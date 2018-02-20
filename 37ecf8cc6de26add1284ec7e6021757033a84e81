@@ -104,6 +104,91 @@
     },
     {
       "key": {
+        "uuid": "633b51ce_a5fadbec",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:46:15Z",
+      "side": 1,
+      "message": "Newline after",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce5e0a6_ad735dd3",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:46:15Z",
+      "side": 1,
+      "message": "No else after return.",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492c1b6e_19357390",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:46:15Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this lock?",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc05c375_22507e31",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:46:15Z",
+      "side": 1,
+      "message": "Add newlines.\n\nShouldn\u0027t this lock?",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92317012_e4299210",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:46:15Z",
+      "side": 1,
+      "message": "Please document the state space of this object. Document thread safety-- it appears this object is thread safe, but make that explicit. For example, concurrent Resize() with AddTask().",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "485277a4_2c98eb1f",
         "filename": "internal/ceres/thread_pool.h",
         "patchSetId": 4
@@ -115,6 +200,91 @@
       "writtenOn": "2018-02-20T20:01:16Z",
       "side": 1,
       "message": "num_hardware_threads mentioned in docs but is not anywhere else. Where is that set?",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79a3073_be277353",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:46:15Z",
+      "side": 1,
+      "message": "What does it do in the case that a reduction is requested?",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d56a398_49836875",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:46:15Z",
+      "side": 1,
+      "message": "What if the thread pool is resized while workers are working? Is the thread pool resized during the call and guaranteed to be larger upon return? Or is there an async aspect to the behaviour?",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f29207b_d8b58422",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:46:15Z",
+      "side": 1,
+      "message": "Does it return? Document.",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc83d94_cbad2c9a",
+        "filename": "internal/ceres/thread_pool_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:46:15Z",
+      "side": 1,
+      "message": "I feel these tests aren\u0027t quite convincing enough; what about having a test that mixes AddTask() with Resize(), and also Stop() in the middle? Or some variants of that?\n\nMy opinion is that if Ceres is going to have a thread pool, it should be solid and well tested.",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf11b64b_2b8e87ef",
+        "filename": "internal/ceres/thread_pool_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:46:15Z",
+      "side": 1,
+      "message": "Consider having concurrent tasks.",
       "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
