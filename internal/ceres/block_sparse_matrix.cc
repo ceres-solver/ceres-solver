@@ -280,9 +280,12 @@ BlockSparseMatrix* BlockSparseMatrix::CreateDiagonalMatrix(
 }
 
 void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
+  CHECK_EQ(m.num_cols(), num_cols());
+  const CompressedRowBlockStructure* m_bs = m.block_structure();
+  CHECK_EQ(m_bs->cols.size(), block_structure_->cols.size());
+
   const int old_num_nonzeros = num_nonzeros_;
   const int old_num_row_blocks = block_structure_->rows.size();
-  const CompressedRowBlockStructure* m_bs = m.block_structure();
   block_structure_->rows.resize(old_num_row_blocks + m_bs->rows.size());
 
   for (int i = 0; i < m_bs->rows.size(); ++i) {
@@ -336,29 +339,33 @@ BlockSparseMatrix* BlockSparseMatrix::CreateRandomMatrix(
   CHECK_GT(options.min_row_block_size, 0);
   CHECK_GT(options.max_row_block_size, 0);
   CHECK_LE(options.min_row_block_size, options.max_row_block_size);
-  CHECK_GT(options.num_col_blocks, 0);
-  CHECK_GT(options.min_col_block_size, 0);
-  CHECK_GT(options.max_col_block_size, 0);
-  CHECK_LE(options.min_col_block_size, options.max_col_block_size);
   CHECK_GT(options.block_density, 0.0);
   CHECK_LE(options.block_density, 1.0);
 
   CompressedRowBlockStructure* bs = new CompressedRowBlockStructure();
-    // Generate the col block structure.
-  int col_block_position = 0;
-  for (int i = 0; i < options.num_col_blocks; ++i) {
-    // Generate a random integer in [min_col_block_size, max_col_block_size]
-    const int delta_block_size =
-        Uniform(options.max_col_block_size - options.min_col_block_size);
-    const int col_block_size = options.min_col_block_size + delta_block_size;
-    bs->cols.push_back(Block(col_block_size, col_block_position));
-    col_block_position += col_block_size;
-  }
+  if (options.col_blocks.empty()) {
+    CHECK_GT(options.num_col_blocks, 0);
+    CHECK_GT(options.min_col_block_size, 0);
+    CHECK_GT(options.max_col_block_size, 0);
+    CHECK_LE(options.min_col_block_size, options.max_col_block_size);
 
+    // Generate the col block structure.
+    int col_block_position = 0;
+    for (int i = 0; i < options.num_col_blocks; ++i) {
+      // Generate a random integer in [min_col_block_size, max_col_block_size]
+      const int delta_block_size =
+          Uniform(options.max_col_block_size - options.min_col_block_size);
+      const int col_block_size = options.min_col_block_size + delta_block_size;
+      bs->cols.push_back(Block(col_block_size, col_block_position));
+      col_block_position += col_block_size;
+    }
+  } else {
+    bs->cols = options.col_blocks;
+  }
 
   bool matrix_has_blocks = false;
   while (!matrix_has_blocks) {
-    LOG(INFO) << "clearing";
+    VLOG(1) << "Clearing";
     bs->rows.clear();
     int row_block_position = 0;
     int value_position = 0;
@@ -372,7 +379,7 @@ BlockSparseMatrix* BlockSparseMatrix::CreateRandomMatrix(
       row.block.size = row_block_size;
       row.block.position = row_block_position;
       row_block_position += row_block_size;
-      for (int c = 0; c < options.num_col_blocks; ++c) {
+      for (int c = 0; c < bs->cols.size(); ++c) {
         if (RandDouble() > options.block_density) continue;
 
         row.cells.push_back(Cell());
