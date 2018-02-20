@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32db318f_631ed1c0",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T23:52:22Z",
+      "side": 1,
+      "message": "Should be indented 1 more",
+      "revId": "91530aed2c390b4ab720098cb82ffedba4d85bc8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ffcd5a_27b6fa04",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T23:52:22Z",
+      "side": 1,
+      "message": "Please retain the previous breaking with T on its own line.",
+      "revId": "91530aed2c390b4ab720098cb82ffedba4d85bc8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979b15a8_87db255a",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T23:52:22Z",
+      "side": 1,
+      "message": "Please fix breaking-- stack the parameters one per line.",
+      "revId": "91530aed2c390b4ab720098cb82ffedba4d85bc8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecdfc812_67644149",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T23:52:22Z",
+      "side": 1,
+      "message": "Please fix paragraph formatting.",
+      "revId": "91530aed2c390b4ab720098cb82ffedba4d85bc8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4cbe22_ae2fc372",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T23:52:22Z",
+      "side": 1,
+      "message": "Spaces around \u003d\u003d",
+      "revId": "91530aed2c390b4ab720098cb82ffedba4d85bc8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99574940_c7bc84d0",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T23:52:22Z",
+      "side": 1,
+      "message": "Align the template parameters one per line.",
+      "revId": "91530aed2c390b4ab720098cb82ffedba4d85bc8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f5c4db_bc695c5e",
+        "filename": "internal/ceres/tiny_solver_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T23:52:22Z",
+      "side": 1,
+      "message": "Alignment",
+      "revId": "91530aed2c390b4ab720098cb82ffedba4d85bc8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
