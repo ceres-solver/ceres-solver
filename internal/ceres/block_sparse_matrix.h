@@ -117,6 +117,11 @@ class BlockSparseMatrix : public SparseMatrix {
     // present in the matrix. A given random matrix will not have
     // precisely this density.
     double block_density;
+
+    // If col_blocks is non-empty, then the generated random matrix
+    // has this block structure and the column related options in this
+    // struct are ignored.
+    std::vector<Block> col_blocks;
   };
 
   // Create a random BlockSparseMatrix whose entries are normally
