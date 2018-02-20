@@ -111,6 +111,7 @@ set(CERES_INTERNAL_SRC
     sparse_matrix.cc
     sparse_cholesky.cc
     sparse_normal_cholesky_solver.cc
+    subset_preconditioner.cc
     split.cc
     stringprintf.cc
     suitesparse.cc
@@ -359,6 +360,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(solver)
   ceres_test(sparse_cholesky)
   ceres_test(sparse_normal_cholesky_solver)
+  ceres_test(subset_preconditioner)
   ceres_test(system)
   ceres_test(tiny_solver)
   ceres_test(tiny_solver_autodiff_function)
