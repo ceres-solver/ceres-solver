@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc9d8088_17a40632",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:01:16Z",
+      "side": 1,
+      "message": "Please extend documentation to show a sketch use case. This object has a state space but is not documented.",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef9c0af_cace9c4e",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:01:16Z",
+      "side": 1,
+      "message": "Perhaps rename abandon() or cancel()? There is no resume. Not sure what the right name is.\n\nAlso, what happens to the queue? Since the queue is owned, it\u0027s sorta weird to leave the object in an inconsistent state after.",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f538e6_9d2893cc",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:01:16Z",
+      "side": 1,
+      "message": "precondition required (or at least should be): stop \u003d\u003d false. Not checked.",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ac038f_fcdf3e13",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:01:16Z",
+      "side": 1,
+      "message": "Precondition: !stop -- should probably check for this, or re-start the queue. Needs documentation.",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e344b46a_d89aa93b",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:01:16Z",
+      "side": 1,
+      "message": "Perhaps name this matched to the use? work_pending_condition_? work_pending_event_?",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d8242f_6a67d01f",
+        "filename": "internal/ceres/concurrent_queue_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:01:16Z",
+      "side": 1,
+      "message": "What about stop after stop? Push?",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "485277a4_2c98eb1f",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:01:16Z",
+      "side": 1,
+      "message": "num_hardware_threads mentioned in docs but is not anywhere else. Where is that set?",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
