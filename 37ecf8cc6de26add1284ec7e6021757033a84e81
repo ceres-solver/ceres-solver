@@ -206,6 +206,23 @@
     },
     {
       "key": {
+        "uuid": "ea4de156_cc1d2e2d",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:48:56Z",
+      "side": 1,
+      "message": "Document destructor behaviour. What about tasks in the queue? What if destruction happens while threads are working? Does this block?",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a79a3073_be277353",
         "filename": "internal/ceres/thread_pool.h",
         "patchSetId": 4
@@ -234,6 +251,23 @@
       "writtenOn": "2018-02-20T20:46:15Z",
       "side": 1,
       "message": "What if the thread pool is resized while workers are working? Is the thread pool resized during the call and guaranteed to be larger upon return? Or is there an async aspect to the behaviour?",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621c8214_9bea2daf",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-20T20:48:56Z",
+      "side": 1,
+      "message": "What if the thread pool is being destructed? What\u0027s the guarantee for that?",
       "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
