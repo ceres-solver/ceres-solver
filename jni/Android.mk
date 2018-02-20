@@ -195,6 +195,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/sparse_normal_cholesky_solver.cc \
                    $(CERES_SRC_PATH)/split.cc \
                    $(CERES_SRC_PATH)/stringprintf.cc \
+                   $(CERES_SRC_PATH)/subset_preconditioner.cc \
                    $(CERES_SRC_PATH)/suitesparse.cc \
                    $(CERES_SRC_PATH)/triplet_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/trust_region_minimizer.cc \

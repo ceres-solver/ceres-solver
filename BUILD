@@ -141,6 +141,7 @@ CERES_TESTS = [
     "solver",
     "sparse_cholesky",
     "sparse_normal_cholesky_solver",
+    "subset_preconditioner",
     "system",
     "tiny_solver_autodiff_function",
     "tiny_solver_cost_function_adapter",
