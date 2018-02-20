@@ -22,6 +22,30 @@
       "revId": "752a8fba5aa91327fd49c915da16ac8d8131b87d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73c09cb_8671d107",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-20T19:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d10ccd1d_7c8ff228",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "752a8fba5aa91327fd49c915da16ac8d8131b87d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
