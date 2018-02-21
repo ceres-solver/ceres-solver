@@ -31,7 +31,7 @@
 # These are Bazel rules to build Ceres. It's currently in Alpha state, and does
 # not support parameterization around threading choice or sparse backends.
 
-load("//:bazel/ceres.bzl", "ceres_library")
+load("//:bazel/ceres.bzl", "ceres_library", "ceres_example")
 
 ceres_library(
     name = "ceres",
@@ -58,9 +58,6 @@ cc_library(
     copts = [
         "-Wno-sign-compare",
         "-DCERES_TEST_SRCDIR_SUFFIX=\\\"data/\\\"",
-    ],
-    defines = [
-        "CERES_GFLAGS_NAMESPACE=gflags",
     ],
     includes = [
         "internal",
@@ -154,6 +151,7 @@ CERES_TESTS = [
 ]
 
 TEST_COPTS = [
+    # Needed to silence GFlags complaints.
     "-Wno-sign-compare",
 
     # These two warnings don't work well in conjunction with GMock, and
