@@ -59,9 +59,6 @@ cc_library(
         "-Wno-sign-compare",
         "-DCERES_TEST_SRCDIR_SUFFIX=\\\"data/\\\"",
     ],
-    defines = [
-        "CERES_GFLAGS_NAMESPACE=gflags",
-    ],
     includes = [
         "internal",
         "internal/ceres",
@@ -157,6 +154,7 @@ CERES_TESTS = [
 ]
 
 TEST_COPTS = [
+    # Needed to silence GFlags complaints.
     "-Wno-sign-compare",
 
     # These two warnings don't work well in conjunction with GMock, and
