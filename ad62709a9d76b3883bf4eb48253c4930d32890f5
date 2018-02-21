@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4ca88e8_c84668d1",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-21T23:21:12Z",
+      "side": 1,
+      "message": "not a fan of this extra_deps thing.\n\n1. deps are link targets not source files.\n2. it makes them sound to be irrelevant.\n\nwhy not just have everything in the srcs attribute?",
+      "range": {
+        "startLine": 209,
+        "startChar": 27,
+        "endLine": 209,
+        "endChar": 36
+      },
+      "revId": "ad62709a9d76b3883bf4eb48253c4930d32890f5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
