@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe869a7c_f640e200",
+        "filename": "BUILD",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T23:30:21Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5c2a0a66_1ddfaf02",
+      "range": {
+        "startLine": 199,
+        "startChar": 34,
+        "endLine": 199,
+        "endChar": 44
+      },
+      "revId": "e0ee2688d6c6a8b2d321be69ee35af34c45d0909",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6e966aa_2cc9885a",
         "filename": "BUILD",
         "patchSetId": 4
@@ -93,6 +117,30 @@
       "revId": "e0ee2688d6c6a8b2d321be69ee35af34c45d0909",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87127416_26cdbf72",
+        "filename": "BUILD",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T23:30:21Z",
+      "side": 1,
+      "message": "But that is why I originally had \"extra\" since the main src is the foo_test.cc file.",
+      "parentUuid": "f317e24c_9bd6cd18",
+      "range": {
+        "startLine": 204,
+        "startChar": 9,
+        "endLine": 204,
+        "endChar": 15
+      },
+      "revId": "e0ee2688d6c6a8b2d321be69ee35af34c45d0909",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
