@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e4426a2_5ad8c204",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T19:42:05Z",
+      "side": 1,
+      "message": "Consider having a private PopUnlocked() that\u0027s called here and below in Wait().",
+      "revId": "630d624b68b3686e4a1508566fc68f6510172bad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e77eea_1af38901",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T19:42:05Z",
+      "side": 1,
+      "message": "This code could become just \n\nreturn PopUnlocked(value);",
+      "revId": "630d624b68b3686e4a1508566fc68f6510172bad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47324c1e_77896442",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T19:42:05Z",
+      "side": 1,
+      "message": "Perhaps mention that they will exit Wait() without getting a value.",
+      "revId": "630d624b68b3686e4a1508566fc68f6510172bad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d4fc0c6_e795db37",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T19:42:05Z",
+      "side": 1,
+      "message": "Not sure it would be faster, but something to consider for the future: Having a AddTasks() method that takes a vector, or some sort of lock/unlock mechanism that avoids the lock for every addition.",
+      "revId": "630d624b68b3686e4a1508566fc68f6510172bad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
