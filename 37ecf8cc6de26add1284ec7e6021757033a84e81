@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d25202e_a40b6de3",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc9d8088_17a40632",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ef9c0af_cace9c4e",
         "filename": "internal/ceres/concurrent_queue.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5106a65c_e614ae49",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "Renamed to Abort.  Let me know.\n\nFor the quque I am not sure what is inconsistent with the state.  Presumably the reason why you called Abort is because something else who owns this is going away.  There are similar semantics of pushing 10 things onto the queue and only popping 5, which is allowed by all queues.",
+      "parentUuid": "2ef9c0af_cace9c4e",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f00c5c4c_998f42fa",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "Condition is checked on 70 and 73.",
+      "parentUuid": "d8f538e6_9d2893cc",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41ac038f_fcdf3e13",
         "filename": "internal/ceres/concurrent_queue.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a25f5761_b0f43964",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "Added check for stop and won\u0027t push onto the queue.",
+      "parentUuid": "41ac038f_fcdf3e13",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "42db3a05_3f09738c",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e344b46a_d89aa93b",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5d8242f_6a67d01f",
         "filename": "internal/ceres/concurrent_queue_test.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1905902_fd5f6e42",
+        "filename": "internal/ceres/concurrent_queue_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5d8242f_6a67d01f",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ae823740_a7815610",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "633b51ce_a5fadbec",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ce5e0a6_ad735dd3",
         "filename": "internal/ceres/thread_pool.cc",
         "patchSetId": 4
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "c3c4a2c0_30b716d5",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ce5e0a6_ad735dd3",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "492c1b6e_19357390",
         "filename": "internal/ceres/thread_pool.cc",
         "patchSetId": 4
@@ -149,6 +293,24 @@
       "writtenOn": "2018-02-20T20:46:15Z",
       "side": 1,
       "message": "Shouldn\u0027t this lock?",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3994f4_4fcca670",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "This is similar to another comment.\n\nI could be thinking about this wrong, but what does it mean to lock in a destructor to guard against concurrent access?  If the thread pool is being accessed and deleted at the same time, then the user will also have a pointer that references deleted memory which can be used to call AddTask which would be bad.  \n\nI don\u0027t think there is anything we can do inside the destructor to guard against this.",
+      "parentUuid": "492c1b6e_19357390",
       "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "a93a127d_4b940809",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "Add newlines (sorry this was auto-styled by the emacs google plugin.)\n\nThe queue has its own thread safety.  I added additional documentation to the header.",
+      "parentUuid": "bc05c375_22507e31",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92317012_e4299210",
         "filename": "internal/ceres/thread_pool.h",
         "patchSetId": 4
@@ -186,6 +366,24 @@
       "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa60a16_c5114dbb",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92317012_e4299210",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "e3a55bb8_b3f045cf",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "It is a hardware dependent number which is read via the library call: std::thread::hardware_concurrency()",
+      "parentUuid": "485277a4_2c98eb1f",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea4de156_cc1d2e2d",
         "filename": "internal/ceres/thread_pool.h",
         "patchSetId": 4
@@ -220,6 +436,24 @@
       "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9773dbf6_49b62d61",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea4de156_cc1d2e2d",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "62ab8d65_f1aa2d11",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "Requested a smaller number of threads is a no-op.  Updated documentation.",
+      "parentUuid": "a79a3073_be277353",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d56a398_49836875",
         "filename": "internal/ceres/thread_pool.h",
         "patchSetId": 4
@@ -254,6 +506,24 @@
       "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e5930b_b3fa91b6",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "It is safe to resize while working.  The resizing is guaranteed to finish upon return.  I updated the comments to reflect these questions.",
+      "parentUuid": "2d56a398_49836875",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "03e09a26_d2bf1f4d",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "I consider this undefined behavior and a programming error than cannot be fixed within the thread pool class.  A user adding a task while the thread pool is being destructed means someone has a raw pointer to a thread pool.  This also means that after the thread pool has been deleted, the user may call AddTask again but raw pointer references deleted memory.",
+      "parentUuid": "621c8214_9bea2daf",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f29207b_d8b58422",
         "filename": "internal/ceres/thread_pool.h",
         "patchSetId": 4
@@ -288,6 +576,24 @@
       "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1dce31_f09f184e",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "Updated documentation.",
+      "parentUuid": "5f29207b_d8b58422",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "5ea3541b_e080b2b8",
+        "filename": "internal/ceres/thread_pool_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "I agree.  At the time I didn\u0027t know how to correctly do tasks, resizing without using sleep which is flaky. I think I figured out a way.  \n\nFor testing the destructor I couldn\u0027t figure out a way to do this without race conditions.  The race condition is that I couldn\u0027t always guarantee the thread pool destructor was always called before all the tasks completed.  \n\nSo we have three options: add this test that doesn\u0027t always test as intended, don\u0027t have a test for it, or expose Stop() which introduces another state and gives people the ability to add tasks when the thread pool is stopped.  Thoughts?",
+      "parentUuid": "ffc83d94_cbad2c9a",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf11b64b_2b8e87ef",
         "filename": "internal/ceres/thread_pool_test.cc",
         "patchSetId": 4
@@ -322,6 +646,24 @@
       "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ccd9a0_5711dd47",
+        "filename": "internal/ceres/thread_pool_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T00:27:10Z",
+      "side": 1,
+      "message": "I added another test that will test resize and adding tasks.  This test is more about testing resize/size operates as expected.\n\nI updated this test to ensure it won\u0027t shrink the thread pool.",
+      "parentUuid": "cf11b64b_2b8e87ef",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
