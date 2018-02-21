@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09cb95a6_77ac8d38",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-21T21:48:14Z",
+      "side": 1,
+      "message": "i was confused .. isn\u0027t this a horizontal partitioning? vertical split would be one that breaks up the columns no?",
+      "parentUuid": "0a779558_fc9b4d84",
+      "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "016f385e_947f1cff",
         "filename": "internal/ceres/preconditioner.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-21T19:01:24Z",
       "side": 1,
       "message": "This should probably get documented since it\u0027s essentially part of the public API.",
+      "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d133834_0780171f",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-21T21:48:14Z",
+      "side": 1,
+      "message": "its the same structure as the TypedLinearSolver and same contract. And this is not a public API.",
+      "parentUuid": "016f385e_947f1cff",
       "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7ef11e9c_39611e24",
+        "filename": "internal/ceres/subset_preconditioner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-21T21:48:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a0ab00b_258adc25",
+      "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5359030_85c4bb3f",
         "filename": "internal/ceres/subset_preconditioner.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-21T19:01:24Z",
       "side": 1,
       "message": "It would be nice to have a more detailed explanation here, ideally with some matrix equations or similar.",
+      "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6758c6f5_214226be",
+        "filename": "internal/ceres/subset_preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-21T21:48:14Z",
+      "side": 1,
+      "message": "added the same equation as preconditioner.h",
+      "parentUuid": "c5359030_85c4bb3f",
       "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1a2cdc9f_807eb810",
+        "filename": "internal/ceres/subset_preconditioner_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-21T21:48:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e46d481a_f9e1b103",
+      "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cd5b7f0_01f0a233",
         "filename": "internal/ceres/subset_preconditioner_test.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6419b5_4045cb5f",
+        "filename": "internal/ceres/subset_preconditioner_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-21T21:48:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cd5b7f0_01f0a233",
+      "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
