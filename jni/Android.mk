@@ -79,6 +79,11 @@ ifneq ($(shell $(LOCAL_PATH)/assert_ndk_version.sh "r9d" $(NDK_ROOT)), true)
   $(error Ceres requires NDK version r9d or greater)
 endif
 
+# Ceres requires Eigen to build.
+ifndef EIGEN_PATH
+  $(error Ceres requires Eigen; please invoke via EIGEN_PATH=... ndk-build)
+endif
+
 EIGEN_PATH := $(EIGEN_PATH)
 CERES_INCLUDE_PATHS := $(CERES_EXTRA_INCLUDES)
 CERES_INCLUDE_PATHS += $(LOCAL_PATH)/../internal
