@@ -182,7 +182,7 @@ INSTANTIATE_TEST_CASE_P(SubsetPreconditionerWithCXSparse,
                         ParamInfoToString);
 #endif
 
-#ifndef CERES_NO_EIGEN_SPARSE
+#ifdef CERES_USE_EIGEN_SPARSE
 INSTANTIATE_TEST_CASE_P(SubsetPreconditionerWithEigenSparse,
                         SubsetPreconditionerTest,
                         ::testing::Combine(::testing::Values(EIGEN_SPARSE),
