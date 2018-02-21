@@ -36,6 +36,98 @@
     },
     {
       "key": {
+        "uuid": "648a4fce_504b42b3",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-21T18:52:35Z",
+      "side": 1,
+      "message": "I\u0027d personally put this line and the next one in a scope and remove the unlock(), but this is fine too if you prefer it.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 46
+      },
+      "revId": "f53dda22b31f0085987f4245c6297ac777523249",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25ea79b7_604a1c2c",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-21T18:52:35Z",
+      "side": 1,
+      "message": "Add queue_.clear()?",
+      "range": {
+        "startLine": 87,
+        "startChar": 18,
+        "endLine": 87,
+        "endChar": 0
+      },
+      "revId": "f53dda22b31f0085987f4245c6297ac777523249",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca63ae4_9cd33137",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-21T18:52:35Z",
+      "side": 1,
+      "message": "Strictly speaking, you need to hold thread_pool_mutex_ while doing this. If Resize() was called earlier from another thread, it\u0027s possible that the modifications that it made to thread_pool_ aren\u0027t visible to this thread yet.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 44
+      },
+      "revId": "f53dda22b31f0085987f4245c6297ac777523249",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a751f45_027cb575",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-21T18:52:35Z",
+      "side": 1,
+      "message": "ConcurrentQueue is only defined if CXX11_THREADS. Does thread_pool.h also need to define ThreadPool if CXX11_THREADS?",
+      "range": {
+        "startLine": 38,
+        "startChar": 35,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "f53dda22b31f0085987f4245c6297ac777523249",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cd244f6_a4301cec",
         "filename": "internal/ceres/thread_pool.h",
         "patchSetId": 5
@@ -47,6 +139,75 @@
       "writtenOn": "2018-02-21T00:53:12Z",
       "side": 1,
       "message": "I count three :)",
+      "revId": "f53dda22b31f0085987f4245c6297ac777523249",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a4d66b1_372079e5",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-21T18:52:35Z",
+      "side": 1,
+      "message": "Resizes",
+      "range": {
+        "startLine": 76,
+        "startChar": 5,
+        "endLine": 76,
+        "endChar": 11
+      },
+      "revId": "f53dda22b31f0085987f4245c6297ac777523249",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416c8e8e_2382c81f",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-21T18:52:35Z",
+      "side": 1,
+      "message": "Adds... wakes...",
+      "range": {
+        "startLine": 87,
+        "startChar": 5,
+        "endLine": 87,
+        "endChar": 8
+      },
+      "revId": "f53dda22b31f0085987f4245c6297ac777523249",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc6e8ef_34cb8a43",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-21T18:52:35Z",
+      "side": 1,
+      "message": "I may be missing something - how does this abstraction handle the work stealing necessary to avoid deadlock?",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 77
+      },
       "revId": "f53dda22b31f0085987f4245c6297ac777523249",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
