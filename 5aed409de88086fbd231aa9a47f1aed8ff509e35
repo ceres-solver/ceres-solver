@@ -16,6 +16,24 @@
       "revId": "5aed409de88086fbd231aa9a47f1aed8ff509e35",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e3ab6f_f15c2989",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T23:49:33Z",
+      "side": 1,
+      "message": "Done.  Everything passed but the following tests timed out.  But make tests works.\n\nba_denseschur_auto_test\nba_denseschur_user_test\nba_iterschur_jacobi_auto_test\nba_iterschur_jacobi_user_test\nba_iterschur_schurjacobi_auto_test\nba_iterschur_schurjacobi_user_test",
+      "parentUuid": "01edff71_56cc84cc",
+      "revId": "5aed409de88086fbd231aa9a47f1aed8ff509e35",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
