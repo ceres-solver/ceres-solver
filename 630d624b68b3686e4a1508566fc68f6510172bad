@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1637a08_f99a101a",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T19:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e4426a2_5ad8c204",
+      "revId": "630d624b68b3686e4a1508566fc68f6510172bad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94e77eea_1af38901",
         "filename": "internal/ceres/concurrent_queue.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "630d624b68b3686e4a1508566fc68f6510172bad",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da58c3d_85362d35",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T19:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94e77eea_1af38901",
+      "revId": "630d624b68b3686e4a1508566fc68f6510172bad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5d327f0c_92e01841",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T19:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47324c1e_77896442",
+      "revId": "630d624b68b3686e4a1508566fc68f6510172bad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d4fc0c6_e795db37",
         "filename": "internal/ceres/thread_pool.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "630d624b68b3686e4a1508566fc68f6510172bad",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e43f1d8_3021f534",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T19:59:04Z",
+      "side": 1,
+      "message": "This is a good idea.  I think there are several places where we can speed up the execution.  I\u0027d like to get the first version (i.e. simple) in and then profile to decide where we should spend our effort.  Currently, getting the thread ID is the slowest part because that is call for every iteration of the for loop whereas this is only called for every task.",
+      "parentUuid": "9d4fc0c6_e795db37",
+      "revId": "630d624b68b3686e4a1508566fc68f6510172bad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
