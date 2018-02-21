@@ -69,6 +69,30 @@
       "revId": "e0ee2688d6c6a8b2d321be69ee35af34c45d0909",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6938c046_7c0b1324",
+        "filename": "BUILD",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-21T23:30:13Z",
+      "side": 1,
+      "message": "explicit over implict :)\nalso these are examples not tests.",
+      "parentUuid": "f317e24c_9bd6cd18",
+      "range": {
+        "startLine": 204,
+        "startChar": 9,
+        "endLine": 204,
+        "endChar": 15
+      },
+      "revId": "e0ee2688d6c6a8b2d321be69ee35af34c45d0909",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
