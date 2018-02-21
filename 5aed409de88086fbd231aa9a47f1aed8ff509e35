@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01edff71_56cc84cc",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T22:52:36Z",
+      "side": 1,
+      "message": "Please also add these to the Bazel build (and tests), and make sure to run bazel test :all.",
+      "revId": "5aed409de88086fbd231aa9a47f1aed8ff509e35",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
