@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a779558_fc9b4d84",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T19:01:24Z",
+      "side": 1,
+      "message": "vertically",
+      "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016f385e_947f1cff",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T19:01:24Z",
+      "side": 1,
+      "message": "This should probably get documented since it\u0027s essentially part of the public API.",
+      "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0ab00b_258adc25",
+        "filename": "internal/ceres/subset_preconditioner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T19:01:24Z",
+      "side": 1,
+      "message": "Consider adding some block comments showing the mathematical structure. It\u0027s not entirely clear to me how this machination works.",
+      "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5359030_85c4bb3f",
+        "filename": "internal/ceres/subset_preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T19:01:24Z",
+      "side": 1,
+      "message": "It would be nice to have a more detailed explanation here, ideally with some matrix equations or similar.",
+      "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46d481a_f9e1b103",
+        "filename": "internal/ceres/subset_preconditioner_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T19:01:24Z",
+      "side": 1,
+      "message": "Use Eigen\u0027s dense solvers...",
+      "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd5b7f0_01f0a233",
+        "filename": "internal/ceres/subset_preconditioner_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T19:01:24Z",
+      "side": 1,
+      "message": "No else after return.",
+      "revId": "4eb90b3ae9ffcdeb14c605c3ce2b0c829147dbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
