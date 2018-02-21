@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5899262_b7c6c8db",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T00:53:12Z",
+      "side": 1,
+      "message": "Perhaps mention that after Abort(), the object is dead and needs to be destructed (no resurrection).\n\nPerhaps Flush()? And support re-using later?",
+      "revId": "f53dda22b31f0085987f4245c6297ac777523249",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e2dcc3_5db33186",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T00:53:12Z",
+      "side": 1,
+      "message": "nit: Please add a comment blank after this line.",
+      "revId": "f53dda22b31f0085987f4245c6297ac777523249",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd244f6_a4301cec",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T00:53:12Z",
+      "side": 1,
+      "message": "I count three :)",
+      "revId": "f53dda22b31f0085987f4245c6297ac777523249",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
