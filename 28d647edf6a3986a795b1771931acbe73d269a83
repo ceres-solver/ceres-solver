@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7b624bb_1e3b9850",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T21:17:26Z",
+      "side": 1,
+      "message": "Using the predicated wait, I am not sure this is as readable, especially because we need to negate our condition.\n\n work_pending_condition_.wait(lock,\n                                 [\u0026]() { return !(wait_ \u0026\u0026 queue_.empty()); });\n\nI can be convinced otherwise.",
+      "parentUuid": "e3e7b278_463ec5b2",
+      "revId": "28d647edf6a3986a795b1771931acbe73d269a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94ccc8fa_023ff2bb",
         "filename": "internal/ceres/concurrent_queue_test.cc",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "28d647edf6a3986a795b1771931acbe73d269a83",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea56ed8f_8f169846",
+        "filename": "internal/ceres/concurrent_queue_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T21:17:26Z",
+      "side": 1,
+      "message": "I thought about that but I want the thread to be waiting inside the Wait() call, otherwise we won\u0027t know if the queue would have actually blocked.  Sleeping is my best effort solution to that. I don\u0027t think it is the best solution but it is the only thing I can come up with.",
+      "parentUuid": "94ccc8fa_023ff2bb",
+      "range": {
+        "startLine": 208,
+        "startChar": 62,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "28d647edf6a3986a795b1771931acbe73d269a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f1ab4113_fb193f2f",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T21:17:26Z",
+      "side": 1,
+      "message": "Yea, I didn\u0027t have this until the last patch. I added it because I wanted to ensure no one could add tasks while in the destructor but now I\u0027ve gone back on that.",
+      "parentUuid": "07004e17_7bfa487c",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 56
+      },
+      "revId": "28d647edf6a3986a795b1771931acbe73d269a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12e72a4d_84ce6b80",
         "filename": "internal/ceres/thread_pool.h",
         "patchSetId": 7
@@ -85,6 +151,30 @@
       "revId": "28d647edf6a3986a795b1771931acbe73d269a83",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c973024_52581640",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T21:17:26Z",
+      "side": 1,
+      "message": "My thought process is that if something is actively trying to delete the thread pool while someone else has a raw pointer to it then nothing inside the thread pool will prevent bad things from happening.  After the thread pool is destroyed they will be accessing deleted memory.\n\nIn reference to your other comment, I added the lock in AddTask just to be on the safe side to prevent people from potentially changing the work while we are destroying the threadpool.  But again, I think that is futile if that is what we are trying to prevent.",
+      "parentUuid": "12e72a4d_84ce6b80",
+      "range": {
+        "startLine": 57,
+        "startChar": 34,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "28d647edf6a3986a795b1771931acbe73d269a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
