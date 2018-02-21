@@ -335,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "4faf70a5_60f3c814",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T19:31:23Z",
+      "side": 1,
+      "message": "From William\u0027s comment, I decided to lock here as well as in the AddTask function to be on the safe side.",
+      "parentUuid": "51aa5e93_16851ff5",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc05c375_22507e31",
         "filename": "internal/ceres/thread_pool.cc",
         "patchSetId": 4
@@ -662,6 +680,24 @@
       "side": 1,
       "message": "I am OK with exposing Stop() provided the other methods know to explode when the object state is stopped. Sameer?",
       "parentUuid": "5ea3541b_e080b2b8",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63aa4242_90b7cf25",
+        "filename": "internal/ceres/thread_pool_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-21T19:31:23Z",
+      "side": 1,
+      "message": "Added new functionality to the queue so I don\u0027t need to expose stop.",
+      "parentUuid": "c5e41290_4a4cf942",
       "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
