@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3e7b278_463ec5b2",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-21T20:29:59Z",
+      "side": 1,
+      "message": "Turn this loop into a predicated wait?",
+      "revId": "28d647edf6a3986a795b1771931acbe73d269a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ccc8fa_023ff2bb",
+        "filename": "internal/ceres/concurrent_queue_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-21T20:29:59Z",
+      "side": 1,
+      "message": "Can you do this with a cond-wait that terminates when \"waiting\" is true? Or is that just overkill for a test?",
+      "range": {
+        "startLine": 208,
+        "startChar": 62,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "28d647edf6a3986a795b1771931acbe73d269a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07004e17_7bfa487c",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-21T20:29:59Z",
+      "side": 1,
+      "message": "This lock is safe to remove, as task_queue_\u0027s internal locking ensures the right chain of happens-before.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 56
+      },
+      "revId": "28d647edf6a3986a795b1771931acbe73d269a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e72a4d_84ce6b80",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-21T20:29:59Z",
+      "side": 1,
+      "message": "What happens if someone tries to add tasks in this state? Well, I see what actually happens - they get added and processed - but is that what you want to happen, or is it enough of an edge case that you don\u0027t care? (And if one thread is adding tasks while another thread is actively trying to destroy the pool, you\u0027ve got more problems...)",
+      "range": {
+        "startLine": 57,
+        "startChar": 34,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "28d647edf6a3986a795b1771931acbe73d269a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
