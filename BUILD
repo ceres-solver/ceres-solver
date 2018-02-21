@@ -31,7 +31,7 @@
 # These are Bazel rules to build Ceres. It's currently in Alpha state, and does
 # not support parameterization around threading choice or sparse backends.
 
-load("//:bazel/ceres.bzl", "ceres_library")
+load("//:bazel/ceres.bzl", "ceres_library", "ceres_example")
 
 ceres_library(
     name = "ceres",
@@ -58,9 +58,6 @@ cc_library(
     copts = [
         "-Wno-sign-compare",
         "-DCERES_TEST_SRCDIR_SUFFIX=\\\"data/\\\"",
-    ],
-    defines = [
-        "CERES_GFLAGS_NAMESPACE=gflags",
     ],
     includes = [
         "internal",
@@ -198,3 +195,76 @@ TEST_DEPS = [
 ) for test_filename in glob([
     "internal/ceres/generated_bundle_adjustment_tests/*_test.cc",
 ])]
+
+# Ceres examples. Some have extra dependencies, so break them out.
+
+ceres_example(
+    "bundle_adjuster",
+    srcs = [
+        "random.h",
+        "bal_problem.h",
+        "bal_problem.cc",
+        "snavely_reprojection_error.h",
+    ],
+)
+
+ceres_example(
+    "denoising",
+    srcs = [
+        "fields_of_experts.h",
+        "fields_of_experts.cc",
+        "pgm_image.h",
+    ],
+)
+
+ceres_example(
+    "robot_pose_mle",
+    srcs = [
+        "random.h",
+    ],
+)
+
+ceres_example(
+    "slam/pose_graph_2d/pose_graph_2d",
+    copts = [
+        "-Iexamples/slam",
+    ],
+    srcs = [
+        "slam/common/read_g2o.h",
+        "slam/pose_graph_2d/angle_local_parameterization.h",
+        "slam/pose_graph_2d/normalize_angle.h",
+        "slam/pose_graph_2d/pose_graph_2d_error_term.h",
+        "slam/pose_graph_2d/types.h",
+    ],
+)
+
+ceres_example(
+    "slam/pose_graph_3d/pose_graph_3d",
+    copts = [
+        "-Iexamples/slam",
+    ],
+    srcs = [
+        "slam/common/read_g2o.h",
+        "slam/pose_graph_3d/pose_graph_3d_error_term.h",
+        "slam/pose_graph_3d/types.h",
+    ],
+)
+
+# These examples don't have any extra dependencies, so do them in a group.
+[ceres_example(example) for example in [
+    "circle_fit",
+    "curve_fitting",
+    "ellipse_approximation",
+    "helloworld",
+    "helloworld_analytic_diff",
+    "helloworld_numeric_diff",
+    "libmv_bundle_adjuster",
+    "libmv_homography",
+    "more_garbow_hillstrom",
+    "nist",
+    "powell",
+    "robust_curve_fitting",
+    "rosenbrock",
+    "sampled_function/sampled_function",
+    "simple_bundle_adjuster",
+]]
