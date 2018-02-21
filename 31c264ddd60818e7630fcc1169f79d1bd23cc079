@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc929b50_1139d66e",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T21:54:15Z",
+      "side": 1,
+      "message": "Please update BUILD and ceres.bzl.",
+      "revId": "31c264ddd60818e7630fcc1169f79d1bd23cc079",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11e6893_676bd56f",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T21:54:15Z",
+      "side": 1,
+      "message": "Please also add to the BUILD.",
+      "revId": "31c264ddd60818e7630fcc1169f79d1bd23cc079",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
