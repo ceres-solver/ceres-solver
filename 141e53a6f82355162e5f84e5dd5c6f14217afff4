@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "044ef4ba_fb2ae8a8",
+        "filename": "internal/ceres/array_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T01:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2d68139_a124371e",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e2cd07a_ed0bf641",
         "filename": "internal/ceres/array_utils.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d82cc5_4da8e193",
+        "filename": "internal/ceres/array_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T01:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e2cd07a_ed0bf641",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a95565cc_cc1a17e7",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T01:21:21Z",
+      "side": 1,
+      "message": "I disagree. The reason we are getting so many mails about this issue is precisely due to overly short messages.",
+      "parentUuid": "ccb574f2_98656171",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 31
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a98d743_247f95bd",
         "filename": "internal/ceres/residual_block_utils.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3440c07_45fe962a",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T01:21:21Z",
+      "side": 1,
+      "message": "I tried moving some stuff out, but the nature of reporting is that you need access to tons of variables. I don\u0027t  want to make an entire separate class just for this.\n\nI moved out some of the error checking though.",
+      "parentUuid": "0a98d743_247f95bd",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 34
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b74ec1c3_8dce64c1",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T01:21:21Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d6d66b2e_ff2af3c1",
+      "range": {
+        "startLine": 90,
+        "startChar": 24,
+        "endLine": 90,
+        "endChar": 27
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64333998_38b476c9",
         "filename": "internal/ceres/residual_block_utils.cc",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "b7fe505c_42cacdce",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T01:21:21Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "64333998_38b476c9",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fa6c7ef_07a49e2d",
         "filename": "internal/ceres/residual_block_utils.cc",
         "patchSetId": 3
@@ -160,6 +304,30 @@
       "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50823f52_6510b068",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T01:21:21Z",
+      "side": 1,
+      "message": "The issue is concisely described in this block. Then there is the explanation. Then the values. What\u0027s the issue? We know from the list that people are confused right now. I\u0027m not sure what else to suggest here. I vote against putting the wall of text at the end, since in practice if you see this error it will be spewed into your terminal, and you will want to see the values; they will be at the end which you will see first (earlier text will be scrolled off).",
+      "parentUuid": "4fa6c7ef_07a49e2d",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 14
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
