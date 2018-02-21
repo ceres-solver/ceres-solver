@@ -317,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "51aa5e93_16851ff5",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T00:53:12Z",
+      "side": 1,
+      "message": "I think you\u0027re right, yet I can\u0027t get rid of the feeling there could be something here. Oh well!",
+      "parentUuid": "ee3994f4_4fcca670",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc05c375_22507e31",
         "filename": "internal/ceres/thread_pool.cc",
         "patchSetId": 4
@@ -626,6 +644,24 @@
       "side": 1,
       "message": "I agree.  At the time I didn\u0027t know how to correctly do tasks, resizing without using sleep which is flaky. I think I figured out a way.  \n\nFor testing the destructor I couldn\u0027t figure out a way to do this without race conditions.  The race condition is that I couldn\u0027t always guarantee the thread pool destructor was always called before all the tasks completed.  \n\nSo we have three options: add this test that doesn\u0027t always test as intended, don\u0027t have a test for it, or expose Stop() which introduces another state and gives people the ability to add tasks when the thread pool is stopped.  Thoughts?",
       "parentUuid": "ffc83d94_cbad2c9a",
+      "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5e41290_4a4cf942",
+        "filename": "internal/ceres/thread_pool_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T00:53:12Z",
+      "side": 1,
+      "message": "I am OK with exposing Stop() provided the other methods know to explode when the object state is stopped. Sameer?",
+      "parentUuid": "5ea3541b_e080b2b8",
       "revId": "37ecf8cc6de26add1284ec7e6021757033a84e81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
