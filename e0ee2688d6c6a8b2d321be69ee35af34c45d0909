@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c2a0a66_1ddfaf02",
+        "filename": "BUILD",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-21T23:27:06Z",
+      "side": 1,
+      "message": "dependencies",
+      "range": {
+        "startLine": 199,
+        "startChar": 34,
+        "endLine": 199,
+        "endChar": 44
+      },
+      "revId": "e0ee2688d6c6a8b2d321be69ee35af34c45d0909",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e966aa_2cc9885a",
+        "filename": "BUILD",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-21T23:27:06Z",
+      "side": 1,
+      "message": "why not have bundle_adjuster.cc in srcs also? yes it makes the list comprehension below slightly longer, but why conflate the name of the example with the cc file?",
+      "range": {
+        "startLine": 204,
+        "startChar": 9,
+        "endLine": 204,
+        "endChar": 15
+      },
+      "revId": "e0ee2688d6c6a8b2d321be69ee35af34c45d0909",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
