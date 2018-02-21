@@ -22,6 +22,30 @@
       "revId": "ad62709a9d76b3883bf4eb48253c4930d32890f5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf74a13_f7e359ae",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-21T23:25:08Z",
+      "side": 1,
+      "message": "Changed to srcs.",
+      "parentUuid": "f4ca88e8_c84668d1",
+      "range": {
+        "startLine": 209,
+        "startChar": 27,
+        "endLine": 209,
+        "endChar": 36
+      },
+      "revId": "ad62709a9d76b3883bf4eb48253c4930d32890f5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
