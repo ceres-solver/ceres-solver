@@ -36,6 +36,7 @@
 #include <string>
 #include <vector>
 
+#include "ceres/context_impl.h"
 #include "ceres/execution_summary.h"
 #include "ceres/internal/port.h"
 #include "ceres/types.h"
@@ -62,12 +63,14 @@ class Evaluator {
         : num_threads(1),
           num_eliminate_blocks(-1),
           linear_solver_type(DENSE_QR),
-          dynamic_sparsity(false) {}
+          dynamic_sparsity(false),
+          context(NULL) {}
 
     int num_threads;
     int num_eliminate_blocks;
     LinearSolverType linear_solver_type;
     bool dynamic_sparsity;
+    ContextImpl* context;
   };
 
   static Evaluator* Create(const Options& options,

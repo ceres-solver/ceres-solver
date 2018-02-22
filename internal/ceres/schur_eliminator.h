@@ -33,13 +33,13 @@
 
 #include <map>
 #include <vector>
-#include "ceres/mutex.h"
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
-#include "ceres/linear_solver.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/linear_solver.h"
+#include "ceres/mutex.h"
 
 namespace ceres {
 namespace internal {
@@ -226,7 +226,8 @@ template <int kRowBlockSize = Eigen::Dynamic,
 class SchurEliminator : public SchurEliminatorBase {
  public:
   explicit SchurEliminator(const LinearSolver::Options& options)
-      : num_threads_(options.num_threads) {
+      : num_threads_(options.num_threads),
+        context_(CHECK_NOTNULL(options.context)) {
   }
 
   // SchurEliminatorBase Interface
@@ -318,6 +319,7 @@ class SchurEliminator : public SchurEliminatorBase {
                                BlockRandomAccessMatrix* lhs);
 
   int num_threads_;
+  ContextImpl* context_;
   int num_eliminate_blocks_;
   bool assume_full_rank_ete_;
 

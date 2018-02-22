@@ -80,6 +80,7 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
   num_blocks_ = bs.cols.size() - options_.elimination_groups[0];
   CHECK_GT(num_blocks_, 0) << "Jacobian should have atleast 1 f_block for "
                            << "visibility based preconditioning.";
+  CHECK(options_.context != NULL);
 
   // Vector of camera block sizes
   block_size_.resize(num_blocks_);
@@ -313,6 +314,7 @@ void VisibilityBasedPreconditioner::InitEliminator(
   eliminator_options.e_block_size = options_.e_block_size;
   eliminator_options.f_block_size = options_.f_block_size;
   eliminator_options.row_block_size = options_.row_block_size;
+  eliminator_options.context = options_.context;
   eliminator_.reset(SchurEliminatorBase::Create(eliminator_options));
   const bool kFullRankETE = true;
   eliminator_->Init(

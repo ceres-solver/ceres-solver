@@ -138,6 +138,8 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/compressed_row_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/conditioned_cost_function.cc \
                    $(CERES_SRC_PATH)/conjugate_gradients_solver.cc \
+                   $(CERES_SRC_PATH)/context.cc \
+                   $(CERES_SRC_PATH)/context_impl.cc \
                    $(CERES_SRC_PATH)/coordinate_descent_minimizer.cc \
                    $(CERES_SRC_PATH)/corrector.cc \
                    $(CERES_SRC_PATH)/covariance.cc \

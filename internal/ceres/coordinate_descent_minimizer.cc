@@ -30,7 +30,7 @@
 
 #include "ceres/coordinate_descent_minimizer.h"
 
-#ifdef CERES_USE_TBB
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
 #include "ceres/parallel_for.h"
 #endif
 
@@ -45,11 +45,11 @@
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
+#include "ceres/scoped_thread_token.h"
 #include "ceres/solver.h"
+#include "ceres/thread_token_provider.h"
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/trust_region_strategy.h"
-#include "ceres/thread_token_provider.h"
-#include "ceres/scoped_thread_token.h"
 
 namespace ceres {
 namespace internal {
@@ -60,6 +60,9 @@ using std::min;
 using std::set;
 using std::string;
 using std::vector;
+
+CoordinateDescentMinimizer::CoordinateDescentMinimizer(ContextImpl* context)
+    : context_(CHECK_NOTNULL(context)) {}
 
 CoordinateDescentMinimizer::~CoordinateDescentMinimizer() {
 }
@@ -122,6 +125,7 @@ bool CoordinateDescentMinimizer::Init(
   evaluator_options_.linear_solver_type = DENSE_QR;
   evaluator_options_.num_eliminate_blocks = 0;
   evaluator_options_.num_threads = 1;
+  evaluator_options_.context = context_;
 
   return true;
 }
@@ -142,6 +146,7 @@ void CoordinateDescentMinimizer::Minimize(
 
   LinearSolver::Options linear_solver_options;
   linear_solver_options.type = DENSE_QR;
+  linear_solver_options.context = context_;
 
   for (int i = 0; i < options.num_threads; ++i) {
     linear_solvers[i] = LinearSolver::Create(linear_solver_options);
@@ -168,16 +173,17 @@ void CoordinateDescentMinimizer::Minimize(
 #pragma omp parallel for num_threads(num_inner_iteration_threads)
 #endif
 
-#ifndef CERES_USE_TBB
+#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
     for (int j = independent_set_offsets_[i];
          j < independent_set_offsets_[i + 1];
          ++j) {
 #else
-    ParallelFor(independent_set_offsets_[i],
+    ParallelFor(context_,
+                independent_set_offsets_[i],
                 independent_set_offsets_[i + 1],
                 num_inner_iteration_threads,
                 [&](int j) {
-#endif // !CERES_USE_TBB
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
       const ScopedThreadToken scoped_thread_token(&thread_token_provider);
       const int thread_id = scoped_thread_token.token();
@@ -212,7 +218,7 @@ void CoordinateDescentMinimizer::Minimize(
       parameter_block->SetState(parameters + parameter_block->state_offset());
       parameter_block->SetConstant();
     }
-#ifdef CERES_USE_TBB
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
   );
 #endif
   }
@@ -239,7 +245,7 @@ void CoordinateDescentMinimizer::Solve(Program* program,
 
   Minimizer::Options minimizer_options;
   minimizer_options.evaluator.reset(
-      CHECK_NOTNULL(Evaluator::Create(evaluator_options_, program,  &error)));
+      CHECK_NOTNULL(Evaluator::Create(evaluator_options_, program, &error)));
   minimizer_options.jacobian.reset(
       CHECK_NOTNULL(minimizer_options.evaluator->CreateJacobian()));
 
