@@ -28,46 +28,22 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
-// This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/port.h"
-
-#ifdef CERES_USE_TBB
-
-#include "ceres/parallel_for.h"
-
-#include <tbb/parallel_for.h>
-#include <tbb/task_arena.h>
-
-#include "glog/logging.h"
+#ifndef CERES_PUBLIC_CONTEXT_H_
+#define CERES_PUBLIC_CONTEXT_H_
 
 namespace ceres {
-namespace internal {
 
-void ParallelFor(const ContextImpl& context,
-                 int start,
-                 int end,
-                 int num_threads,
-                 const std::function<void(int)>& function) {
-  CHECK_GT(num_threads, 0);
-  if (end <= start) {
-    return;
-  }
+// A global context for processing data in Ceres.  This provides a mechanism to
+// allow Ceres to reuse items that are expensive to create between multiple
+// calls; for example, thread pools.
+class Context {
+ public:
+  virtual ~Context() {}
 
-  // Fast path for when it is single threaded.
-  if (num_threads == 1) {
-    for (int i = start; i < end; ++i) {
-      function(i);
-    }
-    return;
-  }
+  // Creates a context object and the caller takes ownership.
+  static Context* CreateContext();
+};
 
-  tbb::task_arena task_arena(num_threads);
-  task_arena.execute([&]{
-      tbb::parallel_for(start, end, function);
-    });
-}
-
-}  // namespace internal
 }  // namespace ceres
 
-#endif // CERES_USE_TBB
+#endif  // CERES_PUBLIC_CONTEXT_H_
