@@ -56,7 +56,8 @@ namespace internal {
 
 IterativeSchurComplementSolver::IterativeSchurComplementSolver(
     const LinearSolver::Options& options)
-    : options_(options) {}
+    : options_(options) {
+}
 
 IterativeSchurComplementSolver::~IterativeSchurComplementSolver() {}
 
@@ -150,6 +151,8 @@ void IterativeSchurComplementSolver::CreatePreconditioner(
   preconditioner_options.e_block_size = options_.e_block_size;
   preconditioner_options.f_block_size = options_.f_block_size;
   preconditioner_options.elimination_groups = options_.elimination_groups;
+  CHECK(options_.context != NULL);
+  preconditioner_options.context = options_.context;
 
   switch (options_.preconditioner_type) {
     case JACOBI:

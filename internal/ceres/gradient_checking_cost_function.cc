@@ -189,6 +189,7 @@ ProblemImpl* CreateGradientCheckingProblemImpl(
       DO_NOT_TAKE_OWNERSHIP;
   gradient_checking_problem_options.local_parameterization_ownership =
       DO_NOT_TAKE_OWNERSHIP;
+  gradient_checking_problem_options.context = problem_impl->context();
 
   NumericDiffOptions numeric_diff_options;
   numeric_diff_options.relative_step_size = relative_step_size;

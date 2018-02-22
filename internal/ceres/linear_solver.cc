@@ -71,6 +71,8 @@ LinearSolverType LinearSolver::LinearSolverForZeroEBlocks(
 }
 
 LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
+  CHECK(options.context != NULL);
+
   switch (options.type) {
     case CGNR:
       return new CgnrSolver(options);
