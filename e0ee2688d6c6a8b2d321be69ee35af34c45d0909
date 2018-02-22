@@ -141,6 +141,30 @@
       "revId": "e0ee2688d6c6a8b2d321be69ee35af34c45d0909",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d8e1400_af7ae654",
+        "filename": "BUILD",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-02-22T15:35:36Z",
+      "side": 1,
+      "message": "I would recommend the explicit option: the style of upstream rules like java_binary is to take as a default that the main file is called \u003crule_name\u003e.java, but to require it explicitly in `srcs` so you have the option to name it differently.",
+      "parentUuid": "87127416_26cdbf72",
+      "range": {
+        "startLine": 204,
+        "startChar": 9,
+        "endLine": 204,
+        "endChar": 15
+      },
+      "revId": "e0ee2688d6c6a8b2d321be69ee35af34c45d0909",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
