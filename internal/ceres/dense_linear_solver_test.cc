@@ -29,6 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include "ceres/casts.h"
+#include "ceres/context_impl.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
@@ -73,6 +74,8 @@ TEST_P(DenseLinearSolverTest, _) {
   LinearSolver::Options options;
   options.type = ::testing::get<0>(param);
   options.dense_linear_algebra_library_type = ::testing::get<1>(param);
+  ContextImpl context;
+  options.context = &context;
   scoped_ptr<LinearSolver> solver(LinearSolver::Create(options));
 
   LinearSolver::PerSolveOptions per_solve_options;

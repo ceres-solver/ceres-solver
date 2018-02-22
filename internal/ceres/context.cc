@@ -28,46 +28,14 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
-// This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/port.h"
+#include "ceres/context.h"
 
-#ifdef CERES_USE_TBB
-
-#include "ceres/parallel_for.h"
-
-#include <tbb/parallel_for.h>
-#include <tbb/task_arena.h>
-
-#include "glog/logging.h"
+#include "ceres/context_impl.h"
 
 namespace ceres {
-namespace internal {
 
-void ParallelFor(const ContextImpl& context,
-                 int start,
-                 int end,
-                 int num_threads,
-                 const std::function<void(int)>& function) {
-  CHECK_GT(num_threads, 0);
-  if (end <= start) {
-    return;
-  }
-
-  // Fast path for when it is single threaded.
-  if (num_threads == 1) {
-    for (int i = start; i < end; ++i) {
-      function(i);
-    }
-    return;
-  }
-
-  tbb::task_arena task_arena(num_threads);
-  task_arena.execute([&]{
-      tbb::parallel_for(start, end, function);
-    });
+Context* Context::Create() {
+  return new internal::ContextImpl();
 }
 
-}  // namespace internal
 }  // namespace ceres
-
-#endif // CERES_USE_TBB
