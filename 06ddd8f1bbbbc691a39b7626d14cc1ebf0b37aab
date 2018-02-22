@@ -118,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "7e62e9e5_040bec4a",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-22T22:51:40Z",
+      "side": 1,
+      "message": "This can be accomplished with a virtual destructor; Context could exist as in interface rather than a concrete class in the headers.",
+      "parentUuid": "726fd068_e174e7a4",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b8e6891_1375384f",
         "filename": "internal/ceres/context_utils.h",
         "patchSetId": 2
