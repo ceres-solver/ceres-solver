@@ -38,6 +38,7 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/conjugate_gradients_solver.h"
+#include "ceres/context_utils.h"
 #include "ceres/detect_structure.h"
 #include "ceres/implicit_schur_complement.h"
 #include "ceres/internal/eigen.h"
@@ -56,7 +57,9 @@ namespace internal {
 
 IterativeSchurComplementSolver::IterativeSchurComplementSolver(
     const LinearSolver::Options& options)
-    : options_(options) {}
+    : options_(options) {
+  InitContextThreadPool(&options_.context, options_.num_threads - 1);
+}
 
 IterativeSchurComplementSolver::~IterativeSchurComplementSolver() {}
 
@@ -150,6 +153,7 @@ void IterativeSchurComplementSolver::CreatePreconditioner(
   preconditioner_options.e_block_size = options_.e_block_size;
   preconditioner_options.f_block_size = options_.f_block_size;
   preconditioner_options.elimination_groups = options_.elimination_groups;
+  preconditioner_options.context = options_.context;
 
   switch (options_.preconditioner_type) {
     case JACOBI:

@@ -194,6 +194,7 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
   pp->linear_solver_options.dynamic_sparsity = options.dynamic_sparsity;
   pp->linear_solver_options.num_threads = options.num_linear_solver_threads;
   pp->linear_solver_options.use_postordering = options.use_postordering;
+  pp->linear_solver_options.context = pp->problem->options().context;
 
   if (IsSchurType(pp->linear_solver_options.type)) {
     OrderingToGroupSizes(options.linear_solver_ordering.get(),
@@ -249,6 +250,7 @@ bool SetupEvaluator(PreprocessedProblem* pp) {
 
   pp->evaluator_options.num_threads = options.num_threads;
   pp->evaluator_options.dynamic_sparsity = options.dynamic_sparsity;
+  pp->evaluator_options.context = pp->problem->options().context;
   pp->evaluator.reset(Evaluator::Create(pp->evaluator_options,
                                         pp->reduced_program.get(),
                                         &pp->error));
@@ -296,7 +298,8 @@ bool SetupInnerIterationMinimizer(PreprocessedProblem* pp) {
         CoordinateDescentMinimizer::CreateOrdering(*pp->reduced_program));
   }
 
-  pp->inner_iteration_minimizer.reset(new CoordinateDescentMinimizer);
+  pp->inner_iteration_minimizer.reset(
+      new CoordinateDescentMinimizer(pp->problem->options().context));
   return pp->inner_iteration_minimizer->Init(*pp->reduced_program,
                                              pp->problem->parameter_map(),
                                              *options.inner_iteration_ordering,

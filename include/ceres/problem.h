@@ -40,6 +40,7 @@
 #include <vector>
 
 #include "glog/logging.h"
+#include "ceres/context.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
@@ -165,6 +166,11 @@ class CERES_EXPORT Problem {
     // WARNING: Do not set this to true, unless you are absolutely sure of what
     // you are doing.
     bool disable_all_safety_checks;
+
+    // A Ceres context to be used to solve this problem.  If it is
+    // uninitialized, it will be automatically created in the problem
+    // constructor.
+    Context context;
   };
 
   // The default constructor is equivalent to the

@@ -36,6 +36,7 @@
 #include <string>
 #include <vector>
 
+#include "ceres/context.h"
 #include "ceres/execution_summary.h"
 #include "ceres/internal/port.h"
 #include "ceres/types.h"
@@ -68,6 +69,7 @@ class Evaluator {
     int num_eliminate_blocks;
     LinearSolverType linear_solver_type;
     bool dynamic_sparsity;
+    Context context;
   };
 
   static Evaluator* Create(const Options& options,

@@ -85,6 +85,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "ceres/context_utils.h"
 #include "ceres/execution_summary.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
@@ -95,7 +96,7 @@
 #include "ceres/small_blas.h"
 #include "ceres/thread_token_provider.h"
 
-#ifdef CERES_USE_TBB
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
 #include <atomic>
 
 #include "ceres/parallel_for.h"
@@ -128,6 +129,8 @@ class ProgramEvaluator : public Evaluator {
       options_.num_threads = 1;
     }
 #endif // CERES_NO_THREADS
+
+    InitContextThreadPool(&options_.context, options_.num_threads - 1);
 
     BuildResidualLayout(*program, &residual_layout_);
     evaluate_scratch_.reset(CreateEvaluatorScratch(*program,
@@ -193,18 +196,19 @@ class ProgramEvaluator : public Evaluator {
     for (int i = 0; i < num_residual_blocks; ++i) {
 #endif // CERES_NO_THREADS
 
-#ifdef CERES_USE_TBB
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
     std::atomic_bool abort(false);
 
-    ParallelFor(0, num_residual_blocks, options_.num_threads, [&](int i) {
-#endif // CERES_USE_TBB
+    ParallelFor(options_.context, 0, num_residual_blocks, options_.num_threads,
+                [&](int i) {
+#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
 
       if (abort) {
-#ifndef CERES_USE_TBB
-        continue;
-#else
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
         return;
-#endif // !CERES_USE_TBB
+#else
+        continue;
+#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
       }
 
       const ScopedThreadToken scoped_thread_token(&thread_token_provider);
@@ -248,11 +252,11 @@ class ProgramEvaluator : public Evaluator {
 #pragma omp flush(abort)
 #endif // CERES_USE_OPENMP
 
-#ifndef CERES_USE_TBB
-        continue;
-#else
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
         return;
-#endif // !CERES_USE_TBB
+#else
+        continue;
+#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
       }
 
       scratch->cost += block_cost;
@@ -285,9 +289,9 @@ class ProgramEvaluator : public Evaluator {
         }
       }
     }
-#ifdef CERES_USE_TBB
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
     );
-#endif // CERES_USE_TBB
+#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
 
     if (!abort) {
       const int num_parameters = program_->NumEffectiveParameters();
