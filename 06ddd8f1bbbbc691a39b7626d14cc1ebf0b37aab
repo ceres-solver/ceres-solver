@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa45abb9_afe4d072",
+        "filename": "include/ceres/context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-22T21:10:12Z",
+      "side": 1,
+      "message": "Needs more documentation. Purpose and example usage.\n\n\"Data\" -\u003e data.\n\nalso I am wondering if we can do this without exposing ceres::internal namespace here, not a big deal if we do.",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75cd3618_5108d1b8",
+        "filename": "include/ceres/context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-22T21:10:12Z",
+      "side": 1,
+      "message": "it this documentation valid for the public users of this API?\nI worry that people will grab this threadpool and do weird things.",
+      "range": {
+        "startLine": 51,
+        "startChar": 42,
+        "endLine": 51,
+        "endChar": 43
+      },
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97e17c2_fb75a84d",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-22T21:10:12Z",
+      "side": 1,
+      "message": "Needs more documentation about the purpose.\nespecially about the circumstances when the user should do something here.\n\nalso how do you expect the user to actually initialize it? since the Init function is internal to ceres no?\n\nWhat is the usage pattern there? under what circumstances?",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686bf026_5b4a0ff2",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-22T21:10:12Z",
+      "side": 1,
+      "message": "why do we need to do this here at all? if we are going to do this in Minimize anyways?\nit is for the benefit of Init?\n\nin which case why not do it in the Init function, since we are guaranteed that Init will be called before anything else happens.",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 23
+      },
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336f53a0_40945499",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-22T21:10:12Z",
+      "side": 1,
+      "message": "what happens if we forget to do this here? it seems a bit error prone to remember to do this piping down all the time like this.",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 157,
+        "endChar": 23
+      },
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a71600e_1c374f84",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-22T21:10:12Z",
+      "side": 1,
+      "message": "so this usage pattern means that if you stick a thread_pool in it will come out of a call being resized.. is that something we need to worry about?\n\ndoes this also mean that we have to worry about different parts of the system resizing the threadpool willy nilly?",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2681202f_6d56cd5e",
+        "filename": "internal/ceres/linear_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-22T21:10:12Z",
+      "side": 1,
+      "message": "hmm this pattern worries me.\nmodifying the options struct for one.\nthe other is, if we forget to include a context object, we end up creating a new threadpool... how would one go about detecting this sort of programming error?",
+      "range": {
+        "startLine": 74,
+        "startChar": 25,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d121eec8_d33c58d7",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-22T21:10:12Z",
+      "side": 1,
+      "message": "this de-constification is worrisome and seems like a code smell.",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 199,
+        "endChar": 9
+      },
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
