@@ -35,6 +35,7 @@
 #include <set>
 #include <utility>
 #include <vector>
+#include "ceres/context_impl.h"
 #include "ceres/covariance.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/problem_impl.h"

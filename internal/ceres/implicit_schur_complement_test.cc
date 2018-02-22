@@ -35,6 +35,7 @@
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
+#include "ceres/context_impl.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
@@ -85,6 +86,8 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     LinearSolver::Options options;
     options.elimination_groups.push_back(num_eliminate_blocks_);
     options.type = DENSE_SCHUR;
+    ContextImpl context;
+    options.context = &context;
 
     scoped_ptr<SchurEliminatorBase> eliminator(
         SchurEliminatorBase::Create(options));
@@ -124,6 +127,8 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     LinearSolver::Options options;
     options.elimination_groups.push_back(num_eliminate_blocks_);
     options.preconditioner_type = JACOBI;
+    ContextImpl context;
+    options.context = &context;
     ImplicitSchurComplement isc(options);
     isc.Init(*A_, D, b_.get());
 

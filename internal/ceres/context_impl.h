@@ -28,46 +28,41 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
+#ifndef CERES_INTERNAL_CONTEXT_IMPL_H_
+#define CERES_INTERNAL_CONTEXT_IMPL_H_
+
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
-#ifdef CERES_USE_TBB
+#include "ceres/context.h"
+#include "ceres/internal/macros.h"
 
-#include "ceres/parallel_for.h"
-
-#include <tbb/parallel_for.h>
-#include <tbb/task_arena.h>
-
-#include "glog/logging.h"
+#ifdef CERES_USE_CXX11_THREADS
+#include "ceres/thread_pool.h"
+#endif  // CERES_USE_CXX11_THREADS
 
 namespace ceres {
 namespace internal {
 
-void ParallelFor(const ContextImpl& context,
-                 int start,
-                 int end,
-                 int num_threads,
-                 const std::function<void(int)>& function) {
-  CHECK_GT(num_threads, 0);
-  if (end <= start) {
-    return;
-  }
+class ContextImpl : public Context {
+ public:
+  ContextImpl() {}
+  virtual ~ContextImpl() {}
 
-  // Fast path for when it is single threaded.
-  if (num_threads == 1) {
-    for (int i = start; i < end; ++i) {
-      function(i);
-    }
-    return;
-  }
+  // When compiled with C++11 threading support, resize the thread pool to have
+  // at min(num_thread, num_hardware_threads) where num_hardware_threads is
+  // defined by the hardware.  Otherwise this call is a no-op.
+  void EnsureMinimumThreads(int num_threads);
 
-  tbb::task_arena task_arena(num_threads);
-  task_arena.execute([&]{
-      tbb::parallel_for(start, end, function);
-    });
-}
+#ifdef CERES_USE_CXX11_THREADS
+  ThreadPool thread_pool;
+#endif  // CERES_USE_CXX11_THREADS
+
+ private:
+  CERES_DISALLOW_COPY_AND_ASSIGN(ContextImpl);
+};
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif // CERES_USE_TBB
+#endif  // CERES_INTERNAL_CONTEXT_IMPL_H_

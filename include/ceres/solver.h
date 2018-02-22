@@ -34,13 +34,14 @@
 #include <cmath>
 #include <string>
 #include <vector>
+#include "ceres/context.h"
 #include "ceres/crs_matrix.h"
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/types.h"
-#include "ceres/internal/disable_warnings.h"
 
 namespace ceres {
 
@@ -1059,9 +1060,8 @@ class CERES_EXPORT Solver {
 };
 
 // Helper function which avoids going through the interface.
-CERES_EXPORT void Solve(const Solver::Options& options,
-           Problem* problem,
-           Solver::Summary* summary);
+CERES_EXPORT void Solve(const Solver::Options& options, Problem* problem,
+                        Solver::Summary* summary);
 
 }  // namespace ceres
 

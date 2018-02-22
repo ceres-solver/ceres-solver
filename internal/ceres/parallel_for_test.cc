@@ -31,12 +31,13 @@
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
-#ifdef CERES_USE_TBB
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
 
 #include "ceres/parallel_for.h"
 
 #include <vector>
 
+#include "ceres/context_impl.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -48,6 +49,9 @@ using testing::ElementsAreArray;
 // Tests the parallel for loop computes the correct result for various number of
 // threads.
 TEST(ParallelFor, NumThreads) {
+  ContextImpl context;
+  context.EnsureMinimumThreads(/*num_threads=*/2);
+
   const int size = 16;
   std::vector<int> expected_results(size, 0);
   for (int i = 0; i < size; ++i) {
@@ -56,7 +60,7 @@ TEST(ParallelFor, NumThreads) {
 
   for (int num_threads = 1; num_threads <= 8; ++num_threads) {
     std::vector<int> values(size, 0);
-    ParallelFor(0, size, num_threads,
+    ParallelFor(context, 0, size, num_threads,
                 [&values](int i) { values[i] = std::sqrt(i); });
     EXPECT_THAT(values, ElementsAreArray(expected_results));
   }
@@ -64,11 +68,14 @@ TEST(ParallelFor, NumThreads) {
 
 // Tests nested for loops do not result in a deadlock.
 TEST(ParallelFor, NestedParallelForDeadlock) {
+  ContextImpl context;
+  context.EnsureMinimumThreads(/*num_threads=*/2);
+
   // Increment each element in the 2D matrix.
   std::vector<std::vector<int>> x(3, {1, 2, 3});
-  ParallelFor(0, 3, 2, [&x](int i) {
+  ParallelFor(context, 0, 3, 2, [&x, &context](int i) {
     std::vector<int>& y = x.at(i);
-    ParallelFor(0, 3, 2, [&y](int j) { ++y.at(j); });
+    ParallelFor(context, 0, 3, 2, [&y](int j) { ++y.at(j); });
   });
 
   const std::vector<int> results = {2, 3, 4};
@@ -80,4 +87,4 @@ TEST(ParallelFor, NestedParallelForDeadlock) {
 }  // namespace internal
 }  // namespace ceres
 
-#endif // CERES_USE_TBB
+#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)

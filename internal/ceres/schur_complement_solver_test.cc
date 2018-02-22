@@ -35,6 +35,7 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
+#include "ceres/context_impl.h"
 #include "ceres/detect_structure.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
@@ -68,6 +69,8 @@ class SchurComplementSolverTest : public ::testing::Test {
 
     LinearSolver::Options options;
     options.type = DENSE_QR;
+    ContextImpl context;
+    options.context = &context;
 
     scoped_ptr<LinearSolver> qr(LinearSolver::Create(options));
 
@@ -104,6 +107,8 @@ class SchurComplementSolverTest : public ::testing::Test {
     options.sparse_linear_algebra_library_type =
         sparse_linear_algebra_library_type;
     options.use_postordering = use_postordering;
+    ContextImpl context;
+    options.context = &context;
     DetectStructure(*A->block_structure(),
                     num_eliminate_blocks,
                     &options.row_block_size,

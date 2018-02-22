@@ -32,8 +32,11 @@
 #include "ceres/solver.h"
 
 #include <algorithm>
-#include <sstream>   // NOLINT
+#include <sstream>  // NOLINT
 #include <vector>
+#include "ceres/casts.h"
+#include "ceres/context.h"
+#include "ceres/context_impl.h"
 #include "ceres/detect_structure.h"
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/internal/port.h"
@@ -524,6 +527,11 @@ void Solver::Solve(const Solver::Options& options,
   Program* program = problem_impl->mutable_program();
   PreSolveSummarize(options, problem_impl, summary);
 
+  // The main thread also does work so we only need to launch num_threads - 1.
+  CHECK(problem_impl->context() != NULL);
+  problem_impl->context()->EnsureMinimumThreads(
+      std::max(options.num_threads, options.num_linear_solver_threads) - 1);
+
   // Make sure that all the parameter blocks states are set to the
   // values provided by the user.
   program->SetParameterBlockStatePtrsToUserStatePtrs();
@@ -534,6 +542,7 @@ void Solver::Solve(const Solver::Options& options,
   scoped_ptr<internal::ProblemImpl> gradient_checking_problem;
   internal::GradientCheckingIterationCallback gradient_checking_callback;
   Solver::Options modified_options = options;
+
   if (options.check_gradients) {
     modified_options.callbacks.push_back(&gradient_checking_callback);
     gradient_checking_problem.reset(
