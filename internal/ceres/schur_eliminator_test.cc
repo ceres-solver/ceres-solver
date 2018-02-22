@@ -34,6 +34,8 @@
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
+#include "ceres/context.h"
+#include "ceres/context_impl.h"
 #include "ceres/detect_structure.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
@@ -142,6 +144,8 @@ class SchurEliminatorTest : public ::testing::Test {
     Vector rhs(schur_size);
 
     LinearSolver::Options options;
+    scoped_ptr<Context> context(CreateContext());
+    options.context = down_cast<ContextImpl*>(context.get());
     options.elimination_groups.push_back(num_eliminate_blocks);
     if (use_static_structure) {
       DetectStructure(*bs,

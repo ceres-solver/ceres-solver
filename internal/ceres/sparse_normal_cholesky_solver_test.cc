@@ -30,6 +30,8 @@
 
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
+#include "ceres/context.h"
+#include "ceres/context_impl.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
@@ -112,6 +114,8 @@ TEST_F(SparseNormalCholeskySolverTest,
   options.sparse_linear_algebra_library_type = SUITE_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
   options.use_postordering = false;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   TestSolver(options);
 }
 
@@ -121,6 +125,8 @@ TEST_F(SparseNormalCholeskySolverTest,
   options.sparse_linear_algebra_library_type = SUITE_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
   options.use_postordering = true;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   TestSolver(options);
 }
 #endif
@@ -132,6 +138,8 @@ TEST_F(SparseNormalCholeskySolverTest,
   options.sparse_linear_algebra_library_type = CX_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
   options.use_postordering = false;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   TestSolver(options);
 }
 
@@ -141,6 +149,8 @@ TEST_F(SparseNormalCholeskySolverTest,
   options.sparse_linear_algebra_library_type = CX_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
   options.use_postordering = true;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   TestSolver(options);
 }
 #endif
@@ -152,6 +162,8 @@ TEST_F(SparseNormalCholeskySolverTest,
   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
   options.use_postordering = false;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   TestSolver(options);
 }
 
@@ -161,6 +173,8 @@ TEST_F(SparseNormalCholeskySolverTest,
   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
   options.use_postordering = true;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   TestSolver(options);
 }
 #endif  // CERES_USE_EIGEN_SPARSE

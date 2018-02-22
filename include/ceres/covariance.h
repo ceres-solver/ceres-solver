@@ -33,10 +33,11 @@
 
 #include <utility>
 #include <vector>
+#include "ceres/context.h"
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
-#include "ceres/internal/disable_warnings.h"
 
 namespace ceres {
 
@@ -213,6 +214,8 @@ class CERES_EXPORT Covariance {
       null_space_rank = 0;
       num_threads = 1;
       apply_loss_function = true;
+
+      context = NULL;
     }
 
     // Sparse linear algebra library to use when a sparse matrix
@@ -330,6 +333,13 @@ class CERES_EXPORT Covariance {
     //
     // TODO(sameergaarwal): Expand this based on Jim's experiments.
     bool apply_loss_function;
+
+    // A Ceres global context to use for solving this problem. This may help to
+    // reduce computation time as Ceres can reuse expensive objects to create.
+    // The context object can be NULL.
+    //
+    // Ceres does NOT take ownership of the pointer.
+    Context* context;
   };
 
   explicit Covariance(const Options& options);

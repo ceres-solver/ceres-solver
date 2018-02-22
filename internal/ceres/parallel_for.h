@@ -33,14 +33,16 @@
 
 #include <functional>
 
+#include "ceres/context_impl.h"
+
 namespace ceres {
 namespace internal {
 
 // Execute the function for every element in the range [start, end) with at most
 // num_threads. It will execute all the work on the calling thread if
 // num_threads is 1.
-void ParallelFor(int start, int end, int num_threads,
-                 const std::function<void(int)>& function);
+void ParallelFor(const ContextImpl& context, int start, int end,
+                 int num_threads, const std::function<void(int)>& function);
 
 }  // namespace internal
 }  // namespace ceres

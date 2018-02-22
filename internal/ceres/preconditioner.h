@@ -34,6 +34,7 @@
 #include <vector>
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/context_impl.h"
 #include "ceres/linear_operator.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
@@ -111,6 +112,8 @@ class Preconditioner : public LinearOperator {
     int row_block_size;
     int e_block_size;
     int f_block_size;
+
+    ContextImpl* context;
   };
 
   // If the optimization problem is such that there are no remaining

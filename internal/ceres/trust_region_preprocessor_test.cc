@@ -30,6 +30,9 @@
 
 #include <map>
 
+#include "ceres/casts.h"
+#include "ceres/context.h"
+#include "ceres/context_impl.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/problem_impl.h"
 #include "ceres/sized_cost_function.h"
@@ -43,6 +46,8 @@ namespace internal {
 TEST(TrustRegionPreprocessor, ZeroProblem) {
   ProblemImpl problem;
   Solver::Options options;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
@@ -53,6 +58,8 @@ TEST(TrustRegionPreprocessor, ProblemWithInvalidParameterBlock) {
   double x = std::numeric_limits<double>::quiet_NaN();
   problem.AddParameterBlock(&x, 1);
   Solver::Options options;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_FALSE(preprocessor.Preprocess(options, &problem, &pp));
@@ -65,6 +72,8 @@ TEST(TrustRegionPreprocessor, ParameterBlockBoundsAreInvalid) {
   problem.SetParameterUpperBound(&x, 0, 1.0);
   problem.SetParameterLowerBound(&x, 0, 2.0);
   Solver::Options options;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_FALSE(preprocessor.Preprocess(options, &problem, &pp));
@@ -78,6 +87,8 @@ TEST(TrustRegionPreprocessor, ParamterBlockIsInfeasible) {
   problem.SetParameterLowerBound(&x, 0, 2.0);
   problem.SetParameterBlockConstant(&x);
   Solver::Options options;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_FALSE(preprocessor.Preprocess(options, &problem, &pp));
@@ -108,6 +119,8 @@ TEST(TrustRegionPreprocessor, RemoveParameterBlocksSucceeds) {
   double x = 3.0;
   problem.AddParameterBlock(&x, 1);
   Solver::Options options;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
@@ -171,6 +184,8 @@ class LinearSolverAndEvaluatorCreationTest : public ::testing::Test {
       const LinearSolverType linear_solver_type) {
     Solver::Options options;
     options.linear_solver_type = linear_solver_type;
+    scoped_ptr<Context> context(CreateContext());
+    options.context = down_cast<ContextImpl*>(context.get());
     TrustRegionPreprocessor preprocessor;
     PreprocessedProblem pp;
     EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
@@ -227,6 +242,8 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, IterativeSchur) {
 TEST_F(LinearSolverAndEvaluatorCreationTest, MinimizerIsAwareOfBounds) {
   problem_.SetParameterLowerBound(&x_, 0, 0.0);
   Solver::Options options;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
@@ -246,6 +263,8 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, SchurTypeSolverWithBadOrdering) {
   options.linear_solver_ordering->AddElementToGroup(&x_, 0);
   options.linear_solver_ordering->AddElementToGroup(&y_, 0);
   options.linear_solver_ordering->AddElementToGroup(&z_, 1);
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
@@ -259,6 +278,8 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, SchurTypeSolverWithGoodOrdering) {
   options.linear_solver_ordering->AddElementToGroup(&x_, 0);
   options.linear_solver_ordering->AddElementToGroup(&z_, 0);
   options.linear_solver_ordering->AddElementToGroup(&y_, 1);
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
@@ -281,6 +302,8 @@ TEST_F(LinearSolverAndEvaluatorCreationTest,
   options.linear_solver_ordering->AddElementToGroup(&x_, 0);
   options.linear_solver_ordering->AddElementToGroup(&z_, 0);
   options.linear_solver_ordering->AddElementToGroup(&y_, 1);
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
@@ -302,6 +325,8 @@ TEST_F(LinearSolverAndEvaluatorCreationTest,
   options.linear_solver_ordering->AddElementToGroup(&x_, 0);
   options.linear_solver_ordering->AddElementToGroup(&z_, 0);
   options.linear_solver_ordering->AddElementToGroup(&y_, 1);
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
@@ -320,6 +345,8 @@ TEST(TrustRegionPreprocessorTest, InnerIterationsWithOneParameterBlock) {
 
   Solver::Options options;
   options.use_inner_iterations = true;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
@@ -333,6 +360,8 @@ TEST_F(LinearSolverAndEvaluatorCreationTest,
        InnerIterationsWithTwoParameterBlocks) {
   Solver::Options options;
   options.use_inner_iterations = true;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
@@ -350,6 +379,8 @@ TEST_F(LinearSolverAndEvaluatorCreationTest,
   options.inner_iteration_ordering->AddElementToGroup(&x_, 0);
   options.inner_iteration_ordering->AddElementToGroup(&z_, 0);
   options.inner_iteration_ordering->AddElementToGroup(&y_, 0);
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
@@ -363,6 +394,8 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, ValidInnerIterationsOrdering) {
   options.inner_iteration_ordering->AddElementToGroup(&x_, 0);
   options.inner_iteration_ordering->AddElementToGroup(&z_, 0);
   options.inner_iteration_ordering->AddElementToGroup(&y_, 1);
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
