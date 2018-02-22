@@ -39,13 +39,13 @@
 #include <set>
 #include <vector>
 
-#include "glog/logging.h"
+#include "ceres/context.h"
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
-#include "ceres/internal/disable_warnings.h"
-
+#include "glog/logging.h"
 
 namespace ceres {
 
@@ -126,7 +126,8 @@ class CERES_EXPORT Problem {
           loss_function_ownership(TAKE_OWNERSHIP),
           local_parameterization_ownership(TAKE_OWNERSHIP),
           enable_fast_removal(false),
-          disable_all_safety_checks(false) {}
+          disable_all_safety_checks(false),
+          context(NULL) {}
 
     // These flags control whether the Problem object owns the cost
     // functions, loss functions, and parameterizations passed into
@@ -165,6 +166,13 @@ class CERES_EXPORT Problem {
     // WARNING: Do not set this to true, unless you are absolutely sure of what
     // you are doing.
     bool disable_all_safety_checks;
+
+    // A Ceres global context to use for solving this problem. This may help to
+    // reduce computation time as Ceres can reuse expensive objects to create.
+    // The context object can be NULL, in which case Ceres may create one.
+    //
+    // Ceres does NOT take ownership of the pointer.
+    Context* context;
   };
 
   // The default constructor is equivalent to the

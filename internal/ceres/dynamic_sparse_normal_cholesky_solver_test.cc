@@ -30,6 +30,7 @@
 
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/context_impl.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
@@ -97,6 +98,8 @@ class DynamicSparseNormalCholeskySolverTest : public ::testing::Test {
     options.dynamic_sparsity = true;
     options.sparse_linear_algebra_library_type =
         sparse_linear_algebra_library_type;
+    ContextImpl context;
+    options.context = &context;
     TestSolver(options, NULL);
     TestSolver(options, D_.get());
   }

@@ -131,6 +131,7 @@ struct EvaluatorTest
     options.linear_solver_type = GetParam().linear_solver_type;
     options.num_eliminate_blocks = GetParam().num_eliminate_blocks;
     options.dynamic_sparsity = GetParam().dynamic_sparsity;
+    options.context = problem.context();
     string error;
     return Evaluator::Create(options, program, &error);
   }
@@ -604,6 +605,7 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
   Evaluator::Options options;
   options.linear_solver_type = DENSE_QR;
   options.num_eliminate_blocks = 0;
+  options.context = problem.context();
   string error;
   scoped_ptr<Evaluator> evaluator(Evaluator::Create(options, program, &error));
   scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());

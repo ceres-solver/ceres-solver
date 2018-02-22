@@ -49,6 +49,8 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "compressed_row_sparse_matrix.cc",
     "conditioned_cost_function.cc",
     "conjugate_gradients_solver.cc",
+    "context.cc",
+    "context_impl.cc",
     "coordinate_descent_minimizer.cc",
     "corrector.cc",
     "covariance.cc",

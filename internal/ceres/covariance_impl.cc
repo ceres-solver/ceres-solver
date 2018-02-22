@@ -30,7 +30,7 @@
 
 #include "ceres/covariance_impl.h"
 
-#ifdef CERES_USE_TBB
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
 #include "ceres/parallel_for.h"
 #endif
 
@@ -86,6 +86,7 @@ CovarianceImpl::CovarianceImpl(const Covariance::Options& options)
     options_.num_threads = 1;
   }
 #endif
+
   evaluate_options_.num_threads = options_.num_threads;
   evaluate_options_.apply_loss_function = options_.apply_loss_function;
 }
@@ -365,18 +366,27 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
     for (int j = i; j < num_parameters; ++j) {
 #endif // CERES_NO_THREADS
 
-#ifdef CERES_USE_TBB
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
+
   // The parallel for abstraction does not have support for constraining the
   // number of workers in nested parallel for loops. Consequently, we will try
   // to evenly distribute the number of workers between the each parallel for
   // loop.
   // TODO(vitus): consolidate the nested for loops into a single loop which can
   // be properly split between the threads.
+  problem_->context()->EnsureMinimumThreads(num_threads);
   const int num_outer_threads = std::sqrt(num_threads);
   const int num_inner_threads = num_threads / num_outer_threads;
-  ParallelFor(0, num_parameters, num_outer_threads, [&](int i) {
-    ParallelFor(i, num_parameters, num_inner_threads, [&](int j) {
-#endif // CERES_USE_TBB
+  ParallelFor(problem_->context(),
+              0,
+              num_parameters,
+              num_outer_threads,
+              [&](int i) {
+    ParallelFor(problem_->context(), i,
+                num_parameters,
+                num_inner_threads,
+                [&](int j) {
+#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
 
       int covariance_row_idx = cum_parameter_size[i];
       int covariance_col_idx = cum_parameter_size[j];
@@ -404,12 +414,12 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 
       }
     }
-#ifdef CERES_USE_TBB
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
     );
   });
 #else
   }
-#endif // CERES_USE_TBB
+#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
   return success;
 }
 
@@ -730,11 +740,12 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
 #pragma omp parallel for num_threads(num_threads) schedule(dynamic)
 #endif // CERES_USE_OPENMP
 
-#ifndef CERES_USE_TBB
+#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
   for (int r = 0; r < num_cols; ++r) {
 #else
-  ParallelFor(0, num_cols, num_threads, [&](int r) {
-#endif // !CERES_USE_TBB
+  problem_->context()->EnsureMinimumThreads(num_threads);
+  ParallelFor(problem_->context(), 0, num_cols, num_threads, [&](int r) {
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
     const int row_begin = rows[r];
     const int row_end = rows[r + 1];
@@ -756,9 +767,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
       }
     }
   }
-#ifdef CERES_USE_TBB
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
   );
-#endif // CERES_USE_TBB
+#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
 
   free(permutation);
   cholmod_l_free_sparse(&R, &cc);
@@ -930,11 +941,12 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
 #pragma omp parallel for num_threads(num_threads) schedule(dynamic)
 #endif // CERES_USE_OPENMP
 
-#ifndef CERES_USE_TBB
+#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
   for (int r = 0; r < num_cols; ++r) {
 #else
-  ParallelFor(0, num_cols, num_threads, [&](int r) {
-#endif // !CERES_USE_TBB
+  problem_->context()->EnsureMinimumThreads(num_threads);
+  ParallelFor(problem_->context(), 0, num_cols, num_threads, [&](int r) {
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
     const int row_begin = rows[r];
     const int row_end = rows[r + 1];
@@ -960,9 +972,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
     }
   }
 
-#ifdef CERES_USE_TBB
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
   );
-#endif // CERES_USE_TBB
+#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
 
   event_logger.AddEvent("Inverse");
 
