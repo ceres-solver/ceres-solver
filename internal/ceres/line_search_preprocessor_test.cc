@@ -30,10 +30,13 @@
 
 #include <map>
 
+#include "ceres/casts.h"
+#include "ceres/context.h"
+#include "ceres/context_impl.h"
+#include "ceres/line_search_preprocessor.h"
 #include "ceres/problem_impl.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"
-#include "ceres/line_search_preprocessor.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -43,6 +46,8 @@ TEST(LineSearchPreprocessor, ZeroProblem) {
   ProblemImpl problem;
   Solver::Options options;
   options.minimizer_type = LINE_SEARCH;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   LineSearchPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
@@ -54,6 +59,8 @@ TEST(LineSearchPreprocessor, ProblemWithInvalidParameterBlock) {
   problem.AddParameterBlock(&x, 1);
   Solver::Options options;
   options.minimizer_type = LINE_SEARCH;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   LineSearchPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_FALSE(preprocessor.Preprocess(options, &problem, &pp));
@@ -67,6 +74,8 @@ TEST(LineSearchPreprocessor, ParameterBlockHasBounds) {
   problem.SetParameterLowerBound(&x, 0, 2.0);
   Solver::Options options;
   options.minimizer_type = LINE_SEARCH;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   LineSearchPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_FALSE(preprocessor.Preprocess(options, &problem, &pp));
@@ -88,6 +97,8 @@ TEST(LineSearchPreprocessor, RemoveParameterBlocksFailed) {
   problem.SetParameterBlockConstant(&x);
   Solver::Options options;
   options.minimizer_type = LINE_SEARCH;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   LineSearchPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_FALSE(preprocessor.Preprocess(options, &problem, &pp));
@@ -99,6 +110,8 @@ TEST(LineSearchPreprocessor, RemoveParameterBlocksSucceeds) {
   problem.AddParameterBlock(&x, 1);
   Solver::Options options;
   options.minimizer_type = LINE_SEARCH;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
   LineSearchPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
@@ -124,6 +137,8 @@ TEST(LineSearchPreprocessor, NormalOperation) {
 
   Solver::Options options;
   options.minimizer_type = LINE_SEARCH;
+  scoped_ptr<Context> context(CreateContext());
+  options.context = down_cast<ContextImpl*>(context.get());
 
   LineSearchPreprocessor preprocessor;
   PreprocessedProblem pp;

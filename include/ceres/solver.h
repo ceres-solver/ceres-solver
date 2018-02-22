@@ -34,13 +34,14 @@
 #include <cmath>
 #include <string>
 #include <vector>
+#include "ceres/context.h"
 #include "ceres/crs_matrix.h"
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/types.h"
-#include "ceres/internal/disable_warnings.h"
 
 namespace ceres {
 
@@ -136,6 +137,7 @@ class CERES_EXPORT Solver {
       gradient_check_relative_precision = 1e-8;
       gradient_check_numeric_derivative_relative_step_size = 1e-6;
       update_state_every_iteration = false;
+      context = NULL;
     }
 
     // Returns true if the options struct has a valid
@@ -758,6 +760,13 @@ class CERES_EXPORT Solver {
     //
     // The solver does NOT take ownership of these pointers.
     std::vector<IterationCallback*> callbacks;
+
+    // A Ceres global context to use for solving this problem. This may help to
+    // reduce computation time as Ceres can reuse expensive objects to create.
+    // The context object can be NULL.
+    //
+    // Ceres does NOT take ownership of the pointer.
+    Context* context;
   };
 
   struct CERES_EXPORT Summary {
@@ -1059,9 +1068,8 @@ class CERES_EXPORT Solver {
 };
 
 // Helper function which avoids going through the interface.
-CERES_EXPORT void Solve(const Solver::Options& options,
-           Problem* problem,
-           Solver::Summary* summary);
+CERES_EXPORT void Solve(const Solver::Options& options, Problem* problem,
+                        Solver::Summary* summary);
 
 }  // namespace ceres
 

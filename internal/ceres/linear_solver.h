@@ -41,6 +41,7 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/context_impl.h"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/execution_summary.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -116,7 +117,8 @@ class LinearSolver {
           residual_reset_period(10),
           row_block_size(Eigen::Dynamic),
           e_block_size(Eigen::Dynamic),
-          f_block_size(Eigen::Dynamic) {
+          f_block_size(Eigen::Dynamic),
+          context(NULL) {
     }
 
     LinearSolverType type;
@@ -175,6 +177,8 @@ class LinearSolver {
     int row_block_size;
     int e_block_size;
     int f_block_size;
+
+    ContextImpl* context;
   };
 
   // Options for the Solve method.
@@ -311,7 +315,7 @@ class LinearSolver {
   }
 
   // Factory
-  static LinearSolver* Create(const Options& options);
+  static LinearSolver* Create(Options options);
 };
 
 // This templated subclass of LinearSolver serves as a base class for

@@ -32,8 +32,11 @@
 #include "ceres/solver.h"
 
 #include <algorithm>
-#include <sstream>   // NOLINT
+#include <sstream>  // NOLINT
 #include <vector>
+#include "ceres/casts.h"
+#include "ceres/context.h"
+#include "ceres/context_impl.h"
 #include "ceres/detect_structure.h"
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/internal/port.h"
@@ -534,6 +537,17 @@ void Solver::Solve(const Solver::Options& options,
   scoped_ptr<internal::ProblemImpl> gradient_checking_problem;
   internal::GradientCheckingIterationCallback gradient_checking_callback;
   Solver::Options modified_options = options;
+  internal::scoped_ptr<Context> context;
+  if (modified_options.context == NULL) {
+    context.reset(CreateContext());
+    modified_options.context = context.get();
+  }
+  internal::ContextImpl* context_impl =
+      down_cast<internal::ContextImpl*>(modified_options.context);
+  // The main thread also does work so we only need to launch num_threads - 1.
+  context_impl->EnsureMinimumThreads(
+      std::max(modified_options.num_threads,
+               modified_options.num_linear_solver_threads) - 1);
   if (options.check_gradients) {
     modified_options.callbacks.push_back(&gradient_checking_callback);
     gradient_checking_problem.reset(
