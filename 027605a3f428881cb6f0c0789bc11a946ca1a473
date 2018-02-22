@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89fa5b94_62b7d829",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-02-22T15:35:36Z",
+      "side": 1,
+      "message": "This is just a question of style, but I wouldn\u0027t use a macro here. Repeating 6 cc_binary rules is not so bad, and the macro is not usable outside of this scenario.",
+      "revId": "027605a3f428881cb6f0c0789bc11a946ca1a473",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e039df3_dc2ebf9d",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-02-22T15:35:36Z",
+      "side": 1,
+      "message": "Consider putting the rules in examples/BUILD, so you don\u0027t need to prefix the path.",
+      "range": {
+        "startLine": 208,
+        "startChar": 14,
+        "endLine": 208,
+        "endChar": 22
+      },
+      "revId": "027605a3f428881cb6f0c0789bc11a946ca1a473",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef736cad_6ed9773d",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-02-22T15:35:36Z",
+      "side": 1,
+      "message": "[\"-Wno-sign-compare\"]",
+      "range": {
+        "startLine": 210,
+        "startChar": 16,
+        "endLine": 210,
+        "endChar": 40
+      },
+      "revId": "027605a3f428881cb6f0c0789bc11a946ca1a473",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3694acc_a7dff657",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 7
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-02-22T15:35:36Z",
+      "side": 1,
+      "message": "],",
+      "revId": "027605a3f428881cb6f0c0789bc11a946ca1a473",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
