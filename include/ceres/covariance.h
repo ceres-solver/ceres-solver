@@ -33,10 +33,10 @@
 
 #include <utility>
 #include <vector>
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
-#include "ceres/internal/disable_warnings.h"
 
 namespace ceres {
 
