@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "6b308dba_f9c2d098",
+        "filename": "include/ceres/context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-22T22:50:04Z",
+      "side": 1,
+      "message": "Agreed; we want this to be as opaque as possible. But I think that as it stands it\u0027s probably OK since in order to use the ThreadPool they\u0027d need its declaration (right now there\u0027s just a forward declaration).",
+      "parentUuid": "75cd3618_5108d1b8",
+      "range": {
+        "startLine": 51,
+        "startChar": 42,
+        "endLine": 51,
+        "endChar": 43
+      },
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c97e17c2_fb75a84d",
         "filename": "include/ceres/problem.h",
         "patchSetId": 2
@@ -70,6 +94,24 @@
       "writtenOn": "2018-02-22T22:31:37Z",
       "side": 1,
       "message": "I was imagining that this would be either a pointer or a shared pointer. The context is what would be shared across calls, then through that, the thread pool. There would be some API through which users could create their own context and manage its lifetime; either a raw Context constructor or a  factory. That would also allow the Context to stay entirely private (no exposed header; just a forward declaration).",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726fd068_e174e7a4",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-22T22:50:04Z",
+      "side": 1,
+      "message": "Lifetime is the big issue here: for example, as it stands I believe that you can\u0027t declare a Problem without (somehow) including ThreadPool\u0027s full declaration, as Problem\u0027s dtor needs Context\u0027s dtor which (via shared_ptr\u0027s dtor) needs ThreadPool\u0027s dtor.",
+      "parentUuid": "33e4069a_27f51bcf",
       "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -232,6 +274,29 @@
     },
     {
       "key": {
+        "uuid": "7247ca0f_18817b8f",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-22T22:50:04Z",
+      "side": 1,
+      "message": "Why the -1s here and above - because of the (future?) work-stealing in ParallelFor?",
+      "range": {
+        "startLine": 953,
+        "startChar": 69,
+        "endLine": 953,
+        "endChar": 0
+      },
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1e492f1_599cd7d2",
         "filename": "internal/ceres/iterative_schur_complement_solver.cc",
         "patchSetId": 2
@@ -300,6 +365,23 @@
       "writtenOn": "2018-02-22T22:31:37Z",
       "side": 1,
       "message": "Stack arguments.\n\nPass thread pool directly.",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f3e6fc_94b90611",
+        "filename": "internal/ceres/parallel_for_tbb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-22T22:50:04Z",
+      "side": 1,
+      "message": "Say we\u0027re using TBB... does the Context end up holding an unused (but fully populated with threads) ThreadPool?",
       "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
