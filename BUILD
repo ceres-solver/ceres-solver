@@ -125,6 +125,7 @@ CERES_TESTS = [
     "normal_prior",
     "numeric_diff_cost_function",
     "ordered_groups",
+    "parallel_for",
     "parameter_block_ordering",
     "parameter_block",
     "partitioned_matrix_view",
