@@ -41,6 +41,7 @@
 #include "ceres/casts.h"
 #include "ceres/compressed_row_jacobian_writer.h"
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/context_impl.h"
 #include "ceres/cost_function.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/evaluator.h"
@@ -54,6 +55,7 @@
 #include "ceres/scratch_evaluate_preparer.h"
 #include "ceres/stl_util.h"
 #include "ceres/stringprintf.h"
+#include "ceres/thread_pool.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -230,12 +232,14 @@ void ProblemImpl::DeleteBlock(ParameterBlock* parameter_block) {
 }
 
 ProblemImpl::ProblemImpl()
-    : program_(new internal::Program) {
+    : options_(Problem::Options()),
+      program_(new internal::Program) {
   residual_parameters_.reserve(10);
 }
 
 ProblemImpl::ProblemImpl(const Problem::Options& options)
-    : options_(options), program_(new internal::Program) {
+    : options_(options),
+      program_(new internal::Program) {
   residual_parameters_.reserve(10);
 }
 
@@ -797,6 +801,20 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
 #else
   evaluator_options.num_threads = evaluate_options.num_threads;
 #endif  // CERES_NO_THREADS
+
+  // TODO(vitus): should we add a context to the ProblemImpl, and set it in the
+  // Solver so we can reuse it if the user does not provide one?
+  scoped_ptr<Context> context_owned;
+  ContextImpl* context_impl;
+  if (evaluate_options.context == NULL) {
+    context_owned.reset(CreateContext());
+    context_impl = down_cast<ContextImpl*>(context_owned.get());
+  } else {
+    context_impl = down_cast<ContextImpl*>(evaluate_options.context);
+  }
+  // The main thread also does work so we only need to launch num_threads - 1.
+  context_impl->EnsureMinimumThreads(evaluator_options.num_threads - 1);
+  evaluator_options.context = context_impl;
 
   scoped_ptr<Evaluator> evaluator(
       new ProgramEvaluator<ScratchEvaluatePreparer,

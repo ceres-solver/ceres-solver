@@ -35,6 +35,7 @@
 #include <set>
 #include <utility>
 #include <vector>
+#include "ceres/context_impl.h"
 #include "ceres/covariance.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/problem_impl.h"
@@ -93,6 +94,11 @@ class CovarianceImpl {
   std::map<const double*, int> parameter_block_to_row_index_;
   std::set<const double*> constant_parameter_blocks_;
   scoped_ptr<CompressedRowSparseMatrix> covariance_matrix_;
+
+  // context_ will be NULL if the user passes in a valid context, otherwise we
+  // will instantiate one to use for the covariance computation.
+  scoped_ptr<Context> context_;
+  ContextImpl* context_impl_;
 };
 
 }  // namespace internal

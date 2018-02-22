@@ -40,6 +40,7 @@
 #include <vector>
 
 #include "glog/logging.h"
+#include "ceres/context.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
@@ -395,7 +396,8 @@ class CERES_EXPORT Problem {
   struct EvaluateOptions {
     EvaluateOptions()
         : apply_loss_function(true),
-          num_threads(1) {
+          num_threads(1),
+          context(NULL) {
     }
 
     // The set of parameter blocks for which evaluation should be
@@ -433,6 +435,13 @@ class CERES_EXPORT Problem {
     bool apply_loss_function;
 
     int num_threads;
+
+    // A Ceres global context to use for solving this problem. This may help to
+    // reduce computation time as Ceres can reuse expensive objects to create.
+    // The context object can be NULL.
+    //
+    // Ceres does NOT take ownership of the pointer.
+    Context* context;
   };
 
   // Evaluate Problem. Any of the output pointers can be NULL. Which

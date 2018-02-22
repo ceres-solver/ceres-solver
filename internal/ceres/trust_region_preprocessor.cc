@@ -33,6 +33,8 @@
 #include <numeric>
 #include <string>
 #include "ceres/callbacks.h"
+#include "ceres/casts.h"
+#include "ceres/context_impl.h"
 #include "ceres/evaluator.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
@@ -110,7 +112,7 @@ void AlternateLinearSolverAndPreconditionerForSchurTypeLinearSolver(
 // For Schur type and SPARSE_NORMAL_CHOLESKY linear solvers, reorder
 // the program to reduce fill-in and increase cache coherency.
 bool ReorderProgram(PreprocessedProblem* pp) {
-  Solver::Options& options = pp->options;
+  const Solver::Options& options = pp->options;
   if (IsSchurType(options.linear_solver_type)) {
     return ReorderProgramForSchurTypeLinearSolver(
         options.linear_solver_type,
@@ -194,6 +196,7 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
   pp->linear_solver_options.dynamic_sparsity = options.dynamic_sparsity;
   pp->linear_solver_options.num_threads = options.num_linear_solver_threads;
   pp->linear_solver_options.use_postordering = options.use_postordering;
+  pp->linear_solver_options.context = down_cast<ContextImpl*>(options.context);
 
   if (IsSchurType(pp->linear_solver_options.type)) {
     OrderingToGroupSizes(options.linear_solver_ordering.get(),
@@ -249,6 +252,8 @@ bool SetupEvaluator(PreprocessedProblem* pp) {
 
   pp->evaluator_options.num_threads = options.num_threads;
   pp->evaluator_options.dynamic_sparsity = options.dynamic_sparsity;
+  CHECK(options.context != NULL);
+  pp->evaluator_options.context = down_cast<ContextImpl*>(options.context);
   pp->evaluator.reset(Evaluator::Create(pp->evaluator_options,
                                         pp->reduced_program.get(),
                                         &pp->error));
@@ -296,7 +301,8 @@ bool SetupInnerIterationMinimizer(PreprocessedProblem* pp) {
         CoordinateDescentMinimizer::CreateOrdering(*pp->reduced_program));
   }
 
-  pp->inner_iteration_minimizer.reset(new CoordinateDescentMinimizer);
+  pp->inner_iteration_minimizer.reset(
+      new CoordinateDescentMinimizer(down_cast<ContextImpl*>(options.context)));
   return pp->inner_iteration_minimizer->Init(*pp->reduced_program,
                                              pp->problem->parameter_map(),
                                              *options.inner_iteration_ordering,
