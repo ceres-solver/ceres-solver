@@ -39,6 +39,7 @@
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
+#include "ceres/context_utils.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
@@ -113,6 +114,8 @@ class SchurComplementSolver : public BlockSparseMatrixSolver {
       : options_(options) {
     CHECK_GT(options.elimination_groups.size(), 1);
     CHECK_GT(options.elimination_groups[0], 0);
+
+    InitContextThreadPool(&options_.context, options.num_threads - 1);
   }
 
   // LinearSolver methods

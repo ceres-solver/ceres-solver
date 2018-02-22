@@ -40,6 +40,7 @@
 #include <vector>
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
+#include "ceres/context.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/execution_summary.h"
@@ -175,6 +176,8 @@ class LinearSolver {
     int row_block_size;
     int e_block_size;
     int f_block_size;
+
+    Context context;
   };
 
   // Options for the Solve method.
@@ -311,7 +314,7 @@ class LinearSolver {
   }
 
   // Factory
-  static LinearSolver* Create(const Options& options);
+  static LinearSolver* Create(Options options);
 };
 
 // This templated subclass of LinearSolver serves as a base class for

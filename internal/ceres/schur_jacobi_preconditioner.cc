@@ -35,6 +35,7 @@
 #include "ceres/block_random_access_diagonal_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/collections_port.h"
+#include "ceres/context_utils.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
@@ -53,6 +54,8 @@ SchurJacobiPreconditioner::SchurJacobiPreconditioner(
   CHECK_GT(num_blocks, 0)
       << "Jacobian should have atleast 1 f_block for "
       << "SCHUR_JACOBI preconditioner.";
+
+  InitContextThreadPool(&options_.context, options_.num_threads - 1);
 
   std::vector<int> blocks(num_blocks);
   for (int i = 0; i < num_blocks; ++i) {
@@ -75,6 +78,7 @@ void SchurJacobiPreconditioner::InitEliminator(
   eliminator_options.e_block_size = options_.e_block_size;
   eliminator_options.f_block_size = options_.f_block_size;
   eliminator_options.row_block_size = options_.row_block_size;
+  eliminator_options.context = options_.context;
   eliminator_.reset(SchurEliminatorBase::Create(eliminator_options));
   const bool kFullRankETE = true;
   eliminator_->Init(

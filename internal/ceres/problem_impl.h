@@ -181,6 +181,8 @@ class ProblemImpl {
     return residual_block_set_;
   }
 
+  const Problem::Options& options() { return options_; }
+
  private:
   ParameterBlock* InternalAddParameterBlock(double* values, int size);
   void InternalRemoveResidualBlock(ResidualBlock* residual_block);
@@ -194,7 +196,7 @@ class ProblemImpl {
   void DeleteBlock(ResidualBlock* residual_block);
   void DeleteBlock(ParameterBlock* parameter_block);
 
-  const Problem::Options options_;
+  Problem::Options options_;
 
   // The mapping from user pointers to parameter blocks.
   std::map<double*, ParameterBlock*> parameter_block_map_;

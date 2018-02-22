@@ -34,6 +34,7 @@
 #include <string>
 #include <vector>
 
+#include "ceres/context.h"
 #include "ceres/evaluator.h"
 #include "ceres/minimizer.h"
 #include "ceres/problem_impl.h"
@@ -57,6 +58,8 @@ class LinearSolver;
 // program are constant.
 class CoordinateDescentMinimizer : public Minimizer {
  public:
+  explicit CoordinateDescentMinimizer(const Context& context);
+
   bool Init(const Program& program,
             const ProblemImpl::ParameterMap& parameter_map,
             const ParameterBlockOrdering& ordering,
@@ -94,6 +97,8 @@ class CoordinateDescentMinimizer : public Minimizer {
   std::vector<int> independent_set_offsets_;
 
   Evaluator::Options evaluator_options_;
+
+  Context context_;
 };
 
 }  // namespace internal

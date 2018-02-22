@@ -28,65 +28,28 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
+#include "ceres/context_utils.h"
+
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
-
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-
-#include "ceres/parallel_for.h"
-
-#include <vector>
-
-#include "ceres/context.h"
-#include "ceres/context_utils.h"
 #include "ceres/thread_pool.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
 
-using testing::ElementsAreArray;
+void InitContextThreadPool(Context* context, int num_threads) {
+  CHECK(context != NULL);
+  CHECK_GE(num_threads, 0);
 
-// Tests the parallel for loop computes the correct result for various number of
-// threads.
-TEST(ParallelFor, NumThreads) {
-  Context context;
-  InitContextThreadPool(&context, /*num_threads=*/2);
-
-  const int size = 16;
-  std::vector<int> expected_results(size, 0);
-  for (int i = 0; i < size; ++i) {
-    expected_results[i] = std::sqrt(i);
+#ifdef CERES_USE_CXX11_THREADS
+  if (context->thread_pool == NULL) {
+    context->thread_pool.reset(new ThreadPool(num_threads));
+  } else {
+    context->thread_pool->Resize(num_threads);
   }
-
-  for (int num_threads = 1; num_threads <= 8; ++num_threads) {
-    std::vector<int> values(size, 0);
-    ParallelFor(context, 0, size, num_threads,
-                [&values](int i) { values[i] = std::sqrt(i); });
-    EXPECT_THAT(values, ElementsAreArray(expected_results));
-  }
-}
-
-// Tests nested for loops do not result in a deadlock.
-TEST(ParallelFor, NestedParallelForDeadlock) {
-  Context context;
-  InitContextThreadPool(&context, /*num_threads=*/2);
-
-  // Increment each element in the 2D matrix.
-  std::vector<std::vector<int>> x(3, {1, 2, 3});
-  ParallelFor(context, 0, 3, 2, [&x, &context](int i) {
-    std::vector<int>& y = x.at(i);
-    ParallelFor(context, 0, 3, 2, [&y](int j) { ++y.at(j); });
-  });
-
-  const std::vector<int> results = {2, 3, 4};
-  for (const std::vector<int>& value : x) {
-    EXPECT_THAT(value, ElementsAreArray(results));
-  }
+#endif  // CERES_USE_CXX11_THREADS
 }
 
 }  // namespace internal
 }  // namespace ceres
-
-#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)

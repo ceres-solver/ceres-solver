@@ -43,7 +43,7 @@
 namespace ceres {
 namespace internal {
 
-void ParallelFor(int start, int end, int num_threads,
+void ParallelFor(const Context& context, int start, int end, int num_threads,
                  const std::function<void(int)>& function) {
   CHECK_GT(num_threads, 0);
   if (end <= start) {

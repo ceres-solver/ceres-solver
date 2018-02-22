@@ -49,6 +49,7 @@ set(CERES_INTERNAL_SRC
     compressed_row_sparse_matrix.cc
     conditioned_cost_function.cc
     conjugate_gradients_solver.cc
+    context_utils.cc
     coordinate_descent_minimizer.cc
     corrector.cc
     covariance.cc

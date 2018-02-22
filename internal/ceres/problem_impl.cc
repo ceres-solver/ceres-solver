@@ -41,6 +41,7 @@
 #include "ceres/casts.h"
 #include "ceres/compressed_row_jacobian_writer.h"
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/context_utils.h"
 #include "ceres/cost_function.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/evaluator.h"
@@ -54,6 +55,7 @@
 #include "ceres/scratch_evaluate_preparer.h"
 #include "ceres/stl_util.h"
 #include "ceres/stringprintf.h"
+#include "ceres/thread_pool.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -230,13 +232,17 @@ void ProblemImpl::DeleteBlock(ParameterBlock* parameter_block) {
 }
 
 ProblemImpl::ProblemImpl()
-    : program_(new internal::Program) {
+    : options_(Problem::Options()),
+      program_(new internal::Program) {
   residual_parameters_.reserve(10);
+  InitContextThreadPool(&options_.context, /*num_threads=*/0);
 }
 
 ProblemImpl::ProblemImpl(const Problem::Options& options)
-    : options_(options), program_(new internal::Program) {
+    : options_(options),
+      program_(new internal::Program) {
   residual_parameters_.reserve(10);
+  InitContextThreadPool(&options_.context, /*num_threads=*/0);
 }
 
 ProblemImpl::~ProblemImpl() {
@@ -797,6 +803,7 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
 #else
   evaluator_options.num_threads = evaluate_options.num_threads;
 #endif  // CERES_NO_THREADS
+  evaluator_options.context = options_.context;
 
   scoped_ptr<Evaluator> evaluator(
       new ProgramEvaluator<ScratchEvaluatePreparer,
