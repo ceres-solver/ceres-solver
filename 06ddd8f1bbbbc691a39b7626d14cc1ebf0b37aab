@@ -59,6 +59,40 @@
     },
     {
       "key": {
+        "uuid": "33e4069a_27f51bcf",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-22T22:31:37Z",
+      "side": 1,
+      "message": "I was imagining that this would be either a pointer or a shared pointer. The context is what would be shared across calls, then through that, the thread pool. There would be some API through which users could create their own context and manage its lifetime; either a raw Context constructor or a  factory. That would also allow the Context to stay entirely private (no exposed header; just a forward declaration).",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8e6891_1375384f",
+        "filename": "internal/ceres/context_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-22T22:31:37Z",
+      "side": 1,
+      "message": "This could just be a method on the context.",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "686bf026_5b4a0ff2",
         "filename": "internal/ceres/coordinate_descent_minimizer.cc",
         "patchSetId": 2
@@ -70,6 +104,30 @@
       "writtenOn": "2018-02-22T21:10:12Z",
       "side": 1,
       "message": "why do we need to do this here at all? if we are going to do this in Minimize anyways?\nit is for the benefit of Init?\n\nin which case why not do it in the Init function, since we are guaranteed that Init will be called before anything else happens.",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 23
+      },
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87c1716_80cdb9ce",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-22T22:31:37Z",
+      "side": 1,
+      "message": "I agree; by the time these lower functions are invoked the thread pool should already exist. If the number of threads differs, then it could be:\n\ncontext-\u003eEnsureMinimumThreads(5);  // Ensure minimum of 5 threads",
+      "parentUuid": "686bf026_5b4a0ff2",
       "range": {
         "startLine": 70,
         "startChar": 2,
@@ -105,6 +163,40 @@
     },
     {
       "key": {
+        "uuid": "9f8d9f90_638e328d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-22T22:31:37Z",
+      "side": 1,
+      "message": "IMO this should pass the thread pool directly instead of the context. What\u0027s the reason to pass the context?",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f99862_b5c3ffc8",
+        "filename": "internal/ceres/coordinate_descent_minimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-22T22:31:37Z",
+      "side": 1,
+      "message": "I don\u0027t think these context objects should be full objects, and instead should be references.",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a71600e_1c374f84",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
@@ -116,6 +208,41 @@
       "writtenOn": "2018-02-22T21:10:12Z",
       "side": 1,
       "message": "so this usage pattern means that if you stick a thread_pool in it will come out of a call being resized.. is that something we need to worry about?\n\ndoes this also mean that we have to worry about different parts of the system resizing the threadpool willy nilly?",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050a168c_c611b037",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-22T22:31:37Z",
+      "side": 1,
+      "message": "It could potentially enlarge in different parts of the system.",
+      "parentUuid": "0a71600e_1c374f84",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e492f1_599cd7d2",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-22T22:31:37Z",
+      "side": 1,
+      "message": "I suggest changing this to a method on the context, which is something like:\n\noptions.context-\u003eEnsureThreads(3)",
       "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -145,6 +272,40 @@
     },
     {
       "key": {
+        "uuid": "76fa542b_ce1289da",
+        "filename": "internal/ceres/linear_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-22T22:31:37Z",
+      "side": 1,
+      "message": "De-constifying shouldn\u0027t be necessary.\n\nAs long as options has a non-const pointer to a Context, it is fine.",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a0ee30_2ddd3075",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-22T22:31:37Z",
+      "side": 1,
+      "message": "Stack arguments.\n\nPass thread pool directly.",
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d121eec8_d33c58d7",
         "filename": "internal/ceres/problem_impl.h",
         "patchSetId": 2
@@ -156,6 +317,30 @@
       "writtenOn": "2018-02-22T21:10:12Z",
       "side": 1,
       "message": "this de-constification is worrisome and seems like a code smell.",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 199,
+        "endChar": 9
+      },
+      "revId": "06ddd8f1bbbbc691a39b7626d14cc1ebf0b37aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817b1b56_af963b34",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-22T22:31:37Z",
+      "side": 1,
+      "message": "Agreed; use a non-const pointer to an options.",
+      "parentUuid": "d121eec8_d33c58d7",
       "range": {
         "startLine": 199,
         "startChar": 2,
