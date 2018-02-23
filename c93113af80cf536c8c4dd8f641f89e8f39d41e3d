@@ -39,6 +39,30 @@
       "revId": "c93113af80cf536c8c4dd8f641f89e8f39d41e3d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd45d98e_0f5981fa",
+        "filename": "examples/BUILD",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-02-23T09:15:11Z",
+      "side": 1,
+      "message": "Adding `includes \u003d [\"slam\"]` to the cc_binary rules for the SLAM examples should work too (and not be dependent on the path within the repo or whether it\u0027s an external repo). You might need to move the .h files from `srcs` to `hdrs`.",
+      "parentUuid": "b07f07b0_61adb15f",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "c93113af80cf536c8c4dd8f641f89e8f39d41e3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
