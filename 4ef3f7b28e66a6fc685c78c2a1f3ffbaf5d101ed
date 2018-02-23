@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8fc6125_5ba2c8de",
+        "filename": "include/ceres/context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "perhaps:\n\n// calls; for example, thread pools.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052cf02b_eb6be692",
+        "filename": "include/ceres/context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "Suggest instead:\n\nContext::Create() to match other factories inside Ceres.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d2a315_a3eafe4e",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "// The context object can be NULL, in which case Ceres may create one.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7485f19c_8e7d6488",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "So one issue to consider:\n\nWhat if the problem has a context, and the solver::options or the covariance eval also has one? Should we error out in that case?",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4efcdcb4_c460f61c",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "What is the point of including the Context in the solver options if it can go in the Problem? It\u0027s likely cleaner for the user to put it in the problem. I\u0027m having trouble coming up with a use case where you would want it in Solver::Options but not in Problem::Options.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83754fea_fd507e60",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "Make a struct if it\u0027s all public.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48f1697_da6fce4e",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "I don\u0027t think this is required; is it? Also should this have disable copy and assign or similar?",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b80a986_9abd1fdd",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "Once virtual always virtual-- add \"virtual\" keyword.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31419ff5_259b4f4b",
+        "filename": "internal/ceres/coordinate_descent_minimizer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "This should accept the Context through the options, as a non-optional member. E.g. it is a requirement of the minimizer interface that the context is populated.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3f8367_7cf732ff",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "Stack args since they don\u0027t fit.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea7ebd4_9a57627b",
+        "filename": "internal/ceres/covariance_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "I suggest having this named owned_context_ instead; even though it\u0027s implied.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52162510_b05ca3c2",
+        "filename": "internal/ceres/covariance_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "Please comment that this could either be user-supplied, or pointing to the owned context.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05fcd3b6_fa1bead4",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "So while I don\u0027t love creating new classes, I suspect it\u0027ll be cleaner to have a tiny util class for this pattern. There are two states: Owned, or not owned. You could have:\n\nIn class:\n MaybeOwned\u003cContextImpl\u003e context_;\n\nIn constructor:\n context_(options.context);\n\nThen with this class:\n\ntemplate\u003ctypename KnownSubtype\u003e\nstruct MaybeOwned {\n  template\u003ctypename InterfaceType\u003e\n  MaybeOwned(InterfaceType* pointer_or_null) {\n    if (pointer_or_null !\u003d NULL) {\n      pointer \u003d down_cast\u003cKnownSubtype\u003e(pointer_or_null);\n    } else {\n      owned_pointer.reset(new T); // or T::Create()\n      pointer \u003d owned_pointer.get();\n    }\n  }\n  KnownSubtype get() { return pointer; }\n\n  KnownSubtype pointer;\n  scoped_ptr\u003cKnownSubtype\u003e owned_pointer;\n}",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2f7d8a_540143d1",
+        "filename": "internal/ceres/line_search_preprocessor_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "I don\u0027t think the casts are needed.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae595bbf_6c7f019e",
+        "filename": "internal/ceres/line_search_preprocessor_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "Why not use the ContextImpl directly in these tests (all over the place)?",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c74b3b_3b4d37fb",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "Please stack arguments.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9a9102_feead90b",
+        "filename": "internal/ceres/parallel_for_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t ParallelFor take a ContextImpl? Inside ceres it should be ContextImpl all the way down everywhere.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50fee2c1_e5ba3779",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "I\u0027m not convinced evaluate options should have a context. What\u0027s the use case? Even if we do support it, it should explode loudly if both context optional pointers are non-null.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1bfb7b4_ee64d031",
+        "filename": "internal/ceres/schur_complement_solver_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "As mentioned elsewhere, inside Ceres should be all ContextImpl; no need for downcasting.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34526a3e_f413eac4",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "See comments about having a wrapping class.\n\nAlso consider using scoped_ptr\u003cContextImpl\u003e internally; no point in using the interface internally.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b725f2e_1c1f6ced",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "Should be a static_cast\u003c\u003e, but regardless cast should go away since this should be a ContextImpl directly.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba63a67_bb879c9d",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T22:18:44Z",
+      "side": 1,
+      "message": "Cast shouldn\u0027t be needed.",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
