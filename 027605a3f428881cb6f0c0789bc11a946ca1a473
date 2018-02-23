@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df68f408_c6643a62",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T01:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89fa5b94_62b7d829",
+      "revId": "027605a3f428881cb6f0c0789bc11a946ca1a473",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e039df3_dc2ebf9d",
         "filename": "bazel/ceres.bzl",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "027605a3f428881cb6f0c0789bc11a946ca1a473",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15671449_d5fc9dfb",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T01:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e039df3_dc2ebf9d",
+      "range": {
+        "startLine": 208,
+        "startChar": 14,
+        "endLine": 208,
+        "endChar": 22
+      },
+      "revId": "027605a3f428881cb6f0c0789bc11a946ca1a473",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a40435c5_2123c49a",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T01:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef736cad_6ed9773d",
+      "range": {
+        "startLine": 210,
+        "startChar": 16,
+        "endLine": 210,
+        "endChar": 40
+      },
+      "revId": "027605a3f428881cb6f0c0789bc11a946ca1a473",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3694acc_a7dff657",
         "filename": "bazel/ceres.bzl",
         "patchSetId": 7
@@ -79,6 +145,24 @@
       "revId": "027605a3f428881cb6f0c0789bc11a946ca1a473",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759d5d9e_99399602",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 7
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-23T01:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3694acc_a7dff657",
+      "revId": "027605a3f428881cb6f0c0789bc11a946ca1a473",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
