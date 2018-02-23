@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4bea541_8e84fe5d",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-23T22:22:23Z",
+      "side": 1,
+      "message": "would it be better to have a dummy implementation of resize instead of guarding this by an ifdef?",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16556499_aef3d6ea",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-23T22:22:23Z",
+      "side": 1,
+      "message": "I think this should likely come after the port.h no?",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 23
+      },
+      "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d086f457_e2345279",
+        "filename": "internal/ceres/covariance_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-23T22:22:23Z",
+      "side": 1,
+      "message": "use a single variable and bool which is used to destroy.. that way the code does not have to worry about accessing the wrong variable.",
+      "range": {
+        "startLine": 101,
+        "startChar": 29,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "128b0d8c_2f959e86",
+        "filename": "internal/ceres/parallel_for_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-23T22:22:23Z",
+      "side": 1,
+      "message": "Don\u0027t you want a ContextImpl here?",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b296eb_908617f6",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-23T22:22:23Z",
+      "side": 1,
+      "message": "No I do not think so, based on our discussion, if the user wants that they should cache it themselves.",
+      "range": {
+        "startLine": 805,
+        "startChar": 25,
+        "endLine": 805,
+        "endChar": 27
+      },
+      "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d914340_829629ce",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-23T22:22:23Z",
+      "side": 1,
+      "message": "any way of abstracting this pattern into an object perhaps?",
+      "range": {
+        "startLine": 540,
+        "startChar": 40,
+        "endLine": 540,
+        "endChar": 0
+      },
+      "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
