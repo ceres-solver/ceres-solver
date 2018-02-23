@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "d5099f9e_b99d64b3",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-23T06:11:13Z",
+      "side": 1,
+      "message": "1. I\u0027d prefer you included all the sources in srcs. I should not have to read the ceres_example definition to figure out what cc files are being used to compile the example. DRY or otherwise. \n\n2. If you insist on going down this current path, then srcs needs a better name.",
+      "range": {
+        "startLine": 204,
+        "startChar": 24,
+        "endLine": 204,
+        "endChar": 28
+      },
+      "revId": "027605a3f428881cb6f0c0789bc11a946ca1a473",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e039df3_dc2ebf9d",
         "filename": "bazel/ceres.bzl",
         "patchSetId": 7
