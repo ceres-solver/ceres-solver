@@ -105,7 +105,8 @@ class DynamicAutoDiffCostFunction : public DynamicCostFunction {
     // To work around this issue, the solution here is to evaluate the
     // jacobians in a series of passes, each one computing Stripe *
     // num_residuals() derivatives. This is done with small, fixed-size jets.
-    const int num_parameter_blocks = parameter_block_sizes().size();
+    const int num_parameter_blocks =
+        static_cast<int>(parameter_block_sizes().size());
     const int num_parameters = std::accumulate(parameter_block_sizes().begin(),
                                                parameter_block_sizes().end(),
                                                0);
