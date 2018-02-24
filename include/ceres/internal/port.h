@@ -35,6 +35,11 @@
 #ifdef __cplusplus
 #include <cstddef>
 #include "ceres/internal/config.h"
+
+#if !(defined(CERES_USE_OPENMP) ^ defined(CERES_USE_TBB) ^ defined(CERES_USE_CXX11_THREADS) ^ defined(CERES_NO_THREADS))
+#error CERES_USE_OPENMP, CERES_USE_TBB, CERES_USE_CXX11_THREADS, and CERES_NO_THREADS are mutually exclusive, but multiple are defined.
+#endif
+
 #if defined(CERES_TR1_MEMORY_HEADER)
 #include <tr1/memory>
 #else

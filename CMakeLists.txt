@@ -108,6 +108,8 @@ option(CUSTOM_BLAS
 option(OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON)
 # Multithreading using TBB
 option(TBB "Enable threaded solving in Ceres with TBB (requires TBB and C++11)" OFF)
+# Multithreading using C++11 primitives.
+option(CXX11_THREADS "Enable threaded solving in Ceres with C++11 primitives" OFF)
 # Enable the use of Eigen as a sparse linear algebra library for
 # solving the nonlinear least squares problems.
 option(EIGENSPARSE "Enable Eigen as a sparse linear algebra library." ON)
@@ -444,10 +446,35 @@ if (TBB)
   endif (TBB_FOUND)
 endif (TBB)
 
-if (NOT OPENMP AND NOT TBB)
-  message("-- Neither OpenMP or TBB is enabled, disabling multithreading.")
+if (CXX11_THREADS)
+  # OpenMP and C++11 threads are mutually exclusive options. Fail with an error
+  # if they user requested both.
+  if (OPENMP)
+    message(FATAL_ERROR "OpenMP and C++11 threading support are both enabled "
+      "but they are mutally exclusive.  OpenMP is enabled by default. Please "
+      "disable one of them.")
+  endif (OPENMP)
+
+  # C++11 threads and TBB are mutually exclusive options. Fail with an error if
+  # the user requested both.
+  if (TBB)
+    message(FATAL_ERROR "Intel TBB and C++11 threading support are both "
+      "enabled but they are mutally exclusive. Please disable one of them.")
+  endif (TBB)
+
+  if (NOT CXX11)
+    message(FATAL_ERROR "C++11 threading support requires C++11.  Please "
+      "enable C++11 to enable.")
+  endif (NOT CXX11)
+
+  list(APPEND CERES_COMPILE_OPTIONS CERES_USE_CXX11_THREADS)
+endif (CXX11_THREADS)
+
+if (NOT OPENMP AND NOT TBB AND NOT CXX11_THREADS)
+  message("-- Neither OpenMP, TBB or C++11 threads is enabled, "
+    "disabling multithreading.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
-else (NOT OPENMP AND NOT TBB)
+else (NOT OPENMP AND NOT TBB AND NOT CXX11_THREADS)
   if (UNIX)
     # At least on Linux, we need pthreads to be enabled for mutex to
     # compile.  This may not work on Windows or Android.
@@ -455,7 +482,7 @@ else (NOT OPENMP AND NOT TBB)
     list(APPEND CERES_COMPILE_OPTIONS CERES_HAVE_PTHREAD)
     list(APPEND CERES_COMPILE_OPTIONS CERES_HAVE_RWLOCK)
   endif (UNIX)
-endif (NOT OPENMP AND NOT TBB)
+endif (NOT OPENMP AND NOT TBB AND NOT CXX11_THREADS)
 
 # Initialise CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles with the
 # contents of CMAKE_CXX_FLAGS such that if the user has passed extra flags
@@ -513,6 +540,10 @@ if (CXX11)
     message("-- Failed to find C++11 components in C++11 locations & "
       "namespaces, disabling CXX11.")
     update_cache_variable(CXX11 OFF)
+    if (CXX11_THREADS)
+      message(FATAL_ERROR "C++11 threading requires C++11 components, which we "
+        "failed to find.  Please disable C++11 threading to continue.")
+    endif (CXX11_THREADS)
   else()
     message("   ==============================================================")
     message("   Compiling Ceres using C++11.  This will result in a version ")
