@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c6ae67b_c1f62b32",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Currently the ThreadPool and ConcurrentQueue is only defined for CERES_USE_CXX11_THREADS.  We could do as you say but then we would have more complicated ifdef\u0027s in those files.  That seems like more clutter.",
+      "parentUuid": "f4bea541_8e84fe5d",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16556499_aef3d6ea",
         "filename": "internal/ceres/context_impl.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c089a8b_89beb4c9",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16556499_aef3d6ea",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 23
+      },
+      "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6ea8d4c4_4cd71f00",
+        "filename": "internal/ceres/covariance_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "this is removed here but I did this in the problem.",
+      "parentUuid": "d086f457_e2345279",
+      "range": {
+        "startLine": 101,
+        "startChar": 29,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "128b0d8c_2f959e86",
         "filename": "internal/ceres/parallel_for_test.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43412e65_db985a88",
+        "filename": "internal/ceres/parallel_for_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "yes, i didnt compile this part yet. sorry.",
+      "parentUuid": "128b0d8c_2f959e86",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "48bcdfb7_83bf3194",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "based Keir\u0027s feedback we added it to the problem.",
+      "parentUuid": "f5b296eb_908617f6",
+      "range": {
+        "startLine": 805,
+        "startChar": 25,
+        "endLine": 805,
+        "endChar": 27
+      },
+      "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d914340_829629ce",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceeb4f78_b9e22304",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "now it only happens once, in the problem_impl.",
+      "parentUuid": "1d914340_829629ce",
+      "range": {
+        "startLine": 540,
+        "startChar": 40,
+        "endLine": 540,
+        "endChar": 0
+      },
+      "revId": "3d1e5a6d5649295ad154dbc4b6a8b6638d31a02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
