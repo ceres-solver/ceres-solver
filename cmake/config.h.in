@@ -69,6 +69,8 @@
 @CERES_USE_OPENMP@
 // If defined Ceres was compiled with TBB multithreading support.
 @CERES_USE_TBB@
+// If defined Ceres was compiled with C++11 thread support.
+@CERES_USE_CXX11_THREADS@
 // Additionally defined on *nix if Ceres was compiled with OpenMP or TBB
 // support, as in this case pthreads is also required.
 @CERES_HAVE_PTHREAD@

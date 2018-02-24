@@ -89,6 +89,7 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "low_rank_inverse_hessian.cc",
     "minimizer.cc",
     "normal_prior.cc",
+    "parallel_for_cxx.cc",
     "parallel_for_tbb.cc",
     "parameter_block_ordering.cc",
     "partitioned_matrix_view.cc",

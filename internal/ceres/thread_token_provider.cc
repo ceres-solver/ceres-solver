@@ -45,6 +45,13 @@ ThreadTokenProvider::ThreadTokenProvider(int num_threads) {
     pool_.push(i);
   }
 #endif
+
+#ifdef CERES_USE_CXX11_THREADS
+  for (int i = 0; i < num_threads; i++) {
+    pool_.Push(i);
+  }
+#endif
+
 }
 
 int ThreadTokenProvider::Acquire() {
@@ -61,6 +68,13 @@ int ThreadTokenProvider::Acquire() {
   pool_.pop(thread_id);
   return thread_id;
 #endif
+
+#ifdef CERES_USE_CXX11_THREADS
+  int thread_id;
+  CHECK(pool_.Wait(&thread_id));
+  return thread_id;
+#endif
+
 }
 
 void ThreadTokenProvider::Release(int thread_id) {
@@ -68,6 +82,11 @@ void ThreadTokenProvider::Release(int thread_id) {
 #ifdef CERES_USE_TBB
   pool_.push(thread_id);
 #endif
+
+#ifdef CERES_USE_CXX11_THREADS
+  pool_.Push(thread_id);
+#endif
+
 }
 
 }  // namespace internal
