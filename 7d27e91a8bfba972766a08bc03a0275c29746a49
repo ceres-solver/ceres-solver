@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15924199_dfd96924",
+        "filename": "internal/ceres/parallel_for_tbb.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-24T19:01:15Z",
+      "side": 1,
+      "message": "I think its a good idea to check for this not to be NULL.\nthat way we will catch programming errors in all configurations of the solver.",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 28
+      },
+      "revId": "7d27e91a8bfba972766a08bc03a0275c29746a49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89fad25_6d9f3ab0",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-24T19:01:15Z",
+      "side": 1,
+      "message": "in the places where we actually use the threadpool, we barely do anything in the main thread, so is this a good idea?",
+      "revId": "7d27e91a8bfba972766a08bc03a0275c29746a49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
