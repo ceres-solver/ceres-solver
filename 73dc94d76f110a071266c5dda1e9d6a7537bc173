@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e95055c0_72ff7dbf",
+        "filename": "include/ceres/context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T01:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bdda115_aef02872",
+      "revId": "73dc94d76f110a071266c5dda1e9d6a7537bc173",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5a69c09_2285ad4c",
         "filename": "include/ceres/problem.h",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "73dc94d76f110a071266c5dda1e9d6a7537bc173",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f6a1e7_a954096e",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T01:31:58Z",
+      "side": 1,
+      "message": "Added it to the main context object. This was a good idea, thanks.",
+      "parentUuid": "b5a69c09_2285ad4c",
+      "range": {
+        "startLine": 171,
+        "startChar": 37,
+        "endLine": 171,
+        "endChar": 73
+      },
+      "revId": "73dc94d76f110a071266c5dda1e9d6a7537bc173",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "dad8cb52_e5e53ef5",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T01:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe6cf6fa_ca161928",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 9
+      },
+      "revId": "73dc94d76f110a071266c5dda1e9d6a7537bc173",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78a0a651_7c16f7c1",
         "filename": "internal/ceres/evaluator.h",
         "patchSetId": 8
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "ceaea901_2997dd96",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T01:31:58Z",
+      "side": 1,
+      "message": "yes, thanks for catching.",
+      "parentUuid": "78a0a651_7c16f7c1",
+      "range": {
+        "startLine": 66,
+        "startChar": 34,
+        "endLine": 66,
+        "endChar": 35
+      },
+      "revId": "73dc94d76f110a071266c5dda1e9d6a7537bc173",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb787558_bd9cbbeb",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 8
@@ -102,6 +192,24 @@
       "revId": "73dc94d76f110a071266c5dda1e9d6a7537bc173",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc8699d_ebb0b47a",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T01:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb787558_bd9cbbeb",
+      "revId": "73dc94d76f110a071266c5dda1e9d6a7537bc173",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
