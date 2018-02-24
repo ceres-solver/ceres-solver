@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15553e3f_b3990555",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-24T18:45:10Z",
+      "side": 1,
+      "message": "derivate -\u003e derivative",
+      "range": {
+        "startLine": 595,
+        "startChar": 57,
+        "endLine": 595,
+        "endChar": 65
+      },
+      "revId": "83af97d99a7a51343963d6ce5e697a9df83bc5ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcad0b23_6a752b7c",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-24T18:45:10Z",
+      "side": 1,
+      "message": "c++ style comments",
+      "range": {
+        "startLine": 598,
+        "startChar": 4,
+        "endLine": 599,
+        "endChar": 0
+      },
+      "revId": "83af97d99a7a51343963d6ce5e697a9df83bc5ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9afbe5c8_d0ec962c",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-24T18:45:10Z",
+      "side": 1,
+      "message": "the sqrt symbol is not standard ascii no?\n\nI think you can simplify this a bit.\n\nD_1 sqrt(x^2 + y^2) \u003d 1/2 1/sqrt(x^2 + y^2) . 2x\n                    \u003d x/sqrt(x^2 + y^2)\n\nD_2 sqrt(x^2 + y^2) \u003d y/sqrt(x^2 + y^2)",
+      "range": {
+        "startLine": 614,
+        "startChar": 33,
+        "endLine": 614,
+        "endChar": 34
+      },
+      "revId": "83af97d99a7a51343963d6ce5e697a9df83bc5ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
