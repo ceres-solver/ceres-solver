@@ -34,6 +34,24 @@
       "revId": "5e8b82db2760867b03e922585463b32c8a3bce68",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac13a59_f6c71d0b",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 6103
+      },
+      "writtenOn": "2018-02-24T12:26:29Z",
+      "side": 1,
+      "message": "Except this CHECK forbids the user from setting local size to zero, and I don\u0027t know why. I can\u0027t find any good reason for forbidding it.",
+      "parentUuid": "277510a1_2bf4f654",
+      "revId": "5e8b82db2760867b03e922585463b32c8a3bce68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
