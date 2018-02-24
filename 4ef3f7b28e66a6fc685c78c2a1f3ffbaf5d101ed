@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11d449c3_8e99c2b3",
+        "filename": "include/ceres/context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8fc6125_5ba2c8de",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "052cf02b_eb6be692",
         "filename": "include/ceres/context.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32051e30_a7879a6b",
+        "filename": "include/ceres/context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "052cf02b_eb6be692",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "97c12c51_b0bd28d1",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8d2a315_a3eafe4e",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7485f19c_8e7d6488",
         "filename": "include/ceres/solver.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d0d69b_d056ee78",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "it is only in the problem now so we don\u0027t need to worry about this now.",
+      "parentUuid": "7485f19c_8e7d6488",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5637bf09_f45412bf",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "I misunderstood about the entry points.  only in the problem now.",
+      "parentUuid": "4efcdcb4_c460f61c",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83754fea_fd507e60",
         "filename": "internal/ceres/context_impl.h",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366b5c95_832c75f4",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83754fea_fd507e60",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "25979111_a189a53a",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c48f1697_da6fce4e",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b80a986_9abd1fdd",
         "filename": "internal/ceres/context_impl.h",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7ad1c4_02ae5824",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b80a986_9abd1fdd",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a1a747fb_bf9f606e",
+        "filename": "internal/ceres/coordinate_descent_minimizer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "This comment was a little misplaced.  We need to set the context in the evaluator_options which is used in Solve.  So we have two functions that use the context.",
+      "parentUuid": "31419ff5_259b4f4b",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b3f8367_7cf732ff",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 4
@@ -169,6 +331,24 @@
       "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19eedd4_1fe257d0",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b3f8367_7cf732ff",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "b45452dc_f02fcf49",
+        "filename": "internal/ceres/covariance_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "these are now removed.",
+      "parentUuid": "3ea7ebd4_9a57627b",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52162510_b05ca3c2",
         "filename": "internal/ceres/covariance_impl.h",
         "patchSetId": 4
@@ -203,6 +401,24 @@
       "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c36a161_20f1d09c",
+        "filename": "internal/ceres/covariance_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "these are now removed.",
+      "parentUuid": "52162510_b05ca3c2",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "835358d1_1da67182",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "thanks for the option. We don\u0027t need this pattern anymore.  Only one place and it is guarded by a bool like everything else.",
+      "parentUuid": "05fcd3b6_fa1bead4",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb2f7d8a_540143d1",
         "filename": "internal/ceres/line_search_preprocessor_test.cc",
         "patchSetId": 4
@@ -237,6 +471,24 @@
       "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617b7ed8_1aae6c06",
+        "filename": "internal/ceres/line_search_preprocessor_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb2f7d8a_540143d1",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "1909ac52_fe555f2d",
+        "filename": "internal/ceres/line_search_preprocessor_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae595bbf_6c7f019e",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6c74b3b_3b4d37fb",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 4
@@ -271,6 +541,24 @@
       "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df2154c1_cda485f1",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6c74b3b_3b4d37fb",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "b17013e0_dfe53478",
+        "filename": "internal/ceres/parallel_for_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "yes, I didn\u0027t fix this one yet. need to compile with tbb on.",
+      "parentUuid": "8e9a9102_feead90b",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50fee2c1_e5ba3779",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 4
@@ -305,6 +611,24 @@
       "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0debb28_e6bd737d",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Removed (see earlier comments, I had a misunderstanding).",
+      "parentUuid": "50fee2c1_e5ba3779",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "345f6cde_06bf82c7",
+        "filename": "internal/ceres/schur_complement_solver_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1bfb7b4_ee64d031",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34526a3e_f413eac4",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 4
@@ -339,6 +681,24 @@
       "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31438656_8d3dfbf6",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "removed. not needed.",
+      "parentUuid": "34526a3e_f413eac4",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +719,24 @@
     },
     {
       "key": {
+        "uuid": "f4dce45d_089f6adc",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b725f2e_1c1f6ced",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ba63a67_bb879c9d",
         "filename": "internal/ceres/trust_region_preprocessor.cc",
         "patchSetId": 4
@@ -373,6 +751,24 @@
       "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa15dc97_5c046615",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-24T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ba63a67_bb879c9d",
+      "revId": "4ef3f7b28e66a6fc685c78c2a1f3ffbaf5d101ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
