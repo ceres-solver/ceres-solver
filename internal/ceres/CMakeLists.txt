@@ -380,7 +380,6 @@ if (BUILD_BENCHMARKS)
   add_executable(autodiff_cost_function_benchmark autodiff_cost_function_benchmark.cc)
   target_link_libraries(autodiff_cost_function_benchmark ceres benchmark::benchmark)
 
-  add_executable(small_blas_benchmark small_blas_benchmark.cc)
-  target_link_libraries(small_blas_benchmark ceres benchmark::benchmark)
-
+  add_executable(small_blas_gemv_benchmark small_blas_gemv_benchmark.cc)
+  target_link_libraries(small_blas_gemv_benchmark ceres benchmark::benchmark)
 endif (BUILD_BENCHMARKS)
