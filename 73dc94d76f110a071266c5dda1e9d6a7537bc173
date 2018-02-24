@@ -16,6 +16,92 @@
       "revId": "73dc94d76f110a071266c5dda1e9d6a7537bc173",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a69c09_2285ad4c",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-24T01:19:57Z",
+      "side": 1,
+      "message": "I\u0027d omit the \"in which case...\"\n\nAlso note, here or on Context, that the same Context can be used on multiple Problems, either serially or in parallel - but be careful using it on \u003e1 Problem at the same time, as those Problems may end up contending for resources (e.g., threads) managed by the Context.",
+      "range": {
+        "startLine": 171,
+        "startChar": 37,
+        "endLine": 171,
+        "endChar": 73
+      },
+      "revId": "73dc94d76f110a071266c5dda1e9d6a7537bc173",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6cf6fa_ca161928",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-24T01:19:57Z",
+      "side": 1,
+      "message": "Probably the Context class should have this - otherwise it\u0027s possible (OK, you\u0027d have to try hard) to slice a Context by doing an assignment or copy.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 9
+      },
+      "revId": "73dc94d76f110a071266c5dda1e9d6a7537bc173",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a0a651_7c16f7c1",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-24T01:19:57Z",
+      "side": 1,
+      "message": "Initialise context to NULL so you can detect whether it was set properly (IIRC if you do nothing here, it\u0027s not initialised at all, so likely isn\u0027t NULL). Looks like you did this on all the other Foo::Options structs.",
+      "range": {
+        "startLine": 66,
+        "startChar": 34,
+        "endLine": 66,
+        "endChar": 35
+      },
+      "revId": "73dc94d76f110a071266c5dda1e9d6a7537bc173",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb787558_bd9cbbeb",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-24T01:19:57Z",
+      "side": 1,
+      "message": "Align",
+      "revId": "73dc94d76f110a071266c5dda1e9d6a7537bc173",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
