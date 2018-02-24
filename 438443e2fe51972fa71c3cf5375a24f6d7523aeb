@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb81e25b_041357fa",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 6103
+      },
+      "writtenOn": "2018-02-24T12:20:09Z",
+      "side": 1,
+      "message": "pow(f.a, 2/3) gives NaN when f.a \u003c 0. cbrt(f.a * f.a) gives the right answer.\n\nNear-zero you get the same effect as for sqrt: exploding derivate (approaching inf as you get closer to 0).",
+      "parentUuid": "fc15147a_4af7fb57",
+      "range": {
+        "startLine": 574,
+        "startChar": 42,
+        "endLine": 574,
+        "endChar": 46
+      },
+      "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f445064_310d94e2",
         "filename": "include/ceres/jet.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e30f23b_123e5f67",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 6103
+      },
+      "writtenOn": "2018-02-24T12:20:09Z",
+      "side": 1,
+      "message": "As x approaches zero, the derivate approaches positive infinity.",
+      "parentUuid": "8f445064_310d94e2",
+      "range": {
+        "startLine": 589,
+        "startChar": 39,
+        "endLine": 589,
+        "endChar": 42
+      },
+      "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d842aff4_ce40abfd",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 6103
+      },
+      "writtenOn": "2018-02-24T12:20:09Z",
+      "side": 1,
+      "message": "This was a bad if-statement – the derivate is undefined at hypot(x\u003d0, y\u003d0) as the function is none-smooth there (it is the inside of the tip of a cone). I have fixed this.",
+      "parentUuid": "49c4f9c7_cf0a3cc6",
+      "range": {
+        "startLine": 602,
+        "startChar": 9,
+        "endLine": 602,
+        "endChar": 12
+      },
+      "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ad93c38_b14f50f3",
         "filename": "include/ceres/jet.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03914365_c746c8a8",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 6103
+      },
+      "writtenOn": "2018-02-24T12:20:09Z",
+      "side": 1,
+      "message": "Rewritten.",
+      "parentUuid": "0ad93c38_b14f50f3",
+      "range": {
+        "startLine": 604,
+        "startChar": 5,
+        "endLine": 604,
+        "endChar": 0
+      },
+      "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c3c242da_7ed1a140",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 6103
+      },
+      "writtenOn": "2018-02-24T12:20:09Z",
+      "side": 1,
+      "message": "I\u0027ve added a full derivation of the derivate!",
+      "parentUuid": "2816f1ff_4182b054",
+      "range": {
+        "startLine": 606,
+        "startChar": 12,
+        "endLine": 606,
+        "endChar": 20
+      },
+      "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3792846_a8052b93",
         "filename": "include/ceres/jet.h",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1226b184_d7db14ac",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 6103
+      },
+      "writtenOn": "2018-02-24T12:20:09Z",
+      "side": 1,
+      "message": "Good catch!",
+      "parentUuid": "b3792846_a8052b93",
+      "range": {
+        "startLine": 609,
+        "startChar": 15,
+        "endLine": 609,
+        "endChar": 16
+      },
+      "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
