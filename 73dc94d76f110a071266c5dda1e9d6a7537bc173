@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bdda115_aef02872",
+        "filename": "include/ceres/context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-24T01:08:56Z",
+      "side": 1,
+      "message": "No need for \"Context\"; can just be \"Create()\" since you need to add the class anyway:\n\nContext::Create()",
+      "revId": "73dc94d76f110a071266c5dda1e9d6a7537bc173",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
