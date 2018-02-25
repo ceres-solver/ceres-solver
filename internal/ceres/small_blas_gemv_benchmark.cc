@@ -136,47 +136,47 @@ void BM_MatrixVectorMultiply(benchmark::State& state) {
 
 BENCHMARK(BM_MatrixVectorMultiply)->Apply(MatrixSizeArguments);
 
-// Run on (8 X 2200 MHz CPU s)
-// 2018-02-24 15:51:34
-// ------------------------------------------------------------------------------------
-// Benchmark                                             Time           CPU Iterations
-// ------------------------------------------------------------------------------------
-// BM_MatrixTransposeVectorMultiply/1/1           9 ns          9 ns   86150665
-// BM_MatrixTransposeVectorMultiply/1/2           9 ns          9 ns   82534517
-// BM_MatrixTransposeVectorMultiply/1/3          10 ns         10 ns   73243209
-// BM_MatrixTransposeVectorMultiply/1/4          12 ns         12 ns   56850022
-// BM_MatrixTransposeVectorMultiply/1/6          16 ns         16 ns   42462072
-// BM_MatrixTransposeVectorMultiply/1/7          17 ns         17 ns   42546208
-// BM_MatrixTransposeVectorMultiply/1/12         23 ns         23 ns   31237031
-// BM_MatrixTransposeVectorMultiply/1/16         34 ns         34 ns   20534363
-// BM_MatrixTransposeVectorMultiply/1/20         37 ns         37 ns   18656368
-// BM_MatrixTransposeVectorMultiply/2/1           9 ns          9 ns   81061676
-// BM_MatrixTransposeVectorMultiply/2/2          11 ns         11 ns   62989859
-// BM_MatrixTransposeVectorMultiply/2/3          15 ns         15 ns   51009255
-// BM_MatrixTransposeVectorMultiply/2/4          17 ns         17 ns   38093165
-// BM_MatrixTransposeVectorMultiply/2/6          22 ns         22 ns   33472003
-// BM_MatrixTransposeVectorMultiply/2/7          24 ns         24 ns   29251863
-// BM_MatrixTransposeVectorMultiply/2/12         36 ns         36 ns   19115185
-// BM_MatrixTransposeVectorMultiply/2/16         47 ns         46 ns   15031588
-// BM_MatrixTransposeVectorMultiply/2/20         56 ns         56 ns   12340891
-// BM_MatrixTransposeVectorMultiply/3/1           9 ns          9 ns   79240200
-// BM_MatrixTransposeVectorMultiply/3/2          13 ns         13 ns   53128510
-// BM_MatrixTransposeVectorMultiply/3/3          16 ns         16 ns   42053913
-// BM_MatrixTransposeVectorMultiply/3/4          18 ns         18 ns   34659814
-// BM_MatrixTransposeVectorMultiply/3/6          24 ns         24 ns   29154155
-// BM_MatrixTransposeVectorMultiply/3/7          28 ns         28 ns   25546979
-// BM_MatrixTransposeVectorMultiply/3/12         40 ns         40 ns   16952559
-// BM_MatrixTransposeVectorMultiply/3/16         50 ns         50 ns   12813472
-// BM_MatrixTransposeVectorMultiply/3/20         62 ns         62 ns   10624251
-// BM_MatrixTransposeVectorMultiply/4/1           9 ns          9 ns   75487976
-// BM_MatrixTransposeVectorMultiply/4/2          15 ns         15 ns   46294459
-// BM_MatrixTransposeVectorMultiply/4/3          17 ns         17 ns   40505040
-// BM_MatrixTransposeVectorMultiply/4/4          20 ns         20 ns   33256527
-// BM_MatrixTransposeVectorMultiply/4/6          26 ns         26 ns   25882309
-// BM_MatrixTransposeVectorMultiply/4/7          30 ns         30 ns   22910857
-// BM_MatrixTransposeVectorMultiply/4/12         46 ns         46 ns   14966763
-// BM_MatrixTransposeVectorMultiply/4/16         64 ns         64 ns    9234463
-// BM_MatrixTransposeVectorMultiply/4/20         79 ns         79 ns    8412147
+Run on (8 X 2200 MHz CPU s)
+2018-02-25 12:39:03
+-----------------------------------------------------------------------------
+Benchmark                                      Time           CPU Iterations
+-----------------------------------------------------------------------------
+BM_MatrixTransposeVectorMultiply/1/1          11 ns         11 ns   65731403
+BM_MatrixTransposeVectorMultiply/1/2          11 ns         11 ns   61544954
+BM_MatrixTransposeVectorMultiply/1/3          11 ns         11 ns   55358725
+BM_MatrixTransposeVectorMultiply/1/4          10 ns         10 ns   68624087
+BM_MatrixTransposeVectorMultiply/1/6          13 ns         13 ns   54298502
+BM_MatrixTransposeVectorMultiply/1/7          15 ns         15 ns   45811818
+BM_MatrixTransposeVectorMultiply/1/12         16 ns         16 ns   40978088
+BM_MatrixTransposeVectorMultiply/1/16         19 ns         19 ns   40724903
+BM_MatrixTransposeVectorMultiply/1/20         20 ns         20 ns   34253279
+BM_MatrixTransposeVectorMultiply/2/1          12 ns         12 ns   62459847
+BM_MatrixTransposeVectorMultiply/2/2          13 ns         13 ns   51665092
+BM_MatrixTransposeVectorMultiply/2/3          16 ns         16 ns   45675508
+BM_MatrixTransposeVectorMultiply/2/4          16 ns         16 ns   42943468
+BM_MatrixTransposeVectorMultiply/2/6          19 ns         19 ns   36854907
+BM_MatrixTransposeVectorMultiply/2/7          21 ns         21 ns   33189512
+BM_MatrixTransposeVectorMultiply/2/12         23 ns         23 ns   29639917
+BM_MatrixTransposeVectorMultiply/2/16         26 ns         26 ns   27554716
+BM_MatrixTransposeVectorMultiply/2/20         27 ns         27 ns   24042259
+BM_MatrixTransposeVectorMultiply/3/1          13 ns         13 ns   54472165
+BM_MatrixTransposeVectorMultiply/3/2          17 ns         17 ns   43412737
+BM_MatrixTransposeVectorMultiply/3/3          19 ns         19 ns   38757329
+BM_MatrixTransposeVectorMultiply/3/4          17 ns         17 ns   40583004
+BM_MatrixTransposeVectorMultiply/3/6          22 ns         22 ns   30218262
+BM_MatrixTransposeVectorMultiply/3/7          23 ns         23 ns   29814765
+BM_MatrixTransposeVectorMultiply/3/12         24 ns         24 ns   27344284
+BM_MatrixTransposeVectorMultiply/3/16         31 ns         31 ns   24471417
+BM_MatrixTransposeVectorMultiply/3/20         33 ns         33 ns   18655225
+BM_MatrixTransposeVectorMultiply/4/1          14 ns         14 ns   44872370
+BM_MatrixTransposeVectorMultiply/4/2          17 ns         17 ns   39525915
+BM_MatrixTransposeVectorMultiply/4/3          21 ns         21 ns   32630990
+BM_MatrixTransposeVectorMultiply/4/4          19 ns         19 ns   37524860
+BM_MatrixTransposeVectorMultiply/4/6          28 ns         28 ns   26768847
+BM_MatrixTransposeVectorMultiply/4/7          31 ns         31 ns   22582831
+BM_MatrixTransposeVectorMultiply/4/12         32 ns         32 ns   22881799
+BM_MatrixTransposeVectorMultiply/4/16         34 ns         34 ns   19839527
+BM_MatrixTransposeVectorMultiply/4/20         39 ns         39 ns   17312077
 void BM_MatrixTransposeVectorMultiply(benchmark::State& state) {
   const int rows = state.range(0);
   const int cols = state.range(1);
