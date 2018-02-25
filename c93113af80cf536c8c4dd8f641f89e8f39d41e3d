@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0fa5d5d8_f8bf00ac",
+        "filename": "examples/BUILD",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-25T22:33:33Z",
+      "side": 1,
+      "message": "Let\u0027s keep it nested; it seems cleaner.",
+      "parentUuid": "38c8cb00_3eb762a9",
+      "revId": "c93113af80cf536c8c4dd8f641f89e8f39d41e3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b07f07b0_61adb15f",
         "filename": "examples/BUILD",
         "patchSetId": 9
@@ -63,6 +81,30 @@
       "revId": "c93113af80cf536c8c4dd8f641f89e8f39d41e3d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd336326_454315ca",
+        "filename": "examples/BUILD",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-25T22:33:33Z",
+      "side": 1,
+      "message": "I\u0027m hesitant to do the \"includes\" approach, since that adds transient includes which doesn\u0027t seem like the right approach. And also, these examples shouldn\u0027t get compiled as part of a larger project (one would think?) and so I\u0027m OK to leave this as is.\n\nIf someone comes later and actually wants transitive includes we can change it then.\n\nAlso: Moved to the SLAM examples.",
+      "parentUuid": "cd45d98e_0f5981fa",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "c93113af80cf536c8c4dd8f641f89e8f39d41e3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
