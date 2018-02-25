@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "92c0eabf_261165ef",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-25T22:33:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5099f9e_b99d64b3",
+      "range": {
+        "startLine": 204,
+        "startChar": 24,
+        "endLine": 204,
+        "endChar": 28
+      },
+      "revId": "027605a3f428881cb6f0c0789bc11a946ca1a473",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e039df3_dc2ebf9d",
         "filename": "bazel/ceres.bzl",
         "patchSetId": 7
