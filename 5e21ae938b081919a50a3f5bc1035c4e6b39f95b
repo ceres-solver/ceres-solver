@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ade9a05f_d52e25b9",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-25T20:48:38Z",
+      "side": 1,
+      "message": "Please document in comments attempted alternate forms so there is some history here; at least explain whit he loop is structured this way.",
+      "revId": "5e21ae938b081919a50a3f5bc1035c4e6b39f95b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c97a583_4b5bbb83",
+        "filename": "internal/ceres/small_blas_gemv_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-25T20:48:38Z",
+      "side": 1,
+      "message": "MHZ of CPU is interesting, but not enough. Please include the full CPU model, since that will allow determining cache sizes and so on. Additionally, it\u0027s worth examining the disassembled binary to see if any AVX or SSE instructions are used.",
+      "revId": "5e21ae938b081919a50a3f5bc1035c4e6b39f95b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
