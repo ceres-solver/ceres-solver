@@ -228,17 +228,17 @@ CERES_GEMM_BEGIN(MatrixTransposeMatrixMultiplyNaive) {
   // Evaluate C op A' * B
   // as the sum of rank one outer products of the rows of A and B.
   for (int r = 0; r < NUM_ROW_A; ++r) {
-    double* c_row = C;
+    double* c_row = C + start_row_c * col_stride_c;
     for (int i = 0; i < NUM_COL_A; ++i) {
       const double a_value = A[i];
       for (int j = 0; j < NUM_COL_B; ++j) {
         if (kOperation >= 0) {
-          c_row[j] += a_value * B[j];
+          c_row[start_col_c + j] += a_value * B[j];
         } else {
-          c_row[j] -= a_value * B[j];
+          c_row[start_col_c + j] -= a_value * B[j];
         }
       }
-      c_row += NUM_COL_C;
+      c_row += col_stride_c;
     }
     A += NUM_COL_A;
     B += NUM_COL_B;
