@@ -385,4 +385,7 @@ if (BUILD_BENCHMARKS)
 
   add_executable(small_blas_gemv_benchmark small_blas_gemv_benchmark.cc)
   target_link_libraries(small_blas_gemv_benchmark ceres benchmark::benchmark)
+
+  add_executable(small_blas_gemm_benchmark small_blas_gemm_benchmark.cc)
+  target_link_libraries(small_blas_gemm_benchmark ceres benchmark::benchmark)
 endif (BUILD_BENCHMARKS)
