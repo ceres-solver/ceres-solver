@@ -604,29 +604,21 @@ endif (NOT CMAKE_BUILD_TYPE)
 # Set the default Ceres flags to an empty string.
 set (CERES_CXX_FLAGS)
 
-if (CMAKE_BUILD_TYPE STREQUAL "Release")
-  if (CMAKE_COMPILER_IS_GNUCXX)
-    # Linux
-    if (CMAKE_SYSTEM_NAME MATCHES "Linux")
-      if (NOT GCC_VERSION VERSION_LESS 4.2)
-        set (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -march=native -mtune=native")
-      endif (NOT GCC_VERSION VERSION_LESS 4.2)
-    endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
-    # Mac OS X
-    if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-      set (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -msse3")
-      # Use of -fast only applicable for Apple's GCC
-      # Assume this is being used if GCC version < 4.3 on OSX
-      execute_process(COMMAND ${CMAKE_C_COMPILER}
-        ARGS ${CMAKE_CXX_COMPILER_ARG1} -dumpversion
-        OUTPUT_VARIABLE GCC_VERSION
-        OUTPUT_STRIP_TRAILING_WHITESPACE)
-      if (GCC_VERSION VERSION_LESS 4.3)
-        set (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -fast")
-      endif (GCC_VERSION VERSION_LESS 4.3)
-    endif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-  endif (CMAKE_COMPILER_IS_GNUCXX)
-endif (CMAKE_BUILD_TYPE STREQUAL "Release")
+if (NOT MSVC AND CMAKE_BUILD_TYPE STREQUAL "Release")
+  # Use -Werror when checking compiler flags to protect against silent
+  # warnings of unused flags being treated as success.
+  include(CheckCXXCompilerFlag)
+  check_cxx_compiler_flag("-Werror -march=native" COMPILER_HAS_MARCH_NATIVE_FLAG)
+  if (COMPILER_HAS_MARCH_NATIVE_FLAG)
+    # This also implies -mtune=native.
+    set(CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -march=native")
+  endif()
+  check_cxx_compiler_flag("-Werror -fast" COMPILER_HAS_FAST_FLAG)
+  if (COMPILER_HAS_FAST_FLAG)
+    # Apple's fork of GCC on OS X supported -fast.
+    set(CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -fast")
+  endif()
+endif()
 
 set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CERES_CXX_FLAGS}")
 
