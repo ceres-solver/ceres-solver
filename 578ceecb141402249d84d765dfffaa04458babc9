@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b92885c_5b0c3757",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-25T22:21:15Z",
+      "side": 1,
+      "message": "why not include this outside this if block, don\u0027t we use it elsewhere already? either ways, no point making this include conditional.",
+      "range": {
+        "startLine": 610,
+        "startChar": 10,
+        "endLine": 610,
+        "endChar": 30
+      },
+      "revId": "578ceecb141402249d84d765dfffaa04458babc9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
