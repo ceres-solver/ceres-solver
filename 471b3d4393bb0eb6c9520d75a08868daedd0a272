@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "141b59f4_8365d60c",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-25T21:40:14Z",
+      "side": 1,
+      "message": "Explain why this is done this way; why zero the entire array first? Shouldn\u0027t it be faster to do a single zero assign within the loop?",
+      "revId": "471b3d4393bb0eb6c9520d75a08868daedd0a272",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
