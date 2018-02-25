@@ -199,3 +199,15 @@ TEST_DEPS = [
 ) for test_filename in glob([
     "internal/ceres/generated_bundle_adjustment_tests/*_test.cc",
 ])]
+
+# Build the benchmarks.
+[cc_binary(
+    name = benchmark_name,
+    srcs = ["internal/ceres/" + benchmark_name + ".cc"],
+    copts = TEST_COPTS,
+    deps = TEST_DEPS + ["@com_github_google_benchmark//:benchmark"],
+) for benchmark_name in [
+    "autodiff_cost_function_benchmark",
+    "small_blas_gemm_benchmark",
+    "small_blas_gemv_benchmark",
+]]

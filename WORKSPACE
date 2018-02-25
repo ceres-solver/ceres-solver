@@ -63,3 +63,29 @@ new_http_archive(
         "http://bitbucket.org/eigen/eigen/get/3.3.4.tar.bz2",
     ],
 )
+
+# External dependency: Google Benchmark; has no Bazel build.
+new_http_archive(
+    name = "com_github_google_benchmark",
+    urls = ["https://github.com/google/benchmark/archive/56f52ee228783547f544d9ac4a533574b9010e3f.zip"],
+    sha256 = "8c1c6e90cd320b07504fabb86400f390faff2e599183ebd9396908817968ae79",
+    strip_prefix = "benchmark-56f52ee228783547f544d9ac4a533574b9010e3f",
+    build_file_content =
+"""
+cc_library(
+    name = "benchmark",
+    srcs = glob([
+        "src/*.h",
+        "src/*.cc",
+    ]),
+    hdrs = glob(["include/benchmark/*.h"]),
+    copts = [
+        "-DHAVE_STD_REGEX",
+    ],
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+)
+"""
+)
