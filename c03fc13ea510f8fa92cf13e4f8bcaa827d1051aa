@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dda18a7b_94d4ffb8",
+        "filename": "internal/ceres/small_blas_gemv_benchmark.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-25T20:59:01Z",
+      "side": 1,
+      "message": "Please explain reasoning for 1000 elements here. Is it to defeat the cache sizes? Perhaps consider the cache sizes for the machine you\u0027re benchmarking on.",
+      "revId": "c03fc13ea510f8fa92cf13e4f8bcaa827d1051aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d29642_31efa459",
+        "filename": "internal/ceres/small_blas_gemv_benchmark.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-25T20:59:01Z",
+      "side": 1,
+      "message": "This code requires C++ 11, but has no include guards agains that.",
+      "revId": "c03fc13ea510f8fa92cf13e4f8bcaa827d1051aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
