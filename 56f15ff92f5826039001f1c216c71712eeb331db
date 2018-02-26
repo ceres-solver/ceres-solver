@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f2ad181_0dc55f5c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-26T23:33:52Z",
+      "side": 1,
+      "message": "Trailing space.",
+      "revId": "56f15ff92f5826039001f1c216c71712eeb331db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c029d4_b0f55682",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-26T23:33:52Z",
+      "side": 1,
+      "message": "Trailing space.",
+      "revId": "56f15ff92f5826039001f1c216c71712eeb331db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d797b88e_ae0353d9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-26T23:33:52Z",
+      "side": 1,
+      "message": "Trailing space.",
+      "revId": "56f15ff92f5826039001f1c216c71712eeb331db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10260715_fe4c1b60",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-26T23:33:52Z",
+      "side": 1,
+      "message": "Remove hard tab.",
+      "revId": "56f15ff92f5826039001f1c216c71712eeb331db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
