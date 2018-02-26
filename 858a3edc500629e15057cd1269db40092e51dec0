@@ -410,6 +410,30 @@
       "revId": "858a3edc500629e15057cd1269db40092e51dec0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004a8838_fa2b165d",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-26T23:42:47Z",
+      "side": 1,
+      "message": "I filed this: https://github.com/ceres-solver/ceres-solver/issues/348\n\nto track the preprocessor symbol sanitization.",
+      "parentUuid": "92fb1c53_fba1a4f6",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
