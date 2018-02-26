@@ -94,6 +94,52 @@
     },
     {
       "key": {
+        "uuid": "97a1ad18_648e58ea",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-26T22:25:01Z",
+      "side": 1,
+      "message": "Finished",
+      "range": {
+        "startLine": 51,
+        "startChar": 40,
+        "endLine": 51,
+        "endChar": 46
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51281ea1_74514d4e",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-26T22:25:01Z",
+      "side": 1,
+      "message": "Rather than storing num_threads, why not store num_work_items (\u003dstd::min((end-start), num_threads)? That would simplify the initialisation of block_until_finished and also the definition of task_function below.",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 24
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16fd7216_59db7a86",
         "filename": "internal/ceres/thread_token_provider.h",
         "patchSetId": 1
