@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ed41d6f_6494fb09",
+        "filename": "include/ceres/context.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-26T18:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fedd2bd_a9b9afea",
+      "range": {
+        "startLine": 42,
+        "startChar": 3,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "7d27e91a8bfba972766a08bc03a0275c29746a49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5385eb7f_eece3124",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "7d27e91a8bfba972766a08bc03a0275c29746a49",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53fa764_dc500cde",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-26T18:57:18Z",
+      "side": 1,
+      "message": "needs to call AddTask which is non-const.",
+      "parentUuid": "5385eb7f_eece3124",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "7d27e91a8bfba972766a08bc03a0275c29746a49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "862194ee_5d3695d9",
+        "filename": "internal/ceres/parallel_for_tbb.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-26T18:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15924199_dfd96924",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 28
+      },
+      "revId": "7d27e91a8bfba972766a08bc03a0275c29746a49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d89fad25_6d9f3ab0",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 11
@@ -85,6 +157,24 @@
       "revId": "7d27e91a8bfba972766a08bc03a0275c29746a49",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817d5610_b72736f3",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-26T18:57:18Z",
+      "side": 1,
+      "message": "We explicitly try to steal work in the main thread to avoid deadlock.  So we minus 1 here to ensure we obey the requested number of threads.  We also don\u0027t want to spin up a thread if running with no threads.",
+      "parentUuid": "d89fad25_6d9f3ab0",
+      "revId": "7d27e91a8bfba972766a08bc03a0275c29746a49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
