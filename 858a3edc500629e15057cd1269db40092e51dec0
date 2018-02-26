@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6330c2b1_127401b6",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-26T22:10:59Z",
+      "side": 1,
+      "message": "I think for now lets just not do anything automatic here and barf, and in a follow up CL figure out what the right policy is.",
+      "range": {
+        "startLine": 416,
+        "startChar": 12,
+        "endLine": 416,
+        "endChar": 25
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c489dd70_304855cc",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-26T22:10:59Z",
+      "side": 1,
+      "message": "same as above.",
+      "range": {
+        "startLine": 424,
+        "startChar": 22,
+        "endLine": 424,
+        "endChar": 28
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aed288c_7fa5fe84",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-26T22:10:59Z",
+      "side": 1,
+      "message": "see above.",
+      "range": {
+        "startLine": 466,
+        "startChar": 6,
+        "endLine": 466,
+        "endChar": 9
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1cb338e_e8d5dfc6",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-26T22:10:59Z",
+      "side": 1,
+      "message": "see above.",
+      "range": {
+        "startLine": 544,
+        "startChar": 26,
+        "endLine": 544,
+        "endChar": 39
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
