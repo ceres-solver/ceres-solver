@@ -386,6 +386,30 @@
       "revId": "858a3edc500629e15057cd1269db40092e51dec0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fb1c53_fba1a4f6",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-26T23:41:06Z",
+      "side": 1,
+      "message": "I\u0027d say move this to port too.\nthis should crash as early in the compile process as possible.\nI would not depend no cmake guaranteeing anything since we have three different build mechanisms, so we should assume that people will do silly things.",
+      "parentUuid": "39875334_5fde3563",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
