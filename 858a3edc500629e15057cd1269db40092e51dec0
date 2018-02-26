@@ -49,6 +49,23 @@
     },
     {
       "key": {
+        "uuid": "da071720_de8dd355",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-26T23:20:40Z",
+      "side": 1,
+      "message": "Interesting enough, with the new abstraction I believe it should be possible to support both at the same time! But that\u0027s a separate discussion.",
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c489dd70_304855cc",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -319,6 +336,47 @@
       "side": 1,
       "message": "After looking at this further, all this is checking is that only one (CERES_USE_TBB, CERES_USE_OPENMP, CERES_CXX11_THREADS, and CERES_NO_THREADS) is set.  This is already guaranteed by the CMakeLists file checking. \n\nSo I think it makes sense to either take it out (because it is already guaranteed) or move it to port so it is guaranteed for all of Ceres.  What do you think is best?",
       "parentUuid": "16fd7216_59db7a86",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f7827d_7a563c1f",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-26T23:20:40Z",
+      "side": 1,
+      "message": "Phew!\n\nI hope we can drop some of these options soon.",
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39875334_5fde3563",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-26T23:20:40Z",
+      "side": 1,
+      "message": "It should likely go in port, after including config.\n\nIt should probably be simplified to use \n\n#if !(defined(CERES_USE_TBB) ^ defined(CERES_USE_CXX11_THREADS ...\n#error ...",
+      "parentUuid": "16e10709_b97de497",
       "range": {
         "startLine": 36,
         "startChar": 12,
