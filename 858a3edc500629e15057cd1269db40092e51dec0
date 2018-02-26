@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7fa7e613_2562b056",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-26T22:58:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6330c2b1_127401b6",
+      "range": {
+        "startLine": 416,
+        "startChar": 12,
+        "endLine": 416,
+        "endChar": 25
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c489dd70_304855cc",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "858a3edc500629e15057cd1269db40092e51dec0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edcb96fe_f01f4d26",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-26T22:58:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c489dd70_304855cc",
+      "range": {
+        "startLine": 424,
+        "startChar": 22,
+        "endLine": 424,
+        "endChar": 28
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c38784e2_ccb37dcd",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-26T22:58:20Z",
+      "side": 1,
+      "message": "Done, but this follows the same logic as TBB which requires C++11.",
+      "parentUuid": "4aed288c_7fa5fe84",
+      "range": {
+        "startLine": 466,
+        "startChar": 6,
+        "endLine": 466,
+        "endChar": 9
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1cb338e_e8d5dfc6",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "858a3edc500629e15057cd1269db40092e51dec0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ef437f_8c760670",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-26T22:58:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1cb338e_e8d5dfc6",
+      "range": {
+        "startLine": 544,
+        "startChar": 26,
+        "endLine": 544,
+        "endChar": 39
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8853cc07_4c93c2f8",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-26T22:58:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97a1ad18_648e58ea",
+      "range": {
+        "startLine": 51,
+        "startChar": 40,
+        "endLine": 51,
+        "endChar": 46
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51281ea1_74514d4e",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "d765a5d0_bf3b6491",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-26T22:58:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51281ea1_74514d4e",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 24
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16fd7216_59db7a86",
         "filename": "internal/ceres/thread_token_provider.h",
         "patchSetId": 1
@@ -151,6 +295,30 @@
       "writtenOn": "2018-02-26T22:17:37Z",
       "side": 1,
       "message": "should these errors be in this file? or maybe in port.h or somewhere more sane?",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "858a3edc500629e15057cd1269db40092e51dec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e10709_b97de497",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-26T22:58:20Z",
+      "side": 1,
+      "message": "After looking at this further, all this is checking is that only one (CERES_USE_TBB, CERES_USE_OPENMP, CERES_CXX11_THREADS, and CERES_NO_THREADS) is set.  This is already guaranteed by the CMakeLists file checking. \n\nSo I think it makes sense to either take it out (because it is already guaranteed) or move it to port so it is guaranteed for all of Ceres.  What do you think is best?",
+      "parentUuid": "16fd7216_59db7a86",
       "range": {
         "startLine": 36,
         "startChar": 12,
