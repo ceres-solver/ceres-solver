@@ -344,49 +344,28 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 
   ThreadTokenProvider thread_token_provider(num_threads);
 
-#ifdef CERES_USE_OPENMP
-// The collapse() directive is only supported in OpenMP 3.0 and higher. OpenMP
-// 3.0 was released in May 2008 (hence the version number).
-#  if _OPENMP >= 200805
-#    pragma omp parallel for num_threads(num_threads) schedule(dynamic) collapse(2)
-#  else
+#if defined(CERES_USE_OPENMP)
 #    pragma omp parallel for num_threads(num_threads) schedule(dynamic)
-#  endif
-  for (int i = 0; i < num_parameters; ++i) {
-    for (int j = 0; j < num_parameters; ++j) {
-      // The second loop can't start from j = i for compatibility with OpenMP
-      // collapse command. The conditional serves as a workaround
-      if (j < i) {
-        continue;
-      }
 #endif // CERES_USE_OPENMP
-
-#ifdef CERES_NO_THREADS
-  for (int i = 0; i < num_parameters; ++i) {
-    for (int j = i; j < num_parameters; ++j) {
-#endif // CERES_NO_THREADS
-
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-
-  // The parallel for abstraction does not have support for constraining the
-  // number of workers in nested parallel for loops. Consequently, we will try
-  // to evenly distribute the number of workers between the each parallel for
-  // loop.
-  // TODO(vitus): consolidate the nested for loops into a single loop which can
-  // be properly split between the threads.
+#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
+  for (int k = 0; k < num_parameters * num_parameters; ++k) {
+#else
   problem_->context()->EnsureMinimumThreads(num_threads);
-  const int num_outer_threads = std::sqrt(num_threads);
-  const int num_inner_threads = num_threads / num_outer_threads;
   ParallelFor(problem_->context(),
               0,
-              num_parameters,
-              num_outer_threads,
-              [&](int i) {
-    ParallelFor(problem_->context(), i,
-                num_parameters,
-                num_inner_threads,
-                [&](int j) {
-#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
+              num_parameters * num_parameters,
+              num_threads,
+              [&](int k) {
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
+      int i = k / num_parameters;
+      int j = k % num_parameters;
+      if (j < i) {
+#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
+        return;
+#else
+        continue;
+#endif
+      }
 
       int covariance_row_idx = cum_parameter_size[i];
       int covariance_col_idx = cum_parameter_size[j];
@@ -415,10 +394,7 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
       }
     }
 #if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-    );
-  });
-#else
-  }
+   );
 #endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
   return success;
 }
