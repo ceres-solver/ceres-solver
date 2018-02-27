@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44be6cda_4c626c30",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-27T07:18:22Z",
+      "side": 1,
+      "message": "What is the default setting? If users are only setting num_threads today, will they get this warning?",
+      "revId": "57fde76673cf64f2c8ca193d968b6ca2c40b8a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088e8353_992059a7",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-27T07:18:22Z",
+      "side": 1,
+      "message": "Nolint indentation.",
+      "revId": "57fde76673cf64f2c8ca193d968b6ca2c40b8a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
