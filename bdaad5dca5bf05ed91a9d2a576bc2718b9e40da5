@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d46709c6_bf975747",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-27T23:33:50Z",
+      "side": 1,
+      "message": "This bothers me. In the worse case (if num_parameters \u003d\u003d num_threads) this ensures worst-case workload balancing: one thread gets one real work item, one gets num_parameters work items, and the rest go between.\n\nI\u0027m going to see if I can come up with a better way to fold the loops so there aren\u0027t wasted items.",
+      "revId": "bdaad5dca5bf05ed91a9d2a576bc2718b9e40da5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
