@@ -44,7 +44,7 @@ namespace internal {
 
 // TODO(sameeragarwal): Refactor the following two functions out of
 // here and sparse_cholesky_test.cc into a more suitable place.
-template <Eigen::UpLoType UpLoType>
+template <int UpLoType>
 bool SolveLinearSystemUsingEigen(const Matrix& lhs,
                                  const Vector rhs,
                                  Vector* solution) {
