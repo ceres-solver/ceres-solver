@@ -79,9 +79,9 @@ namespace internal {
 TEST(InnerProductComputer, NormalOperation) {
   // "Randomly generated seed."
   SetRandomState(29823);
-  const int kMaxNumRowBlocks = 3;
-  const int kMaxNumColBlocks = 3;
-  const int kNumTrials = 1;
+  const int kMaxNumRowBlocks = 10;
+  const int kMaxNumColBlocks = 10;
+  const int kNumTrials = 10;
 
   // Create a random matrix, compute its outer product using Eigen and
   // ComputeOuterProduct. Convert both matrices to dense matrices and
@@ -140,7 +140,6 @@ TEST(InnerProductComputer, NormalOperation) {
   }
 }
 
-/*
 TEST(InnerProductComputer, SubMatrix) {
   // "Randomly generated seed."
   SetRandomState(29823);
@@ -223,6 +222,5 @@ TEST(InnerProductComputer, SubMatrix) {
 }
 
 #undef COMPUTE_AND_COMPARE
-*/
 }  // namespace internal
 }  // namespace ceres
