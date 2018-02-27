@@ -1,6 +1,6 @@
 {
   "context": {
-    "date": "2018-02-25 13:34:34",
+    "date": "2018-02-25 13:20:04",
     "num_cpus": 8,
     "mhz_per_cpu": 2200,
     "cpu_scaling_enabled": false,
@@ -9,506 +9,506 @@
   "benchmarks": [
     {
       "name": "BM_MatrixVectorMultiply/1/1",
-      "iterations": 70252205,
-      "real_time": 1.0236544348302301e+01,
-      "cpu_time": 1.0086487676792496e+01,
+      "iterations": 69298697,
+      "real_time": 1.0097105894512250e+01,
+      "cpu_time": 1.0040275360444367e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/1/2",
-      "iterations": 68107961,
-      "real_time": 1.0524348980780600e+01,
-      "cpu_time": 1.0394526419606072e+01,
+      "iterations": 65913992,
+      "real_time": 1.0302522610563768e+01,
+      "cpu_time": 1.0245351244998181e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/1/3",
-      "iterations": 69200732,
-      "real_time": 1.0096407926919197e+01,
-      "cpu_time": 9.9902844958345245e+00,
+      "iterations": 73595895,
+      "real_time": 9.6440729347083387e+00,
+      "cpu_time": 9.5853172245544389e+00,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/1/4",
-      "iterations": 63594738,
-      "real_time": 1.0774345118765158e+01,
-      "cpu_time": 1.0670930038268263e+01,
+      "iterations": 69574897,
+      "real_time": 1.0073530211782117e+01,
+      "cpu_time": 9.9997560901886722e+00,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/1/6",
-      "iterations": 58849740,
-      "real_time": 1.2862122686593422e+01,
-      "cpu_time": 1.2680090005495353e+01,
+      "iterations": 58273603,
+      "real_time": 1.1879482448448192e+01,
+      "cpu_time": 1.1746073089045133e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/1/7",
-      "iterations": 50270744,
-      "real_time": 1.4796897833024486e+01,
-      "cpu_time": 1.4365512473815775e+01,
+      "iterations": 54426846,
+      "real_time": 1.2970374490544540e+01,
+      "cpu_time": 1.2881400476522181e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/1/12",
-      "iterations": 38925219,
-      "real_time": 1.7628035668447385e+01,
-      "cpu_time": 1.7363447589080991e+01,
+      "iterations": 40754541,
+      "real_time": 1.7086407941937370e+01,
+      "cpu_time": 1.6969201051730625e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/1/16",
-      "iterations": 34818249,
-      "real_time": 2.0217151184202585e+01,
-      "cpu_time": 1.9996726429292874e+01,
+      "iterations": 36813042,
+      "real_time": 2.0977509004292560e+01,
+      "cpu_time": 2.0338009556504460e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/1/20",
-      "iterations": 31906359,
-      "real_time": 2.2445605654072409e+01,
-      "cpu_time": 2.2253933769127354e+01,
+      "iterations": 32061264,
+      "real_time": 2.1783493596539344e+01,
+      "cpu_time": 2.1625753744456222e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/2/1",
-      "iterations": 71029213,
-      "real_time": 9.9579144427668691e+00,
-      "cpu_time": 9.8622238711838168e+00,
+      "iterations": 71987577,
+      "real_time": 9.9393425620120528e+00,
+      "cpu_time": 9.8528944792793975e+00,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/2/2",
-      "iterations": 63346123,
-      "real_time": 1.1705572873750949e+01,
-      "cpu_time": 1.1623789509580556e+01,
+      "iterations": 63771443,
+      "real_time": 1.1381383373240160e+01,
+      "cpu_time": 1.1294600939169571e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/2/3",
-      "iterations": 51417658,
-      "real_time": 1.3784111481715327e+01,
-      "cpu_time": 1.3678199812212368e+01,
+      "iterations": 52469043,
+      "real_time": 1.5624869525055580e+01,
+      "cpu_time": 1.5158995752981452e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/2/4",
-      "iterations": 43867070,
-      "real_time": 1.6680275408505068e+01,
-      "cpu_time": 1.6505866473416127e+01,
+      "iterations": 45512470,
+      "real_time": 1.5249180278513519e+01,
+      "cpu_time": 1.4811259419671170e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/2/6",
-      "iterations": 38832366,
-      "real_time": 1.8493552852222152e+01,
-      "cpu_time": 1.8353143869729728e+01,
+      "iterations": 40479275,
+      "real_time": 1.7419527499445600e+01,
+      "cpu_time": 1.7267799386229168e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/2/7",
-      "iterations": 35359607,
-      "real_time": 2.1535896143019905e+01,
-      "cpu_time": 2.0674296521451733e+01,
+      "iterations": 35497677,
+      "real_time": 1.9656466957520109e+01,
+      "cpu_time": 1.9009525609239173e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/2/12",
-      "iterations": 29137044,
-      "real_time": 2.4302196854567779e+01,
-      "cpu_time": 2.4139888727216171e+01,
+      "iterations": 27042793,
+      "real_time": 2.4197042293219681e+01,
+      "cpu_time": 2.3855672008434897e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/2/16",
-      "iterations": 24110910,
-      "real_time": 2.9894188605096506e+01,
-      "cpu_time": 2.9568937879159293e+01,
+      "iterations": 24077820,
+      "real_time": 2.8851556123593411e+01,
+      "cpu_time": 2.8603793865059156e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/2/20",
-      "iterations": 20147885,
-      "real_time": 3.4507044086219317e+01,
-      "cpu_time": 3.3935571897496963e+01,
+      "iterations": 20977240,
+      "real_time": 3.2981163630488950e+01,
+      "cpu_time": 3.2740865814568508e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/3/1",
-      "iterations": 61213425,
-      "real_time": 1.1528627127493634e+01,
-      "cpu_time": 1.1442522616566544e+01,
+      "iterations": 61687596,
+      "real_time": 1.1764908379779497e+01,
+      "cpu_time": 1.1687698123298562e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/3/2",
-      "iterations": 45232787,
-      "real_time": 1.5206686116791806e+01,
-      "cpu_time": 1.5059783957154792e+01,
+      "iterations": 43755469,
+      "real_time": 1.6423369476207299e+01,
+      "cpu_time": 1.6309206970218952e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/3/3",
-      "iterations": 39082565,
-      "real_time": 1.7894326358792654e+01,
-      "cpu_time": 1.7703981302148417e+01,
+      "iterations": 37693381,
+      "real_time": 1.8031485450223030e+01,
+      "cpu_time": 1.7915983710774054e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/3/4",
-      "iterations": 33507894,
-      "real_time": 2.1085192464583656e+01,
-      "cpu_time": 2.0737620812576353e+01,
+      "iterations": 36812849,
+      "real_time": 1.9044860858008274e+01,
+      "cpu_time": 1.8915433575923469e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/3/6",
-      "iterations": 30657919,
-      "real_time": 2.3736662589079380e+01,
-      "cpu_time": 2.3452798606454710e+01,
+      "iterations": 31380003,
+      "real_time": 2.2716422938798129e+01,
+      "cpu_time": 2.2573452271499175e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/3/7",
-      "iterations": 29037209,
-      "real_time": 2.8086983741164396e+01,
-      "cpu_time": 2.6849377982574079e+01,
+      "iterations": 29979614,
+      "real_time": 2.5305456738143899e+01,
+      "cpu_time": 2.4368525892294780e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/3/12",
-      "iterations": 20780516,
-      "real_time": 3.7916595043916402e+01,
-      "cpu_time": 3.4962991294345251e+01,
+      "iterations": 22574601,
+      "real_time": 3.2935694633936649e+01,
+      "cpu_time": 3.1806276443158403e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/3/16",
-      "iterations": 14964235,
-      "real_time": 4.5643732738804459e+01,
-      "cpu_time": 4.4360169430645840e+01,
+      "iterations": 18534847,
+      "real_time": 3.7167092181413921e+01,
+      "cpu_time": 3.6952179858835549e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/3/20",
-      "iterations": 10665042,
-      "real_time": 6.0875662188190091e+01,
-      "cpu_time": 5.7067567103814788e+01,
+      "iterations": 14379061,
+      "real_time": 4.9144608746192276e+01,
+      "cpu_time": 4.8366649254773812e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/4/1",
-      "iterations": 37661946,
-      "real_time": 2.0775609523494111e+01,
-      "cpu_time": 1.7639077917004130e+01,
+      "iterations": 48585469,
+      "real_time": 1.4383808851738836e+01,
+      "cpu_time": 1.4028535980582999e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/4/2",
-      "iterations": 35503979,
-      "real_time": 1.9826045271850877e+01,
-      "cpu_time": 1.9558512019174053e+01,
+      "iterations": 36885397,
+      "real_time": 1.9225010159014570e+01,
+      "cpu_time": 1.9118216349955460e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/4/3",
-      "iterations": 31566368,
-      "real_time": 2.4285911482952638e+01,
-      "cpu_time": 2.4048379591849130e+01,
+      "iterations": 31222959,
+      "real_time": 2.2854289371385235e+01,
+      "cpu_time": 2.2695991113462323e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/4/4",
-      "iterations": 27748598,
-      "real_time": 2.8067616677809326e+01,
-      "cpu_time": 2.5865126591260609e+01,
+      "iterations": 31518186,
+      "real_time": 2.2779098836662452e+01,
+      "cpu_time": 2.2609264378349625e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/4/6",
-      "iterations": 22872005,
-      "real_time": 2.8774739072673267e+01,
-      "cpu_time": 2.8174005733209675e+01,
+      "iterations": 27870791,
+      "real_time": 2.6312030431589900e+01,
+      "cpu_time": 2.6164704116219813e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/4/7",
-      "iterations": 23207779,
-      "real_time": 3.0391250791985073e+01,
-      "cpu_time": 2.9916649930180775e+01,
+      "iterations": 26635110,
+      "real_time": 2.8015773282089135e+01,
+      "cpu_time": 2.7610248277555474e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/4/12",
-      "iterations": 15364422,
-      "real_time": 4.5653321419675805e+01,
-      "cpu_time": 4.2920586273925778e+01,
+      "iterations": 17797575,
+      "real_time": 3.9333237811242320e+01,
+      "cpu_time": 3.8665042849938892e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/4/16",
-      "iterations": 10000000,
-      "real_time": 5.1884067698847502e+01,
-      "cpu_time": 5.1231399999999638e+01,
+      "iterations": 14592636,
+      "real_time": 4.8254791185539325e+01,
+      "cpu_time": 4.7936644208764051e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixVectorMultiply/4/20",
-      "iterations": 10321743,
-      "real_time": 7.1935641875272623e+01,
-      "cpu_time": 6.9165353177268500e+01,
+      "iterations": 11582884,
+      "real_time": 6.1053182527591900e+01,
+      "cpu_time": 6.0339031280982766e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/1/1",
-      "iterations": 57211511,
-      "real_time": 1.2786805141388754e+01,
-      "cpu_time": 1.2007094166766615e+01,
+      "iterations": 76783011,
+      "real_time": 9.3956197029191628e+00,
+      "cpu_time": 9.3391232078669315e+00,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/1/2",
-      "iterations": 59967446,
-      "real_time": 1.2595885590935398e+01,
-      "cpu_time": 1.2386837351719235e+01,
+      "iterations": 70815082,
+      "real_time": 9.6104494527203634e+00,
+      "cpu_time": 9.5503808072974952e+00,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/1/3",
-      "iterations": 48324853,
-      "real_time": 1.3965870500880389e+01,
-      "cpu_time": 1.3175870395301542e+01,
+      "iterations": 66582329,
+      "real_time": 1.0727912012247707e+01,
+      "cpu_time": 1.0640345728969692e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/1/4",
-      "iterations": 53931199,
-      "real_time": 1.2531495191006034e+01,
-      "cpu_time": 1.2395125871390313e+01,
+      "iterations": 53793602,
+      "real_time": 1.3614292048217301e+01,
+      "cpu_time": 1.3500583210620450e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/1/6",
-      "iterations": 46024169,
-      "real_time": 1.7573782894920971e+01,
-      "cpu_time": 1.6465957266930783e+01,
+      "iterations": 40321652,
+      "real_time": 1.7766203749914158e+01,
+      "cpu_time": 1.7570882264446855e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/1/7",
-      "iterations": 39807333,
-      "real_time": 1.7835137661432338e+01,
-      "cpu_time": 1.7324019170035765e+01,
+      "iterations": 37201986,
+      "real_time": 1.9978757341790001e+01,
+      "cpu_time": 1.8992776353391505e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/1/12",
-      "iterations": 39456626,
-      "real_time": 1.8121366004006191e+01,
-      "cpu_time": 1.7872739549499133e+01,
+      "iterations": 27434090,
+      "real_time": 2.6018652924849363e+01,
+      "cpu_time": 2.5589622254647360e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/1/16",
-      "iterations": 35995824,
-      "real_time": 1.9690264516458388e+01,
-      "cpu_time": 1.9365940893587972e+01,
+      "iterations": 18985007,
+      "real_time": 3.8675490929263397e+01,
+      "cpu_time": 3.8356793863705086e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/1/20",
-      "iterations": 28878603,
-      "real_time": 2.2967801144088135e+01,
-      "cpu_time": 2.1233817993204124e+01,
+      "iterations": 16250235,
+      "real_time": 4.2684055338167965e+01,
+      "cpu_time": 4.2342464585896622e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/2/1",
-      "iterations": 55120280,
-      "real_time": 1.3296489332225445e+01,
-      "cpu_time": 1.2641753634052581e+01,
+      "iterations": 72217809,
+      "real_time": 9.8704761588567429e+00,
+      "cpu_time": 9.7949108370208933e+00,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/2/2",
-      "iterations": 45745355,
-      "real_time": 1.5342622390806852e+01,
-      "cpu_time": 1.5143701475264400e+01,
+      "iterations": 58405854,
+      "real_time": 1.2449916972022011e+01,
+      "cpu_time": 1.2345851496324279e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/2/3",
-      "iterations": 36244078,
-      "real_time": 1.7288141497621908e+01,
-      "cpu_time": 1.7104835719644967e+01,
+      "iterations": 44559025,
+      "real_time": 1.6004563317294398e+01,
+      "cpu_time": 1.5868367855894519e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/2/4",
-      "iterations": 43622948,
-      "real_time": 1.7079777392449788e+01,
-      "cpu_time": 1.6899912403902590e+01,
+      "iterations": 35586284,
+      "real_time": 1.8873825462252668e+01,
+      "cpu_time": 1.8742417724761761e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/2/6",
-      "iterations": 34441361,
-      "real_time": 2.1433496777681615e+01,
-      "cpu_time": 2.1101808375110068e+01,
+      "iterations": 30603233,
+      "real_time": 2.3746124174457755e+01,
+      "cpu_time": 2.3614759917685756e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/2/7",
-      "iterations": 29266661,
-      "real_time": 2.8695185282827168e+01,
-      "cpu_time": 2.5598239580524783e+01,
+      "iterations": 25503512,
+      "real_time": 2.7041517616016900e+01,
+      "cpu_time": 2.6823050880208051e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/2/12",
-      "iterations": 28410129,
-      "real_time": 2.5414124132552242e+01,
-      "cpu_time": 2.5012734014689062e+01,
+      "iterations": 17142745,
+      "real_time": 4.0841419326141207e+01,
+      "cpu_time": 4.0593790551046581e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/2/16",
-      "iterations": 26304121,
-      "real_time": 2.7786573175356700e+01,
-      "cpu_time": 2.7248239924078774e+01,
+      "iterations": 13289037,
+      "real_time": 5.3266691859451711e+01,
+      "cpu_time": 5.2837914440301496e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/2/20",
-      "iterations": 23371507,
-      "real_time": 3.1584149964122386e+01,
-      "cpu_time": 3.1010794468666266e+01,
+      "iterations": 10179301,
+      "real_time": 7.1242744951979475e+01,
+      "cpu_time": 6.9943702421217523e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/3/1",
-      "iterations": 45903445,
-      "real_time": 1.5271870291696541e+01,
-      "cpu_time": 1.5023186168271270e+01,
+      "iterations": 69897251,
+      "real_time": 1.0455159873353184e+01,
+      "cpu_time": 1.0183404780826111e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/3/2",
-      "iterations": 38719384,
-      "real_time": 1.8626934482269160e+01,
-      "cpu_time": 1.8326117998158196e+01,
+      "iterations": 48687523,
+      "real_time": 1.4473279406174216e+01,
+      "cpu_time": 1.4368362917127623e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/3/3",
-      "iterations": 32912833,
-      "real_time": 2.1152548974519810e+01,
-      "cpu_time": 2.0909078230974622e+01,
+      "iterations": 36199282,
+      "real_time": 1.8768082416320095e+01,
+      "cpu_time": 1.8594457204980039e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/3/4",
-      "iterations": 36580841,
-      "real_time": 2.2141558800840450e+01,
-      "cpu_time": 2.1718254099188123e+01,
+      "iterations": 32392711,
+      "real_time": 2.1793111421538484e+01,
+      "cpu_time": 2.1554787433506387e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/3/6",
-      "iterations": 27507181,
-      "real_time": 2.5637143914685403e+01,
-      "cpu_time": 2.5370575050929215e+01,
+      "iterations": 25449918,
+      "real_time": 2.7307808579096385e+01,
+      "cpu_time": 2.7092071573668875e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/3/7",
-      "iterations": 25641026,
-      "real_time": 2.9056108440940619e+01,
-      "cpu_time": 2.8340402603234452e+01,
+      "iterations": 22970703,
+      "real_time": 3.0684889528257191e+01,
+      "cpu_time": 3.0455576392242047e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/3/12",
-      "iterations": 21857104,
-      "real_time": 2.9318980271296027e+01,
-      "cpu_time": 2.8576201128932929e+01,
+      "iterations": 15189357,
+      "real_time": 4.8938380408733977e+01,
+      "cpu_time": 4.7137676729830986e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/3/16",
-      "iterations": 21147525,
-      "real_time": 3.4772101701348014e+01,
-      "cpu_time": 3.3845851937756258e+01,
+      "iterations": 12187690,
+      "real_time": 6.4202213625161093e+01,
+      "cpu_time": 6.1960141749584857e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/3/20",
-      "iterations": 18255885,
-      "real_time": 3.8151240495870312e+01,
-      "cpu_time": 3.7737693899802757e+01,
+      "iterations": 8626958,
+      "real_time": 7.7660120865570065e+01,
+      "cpu_time": 7.6987740058547374e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/4/1",
-      "iterations": 41598327,
-      "real_time": 1.7972290135515205e+01,
-      "cpu_time": 1.7753334166539762e+01,
+      "iterations": 68685362,
+      "real_time": 1.0764260905433320e+01,
+      "cpu_time": 1.0544197175520464e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/4/2",
-      "iterations": 34202734,
-      "real_time": 2.2089604240919805e+01,
-      "cpu_time": 2.1759722483003841e+01,
+      "iterations": 41396113,
+      "real_time": 1.6881927031100783e+01,
+      "cpu_time": 1.6629145833088174e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/4/3",
-      "iterations": 27249123,
-      "real_time": 2.6488586586931632e+01,
-      "cpu_time": 2.6050122787437939e+01,
+      "iterations": 35592798,
+      "real_time": 2.0520861720163161e+01,
+      "cpu_time": 2.0318998242284707e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/4/4",
-      "iterations": 30863381,
-      "real_time": 2.4542076224741049e+01,
-      "cpu_time": 2.4055303597489978e+01,
+      "iterations": 29245508,
+      "real_time": 2.4356611964112989e+01,
+      "cpu_time": 2.4129585986333215e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/4/6",
-      "iterations": 23214321,
-      "real_time": 3.1091653333839805e+01,
-      "cpu_time": 3.0791294735693508e+01,
+      "iterations": 20036065,
+      "real_time": 3.4106466514085753e+01,
+      "cpu_time": 3.3619725230478345e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/4/7",
-      "iterations": 21214950,
-      "real_time": 3.3605207788356317e+01,
-      "cpu_time": 3.3319333771703114e+01,
+      "iterations": 18768417,
+      "real_time": 3.6661212077921938e+01,
+      "cpu_time": 3.6314090847405801e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/4/12",
-      "iterations": 21109771,
-      "real_time": 3.4236321416005268e+01,
-      "cpu_time": 3.3933669863117345e+01,
+      "iterations": 11789871,
+      "real_time": 6.1986798330774114e+01,
+      "cpu_time": 6.1171322400389727e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/4/16",
-      "iterations": 17775521,
-      "real_time": 3.9990263516471948e+01,
-      "cpu_time": 3.9692563722886177e+01,
+      "iterations": 7869236,
+      "real_time": 8.5527959635890710e+01,
+      "cpu_time": 8.2749964545479799e+01,
       "time_unit": "ns"
     },
     {
       "name": "BM_MatrixTransposeVectorMultiply/4/20",
-      "iterations": 14255226,
-      "real_time": 5.0482404275173749e+01,
-      "cpu_time": 4.9507808574903912e+01,
+      "iterations": 7417847,
+      "real_time": 9.9073482499474821e+01,
+      "cpu_time": 9.7701125407411183e+01,
       "time_unit": "ns"
     }
   ]

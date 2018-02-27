@@ -309,8 +309,8 @@ inline void MatrixVectorMultiply(const double* A,
 
   for (int row = 0; row < NUM_ROW_A; ++row) {
     double tmp = 0.0;
-    for (int col = 0; col < NUM_COL_A; ++col, ++A) {
-      tmp += (*A) * b[col];
+    for (int col = 0; col < NUM_COL_A; ++col) {
+      tmp += A[row * NUM_COL_A + col] * b[col];
     }
 
     if (kOperation > 0) {
@@ -358,19 +358,18 @@ inline void MatrixTransposeVectorMultiply(const double* A,
   const int NUM_ROW_A = (kRowA != Eigen::Dynamic ? kRowA : num_row_a);
   const int NUM_COL_A = (kColA != Eigen::Dynamic ? kColA : num_col_a);
 
+  for (int row = 0; row < NUM_COL_A; ++row) {
+    double tmp = 0.0;
+    for (int col = 0; col < NUM_ROW_A; ++col) {
+      tmp += A[col * NUM_COL_A + row] * b[col];
+    }
 
-  if (kOperation == 0) {
-    std::fill(c, c + NUM_COL_A, 0.0);
-  }
-
-  for (int row = 0; row < NUM_ROW_A; ++row) {
-    const double tmp = b[row];
-    for (int col = 0; col < NUM_COL_A; ++col, ++A) {
-      if (kOperation >= 0) {
-        c[col] += (*A) * tmp;
-      } else {
-        c[col] -= (*A) * tmp;
-      }
+    if (kOperation > 0) {
+      c[row] += tmp;
+    } else if (kOperation < 0) {
+      c[row] -= tmp;
+    } else {
+      c[row] = tmp;
     }
   }
 #endif  // CERES_NO_CUSTOM_BLAS
