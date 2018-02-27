@@ -140,7 +140,6 @@ void SetLinearSolver(Solver::Options* options) {
   CHECK(StringToDenseLinearAlgebraLibraryType(
             FLAGS_dense_linear_algebra_library,
             &options->dense_linear_algebra_library_type));
-  options->num_linear_solver_threads = FLAGS_num_threads;
   options->use_explicit_schur_complement = FLAGS_explicit_schur_complement;
 }
 

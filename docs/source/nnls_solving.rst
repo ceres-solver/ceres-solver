@@ -1284,6 +1284,11 @@ elimination group [LiSaad]_.
 
    Default: ``1``
 
+   **This field is deprecated, and is ignored by
+   Ceres. Solver::Options::num_threads controls threading for all
+   of Ceres Solver. This setting is scheduled to be removed in
+   1.15.0.**
+
    Number of threads used by the linear solver.
 
 .. member:: shared_ptr<ParameterBlockOrdering> Solver::Options::linear_solver_ordering
@@ -2125,15 +2130,28 @@ The three arrays will be:
 
    Number of threads actually used by the solver for Jacobian and
    residual evaluation. This number is not equal to
-   :member:`Solver::Summary::num_threads_given` if neither `OpenMP` nor `TBB`
-   is available.
+   :member:`Solver::Summary::num_threads_given` if neither `OpenMP`
+   nor `TBB` is available.
 
 .. member:: int Solver::Summary::num_linear_solver_threads_given
+
+   **This field is deprecated, and is ignored by
+   Ceres. Solver::Summary::num_threads_given should be used
+   instead.
+
+   This field is scheduled to be removed in 1.15.0. In the interim the
+   value of this field will be num_threads_given.**
 
    Number of threads specified by the user for solving the trust
    region problem.
 
 .. member:: int Solver::Summary::num_linear_solver_threads_used
+
+   **This field is deprecated. Solver::Summary::num_threads_used
+   should be used instead.
+
+   This field is scheduled to be removed in 1.15.0. In the interim the
+   value of this field will be num_threads_use`.**
 
    Number of threads actually used by the solver for solving the trust
    region problem. This number is not equal to

@@ -425,9 +425,11 @@ class CERES_EXPORT Solver {
     // whether they are linked into Ceres at build time.
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type;
 
-    // Number of threads used by Ceres to solve the Newton
-    // step. Currently only the SPARSE_SCHUR solver is capable of
-    // using this setting.
+    // NOTE: This field is deprecated, and is ignored by
+    // Ceres. Solver::Options::num_threads controls threading for all
+    // of Ceres Solver.
+    //
+    // This setting is scheduled to be removed in 1.15.0.
     int num_linear_solver_threads;
 
     // The order in which variables are eliminated in a linear solver
@@ -932,10 +934,24 @@ class CERES_EXPORT Solver {
     // num_threads_given if OpenMP is not available.
     int num_threads_used;
 
-    //  Number of threads specified by the user for solving the trust
+    // NOTE: This field is deprecated, and is ignored by
+    // Ceres. Solver::Summary::num_threads_given should be used
+    // instead.
+    //
+    // This field is scheduled to be removed in 1.15.0. In the interim
+    // the value of this field will be num_threads_given.
+    //
+    // Number of threads specified by the user for solving the trust
     // region problem.
     int num_linear_solver_threads_given;
 
+    // NOTE: This field is deprecated, and is ignored by
+    // Ceres. Solver::Summary::num_threads_used should be used
+    // instead.
+    //
+    // This field is scheduled to be removed in 1.15.0. In the interim
+    // the value of this field will be equal to num_threads_used.
+    //
     // Number of threads actually used by the solver for solving the
     // trust region problem. This number is not equal to
     // num_threads_given if OpenMP is not available.
