@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "de6dbaa0_d4f108b8",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-27T23:37:58Z",
+      "side": 1,
+      "message": "The loop unnesting requires a comment.",
+      "revId": "bdaad5dca5bf05ed91a9d2a576bc2718b9e40da5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d46709c6_bf975747",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 1
