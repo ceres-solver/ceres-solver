@@ -36,8 +36,24 @@
 #include <cstddef>
 #include "ceres/internal/config.h"
 
-#if !(defined(CERES_USE_OPENMP) ^ defined(CERES_USE_TBB) ^ defined(CERES_USE_CXX11_THREADS) ^ defined(CERES_NO_THREADS))
-#error CERES_USE_OPENMP, CERES_USE_TBB, CERES_USE_CXX11_THREADS, and CERES_NO_THREADS are mutually exclusive, but multiple are defined.
+#if defined(CERES_USE_OPENMP)
+#  if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS) || defined(CERES_NO_THREADS)
+#    error CERES_USE_OPENMP is mutually exclusive to CERES_USE_TBB, CERES_USE_CXX11_THREADS, and CERES_NO_THREADS
+#  endif
+#elif defined(CERES_USE_TBB)
+#  if defined(CERES_USE_OPENMP) || defined(CERES_USE_CXX11_THREADS) || defined(CERES_NO_THREADS)
+#    error CERES_USE_TBB is mutually exclusive to CERES_USE_OPENMP, CERES_USE_CXX11_THREADS and CERES_NO_THREADS
+#  endif
+#elif defined(CERES_USE_CXX11_THREADS)
+#  if defined(CERES_USE_OPENMP) || defined(CERES_USE_TBB) || defined(CERES_NO_THREADS)
+#    error CERES_USE_CXX11_THREADS is mutually exclusive to CERES_USE_OPENMP, CERES_USE_CXX11_THREADS and CERES_NO_THREADS
+#  endif
+#elif defined(CERES_NO_THREADS)
+#  if defined(CERES_USE_OPENMP) || defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
+#    error CERES_NO_THREADS is mutually exclusive to CERES_USE_OPENMP, CERES_USE_TBB and CERES_USE_CXX11_THREADS
+#  endif
+#else
+#  error One of CERES_USE_OPENMP, CERES_USE_TBB,CERES_USE_CXX11_THREADS or CERES_NO_THREADS must be defined.
 #endif
 
 #if defined(CERES_TR1_MEMORY_HEADER)
