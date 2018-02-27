@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3affe7fc_367ced23",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-27T00:09:06Z",
+      "side": 1,
+      "message": "Done.  Sorry about all these whitespace issues.  I need to better configure emacs for handling cmake files.",
+      "parentUuid": "2f2ad181_0dc55f5c",
+      "revId": "56f15ff92f5826039001f1c216c71712eeb331db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5041f382_b2b3b8df",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "564e32d2_9293aa8f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-27T00:09:06Z",
+      "side": 1,
+      "message": "thanks that is much better.",
+      "parentUuid": "5041f382_b2b3b8df",
+      "range": {
+        "startLine": 465,
+        "startChar": 10,
+        "endLine": 465,
+        "endChar": 21
+      },
+      "revId": "56f15ff92f5826039001f1c216c71712eeb331db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6c029d4_b0f55682",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "56f15ff92f5826039001f1c216c71712eeb331db",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d82038a_2bf81563",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-27T00:09:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6c029d4_b0f55682",
+      "revId": "56f15ff92f5826039001f1c216c71712eeb331db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "515cdcce_dc5bf40d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-27T00:09:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d797b88e_ae0353d9",
+      "revId": "56f15ff92f5826039001f1c216c71712eeb331db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10260715_fe4c1b60",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
@@ -90,6 +168,24 @@
       "revId": "56f15ff92f5826039001f1c216c71712eeb331db",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3a26d5_1fc59563",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-27T00:09:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10260715_fe4c1b60",
+      "revId": "56f15ff92f5826039001f1c216c71712eeb331db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
