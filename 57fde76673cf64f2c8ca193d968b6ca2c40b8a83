@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "c2dd12f4_bcc15737",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-27T23:55:16Z",
+      "side": 1,
+      "message": "good catch. the default is 1. which is the same as num_threads, so as stated the test is kind of a bust and willbecome noisy over time as people stop paying attention to num_threads.\n\nSo two options.\n\n1. do not bother with the warning.\n2. change the test to be \n\n(options-\u003enum_linear_solver_threads \u003e 1 \u0026 options-\u003enum_threads !\u003d options-\u003enum_linear_solver_threads)\n\nWDYT?",
+      "parentUuid": "44be6cda_4c626c30",
+      "revId": "57fde76673cf64f2c8ca193d968b6ca2c40b8a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "088e8353_992059a7",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 1
