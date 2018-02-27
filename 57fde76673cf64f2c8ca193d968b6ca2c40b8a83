@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "fe599c31_d60977f7",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 2154,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-27T16:03:58Z",
+      "side": 1,
+      "message": "num_threads_used",
+      "range": {
+        "startLine": 2154,
+        "startChar": 31,
+        "endLine": 2154,
+        "endChar": 46
+      },
+      "revId": "57fde76673cf64f2c8ca193d968b6ca2c40b8a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42871b29_64d91083",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-27T16:03:58Z",
+      "side": 1,
+      "message": "Above, \"the value will be num_...\"; here \"the value will be equal to num_...\". Either is fine; pick one :-)",
+      "range": {
+        "startLine": 953,
+        "startChar": 31,
+        "endLine": 953,
+        "endChar": 44
+      },
+      "revId": "57fde76673cf64f2c8ca193d968b6ca2c40b8a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44be6cda_4c626c30",
         "filename": "internal/ceres/preprocessor.cc",
         "patchSetId": 1
@@ -30,6 +76,29 @@
       "writtenOn": "2018-02-27T07:18:22Z",
       "side": 1,
       "message": "Nolint indentation.",
+      "revId": "57fde76673cf64f2c8ca193d968b6ca2c40b8a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3e28da_1a9c9d9d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-27T16:03:58Z",
+      "side": 1,
+      "message": "NOLINT indentation",
+      "range": {
+        "startLine": 388,
+        "startChar": 0,
+        "endLine": 389,
+        "endChar": 0
+      },
       "revId": "57fde76673cf64f2c8ca193d968b6ca2c40b8a83",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
