@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "505a3e9f_f38fe454",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-28T22:38:29Z",
+      "side": 1,
+      "message": "isn\u0027t this c++11 only?",
+      "range": {
+        "startLine": 1583,
+        "startChar": 14,
+        "endLine": 1583,
+        "endChar": 30
+      },
+      "revId": "818a339880f13bebd1ff67ffb02aecd029d256ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
