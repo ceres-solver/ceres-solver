@@ -1537,6 +1537,7 @@ Instances
    once, regardless of how many residual blocks refer to them.
 
 .. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, const vector<double*> parameter_blocks)
+.. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, double *x0, double *x1, ...)
 
    Add a residual block to the overall cost function. The cost
    function carries with it information about the sizes of the
@@ -1545,6 +1546,9 @@ Instances
    program aborts if a mismatch is detected. loss_function can be
    NULL, in which case the cost of the term is just the squared norm
    of the residuals.
+
+   The parameter blocks may be passed together as a
+   ``vector<double*>``, or as up to ten separate ``double*`` pointers.
 
    The user has the option of explicitly adding the parameter blocks
    using AddParameterBlock. This causes additional correctness
@@ -1571,12 +1575,18 @@ Instances
       double x1[] = {1.0, 2.0, 3.0};
       double x2[] = {1.0, 2.0, 5.0, 6.0};
       double x3[] = {3.0, 6.0, 2.0, 5.0, 1.0};
+      vector<double*> v1;
+      v1.push_back(x1);
+      vector<double*> v2;
+      v2.push_back(x2);
+      v2.push_back(x1);
 
       Problem problem;
 
       problem.AddResidualBlock(new MyUnaryCostFunction(...), NULL, x1);
       problem.AddResidualBlock(new MyBinaryCostFunction(...), NULL, x2, x1);
-
+      problem.AddResidualBlock(new MyUnaryCostFunction(...), NULL, v1);
+      problem.AddResidualBlock(new MyBinaryCostFunction(...), NULL, v2);
 
 .. function:: void Problem::AddParameterBlock(double* values, int size, LocalParameterization* local_parameterization)
 
