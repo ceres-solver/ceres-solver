@@ -83,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "570de00a_b3c6b6c2",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-28T00:33:12Z",
+      "side": 1,
+      "message": "I suggest instead we set the default number (options constructor) to -1 or something similar, and then warn when linear_solver_threads !\u003d -1 \u0026\u0026 num_threads !\u003d num_linear_solver_threads.",
+      "parentUuid": "c2dd12f4_bcc15737",
+      "revId": "57fde76673cf64f2c8ca193d968b6ca2c40b8a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "088e8353_992059a7",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 1
