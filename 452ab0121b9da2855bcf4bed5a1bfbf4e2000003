@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "02c5ef70_5a51a645",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-28T22:24:50Z",
+      "side": 1,
+      "message": "Thanks this is much better.",
+      "parentUuid": "d1f61306_89fc7941",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 59
+      },
+      "revId": "452ab0121b9da2855bcf4bed5a1bfbf4e2000003",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de8235bc_e6acafc8",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 2
