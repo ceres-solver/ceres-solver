@@ -95,16 +95,9 @@ class ThreadTokenProvider {
 #ifdef CERES_USE_CXX11_THREADS
   // This queue initially holds a sequence from 0..num_threads-1. Every
   // Acquire() call the first number is removed from here. When the token is not
-  // needed anymore it shall be given back with corresponding Release() call.
-  //
-  // The thread number is acquired on every for loop iteration. The
-  // ConcurrentQueue uses a mutex to enable thread safety, however, this can
-  // lead to a large amount of contention between the threads which can cause a
-  // loss in performance. This is noticable for problems with inexpensive
-  // residual computations.
-  //
-  // TODO(vitus): We should either implement a more performant queue (such as
-  // lock free), or get the thread ID from the shared state.
+  // needed anymore it shall be given back with corresponding Release()
+  // call. This concurrent queue is more expensive than TBB's version, so you
+  // should not acquire the thread ID on every for loop iteration.
   ConcurrentQueue<int> pool_;
 #endif
 

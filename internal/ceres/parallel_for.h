@@ -47,6 +47,15 @@ void ParallelFor(ContextImpl* context,
                  int num_threads,
                  const std::function<void(int)>& function);
 
+// Execute the function for every element in the range [start, end) with at most
+// num_threads. It will execute all the work on the calling thread if
+// num_threads is 1. A unique thread ID among all active tasks will be passed to
+// the function.
+void ParallelFor(ContextImpl* context,
+                 int start,
+                 int end,
+                 int num_threads,
+                 const std::function<void(int thread_id, int i)>& function);
 }  // namespace internal
 }  // namespace ceres
 

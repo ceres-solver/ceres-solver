@@ -36,10 +36,13 @@
 #include "ceres/thread_pool.h"
 
 #include <chrono>
+#include <condition_variable>
+#include <mutex>
 #include <thread>
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
