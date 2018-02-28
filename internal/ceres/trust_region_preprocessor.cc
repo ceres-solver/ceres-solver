@@ -193,7 +193,7 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
   pp->linear_solver_options.use_explicit_schur_complement =
       options.use_explicit_schur_complement;
   pp->linear_solver_options.dynamic_sparsity = options.dynamic_sparsity;
-  pp->linear_solver_options.num_threads = options.num_linear_solver_threads;
+  pp->linear_solver_options.num_threads = options.num_threads;
   pp->linear_solver_options.use_postordering = options.use_postordering;
   pp->linear_solver_options.context = pp->problem->context();
 

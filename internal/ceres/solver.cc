@@ -96,7 +96,6 @@ bool CommonOptionsAreValid(const Solver::Options& options, string* error) {
   OPTION_GE(gradient_tolerance, 0.0);
   OPTION_GE(parameter_tolerance, 0.0);
   OPTION_GT(num_threads, 0);
-  OPTION_GT(num_linear_solver_threads, 0);
   if (options.check_gradients) {
     OPTION_GT(gradient_check_relative_precision, 0.0);
     OPTION_GT(gradient_check_numeric_derivative_relative_step_size, 0.0);
@@ -369,7 +368,7 @@ void PreSolveSummarize(const Solver::Options& options,
   summary->max_lbfgs_rank                     = options.max_lbfgs_rank;
   summary->minimizer_type                     = options.minimizer_type;
   summary->nonlinear_conjugate_gradient_type  = options.nonlinear_conjugate_gradient_type;  //  NOLINT
-  summary->num_linear_solver_threads_given    = options.num_linear_solver_threads;          //  NOLINT
+  summary->num_linear_solver_threads_given    = options.num_threads;
   summary->num_threads_given                  = options.num_threads;
   summary->preconditioner_type_given          = options.preconditioner_type;
   summary->sparse_linear_algebra_library_type = options.sparse_linear_algebra_library_type; //  NOLINT
@@ -386,9 +385,9 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
 
   summary->inner_iterations_used          = pp.inner_iteration_minimizer.get() != NULL;     // NOLINT
   summary->linear_solver_type_used        = pp.linear_solver_options.type;
-  summary->num_linear_solver_threads_used = pp.options.num_linear_solver_threads;           // NOLINT
+  summary->num_linear_solver_threads_used = pp.options.num_threads;
   summary->num_threads_used               = pp.options.num_threads;
-  summary->preconditioner_type_used       = pp.options.preconditioner_type;                 // NOLINT
+  summary->preconditioner_type_used       = pp.options.preconditioner_type;
 
   internal::SetSummaryFinalCost(summary);
 
@@ -528,8 +527,7 @@ void Solver::Solve(const Solver::Options& options,
   PreSolveSummarize(options, problem_impl, summary);
 
   // The main thread also does work so we only need to launch num_threads - 1.
-  problem_impl->context()->EnsureMinimumThreads(
-      std::max(options.num_threads, options.num_linear_solver_threads) - 1);
+  problem_impl->context()->EnsureMinimumThreads(options.num_threads - 1);
 
   // Make sure that all the parameter blocks states are set to the
   // values provided by the user.
@@ -779,9 +777,6 @@ string Solver::Summary::FullReport() const {
     }
     StringAppendF(&report, "Threads             % 25d% 25d\n",
                   num_threads_given, num_threads_used);
-    StringAppendF(&report, "Linear solver threads % 23d% 25d\n",
-                  num_linear_solver_threads_given,
-                  num_linear_solver_threads_used);
 
     string given;
     StringifyOrdering(linear_solver_ordering_given, &given);
