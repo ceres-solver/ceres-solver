@@ -102,8 +102,6 @@ struct SolverConfig {
         sparse_linear_algebra_library_type;
     options->preconditioner_type = preconditioner_type;
     options->num_threads = num_threads;
-    options->num_linear_solver_threads = num_threads;
-
     if (use_automatic_ordering) {
       options->linear_solver_ordering.reset();
     }
