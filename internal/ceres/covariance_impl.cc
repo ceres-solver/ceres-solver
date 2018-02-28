@@ -342,7 +342,9 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 
   bool success = true;
 
+#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
   ThreadTokenProvider thread_token_provider(num_threads);
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
   // Technically the following code is a double nested loop where
   // i = 1:n, j = i:n.
@@ -361,7 +363,7 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
               0,
               num_parameters * num_parameters,
               num_threads,
-              [&](int k) {
+              [&](int thread_id, int k) {
 #endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
       int i = k / num_parameters;
       int j = k % num_parameters;
@@ -377,8 +379,10 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
       int covariance_col_idx = cum_parameter_size[j];
       int size_i = parameter_sizes[i];
       int size_j = parameter_sizes[j];
+#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
       const ScopedThreadToken scoped_thread_token(&thread_token_provider);
       const int thread_id = scoped_thread_token.token();
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
       double* covariance_block =
           workspace.get() +
           thread_id * max_covariance_block_size * max_covariance_block_size;
@@ -716,7 +720,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   const int num_threads = options_.num_threads;
   scoped_array<double> workspace(new double[num_threads * num_cols]);
 
+#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
   ThreadTokenProvider thread_token_provider(num_threads);
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
 #ifdef CERES_USE_OPENMP
 #pragma omp parallel for num_threads(num_threads) schedule(dynamic)
@@ -726,14 +732,20 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   for (int r = 0; r < num_cols; ++r) {
 #else
   problem_->context()->EnsureMinimumThreads(num_threads);
-  ParallelFor(problem_->context(), 0, num_cols, num_threads, [&](int r) {
+  ParallelFor(problem_->context(),
+              0,
+              num_cols,
+              num_threads,
+              [&](int thread_id, int r) {
 #endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
     const int row_begin = rows[r];
     const int row_end = rows[r + 1];
     if (row_end != row_begin) {
+#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
       const ScopedThreadToken scoped_thread_token(&thread_token_provider);
       const int thread_id = scoped_thread_token.token();
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
       double* solution = workspace.get() + thread_id * num_cols;
       SolveRTRWithSparseRHS<SuiteSparse_long>(
@@ -917,7 +929,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
   const int num_threads = options_.num_threads;
   scoped_array<double> workspace(new double[num_threads * num_cols]);
 
+#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
   ThreadTokenProvider thread_token_provider(num_threads);
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
 #ifdef CERES_USE_OPENMP
 #pragma omp parallel for num_threads(num_threads) schedule(dynamic)
@@ -927,14 +941,20 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
   for (int r = 0; r < num_cols; ++r) {
 #else
   problem_->context()->EnsureMinimumThreads(num_threads);
-  ParallelFor(problem_->context(), 0, num_cols, num_threads, [&](int r) {
+  ParallelFor(problem_->context(),
+              0,
+              num_cols,
+              num_threads,
+              [&](int thread_id, int r) {
 #endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
     const int row_begin = rows[r];
     const int row_end = rows[r + 1];
     if (row_end != row_begin) {
+#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
       const ScopedThreadToken scoped_thread_token(&thread_token_provider);
       const int thread_id = scoped_thread_token.token();
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
       double* solution = workspace.get() + thread_id * num_cols;
       SolveRTRWithSparseRHS<int>(

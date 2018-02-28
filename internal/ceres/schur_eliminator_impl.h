@@ -222,7 +222,9 @@ Eliminate(const BlockSparseMatrix* A,
 #endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
   }
 
+#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
   ThreadTokenProvider thread_token_provider(num_threads_);
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
 #ifdef CERES_USE_OPENMP
   // Eliminate y blocks one chunk at a time.  For each chunk, compute
@@ -243,12 +245,15 @@ Eliminate(const BlockSparseMatrix* A,
 
 #if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
   for (int i = 0; i < chunks_.size(); ++i) {
-#else
-  ParallelFor(context_, 0, int(chunks_.size()), num_threads_, [&](int i) {
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-
     const ScopedThreadToken scoped_thread_token(&thread_token_provider);
     const int thread_id = scoped_thread_token.token();
+#else
+    ParallelFor(context_,
+                0,
+                int(chunks_.size()),
+                num_threads_,
+                [&](int thread_id, int i) {
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
     double* buffer = buffer_.get() + thread_id * buffer_size_;
     const Chunk& chunk = chunks_[i];
