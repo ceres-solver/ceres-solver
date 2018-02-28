@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de8235bc_e6acafc8",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-28T21:44:07Z",
+      "side": 1,
+      "message": "acquired",
+      "revId": "452ab0121b9da2855bcf4bed5a1bfbf4e2000003",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
