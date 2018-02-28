@@ -175,7 +175,9 @@ class ProgramEvaluator : public Evaluator {
 
     const int num_residual_blocks = program_->NumResidualBlocks();
 
+#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
     ThreadTokenProvider thread_token_provider(options_.num_threads);
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
 #ifdef CERES_USE_OPENMP
     // This bool is used to disable the loop if an error is encountered
@@ -196,8 +198,11 @@ class ProgramEvaluator : public Evaluator {
 #if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
     std::atomic_bool abort(false);
 
-    ParallelFor(options_.context, 0, num_residual_blocks, options_.num_threads,
-                [&](int i) {
+    ParallelFor(options_.context,
+                0,
+                num_residual_blocks,
+                options_.num_threads,
+                [&](int thread_id, int i) {
 #endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
 
       if (abort) {
@@ -208,8 +213,10 @@ class ProgramEvaluator : public Evaluator {
 #endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
       }
 
+#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
       const ScopedThreadToken scoped_thread_token(&thread_token_provider);
       const int thread_id = scoped_thread_token.token();
+#endif  // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
       EvaluatePreparer* preparer = &evaluate_preparers_[thread_id];
       EvaluateScratch* scratch = &evaluate_scratch_[thread_id];

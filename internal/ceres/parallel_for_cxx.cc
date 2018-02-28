@@ -41,7 +41,8 @@
 #include <mutex>
 
 #include "ceres/concurrent_queue.h"
-#include "ceres/thread_pool.h"
+#include "ceres/scoped_thread_token.h"
+#include "ceres/thread_token_provider.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -90,6 +91,7 @@ struct SharedState {
         end(end),
         num_work_items(num_work_items),
         i(0),
+        thread_token_provider(num_work_items),
         block_until_finished(num_work_items) {}
 
   // The start and end index of the for loop.
@@ -105,27 +107,17 @@ struct SharedState {
   int i;
   std::mutex mutex_i;
 
-  // Used to signal when all the work has been completed.
+  // Provides a unique thread ID among all active threads working on the same
+  // group of tasks.  Thread-safe.
+  ThreadTokenProvider thread_token_provider;
+
+  // Used to signal when all the work has been completed.  Thread safe.
   BlockUntilFinished block_until_finished;
 };
 
 }  // namespace
 
-// This implementation uses a fixed size max worker pool with a shared task
-// queue. The problem of executing the function for the interval of [start, end)
-// is broken up into at most num_threads blocks and added to the thread pool. To
-// avoid deadlocks, the calling thread is allowed to steal work from the worker
-// pool. This is implemented via a shared state between the tasks. In order for
-// the calling thread or thread pool to get a block of work, it will query the
-// shared state for the next block of work to be done. If there is nothing left,
-// it will return. We will exit the ParallelFor call when all of the work has
-// been done, not when all of the tasks have been popped off the task queue.
-//
-// A performance analysis has shown this implementation is about ~20% slower
-// than OpenMP or TBB. This native implementation is a fix for platforms that do
-// not have access to OpenMP or TBB. The gain in enabling multi-threaded Ceres
-// is much more significant so we decided to not chase the performance of these
-// two libraries.
+// See ParallelFor (below) for more details.
 void ParallelFor(ContextImpl* context,
                  int start,
                  int end,
@@ -141,6 +133,51 @@ void ParallelFor(ContextImpl* context,
   if (num_threads == 1) {
     for (int i = start; i < end; ++i) {
       function(i);
+    }
+    return;
+  }
+
+  ParallelFor(context, start, end, num_threads,
+              [&function](int /*thread_id*/, int i) { function(i); });
+}
+
+// This implementation uses a fixed size max worker pool with a shared task
+// queue. The problem of executing the function for the interval of [start, end)
+// is broken up into at most num_threads blocks and added to the thread pool. To
+// avoid deadlocks, the calling thread is allowed to steal work from the worker
+// pool. This is implemented via a shared state between the tasks. In order for
+// the calling thread or thread pool to get a block of work, it will query the
+// shared state for the next block of work to be done. If there is nothing left,
+// it will return. We will exit the ParallelFor call when all of the work has
+// been done, not when all of the tasks have been popped off the task queue.
+//
+// A unique thread ID among all active tasks will be acquired once for each
+// block of work.  This avoids the significant performance penalty for acquiring
+// it on every iteration of the for loop. The thread ID is guaranteed to be in
+// [0, num_threads).
+//
+// A performance analysis has shown this implementation is onpar with OpenMP and
+// TBB.
+void ParallelFor(ContextImpl* context,
+                 int start,
+                 int end,
+                 int num_threads,
+                 const std::function<void(int thread_id, int i)>& function) {
+  CHECK_GT(num_threads, 0);
+  CHECK(context != NULL);
+  if (end <= start) {
+    return;
+  }
+
+  // Fast path for when it is single threaded.
+  if (num_threads == 1) {
+    // Even though we only have one thread, use the thread token provider to
+    // guarantee the exact same behavior when running with multiple threads.
+    ThreadTokenProvider thread_token_provider(num_threads);
+    const ScopedThreadToken scoped_thread_token(&thread_token_provider);
+    const int thread_id = scoped_thread_token.token();
+    for (int i = start; i < end; ++i) {
+      function(thread_id, i);
     }
     return;
   }
@@ -167,11 +204,15 @@ void ParallelFor(ContextImpl* context,
       ++shared_state->i;
     }
 
+    const ScopedThreadToken scoped_thread_token(
+        &shared_state->thread_token_provider);
+    const int thread_id = scoped_thread_token.token();
+
     // Perform each task.
     for (int j = shared_state->start + i;
          j < shared_state->end;
          j += shared_state->num_work_items) {
-      function(j);
+      function(thread_id, j);
     }
     shared_state->block_until_finished.Finished();
     return true;
