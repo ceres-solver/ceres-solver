@@ -258,5 +258,26 @@ ifndef CERES_GLOG_DIR
 LOCAL_SRC_FILES += $(CERES_SRC_PATH)/miniglog/glog/logging.cc
 endif
 
+# master switch if the optimization of small matrices expected
+LOCAL_CFLAGS += -DSMALL_BLAS_OPT
+ifeq (clang, $(findstring clang, $(NDK_TOOLCHAIN_VERSION)))
+  # ASM codes only work on arm64-v8a platform(registers x0~x15 used)
+  ifeq (arm64-v8a, $(TARGET_ARCH_ABI))
+    LOCAL_SRC_FILES += $(CERES_SRC_PATH)/small_blas_asm/MMM_mat1x4_arm_p1.s \
+                       $(CERES_SRC_PATH)/small_blas_asm/MMM_mat1x4_arm_m1.s \
+                       $(CERES_SRC_PATH)/small_blas_asm/MMM_mat1x4_arm_00.s \
+                       $(CERES_SRC_PATH)/small_blas_asm/MMM_mat4x4_arm_p1.s \
+                       $(CERES_SRC_PATH)/small_blas_asm/MMM_mat4x4_arm_m1.s \
+                       $(CERES_SRC_PATH)/small_blas_asm/MMM_mat4x4_arm_00.s \
+                       $(CERES_SRC_PATH)/small_blas_asm/MTM_mat1x4_arm_p1.s \
+                       $(CERES_SRC_PATH)/small_blas_asm/MTM_mat1x4_arm_m1.s \
+                       $(CERES_SRC_PATH)/small_blas_asm/MTM_mat1x4_arm_00.s \
+                       $(CERES_SRC_PATH)/small_blas_asm/MTM_mat4x4_arm_p1.s \
+                       $(CERES_SRC_PATH)/small_blas_asm/MTM_mat4x4_arm_m1.s \
+                       $(CERES_SRC_PATH)/small_blas_asm/MTM_mat4x4_arm_00.s
+    #LOCAL_CFLAGS += -DSMALL_BLAS_OPT_ARM64_ARCH
+  endif
+endif
+
 LOCAL_MODULE := ceres
 include $(BUILD_STATIC_LIBRARY)
