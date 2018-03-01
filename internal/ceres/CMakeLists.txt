@@ -282,7 +282,7 @@ if (BUILD_TESTING AND GFLAGS)
   endif (MINIGLOG)
 
   macro (CERES_TEST NAME)
-    add_executable(${NAME}_test ${NAME}_test.cc)
+    add_executable(${NAME}_test ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}_test.cc)
     target_link_libraries(${NAME}_test test_util ceres gtest)
     if (BUILD_SHARED_LIBS)
       # Define gtest-specific shared library flags for linking.
@@ -377,8 +377,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(visibility)
   ceres_test(visibility_based_preconditioner)
 
-  # Put the large end to end test last.
-  ceres_test(bundle_adjustment)
+  add_subdirectory(generated_bundle_adjustment_tests)
 
 endif (BUILD_TESTING AND GFLAGS)
 
