@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6fd2504_71541692",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-01T23:19:29Z",
+      "side": 1,
+      "message": "I think the last part of the sentence is superfluous. But the rest looks sane to me.\nI need to go look at the semantics of  update_state_every_iteration and how that will be affected by this.",
+      "revId": "ae66c049d6d0a5f9c8a214d234d4e9a7ad7c9404",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
