@@ -722,7 +722,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
 
 #if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
   ThreadTokenProvider thread_token_provider(num_threads);
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
+#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
 
 #ifdef CERES_USE_OPENMP
 #pragma omp parallel for num_threads(num_threads) schedule(dynamic)
