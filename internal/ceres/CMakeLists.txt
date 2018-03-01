@@ -377,8 +377,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(visibility)
   ceres_test(visibility_based_preconditioner)
 
-  # Put the large end to end test last.
-  ceres_test(bundle_adjustment)
+  add_subdirectory(generated_bundle_adjustment_tests)
 
 endif (BUILD_TESTING AND GFLAGS)
 
