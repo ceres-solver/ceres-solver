@@ -221,27 +221,22 @@ CERES_GEMM_BEGIN(MatrixTransposeMatrixMultiplyNaive) {
   DCHECK_LE(start_row_c + NUM_ROW_C, row_stride_c);
   DCHECK_LE(start_col_c + NUM_COL_C, col_stride_c);
 
-  if (kOperation == 0) {
-    std::fill(C, C + NUM_ROW_C * NUM_COL_C, 0.0);
-  }
-
-  // Evaluate C op A' * B
-  // as the sum of rank one outer products of the rows of A and B.
-  for (int r = 0; r < NUM_ROW_A; ++r) {
-    double* c_row = C + start_row_c * col_stride_c;
-    for (int i = 0; i < NUM_COL_A; ++i) {
-      const double a_value = A[i];
-      for (int j = 0; j < NUM_COL_B; ++j) {
-        if (kOperation >= 0) {
-          c_row[start_col_c + j] += a_value * B[j];
-        } else {
-          c_row[start_col_c + j] -= a_value * B[j];
-        }
+  for (int row = 0; row < NUM_ROW_C; ++row) {
+    for (int col = 0; col < NUM_COL_C; ++col) {
+      double tmp = 0.0;
+      for (int k = 0; k < NUM_ROW_A; ++k) {
+        tmp += A[k * NUM_COL_A + row] * B[k * NUM_COL_B + col];
       }
-      c_row += col_stride_c;
+
+      const int index = (row + start_row_c) * col_stride_c + start_col_c + col;
+      if (kOperation > 0) {
+        C[index]+= tmp;
+      } else if (kOperation < 0) {
+        C[index]-= tmp;
+      } else {
+        C[index]= tmp;
+      }
     }
-    A += NUM_COL_A;
-    B += NUM_COL_B;
   }
 }
 

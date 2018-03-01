@@ -35,6 +35,7 @@
 
 #include "ceres/parallel_for.h"
 
+#include <cmath>
 #include <vector>
 
 #include "ceres/context_impl.h"
