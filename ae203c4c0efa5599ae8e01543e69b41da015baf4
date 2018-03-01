@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f55fce4b_928076e4",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-01T22:52:51Z",
+      "side": 1,
+      "message": "this interacts with or rather requires that the user set Solver::Options::update_state_every_iteration. we should think through that too.",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 35
+      },
+      "revId": "ae203c4c0efa5599ae8e01543e69b41da015baf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e886a6d_55641183",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-01T22:52:51Z",
+      "side": 1,
+      "message": "I think this is too strongly worded, because it implies something about the entire iteration history of the solver.\n\nwhat we want is something simpler, along the lines of is this the same point as the last time this callback was called or not.\n\nalso we can likely make this one function no?\n\nPrepareForEvaluation(bool evaluate_jacobians, bool new_evaluation_point) ?",
+      "range": {
+        "startLine": 71,
+        "startChar": 54,
+        "endLine": 71,
+        "endChar": 64
+      },
+      "revId": "ae203c4c0efa5599ae8e01543e69b41da015baf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a97bd33_255e85f7",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-01T22:52:51Z",
+      "side": 1,
+      "message": "will also be evaluated.",
+      "range": {
+        "startLine": 77,
+        "startChar": 58,
+        "endLine": 77,
+        "endChar": 62
+      },
+      "revId": "ae203c4c0efa5599ae8e01543e69b41da015baf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
