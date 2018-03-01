@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25922ec9_6ca3674f",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-01T22:23:19Z",
+      "side": 1,
+      "message": "haha :)",
+      "range": {
+        "startLine": 242,
+        "startChar": 57,
+        "endLine": 242,
+        "endChar": 58
+      },
+      "revId": "7291239f88c1941310fe5fe2b360d4b3666032a0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
