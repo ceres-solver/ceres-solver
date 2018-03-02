@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "685f32c4_811fa9ba",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-02T23:11:46Z",
+      "side": 1,
+      "message": "this paragraph is repetitive. I think the first two sentences are enough.",
+      "range": {
+        "startLine": 752,
+        "startChar": 16,
+        "endLine": 752,
+        "endChar": 20
+      },
+      "revId": "98a621804f7e1d85505b6674d3df0cb67e3df056",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16d0a24_51edc123",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-02T23:11:46Z",
+      "side": 1,
+      "message": "so looking at the code, if we keep the callback code the way it is, this will actually cause an update to the state every successful iteration still. \nthings only go awry if the step is unsuccessful,\n\nso I think the right thing to do actually, is to\n\nreplace\n\nif (summary.step_is_successful) {\n    program_-\u003eStateVectorToParameterBlocks(parameters_);\n    program_-\u003eCopyParameterBlockStateToUserState();\n  }\n\nwith an unconditional\n\nprogram_-\u003eStateVectorToParameterBlocks(parameters_);\nprogram_-\u003eCopyParameterBlockStateToUserState();\n\nwhat this will do is that at the end of each iteration, the state of the user visible parameter blocks (which they maybe inspecting in their callbacks) is valid and reflects the state of the optimizer.\n\n\nwhich also raises the question, what happens if this bool is false, \n\nif it is false, and the optimization succeeds, then there is no problem.\n\nbut if the optimization fails, then we have corrupted the user\u0027s state. so there is one more place where we need to change things.\n\nand that is line 459 in solver.cc, which currently reads as\n\nif (summary-\u003eIsSolutionUsable()) {\n    program-\u003eStateVectorToParameterBlocks(pp-\u003ereduced_parameters.data());\n    program-\u003eCopyParameterBlockStateToUserState();\n}\n\nwhich only updates the user\u0027s state if the solution if the solver did not do something stupid.\n\nso what we need do here is as follows\n\nscoped_ptr\u003cMinimizer\u003e minimizer(\n      Minimizer::Create(pp-\u003eoptions.minimizer_type));\n  minimizer-\u003eMinimize(pp-\u003eminimizer_options,\n                      pp-\u003ereduced_parameters.data(),\n                      summary);\n\n  if (summary-\u003eIsSolutionUsable()) {\n    program-\u003eStateVectorToParameterBlocks(pp-\u003ereduced_parameters.data());\n    program-\u003eCopyParameterBlockStateToUserState();\n  }\n\ngets replaced by\n\n\nVector original_reduced_parameters \u003d pp-\u003ereduced_parameters;\nscoped_ptr\u003cMinimizer\u003e minimizer(\n      Minimizer::Create(pp-\u003eoptions.minimizer_type));\n  minimizer-\u003eMinimize(pp-\u003eminimizer_options,\n                      pp-\u003ereduced_parameters.data(),\n                      summary);\n\n   program-\u003eStateVectorToParameterBlocks(\nsummary-\u003eIsSolutionUsable() ? \npp-\u003ereduced_parameters.data()) : original_reduced_parameters.data());\n   program-\u003eCopyParameterBlockStateToUserState();",
+      "range": {
+        "startLine": 753,
+        "startChar": 7,
+        "endLine": 753,
+        "endChar": 17
+      },
+      "revId": "98a621804f7e1d85505b6674d3df0cb67e3df056",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
