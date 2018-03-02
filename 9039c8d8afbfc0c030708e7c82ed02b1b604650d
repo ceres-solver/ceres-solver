@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b26dd17_b98004a1",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-02T08:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49e26e3a_0f4d6988",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 11
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cade53b_cd51140f",
         "filename": "include/ceres/evaluation_callback.h",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e1e13fff_9e400679",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-02T08:36:11Z",
+      "side": 1,
+      "message": "Updated. I don\u0027t agree it\u0027s too verbose-- while the purpose of this interface is fairly clear to us, I expect it will be less clear to others.",
+      "parentUuid": "6cade53b_cd51140f",
+      "range": {
+        "startLine": 40,
+        "startChar": 32,
+        "endLine": 40,
+        "endChar": 35
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a272382b_e3715ae2",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 11
@@ -59,6 +107,30 @@
       "writtenOn": "2018-03-02T05:46:25Z",
       "side": 1,
       "message": "LineSearchMinimizer I need to think about more carefully.",
+      "range": {
+        "startLine": 127,
+        "startChar": 25,
+        "endLine": 127,
+        "endChar": 26
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e3be46_7b1e3cd4",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-02T08:36:11Z",
+      "side": 1,
+      "message": "Yep. Based on my first pass through it, it was not obvious that there is an opportunity to set new_evaluation_point\u003dfalse. It seems that the line search solvers never re-evaluate; they either always take the gradient or not.\n\nAlex, what do you think?",
+      "parentUuid": "a272382b_e3715ae2",
       "range": {
         "startLine": 127,
         "startChar": 25,
@@ -94,6 +166,47 @@
     },
     {
       "key": {
+        "uuid": "178b6966_a6bf2f59",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-02T08:36:11Z",
+      "side": 1,
+      "message": "You are correct. Tests needed!",
+      "parentUuid": "c8936fb4_0fea641e",
+      "range": {
+        "startLine": 164,
+        "startChar": 38,
+        "endLine": 164,
+        "endChar": 42
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9de77658_e5c44987",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-02T08:36:11Z",
+      "side": 1,
+      "message": "In this case, there is no opportunity to reuse (newpoint\u003dtrue).",
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9497d2c2_d0879c55",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 11
@@ -114,6 +227,30 @@
       "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b4d7e0_b75662c2",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-02T08:36:11Z",
+      "side": 1,
+      "message": "It\u0027s not; this is the only place where new_evaluation_point might be set to false. The other solvers (line search, bfgs) it\u0027s not clear to me whether we can do this style caching (re-evaluating the same point).",
+      "parentUuid": "9497d2c2_d0879c55",
+      "range": {
+        "startLine": 230,
+        "startChar": 28,
+        "endLine": 230,
+        "endChar": 44
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +277,30 @@
     },
     {
       "key": {
+        "uuid": "c79c2b18_3a1f1827",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-02T08:36:11Z",
+      "side": 1,
+      "message": "It\u0027s not; see the call in IterationZero().",
+      "parentUuid": "1155fb8e_3e1e8568",
+      "range": {
+        "startLine": 783,
+        "startChar": 2,
+        "endLine": 783,
+        "endChar": 4
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9cafb8d_e217da79",
         "filename": "internal/ceres/trust_region_minimizer.h",
         "patchSetId": 11
@@ -160,6 +321,30 @@
       "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e063926_407c6bbd",
+        "filename": "internal/ceres/trust_region_minimizer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-02T08:36:11Z",
+      "side": 1,
+      "message": "As mentioned, not the case.",
+      "parentUuid": "f9cafb8d_e217da79",
+      "range": {
+        "startLine": 66,
+        "startChar": 34,
+        "endLine": 66,
+        "endChar": 35
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
