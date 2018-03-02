@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "935bd07e_6eb58e95",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-03-02T20:17:10Z",
+      "side": 1,
+      "message": "Correct, the line search solvers never re-evaluate the same point with/without gradients.  They either always calculate the gradients (Wolfe, Armijo with cubic interpolation), or never do (Armijo with \u003c cubic interpolation).\n\nI think I tried to explain the rationale originally here: https://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/line_search.cc#L520\n\nStrictly speaking, you could modify the Wolfe search s/t it did re-evaluate if the Armijo conditions were satisfied to get the gradient to evaluate the (remaining) Wolfe conditions.  However in my original use-case the cost function was actually being evaluated on a set of GPUs, so the overhead of an additional call was actually quite significant, as was the issue of subtle changes in the evaluated cost between re-evaluations of the same point resulting in inconsistencies.  As it happens we explicitly check for such inconsistencies precisely for this reason.",
+      "parentUuid": "f0e3be46_7b1e3cd4",
+      "range": {
+        "startLine": 127,
+        "startChar": 25,
+        "endLine": 127,
+        "endChar": 26
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8936fb4_0fea641e",
         "filename": "internal/ceres/program_evaluator.h",
         "patchSetId": 11
