@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a37bc39c_57cc3a44",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-02T20:27:57Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "479593be_f8a472b4",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 19
+      },
+      "revId": "dab1e2642b240ff4947a305c750417b6f4bb9158",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b5171d6_36f4b3c2",
         "filename": "include/ceres/solver.h",
         "patchSetId": 12
@@ -89,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "0a8a01dc_059b6d5b",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-02T20:27:57Z",
+      "side": 1,
+      "message": "I added some more notes. But in practice, I expect the impact will be small. In the successful update case, the parameters should be set to the correct values. It\u0027s only the unsuccessful case that the behaviour changes; and in that case, I don\u0027t expect people are looking at the parameters.\n\nAn alternate approach is to make the settings mutually exclusive. I could be convinced; users who are setting evaluation_callback !\u003d NULL are going to have to change their Ceres use anyway, so perhaps there is no harm in making this behaviour explicit.",
+      "parentUuid": "5396bd36_6fa56712",
+      "range": {
+        "startLine": 768,
+        "startChar": 7,
+        "endLine": 768,
+        "endChar": 22
+      },
+      "revId": "dab1e2642b240ff4947a305c750417b6f4bb9158",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "702f27f6_4c3f8745",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 12
@@ -109,6 +157,30 @@
       "revId": "dab1e2642b240ff4947a305c750417b6f4bb9158",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236b1ac2_93baf390",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-02T20:27:57Z",
+      "side": 1,
+      "message": "Sorry; I had changes here earlier but not anymore.",
+      "parentUuid": "702f27f6_4c3f8745",
+      "range": {
+        "startLine": 489,
+        "startChar": 9,
+        "endLine": 489,
+        "endChar": 29
+      },
+      "revId": "dab1e2642b240ff4947a305c750417b6f4bb9158",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
