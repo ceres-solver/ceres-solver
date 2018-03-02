@@ -91,6 +91,7 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "normal_prior.cc",
     "parallel_for_cxx.cc",
     "parallel_for_tbb.cc",
+    "parallel_utils.cc",
     "parameter_block_ordering.cc",
     "partitioned_matrix_view.cc",
     "polynomial.cc",
