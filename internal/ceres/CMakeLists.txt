@@ -92,6 +92,7 @@ set(CERES_INTERNAL_SRC
     normal_prior.cc
     parallel_for_cxx.cc
     parallel_for_tbb.cc
+    parallel_utils.cc
     parameter_block_ordering.cc
     partitioned_matrix_view.cc
     polynomial.cc
@@ -348,6 +349,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(numeric_diff_cost_function)
   ceres_test(ordered_groups)
   ceres_test(parallel_for)
+  ceres_test(parallel_utils)
   ceres_test(parameter_block)
   ceres_test(parameter_block_ordering)
   ceres_test(partitioned_matrix_view)

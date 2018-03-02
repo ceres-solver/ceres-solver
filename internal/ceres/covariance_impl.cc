@@ -52,6 +52,7 @@
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/map_util.h"
+#include "ceres/parallel_utils.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
 #include "ceres/residual_block.h"
@@ -348,32 +349,22 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 
   // Technically the following code is a double nested loop where
   // i = 1:n, j = i:n.
-  //
-  // To make things easier to parallelize, we instead iterate over k =
-  // 1:n^2, compute i * j ,and skip over the lower triangular part of
-  // the loop.
+  int iteration_count = (num_parameters * (num_parameters + 1)) / 2;
 #if defined(CERES_USE_OPENMP)
 #    pragma omp parallel for num_threads(num_threads) schedule(dynamic)
 #endif // CERES_USE_OPENMP
 #if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-  for (int k = 0; k < num_parameters * num_parameters; ++k) {
+  for (int k = 0; k < iteration_count; ++k) {
 #else
   problem_->context()->EnsureMinimumThreads(num_threads);
   ParallelFor(problem_->context(),
               0,
-              num_parameters * num_parameters,
+              iteration_count,
               num_threads,
               [&](int thread_id, int k) {
 #endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-      int i = k / num_parameters;
-      int j = k % num_parameters;
-      if (j < i) {
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-        return;
-#else
-        continue;
-#endif
-      }
+      int i, j;
+      LinearIterationToTriangular(k, num_parameters, &i, &j);
 
       int covariance_row_idx = cum_parameter_size[i];
       int covariance_col_idx = cum_parameter_size[j];
