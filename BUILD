@@ -123,6 +123,7 @@ CERES_TESTS = [
     "numeric_diff_cost_function",
     "ordered_groups",
     "parallel_for",
+    "parallel_utils",
     "parameter_block_ordering",
     "parameter_block",
     "partitioned_matrix_view",
