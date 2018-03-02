@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab7aa825_9c9afab4",
+        "filename": "internal/ceres/parallel_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-02T21:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "032d8fd0_dd2f4a9a",
+      "revId": "a51c75a41e94618d3348c7ceb3a89fb323911e5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "711d52b1_626b35f2",
         "filename": "internal/ceres/parallel_utils.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "a51c75a41e94618d3348c7ceb3a89fb323911e5f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e89edf_bc2c8aa6",
+        "filename": "internal/ceres/parallel_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-02T21:34:49Z",
+      "side": 1,
+      "message": "They match the usage well, and any names would need to be much much longer to have a hope of being meaningful:\nk -\u003e index_in_linear_iteration\nn -\u003e size_of_square_the_triangular_iteration_is_embedded_in\ni -\u003e index_in_first_dimension_of_triangular_iteration\nj -\u003e index_in_second_dimension_of_triangular_iteration\nwhich strikes me as a bit over the top",
+      "parentUuid": "711d52b1_626b35f2",
+      "revId": "a51c75a41e94618d3348c7ceb3a89fb323911e5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }

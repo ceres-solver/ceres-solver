@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "31bbe3d2_d95c2248",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-02T21:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed9dbb12_d63c9f70",
+      "range": {
+        "startLine": 367,
+        "startChar": 6,
+        "endLine": 367,
+        "endChar": 33
+      },
+      "revId": "f212a46c6a1964ab973c293f7e8b5c2dbfa0fe9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e79ab76_35e57334",
         "filename": "internal/ceres/parallel_utils.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f212a46c6a1964ab973c293f7e8b5c2dbfa0fe9d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a44b1f7_9fde377d",
+        "filename": "internal/ceres/parallel_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-02T21:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e79ab76_35e57334",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 32
+      },
+      "revId": "f212a46c6a1964ab973c293f7e8b5c2dbfa0fe9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
