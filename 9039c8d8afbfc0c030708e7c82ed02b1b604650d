@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49e26e3a_0f4d6988",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-02T05:46:25Z",
+      "side": 1,
+      "message": "why split the docs here and the class. All this file has is on interface with one method.\n\nI suggest having all the docs at on place next to the class.",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 11
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cade53b_cd51140f",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-02T05:46:25Z",
+      "side": 1,
+      "message": "this is outdated and a little too verbose.",
+      "range": {
+        "startLine": 40,
+        "startChar": 32,
+        "endLine": 40,
+        "endChar": 35
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a272382b_e3715ae2",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-02T05:46:25Z",
+      "side": 1,
+      "message": "LineSearchMinimizer I need to think about more carefully.",
+      "range": {
+        "startLine": 127,
+        "startChar": 25,
+        "endLine": 127,
+        "endChar": 26
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8936fb4_0fea641e",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-02T05:46:25Z",
+      "side": 1,
+      "message": "err this should be jacobian !\u003d NULL or gradient !\u003d NULL.\nwhy are you checking that residual !\u003d NULL?",
+      "range": {
+        "startLine": 164,
+        "startChar": 38,
+        "endLine": 164,
+        "endChar": 42
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9497d2c2_d0879c55",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-02T05:46:25Z",
+      "side": 1,
+      "message": "its odd that at some places you call one version of Evaluate with options, and at others a different one.",
+      "range": {
+        "startLine": 230,
+        "startChar": 28,
+        "endLine": 230,
+        "endChar": 44
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1155fb8e_3e1e8568",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-02T05:46:25Z",
+      "side": 1,
+      "message": "The argument to this function is always false, so why bother passing an argument?",
+      "range": {
+        "startLine": 783,
+        "startChar": 2,
+        "endLine": 783,
+        "endChar": 4
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9cafb8d_e217da79",
+        "filename": "internal/ceres/trust_region_minimizer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-02T05:46:25Z",
+      "side": 1,
+      "message": "see comment in cc file, there is only one call site for this function and it has as fixed argument..",
+      "range": {
+        "startLine": 66,
+        "startChar": 34,
+        "endLine": 66,
+        "endChar": 35
+      },
+      "revId": "9039c8d8afbfc0c030708e7c82ed02b1b604650d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
