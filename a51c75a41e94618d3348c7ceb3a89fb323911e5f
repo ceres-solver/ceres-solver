@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "032d8fd0_dd2f4a9a",
+        "filename": "internal/ceres/parallel_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-02T21:22:09Z",
+      "side": 1,
+      "message": "I don\u0027t think this include is needed.",
+      "revId": "a51c75a41e94618d3348c7ceb3a89fb323911e5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711d52b1_626b35f2",
+        "filename": "internal/ceres/parallel_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-02T21:22:09Z",
+      "side": 1,
+      "message": "Consider using much longer names for these arguments.",
+      "revId": "a51c75a41e94618d3348c7ceb3a89fb323911e5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
