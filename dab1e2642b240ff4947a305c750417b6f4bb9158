@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479593be_f8a472b4",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-02T15:43:23Z",
+      "side": 1,
+      "message": "This IMU bit is too specific, I suggest dropping it.\n\nMore generally make this factual with perhaps a usage example rather than walls of text.",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 19
+      },
+      "revId": "dab1e2642b240ff4947a305c750417b6f4bb9158",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5396bd36_6fa56712",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-02T15:43:23Z",
+      "side": 1,
+      "message": "I think this documentation needs to be updated a bit more, because what happens is a bit different in this case, which is that if the user as an iteration callback which is looking at the state of the parameters, they will see intermediate steps which we may never take.\n\nThis can lead to subtle bugs in user code.",
+      "range": {
+        "startLine": 768,
+        "startChar": 7,
+        "endLine": 768,
+        "endChar": 22
+      },
+      "revId": "dab1e2642b240ff4947a305c750417b6f4bb9158",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702f27f6_4c3f8745",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-02T15:43:23Z",
+      "side": 1,
+      "message": "why reflow code which you are not changing, this just creates noise here and elsewhere.",
+      "range": {
+        "startLine": 489,
+        "startChar": 9,
+        "endLine": 489,
+        "endChar": 29
+      },
+      "revId": "dab1e2642b240ff4947a305c750417b6f4bb9158",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
