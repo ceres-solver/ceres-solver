@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "43fcce37_55197bcf",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T14:30:59Z",
+      "side": 1,
+      "message": "is there a reason why we would want to keep this implementation around?",
+      "revId": "9314c38be798e175b3108df328d3348de2f32c44",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e93a1bd_3fc20548",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T14:30:59Z",
+      "side": 1,
+      "message": "same comment as above?",
+      "range": {
+        "startLine": 346,
+        "startChar": 26,
+        "endLine": 346,
+        "endChar": 35
+      },
+      "revId": "9314c38be798e175b3108df328d3348de2f32c44",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9be63fa2_2bce03b1",
         "filename": "internal/ceres/small_blas_opt.h",
         "patchSetId": 1
