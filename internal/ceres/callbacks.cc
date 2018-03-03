@@ -47,10 +47,8 @@ StateUpdatingCallback::~StateUpdatingCallback() {}
 
 CallbackReturnType StateUpdatingCallback::operator()(
     const IterationSummary& summary) {
-  if (summary.step_is_successful) {
-    program_->StateVectorToParameterBlocks(parameters_);
-    program_->CopyParameterBlockStateToUserState();
-  }
+  program_->StateVectorToParameterBlocks(parameters_);
+  program_->CopyParameterBlockStateToUserState();
   return SOLVER_CONTINUE;
 }
 
