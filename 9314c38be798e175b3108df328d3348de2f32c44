@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9be63fa2_2bce03b1",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T14:11:07Z",
+      "side": 1,
+      "message": "This five lines of code can be collapsed into a macro and reused?",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 10
+      },
+      "revId": "9314c38be798e175b3108df328d3348de2f32c44",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f0a0c4_79303db6",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T14:11:07Z",
+      "side": 1,
+      "message": "same as above, the five repeatitive lines can be replaced by a macro?",
+      "revId": "9314c38be798e175b3108df328d3348de2f32c44",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a4aa07_b72499d9",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T14:11:07Z",
+      "side": 1,
+      "message": "code reuse using macro as above?",
+      "revId": "9314c38be798e175b3108df328d3348de2f32c44",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd8f4e4_8f84b181",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T14:11:07Z",
+      "side": 1,
+      "message": "code reuse using a macro as above.",
+      "revId": "9314c38be798e175b3108df328d3348de2f32c44",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a084de_d4176adc",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T14:11:07Z",
+      "side": 1,
+      "message": "replace redundant code sections with macros ?",
+      "revId": "9314c38be798e175b3108df328d3348de2f32c44",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ceba2da_3f366489",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T14:11:07Z",
+      "side": 1,
+      "message": "the zero initialization code that occurs in every block of code before you call the macro should be folded into the macro itself.\n\ni.e. the initialization of C0 to Cf should be included in MMM_MAT4x4_MAIN\nor you can make another macro out of it, and call it, so that code can be shared too.",
+      "revId": "9314c38be798e175b3108df328d3348de2f32c44",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
