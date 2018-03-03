@@ -450,16 +450,18 @@ void Minimize(internal::PreprocessedProblem* pp,
     return;
   }
 
+  const Vector original_reduced_parameters = pp->reduced_parameters;
   scoped_ptr<Minimizer> minimizer(
       Minimizer::Create(pp->options.minimizer_type));
   minimizer->Minimize(pp->minimizer_options,
                       pp->reduced_parameters.data(),
                       summary);
 
-  if (summary->IsSolutionUsable()) {
-    program->StateVectorToParameterBlocks(pp->reduced_parameters.data());
-    program->CopyParameterBlockStateToUserState();
-  }
+  program->StateVectorToParameterBlocks(
+      summary->IsSolutionUsable()
+      ? pp->reduced_parameters.data()
+      : original_reduced_parameters.data());
+  program->CopyParameterBlockStateToUserState();
 }
 
 std::string SchurStructureToString(const int row_block_size,
