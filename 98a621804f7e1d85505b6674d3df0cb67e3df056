@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6835629_31f6cd76",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-03T01:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "685f32c4_811fa9ba",
+      "range": {
+        "startLine": 752,
+        "startChar": 16,
+        "endLine": 752,
+        "endChar": 20
+      },
+      "revId": "98a621804f7e1d85505b6674d3df0cb67e3df056",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b16d0a24_51edc123",
         "filename": "include/ceres/solver.h",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "98a621804f7e1d85505b6674d3df0cb67e3df056",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe0d5c2_a0f29eb8",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-03T01:43:51Z",
+      "side": 1,
+      "message": "As discussed this can go in a separate patch.",
+      "parentUuid": "b16d0a24_51edc123",
+      "range": {
+        "startLine": 753,
+        "startChar": 7,
+        "endLine": 753,
+        "endChar": 17
+      },
+      "revId": "98a621804f7e1d85505b6674d3df0cb67e3df056",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
