@@ -1,0 +1,432 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eabaa789_e74aebb4",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 21
+      },
+      "lineNbr": 1634,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "also add documentation for EvaluationCallback object, just like IterationCallback.",
+      "range": {
+        "startLine": 1634,
+        "startChar": 3,
+        "endLine": 1634,
+        "endChar": 9
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c5672c_044262e5",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 21
+      },
+      "lineNbr": 1639,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "residuals and Jacobians.",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79906296_bb0ac9c8",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 21
+      },
+      "lineNbr": 1641,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "discuss incompatibility/interaction with other options in the last para in one go, and focus on the use of the option in the first two paras.",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49b2bb8_288322ca",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 21
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "the second and the third para are saying the same thing.",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "112358ea_97c7847b",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "or with old parameters. I would just drop the phrase after jacobians and come back to this discussion later.",
+      "range": {
+        "startLine": 37,
+        "startChar": 50,
+        "endLine": 37,
+        "endChar": 53
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d704aa2f_8c0e9c35",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "this second paragraph seems like not the best place, it belongs more with a concrete example. I suggest dropping it. Your first paragraph is plenty.",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffff447_d7708a8f",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "This paragraph is not correct, you can drop it entirely.",
+      "range": {
+        "startLine": 53,
+        "startChar": 40,
+        "endLine": 53,
+        "endChar": 47
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7fc8d7_a2276bf1",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "drop successful",
+      "range": {
+        "startLine": 743,
+        "startChar": 0,
+        "endLine": 744,
+        "endChar": 0
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aba9425_206e8470",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "update the documentation in the docs too.",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b761f95b_1e469c19",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "this paragraph requires more finesse, because with update_state_every_iteration \u003d true and false will have different implications with EvaluationCallback being provided.",
+      "range": {
+        "startLine": 767,
+        "startChar": 0,
+        "endLine": 767,
+        "endChar": 63
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c953045e_4264e1aa",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "see my comments in the main docs, since it is the same paragraph.",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2126ce85_b8301e32",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "our naming convention generally has been num_calls_foo",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ec900b_294d8b1d",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "you can just use NaN if you like instead of 1e302.",
+      "range": {
+        "startLine": 57,
+        "startChar": 38,
+        "endLine": 57,
+        "endChar": 52
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb9b19f_dce85a32",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "since you update evaluate_num_calls in this function itself, it is perhaps easier to combine this check and that increment into one place.",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e21af9_d31df8a9",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "purely from a readability perspective, I recommend having PrepareForEvaluation before Evaluate. It makes reading Evaluate easier after having read PrepareForEvaluation.",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53bbaa36_4d473cc4",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "reading this here, jacobians is a bad name for this bool in the API, how about evaluate_jacobians ?",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b8960b_1ad0fb78",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "shouldn\u0027t these CHECKS be EXPECTS?",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08cbe7b0_ce90001f",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "why are you checking evaluate_last_parameter_value here? shouldn\u0027t it be checked in the evaluate function? \n\nalso isn\u0027t the invariant actually that the value that you evaluate on should be the same as the value you prepared for?",
+      "range": {
+        "startLine": 105,
+        "startChar": 15,
+        "endLine": 105,
+        "endChar": 44
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "defa6062_8a9051c5",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "num_prepare_calls;\nnum_evaluate_calls;",
+      "range": {
+        "startLine": 124,
+        "startChar": 6,
+        "endLine": 124,
+        "endChar": 23
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db94e5e5_339b6342",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "prepare_new_evaluation_point -\u003e is_new_evaluation_point or just new_evaluation_point",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 35
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea98d64_5c8b0947",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "add test for line search minimizer,",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993bb5f8_64b770b5",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-03T13:06:32Z",
+      "side": 1,
+      "message": "how many iterations does it run for? \nwith a quadratic function, you will always just have successful steps, so we are not testing the unsuccessful step logic.",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
