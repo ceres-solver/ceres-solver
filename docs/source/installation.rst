@@ -520,6 +520,11 @@ build for ``OS`` (``armv7``, ``armv7s``, ``arm64``), ``SIMULATOR``
 to merge them into one static library.  See ``cmake/iOS.cmake`` for
 more options.
 
+.. NOTE::
+
+   iOS version 11.0+ requires a 64-bit architecture, so you cannot
+   build for armv7/armv7s with iOS 11.0+ (only arm64 is supported).
+
 After building, you will get a ``libceres.a`` library, which you will
 need to add to your Xcode project.
 

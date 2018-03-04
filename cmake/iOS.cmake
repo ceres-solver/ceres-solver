@@ -120,8 +120,6 @@ elseif(IOS_PLATFORM STREQUAL "SIMULATOR64")
 else()
   message(FATAL_ERROR "Invalid IOS_PLATFORM: ${IOS_PLATFORM}")
 endif()
-message(STATUS "Configuring iOS build for platform: ${IOS_PLATFORM}, "
-  "architecture(s): ${IOS_ARCH}")
 
 # If user did not specify the SDK root to use, then query xcodebuild for it.
 if (NOT CMAKE_OSX_SYSROOT)
@@ -190,6 +188,29 @@ execute_process(COMMAND uname -r
   ERROR_QUIET
   OUTPUT_STRIP_TRAILING_WHITESPACE)
 
+# Specify minimum version of deployment target.
+# Unless specified, the latest SDK version is used by default.
+set(IOS_DEPLOYMENT_TARGET "${IOS_SDK_VERSION}"
+    CACHE STRING "Minimum iOS version to build for." )
+message(STATUS "Building for minimum iOS version: ${IOS_DEPLOYMENT_TARGET}"
+               " (SDK version: ${IOS_SDK_VERSION})")
+if (NOT IOS_DEPLOYMENT_TARGET VERSION_LESS 11.0)
+  # iOS 11+ does not support 32-bit architectures (armv7).
+  foreach(ARCH ${IOS_ARCH})
+    if (ARCH MATCHES "armv7*")
+      message(STATUS "Removing iOS architecture: ${ARCH} from build as it is "
+        "not supported by the minimum iOS version to build for: "
+        "${IOS_DEPLOYMENT_TARGET} (iOS >= 11 requires 64-bit).")
+    else()
+      list(APPEND VALID_IOS_ARCH_FOR_SDK_VERSION ${ARCH})
+    endif()
+  endforeach()
+  set(IOS_ARCH ${VALID_IOS_ARCH_FOR_SDK_VERSION})
+endif()
+
+message(STATUS "Configuring iOS build for platform: ${IOS_PLATFORM}, "
+  "architecture(s): ${IOS_ARCH}")
+
 # Standard settings.
 set(CMAKE_SYSTEM_NAME Darwin)
 set(CMAKE_SYSTEM_VERSION ${IOS_SDK_VERSION})
@@ -221,13 +242,6 @@ set(CMAKE_C_OSX_COMPATIBILITY_VERSION_FLAG "-compatibility_version ")
 set(CMAKE_C_OSX_CURRENT_VERSION_FLAG "-current_version ")
 set(CMAKE_CXX_OSX_COMPATIBILITY_VERSION_FLAG "${CMAKE_C_OSX_COMPATIBILITY_VERSION_FLAG}")
 set(CMAKE_CXX_OSX_CURRENT_VERSION_FLAG "${CMAKE_C_OSX_CURRENT_VERSION_FLAG}")
-
-# Specify minimum version of deployment target.
-# Unless specified, the latest SDK version is used by default.
-set(IOS_DEPLOYMENT_TARGET "${IOS_SDK_VERSION}"
-    CACHE STRING "Minimum iOS version to build for." )
-message(STATUS "Building for minimum iOS version: ${IOS_DEPLOYMENT_TARGET}"
-               " (SDK version: ${IOS_SDK_VERSION})")
 
 # Note that only Xcode 7+ supports the newer more specific:
 # -m${XCODE_IOS_PLATFORM}-version-min flags, older versions of Xcode use:
