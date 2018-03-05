@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc870c57_2cf5dbb1",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-05T22:18:25Z",
+      "side": 1,
+      "message": "x86?",
+      "parentUuid": "43fcce37_55197bcf",
+      "revId": "9314c38be798e175b3108df328d3348de2f32c44",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e93a1bd_3fc20548",
         "filename": "internal/ceres/small_blas.h",
         "patchSetId": 1
@@ -36,6 +54,23 @@
         "endLine": 346,
         "endChar": 35
       },
+      "revId": "9314c38be798e175b3108df328d3348de2f32c44",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2680a011_424c0db5",
+        "filename": "internal/ceres/small_blas_asm/MMM_mat1x4_arm_00.s",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-05T22:18:25Z",
+      "side": 1,
+      "message": "Please update the dates (across the entire patch).",
       "revId": "9314c38be798e175b3108df328d3348de2f32c44",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
