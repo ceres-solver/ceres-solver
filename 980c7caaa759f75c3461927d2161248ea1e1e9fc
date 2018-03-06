@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a9fb9983_9fd04c05",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 21
+      },
+      "lineNbr": 1634,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eabaa789_e74aebb4",
+      "range": {
+        "startLine": 1634,
+        "startChar": 3,
+        "endLine": 1634,
+        "endChar": 9
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7c5672c_044262e5",
         "filename": "docs/source/nnls_solving.rst",
         "patchSetId": 21
@@ -39,6 +63,24 @@
       "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb13ec55_0331d554",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 21
+      },
+      "lineNbr": 1639,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7c5672c_044262e5",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "a7ca52f8_02e277be",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 21
+      },
+      "lineNbr": 1641,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79906296_bb0ac9c8",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c49b2bb8_288322ca",
         "filename": "docs/source/nnls_solving.rst",
         "patchSetId": 21
@@ -73,6 +133,24 @@
       "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1bb23c1_c0e78398",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 21
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c49b2bb8_288322ca",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "f60bff89_d144020a",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "112358ea_97c7847b",
+      "range": {
+        "startLine": 37,
+        "startChar": 50,
+        "endLine": 37,
+        "endChar": 53
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d704aa2f_8c0e9c35",
         "filename": "include/ceres/evaluation_callback.h",
         "patchSetId": 21
@@ -113,6 +215,24 @@
       "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d69fd2c_1fce6e90",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "I disagree that this should get dropped. Based on so many conversations with users who don\u0027t understand the use cases for various features in Ceres, I would like to keep this here to make it clear how you might use this in practice. I have extended it with some discussion as well.",
+      "parentUuid": "d704aa2f_8c0e9c35",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "6d5db1c9_b5810518",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6ffff447_d7708a8f",
+      "range": {
+        "startLine": 53,
+        "startChar": 40,
+        "endLine": 53,
+        "endChar": 47
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa7fc8d7_a2276bf1",
         "filename": "include/ceres/solver.h",
         "patchSetId": 21
@@ -159,6 +303,30 @@
       "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4741f8_5c82f5c9",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa7fc8d7_a2276bf1",
+      "range": {
+        "startLine": 743,
+        "startChar": 0,
+        "endLine": 744,
+        "endChar": 0
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +358,30 @@
       "writtenOn": "2018-03-03T13:06:32Z",
       "side": 1,
       "message": "this paragraph requires more finesse, because with update_state_every_iteration \u003d true and false will have different implications with EvaluationCallback being provided.",
+      "range": {
+        "startLine": 767,
+        "startChar": 0,
+        "endLine": 767,
+        "endChar": 63
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a315190_f1843022",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "What would need to change? This explains the situation fairly clearly.",
+      "parentUuid": "b761f95b_1e469c19",
       "range": {
         "startLine": 767,
         "startChar": 0,
@@ -236,6 +428,24 @@
     },
     {
       "key": {
+        "uuid": "ccf43213_bd0f7347",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Yes, but in this case I deliberately broke the convention to group the variables into those set in Prepare() and those set in EvaluationCallback().",
+      "parentUuid": "2126ce85_b8301e32",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43ec900b_294d8b1d",
         "filename": "internal/ceres/evaluation_callback_test.cc",
         "patchSetId": 21
@@ -259,6 +469,30 @@
     },
     {
       "key": {
+        "uuid": "4e885968_b5757ed6",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "You can\u0027t, because comparisons with NaN are always false.",
+      "parentUuid": "43ec900b_294d8b1d",
+      "range": {
+        "startLine": 57,
+        "startChar": 38,
+        "endLine": 57,
+        "endChar": 52
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffb9b19f_dce85a32",
         "filename": "internal/ceres/evaluation_callback_test.cc",
         "patchSetId": 21
@@ -273,6 +507,24 @@
       "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7155190_1800049f",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "I had it that way originally, but decided it was cleaner to have all the verification code in one place, and the updating code separate.",
+      "parentUuid": "ffb9b19f_dce85a32",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -293,6 +545,24 @@
     },
     {
       "key": {
+        "uuid": "e00d5e03_4564be28",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62e21af9_d31df8a9",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53bbaa36_4d473cc4",
         "filename": "internal/ceres/evaluation_callback_test.cc",
         "patchSetId": 21
@@ -307,6 +577,24 @@
       "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfb99c7_2bb99979",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53bbaa36_4d473cc4",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -350,6 +638,48 @@
     },
     {
       "key": {
+        "uuid": "76754f66_447d4d94",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8b8960b_1ad0fb78",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb8eed9b_febbee68",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "(1) I am also checking this in Evaluate(). Both conditions are required; it\u0027s insufficient to check only in Prepare().\n\n(2) I\u0027m checking the inverse, which technically isn\u0027t part of the interface, but provides some sanity checking. Basically, I\u0027m verifying that if Ceres says it\u0027s a new evaluation point, it actually is. If this CHECK/EXPECT fires, then it means we are losing optimization opportunity in Ceres.",
+      "parentUuid": "08cbe7b0_ce90001f",
+      "range": {
+        "startLine": 105,
+        "startChar": 15,
+        "endLine": 105,
+        "endChar": 44
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "defa6062_8a9051c5",
         "filename": "internal/ceres/evaluation_callback_test.cc",
         "patchSetId": 21
@@ -370,6 +700,30 @@
       "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871e7876_97df1d35",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "As mentioned earlier, this in deliberate. I added comments to make it clearer that there is a grouping between them.",
+      "parentUuid": "defa6062_8a9051c5",
+      "range": {
+        "startLine": 124,
+        "startChar": 6,
+        "endLine": 124,
+        "endChar": 23
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -396,6 +750,30 @@
     },
     {
       "key": {
+        "uuid": "a70d664d_ffbbc055",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Nope, as explained these are grouped by prefix to match Prepare() and Evaluate().",
+      "parentUuid": "db94e5e5_339b6342",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 35
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ea98d64_5c8b0947",
         "filename": "internal/ceres/evaluation_callback_test.cc",
         "patchSetId": 21
@@ -413,6 +791,24 @@
     },
     {
       "key": {
+        "uuid": "1b302a9e_53b86a58",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Done, but need to more careful thinking about whether a different optimization function should get tried.",
+      "parentUuid": "0ea98d64_5c8b0947",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "993bb5f8_64b770b5",
         "filename": "internal/ceres/evaluation_callback_test.cc",
         "patchSetId": 21
@@ -424,6 +820,24 @@
       "writtenOn": "2018-03-03T13:06:32Z",
       "side": 1,
       "message": "how many iterations does it run for? \nwith a quadratic function, you will always just have successful steps, so we are not testing the unsuccessful step logic.",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51696d8c_c80f3b64",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Good point; will add more difficult tests.",
+      "parentUuid": "993bb5f8_64b770b5",
       "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true

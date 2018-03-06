@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4cce7186_ff43ab8c",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T00:48:32Z",
+      "side": 1,
+      "message": "Added the GPU use case.",
+      "parentUuid": "a37bc39c_57cc3a44",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 19
+      },
+      "revId": "dab1e2642b240ff4947a305c750417b6f4bb9158",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b5171d6_36f4b3c2",
         "filename": "include/ceres/solver.h",
         "patchSetId": 12
