@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b58c9bd9_5e758a30",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T20:53:11Z",
+      "side": 1,
+      "message": "I switched to using a helper. I tried using GTest\u0027s parameterized tests but they were worse.",
+      "parentUuid": "adfcd1d8_30aa1baa",
+      "revId": "f70a604d5b5a6e5dfd9cd284971aed4d298fa431",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03257978_813eaaac",
         "filename": "internal/ceres/preprocessor.cc",
         "patchSetId": 26
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "3b58ada4_41a56f03",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T20:53:11Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c6e45ef0_ea7f6884",
+      "revId": "f70a604d5b5a6e5dfd9cd284971aed4d298fa431",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4dbb12d_cccac445",
         "filename": "internal/ceres/solver_test.cc",
         "patchSetId": 26
@@ -74,6 +110,30 @@
       "revId": "f70a604d5b5a6e5dfd9cd284971aed4d298fa431",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8bafba8_6421cb7d",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T20:53:11Z",
+      "side": 1,
+      "message": "So I agree that the preprocessor change shouldn\u0027t happen. However, the test is still reasonable.",
+      "parentUuid": "d4dbb12d_cccac445",
+      "range": {
+        "startLine": 88,
+        "startChar": 32,
+        "endLine": 88,
+        "endChar": 50
+      },
+      "revId": "f70a604d5b5a6e5dfd9cd284971aed4d298fa431",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
