@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "689a39dc_1da187f2",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 27
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-06T22:26:01Z",
+      "side": 1,
+      "message": "Trailing (well, and leading too) here and in the next few para breaks.",
+      "range": {
+        "startLine": 1642,
+        "startChar": 3,
+        "endLine": 1642,
+        "endChar": 0
+      },
+      "revId": "b846eb9758841e858231c4b4a49582683979deab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a5a844_2ac38e97",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 27
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-06T22:26:01Z",
+      "side": 1,
+      "message": "It\u0027s probably worth putting in a note here about cost functors (vs functions): precomputing results (whether final or intermediate) using this is fundamentally incompatible with providing a cost functor and then using Ceres\u0027 numeric diff. It\u0027s kind of compatible with providing a (templated) cost functor and using autodiff... but if you\u0027re doing that in any real use case, the number of hoops you have to jump through to get any value of it is large enough that you\u0027re better off just going to raw cost functions.",
+      "range": {
+        "startLine": 1752,
+        "startChar": 3,
+        "endLine": 1753,
+        "endChar": 0
+      },
+      "revId": "b846eb9758841e858231c4b4a49582683979deab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b669cf_8b9c72e2",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-06T22:26:01Z",
+      "side": 1,
+      "message": "Period before \"If\".",
+      "range": {
+        "startLine": 64,
+        "startChar": 72,
+        "endLine": 64,
+        "endChar": 74
+      },
+      "revId": "b846eb9758841e858231c4b4a49582683979deab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dbfeee8_631c9468",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-06T22:26:01Z",
+      "side": 1,
+      "message": "Old typo but while you\u0027re here: update_state_every_iteration.",
+      "range": {
+        "startLine": 763,
+        "startChar": 7,
+        "endLine": 763,
+        "endChar": 34
+      },
+      "revId": "b846eb9758841e858231c4b4a49582683979deab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a01431c_25acaad5",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-06T22:26:01Z",
+      "side": 1,
+      "message": "Another old typo: updated.",
+      "range": {
+        "startLine": 764,
+        "startChar": 14,
+        "endLine": 764,
+        "endChar": 20
+      },
+      "revId": "b846eb9758841e858231c4b4a49582683979deab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f2ae80b_ee648d9e",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-06T22:26:01Z",
+      "side": 1,
+      "message": "Nice set of tests.",
+      "revId": "b846eb9758841e858231c4b4a49582683979deab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a776a17f_0d2d4814",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-06T22:26:01Z",
+      "side": 1,
+      "message": "End with a period.",
+      "range": {
+        "startLine": 131,
+        "startChar": 46,
+        "endLine": 131,
+        "endChar": 47
+      },
+      "revId": "b846eb9758841e858231c4b4a49582683979deab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1993c925_2cd50595",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-06T22:26:01Z",
+      "side": 1,
+      "message": "This looks basically identical to NoOpEvaluationCallback.",
+      "range": {
+        "startLine": 410,
+        "startChar": 7,
+        "endLine": 410,
+        "endChar": 29
+      },
+      "revId": "b846eb9758841e858231c4b4a49582683979deab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
