@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "132cf4de_775a4ac2",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-06T23:40:44Z",
+      "side": 1,
+      "message": "The warning is not quite correct. Because it is not ignored. The interpretation is a bit more complicated. Here is one take at it.\n\nNOTE: If an evaluation_callback is provided, then there are two cases to consider. \n\nIf update_state_every_iteration \u003d false, then the user\u0027s state is changed at every residual and/or jacobian evaluation. Any user provided IterationCallbacks should NOT inspect and depend on the user visible state while the solver is running. \n\nIf update_state_every_iteration is true, then the user\u0027s state is changed at every residual and/or jacobian evaluation, BUT the solver will ensure that before the user provided IterationCallbacks are called, the user visible state will be updated to the current best point found by the solver.",
+      "range": {
+        "startLine": 748,
+        "startChar": 7,
+        "endLine": 748,
+        "endChar": 14
+      },
+      "revId": "8646efa38bb625c2a989b154a464a275c3b7233e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd556b8_4163e325",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-06T23:40:44Z",
+      "side": 1,
+      "message": "since the explanation is more complicated than this one paragraph, just point them to the docs above.",
+      "range": {
+        "startLine": 768,
+        "startChar": 31,
+        "endLine": 768,
+        "endChar": 32
+      },
+      "revId": "8646efa38bb625c2a989b154a464a275c3b7233e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f63f06b_ad81b96d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-06T23:40:44Z",
+      "side": 1,
+      "message": "same comment as above.",
+      "range": {
+        "startLine": 783,
+        "startChar": 48,
+        "endLine": 783,
+        "endChar": 55
+      },
+      "revId": "8646efa38bb625c2a989b154a464a275c3b7233e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
