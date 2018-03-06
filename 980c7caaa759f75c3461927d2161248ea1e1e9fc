@@ -394,6 +394,30 @@
     },
     {
       "key": {
+        "uuid": "248c46c3_cf56084a",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-06T15:01:46Z",
+      "side": 1,
+      "message": "No what it doesn\u0027t explain is what the state will be when the callback is called.\n\nif update_state_every_iteration is true, then they will always see the current/best state of the solver when their callback is called, if update_state_every_iteration is false, and the last iteration was unsuccessful, they will see the trial point that was evaluated and rejected.\n\nI think this is true for both line search and trust region minimizers.",
+      "parentUuid": "0a315190_f1843022",
+      "range": {
+        "startLine": 767,
+        "startChar": 0,
+        "endLine": 767,
+        "endChar": 63
+      },
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c953045e_4264e1aa",
         "filename": "include/ceres/solver.h",
         "patchSetId": 21
@@ -803,6 +827,24 @@
       "side": 1,
       "message": "Done, but need to more careful thinking about whether a different optimization function should get tried.",
       "parentUuid": "0ea98d64_5c8b0947",
+      "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ebe15df_df89b579",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-06T15:01:46Z",
+      "side": 1,
+      "message": "you will need to use a non-lbfgs line search direction with armijo line search and quadratic/bisection interpolation.",
+      "parentUuid": "1b302a9e_53b86a58",
       "revId": "980c7caaa759f75c3461927d2161248ea1e1e9fc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
