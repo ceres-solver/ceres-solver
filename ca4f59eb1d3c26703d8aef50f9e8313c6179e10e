@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b83f33d_a155a305",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 24
+      },
+      "lineNbr": 1641,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-06T15:24:05Z",
+      "side": 1,
+      "message": "don\u0027t point people to headers for details. we don\u0027t do that anywhere else in the docs.  instead point them to the evaluationcallback docs no?",
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ecacacf_7079b79b",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 24
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-06T15:24:05Z",
+      "side": 1,
+      "message": "Drop this paragraph. it is ranty and not useful. there is nothing hacky about this API.",
+      "range": {
+        "startLine": 1753,
+        "startChar": 5,
+        "endLine": 1753,
+        "endChar": 15
+      },
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d4973c_0e311e90",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-06T15:24:05Z",
+      "side": 1,
+      "message": "drop.",
+      "range": {
+        "startLine": 59,
+        "startChar": 3,
+        "endLine": 59,
+        "endChar": 13
+      },
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81023140_471f1656",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-06T15:24:05Z",
+      "side": 1,
+      "message": "The comment is a bit misleading, it makes it sound this is the current state, it is worth saying that this is a precondition at this point?",
+      "range": {
+        "startLine": 66,
+        "startChar": 14,
+        "endLine": 66,
+        "endChar": 31
+      },
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884517fc_ea2091f5",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-06T15:24:05Z",
+      "side": 1,
+      "message": "what you are minimizing is \n\n1/2 * [(y - a*sin(x))^2 + x^2] which is the same as having the sqrt, but it is not the same function implemented here, so drop the sqrt.",
+      "range": {
+        "startLine": 97,
+        "startChar": 19,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386e8436_3b02f7ba",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-06T15:24:05Z",
+      "side": 1,
+      "message": "same as above.",
+      "range": {
+        "startLine": 203,
+        "startChar": 26,
+        "endLine": 203,
+        "endChar": 43
+      },
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aded1ee_684ab583",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-06T15:24:05Z",
+      "side": 1,
+      "message": "why would you check for number of steps? if there are any algorithmic changes which improve convergence and keeps the invariant of the interface, this test will break.\nalso this callback says nothing about number of iterations.",
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
