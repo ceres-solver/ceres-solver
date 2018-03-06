@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "015667a0_2ed45980",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 24
+      },
+      "lineNbr": 1641,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T18:30:14Z",
+      "side": 1,
+      "message": "I want to get the header docs sorted out before going full RST conversion to avoid dupli-fixing.",
+      "parentUuid": "1b83f33d_a155a305",
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ecacacf_7079b79b",
         "filename": "docs/source/nnls_solving.rst",
         "patchSetId": 24
@@ -39,6 +57,30 @@
       "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8497594_c0e0327e",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 24
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T18:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ecacacf_7079b79b",
+      "range": {
+        "startLine": 1753,
+        "startChar": 5,
+        "endLine": 1753,
+        "endChar": 15
+      },
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "96d2880d_6c531a5e",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T18:30:14Z",
+      "side": 1,
+      "message": "I don\u0027t agree, but removed. Basically, that this interface exists is weird, and IMO should get commented. I put it in the category of violating the principle of least surprise. If I were reading this interface without knowing about the internals of Ceres, I\u0027d be confused about why there isn\u0027t just a simple way to supply the Jacobian. My philosophy is to comment anytime the POLS is violated.",
+      "parentUuid": "78d4973c_0e311e90",
+      "range": {
+        "startLine": 59,
+        "startChar": 3,
+        "endLine": 59,
+        "endChar": 13
+      },
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81023140_471f1656",
         "filename": "internal/ceres/evaluation_callback_test.cc",
         "patchSetId": 24
@@ -85,6 +151,30 @@
       "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb1f7d3_dc481e2e",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T18:30:14Z",
+      "side": 1,
+      "message": "Good idea; added some explanatory text.",
+      "parentUuid": "81023140_471f1656",
+      "range": {
+        "startLine": 66,
+        "startChar": 14,
+        "endLine": 66,
+        "endChar": 31
+      },
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "7af4790f_066e9dff",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T18:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "884517fc_ea2091f5",
+      "range": {
+        "startLine": 97,
+        "startChar": 19,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "386e8436_3b02f7ba",
         "filename": "internal/ceres/evaluation_callback_test.cc",
         "patchSetId": 24
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "06a81f12_e2af505a",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T18:30:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the issue is here. I\u0027d like to keep these checks as a measure of non-trivialness.",
+      "parentUuid": "386e8436_3b02f7ba",
+      "range": {
+        "startLine": 203,
+        "startChar": 26,
+        "endLine": 203,
+        "endChar": 43
+      },
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aded1ee_684ab583",
         "filename": "internal/ceres/evaluation_callback_test.cc",
         "patchSetId": 24
@@ -148,6 +286,24 @@
       "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09502f85_28322138",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-06T18:30:14Z",
+      "side": 1,
+      "message": "While in theory, I agree algorithm changes could break this. In practice, I doubt it\u0027ll happen often and this check ensures that there is nontrivial solver behavior happening.",
+      "parentUuid": "3aded1ee_684ab583",
+      "revId": "ca4f59eb1d3c26703d8aef50f9e8313c6179e10e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
