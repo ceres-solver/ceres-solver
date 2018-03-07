@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31f0000c_bb647db3",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-03-07T18:55:06Z",
+      "side": 1,
+      "message": "Is this true, as update_state_every_iteration is still implemented via a StateUpdatingCallback in SetupCommonMinimizerOptions() in preprocessor.cc is it not?",
+      "revId": "362318d4d8781ca66c21a8fca51b4875b736a60f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
