@@ -67,6 +67,24 @@
       "revId": "62bb000f67d25a758bfc80383d9ec13b4b921f13",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c09a7d_3d6740c4",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-07T19:03:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b3453dc_6945951e",
+      "revId": "62bb000f67d25a758bfc80383d9ec13b4b921f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
