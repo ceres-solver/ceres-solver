@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b0faaef_76ff0110",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-07T18:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "132cf4de_775a4ac2",
+      "range": {
+        "startLine": 748,
+        "startChar": 7,
+        "endLine": 748,
+        "endChar": 14
+      },
+      "revId": "8646efa38bb625c2a989b154a464a275c3b7233e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dd556b8_4163e325",
         "filename": "include/ceres/solver.h",
         "patchSetId": 32
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f50b16c2_8f8ceafa",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-07T18:58:00Z",
+      "side": 1,
+      "message": "Removed; docs on update_state... and evaluation_callback are enough.",
+      "parentUuid": "0dd556b8_4163e325",
+      "range": {
+        "startLine": 768,
+        "startChar": 31,
+        "endLine": 768,
+        "endChar": 32
+      },
+      "revId": "8646efa38bb625c2a989b154a464a275c3b7233e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f63f06b_ad81b96d",
         "filename": "include/ceres/solver.h",
         "patchSetId": 32
@@ -68,6 +116,30 @@
       "revId": "8646efa38bb625c2a989b154a464a275c3b7233e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90755ba5_ec4587d5",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-07T18:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f63f06b_ad81b96d",
+      "range": {
+        "startLine": 783,
+        "startChar": 48,
+        "endLine": 783,
+        "endChar": 55
+      },
+      "revId": "8646efa38bb625c2a989b154a464a275c3b7233e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
