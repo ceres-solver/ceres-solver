@@ -16,6 +16,24 @@
       "revId": "362318d4d8781ca66c21a8fca51b4875b736a60f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a7e00a_23b75c9c",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-07T19:03:57Z",
+      "side": 1,
+      "message": "Updated the comments; good catch.",
+      "parentUuid": "31f0000c_bb647db3",
+      "revId": "362318d4d8781ca66c21a8fca51b4875b736a60f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
