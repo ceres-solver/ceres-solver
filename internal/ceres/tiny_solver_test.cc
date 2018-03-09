@@ -30,6 +30,7 @@
 // Author: mierle@gmail.com (Keir Mierle)
 
 #include "ceres/tiny_solver.h"
+#include "ceres/tiny_solver_test_util.h"
 
 #include <algorithm>
 #include <cmath>
@@ -42,29 +43,6 @@ typedef Eigen::Matrix<double, 2, 1> Vec2;
 typedef Eigen::Matrix<double, 3, 1> Vec3;
 typedef Eigen::VectorXd VecX;
 
-bool EvaluateResidualsAndJacobians(const double* parameters,
-                                   double* residuals,
-                                   double* jacobian) {
-  double x = parameters[0];
-  double y = parameters[1];
-  double z = parameters[2];
-
-  residuals[0] = x + 2*y + 4*z;
-  residuals[1] = y * z;
-
-  if (jacobian) {
-    jacobian[0 * 2 + 0] = 1;
-    jacobian[0 * 2 + 1] = 0;
-
-    jacobian[1 * 2 + 0] = 2;
-    jacobian[1 * 2 + 1] = z;
-
-    jacobian[2 * 2 + 0] = 4;
-    jacobian[2 * 2 + 1] = y;
-  }
-  return true;
-}
-
 class ExampleStatic {
  public:
   typedef double Scalar;
@@ -76,7 +54,9 @@ class ExampleStatic {
   bool operator()(const double* parameters,
                   double* residuals,
                   double* jacobian) const {
-    return EvaluateResidualsAndJacobians(parameters, residuals, jacobian);
+    return EvaluateResidualsAndJacobians(parameters,
+                                         residuals,
+                                         jacobian);
   }
 };
 
@@ -95,7 +75,9 @@ class ExampleParametersDynamic {
   bool operator()(const double* parameters,
                   double* residuals,
                   double* jacobian) const {
-    return EvaluateResidualsAndJacobians(parameters, residuals, jacobian);
+    return EvaluateResidualsAndJacobians(parameters,
+                                         residuals,
+                                         jacobian);
   }
 };
 
@@ -114,7 +96,9 @@ class ExampleResidualsDynamic {
   bool operator()(const double* parameters,
                   double* residuals,
                   double* jacobian) const {
-    return EvaluateResidualsAndJacobians(parameters, residuals, jacobian);
+    return EvaluateResidualsAndJacobians(parameters,
+                                         residuals,
+                                         jacobian);
   }
 };
 
@@ -137,7 +121,9 @@ class ExampleAllDynamic {
   bool operator()(const double* parameters,
                   double* residuals,
                   double* jacobian) const {
-    return EvaluateResidualsAndJacobians(parameters, residuals, jacobian);
+    return EvaluateResidualsAndJacobians(parameters,
+                                         residuals,
+                                         jacobian);
   }
 };
 
