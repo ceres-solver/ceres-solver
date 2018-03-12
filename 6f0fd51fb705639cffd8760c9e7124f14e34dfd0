@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c5dcd977_53ba1dc8",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-12T04:21:07Z",
+      "side": 1,
+      "message": "don\u0027t you want the functions defined in this file to be inlined?",
+      "range": {
+        "startLine": 3,
+        "startChar": 7,
+        "endLine": 3,
+        "endChar": 8
+      },
+      "revId": "6f0fd51fb705639cffd8760c9e7124f14e34dfd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1004801c_0434ab3e",
         "filename": "internal/ceres/small_blas_opt.h",
         "patchSetId": 2
