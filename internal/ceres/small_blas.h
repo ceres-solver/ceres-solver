@@ -38,6 +38,7 @@
 #include "ceres/internal/port.h"
 #include "ceres/internal/eigen.h"
 #include "glog/logging.h"
+#include "small_blas_generic.h"
 
 namespace ceres {
 namespace internal {
@@ -88,7 +89,6 @@ namespace internal {
       A, num_row_a, num_col_a,                                          \
       B, num_row_b, num_col_b,                                          \
       C, start_row_c, start_col_c, row_stride_c, col_stride_c);
-
 
 // For the matrix-matrix functions below, there are three variants for
 // each functionality. Foo, FooNaive and FooEigen. Foo is the one to
@@ -161,8 +161,22 @@ CERES_GEMM_BEGIN(MatrixMatrixMultiplyNaive) {
   DCHECK_LE(start_row_c + NUM_ROW_C, row_stride_c);
   DCHECK_LE(start_col_c + NUM_COL_C, col_stride_c);
 
-  for (int row = 0; row < NUM_ROW_C; ++row) {
-    for (int col = 0; col < NUM_COL_C; ++col) {
+  const int span = 0x4;
+  int col_r = NUM_COL_C & (span - 1);
+  int col_m = NUM_COL_C - col_r;
+
+  // Process the main part with multiples of 4.
+  for (int col = 0; col < col_m; col += span) {
+    for (int row = 0; row < NUM_ROW_C; ++row) {
+      const int index = (row + start_row_c) * col_stride_c + start_col_c + col;
+      MMM_mat1x4(NUM_COL_A, &A[row * NUM_COL_A],
+                 &B[col], NUM_COL_B, &C[index], kOperation);
+    }
+  }
+
+  // Process the remaining part.
+  for (int col = col_m; col < NUM_COL_C; ++col) {
+    for (int row = 0; row < NUM_ROW_C; ++row) {
       double tmp = 0.0;
       for (int k = 0; k < NUM_COL_A; ++k) {
         tmp += A[row * NUM_COL_A + k] * B[k * NUM_COL_B + col];
@@ -221,8 +235,22 @@ CERES_GEMM_BEGIN(MatrixTransposeMatrixMultiplyNaive) {
   DCHECK_LE(start_row_c + NUM_ROW_C, row_stride_c);
   DCHECK_LE(start_col_c + NUM_COL_C, col_stride_c);
 
-  for (int row = 0; row < NUM_ROW_C; ++row) {
-    for (int col = 0; col < NUM_COL_C; ++col) {
+  const int span = 0x4;
+  int col_r = NUM_COL_C & (span - 1);
+  int col_m = NUM_COL_C - col_r;
+
+  // Process the main part with multiples of 4.
+  for (int col = 0; col < col_m; col += span) {
+    for (int row = 0; row < NUM_ROW_C; ++row) {
+      const int index = (row + start_row_c) * col_stride_c + start_col_c + col;
+      MTM_mat1x4(NUM_ROW_A, &A[row], NUM_COL_A,
+                 &B[col], NUM_COL_B, &C[index], kOperation);
+    }
+  }
+
+  // Process the remaining part.
+  for (int col = col_m; col < NUM_COL_C; ++col) {
+    for (int row = 0; row < NUM_ROW_C; ++row) {
       double tmp = 0.0;
       for (int k = 0; k < NUM_ROW_A; ++k) {
         tmp += A[k * NUM_COL_A + row] * B[k * NUM_COL_B + col];
@@ -302,7 +330,18 @@ inline void MatrixVectorMultiply(const double* A,
   const int NUM_ROW_A = (kRowA != Eigen::Dynamic ? kRowA : num_row_a);
   const int NUM_COL_A = (kColA != Eigen::Dynamic ? kColA : num_col_a);
 
-  for (int row = 0; row < NUM_ROW_A; ++row) {
+  const int span = 0x4;
+  int row_r = NUM_ROW_A & (span - 1);
+  int row_m = NUM_ROW_A - row_r;
+
+  // Process the main part with multiples of 4.
+  for (int row = 0; row < row_m; row += span) {
+    MVM_mat4x1(NUM_COL_A, &A[row * NUM_COL_A], NUM_COL_A,
+               &b[0], &c[row], kOperation);
+  }
+
+  // Process the remaining part.
+  for (int row = row_m; row < NUM_ROW_A; ++row) {
     double tmp = 0.0;
     for (int col = 0; col < NUM_COL_A; ++col) {
       tmp += A[row * NUM_COL_A + col] * b[col];
@@ -316,6 +355,7 @@ inline void MatrixVectorMultiply(const double* A,
       c[row] = tmp;
     }
   }
+
 #endif  // CERES_NO_CUSTOM_BLAS
 }
 
@@ -353,7 +393,18 @@ inline void MatrixTransposeVectorMultiply(const double* A,
   const int NUM_ROW_A = (kRowA != Eigen::Dynamic ? kRowA : num_row_a);
   const int NUM_COL_A = (kColA != Eigen::Dynamic ? kColA : num_col_a);
 
-  for (int row = 0; row < NUM_COL_A; ++row) {
+  const int span = 0x4;
+  int row_r = NUM_COL_A & (span - 1);
+  int row_m = NUM_COL_A - row_r;
+
+  // Process the main part with multiples of 4.
+  for (int row = 0; row < row_m; row += span) {
+    MTV_mat4x1(NUM_ROW_A, &A[row], NUM_COL_A,
+               &b[0], &c[row], kOperation);
+  }
+
+  // Process the remaining part.
+  for (int row = row_m; row < NUM_COL_A; ++row) {
     double tmp = 0.0;
     for (int col = 0; col < NUM_ROW_A; ++col) {
       tmp += A[col * NUM_COL_A + row] * b[col];
