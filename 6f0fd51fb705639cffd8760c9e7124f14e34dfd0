@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1004801c_0434ab3e",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-12T04:04:47Z",
+      "side": 1,
+      "message": "I think this file needs a better name, I don\u0027t have a great suggestion right now, but that should not prevent us from reviewing this patch.",
+      "revId": "6f0fd51fb705639cffd8760c9e7124f14e34dfd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bd80af_ed36875f",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-12T04:04:47Z",
+      "side": 1,
+      "message": "I suggest moving the particular macros closer to the functions using them and undefing them right after use.",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 16
+      },
+      "revId": "6f0fd51fb705639cffd8760c9e7124f14e34dfd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08055f33_bd790ca7",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-12T04:04:47Z",
+      "side": 1,
+      "message": "why cast like this? we know that AA and BB are const double pointers.\n\nso just const double* pa \u003d AA should work no?",
+      "range": {
+        "startLine": 47,
+        "startChar": 13,
+        "endLine": 47,
+        "endChar": 14
+      },
+      "revId": "6f0fd51fb705639cffd8760c9e7124f14e34dfd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd49c843_bf312b3b",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-12T04:04:47Z",
+      "side": 1,
+      "message": "same comment as above, pb \u003d BB + pi should work.",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 14
+      },
+      "revId": "6f0fd51fb705639cffd8760c9e7124f14e34dfd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39658267_f062745c",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-12T04:04:47Z",
+      "side": 1,
+      "message": "remove tabs, correct indentation.",
+      "range": {
+        "startLine": 111,
+        "startChar": 1,
+        "endLine": 111,
+        "endChar": 2
+      },
+      "revId": "6f0fd51fb705639cffd8760c9e7124f14e34dfd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25cf12ee_d826d0f0",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-12T04:04:47Z",
+      "side": 1,
+      "message": "perhaps the increment to pa can be folded into the macro?",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "6f0fd51fb705639cffd8760c9e7124f14e34dfd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc9bce3_1bb3858e",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-12T04:04:47Z",
+      "side": 1,
+      "message": "why not fold the av and ai updates into the macro?",
+      "range": {
+        "startLine": 175,
+        "startChar": 9,
+        "endLine": 175,
+        "endChar": 11
+      },
+      "revId": "6f0fd51fb705639cffd8760c9e7124f14e34dfd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
