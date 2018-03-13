@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2f30d4b_240d6c63",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-13T17:10:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17a347a5_5300b717",
+      "revId": "fc3e449283e1e932424aca005fe52f1fef9a4a8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "691de8a5_0d9ef28f",
         "filename": "docs/source/version_history.rst",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-03-13T17:08:38Z",
       "side": 1,
       "message": "Bazel build is me and Rodrigo.",
+      "revId": "fc3e449283e1e932424aca005fe52f1fef9a4a8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc34556_e7ca39cc",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-13T17:10:26Z",
+      "side": 1,
+      "message": "ugh sorry bad cut and paste late at night :/",
+      "parentUuid": "691de8a5_0d9ef28f",
       "revId": "fc3e449283e1e932424aca005fe52f1fef9a4a8c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
