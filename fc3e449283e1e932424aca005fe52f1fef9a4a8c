@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17a347a5_5300b717",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-13T17:08:38Z",
+      "side": 1,
+      "message": "TinySolver is you and me, not Rodrigo.",
+      "revId": "fc3e449283e1e932424aca005fe52f1fef9a4a8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691de8a5_0d9ef28f",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-13T17:08:38Z",
+      "side": 1,
+      "message": "Bazel build is me and Rodrigo.",
+      "revId": "fc3e449283e1e932424aca005fe52f1fef9a4a8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
