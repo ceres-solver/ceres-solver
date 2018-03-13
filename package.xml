@@ -30,7 +30,7 @@
 
 <package format="2">
   <name>ceres-solver</name>
-  <version>1.13.0</version>
+  <version>1.14.0</version>
   <description>A large scale non-linear optimization library.</description>
   <maintainer email="ceres-solver@googlegroups.com">
     The Ceres Solver Authors

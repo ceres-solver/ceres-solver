@@ -4,6 +4,82 @@
 Version History
 ===============
 
+1.14.0
+======
+
+New Features
+------------
+
+#. New ``EvaluationCallback`` API. (Keir Mierle)
+#. TBB based threading (Yury Prokazov & Mike Vitus)
+#. C++11 threads based threading (Mike Vitus)
+#. A ``ceres::Context`` object to cache and keep track of global
+   state. (Mike Vitus)
+#. TinySolver - A small dense solver meant for solving small problems
+   really fast. [EXPERIMENTAL] (Keir Mierle & Sameer Agarwal)
+#. Bazel Build. (Keir Mierle & Rodrigo Queiro)
+
+
+Backward Incompatible API Changes
+---------------------------------
+
+#. ``Solver::Options::num_linear_solver_threads`` is deprecated,
+   ``Solver::Options::num_threads`` controls all parallelism in Ceres
+   Solver now. Similarly,
+   ``Solver::Summary::num_linear_solver_threads_given`` and
+   ``Solver::Summary::num_linear_solver_threads_used`` are also
+   deprecated.
+
+
+Bug Fixes & Minor Changes
+-------------------------
+
+#. Remove armv7 from target architectures when building for iOS >= 11. (Alex Stewart)
+#. Corrects the documentation of Problem::AddResidualBlock. (Mike Vitus)
+#. Fixes the configuration check in port.h. (Mike Vitus)
+#. Add small_blas_gemm_benchmark. (Sameer Agarwal)
+#. Implement some C++11 math functions for Jet (Emil Ernerfeldt)
+#. Fix integer conversion warning in MSVC. (Alex Stewart)
+#. Improve NDK build error handling (Keir Mierle)
+#. Fix build: -Wreorder, test fail (Keir Mierle)
+#. An implementation of SubsetPreconditioner. (Sameer Agarwal)
+#. Split bundle adjustment tests into individual binaries (Keir Mierle)
+#. Require Eigen >= 3.3.4 on aarch64. (Alex Stewart)
+#. Fix TBB detection on Windows. (Alex Stewart)
+#. Improve ExecutionSummary (Sameer Agarwal)
+#. Remove as typo from callbacks.h (Sameer Agarwal)
+#. Removes two unimplemented class functions. (Mike Vitus)
+#. Update EigenTypes to deal with 1 column matrices (Sameer Agarwal)
+#. Add GradientProblemSolver::Options::update_state_every_iteration (Sameer Agarwal)
+#. Fixes the pose graph example documentation. (Mike Vitus)
+#. Fix Eigen >= 3.3 compilation if EIGEN_DONT_VECTORIZE set (Janick Martinez Esturo)
+#. Add an optional dependency on the Google Benchmark library. (Sameer Agarwal)
+#. Fix the documentation for CostFunction::Evaluate. (Sameer Agarwal)
+#. Fix a mathematical typo. (Sameer Agarwal)
+#. Add TBB information to Ceres version string. (Alex Stewart)
+#. Move discussion of dependency licensing to Sphinx docs. (Alex Stewart)
+#. Fix an erroneous namespace comment (Sameer Agarwal)
+#. Fix use of unnamed type as template argument warnings on Clang. (Alex Stewart)
+#. Add link for CLA in docs; minor fixes (Keir Mierle)
+#. Fix tiny_solver_test (Sameer Agarwal)
+#. Improve compatibility with ceres::Solver (Sameer Agarwal)
+#. Refactor nist.cc to be compatible with TinySolver (Sameer Agarwal)
+#. Report timings with microsecond resolution (Thomas Gamper)
+#. Add missing Eigen traits to Jets (Sameer Agarwal)
+#. Use high-resolution timer on Windows (Thomas Gamper)
+#. Add a comment about default constructed reference counts= (Keir Mierle)
+#. Delete cost and loss functions when not in use. (Sameer Agarwal)
+#. Fix assert_ndk_version for >= r11. (Alex Stewart)
+#. Add docs explaining how to build Ceres with OpenMP on OS X. (Alex Stewart)
+#. Update LAPACK option to refer to direct use by Ceres only. (Alex Stewart)
+#. Hide optional SuiteSparse vars in CMake GUI by default. (Alex Stewart)
+#. Always hide TBB_LIBRARY in CMake GUI by default. (Alex Stewart)
+#. Fix typo in definition of f3 in powell example (x4 -> x3). (Alex Stewart)
+#. Fix suppression of C++11 propagation warning. (Alex Stewart)
+#. Add new Schur specialization for 2, 4, 6. (Chris Sweeney)
+#. Use const keyword for 'int thread_id' variables. (pmoulon)
+
+
 1.13.0
 ======
 
