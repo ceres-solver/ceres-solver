@@ -37,8 +37,6 @@ if (POLICY CMP0042)
   cmake_policy(SET CMP0042 NEW)
 endif()
 
-include(CMakeDependentOption)
-
 project(Ceres C CXX)
 
 # NOTE: The 'generic' CMake variables CMAKE_[SOURCE/BINARY]_DIR should not be
@@ -92,6 +90,7 @@ read_ceres_version_from_source(${Ceres_SOURCE_DIR})
 
 enable_testing()
 
+include(CMakeDependentOption)
 option(MINIGLOG "Use a stripped down version of glog." OFF)
 option(GFLAGS "Enable Google Flags." ON)
 option(SUITESPARSE "Enable SuiteSparse." ON)
@@ -104,15 +103,6 @@ option(SCHUR_SPECIALIZATIONS "Enable fixed-size schur specializations." ON)
 option(CUSTOM_BLAS
        "Use handcoded BLAS routines (usually faster) instead of Eigen."
        ON)
-# Multithreading using OpenMP
-option(OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON)
-# Multithreading using TBB
-option(TBB "Enable threaded solving in Ceres with TBB (requires TBB and C++11)" OFF)
-# Multithreading using C++11 primitives.
-option(CXX11_THREADS "Enable threaded solving in Ceres with C++11 primitives" OFF)
-# Enable the use of Eigen as a sparse linear algebra library for
-# solving the nonlinear least squares problems.
-option(EIGENSPARSE "Enable Eigen as a sparse linear algebra library." ON)
 # Ceres does not use C++11 internally, however it does use shared_ptr
 # (required) and unordered_map (if available), both of which were present in
 # previous iterations of what became C++11.  GCC & Clang can have both TR1 &
@@ -123,20 +113,34 @@ option(EIGENSPARSE "Enable Eigen as a sparse linear algebra library." ON)
 # Enabling this option forces the use of the C++11 versions (& -std=c++11) if
 # available.
 option(CXX11 "Enable use of C++11 headers if available (requires client code use C++11)." OFF)
+# Multithreading using OpenMP
+cmake_dependent_option(
+  OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON
+  "NOT TBB;NOT CXX11_THREADS" OFF)
+# Multithreading using TBB
+cmake_dependent_option(
+  TBB "Enable threaded solving in Ceres with TBB (requires TBB and C++11)" OFF
+  "CXX11;NOT OPENMP;NOT CXX11_THREADS" OFF)
+# Multithreading using C++11 primitives.
+cmake_dependent_option(
+  CXX11_THREADS "Enable threaded solving in Ceres with C++11 primitives" OFF
+  "CXX11;NOT OPENMP;NOT TBB" OFF)
+# Enable the use of Eigen as a sparse linear algebra library for
+# solving the nonlinear least squares problems.
+option(EIGENSPARSE "Enable Eigen as a sparse linear algebra library." ON)
 option(EXPORT_BUILD_DIR
   "Export build directory using CMake (enables external use without install)." OFF)
 option(BUILD_TESTING "Enable tests" ON)
 option(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 option(BUILD_EXAMPLES "Build examples" ON)
-cmake_dependent_option(BUILD_BENCHMARKS "Build Ceres benchmarking suite" ON "CXX11" OFF)
+cmake_dependent_option(
+  BUILD_BENCHMARKS "Build Ceres benchmarking suite" ON "CXX11" OFF)
 option(BUILD_SHARED_LIBS "Build Ceres as a shared library." OFF)
 if (MSVC)
-  # CXX11 is always enabled on Windows when using MSVC, as there, any new
-  # (C++11 etc) features available are on by default and there is no analogue to
-  # -std=c++11.  It is however optional for MinGW & CygWin, which can support
-  # -std=c++11.
+  # MSVC has no analogue of -std=c++11, as all features available are on by
+  # default. Enable CXX11 by default and disable if the required features
+  # are not found (<= VS2010).
   update_cache_variable(CXX11 ON)
-  mark_as_advanced(FORCE CXX11)
 
   option(MSVC_USE_STATIC_CRT
     "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
@@ -203,6 +207,87 @@ if (IOS)
 endif (IOS)
 
 unset(CERES_COMPILE_OPTIONS)
+
+# Initialise CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles with the
+# contents of CMAKE_CXX_FLAGS such that if the user has passed extra flags
+# they are used when discovering shared_ptr/unordered_map.
+set(CMAKE_REQUIRED_FLAGS ${CMAKE_CXX_FLAGS})
+include(CheckCXXCompilerFlag)
+check_cxx_compiler_flag("-std=c++11" COMPILER_HAS_CXX11_FLAG)
+if (CXX11 AND COMPILER_HAS_CXX11_FLAG)
+  # Update CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles to include
+  # -std=c++11 s/t we will detect the C++11 versions of unordered_map &
+  # shared_ptr if they exist.
+  set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} -std=c++11")
+endif (CXX11 AND COMPILER_HAS_CXX11_FLAG)
+
+# Set the Ceres compile definitions for the unordered_map configuration.
+include(FindUnorderedMap)
+find_unordered_map()
+if (UNORDERED_MAP_FOUND)
+  if (HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_STD_UNORDERED_MAP)
+  endif(HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
+  if (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_STD_UNORDERED_MAP_IN_TR1_NAMESPACE)
+  endif(HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
+  if (HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_TR1_UNORDERED_MAP)
+  endif(HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
+else (UNORDERED_MAP_FOUND)
+  message("-- Replacing unordered_map/set with map/set (warning: slower!), "
+    "try enabling CXX11 option if you expect C++11 to be available.")
+  list(APPEND CERES_COMPILE_OPTIONS CERES_NO_UNORDERED_MAP)
+endif()
+
+# Set the Ceres compile definitions for the shared_ptr configuration.
+include(FindSharedPtr)
+find_shared_ptr()
+if (SHARED_PTR_FOUND)
+  if (SHARED_PTR_TR1_MEMORY_HEADER)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_TR1_MEMORY_HEADER)
+  endif (SHARED_PTR_TR1_MEMORY_HEADER)
+  if (SHARED_PTR_TR1_NAMESPACE)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_TR1_SHARED_PTR)
+  endif (SHARED_PTR_TR1_NAMESPACE)
+else (SHARED_PTR_FOUND)
+  message(FATAL_ERROR "Unable to find shared_ptr, try enabling CXX11 option "
+    "if you expect C++11 to be available.")
+endif (SHARED_PTR_FOUND)
+
+include(FindCXX11MathFunctions)
+find_cxx11_math_functions()
+if (CXX11 AND NOT CXX11_MATH_FUNCTIONS_FOUND)
+  message("-- Failed to find C++11 math functions (cbrt(), exp2() etc). "
+    "Disabling C++11.")
+  update_cache_variable(CXX11 OFF)
+endif()
+
+# To ensure that CXX11 accurately reflects whether we are using C++11,
+# check if it is required given where the potentially C++11 features Ceres
+# uses were found, and disable it if C++11 is not being used.
+if (CXX11)
+  if (NOT HAVE_SHARED_PTR_IN_STD_NAMESPACE AND
+      NOT HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
+    message("-- Failed to find C++11 components in C++11 locations & "
+      "namespaces, disabling CXX11.")
+    update_cache_variable(CXX11 OFF)
+  else()
+    message("   ==============================================================")
+    message("   Compiling Ceres using C++11.  This will result in a version ")
+    message("   of Ceres that will require the use of C++11 in client code.")
+    message("   ==============================================================")
+    list(APPEND CERES_COMPILE_OPTIONS CERES_USE_CXX11)
+    if (COMPILER_HAS_CXX11_FLAG AND
+        CMAKE_VERSION VERSION_LESS "2.8.12")
+      # For CMake versions > 2.8.12, the C++11 dependency is rolled into the
+      # Ceres target, and all dependent targets, but for older versions of CMake
+      # the flag must be specified explicitly both for Ceres and the
+      # examples/tests.
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    endif()
+  endif()
+endif(CXX11)
 
 # Eigen.
 find_package(Eigen REQUIRED)
@@ -403,14 +488,6 @@ if (NOT CUSTOM_BLAS)
   message("-- Disabling custom blas")
 endif (NOT CUSTOM_BLAS)
 
-# OpenMP and TBB are mutually exclusive options. OpenMP is on by default thus
-# disable it if the user requested TBB.
-if (TBB AND OPENMP)
-  update_cache_variable(OPENMP OFF)
-  message("-- Intel TBB enabled; disabling OpenMP support (they are mutually "
-    "exclusive)")
-endif (TBB AND OPENMP)
-
 if (OPENMP)
   # Find quietly, as we can continue without OpenMP if it is not found.
   find_package(OpenMP QUIET)
@@ -429,45 +506,43 @@ else (OPENMP)
   message("-- Building without OpenMP, disabling.")
 endif (OPENMP)
 
-if (TBB)
+if (CXX11)
+  # We require <atomic> for both TBB & CXX11_THREADS. Not all compilers
+  # (MSVC 2010) have <atomic> even if they have other C++11 features.
+  check_include_file_cxx(atomic HAVE_STD_ATOMIC_HEADER)
+  if (NOT HAVE_STD_ATOMIC_HEADER)
+    message("-- Failed to find <atomic> (C++11) header. Disabling "
+      "TBB and C++11 threads.")
+    # update_cache_variable() requires that the variable exists in the
+    # cache. As TBB & CXX11_THREADS are dependent-options they might not
+    # exist at this point so check before disabling.
+    if (TBB)
+      update_cache_variable(TBB OFF)
+    endif()
+    if (CXX11_THREADS)
+      update_cache_variable(CXX11_THREADS OFF)
+    endif()
+  endif()
+else()
+  message("-- Building without C++11. Disabling TBB & C++11 threads.")
+endif()
+
+if (CXX11 AND TBB)
   find_package(TBB QUIET)
   if (TBB_FOUND)
     message("-- Building with TBB (version: ${TBB_VERSION}).")
     list(APPEND CERES_COMPILE_OPTIONS CERES_USE_TBB)
     include_directories(${TBB_INCLUDE_DIRS})
-    if (NOT CXX11)
-      message("-- Enabling CXX11 (C++11) option required by TBB=ON.")
-      update_cache_variable(CXX11 ON)
-    endif()
   else (TBB_FOUND)
     message("-- Failed to find TBB, disabling.")
     update_cache_variable(TBB OFF)
   endif (TBB_FOUND)
-endif (TBB)
+endif()
 
-if (CXX11_THREADS)
-  # OpenMP and C++11 threads are mutually exclusive options. Fail with an error
-  # if they user requested both.
-  if (OPENMP)
-    message(FATAL_ERROR "OpenMP and C++11 threading support are both enabled "
-      "but they are mutally exclusive.  OpenMP is enabled by default. Please "
-      "disable one of them.")
-  endif (OPENMP)
-
-  # C++11 threads and TBB are mutually exclusive options. Fail with an error if
-  # the user requested both.
-  if (TBB)
-    message(FATAL_ERROR "Intel TBB and C++11 threading support are both "
-      "enabled but they are mutally exclusive. Please disable one of them.")
-  endif (TBB)
-
-  if (NOT CXX11)
-    message(FATAL_ERROR "C++11 threading support requires C++11.  Please "
-      "enable C++11 to enable.")
-  endif (NOT CXX11)
-
+if (CXX11 AND CXX11_THREADS)
+  message("-- Building with C++11 threads.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_USE_CXX11_THREADS)
-endif (CXX11_THREADS)
+endif()
 
 if (NOT OPENMP AND NOT TBB AND NOT CXX11_THREADS)
   message("-- Neither OpenMP, TBB or C++11 threads is enabled, "
@@ -482,83 +557,6 @@ else (NOT OPENMP AND NOT TBB AND NOT CXX11_THREADS)
     list(APPEND CERES_COMPILE_OPTIONS CERES_HAVE_RWLOCK)
   endif (UNIX)
 endif (NOT OPENMP AND NOT TBB AND NOT CXX11_THREADS)
-
-# Initialise CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles with the
-# contents of CMAKE_CXX_FLAGS such that if the user has passed extra flags
-# they are used when discovering shared_ptr/unordered_map.
-set(CMAKE_REQUIRED_FLAGS ${CMAKE_CXX_FLAGS})
-include(CheckCXXCompilerFlag)
-check_cxx_compiler_flag("-std=c++11" COMPILER_HAS_CXX11_FLAG)
-if (CXX11 AND COMPILER_HAS_CXX11_FLAG)
-  # Update CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles to include
-  # -std=c++11 s/t we will detect the C++11 versions of unordered_map &
-  # shared_ptr if they exist.
-  set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} -std=c++11")
-endif (CXX11 AND COMPILER_HAS_CXX11_FLAG)
-
-# Set the Ceres compile definitions for the unordered_map configuration.
-include(FindUnorderedMap)
-find_unordered_map()
-if (UNORDERED_MAP_FOUND)
-  if (HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_STD_UNORDERED_MAP)
-  endif(HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
-  if (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_STD_UNORDERED_MAP_IN_TR1_NAMESPACE)
-  endif(HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
-  if (HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_TR1_UNORDERED_MAP)
-  endif(HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
-else (UNORDERED_MAP_FOUND)
-  message("-- Replacing unordered_map/set with map/set (warning: slower!), "
-    "try enabling CXX11 option if you expect C++11 to be available.")
-  list(APPEND CERES_COMPILE_OPTIONS CERES_NO_UNORDERED_MAP)
-endif()
-
-# Set the Ceres compile definitions for the shared_ptr configuration.
-include(FindSharedPtr)
-find_shared_ptr()
-if (SHARED_PTR_FOUND)
-  if (SHARED_PTR_TR1_MEMORY_HEADER)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_TR1_MEMORY_HEADER)
-  endif (SHARED_PTR_TR1_MEMORY_HEADER)
-  if (SHARED_PTR_TR1_NAMESPACE)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_TR1_SHARED_PTR)
-  endif (SHARED_PTR_TR1_NAMESPACE)
-else (SHARED_PTR_FOUND)
-  message(FATAL_ERROR "Unable to find shared_ptr, try enabling CXX11 option "
-    "if you expect C++11 to be available.")
-endif (SHARED_PTR_FOUND)
-
-# To ensure that CXX11 accurately reflects whether we are using C++11,
-# check if it is required given where the potentially C++11 features Ceres
-# uses were found, and disable it if C++11 is not being used.
-if (CXX11)
-  if (NOT HAVE_SHARED_PTR_IN_STD_NAMESPACE AND
-      NOT HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
-    message("-- Failed to find C++11 components in C++11 locations & "
-      "namespaces, disabling CXX11.")
-    update_cache_variable(CXX11 OFF)
-    if (CXX11_THREADS)
-      message(FATAL_ERROR "C++11 threading requires C++11 components, which we "
-        "failed to find.  Please disable C++11 threading to continue.")
-    endif (CXX11_THREADS)
-  else()
-    message("   ==============================================================")
-    message("   Compiling Ceres using C++11.  This will result in a version ")
-    message("   of Ceres that will require the use of C++11 in client code.")
-    message("   ==============================================================")
-    list(APPEND CERES_COMPILE_OPTIONS CERES_USE_CXX11)
-    if (COMPILER_HAS_CXX11_FLAG AND
-        CMAKE_VERSION VERSION_LESS "2.8.12")
-      # For CMake versions > 2.8.12, the C++11 dependency is rolled into the
-      # Ceres target, and all dependent targets, but for older versions of CMake
-      # the flag must be specified explicitly both for Ceres and the
-      # examples/tests.
-      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    endif()
-  endif()
-endif(CXX11)
 
 if (BUILD_BENCHMARKS)
   find_package(benchmark QUIET)
