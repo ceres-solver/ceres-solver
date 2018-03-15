@@ -635,7 +635,8 @@ Options controlling Ceres configuration
    to disable multi-threading.
 
 #. ``TBB [Default: OFF]``: An alternative to ``OpenMP`` threading library that
-   requires C++11. This option is mutually exclusive to ``OpenMP``.
+   requires C++11. This option is mutually exclusive to ``OPENMP`` and
+   ``CXX11_THREADS``.
 
    .. NOTE::
 
@@ -643,7 +644,11 @@ Options controlling Ceres configuration
       GPL/Commercial terms.  From 2017.x versions onwards, TBB is licensed under
       the Apache 2.0 license (and commerical terms).
 
-#. ``CXX11 [Default: OFF]`` *Non-MSVC compilers only*.
+#. ``CXX11_THREADS [Default: OFF]``: An alternative to ``OpenMP``
+   threading library that uses a C++11 thread-pool.  This option
+   requires C++11 and is mutually exclusive to ``OPENMP`` and ``TBB``.
+
+#. ``CXX11 [Default: OFF]``
 
    Although Ceres does not currently require C++11, it does use
    ``shared_ptr`` (required) and ``unordered_map`` (if available);
@@ -685,11 +690,6 @@ Options controlling Ceres configuration
    OS X 10.9+           OFF         std               **No**
    OS X 10.9+           ON          std               **Yes**
    ===================  ==========  ================  ======================================
-
-   The ``CXX11`` option does does not exist when using MSVC, as there
-   any new C++ features available are enabled by default, and there is
-   no analogue of ``-std=c++11``.  It will however be available on
-   MinGW & CygWin, which can support ``-std=c++11``.
 
 #. ``BUILD_SHARED_LIBS [Default: OFF]``: By default Ceres is built as
    a static library, turn this ``ON`` to instead build Ceres as a

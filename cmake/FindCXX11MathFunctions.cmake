@@ -27,22 +27,32 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 # Author: alexs.mac@gmail.com (Alex Stewart)
-
-# By default, there is no easy way in CMake to set the value of a cache
-# variable without reinitialising it, which involves resetting its
-# associated help string.  This is particularly annoying for CMake options
-# where they need to programmatically updated.
 #
-# This function automates this process by getting the current help string
-# for the cache variable to update, then reinitialising it with the new
-# value, but with the original help string.
-function(UPDATE_CACHE_VARIABLE VAR_NAME VALUE)
-  get_property(IS_DEFINED_IN_CACHE CACHE ${VAR_NAME} PROPERTY VALUE SET)
-  if (NOT IS_DEFINED_IN_CACHE)
-    message(FATAL_ERROR "Specified variable to update in cache: "
-      "${VAR_NAME} has not been set in the cache.")
-  endif()
-  get_property(HELP_STRING CACHE ${VAR_NAME} PROPERTY HELPSTRING)
-  get_property(VAR_TYPE CACHE ${VAR_NAME} PROPERTY TYPE)
-  set(${VAR_NAME} ${VALUE} CACHE ${VAR_TYPE} "${HELP_STRING}" FORCE)
-endfunction()
+
+# FindCXX11MathFunctions.cmake - Find C++11 math functions.
+#
+# This module defines the following variables:
+#
+# CXX11_MATH_FUNCTIONS_FOUND: TRUE if C++11 math functions are found.
+
+macro(find_cxx11_math_functions)
+  # To support CXX11 option, clear the results of all check_xxx() functions
+  # s/t we always perform the checks each time, otherwise CMake fails to
+  # detect that the tests should be performed again after CXX11 is toggled.
+  unset(CXX11_MATH_FUNCTIONS_FOUND CACHE)
+
+  # Verify that all C++11-specific math functions used by jet.h exist.
+  check_cxx_source_compiles("#include <cmath>
+                             #include <cstddef>
+                             static constexpr size_t kMaxAlignBytes = alignof(std::max_align_t);
+                             int main() {
+                                std::cbrt(1.0);
+                                std::exp2(1.0);
+                                std::log2(1.0);
+                                std::hypot(1.0, 1.0);
+                                std::fmax(1.0, 1.0);
+                                std::fmin(1.0, 1.0);
+                                return 0;
+                             }"
+                             CXX11_MATH_FUNCTIONS_FOUND)
+endmacro()
