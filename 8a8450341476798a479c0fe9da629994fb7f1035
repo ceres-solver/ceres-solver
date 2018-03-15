@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0bdfdd6_adcaed69",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-15T23:20:49Z",
+      "side": 1,
+      "message": "Comments should be full sentences (start with a capital letter, end with a period).",
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b850d61_fd7d9271",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-15T23:20:49Z",
+      "side": 1,
+      "message": "Please use full sentences.",
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
