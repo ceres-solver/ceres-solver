@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "250c42d9_220c0a2b",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-03-16T17:25:29Z",
+      "side": 1,
+      "message": "This constant literal is repeated, can it be a constant and derived from the same constant \u00274\u0027 used in the for() loop declarations for clarity?",
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0bdfdd6_adcaed69",
         "filename": "internal/ceres/small_blas.h",
         "patchSetId": 3
@@ -30,6 +47,23 @@
       "writtenOn": "2018-03-15T23:20:49Z",
       "side": 1,
       "message": "Please use full sentences.",
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b974643_29f8a4b4",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-03-16T17:25:29Z",
+      "side": 1,
+      "message": "I don\u0027t think \u0027_opt\u0027 is a great suffix here, given that this is now the implementation used by everyone, except in future on armv8a when the optimised assembler will replace it.  As such, I would propose: \u0027_default\u0027 / \u0027_generic\u0027, and then we can use an \u0027_armv8\u0027 suffix for the optimised assembler version.",
       "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
