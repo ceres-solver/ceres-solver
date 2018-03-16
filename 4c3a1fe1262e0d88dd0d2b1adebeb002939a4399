@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e889bda_263adcda",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-16T17:54:42Z",
+      "side": 1,
+      "message": "don\u0027t you need to only worry about this if openmp is not found and the user has requested tbb or threads? why check for atomic header otherwise?",
+      "range": {
+        "startLine": 515,
+        "startChar": 17,
+        "endLine": 515,
+        "endChar": 18
+      },
+      "revId": "4c3a1fe1262e0d88dd0d2b1adebeb002939a4399",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
