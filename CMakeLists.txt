@@ -208,87 +208,6 @@ endif (IOS)
 
 unset(CERES_COMPILE_OPTIONS)
 
-# Initialise CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles with the
-# contents of CMAKE_CXX_FLAGS such that if the user has passed extra flags
-# they are used when discovering shared_ptr/unordered_map.
-set(CMAKE_REQUIRED_FLAGS ${CMAKE_CXX_FLAGS})
-include(CheckCXXCompilerFlag)
-check_cxx_compiler_flag("-std=c++11" COMPILER_HAS_CXX11_FLAG)
-if (CXX11 AND COMPILER_HAS_CXX11_FLAG)
-  # Update CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles to include
-  # -std=c++11 s/t we will detect the C++11 versions of unordered_map &
-  # shared_ptr if they exist.
-  set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} -std=c++11")
-endif (CXX11 AND COMPILER_HAS_CXX11_FLAG)
-
-# Set the Ceres compile definitions for the unordered_map configuration.
-include(FindUnorderedMap)
-find_unordered_map()
-if (UNORDERED_MAP_FOUND)
-  if (HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_STD_UNORDERED_MAP)
-  endif(HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
-  if (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_STD_UNORDERED_MAP_IN_TR1_NAMESPACE)
-  endif(HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
-  if (HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_TR1_UNORDERED_MAP)
-  endif(HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
-else (UNORDERED_MAP_FOUND)
-  message("-- Replacing unordered_map/set with map/set (warning: slower!), "
-    "try enabling CXX11 option if you expect C++11 to be available.")
-  list(APPEND CERES_COMPILE_OPTIONS CERES_NO_UNORDERED_MAP)
-endif()
-
-# Set the Ceres compile definitions for the shared_ptr configuration.
-include(FindSharedPtr)
-find_shared_ptr()
-if (SHARED_PTR_FOUND)
-  if (SHARED_PTR_TR1_MEMORY_HEADER)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_TR1_MEMORY_HEADER)
-  endif (SHARED_PTR_TR1_MEMORY_HEADER)
-  if (SHARED_PTR_TR1_NAMESPACE)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_TR1_SHARED_PTR)
-  endif (SHARED_PTR_TR1_NAMESPACE)
-else (SHARED_PTR_FOUND)
-  message(FATAL_ERROR "Unable to find shared_ptr, try enabling CXX11 option "
-    "if you expect C++11 to be available.")
-endif (SHARED_PTR_FOUND)
-
-include(FindCXX11MathFunctions)
-find_cxx11_math_functions()
-if (CXX11 AND NOT CXX11_MATH_FUNCTIONS_FOUND)
-  message("-- Failed to find C++11 math functions (cbrt(), exp2() etc). "
-    "Disabling C++11.")
-  update_cache_variable(CXX11 OFF)
-endif()
-
-# To ensure that CXX11 accurately reflects whether we are using C++11,
-# check if it is required given where the potentially C++11 features Ceres
-# uses were found, and disable it if C++11 is not being used.
-if (CXX11)
-  if (NOT HAVE_SHARED_PTR_IN_STD_NAMESPACE AND
-      NOT HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
-    message("-- Failed to find C++11 components in C++11 locations & "
-      "namespaces, disabling CXX11.")
-    update_cache_variable(CXX11 OFF)
-  else()
-    message("   ==============================================================")
-    message("   Compiling Ceres using C++11.  This will result in a version ")
-    message("   of Ceres that will require the use of C++11 in client code.")
-    message("   ==============================================================")
-    list(APPEND CERES_COMPILE_OPTIONS CERES_USE_CXX11)
-    if (COMPILER_HAS_CXX11_FLAG AND
-        CMAKE_VERSION VERSION_LESS "2.8.12")
-      # For CMake versions > 2.8.12, the C++11 dependency is rolled into the
-      # Ceres target, and all dependent targets, but for older versions of CMake
-      # the flag must be specified explicitly both for Ceres and the
-      # examples/tests.
-      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    endif()
-  endif()
-endif(CXX11)
-
 # Eigen.
 find_package(Eigen REQUIRED)
 if (EIGEN_FOUND)
@@ -505,6 +424,87 @@ if (OPENMP)
 else (OPENMP)
   message("-- Building without OpenMP, disabling.")
 endif (OPENMP)
+
+# Initialise CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles with the
+# contents of CMAKE_CXX_FLAGS such that if the user has passed extra flags
+# they are used when discovering shared_ptr/unordered_map.
+set(CMAKE_REQUIRED_FLAGS ${CMAKE_CXX_FLAGS})
+include(CheckCXXCompilerFlag)
+check_cxx_compiler_flag("-std=c++11" COMPILER_HAS_CXX11_FLAG)
+if (CXX11 AND COMPILER_HAS_CXX11_FLAG)
+  # Update CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles to include
+  # -std=c++11 s/t we will detect the C++11 versions of unordered_map &
+  # shared_ptr if they exist.
+  set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} -std=c++11")
+endif (CXX11 AND COMPILER_HAS_CXX11_FLAG)
+
+# Set the Ceres compile definitions for the unordered_map configuration.
+include(FindUnorderedMap)
+find_unordered_map()
+if (UNORDERED_MAP_FOUND)
+  if (HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_STD_UNORDERED_MAP)
+  endif(HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
+  if (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_STD_UNORDERED_MAP_IN_TR1_NAMESPACE)
+  endif(HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
+  if (HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_TR1_UNORDERED_MAP)
+  endif(HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
+else (UNORDERED_MAP_FOUND)
+  message("-- Replacing unordered_map/set with map/set (warning: slower!), "
+    "try enabling CXX11 option if you expect C++11 to be available.")
+  list(APPEND CERES_COMPILE_OPTIONS CERES_NO_UNORDERED_MAP)
+endif()
+
+# Set the Ceres compile definitions for the shared_ptr configuration.
+include(FindSharedPtr)
+find_shared_ptr()
+if (SHARED_PTR_FOUND)
+  if (SHARED_PTR_TR1_MEMORY_HEADER)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_TR1_MEMORY_HEADER)
+  endif (SHARED_PTR_TR1_MEMORY_HEADER)
+  if (SHARED_PTR_TR1_NAMESPACE)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_TR1_SHARED_PTR)
+  endif (SHARED_PTR_TR1_NAMESPACE)
+else (SHARED_PTR_FOUND)
+  message(FATAL_ERROR "Unable to find shared_ptr, try enabling CXX11 option "
+    "if you expect C++11 to be available.")
+endif (SHARED_PTR_FOUND)
+
+include(FindCXX11MathFunctions)
+find_cxx11_math_functions()
+if (CXX11 AND NOT CXX11_MATH_FUNCTIONS_FOUND)
+  message("-- Failed to find C++11 math functions (cbrt(), exp2() etc). "
+    "Disabling C++11.")
+  update_cache_variable(CXX11 OFF)
+endif()
+
+# To ensure that CXX11 accurately reflects whether we are using C++11,
+# check if it is required given where the potentially C++11 features Ceres
+# uses were found, and disable it if C++11 is not being used.
+if (CXX11)
+  if (NOT HAVE_SHARED_PTR_IN_STD_NAMESPACE AND
+      NOT HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
+    message("-- Failed to find C++11 components in C++11 locations & "
+      "namespaces, disabling CXX11.")
+    update_cache_variable(CXX11 OFF)
+  else()
+    message("   ==============================================================")
+    message("   Compiling Ceres using C++11.  This will result in a version ")
+    message("   of Ceres that will require the use of C++11 in client code.")
+    message("   ==============================================================")
+    list(APPEND CERES_COMPILE_OPTIONS CERES_USE_CXX11)
+    if (COMPILER_HAS_CXX11_FLAG AND
+        CMAKE_VERSION VERSION_LESS "2.8.12")
+      # For CMake versions > 2.8.12, the C++11 dependency is rolled into the
+      # Ceres target, and all dependent targets, but for older versions of CMake
+      # the flag must be specified explicitly both for Ceres and the
+      # examples/tests.
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    endif()
+  endif()
+endif(CXX11)
 
 if (CXX11 AND (TBB OR CXX11_THREADS))
   # We require <atomic> for both TBB & CXX11_THREADS. Not all compilers
