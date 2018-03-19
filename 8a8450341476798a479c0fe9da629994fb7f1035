@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "3a76cd66_81f043d0",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-19T16:35:42Z",
+      "side": 1,
+      "message": "Align inside the parens: the \"\u0026\" of \"\u0026B[col]\" should be below the N of NUM_COL_A. This applies to all the other places that look like this.",
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b850d61_fd7d9271",
         "filename": "internal/ceres/small_blas.h",
         "patchSetId": 3
@@ -64,6 +81,98 @@
       "writtenOn": "2018-03-16T17:25:29Z",
       "side": 1,
       "message": "I don\u0027t think \u0027_opt\u0027 is a great suffix here, given that this is now the implementation used by everyone, except in future on armv8a when the optimised assembler will replace it.  As such, I would propose: \u0027_default\u0027 / \u0027_generic\u0027, and then we can use an \u0027_armv8\u0027 suffix for the optimised assembler version.",
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f6a6ef_3879e8bb",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-19T16:35:42Z",
+      "side": 1,
+      "message": "I\u0027m not fond of the AA, BB, CC names. They should follow normal naming convention (lower snake case).",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f062f4_6ff77dde",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-19T16:35:42Z",
+      "side": 1,
+      "message": "What\u0027s \"ldb\"? Looks like it\u0027s B\u0027s line stride; is there a better name? Also \"lda\" elsewhere.",
+      "range": {
+        "startLine": 92,
+        "startChar": 40,
+        "endLine": 92,
+        "endChar": 43
+      },
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d22166_48a42e87",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-19T16:35:42Z",
+      "side": 1,
+      "message": "Load *pb into a variable? (This may already be done by the compiler as it ought to be able to deduce that modifications to c[0123] can\u0027t modify *pb).",
+      "range": {
+        "startLine": 220,
+        "startChar": 33,
+        "endLine": 220,
+        "endChar": 36
+      },
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe23286_914ebace",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-19T16:35:42Z",
+      "side": 1,
+      "message": "I think it\u0027s safe to do \"*2\", \"*3\" in these macros - the compiler should know whether to convert the multiplies into shift-and-add sequences. Benchmarks may prove me wrong :-)",
+      "range": {
+        "startLine": 222,
+        "startChar": 22,
+        "endLine": 222,
+        "endChar": 25
+      },
       "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
