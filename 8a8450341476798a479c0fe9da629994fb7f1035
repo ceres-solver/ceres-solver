@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "603612dd_a637bfd2",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 6131
+      },
+      "writtenOn": "2018-03-20T13:32:44Z",
+      "side": 1,
+      "message": "Done\n\nModified like this,\n---------------------\nconst int span \u003d 0x4;\nint col_r \u003d NUM_COL_C \u0026 (span - 1);\n...",
+      "parentUuid": "250c42d9_220c0a2b",
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0bdfdd6_adcaed69",
         "filename": "internal/ceres/small_blas.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2179a842_f11e9eee",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 6131
+      },
+      "writtenOn": "2018-03-20T13:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0bdfdd6_adcaed69",
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e1c2bc23_52ff4fbe",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 6131
+      },
+      "writtenOn": "2018-03-20T13:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a76cd66_81f043d0",
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b850d61_fd7d9271",
         "filename": "internal/ceres/small_blas.h",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8cd2fb48_3da9f278",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 6131
+      },
+      "writtenOn": "2018-03-20T13:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b850d61_fd7d9271",
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b974643_29f8a4b4",
         "filename": "internal/ceres/small_blas_opt.h",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9293ada5_34bc7622",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6131
+      },
+      "writtenOn": "2018-03-20T13:32:44Z",
+      "side": 1,
+      "message": "Done\n\nGreat! I prefer to small_blas_generic.h",
+      "parentUuid": "8b974643_29f8a4b4",
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "f666a0df_3e7f4798",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6131
+      },
+      "writtenOn": "2018-03-20T13:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43f6a6ef_3879e8bb",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7f062f4_6ff77dde",
         "filename": "internal/ceres/small_blas_opt.h",
         "patchSetId": 3
@@ -130,6 +244,30 @@
       "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a19262_96007041",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6131
+      },
+      "writtenOn": "2018-03-20T13:32:44Z",
+      "side": 1,
+      "message": "Done\n\nHow about stride_A / stride_B? \n^-^",
+      "parentUuid": "e7f062f4_6ff77dde",
+      "range": {
+        "startLine": 92,
+        "startChar": 40,
+        "endLine": 92,
+        "endChar": 43
+      },
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "bf50319f_18b0785e",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 6131
+      },
+      "writtenOn": "2018-03-20T13:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34d22166_48a42e87",
+      "range": {
+        "startLine": 220,
+        "startChar": 33,
+        "endLine": 220,
+        "endChar": 36
+      },
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebe23286_914ebace",
         "filename": "internal/ceres/small_blas_opt.h",
         "patchSetId": 3
@@ -167,6 +329,30 @@
       "writtenOn": "2018-03-19T16:35:42Z",
       "side": 1,
       "message": "I think it\u0027s safe to do \"*2\", \"*3\" in these macros - the compiler should know whether to convert the multiplies into shift-and-add sequences. Benchmarks may prove me wrong :-)",
+      "range": {
+        "startLine": 222,
+        "startChar": 22,
+        "endLine": 222,
+        "endChar": 25
+      },
+      "revId": "8a8450341476798a479c0fe9da629994fb7f1035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735ce4e3_3f8fa77a",
+        "filename": "internal/ceres/small_blas_opt.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 6131
+      },
+      "writtenOn": "2018-03-20T13:32:44Z",
+      "side": 1,
+      "message": "Does really the compiler do so? \nI am not very sure. I will do some tests to probe it.",
+      "parentUuid": "ebe23286_914ebace",
       "range": {
         "startLine": 222,
         "startChar": 22,
