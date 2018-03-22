@@ -44,25 +44,23 @@ namespace ceres {
 // matrix and vector objects for use in the benchmark.
 class MatrixVectorMultiplyData {
  public:
-  MatrixVectorMultiplyData(int rows, int cols) {
-    rows_ = rows;
-    cols_ = cols;
-
-    num_elements_ = 1000;
-    a_.resize(num_elements_ * rows, 1.00001);
-    b_.resize(num_elements_ * rows * cols, 1.00002);
-    c_.resize(num_elements_ * cols, 1.00003);
-  }
+  MatrixVectorMultiplyData(int rows, int cols)
+      : num_elements_(1000),
+        rows_(rows),
+        cols_(cols),
+        a_(num_elements_ * rows, 1.001),
+        b_(num_elements_ * rows * cols, 1.5),
+        c_(num_elements_ * cols, 1.00003) {}
 
   int num_elements() const { return num_elements_; }
-  double* GetA(int i) { return &a_[i * rows_]; };
-  double* GetB(int i) { return &b_[i * rows_ * cols_]; };
-  double* GetC(int i) { return &c_[i * cols_]; };
+  double* GetA(int i) { return &a_[i * rows_]; }
+  double* GetB(int i) { return &b_[i * rows_ * cols_]; }
+  double* GetC(int i) { return &c_[i * cols_]; }
 
  private:
-  int num_elements_;
-  int rows_;
-  int cols_;
+  const int num_elements_;
+  const int rows_;
+  const int cols_;
   std::vector<double> a_;
   std::vector<double> b_;
   std::vector<double> c_;
@@ -71,8 +69,8 @@ class MatrixVectorMultiplyData {
 // Helper function to generate the various matrix sizes for which we
 // run the benchmark.
 static void MatrixSizeArguments(benchmark::internal::Benchmark* benchmark) {
-  std::vector<int> rows = {1, 2, 3, 4};
-  std::vector<int> cols = {1, 2, 3, 4, 6, 7, 12, 16, 20};
+  std::vector<int> rows = {1, 2, 3, 4, 6, 8};
+  std::vector<int> cols = {1, 2, 3, 4, 8, 12, 15};
   for (int r : rows) {
     for (int c : cols) {
       benchmark->Args({r, c});
@@ -85,12 +83,12 @@ void BM_MatrixVectorMultiply(benchmark::State& state) {
   const int cols = state.range(1);
   MatrixVectorMultiplyData data(rows, cols);
   const int num_elements = data.num_elements();
-  int i = 0;
+  int iter = 0;
   for (auto _ : state) {
     // A += B * C;
     internal::MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
-        data.GetB(i), rows, cols, data.GetC(i), data.GetA(i));
-    i = (i + 1) % num_elements;
+        data.GetB(iter), rows, cols, data.GetC(iter), data.GetA(iter));
+    iter = (iter + 1) % num_elements;
   }
 }
 
@@ -101,11 +99,11 @@ void BM_MatrixTransposeVectorMultiply(benchmark::State& state) {
   const int cols = state.range(1);
   MatrixVectorMultiplyData data(cols, rows);
   const int num_elements = data.num_elements();
-  int i = 0;
+  int iter = 0;
   for (auto _ : state) {
     internal::MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
-        data.GetB(i), rows, cols, data.GetC(i), data.GetA(i));
-    i = (i + 1) % num_elements;
+        data.GetB(iter), rows, cols, data.GetC(iter), data.GetA(iter));
+    iter = (iter + 1) % num_elements;
   }
 }
 

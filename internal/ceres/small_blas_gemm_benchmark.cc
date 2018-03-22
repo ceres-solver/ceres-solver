@@ -34,6 +34,7 @@
 #include "ceres/small_blas.h"
 
 namespace ceres {
+namespace internal {
 
 // Benchmarking matrix-matrix multiply routines and optimizing memory
 // access requires that we make sure that they are not just sitting in
@@ -46,20 +47,19 @@ namespace ceres {
 class MatrixMatrixMultiplyData {
  public:
   MatrixMatrixMultiplyData(
-      int a_rows, int a_cols, int b_rows, int b_cols, int c_rows, int c_cols) {
-    num_elements_ = 1000;
-    a_size_ = a_rows * a_cols;
-    b_size_ = b_rows * b_cols;
-    c_size_ = c_cols * c_cols;
-    a_.resize(num_elements_ * a_size_, 1.00001);
-    b_.resize(num_elements_ * b_size_, 1.00002);
-    c_.resize(num_elements_ * c_size_, 1.00003);
-  }
+      int a_rows, int a_cols, int b_rows, int b_cols, int c_rows, int c_cols)
+      : num_elements_(1000),
+        a_size_(a_rows * a_cols),
+        b_size_(b_rows * b_cols),
+        c_size_(c_rows * c_cols),
+        a_(num_elements_ * a_size_, 1.00001),
+        b_(num_elements_ * b_size_, 0.5),
+        c_(num_elements_ * c_size_, -1.1) {}
 
   int num_elements() const { return num_elements_; }
-  double* GetA(int i) { return &a_[i * a_size_]; };
-  double* GetB(int i) { return &b_[i * b_size_]; };
-  double* GetC(int i) { return &c_[i * c_size_]; };
+  double* GetA(int i) { return &a_[i * a_size_]; }
+  double* GetB(int i) { return &b_[i * b_size_]; }
+  double* GetC(int i) { return &c_[i * c_size_]; }
 
  private:
   int num_elements_;
@@ -73,9 +73,9 @@ class MatrixMatrixMultiplyData {
 
 static void MatrixMatrixMultiplySizeArguments(
     benchmark::internal::Benchmark* benchmark) {
-  std::vector<int> b_rows = {2, 4, 6, 8};
-  std::vector<int> b_cols = {2, 4, 6, 8, 10, 12, 15};
-  std::vector<int> c_cols = {2, 4, 6, 8, 10, 12, 15};
+  const std::vector<int> b_rows = {1, 2, 3, 4, 6, 8};
+  const std::vector<int> b_cols = {1, 2, 3, 4, 8, 12, 15};
+  const std::vector<int> c_cols = b_cols;
   for (int i : b_rows) {
     for (int j : b_cols) {
       for (int k : c_cols) {
@@ -86,24 +86,29 @@ static void MatrixMatrixMultiplySizeArguments(
 }
 
 void BM_MatrixMatrixMultiplyDynamic(benchmark::State& state) {
-  const int b_rows = state.range(0);
-  const int b_cols = state.range(1);
-  const int c_cols = state.range(2);
-  MatrixMatrixMultiplyData data(b_rows, c_cols, b_rows, b_cols, b_cols, c_cols);
+  const int i = state.range(0);
+  const int j = state.range(1);
+  const int k = state.range(2);
 
+  const int b_rows = i;
+  const int b_cols = j;
+  const int c_rows = b_cols;
+  const int c_cols = k;
+  const int a_rows = b_rows;
+  const int a_cols = c_cols;
+
+  MatrixMatrixMultiplyData data(a_rows, a_cols, b_rows, b_cols, c_rows, c_cols);
   const int num_elements = data.num_elements();
-  int i = 0;
+
+  int iter = 0;
   for (auto _ : state) {
-    i = (i + 1) % num_elements;
     // a += b * c
-    internal::MatrixMatrixMultiply<Eigen::Dynamic,
-                                   Eigen::Dynamic,
-                                   Eigen::Dynamic,
-                                   Eigen::Dynamic,
-                                   1>(data.GetB(i), b_rows, b_cols,
-                                      data.GetC(i), b_cols, c_cols,
-                                      data.GetA(i), 0, 0, b_rows, c_cols);
-    i = (i + 1) % num_elements;
+    MatrixMatrixMultiply
+        <Eigen::Dynamic, Eigen::Dynamic,Eigen::Dynamic,Eigen::Dynamic, 1>
+        (data.GetB(iter), b_rows, b_cols,
+         data.GetC(iter), c_rows, c_cols,
+         data.GetA(iter), 0, 0, a_rows, a_cols);
+    iter = (iter + 1) % num_elements;
   }
 }
 
@@ -112,9 +117,9 @@ BENCHMARK(BM_MatrixMatrixMultiplyDynamic)
 
 static void MatrixTransposeMatrixMultiplySizeArguments(
     benchmark::internal::Benchmark* benchmark) {
-  std::vector<int> b_rows = {2, 4, 6, 8};
-  std::vector<int> b_cols = {2, 4, 5, 8, 10, 12, 15};
-  std::vector<int> c_cols = {2, 4, 6, 8};
+  std::vector<int> b_rows = {1, 2, 3, 4, 6, 8};
+  std::vector<int> b_cols = {1, 2, 3, 4, 8, 12, 15};
+  std::vector<int> c_cols = b_rows;
   for (int i : b_rows) {
     for (int j : b_cols) {
       for (int k : c_cols) {
@@ -125,30 +130,36 @@ static void MatrixTransposeMatrixMultiplySizeArguments(
 }
 
 void BM_MatrixTransposeMatrixMultiplyDynamic(benchmark::State& state) {
-  const int b_rows = state.range(0);
-  const int b_cols = state.range(1);
-  const int c_cols = state.range(2);
-  MatrixMatrixMultiplyData data(b_cols, c_cols, b_rows, b_cols, b_cols, c_cols);
+  const int i = state.range(0);
+  const int j = state.range(1);
+  const int k = state.range(2);
 
+  const int b_rows = i;
+  const int b_cols = j;
+  const int c_rows = b_rows;
+  const int c_cols = k;
+  const int a_rows = b_cols;
+  const int a_cols = c_cols;
+
+  MatrixMatrixMultiplyData data(a_rows, a_cols, b_rows, b_cols, c_rows, c_cols);
   const int num_elements = data.num_elements();
-  int i = 0;
+
+  int iter = 0;
   for (auto _ : state) {
-    i = (i + 1) % num_elements;
-    // a += b * c
-    internal::MatrixTransposeMatrixMultiply<Eigen::Dynamic,
-                                            Eigen::Dynamic,
-                                            Eigen::Dynamic,
-                                            Eigen::Dynamic,
-                                            1>(data.GetB(i), b_rows, b_cols,
-                                               data.GetC(i), b_cols, c_cols,
-                                               data.GetA(i), 0, 0, b_cols, c_cols);
-    i = (i + 1) % num_elements;
+    // a += b' * c
+    MatrixTransposeMatrixMultiply
+        <Eigen::Dynamic,Eigen::Dynamic,Eigen::Dynamic,Eigen::Dynamic, 1>
+        (data.GetB(iter), b_rows, b_cols,
+         data.GetC(iter), c_rows, c_cols,
+         data.GetA(iter), 0, 0, a_rows, a_cols);
+    iter = (iter + 1) % num_elements;
   }
 }
 
 BENCHMARK(BM_MatrixTransposeMatrixMultiplyDynamic)
     ->Apply(MatrixTransposeMatrixMultiplySizeArguments);
 
+}  // internal
 }  // namespace ceres
 
 BENCHMARK_MAIN();
