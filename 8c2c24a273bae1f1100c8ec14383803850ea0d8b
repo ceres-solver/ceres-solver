@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a68098fe_7b50db9b",
+        "filename": "internal/ceres/small_blas_generic.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-22T16:49:11Z",
+      "side": 1,
+      "message": "This is a fairly minor quibble, but I\u0027d prefer it if the parameter names here (and throughout) matched the prevalent style: lower_snake_case.",
+      "range": {
+        "startLine": 90,
+        "startChar": 40,
+        "endLine": 90,
+        "endChar": 45
+      },
+      "revId": "8c2c24a273bae1f1100c8ec14383803850ea0d8b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
