@@ -71,8 +71,8 @@ class MatrixVectorMultiplyData {
 // Helper function to generate the various matrix sizes for which we
 // run the benchmark.
 static void MatrixSizeArguments(benchmark::internal::Benchmark* benchmark) {
-  std::vector<int> rows = {1, 2, 3, 4};
-  std::vector<int> cols = {1, 2, 3, 4, 6, 7, 12, 16, 20};
+  std::vector<int> rows = {1, 2, 3, 4, 6, 8};
+  std::vector<int> cols = {1, 2, 3, 4, 5, 8, 10, 12, 15, 16};
   for (int r : rows) {
     for (int c : cols) {
       benchmark->Args({r, c});

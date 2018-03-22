@@ -73,9 +73,9 @@ class MatrixMatrixMultiplyData {
 
 static void MatrixMatrixMultiplySizeArguments(
     benchmark::internal::Benchmark* benchmark) {
-  std::vector<int> b_rows = {2, 4, 6, 8};
-  std::vector<int> b_cols = {2, 4, 6, 8, 10, 12, 15};
-  std::vector<int> c_cols = {2, 4, 6, 8, 10, 12, 15};
+  std::vector<int> b_rows = {1, 2, 3, 4, 6, 8};
+  std::vector<int> b_cols = {1, 2, 3, 4, 5, 8, 10, 12, 15, 16};
+  std::vector<int> c_cols = b_cols;
   for (int i : b_rows) {
     for (int j : b_cols) {
       for (int k : c_cols) {
@@ -112,9 +112,9 @@ BENCHMARK(BM_MatrixMatrixMultiplyDynamic)
 
 static void MatrixTransposeMatrixMultiplySizeArguments(
     benchmark::internal::Benchmark* benchmark) {
-  std::vector<int> b_rows = {2, 4, 6, 8};
-  std::vector<int> b_cols = {2, 4, 5, 8, 10, 12, 15};
-  std::vector<int> c_cols = {2, 4, 6, 8};
+  std::vector<int> b_rows = {1, 2, 3, 4, 6, 8};
+  std::vector<int> b_cols = {1, 2, 3, 4, 5, 8, 10, 12, 15};
+  std::vector<int> c_cols = b_rows;
   for (int i : b_rows) {
     for (int j : b_cols) {
       for (int k : c_cols) {
