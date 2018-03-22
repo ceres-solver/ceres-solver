@@ -69,7 +69,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
   summary.message = "Success.";
 
   const int num_cols = A->num_cols();
-  VectorRef(x, num_cols).setZero();
+  VectorRef(x, num_cols).setZero();  // change this
   A->LeftMultiply(b, x);
   event_logger.AddEvent("Compute RHS");
 
@@ -95,15 +95,87 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
   inner_product_computer_->Compute();
   event_logger.AddEvent("InnerProductComputer::Compute");
 
-  // TODO(sameeragarwal):
-
   if (per_solve_options.D != NULL) {
     A->DeleteRowBlocks(A->block_structure()->cols.size());
   }
-  summary.termination_type = sparse_cholesky_->FactorAndSolve(
-      inner_product_computer_->mutable_result(), x, x, &summary.message);
-  event_logger.AddEvent("Factor & Solve");
+
+  bool do_iterative_refinement = false;
+  CompressedRowSparseMatrix* lhs = inner_product_computer_->mutable_result();
+  if (!do_iterative_refinement) {
+    summary.termination_type =
+        sparse_cholesky_->FactorAndSolve(lhs, x, x, &summary.message);
+    event_logger.AddEvent("Factor & Solve");
+  }
+
   return summary;
+
+  /*
+  const int num_rows = lhs->num_rows();
+  Eigen::MappedSparseMatrix<double, Eigen::ColMajor> eigen_lhs(
+      num_rows,
+      num_rows,
+      lhs->num_nonzeros(),
+      lhs->mutable_rows(),
+      lhs->mutable_cols(),
+      lhs->mutable_values());
+
+  const double lhs_norm = ConstVectorRef(lhs->values(), lhs->num_nonzeros())
+                              .lpNorm<Eigen::Infinity>();
+  const refinement_relative_tolerance =
+      lhs_norm * std::numeric_limits<double>::epsilon() * std::sqrt(num_rows);
+
+  Vector rhs = ConstVectorRef(b, num_rows);  // wrong
+  VectorRef solution(x, num_rows);
+  Eigen::VectorXf float_rhs = rhs.cast<float>();
+  Eigen::VectorXf float_solution(num_rows);
+
+  summary.termination_type = sparse_cholesky_->Factorize(lhs, &summary.message);
+  event_logger.AddEvent("Factor");
+  if (summary.termination_type != LINEAR_SOLVER_SUCCESS) {
+    return summary;
+  }
+
+  summary.termination_type =
+      Solve(float_rhs.data(), float_solution.data(), &summary.message);
+  if (summary.termination_type != LINEAR_SOLVER_SUCCESS) {
+    event_logger.AddEvent("Solve");
+    return summary;
+  }
+
+  // Compute residual
+  // solution = float_solution.cast<double>();
+  // RightMultiply
+
+  double solution_norm = solution.lpNorm<Eigen::Infinity>();
+  double residual_norm = residual.lpNorm<Eigen::Infinity>();
+
+  event_logger.AddEvent("Solve");
+  if (residual_norm < solution_norm * refinement_relative_tolerance) {
+    return summary;
+  }
+
+  for (; summary.num_iterations < 30; ++summary.num_iterations) {
+    // Might need to change sign.
+    float_rhs = residual.cast<float>();
+    summary.termination_type =
+        Solve(float_rhs.data(), float_solution.data(), &summary.message);
+    if (summary.termination_type != LINEAR_SOLVER_SUCCESS) {
+      return summary;
+    }
+    solution += float_solution.cast<double>();
+    // foo
+
+    double solution_norm = solution.lpNorm<Eigen::Infinity>();
+    double residual_norm = residual.lpNorm<Eigen::Infinity>();
+    if (residual_norm < solution_norm * refinement_relative_tolerance) {
+      break;
+    }
+  }
+
+  event_logger.AddEvent("Iterative Refinement");
+  return summary;
+  */
+
 }
 
 }  // namespace internal

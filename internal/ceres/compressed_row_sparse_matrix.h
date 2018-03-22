@@ -108,7 +108,6 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   virtual void LeftMultiply(const double* x, double* y) const;
   virtual void SquaredColumnNorm(double* x) const;
   virtual void ScaleColumns(const double* scale);
-
   virtual void ToDenseMatrix(Matrix* dense_matrix) const;
   virtual void ToTextFile(FILE* file) const;
   virtual int num_rows() const { return num_rows_; }
@@ -184,7 +183,8 @@ class CompressedRowSparseMatrix : public SparseMatrix {
           num_col_blocks(0),
           min_col_block_size(0),
           max_col_block_size(0),
-          block_density(0.0) {
+          block_density(0.0),
+          storage_type(UNSYMMETRIC) {
     }
 
     int num_row_blocks;
@@ -198,6 +198,15 @@ class CompressedRowSparseMatrix : public SparseMatrix {
     // present in the matrix. A given random matrix will not have
     // precisely this density.
     double block_density;
+
+    // Type of matrix to create.
+    //
+    // If storage_type is UPPER_TRIANGULAR (LOWER_TRIANGULAR), then a
+    // square symmetric matrix with just the upper triangular(lower
+    // triangular) part. In this case, num_col_blocks,
+    // min_col_block_size and max_col_block_size will be ignored and
+    // assumed to be equal to the corresponding row settings.
+    StorageType storage_type;
   };
 
   // Create a random CompressedRowSparseMatrix whose entries are
@@ -206,7 +215,7 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   //
   // Caller owns the result.
   static CompressedRowSparseMatrix* CreateRandomMatrix(
-      const RandomMatrixOptions& options);
+      RandomMatrixOptions options);
 
  private:
   static CompressedRowSparseMatrix* FromTripletSparseMatrix(

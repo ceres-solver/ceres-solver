@@ -51,7 +51,8 @@ class EigenSparseCholeskyTemplate : public EigenSparseCholesky {
   }
 
   virtual LinearSolverTerminationType Factorize(
-      const Eigen::SparseMatrix<double>& lhs, std::string* message) {
+      const Eigen::SparseMatrix<typename Solver::Scalar>& lhs,
+      std::string* message) {
     if (!analyzed_) {
       solver_.analyzePattern(lhs);
 
@@ -83,7 +84,11 @@ class EigenSparseCholeskyTemplate : public EigenSparseCholesky {
     CHECK(analyzed_) << "Solve called without a call to Factorize first.";
 
     VectorRef(solution, solver_.cols()) =
-        solver_.solve(ConstVectorRef(rhs, solver_.cols()));
+        solver_
+            .solve(ConstVectorRef(rhs, solver_.cols())
+                       .cast<typename Solver::Scalar>())
+            .template cast<double>();
+
     if (solver_.info() != Eigen::Success) {
       *message = "Eigen failure. Unable to do triangular solve.";
       return LINEAR_SOLVER_FAILURE;
@@ -93,14 +98,16 @@ class EigenSparseCholeskyTemplate : public EigenSparseCholesky {
 
   virtual LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
                                                 std::string* message) {
+    Eigen::Matrix<typename Solver::Scalar, Eigen::Dynamic, 1> v =
+        ConstVectorRef(lhs->values(), lhs->num_nonzeros()).cast<typename Solver::Scalar>();
     CHECK_EQ(lhs->storage_type(), StorageType());
-    Eigen::MappedSparseMatrix<double, Eigen::ColMajor> eigen_lhs(
+    Eigen::MappedSparseMatrix<typename Solver::Scalar, Eigen::ColMajor> eigen_lhs(
         lhs->num_rows(),
         lhs->num_rows(),
         lhs->num_nonzeros(),
         lhs->mutable_rows(),
         lhs->mutable_cols(),
-        lhs->mutable_values());
+        v.data());
     return Factorize(eigen_lhs, message);
   }
 
@@ -115,11 +122,11 @@ EigenSparseCholesky* EigenSparseCholesky::Create(
   // before version 3.2.2, Eigen did not support a third template
   // parameter to specify the ordering and it always defaults to AMD.
 #if EIGEN_VERSION_AT_LEAST(3, 2, 2)
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
+  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
                                 Eigen::Upper,
                                 Eigen::AMDOrdering<int> >
       WithAMDOrdering;
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
+  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
                                 Eigen::Upper,
                                 Eigen::NaturalOrdering<int> >
       WithNaturalOrdering;
@@ -129,7 +136,7 @@ EigenSparseCholesky* EigenSparseCholesky::Create(
     return new EigenSparseCholeskyTemplate<WithNaturalOrdering>();
   }
 #else
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>, Eigen::Upper>
+  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>, Eigen::Upper>
       WithAMDOrdering;
   return new EigenSparseCholeskyTemplate<WithAMDOrdering>();
 #endif
