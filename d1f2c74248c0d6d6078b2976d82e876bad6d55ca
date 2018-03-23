@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42f8787d_e43cdfb1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-23T15:02:39Z",
+      "side": 1,
+      "message": "a small drop",
+      "range": {
+        "startLine": 18,
+        "startChar": 50,
+        "endLine": 18,
+        "endChar": 53
+      },
+      "revId": "d1f2c74248c0d6d6078b2976d82e876bad6d55ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3708ff_2fac4206",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-23T15:02:39Z",
+      "side": 1,
+      "message": "the data shows",
+      "range": {
+        "startLine": 20,
+        "startChar": 37,
+        "endLine": 20,
+        "endChar": 42
+      },
+      "revId": "d1f2c74248c0d6d6078b2976d82e876bad6d55ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee6f4c9_a73d59df",
+        "filename": "internal/ceres/small_blas_generic.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-23T15:02:39Z",
+      "side": 1,
+      "message": "The \"A\", \"B\" and \"C\" are still upper case - the parameter names shouldn\u0027t include any upper case.",
+      "range": {
+        "startLine": 90,
+        "startChar": 40,
+        "endLine": 90,
+        "endChar": 45
+      },
+      "revId": "d1f2c74248c0d6d6078b2976d82e876bad6d55ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
