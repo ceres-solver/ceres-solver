@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ae50408e_3ae3a2a4",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-23T22:20:45Z",
+      "side": 1,
+      "message": "why use hex here? just 4 will do.",
+      "range": {
+        "startLine": 164,
+        "startChar": 19,
+        "endLine": 164,
+        "endChar": 22
+      },
+      "revId": "8c2c24a273bae1f1100c8ec14383803850ea0d8b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a68098fe_7b50db9b",
         "filename": "internal/ceres/small_blas_generic.h",
         "patchSetId": 6
