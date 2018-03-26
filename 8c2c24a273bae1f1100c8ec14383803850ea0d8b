@@ -93,6 +93,30 @@
       "revId": "8c2c24a273bae1f1100c8ec14383803850ea0d8b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f968d67_02ef9617",
+        "filename": "internal/ceres/small_blas_generic.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-26T15:43:50Z",
+      "side": 1,
+      "message": "I need to be really clear:\nThe parameters \"A\", \"B\" and \"C\" should not be in upper case. They should be \"a\", \"b\" and \"c\".",
+      "parentUuid": "1648ee71_99795e8b",
+      "range": {
+        "startLine": 90,
+        "startChar": 40,
+        "endLine": 90,
+        "endChar": 45
+      },
+      "revId": "8c2c24a273bae1f1100c8ec14383803850ea0d8b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
