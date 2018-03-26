@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57c6b6e1_42322a13",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-26T20:34:04Z",
+      "side": 1,
+      "message": "Minor, but generally we avoid else after return (for all branches here).",
+      "revId": "317099f40ebc1b4459c7ced1246610c71344f972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a0b562_27af06e5",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-26T20:34:04Z",
+      "side": 1,
+      "message": "Delete comment since if() covers it.",
+      "revId": "317099f40ebc1b4459c7ced1246610c71344f972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2cfcc4_d3e96ca1",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-26T20:34:04Z",
+      "side": 1,
+      "message": "till -\u003e untill. Unless you are working the fields :)",
+      "revId": "317099f40ebc1b4459c7ced1246610c71344f972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
