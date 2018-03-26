@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "9a629dab_0027cf1d",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-26T20:35:50Z",
+      "side": 1,
+      "message": "Weird spacing, etc.",
+      "revId": "317099f40ebc1b4459c7ced1246610c71344f972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34a0b562_27af06e5",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 4
