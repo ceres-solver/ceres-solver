@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ff3dc15_ed96d4c9",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-26T19:47:52Z",
+      "side": 1,
+      "message": "I\u0027m not sure exactly what kind of comment I\u0027m looking for here, but perhaps each block could use a bit of explanation?",
+      "revId": "40aee6c88c7a1295ecd1d0ea7018dd060570e5a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a7d6dc_b955f511",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-26T19:47:52Z",
+      "side": 1,
+      "message": "For example, it\u0027s not immediately obvious why the idx needs to get bumped here; perhaps explain more?",
+      "revId": "40aee6c88c7a1295ecd1d0ea7018dd060570e5a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "766f9403_4c462c9b",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-26T19:47:52Z",
+      "side": 1,
+      "message": "Do the explicit check with a fatal log below otherwise; this keeps symmetry with above code and also is more error resiliant.",
+      "revId": "40aee6c88c7a1295ecd1d0ea7018dd060570e5a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49863094_e27e7dc6",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-26T19:47:52Z",
+      "side": 1,
+      "message": "See above comments about keeping this symmetric.",
+      "revId": "40aee6c88c7a1295ecd1d0ea7018dd060570e5a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7690c26c_6c7d5515",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-26T19:47:52Z",
+      "side": 1,
+      "message": "Perhaps explicit checks or comment to indicate that this covers the 2 other enums explicitly?",
+      "revId": "40aee6c88c7a1295ecd1d0ea7018dd060570e5a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943e98b6_6ef4ddc8",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-26T19:47:52Z",
+      "side": 1,
+      "message": "Nit: Trailing space.",
+      "revId": "40aee6c88c7a1295ecd1d0ea7018dd060570e5a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b13e0a_a0f7047e",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-26T19:47:52Z",
+      "side": 1,
+      "message": "\"then a\" -- \"then create a\"",
+      "revId": "40aee6c88c7a1295ecd1d0ea7018dd060570e5a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff56e54_46de86e8",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-26T19:47:52Z",
+      "side": 1,
+      "message": "Nit: space before (",
+      "revId": "40aee6c88c7a1295ecd1d0ea7018dd060570e5a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69181128_8fe07ae9",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-26T19:47:52Z",
+      "side": 1,
+      "message": "Perhaps add a more meaningful test name? What behavior is this testing?",
+      "revId": "40aee6c88c7a1295ecd1d0ea7018dd060570e5a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
