@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1d7d5bf3_fe0f6a48",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-28T20:37:14Z",
+      "side": 1,
+      "message": "We should probably put a #pragma warn or similar if they are defined in the future to notify people they aren\u0027t needed.",
+      "revId": "f920462699465307df2a032f85c0ec9ee712c1c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a35dfffd_ce70d06b",
         "filename": "docs/source/installation.rst",
         "patchSetId": 2
