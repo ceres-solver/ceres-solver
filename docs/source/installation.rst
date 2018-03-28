@@ -21,6 +21,12 @@ the latest version, you can clone the git repository
 Dependencies
 ============
 
+  .. NOTE ::
+
+    All versions of Ceres > 1.14 require a **fully C++11-compliant**
+    compiler.  In versions <= 1.14, C++11 was an optional requirement
+    controlled by the ``CXX11 [Default: OFF]`` build option.
+
 Ceres relies on a number of open source libraries, some of which are
 optional. For details on customizing the build process, see
 :ref:`section-customizing` .
@@ -34,7 +40,7 @@ optional. For details on customizing the build process, see
     library. Please see the documentation for ``EIGENSPARSE`` for
     more details.
 
-- `CMake <http://www.cmake.org>`_ 2.8.0 or later.
+- `CMake <http://www.cmake.org>`_ 3.5 or later.
   **Required on all platforms except for Android.**
 
 - `glog <https://github.com/google/glog>`_ 0.3.1 or
@@ -373,7 +379,7 @@ Windows
   <https://github.com/tbennun/ceres-windows>`_ for Ceres Solver by Tal
   Ben-Nun.
 
-On Windows, we support building with Visual Studio 2010 or newer. Note
+On Windows, we support building with Visual Studio 2013 Release 4 or newer. Note
 that the Windows port is less featureful and less tested than the
 Linux or Mac OS X versions due to the lack of an officially supported
 way of building SuiteSparse and CXSparse.  There are however a number
@@ -635,8 +641,8 @@ Options controlling Ceres configuration
    to disable multi-threading.
 
 #. ``TBB [Default: OFF]``: An alternative to ``OpenMP`` threading library that
-   requires C++11. This option is mutually exclusive to ``OPENMP`` and
-   ``CXX11_THREADS``.
+   uses Intel's Thread Building Blocks.  This option is mutually
+   exclusive to ``OPENMP`` and ``CXX11_THREADS``.
 
    .. NOTE::
 
@@ -646,50 +652,7 @@ Options controlling Ceres configuration
 
 #. ``CXX11_THREADS [Default: OFF]``: An alternative to ``OpenMP``
    threading library that uses a C++11 thread-pool.  This option
-   requires C++11 and is mutually exclusive to ``OPENMP`` and ``TBB``.
-
-#. ``CXX11 [Default: OFF]``
-
-   Although Ceres does not currently require C++11, it does use
-   ``shared_ptr`` (required) and ``unordered_map`` (if available);
-   both of which existed in the previous iterations of what became the
-   C++11 standard: TR1 & C++0x.  As such, Ceres can compile on
-   pre-C++11 compilers, using the TR1/C++0x versions of ``shared_ptr``
-   & ``unordered_map``.
-
-   Note that when using GCC & Clang, compiling against the TR1/C++0x
-   versions: ``CXX11=OFF`` (the default) *does not* require
-   ``-std=c++11`` when compiling Ceres, *nor* does it require that any
-   client code using Ceres use ``-std=c++11``.  However, this will
-   cause compile errors if any client code that uses Ceres also uses
-   C++11 (mismatched versions of ``shared_ptr`` & ``unordered_map``).
-
-   Enabling this option: ``CXX11=ON`` forces Ceres to use the C++11
-   versions of ``shared_ptr`` & ``unordered_map`` if they are
-   available, and thus imposes the requirement that all client code
-   using Ceres also compile with ``-std=c++11``.  This requirement is
-   handled automatically through CMake target properties on the
-   exported Ceres target for CMake >= 2.8.12 (when it was introduced).
-   Thus, any client code which uses CMake will automatically be
-   compiled with ``-std=c++11``.  **On CMake versions < 2.8.12, you
-   are responsible for ensuring that any code which uses Ceres is
-   compiled with** ``-std=c++11``.
-
-   On OS X 10.9+, Clang will use the C++11 versions of ``shared_ptr``
-   & ``unordered_map`` without ``-std=c++11`` and so this option does
-   not change the versions detected, although enabling it *will*
-   require that client code compile with ``-std=c++11``.
-
-   The following table summarises the effects of the ``CXX11`` option:
-
-   ===================  ==========  ================  ======================================
-   OS                   CXX11       Detected Version  Ceres & client code require ``-std=c++11``
-   ===================  ==========  ================  ======================================
-   Linux (GCC & Clang)  OFF         tr1               **No**
-   Linux (GCC & Clang)  ON          std               **Yes**
-   OS X 10.9+           OFF         std               **No**
-   OS X 10.9+           ON          std               **Yes**
-   ===================  ==========  ================  ======================================
+   is mutually exclusive to ``OPENMP`` and ``TBB``.
 
 #. ``BUILD_SHARED_LIBS [Default: OFF]``: By default Ceres is built as
    a static library, turn this ``ON`` to instead build Ceres as a
@@ -875,7 +838,7 @@ The Ceres components which can be specified are:
 #. ``Multithreading``: Ceres built with *a* multithreading library.
    This is equivalent to ``OpenMP`` **OR** ``TBB``.
 
-#. ``C++11``: Ceres built with C++11 (``CXX11=ON``).
+#. ``C++11``: Ceres built with C++11.
 
 To specify one/multiple Ceres components use the ``COMPONENTS`` argument to
 `find_package()
