@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a35dfffd_ce70d06b",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-28T20:10:11Z",
+      "side": 1,
+      "message": "move this to the top?",
+      "range": {
+        "startLine": 835,
+        "startChar": 14,
+        "endLine": 835,
+        "endChar": 19
+      },
+      "revId": "f920462699465307df2a032f85c0ec9ee712c1c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8cd1c2b_9fa027b8",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-28T20:10:11Z",
+      "side": 1,
+      "message": "why not to do this in the top level cmakefile?",
+      "range": {
+        "startLine": 219,
+        "startChar": 2,
+        "endLine": 219,
+        "endChar": 10
+      },
+      "revId": "f920462699465307df2a032f85c0ec9ee712c1c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
