@@ -215,26 +215,26 @@ set_target_properties(ceres PROPERTIES
   VERSION ${CERES_VERSION}
   SOVERSION ${CERES_VERSION_MAJOR})
 
+# The ability to specify a minimum language version via cxx_std_[11,14,17]
+# requires CMake >= 3.8.  Prior to that we have to specify the compiler features
+# we require.
+if (CMAKE_VERSION VERSION_LESS 3.8)
+  set(REQUIRED_PUBLIC_CXX_FEATURES cxx_alignas cxx_alignof cxx_constexpr)
+else()
+  # Forward whatever C++ version Ceres was compiled with as our requirement
+  # for downstream clients.
+  set(REQUIRED_PUBLIC_CXX_FEATURES cxx_std_${CMAKE_CXX_STANDARD})
+endif()
+target_compile_features(ceres PUBLIC ${REQUIRED_PUBLIC_CXX_FEATURES})
+
 include(AppendTargetProperty)
 # Always build position-independent code (PIC), even when building Ceres as a
 # static library so that shared libraries can link against it, not just
 # executables (PIC does not apply on Windows).
 if (NOT WIN32 AND NOT BUILD_SHARED_LIBS)
-  # Use the explicit POSITION_INDEPENDENT_CODE target property on CMake versions
-  # that support it (>= 2.8.9).  Otherwise, manually add the -fPIC flag as an
-  # additional compile definitions for the target.
-  if (CMAKE_VERSION VERSION_LESS "2.8.9")
-    append_target_property(ceres COMPILE_FLAGS "-fPIC")
-  else()
-    # Use set_target_properties() not append_target_property() here as
-    # POSITION_INDEPENDENT_CODE is a binary ON/OFF switch.
-    set_target_properties(ceres PROPERTIES POSITION_INDEPENDENT_CODE ON)
-  endif()
-endif()
-
-if (CXX11)
-  include(AddCeresCXX11RequirementsToTarget)
-  add_ceres_cxx11_requirements_to_target(ceres)
+  # Use set_target_properties() not append_target_property() here as
+  # POSITION_INDEPENDENT_CODE is a binary ON/OFF switch.
+  set_target_properties(ceres PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif()
 
 if (BUILD_SHARED_LIBS)
