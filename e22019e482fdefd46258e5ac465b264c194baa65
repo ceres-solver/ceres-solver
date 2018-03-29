@@ -16,6 +16,24 @@
       "revId": "e22019e482fdefd46258e5ac465b264c194baa65",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3aa89fe_6d677f12",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 6131
+      },
+      "writtenOn": "2018-03-29T01:59:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7894152_0867c847",
+      "revId": "e22019e482fdefd46258e5ac465b264c194baa65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
