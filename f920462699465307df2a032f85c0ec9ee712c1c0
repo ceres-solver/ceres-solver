@@ -62,6 +62,30 @@
       "revId": "f920462699465307df2a032f85c0ec9ee712c1c0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6ca482_210c1108",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-03-29T08:26:54Z",
+      "side": 1,
+      "message": "Do you mean why not require CMake \u003e\u003d 3.8 instead of 3.5?  Or do you mean why not move this block to the main CMakeLists?  The reason for the former is the default CMake for 16.04 was 3.5 and the reason for the latter is that we need to append this to the Ceres target, which is defined here.",
+      "parentUuid": "e8cd1c2b_9fa027b8",
+      "range": {
+        "startLine": 219,
+        "startChar": 2,
+        "endLine": 219,
+        "endChar": 10
+      },
+      "revId": "f920462699465307df2a032f85c0ec9ee712c1c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
