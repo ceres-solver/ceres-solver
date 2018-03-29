@@ -60,9 +60,6 @@
 // routines.
 @CERES_NO_CUSTOM_BLAS@
 
-// If defined, Ceres was compiled with C++11.
-@CERES_USE_CXX11@
-
 // If defined, Ceres was compiled without multithreading support.
 @CERES_NO_THREADS@
 // If defined Ceres was compiled with OpenMP multithreading support.

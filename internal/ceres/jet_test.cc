@@ -567,7 +567,6 @@ TEST(Jet, Jet) {
     EXPECT_EQ(expected, b);
   }
 
-  #ifdef CERES_USE_CXX11
   { // Check that cbrt(x * x * x) == x.
     J z = x * x * x;
     J w = cbrt(z);
@@ -696,7 +695,6 @@ TEST(Jet, Jet) {
     ExpectJetsClose(y, z);
   }
 
-  #endif
 }
 
 TEST(Jet, JetsInEigenMatrices) {

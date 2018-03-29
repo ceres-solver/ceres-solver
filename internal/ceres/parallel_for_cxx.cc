@@ -182,11 +182,11 @@ void ParallelFor(ContextImpl* context,
     return;
   }
 
-  // We use a shared_ptr because the main thread can finish all the work before
-  // the tasks have been popped off the queue.  So the shared state needs to
-  // exist for the duration of all the tasks.
+  // We use a std::shared_ptr because the main thread can finish all
+  // the work before the tasks have been popped off the queue.  So the
+  // shared state needs to exist for the duration of all the tasks.
   const int num_work_items = std::min((end - start), num_threads);
-  shared_ptr<SharedState> shared_state(
+  std::shared_ptr<SharedState> shared_state(
       new SharedState(start, end, num_work_items));
 
   // A function which tries to perform a chunk of work. This returns false if

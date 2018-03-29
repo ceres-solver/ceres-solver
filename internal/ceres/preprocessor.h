@@ -31,6 +31,7 @@
 #ifndef CERES_INTERNAL_PREPROCESSOR_H_
 #define CERES_INTERNAL_PREPROCESSOR_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -97,8 +98,8 @@ struct PreprocessedProblem {
   scoped_ptr<IterationCallback> logging_callback;
   scoped_ptr<IterationCallback> state_updating_callback;
 
-  shared_ptr<Evaluator> evaluator;
-  shared_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer;
+  std::shared_ptr<Evaluator> evaluator;
+  std::shared_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer;
 
   std::vector<double*> removed_parameter_blocks;
   Vector reduced_parameters;

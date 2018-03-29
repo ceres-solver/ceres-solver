@@ -32,6 +32,7 @@
 #define CERES_PUBLIC_SOLVER_H_
 
 #include <cmath>
+#include <memory>
 #include <string>
 #include <vector>
 #include "ceres/crs_matrix.h"
@@ -500,7 +501,7 @@ class CERES_EXPORT Solver {
     // the parameter blocks into two groups, one for the points and one
     // for the cameras, where the group containing the points has an id
     // smaller than the group containing cameras.
-    shared_ptr<ParameterBlockOrdering> linear_solver_ordering;
+    std::shared_ptr<ParameterBlockOrdering> linear_solver_ordering;
 
     // Use an explicitly computed Schur complement matrix with
     // ITERATIVE_SCHUR.
@@ -631,7 +632,7 @@ class CERES_EXPORT Solver {
     //    the lower numbered groups are optimized before the higher
     //    number groups. Each group must be an independent set. Not
     //    all parameter blocks need to be present in the ordering.
-    shared_ptr<ParameterBlockOrdering> inner_iteration_ordering;
+    std::shared_ptr<ParameterBlockOrdering> inner_iteration_ordering;
 
     // Generally speaking, inner iterations make significant progress
     // in the early stages of the solve and then their contribution
