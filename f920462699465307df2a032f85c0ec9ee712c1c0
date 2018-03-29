@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "91d01633_6efdfd14",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-03-29T08:37:53Z",
+      "side": 1,
+      "message": "I\u0027m ambivalent on what to do with this.  For backwards compatibility we should probably keep it in case people have done this:\n\nfind_package(Ceres REQUIRED COMPONENTS C++11)\n\nbut I\u0027m unclear on what we should do if Ceres was compiled with C++14 in this case, we could easily report the component as C++14 then, but then the above line would fail as it stands right now, but I would update the CeresConfig.cmake logic that performs the component checking to instead say that if you specify C++XX and Ceres reports C++YY then as long as YY \u003e\u003d XX report Ceres as found.  Given what it means right now that seems sensible.",
+      "parentUuid": "a35dfffd_ce70d06b",
+      "range": {
+        "startLine": 835,
+        "startChar": 14,
+        "endLine": 835,
+        "endChar": 19
+      },
+      "revId": "f920462699465307df2a032f85c0ec9ee712c1c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8cd1c2b_9fa027b8",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 2
