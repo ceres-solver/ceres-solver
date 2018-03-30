@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "557f7ce0_34f3338c",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-30T17:02:45Z",
+      "side": 1,
+      "message": "I\u0027d prefer this \"auto\" to spell out the type as it\u0027s not clear from context. Maybe a better name than cell_value would help? cell_position_and_data?",
+      "range": {
+        "startLine": 157,
+        "startChar": 13,
+        "endLine": 157,
+        "endChar": 17
+      },
+      "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ba09f4_7c45e3d7",
+        "filename": "internal/ceres/canonical_views_clustering.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-30T17:02:45Z",
+      "side": 1,
+      "message": "Remove space before \"\u0026\".",
+      "range": {
+        "startLine": 192,
+        "startChar": 17,
+        "endLine": 192,
+        "endChar": 18
+      },
+      "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de922bf_3825e5a9",
+        "filename": "internal/ceres/canonical_views_clustering.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-30T17:02:45Z",
+      "side": 1,
+      "message": "Add space after \"\u003d\".",
+      "range": {
+        "startLine": 220,
+        "startChar": 13,
+        "endLine": 220,
+        "endChar": 36
+      },
+      "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7e9925_cf36606b",
+        "filename": "internal/ceres/graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-30T17:02:45Z",
+      "side": 1,
+      "message": "While you\u0027re editing this line: remove space between \"\u003e \u003e\"? (There are zillions more of these but fixing them is a really low priority).",
+      "range": {
+        "startLine": 213,
+        "startChar": 55,
+        "endLine": 213,
+        "endChar": 56
+      },
+      "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850121b5_cfd3f9f8",
+        "filename": "internal/ceres/pair_hash.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-30T17:02:45Z",
+      "side": 1,
+      "message": "Update comment.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 78
+      },
+      "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "251cb123_e53518c9",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-03-30T17:02:45Z",
+      "side": 1,
+      "message": "Add parameter_blocks-\u003ereserve(parameter_block_map_.size())?",
+      "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
