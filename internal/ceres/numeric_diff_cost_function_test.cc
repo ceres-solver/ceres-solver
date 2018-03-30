@@ -33,10 +33,11 @@
 
 #include <algorithm>
 #include <cmath>
+#include <memory>
 #include <string>
 #include <vector>
+
 #include "ceres/internal/macros.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/array_utils.h"
 #include "ceres/numeric_diff_test_utils.h"
 #include "ceres/test_util.h"
@@ -48,7 +49,7 @@ namespace ceres {
 namespace internal {
 
 TEST(NumericDiffCostFunction, EasyCaseFunctorCentralDifferences) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<EasyFunctor,
                                   CENTRAL,
@@ -61,7 +62,7 @@ TEST(NumericDiffCostFunction, EasyCaseFunctorCentralDifferences) {
 }
 
 TEST(NumericDiffCostFunction, EasyCaseFunctorForwardDifferences) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<EasyFunctor,
                                   FORWARD,
@@ -74,7 +75,7 @@ TEST(NumericDiffCostFunction, EasyCaseFunctorForwardDifferences) {
 }
 
 TEST(NumericDiffCostFunction, EasyCaseFunctorRidders) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<EasyFunctor,
                                   RIDDERS,
@@ -87,7 +88,7 @@ TEST(NumericDiffCostFunction, EasyCaseFunctorRidders) {
 }
 
 TEST(NumericDiffCostFunction, EasyCaseCostFunctionCentralDifferences) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<EasyCostFunction,
                                   CENTRAL,
@@ -100,7 +101,7 @@ TEST(NumericDiffCostFunction, EasyCaseCostFunctionCentralDifferences) {
 }
 
 TEST(NumericDiffCostFunction, EasyCaseCostFunctionForwardDifferences) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<EasyCostFunction,
                                   FORWARD,
@@ -113,7 +114,7 @@ TEST(NumericDiffCostFunction, EasyCaseCostFunctionForwardDifferences) {
 }
 
 TEST(NumericDiffCostFunction, EasyCaseCostFunctionRidders) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<EasyCostFunction,
                                   RIDDERS,
@@ -127,7 +128,7 @@ TEST(NumericDiffCostFunction, EasyCaseCostFunctionRidders) {
 
 TEST(NumericDiffCostFunction,
      TranscendentalCaseFunctorCentralDifferences) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<TranscendentalFunctor,
                                   CENTRAL,
@@ -141,7 +142,7 @@ TEST(NumericDiffCostFunction,
 
 TEST(NumericDiffCostFunction,
      TranscendentalCaseFunctorForwardDifferences) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<TranscendentalFunctor,
                                   FORWARD,
@@ -161,7 +162,7 @@ TEST(NumericDiffCostFunction,
   // behavior.
   options.ridders_relative_initial_step_size = 1e-3;
 
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<TranscendentalFunctor,
                                   RIDDERS,
@@ -175,7 +176,7 @@ TEST(NumericDiffCostFunction,
 
 TEST(NumericDiffCostFunction,
      TranscendentalCaseCostFunctionCentralDifferences) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<TranscendentalCostFunction,
                                   CENTRAL,
@@ -189,7 +190,7 @@ TEST(NumericDiffCostFunction,
 
 TEST(NumericDiffCostFunction,
      TranscendentalCaseCostFunctionForwardDifferences) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<TranscendentalCostFunction,
                                   FORWARD,
@@ -209,7 +210,7 @@ TEST(NumericDiffCostFunction,
   // behavior.
   options.ridders_relative_initial_step_size = 1e-3;
 
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<TranscendentalCostFunction,
                                   RIDDERS,
@@ -238,7 +239,7 @@ class SizeTestingCostFunction : public SizedCostFunction<num_rows, num_cols> {
 // templates are instantiated for various shapes of the Jacobian
 // matrix.
 TEST(NumericDiffCostFunction, EigenRowMajorColMajorTest) {
-  scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<SizeTestingCostFunction<1,1>,  CENTRAL, 1, 1>(
           new SizeTestingCostFunction<1,1>, ceres::TAKE_OWNERSHIP));
@@ -282,7 +283,7 @@ TEST(NumericDiffCostFunction, EigenRowMajorColMajorTest) {
 
 TEST(NumericDiffCostFunction,
      EasyCaseFunctorCentralDifferencesAndDynamicNumResiduals) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<EasyFunctor,
                                   CENTRAL,
@@ -295,7 +296,7 @@ TEST(NumericDiffCostFunction,
 }
 
 TEST(NumericDiffCostFunction, ExponentialFunctorRidders) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<ExponentialFunctor,
                                   RIDDERS,
@@ -307,7 +308,7 @@ TEST(NumericDiffCostFunction, ExponentialFunctorRidders) {
 }
 
 TEST(NumericDiffCostFunction, ExponentialCostFunctionRidders) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   cost_function.reset(
       new NumericDiffCostFunction<ExponentialCostFunction,
                                   RIDDERS,
@@ -319,7 +320,7 @@ TEST(NumericDiffCostFunction, ExponentialCostFunctionRidders) {
 }
 
 TEST(NumericDiffCostFunction, RandomizedFunctorRidders) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   NumericDiffOptions options;
   // Larger initial step size is chosen to produce robust results in the
   // presence of random noise.
@@ -337,7 +338,7 @@ TEST(NumericDiffCostFunction, RandomizedFunctorRidders) {
 }
 
 TEST(NumericDiffCostFunction, RandomizedCostFunctionRidders) {
-  internal::scoped_ptr<CostFunction> cost_function;
+  std::unique_ptr<CostFunction> cost_function;
   NumericDiffOptions options;
   // Larger initial step size is chosen to produce robust results in the
   // presence of random noise.
@@ -368,7 +369,7 @@ TEST(NumericDiffCostFunction, PartiallyFilledResidualShouldFailEvaluation) {
   double* parameters[] = {&parameter};
   double* jacobians[] = {jacobian};
 
-  scoped_ptr<CostFunction> cost_function(
+  std::unique_ptr<CostFunction> cost_function(
       new NumericDiffCostFunction<OnlyFillsOneOutputFunctor, CENTRAL, 2, 1>(
           new OnlyFillsOneOutputFunctor));
   InvalidateArray(2, jacobian);

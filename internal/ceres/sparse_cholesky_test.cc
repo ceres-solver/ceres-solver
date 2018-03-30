@@ -30,6 +30,7 @@
 
 #include "ceres/sparse_cholesky.h"
 
+#include <memory>
 #include <numeric>
 #include <vector>
 
@@ -39,7 +40,6 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/random.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
@@ -61,12 +61,12 @@ BlockSparseMatrix* CreateRandomFullRankMatrix(const int num_col_blocks,
   options.min_row_block_size = 1;
   options.max_row_block_size = max_col_block_size;
   options.block_density = block_density;
-  scoped_ptr<BlockSparseMatrix> random_matrix(
+  std::unique_ptr<BlockSparseMatrix> random_matrix(
       BlockSparseMatrix::CreateRandomMatrix(options));
 
   // Add a diagonal block sparse matrix to make it full rank.
   Vector diagonal = Vector::Ones(random_matrix->num_cols());
-  scoped_ptr<BlockSparseMatrix> block_diagonal(
+  std::unique_ptr<BlockSparseMatrix> block_diagonal(
       BlockSparseMatrix::CreateDiagonalMatrix(
           diagonal.data(), random_matrix->block_structure()->cols));
   random_matrix->AppendRows(*block_diagonal);
@@ -107,14 +107,14 @@ void SparseCholeskySolverUnitTest(
     const int min_block_size,
     const int max_block_size,
     const double block_density) {
-  scoped_ptr<SparseCholesky> sparse_cholesky(SparseCholesky::Create(
+  std::unique_ptr<SparseCholesky> sparse_cholesky(SparseCholesky::Create(
       sparse_linear_algebra_library_type, ordering_type));
   const CompressedRowSparseMatrix::StorageType storage_type =
       sparse_cholesky->StorageType();
 
-  scoped_ptr<BlockSparseMatrix> m(CreateRandomFullRankMatrix(
+  std::unique_ptr<BlockSparseMatrix> m(CreateRandomFullRankMatrix(
       num_blocks, min_block_size, max_block_size, block_density));
-  scoped_ptr<InnerProductComputer> inner_product_computer(
+  std::unique_ptr<InnerProductComputer> inner_product_computer(
       InnerProductComputer::Create(*m, storage_type));
   inner_product_computer->Compute();
   CompressedRowSparseMatrix* lhs = inner_product_computer->mutable_result();

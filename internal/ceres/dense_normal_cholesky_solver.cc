@@ -31,12 +31,12 @@
 #include "ceres/dense_normal_cholesky_solver.h"
 
 #include <cstddef>
+#include <memory>
 
 #include "Eigen/Dense"
 #include "ceres/blas.h"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/lapack.h"
 #include "ceres/linear_solver.h"
 #include "ceres/types.h"

@@ -90,11 +90,11 @@
 #include <numeric>
 #include <vector>
 
+#include <memory>
 #include "ceres/cost_function.h"
 #include "ceres/dynamic_cost_function_to_functor.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
 
 namespace ceres {
 

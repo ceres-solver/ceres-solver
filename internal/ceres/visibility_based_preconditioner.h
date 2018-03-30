@@ -48,13 +48,14 @@
 #ifndef CERES_INTERNAL_VISIBILITY_BASED_PRECONDITIONER_H_
 #define CERES_INTERNAL_VISIBILITY_BASED_PRECONDITIONER_H_
 
+#include <memory>
 #include <set>
 #include <utility>
 #include <vector>
+
 #include "ceres/collections_port.h"
 #include "ceres/graph.h"
 #include "ceres/internal/macros.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
 #include "ceres/preconditioner.h"
 #include "ceres/sparse_cholesky.h"
@@ -183,11 +184,11 @@ class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
   // Set of cluster pairs (including self pairs (i,i)) in the
   // preconditioner.
   HashSet<std::pair<int, int> > cluster_pairs_;
-  scoped_ptr<SchurEliminatorBase> eliminator_;
+  std::unique_ptr<SchurEliminatorBase> eliminator_;
 
   // Preconditioner matrix.
-  scoped_ptr<BlockRandomAccessSparseMatrix> m_;
-  scoped_ptr<SparseCholesky> sparse_cholesky_;
+  std::unique_ptr<BlockRandomAccessSparseMatrix> m_;
+  std::unique_ptr<SparseCholesky> sparse_cholesky_;
   CERES_DISALLOW_COPY_AND_ASSIGN(VisibilityBasedPreconditioner);
 };
 

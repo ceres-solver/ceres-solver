@@ -32,9 +32,9 @@
 #ifndef CERES_PUBLIC_LOCAL_PARAMETERIZATION_H_
 #define CERES_PUBLIC_LOCAL_PARAMETERIZATION_H_
 
+#include <memory>
 #include <vector>
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/internal/disable_warnings.h"
 
 namespace ceres {

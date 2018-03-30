@@ -31,8 +31,8 @@
 
 #include <cstddef>
 
+#include <memory>
 #include "ceres/dynamic_numeric_diff_cost_function.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -419,7 +419,7 @@ class ThreeParameterCostFunctorTest : public ::testing::Test {
 
   vector<double*> parameter_blocks_;
 
-  scoped_ptr<CostFunction> cost_function_;
+  std::unique_ptr<CostFunction> cost_function_;
 
   vector<vector<double> > jacobian_vect_;
 

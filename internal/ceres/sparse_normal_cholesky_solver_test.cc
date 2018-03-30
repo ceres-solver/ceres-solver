@@ -28,10 +28,10 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <memory>
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -54,7 +54,7 @@ namespace internal {
 class SparseNormalCholeskySolverTest : public ::testing::Test {
  protected:
   virtual void SetUp() {
-    scoped_ptr<LinearLeastSquaresProblem> problem(
+    std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(2));
 
     CHECK_NOTNULL(problem.get());
@@ -79,7 +79,7 @@ class SparseNormalCholeskySolverTest : public ::testing::Test {
     A_->LeftMultiply(b_.get(), rhs.data());
     Vector expected_solution = lhs.llt().solve(rhs);
 
-    scoped_ptr<LinearSolver> solver(LinearSolver::Create(options));
+    std::unique_ptr<LinearSolver> solver(LinearSolver::Create(options));
     LinearSolver::PerSolveOptions per_solve_options;
     per_solve_options.D = D;
     Vector actual_solution(A_->num_cols());
@@ -101,9 +101,9 @@ class SparseNormalCholeskySolverTest : public ::testing::Test {
     TestSolver(options, D_.get());
   }
 
-  scoped_ptr<BlockSparseMatrix> A_;
-  scoped_array<double> b_;
-  scoped_array<double> D_;
+  std::unique_ptr<BlockSparseMatrix> A_;
+  std::unique_ptr<double[]> b_;
+  std::unique_ptr<double[]> D_;
 };
 
 #ifndef CERES_NO_SUITESPARSE

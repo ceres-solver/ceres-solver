@@ -34,15 +34,15 @@
 #ifndef CERES_PUBLIC_GRADIENT_CHECKER_H_
 #define CERES_PUBLIC_GRADIENT_CHECKER_H_
 
-#include <vector>
+#include <memory>
 #include <string>
+#include <vector>
 
 #include "ceres/cost_function.h"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/internal/macros.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/local_parameterization.h"
 #include "glog/logging.h"
 
@@ -141,7 +141,7 @@ class CERES_EXPORT GradientChecker {
 
   std::vector<const LocalParameterization*> local_parameterizations_;
   const CostFunction* function_;
-  internal::scoped_ptr<CostFunction> finite_diff_cost_function_;
+  std::unique_ptr<CostFunction> finite_diff_cost_function_;
 };
 
 }  // namespace ceres

@@ -30,8 +30,8 @@
 
 #include "ceres/cubic_interpolation.h"
 
+#include <memory>
 #include "ceres/jet.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
@@ -257,7 +257,7 @@ class CubicInterpolatorTest : public ::testing::Test {
  private:
   static const int kNumSamples = 10;
   static const int kNumTestSamples = 100;
-  scoped_array<double> values_;
+  std::unique_ptr<double[]> values_;
 };
 
 TEST_F(CubicInterpolatorTest, ConstantFunction) {
@@ -375,7 +375,7 @@ class BiCubicInterpolatorTest : public ::testing::Test {
   static const int kNumCols = 10;
   static const int kNumRowSamples = 100;
   static const int kNumColSamples = 100;
-  scoped_array<double> values_;
+  std::unique_ptr<double[]> values_;
 };
 
 TEST_F(BiCubicInterpolatorTest, ZeroFunction) {

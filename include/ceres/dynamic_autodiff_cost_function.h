@@ -36,8 +36,8 @@
 #include <numeric>
 #include <vector>
 
+#include <memory>
 #include "ceres/dynamic_cost_function.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/jet.h"
 #include "glog/logging.h"
 
@@ -244,7 +244,7 @@ class DynamicAutoDiffCostFunction : public DynamicCostFunction {
   }
 
  private:
-  internal::scoped_ptr<CostFunctor> functor_;
+  std::unique_ptr<CostFunctor> functor_;
 };
 
 }  // namespace ceres

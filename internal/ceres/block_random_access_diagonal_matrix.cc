@@ -31,12 +31,12 @@
 #include "ceres/block_random_access_diagonal_matrix.h"
 
 #include <algorithm>
+#include <memory>
 #include <set>
 #include <utility>
 #include <vector>
 #include "Eigen/Dense"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/stl_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"

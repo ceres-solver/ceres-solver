@@ -31,9 +31,9 @@
 #include "ceres/normal_prior.h"
 
 #include <cstddef>
+#include <memory>
 #include <vector>
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
 

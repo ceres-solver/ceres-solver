@@ -33,6 +33,7 @@
 
 #include <algorithm>
 #include <cstdlib>
+#include <memory>
 #include <limits>
 #include <string>
 #include "ceres/array_utils.h"
@@ -40,7 +41,6 @@
 #include "ceres/integral_types.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/stringprintf.h"
 #include "glog/logging.h"
@@ -368,7 +368,7 @@ class ParameterBlock {
   // ends up simplifying the internals of Ceres enough to justify the potential
   // pitfalls of using "mutable."
   mutable const double* state_;
-  mutable scoped_array<double> local_parameterization_jacobian_;
+  mutable std::unique_ptr<double[]> local_parameterization_jacobian_;
 
   // The index of the parameter. This is used by various other parts of Ceres to
   // permit switching from a ParameterBlock* to an index in another array.
@@ -381,7 +381,7 @@ class ParameterBlock {
   int32 delta_offset_;
 
   // If non-null, contains the residual blocks this parameter block is in.
-  scoped_ptr<ResidualBlockSet> residual_blocks_;
+  std::unique_ptr<ResidualBlockSet> residual_blocks_;
 
   // Upper and lower bounds for the parameter block.  SetUpperBound
   // and SetLowerBound lazily initialize the upper_bounds_ and
@@ -394,8 +394,8 @@ class ParameterBlock {
   // std::numeric_limits<double>::max() and
   // -std::numeric_limits<double>::max() respectively which correspond
   // to the parameter block being unconstrained.
-  scoped_array<double> upper_bounds_;
-  scoped_array<double> lower_bounds_;
+  std::unique_ptr<double[]> upper_bounds_;
+  std::unique_ptr<double[]> lower_bounds_;
 
   // Necessary so ProblemImpl can clean up the parameterizations.
   friend class ProblemImpl;

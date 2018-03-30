@@ -32,8 +32,8 @@
 #define CERES_INTERNAL_CGNR_LINEAR_OPERATOR_H_
 
 #include <algorithm>
+#include <memory>
 #include "ceres/linear_operator.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/internal/eigen.h"
 
 namespace ceres {
@@ -111,7 +111,7 @@ class CgnrLinearOperator : public LinearOperator {
  private:
   const LinearOperator& A_;
   const double* D_;
-  scoped_array<double> z_;
+  std::unique_ptr<double[]> z_;
 };
 
 }  // namespace internal

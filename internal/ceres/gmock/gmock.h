@@ -10759,7 +10759,7 @@ class FunctionMockerBase : public UntypedFunctionMockerBase {
   // threads concurrently.
   Result InvokeWith(const ArgumentTuple& args)
         GTEST_LOCK_EXCLUDED_(g_gmock_mutex) {
-    scoped_ptr<ResultHolder> holder(
+    std::unique_ptr<ResultHolder> holder(
         DownCast_<ResultHolder*>(this->UntypedInvokeWith(&args)));
     return holder->Unwrap();
   }

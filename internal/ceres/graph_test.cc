@@ -30,9 +30,9 @@
 
 #include "ceres/graph.h"
 
-#include "gtest/gtest.h"
+#include <memory>
 #include "ceres/collections_port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

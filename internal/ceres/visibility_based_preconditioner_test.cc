@@ -30,6 +30,7 @@
 
 #include "ceres/visibility_based_preconditioner.h"
 
+#include <memory>
 #include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_random_access_sparse_matrix.h"
@@ -38,7 +39,6 @@
 #include "ceres/collections_port.h"
 #include "ceres/file.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/schur_eliminator.h"
 #include "ceres/stringprintf.h"
@@ -67,7 +67,7 @@ namespace internal {
 //   void SetUp() {
 //     string input_file = TestFileAbsolutePath("problem-6-1384-000.lsqp");
 
-//     scoped_ptr<LinearLeastSquaresProblem> problem(
+//     std::unique_ptr<LinearLeastSquaresProblem> problem(
 //         CHECK_NOTNULL(CreateLinearLeastSquaresProblemFromFile(input_file)));
 //     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
 //     b_.reset(problem->b.release());
@@ -99,7 +99,7 @@ namespace internal {
 //     schur_complement_.reset(new BlockRandomAccessDenseMatrix(blocks));
 //     Vector rhs(schur_complement_->num_rows());
 
-//     scoped_ptr<SchurEliminatorBase> eliminator;
+//     std::unique_ptr<SchurEliminatorBase> eliminator;
 //     LinearSolver::Options eliminator_options;
 //     eliminator_options.elimination_groups = options_.elimination_groups;
 //     eliminator_options.num_threads = options_.num_threads;
@@ -230,13 +230,13 @@ namespace internal {
 //   int num_eliminate_blocks_;
 //   int num_camera_blocks_;
 
-//   scoped_ptr<BlockSparseMatrix> A_;
-//   scoped_array<double> b_;
-//   scoped_array<double> D_;
+//   std::unique_ptr<BlockSparseMatrix> A_;
+//   std::unique_ptr<double[]> b_;
+//   std::unique_ptr<double[]> D_;
 
 //   Preconditioner::Options options_;
-//   scoped_ptr<VisibilityBasedPreconditioner> preconditioner_;
-//   scoped_ptr<BlockRandomAccessDenseMatrix> schur_complement_;
+//   std::unique_ptr<VisibilityBasedPreconditioner> preconditioner_;
+//   std::unique_ptr<BlockRandomAccessDenseMatrix> schur_complement_;
 // };
 
 // TEST_F(VisibilityBasedPreconditionerTest, OneClusterClusterJacobi) {

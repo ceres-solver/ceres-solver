@@ -50,12 +50,12 @@
 
 #include <algorithm>
 #include <map>
+#include <memory>
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/invert_psd_matrix.h"
 #include "ceres/map_util.h"
 #include "ceres/schur_eliminator.h"

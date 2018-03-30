@@ -31,8 +31,8 @@
 #ifndef CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
 #define CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
 
+#include <memory>
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/minimizer.h"
 #include "ceres/solver.h"
 #include "ceres/sparse_matrix.h"
@@ -94,7 +94,7 @@ class TrustRegionMinimizer : public Minimizer {
   SparseMatrix* jacobian_;
   TrustRegionStrategy* strategy_;
 
-  scoped_ptr<TrustRegionStepEvaluator> step_evaluator_;
+  std::unique_ptr<TrustRegionStepEvaluator> step_evaluator_;
 
   bool is_not_silent_;
   bool inner_iterations_are_enabled_;

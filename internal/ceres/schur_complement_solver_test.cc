@@ -31,13 +31,13 @@
 #include "ceres/schur_complement_solver.h"
 
 #include <cstddef>
+#include <memory>
 
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
 #include "ceres/detect_structure.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -51,7 +51,7 @@ namespace internal {
 class SchurComplementSolverTest : public ::testing::Test {
  protected:
   void SetUpFromProblemId(int problem_id) {
-    scoped_ptr<LinearLeastSquaresProblem> problem(
+    std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(problem_id));
 
     CHECK_NOTNULL(problem.get());
@@ -72,7 +72,7 @@ class SchurComplementSolverTest : public ::testing::Test {
     ContextImpl context;
     options.context = &context;
 
-    scoped_ptr<LinearSolver> qr(LinearSolver::Create(options));
+    std::unique_ptr<LinearSolver> qr(LinearSolver::Create(options));
 
     TripletSparseMatrix triplet_A(A->num_rows(),
                                   A->num_cols(),
@@ -115,7 +115,7 @@ class SchurComplementSolverTest : public ::testing::Test {
                     &options.e_block_size,
                     &options.f_block_size);
 
-    scoped_ptr<LinearSolver> solver(LinearSolver::Create(options));
+    std::unique_ptr<LinearSolver> solver(LinearSolver::Create(options));
 
     LinearSolver::PerSolveOptions per_solve_options;
     LinearSolver::Summary summary;
@@ -142,9 +142,9 @@ class SchurComplementSolverTest : public ::testing::Test {
   int num_cols;
   int num_eliminate_blocks;
 
-  scoped_ptr<BlockSparseMatrix> A;
-  scoped_array<double> b;
-  scoped_array<double> D;
+  std::unique_ptr<BlockSparseMatrix> A;
+  std::unique_ptr<double[]> b;
+  std::unique_ptr<double[]> D;
   Vector x;
   Vector sol;
   Vector sol_d;

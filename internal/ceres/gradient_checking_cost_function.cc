@@ -33,13 +33,13 @@
 
 #include <algorithm>
 #include <cmath>
+#include <memory>
 #include <numeric>
 #include <string>
 #include <vector>
 
 #include "ceres/gradient_checker.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"

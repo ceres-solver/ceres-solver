@@ -32,6 +32,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <memory>
 #include <vector>
 
 #include "Eigen/Dense"
@@ -41,7 +42,6 @@
 #include "ceres/detect_structure.h"
 #include "ceres/implicit_schur_complement.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
 #include "ceres/preconditioner.h"
 #include "ceres/schur_jacobi_preconditioner.h"

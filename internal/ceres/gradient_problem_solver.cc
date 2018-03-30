@@ -103,7 +103,6 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
   using internal::GradientProblemSolverStateUpdatingCallback;
   using internal::LoggingCallback;
   using internal::Minimizer;
-  using internal::scoped_ptr;
   using internal::SetSummaryFinalCost;
   using internal::WallTimeInSeconds;
 
@@ -135,7 +134,7 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
       Minimizer::Options(GradientProblemSolverOptionsToSolverOptions(options));
   minimizer_options.evaluator.reset(new GradientProblemEvaluator(problem));
 
-  scoped_ptr<IterationCallback> logging_callback;
+  std::unique_ptr<IterationCallback> logging_callback;
   if (options.logging_type != SILENT) {
     logging_callback.reset(
         new LoggingCallback(LINE_SEARCH, options.minimizer_progress_to_stdout));
@@ -143,7 +142,7 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
                                        logging_callback.get());
   }
 
-  scoped_ptr<IterationCallback> state_updating_callback;
+  std::unique_ptr<IterationCallback> state_updating_callback;
   if (options.update_state_every_iteration) {
     state_updating_callback.reset(
         new GradientProblemSolverStateUpdatingCallback(
@@ -152,7 +151,7 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
                                        state_updating_callback.get());
   }
 
-  scoped_ptr<Minimizer> minimizer(Minimizer::Create(LINE_SEARCH));
+  std::unique_ptr<Minimizer> minimizer(Minimizer::Create(LINE_SEARCH));
 
   Solver::Summary solver_summary;
   solver_summary.fixed_cost = 0.0;

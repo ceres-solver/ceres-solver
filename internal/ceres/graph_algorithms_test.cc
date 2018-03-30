@@ -31,11 +31,11 @@
 #include "ceres/graph_algorithms.h"
 
 #include <algorithm>
+#include <memory>
 #include "gtest/gtest.h"
 #include "ceres/collections_port.h"
 #include "ceres/graph.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
 
 namespace ceres {
 namespace internal {
@@ -110,7 +110,7 @@ TEST(Degree2MaximumSpanningForest, PreserveWeights) {
   graph.AddEdge(0, 1, 0.5);
   graph.AddEdge(1, 0, 0.5);
 
-  scoped_ptr<WeightedGraph<int> > forest(Degree2MaximumSpanningForest(graph));
+  std::unique_ptr<WeightedGraph<int> > forest(Degree2MaximumSpanningForest(graph));
 
   const HashSet<int>& vertices = forest->vertices();
   EXPECT_EQ(vertices.size(), 2);
@@ -133,7 +133,7 @@ TEST(Degree2MaximumSpanningForest, StarGraph) {
   graph.AddEdge(0, 3, 3.0);
   graph.AddEdge(0, 4, 4.0);
 
-  scoped_ptr<WeightedGraph<int> > forest(Degree2MaximumSpanningForest(graph));
+  std::unique_ptr<WeightedGraph<int> > forest(Degree2MaximumSpanningForest(graph));
   const HashSet<int>& vertices = forest->vertices();
   EXPECT_EQ(vertices.size(), 5);
 

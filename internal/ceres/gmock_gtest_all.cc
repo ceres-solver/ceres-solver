@@ -1315,8 +1315,8 @@ class GTEST_API_ UnitTestImpl {
 #if GTEST_HAS_DEATH_TEST
   // The decomposed components of the gtest_internal_run_death_test flag,
   // parsed when RUN_ALL_TESTS is called.
-  internal::scoped_ptr<InternalRunDeathTestFlag> internal_run_death_test_flag_;
-  internal::scoped_ptr<internal::DeathTestFactory> death_test_factory_;
+  std::unique_ptr<InternalRunDeathTestFlag> internal_run_death_test_flag_;
+  std::unique_ptr<internal::DeathTestFactory> death_test_factory_;
 #endif  // GTEST_HAS_DEATH_TEST
 
   // A per-thread stack of traces created by the SCOPED_TRACE() macro.
@@ -1577,7 +1577,7 @@ class GTEST_API_ StreamingListener : public EmptyTestEventListener {
 
   string FormatBool(bool value) { return value ? "1" : "0"; }
 
-  const scoped_ptr<AbstractSocketWriter> socket_writer_;
+  const std::unique_ptr<AbstractSocketWriter> socket_writer_;
 
   GTEST_DISALLOW_COPY_AND_ASSIGN_(StreamingListener);
 };  // class StreamingListener
@@ -8899,14 +8899,14 @@ class ThreadWithParamSupport : public ThreadWithParamBase {
         : runnable_(runnable),
           thread_can_start_(thread_can_start) {
     }
-    scoped_ptr<Runnable> runnable_;
+    std::unique_ptr<Runnable> runnable_;
     // Does not own.
     Notification* thread_can_start_;
   };
 
   static DWORD WINAPI ThreadMain(void* ptr) {
     // Transfers ownership.
-    scoped_ptr<ThreadMainParam> param(static_cast<ThreadMainParam*>(ptr));
+    std::unique_ptr<ThreadMainParam> param(static_cast<ThreadMainParam*>(ptr));
     if (param->thread_can_start_ != NULL)
       param->thread_can_start_->WaitForNotification();
     param->runnable_->Run();

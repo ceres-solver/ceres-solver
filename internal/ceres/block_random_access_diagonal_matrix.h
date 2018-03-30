@@ -31,9 +31,10 @@
 #ifndef CERES_INTERNAL_BLOCK_RANDOM_ACCESS_DIAGONAL_MATRIX_H_
 #define CERES_INTERNAL_BLOCK_RANDOM_ACCESS_DIAGONAL_MATRIX_H_
 
+#include <memory>
 #include <set>
-#include <vector>
 #include <utility>
+#include <vector>
 #include "ceres/mutex.h"
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/collections_port.h"
@@ -41,7 +42,6 @@
 #include "ceres/integral_types.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
 
 namespace ceres {
@@ -89,7 +89,7 @@ class BlockRandomAccessDiagonalMatrix : public BlockRandomAccessMatrix {
   std::vector<CellInfo*> layout_;
 
   // The underlying matrix object which actually stores the cells.
-  scoped_ptr<TripletSparseMatrix> tsm_;
+  std::unique_ptr<TripletSparseMatrix> tsm_;
 
   friend class BlockRandomAccessDiagonalMatrixTest;
   CERES_DISALLOW_COPY_AND_ASSIGN(BlockRandomAccessDiagonalMatrix);

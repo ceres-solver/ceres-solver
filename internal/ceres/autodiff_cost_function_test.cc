@@ -158,7 +158,7 @@ TEST(AutoDiffCostFunction, PartiallyFilledResidualShouldFailEvaluation) {
   double* parameters[] = {&parameter};
   double* jacobians[] = {jacobian};
 
-  scoped_ptr<CostFunction> cost_function(
+  std::unique_ptr<CostFunction> cost_function(
       new AutoDiffCostFunction<OnlyFillsOneOutputFunctor, 2, 1>(
           new OnlyFillsOneOutputFunctor));
   InvalidateArray(2, jacobian);
