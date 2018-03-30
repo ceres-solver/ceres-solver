@@ -31,7 +31,7 @@
 #ifndef CERES_INTERNAL_SINGLE_LINKAGE_CLUSTERING_H_
 #define CERES_INTERNAL_SINGLE_LINKAGE_CLUSTERING_H_
 
-#include "ceres/collections_port.h"
+#include <unordered_map>
 #include "ceres/graph.h"
 
 namespace ceres {
@@ -60,7 +60,7 @@ struct SingleLinkageClusteringOptions {
 int ComputeSingleLinkageClustering(
     const SingleLinkageClusteringOptions& options,
     const WeightedGraph<int>& graph,
-    HashMap<int, int>* membership);
+    std::unordered_map<int, int>* membership);
 
 }  // namespace internal
 }  // namespace ceres

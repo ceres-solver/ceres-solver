@@ -373,11 +373,10 @@ bool Program::IsParameterBlockSetIndependent(
   // blocks in the same residual block are part of
   // parameter_block_ptrs as that would violate the assumption that it
   // is an independent set in the Hessian matrix.
-  for (vector<ResidualBlock*>::const_iterator it = residual_blocks_.begin();
-       it != residual_blocks_.end();
-       ++it) {
-    ParameterBlock* const* parameter_blocks = (*it)->parameter_blocks();
-    const int num_parameter_blocks = (*it)->NumParameterBlocks();
+  for (const ResidualBlock* residual_block : residual_blocks_) {
+    ParameterBlock* const* parameter_blocks =
+        residual_block->parameter_blocks();
+    const int num_parameter_blocks = residual_block->NumParameterBlocks();
     int count = 0;
     for (int i = 0; i < num_parameter_blocks; ++i) {
       count += independent_set.count(

@@ -40,9 +40,9 @@
 #define CERES_PUBLIC_PROBLEM_IMPL_H_
 
 #include <map>
+#include <unordered_set>
 #include <vector>
 
-#include "ceres/collections_port.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
@@ -65,7 +65,7 @@ class ResidualBlock;
 class ProblemImpl {
  public:
   typedef std::map<double*, ParameterBlock*> ParameterMap;
-  typedef HashSet<ResidualBlock*> ResidualBlockSet;
+  typedef std::unordered_set<ResidualBlock*> ResidualBlockSet;
   typedef std::map<CostFunction*, int> CostFunctionRefCount;
   typedef std::map<LossFunction*, int> LossFunctionRefCount;
 
@@ -203,7 +203,7 @@ class ProblemImpl {
   ContextImpl* context_impl_;
 
   // The mapping from user pointers to parameter blocks.
-  std::map<double*, ParameterBlock*> parameter_block_map_;
+  ParameterMap parameter_block_map_;
 
   // Iff enable_fast_removal is enabled, contains the current residual blocks.
   ResidualBlockSet residual_block_set_;

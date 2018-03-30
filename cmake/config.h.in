@@ -73,13 +73,6 @@
 @CERES_HAVE_PTHREAD@
 @CERES_HAVE_RWLOCK@
 
-// Which version of unordered map was used when Ceres was compiled. Exactly
-// one of these will be defined for any given build.
-@CERES_STD_UNORDERED_MAP@
-@CERES_STD_UNORDERED_MAP_IN_TR1_NAMESPACE@
-@CERES_TR1_UNORDERED_MAP@
-@CERES_NO_UNORDERED_MAP@
-
 // If defined, the memory header is in <tr1/memory>, otherwise <memory>.
 @CERES_TR1_MEMORY_HEADER@
 

@@ -32,11 +32,11 @@
 #define CERES_INTERNAL_BLOCK_RANDOM_ACCESS_SPARSE_MATRIX_H_
 
 #include <set>
+#include <unordered_map>
 #include <vector>
 #include <utility>
 #include "ceres/mutex.h"
 #include "ceres/block_random_access_matrix.h"
-#include "ceres/collections_port.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/integral_types.h"
 #include "ceres/internal/macros.h"
@@ -109,7 +109,7 @@ class BlockRandomAccessSparseMatrix : public BlockRandomAccessMatrix {
 
   // A mapping from <row_block_id, col_block_id> to the position in
   // the values array of tsm_ where the block is stored.
-  typedef HashMap<long int, CellInfo* > LayoutType;
+  typedef std::unordered_map<long int, CellInfo* > LayoutType;
   LayoutType layout_;
 
   // In order traversal of contents of the matrix. This allows us to

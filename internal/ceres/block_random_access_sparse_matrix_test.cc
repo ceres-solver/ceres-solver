@@ -68,11 +68,9 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
   EXPECT_EQ(m.num_rows(), num_rows);
   EXPECT_EQ(m.num_cols(), num_rows);
 
-  for (set<pair<int, int> >::const_iterator it = block_pairs.begin();
-       it != block_pairs.end();
-       ++it) {
-    const int row_block_id = it->first;
-    const int col_block_id = it->second;
+  for (const auto& block_pair : block_pairs) {
+    const int row_block_id = block_pair.first;
+    const int col_block_id = block_pair.second;
     int row;
     int col;
     int row_stride;
