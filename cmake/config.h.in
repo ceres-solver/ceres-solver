@@ -83,9 +83,6 @@
 @CERES_TR1_UNORDERED_MAP@
 @CERES_NO_UNORDERED_MAP@
 
-// If defined, the memory header is in <tr1/memory>, otherwise <memory>.
-@CERES_TR1_MEMORY_HEADER@
-
 // If defined shared_ptr is in std::tr1 namespace, otherwise std.
 @CERES_TR1_SHARED_PTR@
 

@@ -29,6 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <limits>
+#include <memory>
 #include <vector>
 
 #include "ceres/block_random_access_diagonal_matrix.h"
@@ -92,7 +93,7 @@ class BlockRandomAccessDiagonalMatrixTest : public ::testing::Test {
 
  protected:
   int num_nonzeros_;
-  scoped_ptr<BlockRandomAccessDiagonalMatrix> m_;
+  std::unique_ptr<BlockRandomAccessDiagonalMatrix> m_;
 };
 
 TEST_F(BlockRandomAccessDiagonalMatrixTest, MatrixContents) {

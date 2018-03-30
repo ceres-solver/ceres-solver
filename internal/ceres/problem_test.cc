@@ -32,12 +32,12 @@
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 
+#include <memory>
 #include "ceres/casts.h"
 #include "ceres/cost_function.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/evaluator_test_utils.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
 #include "ceres/map_util.h"
@@ -496,7 +496,7 @@ struct DynamicProblem : public ::testing::TestWithParam<bool> {
     ExpectParameterBlockContainsResidualBlock(values, r4);
   }
 
-  scoped_ptr<ProblemImpl> problem;
+  std::unique_ptr<ProblemImpl> problem;
   double y[4], z[5], w[3];
 };
 

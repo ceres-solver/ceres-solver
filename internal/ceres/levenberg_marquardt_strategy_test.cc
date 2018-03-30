@@ -28,8 +28,8 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <memory>
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/levenberg_marquardt_strategy.h"
 #include "ceres/linear_solver.h"
 #include "ceres/trust_region_strategy.h"
@@ -86,7 +86,7 @@ TEST(LevenbergMarquardtStrategy, AcceptRejectStepRadiusScaling) {
   options.max_lm_diagonal = 1e8;
 
   // We need a non-null pointer here, so anything should do.
-  scoped_ptr<LinearSolver> linear_solver(
+  std::unique_ptr<LinearSolver> linear_solver(
       new RegularizationCheckingLinearSolver(0, NULL));
   options.linear_solver = linear_solver.get();
 

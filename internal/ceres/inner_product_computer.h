@@ -31,11 +31,11 @@
 #ifndef CERES_INTERNAL_INNER_PRODUCT_COMPUTER_H_
 #define CERES_INTERNAL_INNER_PRODUCT_COMPUTER_H_
 
+#include <memory>
 #include <vector>
 
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/compressed_row_sparse_matrix.h"
-#include "ceres/internal/scoped_ptr.h"
 
 namespace ceres {
 namespace internal {
@@ -140,7 +140,7 @@ class InnerProductComputer {
   const BlockSparseMatrix& m_;
   const int start_row_block_;
   const int end_row_block_;
-  scoped_ptr<CompressedRowSparseMatrix> result_;
+  std::unique_ptr<CompressedRowSparseMatrix> result_;
 
   // For each term in the inner product, result_offsets_ contains the
   // location in the values array of the result_ matrix where it

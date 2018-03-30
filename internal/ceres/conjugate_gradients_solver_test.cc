@@ -31,12 +31,12 @@
 // TODO(sameeragarwal): More comprehensive testing with larger and
 // more badly conditioned problem.
 
+#include <memory>
 #include "gtest/gtest.h"
 #include "ceres/conjugate_gradients_solver.h"
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
 
 namespace ceres {
@@ -44,7 +44,7 @@ namespace internal {
 
 TEST(ConjugateGradientTest, Solves3x3IdentitySystem) {
   double diagonal[] = { 1.0, 1.0, 1.0 };
-  scoped_ptr<TripletSparseMatrix>
+  std::unique_ptr<TripletSparseMatrix>
       A(TripletSparseMatrix::CreateSparseDiagonalMatrix(diagonal, 3));
   Vector b(3);
   Vector x(3);
@@ -77,7 +77,7 @@ TEST(ConjugateGradientTest, Solves3x3IdentitySystem) {
 
 
 TEST(ConjuateGradientTest, Solves3x3SymmetricSystem) {
-  scoped_ptr<TripletSparseMatrix> A(new TripletSparseMatrix(3, 3, 9));
+  std::unique_ptr<TripletSparseMatrix> A(new TripletSparseMatrix(3, 3, 9));
   Vector b(3);
   Vector x(3);
 

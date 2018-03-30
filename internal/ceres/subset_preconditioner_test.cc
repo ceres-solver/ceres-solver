@@ -28,6 +28,7 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <memory>
 #include "ceres/subset_preconditioner.h"
 #include "Eigen/Dense"
 #include "Eigen/SparseCore"
@@ -35,7 +36,6 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
@@ -118,11 +118,11 @@ class SubsetPreconditionerTest : public ::testing::TestWithParam<Param> {
     inner_product_computer_->Compute();
   }
 
-  scoped_ptr<BlockSparseMatrix> m_;
-  scoped_ptr<BlockSparseMatrix> b_;
-  scoped_ptr<BlockSparseMatrix> block_diagonal_;
-  scoped_ptr<InnerProductComputer> inner_product_computer_;
-  scoped_ptr<Preconditioner> preconditioner_;
+  std::unique_ptr<BlockSparseMatrix> m_;
+  std::unique_ptr<BlockSparseMatrix> b_;
+  std::unique_ptr<BlockSparseMatrix> block_diagonal_;
+  std::unique_ptr<InnerProductComputer> inner_product_computer_;
+  std::unique_ptr<Preconditioner> preconditioner_;
   Vector diagonal_;
   int start_row_block_;
 };

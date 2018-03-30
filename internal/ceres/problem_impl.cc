@@ -34,10 +34,12 @@
 #include <algorithm>
 #include <cstddef>
 #include <iterator>
+#include <memory>
 #include <set>
 #include <string>
 #include <utility>
 #include <vector>
+
 #include "ceres/casts.h"
 #include "ceres/compressed_row_jacobian_writer.h"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -823,7 +825,7 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   context_impl_->EnsureMinimumThreads(evaluator_options.num_threads - 1);
   evaluator_options.context = context_impl_;
 
-  scoped_ptr<Evaluator> evaluator(
+  std::unique_ptr<Evaluator> evaluator(
       new ProgramEvaluator<ScratchEvaluatePreparer,
                            CompressedRowJacobianWriter>(evaluator_options,
                                                         &program));
@@ -836,7 +838,7 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
     gradient->resize(evaluator->NumEffectiveParameters());
   }
 
-  scoped_ptr<CompressedRowSparseMatrix> tmp_jacobian;
+  std::unique_ptr<CompressedRowSparseMatrix> tmp_jacobian;
   if (jacobian != NULL) {
     tmp_jacobian.reset(
         down_cast<CompressedRowSparseMatrix*>(evaluator->CreateJacobian()));

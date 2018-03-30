@@ -34,6 +34,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
+#include <memory>
 #include <limits>
 #include <string>
 #include <vector>
@@ -573,7 +574,7 @@ void TrustRegionMinimizer::DoLineSearch(const Vector& x,
   line_search_options.function = &line_search_function;
 
   std::string message;
-  scoped_ptr<LineSearch> line_search(CHECK_NOTNULL(
+  std::unique_ptr<LineSearch> line_search(CHECK_NOTNULL(
       LineSearch::Create(ceres::ARMIJO, line_search_options, &message)));
   LineSearch::Summary line_search_summary;
   line_search_function.Init(x, *delta);

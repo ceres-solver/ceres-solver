@@ -31,7 +31,7 @@
 #ifndef CERES_INTERNAL_CGNR_SOLVER_H_
 #define CERES_INTERNAL_CGNR_SOLVER_H_
 
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/linear_solver.h"
 
 namespace ceres {
@@ -59,7 +59,7 @@ class CgnrSolver : public BlockSparseMatrixSolver {
 
  private:
   const LinearSolver::Options options_;
-  scoped_ptr<Preconditioner> preconditioner_;
+  std::unique_ptr<Preconditioner> preconditioner_;
   CERES_DISALLOW_COPY_AND_ASSIGN(CgnrSolver);
 };
 
