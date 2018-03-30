@@ -40,7 +40,6 @@
 #include "ceres/block_random_access_sparse_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/canonical_views_clustering.h"
-#include "ceres/collections_port.h"
 #include "ceres/graph.h"
 #include "ceres/graph_algorithms.h"
 #include "ceres/internal/scoped_ptr.h"
@@ -177,7 +176,7 @@ void VisibilityBasedPreconditioner::ClusterCameras(
   scoped_ptr<WeightedGraph<int> > schur_complement_graph(
       CHECK_NOTNULL(CreateSchurComplementGraph(visibility)));
 
-  HashMap<int, int> membership;
+  std::unordered_map<int, int> membership;
 
   if (options_.visibility_clustering_type == CANONICAL_VIEWS) {
     vector<int> centers;
@@ -382,11 +381,9 @@ bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
 // matrix. Scaling these off-diagonal entries by 1/2 forces this
 // matrix to be positive definite.
 void VisibilityBasedPreconditioner::ScaleOffDiagonalCells() {
-  for (set<pair<int, int> >::const_iterator it = block_pairs_.begin();
-       it != block_pairs_.end();
-       ++it) {
-    const int block1 = it->first;
-    const int block2 = it->second;
+  for (const auto& block_pair : block_pairs_) {
+    const int block1 = block_pair.first;
+    const int block2 = block_pair.second;
     if (!IsBlockPairOffDiagonal(block1, block2)) {
       continue;
     }
@@ -464,23 +461,17 @@ bool VisibilityBasedPreconditioner::IsBlockPairOffDiagonal(
 // each vertex.
 void VisibilityBasedPreconditioner::ForestToClusterPairs(
     const WeightedGraph<int>& forest,
-    HashSet<pair<int, int> >* cluster_pairs) const {
+    std::unordered_set<pair<int, int>, pair_hash >* cluster_pairs) const {
   CHECK_NOTNULL(cluster_pairs)->clear();
-  const HashSet<int>& vertices = forest.vertices();
+  const std::unordered_set<int>& vertices = forest.vertices();
   CHECK_EQ(vertices.size(), num_clusters_);
 
   // Add all the cluster pairs corresponding to the edges in the
   // forest.
-  for (HashSet<int>::const_iterator it1 = vertices.begin();
-       it1 != vertices.end();
-       ++it1) {
-    const int cluster1 = *it1;
+  for (const int cluster1 : vertices) {
     cluster_pairs->insert(make_pair(cluster1, cluster1));
-    const HashSet<int>& neighbors = forest.Neighbors(cluster1);
-    for (HashSet<int>::const_iterator it2 = neighbors.begin();
-         it2 != neighbors.end();
-         ++it2) {
-      const int cluster2 = *it2;
+    const std::unordered_set<int>& neighbors = forest.Neighbors(cluster1);
+    for (const int cluster2 : neighbors) {
       if (cluster1 < cluster2) {
         cluster_pairs->insert(make_pair(cluster1, cluster2));
       }
@@ -538,7 +529,7 @@ WeightedGraph<int>* VisibilityBasedPreconditioner::CreateClusterGraph(
   return cluster_graph;
 }
 
-// Canonical views clustering returns a HashMap from vertices to
+// Canonical views clustering returns a std::unordered_map from vertices to
 // cluster ids. Convert this into a flat array for quick lookup. It is
 // possible that some of the vertices may not be associated with any
 // cluster. In that case, randomly assign them to one of the clusters.
@@ -547,20 +538,18 @@ WeightedGraph<int>* VisibilityBasedPreconditioner::CreateClusterGraph(
 // the membership_map, we also map the cluster ids to a contiguous set
 // of integers so that the cluster ids are in [0, num_clusters_).
 void VisibilityBasedPreconditioner::FlattenMembershipMap(
-    const HashMap<int, int>& membership_map,
+    const std::unordered_map<int, int>& membership_map,
     vector<int>* membership_vector) const {
   CHECK_NOTNULL(membership_vector)->resize(0);
   membership_vector->resize(num_blocks_, -1);
 
-  HashMap<int, int> cluster_id_to_index;
+  std::unordered_map<int, int> cluster_id_to_index;
   // Iterate over the cluster membership map and update the
   // cluster_membership_ vector assigning arbitrary cluster ids to
   // the few cameras that have not been clustered.
-  for (HashMap<int, int>::const_iterator it = membership_map.begin();
-       it != membership_map.end();
-       ++it) {
-    const int camera_id = it->first;
-    int cluster_id = it->second;
+  for (const auto& m : membership_map) {
+    const int camera_id = m.first;
+    int cluster_id = m.second;
 
     // If the view was not clustered, randomly assign it to one of the
     // clusters. This preserves the mathematical correctness of the

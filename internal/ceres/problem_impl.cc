@@ -63,7 +63,6 @@ namespace internal {
 using std::map;
 using std::string;
 using std::vector;
-typedef std::map<double*, internal::ParameterBlock*> ParameterMap;
 
 namespace {
 // Returns true if two regions of memory, a and b, with sizes size_a and size_b
@@ -90,7 +89,7 @@ void CheckForNoAliasing(double* existing_block,
 template <typename KeyType>
 void DecrementValueOrDeleteKey(const KeyType key,
                                std::map<KeyType, int>* container) {
-  typename std::map<KeyType, int>::iterator it = container->find(key);
+  auto it = container->find(key);
   if (it->second == 1) {
     delete key;
     container->erase(it);
@@ -936,10 +935,8 @@ bool ProblemImpl::HasParameterBlock(const double* parameter_block) const {
 void ProblemImpl::GetParameterBlocks(vector<double*>* parameter_blocks) const {
   CHECK_NOTNULL(parameter_blocks);
   parameter_blocks->resize(0);
-  for (ParameterMap::const_iterator it = parameter_block_map_.begin();
-       it != parameter_block_map_.end();
-       ++it) {
-    parameter_blocks->push_back(it->first);
+  for (const auto& entry : parameter_block_map_) {
+    parameter_blocks->push_back(entry.first);
   }
 }
 

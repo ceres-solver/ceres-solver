@@ -41,9 +41,9 @@
 #ifndef CERES_INTERNAL_CANONICAL_VIEWS_CLUSTERING_H_
 #define CERES_INTERNAL_CANONICAL_VIEWS_CLUSTERING_H_
 
+#include <unordered_map>
 #include <vector>
 
-#include "ceres/collections_port.h"
 #include "ceres/graph.h"
 
 namespace ceres {
@@ -98,7 +98,7 @@ void ComputeCanonicalViewsClustering(
     const CanonicalViewsClusteringOptions& options,
     const WeightedGraph<int>& graph,
     std::vector<int>* centers,
-    HashMap<int, int>* membership);
+    std::unordered_map<int, int>* membership);
 
 struct CanonicalViewsClusteringOptions {
   CanonicalViewsClusteringOptions()

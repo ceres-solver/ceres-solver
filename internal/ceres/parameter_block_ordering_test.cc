@@ -31,9 +31,9 @@
 #include "ceres/parameter_block_ordering.h"
 
 #include <cstddef>
+#include <unordered_set>
 #include <vector>
 #include "gtest/gtest.h"
-#include "ceres/collections_port.h"
 #include "ceres/graph.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
@@ -48,7 +48,7 @@ namespace internal {
 using std::vector;
 
 typedef Graph<ParameterBlock*> HessianGraph;
-typedef HashSet<ParameterBlock*> VertexSet;
+typedef std::unordered_set<ParameterBlock*> VertexSet;
 
 template <int M, int N1 = 0, int N2 = 0, int N3 = 0>
 class DummyCostFunction: public SizedCostFunction<M, N1, N2, N3> {

@@ -440,10 +440,6 @@ endif (OPENMP)
 # they are used when checking for compiler features.
 set(CMAKE_REQUIRED_FLAGS ${CMAKE_CXX_FLAGS})
 
-# Set the Ceres option for C++11.
-# TODO(alex): Remove when #defines are removed from source & config.h
-list(APPEND CERES_COMPILE_OPTIONS CERES_STD_UNORDERED_MAP)
-
 if (TBB)
   find_package(TBB QUIET)
   if (TBB_FOUND)

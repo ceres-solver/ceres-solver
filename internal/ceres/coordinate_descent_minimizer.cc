@@ -80,18 +80,15 @@ bool CoordinateDescentMinimizer::Init(
   // offsets for parallel access.
   map<ParameterBlock*, int> parameter_block_index;
   map<int, set<double*> > group_to_elements = ordering.group_to_elements();
-  for (map<int, set<double*> >::const_iterator it = group_to_elements.begin();
-       it != group_to_elements.end();
-       ++it) {
-    for (set<double*>::const_iterator ptr_it = it->second.begin();
-         ptr_it != it->second.end();
-         ++ptr_it) {
-      parameter_blocks_.push_back(parameter_map.find(*ptr_it)->second);
+  for (const auto& g_t_e : group_to_elements) {
+    const auto& elements = g_t_e.second;
+    for (double* parameter_block: elements) {
+      parameter_blocks_.push_back(parameter_map.find(parameter_block)->second);
       parameter_block_index[parameter_blocks_.back()] =
           parameter_blocks_.size() - 1;
     }
     independent_set_offsets_.push_back(
-        independent_set_offsets_.back() + it->second.size());
+        independent_set_offsets_.back() + elements.size());
   }
 
   // The ordering does not have to contain all parameter blocks, so
@@ -114,8 +111,7 @@ bool CoordinateDescentMinimizer::Init(
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
     for (int j = 0; j < num_parameter_blocks; ++j) {
       ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
-      const map<ParameterBlock*, int>::const_iterator it =
-          parameter_block_index.find(parameter_block);
+      const auto it = parameter_block_index.find(parameter_block);
       if (it != parameter_block_index.end()) {
         residual_blocks_[it->second].push_back(residual_block);
       }
@@ -267,13 +263,12 @@ bool CoordinateDescentMinimizer::IsOrderingValid(
       ordering.group_to_elements();
 
   // Verify that each group is an independent set
-  map<int, set<double*> >::const_iterator it = group_to_elements.begin();
-  for (; it != group_to_elements.end(); ++it) {
-    if (!program.IsParameterBlockSetIndependent(it->second)) {
+  for (const auto& g_t_e : group_to_elements) {
+    if (!program.IsParameterBlockSetIndependent(g_t_e.second)) {
       *message =
           StringPrintf("The user-provided "
                        "parameter_blocks_for_inner_iterations does not "
-                       "form an independent set. Group Id: %d", it->first);
+                       "form an independent set. Group Id: %d", g_t_e.first);
       return false;
     }
   }
