@@ -31,16 +31,17 @@
 #include "ceres/parameter_block_ordering.h"
 
 #include <cstddef>
+#include <memory>
 #include <unordered_set>
 #include <vector>
-#include "gtest/gtest.h"
+
+#include "ceres/cost_function.h"
 #include "ceres/graph.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
-#include "ceres/stl_util.h"
-#include "ceres/cost_function.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/sized_cost_function.h"
+#include "ceres/stl_util.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
@@ -85,7 +86,7 @@ class SchurOrderingTest : public ::testing::Test {
 TEST_F(SchurOrderingTest, NoFixed) {
   const Program& program = problem_.program();
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
-  scoped_ptr<HessianGraph> graph(CreateHessianGraph(program));
+  std::unique_ptr<HessianGraph> graph(CreateHessianGraph(program));
 
   const VertexSet& vertices = graph->vertices();
   EXPECT_EQ(vertices.size(), 4);
@@ -130,7 +131,7 @@ TEST_F(SchurOrderingTest, AllFixed) {
   problem_.SetParameterBlockConstant(w_);
 
   const Program& program = problem_.program();
-  scoped_ptr<HessianGraph> graph(CreateHessianGraph(program));
+  std::unique_ptr<HessianGraph> graph(CreateHessianGraph(program));
   EXPECT_EQ(graph->vertices().size(), 0);
 }
 
@@ -139,7 +140,7 @@ TEST_F(SchurOrderingTest, OneFixed) {
 
   const Program& program = problem_.program();
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
-  scoped_ptr<HessianGraph> graph(CreateHessianGraph(program));
+  std::unique_ptr<HessianGraph> graph(CreateHessianGraph(program));
 
   const VertexSet& vertices = graph->vertices();
 

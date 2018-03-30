@@ -31,9 +31,10 @@
 #include "ceres/gradient_checking_cost_function.h"
 
 #include <cmath>
+#include <memory>
 #include <vector>
+
 #include "ceres/cost_function.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
 #include "ceres/parameter_block.h"
@@ -161,7 +162,7 @@ TEST(GradientCheckingCostFunction, ResidualsAndJacobiansArePreservedTest) {
 
   TestTerm<-1, -1> term(arity, dim);
   GradientCheckingIterationCallback callback;
-  scoped_ptr<CostFunction> gradient_checking_cost_function(
+  std::unique_ptr<CostFunction> gradient_checking_cost_function(
       CreateGradientCheckingCostFunction(&term, NULL,
                                          kRelativeStepSize,
                                          kRelativePrecision,
@@ -218,7 +219,7 @@ TEST(GradientCheckingCostFunction, SmokeTest) {
   {
     TestTerm<1, 2> term(arity, dim);
     GradientCheckingIterationCallback callback;
-    scoped_ptr<CostFunction> gradient_checking_cost_function(
+    std::unique_ptr<CostFunction> gradient_checking_cost_function(
         CreateGradientCheckingCostFunction(&term, NULL,
                                            kRelativeStepSize,
                                            kRelativePrecision,
@@ -237,7 +238,7 @@ TEST(GradientCheckingCostFunction, SmokeTest) {
   {
     TestTerm<-1, -1> term(arity, dim);
     GradientCheckingIterationCallback callback;
-    scoped_ptr<CostFunction> gradient_checking_cost_function(
+    std::unique_ptr<CostFunction> gradient_checking_cost_function(
         CreateGradientCheckingCostFunction(&term, NULL,
                                            kRelativeStepSize,
                                            kRelativePrecision,
@@ -358,7 +359,7 @@ TEST(GradientCheckingProblemImpl, ProblemDimensionsMatch) {
                                 NULL, z, x, y);
 
   GradientCheckingIterationCallback callback;
-  scoped_ptr<ProblemImpl> gradient_checking_problem_impl(
+  std::unique_ptr<ProblemImpl> gradient_checking_problem_impl(
       CreateGradientCheckingProblemImpl(&problem_impl, 1.0, 1.0, &callback));
 
   // The dimensions of the two problems match.

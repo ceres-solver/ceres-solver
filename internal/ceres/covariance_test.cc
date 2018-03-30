@@ -33,7 +33,9 @@
 #include <algorithm>
 #include <cmath>
 #include <map>
+#include <memory>
 #include <utility>
+
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/cost_function.h"
 #include "ceres/covariance_impl.h"
@@ -1256,7 +1258,7 @@ class LargeScaleCovarianceTest : public ::testing::Test {
     }
   }
 
-  scoped_array<double> parameters_;
+  std::unique_ptr<double[]> parameters_;
   int parameter_block_size_;
   int num_parameter_blocks_;
 

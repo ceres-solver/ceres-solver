@@ -29,8 +29,8 @@
 // Author: moll.markus@arcor.de (Markus Moll)
 
 #include <limits>
+#include <memory>
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/dense_qr_solver.h"
 #include "ceres/dogleg_strategy.h"
 #include "ceres/linear_solver.h"
@@ -44,7 +44,7 @@ namespace {
 
 class Fixture : public testing::Test {
  protected:
-  scoped_ptr<DenseSparseMatrix> jacobian_;
+  std::unique_ptr<DenseSparseMatrix> jacobian_;
   Vector residual_;
   Vector x_;
   TrustRegionStrategy::Options options_;
@@ -126,7 +126,7 @@ const double kEpsilon = std::numeric_limits<double>::epsilon();
 // The DoglegStrategy must never return a step that is longer than the current
 // trust region radius.
 TEST_F(DoglegStrategyFixtureEllipse, TrustRegionObeyedTraditional) {
-  scoped_ptr<LinearSolver> linear_solver(
+  std::unique_ptr<LinearSolver> linear_solver(
       new DenseQRSolver(LinearSolver::Options()));
   options_.linear_solver = linear_solver.get();
   // The global minimum is at (1, 1, ..., 1), so the distance to it is
@@ -149,7 +149,7 @@ TEST_F(DoglegStrategyFixtureEllipse, TrustRegionObeyedTraditional) {
 }
 
 TEST_F(DoglegStrategyFixtureEllipse, TrustRegionObeyedSubspace) {
-  scoped_ptr<LinearSolver> linear_solver(
+  std::unique_ptr<LinearSolver> linear_solver(
       new DenseQRSolver(LinearSolver::Options()));
   options_.linear_solver = linear_solver.get();
   options_.dogleg_type = SUBSPACE_DOGLEG;
@@ -169,7 +169,7 @@ TEST_F(DoglegStrategyFixtureEllipse, TrustRegionObeyedSubspace) {
 }
 
 TEST_F(DoglegStrategyFixtureEllipse, CorrectGaussNewtonStep) {
-  scoped_ptr<LinearSolver> linear_solver(
+  std::unique_ptr<LinearSolver> linear_solver(
       new DenseQRSolver(LinearSolver::Options()));
   options_.linear_solver = linear_solver.get();
   options_.dogleg_type = SUBSPACE_DOGLEG;
@@ -196,7 +196,7 @@ TEST_F(DoglegStrategyFixtureEllipse, CorrectGaussNewtonStep) {
 // Test if the subspace basis is a valid orthonormal basis of the space spanned
 // by the gradient and the Gauss-Newton point.
 TEST_F(DoglegStrategyFixtureEllipse, ValidSubspaceBasis) {
-  scoped_ptr<LinearSolver> linear_solver(
+  std::unique_ptr<LinearSolver> linear_solver(
       new DenseQRSolver(LinearSolver::Options()));
   options_.linear_solver = linear_solver.get();
   options_.dogleg_type = SUBSPACE_DOGLEG;
@@ -231,7 +231,7 @@ TEST_F(DoglegStrategyFixtureEllipse, ValidSubspaceBasis) {
 // in the same direction and the Gauss-Newton step is outside the trust region,
 // i.e. the trust region is active.
 TEST_F(DoglegStrategyFixtureValley, CorrectStepLocalOptimumAlongGradient) {
-  scoped_ptr<LinearSolver> linear_solver(
+  std::unique_ptr<LinearSolver> linear_solver(
       new DenseQRSolver(LinearSolver::Options()));
   options_.linear_solver = linear_solver.get();
   options_.dogleg_type = SUBSPACE_DOGLEG;
@@ -259,7 +259,7 @@ TEST_F(DoglegStrategyFixtureValley, CorrectStepLocalOptimumAlongGradient) {
 // in the same direction and the Gauss-Newton step is inside the trust region,
 // i.e. the trust region is inactive.
 TEST_F(DoglegStrategyFixtureValley, CorrectStepGlobalOptimumAlongGradient) {
-  scoped_ptr<LinearSolver> linear_solver(
+  std::unique_ptr<LinearSolver> linear_solver(
       new DenseQRSolver(LinearSolver::Options()));
   options_.linear_solver = linear_solver.get();
   options_.dogleg_type = SUBSPACE_DOGLEG;

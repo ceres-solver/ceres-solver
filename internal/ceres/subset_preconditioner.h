@@ -31,7 +31,7 @@
 #ifndef CERES_INTERNAL_SUBSET_PRECONDITIONER_H_
 #define CERES_INTERNAL_SUBSET_PRECONDITIONER_H_
 
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/preconditioner.h"
 
 namespace ceres {
@@ -81,8 +81,8 @@ class SubsetPreconditioner : public BlockSparseMatrixPreconditioner {
 
   const Preconditioner::Options options_;
   const int num_cols_;
-  scoped_ptr<SparseCholesky> sparse_cholesky_;
-  scoped_ptr<InnerProductComputer> inner_product_computer_;
+  std::unique_ptr<SparseCholesky> sparse_cholesky_;
+  std::unique_ptr<InnerProductComputer> inner_product_computer_;
 };
 
 }  // namespace internal

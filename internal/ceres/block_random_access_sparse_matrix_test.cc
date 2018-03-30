@@ -29,7 +29,9 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <limits>
+#include <memory>
 #include <vector>
+
 #include "ceres/block_random_access_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "glog/logging.h"
@@ -168,7 +170,7 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
   }
 
  private:
-  scoped_ptr<BlockRandomAccessSparseMatrix> m_;
+  std::unique_ptr<BlockRandomAccessSparseMatrix> m_;
 };
 
 TEST_F(BlockRandomAccessSparseMatrixTest, IntPairToLongOverflow) {

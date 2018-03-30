@@ -33,16 +33,17 @@
 #include <algorithm>
 #include <functional>
 #include <iterator>
+#include <memory>
 #include <set>
 #include <utility>
 #include <vector>
+
 #include "Eigen/Dense"
 #include "ceres/block_random_access_sparse_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/canonical_views_clustering.h"
 #include "ceres/graph.h"
 #include "ceres/graph_algorithms.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
 #include "ceres/single_linkage_clustering.h"
@@ -151,9 +152,9 @@ void VisibilityBasedPreconditioner::ComputeClusterTridiagonalSparsity(
   // maximum spanning forest of this graph.
   vector<set<int> > cluster_visibility;
   ComputeClusterVisibility(visibility, &cluster_visibility);
-  scoped_ptr<WeightedGraph<int> > cluster_graph(
+  std::unique_ptr<WeightedGraph<int> > cluster_graph(
       CHECK_NOTNULL(CreateClusterGraph(cluster_visibility)));
-  scoped_ptr<WeightedGraph<int> > forest(
+  std::unique_ptr<WeightedGraph<int> > forest(
       CHECK_NOTNULL(Degree2MaximumSpanningForest(*cluster_graph)));
   ForestToClusterPairs(*forest, &cluster_pairs_);
 }
@@ -173,7 +174,7 @@ void VisibilityBasedPreconditioner::InitStorage(
 // memberships for each camera block.
 void VisibilityBasedPreconditioner::ClusterCameras(
     const vector<set<int> >& visibility) {
-  scoped_ptr<WeightedGraph<int> > schur_complement_graph(
+  std::unique_ptr<WeightedGraph<int> > schur_complement_graph(
       CHECK_NOTNULL(CreateSchurComplementGraph(visibility)));
 
   std::unordered_map<int, int> membership;
@@ -412,7 +413,7 @@ LinearSolverTerminationType VisibilityBasedPreconditioner::Factorize() {
   const TripletSparseMatrix* tsm =
       down_cast<BlockRandomAccessSparseMatrix*>(m_.get())->mutable_matrix();
 
-  scoped_ptr<CompressedRowSparseMatrix> lhs;
+  std::unique_ptr<CompressedRowSparseMatrix> lhs;
   const CompressedRowSparseMatrix::StorageType storage_type =
       sparse_cholesky_->StorageType();
   if (storage_type == CompressedRowSparseMatrix::UPPER_TRIANGULAR) {

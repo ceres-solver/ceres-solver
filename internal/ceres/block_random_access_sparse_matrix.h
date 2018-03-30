@@ -31,16 +31,17 @@
 #ifndef CERES_INTERNAL_BLOCK_RANDOM_ACCESS_SPARSE_MATRIX_H_
 #define CERES_INTERNAL_BLOCK_RANDOM_ACCESS_SPARSE_MATRIX_H_
 
+#include <memory>
 #include <set>
 #include <unordered_map>
-#include <vector>
 #include <utility>
+#include <vector>
+
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/integral_types.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
 #include "ceres/small_blas.h"
 
@@ -116,7 +117,7 @@ class BlockRandomAccessSparseMatrix : public BlockRandomAccessMatrix {
   // iterator in the Layout object instead.
   std::vector<std::pair<std::pair<int, int>, double*> > cell_values_;
   // The underlying matrix object which actually stores the cells.
-  scoped_ptr<TripletSparseMatrix> tsm_;
+  std::unique_ptr<TripletSparseMatrix> tsm_;
 
   friend class BlockRandomAccessSparseMatrixTest;
   CERES_DISALLOW_COPY_AND_ASSIGN(BlockRandomAccessSparseMatrix);

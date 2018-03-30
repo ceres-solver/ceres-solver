@@ -33,10 +33,9 @@
 #ifndef CERES_INTERNAL_DENSE_SPARSE_MATRIX_H_
 #define CERES_INTERNAL_DENSE_SPARSE_MATRIX_H_
 
-#include "ceres/sparse_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/macros.h"
-#include "ceres/internal/scoped_ptr.h"
+#include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
 
 namespace ceres {

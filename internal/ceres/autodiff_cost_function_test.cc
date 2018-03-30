@@ -31,6 +31,7 @@
 #include "ceres/autodiff_cost_function.h"
 
 #include <cstddef>
+#include <memory>
 
 #include "gtest/gtest.h"
 #include "ceres/cost_function.h"
@@ -158,7 +159,7 @@ TEST(AutoDiffCostFunction, PartiallyFilledResidualShouldFailEvaluation) {
   double* parameters[] = {&parameter};
   double* jacobians[] = {jacobian};
 
-  scoped_ptr<CostFunction> cost_function(
+  std::unique_ptr<CostFunction> cost_function(
       new AutoDiffCostFunction<OnlyFillsOneOutputFunctor, 2, 1>(
           new OnlyFillsOneOutputFunctor));
   InvalidateArray(2, jacobian);

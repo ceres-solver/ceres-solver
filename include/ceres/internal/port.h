@@ -56,12 +56,6 @@
 #  error One of CERES_USE_OPENMP, CERES_USE_TBB,CERES_USE_CXX11_THREADS or CERES_NO_THREADS must be defined.
 #endif
 
-#if defined(CERES_TR1_MEMORY_HEADER)
-#include <tr1/memory>
-#else
-#include <memory>
-#endif
-
 namespace ceres {
 
 // We allocate some Eigen objects on the stack and other places they

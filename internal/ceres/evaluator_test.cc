@@ -33,12 +33,12 @@
 
 #include "ceres/evaluator.h"
 
+#include <memory>
 #include "ceres/casts.h"
 #include "ceres/cost_function.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/evaluator_test_utils.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
@@ -143,7 +143,7 @@ struct EvaluatorTest
                           const double* expected_residuals,
                           const double* expected_gradient,
                           const double* expected_jacobian) {
-    scoped_ptr<Evaluator> evaluator(
+    std::unique_ptr<Evaluator> evaluator(
         CreateEvaluator(problem->mutable_program()));
     int num_residuals = expected_num_rows;
     int num_parameters = expected_num_cols;
@@ -156,7 +156,7 @@ struct EvaluatorTest
     Vector gradient(num_parameters);
     gradient.setConstant(-3000);
 
-    scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
+    std::unique_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
 
     ASSERT_EQ(expected_num_rows, evaluator->NumResiduals());
     ASSERT_EQ(expected_num_cols, evaluator->NumEffectiveParameters());
@@ -531,8 +531,8 @@ TEST_P(EvaluatorTest, EvaluatorAbortsForResidualsThatFailToEvaluate) {
   // The values are ignored.
   double state[9];
 
-  scoped_ptr<Evaluator> evaluator(CreateEvaluator(problem.mutable_program()));
-  scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
+  std::unique_ptr<Evaluator> evaluator(CreateEvaluator(problem.mutable_program()));
+  std::unique_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
   double cost;
   EXPECT_FALSE(evaluator->Evaluate(state, &cost, NULL, NULL, NULL));
 }
@@ -607,8 +607,8 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
   options.num_eliminate_blocks = 0;
   options.context = problem.context();
   string error;
-  scoped_ptr<Evaluator> evaluator(Evaluator::Create(options, program, &error));
-  scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
+  std::unique_ptr<Evaluator> evaluator(Evaluator::Create(options, program, &error));
+  std::unique_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
 
   ASSERT_EQ(2, jacobian->num_rows());
   ASSERT_EQ(2, jacobian->num_cols());

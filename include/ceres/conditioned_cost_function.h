@@ -36,8 +36,8 @@
 
 #include <vector>
 
+#include <memory>
 #include "ceres/cost_function.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
 #include "ceres/internal/disable_warnings.h"
 
@@ -87,7 +87,7 @@ class CERES_EXPORT ConditionedCostFunction : public CostFunction {
                         double** jacobians) const;
 
  private:
-  internal::scoped_ptr<CostFunction> wrapped_cost_function_;
+  std::unique_ptr<CostFunction> wrapped_cost_function_;
   std::vector<CostFunction*> conditioners_;
   Ownership ownership_;
 };

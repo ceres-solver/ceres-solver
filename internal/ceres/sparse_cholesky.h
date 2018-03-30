@@ -52,7 +52,7 @@ namespace internal {
 //
 // Example usage:
 //
-//  scoped_ptr<SparseCholesky>
+//  std::unique_ptr<SparseCholesky>
 //  sparse_cholesky(SparseCholesky::Create(SUITE_SPARSE, AMD));
 //
 //  CompressedRowSparseMatrix lhs = ...;

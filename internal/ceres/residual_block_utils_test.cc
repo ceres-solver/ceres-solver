@@ -30,12 +30,12 @@
 
 #include <cmath>
 #include <limits>
+#include <memory>
 #include "gtest/gtest.h"
 #include "ceres/parameter_block.h"
 #include "ceres/residual_block.h"
 #include "ceres/residual_block_utils.h"
 #include "ceres/cost_function.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/sized_cost_function.h"
 
 namespace ceres {
@@ -54,7 +54,7 @@ void CheckEvaluation(const CostFunction& cost_function, bool is_good) {
                                parameter_blocks,
                                -1);
 
-  scoped_array<double> scratch(
+  std::unique_ptr<double[]> scratch(
       new double[residual_block.NumScratchDoublesForEvaluate()]);
 
   double cost;

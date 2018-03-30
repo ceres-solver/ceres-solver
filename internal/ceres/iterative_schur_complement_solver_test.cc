@@ -35,13 +35,13 @@
 #include "ceres/iterative_schur_complement_solver.h"
 
 #include <cstddef>
+#include <memory>
 #include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
@@ -60,7 +60,7 @@ const double kEpsilon = 1e-14;
 class IterativeSchurComplementSolverTest : public ::testing::Test {
  protected :
   void SetUpProblem(int problem_id) {
-    scoped_ptr<LinearLeastSquaresProblem> problem(
+    std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(problem_id));
 
     CHECK_NOTNULL(problem.get());
@@ -85,7 +85,7 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     options.type = DENSE_QR;
     ContextImpl context;
     options.context = &context;
-    scoped_ptr<LinearSolver> qr(LinearSolver::Create(options));
+    std::unique_ptr<LinearSolver> qr(LinearSolver::Create(options));
 
     LinearSolver::PerSolveOptions per_solve_options;
     per_solve_options.D = D;
@@ -114,9 +114,9 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
   int num_rows_;
   int num_cols_;
   int num_eliminate_blocks_;
-  scoped_ptr<BlockSparseMatrix> A_;
-  scoped_array<double> b_;
-  scoped_array<double> D_;
+  std::unique_ptr<BlockSparseMatrix> A_;
+  std::unique_ptr<double[]> b_;
+  std::unique_ptr<double[]> D_;
 };
 
 TEST_F(IterativeSchurComplementSolverTest, NormalProblem) {

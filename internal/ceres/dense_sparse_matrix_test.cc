@@ -34,11 +34,11 @@
 
 #include "ceres/dense_sparse_matrix.h"
 
+#include <memory>
 #include "ceres/casts.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
@@ -69,7 +69,7 @@ void CompareMatrices(const SparseMatrix* a, const SparseMatrix* b) {
 class DenseSparseMatrixTest : public ::testing::Test {
  protected :
   virtual void SetUp() {
-    scoped_ptr<LinearLeastSquaresProblem> problem(
+    std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(1));
 
     CHECK_NOTNULL(problem.get());
@@ -84,8 +84,8 @@ class DenseSparseMatrixTest : public ::testing::Test {
   int num_rows;
   int num_cols;
 
-  scoped_ptr<TripletSparseMatrix> tsm;
-  scoped_ptr<DenseSparseMatrix> dsm;
+  std::unique_ptr<TripletSparseMatrix> tsm;
+  std::unique_ptr<DenseSparseMatrix> dsm;
 };
 
 TEST_F(DenseSparseMatrixTest, RightMultiply) {
