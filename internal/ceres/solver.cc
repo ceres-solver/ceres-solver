@@ -32,8 +32,10 @@
 #include "ceres/solver.h"
 
 #include <algorithm>
+#include <memory>
 #include <sstream>  // NOLINT
 #include <vector>
+
 #include "ceres/casts.h"
 #include "ceres/context.h"
 #include "ceres/context_impl.h"
@@ -444,7 +446,6 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
 void Minimize(internal::PreprocessedProblem* pp,
               Solver::Summary* summary) {
   using internal::Program;
-  using internal::scoped_ptr;
   using internal::Minimizer;
 
   Program* program = pp->reduced_program.get();
@@ -459,7 +460,7 @@ void Minimize(internal::PreprocessedProblem* pp,
   }
 
   const Vector original_reduced_parameters = pp->reduced_parameters;
-  scoped_ptr<Minimizer> minimizer(
+  std::unique_ptr<Minimizer> minimizer(
       Minimizer::Create(pp->options.minimizer_type));
   minimizer->Minimize(pp->minimizer_options,
                       pp->reduced_parameters.data(),
@@ -519,7 +520,6 @@ void Solver::Solve(const Solver::Options& options,
   using internal::Preprocessor;
   using internal::ProblemImpl;
   using internal::Program;
-  using internal::scoped_ptr;
   using internal::WallTimeInSeconds;
 
   CHECK_NOTNULL(problem);
@@ -546,7 +546,7 @@ void Solver::Solve(const Solver::Options& options,
   // If gradient_checking is enabled, wrap all cost functions in a
   // gradient checker and install a callback that terminates if any gradient
   // error is detected.
-  scoped_ptr<internal::ProblemImpl> gradient_checking_problem;
+  std::unique_ptr<internal::ProblemImpl> gradient_checking_problem;
   internal::GradientCheckingIterationCallback gradient_checking_callback;
   Solver::Options modified_options = options;
   if (options.check_gradients) {
@@ -561,7 +561,7 @@ void Solver::Solve(const Solver::Options& options,
     program = problem_impl->mutable_program();
   }
 
-  scoped_ptr<Preprocessor> preprocessor(
+  std::unique_ptr<Preprocessor> preprocessor(
       Preprocessor::Create(modified_options.minimizer_type));
   PreprocessedProblem pp;
 

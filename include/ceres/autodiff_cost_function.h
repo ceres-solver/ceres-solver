@@ -129,8 +129,8 @@
 #ifndef CERES_PUBLIC_AUTODIFF_COST_FUNCTION_H_
 #define CERES_PUBLIC_AUTODIFF_COST_FUNCTION_H_
 
+#include <memory>
 #include "ceres/internal/autodiff.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
@@ -219,7 +219,7 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals,
   }
 
  private:
-  internal::scoped_ptr<CostFunctor> functor_;
+  std::unique_ptr<CostFunctor> functor_;
 };
 
 }  // namespace ceres

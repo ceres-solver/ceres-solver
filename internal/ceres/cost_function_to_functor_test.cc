@@ -29,6 +29,8 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include "ceres/cost_function_to_functor.h"
+
+#include <memory>
 #include "ceres/dynamic_autodiff_cost_function.h"
 #include "ceres/dynamic_cost_function_to_functor.h"
 #include "ceres/autodiff_cost_function.h"
@@ -58,23 +60,23 @@ void ExpectCostFunctionsAreEqual(const CostFunction& cost_function,
     num_parameters += parameter_block_sizes[i];
   }
 
-  scoped_array<double> parameters(new double[num_parameters]);
+  std::unique_ptr<double[]> parameters(new double[num_parameters]);
   for (int i = 0; i < num_parameters; ++i) {
     parameters[i] = static_cast<double>(i) + 1.0;
   }
 
-  scoped_array<double> residuals(new double[num_residuals]);
-  scoped_array<double> jacobians(new double[num_parameters * num_residuals]);
+  std::unique_ptr<double[]> residuals(new double[num_residuals]);
+  std::unique_ptr<double[]> jacobians(new double[num_parameters * num_residuals]);
 
-  scoped_array<double> actual_residuals(new double[num_residuals]);
-  scoped_array<double> actual_jacobians
+  std::unique_ptr<double[]> actual_residuals(new double[num_residuals]);
+  std::unique_ptr<double[]> actual_jacobians
       (new double[num_parameters * num_residuals]);
 
-  scoped_array<double*> parameter_blocks(
+  std::unique_ptr<double*[]> parameter_blocks(
       new double*[parameter_block_sizes.size()]);
-  scoped_array<double*> jacobian_blocks(
+  std::unique_ptr<double*[]> jacobian_blocks(
       new double*[parameter_block_sizes.size()]);
-  scoped_array<double*> actual_jacobian_blocks(
+  std::unique_ptr<double*[]> actual_jacobian_blocks(
       new double*[parameter_block_sizes.size()]);
 
   num_parameters = 0;
@@ -258,7 +260,7 @@ class DynamicTwoParameterBlockFunctor {
 
 #define TEST_BODY(NAME)                                                 \
   TEST(CostFunctionToFunctor, NAME) {                                   \
-    scoped_ptr<CostFunction> cost_function(                             \
+    std::unique_ptr<CostFunction> cost_function(                             \
         new AutoDiffCostFunction<                                       \
             CostFunctionToFunctor<2, PARAMETER_BLOCK_SIZES >,           \
                 2, PARAMETER_BLOCK_SIZES>(new CostFunctionToFunctor<    \
@@ -267,7 +269,7 @@ class DynamicTwoParameterBlockFunctor {
                             NAME##Functor, 2, PARAMETER_BLOCK_SIZES >(  \
                   new NAME##Functor))));                                \
                                                                         \
-scoped_ptr<CostFunction> actual_cost_function(                          \
+std::unique_ptr<CostFunction> actual_cost_function(                          \
     new AutoDiffCostFunction<NAME##Functor, 2, PARAMETER_BLOCK_SIZES >( \
         new NAME##Functor));                                            \
 ExpectCostFunctionsAreEqual(*cost_function, *actual_cost_function);     \
@@ -316,14 +318,14 @@ TEST_BODY(TenParameterBlock)
 #undef TEST_BODY
 
 TEST(CostFunctionToFunctor, DynamicNumberOfResiduals) {
-  scoped_ptr<CostFunction> cost_function(
+  std::unique_ptr<CostFunction> cost_function(
       new AutoDiffCostFunction<
       CostFunctionToFunctor<ceres::DYNAMIC, 2, 2 >, ceres::DYNAMIC, 2, 2>(
           new CostFunctionToFunctor<ceres::DYNAMIC, 2, 2 >(
               new AutoDiffCostFunction<TwoParameterBlockFunctor, 2, 2, 2 >(
                   new TwoParameterBlockFunctor)), 2));
 
-  scoped_ptr<CostFunction> actual_cost_function(
+  std::unique_ptr<CostFunction> actual_cost_function(
       new AutoDiffCostFunction<TwoParameterBlockFunctor, 2, 2, 2 >(
           new TwoParameterBlockFunctor));
   ExpectCostFunctionsAreEqual(*cost_function, *actual_cost_function);

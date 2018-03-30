@@ -30,11 +30,11 @@
 
 #include "ceres/solver.h"
 
-#include <limits>
 #include <cmath>
+#include <limits>
 #include <vector>
+
 #include "gtest/gtest.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"

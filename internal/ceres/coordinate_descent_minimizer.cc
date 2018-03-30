@@ -35,8 +35,10 @@
 #endif
 
 #include <iterator>
+#include <memory>
 #include <numeric>
 #include <vector>
+
 #include "ceres/evaluator.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
@@ -137,7 +139,7 @@ void CoordinateDescentMinimizer::Minimize(
     parameter_block->SetConstant();
   }
 
-  scoped_array<LinearSolver*> linear_solvers(
+  std::unique_ptr<LinearSolver*[]> linear_solvers(
       new LinearSolver*[options.num_threads]);
 
   LinearSolver::Options linear_solver_options;
@@ -281,7 +283,7 @@ bool CoordinateDescentMinimizer::IsOrderingValid(
 // points.
 ParameterBlockOrdering* CoordinateDescentMinimizer::CreateOrdering(
     const Program& program) {
-  scoped_ptr<ParameterBlockOrdering> ordering(new ParameterBlockOrdering);
+  std::unique_ptr<ParameterBlockOrdering> ordering(new ParameterBlockOrdering);
   ComputeRecursiveIndependentSetOrdering(program, ordering.get());
   ordering->Reverse();
   return ordering.release();

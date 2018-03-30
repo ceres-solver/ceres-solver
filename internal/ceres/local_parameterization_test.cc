@@ -30,6 +30,8 @@
 
 #include <cmath>
 #include <limits>
+#include <memory>
+
 #include "Eigen/Geometry"
 #include "ceres/autodiff_local_parameterization.h"
 #include "ceres/fpclassify.h"
@@ -611,10 +613,10 @@ class ProductParameterizationTest : public ::testing::Test {
                                              constant_parameters4));
   }
 
-  scoped_ptr<LocalParameterization> param1_;
-  scoped_ptr<LocalParameterization> param2_;
-  scoped_ptr<LocalParameterization> param3_;
-  scoped_ptr<LocalParameterization> param4_;
+  std::unique_ptr<LocalParameterization> param1_;
+  std::unique_ptr<LocalParameterization> param2_;
+  std::unique_ptr<LocalParameterization> param3_;
+  std::unique_ptr<LocalParameterization> param4_;
 };
 
 TEST_F(ProductParameterizationTest, LocalAndGlobalSize2) {

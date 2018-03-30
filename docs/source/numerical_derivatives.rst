@@ -125,7 +125,7 @@ like the following:
        }
 
      private:
-       scoped_ptr<Rat43Functor> functor_;
+       std::unique_ptr<Rat43Functor> functor_;
    };
 
 

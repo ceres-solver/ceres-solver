@@ -56,11 +56,9 @@
 #  error One of CERES_USE_OPENMP, CERES_USE_TBB,CERES_USE_CXX11_THREADS or CERES_NO_THREADS must be defined.
 #endif
 
-#if defined(CERES_TR1_MEMORY_HEADER)
-#include <tr1/memory>
-#else
+// TODO(keir): Remove this include once other porting is further along. This
+// port header can gradually shrink now that we are on C++11 required.
 #include <memory>
-#endif
 
 namespace ceres {
 

@@ -43,6 +43,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <cmath>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -51,7 +52,6 @@
 #include "ceres/evaluator.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/line_search.h"
 #include "ceres/line_search_direction.h"
 #include "ceres/stringprintf.h"
@@ -164,7 +164,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   line_search_direction_options.max_lbfgs_rank = options.max_lbfgs_rank;
   line_search_direction_options.use_approximate_eigenvalue_bfgs_scaling =
       options.use_approximate_eigenvalue_bfgs_scaling;
-  scoped_ptr<LineSearchDirection> line_search_direction(
+  std::unique_ptr<LineSearchDirection> line_search_direction(
       LineSearchDirection::Create(line_search_direction_options));
 
   LineSearchFunction line_search_function(evaluator);
@@ -188,7 +188,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   line_search_options.is_silent = options.is_silent;
   line_search_options.function = &line_search_function;
 
-  scoped_ptr<LineSearch>
+  std::unique_ptr<LineSearch>
       line_search(LineSearch::Create(options.line_search_type,
                                      line_search_options,
                                      &summary->message));

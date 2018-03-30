@@ -33,9 +33,9 @@
 #ifndef CERES_PUBLIC_AUTODIFF_LOCAL_PARAMETERIZATION_H_
 #define CERES_PUBLIC_AUTODIFF_LOCAL_PARAMETERIZATION_H_
 
+#include <memory>
 #include "ceres/local_parameterization.h"
 #include "ceres/internal/autodiff.h"
-#include "ceres/internal/scoped_ptr.h"
 
 namespace ceres {
 
@@ -146,7 +146,7 @@ class AutoDiffLocalParameterization : public LocalParameterization {
   virtual int LocalSize() const { return kLocalSize; }
 
  private:
-  internal::scoped_ptr<Functor> functor_;
+  std::unique_ptr<Functor> functor_;
 };
 
 }  // namespace ceres

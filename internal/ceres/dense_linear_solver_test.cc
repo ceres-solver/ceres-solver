@@ -28,9 +28,9 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <memory>
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -61,7 +61,7 @@ TEST_P(DenseLinearSolverTest, _) {
   Param param = GetParam();
   const bool regularized = testing::get<2>(param);
 
-  scoped_ptr<LinearLeastSquaresProblem> problem(
+  std::unique_ptr<LinearLeastSquaresProblem> problem(
       CreateLinearLeastSquaresProblemFromId(testing::get<3>(param)));
   DenseSparseMatrix lhs(*down_cast<TripletSparseMatrix*>(problem->A.get()));
 
@@ -76,7 +76,7 @@ TEST_P(DenseLinearSolverTest, _) {
   options.dense_linear_algebra_library_type = ::testing::get<1>(param);
   ContextImpl context;
   options.context = &context;
-  scoped_ptr<LinearSolver> solver(LinearSolver::Create(options));
+  std::unique_ptr<LinearSolver> solver(LinearSolver::Create(options));
 
   LinearSolver::PerSolveOptions per_solve_options;
   if (regularized) {

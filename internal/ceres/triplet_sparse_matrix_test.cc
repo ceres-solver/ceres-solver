@@ -30,8 +30,8 @@
 
 #include "ceres/triplet_sparse_matrix.h"
 
+#include <memory>
 #include "gtest/gtest.h"
-#include "ceres/internal/scoped_ptr.h"
 
 namespace ceres {
 namespace internal {
@@ -279,11 +279,11 @@ TEST(TripletSparseMatrix, AppendCols) {
 }
 
 TEST(TripletSparseMatrix, CreateDiagonalMatrix) {
-  scoped_array<double> values(new double[10]);
+  std::unique_ptr<double[]> values(new double[10]);
   for (int i = 0; i < 10; ++i)
     values[i] = i;
 
-  scoped_ptr<TripletSparseMatrix> m(
+  std::unique_ptr<TripletSparseMatrix> m(
       TripletSparseMatrix::CreateSparseDiagonalMatrix(values.get(), 10));
   EXPECT_EQ(m->num_rows(), 10);
   EXPECT_EQ(m->num_cols(), 10);

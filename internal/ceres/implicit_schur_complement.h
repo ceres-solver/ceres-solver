@@ -34,11 +34,11 @@
 #ifndef CERES_INTERNAL_IMPLICIT_SCHUR_COMPLEMENT_H_
 #define CERES_INTERNAL_IMPLICIT_SCHUR_COMPLEMENT_H_
 
+#include <memory>
 #include "ceres/linear_operator.h"
 #include "ceres/linear_solver.h"
 #include "ceres/partitioned_matrix_view.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
 
 namespace ceres {
@@ -145,12 +145,12 @@ class ImplicitSchurComplement : public LinearOperator {
 
   const LinearSolver::Options& options_;
 
-  scoped_ptr<PartitionedMatrixViewBase> A_;
+  std::unique_ptr<PartitionedMatrixViewBase> A_;
   const double* D_;
   const double* b_;
 
-  scoped_ptr<BlockSparseMatrix> block_diagonal_EtE_inverse_;
-  scoped_ptr<BlockSparseMatrix> block_diagonal_FtF_inverse_;
+  std::unique_ptr<BlockSparseMatrix> block_diagonal_EtE_inverse_;
+  std::unique_ptr<BlockSparseMatrix> block_diagonal_FtF_inverse_;
 
   Vector rhs_;
 

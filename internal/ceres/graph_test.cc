@@ -32,7 +32,6 @@
 
 #include <unordered_set>
 #include "gtest/gtest.h"
-#include "ceres/internal/scoped_ptr.h"
 
 namespace ceres {
 namespace internal {
