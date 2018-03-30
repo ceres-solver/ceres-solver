@@ -31,7 +31,7 @@
 
 #include "ceres/canonical_views_clustering.h"
 
-#include "ceres/collections_port.h"
+#include <unordered_map>
 #include "ceres/graph.h"
 #include "gtest/gtest.h"
 
@@ -74,7 +74,7 @@ class CanonicalViewsTest : public ::testing::Test {
 
   CanonicalViewsClusteringOptions options_;
   std::vector<int> centers_;
-  HashMap<int, int> membership_;
+  std::unordered_map<int, int> membership_;
 };
 
 TEST_F(CanonicalViewsTest, ComputeCanonicalViewsTest) {

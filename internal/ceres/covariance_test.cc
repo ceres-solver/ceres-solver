@@ -564,9 +564,8 @@ class CovarianceTest : public ::testing::Test {
     }
 
     int dof = 0;  // degrees of freedom = sum of LocalSize()s
-    for (BoundsMap::const_iterator iter = column_bounds.begin();
-         iter != column_bounds.end(); ++iter) {
-      dof = std::max(dof, iter->second.second);
+    for (const auto& bound : column_bounds) {
+      dof = std::max(dof, bound.second.second);
     }
     ConstMatrixRef expected(expected_covariance, dof, dof);
     double diff_norm = (expected.block(row_begin,

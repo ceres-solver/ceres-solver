@@ -38,6 +38,7 @@
 #include <cstdlib>
 #include <numeric>
 #include <sstream>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -45,7 +46,6 @@
 #include "Eigen/SparseQR"
 #include "Eigen/SVD"
 
-#include "ceres/collections_port.h"
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/covariance.h"
@@ -412,7 +412,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   vector<double*> all_parameter_blocks;
   problem->GetParameterBlocks(&all_parameter_blocks);
   const ProblemImpl::ParameterMap& parameter_map = problem->parameter_map();
-  HashSet<ParameterBlock*> parameter_blocks_in_use;
+  std::unordered_set<ParameterBlock*> parameter_blocks_in_use;
   vector<ResidualBlock*> residual_blocks;
   problem->GetResidualBlocks(&residual_blocks);
 
@@ -511,13 +511,10 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   // rows of the covariance matrix in order.
   int i = 0;  // index into covariance_blocks.
   int cursor = 0;  // index into the covariance matrix.
-  for (map<const double*, int>::const_iterator it =
-           parameter_block_to_row_index_.begin();
-       it != parameter_block_to_row_index_.end();
-       ++it) {
-    const double* row_block =  it->first;
+  for (const auto& entry : parameter_block_to_row_index_) {
+    const double* row_block =  entry.first;
     const int row_block_size = problem->ParameterBlockLocalSize(row_block);
-    int row_begin = it->second;
+    int row_begin = entry.second;
 
     // Iterate over the covariance blocks contained in this row block
     // and count the number of columns in this row block.

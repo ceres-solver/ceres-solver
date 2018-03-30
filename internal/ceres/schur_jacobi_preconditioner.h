@@ -41,7 +41,6 @@
 #include <set>
 #include <vector>
 #include <utility>
-#include "ceres/collections_port.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/preconditioner.h"

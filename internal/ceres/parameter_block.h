@@ -35,8 +35,8 @@
 #include <cstdlib>
 #include <limits>
 #include <string>
+#include <unordered_set>
 #include "ceres/array_utils.h"
-#include "ceres/collections_port.h"
 #include "ceres/integral_types.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
@@ -71,7 +71,7 @@ class ParameterBlock {
   // when it is small, but transitions to a hash set when it has more elements.
   //
   // For now, use a hash set.
-  typedef HashSet<ResidualBlock*> ResidualBlockSet;
+  typedef std::unordered_set<ResidualBlock*> ResidualBlockSet;
 
   // Create a parameter block with the user state, size, and index specified.
   // The size is the size of the parameter block and the index is the position

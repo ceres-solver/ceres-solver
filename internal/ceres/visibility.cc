@@ -35,10 +35,11 @@
 #include <algorithm>
 #include <set>
 #include <vector>
+#include <unordered_map>
 #include <utility>
 #include "ceres/block_structure.h"
-#include "ceres/collections_port.h"
 #include "ceres/graph.h"
+#include "ceres/pair_hash.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -98,22 +99,17 @@ WeightedGraph<int>* CreateSchurComplementGraph(
   vector<set<int> > inverse_visibility(num_points);
   for (int i = 0; i < visibility.size(); i++) {
     const set<int>& visibility_set = visibility[i];
-    for (set<int>::const_iterator it = visibility_set.begin();
-         it != visibility_set.end();
-         ++it) {
-      inverse_visibility[*it].insert(i);
+    for (const int v : visibility_set) {
+      inverse_visibility[v].insert(i);
     }
   }
 
   // Map from camera pairs to number of points visible to both cameras
   // in the pair.
-  HashMap<pair<int, int>, int > camera_pairs;
+  std::unordered_map<pair<int, int>, int, pair_hash> camera_pairs;
 
   // Count the number of points visible to each camera/f_block pair.
-  for (vector<set<int> >::const_iterator it = inverse_visibility.begin();
-       it != inverse_visibility.end();
-       ++it) {
-    const set<int>& inverse_visibility_set = *it;
+  for (const auto& inverse_visibility_set : inverse_visibility) {
     for (set<int>::const_iterator camera1 = inverse_visibility_set.begin();
          camera1 != inverse_visibility_set.end();
          ++camera1) {
@@ -136,14 +132,11 @@ WeightedGraph<int>* CreateSchurComplementGraph(
   }
 
   // Add an edge for each camera pair.
-  for (HashMap<pair<int, int>, int>::const_iterator it = camera_pairs.begin();
-       it != camera_pairs.end();
-       ++it) {
-    const int camera1 = it->first.first;
-    const int camera2 = it->first.second;
-    CHECK_NE(camera1, camera2);
-
-    const int count = it->second;
+  for (const auto& camera_pair_count : camera_pairs) {
+    const int camera1 = camera_pair_count.first.first;
+    const int camera2 = camera_pair_count.first.second;
+    const int count = camera_pair_count.second;
+    DCHECK_NE(camera1, camera2);
     // Static cast necessary for Windows.
     const double weight = static_cast<double>(count) /
         (sqrt(static_cast<double>(
