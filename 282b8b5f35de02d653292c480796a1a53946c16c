@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb866ea5_2ba2f42d",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-30T23:59:11Z",
+      "side": 0,
+      "message": "err?",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 1
+      },
+      "revId": "282b8b5f35de02d653292c480796a1a53946c16c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f675c864_864d6afc",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-30T23:59:11Z",
+      "side": 0,
+      "message": "memory header.",
+      "revId": "282b8b5f35de02d653292c480796a1a53946c16c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
