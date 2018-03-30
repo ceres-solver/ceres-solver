@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b31bea83_07b870f4",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-30T19:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "557f7ce0_34f3338c",
+      "range": {
+        "startLine": 157,
+        "startChar": 13,
+        "endLine": 157,
+        "endChar": 17
+      },
+      "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0ba09f4_7c45e3d7",
         "filename": "internal/ceres/canonical_views_clustering.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5e88ed_4bd9fcd4",
+        "filename": "internal/ceres/canonical_views_clustering.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-30T19:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0ba09f4_7c45e3d7",
+      "range": {
+        "startLine": 192,
+        "startChar": 17,
+        "endLine": 192,
+        "endChar": 18
+      },
+      "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5d3acb7a_2e9b1dde",
+        "filename": "internal/ceres/canonical_views_clustering.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-30T19:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7de922bf_3825e5a9",
+      "range": {
+        "startLine": 220,
+        "startChar": 13,
+        "endLine": 220,
+        "endChar": 36
+      },
+      "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e7e9925_cf36606b",
         "filename": "internal/ceres/graph.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5e86a3_186253da",
+        "filename": "internal/ceres/graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-30T19:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e7e9925_cf36606b",
+      "range": {
+        "startLine": 213,
+        "startChar": 55,
+        "endLine": 213,
+        "endChar": 56
+      },
+      "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6b9cac13_5b161dd0",
+        "filename": "internal/ceres/pair_hash.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-30T19:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "850121b5_cfd3f9f8",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 78
+      },
+      "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "251cb123_e53518c9",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 2
@@ -131,6 +251,24 @@
       "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d067e08d_6dc65d34",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-03-30T19:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "251cb123_e53518c9",
+      "revId": "ea30bbdf8e17661c3f3e0d4fe092b656688009f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
