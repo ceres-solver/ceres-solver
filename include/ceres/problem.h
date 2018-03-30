@@ -43,7 +43,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/types.h"
 #include "glog/logging.h"
 
@@ -485,7 +485,7 @@ class CERES_EXPORT Problem {
  private:
   friend class Solver;
   friend class Covariance;
-  internal::scoped_ptr<internal::ProblemImpl> problem_impl_;
+  std::unique_ptr<internal::ProblemImpl> problem_impl_;
   CERES_DISALLOW_COPY_AND_ASSIGN(Problem);
 };
 

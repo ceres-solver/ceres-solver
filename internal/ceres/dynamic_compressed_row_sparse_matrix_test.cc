@@ -33,7 +33,7 @@
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "gtest/gtest.h"
@@ -167,10 +167,10 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
   int expected_num_nonzeros;
 
   Matrix dense;
-  scoped_ptr<TripletSparseMatrix> tsm;
-  scoped_ptr<CompressedRowSparseMatrix> crsm;
+  std::unique_ptr<TripletSparseMatrix> tsm;
+  std::unique_ptr<CompressedRowSparseMatrix> crsm;
 
-  scoped_ptr<DynamicCompressedRowSparseMatrix> dcrsm;
+  std::unique_ptr<DynamicCompressedRowSparseMatrix> dcrsm;
 };
 
 TEST_F(DynamicCompressedRowSparseMatrixTest, Initialization) {

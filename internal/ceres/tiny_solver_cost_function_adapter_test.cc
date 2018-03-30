@@ -34,7 +34,7 @@
 #include <cmath>
 
 #include "ceres/cost_function.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/sized_cost_function.h"
 #include "gtest/gtest.h"
 
@@ -67,7 +67,7 @@ class CostFunction2x3 : public SizedCostFunction<2,3> {
 
 template<int kNumResiduals, int kNumParameters>
 void TestHelper() {
-  internal::scoped_ptr<CostFunction> cost_function(new CostFunction2x3);
+  std::unique_ptr<CostFunction> cost_function(new CostFunction2x3);
   typedef  TinySolverCostFunctionAdapter<kNumResiduals, kNumParameters> CostFunctionAdapter;
   CostFunctionAdapter cfa(*cost_function);
   EXPECT_EQ(CostFunctionAdapter::NUM_RESIDUALS, kNumResiduals);

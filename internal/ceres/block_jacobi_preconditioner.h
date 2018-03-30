@@ -32,7 +32,7 @@
 #define CERES_INTERNAL_BLOCK_JACOBI_PRECONDITIONER_H_
 
 #include "ceres/block_random_access_diagonal_matrix.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/preconditioner.h"
 
 namespace ceres {
@@ -66,7 +66,7 @@ class BlockJacobiPreconditioner : public BlockSparseMatrixPreconditioner {
  private:
   virtual bool UpdateImpl(const BlockSparseMatrix& A, const double* D);
 
-  scoped_ptr<BlockRandomAccessDiagonalMatrix> m_;
+  std::unique_ptr<BlockRandomAccessDiagonalMatrix> m_;
 };
 
 }  // namespace internal

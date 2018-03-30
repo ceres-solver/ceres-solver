@@ -33,7 +33,7 @@
 #include <string>
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/inner_product_computer.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/types.h"
@@ -72,7 +72,7 @@ bool SubsetPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
     // A = [P]
     //     [Q]
     //     [D]
-    scoped_ptr<BlockSparseMatrix> regularizer(
+    std::unique_ptr<BlockSparseMatrix> regularizer(
         BlockSparseMatrix::CreateDiagonalMatrix(D, bs->cols));
     m->AppendRows(*regularizer);
   }

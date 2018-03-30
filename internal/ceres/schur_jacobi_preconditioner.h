@@ -43,7 +43,7 @@
 #include <utility>
 #include "ceres/collections_port.h"
 #include "ceres/internal/macros.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/preconditioner.h"
 
 namespace ceres {
@@ -94,9 +94,9 @@ class SchurJacobiPreconditioner : public BlockSparseMatrixPreconditioner {
   virtual bool UpdateImpl(const BlockSparseMatrix& A, const double* D);
 
   Preconditioner::Options options_;
-  scoped_ptr<SchurEliminatorBase> eliminator_;
+  std::unique_ptr<SchurEliminatorBase> eliminator_;
   // Preconditioner matrix.
-  scoped_ptr<BlockRandomAccessDiagonalMatrix> m_;
+  std::unique_ptr<BlockRandomAccessDiagonalMatrix> m_;
   CERES_DISALLOW_COPY_AND_ASSIGN(SchurJacobiPreconditioner);
 };
 

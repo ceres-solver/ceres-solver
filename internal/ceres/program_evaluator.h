@@ -88,7 +88,7 @@
 #include "ceres/evaluation_callback.h"
 #include "ceres/execution_summary.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
@@ -373,12 +373,12 @@ class ProgramEvaluator : public Evaluator {
     }
 
     double cost;
-    scoped_array<double> residual_block_evaluate_scratch;
+    std::unique_ptr<double[]> residual_block_evaluate_scratch;
     // The gradient in the local parameterization.
-    scoped_array<double> gradient;
+    std::unique_ptr<double[]> gradient;
     // Enough space to store the residual for the largest residual block.
-    scoped_array<double> residual_block_residuals;
-    scoped_array<double*> jacobian_block_ptrs;
+    std::unique_ptr<double[]> residual_block_residuals;
+    std::unique_ptr<double*[]> jacobian_block_ptrs;
   };
 
   static void BuildResidualLayout(const Program& program,
@@ -418,8 +418,8 @@ class ProgramEvaluator : public Evaluator {
   Evaluator::Options options_;
   Program* program_;
   JacobianWriter jacobian_writer_;
-  scoped_array<EvaluatePreparer> evaluate_preparers_;
-  scoped_array<EvaluateScratch> evaluate_scratch_;
+  std::unique_ptr<EvaluatePreparer[]> evaluate_preparers_;
+  std::unique_ptr<EvaluateScratch[]> evaluate_scratch_;
   std::vector<int> residual_layout_;
   ::ceres::internal::ExecutionSummary execution_summary_;
 };

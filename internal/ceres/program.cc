@@ -274,7 +274,7 @@ Program* Program::CreateReducedProgram(
   CHECK_NOTNULL(fixed_cost);
   CHECK_NOTNULL(error);
 
-  scoped_ptr<Program> reduced_program(new Program(*this));
+  std::unique_ptr<Program> reduced_program(new Program(*this));
   if (!reduced_program->RemoveFixedBlocks(removed_parameter_blocks,
                                           fixed_cost,
                                           error)) {
@@ -292,7 +292,7 @@ bool Program::RemoveFixedBlocks(vector<double*>* removed_parameter_blocks,
   CHECK_NOTNULL(fixed_cost);
   CHECK_NOTNULL(error);
 
-  scoped_array<double> residual_block_evaluate_scratch;
+  std::unique_ptr<double[]> residual_block_evaluate_scratch;
   residual_block_evaluate_scratch.reset(
       new double[MaxScratchDoublesNeededForEvaluate()]);
   *fixed_cost = 0.0;

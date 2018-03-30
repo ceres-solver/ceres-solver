@@ -36,7 +36,7 @@
 #include <utility>
 #include <vector>
 #include "ceres/covariance.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/problem_impl.h"
 #include "ceres/suitesparse.h"
 
@@ -92,7 +92,7 @@ class CovarianceImpl {
   bool is_valid_;
   std::map<const double*, int> parameter_block_to_row_index_;
   std::set<const double*> constant_parameter_blocks_;
-  scoped_ptr<CompressedRowSparseMatrix> covariance_matrix_;
+  std::unique_ptr<CompressedRowSparseMatrix> covariance_matrix_;
 };
 
 }  // namespace internal

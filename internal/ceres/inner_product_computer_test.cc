@@ -33,7 +33,7 @@
 #include <numeric>
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/random.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
@@ -108,7 +108,7 @@ TEST(InnerProductComputer, NormalOperation) {
         VLOG(2) << "max col block size: " << options.max_col_block_size;
         VLOG(2) << "block density: " << options.block_density;
 
-        scoped_ptr<BlockSparseMatrix> random_matrix(
+        std::unique_ptr<BlockSparseMatrix> random_matrix(
             BlockSparseMatrix::CreateRandomMatrix(options));
 
         TripletSparseMatrix tsm(random_matrix->num_rows(),
@@ -126,7 +126,7 @@ TEST(InnerProductComputer, NormalOperation) {
         Matrix expected_inner_product =
             eigen_random_matrix.transpose() * eigen_random_matrix;
 
-        scoped_ptr<InnerProductComputer> inner_product_computer;
+        std::unique_ptr<InnerProductComputer> inner_product_computer;
 
         inner_product_computer.reset(InnerProductComputer::Create(
             *random_matrix, CompressedRowSparseMatrix::LOWER_TRIANGULAR));
@@ -168,7 +168,7 @@ TEST(InnerProductComputer, SubMatrix) {
     VLOG(2) << "max col block size: " << options.max_col_block_size;
     VLOG(2) << "block density: " << options.block_density;
 
-    scoped_ptr<BlockSparseMatrix> random_matrix(
+    std::unique_ptr<BlockSparseMatrix> random_matrix(
         BlockSparseMatrix::CreateRandomMatrix(options));
 
     const std::vector<CompressedRow>& row_blocks =
@@ -202,7 +202,7 @@ TEST(InnerProductComputer, SubMatrix) {
         Matrix expected_inner_product =
             eigen_random_matrix.transpose() * eigen_random_matrix;
 
-        scoped_ptr<InnerProductComputer> inner_product_computer;
+        std::unique_ptr<InnerProductComputer> inner_product_computer;
         inner_product_computer.reset(InnerProductComputer::Create(
             *random_matrix,
             start_row_block,

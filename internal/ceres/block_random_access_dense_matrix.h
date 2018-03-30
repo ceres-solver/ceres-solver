@@ -37,7 +37,7 @@
 
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 
 namespace ceres {
 namespace internal {
@@ -86,8 +86,8 @@ class BlockRandomAccessDenseMatrix : public BlockRandomAccessMatrix {
  private:
   int num_rows_;
   std::vector<int> block_layout_;
-  scoped_array<double> values_;
-  scoped_array<CellInfo> cell_infos_;
+  std::unique_ptr<double[]> values_;
+  std::unique_ptr<CellInfo[]> cell_infos_;
 
   CERES_DISALLOW_COPY_AND_ASSIGN(BlockRandomAccessDenseMatrix);
 };

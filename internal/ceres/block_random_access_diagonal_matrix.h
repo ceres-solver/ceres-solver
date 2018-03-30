@@ -41,7 +41,7 @@
 #include "ceres/integral_types.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/types.h"
 
 namespace ceres {
@@ -89,7 +89,7 @@ class BlockRandomAccessDiagonalMatrix : public BlockRandomAccessMatrix {
   std::vector<CellInfo*> layout_;
 
   // The underlying matrix object which actually stores the cells.
-  scoped_ptr<TripletSparseMatrix> tsm_;
+  std::unique_ptr<TripletSparseMatrix> tsm_;
 
   friend class BlockRandomAccessDiagonalMatrixTest;
   CERES_DISALLOW_COPY_AND_ASSIGN(BlockRandomAccessDiagonalMatrix);

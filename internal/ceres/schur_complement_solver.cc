@@ -45,7 +45,7 @@
 #include "ceres/conjugate_gradients_solver.h"
 #include "ceres/detect_structure.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/lapack.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
@@ -325,7 +325,7 @@ LinearSolver::Summary SparseSchurComplementSolver::SolveReducedLinearSystem(
     return summary;
   }
 
-  scoped_ptr<CompressedRowSparseMatrix> lhs;
+  std::unique_ptr<CompressedRowSparseMatrix> lhs;
   const CompressedRowSparseMatrix::StorageType storage_type =
       sparse_cholesky_->StorageType();
   if (storage_type == CompressedRowSparseMatrix::UPPER_TRIANGULAR) {
@@ -399,9 +399,9 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingConjugateGradients(
 
   VectorRef(solution, num_rows).setZero();
 
-  scoped_ptr<LinearOperator> lhs_adapter(
+  std::unique_ptr<LinearOperator> lhs_adapter(
       new BlockRandomAccessSparseMatrixAdapter(*sc));
-  scoped_ptr<LinearOperator> preconditioner_adapter(
+  std::unique_ptr<LinearOperator> preconditioner_adapter(
       new BlockRandomAccessDiagonalMatrixAdapter(*preconditioner_));
 
 

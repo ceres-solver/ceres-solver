@@ -33,7 +33,7 @@
 
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/local_parameterization.h"
 
 namespace ceres {
@@ -105,9 +105,9 @@ class CERES_EXPORT GradientProblem {
   bool Plus(const double* x, const double* delta, double* x_plus_delta) const;
 
  private:
-  internal::scoped_ptr<FirstOrderFunction> function_;
-  internal::scoped_ptr<LocalParameterization> parameterization_;
-  internal::scoped_array<double> scratch_;
+  std::unique_ptr<FirstOrderFunction> function_;
+  std::unique_ptr<LocalParameterization> parameterization_;
+  std::unique_ptr<double[]> scratch_;
 };
 
 // A FirstOrderFunction object implements the evaluation of a function

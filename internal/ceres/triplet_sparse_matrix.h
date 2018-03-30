@@ -34,7 +34,7 @@
 #include <vector>
 #include "ceres/sparse_matrix.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/types.h"
 
 namespace ceres {
@@ -144,9 +144,9 @@ class TripletSparseMatrix : public SparseMatrix {
   // stored at the location (rows_[i], cols_[i]). If the there are
   // multiple entries with the same (rows_[i], cols_[i]), the values_
   // entries corresponding to them are summed up.
-  scoped_array<int> rows_;
-  scoped_array<int> cols_;
-  scoped_array<double> values_;
+  std::unique_ptr<int[]> rows_;
+  std::unique_ptr<int[]> cols_;
+  std::unique_ptr<double[]> values_;
 };
 
 }  // namespace internal

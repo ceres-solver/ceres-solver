@@ -38,7 +38,7 @@
 #include "ceres/evaluator.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/iteration_callback.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
@@ -91,11 +91,11 @@ struct PreprocessedProblem {
   Minimizer::Options minimizer_options;
 
   ProblemImpl* problem;
-  scoped_ptr<ProblemImpl> gradient_checking_problem;
-  scoped_ptr<Program> reduced_program;
-  scoped_ptr<LinearSolver> linear_solver;
-  scoped_ptr<IterationCallback> logging_callback;
-  scoped_ptr<IterationCallback> state_updating_callback;
+  std::unique_ptr<ProblemImpl> gradient_checking_problem;
+  std::unique_ptr<Program> reduced_program;
+  std::unique_ptr<LinearSolver> linear_solver;
+  std::unique_ptr<IterationCallback> logging_callback;
+  std::unique_ptr<IterationCallback> state_updating_callback;
 
   shared_ptr<Evaluator> evaluator;
   shared_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer;

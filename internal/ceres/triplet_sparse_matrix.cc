@@ -34,7 +34,7 @@
 #include <cstddef>
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/random.h"
 #include "ceres/types.h"
 #include "glog/logging.h"

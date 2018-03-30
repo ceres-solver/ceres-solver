@@ -32,7 +32,7 @@
 
 #include "ceres/graph.h"
 #include "ceres/graph_algorithms.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/map_util.h"
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
@@ -51,7 +51,7 @@ int ComputeStableSchurOrdering(const Program& program,
                          vector<ParameterBlock*>* ordering) {
   CHECK_NOTNULL(ordering)->clear();
   EventLogger event_logger("ComputeStableSchurOrdering");
-  scoped_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
+  std::unique_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
   event_logger.AddEvent("CreateHessianGraph");
 
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
@@ -82,7 +82,7 @@ int ComputeSchurOrdering(const Program& program,
                          vector<ParameterBlock*>* ordering) {
   CHECK_NOTNULL(ordering)->clear();
 
-  scoped_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
+  std::unique_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
   int independent_set_size = IndependentSetOrdering(*graph, ordering);
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
 
@@ -101,7 +101,7 @@ void ComputeRecursiveIndependentSetOrdering(const Program& program,
                                             ParameterBlockOrdering* ordering) {
   CHECK_NOTNULL(ordering)->Clear();
   const vector<ParameterBlock*> parameter_blocks = program.parameter_blocks();
-  scoped_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
+  std::unique_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
 
   int num_covered = 0;
   int round = 0;

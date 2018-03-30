@@ -39,7 +39,7 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/cxsparse.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/linear_solver.h"
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -69,7 +69,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
   if (per_solve_options.D != NULL) {
     // Temporarily append a diagonal block to the A matrix, but undo
     // it before returning the matrix to the user.
-    scoped_ptr<CompressedRowSparseMatrix> regularizer;
+    std::unique_ptr<CompressedRowSparseMatrix> regularizer;
     if (!A->col_blocks().empty()) {
       regularizer.reset(CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
           per_solve_options.D, A->col_blocks()));

@@ -37,7 +37,7 @@
 #include "ceres/residual_block.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 
 namespace ceres {
 namespace internal {

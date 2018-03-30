@@ -36,7 +36,7 @@
 #include <vector>
 #include "Eigen/Dense"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/stl_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"

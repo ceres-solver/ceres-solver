@@ -46,7 +46,7 @@
 #include "ceres/context_impl.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/problem.h"
 #include "ceres/types.h"
 
@@ -209,7 +209,7 @@ class ProblemImpl {
   ResidualBlockSet residual_block_set_;
 
   // The actual parameter and residual blocks.
-  internal::scoped_ptr<internal::Program> program_;
+  std::unique_ptr<internal::Program> program_;
 
   // When removing parameter blocks, parameterizations have ambiguous
   // ownership. Instead of scanning the entire problem to see if the

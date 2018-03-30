@@ -37,7 +37,7 @@
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
 #include "ceres/file.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/stringprintf.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
@@ -297,7 +297,7 @@ LinearLeastSquaresProblem* LinearLeastSquaresProblem2() {
   problem->num_eliminate_blocks = 2;
 
   CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
-  scoped_array<double> values(new double[num_rows * num_cols]);
+  std::unique_ptr<double[]> values(new double[num_rows * num_cols]);
 
   for (int c = 0; c < num_cols; ++c) {
     bs->cols.push_back(Block());
@@ -431,7 +431,7 @@ LinearLeastSquaresProblem* LinearLeastSquaresProblem3() {
   problem->num_eliminate_blocks = 2;
 
   CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
-  scoped_array<double> values(new double[num_rows * num_cols]);
+  std::unique_ptr<double[]> values(new double[num_rows * num_cols]);
 
   for (int c = 0; c < num_cols; ++c) {
     bs->cols.push_back(Block());
@@ -538,7 +538,7 @@ LinearLeastSquaresProblem* LinearLeastSquaresProblem4() {
   problem->num_eliminate_blocks = 1;
 
   CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
-  scoped_array<double> values(new double[num_rows * num_cols]);
+  std::unique_ptr<double[]> values(new double[num_rows * num_cols]);
 
   // Column block structure
   bs->cols.push_back(Block());

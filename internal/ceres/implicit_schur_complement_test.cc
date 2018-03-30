@@ -37,7 +37,7 @@
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
@@ -56,7 +56,7 @@ const double kEpsilon = 1e-14;
 class ImplicitSchurComplementTest : public ::testing::Test {
  protected :
   virtual void SetUp() {
-    scoped_ptr<LinearLeastSquaresProblem> problem(
+    std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(2));
 
     CHECK_NOTNULL(problem.get());
@@ -89,7 +89,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     ContextImpl context;
     options.context = &context;
 
-    scoped_ptr<SchurEliminatorBase> eliminator(
+    std::unique_ptr<SchurEliminatorBase> eliminator(
         SchurEliminatorBase::Create(options));
     CHECK_NOTNULL(eliminator.get());
     const bool kFullRankETE = true;
@@ -185,9 +185,9 @@ class ImplicitSchurComplementTest : public ::testing::Test {
   int num_cols_;
   int num_eliminate_blocks_;
 
-  scoped_ptr<BlockSparseMatrix> A_;
-  scoped_array<double> b_;
-  scoped_array<double> D_;
+  std::unique_ptr<BlockSparseMatrix> A_;
+  std::unique_ptr<double[]> b_;
+  std::unique_ptr<double[]> D_;
 };
 
 // Verify that the Schur Complement matrix implied by the

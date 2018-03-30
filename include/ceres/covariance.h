@@ -35,7 +35,7 @@
 #include <vector>
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/types.h"
 
 namespace ceres {
@@ -457,7 +457,7 @@ class CERES_EXPORT Covariance {
       double* covariance_matrix);
 
  private:
-  internal::scoped_ptr<internal::CovarianceImpl> impl_;
+  std::unique_ptr<internal::CovarianceImpl> impl_;
 };
 
 }  // namespace ceres

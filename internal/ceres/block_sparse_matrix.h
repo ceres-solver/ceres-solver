@@ -38,7 +38,7 @@
 #include "ceres/sparse_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/macros.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 
 namespace ceres {
 namespace internal {
@@ -137,8 +137,8 @@ class BlockSparseMatrix : public SparseMatrix {
   int num_cols_;
   int num_nonzeros_;
   int max_num_nonzeros_;
-  scoped_array<double> values_;
-  scoped_ptr<CompressedRowBlockStructure> block_structure_;
+  std::unique_ptr<double[]> values_;
+  std::unique_ptr<CompressedRowBlockStructure> block_structure_;
   CERES_DISALLOW_COPY_AND_ASSIGN(BlockSparseMatrix);
 };
 

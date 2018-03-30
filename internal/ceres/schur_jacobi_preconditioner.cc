@@ -35,7 +35,7 @@
 #include "ceres/block_random_access_diagonal_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/collections_port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
 #include "glog/logging.h"

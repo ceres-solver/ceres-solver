@@ -35,7 +35,7 @@
 #include <utility>
 #include <vector>
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/mutex.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"

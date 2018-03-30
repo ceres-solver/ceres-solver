@@ -1257,7 +1257,7 @@ class LargeScaleCovarianceTest : public ::testing::Test {
     }
   }
 
-  scoped_array<double> parameters_;
+  std::unique_ptr<double[]> parameters_;
   int parameter_block_size_;
   int num_parameter_blocks_;
 

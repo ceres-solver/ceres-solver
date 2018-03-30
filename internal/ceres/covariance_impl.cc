@@ -337,7 +337,7 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
   // Assemble the blocks in the covariance matrix.
   MatrixRef covariance(covariance_matrix, covariance_size, covariance_size);
   const int num_threads = options_.num_threads;
-  scoped_array<double> workspace(
+  std::unique_ptr<double[]> workspace(
       new double[num_threads * max_covariance_block_size *
                  max_covariance_block_size]);
 
@@ -709,7 +709,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   // Since the covariance matrix is symmetric, the i^th row and column
   // are equal.
   const int num_threads = options_.num_threads;
-  scoped_array<double> workspace(new double[num_threads * num_cols]);
+  std::unique_ptr<double[]> workspace(new double[num_threads * num_cols]);
 
 #if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
   ThreadTokenProvider thread_token_provider(num_threads);
@@ -918,7 +918,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
   // are equal.
   const int num_cols = jacobian.num_cols;
   const int num_threads = options_.num_threads;
-  scoped_array<double> workspace(new double[num_threads * num_cols]);
+  std::unique_ptr<double[]> workspace(new double[num_threads * num_cols]);
 
 #if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
   ThreadTokenProvider thread_token_provider(num_threads);

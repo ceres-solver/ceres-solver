@@ -34,7 +34,7 @@
 #include "ceres/block_random_access_diagonal_matrix.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/block_sparse_matrix.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "gtest/gtest.h"
 #include "Eigen/Dense"
 
@@ -45,7 +45,7 @@ namespace internal {
 class BlockJacobiPreconditionerTest : public ::testing::Test {
  protected:
   void SetUpFromProblemId(int problem_id) {
-    scoped_ptr<LinearLeastSquaresProblem> problem(
+    std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(problem_id));
 
     CHECK_NOTNULL(problem.get());
@@ -88,8 +88,8 @@ class BlockJacobiPreconditionerTest : public ::testing::Test {
     }
   }
 
-  scoped_ptr<BlockSparseMatrix> A;
-  scoped_array<double> D;
+  std::unique_ptr<BlockSparseMatrix> A;
+  std::unique_ptr<double[]> D;
   Matrix dense_ata;
 };
 

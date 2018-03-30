@@ -32,7 +32,7 @@
 
 #include "gtest/gtest.h"
 #include "ceres/collections_port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 
 namespace ceres {
 namespace internal {

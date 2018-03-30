@@ -55,7 +55,7 @@
 #include "ceres/block_structure.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/invert_psd_matrix.h"
 #include "ceres/map_util.h"
 #include "ceres/schur_eliminator.h"

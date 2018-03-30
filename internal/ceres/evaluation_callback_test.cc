@@ -34,7 +34,7 @@
 #include <cmath>
 #include <vector>
 #include "gtest/gtest.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/sized_cost_function.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"

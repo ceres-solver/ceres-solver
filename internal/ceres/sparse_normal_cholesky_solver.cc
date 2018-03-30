@@ -37,7 +37,7 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -76,7 +76,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
   if (per_solve_options.D != NULL) {
     // Temporarily append a diagonal block to the A matrix, but undo
     // it before returning the matrix to the user.
-    scoped_ptr<BlockSparseMatrix> regularizer;
+    std::unique_ptr<BlockSparseMatrix> regularizer;
     regularizer.reset(BlockSparseMatrix::CreateDiagonalMatrix(
         per_solve_options.D, A->block_structure()->cols));
     event_logger.AddEvent("Diagonal");

@@ -37,7 +37,7 @@
 #include "ceres/context_impl.h"
 #include "ceres/detect_structure.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -54,7 +54,7 @@ namespace internal {
 class SchurEliminatorTest : public ::testing::Test {
  protected:
   void SetUpFromId(int id) {
-    scoped_ptr<LinearLeastSquaresProblem>
+    std::unique_ptr<LinearLeastSquaresProblem>
         problem(CreateLinearLeastSquaresProblemFromId(id));
     CHECK_NOTNULL(problem.get());
     SetupHelper(problem.get());
@@ -154,7 +154,7 @@ class SchurEliminatorTest : public ::testing::Test {
                       &options.f_block_size);
     }
 
-    scoped_ptr<SchurEliminatorBase> eliminator;
+    std::unique_ptr<SchurEliminatorBase> eliminator;
     eliminator.reset(SchurEliminatorBase::Create(options));
     const bool kFullRankETE = true;
     eliminator->Init(num_eliminate_blocks, kFullRankETE, A->block_structure());
@@ -186,9 +186,9 @@ class SchurEliminatorTest : public ::testing::Test {
                 relative_tolerance);
   }
 
-  scoped_ptr<BlockSparseMatrix> A;
-  scoped_array<double> b;
-  scoped_array<double> D;
+  std::unique_ptr<BlockSparseMatrix> A;
+  std::unique_ptr<double[]> b;
+  std::unique_ptr<double[]> D;
   int num_eliminate_blocks;
   int num_eliminate_cols;
 

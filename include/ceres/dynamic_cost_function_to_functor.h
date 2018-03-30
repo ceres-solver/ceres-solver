@@ -38,7 +38,7 @@
 #include "ceres/dynamic_cost_function.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 
 namespace ceres {
 
@@ -182,7 +182,7 @@ class DynamicCostFunctionToFunctor {
   }
 
  private:
-  internal::scoped_ptr<CostFunction> cost_function_;
+  std::unique_ptr<CostFunction> cost_function_;
 };
 
 }  // namespace ceres

@@ -364,7 +364,7 @@ void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
   MapValuesToContiguousRange(constraints.size(), &constraints[0]);
 
   // Compute a block sparse presentation of J'.
-  scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
+  std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
       program->CreateJacobianBlockSparsityTranspose());
 
   cholmod_sparse* block_jacobian_transpose =
@@ -393,7 +393,7 @@ void MaybeReorderSchurComplementColumnsUsingEigen(
   return;
 #else
 
-  scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
+  std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
       program->CreateJacobianBlockSparsityTranspose());
 
   typedef Eigen::SparseMatrix<int> SparseMatrix;
@@ -555,7 +555,7 @@ bool ReorderProgramForSparseNormalCholesky(
   }
 
   // Compute a block sparse presentation of J'.
-  scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
+  std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
       program->CreateJacobianBlockSparsityTranspose());
 
   vector<int> ordering(program->NumParameterBlocks(), 0);

@@ -170,7 +170,7 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
   }
 
  private:
-  scoped_ptr<BlockRandomAccessSparseMatrix> m_;
+  std::unique_ptr<BlockRandomAccessSparseMatrix> m_;
 };
 
 TEST_F(BlockRandomAccessSparseMatrixTest, IntPairToLongOverflow) {

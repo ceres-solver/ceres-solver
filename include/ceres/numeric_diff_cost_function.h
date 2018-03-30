@@ -164,7 +164,7 @@
 #include "Eigen/Dense"
 #include "ceres/cost_function.h"
 #include "ceres/internal/numeric_diff.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/numeric_diff_options.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
@@ -309,7 +309,7 @@ class NumericDiffCostFunction
   }
 
  private:
-  internal::scoped_ptr<CostFunctor> functor_;
+  std::unique_ptr<CostFunctor> functor_;
   Ownership ownership_;
   NumericDiffOptions options_;
 };

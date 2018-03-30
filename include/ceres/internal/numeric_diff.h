@@ -41,7 +41,7 @@
 #include "Eigen/StdVector"
 #include "ceres/cost_function.h"
 #include "ceres/internal/fixed_array.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/internal/variadic_evaluate.h"
 #include "ceres/numeric_diff_options.h"
 #include "ceres/types.h"

@@ -41,7 +41,7 @@
 #include "ceres/integral_types.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
-#include "ceres/internal/scoped_ptr.h"
+#include <memory>
 #include "ceres/types.h"
 #include "ceres/small_blas.h"
 
@@ -117,7 +117,7 @@ class BlockRandomAccessSparseMatrix : public BlockRandomAccessMatrix {
   // iterator in the Layout object instead.
   std::vector<std::pair<std::pair<int, int>, double*> > cell_values_;
   // The underlying matrix object which actually stores the cells.
-  scoped_ptr<TripletSparseMatrix> tsm_;
+  std::unique_ptr<TripletSparseMatrix> tsm_;
 
   friend class BlockRandomAccessSparseMatrixTest;
   CERES_DISALLOW_COPY_AND_ASSIGN(BlockRandomAccessSparseMatrix);
