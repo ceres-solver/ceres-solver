@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4325a35a_cca40d2b",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-31T01:17:23Z",
+      "side": 0,
+      "message": "Unique ptr defaults to NULL; there is no need for the explicit constructor here.",
+      "parentUuid": "eb866ea5_2ba2f42d",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 1
+      },
+      "revId": "282b8b5f35de02d653292c480796a1a53946c16c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f675c864_864d6afc",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "282b8b5f35de02d653292c480796a1a53946c16c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d976337_1def36f1",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-03-31T01:17:23Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f675c864_864d6afc",
+      "revId": "282b8b5f35de02d653292c480796a1a53946c16c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
