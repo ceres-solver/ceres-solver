@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9333241f_44e83295",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-02T19:51:41Z",
+      "side": 1,
+      "message": "we are done no? this can go.",
+      "range": {
+        "startLine": 60,
+        "startChar": 14,
+        "endLine": 60,
+        "endChar": 15
+      },
+      "revId": "cdcb0b9018e309b8cbbd42c7ae422345ab359653",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067f7da3_0868e453",
+        "filename": "internal/ceres/autodiff_cost_function_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-02T19:51:41Z",
+      "side": 1,
+      "message": "add memory header.",
+      "range": {
+        "startLine": 157,
+        "startChar": 22,
+        "endLine": 158,
+        "endChar": 0
+      },
+      "revId": "cdcb0b9018e309b8cbbd42c7ae422345ab359653",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43dbd2dc_67c79474",
+        "filename": "internal/ceres/block_random_access_sparse_matrix_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-02T19:51:41Z",
+      "side": 1,
+      "message": "missing memory header",
+      "revId": "cdcb0b9018e309b8cbbd42c7ae422345ab359653",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb45a00_9e446be9",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-02T19:51:41Z",
+      "side": 1,
+      "message": "missing memory header.",
+      "revId": "cdcb0b9018e309b8cbbd42c7ae422345ab359653",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
