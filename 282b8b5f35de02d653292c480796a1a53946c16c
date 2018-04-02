@@ -16,6 +16,24 @@
       "revId": "282b8b5f35de02d653292c480796a1a53946c16c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad75933_01855f04",
+        "filename": "cmake/CeresCompileOptionsToComponents.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-02T12:15:10Z",
+      "side": 0,
+      "message": "I vote for removing it. Having c++11 support depend on a cmake define is likely not worth it as the whole package depends on c++11.",
+      "parentUuid": "ed1b09b2_5d72ec4a",
+      "revId": "282b8b5f35de02d653292c480796a1a53946c16c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
