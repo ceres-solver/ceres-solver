@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_SCHUR_ELIMINATOR_H_
 
 #include <map>
+#include <mutex>
 #include <vector>
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
@@ -39,7 +40,6 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
-#include "ceres/mutex.h"
 
 namespace ceres {
 namespace internal {
@@ -358,7 +358,7 @@ class SchurEliminator : public SchurEliminatorBase {
 
   // Locks for the blocks in the right hand side of the reduced linear
   // system.
-  std::vector<Mutex*> rhs_locks_;
+ std::vector<std::mutex*> rhs_locks_;
 };
 
 }  // namespace internal

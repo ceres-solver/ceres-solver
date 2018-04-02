@@ -461,14 +461,6 @@ if (NOT OPENMP AND NOT TBB AND NOT CXX11_THREADS)
   message("-- Neither OpenMP, TBB or C++11 threads is enabled, "
     "disabling multithreading.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
-else (NOT OPENMP AND NOT TBB AND NOT CXX11_THREADS)
-  if (UNIX)
-    # At least on Linux, we need pthreads to be enabled for mutex to
-    # compile.  This may not work on Windows or Android.
-    find_package(Threads REQUIRED)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_HAVE_PTHREAD)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_HAVE_RWLOCK)
-  endif (UNIX)
 endif (NOT OPENMP AND NOT TBB AND NOT CXX11_THREADS)
 
 if (BUILD_BENCHMARKS)

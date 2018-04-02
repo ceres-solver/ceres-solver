@@ -168,7 +168,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Init(
   STLDeleteElements(&rhs_locks_);
   rhs_locks_.resize(num_col_blocks - num_eliminate_blocks_);
   for (int i = 0; i < num_col_blocks - num_eliminate_blocks_; ++i) {
-    rhs_locks_[i] = new Mutex;
+    rhs_locks_[i] = new std::mutex;
   }
 }
 
@@ -211,7 +211,7 @@ Eliminate(const BlockSparseMatrix* A,
         typename EigenTypes<Eigen::Dynamic>::ConstVectorRef
             diag(D + bs->cols[i].position, block_size);
 
-        CeresMutexLock l(&cell_info->m);
+        std::lock_guard<std::mutex> l(cell_info->m);
         MatrixRef m(cell_info->values, row_stride, col_stride);
         m.block(r, c, block_size, block_size).diagonal()
             += diag.array().square().matrix();
@@ -442,7 +442,7 @@ UpdateRhs(const Chunk& chunk,
       const int block_id = row.cells[c].block_id;
       const int block_size = bs->cols[block_id].size;
       const int block = block_id - num_eliminate_blocks_;
-      CeresMutexLock l(rhs_locks_[block]);
+      std::lock_guard<std::mutex> l(*rhs_locks_[block]);
       MatrixTransposeVectorMultiply<kRowBlockSize, kFBlockSize, 1>(
           values + row.cells[c].position,
           row.block.size, block_size,
@@ -575,7 +575,7 @@ ChunkOuterProduct(int thread_id,
                                          &row_stride, &col_stride);
       if (cell_info != NULL) {
         const int block2_size = bs->cols[it2->first].size;
-        CeresMutexLock l(&cell_info->m);
+        std::lock_guard<std::mutex> l(cell_info->m);
         MatrixMatrixMultiply
             <kFBlockSize, kEBlockSize, kEBlockSize, kFBlockSize, -1>(
                 b1_transpose_inverse_ete, block1_size, e_block_size,
@@ -648,7 +648,7 @@ NoEBlockRowOuterProduct(const BlockSparseMatrix* A,
                                        &r, &c,
                                        &row_stride, &col_stride);
     if (cell_info != NULL) {
-      CeresMutexLock l(&cell_info->m);
+      std::lock_guard<std::mutex> l(cell_info->m);
       // This multiply currently ignores the fact that this is a
       // symmetric outer product.
       MatrixTransposeMatrixMultiply
@@ -668,7 +668,7 @@ NoEBlockRowOuterProduct(const BlockSparseMatrix* A,
                                          &row_stride, &col_stride);
       if (cell_info != NULL) {
         const int block2_size = bs->cols[row.cells[j].block_id].size;
-        CeresMutexLock l(&cell_info->m);
+        std::lock_guard<std::mutex> l(cell_info->m);
         MatrixTransposeMatrixMultiply
             <Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, 1>(
                 values + row.cells[i].position, row.block.size, block1_size,
@@ -701,7 +701,7 @@ EBlockRowOuterProduct(const BlockSparseMatrix* A,
                                        &r, &c,
                                        &row_stride, &col_stride);
     if (cell_info != NULL) {
-      CeresMutexLock l(&cell_info->m);
+      std::lock_guard<std::mutex> l(cell_info->m);
       // block += b1.transpose() * b1;
       MatrixTransposeMatrixMultiply
           <kRowBlockSize, kFBlockSize, kRowBlockSize, kFBlockSize, 1>(
@@ -721,7 +721,7 @@ EBlockRowOuterProduct(const BlockSparseMatrix* A,
                                          &row_stride, &col_stride);
       if (cell_info != NULL) {
         // block += b1.transpose() * b2;
-        CeresMutexLock l(&cell_info->m);
+        std::lock_guard<std::mutex> l(cell_info->m);
         MatrixTransposeMatrixMultiply
             <kRowBlockSize, kFBlockSize, kRowBlockSize, kFBlockSize, 1>(
                 values + row.cells[i].position, row.block.size, block1_size,

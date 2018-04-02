@@ -32,10 +32,10 @@
 #define CERES_INTERNAL_EXECUTION_SUMMARY_H_
 
 #include <map>
+#include <mutex>
 #include <string>
 
 #include "ceres/internal/port.h"
-#include "ceres/mutex.h"
 #include "ceres/wall_time.h"
 
 namespace ceres {
@@ -52,7 +52,7 @@ struct CallStatistics {
 class ExecutionSummary {
  public:
   void IncrementTimeBy(const std::string& name, const double value) {
-    CeresMutexLock l(&mutex_);
+    std::lock_guard<std::mutex> l(mutex_);
     CallStatistics& call_stats = statistics_[name];
     call_stats.time += value;
     ++call_stats.calls;
@@ -63,7 +63,7 @@ class ExecutionSummary {
   }
 
  private:
-  Mutex mutex_;
+  std::mutex mutex_;
   std::map<std::string, CallStatistics> statistics_;
 };
 

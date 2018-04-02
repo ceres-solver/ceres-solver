@@ -35,7 +35,6 @@
 #include <unordered_map>
 #include <vector>
 #include <utility>
-#include "ceres/mutex.h"
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/integral_types.h"
