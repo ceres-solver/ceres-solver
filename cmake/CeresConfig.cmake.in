@@ -313,7 +313,7 @@ else (CERES_USES_MINIGLOG)
         "dependency: gflags. Searched using GFLAGS_INCLUDE_DIR_HINTS: "
         "${GFLAGS_INCLUDE_DIR_HINTS} and gflags_DIR: ${gflags_DIR}.")
     endif()
-    list(APPEND CERES_INCLUDE_DIRS ${GFLAGS_INCLUDE_DIR_HINTS})
+    list(APPEND CERES_INCLUDE_DIRS ${GFLAGS_INCLUDE_DIRS})
   endif()
 endif (CERES_USES_MINIGLOG)
 
