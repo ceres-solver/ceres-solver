@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "176ce5ea_c52331cc",
+        "filename": "internal/ceres/block_random_access_sparse_matrix_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-03T17:55:01Z",
+      "side": 1,
+      "message": "Real nit-pick, but this could be: set\u003cpair\u003c",
+      "revId": "d0a9dee6c36e07e190e133b3ecb41baeaf1c26f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc81385_4b4c9415",
+        "filename": "internal/ceres/visibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-03T17:55:01Z",
+      "side": 1,
+      "message": "Again, nit-pick but this could be: vector\u003cset\u003c",
+      "revId": "d0a9dee6c36e07e190e133b3ecb41baeaf1c26f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
