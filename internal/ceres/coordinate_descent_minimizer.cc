@@ -30,10 +30,6 @@
 
 #include "ceres/coordinate_descent_minimizer.h"
 
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-#include "ceres/parallel_for.h"
-#endif
-
 #include <iterator>
 #include <memory>
 #include <numeric>
@@ -42,14 +38,13 @@
 #include "ceres/evaluator.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
+#include "ceres/parallel_for.h"
 #include "ceres/parameter_block.h"
 #include "ceres/parameter_block_ordering.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
-#include "ceres/scoped_thread_token.h"
 #include "ceres/solver.h"
-#include "ceres/thread_token_provider.h"
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/trust_region_strategy.h"
 
@@ -163,62 +158,43 @@ void CoordinateDescentMinimizer::Minimize(
     evaluator_options_.num_threads =
         max(1, options.num_threads / num_inner_iteration_threads);
 
-    ThreadTokenProvider thread_token_provider(num_inner_iteration_threads);
+    ParallelFor(
+        context_,
+        independent_set_offsets_[i],
+        independent_set_offsets_[i + 1],
+        num_inner_iteration_threads,
+        [&](int thread_id, int j) {
+          ParameterBlock* parameter_block = parameter_blocks_[j];
+          const int old_index = parameter_block->index();
+          const int old_delta_offset = parameter_block->delta_offset();
+          parameter_block->SetVarying();
+          parameter_block->set_index(0);
+          parameter_block->set_delta_offset(0);
 
-#ifdef CERES_USE_OPENMP
-    // The parameter blocks in each independent set can be optimized
-    // in parallel, since they do not co-occur in any residual block.
-#pragma omp parallel for num_threads(num_inner_iteration_threads)
-#endif
+          Program inner_program;
+          inner_program.mutable_parameter_blocks()->push_back(parameter_block);
+          *inner_program.mutable_residual_blocks() = residual_blocks_[j];
 
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-    for (int j = independent_set_offsets_[i];
-         j < independent_set_offsets_[i + 1];
-         ++j) {
-#else
-    ParallelFor(context_,
-                independent_set_offsets_[i],
-                independent_set_offsets_[i + 1],
-                num_inner_iteration_threads,
-                [&](int j) {
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
+          // TODO(sameeragarwal): Better error handling. Right now we
+          // assume that this is not going to lead to problems of any
+          // sort. Basically we should be checking for numerical failure
+          // of some sort.
+          //
+          // On the other hand, if the optimization is a failure, that in
+          // some ways is fine, since it won't change the parameters and
+          // we are fine.
+          Solver::Summary inner_summary;
+          Solve(&inner_program,
+                linear_solvers[thread_id],
+                parameters + parameter_block->state_offset(),
+                &inner_summary);
 
-      const ScopedThreadToken scoped_thread_token(&thread_token_provider);
-      const int thread_id = scoped_thread_token.token();
-
-      ParameterBlock* parameter_block = parameter_blocks_[j];
-      const int old_index = parameter_block->index();
-      const int old_delta_offset = parameter_block->delta_offset();
-      parameter_block->SetVarying();
-      parameter_block->set_index(0);
-      parameter_block->set_delta_offset(0);
-
-      Program inner_program;
-      inner_program.mutable_parameter_blocks()->push_back(parameter_block);
-      *inner_program.mutable_residual_blocks() = residual_blocks_[j];
-
-      // TODO(sameeragarwal): Better error handling. Right now we
-      // assume that this is not going to lead to problems of any
-      // sort. Basically we should be checking for numerical failure
-      // of some sort.
-      //
-      // On the other hand, if the optimization is a failure, that in
-      // some ways is fine, since it won't change the parameters and
-      // we are fine.
-      Solver::Summary inner_summary;
-      Solve(&inner_program,
-            linear_solvers[thread_id],
-            parameters + parameter_block->state_offset(),
-            &inner_summary);
-
-      parameter_block->set_index(old_index);
-      parameter_block->set_delta_offset(old_delta_offset);
-      parameter_block->SetState(parameters + parameter_block->state_offset());
-      parameter_block->SetConstant();
-    }
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-  );
-#endif
+          parameter_block->set_index(old_index);
+          parameter_block->set_delta_offset(old_delta_offset);
+          parameter_block->SetState(parameters +
+                                    parameter_block->state_offset());
+          parameter_block->SetConstant();
+        });
   }
 
   for (int i =  0; i < parameter_blocks_.size(); ++i) {
