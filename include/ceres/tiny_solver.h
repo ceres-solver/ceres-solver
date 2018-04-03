@@ -128,7 +128,7 @@ template<typename Function,
          typename LinearSolver = Eigen::LDLT<
            Eigen::Matrix<typename Function::Scalar,
                          Function::NUM_PARAMETERS,
-                         Function::NUM_PARAMETERS> > >
+                         Function::NUM_PARAMETERS>>>
 class TinySolver {
  public:
   enum {

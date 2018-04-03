@@ -111,7 +111,8 @@ TEST(Degree2MaximumSpanningForest, PreserveWeights) {
   graph.AddEdge(0, 1, 0.5);
   graph.AddEdge(1, 0, 0.5);
 
-  std::unique_ptr<WeightedGraph<int> > forest(Degree2MaximumSpanningForest(graph));
+  std::unique_ptr<WeightedGraph<int> > forest(
+					      Degree2MaximumSpanningForest(graph));
 
   const std::unordered_set<int>& vertices = forest->vertices();
   EXPECT_EQ(vertices.size(), 2);

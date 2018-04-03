@@ -204,7 +204,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsity) {
                          6, 7, 8, 9};
 
 
-  vector<pair<const double*, const double*> > covariance_blocks;
+  vector<pair<const double*, const double*>> covariance_blocks;
   covariance_blocks.push_back(make_pair(block1, block1));
   covariance_blocks.push_back(make_pair(block4, block4));
   covariance_blocks.push_back(make_pair(block2, block2));
@@ -287,7 +287,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithConstantParameterBlock) {
                          3, 4, 5, 6,
                          3, 4, 5, 6};
 
-  vector<pair<const double*, const double*> > covariance_blocks;
+  vector<pair<const double*, const double*>> covariance_blocks;
   covariance_blocks.push_back(make_pair(block1, block1));
   covariance_blocks.push_back(make_pair(block4, block4));
   covariance_blocks.push_back(make_pair(block2, block2));
@@ -368,7 +368,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
                          3, 4, 5, 6,
                          3, 4, 5, 6};
 
-  vector<pair<const double*, const double*> > covariance_blocks;
+  vector<pair<const double*, const double*>> covariance_blocks;
   covariance_blocks.push_back(make_pair(block1, block1));
   covariance_blocks.push_back(make_pair(block4, block4));
   covariance_blocks.push_back(make_pair(block2, block2));
@@ -406,7 +406,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
 
 class CovarianceTest : public ::testing::Test {
  protected:
-  typedef map<const double*, pair<int, int> > BoundsMap;
+  typedef map<const double*, pair<int, int>> BoundsMap;
 
   virtual void SetUp() {
     double* x = parameters_;
@@ -495,7 +495,7 @@ class CovarianceTest : public ::testing::Test {
     // Generate all possible combination of block pairs and check if the
     // covariance computation is correct.
     for (int i = 0; i <= 64; ++i) {
-      vector<pair<const double*, const double*> > covariance_blocks;
+      vector<pair<const double*, const double*>> covariance_blocks;
       if (i & 1) {
         covariance_blocks.push_back(all_covariance_blocks_[0]);
       }
@@ -590,7 +590,7 @@ class CovarianceTest : public ::testing::Test {
 
   double parameters_[6];
   Problem problem_;
-  vector<pair<const double*, const double*> > all_covariance_blocks_;
+  vector<pair<const double*, const double*>> all_covariance_blocks_;
   BoundsMap column_bounds_;
   BoundsMap local_column_bounds_;
 };
@@ -1089,7 +1089,7 @@ TEST_F(CovarianceTest, ComputeCovarianceFailure) {
   EXPECT_DEATH_IF_SUPPORTED(covariance.Compute(parameter_blocks, &problem_),
                             "Covariance::Compute called with duplicate blocks "
                             "at indices \\(0, 1\\) and \\(2, 3\\)");
-  vector<pair<const double*, const double*> > covariance_blocks;
+  vector<pair<const double*, const double*>> covariance_blocks;
   covariance_blocks.push_back(make_pair(x, x));
   covariance_blocks.push_back(make_pair(x, x));
   covariance_blocks.push_back(make_pair(y, y));
@@ -1263,7 +1263,7 @@ class LargeScaleCovarianceTest : public ::testing::Test {
   int num_parameter_blocks_;
 
   Problem problem_;
-  vector<pair<const double*, const double*> > all_covariance_blocks_;
+  vector<pair<const double*, const double*>> all_covariance_blocks_;
 };
 
 #if !defined(CERES_NO_SUITESPARSE) && defined(CERES_USE_OPENMP)

@@ -116,7 +116,7 @@ class TinySolverCostFunctionAdapter {
     // column-major layout, and the CostFunction objects use row-major
     // Jacobian matrices. So the following bit of code does the
     // conversion from row-major Jacobians to column-major Jacobians.
-    Eigen::Map<Eigen::Matrix<double, NUM_RESIDUALS, NUM_PARAMETERS> >
+    Eigen::Map<Eigen::Matrix<double, NUM_RESIDUALS, NUM_PARAMETERS>>
         col_major_jacobian(jacobian, NumResiduals(), NumParameters());
     col_major_jacobian = row_major_jacobian_;
     return true;

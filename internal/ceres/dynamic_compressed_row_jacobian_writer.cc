@@ -67,7 +67,7 @@ void DynamicCompressedRowJacobianWriter::Write(int residual_id,
       program_->residual_blocks()[residual_id];
   const int num_residuals = residual_block->NumResiduals();
 
-  vector<pair<int, int> > evaluated_jacobian_blocks;
+  vector<pair<int, int>> evaluated_jacobian_blocks;
   CompressedRowJacobianWriter::GetOrderedParameterBlocks(
       program_, residual_id, &evaluated_jacobian_blocks);
 

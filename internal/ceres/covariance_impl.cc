@@ -73,7 +73,7 @@ using std::sort;
 using std::swap;
 using std::vector;
 
-typedef vector<pair<const double*, const double*> > CovarianceBlocks;
+typedef vector<pair<const double*, const double*>> CovarianceBlocks;
 
 CovarianceImpl::CovarianceImpl(const Covariance::Options& options)
     : options_(options),
@@ -102,7 +102,7 @@ template <typename T> void CheckForDuplicates(vector<T> blocks) {
       std::adjacent_find(blocks.begin(), blocks.end());
   if (it != blocks.end()) {
     // In case there are duplicates, we search for their location.
-    map<T, vector<int> > blocks_map;
+    map<T, vector<int>> blocks_map;
     for (int i = 0; i < blocks.size(); ++i) {
       blocks_map[blocks[i]].push_back(i);
     }
@@ -127,7 +127,7 @@ template <typename T> void CheckForDuplicates(vector<T> blocks) {
 
 bool CovarianceImpl::Compute(const CovarianceBlocks& covariance_blocks,
                              ProblemImpl* problem) {
-  CheckForDuplicates<pair<const double*, const double*> >(covariance_blocks);
+  CheckForDuplicates<pair<const double*, const double*>>(covariance_blocks);
   problem_ = problem;
   parameter_block_to_row_index_.clear();
   covariance_matrix_.reset(NULL);
@@ -881,7 +881,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
           jacobian.rows.data(), jacobian.cols.data(), jacobian.values.data());
   event_logger.AddEvent("ConvertToSparseMatrix");
 
-  Eigen::SparseQR<EigenSparseMatrix, Eigen::COLAMDOrdering<int> >
+  Eigen::SparseQR<EigenSparseMatrix, Eigen::COLAMDOrdering<int>>
       qr_solver(sparse_jacobian);
   event_logger.AddEvent("QRDecomposition");
 
