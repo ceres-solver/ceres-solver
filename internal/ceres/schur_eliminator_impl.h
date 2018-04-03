@@ -51,6 +51,7 @@
 #include <algorithm>
 #include <map>
 
+#include "Eigen/Dense"
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
@@ -58,17 +59,13 @@
 #include "ceres/internal/fixed_array.h"
 #include "ceres/invert_psd_matrix.h"
 #include "ceres/map_util.h"
+#include "ceres/parallel_for.h"
 #include "ceres/schur_eliminator.h"
 #include "ceres/scoped_thread_token.h"
 #include "ceres/small_blas.h"
 #include "ceres/stl_util.h"
 #include "ceres/thread_token_provider.h"
-#include "Eigen/Dense"
 #include "glog/logging.h"
-
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-#include "ceres/parallel_for.h"
-#endif
 
 namespace ceres {
 namespace internal {
@@ -190,43 +187,29 @@ Eliminate(const BlockSparseMatrix* A,
 
   // Add the diagonal to the schur complement.
   if (D != NULL) {
-#ifdef CERES_USE_OPENMP
-#pragma omp parallel for num_threads(num_threads_) schedule(dynamic)
-#endif // CERES_USE_OPENMP
+    ParallelFor(
+        context_,
+        num_eliminate_blocks_,
+        num_col_blocks,
+        num_threads_,
+        [&](int i) {
+          const int block_id = i - num_eliminate_blocks_;
+          int r, c, row_stride, col_stride;
+          CellInfo* cell_info = lhs->GetCell(block_id, block_id, &r, &c,
+                                             &row_stride, &col_stride);
+          if (cell_info != NULL) {
+            const int block_size = bs->cols[i].size;
+            typename EigenTypes<Eigen::Dynamic>::ConstVectorRef diag(
+                D + bs->cols[i].position, block_size);
 
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-    for (int i = num_eliminate_blocks_; i < num_col_blocks; ++i) {
-#else
-    ParallelFor(context_, num_eliminate_blocks_, num_col_blocks, num_threads_,
-                [&](int i) {
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-
-      const int block_id = i - num_eliminate_blocks_;
-      int r, c, row_stride, col_stride;
-      CellInfo* cell_info = lhs->GetCell(block_id, block_id,
-                                         &r, &c,
-                                         &row_stride, &col_stride);
-      if (cell_info != NULL) {
-        const int block_size = bs->cols[i].size;
-        typename EigenTypes<Eigen::Dynamic>::ConstVectorRef
-            diag(D + bs->cols[i].position, block_size);
-
-        std::lock_guard<std::mutex> l(cell_info->m);
-        MatrixRef m(cell_info->values, row_stride, col_stride);
-        m.block(r, c, block_size, block_size).diagonal()
-            += diag.array().square().matrix();
-      }
-    }
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-    );
-#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
+            std::lock_guard<std::mutex> l(cell_info->m);
+            MatrixRef m(cell_info->values, row_stride, col_stride);
+            m.block(r, c, block_size, block_size).diagonal() +=
+                diag.array().square().matrix();
+          }
+        });
   }
 
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-  ThreadTokenProvider thread_token_provider(num_threads_);
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-
-#ifdef CERES_USE_OPENMP
   // Eliminate y blocks one chunk at a time.  For each chunk, compute
   // the entries of the normal equations and the gradient vector block
   // corresponding to the y block and then apply Gaussian elimination
@@ -240,88 +223,73 @@ Eliminate(const BlockSparseMatrix* A,
   // z blocks that share a row block/residual term with the y
   // block. EliminateRowOuterProduct does the corresponding operation
   // for the lhs of the reduced linear system.
-#pragma omp parallel for num_threads(num_threads_) schedule(dynamic)
-#endif // CERES_USE_OPENMP
+  ParallelFor(
+      context_, 0, int(chunks_.size()), num_threads_,
+      [&](int thread_id, int i) {
+        double* buffer = buffer_.get() + thread_id * buffer_size_;
+        const Chunk& chunk = chunks_[i];
+        const int e_block_id = bs->rows[chunk.start].cells.front().block_id;
+        const int e_block_size = bs->cols[e_block_id].size;
 
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-  for (int i = 0; i < chunks_.size(); ++i) {
-    const ScopedThreadToken scoped_thread_token(&thread_token_provider);
-    const int thread_id = scoped_thread_token.token();
-#else
-    ParallelFor(context_,
-                0,
-                int(chunks_.size()),
-                num_threads_,
-                [&](int thread_id, int i) {
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
+        VectorRef(buffer, buffer_size_).setZero();
 
-    double* buffer = buffer_.get() + thread_id * buffer_size_;
-    const Chunk& chunk = chunks_[i];
-    const int e_block_id = bs->rows[chunk.start].cells.front().block_id;
-    const int e_block_size = bs->cols[e_block_id].size;
+        typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix
+            ete(e_block_size, e_block_size);
 
-    VectorRef(buffer, buffer_size_).setZero();
+        if (D != NULL) {
+          const typename EigenTypes<kEBlockSize>::ConstVectorRef
+              diag(D + bs->cols[e_block_id].position, e_block_size);
+          ete = diag.array().square().matrix().asDiagonal();
+        } else {
+          ete.setZero();
+        }
 
-    typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix
-        ete(e_block_size, e_block_size);
+        FixedArray<double, 8> g(e_block_size);
+        typename EigenTypes<kEBlockSize>::VectorRef gref(g.get(), e_block_size);
+        gref.setZero();
 
-    if (D != NULL) {
-      const typename EigenTypes<kEBlockSize>::ConstVectorRef
-          diag(D + bs->cols[e_block_id].position, e_block_size);
-      ete = diag.array().square().matrix().asDiagonal();
-    } else {
-      ete.setZero();
-    }
+        // We are going to be computing
+        //
+        //   S += F'F - F'E(E'E)^{-1}E'F
+        //
+        // for each Chunk. The computation is broken down into a number of
+        // function calls as below.
 
-    FixedArray<double, 8> g(e_block_size);
-    typename EigenTypes<kEBlockSize>::VectorRef gref(g.get(), e_block_size);
-    gref.setZero();
+        // Compute the outer product of the e_blocks with themselves (ete
+        // = E'E). Compute the product of the e_blocks with the
+        // corresonding f_blocks (buffer = E'F), the gradient of the terms
+        // in this chunk (g) and add the outer product of the f_blocks to
+        // Schur complement (S += F'F).
+        ChunkDiagonalBlockAndGradient(
+            chunk, A, b, chunk.start, &ete, g.get(), buffer, lhs);
 
-    // We are going to be computing
-    //
-    //   S += F'F - F'E(E'E)^{-1}E'F
-    //
-    // for each Chunk. The computation is broken down into a number of
-    // function calls as below.
+        // Normally one wouldn't compute the inverse explicitly, but
+        // e_block_size will typically be a small number like 3, in
+        // which case its much faster to compute the inverse once and
+        // use it to multiply other matrices/vectors instead of doing a
+        // Solve call over and over again.
+        typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix inverse_ete =
+            InvertPSDMatrix<kEBlockSize>(assume_full_rank_ete_, ete);
 
-    // Compute the outer product of the e_blocks with themselves (ete
-    // = E'E). Compute the product of the e_blocks with the
-    // corresonding f_blocks (buffer = E'F), the gradient of the terms
-    // in this chunk (g) and add the outer product of the f_blocks to
-    // Schur complement (S += F'F).
-    ChunkDiagonalBlockAndGradient(
-        chunk, A, b, chunk.start, &ete, g.get(), buffer, lhs);
+        // For the current chunk compute and update the rhs of the reduced
+        // linear system.
+        //
+        //   rhs = F'b - F'E(E'E)^(-1) E'b
 
-    // Normally one wouldn't compute the inverse explicitly, but
-    // e_block_size will typically be a small number like 3, in
-    // which case its much faster to compute the inverse once and
-    // use it to multiply other matrices/vectors instead of doing a
-    // Solve call over and over again.
-    typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix inverse_ete =
-        InvertPSDMatrix<kEBlockSize>(assume_full_rank_ete_, ete);
+        FixedArray<double, 8> inverse_ete_g(e_block_size);
+        MatrixVectorMultiply<kEBlockSize, kEBlockSize, 0>(
+            inverse_ete.data(),
+            e_block_size,
+            e_block_size,
+            g.get(),
+            inverse_ete_g.get());
 
-    // For the current chunk compute and update the rhs of the reduced
-    // linear system.
-    //
-    //   rhs = F'b - F'E(E'E)^(-1) E'b
+        UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.get(), rhs);
 
-    FixedArray<double, 8> inverse_ete_g(e_block_size);
-    MatrixVectorMultiply<kEBlockSize, kEBlockSize, 0>(
-        inverse_ete.data(),
-        e_block_size,
-        e_block_size,
-        g.get(),
-        inverse_ete_g.get());
-
-    UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.get(), rhs);
-
-    // S -= F'E(E'E)^{-1}E'F
-    ChunkOuterProduct(
+        // S -= F'E(E'E)^{-1}E'F
+        ChunkOuterProduct(
         thread_id, bs, inverse_ete, buffer, chunk.buffer_layout, lhs);
-  }
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-  );
-#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
+      });
 
   // For rows with no e_blocks, the schur complement update reduces to
   // S += F'F.
@@ -338,21 +306,12 @@ BackSubstitute(const BlockSparseMatrix* A,
                double* y) {
   const CompressedRowBlockStructure* bs = A->block_structure();
 
-#ifdef CERES_USE_OPENMP
-#pragma omp parallel for num_threads(num_threads_) schedule(dynamic)
-#endif // CERES_USE_OPENMP
-
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-  for (int i = 0; i < chunks_.size(); ++i) {
-#else
   ParallelFor(context_, 0, int(chunks_.size()), num_threads_, [&](int i) {
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-
     const Chunk& chunk = chunks_[i];
     const int e_block_id = bs->rows[chunk.start].cells.front().block_id;
     const int e_block_size = bs->cols[e_block_id].size;
 
-    double* y_ptr = y +  bs->cols[e_block_id].position;
+    double* y_ptr = y + bs->cols[e_block_id].position;
     typename EigenTypes<kEBlockSize>::VectorRef y_block(y_ptr, e_block_size);
 
     typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix
@@ -374,8 +333,8 @@ BackSubstitute(const BlockSparseMatrix* A,
       FixedArray<double, 8> sj(row.block.size);
 
       typename EigenTypes<kRowBlockSize>::VectorRef(sj.get(), row.block.size) =
-          typename EigenTypes<kRowBlockSize>::ConstVectorRef
-          (b + bs->rows[chunk.start + j].block.position, row.block.size);
+          typename EigenTypes<kRowBlockSize>::ConstVectorRef(
+              b + bs->rows[chunk.start + j].block.position, row.block.size);
 
       for (int c = 1; c < row.cells.size(); ++c) {
         const int f_block_id = row.cells[c].block_id;
@@ -393,19 +352,16 @@ BackSubstitute(const BlockSparseMatrix* A,
           sj.get(),
           y_ptr);
 
-      MatrixTransposeMatrixMultiply
-          <kRowBlockSize, kEBlockSize, kRowBlockSize, kEBlockSize, 1>(
-              values + e_cell.position, row.block.size, e_block_size,
-              values + e_cell.position, row.block.size, e_block_size,
-              ete.data(), 0, 0, e_block_size, e_block_size);
+      MatrixTransposeMatrixMultiply<kRowBlockSize, kEBlockSize, kRowBlockSize,
+                                    kEBlockSize, 1>(
+          values + e_cell.position, row.block.size, e_block_size,
+          values + e_cell.position, row.block.size, e_block_size, ete.data(), 0,
+          0, e_block_size, e_block_size);
     }
 
-    y_block = InvertPSDMatrix<kEBlockSize>(assume_full_rank_ete_, ete)
-        * y_block;
-  }
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-  );
-#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
+    y_block =
+        InvertPSDMatrix<kEBlockSize>(assume_full_rank_ete_, ete) * y_block;
+  });
 }
 
 // Update the rhs of the reduced linear system. Compute

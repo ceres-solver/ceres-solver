@@ -31,8 +31,6 @@
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-
 #include "ceres/parallel_for.h"
 
 #include <cmath>
@@ -129,6 +127,8 @@ TEST(ParallelForWithThreadId, NestedParallelForDeadlock) {
   }
 }
 
+// This test is only valid when multithreading support is enabled.
+#ifndef CERES_NO_THREADS
 TEST(ParallelForWithThreadId, UniqueThreadIds) {
   // Ensure the hardware supports more than 1 thread to ensure the test will
   // pass.
@@ -157,8 +157,7 @@ TEST(ParallelForWithThreadId, UniqueThreadIds) {
 
   EXPECT_THAT(x, UnorderedElementsAreArray({0,1}));
 }
+#endif  // CERES_NO_THREADS
 
 }  // namespace internal
 }  // namespace ceres
-
-#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
