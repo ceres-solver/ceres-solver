@@ -52,7 +52,7 @@ int ComputeStableSchurOrdering(const Program& program,
                          vector<ParameterBlock*>* ordering) {
   CHECK_NOTNULL(ordering)->clear();
   EventLogger event_logger("ComputeStableSchurOrdering");
-  scoped_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
+  scoped_ptr<Graph< ParameterBlock*>> graph(CreateHessianGraph(program));
   event_logger.AddEvent("CreateHessianGraph");
 
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
@@ -83,7 +83,7 @@ int ComputeSchurOrdering(const Program& program,
                          vector<ParameterBlock*>* ordering) {
   CHECK_NOTNULL(ordering)->clear();
 
-  scoped_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
+  scoped_ptr<Graph< ParameterBlock*>> graph(CreateHessianGraph(program));
   int independent_set_size = IndependentSetOrdering(*graph, ordering);
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
 
@@ -102,7 +102,7 @@ void ComputeRecursiveIndependentSetOrdering(const Program& program,
                                             ParameterBlockOrdering* ordering) {
   CHECK_NOTNULL(ordering)->Clear();
   const vector<ParameterBlock*> parameter_blocks = program.parameter_blocks();
-  scoped_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
+  scoped_ptr<Graph< ParameterBlock*>> graph(CreateHessianGraph(program));
 
   int num_covered = 0;
   int round = 0;
@@ -161,7 +161,7 @@ void OrderingToGroupSizes(const ParameterBlockOrdering* ordering,
     return;
   }
 
-  const map<int, set<double*> >& group_to_elements =
+  const map<int, set<double*>>& group_to_elements =
       ordering->group_to_elements();
   for (const auto& g_t_e : group_to_elements) {
     group_sizes->push_back(g_t_e.second.size());

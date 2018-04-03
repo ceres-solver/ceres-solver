@@ -122,7 +122,7 @@ VisibilityBasedPreconditioner::~VisibilityBasedPreconditioner() {}
 // preconditioner matrix.
 void VisibilityBasedPreconditioner::ComputeClusterJacobiSparsity(
     const CompressedRowBlockStructure& bs) {
-  vector<set<int> > visibility;
+  vector<set<int>> visibility;
   ComputeVisibility(bs, options_.elimination_groups[0], &visibility);
   CHECK_EQ(num_blocks_, visibility.size());
   ClusterCameras(visibility);
@@ -140,7 +140,7 @@ void VisibilityBasedPreconditioner::ComputeClusterJacobiSparsity(
 // forest. The set of edges in this forest are the cluster pairs.
 void VisibilityBasedPreconditioner::ComputeClusterTridiagonalSparsity(
     const CompressedRowBlockStructure& bs) {
-  vector<set<int> > visibility;
+  vector<set<int>> visibility;
   ComputeVisibility(bs, options_.elimination_groups[0], &visibility);
   CHECK_EQ(num_blocks_, visibility.size());
   ClusterCameras(visibility);
@@ -149,11 +149,11 @@ void VisibilityBasedPreconditioner::ComputeClusterTridiagonalSparsity(
   // edges are the number of 3D points/e_blocks visible in both the
   // clusters at the ends of the edge. Return an approximate degree-2
   // maximum spanning forest of this graph.
-  vector<set<int> > cluster_visibility;
+  vector<set<int>> cluster_visibility;
   ComputeClusterVisibility(visibility, &cluster_visibility);
-  scoped_ptr<WeightedGraph<int> > cluster_graph(
+  scoped_ptr<WeightedGraph<int>> cluster_graph(
       CHECK_NOTNULL(CreateClusterGraph(cluster_visibility)));
-  scoped_ptr<WeightedGraph<int> > forest(
+  scoped_ptr<WeightedGraph<int>> forest(
       CHECK_NOTNULL(Degree2MaximumSpanningForest(*cluster_graph)));
   ForestToClusterPairs(*forest, &cluster_pairs_);
 }
@@ -172,8 +172,8 @@ void VisibilityBasedPreconditioner::InitStorage(
 // The cluster_membership_ vector is updated to indicate cluster
 // memberships for each camera block.
 void VisibilityBasedPreconditioner::ClusterCameras(
-    const vector<set<int> >& visibility) {
-  scoped_ptr<WeightedGraph<int> > schur_complement_graph(
+    const vector<set<int>>& visibility) {
+  scoped_ptr<WeightedGraph<int>> schur_complement_graph(
       CHECK_NOTNULL(CreateSchurComplementGraph(visibility)));
 
   std::unordered_map<int, int> membership;
@@ -483,8 +483,8 @@ void VisibilityBasedPreconditioner::ForestToClusterPairs(
 // of all its cameras. In other words, the set of points visible to
 // any camera in the cluster.
 void VisibilityBasedPreconditioner::ComputeClusterVisibility(
-    const vector<set<int> >& visibility,
-    vector<set<int> >* cluster_visibility) const {
+    const vector<set<int>>& visibility,
+    vector<set<int>>* cluster_visibility) const {
   CHECK_NOTNULL(cluster_visibility)->resize(0);
   cluster_visibility->resize(num_clusters_);
   for (int i = 0; i < num_blocks_; ++i) {
@@ -498,7 +498,7 @@ void VisibilityBasedPreconditioner::ComputeClusterVisibility(
 // weights are the number of 3D points visible to cameras in both the
 // vertices.
 WeightedGraph<int>* VisibilityBasedPreconditioner::CreateClusterGraph(
-    const vector<set<int> >& cluster_visibility) const {
+    const vector<set<int>>& cluster_visibility) const {
   WeightedGraph<int>* cluster_graph = new WeightedGraph<int>;
 
   for (int i = 0; i < num_clusters_; ++i) {

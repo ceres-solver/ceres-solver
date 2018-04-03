@@ -376,8 +376,8 @@ struct EigenQuaternionPlus {
       q_delta.coeffs() <<  delta[0], delta[1], delta[2], T(1.0);
     }
 
-    Eigen::Map<Eigen::Quaternion<T> > x_plus_delta_ref(x_plus_delta);
-    Eigen::Map<const Eigen::Quaternion<T> > x_ref(x);
+    Eigen::Map<Eigen::Quaternion<T>> x_plus_delta_ref(x_plus_delta);
+    Eigen::Map<const Eigen::Quaternion<T>> x_ref(x);
     x_plus_delta_ref = q_delta * x_ref;
     return true;
   }
@@ -438,9 +438,9 @@ struct HomogeneousVectorParameterizationPlus {
   template<typename Scalar>
   bool operator()(const Scalar* p_x, const Scalar* p_delta,
                   Scalar* p_x_plus_delta) const {
-    Eigen::Map<const Eigen::Matrix<Scalar, 4, 1> > x(p_x);
-    Eigen::Map<const Eigen::Matrix<Scalar, 3, 1> > delta(p_delta);
-    Eigen::Map<Eigen::Matrix<Scalar, 4, 1> > x_plus_delta(p_x_plus_delta);
+    Eigen::Map<const Eigen::Matrix<Scalar, 4, 1>> x(p_x);
+    Eigen::Map<const Eigen::Matrix<Scalar, 3, 1>> delta(p_delta);
+    Eigen::Map<Eigen::Matrix<Scalar, 4, 1>> x_plus_delta(p_x_plus_delta);
 
     const Scalar squared_norm_delta =
         delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];

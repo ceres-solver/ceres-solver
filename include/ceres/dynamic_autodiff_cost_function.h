@@ -112,8 +112,8 @@ class DynamicAutoDiffCostFunction : public DynamicCostFunction {
                                                0);
 
     // Allocate scratch space for the strided evaluation.
-    std::vector<Jet<double, Stride> > input_jets(num_parameters);
-    std::vector<Jet<double, Stride> > output_jets(num_residuals());
+    std::vector<Jet<double, Stride>> input_jets(num_parameters);
+    std::vector<Jet<double, Stride>> output_jets(num_residuals());
 
     // Make the parameter pack that is sent to the functor (reused).
     std::vector<Jet<double, Stride>* > jet_parameters(num_parameter_blocks,

@@ -50,7 +50,7 @@ using std::vector;
 
 BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
     const vector<int>& blocks,
-    const set<pair<int, int> >& block_pairs)
+    const set<pair<int, int>>& block_pairs)
     : kMaxRowBlocks(10 * 1000 * 1000),
       blocks_(blocks) {
   CHECK_LT(blocks.size(), kMaxRowBlocks);

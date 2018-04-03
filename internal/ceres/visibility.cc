@@ -53,7 +53,7 @@ using std::vector;
 
 void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
                        const int num_eliminate_blocks,
-                       vector< set<int> >* visibility) {
+                       vector< set<int>>* visibility) {
   CHECK_NOTNULL(visibility);
 
   // Clear the visibility vector and resize it to hold a
@@ -79,7 +79,7 @@ void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
 }
 
 WeightedGraph<int>* CreateSchurComplementGraph(
-    const vector<set<int> >& visibility) {
+    const vector<set<int>>& visibility) {
   const time_t start_time = time(NULL);
   // Compute the number of e_blocks/point blocks. Since the visibility
   // set for each e_block/camera contains the set of e_blocks/points
@@ -96,7 +96,7 @@ WeightedGraph<int>* CreateSchurComplementGraph(
   // cameras. However, to compute the sparsity structure of the Schur
   // Complement efficiently, its better to have the point->camera
   // mapping.
-  vector<set<int> > inverse_visibility(num_points);
+  vector<set<int>> inverse_visibility(num_points);
   for (int i = 0; i < visibility.size(); i++) {
     const set<int>& visibility_set = visibility[i];
     for (const int v : visibility_set) {

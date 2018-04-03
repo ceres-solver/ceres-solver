@@ -249,7 +249,7 @@ void SparseSchurComplementSolver::InitStorage(
     blocks_[i - num_eliminate_blocks] = bs->cols[i].size;
   }
 
-  set<pair<int, int> > block_pairs;
+  set<pair<int, int>> block_pairs;
   for (int i = 0; i < blocks_.size(); ++i) {
     block_pairs.insert(make_pair(i, i));
   }

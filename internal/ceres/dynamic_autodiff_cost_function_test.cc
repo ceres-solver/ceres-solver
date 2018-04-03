@@ -119,7 +119,7 @@ TEST(DynamicAutodiffCostFunctionTest, TestJacobian) {
   parameter_blocks[1] = &param_block_1[0];
 
   // Prepare the jacobian.
-  vector<vector<double> > jacobian_vect(2);
+  vector<vector<double>> jacobian_vect(2);
   jacobian_vect[0].resize(21 * 10, -100000);
   jacobian_vect[1].resize(21 * 5, -100000);
   vector<double*> jacobian;
@@ -186,7 +186,7 @@ TEST(DynamicAutodiffCostFunctionTest, JacobianWithFirstParameterBlockConstant) {
   parameter_blocks[1] = &param_block_1[0];
 
   // Prepare the jacobian.
-  vector<vector<double> > jacobian_vect(2);
+  vector<vector<double>> jacobian_vect(2);
   jacobian_vect[0].resize(21 * 10, -100000);
   jacobian_vect[1].resize(21 * 5, -100000);
   vector<double*> jacobian;
@@ -236,7 +236,7 @@ TEST(DynamicAutodiffCostFunctionTest, JacobianWithSecondParameterBlockConstant) 
   parameter_blocks[1] = &param_block_1[0];
 
   // Prepare the jacobian.
-  vector<vector<double> > jacobian_vect(2);
+  vector<vector<double>> jacobian_vect(2);
   jacobian_vect[0].resize(21 * 10, -100000);
   jacobian_vect[1].resize(21 * 5, -100000);
   vector<double*> jacobian;
@@ -420,7 +420,7 @@ class ThreeParameterCostFunctorTest : public ::testing::Test {
 
   scoped_ptr<CostFunction> cost_function_;
 
-  vector<vector<double> > jacobian_vect_;
+  vector<vector<double>> jacobian_vect_;
 
   vector<double> expected_residuals_;
 
@@ -667,10 +667,10 @@ class SixParameterCostFunctorTest : public ::testing::Test {
 
   scoped_ptr<CostFunction> cost_function_;
 
-  vector<vector<double> > jacobian_vect_;
+  vector<vector<double>> jacobian_vect_;
 
   vector<double> expected_residuals_;
-  vector<vector<double> > expected_jacobians_;
+  vector<vector<double>> expected_jacobians_;
 };
 
 TEST_F(SixParameterCostFunctorTest, TestSixParameterResiduals) {

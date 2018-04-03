@@ -117,11 +117,11 @@ EigenSparseCholesky* EigenSparseCholesky::Create(
 #if EIGEN_VERSION_AT_LEAST(3, 2, 2)
   typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
                                 Eigen::Upper,
-                                Eigen::AMDOrdering<int> >
+                                Eigen::AMDOrdering<int>>
       WithAMDOrdering;
   typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
                                 Eigen::Upper,
-                                Eigen::NaturalOrdering<int> >
+                                Eigen::NaturalOrdering<int>>
       WithNaturalOrdering;
   if (ordering_type == AMD) {
     return new EigenSparseCholeskyTemplate<WithAMDOrdering>();

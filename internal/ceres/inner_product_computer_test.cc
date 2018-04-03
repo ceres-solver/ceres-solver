@@ -115,7 +115,7 @@ TEST(InnerProductComputer, NormalOperation) {
                                 random_matrix->num_cols(),
                                 random_matrix->num_nonzeros());
         random_matrix->ToTripletSparseMatrix(&tsm);
-        std::vector<Eigen::Triplet<double> > triplets;
+        std::vector<Eigen::Triplet<double>> triplets;
         for (int i = 0; i < tsm.num_nonzeros(); ++i) {
           triplets.push_back(Eigen::Triplet<double>(
               tsm.rows()[i], tsm.cols()[i], tsm.values()[i]));
@@ -187,7 +187,7 @@ TEST(InnerProductComputer, SubMatrix) {
                                 random_matrix->num_cols(),
                                 random_matrix->num_nonzeros());
         random_matrix->ToTripletSparseMatrix(&tsm);
-        std::vector<Eigen::Triplet<double> > triplets;
+        std::vector<Eigen::Triplet<double>> triplets;
         for (int i = 0; i < tsm.num_nonzeros(); ++i) {
           if (tsm.rows()[i] >= start_row && tsm.rows()[i] < end_row) {
             triplets.push_back(Eigen::Triplet<double>(

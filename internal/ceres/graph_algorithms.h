@@ -260,7 +260,7 @@ template <typename Vertex>
 WeightedGraph<Vertex>*
 Degree2MaximumSpanningForest(const WeightedGraph<Vertex>& graph) {
   // Array of edges sorted in decreasing order of their weights.
-  std::vector<std::pair<double, std::pair<Vertex, Vertex> > > weighted_edges;
+  std::vector<std::pair<double, std::pair<Vertex, Vertex>>> weighted_edges;
   WeightedGraph<Vertex>* forest = new WeightedGraph<Vertex>();
 
   // Disjoint-set to keep track of the connected components in the

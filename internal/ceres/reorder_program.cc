@@ -233,7 +233,7 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
       program->mutable_parameter_blocks();
   parameter_blocks->clear();
 
-  const map<int, set<double*> >& groups = ordering.group_to_elements();
+  const map<int, set<double*>>& groups = ordering.group_to_elements();
   for (const auto& p : groups) {
     const set<double*>& group = p.second;
     for (double* parameter_block_ptr : group) {

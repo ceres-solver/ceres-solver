@@ -193,7 +193,7 @@ inline void Take1stOrderPart(const int M, const JetT *src, T *dst) {
   DCHECK(src);
   DCHECK(dst);
   for (int i = 0; i < M; ++i) {
-    Eigen::Map<Eigen::Matrix<T, N, 1> >(dst + N * i, N) =
+    Eigen::Map<Eigen::Matrix<T, N, 1>>(dst + N * i, N) =
         src[i].v.template segment<N>(N0);
   }
 }

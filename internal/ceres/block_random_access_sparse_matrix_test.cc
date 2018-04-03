@@ -50,7 +50,7 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
   blocks.push_back(5);
   const int num_rows = 3 + 4 + 5;
 
-  set< pair<int, int> > block_pairs;
+  set< pair<int, int>> block_pairs;
   int num_nonzeros = 0;
   block_pairs.insert(make_pair(0, 0));
   num_nonzeros += blocks[0] * blocks[0];
@@ -140,7 +140,7 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
   virtual void SetUp() {
     vector<int> blocks;
     blocks.push_back(1);
-    set< pair<int, int> > block_pairs;
+    set< pair<int, int>> block_pairs;
     block_pairs.insert(make_pair(0, 0));
     m_.reset(new BlockRandomAccessSparseMatrix(blocks, block_pairs));
   }

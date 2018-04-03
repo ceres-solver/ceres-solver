@@ -79,7 +79,7 @@ bool CoordinateDescentMinimizer::Init(
   // Serialize the OrderedGroups into a vector of parameter block
   // offsets for parallel access.
   map<ParameterBlock*, int> parameter_block_index;
-  map<int, set<double*> > group_to_elements = ordering.group_to_elements();
+  map<int, set<double*>> group_to_elements = ordering.group_to_elements();
   for (const auto& g_t_e : group_to_elements) {
     const auto& elements = g_t_e.second;
     for (double* parameter_block: elements) {
@@ -259,7 +259,7 @@ bool CoordinateDescentMinimizer::IsOrderingValid(
     const Program& program,
     const ParameterBlockOrdering& ordering,
     string* message) {
-  const map<int, set<double*> >& group_to_elements =
+  const map<int, set<double*>>& group_to_elements =
       ordering.group_to_elements();
 
   // Verify that each group is an independent set

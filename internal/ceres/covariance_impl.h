@@ -52,7 +52,7 @@ class CovarianceImpl {
 
   bool Compute(
       const std::vector<std::pair<const double*,
-                                  const double*> >& covariance_blocks,
+                                  const double*>>& covariance_blocks,
       ProblemImpl* problem);
 
   bool Compute(
@@ -72,7 +72,7 @@ class CovarianceImpl {
 
   bool ComputeCovarianceSparsity(
       const std::vector<std::pair<const double*,
-                                  const double*> >& covariance_blocks,
+                                  const double*>>& covariance_blocks,
       ProblemImpl* problem);
 
   bool ComputeCovarianceValues();

@@ -100,7 +100,7 @@ class Graph {
 
  private:
   std::unordered_set<Vertex> vertices_;
-  std::unordered_map<Vertex, std::unordered_set<Vertex> > edges_;
+  std::unordered_map<Vertex, std::unordered_set<Vertex>> edges_;
 };
 
 // A weighted undirected graph templated over the vertex ids. Vertex
