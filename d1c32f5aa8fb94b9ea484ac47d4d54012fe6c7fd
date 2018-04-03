@@ -22,6 +22,30 @@
       "revId": "d1c32f5aa8fb94b9ea484ac47d4d54012fe6c7fd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b790c54a_80599379",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-04-03T22:31:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b095a625_a2603c6d",
+      "range": {
+        "startLine": 187,
+        "startChar": 17,
+        "endLine": 187,
+        "endChar": 30
+      },
+      "revId": "d1c32f5aa8fb94b9ea484ac47d4d54012fe6c7fd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
