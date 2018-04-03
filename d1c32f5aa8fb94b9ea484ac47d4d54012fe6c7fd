@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b095a625_a2603c6d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-03T22:22:22Z",
+      "side": 1,
+      "message": "vertical stacking of parameters.",
+      "range": {
+        "startLine": 187,
+        "startChar": 17,
+        "endLine": 187,
+        "endChar": 30
+      },
+      "revId": "d1c32f5aa8fb94b9ea484ac47d4d54012fe6c7fd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
