@@ -46,10 +46,8 @@ TripletSparseMatrix::TripletSparseMatrix()
     : num_rows_(0),
       num_cols_(0),
       max_num_nonzeros_(0),
-      num_nonzeros_(0),
-      rows_(NULL),
-      cols_(NULL),
-      values_(NULL) {}
+      num_nonzeros_(0) {}
+
 
 TripletSparseMatrix::~TripletSparseMatrix() {}
 
@@ -59,10 +57,7 @@ TripletSparseMatrix::TripletSparseMatrix(int num_rows,
     : num_rows_(num_rows),
       num_cols_(num_cols),
       max_num_nonzeros_(max_num_nonzeros),
-      num_nonzeros_(0),
-      rows_(NULL),
-      cols_(NULL),
-      values_(NULL) {
+      num_nonzeros_(0) {
   // All the sizes should at least be zero
   CHECK_GE(num_rows, 0);
   CHECK_GE(num_cols, 0);
@@ -78,10 +73,7 @@ TripletSparseMatrix::TripletSparseMatrix(const int num_rows,
     : num_rows_(num_rows),
       num_cols_(num_cols),
       max_num_nonzeros_(values.size()),
-      num_nonzeros_(values.size()),
-      rows_(NULL),
-      cols_(NULL),
-      values_(NULL) {
+      num_nonzeros_(values.size()) {
   // All the sizes should at least be zero
   CHECK_GE(num_rows, 0);
   CHECK_GE(num_cols, 0);
@@ -98,10 +90,7 @@ TripletSparseMatrix::TripletSparseMatrix(const TripletSparseMatrix& orig)
       num_rows_(orig.num_rows_),
       num_cols_(orig.num_cols_),
       max_num_nonzeros_(orig.max_num_nonzeros_),
-      num_nonzeros_(orig.num_nonzeros_),
-      rows_(NULL),
-      cols_(NULL),
-      values_(NULL) {
+      num_nonzeros_(orig.num_nonzeros_) {
   AllocateMemory();
   CopyData(orig);
 }

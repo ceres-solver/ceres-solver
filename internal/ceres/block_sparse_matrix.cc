@@ -52,7 +52,6 @@ BlockSparseMatrix::BlockSparseMatrix(
     : num_rows_(0),
       num_cols_(0),
       num_nonzeros_(0),
-      values_(NULL),
       block_structure_(block_structure) {
   CHECK_NOTNULL(block_structure_.get());
 
