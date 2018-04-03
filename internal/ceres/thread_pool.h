@@ -31,6 +31,7 @@
 #ifndef CERES_INTERNAL_THREAD_POOL_H_
 #define CERES_INTERNAL_THREAD_POOL_H_
 
+#include <functional>
 #include <mutex>
 #include <thread>
 #include <vector>
