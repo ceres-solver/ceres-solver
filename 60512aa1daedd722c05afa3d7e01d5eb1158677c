@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af5e811_8ae57062",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-03T21:32:00Z",
+      "side": 1,
+      "message": "what do you think about always starting the lambda on its own new line, I think it would improve readability significantly. \nmore generally we do vertical stacking of arguments in function arguments, and I think the ParallelFor Callsites are a good candidate for that.",
+      "range": {
+        "startLine": 872,
+        "startChar": 53,
+        "endLine": 872,
+        "endChar": 54
+      },
+      "revId": "60512aa1daedd722c05afa3d7e01d5eb1158677c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488855c8_a7843123",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-03T21:32:00Z",
+      "side": 1,
+      "message": "don\u0027t reformat",
+      "range": {
+        "startLine": 343,
+        "startChar": 32,
+        "endLine": 343,
+        "endChar": 39
+      },
+      "revId": "60512aa1daedd722c05afa3d7e01d5eb1158677c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8627e17a_2d858623",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-03T21:32:00Z",
+      "side": 1,
+      "message": "don\u0027t reformat",
+      "range": {
+        "startLine": 347,
+        "startChar": 19,
+        "endLine": 347,
+        "endChar": 25
+      },
+      "revId": "60512aa1daedd722c05afa3d7e01d5eb1158677c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba81299_829bd2e6",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-03T21:32:00Z",
+      "side": 1,
+      "message": "don\u0027t reformat",
+      "range": {
+        "startLine": 353,
+        "startChar": 17,
+        "endLine": 353,
+        "endChar": 18
+      },
+      "revId": "60512aa1daedd722c05afa3d7e01d5eb1158677c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
