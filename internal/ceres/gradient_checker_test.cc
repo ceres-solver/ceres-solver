@@ -112,7 +112,7 @@ class GoodTestTerm : public CostFunction {
  private:
   int arity_;
   bool return_value_;
-  vector<vector<double> > a_;  // our vectors.
+  vector<vector<double>> a_;  // our vectors.
 };
 
 class BadTestTerm : public CostFunction {
@@ -165,7 +165,7 @@ class BadTestTerm : public CostFunction {
 
  private:
   int arity_;
-  vector<vector<double> > a_;  // our vectors.
+  vector<vector<double>> a_;  // our vectors.
 };
 
 const double kTolerance = 1e-6;

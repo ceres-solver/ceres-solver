@@ -162,7 +162,7 @@ void OrderingToGroupSizes(const ParameterBlockOrdering* ordering,
     return;
   }
 
-  const map<int, set<double*> >& group_to_elements =
+  const map<int, set<double*>>& group_to_elements =
       ordering->group_to_elements();
   for (const auto& g_t_e : group_to_elements) {
     group_sizes->push_back(g_t_e.second.size());

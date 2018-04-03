@@ -126,9 +126,9 @@ class OrderedGroups {
       return;
     }
 
-    typename std::map<int, std::set<T> >::reverse_iterator it =
+    typename std::map<int, std::set<T>>::reverse_iterator it =
         group_to_elements_.rbegin();
-    std::map<int, std::set<T> > new_group_to_elements;
+    std::map<int, std::set<T>> new_group_to_elements;
     new_group_to_elements[it->first] = it->second;
 
     int new_group_id = it->first + 1;
@@ -165,7 +165,7 @@ class OrderedGroups {
   // This function always succeeds, i.e., implicitly there exists a
   // group for every integer.
   int GroupSize(const int group) const {
-    typename std::map<int, std::set<T> >::const_iterator it =
+    typename std::map<int, std::set<T>>::const_iterator it =
         group_to_elements_.find(group);
     return (it ==  group_to_elements_.end()) ? 0 : it->second.size();
   }
@@ -187,7 +187,7 @@ class OrderedGroups {
     return group_to_elements_.begin()->first;
   }
 
-  const std::map<int, std::set<T> >& group_to_elements() const {
+  const std::map<int, std::set<T>>& group_to_elements() const {
     return group_to_elements_;
   }
 
@@ -196,7 +196,7 @@ class OrderedGroups {
   }
 
  private:
-  std::map<int, std::set<T> > group_to_elements_;
+  std::map<int, std::set<T>> group_to_elements_;
   std::map<T, int> element_to_group_;
 };
 

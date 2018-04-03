@@ -196,11 +196,11 @@ namespace internal {
 //     return &preconditioner_->cluster_membership_;
 //   }
 
-//   const set<pair<int, int> >& get_block_pairs() {
+//   const set<pair<int, int>>& get_block_pairs() {
 //     return preconditioner_->block_pairs_;
 //   }
 
-//   set<pair<int, int> >* get_mutable_block_pairs() {
+//   set<pair<int, int>>* get_mutable_block_pairs() {
 //     return &preconditioner_->block_pairs_;
 //   }
 

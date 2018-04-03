@@ -42,7 +42,7 @@ namespace internal {
 // indices that are in-range and unique.
 TEST(LinearIndexToUpperTriangularIndexTest, UniqueAndValid) {
   for (int n = 0; n < 100; n++) {
-    std::set<std::pair<int, int> > seen_pairs;
+    std::set<std::pair<int, int>> seen_pairs;
     int actual_work_items = (n * (n + 1)) / 2;
     for (int k = 0; k < actual_work_items; k++) {
       int i, j;

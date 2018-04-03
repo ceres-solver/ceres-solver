@@ -152,14 +152,14 @@ class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
   LinearSolverTerminationType Factorize();
   void ScaleOffDiagonalCells();
 
-  void ClusterCameras(const std::vector<std::set<int> >& visibility);
+  void ClusterCameras(const std::vector<std::set<int>>& visibility);
   void FlattenMembershipMap(const std::unordered_map<int, int>& membership_map,
                             std::vector<int>* membership_vector) const;
   void ComputeClusterVisibility(
-      const std::vector<std::set<int> >& visibility,
-      std::vector<std::set<int> >* cluster_visibility) const;
+      const std::vector<std::set<int>>& visibility,
+      std::vector<std::set<int>>* cluster_visibility) const;
   WeightedGraph<int>* CreateClusterGraph(
-      const std::vector<std::set<int> >& visibility) const;
+      const std::vector<std::set<int>>& visibility) const;
   void ForestToClusterPairs(const WeightedGraph<int>& forest,
                             std::unordered_set<std::pair<int, int>, pair_hash>* cluster_pairs) const;
   void ComputeBlockPairsInPreconditioner(const CompressedRowBlockStructure& bs);
@@ -181,7 +181,7 @@ class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
   // Non-zero camera pairs from the schur complement matrix that are
   // present in the preconditioner, sorted by row (first element of
   // each pair), then column (second).
-  std::set<std::pair<int, int> > block_pairs_;
+  std::set<std::pair<int, int>> block_pairs_;
 
   // Set of cluster pairs (including self pairs (i,i)) in the
   // preconditioner.

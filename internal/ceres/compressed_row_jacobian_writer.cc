@@ -71,7 +71,7 @@ void CompressedRowJacobianWriter::PopulateJacobianRowAndColumnBlockVectors(
 void CompressedRowJacobianWriter::GetOrderedParameterBlocks(
       const Program* program,
       int residual_id,
-      vector<pair<int, int> >* evaluated_jacobian_blocks) {
+      vector<pair<int, int>>* evaluated_jacobian_blocks) {
   const ResidualBlock* residual_block =
       program->residual_blocks()[residual_id];
   const int num_parameter_blocks = residual_block->NumParameterBlocks();
@@ -208,7 +208,7 @@ void CompressedRowJacobianWriter::Write(int residual_id,
       program_->residual_blocks()[residual_id];
   const int num_residuals = residual_block->NumResiduals();
 
-  vector<pair<int, int> > evaluated_jacobian_blocks;
+  vector<pair<int, int>> evaluated_jacobian_blocks;
   GetOrderedParameterBlocks(program_, residual_id, &evaluated_jacobian_blocks);
 
   // Where in the current row does the jacobian for a parameter block begin.
