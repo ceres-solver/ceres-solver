@@ -91,7 +91,7 @@ void FillBlock(const vector<int>& row_blocks,
                const vector<int>& col_blocks,
                const int row_block_id,
                const int col_block_id,
-               vector<Eigen::Triplet<double> >* triplets) {
+               vector<Eigen::Triplet<double>>* triplets) {
   const int row_offset = std::accumulate(&row_blocks[0], &row_blocks[row_block_id], 0);
   const int col_offset = std::accumulate(&col_blocks[0], &col_blocks[col_block_id], 0);
   for (int r = 0; r < row_blocks[row_block_id]; ++r) {
@@ -125,7 +125,7 @@ TEST(_, ScalarMatrixToBlockMatrix) {
   const int num_rows = std::accumulate(row_blocks.begin(), row_blocks.end(), 0.0);
   const int num_cols = std::accumulate(col_blocks.begin(), col_blocks.end(), 0.0);
 
-  vector<Eigen::Triplet<double> > triplets;
+  vector<Eigen::Triplet<double>> triplets;
   FillBlock(row_blocks, col_blocks, 0, 0, &triplets);
   FillBlock(row_blocks, col_blocks, 2, 0, &triplets);
   FillBlock(row_blocks, col_blocks, 1, 1, &triplets);

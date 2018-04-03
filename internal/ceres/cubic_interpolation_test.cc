@@ -220,7 +220,7 @@ class CubicInterpolatorTest : public ::testing::Test {
     }
 
     Grid1D<double, kDataDimension> grid(values_.get(), 0, kNumSamples);
-    CubicInterpolator<Grid1D<double, kDataDimension> > interpolator(grid);
+    CubicInterpolator<Grid1D<double, kDataDimension>> interpolator(grid);
 
     // Check values in the all the cells but the first and the last
     // ones. In these cells, the interpolated function values should
@@ -283,7 +283,7 @@ TEST(CubicInterpolator, JetEvaluation) {
   const double values[] = {1.0, 2.0, 2.0, 5.0, 3.0, 9.0, 2.0, 7.0};
 
   Grid1D<double, 2, true> grid(values, 0, 4);
-  CubicInterpolator<Grid1D<double, 2, true> > interpolator(grid);
+  CubicInterpolator<Grid1D<double, 2, true>> interpolator(grid);
 
   double f[2], dfdx[2];
   const double x = 2.5;
@@ -327,7 +327,7 @@ class BiCubicInterpolatorTest : public ::testing::Test {
     }
 
     Grid2D<double, kDataDimension> grid(values_.get(), 0, kNumRows, 0, kNumCols);
-    BiCubicInterpolator<Grid2D<double, kDataDimension> > interpolator(grid);
+    BiCubicInterpolator<Grid2D<double, kDataDimension>> interpolator(grid);
 
     for (int j = 0; j < kNumRowSamples; ++j) {
       const double r = 1.0 + 7.0 / (kNumRowSamples - 1) * j;
@@ -471,7 +471,7 @@ TEST(BiCubicInterpolator, JetEvaluation) {
                            1.0, 2.0, 2.0,  2.0, 2.0, 2.0, 3.0, 1.0};
 
   Grid2D<double, 2> grid(values, 0, 2, 0, 4);
-  BiCubicInterpolator<Grid2D<double, 2> > interpolator(grid);
+  BiCubicInterpolator<Grid2D<double, 2>> interpolator(grid);
 
   double f[2], dfdr[2], dfdc[2];
   const double r = 0.5;

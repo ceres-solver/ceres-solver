@@ -129,7 +129,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(
                                                        A->mutable_values());
 
   Eigen::SparseMatrix<double> lhs = a.transpose() * a;
-  Eigen::SimplicialLDLT<Eigen::SparseMatrix<double> > solver;
+  Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>> solver;
 
   LinearSolver::Summary summary;
   summary.num_iterations = 1;

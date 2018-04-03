@@ -115,7 +115,7 @@ class TinySolverAutoDiffFunction {
     // Copy the jacobian out of the derivative part of the residual jets.
     Eigen::Map<Eigen::Matrix<T,
                              kNumResiduals,
-                             kNumParameters> > jacobian_matrix(jacobian);
+                             kNumParameters>> jacobian_matrix(jacobian);
     for (int r = 0; r < kNumResiduals; ++r) {
       residuals[r] = jet_residuals_[r].a;
       // Note that while this looks like a fast vectorized write, in practice it

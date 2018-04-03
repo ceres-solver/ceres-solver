@@ -912,7 +912,7 @@ namespace Eigen {
 // Creating a specialization of NumTraits enables placing Jet objects inside
 // Eigen arrays, getting all the goodness of Eigen combined with autodiff.
 template<typename T, int N>
-struct NumTraits<ceres::Jet<T, N> > {
+struct NumTraits<ceres::Jet<T, N>> {
   typedef ceres::Jet<T, N> Real;
   typedef ceres::Jet<T, N> NonInteger;
   typedef ceres::Jet<T, N> Nested;

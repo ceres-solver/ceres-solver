@@ -126,7 +126,7 @@ class TestTerm : public CostFunction {
 
  private:
   int arity_;
-  vector<vector<double> > a_;
+  vector<vector<double>> a_;
 };
 
 TEST(GradientCheckingCostFunction, ResidualsAndJacobiansArePreservedTest) {

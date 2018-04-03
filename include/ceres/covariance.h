@@ -183,7 +183,7 @@ class CovarianceImpl;
 //  Covariance::Options options;
 //  Covariance covariance(options);
 //
-//  std::vector<std::pair<const double*, const double*> > covariance_blocks;
+//  std::vector<std::pair<const double*, const double*>> covariance_blocks;
 //  covariance_blocks.push_back(make_pair(x, x));
 //  covariance_blocks.push_back(make_pair(y, y));
 //  covariance_blocks.push_back(make_pair(x, y));
@@ -360,7 +360,7 @@ class CERES_EXPORT Covariance {
   // function returns false.
   bool Compute(
       const std::vector<std::pair<const double*,
-                                  const double*> >& covariance_blocks,
+                                  const double*>>& covariance_blocks,
       Problem* problem);
 
   // Compute a part of the covariance matrix.

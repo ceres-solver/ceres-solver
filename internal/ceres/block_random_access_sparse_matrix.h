@@ -59,7 +59,7 @@ class BlockRandomAccessSparseMatrix : public BlockRandomAccessMatrix {
   // of this matrix.
   BlockRandomAccessSparseMatrix(
       const std::vector<int>& blocks,
-      const std::set<std::pair<int, int> >& block_pairs);
+      const std::set<std::pair<int, int>>& block_pairs);
 
   // The destructor is not thread safe. It assumes that no one is
   // modifying any cells when the matrix is being destroyed.
@@ -115,7 +115,7 @@ class BlockRandomAccessSparseMatrix : public BlockRandomAccessMatrix {
   // In order traversal of contents of the matrix. This allows us to
   // implement a matrix-vector which is 20% faster than using the
   // iterator in the Layout object instead.
-  std::vector<std::pair<std::pair<int, int>, double*> > cell_values_;
+  std::vector<std::pair<std::pair<int, int>, double*>> cell_values_;
   // The underlying matrix object which actually stores the cells.
   std::unique_ptr<TripletSparseMatrix> tsm_;
 
