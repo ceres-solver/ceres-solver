@@ -30,10 +30,6 @@
 
 #include "ceres/covariance_impl.h"
 
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-#include "ceres/parallel_for.h"
-#endif
-
 #include <algorithm>
 #include <cstdlib>
 #include <memory>
@@ -53,13 +49,12 @@
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/map_util.h"
+#include "ceres/parallel_for.h"
 #include "ceres/parallel_utils.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
 #include "ceres/residual_block.h"
-#include "ceres/scoped_thread_token.h"
 #include "ceres/suitesparse.h"
-#include "ceres/thread_token_provider.h"
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
 
@@ -344,60 +339,41 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 
   bool success = true;
 
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-  ThreadTokenProvider thread_token_provider(num_threads);
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-
   // Technically the following code is a double nested loop where
   // i = 1:n, j = i:n.
   int iteration_count = (num_parameters * (num_parameters + 1)) / 2;
-#if defined(CERES_USE_OPENMP)
-#    pragma omp parallel for num_threads(num_threads) schedule(dynamic)
-#endif // CERES_USE_OPENMP
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-  for (int k = 0; k < iteration_count; ++k) {
-#else
   problem_->context()->EnsureMinimumThreads(num_threads);
-  ParallelFor(problem_->context(),
-              0,
-              iteration_count,
-              num_threads,
-              [&](int thread_id, int k) {
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-      int i, j;
-      LinearIndexToUpperTriangularIndex(k, num_parameters, &i, &j);
+  ParallelFor(
+      problem_->context(),
+      0,
+      iteration_count,
+      num_threads,
+      [&](int thread_id, int k) {
+        int i, j;
+        LinearIndexToUpperTriangularIndex(k, num_parameters, &i, &j);
 
-      int covariance_row_idx = cum_parameter_size[i];
-      int covariance_col_idx = cum_parameter_size[j];
-      int size_i = parameter_sizes[i];
-      int size_j = parameter_sizes[j];
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-      const ScopedThreadToken scoped_thread_token(&thread_token_provider);
-      const int thread_id = scoped_thread_token.token();
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-      double* covariance_block =
-          workspace.get() +
-          thread_id * max_covariance_block_size * max_covariance_block_size;
-      if (!GetCovarianceBlockInTangentOrAmbientSpace(
-              parameters[i], parameters[j], lift_covariance_to_ambient_space,
-              covariance_block)) {
-        success = false;
-      }
+        int covariance_row_idx = cum_parameter_size[i];
+        int covariance_col_idx = cum_parameter_size[j];
+        int size_i = parameter_sizes[i];
+        int size_j = parameter_sizes[j];
+        double* covariance_block =
+            workspace.get() + thread_id * max_covariance_block_size *
+            max_covariance_block_size;
+        if (!GetCovarianceBlockInTangentOrAmbientSpace(
+                parameters[i], parameters[j],
+                lift_covariance_to_ambient_space, covariance_block)) {
+          success = false;
+        }
 
-      covariance.block(covariance_row_idx, covariance_col_idx,
-                       size_i, size_j) =
-          MatrixRef(covariance_block, size_i, size_j);
+        covariance.block(covariance_row_idx, covariance_col_idx, size_i,
+                         size_j) = MatrixRef(covariance_block, size_i, size_j);
 
-      if (i != j) {
-        covariance.block(covariance_col_idx, covariance_row_idx,
-                         size_j, size_i) =
-            MatrixRef(covariance_block, size_i, size_j).transpose();
-
-      }
-    }
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-   );
-#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
+        if (i != j) {
+          covariance.block(covariance_col_idx, covariance_row_idx,
+                           size_j, size_i) =
+              MatrixRef(covariance_block, size_i, size_j).transpose();
+        }
+      });
   return success;
 }
 
@@ -709,50 +685,23 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   const int num_threads = options_.num_threads;
   std::unique_ptr<double[]> workspace(new double[num_threads * num_cols]);
 
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-  ThreadTokenProvider thread_token_provider(num_threads);
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-
-#ifdef CERES_USE_OPENMP
-#pragma omp parallel for num_threads(num_threads) schedule(dynamic)
-#endif // CERES_USE_OPENMP
-
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-  for (int r = 0; r < num_cols; ++r) {
-#else
   problem_->context()->EnsureMinimumThreads(num_threads);
-  ParallelFor(problem_->context(),
-              0,
-              num_cols,
-              num_threads,
-              [&](int thread_id, int r) {
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-
-    const int row_begin = rows[r];
-    const int row_end = rows[r + 1];
-    if (row_end != row_begin) {
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-      const ScopedThreadToken scoped_thread_token(&thread_token_provider);
-      const int thread_id = scoped_thread_token.token();
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-
-      double* solution = workspace.get() + thread_id * num_cols;
-      SolveRTRWithSparseRHS<SuiteSparse_long>(
-          num_cols,
-          static_cast<SuiteSparse_long*>(R->i),
-          static_cast<SuiteSparse_long*>(R->p),
-          static_cast<double*>(R->x),
-          inverse_permutation[r],
-          solution);
-      for (int idx = row_begin; idx < row_end; ++idx) {
-        const int c = cols[idx];
-        values[idx] = solution[inverse_permutation[c]];
-      }
-    }
-  }
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-  );
-#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
+  ParallelFor(
+      problem_->context(), 0, num_cols, num_threads, [&](int thread_id, int r) {
+        const int row_begin = rows[r];
+        const int row_end = rows[r + 1];
+        if (row_end != row_begin) {
+          double* solution = workspace.get() + thread_id * num_cols;
+          SolveRTRWithSparseRHS<SuiteSparse_long>(
+              num_cols, static_cast<SuiteSparse_long*>(R->i),
+              static_cast<SuiteSparse_long*>(R->p), static_cast<double*>(R->x),
+              inverse_permutation[r], solution);
+          for (int idx = row_begin; idx < row_end; ++idx) {
+            const int c = cols[idx];
+            values[idx] = solution[inverse_permutation[c]];
+          }
+        }
+      });
 
   free(permutation);
   cholmod_l_free_sparse(&R, &cc);
@@ -918,54 +867,29 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
   const int num_threads = options_.num_threads;
   std::unique_ptr<double[]> workspace(new double[num_threads * num_cols]);
 
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-  ThreadTokenProvider thread_token_provider(num_threads);
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-
-#ifdef CERES_USE_OPENMP
-#pragma omp parallel for num_threads(num_threads) schedule(dynamic)
-#endif // CERES_USE_OPENMP
-
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-  for (int r = 0; r < num_cols; ++r) {
-#else
   problem_->context()->EnsureMinimumThreads(num_threads);
-  ParallelFor(problem_->context(),
-              0,
+  ParallelFor(
+      problem_->context(), 0, num_cols, num_threads, [&](int thread_id, int r) {
+        const int row_begin = rows[r];
+        const int row_end = rows[r + 1];
+        if (row_end != row_begin) {
+          double* solution = workspace.get() + thread_id * num_cols;
+          SolveRTRWithSparseRHS<int>(
               num_cols,
-              num_threads,
-              [&](int thread_id, int r) {
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
+              qr_solver.matrixR().innerIndexPtr(),
+              qr_solver.matrixR().outerIndexPtr(),
+              &qr_solver.matrixR().data().value(0),
+              inverse_permutation.indices().coeff(r),
+              solution);
 
-    const int row_begin = rows[r];
-    const int row_end = rows[r + 1];
-    if (row_end != row_begin) {
-#if !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-      const ScopedThreadToken scoped_thread_token(&thread_token_provider);
-      const int thread_id = scoped_thread_token.token();
-#endif // !(defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS))
-
-      double* solution = workspace.get() + thread_id * num_cols;
-      SolveRTRWithSparseRHS<int>(
-          num_cols,
-          qr_solver.matrixR().innerIndexPtr(),
-          qr_solver.matrixR().outerIndexPtr(),
-          &qr_solver.matrixR().data().value(0),
-          inverse_permutation.indices().coeff(r),
-          solution);
-
-      // Assign the values of the computed covariance using the
-      // inverse permutation used in the QR factorization.
-      for (int idx = row_begin; idx < row_end; ++idx) {
-       const int c = cols[idx];
-       values[idx] = solution[inverse_permutation.indices().coeff(c)];
-      }
-    }
-  }
-
-#if defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
-  );
-#endif // defined(CERES_USE_TBB) || defined(CERES_USE_CXX11_THREADS)
+          // Assign the values of the computed covariance using the
+          // inverse permutation used in the QR factorization.
+          for (int idx = row_begin; idx < row_end; ++idx) {
+            const int c = cols[idx];
+            values[idx] = solution[inverse_permutation.indices().coeff(c)];
+          }
+        }
+      });
 
   event_logger.AddEvent("Inverse");
 
