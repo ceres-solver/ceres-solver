@@ -178,6 +178,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/low_rank_inverse_hessian.cc \
                    $(CERES_SRC_PATH)/minimizer.cc \
                    $(CERES_SRC_PATH)/normal_prior.cc \
+                   $(CERES_SRC_PATH)/parallel_for_openmp.cc \
                    $(CERES_SRC_PATH)/parameter_block_ordering.cc \
                    $(CERES_SRC_PATH)/partitioned_matrix_view.cc \
                    $(CERES_SRC_PATH)/polynomial.cc \
