@@ -75,6 +75,7 @@ set(CERES_INTERNAL_SRC
     implicit_schur_complement.cc
     inner_product_computer.cc
     is_close.cc
+    iterative_refiner.cc
     iterative_schur_complement_solver.cc
     levenberg_marquardt_strategy.cc
     lapack.cc
@@ -338,6 +339,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(inner_product_computer)
   ceres_test(invert_psd_matrix)
   ceres_test(is_close)
+  ceres_test(iterative_refiner)
   ceres_test(iterative_schur_complement_solver)
   ceres_test(jet)
   ceres_test(levenberg_marquardt_strategy)
