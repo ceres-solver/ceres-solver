@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2017 Google Inc. All rights reserved.
+// Copyright 2018 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,51 +27,77 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//
-// A solver for sparse linear least squares problem based on solving
-// the normal equations via a sparse cholesky factorization.
 
-#ifndef CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
-#define CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
+#ifndef CERES_INTERNAL_ITERATIVE_REFINER_H_
+#define CERES_INTERNAL_ITERATIVE_REFINER_H_
 
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
-
-#include <vector>
-#include "ceres/internal/macros.h"
-#include "ceres/linear_solver.h"
+#include "ceres/internal/eigen.h"
 
 namespace ceres {
 namespace internal {
 
-class CompressedRowSparseMatrix;
-class InnerProductComputer;
-class IterativeRefiner;
+class SparseMatrix;
 class SparseCholesky;
 
-// Solves the normal equations (A'A + D'D) x = A'b, using the sparse
-// linear algebra library of the user's choice.
-class SparseNormalCholeskySolver : public BlockSparseMatrixSolver {
+// Iterative refinement
+// (https://en.wikipedia.org/wiki/Iterative_refinement) is the process
+// of improving the solution to a linear system, by using the
+// following iteration.
+//
+// r_i = b - Ax_i
+// Ad_i = r_i
+// x_{i+1} = x_i + d_i
+//
+// IterativeRefiner implements this process for Symmetric Positive
+// Definite linear systems.
+//
+// The above iterative loop is till max_num_iterations is reached or
+// the following convergence criterion is satisfied:
+//
+//    |b - Ax|
+// ------------- < 5e-15
+// |A| |x| + |b|
+//
+// All norms in the above expression are max-norms. The above
+// expression is what is recommended and used by Hogg & Scott in "A
+// fast and robust mixed-precision solver for the solution of sparse
+// symmetric linear systems".
+//
+// For example usage, please see sparse_normal_cholesky_solver.cc
+class IterativeRefiner {
  public:
-  explicit SparseNormalCholeskySolver(const LinearSolver::Options& options);
-  virtual ~SparseNormalCholeskySolver();
+  struct Summary {
+    bool converged = false;
+    int num_iterations = -1;
+    double lhs_max_norm = -1;
+    double rhs_max_norm = -1;
+    double solution_max_norm = -1;
+    double residual_max_norm = -1;
+  };
+
+  IterativeRefiner(int num_cols, int max_num_iterations);
+
+  // sparse_cholesky is assumed to already computed a factorization
+  // (or approximation thereof) of lhs.
+  //
+  // solution is expected to contain a approximation to the solution
+  // to lhs * x = rhs. It can be zero.
+  Summary Refine(const SparseMatrix& lhs,
+                 const double* rhs,
+                 SparseCholesky* sparse_cholesky,
+                 double* solution);
 
  private:
-  virtual LinearSolver::Summary SolveImpl(
-      BlockSparseMatrix* A,
-      const double* b,
-      const LinearSolver::PerSolveOptions& options,
-      double* x);
-
-  const LinearSolver::Options options_;
-  Vector rhs_;
-  std::unique_ptr<SparseCholesky> sparse_cholesky_;
-  std::unique_ptr<InnerProductComputer> inner_product_computer_;
-  std::unique_ptr<IterativeRefiner> iterative_refiner_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
+  int num_cols_;
+  int max_num_iterations_;
+  Vector residual_;
+  Vector correction_;
+  Vector lhs_x_solution_;
 };
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
+#endif  // CERES_INTERNAL_ITERATIVE_REFINER_H_
