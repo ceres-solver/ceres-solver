@@ -74,6 +74,7 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "is_close.cc",
     "implicit_schur_complement.cc",
     "inner_product_computer.cc",
+    "iterative_refiner.cc",
     "iterative_schur_complement_solver.cc",
     "lapack.cc",
     "levenberg_marquardt_strategy.cc",

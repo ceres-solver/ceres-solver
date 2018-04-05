@@ -38,6 +38,7 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/iterative_refiner.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -69,8 +70,11 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
   summary.message = "Success.";
 
   const int num_cols = A->num_cols();
-  VectorRef(x, num_cols).setZero();
-  A->LeftMultiply(b, x);
+  VectorRef xref(x, num_cols);
+  xref.setZero();
+  rhs_.resize(num_cols);
+  rhs_.setZero();
+  A->LeftMultiply(b, rhs_.data());
   event_logger.AddEvent("Compute RHS");
 
   if (per_solve_options.D != NULL) {
@@ -95,14 +99,28 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
   inner_product_computer_->Compute();
   event_logger.AddEvent("InnerProductComputer::Compute");
 
-  // TODO(sameeragarwal):
-
   if (per_solve_options.D != NULL) {
     A->DeleteRowBlocks(A->block_structure()->cols.size());
   }
+
+  CompressedRowSparseMatrix* lhs = inner_product_computer_->mutable_result();
   summary.termination_type = sparse_cholesky_->FactorAndSolve(
-      inner_product_computer_->mutable_result(), x, x, &summary.message);
+      lhs, rhs_.data(), x, &summary.message);
   event_logger.AddEvent("Factor & Solve");
+  if (summary.termination_type != LINEAR_SOLVER_SUCCESS) {
+    return summary;
+  }
+
+  if (options_.max_num_refinement_iterations > 0) {
+    if (iterative_refiner_ == nullptr) {
+      iterative_refiner_.reset(new IterativeRefiner(
+          num_cols, options_.max_num_refinement_iterations));
+    }
+
+    iterative_refiner_->Refine(*lhs, rhs_.data(), sparse_cholesky_.get(), x);
+    event_logger.AddEvent("Iterative Refinement");
+  }
+
   return summary;
 }
 
