@@ -112,6 +112,7 @@ CERES_TESTS = [
     "inner_product_computer",
     "invert_psd_matrix",
     "is_close",
+    "iterative_refiner",
     "iterative_schur_complement_solver",
     "jet",
     "levenberg_marquardt_strategy",
