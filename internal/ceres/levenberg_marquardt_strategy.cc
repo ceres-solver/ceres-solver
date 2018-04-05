@@ -30,7 +30,9 @@
 
 #include "ceres/levenberg_marquardt_strategy.h"
 
+#include <algorithm>
 #include <cmath>
+
 #include "Eigen/Core"
 #include "ceres/array_utils.h"
 #include "ceres/internal/eigen.h"

@@ -34,6 +34,7 @@
 #include "ceres/parallel_for.h"
 #endif
 
+#include <algorithm>
 #include <iterator>
 #include <memory>
 #include <numeric>

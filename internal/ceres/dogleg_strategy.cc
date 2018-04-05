@@ -30,7 +30,9 @@
 
 #include "ceres/dogleg_strategy.h"
 
+#include <algorithm>
 #include <cmath>
+
 #include "Eigen/Dense"
 #include "ceres/array_utils.h"
 #include "ceres/internal/eigen.h"

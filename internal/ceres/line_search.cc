@@ -30,6 +30,7 @@
 
 #include "ceres/line_search.h"
 
+#include <algorithm>
 #include <iomanip>
 #include <iostream>  // NOLINT
 

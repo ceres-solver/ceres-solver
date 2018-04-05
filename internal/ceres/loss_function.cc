@@ -32,6 +32,7 @@
 
 #include "ceres/loss_function.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstddef>
 #include <limits>

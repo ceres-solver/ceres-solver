@@ -30,6 +30,7 @@
 
 #include "ceres/program.h"
 
+#include <algorithm>
 #include <map>
 #include <memory>
 #include <vector>
