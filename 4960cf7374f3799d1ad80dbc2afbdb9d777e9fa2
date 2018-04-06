@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7bef28c_9ec645dd",
+        "filename": "internal/ceres/iterative_refiner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-06T20:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1f4e23b_fb1b0f43",
+      "revId": "4960cf7374f3799d1ad80dbc2afbdb9d777e9fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90fe08da_68e46a9b",
         "filename": "internal/ceres/iterative_refiner.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "4960cf7374f3799d1ad80dbc2afbdb9d777e9fa2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c69298_a0f6017c",
+        "filename": "internal/ceres/iterative_refiner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-06T20:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90fe08da_68e46a9b",
+      "revId": "4960cf7374f3799d1ad80dbc2afbdb9d777e9fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b38bd703_b1ecc533",
+        "filename": "internal/ceres/iterative_refiner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-06T20:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1129f9c2_5c23a7ab",
+      "revId": "4960cf7374f3799d1ad80dbc2afbdb9d777e9fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a127512_cb059f66",
         "filename": "internal/ceres/iterative_refiner.h",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "997e7fbe_3ad4ac7a",
+        "filename": "internal/ceres/iterative_refiner.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-06T20:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a127512_cb059f66",
+      "revId": "4960cf7374f3799d1ad80dbc2afbdb9d777e9fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1690fb11_11c5a65f",
         "filename": "internal/ceres/iterative_refiner.h",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2018-04-06T18:37:51Z",
       "side": 1,
       "message": "Is this needed? Isn\u0027t this provided as part of the SparseMatrix?",
+      "revId": "4960cf7374f3799d1ad80dbc2afbdb9d777e9fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940a1a8d_0b40ecb1",
+        "filename": "internal/ceres/iterative_refiner.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-06T20:42:22Z",
+      "side": 1,
+      "message": "I am allocating memory in the constructor so that the Refine loop doesn\u0027t have to do it, otherwise I will end up doing a bunch of resizes in Refine and then basically hoping that they do not cause a reallocation.",
+      "parentUuid": "1690fb11_11c5a65f",
       "revId": "4960cf7374f3799d1ad80dbc2afbdb9d777e9fa2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d3d1ef4d_66c01fc6",
+        "filename": "internal/ceres/iterative_refiner.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-06T20:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "170a1c00_bc8386a8",
+      "revId": "4960cf7374f3799d1ad80dbc2afbdb9d777e9fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2aa2dd2_6433069f",
         "filename": "internal/ceres/iterative_refiner_test.cc",
         "patchSetId": 5
@@ -115,6 +223,30 @@
       "writtenOn": "2018-04-06T19:01:41Z",
       "side": 1,
       "message": "Document \"oh, this had better be a symmetric matrix\". I got whiplash reading this function. Implementing LeftMultiply as an alias for RightMultiply would also help (rather than vice versa).",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "4960cf7374f3799d1ad80dbc2afbdb9d777e9fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dadab5a_31a5eb45",
+        "filename": "internal/ceres/iterative_refiner_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-06T20:42:22Z",
+      "side": 1,
+      "message": "you are right!\nI swapped it.",
+      "parentUuid": "a2aa2dd2_6433069f",
       "range": {
         "startLine": 61,
         "startChar": 0,
