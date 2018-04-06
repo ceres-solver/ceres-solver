@@ -77,12 +77,9 @@ class IterativeRefiner {
     double residual_max_norm = -1;
   };
 
-  // num_cols is the number of rows & columns in the linear system
-  // being solved.
-  //
   // max_num_iterations is the maximum number of refinement iterations
   // to perform.
-  IterativeRefiner(int num_cols, int max_num_iterations);
+  IterativeRefiner(int max_num_iterations);
 
   // Needed for mocking.
   virtual ~IterativeRefiner();
@@ -97,13 +94,18 @@ class IterativeRefiner {
   // to lhs * x = rhs. It can be zero.
   //
   // This method is virtual to facilitate mocking.
+  //
+  // TODO(sameeragarwal): Consider dropping the Summary object, and
+  // simplifying the internal implementation to improve efficiency,
+  // since we do not seem to be using the output at all.
   virtual Summary Refine(const SparseMatrix& lhs,
                          const double* rhs,
                          SparseCholesky* sparse_cholesky,
                          double* solution);
 
  private:
-  int num_cols_;
+  void Allocate(int num_cols);
+
   int max_num_iterations_;
   Vector residual_;
   Vector correction_;

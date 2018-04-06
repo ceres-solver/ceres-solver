@@ -196,8 +196,9 @@ void CXSparse::Free(cs_dis* symbolic_factor) { cs_di_sfree(symbolic_factor); }
 
 void CXSparse::Free(csn* numeric_factor) { cs_di_nfree(numeric_factor); }
 
-CXSparseCholesky* CXSparseCholesky::Create(const OrderingType ordering_type) {
-  return new CXSparseCholesky(ordering_type);
+std::unique_ptr<SparseCholesky> CXSparseCholesky::Create(
+    const OrderingType ordering_type) {
+  return std::unique_ptr<SparseCholesky>(new CXSparseCholesky(ordering_type));
 }
 
 CompressedRowSparseMatrix::StorageType CXSparseCholesky::StorageType() const {

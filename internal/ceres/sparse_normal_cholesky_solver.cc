@@ -38,6 +38,7 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/iterative_refiner.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -50,9 +51,7 @@ namespace internal {
 SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
     : options_(options) {
-  sparse_cholesky_.reset(
-      SparseCholesky::Create(options_.sparse_linear_algebra_library_type,
-                             options_.use_postordering ? AMD : NATURAL));
+  sparse_cholesky_ = SparseCholesky::Create(options);
 }
 
 SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {}
@@ -69,8 +68,11 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
   summary.message = "Success.";
 
   const int num_cols = A->num_cols();
-  VectorRef(x, num_cols).setZero();
-  A->LeftMultiply(b, x);
+  VectorRef xref(x, num_cols);
+  xref.setZero();
+  rhs_.resize(num_cols);
+  rhs_.setZero();
+  A->LeftMultiply(b, rhs_.data());
   event_logger.AddEvent("Compute RHS");
 
   if (per_solve_options.D != NULL) {
@@ -95,14 +97,16 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
   inner_product_computer_->Compute();
   event_logger.AddEvent("InnerProductComputer::Compute");
 
-  // TODO(sameeragarwal):
-
   if (per_solve_options.D != NULL) {
     A->DeleteRowBlocks(A->block_structure()->cols.size());
   }
+
   summary.termination_type = sparse_cholesky_->FactorAndSolve(
-      inner_product_computer_->mutable_result(), x, x, &summary.message);
-  event_logger.AddEvent("Factor & Solve");
+      inner_product_computer_->mutable_result(),
+      rhs_.data(),
+      x,
+      &summary.message);
+  event_logger.AddEvent("SparseCholesky::FactorAndSolve");
   return summary;
 }
 
