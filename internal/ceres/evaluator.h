@@ -60,20 +60,12 @@ class Evaluator {
   virtual ~Evaluator();
 
   struct Options {
-    Options()
-        : num_threads(1),
-          num_eliminate_blocks(-1),
-          linear_solver_type(DENSE_QR),
-          dynamic_sparsity(false),
-          context(NULL),
-          evaluation_callback(NULL) {}
-
-    int num_threads;
-    int num_eliminate_blocks;
-    LinearSolverType linear_solver_type;
-    bool dynamic_sparsity;
-    ContextImpl* context;
-    EvaluationCallback* evaluation_callback;
+    int num_threads = 1;
+    int num_eliminate_blocks = -1;
+    LinearSolverType linear_solver_type = DENSE_QR;
+    bool dynamic_sparsity = false;
+    ContextImpl* context = nullptr;
+    EvaluationCallback* evaluation_callback = nullptr;
   };
 
   static Evaluator* Create(const Options& options,
@@ -100,17 +92,12 @@ class Evaluator {
 
   // Options struct to control Evaluator::Evaluate;
   struct EvaluateOptions {
-    EvaluateOptions()
-        : apply_loss_function(true),
-          new_evaluation_point(true) {
-    }
-
     // If false, the loss function correction is not applied to the
     // residual blocks.
-    bool apply_loss_function;
+    bool apply_loss_function = true;
 
     // If false, this evaluation point is the same as the last one.
-    bool new_evaluation_point;
+    bool new_evaluation_point = true;
   };
 
   // Evaluate the cost function for the given state. Returns the cost,

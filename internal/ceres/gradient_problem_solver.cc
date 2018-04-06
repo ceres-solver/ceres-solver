@@ -194,26 +194,6 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
   summary->total_time_in_seconds = WallTimeInSeconds() - start_time;
 }
 
-// Invalid values for most fields, to ensure that we are not
-// accidentally reporting default values.
-GradientProblemSolver::Summary::Summary()
-    : termination_type(FAILURE),
-      message("ceres::GradientProblemSolve was not called."),
-      initial_cost(-1.0),
-      final_cost(-1.0),
-      total_time_in_seconds(-1.0),
-      cost_evaluation_time_in_seconds(-1.0),
-      gradient_evaluation_time_in_seconds(-1.0),
-      line_search_polynomial_minimization_time_in_seconds(-1.0),
-      num_parameters(-1),
-      num_local_parameters(-1),
-      line_search_direction_type(LBFGS),
-      line_search_type(ARMIJO),
-      line_search_interpolation_type(BISECTION),
-      nonlinear_conjugate_gradient_type(FLETCHER_REEVES),
-      max_lbfgs_rank(-1) {
-}
-
 bool GradientProblemSolver::Summary::IsSolutionUsable() const {
   return internal::IsSolutionUsable(*this);
 }
