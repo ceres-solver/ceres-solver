@@ -120,6 +120,8 @@ DEFINE_int32(random_seed, 38401, "Random seed used to set the state "
              "the pertubations.");
 DEFINE_bool(line_search, false, "Use a line search instead of trust region "
             "algorithm.");
+DEFINE_bool(mixed_precision_solves, false, "Use mixed precision solves.");
+DEFINE_int32(max_num_refinement_iterations, 0, "Iterative refinement iterations");
 DEFINE_string(initial_ply, "", "Export the BAL file data as a PLY file.");
 DEFINE_string(final_ply, "", "Export the refined BAL file data as a PLY "
               "file.");
@@ -141,6 +143,8 @@ void SetLinearSolver(Solver::Options* options) {
             FLAGS_dense_linear_algebra_library,
             &options->dense_linear_algebra_library_type));
   options->use_explicit_schur_complement = FLAGS_explicit_schur_complement;
+  options->use_mixed_precision_solves = FLAGS_mixed_precision_solves;
+  options->max_num_refinement_iterations = FLAGS_max_num_refinement_iterations;
 }
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {

@@ -66,14 +66,9 @@ namespace internal {
 
 class SparseCholesky {
  public:
-  // Factory which returns an instance of SparseCholesky for the given
-  // sparse linear algebra library and fill reducing ordering
-  // strategy.
-  //
-  // Caller owns the result.
-  static SparseCholesky* Create(
-      SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
-      OrderingType ordering_type);
+  // Factory
+  static std::unique_ptr<SparseCholesky> Create(
+      const LinearSolver::Options& options);
 
   virtual ~SparseCholesky();
 

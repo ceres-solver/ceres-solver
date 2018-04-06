@@ -285,7 +285,8 @@ class SuiteSparse {
 
 class SuiteSparseCholesky : public SparseCholesky {
  public:
-  static SuiteSparseCholesky* Create(const OrderingType ordering_type);
+  static std::unique_ptr<SparseCholesky> Create(
+      OrderingType ordering_type);
 
   // SparseCholesky interface.
   virtual ~SuiteSparseCholesky();

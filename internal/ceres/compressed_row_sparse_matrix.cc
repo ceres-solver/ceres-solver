@@ -266,6 +266,8 @@ void CompressedRowSparseMatrix::SetZero() {
   std::fill(values_.begin(), values_.end(), 0);
 }
 
+// TODO(sameeragarwal): Make RightMultiply and LeftMultiply
+// block-aware for higher performance.
 void CompressedRowSparseMatrix::RightMultiply(const double* x,
                                               double* y) const {
   CHECK_NOTNULL(x);

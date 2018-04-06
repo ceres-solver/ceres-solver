@@ -160,6 +160,8 @@ class LinearSolver {
     int e_block_size = Eigen::Dynamic;
     int f_block_size = Eigen::Dynamic;
 
+    bool use_mixed_precision_solves = false;
+    int max_num_refinement_iterations = 0;
     ContextImpl* context = nullptr;
   };
 

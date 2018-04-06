@@ -227,9 +227,7 @@ SparseSchurComplementSolver::SparseSchurComplementSolver(
     const LinearSolver::Options& options)
     : SchurComplementSolver(options) {
   if (options.type != ITERATIVE_SCHUR) {
-    sparse_cholesky_.reset(
-        SparseCholesky::Create(options.sparse_linear_algebra_library_type,
-                               options.use_postordering ? AMD : NATURAL));
+    sparse_cholesky_ = SparseCholesky::Create(options);
   }
 }
 

@@ -44,10 +44,13 @@ namespace internal {
 SubsetPreconditioner::SubsetPreconditioner(
     const Preconditioner::Options& options, const BlockSparseMatrix& A)
     : options_(options), num_cols_(A.num_cols()) {
-  sparse_cholesky_.reset(
-      SparseCholesky::Create(options_.sparse_linear_algebra_library_type,
-                             options_.use_postordering ? AMD : NATURAL));
   CHECK_GE(options_.subset_preconditioner_start_row_block, 0);
+  LinearSolver::Options sparse_cholesky_options;
+  sparse_cholesky_options.sparse_linear_algebra_library_type =
+      options_.sparse_linear_algebra_library_type;
+  sparse_cholesky_options.use_postordering =
+      options_.use_postordering;
+  sparse_cholesky_ = SparseCholesky::Create(sparse_cholesky_options);
 }
 
 SubsetPreconditioner::~SubsetPreconditioner() {}
