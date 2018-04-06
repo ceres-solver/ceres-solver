@@ -147,7 +147,7 @@ TEST_F(IterativeRefinerTest,
        ExactSolutionWithExactFactorizationReturnsInZeroIterations) {
   FakeSparseMatrix lhs(lhs_);
   FakeSparseCholesky<double> sparse_cholesky(lhs_);
-  IterativeRefiner refiner(num_cols_, max_num_iterations_);
+  IterativeRefiner refiner(max_num_iterations_);
   Vector refined_solution = solution_;
   auto summary = refiner.Refine(
       lhs, rhs_.data(), &sparse_cholesky, refined_solution.data());
@@ -161,7 +161,7 @@ TEST_F(IterativeRefinerTest,
        RandomSolutionWithExactFactorizationReturnsInOneIteration) {
   FakeSparseMatrix lhs(lhs_);
   FakeSparseCholesky<double> sparse_cholesky(lhs_);
-  IterativeRefiner refiner(num_cols_, max_num_iterations_);
+  IterativeRefiner refiner(max_num_iterations_);
   Vector refined_solution(num_cols_);
   refined_solution.setRandom();
   auto summary = refiner.Refine(
@@ -178,7 +178,7 @@ TEST_F(IterativeRefinerTest,
   // Use a single precision Cholesky factorization of the double
   // precision matrix. This will give us an approximate factorization.
   FakeSparseCholesky<float> sparse_cholesky(lhs_);
-  IterativeRefiner refiner(num_cols_, max_num_iterations_);
+  IterativeRefiner refiner(max_num_iterations_);
   Vector refined_solution(num_cols_);
   refined_solution.setRandom();
   auto summary = refiner.Refine(

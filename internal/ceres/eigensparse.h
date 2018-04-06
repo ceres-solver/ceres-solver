@@ -49,7 +49,8 @@ namespace internal {
 class EigenSparseCholesky : public SparseCholesky {
  public:
   // Factory
-  static SparseCholesky* Create(const OrderingType ordering_type);
+  static std::unique_ptr<SparseCholesky> Create(
+      const OrderingType ordering_type);
 
   // SparseCholesky interface.
   virtual ~EigenSparseCholesky();
@@ -66,7 +67,8 @@ class EigenSparseCholesky : public SparseCholesky {
 class FloatEigenSparseCholesky : public SparseCholesky {
  public:
   // Factory
-  static SparseCholesky* Create(const OrderingType ordering_type);
+  static std::unique_ptr<SparseCholesky> Create(
+      const OrderingType ordering_type);
 
   // SparseCholesky interface.
   virtual ~FloatEigenSparseCholesky();

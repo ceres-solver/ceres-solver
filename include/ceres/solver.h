@@ -500,6 +500,18 @@ class CERES_EXPORT Solver {
     // This settings affects the SPARSE_NORMAL_CHOLESKY solver.
     bool dynamic_sparsity = false;
 
+    // NOTE: The following two options are currently only applicable
+    // if sparse_linear_algebra_library_type is EIGEN_SPARSE and
+    // linear_solver_type is SPARSE_NORMAL_CHOLESKY, or SPARSE_SCHUR.
+    //
+    // When true, use_mixed_precision_solves enables the use of mixed
+    // precision algorithms when solving for the Gauss-Newton step.
+    //
+    // max_num_refinement_iterations controls the number of iterative
+    // refinement iterations used.
+    bool use_mixed_precision_solves = false;
+    int max_num_refinement_iterations = 0;
+
     // Some non-linear least squares problems have additional
     // structure in the way the parameter blocks interact that it is
     // beneficial to modify the way the trust region step is computed.

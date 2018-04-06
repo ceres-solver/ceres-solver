@@ -109,8 +109,12 @@ void SparseCholeskySolverUnitTest(
     const int min_block_size,
     const int max_block_size,
     const double block_density) {
-  std::unique_ptr<SparseCholesky> sparse_cholesky(SparseCholesky::Create(
-      sparse_linear_algebra_library_type, ordering_type));
+  LinearSolver::Options sparse_cholesky_options;
+  sparse_cholesky_options.sparse_linear_algebra_library_type =
+      sparse_linear_algebra_library_type;
+  sparse_cholesky_options.use_postordering  = (ordering_type == AMD);
+  std::unique_ptr<SparseCholesky> sparse_cholesky = SparseCholesky::Create(
+      sparse_cholesky_options);
   const CompressedRowSparseMatrix::StorageType storage_type =
       sparse_cholesky->StorageType();
 
@@ -230,7 +234,7 @@ class MockSparseCholesky : public SparseCholesky {
 
 class MockIterativeRefiner : public IterativeRefiner {
  public:
-  MockIterativeRefiner() : IterativeRefiner(1, 1) {}
+  MockIterativeRefiner() : IterativeRefiner(1) {}
   MOCK_METHOD4(Refine,
                Summary(const SparseMatrix& lhs,
                        const double* rhs,

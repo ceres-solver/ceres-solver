@@ -348,9 +348,9 @@ bool SuiteSparse::ConstrainedApproximateMinimumDegreeOrdering(
 #endif
 }
 
-SuiteSparseCholesky* SuiteSparseCholesky::Create(
+std::unique_ptr<SparseCholesky> SuiteSparseCholesky::Create(
     const OrderingType ordering_type) {
-  return new SuiteSparseCholesky(ordering_type);
+  return std::unique_ptr<SparseCholesky>(new SuiteSparseCholesky(ordering_type));
 }
 
 SuiteSparseCholesky::SuiteSparseCholesky(const OrderingType ordering_type)

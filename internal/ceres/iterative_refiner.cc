@@ -38,15 +38,16 @@
 namespace ceres {
 namespace internal {
 
-IterativeRefiner::IterativeRefiner(const int num_cols,
-                                   const int max_num_iterations)
-    : num_cols_(num_cols),
-      max_num_iterations_(max_num_iterations),
-      residual_(num_cols),
-      correction_(num_cols),
-      lhs_x_solution_(num_cols) {}
+IterativeRefiner::IterativeRefiner(const int max_num_iterations)
+    : max_num_iterations_(max_num_iterations) {}
 
 IterativeRefiner::~IterativeRefiner() {}
+
+void IterativeRefiner::Allocate(int num_cols) {
+  residual_.resize(num_cols);
+  correction_.resize(num_cols);
+  lhs_x_solution_.resize(num_cols);
+}
 
 IterativeRefiner::Summary IterativeRefiner::Refine(
     const SparseMatrix& lhs,
@@ -54,9 +55,11 @@ IterativeRefiner::Summary IterativeRefiner::Refine(
     SparseCholesky* sparse_cholesky,
     double* solution_ptr) {
   Summary summary;
+  const int num_cols = lhs.num_cols();
+  Allocate(num_cols);
 
-  ConstVectorRef rhs(rhs_ptr, num_cols_);
-  VectorRef solution(solution_ptr, num_cols_);
+  ConstVectorRef rhs(rhs_ptr, num_cols);
+  VectorRef solution(solution_ptr, num_cols);
 
   summary.lhs_max_norm = ConstVectorRef(lhs.values(), lhs.num_nonzeros())
                              .lpNorm<Eigen::Infinity>();

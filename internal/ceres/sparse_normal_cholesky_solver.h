@@ -46,6 +46,7 @@ namespace internal {
 
 class CompressedRowSparseMatrix;
 class InnerProductComputer;
+class IterativeRefiner;
 class SparseCholesky;
 
 // Solves the normal equations (A'A + D'D) x = A'b, using the sparse
@@ -63,8 +64,10 @@ class SparseNormalCholeskySolver : public BlockSparseMatrixSolver {
       double* x);
 
   const LinearSolver::Options options_;
+  Vector rhs_;
   std::unique_ptr<SparseCholesky> sparse_cholesky_;
   std::unique_ptr<InnerProductComputer> inner_product_computer_;
+  std::unique_ptr<IterativeRefiner> iterative_refiner_;
   CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
 };
 

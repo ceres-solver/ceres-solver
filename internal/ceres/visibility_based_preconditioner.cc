@@ -105,8 +105,12 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
   InitEliminator(bs);
   const time_t eliminator_time = time(NULL);
 
-  sparse_cholesky_.reset(
-      SparseCholesky::Create(options_.sparse_linear_algebra_library_type, AMD));
+  LinearSolver::Options sparse_cholesky_options;
+  sparse_cholesky_options.sparse_linear_algebra_library_type =
+      options_.sparse_linear_algebra_library_type;
+  // Force use of AMD ordering.
+  sparse_cholesky_options.use_postordering = true;
+  sparse_cholesky_ = SparseCholesky::Create(sparse_cholesky_options);
 
   const time_t init_time = time(NULL);
   VLOG(2) << "init time: " << init_time - start_time

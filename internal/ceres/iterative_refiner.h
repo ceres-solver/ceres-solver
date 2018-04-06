@@ -77,12 +77,9 @@ class IterativeRefiner {
     double residual_max_norm = -1;
   };
 
-  // num_cols is the number of rows & columns in the linear system
-  // being solved.
-  //
   // max_num_iterations is the maximum number of refinement iterations
   // to perform.
-  IterativeRefiner(int num_cols, int max_num_iterations);
+  IterativeRefiner(int max_num_iterations);
 
   // Needed for mocking.
   virtual ~IterativeRefiner();
@@ -103,7 +100,8 @@ class IterativeRefiner {
                          double* solution);
 
  private:
-  int num_cols_;
+  void Allocate(int num_cols);
+
   int max_num_iterations_;
   Vector residual_;
   Vector correction_;
