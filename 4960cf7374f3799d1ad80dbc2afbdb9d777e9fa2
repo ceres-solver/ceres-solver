@@ -101,6 +101,29 @@
       "revId": "4960cf7374f3799d1ad80dbc2afbdb9d777e9fa2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2aa2dd2_6433069f",
+        "filename": "internal/ceres/iterative_refiner_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-04-06T19:01:41Z",
+      "side": 1,
+      "message": "Document \"oh, this had better be a symmetric matrix\". I got whiplash reading this function. Implementing LeftMultiply as an alias for RightMultiply would also help (rather than vice versa).",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "4960cf7374f3799d1ad80dbc2afbdb9d777e9fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
