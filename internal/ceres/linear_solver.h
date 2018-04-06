@@ -102,43 +102,25 @@ class LinearOperator;
 class LinearSolver {
  public:
   struct Options {
-    Options()
-        : type(SPARSE_NORMAL_CHOLESKY),
-          preconditioner_type(JACOBI),
-          visibility_clustering_type(CANONICAL_VIEWS),
-          dense_linear_algebra_library_type(EIGEN),
-          sparse_linear_algebra_library_type(SUITE_SPARSE),
-          use_postordering(false),
-          dynamic_sparsity(false),
-          use_explicit_schur_complement(false),
-          min_num_iterations(1),
-          max_num_iterations(1),
-          num_threads(1),
-          residual_reset_period(10),
-          row_block_size(Eigen::Dynamic),
-          e_block_size(Eigen::Dynamic),
-          f_block_size(Eigen::Dynamic),
-          context(NULL) {
-    }
-
-    LinearSolverType type;
-    PreconditionerType preconditioner_type;
-    VisibilityClusteringType visibility_clustering_type;
-    DenseLinearAlgebraLibraryType dense_linear_algebra_library_type;
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type;
+    LinearSolverType type = SPARSE_NORMAL_CHOLESKY;
+    PreconditionerType preconditioner_type = JACOBI;
+    VisibilityClusteringType visibility_clustering_type = CANONICAL_VIEWS;
+    DenseLinearAlgebraLibraryType dense_linear_algebra_library_type = EIGEN;
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type =
+        SUITE_SPARSE;
 
     // See solver.h for information about these flags.
-    bool use_postordering;
-    bool dynamic_sparsity;
-    bool use_explicit_schur_complement;
+    bool use_postordering = false;
+    bool dynamic_sparsity = false;
+    bool use_explicit_schur_complement = false;
 
     // Number of internal iterations that the solver uses. This
     // parameter only makes sense for iterative solvers like CG.
-    int min_num_iterations;
-    int max_num_iterations;
+    int min_num_iterations = 1;
+    int max_num_iterations = 1;
 
     // If possible, how many threads can the solver use.
-    int num_threads;
+    int num_threads = 1;
 
     // Hints about the order in which the parameter blocks should be
     // eliminated by the linear solver.
@@ -163,7 +145,7 @@ class LinearSolver {
     // inaccurate over time. Thus for non-zero values of this
     // parameter, the solver can be told to recalculate the value of
     // the residual using a |b - Ax| evaluation.
-    int residual_reset_period;
+    int residual_reset_period = 10;
 
     // If the block sizes in a BlockSparseMatrix are fixed, then in
     // some cases the Schur complement based solvers can detect and
@@ -174,22 +156,15 @@ class LinearSolver {
     //
     // Please see schur_complement_solver.h and schur_eliminator.h for
     // more details.
-    int row_block_size;
-    int e_block_size;
-    int f_block_size;
+    int row_block_size = Eigen::Dynamic;
+    int e_block_size = Eigen::Dynamic;
+    int f_block_size = Eigen::Dynamic;
 
-    ContextImpl* context;
+    ContextImpl* context = nullptr;
   };
 
   // Options for the Solve method.
   struct PerSolveOptions {
-    PerSolveOptions()
-        : D(NULL),
-          preconditioner(NULL),
-          r_tolerance(0.0),
-          q_tolerance(0.0) {
-    }
-
     // This option only makes sense for unsymmetric linear solvers
     // that can solve rectangular linear systems.
     //
@@ -213,7 +188,7 @@ class LinearSolver {
     // does not have full column rank, the results returned by the
     // solver cannot be relied on. D, if it is not null is an array of
     // size n.  b is an array of size m and x is an array of size n.
-    double * D;
+    double* D = nullptr;
 
     // This option only makes sense for iterative solvers.
     //
@@ -235,7 +210,7 @@ class LinearSolver {
     //
     // A null preconditioner is equivalent to an identity matrix being
     // used a preconditioner.
-    LinearOperator* preconditioner;
+    LinearOperator* preconditioner = nullptr;
 
 
     // The following tolerance related options only makes sense for
@@ -247,7 +222,7 @@ class LinearSolver {
     //
     // This is the most commonly used termination criterion for
     // iterative solvers.
-    double r_tolerance;
+    double r_tolerance = 0.0;
 
     // For PSD matrices A, let
     //
@@ -271,22 +246,16 @@ class LinearSolver {
     //      Journal of Computational and Applied Mathematics,
     //      124(1-2), 45-59, 2000.
     //
-    double q_tolerance;
+    double q_tolerance = 0.0;
   };
 
   // Summary of a call to the Solve method. We should move away from
   // the true/false method for determining solver success. We should
   // let the summary object do the talking.
   struct Summary {
-    Summary()
-        : residual_norm(0.0),
-          num_iterations(-1),
-          termination_type(LINEAR_SOLVER_FAILURE) {
-    }
-
-    double residual_norm;
-    int num_iterations;
-    LinearSolverTerminationType termination_type;
+    double residual_norm = -1.0;
+    int num_iterations = -1;
+    LinearSolverTerminationType termination_type = LINEAR_SOLVER_FAILURE;
     std::string message;
   };
 

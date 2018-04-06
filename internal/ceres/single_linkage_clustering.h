@@ -38,13 +38,9 @@ namespace ceres {
 namespace internal {
 
 struct SingleLinkageClusteringOptions {
-  SingleLinkageClusteringOptions()
-      : min_similarity(0.99) {
-  }
-
   // Graph edges with edge weight less than min_similarity are ignored
   // during the clustering process.
-  double min_similarity;
+  double min_similarity = 0.99;
 };
 
 // Compute a partitioning of the vertices of the graph using the
