@@ -101,27 +101,21 @@ void ComputeCanonicalViewsClustering(
     std::unordered_map<int, int>* membership);
 
 struct CanonicalViewsClusteringOptions {
-  CanonicalViewsClusteringOptions()
-      : min_views(3),
-        size_penalty_weight(5.75),
-        similarity_penalty_weight(100.0),
-        view_score_weight(0.0) {
-  }
   // The minimum number of canonical views to compute.
-  int min_views;
+  int min_views = 3;
 
   // Penalty weight for the number of canonical views.  A higher
   // number will result in fewer canonical views.
-  double size_penalty_weight;
+  double size_penalty_weight = 5.75;
 
   // Penalty weight for the diversity (orthogonality) of the
   // canonical views.  A higher number will encourage less similar
   // canonical views.
-  double similarity_penalty_weight;
+  double similarity_penalty_weight = 100;
 
   // Weight for per-view scores.  Lower weight places less
   // confidence in the view scores.
-  double view_score_weight;
+  double view_score_weight = 0.0;
 };
 
 }  // namespace internal
