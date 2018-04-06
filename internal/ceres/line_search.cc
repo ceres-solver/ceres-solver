@@ -627,7 +627,11 @@ bool WolfeLineSearch::BracketingPhase(
     // being a boundary of a bracket.
 
     // If f(current) is valid, (but meets no criteria) expand the search by
-    // increasing the step size.
+    // increasing the step size.  If f(current) is invalid, contract the step
+    // size.
+    const double min_step_size =
+        current.value_is_valid
+        ? current.x : previous.x;
     const double max_step_size =
         current.value_is_valid
         ? (current.x * options().max_step_expansion) : current.x;
@@ -646,7 +650,7 @@ bool WolfeLineSearch::BracketingPhase(
             previous,
             unused_previous,
             current,
-            previous.x,
+            min_step_size,
             max_step_size);
     summary->polynomial_minimization_time_in_seconds +=
         (WallTimeInSeconds() - polynomial_minimization_start_time);
@@ -659,6 +663,10 @@ bool WolfeLineSearch::BracketingPhase(
       return false;
     }
 
+    // Only advance the lower boundary (in x) of the bracket if f(current)
+    // is valid such that we can support contracting the step size when
+    // f(current) is invalid without risking inverting the bracket in x, i.e.
+    // prevent previous.x > current.x.
     previous = current.value_is_valid ? current : previous;
     ++summary->num_function_evaluations;
     ++summary->num_gradient_evaluations;
