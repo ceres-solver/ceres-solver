@@ -96,27 +96,17 @@ class BlockSparseMatrix : public SparseMatrix {
       const std::vector<Block>& column_blocks);
 
   struct RandomMatrixOptions {
-    RandomMatrixOptions()
-        : num_row_blocks(0),
-          min_row_block_size(0),
-          max_row_block_size(0),
-          num_col_blocks(0),
-          min_col_block_size(0),
-          max_col_block_size(0),
-          block_density(0.0) {
-    }
-
-    int num_row_blocks;
-    int min_row_block_size;
-    int max_row_block_size;
-    int num_col_blocks;
-    int min_col_block_size;
-    int max_col_block_size;
+    int num_row_blocks = 0;
+    int min_row_block_size = 0;
+    int max_row_block_size = 0;
+    int num_col_blocks = 0;
+    int min_col_block_size = 0;
+    int max_col_block_size = 0;
 
     // 0 < block_density <= 1 is the probability of a block being
     // present in the matrix. A given random matrix will not have
     // precisely this density.
-    double block_density;
+    double block_density = 0.0;
 
     // If col_blocks is non-empty, then the generated random matrix
     // has this block structure and the column related options in this
