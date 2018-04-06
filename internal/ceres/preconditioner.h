@@ -48,22 +48,9 @@ class SparseMatrix;
 class Preconditioner : public LinearOperator {
  public:
   struct Options {
-    Options()
-        : type(JACOBI),
-          visibility_clustering_type(CANONICAL_VIEWS),
-          sparse_linear_algebra_library_type(SUITE_SPARSE),
-          subset_preconditioner_start_row_block(-1),
-          use_postordering(false),
-          num_threads(1),
-          row_block_size(Eigen::Dynamic),
-          e_block_size(Eigen::Dynamic),
-          f_block_size(Eigen::Dynamic),
-          context(NULL) {
-    }
-
-    PreconditionerType type;
-    VisibilityClusteringType visibility_clustering_type;
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type;
+    PreconditionerType type = JACOBI;
+    VisibilityClusteringType visibility_clustering_type = CANONICAL_VIEWS;
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type = SUITE_SPARSE;
 
     // When using the subset preconditioner, all row blocks starting
     // from this row block are used to construct the preconditioner.
@@ -75,13 +62,13 @@ class Preconditioner : public LinearOperator {
     //
     // where P has subset_preconditioner_start_row_block row blocks,
     // and the preconditioner is the inverse of the matrix Q'Q.
-    int subset_preconditioner_start_row_block;
+    int subset_preconditioner_start_row_block = -1;
 
     // See solver.h for information about these flags.
-    bool use_postordering;
+    bool use_postordering = false;
 
     // If possible, how many threads the preconditioner can use.
-    int num_threads;
+    int num_threads = 1;
 
     // Hints about the order in which the parameter blocks should be
     // eliminated by the linear solver.
@@ -110,11 +97,11 @@ class Preconditioner : public LinearOperator {
     //
     // Please see schur_complement_solver.h and schur_eliminator.h for
     // more details.
-    int row_block_size;
-    int e_block_size;
-    int f_block_size;
+    int row_block_size = Eigen::Dynamic;
+    int e_block_size = Eigen::Dynamic;
+    int f_block_size = Eigen::Dynamic;
 
-    ContextImpl* context;
+    ContextImpl* context = nullptr;
   };
 
   // If the optimization problem is such that there are no remaining

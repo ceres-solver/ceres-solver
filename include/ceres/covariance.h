@@ -200,26 +200,17 @@ class CovarianceImpl;
 class CERES_EXPORT Covariance {
  public:
   struct CERES_EXPORT Options {
-    Options() {
-      algorithm_type = SPARSE_QR;
-
-      // Eigen's QR factorization is always available.
-      sparse_linear_algebra_library_type = EIGEN_SPARSE;
-#if !defined(CERES_NO_SUITESPARSE)
-      sparse_linear_algebra_library_type = SUITE_SPARSE;
-#endif
-
-      min_reciprocal_condition_number = 1e-14;
-      null_space_rank = 0;
-      num_threads = 1;
-      apply_loss_function = true;
-    }
-
     // Sparse linear algebra library to use when a sparse matrix
     // factorization is being used to compute the covariance matrix.
     //
     // Currently this only applies to SPARSE_QR.
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type;
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type =
+#if !defined(CERES_NO_SUITESPARSE)
+        SUITE_SPARSE;
+#else
+        // Eigen's QR factorization is always available.
+        EIGEN_SPARSE;
+#endif
 
     // Ceres supports two different algorithms for covariance
     // estimation, which represent different tradeoffs in speed,
@@ -251,7 +242,7 @@ class CERES_EXPORT Covariance {
     // Eigen's Sparse QR factorization algorithm will be used or
     // SuiteSparse's high performance SuiteSparseQR algorithm will be
     // used.
-    CovarianceAlgorithmType algorithm_type;
+    CovarianceAlgorithmType algorithm_type = SPARSE_QR;
 
     // If the Jacobian matrix is near singular, then inverting J'J
     // will result in unreliable results, e.g, if
@@ -284,7 +275,7 @@ class CERES_EXPORT Covariance {
     //   sparse QR factorization algorithm. It is a fairly reliable
     //   indication of rank deficiency.
     //
-    double min_reciprocal_condition_number;
+    double min_reciprocal_condition_number = 1e-14;
 
     // When using DENSE_SVD, the user has more control in dealing with
     // singular and near singular covariance matrices.
@@ -319,9 +310,9 @@ class CERES_EXPORT Covariance {
     //
     // This option has no effect on the SUITE_SPARSE_QR and
     // EIGEN_SPARSE_QR algorithms.
-    int null_space_rank;
+    int null_space_rank = 0;
 
-    int num_threads;
+    int num_threads = 1;
 
     // Even though the residual blocks in the problem may contain loss
     // functions, setting apply_loss_function to false will turn off
@@ -329,7 +320,7 @@ class CERES_EXPORT Covariance {
     // function and in turn its effect on the covariance.
     //
     // TODO(sameergaarwal): Expand this based on Jim's experiments.
-    bool apply_loss_function;
+    bool apply_loss_function = true;
   };
 
   explicit Covariance(const Options& options);

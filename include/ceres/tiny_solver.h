@@ -148,32 +148,20 @@ class TinySolver {
   };
 
   struct Options {
-    Options()
-        : gradient_tolerance(1e-10),
-          parameter_tolerance(1e-8),
-          cost_threshold(std::numeric_limits<Scalar>::epsilon()),
-          initial_trust_region_radius(1e4),
-          max_num_iterations(50) {}
-    Scalar gradient_tolerance;   // eps > max(J'*f(x))
-    Scalar parameter_tolerance;  // eps > ||dx|| / ||x||
-    Scalar cost_threshold;       // eps > ||f(x)||
-    Scalar initial_trust_region_radius;
-    int max_num_iterations;
+    Scalar gradient_tolerance = 1e-10;  // eps > max(J'*f(x))
+    Scalar parameter_tolerance = 1e-8;  // eps > ||dx|| / ||x||
+    Scalar cost_threshold =             // eps > ||f(x)||
+        std::numeric_limits<Scalar>::epsilon();
+    Scalar initial_trust_region_radius = 1e4;
+    int max_num_iterations = 50;
   };
 
   struct Summary {
-    Summary()
-        : initial_cost(-1),
-          final_cost(-1),
-          gradient_max_norm(-1),
-          iterations(0),
-          status(HIT_MAX_ITERATIONS) {}
-
-    Scalar initial_cost;       // 1/2 ||f(x)||^2
-    Scalar final_cost;         // 1/2 ||f(x)||^2
-    Scalar gradient_max_norm;  // max(J'f(x))
-    int iterations;
-    Status status;
+    Scalar initial_cost = -1;       // 1/2 ||f(x)||^2
+    Scalar final_cost = -1;         // 1/2 ||f(x)||^2
+    Scalar gradient_max_norm = -1;  // max(J'f(x))
+    int iterations = 0;
+    Status status = HIT_MAX_ITERATIONS;
   };
 
   bool Update(const Function& function, const Parameters &x) {

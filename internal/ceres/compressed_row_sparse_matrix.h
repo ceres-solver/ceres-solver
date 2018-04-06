@@ -173,15 +173,6 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // zero or not. If the answer is no, then we generate entries for the
   // block which are distributed normally.
   struct RandomMatrixOptions {
-    RandomMatrixOptions()
-        : storage_type(UNSYMMETRIC),
-          min_row_block_size(0),
-          max_row_block_size(0),
-          num_col_blocks(0),
-          min_col_block_size(0),
-          max_col_block_size(0),
-          block_density(0.0) {}
-
     // Type of matrix to create.
     //
     // If storage_type is UPPER_TRIANGULAR (LOWER_TRIANGULAR), then
@@ -189,19 +180,19 @@ class CompressedRowSparseMatrix : public SparseMatrix {
     // (lower triangular) part. In this case, num_col_blocks,
     // min_col_block_size and max_col_block_size will be ignored and
     // assumed to be equal to the corresponding row settings.
-    StorageType storage_type;
+    StorageType storage_type = UNSYMMETRIC;
 
-    int num_row_blocks;
-    int min_row_block_size;
-    int max_row_block_size;
-    int num_col_blocks;
-    int min_col_block_size;
-    int max_col_block_size;
+    int num_row_blocks = 0;
+    int min_row_block_size = 0;
+    int max_row_block_size = 0;
+    int num_col_blocks = 0;
+    int min_col_block_size = 0;
+    int max_col_block_size = 0;
 
     // 0 < block_density <= 1 is the probability of a block being
     // present in the matrix. A given random matrix will not have
     // precisely this density.
-    double block_density;
+    double block_density = 0.0;
   };
 
   // Create a random CompressedRowSparseMatrix whose entries are
