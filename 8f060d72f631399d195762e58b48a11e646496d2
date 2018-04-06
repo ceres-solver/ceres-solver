@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58b5c7c2_fda39bde",
+        "filename": "internal/ceres/iterative_refiner_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-06T22:11:48Z",
+      "side": 1,
+      "message": "nit: Remove blank",
+      "revId": "8f060d72f631399d195762e58b48a11e646496d2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b36193_6bfd7463",
+        "filename": "internal/ceres/iterative_refiner_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-06T22:11:48Z",
+      "side": 1,
+      "message": "Why the semi here and below in the comment?",
+      "revId": "8f060d72f631399d195762e58b48a11e646496d2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
