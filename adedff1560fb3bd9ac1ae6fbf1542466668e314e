@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67538a37_74b9bda8",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-06T22:07:08Z",
+      "side": 1,
+      "message": "Can the preprocessor defines get indented? Like\n\n#  if foo\n#  endif\n\nand so on? It\u0027s hard to read this.",
+      "revId": "adedff1560fb3bd9ac1ae6fbf1542466668e314e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
