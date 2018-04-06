@@ -38,7 +38,9 @@
 
 #ifdef CERES_USE_EIGEN_SPARSE
 
+#include <memory>
 #include <string>
+
 #include "Eigen/SparseCore"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
@@ -49,7 +51,8 @@ namespace internal {
 class EigenSparseCholesky : public SparseCholesky {
  public:
   // Factory
-  static SparseCholesky* Create(const OrderingType ordering_type);
+  static std::unique_ptr<SparseCholesky> Create(
+      const OrderingType ordering_type);
 
   // SparseCholesky interface.
   virtual ~EigenSparseCholesky();
@@ -66,7 +69,8 @@ class EigenSparseCholesky : public SparseCholesky {
 class FloatEigenSparseCholesky : public SparseCholesky {
  public:
   // Factory
-  static SparseCholesky* Create(const OrderingType ordering_type);
+  static std::unique_ptr<SparseCholesky> Create(
+      const OrderingType ordering_type);
 
   // SparseCholesky interface.
   virtual ~FloatEigenSparseCholesky();
