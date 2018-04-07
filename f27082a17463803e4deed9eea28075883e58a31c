@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f45210b_8ab6fa05",
+        "filename": "internal/ceres/trust_region_step_evaluator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-07T03:34:29Z",
+      "side": 1,
+      "message": "Perhaps add \"model_cost_change *below* can result in overflow\"",
+      "revId": "f27082a17463803e4deed9eea28075883e58a31c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a2e06a_d8d8b85c",
+        "filename": "internal/ceres/trust_region_step_evaluator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-07T03:34:29Z",
+      "side": 1,
+      "message": "What is the reason for \u003e\u003d instead of just \u003d\u003d? Is this intended for inf also? I dislike sentinel value inside-baseball in general, and this feels a bit like that.\n\nCould the TrustRegionMinimizer instead use a nan? Or change to an actual sentinel value like kCeresFunctionEvalFailed so it\u0027s extra clear?",
+      "revId": "f27082a17463803e4deed9eea28075883e58a31c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
