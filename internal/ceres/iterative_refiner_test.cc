@@ -185,7 +185,7 @@ TEST_F(IterativeRefinerTest,
       lhs, rhs_.data(), &sparse_cholesky, refined_solution.data());
   EXPECT_TRUE(summary.converged);
   EXPECT_NEAR(
-      (refined_solution - solution_).norm() / solution_.norm(), 0.0, 5e-15);
+      (refined_solution - solution_).norm() / solution_.norm(), 0.0, 5e-14);
 }
 
 }  // namespace internal
