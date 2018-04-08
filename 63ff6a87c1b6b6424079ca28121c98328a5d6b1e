@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2df15ca7_f91a3936",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-08T13:31:43Z",
+      "side": 1,
+      "message": "This description should be updated to reflect that the interpolation_type is the maximum interpolation type, and that we fall back on failure",
+      "revId": "63ff6a87c1b6b6424079ca28121c98328a5d6b1e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "974499a7_c41fc77f",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-08T13:31:43Z",
+      "side": 1,
+      "message": "Unnecessary \u0027;\u0027 after }",
+      "revId": "63ff6a87c1b6b6424079ca28121c98328a5d6b1e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8caff0fd_ee6e3c01",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-08T13:31:43Z",
+      "side": 1,
+      "message": "So, should interpolation_type -\u003e max_interpolation_type (or something like that)?  As I understand this, you are falling back one degree on failure.  I think this needs a comment to this effect about the switch / perhaps inline after the if (MinimizeInterpolatingPolynomial(..)) {} for clarity?",
+      "revId": "63ff6a87c1b6b6424079ca28121c98328a5d6b1e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3bc8a3a_2b36f460",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-08T13:31:43Z",
+      "side": 1,
+      "message": "Add a \u003e\u003d VLOG() here about falling back to quadratic after cubic failure?",
+      "revId": "63ff6a87c1b6b6424079ca28121c98328a5d6b1e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6741143f_ef072bef",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-08T13:31:43Z",
+      "side": 1,
+      "message": "Add a \u003e\u003d VLOG() here about falling back to bisection after quadratic failure?",
+      "revId": "63ff6a87c1b6b6424079ca28121c98328a5d6b1e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
