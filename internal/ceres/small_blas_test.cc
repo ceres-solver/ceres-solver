@@ -202,100 +202,276 @@ TEST(BLAS, MatrixTransposeMatrixMultiply) {
   }
 }
 
-TEST(BLAS, MatrixVectorMultiply) {
+// TODO(sameeragarwal): Dedup and reduce the amount of duplication of
+// test code in this file.
+
+TEST(BLAS, MatrixMatrixMultiplyNaive) {
+  const int kRowA = 3;
+  const int kColA = 5;
+  Matrix A(kRowA, kColA);
+  A.setOnes();
+
+  const int kRowB = 5;
+  const int kColB = 7;
+  Matrix B(kRowB, kColB);
+  B.setOnes();
+
+  for (int row_stride_c = kRowA; row_stride_c < 3 * kRowA; ++row_stride_c) {
+    for (int col_stride_c = kColB; col_stride_c < 3 * kColB; ++col_stride_c) {
+      Matrix C(row_stride_c, col_stride_c);
+      C.setOnes();
+
+      Matrix C_plus = C;
+      Matrix C_minus = C;
+      Matrix C_assign = C;
+
+      Matrix C_plus_ref = C;
+      Matrix C_minus_ref = C;
+      Matrix C_assign_ref = C;
+      for (int start_row_c = 0; start_row_c + kRowA < row_stride_c; ++start_row_c) {
+        for (int start_col_c = 0; start_col_c + kColB < col_stride_c; ++start_col_c) {
+          C_plus_ref.block(start_row_c, start_col_c, kRowA, kColB) +=
+              A * B;
+
+          MatrixMatrixMultiplyNaive<kRowA, kColA, kRowB, kColB, 1>(
+              A.data(), kRowA, kColA,
+              B.data(), kRowB, kColB,
+              C_plus.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
+
+          EXPECT_NEAR((C_plus_ref - C_plus).norm(), 0.0, kTolerance)
+              << "C += A * B \n"
+              << "row_stride_c : " << row_stride_c << "\n"
+              << "col_stride_c : " << col_stride_c << "\n"
+              << "start_row_c  : " << start_row_c << "\n"
+              << "start_col_c  : " << start_col_c << "\n"
+              << "Cref : \n" << C_plus_ref << "\n"
+              << "C: \n" << C_plus;
+
+
+          C_minus_ref.block(start_row_c, start_col_c, kRowA, kColB) -=
+              A * B;
+
+          MatrixMatrixMultiplyNaive<kRowA, kColA, kRowB, kColB, -1>(
+              A.data(), kRowA, kColA,
+              B.data(), kRowB, kColB,
+              C_minus.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
+
+           EXPECT_NEAR((C_minus_ref - C_minus).norm(), 0.0, kTolerance)
+              << "C -= A * B \n"
+              << "row_stride_c : " << row_stride_c << "\n"
+              << "col_stride_c : " << col_stride_c << "\n"
+              << "start_row_c  : " << start_row_c << "\n"
+              << "start_col_c  : " << start_col_c << "\n"
+              << "Cref : \n" << C_minus_ref << "\n"
+              << "C: \n" << C_minus;
+
+          C_assign_ref.block(start_row_c, start_col_c, kRowA, kColB) =
+              A * B;
+
+          MatrixMatrixMultiplyNaive<kRowA, kColA, kRowB, kColB, 0>(
+              A.data(), kRowA, kColA,
+              B.data(), kRowB, kColB,
+              C_assign.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
+
+          EXPECT_NEAR((C_assign_ref - C_assign).norm(), 0.0, kTolerance)
+              << "C = A * B \n"
+              << "row_stride_c : " << row_stride_c << "\n"
+              << "col_stride_c : " << col_stride_c << "\n"
+              << "start_row_c  : " << start_row_c << "\n"
+              << "start_col_c  : " << start_col_c << "\n"
+              << "Cref : \n" << C_assign_ref << "\n"
+              << "C: \n" << C_assign;
+        }
+      }
+    }
+  }
+}
+
+TEST(BLAS, MatrixTransposeMatrixMultiplyNaive) {
   const int kRowA = 5;
   const int kColA = 3;
   Matrix A(kRowA, kColA);
   A.setOnes();
 
-  Vector b(kColA);
-  b.setOnes();
+  const int kRowB = 5;
+  const int kColB = 7;
+  Matrix B(kRowB, kColB);
+  B.setOnes();
 
-  Vector c(kRowA);
-  c.setOnes();
+  for (int row_stride_c = kColA; row_stride_c < 3 * kColA; ++row_stride_c) {
+    for (int col_stride_c = kColB; col_stride_c <  3 * kColB; ++col_stride_c) {
+      Matrix C(row_stride_c, col_stride_c);
+      C.setOnes();
 
-  Vector c_plus = c;
-  Vector c_minus = c;
-  Vector c_assign = c;
+      Matrix C_plus = C;
+      Matrix C_minus = C;
+      Matrix C_assign = C;
 
-  Vector c_plus_ref = c;
-  Vector c_minus_ref = c;
-  Vector c_assign_ref = c;
+      Matrix C_plus_ref = C;
+      Matrix C_minus_ref = C;
+      Matrix C_assign_ref = C;
+      for (int start_row_c = 0; start_row_c + kColA < row_stride_c; ++start_row_c) {
+        for (int start_col_c = 0; start_col_c + kColB < col_stride_c; ++start_col_c) {
+          C_plus_ref.block(start_row_c, start_col_c, kColA, kColB) +=
+              A.transpose() * B;
 
-  c_plus_ref += A * b;
-  MatrixVectorMultiply<kRowA, kColA, 1>(A.data(), kRowA, kColA,
-                                        b.data(),
-                                        c_plus.data());
-  EXPECT_NEAR((c_plus_ref - c_plus).norm(), 0.0, kTolerance)
-      << "c += A * b \n"
-      << "c_ref : \n" << c_plus_ref << "\n"
-      << "c: \n" << c_plus;
+          MatrixTransposeMatrixMultiplyNaive<kRowA, kColA, kRowB, kColB, 1>(
+              A.data(), kRowA, kColA,
+              B.data(), kRowB, kColB,
+              C_plus.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
 
-  c_minus_ref -= A * b;
-  MatrixVectorMultiply<kRowA, kColA, -1>(A.data(), kRowA, kColA,
-                                                 b.data(),
-                                                 c_minus.data());
-  EXPECT_NEAR((c_minus_ref - c_minus).norm(), 0.0, kTolerance)
-      << "c += A * b \n"
-      << "c_ref : \n" << c_minus_ref << "\n"
-      << "c: \n" << c_minus;
+          EXPECT_NEAR((C_plus_ref - C_plus).norm(), 0.0, kTolerance)
+              << "C += A' * B \n"
+              << "row_stride_c : " << row_stride_c << "\n"
+              << "col_stride_c : " << col_stride_c << "\n"
+              << "start_row_c  : " << start_row_c << "\n"
+              << "start_col_c  : " << start_col_c << "\n"
+              << "Cref : \n" << C_plus_ref << "\n"
+              << "C: \n" << C_plus;
 
-  c_assign_ref = A * b;
-  MatrixVectorMultiply<kRowA, kColA, 0>(A.data(), kRowA, kColA,
-                                                  b.data(),
-                                                  c_assign.data());
-  EXPECT_NEAR((c_assign_ref - c_assign).norm(), 0.0, kTolerance)
-      << "c += A * b \n"
-      << "c_ref : \n" << c_assign_ref << "\n"
-      << "c: \n" << c_assign;
+          C_minus_ref.block(start_row_c, start_col_c, kColA, kColB) -=
+              A.transpose() * B;
+
+          MatrixTransposeMatrixMultiplyNaive<kRowA, kColA, kRowB, kColB, -1>(
+              A.data(), kRowA, kColA,
+              B.data(), kRowB, kColB,
+              C_minus.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
+
+          EXPECT_NEAR((C_minus_ref - C_minus).norm(), 0.0, kTolerance)
+              << "C -= A' * B \n"
+              << "row_stride_c : " << row_stride_c << "\n"
+              << "col_stride_c : " << col_stride_c << "\n"
+              << "start_row_c  : " << start_row_c << "\n"
+              << "start_col_c  : " << start_col_c << "\n"
+              << "Cref : \n" << C_minus_ref << "\n"
+              << "C: \n" << C_minus;
+
+          C_assign_ref.block(start_row_c, start_col_c, kColA, kColB) =
+              A.transpose() * B;
+
+          MatrixTransposeMatrixMultiplyNaive<kRowA, kColA, kRowB, kColB, 0>(
+              A.data(), kRowA, kColA,
+              B.data(), kRowB, kColB,
+              C_assign.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
+
+          EXPECT_NEAR((C_assign_ref - C_assign).norm(), 0.0, kTolerance)
+              << "C = A' * B \n"
+              << "row_stride_c : " << row_stride_c << "\n"
+              << "col_stride_c : " << col_stride_c << "\n"
+              << "start_row_c  : " << start_row_c << "\n"
+              << "start_col_c  : " << start_col_c << "\n"
+              << "Cref : \n" << C_assign_ref << "\n"
+              << "C: \n" << C_assign;
+        }
+      }
+    }
+  }
+}
+
+TEST(BLAS, MatrixVectorMultiply) {
+  for (int num_rows_a = 1; num_rows_a < 10; ++num_rows_a) {
+    for (int num_cols_a = 1; num_cols_a < 10; ++num_cols_a) {
+      Matrix A(num_rows_a, num_cols_a);
+      A.setOnes();
+
+      Vector b(num_cols_a);
+      b.setOnes();
+
+      Vector c(num_rows_a);
+      c.setOnes();
+
+      Vector c_plus = c;
+      Vector c_minus = c;
+      Vector c_assign = c;
+
+      Vector c_plus_ref = c;
+      Vector c_minus_ref = c;
+      Vector c_assign_ref = c;
+
+      c_plus_ref += A * b;
+      MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+          A.data(), num_rows_a, num_cols_a,
+          b.data(),
+          c_plus.data());
+      EXPECT_NEAR((c_plus_ref - c_plus).norm(), 0.0, kTolerance)
+          << "c += A * b \n"
+          << "c_ref : \n" << c_plus_ref << "\n"
+          << "c: \n" << c_plus;
+
+      c_minus_ref -= A * b;
+      MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, -1>(
+          A.data(), num_rows_a, num_cols_a,
+          b.data(),
+          c_minus.data());
+      EXPECT_NEAR((c_minus_ref - c_minus).norm(), 0.0, kTolerance)
+          << "c += A * b \n"
+          << "c_ref : \n" << c_minus_ref << "\n"
+          << "c: \n" << c_minus;
+
+      c_assign_ref = A * b;
+      MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 0>(
+          A.data(), num_rows_a, num_cols_a,
+          b.data(),
+          c_assign.data());
+      EXPECT_NEAR((c_assign_ref - c_assign).norm(), 0.0, kTolerance)
+          << "c += A * b \n"
+          << "c_ref : \n" << c_assign_ref << "\n"
+          << "c: \n" << c_assign;
+    }
+  }
 }
 
 TEST(BLAS, MatrixTransposeVectorMultiply) {
-  const int kRowA = 5;
-  const int kColA = 3;
-  Matrix A(kRowA, kColA);
-  A.setRandom();
+  for (int num_rows_a = 1; num_rows_a < 10; ++num_rows_a) {
+    for (int num_cols_a = 1; num_cols_a < 10; ++num_cols_a) {
+      Matrix A(num_rows_a, num_cols_a);
+      A.setRandom();
 
-  Vector b(kRowA);
-  b.setRandom();
+      Vector b(num_rows_a);
+      b.setRandom();
 
-  Vector c(kColA);
-  c.setOnes();
+      Vector c(num_cols_a);
+      c.setOnes();
 
-  Vector c_plus = c;
-  Vector c_minus = c;
-  Vector c_assign = c;
+      Vector c_plus = c;
+      Vector c_minus = c;
+      Vector c_assign = c;
 
-  Vector c_plus_ref = c;
-  Vector c_minus_ref = c;
-  Vector c_assign_ref = c;
+      Vector c_plus_ref = c;
+      Vector c_minus_ref = c;
+      Vector c_assign_ref = c;
 
-  c_plus_ref += A.transpose() * b;
-  MatrixTransposeVectorMultiply<kRowA, kColA, 1>(A.data(), kRowA, kColA,
-                                                 b.data(),
-                                                 c_plus.data());
-  EXPECT_NEAR((c_plus_ref - c_plus).norm(), 0.0, kTolerance)
-      << "c += A' * b \n"
-      << "c_ref : \n" << c_plus_ref << "\n"
-      << "c: \n" << c_plus;
+      c_plus_ref += A.transpose() * b;
+      MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+          A.data(), num_rows_a, num_cols_a,
+          b.data(),
+          c_plus.data());
+      EXPECT_NEAR((c_plus_ref - c_plus).norm(), 0.0, kTolerance)
+          << "c += A' * b \n"
+          << "c_ref : \n" << c_plus_ref << "\n"
+          << "c: \n" << c_plus;
 
-  c_minus_ref -= A.transpose() * b;
-  MatrixTransposeVectorMultiply<kRowA, kColA, -1>(A.data(), kRowA, kColA,
-                                                  b.data(),
-                                                  c_minus.data());
-  EXPECT_NEAR((c_minus_ref - c_minus).norm(), 0.0, kTolerance)
-      << "c += A' * b \n"
-      << "c_ref : \n" << c_minus_ref << "\n"
-      << "c: \n" << c_minus;
+      c_minus_ref -= A.transpose() * b;
+      MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, -1>(
+          A.data(), num_rows_a, num_cols_a,
+          b.data(),
+          c_minus.data());
+      EXPECT_NEAR((c_minus_ref - c_minus).norm(), 0.0, kTolerance)
+          << "c += A' * b \n"
+          << "c_ref : \n" << c_minus_ref << "\n"
+          << "c: \n" << c_minus;
 
-  c_assign_ref = A.transpose() * b;
-  MatrixTransposeVectorMultiply<kRowA, kColA, 0>(A.data(), kRowA, kColA,
-                                                  b.data(),
-                                                  c_assign.data());
-  EXPECT_NEAR((c_assign_ref - c_assign).norm(), 0.0, kTolerance)
-      << "c += A' * b \n"
-      << "c_ref : \n" << c_assign_ref << "\n"
-      << "c: \n" << c_assign;
+      c_assign_ref = A.transpose() * b;
+      MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 0>(
+          A.data(), num_rows_a, num_cols_a,
+          b.data(),
+          c_assign.data());
+      EXPECT_NEAR((c_assign_ref - c_assign).norm(), 0.0, kTolerance)
+          << "c += A' * b \n"
+          << "c_ref : \n" << c_assign_ref << "\n"
+          << "c: \n" << c_assign;
+    }
+  }
 }
 
 }  // namespace internal
