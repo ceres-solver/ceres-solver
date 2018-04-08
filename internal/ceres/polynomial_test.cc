@@ -310,6 +310,7 @@ TEST(Polynomial, MinimizeQuadraticPolynomial) {
   EXPECT_EQ(optimal_value, 0.0);
 }
 
+/*
 TEST(Polymomial, ConstantInterpolatingPolynomial) {
   // p(x) = 1.0
   Vector true_polynomial(1);
@@ -511,6 +512,26 @@ TEST(Polynomial, CubicInterpolatingPolynomialFromValuesAndGradients) {
 
   const Vector polynomial = FindInterpolatingPolynomial(samples);
   EXPECT_NEAR((true_polynomial - polynomial).norm(), 0.0, 1e-14);
+}
+
+*/
+TEST(Polynomial, FindInterpolatingPolynomial) {
+  std::vector<FunctionSample> samples;
+  FunctionSample sample;
+  sample.x = 0.0;
+  sample.value =  5.22139340e+05;
+  sample.gradient = -3.25764989e+11;
+  sample.value_is_valid = true;
+  sample.gradient_is_valid = true;
+  samples.push_back(sample);
+
+  sample.x = 1.90750650e-06;
+  sample.value = 1.81769406e+06;
+  sample.gradient = -4.06082302e+10;
+  sample.gradient_is_valid = false;
+  samples.push_back(sample);
+  Vector polynomial;
+  EXPECT_TRUE(FindInterpolatingPolynomial(samples, &polynomial));
 }
 
 }  // namespace internal

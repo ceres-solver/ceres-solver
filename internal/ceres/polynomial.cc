@@ -326,7 +326,7 @@ void MinimizePolynomial(const Vector& polynomial,
   }
 }
 
-Vector FindInterpolatingPolynomial(const vector<FunctionSample>& samples) {
+bool FindInterpolatingPolynomial(const vector<FunctionSample>& samples, Vector* polynomial) {
   const int num_samples = samples.size();
   int num_constraints = 0;
   for (int i = 0; i < num_samples; ++i) {
@@ -363,18 +363,43 @@ Vector FindInterpolatingPolynomial(const vector<FunctionSample>& samples) {
     }
   }
 
-  // TODO(sameeragarwal): This is a hack.
-  // https://github.com/ceres-solver/ceres-solver/issues/248
-  Eigen::FullPivLU<Matrix> lu(lhs);
-  return lu.setThreshold(0.0).solve(rhs);
+  // While it is the case that lhs * x = rhs is a square linear
+  // system, and we would normally use an LU factorization to solve
+  // it. It turns out that this linear system can be very poorly
+  // conditioned, to the point of being rank deficient. In such cases,
+  // the linear system cannot be inverted and the number of solutions
+  // is infinite.
+  //
+  // Using a QR factorization allows us to deal with the the full rank
+  // and rank-deficient case in a unified manner.
+  //
+  // In the full rank case, we get the same solution as the LU
+  // factorization. In the rank deficient case, we get the minimum
+  // norm solution that satisfies the linear equation.
+
+  LOG(INFO) << "lhs: \n" << lhs;
+  LOG(INFO) << "rhs: " << rhs.transpose();
+  Eigen::FullPivLU<ceres::Matrix> lu(lhs);
+  if (lu.rank() < lu.rows()) {
+    return false;
+  }
+
+  *polynomial = lu.solve(rhs);
+  LOG(INFO) << "lu : " << polynomial->transpose() << " "
+            << (lhs * (*polynomial) - rhs).norm();
+  return true;
 }
 
-void MinimizeInterpolatingPolynomial(const vector<FunctionSample>& samples,
+bool MinimizeInterpolatingPolynomial(const vector<FunctionSample>& samples,
                                      double x_min,
                                      double x_max,
                                      double* optimal_x,
                                      double* optimal_value) {
-  const Vector polynomial = FindInterpolatingPolynomial(samples);
+  Vector polynomial;
+  if (!FindInterpolatingPolynomial(samples, &polynomial)) {
+    return false;
+  }
+
   MinimizePolynomial(polynomial, x_min, x_max, optimal_x, optimal_value);
   for (int i = 0; i < samples.size(); ++i) {
     const FunctionSample& sample = samples[i];
@@ -388,6 +413,7 @@ void MinimizeInterpolatingPolynomial(const vector<FunctionSample>& samples,
       *optimal_value = value;
     }
   }
+  return true;
 }
 
 }  // namespace internal

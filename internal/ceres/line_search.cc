@@ -206,6 +206,83 @@ void LineSearch::Search(double step_size_estimate,
   summary->total_time_in_seconds = WallTimeInSeconds() - start_time;
 }
 
+namespace {
+double Bisect(const FunctionSample& lowerbound,
+                          const FunctionSample& previous,
+                          const FunctionSample& current,
+                          const double min_step_size,
+                          const double max_step_size) {
+  if (!current.value_is_valid || (max_step_size <= current.x)) {
+    // Either: sample is invalid; or we are using BISECTION and contracting
+    // the step size.
+    return std::min(std::max(current.x * 0.5, min_step_size), max_step_size);
+  } else {
+    CHECK_GT(max_step_size, current.x);
+    // We are expanding the search (during a Wolfe bracketing phase) using
+    // BISECTION interpolation.  Using BISECTION when trying to expand is
+    // strictly speaking an oxymoron, but we define this to mean always taking
+    // the maximum step size so that the Armijo & Wolfe implementations are
+    // agnostic to the interpolation type.
+    return max_step_size;
+  }
+}
+
+double QuadraticInterpolatingPolynomialMinimizingStepSize(
+    const FunctionSample& lowerbound,
+    const FunctionSample& previous,
+    const FunctionSample& current,
+    const double min_step_size,
+    const double max_step_size) {
+  vector<FunctionSample> samples;
+  samples.push_back(lowerbound);
+  // Two point interpolation using function values and the
+  // gradient at the lower bound.
+  samples.push_back(FunctionSample(current.x, current.value));
+
+  if (previous.value_is_valid) {
+    // Three point interpolation, using function values and the
+    // gradient at the lower bound.
+    samples.push_back(FunctionSample(previous.x, previous.value));
+  }
+
+  double step_size = 0.0, unused_min_value = 0.0;
+  if (MinimizeInterpolatingPolynomial(samples, min_step_size, max_step_size,
+                                      &step_size, &unused_min_value)) {
+    return step_size;
+  }
+
+  return Bisect(lowerbound, previous, current, min_step_size, max_step_size);
+}
+
+
+double CubicInterpolatingPolynomialMinimizingStepSize(
+    const FunctionSample& lowerbound,
+    const FunctionSample& previous,
+    const FunctionSample& current,
+    const double min_step_size,
+    const double max_step_size) {
+  vector<FunctionSample> samples;
+  samples.push_back(lowerbound);
+  // Two point interpolation using the function values and the gradients.
+  samples.push_back(current);
+  if (previous.value_is_valid) {
+    // Three point interpolation using the function values and
+    // the gradients.
+    samples.push_back(previous);
+  }
+
+  double step_size = 0.0, unused_min_value = 0.0;
+  if (MinimizeInterpolatingPolynomial(samples, min_step_size, max_step_size,
+                                      &step_size, &unused_min_value)) {
+    return step_size;
+  }
+
+  return QuadraticInterpolatingPolynomialMinimizingStepSize(
+      lowerbound, previous, current, min_step_size, max_step_size);
+}
+
+} // namespace
+
 // Returns step_size \in [min_step_size, max_step_size] which minimizes the
 // polynomial of degree defined by interpolation_type which interpolates all
 // of the provided samples with valid values.
@@ -216,21 +293,10 @@ double LineSearch::InterpolatingPolynomialMinimizingStepSize(
     const FunctionSample& current,
     const double min_step_size,
     const double max_step_size) const {
-  if (!current.value_is_valid ||
-      (interpolation_type == BISECTION &&
-       max_step_size <= current.x)) {
-    // Either: sample is invalid; or we are using BISECTION and contracting
-    // the step size.
-    return std::min(std::max(current.x * 0.5, min_step_size), max_step_size);
-  } else if (interpolation_type == BISECTION) {
-    CHECK_GT(max_step_size, current.x);
-    // We are expanding the search (during a Wolfe bracketing phase) using
-    // BISECTION interpolation.  Using BISECTION when trying to expand is
-    // strictly speaking an oxymoron, but we define this to mean always taking
-    // the maximum step size so that the Armijo & Wolfe implementations are
-    // agnostic to the interpolation type.
-    return max_step_size;
+  if (interpolation_type == BISECTION || !current.value_is_valid) {
+    return Bisect(lowerbound, previous, current, min_step_size, max_step_size);
   }
+
   // Only check if lower-bound is valid here, where it is required
   // to avoid replicating current.value_is_valid == false
   // behaviour in WolfeLineSearch.
@@ -242,40 +308,21 @@ double LineSearch::InterpolatingPolynomialMinimizingStepSize(
       << ", lowerbound: " << lowerbound << ", previous: " << previous
       << ", current: " << current;
 
-  // Select step size by interpolating the function and gradient values
-  // and minimizing the corresponding polynomial.
-  vector<FunctionSample> samples;
-  samples.push_back(lowerbound);
-
   if (interpolation_type == QUADRATIC) {
-    // Two point interpolation using function values and the
-    // gradient at the lower bound.
-    samples.push_back(FunctionSample(current.x, current.value));
-
-    if (previous.value_is_valid) {
-      // Three point interpolation, using function values and the
-      // gradient at the lower bound.
-      samples.push_back(FunctionSample(previous.x, previous.value));
-    }
-  } else if (interpolation_type == CUBIC) {
-    // Two point interpolation using the function values and the gradients.
-    samples.push_back(current);
-
-    if (previous.value_is_valid) {
-      // Three point interpolation using the function values and
-      // the gradients.
-      samples.push_back(previous);
-    }
-  } else {
-    LOG(FATAL) << "Ceres bug: No handler for interpolation_type: "
-               << LineSearchInterpolationTypeToString(interpolation_type)
-               << ", please contact the developers!";
+    return QuadraticInterpolatingPolynomialMinimizingStepSize(
+        lowerbound, previous, current, min_step_size, max_step_size);
   }
 
-  double step_size = 0.0, unused_min_value = 0.0;
-  MinimizeInterpolatingPolynomial(samples, min_step_size, max_step_size,
-                                  &step_size, &unused_min_value);
-  return step_size;
+  if (interpolation_type == CUBIC) {
+    return CubicInterpolatingPolynomialMinimizingStepSize(
+        lowerbound, previous, current, min_step_size, max_step_size);
+  }
+
+
+  LOG(FATAL) << "Ceres bug: No handler for interpolation_type: "
+             << LineSearchInterpolationTypeToString(interpolation_type)
+             << ", please contact the developers!";
+  return -1;
 }
 
 ArmijoLineSearch::ArmijoLineSearch(const LineSearch::Options& options)
