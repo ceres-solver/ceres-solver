@@ -28,6 +28,14 @@
 #
 # Author: keir@google.com (Keir Mierle)
 
+# Avoid 'xxx.cc has no symbols' warnings from source files which are 'empty'
+# when their enclosing #ifdefs are disabled.
+if (CXX11_THREADS)
+  set(CERES_PARALLEL_FOR_SRC parallel_for_cxx.cc thread_pool.cc)
+elseif (TBB)
+  set(CERES_PARALLEL_FOR_SRC parallel_for_tbb.cc)
+endif()
+
 set(CERES_INTERNAL_SRC
     array_utils.cc
     blas.cc
@@ -91,8 +99,7 @@ set(CERES_INTERNAL_SRC
     low_rank_inverse_hessian.cc
     minimizer.cc
     normal_prior.cc
-    parallel_for_cxx.cc
-    parallel_for_tbb.cc
+    ${CERES_PARALLEL_FOR_SRC}
     parallel_utils.cc
     parameter_block_ordering.cc
     partitioned_matrix_view.cc
@@ -120,7 +127,6 @@ set(CERES_INTERNAL_SRC
     split.cc
     stringprintf.cc
     suitesparse.cc
-    thread_pool.cc
     thread_token_provider.cc
     triplet_sparse_matrix.cc
     trust_region_preprocessor.cc
