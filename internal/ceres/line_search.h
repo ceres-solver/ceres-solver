@@ -181,7 +181,7 @@ class LineSearch {
               double initial_gradient,
               Summary* summary) const;
   double InterpolatingPolynomialMinimizingStepSize(
-      const LineSearchInterpolationType& interpolation_type,
+      LineSearchInterpolationType interpolation_type,
       const FunctionSample& lowerbound_sample,
       const FunctionSample& previous_sample,
       const FunctionSample& current_sample,
