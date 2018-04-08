@@ -96,7 +96,8 @@ void MinimizePolynomial(const Vector& polynomial,
 // Of course its possible to sample a polynomial any number of times,
 // in which case, generally speaking the spurious higher order
 // coefficients will be zero.
-Vector FindInterpolatingPolynomial(const std::vector<FunctionSample>& samples);
+bool FindInterpolatingPolynomial(const std::vector<FunctionSample>& samples,
+                                 Vector* polynomial);
 
 // Interpolate the function described by samples with a polynomial,
 // and minimize it on the interval [x_min, x_max]. Depending on the
@@ -104,7 +105,7 @@ Vector FindInterpolatingPolynomial(const std::vector<FunctionSample>& samples);
 // finding algorithms may fail due to numerical difficulties. But the
 // function is guaranteed to return its best guess of an answer, by
 // considering the samples and the end points as possible solutions.
-void MinimizeInterpolatingPolynomial(const std::vector<FunctionSample>& samples,
+bool MinimizeInterpolatingPolynomial(const std::vector<FunctionSample>& samples,
                                      double x_min,
                                      double x_max,
                                      double* optimal_x,
