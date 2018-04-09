@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3d15784_1d9fccd5",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-09T22:45:33Z",
+      "side": 1,
+      "message": "Perhaps sprinkle in some comments about what\u0027s going on here; while it\u0027s in the code, it would be nice if each block mentioned that something tricky is happening (precision mixing).",
+      "revId": "967ae17efb68301c2effc9ea54b7ab108c8d270f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e6a446_c9488ad9",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-09T22:45:33Z",
+      "side": 1,
+      "message": "Do we still support eigen versions older than this?",
+      "revId": "967ae17efb68301c2effc9ea54b7ab108c8d270f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7969821c_e183ec40",
+        "filename": "internal/ceres/eigensparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-09T22:45:33Z",
+      "side": 1,
+      "message": "SinglePrecisionEigenSparseCholesky?\n\nGenerally unless there is a reason to use a suffix on class names, use the base type as the suffix.",
+      "revId": "967ae17efb68301c2effc9ea54b7ab108c8d270f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
