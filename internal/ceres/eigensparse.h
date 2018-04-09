@@ -49,10 +49,29 @@ namespace internal {
 class EigenSparseCholesky : public SparseCholesky {
  public:
   // Factory
-  static EigenSparseCholesky* Create(const OrderingType ordering_type);
+  static SparseCholesky* Create(const OrderingType ordering_type);
 
   // SparseCholesky interface.
   virtual ~EigenSparseCholesky();
+  virtual LinearSolverTerminationType Factorize(
+      CompressedRowSparseMatrix* lhs, std::string* message) = 0;
+  virtual CompressedRowSparseMatrix::StorageType StorageType() const = 0;
+  virtual LinearSolverTerminationType Solve(const double* rhs,
+                                            double* solution,
+                                            std::string* message) = 0;
+};
+
+// Even though the input is double precision linear system, this class
+// solves it by computing a single precision Cholesky factorization.
+class FloatEigenSparseCholesky : public SparseCholesky {
+ public:
+  // Factory
+  static SparseCholesky* Create(const OrderingType ordering_type);
+
+  // SparseCholesky interface.
+  virtual ~FloatEigenSparseCholesky();
+  virtual LinearSolverTerminationType Factorize(
+      CompressedRowSparseMatrix* lhs, std::string* message) = 0;
   virtual CompressedRowSparseMatrix::StorageType StorageType() const = 0;
   virtual LinearSolverTerminationType Solve(const double* rhs,
                                             double* solution,
