@@ -66,7 +66,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
   VectorRef(x, num_cols).setZero();
   A->LeftMultiply(b, x);
 
-  if (per_solve_options.D != NULL) {
+  if (per_solve_options.D != nullptr) {
     // Temporarily append a diagonal block to the A matrix, but undo
     // it before returning the matrix to the user.
     std::unique_ptr<CompressedRowSparseMatrix> regularizer;
@@ -96,7 +96,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
                  << options_.sparse_linear_algebra_library_type;
   }
 
-  if (per_solve_options.D != NULL) {
+  if (per_solve_options.D != nullptr) {
     A->DeleteRows(num_cols);
   }
 
@@ -253,19 +253,24 @@ DynamicSparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   cholmod_factor* factor = ss.AnalyzeCholesky(&lhs, &summary.message);
   event_logger.AddEvent("Analysis");
 
-  if (factor == NULL) {
+  if (factor == nullptr) {
     summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
     return summary;
   }
 
   summary.termination_type = ss.Cholesky(&lhs, factor, &summary.message);
   if (summary.termination_type == LINEAR_SOLVER_SUCCESS) {
-    cholmod_dense* rhs =
-        ss.CreateDenseVector(rhs_and_solution, num_cols, num_cols);
-    cholmod_dense* solution = ss.Solve(factor, rhs, &summary.message);
+    cholmod_dense cholmod_rhs;
+    cholmod_rhs.nrow = num_cols;
+    cholmod_rhs.ncol = 1;
+    cholmod_rhs.nzmax = num_cols;
+    cholmod_rhs.d = num_cols;
+    cholmod_rhs.x = reinterpret_cast<void*>(rhs_and_solution);
+    cholmod_rhs.xtype = CHOLMOD_REAL;
+    cholmod_rhs.dtype = CHOLMOD_DOUBLE;
+    cholmod_dense* solution = ss.Solve(factor, &cholmod_rhs, &summary.message);
     event_logger.AddEvent("Solve");
-    ss.Free(rhs);
-    if (solution != NULL) {
+    if (solution != nullptr) {
       memcpy(
           rhs_and_solution, solution->x, num_cols * sizeof(*rhs_and_solution));
       ss.Free(solution);
