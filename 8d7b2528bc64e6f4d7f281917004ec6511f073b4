@@ -16,6 +16,24 @@
       "revId": "8d7b2528bc64e6f4d7f281917004ec6511f073b4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a991758a_cdc2eac4",
+        "filename": "BUILD",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-09T18:18:16Z",
+      "side": 0,
+      "message": "Yes, why are we giving a bad build by default? this affects bundle adjustment performance enormously. Including the speed at which the tests can run.",
+      "parentUuid": "a8948ed4_4b34a8ad",
+      "revId": "8d7b2528bc64e6f4d7f281917004ec6511f073b4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
