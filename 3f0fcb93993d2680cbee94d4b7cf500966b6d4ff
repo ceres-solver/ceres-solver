@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed1db666_48a99a41",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-09T18:13:41Z",
+      "side": 1,
+      "message": "We may need to set the test concurrency to 1 for the bundle tests, since this can trigger bad behavior in Bazel.",
+      "revId": "3f0fcb93993d2680cbee94d4b7cf500966b6d4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
