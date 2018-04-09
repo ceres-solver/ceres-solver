@@ -205,6 +205,13 @@ INSTANTIATE_TEST_CASE_P(EigenSparseCholesky,
                                            ::testing::Values(AMD, NATURAL),
                                            ::testing::Values(true, false)),
                         ParamInfoToString);
+
+INSTANTIATE_TEST_CASE_P(EigenSparseCholeskySingle,
+                        SparseCholeskyTest,
+                        ::testing::Combine(::testing::Values(EIGEN_SPARSE),
+                                           ::testing::Values(AMD, NATURAL),
+                                           ::testing::Values(true, false)),
+                        ParamInfoToString);
 #endif
 
 }  // namespace internal
