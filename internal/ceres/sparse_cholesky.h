@@ -34,6 +34,7 @@
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
+#include <memory>
 #include "ceres/linear_solver.h"
 #include "glog/logging.h"
 
@@ -112,6 +113,29 @@ class SparseCholesky {
       double* solution,
       std::string* message);
 
+};
+
+class IterativeRefiner;
+
+// Computes an initial solution using the given instance of
+// SparseCholesky, and then refines it using the IterativeRefiner.
+class RefinedSparseCholesky : public SparseCholesky {
+ public:
+  RefinedSparseCholesky(std::unique_ptr<SparseCholesky> sparse_cholesky,
+                        std::unique_ptr<IterativeRefiner> iterative_refiner);
+  virtual ~RefinedSparseCholesky();
+
+  virtual CompressedRowSparseMatrix::StorageType StorageType() const;
+  virtual LinearSolverTerminationType Factorize(
+      CompressedRowSparseMatrix* lhs, std::string* message);
+  virtual LinearSolverTerminationType Solve(const double* rhs,
+                                            double* solution,
+                                            std::string* message);
+
+ private:
+  std::unique_ptr<SparseCholesky> sparse_cholesky_;
+  std::unique_ptr<IterativeRefiner> iterative_refiner_;
+  CompressedRowSparseMatrix* lhs = nullptr;
 };
 
 }  // namespace internal
