@@ -99,8 +99,6 @@ class SparseCholesky {
   // Computes the solution to the equation
   //
   // lhs * solution = rhs
-  //
-  // rhs and solution can point to the same memory location.
   virtual LinearSolverTerminationType Solve(const double* rhs,
                                             double* solution,
                                             std::string* message) = 0;
