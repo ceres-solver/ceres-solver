@@ -46,6 +46,8 @@ IterativeRefiner::IterativeRefiner(const int num_cols,
       correction_(num_cols),
       lhs_x_solution_(num_cols) {}
 
+IterativeRefiner::~IterativeRefiner() {}
+
 IterativeRefiner::Summary IterativeRefiner::Refine(
     const SparseMatrix& lhs,
     const double* rhs_ptr,

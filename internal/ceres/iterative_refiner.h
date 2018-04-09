@@ -84,6 +84,8 @@ class IterativeRefiner {
   // to perform.
   IterativeRefiner(int num_cols, int max_num_iterations);
 
+  virtual ~IterativeRefiner();
+
   // Given an initial estimate of the solution of lhs * x = rhs, use
   // iterative refinement to improve it.
   //
@@ -92,10 +94,10 @@ class IterativeRefiner {
   //
   // solution is expected to contain a approximation to the solution
   // to lhs * x = rhs. It can be zero.
-  Summary Refine(const SparseMatrix& lhs,
-                 const double* rhs,
-                 SparseCholesky* sparse_cholesky,
-                 double* solution);
+  virtual Summary Refine(const SparseMatrix& lhs,
+                         const double* rhs,
+                         SparseCholesky* sparse_cholesky,
+                         double* solution);
 
  private:
   int num_cols_;

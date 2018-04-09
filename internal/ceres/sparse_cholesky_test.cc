@@ -40,9 +40,11 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/iterative_refiner.h"
 #include "ceres/random.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
 
 namespace ceres {
 namespace internal {
@@ -213,6 +215,117 @@ INSTANTIATE_TEST_CASE_P(EigenSparseCholeskySingle,
                                            ::testing::Values(true, false)),
                         ParamInfoToString);
 #endif
+
+class MockSparseCholesky : public SparseCholesky {
+ public:
+  MOCK_CONST_METHOD0(StorageType, CompressedRowSparseMatrix::StorageType());
+  MOCK_METHOD2(Factorize,
+               LinearSolverTerminationType(CompressedRowSparseMatrix* lhs,
+                                           std::string* message));
+  MOCK_METHOD3(Solve,
+               LinearSolverTerminationType(const double* rhs,
+                                           double* solution,
+                                           std::string* message));
+};
+
+class MockIterativeRefiner : public IterativeRefiner {
+ public:
+  MockIterativeRefiner() : IterativeRefiner(1, 1) {}
+  MOCK_METHOD4(Refine,
+               Summary(const SparseMatrix& lhs,
+                       const double* rhs,
+                       SparseCholesky* sparse_cholesky,
+                       double* solution));
+};
+
+
+using testing::_;
+using testing::Return;
+
+TEST(RefinedSparseCholesky, StorageType) {
+  MockSparseCholesky* mock_sparse_cholesky = new MockSparseCholesky;
+  MockIterativeRefiner* mock_iterative_refiner = new MockIterativeRefiner;
+  EXPECT_CALL(*mock_sparse_cholesky, StorageType())
+      .Times(1)
+      .WillRepeatedly(Return(CompressedRowSparseMatrix::UPPER_TRIANGULAR));
+  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _))
+      .Times(0);
+  std::unique_ptr<SparseCholesky> sparse_cholesky(mock_sparse_cholesky);
+  std::unique_ptr<IterativeRefiner> iterative_refiner(mock_iterative_refiner);
+  RefinedSparseCholesky refined_sparse_cholesky(std::move(sparse_cholesky),
+                                                std::move(iterative_refiner));
+  EXPECT_EQ(refined_sparse_cholesky.StorageType(),
+            CompressedRowSparseMatrix::UPPER_TRIANGULAR);
+};
+
+TEST(RefinedSparseCholesky, Factorize) {
+  MockSparseCholesky* mock_sparse_cholesky = new MockSparseCholesky;
+  MockIterativeRefiner* mock_iterative_refiner = new MockIterativeRefiner;
+
+  EXPECT_CALL(*mock_sparse_cholesky, Factorize(_, _))
+      .Times(1)
+      .WillRepeatedly(Return(LINEAR_SOLVER_SUCCESS));
+  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _))
+      .Times(0);
+  std::unique_ptr<SparseCholesky> sparse_cholesky(mock_sparse_cholesky);
+  std::unique_ptr<IterativeRefiner> iterative_refiner(mock_iterative_refiner);
+  RefinedSparseCholesky refined_sparse_cholesky(std::move(sparse_cholesky),
+                                                std::move(iterative_refiner));
+  CompressedRowSparseMatrix m(1, 1, 1);
+  std::string message;
+  EXPECT_EQ(refined_sparse_cholesky.Factorize(&m, &message),
+            LINEAR_SOLVER_SUCCESS);
+};
+
+TEST(RefinedSparseCholesky, FactorAndSolveWithUnsuccessfulFactorization) {
+  MockSparseCholesky* mock_sparse_cholesky = new MockSparseCholesky;
+  MockIterativeRefiner* mock_iterative_refiner = new MockIterativeRefiner;
+
+  LOG(INFO) << mock_sparse_cholesky << " " << mock_iterative_refiner;
+  EXPECT_CALL(*mock_sparse_cholesky, Factorize(_, _))
+      .Times(1)
+      .WillRepeatedly(Return(LINEAR_SOLVER_FAILURE));
+  EXPECT_CALL(*mock_sparse_cholesky, Solve(_, _, _))
+      .Times(0);
+  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _))
+      .Times(0);
+  std::unique_ptr<SparseCholesky> sparse_cholesky(mock_sparse_cholesky);
+  std::unique_ptr<IterativeRefiner> iterative_refiner(mock_iterative_refiner);
+  RefinedSparseCholesky refined_sparse_cholesky(std::move(sparse_cholesky),
+                                                std::move(iterative_refiner));
+  CompressedRowSparseMatrix m(1, 1, 1);
+  std::string message;
+  double rhs;
+  double solution;
+  EXPECT_EQ(refined_sparse_cholesky.FactorAndSolve(&m, &rhs, &solution, &message),
+            LINEAR_SOLVER_FAILURE);
+};
+
+TEST(RefinedSparseCholesky, FactorAndSolveWithSuccess) {
+  MockSparseCholesky* mock_sparse_cholesky = new MockSparseCholesky;
+  std::unique_ptr<MockIterativeRefiner> mock_iterative_refiner(new MockIterativeRefiner);
+
+  //LOG(INFO) << mock_sparse_cholesky << " " << mock_iterative_refiner.get();
+  EXPECT_CALL(*mock_sparse_cholesky, Factorize(_, _))
+      .Times(1)
+      .WillRepeatedly(Return(LINEAR_SOLVER_SUCCESS));
+  EXPECT_CALL(*mock_sparse_cholesky, Solve(_, _, _))
+      .Times(1)
+      .WillRepeatedly(Return(LINEAR_SOLVER_SUCCESS));
+  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _))
+      .Times(1);
+
+  std::unique_ptr<SparseCholesky> sparse_cholesky(mock_sparse_cholesky);
+  std::unique_ptr<IterativeRefiner> iterative_refiner(std::move(mock_iterative_refiner));
+  RefinedSparseCholesky refined_sparse_cholesky(std::move(sparse_cholesky),
+                                                std::move(iterative_refiner));
+  CompressedRowSparseMatrix m(1, 1, 1);
+  std::string message;
+  double rhs;
+  double solution;
+  EXPECT_EQ(refined_sparse_cholesky.FactorAndSolve(&m, &rhs, &solution, &message),
+            LINEAR_SOLVER_SUCCESS);
+};
 
 }  // namespace internal
 }  // namespace ceres

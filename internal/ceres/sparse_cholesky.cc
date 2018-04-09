@@ -32,6 +32,7 @@
 
 #include "ceres/cxsparse.h"
 #include "ceres/eigensparse.h"
+#include "ceres/iterative_refiner.h"
 #include "ceres/suitesparse.h"
 
 namespace ceres {
@@ -94,6 +95,37 @@ CompressedRowSparseMatrix::StorageType StorageTypeForSparseLinearAlgebraLibrary(
     return CompressedRowSparseMatrix::UPPER_TRIANGULAR;
   }
   return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
+}
+
+RefinedSparseCholesky::RefinedSparseCholesky(
+    std::unique_ptr<SparseCholesky> sparse_cholesky,
+    std::unique_ptr<IterativeRefiner> iterative_refiner)
+    : sparse_cholesky_(std::move(sparse_cholesky)),
+      iterative_refiner_(std::move(iterative_refiner)) {}
+
+RefinedSparseCholesky::~RefinedSparseCholesky() {}
+
+CompressedRowSparseMatrix::StorageType RefinedSparseCholesky::StorageType() const {
+  return sparse_cholesky_->StorageType();
+}
+
+LinearSolverTerminationType RefinedSparseCholesky::Factorize(
+    CompressedRowSparseMatrix* lhs, std::string* message) {
+  lhs_ = lhs;
+  return sparse_cholesky_->Factorize(lhs, message);
+}
+
+LinearSolverTerminationType RefinedSparseCholesky::Solve(const double* rhs,
+                                                         double* solution,
+                                                         std::string* message) {
+  CHECK(lhs_ != nullptr);
+  auto termination_type = sparse_cholesky_->Solve(rhs, solution, message);
+  if (termination_type != LINEAR_SOLVER_SUCCESS) {
+    return termination_type;
+  }
+
+  iterative_refiner_->Refine(*lhs_, rhs, sparse_cholesky_.get(), solution);
+  return LINEAR_SOLVER_SUCCESS;
 }
 
 }  // namespace internal
