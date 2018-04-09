@@ -192,9 +192,9 @@ def ceres_library(name,
         defines = [
             "CERES_NO_SUITESPARSE",
             "CERES_NO_CXSPARSE",
-            "CERES_NO_THREADS",
             "CERES_NO_LAPACK",
-            "CERES_STD_UNORDERED_MAP",
+            "CERES_USE_EIGEN_SPARSE",
+            "CERES_USE_CXX11_THREADS",
             "CERES_GFLAGS_NAMESPACE=" + gflags_namespace,
         ],
         includes = [
