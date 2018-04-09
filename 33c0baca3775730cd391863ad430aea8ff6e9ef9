@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b2d7e54_62863f20",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-09T21:08:26Z",
+      "side": 1,
+      "message": "Could this be done as a new function in the suite sparse wrapper instead?",
+      "revId": "33c0baca3775730cd391863ad430aea8ff6e9ef9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316d3491_7947aaa5",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-09T21:08:26Z",
+      "side": 1,
+      "message": "Could this be part of the suite sparse abstraction?",
+      "revId": "33c0baca3775730cd391863ad430aea8ff6e9ef9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
