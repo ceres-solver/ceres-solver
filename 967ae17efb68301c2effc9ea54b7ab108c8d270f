@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8300d123_5d77a94b",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-09T22:58:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3d15784_1d9fccd5",
+      "revId": "967ae17efb68301c2effc9ea54b7ab108c8d270f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9e6a446_c9488ad9",
         "filename": "internal/ceres/eigensparse.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-04-09T22:45:33Z",
       "side": 1,
       "message": "Do we still support eigen versions older than this?",
+      "revId": "967ae17efb68301c2effc9ea54b7ab108c8d270f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ef0d7a_ef620213",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-09T22:58:01Z",
+      "side": 1,
+      "message": "well right now yes, but jesus christ I would like to drop this.",
+      "parentUuid": "d9e6a446_c9488ad9",
       "revId": "967ae17efb68301c2effc9ea54b7ab108c8d270f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
