@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7863d1e_3c90b5f9",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-09T21:40:41Z",
+      "side": 1,
+      "message": "yes.",
+      "parentUuid": "5b2d7e54_62863f20",
+      "revId": "33c0baca3775730cd391863ad430aea8ff6e9ef9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "316d3491_7947aaa5",
         "filename": "internal/ceres/suitesparse.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "33c0baca3775730cd391863ad430aea8ff6e9ef9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871f8595_31f2c281",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-09T21:40:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "316d3491_7947aaa5",
+      "revId": "33c0baca3775730cd391863ad430aea8ff6e9ef9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
