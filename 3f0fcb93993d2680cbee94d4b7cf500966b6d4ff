@@ -16,6 +16,24 @@
       "revId": "3f0fcb93993d2680cbee94d4b7cf500966b6d4ff",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f681200_11b6287f",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-09T18:18:16Z",
+      "side": 1,
+      "message": "sure, but no reason not to have good performance by default in the library.\nI do not think we should hold this back because bazel is doing something silly when running tests.",
+      "parentUuid": "ed1db666_48a99a41",
+      "revId": "3f0fcb93993d2680cbee94d4b7cf500966b6d4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
