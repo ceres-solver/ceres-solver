@@ -91,6 +91,7 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "minimizer.cc",
     "normal_prior.cc",
     "parallel_for_cxx.cc",
+    "parallel_for_openmp.cc",
     "parallel_for_tbb.cc",
     "parallel_utils.cc",
     "parameter_block_ordering.cc",

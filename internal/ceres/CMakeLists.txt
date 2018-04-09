@@ -91,6 +91,7 @@ set(CERES_INTERNAL_SRC
     low_rank_inverse_hessian.cc
     minimizer.cc
     normal_prior.cc
+    parallel_for_openmp.cc
     parallel_for_cxx.cc
     parallel_for_tbb.cc
     parallel_utils.cc
