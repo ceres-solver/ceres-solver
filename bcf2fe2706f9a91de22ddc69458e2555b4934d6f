@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dbe7c30_54d88999",
+        "filename": "internal/ceres/iterative_refiner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-10T00:38:18Z",
+      "side": 1,
+      "message": "The virtualness is surprising and serves no production purpose, so consider commenting that this is virtual only for mocking.",
+      "revId": "bcf2fe2706f9a91de22ddc69458e2555b4934d6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85aec59c_07cd4ee2",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-10T00:38:18Z",
+      "side": 1,
+      "message": "ordering",
+      "revId": "bcf2fe2706f9a91de22ddc69458e2555b4934d6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0de85e5_89aed150",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-10T00:38:18Z",
+      "side": 1,
+      "message": "Intended?",
+      "revId": "bcf2fe2706f9a91de22ddc69458e2555b4934d6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ece6b8_ae658400",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-10T00:38:18Z",
+      "side": 1,
+      "message": "Leave in or out, but not commented.",
+      "revId": "bcf2fe2706f9a91de22ddc69458e2555b4934d6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
