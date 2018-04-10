@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ece6f12_61ffa525",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-10T17:12:14Z",
+      "side": 1,
+      "message": "will wait for this to become stable with agreed upon naming.",
+      "parentUuid": "676a8ead_1961f3fa",
+      "revId": "f8c8b313e5f4485b1c208cc91f12c851dbf665b4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b344e6d_058faa9b",
         "filename": "include/ceres/solver.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "f8c8b313e5f4485b1c208cc91f12c851dbf665b4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab105f2b_3539eec9",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-10T17:12:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2b344e6d_058faa9b",
+      "revId": "f8c8b313e5f4485b1c208cc91f12c851dbf665b4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b7b8b066_07adc456",
+        "filename": "internal/ceres/sparse_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-10T17:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b396279_a2e2f338",
+      "revId": "f8c8b313e5f4485b1c208cc91f12c851dbf665b4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6d2bfe0_9fc8a283",
         "filename": "internal/ceres/visibility_based_preconditioner.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "f8c8b313e5f4485b1c208cc91f12c851dbf665b4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94a0301_200761e1",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-04-10T17:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6d2bfe0_9fc8a283",
+      "revId": "f8c8b313e5f4485b1c208cc91f12c851dbf665b4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
