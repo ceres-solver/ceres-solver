@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3aff162_c3143744",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-10T18:00:27Z",
+      "side": 1,
+      "message": "This is use_postordering? Comment doesn\u0027t match.",
+      "revId": "d6a9a6efb0c40f1311be03c30d0593868f8c9ccd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
