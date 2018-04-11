@@ -62,7 +62,7 @@ ThreadPool::ThreadPool(int num_threads) {
 }
 
 ThreadPool::~ThreadPool() {
-  std::unique_lock<std::mutex> lock(thread_pool_mutex_);
+  std::lock_guard<std::mutex> lock(thread_pool_mutex_);
   // Signal the thread workers to stop and wait for them to finish all scheduled
   // tasks.
   Stop();
@@ -72,7 +72,7 @@ ThreadPool::~ThreadPool() {
 }
 
 void ThreadPool::Resize(int num_threads) {
-  std::unique_lock<std::mutex> lock(thread_pool_mutex_);
+  std::lock_guard<std::mutex> lock(thread_pool_mutex_);
 
   const int num_current_threads = thread_pool_.size();
   if (num_current_threads >= num_threads) {
@@ -92,7 +92,7 @@ void ThreadPool::AddTask(const std::function<void()>& func) {
 }
 
 int ThreadPool::Size() {
-  std::unique_lock<std::mutex> lock(thread_pool_mutex_);
+  std::lock_guard<std::mutex> lock(thread_pool_mutex_);
   return thread_pool_.size();
 }
 
