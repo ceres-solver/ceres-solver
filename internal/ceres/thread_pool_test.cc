@@ -59,7 +59,7 @@ TEST(ThreadPool, AddTask) {
 
     for (int i = 0; i < num_tasks; ++i) {
       thread_pool.AddTask([&]() {
-          std::unique_lock<std::mutex> lock(mutex);
+          std::lock_guard<std::mutex> lock(mutex);
           ++value;
           condition.notify_all();
         });
@@ -96,7 +96,7 @@ TEST(ThreadPool, ResizingDuringExecution) {
     auto task = [&]() {
       // This will block until the mutex is released inside the condition
       // variable.
-      std::unique_lock<std::mutex> lock(mutex);
+      std::lock_guard<std::mutex> lock(mutex);
       ++value;
       condition.notify_all();
     };
@@ -150,7 +150,7 @@ TEST(ThreadPool, Destructor) {
       thread_pool.AddTask([&]() {
         // This will block until the mutex is released inside the condition
         // variable.
-        std::unique_lock<std::mutex> lock(mutex);
+        std::lock_guard<std::mutex> lock(mutex);
         ++value;
         condition.notify_all();
       });

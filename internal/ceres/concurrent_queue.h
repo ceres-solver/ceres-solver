@@ -83,7 +83,7 @@ class ConcurrentQueue {
   // Atomically push an element onto the queue.  If a thread was waiting for an
   // element, wake it up.
   void Push(const T& value) {
-    std::unique_lock<std::mutex> lock(mutex_);
+    std::lock_guard<std::mutex> lock(mutex_);
     queue_.push(value);
     work_pending_condition_.notify_one();
   }
@@ -93,7 +93,7 @@ class ConcurrentQueue {
   bool Pop(T* value) {
     CHECK(value != nullptr);
 
-    std::unique_lock<std::mutex> lock(mutex_);
+    std::lock_guard<std::mutex> lock(mutex_);
     return PopUnlocked(value);
   }
 
@@ -114,14 +114,14 @@ class ConcurrentQueue {
   // exit Wait() without getting a value. All future Wait requests will return
   // immediately if no element is present until EnableWaiters is called.
   void StopWaiters() {
-    std::unique_lock<std::mutex> lock(mutex_);
+    std::lock_guard<std::mutex> lock(mutex_);
     wait_ = false;
     work_pending_condition_.notify_all();
   }
 
   // Enable threads to block on Wait calls.
   void EnableWaiters() {
-    std::unique_lock<std::mutex> lock(mutex_);
+    std::lock_guard<std::mutex> lock(mutex_);
     wait_ = true;
   }
 

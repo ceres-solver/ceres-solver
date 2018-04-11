@@ -60,7 +60,7 @@ class BlockUntilFinished {
   // Increment the number of jobs that have finished and signal the blocking
   // thread if all jobs have finished.
   void Finished() {
-    std::unique_lock<std::mutex> lock(mutex_);
+    std::lock_guard<std::mutex> lock(mutex_);
     ++num_finished_;
     CHECK_LE(num_finished_, num_total_);
     if (num_finished_ == num_total_) {
@@ -196,7 +196,7 @@ void ParallelFor(ContextImpl* context,
     {
       // Get the next available chunk of work to be performed. If there is no
       // work, return false.
-      std::unique_lock<std::mutex> lock(shared_state->mutex_i);
+      std::lock_guard<std::mutex> lock(shared_state->mutex_i);
       if (shared_state->i >= shared_state->num_work_items) {
         return false;
       }
