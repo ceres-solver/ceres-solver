@@ -236,10 +236,10 @@ class MockIterativeRefiner : public IterativeRefiner {
  public:
   MockIterativeRefiner() : IterativeRefiner(1) {}
   MOCK_METHOD4(Refine,
-               Summary(const SparseMatrix& lhs,
-                       const double* rhs,
-                       SparseCholesky* sparse_cholesky,
-                       double* solution));
+               void (const SparseMatrix& lhs,
+                     const double* rhs,
+                     SparseCholesky* sparse_cholesky,
+                     double* solution));
 };
 
 

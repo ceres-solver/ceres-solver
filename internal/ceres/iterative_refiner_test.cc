@@ -28,8 +28,9 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "Eigen/Dense"
 #include "ceres/iterative_refiner.h"
+
+#include "Eigen/Dense"
 #include "ceres/internal/eigen.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/sparse_matrix.h"
@@ -58,7 +59,6 @@ class FakeSparseMatrix : public SparseMatrix {
   // y += Ax
   virtual void RightMultiply(const double* x, double* y) const {
     VectorRef(y, m_.cols()) += m_ * ConstVectorRef(x, m_.cols());
-
   }
   // y += A'x
   virtual void LeftMultiply(const double* x, double* y) const {
@@ -70,7 +70,7 @@ class FakeSparseMatrix : public SparseMatrix {
   virtual const double* values() const { return m_.data(); }
   virtual int num_rows() const { return m_.cols(); }
   virtual int num_cols() const { return m_.cols(); }
-  virtual int num_nonzeros() const {return m_.cols() * m_.cols(); }
+  virtual int num_nonzeros() const { return m_.cols() * m_.cols(); }
 
   // The following methods are not needed for tests in this file.
   virtual void SquaredColumnNorm(double* x) const DO_NOT_CALL;
@@ -139,37 +139,19 @@ class IterativeRefinerTest : public ::testing::Test {
   int num_cols_;
   int max_num_iterations_;
   Matrix lhs_;
-  Vector rhs_;
-  Vector solution_;
+  Vector rhs_, solution_;
 };
 
-TEST_F(IterativeRefinerTest,
-       ExactSolutionWithExactFactorizationReturnsInZeroIterations) {
-  FakeSparseMatrix lhs(lhs_);
-  FakeSparseCholesky<double> sparse_cholesky(lhs_);
-  IterativeRefiner refiner(max_num_iterations_);
-  Vector refined_solution = solution_;
-  auto summary = refiner.Refine(
-      lhs, rhs_.data(), &sparse_cholesky, refined_solution.data());
-  EXPECT_EQ(summary.num_iterations, 0);
-  EXPECT_TRUE(summary.converged);
-  EXPECT_NEAR(
-      (refined_solution - solution_).norm() / solution_.norm(), 0.0, 5e-15);
-}
-
-TEST_F(IterativeRefinerTest,
-       RandomSolutionWithExactFactorizationReturnsInOneIteration) {
+TEST_F(IterativeRefinerTest, RandomSolutionWithExactFactorizationConverges) {
   FakeSparseMatrix lhs(lhs_);
   FakeSparseCholesky<double> sparse_cholesky(lhs_);
   IterativeRefiner refiner(max_num_iterations_);
   Vector refined_solution(num_cols_);
   refined_solution.setRandom();
-  auto summary = refiner.Refine(
-      lhs, rhs_.data(), &sparse_cholesky, refined_solution.data());
-  EXPECT_EQ(summary.num_iterations, 1);
-  EXPECT_TRUE(summary.converged);
-  EXPECT_NEAR(
-      (refined_solution - solution_).norm() / solution_.norm(), 0.0, 5e-15);
+  refiner.Refine(lhs, rhs_.data(), &sparse_cholesky, refined_solution.data());
+  EXPECT_NEAR((lhs_ * refined_solution - rhs_).norm(),
+              0.0,
+              std::numeric_limits<double>::epsilon());
 }
 
 TEST_F(IterativeRefinerTest,
@@ -181,11 +163,10 @@ TEST_F(IterativeRefinerTest,
   IterativeRefiner refiner(max_num_iterations_);
   Vector refined_solution(num_cols_);
   refined_solution.setRandom();
-  auto summary = refiner.Refine(
-      lhs, rhs_.data(), &sparse_cholesky, refined_solution.data());
-  EXPECT_TRUE(summary.converged);
-  EXPECT_NEAR(
-      (refined_solution - solution_).norm() / solution_.norm(), 0.0, 5e-14);
+  refiner.Refine(lhs, rhs_.data(), &sparse_cholesky, refined_solution.data());
+  EXPECT_NEAR((lhs_ * refined_solution - rhs_).norm(),
+              0.0,
+              std::numeric_limits<double>::epsilon());
 }
 
 }  // namespace internal

@@ -38,8 +38,8 @@
 namespace ceres {
 namespace internal {
 
-class SparseMatrix;
 class SparseCholesky;
+class SparseMatrix;
 
 // Iterative refinement
 // (https://en.wikipedia.org/wiki/Iterative_refinement) is the process
@@ -53,39 +53,18 @@ class SparseCholesky;
 // IterativeRefiner implements this process for Symmetric Positive
 // Definite linear systems.
 //
-// The above iterative loop is run until max_num_iterations is reached
-// or the following convergence criterion is satisfied:
-//
-//    |b - Ax|
-// ------------- < 5e-15
-// |A| |x| + |b|
-//
-// All norms in the above expression are max-norms. The above
-// expression is what is recommended and used by Hogg & Scott in "A
-// fast and robust mixed-precision solver for the solution of sparse
-// symmetric linear systems".
-//
-// For example usage, please see sparse_normal_cholesky_solver.cc
+// The above iterative loop is run until max_num_iterations is reached.
 class IterativeRefiner {
  public:
-  struct Summary {
-    bool converged = false;
-    int num_iterations = -1;
-    double lhs_max_norm = -1;
-    double rhs_max_norm = -1;
-    double solution_max_norm = -1;
-    double residual_max_norm = -1;
-  };
-
-  // max_num_iterations is the maximum number of refinement iterations
-  // to perform.
+  // max_num_iterations is the number of refinement iterations to
+  // perform.
   IterativeRefiner(int max_num_iterations);
 
   // Needed for mocking.
   virtual ~IterativeRefiner();
 
   // Given an initial estimate of the solution of lhs * x = rhs, use
-  // iterative refinement to improve it.
+  // max_num_iterations rounds of iterative refinement to improve it.
   //
   // sparse_cholesky is assumed to contain an already computed
   // factorization (or approximation thereof) of lhs.
@@ -94,14 +73,10 @@ class IterativeRefiner {
   // to lhs * x = rhs. It can be zero.
   //
   // This method is virtual to facilitate mocking.
-  //
-  // TODO(sameeragarwal): Consider dropping the Summary object, and
-  // simplifying the internal implementation to improve efficiency,
-  // since we do not seem to be using the output at all.
-  virtual Summary Refine(const SparseMatrix& lhs,
-                         const double* rhs,
-                         SparseCholesky* sparse_cholesky,
-                         double* solution);
+  virtual void Refine(const SparseMatrix& lhs,
+                      const double* rhs,
+                      SparseCholesky* sparse_cholesky,
+                      double* solution);
 
  private:
   void Allocate(int num_cols);

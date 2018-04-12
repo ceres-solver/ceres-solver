@@ -49,68 +49,25 @@ void IterativeRefiner::Allocate(int num_cols) {
   lhs_x_solution_.resize(num_cols);
 }
 
-IterativeRefiner::Summary IterativeRefiner::Refine(
-    const SparseMatrix& lhs,
-    const double* rhs_ptr,
-    SparseCholesky* sparse_cholesky,
-    double* solution_ptr) {
-  Summary summary;
+void IterativeRefiner::Refine(const SparseMatrix& lhs,
+                              const double* rhs_ptr,
+                              SparseCholesky* sparse_cholesky,
+                              double* solution_ptr) {
   const int num_cols = lhs.num_cols();
   Allocate(num_cols);
-
   ConstVectorRef rhs(rhs_ptr, num_cols);
   VectorRef solution(solution_ptr, num_cols);
-
-  summary.lhs_max_norm = ConstVectorRef(lhs.values(), lhs.num_nonzeros())
-                             .lpNorm<Eigen::Infinity>();
-  summary.rhs_max_norm = rhs.lpNorm<Eigen::Infinity>();
-  summary.solution_max_norm = solution.lpNorm<Eigen::Infinity>();
-
-  // residual = rhs - lhs * solution
-  lhs_x_solution_.setZero();
-  lhs.RightMultiply(solution_ptr, lhs_x_solution_.data());
-  residual_ = rhs - lhs_x_solution_;
-  summary.residual_max_norm = residual_.lpNorm<Eigen::Infinity>();
-
-  for (summary.num_iterations = 0;
-       summary.num_iterations < max_num_iterations_;
-       ++summary.num_iterations) {
-    // Check the current solution for convergence.
-    const double kTolerance = 5e-15;  // From Hogg & Scott.
-    // residual_tolerance = (|A| |x| + |b|) * kTolerance;
-    const double residual_tolerance =
-        (summary.lhs_max_norm * summary.solution_max_norm +
-         summary.rhs_max_norm) *
-        kTolerance;
-    VLOG(3) << "Refinement:"
-            << " iter: " << summary.num_iterations
-            << " |A|: " << summary.lhs_max_norm
-            << " |b|: " << summary.rhs_max_norm
-            << " |x|: " << summary.solution_max_norm
-            << " |b - Ax|: " << summary.residual_max_norm
-            << " tol: " << residual_tolerance;
-    // |b - Ax| < (|A| |x| + |b|) * kTolerance;
-    if (summary.residual_max_norm < residual_tolerance) {
-      summary.converged = true;
-      break;
-    }
-
-    // Solve for lhs * correction = residual
-    correction_.setZero();
-    std::string ignored_message;
-    sparse_cholesky->Solve(
-        residual_.data(), correction_.data(), &ignored_message);
-    solution += correction_;
-    summary.solution_max_norm = solution.lpNorm<Eigen::Infinity>();
-
+  for (int i = 0; i < max_num_iterations_; ++i) {
     // residual = rhs - lhs * solution
     lhs_x_solution_.setZero();
     lhs.RightMultiply(solution_ptr, lhs_x_solution_.data());
     residual_ = rhs - lhs_x_solution_;
-    summary.residual_max_norm = residual_.lpNorm<Eigen::Infinity>();
+    // solution += lhs^-1 residual
+    std::string ignored_message;
+    sparse_cholesky->Solve(
+        residual_.data(), correction_.data(), &ignored_message);
+    solution += correction_;
   }
-
-  return summary;
 };
 
 }  // namespace internal
