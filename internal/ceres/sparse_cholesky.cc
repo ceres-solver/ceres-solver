@@ -32,6 +32,8 @@
 
 #include "ceres/cxsparse.h"
 #include "ceres/eigensparse.h"
+#include "ceres/float_cxsparse.h"
+#include "ceres/float_suitesparse.h"
 #include "ceres/iterative_refiner.h"
 #include "ceres/suitesparse.h"
 
@@ -46,7 +48,11 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
   switch (options.sparse_linear_algebra_library_type) {
     case SUITE_SPARSE:
 #ifndef CERES_NO_SUITESPARSE
-      sparse_cholesky = SuiteSparseCholesky::Create(ordering_type);
+      if (options.use_mixed_precision_solves) {
+        sparse_cholesky = FloatSuiteSparseCholesky::Create(ordering_type);
+      } else {
+        sparse_cholesky = SuiteSparseCholesky::Create(ordering_type);
+      }
       break;
 #else
       LOG(FATAL) << "Ceres was compiled without support for SuiteSparse.";
@@ -67,7 +73,11 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
 
     case CX_SPARSE:
 #ifndef CERES_NO_CXSPARSE
-      sparse_cholesky = CXSparseCholesky::Create(ordering_type);
+      if (options.use_mixed_precision_solves) {
+        sparse_cholesky = FloatCXSparseCholesky::Create(ordering_type);
+      } else {
+        sparse_cholesky = CXSparseCholesky::Create(ordering_type);
+      }
 #else
       LOG(FATAL) << "Ceres was compiled without support for CXSparse.";
 #endif
