@@ -34,7 +34,6 @@
 
 #include "ceres/linear_solver.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/macros.h"
 
 namespace ceres {
 namespace internal {
@@ -106,7 +105,6 @@ class DenseQRSolver: public DenseSparseMatrixSolver {
   ColMajorMatrix lhs_;
   Vector rhs_;
   Vector work_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(DenseQRSolver);
 };
 
 }  // namespace internal

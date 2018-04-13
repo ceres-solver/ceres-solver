@@ -38,7 +38,6 @@
 #include "ceres/crs_matrix.h"
 #include "ceres/evaluation_callback.h"
 #include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/ordered_groups.h"

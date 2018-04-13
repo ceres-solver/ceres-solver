@@ -47,6 +47,21 @@ namespace internal {
 
 // ------- Define CERES_ALIGNED_CHAR_ARRAY --------------------------------
 
+// Platform independent macros to get aligned memory allocations.
+// For example
+//
+//   MyFoo my_foo CERES_ALIGN_ATTRIBUTE(16);
+//
+// Gives us an instance of MyFoo which is aligned at a 16 byte
+// boundary.
+#if defined(_MSC_VER)
+#define CERES_ALIGN_ATTRIBUTE(n) __declspec(align(n))
+#define CERES_ALIGN_OF(T) __alignof(T)
+#elif defined(__GNUC__)
+#define CERES_ALIGN_ATTRIBUTE(n) __attribute__((aligned(n)))
+#define CERES_ALIGN_OF(T) __alignof(T)
+#endif
+
 #ifndef CERES_ALIGNED_CHAR_ARRAY
 
 // Because MSVC and older GCCs require that the argument to their alignment

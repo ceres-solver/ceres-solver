@@ -70,6 +70,9 @@ class Preconditioner;
 class IterativeSchurComplementSolver : public BlockSparseMatrixSolver {
  public:
   explicit IterativeSchurComplementSolver(const LinearSolver::Options& options);
+  IterativeSchurComplementSolver(const IterativeSchurComplementSolver&) = delete;
+  void operator=(const IterativeSchurComplementSolver&) = delete;
+
   virtual ~IterativeSchurComplementSolver();
 
  private:
@@ -85,7 +88,6 @@ class IterativeSchurComplementSolver : public BlockSparseMatrixSolver {
   std::unique_ptr<internal::ImplicitSchurComplement> schur_complement_;
   std::unique_ptr<Preconditioner> preconditioner_;
   Vector reduced_linear_system_solution_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(IterativeSchurComplementSolver);
 };
 
 }  // namespace internal
