@@ -32,7 +32,6 @@
 #define CERES_PUBLIC_GRADIENT_PROBLEM_H_
 
 #include <memory>
-#include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/local_parameterization.h"
 

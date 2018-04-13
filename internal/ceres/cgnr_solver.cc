@@ -49,6 +49,8 @@ CgnrSolver::CgnrSolver(const LinearSolver::Options& options)
   }
 }
 
+CgnrSolver::~CgnrSolver() {}
+
 LinearSolver::Summary CgnrSolver::SolveImpl(
     BlockSparseMatrix* A,
     const double* b,

@@ -43,7 +43,6 @@
 #include <utility>
 #include <vector>
 
-#include "ceres/internal/macros.h"
 #include "ceres/preconditioner.h"
 
 namespace ceres {
@@ -83,6 +82,9 @@ class SchurJacobiPreconditioner : public BlockSparseMatrixPreconditioner {
   // based solvers. Please see schur_eliminator.h for more details.
   SchurJacobiPreconditioner(const CompressedRowBlockStructure& bs,
                             const Preconditioner::Options& options);
+  SchurJacobiPreconditioner(const SchurJacobiPreconditioner&) = delete;
+  void operator=(const SchurJacobiPreconditioner&) = delete;
+
   virtual ~SchurJacobiPreconditioner();
 
   // Preconditioner interface.
@@ -97,7 +99,6 @@ class SchurJacobiPreconditioner : public BlockSparseMatrixPreconditioner {
   std::unique_ptr<SchurEliminatorBase> eliminator_;
   // Preconditioner matrix.
   std::unique_ptr<BlockRandomAccessDiagonalMatrix> m_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(SchurJacobiPreconditioner);
 };
 
 }  // namespace internal

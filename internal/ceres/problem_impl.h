@@ -45,7 +45,6 @@
 #include <vector>
 
 #include "ceres/context_impl.h"
-#include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/problem.h"
 #include "ceres/types.h"
@@ -71,6 +70,8 @@ class ProblemImpl {
 
   ProblemImpl();
   explicit ProblemImpl(const Problem::Options& options);
+  ProblemImpl(const ProblemImpl&) = delete;
+  void operator=(const ProblemImpl&) = delete;
 
   ~ProblemImpl();
 
@@ -226,7 +227,6 @@ class ProblemImpl {
   CostFunctionRefCount cost_function_ref_count_;
   LossFunctionRefCount loss_function_ref_count_;
   std::vector<double*> residual_parameters_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(ProblemImpl);
 };
 
 }  // namespace internal

@@ -34,7 +34,6 @@
 
 #include "Eigen/Geometry"
 #include "ceres/autodiff_local_parameterization.h"
-#include "ceres/fpclassify.h"
 #include "ceres/householder_vector.h"
 #include "ceres/internal/autodiff.h"
 #include "ceres/internal/eigen.h"

@@ -42,7 +42,6 @@
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
-#include "ceres/internal/macros.h"
 #include "ceres/local_parameterization.h"
 #include "glog/logging.h"
 
@@ -137,7 +136,9 @@ class CERES_EXPORT GradientChecker {
              ProbeResults* results) const;
 
  private:
-  CERES_DISALLOW_IMPLICIT_CONSTRUCTORS(GradientChecker);
+  GradientChecker() = delete;
+  GradientChecker(const GradientChecker&) = delete;
+  void operator=(const GradientChecker&) = delete;
 
   std::vector<const LocalParameterization*> local_parameterizations_;
   const CostFunction* function_;
