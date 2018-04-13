@@ -35,7 +35,6 @@
 #define CERES_INTERNAL_CONJUGATE_GRADIENTS_SOLVER_H_
 
 #include "ceres/linear_solver.h"
-#include "ceres/internal/macros.h"
 
 namespace ceres {
 namespace internal {
@@ -65,7 +64,6 @@ class ConjugateGradientsSolver : public LinearSolver {
 
  private:
   const LinearSolver::Options options_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(ConjugateGradientsSolver);
 };
 
 }  // namespace internal

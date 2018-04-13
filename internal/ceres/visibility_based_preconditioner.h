@@ -56,7 +56,6 @@
 #include <vector>
 
 #include "ceres/graph.h"
-#include "ceres/internal/macros.h"
 #include "ceres/linear_solver.h"
 #include "ceres/pair_hash.h"
 #include "ceres/preconditioner.h"
@@ -135,6 +134,9 @@ class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
   // based solvers. Please see schur_eliminator.h for more details.
   VisibilityBasedPreconditioner(const CompressedRowBlockStructure& bs,
                                 const Preconditioner::Options& options);
+  VisibilityBasedPreconditioner(const VisibilityBasedPreconditioner&) = delete;
+  void operator=(const VisibilityBasedPreconditioner&) = delete;
+
   virtual ~VisibilityBasedPreconditioner();
 
   // Preconditioner interface
@@ -191,7 +193,6 @@ class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
   // Preconditioner matrix.
   std::unique_ptr<BlockRandomAccessSparseMatrix> m_;
   std::unique_ptr<SparseCholesky> sparse_cholesky_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(VisibilityBasedPreconditioner);
 };
 
 }  // namespace internal

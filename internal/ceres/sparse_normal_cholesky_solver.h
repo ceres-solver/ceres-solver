@@ -38,7 +38,6 @@
 #include "ceres/internal/port.h"
 
 #include <vector>
-#include "ceres/internal/macros.h"
 #include "ceres/linear_solver.h"
 
 namespace ceres {
@@ -53,6 +52,9 @@ class SparseCholesky;
 class SparseNormalCholeskySolver : public BlockSparseMatrixSolver {
  public:
   explicit SparseNormalCholeskySolver(const LinearSolver::Options& options);
+  SparseNormalCholeskySolver(const SparseNormalCholeskySolver&) = delete;
+  void operator=(const SparseNormalCholeskySolver&) = delete;
+
   virtual ~SparseNormalCholeskySolver();
 
  private:
@@ -66,7 +68,6 @@ class SparseNormalCholeskySolver : public BlockSparseMatrixSolver {
   Vector rhs_;
   std::unique_ptr<SparseCholesky> sparse_cholesky_;
   std::unique_ptr<InnerProductComputer> inner_product_computer_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
 };
 
 }  // namespace internal

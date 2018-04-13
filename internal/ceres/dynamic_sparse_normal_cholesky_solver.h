@@ -37,7 +37,6 @@
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
-#include "ceres/internal/macros.h"
 #include "ceres/linear_solver.h"
 
 namespace ceres {
@@ -76,7 +75,6 @@ class DynamicSparseNormalCholeskySolver
       double* rhs_and_solution);
 
   const LinearSolver::Options options_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(DynamicSparseNormalCholeskySolver);
 };
 
 }  // namespace internal

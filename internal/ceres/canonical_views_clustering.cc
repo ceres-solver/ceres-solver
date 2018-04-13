@@ -35,7 +35,6 @@
 #include <unordered_map>
 
 #include "ceres/graph.h"
-#include "ceres/internal/macros.h"
 #include "ceres/map_util.h"
 #include "glog/logging.h"
 
@@ -79,7 +78,6 @@ class CanonicalViewsClustering {
   IntMap view_to_canonical_view_;
   // Maps a view to its similarity to its current cluster center.
   std::unordered_map<int, double> view_to_canonical_view_similarity_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(CanonicalViewsClustering);
 };
 
 void ComputeCanonicalViewsClustering(

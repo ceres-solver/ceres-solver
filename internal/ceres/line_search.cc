@@ -31,11 +31,11 @@
 #include "ceres/line_search.h"
 
 #include <algorithm>
+#include <cmath>
 #include <iomanip>
 #include <iostream>  // NOLINT
 
 #include "ceres/evaluator.h"
-#include "ceres/fpclassify.h"
 #include "ceres/function_sample.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/map_util.h"
@@ -128,7 +128,7 @@ void LineSearchFunction::Evaluate(const double x,
   const bool eval_status = evaluator_->Evaluate(
       output->vector_x.data(), &(output->value), NULL, gradient, NULL);
 
-  if (!eval_status || !IsFinite(output->value)) {
+  if (!eval_status || !std::isfinite(output->value)) {
     return;
   }
 
@@ -138,7 +138,7 @@ void LineSearchFunction::Evaluate(const double x,
   }
 
   output->gradient = direction_.dot(output->vector_gradient);
-  if (!IsFinite(output->gradient)) {
+  if (!std::isfinite(output->gradient)) {
     return;
   }
 
