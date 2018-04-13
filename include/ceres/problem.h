@@ -42,7 +42,6 @@
 
 #include "ceres/context.h"
 #include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
@@ -171,6 +170,8 @@ class CERES_EXPORT Problem {
   // invocation Problem(Problem::Options()).
   Problem();
   explicit Problem(const Options& options);
+  Problem(const Problem&) = delete;
+  void operator=(const Problem&) = delete;
 
   ~Problem();
 
@@ -473,7 +474,6 @@ class CERES_EXPORT Problem {
   friend class Solver;
   friend class Covariance;
   std::unique_ptr<internal::ProblemImpl> problem_impl_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(Problem);
 };
 
 }  // namespace ceres

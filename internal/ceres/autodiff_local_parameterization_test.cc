@@ -30,7 +30,6 @@
 
 #include <cmath>
 #include "ceres/autodiff_local_parameterization.h"
-#include "ceres/fpclassify.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/rotation.h"
 #include "gtest/gtest.h"
@@ -172,7 +171,7 @@ void QuaternionParameterizationTestHelper(const double* x,
   EXPECT_NEAR(x_plus_delta_norm, 1.0, kTolerance);
 
   for (int i = 0; i < 12; ++i) {
-    EXPECT_TRUE(IsFinite(jacobian[i]));
+    EXPECT_TRUE(std::isfinite(jacobian[i]));
     EXPECT_NEAR(jacobian[i], jacobian_ref[i], kTolerance)
         << "Jacobian mismatch: i = " << i
         << "\n Expected \n" << ConstMatrixRef(jacobian_ref, 4, 3)
