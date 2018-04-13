@@ -38,7 +38,6 @@
 #include "ceres/block_structure.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/macros.h"
 
 namespace ceres {
 namespace internal {
@@ -64,6 +63,9 @@ class BlockSparseMatrix : public SparseMatrix {
   explicit BlockSparseMatrix(CompressedRowBlockStructure* block_structure);
 
   BlockSparseMatrix();
+  BlockSparseMatrix(const BlockSparseMatrix&) = delete;
+  void operator=(const BlockSparseMatrix&) = delete;
+
   virtual ~BlockSparseMatrix();
 
   // Implementation of SparseMatrix interface.
@@ -129,7 +131,6 @@ class BlockSparseMatrix : public SparseMatrix {
   int max_num_nonzeros_;
   std::unique_ptr<double[]> values_;
   std::unique_ptr<CompressedRowBlockStructure> block_structure_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(BlockSparseMatrix);
 };
 
 }  // namespace internal

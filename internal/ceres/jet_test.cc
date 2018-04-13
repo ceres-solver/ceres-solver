@@ -35,7 +35,6 @@
 
 #include "glog/logging.h"
 #include "gtest/gtest.h"
-#include "ceres/fpclassify.h"
 #include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
 

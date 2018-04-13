@@ -34,7 +34,6 @@
 
 #include <cstddef>
 #include "Eigen/Core"
-#include "ceres/internal/macros.h"
 #include "ceres/internal/manual_constructor.h"
 #include "glog/logging.h"
 

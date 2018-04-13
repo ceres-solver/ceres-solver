@@ -41,7 +41,6 @@
 
 #include <cmath>
 #include <cstddef>
-#include "ceres/fpclassify.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_operator.h"
 #include "ceres/stringprintf.h"
@@ -53,7 +52,7 @@ namespace internal {
 namespace {
 
 bool IsZeroOrInfinity(double x) {
-  return ((x == 0.0) || (IsInfinite(x)));
+  return ((x == 0.0) || std::isinf(x));
 }
 
 }  // namespace
@@ -148,7 +147,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     q.setZero();
     A->RightMultiply(p.data(), q.data());
     const double pq = p.dot(q);
-    if ((pq <= 0) || IsInfinite(pq))  {
+    if ((pq <= 0) || std::isinf(pq)) {
       summary.termination_type = LINEAR_SOLVER_NO_CONVERGENCE;
       summary.message = StringPrintf(
           "Matrix is indefinite, no more progress can be made. "
@@ -158,7 +157,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     }
 
     const double alpha = rho / pq;
-    if (IsInfinite(alpha)) {
+    if (std::isinf(alpha)) {
       summary.termination_type = LINEAR_SOLVER_FAILURE;
       summary.message =
           StringPrintf("Numerical failure. alpha = rho / pq = %e, "

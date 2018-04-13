@@ -55,6 +55,9 @@ class BlockJacobiPreconditioner : public BlockSparseMatrixPreconditioner {
  public:
   // A must remain valid while the BlockJacobiPreconditioner is.
   explicit BlockJacobiPreconditioner(const BlockSparseMatrix& A);
+  BlockJacobiPreconditioner(const BlockJacobiPreconditioner&) = delete;
+  void operator=(const BlockJacobiPreconditioner&) = delete;
+
   virtual ~BlockJacobiPreconditioner();
 
   // Preconditioner interface
