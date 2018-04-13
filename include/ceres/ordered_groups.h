@@ -33,6 +33,7 @@
 
 #include <map>
 #include <set>
+#include <unordered_map>
 #include <vector>
 #include "ceres/internal/port.h"
 #include "glog/logging.h"
@@ -63,8 +64,7 @@ class OrderedGroups {
       return false;
     }
 
-    typename std::map<T, int>::const_iterator it =
-        element_to_group_.find(element);
+    auto it = element_to_group_.find(element);
     if (it != element_to_group_.end()) {
       if (it->second == group) {
         // Element is already in the right group, nothing to do.
@@ -126,17 +126,14 @@ class OrderedGroups {
       return;
     }
 
-    typename std::map<int, std::set<T>>::reverse_iterator it =
-        group_to_elements_.rbegin();
+    auto it = group_to_elements_.rbegin();
     std::map<int, std::set<T>> new_group_to_elements;
     new_group_to_elements[it->first] = it->second;
 
     int new_group_id = it->first + 1;
     for (++it; it != group_to_elements_.rend(); ++it) {
-      for (typename std::set<T>::const_iterator element_it = it->second.begin();
-           element_it != it->second.end();
-           ++element_it) {
-        element_to_group_[*element_it] = new_group_id;
+      for (const auto& element : it->second) {
+        element_to_group_[element] = new_group_id;
       }
       new_group_to_elements[new_group_id] = it->second;
       new_group_id++;
@@ -148,8 +145,7 @@ class OrderedGroups {
   // Return the group id for the element. If the element is not a
   // member of any group, return -1.
   int GroupId(const T element) const {
-    typename std::map<T, int>::const_iterator it =
-        element_to_group_.find(element);
+    auto it = element_to_group_.find(element);
     if (it == element_to_group_.end()) {
       return -1;
     }
@@ -157,16 +153,14 @@ class OrderedGroups {
   }
 
   bool IsMember(const T element) const {
-    typename std::map<T, int>::const_iterator it =
-        element_to_group_.find(element);
+    auto it = element_to_group_.find(element);
     return (it != element_to_group_.end());
   }
 
   // This function always succeeds, i.e., implicitly there exists a
   // group for every integer.
   int GroupSize(const int group) const {
-    typename std::map<int, std::set<T>>::const_iterator it =
-        group_to_elements_.find(group);
+    auto it = group_to_elements_.find(group);
     return (it ==  group_to_elements_.end()) ? 0 : it->second.size();
   }
 
@@ -197,7 +191,7 @@ class OrderedGroups {
 
  private:
   std::map<int, std::set<T>> group_to_elements_;
-  std::map<T, int> element_to_group_;
+  std::unordered_map<T, int> element_to_group_;
 };
 
 // Typedef for the most commonly used version of OrderedGroups.
