@@ -51,6 +51,10 @@ class BlockJacobiPreconditioner;
 class CgnrSolver : public BlockSparseMatrixSolver {
  public:
   explicit CgnrSolver(const LinearSolver::Options& options);
+  CgnrSolver(const CgnrSolver&) = delete;
+  void operator=(const CgnrSolver&) = delete;
+  virtual ~CgnrSolver();
+
   virtual Summary SolveImpl(
       BlockSparseMatrix* A,
       const double* b,
@@ -60,7 +64,6 @@ class CgnrSolver : public BlockSparseMatrixSolver {
  private:
   const LinearSolver::Options options_;
   std::unique_ptr<Preconditioner> preconditioner_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(CgnrSolver);
 };
 
 }  // namespace internal

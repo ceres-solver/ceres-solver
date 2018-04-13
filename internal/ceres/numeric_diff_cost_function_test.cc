@@ -37,7 +37,6 @@
 #include <string>
 #include <vector>
 
-#include "ceres/internal/macros.h"
 #include "ceres/array_utils.h"
 #include "ceres/numeric_diff_test_utils.h"
 #include "ceres/test_util.h"

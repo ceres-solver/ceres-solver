@@ -35,7 +35,6 @@
 #include "ceres/internal/port.h"
 
 #include "ceres/context.h"
-#include "ceres/internal/macros.h"
 
 #ifdef CERES_USE_CXX11_THREADS
 #include "ceres/thread_pool.h"
@@ -47,6 +46,9 @@ namespace internal {
 class ContextImpl : public Context {
  public:
   ContextImpl() {}
+  ContextImpl(const ContextImpl&) = delete;
+  void operator=(const ContextImpl&) = delete;
+
   virtual ~ContextImpl() {}
 
   // When compiled with C++11 threading support, resize the thread pool to have
@@ -57,9 +59,6 @@ class ContextImpl : public Context {
 #ifdef CERES_USE_CXX11_THREADS
   ThreadPool thread_pool;
 #endif  // CERES_USE_CXX11_THREADS
-
- private:
-  CERES_DISALLOW_COPY_AND_ASSIGN(ContextImpl);
 };
 
 }  // namespace internal

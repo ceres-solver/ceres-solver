@@ -34,7 +34,6 @@
 #include <algorithm>
 #include <cmath>
 #include "ceres/cost_function.h"
-#include "ceres/internal/macros.h"
 #include "ceres/test_util.h"
 #include "ceres/types.h"
 #include "gtest/gtest.h"
@@ -122,10 +121,13 @@ bool TranscendentalFunctor::operator()(const double* x1,
 void TranscendentalFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
     const CostFunction& cost_function,
     NumericDiffMethodType method) const {
-  struct {
+
+  struct TestParameterBlocks {
     double x1[5];
     double x2[5];
-  } kTests[] = {
+  };
+
+  std::vector<TestParameterBlocks> kTests =  {
     { { 1.0, 2.0, 3.0, 4.0, 5.0 },  // No zeros.
       { 9.0, 9.0, 5.0, 5.0, 1.0 },
     },
@@ -146,7 +148,7 @@ void TranscendentalFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
     },
   };
 
-  for (int k = 0; k < CERES_ARRAYSIZE(kTests); ++k) {
+  for (int k = 0; k < kTests.size(); ++k) {
     double *x1 = &(kTests[k].x1[0]);
     double *x2 = &(kTests[k].x2[0]);
     double *parameters[] = { x1, x2 };
@@ -196,15 +198,16 @@ bool ExponentialFunctor::operator()(const double* x1,
   return true;
 }
 
+
 void ExponentialFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
     const CostFunction& cost_function) const {
   // Evaluating the functor at specific points for testing.
-  double kTests[] = { 1.0, 2.0, 3.0, 4.0, 5.0 };
+  std::vector<double> kTests = { 1.0, 2.0, 3.0, 4.0, 5.0 };
 
   // Minimal tolerance w.r.t. the cost function and the tests.
   const double kTolerance = 2e-14;
 
-  for (int k = 0; k < CERES_ARRAYSIZE(kTests); ++k) {
+  for (int k = 0; k < kTests.size(); ++k) {
     double *parameters[] = { &kTests[k] };
     double dydx;
     double *jacobians[1] = { &dydx };
@@ -241,14 +244,14 @@ bool RandomizedFunctor::operator()(const double* x1,
 
 void RandomizedFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
     const CostFunction& cost_function) const {
-  double kTests[] = { 0.0, 1.0, 3.0, 4.0, 50.0 };
+  std::vector<double> kTests = { 0.0, 1.0, 3.0, 4.0, 50.0 };
 
   const double kTolerance = 2e-4;
 
   // Initialize random number generator with given seed.
   srand(random_seed_);
 
-  for (int k = 0; k < CERES_ARRAYSIZE(kTests); ++k) {
+  for (int k = 0; k < kTests.size(); ++k) {
     double *parameters[] = { &kTests[k] };
     double dydx;
     double *jacobians[1] = { &dydx };

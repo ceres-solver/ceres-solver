@@ -115,6 +115,8 @@ class SchurComplementSolver : public BlockSparseMatrixSolver {
     CHECK_GT(options.elimination_groups[0], 0);
     CHECK(options.context != NULL);
   }
+  SchurComplementSolver(const SchurComplementSolver&) = delete;
+  void operator=(const SchurComplementSolver&) = delete;
 
   // LinearSolver methods
   virtual ~SchurComplementSolver() {}
@@ -143,8 +145,6 @@ class SchurComplementSolver : public BlockSparseMatrixSolver {
   std::unique_ptr<SchurEliminatorBase> eliminator_;
   std::unique_ptr<BlockRandomAccessMatrix> lhs_;
   std::unique_ptr<double[]> rhs_;
-
-  CERES_DISALLOW_COPY_AND_ASSIGN(SchurComplementSolver);
 };
 
 // Dense Cholesky factorization based solver.
@@ -152,6 +152,9 @@ class DenseSchurComplementSolver : public SchurComplementSolver {
  public:
   explicit DenseSchurComplementSolver(const LinearSolver::Options& options)
       : SchurComplementSolver(options) {}
+  DenseSchurComplementSolver(const DenseSchurComplementSolver&) = delete;
+  void operator=(const DenseSchurComplementSolver&) = delete;
+
   virtual ~DenseSchurComplementSolver() {}
 
  private:
@@ -159,14 +162,15 @@ class DenseSchurComplementSolver : public SchurComplementSolver {
   virtual LinearSolver::Summary SolveReducedLinearSystem(
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* solution);
-
-  CERES_DISALLOW_COPY_AND_ASSIGN(DenseSchurComplementSolver);
 };
 
 // Sparse Cholesky factorization based solver.
 class SparseSchurComplementSolver : public SchurComplementSolver {
  public:
   explicit SparseSchurComplementSolver(const LinearSolver::Options& options);
+  SparseSchurComplementSolver(const SparseSchurComplementSolver&) = delete;
+  void operator=(const SparseSchurComplementSolver&) = delete;
+
   virtual ~SparseSchurComplementSolver();
 
  private:
@@ -182,7 +186,6 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
   std::vector<int> blocks_;
   std::unique_ptr<SparseCholesky> sparse_cholesky_;
   std::unique_ptr<BlockRandomAccessDiagonalMatrix> preconditioner_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(SparseSchurComplementSolver);
 };
 
 }  // namespace internal
