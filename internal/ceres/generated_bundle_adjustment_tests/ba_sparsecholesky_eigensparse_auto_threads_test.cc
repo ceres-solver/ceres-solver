@@ -45,12 +45,15 @@ namespace internal {
 
 TEST_F(BundleAdjustmentTest,
        SparseNormalCholesky_EigenSparse_AutomaticOrdering_Threads) {  // NOLINT
-  RunSolverForConfigAndExpectResidualsMatch(
-      ThreadedSolverConfig(
-          SPARSE_NORMAL_CHOLESKY,
-          EIGEN_SPARSE,
-          kAutomaticOrdering,
-          IDENTITY));
+   Solver::Options options = *BundleAdjustmentProblem().mutable_solver_options();
+   options.num_threads = 4;
+   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+   options.preconditioner_type = IDENTITY;
+   if (kAutomaticOrdering) {
+    options.linear_solver_ordering.reset();
+   }
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 
 }  // namespace internal

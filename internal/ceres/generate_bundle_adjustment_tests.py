@@ -37,7 +37,9 @@
 # Product of ORDERINGS, THREAD_CONFIGS, and SOLVER_CONFIGS is the full set of
 # tests to generate.
 ORDERINGS = ["kAutomaticOrdering", "kUserOrdering"]
-THREAD_CONFIGS = ["SolverConfig", "ThreadedSolverConfig"]
+SINGLE_THREADED = "1"
+MULTI_THREADED = "4"
+THREAD_CONFIGS = [SINGLE_THREADED, MULTI_THREADED]
 
 SOLVER_CONFIGS = [
   # Linear solver            Sparse backend      Preconditioner
@@ -70,8 +72,6 @@ FILENAME_SHORTENING_MAP = dict(
   CLUSTER_TRIDIAGONAL='clusttri',
   kAutomaticOrdering='auto',
   kUserOrdering='user',
-  SolverConfig='',  # Omit references to threads for single threaded tests.
-  ThreadedSolverConfig='threads',
 )
 
 COPYRIGHT_HEADER = (
@@ -121,19 +121,21 @@ namespace internal {
 
 TEST_F(BundleAdjustmentTest,
        %(test_class_name)s) {  // NOLINT
-  RunSolverForConfigAndExpectResidualsMatch(
-      %(thread_config)s(
-          %(linear_solver)s,
-          %(sparse_backend)s,
-          %(ordering)s,
-          %(preconditioner)s));
+   Solver::Options options = *BundleAdjustmentProblem().mutable_solver_options();
+   options.num_threads = %(num_threads)s;
+   options.linear_solver_type = %(linear_solver)s;
+   options.sparse_linear_algebra_library_type = %(sparse_backend)s;
+   options.preconditioner_type = %(preconditioner)s;
+   if (%(ordering)s) {
+    options.linear_solver_ordering.reset();
+   }
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 
 }  // namespace internal
 }  // namespace ceres
 %(preprocessor_conditions_end)s
 """)
-
 
 def camelcasify(token):
   """Convert capitalized underscore tokens to camel case"""
@@ -163,7 +165,7 @@ def generate_bundle_test(linear_solver,
       camelcasify(sparse_backend_tag),
       camelcasify(preconditioner_tag),
       ordering[1:],  # Strip 'k'
-      'Threads' if thread_config == 'ThreadedSolverConfig' else '']))
+      'Threads' if thread_config == MULTI_THREADED else '']))
 
   # Initial template parameters (augmented more below).
   template_parameters = dict(
@@ -171,7 +173,7 @@ def generate_bundle_test(linear_solver,
           sparse_backend=sparse_backend,
           preconditioner=preconditioner,
           ordering=ordering,
-          thread_config=thread_config,
+          num_threads=thread_config,
           test_class_name=test_class_name)
 
   # Accumulate appropriate #ifdef/#ifndefs for the solver's sparse backend.
@@ -188,7 +190,7 @@ def generate_bundle_test(linear_solver,
     preprocessor_conditions_end.insert(0, '#endif  // CERES_USE_EIGEN_SPARSE')
 
   # Accumulate appropriate #ifdef/#ifndefs for threading conditions.
-  if thread_config == 'ThreadedSolverConfig':
+  if thread_config == MULTI_THREADED:
     preprocessor_conditions_begin.append('#ifndef CERES_NO_THREADS')
     preprocessor_conditions_end.insert(0, '#endif  // CERES_NO_THREADS')
 
@@ -210,11 +212,13 @@ def generate_bundle_test(linear_solver,
       linear_solver,
       sparse_backend_tag,
       preconditioner_tag,
-      ordering,
-      thread_config]
+      ordering]
       if FILENAME_SHORTENING_MAP.get(x))
+  if (thread_config == MULTI_THREADED):
+    filename_tag += '_threads'
+
   filename = ('generated_bundle_adjustment_tests/ba_%s_test.cc' %
-              filename_tag.lower())
+                filename_tag.lower())
   with open(filename, 'w') as fd:
     fd.write(BUNDLE_ADJUSTMENT_TEST_TEMPLATE % template_parameters)
 
@@ -245,4 +249,3 @@ if __name__ == '__main__':
     for generated_file in generated_files:
       fd.write('ceres_test(%s)\n' %
                generated_file.split('/')[1].replace('_test.cc', ''))
-

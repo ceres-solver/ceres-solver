@@ -44,12 +44,15 @@ namespace internal {
 
 TEST_F(BundleAdjustmentTest,
        IterativeSchur_SuiteSparse_ClusterTridiagonal_UserOrdering) {  // NOLINT
-  RunSolverForConfigAndExpectResidualsMatch(
-      SolverConfig(
-          ITERATIVE_SCHUR,
-          SUITE_SPARSE,
-          kUserOrdering,
-          CLUSTER_TRIDIAGONAL));
+   Solver::Options options = *BundleAdjustmentProblem().mutable_solver_options();
+   options.num_threads = 1;
+   options.linear_solver_type = ITERATIVE_SCHUR;
+   options.sparse_linear_algebra_library_type = SUITE_SPARSE;
+   options.preconditioner_type = CLUSTER_TRIDIAGONAL;
+   if (kUserOrdering) {
+    options.linear_solver_ordering.reset();
+   }
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 
 }  // namespace internal

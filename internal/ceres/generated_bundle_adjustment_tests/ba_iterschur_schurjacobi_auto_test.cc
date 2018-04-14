@@ -42,12 +42,15 @@ namespace internal {
 
 TEST_F(BundleAdjustmentTest,
        IterativeSchur_SchurJacobi_AutomaticOrdering) {  // NOLINT
-  RunSolverForConfigAndExpectResidualsMatch(
-      SolverConfig(
-          ITERATIVE_SCHUR,
-          NO_SPARSE,
-          kAutomaticOrdering,
-          SCHUR_JACOBI));
+   Solver::Options options = *BundleAdjustmentProblem().mutable_solver_options();
+   options.num_threads = 1;
+   options.linear_solver_type = ITERATIVE_SCHUR;
+   options.sparse_linear_algebra_library_type = NO_SPARSE;
+   options.preconditioner_type = SCHUR_JACOBI;
+   if (kAutomaticOrdering) {
+    options.linear_solver_ordering.reset();
+   }
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 
 }  // namespace internal

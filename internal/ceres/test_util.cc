@@ -129,17 +129,15 @@ std::string TestFileAbsolutePath(const std::string& filename) {
                   filename);
 }
 
-SolverConfig ThreadedSolverConfig(
-    LinearSolverType linear_solver_type,
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
-    bool use_automatic_ordering,
-    PreconditionerType preconditioner_type) {
-  const int kNumThreads = 4;
-  return SolverConfig(linear_solver_type,
-                      sparse_linear_algebra_library_type,
-                      use_automatic_ordering,
-                      preconditioner_type,
-                      kNumThreads);
+std::string ToString(const Solver::Options& options) {
+  return StringPrintf(
+      "(%s, %s, %s, %s, %d)",
+      LinearSolverTypeToString(options.linear_solver_type),
+      SparseLinearAlgebraLibraryTypeToString(
+          options.sparse_linear_algebra_library_type),
+      options.linear_solver_ordering? "USER": "AUTOMATIC",
+      PreconditionerTypeToString(options.preconditioner_type),
+      options.num_threads);
 }
 
 }  // namespace internal
