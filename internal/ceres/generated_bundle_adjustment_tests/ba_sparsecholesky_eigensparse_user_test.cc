@@ -44,12 +44,15 @@ namespace internal {
 
 TEST_F(BundleAdjustmentTest,
        SparseNormalCholesky_EigenSparse_UserOrdering) {  // NOLINT
-  RunSolverForConfigAndExpectResidualsMatch(
-      SolverConfig(
-          SPARSE_NORMAL_CHOLESKY,
-          EIGEN_SPARSE,
-          kUserOrdering,
-          IDENTITY));
+   Solver::Options options = *BundleAdjustmentProblem().mutable_solver_options();
+   options.num_threads = 1;
+   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+   options.preconditioner_type = IDENTITY;
+   if (kUserOrdering) {
+    options.linear_solver_ordering.reset();
+   }
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 
 }  // namespace internal

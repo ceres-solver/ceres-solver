@@ -42,12 +42,15 @@ namespace internal {
 
 TEST_F(BundleAdjustmentTest,
        DenseSchur_UserOrdering) {  // NOLINT
-  RunSolverForConfigAndExpectResidualsMatch(
-      SolverConfig(
-          DENSE_SCHUR,
-          NO_SPARSE,
-          kUserOrdering,
-          IDENTITY));
+   Solver::Options options = *BundleAdjustmentProblem().mutable_solver_options();
+   options.num_threads = 1;
+   options.linear_solver_type = DENSE_SCHUR;
+   options.sparse_linear_algebra_library_type = NO_SPARSE;
+   options.preconditioner_type = IDENTITY;
+   if (kUserOrdering) {
+    options.linear_solver_ordering.reset();
+   }
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 
 }  // namespace internal

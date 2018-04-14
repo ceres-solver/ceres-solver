@@ -44,12 +44,15 @@ namespace internal {
 
 TEST_F(BundleAdjustmentTest,
        IterativeSchur_SchurJacobi_UserOrdering_Threads) {  // NOLINT
-  RunSolverForConfigAndExpectResidualsMatch(
-      ThreadedSolverConfig(
-          ITERATIVE_SCHUR,
-          NO_SPARSE,
-          kUserOrdering,
-          SCHUR_JACOBI));
+   Solver::Options options = *BundleAdjustmentProblem().mutable_solver_options();
+   options.num_threads = 4;
+   options.linear_solver_type = ITERATIVE_SCHUR;
+   options.sparse_linear_algebra_library_type = NO_SPARSE;
+   options.preconditioner_type = SCHUR_JACOBI;
+   if (kUserOrdering) {
+    options.linear_solver_ordering.reset();
+   }
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 
 }  // namespace internal

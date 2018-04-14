@@ -44,12 +44,15 @@ namespace internal {
 
 TEST_F(BundleAdjustmentTest,
        SparseSchur_EigenSparse_AutomaticOrdering) {  // NOLINT
-  RunSolverForConfigAndExpectResidualsMatch(
-      SolverConfig(
-          SPARSE_SCHUR,
-          EIGEN_SPARSE,
-          kAutomaticOrdering,
-          IDENTITY));
+   Solver::Options options = *BundleAdjustmentProblem().mutable_solver_options();
+   options.num_threads = 1;
+   options.linear_solver_type = SPARSE_SCHUR;
+   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+   options.preconditioner_type = IDENTITY;
+   if (kAutomaticOrdering) {
+    options.linear_solver_ordering.reset();
+   }
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 
 }  // namespace internal

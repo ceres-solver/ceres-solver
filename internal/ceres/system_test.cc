@@ -144,46 +144,57 @@ class PowellsFunction {
 double PowellsFunction::kResidualTolerance = 1e-8;
 
 typedef SystemTest<PowellsFunction> PowellTest;
-const bool kAutomaticOrdering = true;
 
 TEST_F(PowellTest, DenseQR) {
-  RunSolverForConfigAndExpectResidualsMatch(
-      SolverConfig(DENSE_QR, NO_SPARSE));
+  Solver::Options options = *PowellsFunction().mutable_solver_options();
+  options.linear_solver_type = DENSE_QR;
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 
 TEST_F(PowellTest, DenseNormalCholesky) {
-  RunSolverForConfigAndExpectResidualsMatch(
-      SolverConfig(DENSE_NORMAL_CHOLESKY));
+  Solver::Options options = *PowellsFunction().mutable_solver_options();
+  options.linear_solver_type = DENSE_NORMAL_CHOLESKY;
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 
 TEST_F(PowellTest, DenseSchur) {
-  RunSolverForConfigAndExpectResidualsMatch(
-      SolverConfig(DENSE_SCHUR));
+  Solver::Options options = *PowellsFunction().mutable_solver_options();
+  options.linear_solver_type = DENSE_SCHUR;
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 
 TEST_F(PowellTest, IterativeSchurWithJacobi) {
-  RunSolverForConfigAndExpectResidualsMatch(
-      SolverConfig(ITERATIVE_SCHUR, NO_SPARSE, kAutomaticOrdering, JACOBI));
+  Solver::Options options = *PowellsFunction().mutable_solver_options();
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  options.sparse_linear_algebra_library_type = NO_SPARSE;
+  options.preconditioner_type = JACOBI;
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 
 #ifndef CERES_NO_SUITESPARSE
 TEST_F(PowellTest, SparseNormalCholeskyUsingSuiteSparse) {
-  RunSolverForConfigAndExpectResidualsMatch(
-      SolverConfig(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, kAutomaticOrdering));
+  Solver::Options options = *PowellsFunction().mutable_solver_options();
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options.sparse_linear_algebra_library_type = SUITE_SPARSE;
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 #endif  // CERES_NO_SUITESPARSE
 
 #ifndef CERES_NO_CXSPARSE
 TEST_F(PowellTest, SparseNormalCholeskyUsingCXSparse) {
-  RunSolverForConfigAndExpectResidualsMatch(
-      SolverConfig(SPARSE_NORMAL_CHOLESKY, CX_SPARSE, kAutomaticOrdering));
+  Solver::Options options = *PowellsFunction().mutable_solver_options();
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options.sparse_linear_algebra_library_type = CX_SPARSE;
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 #endif  // CERES_NO_CXSPARSE
 
 #ifdef CERES_USE_EIGEN_SPARSE
 TEST_F(PowellTest, SparseNormalCholeskyUsingEigenSparse) {
-  RunSolverForConfigAndExpectResidualsMatch(
-      SolverConfig(SPARSE_NORMAL_CHOLESKY, EIGEN_SPARSE, kAutomaticOrdering));
+  Solver::Options options = *PowellsFunction().mutable_solver_options();
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  RunSolverForConfigAndExpectResidualsMatch(options);
 }
 #endif  // CERES_USE_EIGEN_SPARSE
 
