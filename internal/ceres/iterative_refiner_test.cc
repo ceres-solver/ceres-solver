@@ -151,7 +151,7 @@ TEST_F(IterativeRefinerTest, RandomSolutionWithExactFactorizationConverges) {
   refiner.Refine(lhs, rhs_.data(), &sparse_cholesky, refined_solution.data());
   EXPECT_NEAR((lhs_ * refined_solution - rhs_).norm(),
               0.0,
-              std::numeric_limits<double>::epsilon());
+              std::numeric_limits<double>::epsilon() * 10);
 }
 
 TEST_F(IterativeRefinerTest,
@@ -166,7 +166,7 @@ TEST_F(IterativeRefinerTest,
   refiner.Refine(lhs, rhs_.data(), &sparse_cholesky, refined_solution.data());
   EXPECT_NEAR((lhs_ * refined_solution - rhs_).norm(),
               0.0,
-              std::numeric_limits<double>::epsilon());
+              std::numeric_limits<double>::epsilon() * 10);
 }
 
 }  // namespace internal
