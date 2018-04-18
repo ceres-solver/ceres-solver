@@ -692,6 +692,11 @@ bool IsFinite(const Jet<T, N>& f) {
   return true;
 }
 
+template <typename T, int N> inline
+bool isfinite(const Jet<T, N>& f) {
+  return IsFinite(f);
+}
+
 // The jet is infinite if any part of the jet is infinite.
 template <typename T, int N> inline
 bool IsInfinite(const Jet<T, N>& f) {
@@ -706,6 +711,11 @@ bool IsInfinite(const Jet<T, N>& f) {
   return false;
 }
 
+template <typename T, int N> inline
+bool isinf(const Jet<T, N>& f) {
+  return IsInfinite(f);
+}
+
 // The jet is NaN if any part of the jet is NaN.
 template <typename T, int N> inline
 bool IsNaN(const Jet<T, N>& f) {
@@ -718,6 +728,11 @@ bool IsNaN(const Jet<T, N>& f) {
     }
   }
   return false;
+}
+
+template <typename T, int N> inline
+bool isnan(const Jet<T, N>& f) {
+  return IsNan(f);
 }
 
 // The jet is normal if all parts of the jet are normal.
