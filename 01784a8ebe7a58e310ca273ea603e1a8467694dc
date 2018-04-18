@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfd9c955_0dc33982",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-04-18T23:12:24Z",
+      "side": 1,
+      "message": "Perhaps put the \"4\" in a variable:\n\nTHREAD_CONFIG_DISABLED \u003d \"1\"\nTHREAD_CONFIG_ENABLED \u003d \"4\"",
+      "revId": "01784a8ebe7a58e310ca273ea603e1a8467694dc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
