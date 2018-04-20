@@ -146,55 +146,69 @@ double PowellsFunction::kResidualTolerance = 1e-8;
 typedef SystemTest<PowellsFunction> PowellTest;
 
 TEST_F(PowellTest, DenseQR) {
-  Solver::Options options = *PowellsFunction().mutable_solver_options();
-  options.linear_solver_type = DENSE_QR;
-  RunSolverForConfigAndExpectResidualsMatch(options);
+  PowellsFunction powells_function;
+  Solver::Options* options = powells_function.mutable_solver_options();
+  options->linear_solver_type = DENSE_QR;
+  RunSolverForConfigAndExpectResidualsMatch(*options,
+                                            powells_function.mutable_problem());
 }
 
 TEST_F(PowellTest, DenseNormalCholesky) {
-  Solver::Options options = *PowellsFunction().mutable_solver_options();
-  options.linear_solver_type = DENSE_NORMAL_CHOLESKY;
-  RunSolverForConfigAndExpectResidualsMatch(options);
+  PowellsFunction powells_function;
+  Solver::Options* options = powells_function.mutable_solver_options();
+  options->linear_solver_type = DENSE_NORMAL_CHOLESKY;
+  RunSolverForConfigAndExpectResidualsMatch(*options,
+                                            powells_function.mutable_problem());
 }
 
 TEST_F(PowellTest, DenseSchur) {
-  Solver::Options options = *PowellsFunction().mutable_solver_options();
-  options.linear_solver_type = DENSE_SCHUR;
-  RunSolverForConfigAndExpectResidualsMatch(options);
+  PowellsFunction powells_function;
+  Solver::Options* options = powells_function.mutable_solver_options();
+  options->linear_solver_type = DENSE_SCHUR;
+  RunSolverForConfigAndExpectResidualsMatch(*options,
+                                            powells_function.mutable_problem());
 }
 
 TEST_F(PowellTest, IterativeSchurWithJacobi) {
-  Solver::Options options = *PowellsFunction().mutable_solver_options();
-  options.linear_solver_type = ITERATIVE_SCHUR;
-  options.sparse_linear_algebra_library_type = NO_SPARSE;
-  options.preconditioner_type = JACOBI;
-  RunSolverForConfigAndExpectResidualsMatch(options);
+  PowellsFunction powells_function;
+  Solver::Options* options = powells_function.mutable_solver_options();
+  options->linear_solver_type = ITERATIVE_SCHUR;
+  options->sparse_linear_algebra_library_type = NO_SPARSE;
+  options->preconditioner_type = JACOBI;
+  RunSolverForConfigAndExpectResidualsMatch(*options,
+                                            powells_function.mutable_problem());
 }
 
 #ifndef CERES_NO_SUITESPARSE
 TEST_F(PowellTest, SparseNormalCholeskyUsingSuiteSparse) {
-  Solver::Options options = *PowellsFunction().mutable_solver_options();
-  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-  options.sparse_linear_algebra_library_type = SUITE_SPARSE;
-  RunSolverForConfigAndExpectResidualsMatch(options);
+  PowellsFunction powells_function;
+  Solver::Options* options = powells_function.mutable_solver_options();
+  options->linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options->sparse_linear_algebra_library_type = SUITE_SPARSE;
+  RunSolverForConfigAndExpectResidualsMatch(*options,
+                                            powells_function.mutable_problem());
 }
 #endif  // CERES_NO_SUITESPARSE
 
 #ifndef CERES_NO_CXSPARSE
 TEST_F(PowellTest, SparseNormalCholeskyUsingCXSparse) {
-  Solver::Options options = *PowellsFunction().mutable_solver_options();
-  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-  options.sparse_linear_algebra_library_type = CX_SPARSE;
-  RunSolverForConfigAndExpectResidualsMatch(options);
+  PowellsFunction powells_function;
+  Solver::Options* options = powells_function.mutable_solver_options();
+  options->linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options->sparse_linear_algebra_library_type = CX_SPARSE;
+  RunSolverForConfigAndExpectResidualsMatch(*options,
+                                            powells_function.mutable_problem());
 }
 #endif  // CERES_NO_CXSPARSE
 
 #ifdef CERES_USE_EIGEN_SPARSE
 TEST_F(PowellTest, SparseNormalCholeskyUsingEigenSparse) {
-  Solver::Options options = *PowellsFunction().mutable_solver_options();
-  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
-  RunSolverForConfigAndExpectResidualsMatch(options);
+  PowellsFunction powells_function;
+  Solver::Options* options = powells_function.mutable_solver_options();
+  options->linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options->sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  RunSolverForConfigAndExpectResidualsMatch(*options,
+                                            powells_function.mutable_problem());
 }
 #endif  // CERES_USE_EIGEN_SPARSE
 

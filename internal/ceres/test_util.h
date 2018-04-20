@@ -78,7 +78,7 @@ std::string ToString(const Solver::Options& options);
 // It is assumed that the SystemTestProblem has an Solver::Options
 // struct that contains the reference Solver configuration.
 template <typename SystemTestProblem>
-class SystemTest : public::testing::Test {
+class SystemTest : public ::testing::Test {
  protected:
   virtual void SetUp() {
     SystemTestProblem system_test_problem;
@@ -88,15 +88,10 @@ class SystemTest : public::testing::Test {
         &expected_final_residuals_);
   }
 
-  void RunSolverForConfigAndExpectResidualsMatch(const Solver::Options& options) {
-    LOG(INFO) << "Running solver configuration: "
-              << ToString(options);
-    SystemTestProblem system_test_problem;
+  void RunSolverForConfigAndExpectResidualsMatch(const Solver::Options& options,
+                                                 Problem* problem) {
     std::vector<double> final_residuals;
-    SolveAndEvaluateFinalResiduals(
-        options,
-        system_test_problem.mutable_problem(),
-        &final_residuals);
+    SolveAndEvaluateFinalResiduals(options, problem, &final_residuals);
 
     // We compare solutions by comparing their residual vectors. We do
     // not compare parameter vectors because it is much more brittle
@@ -119,10 +114,10 @@ class SystemTest : public::testing::Test {
     Solve(options, problem, &summary);
     CHECK_NE(summary.termination_type, ceres::FAILURE);
     problem->Evaluate(Problem::EvaluateOptions(),
-                      NULL,
+                      nullptr,
                       final_residuals,
-                      NULL,
-                      NULL);
+                      nullptr,
+                      nullptr);
   }
 
   std::vector<double> expected_final_residuals_;
