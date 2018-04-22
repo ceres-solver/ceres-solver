@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d3885323_61ceac19",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-22T13:21:44Z",
+      "side": 1,
+      "message": "1) 80-columns.\n2) Replace all-caps with lower-case function calls.",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48010dd5_29aec548",
         "filename": "CMakeLists.txt",
         "patchSetId": 4
@@ -13,6 +30,108 @@
       "writtenOn": "2018-01-09T18:35:11Z",
       "side": 1,
       "message": "Please fix 80 col issues.",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d4da68_15cf92fe",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-22T13:21:44Z",
+      "side": 1,
+      "message": "I would move this to the internal CMakeLists directly above the line adding it to the gmock source, as currently this is very specifically for gmock.",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5901ca9a_7058bb91",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-22T13:21:44Z",
+      "side": 1,
+      "message": "I don\u0027t think CXX_ADD_STRICT_FLAGS \u0026 CXX_REMOVE_STRICT_FLAGS are great names, as they imply they are direct inverses of each other which isn\u0027t the case.  I\u0027m not sure we need the distinction between whether they are adding or removing flags.  How about just CERES_STRICT_CXX_FLAGS instead.",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55877b21_d70759e1",
+        "filename": "cmake/macros.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-22T13:21:44Z",
+      "side": 1,
+      "message": "macros isn\u0027t a very descriptive name for this file, as it doesn\u0027t include all macros but also only contains functions (not macros) for a specific purpose.  Also, for CMake files we use CamelCase for filenames to match CMake\u0027s internal style.\n\nI think AddCompileFlagsIfSupported.cmake is a better name.",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1efa70f_55f765ee",
+        "filename": "cmake/macros.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-22T13:21:44Z",
+      "side": 1,
+      "message": "I think add_cxx_compile_flag_if_supported is a better function name.  Also, replace use of all-caps function calls with lowercase (functionally equivalent, but newer style) - variable names remain all-caps.  As CACHE_VAR isn\u0027t very descriptive, and is only used for reporting I think we can simplify this by generating the test variable name from the flag something like the following:\n\nfunction(add_cxx_compile_flag_if_supported AGGREGATED_CXX_FLAGS_VAR FLAG_TO_ADD_IF_SUPPORTED)\n  include(CheckCXXCompilerFlag)\n  # Use of whitespace or \u0027-\u0027 in variable names (used by CheckCXXSourceCompiles\n  # as #defines) will trigger errors.\n  string(STRIP \"${FLAG_TO_ADD_IF_SUPPORTED}\" FLAG_TO_ADD_IF_SUPPORTED)\n  # Build an informatively named test result variable so that it will be evident\n  # which tests were performed/succeeded in the CMake output, e.g for -Wall:\n  #\n  # -- Performing Test CHECK_CXX_FLAG_Wall - Success\n  string(REPLACE \"-\" \"_\" CHECK_CXX_FLAG\n    \"CHECK_CXX_FLAG${FLAG_TO_ADD_IF_SUPPORTED}\")\n  check_cxx_compiler_flag(${FLAG_TO_ADD_IF_SUPPORTED} ${CHECK_CXX_FLAG})\n  if (${CHECK_CXX_FLAG})\n    set(${AGGREGATED_CXX_FLAGS_VAR}\n      \"${${AGGREGATED_CXX_FLAGS_VAR}} ${FLAG_TO_ADD_IF_SUPPORTED}\" PARENT_SCOPE)\n  endif()\nendfunction()",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419086d5_36e4ce00",
+        "filename": "cmake/macros.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-22T13:21:44Z",
+      "side": 1,
+      "message": "As this is only used in one place for gmock, I would not bother with this function.  Instead call set_property() directly in the CMakeLists.txt for gmock.",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2efc47d1_eb3acd0b",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-04-22T13:21:44Z",
+      "side": 1,
+      "message": "Replace with direct call to set_property().",
       "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
