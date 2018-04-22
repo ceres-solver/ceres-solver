@@ -108,17 +108,8 @@ LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
                 -DCERES_NO_LAPACK \
                 -DCERES_NO_SUITESPARSE \
                 -DCERES_NO_CXSPARSE \
-                -DCERES_STD_UNORDERED_MAP
-
-
-# If the user did not enable threads in CERES_EXTRA_DEFINES, then add
-# CERES_NO_THREADS.
-#
-# TODO(sameeragarwal): Update comments here and in the docs to
-# demonstrate how OpenMP can be used by the user.
-ifeq (,$(findstring CERES_HAVE_PTHREAD, $(LOCAL_CFLAGS)))
-  LOCAL_CFLAGS += -DCERES_NO_THREADS
-endif
+                -DCERES_USE_EIGEN_SPARSE \
+                -DCERES_USE_OPENMP
 
 LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/blas.cc \
@@ -163,6 +154,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/is_close.cc \
                    $(CERES_SRC_PATH)/implicit_schur_complement.cc \
                    $(CERES_SRC_PATH)/inner_product_computer.cc \
+                   $(CERES_SRC_PATH)/iterative_refiner.cc \
                    $(CERES_SRC_PATH)/iterative_schur_complement_solver.cc \
                    $(CERES_SRC_PATH)/lapack.cc \
                    $(CERES_SRC_PATH)/levenberg_marquardt_strategy.cc \
@@ -178,6 +170,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/low_rank_inverse_hessian.cc \
                    $(CERES_SRC_PATH)/minimizer.cc \
                    $(CERES_SRC_PATH)/normal_prior.cc \
+                   $(CERES_SRC_PATH)/parallel_utils.cc \
                    $(CERES_SRC_PATH)/parallel_for_openmp.cc \
                    $(CERES_SRC_PATH)/parameter_block_ordering.cc \
                    $(CERES_SRC_PATH)/partitioned_matrix_view.cc \
@@ -205,6 +198,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/stringprintf.cc \
                    $(CERES_SRC_PATH)/subset_preconditioner.cc \
                    $(CERES_SRC_PATH)/suitesparse.cc \
+                   $(CERES_SRC_PATH)/thread_token_provider.cc \
                    $(CERES_SRC_PATH)/triplet_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/trust_region_minimizer.cc \
                    $(CERES_SRC_PATH)/trust_region_preprocessor.cc \
