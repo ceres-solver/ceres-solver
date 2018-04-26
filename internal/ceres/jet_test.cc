@@ -30,13 +30,14 @@
 
 #include "ceres/jet.h"
 
+#include <Eigen/Dense>
 #include <algorithm>
 #include <cmath>
 
-#include "glog/logging.h"
-#include "gtest/gtest.h"
 #include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
+#include "glog/logging.h"
+#include "gtest/gtest.h"
 
 #define VL VLOG(1)
 
@@ -758,6 +759,61 @@ TEST(JetTraitsTest, ClassificationFinite) {
   EXPECT_TRUE(IsNormal(a));
   EXPECT_FALSE(IsInfinite(a));
   EXPECT_FALSE(IsNaN(a));
+}
+
+// The following test ensures that Jets have all the appropriate Eigen
+// related traits so that they can be used as part of matrix
+// decompositions.
+TEST(Jet, FullRankEigenLLTSolve) {
+  Eigen::Matrix<J, 3, 3> A;
+  Eigen::Matrix<J, 3, 1> b, x;
+  for (int i = 0; i < 3; ++i) {
+    for (int j = 0; j < 3; ++j) {
+      A(i,j) = MakeJet(0.0, i, j * j);
+    }
+    b(i) = MakeJet(i, i, i);
+    x(i) = MakeJet(0.0, 0.0, 0.0);
+    A(i,i) = MakeJet(1.0, i, i * i);
+  }
+  x = A.llt().solve(b);
+  for (int i = 0; i < 3; ++i) {
+    EXPECT_EQ(x(i).a, b(i).a);
+  }
+}
+
+TEST(Jet, FullRankEigenLDLTSolve) {
+  Eigen::Matrix<J, 3, 3> A;
+  Eigen::Matrix<J, 3, 1> b, x;
+  for (int i = 0; i < 3; ++i) {
+    for (int j = 0; j < 3; ++j) {
+      A(i,j) = MakeJet(0.0, i, j * j);
+    }
+    b(i) = MakeJet(i, i, i);
+    x(i) = MakeJet(0.0, 0.0, 0.0);
+    A(i,i) = MakeJet(1.0, i, i * i);
+  }
+  x = A.ldlt().solve(b);
+  for (int i = 0; i < 3; ++i) {
+    EXPECT_EQ(x(i).a, b(i).a);
+  }
+}
+
+TEST(Jet, FullRankEigenLUSolve) {
+  Eigen::Matrix<J, 3, 3> A;
+  Eigen::Matrix<J, 3, 1> b, x;
+  for (int i = 0; i < 3; ++i) {
+    for (int j = 0; j < 3; ++j) {
+      A(i,j) = MakeJet(0.0, i, j * j);
+    }
+    b(i) = MakeJet(i, i, i);
+    x(i) = MakeJet(0.0, 0.0, 0.0);
+    A(i,i) = MakeJet(1.0, i, i * i);
+  }
+
+  x = A.lu().solve(b);
+  for (int i = 0; i < 3; ++i) {
+    EXPECT_EQ(x(i).a, b(i).a);
+  }
 }
 
 // ScalarBinaryOpTraits is only supported on Eigen versions >= 3.3
