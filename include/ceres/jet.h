@@ -435,35 +435,33 @@ CERES_DEFINE_JET_COMPARISON_OPERATOR( != )  // NOLINT
 // This is necessary because we want to use the same name (e.g. 'sqrt') for
 // double-valued and Jet-valued functions, but we are not allowed to put
 // Jet-valued functions inside namespace std.
-//
-// TODO(keir): Switch to "using".
-inline double abs     (double x) { return std::abs(x);      }
-inline double log     (double x) { return std::log(x);      }
-inline double exp     (double x) { return std::exp(x);      }
-inline double sqrt    (double x) { return std::sqrt(x);     }
-inline double cos     (double x) { return std::cos(x);      }
-inline double acos    (double x) { return std::acos(x);     }
-inline double sin     (double x) { return std::sin(x);      }
-inline double asin    (double x) { return std::asin(x);     }
-inline double tan     (double x) { return std::tan(x);      }
-inline double atan    (double x) { return std::atan(x);     }
-inline double sinh    (double x) { return std::sinh(x);     }
-inline double cosh    (double x) { return std::cosh(x);     }
-inline double tanh    (double x) { return std::tanh(x);     }
-inline double floor   (double x) { return std::floor(x);    }
-inline double ceil    (double x) { return std::ceil(x);     }
-inline double pow  (double x, double y) { return std::pow(x, y);   }
-inline double atan2(double y, double x) { return std::atan2(y, x); }
-inline double cbrt  (double x) { return std::cbrt(x);  }
-inline double exp2  (double x) { return std::exp2(x);  }
-inline double log2  (double x) { return std::log2(x);  }
-inline double hypot(double x, double y) { return std::hypot(x, y); }
-inline double fmax(double  x, double y) { return std::fmax(x, y);  }
-inline double fmin(double  x, double y) { return std::fmin(x, y);  }
-inline double isfinite(double x) { return std::isfinite(x); }
-inline double isinf(double x) { return std::isinf(x); }
-inline double isnan(double x) { return std::isnan(x); }
-inline double isnormal(double x) { return std::isnormal(x); }
+using std::abs;
+using std::acos;
+using std::asin;
+using std::atan;
+using std::atan2;
+using std::cbrt;
+using std::ceil;
+using std::cos;
+using std::cosh;
+using std::exp;
+using std::exp2;
+using std::floor;
+using std::fmax;
+using std::fmin;
+using std::hypot;
+using std::isfinite;
+using std::isinf;
+using std::isnan;
+using std::isnormal;
+using std::log;
+using std::log2;
+using std::pow;
+using std::sin;
+using std::sinh;
+using std::sqrt;
+using std::tan;
+using std::tanh;
 
 // Legacy names from pre-C++11 days.
 inline bool IsFinite  (double x) { return std::isfinite(x); }
@@ -898,38 +896,6 @@ Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
   T const tmp3 = tmp1 * log(f.a);
   return Jet<T, N>(tmp1, tmp2 * f.v + tmp3 * g.v);
 }
-
-// Define the helper functions Eigen needs to embed Jet types.
-//
-// NOTE(keir): machine_epsilon() and precision() are missing, because they don't
-// work with nested template types (e.g. where the scalar is itself templated).
-// Among other things, this means that decompositions of Jet's does not work,
-// for example
-//
-//   Matrix<Jet<T, N> ... > A, x, b;
-//   ...
-//   A.solve(b, &x)
-//
-// does not work and will fail with a strange compiler error.
-//
-// TODO(keir): This is an Eigen 2.0 limitation that is lifted in 3.0. When we
-// switch to 3.0, also add the rest of the specialization functionality.
-template<typename T, int N> inline const Jet<T, N>& ei_conj(const Jet<T, N>& x) { return x;              }  // NOLINT
-template<typename T, int N> inline const Jet<T, N>& ei_real(const Jet<T, N>& x) { return x;              }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_imag(const Jet<T, N>&  ) { return Jet<T, N>(0.0); }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_abs (const Jet<T, N>& x) { return fabs(x);        }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_abs2(const Jet<T, N>& x) { return x * x;          }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_sqrt(const Jet<T, N>& x) { return sqrt(x);        }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_exp (const Jet<T, N>& x) { return exp(x);         }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_log (const Jet<T, N>& x) { return log(x);         }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_sin (const Jet<T, N>& x) { return sin(x);         }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_cos (const Jet<T, N>& x) { return cos(x);         }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_tan (const Jet<T, N>& x) { return tan(x);         }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_atan(const Jet<T, N>& x) { return atan(x);        }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_sinh(const Jet<T, N>& x) { return sinh(x);        }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_cosh(const Jet<T, N>& x) { return cosh(x);        }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_tanh(const Jet<T, N>& x) { return tanh(x);        }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_pow (const Jet<T, N>& x, Jet<T, N> y) { return pow(x, y); }  // NOLINT
 
 // Note: This has to be in the ceres namespace for argument dependent lookup to
 // function correctly. Otherwise statements like CHECK_LE(x, 2.0) fail with
