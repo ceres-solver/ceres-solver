@@ -761,6 +761,8 @@ TEST(JetTraitsTest, ClassificationFinite) {
   EXPECT_FALSE(IsNaN(a));
 }
 
+#if EIGEN_VERSION_AT_LEAST(3, 3, 0)
+
 // The following test ensures that Jets have all the appropriate Eigen
 // related traits so that they can be used as part of matrix
 // decompositions.
@@ -817,7 +819,6 @@ TEST(Jet, FullRankEigenLUSolve) {
 }
 
 // ScalarBinaryOpTraits is only supported on Eigen versions >= 3.3
-#if EIGEN_VERSION_AT_LEAST(3, 3, 0)
 TEST(JetTraitsTest, MatrixScalarUnaryOps) {
   const J x = MakeJet(2.3, -2.7, 1e-3);
   const J y = MakeJet(1.7,  0.5, 1e+2);
