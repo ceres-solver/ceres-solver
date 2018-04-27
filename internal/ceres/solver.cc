@@ -378,7 +378,6 @@ void PreSolveSummarize(const Solver::Options& options,
   summary->max_lbfgs_rank                     = options.max_lbfgs_rank;
   summary->minimizer_type                     = options.minimizer_type;
   summary->nonlinear_conjugate_gradient_type  = options.nonlinear_conjugate_gradient_type;  //  NOLINT
-  summary->num_linear_solver_threads_given    = options.num_threads;
   summary->num_threads_given                  = options.num_threads;
   summary->preconditioner_type_given          = options.preconditioner_type;
   summary->sparse_linear_algebra_library_type = options.sparse_linear_algebra_library_type; //  NOLINT
@@ -395,7 +394,6 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
 
   summary->inner_iterations_used          = pp.inner_iteration_minimizer.get() != NULL;     // NOLINT
   summary->linear_solver_type_used        = pp.linear_solver_options.type;
-  summary->num_linear_solver_threads_used = pp.options.num_threads;
   summary->num_threads_used               = pp.options.num_threads;
   summary->preconditioner_type_used       = pp.options.preconditioner_type;
 

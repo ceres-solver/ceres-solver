@@ -1280,16 +1280,6 @@ elimination group [LiSaad]_.
    The upside is that you do not need to build and link to an external
    library to use ``EIGEN_SPARSE``.
 
-.. member:: int Solver::Options::num_linear_solver_threads
-
-   Default: ``-1``
-
-   **This field is deprecated, and is ignored by
-   Ceres. Solver::Options::num_threads controls threading for all
-   of Ceres Solver. This setting is scheduled to be removed in
-   1.15.0.**
-
-   Number of threads used by the linear solver.
 
 .. member:: shared_ptr<ParameterBlockOrdering> Solver::Options::linear_solver_ordering
 
@@ -2222,28 +2212,6 @@ The three arrays will be:
    residual evaluation. This number is not equal to
    :member:`Solver::Summary::num_threads_given` if none of `OpenMP`,
    `TBB` or `CXX11_THREADS` is available.
-
-.. member:: int Solver::Summary::num_linear_solver_threads_given
-
-   **This field is deprecated and is scheduled to be removed in
-   1.15.0.** :member:`Solver::Summary::num_threads_given` should be used
-   instead.  In the interim the value of this field will be the same as
-   :member:`Solver::Summary::num_threads_given`.
-
-   Number of threads requested by the user for solving the trust
-   region problem.
-
-.. member:: int Solver::Summary::num_linear_solver_threads_used
-
-   **This field is deprecated and is scheduled to be removed in
-   1.15.0.** :member:`Solver::Summary::num_threads_used` should be used
-   instead.  In the interim the value of this field will be the same as
-   :member:`Solver::Summary::num_threads_used`.
-
-   Number of threads actually used by the solver for solving the trust
-   region problem. This number is not equal to
-   :member:`Solver::Summary::num_linear_solver_threads_given` if none
-   of `OpenMP`, `TBB` or `CXX11_THREADS` is available.
 
 .. member:: LinearSolverType Solver::Summary::linear_solver_type_given
 

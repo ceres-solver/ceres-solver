@@ -56,19 +56,6 @@ Preprocessor::~Preprocessor() {
 }
 
 void ChangeNumThreadsIfNeeded(Solver::Options* options) {
-  if (options->num_linear_solver_threads != -1 &&
-      options->num_threads != options->num_linear_solver_threads) {
-    LOG(WARNING) << "Solver::Options::num_threads = "
-                 << options->num_threads
-                 << " and Solver::Options::num_linear_solver_threads = "
-                 << options->num_linear_solver_threads
-                 << ". Solver::Options::num_linear_solver_threads is "
-                 << "deprecated and is ignored."
-                 << "Solver::Options::num_threads now controls threading "
-                 << "behaviour in all of Ceres Solver. "
-                 << "This field will go away in Ceres Solver 1.15.0.";
-  }
-
 #ifdef CERES_NO_THREADS
   if (options->num_threads > 1) {
     LOG(WARNING)

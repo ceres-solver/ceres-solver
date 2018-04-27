@@ -365,13 +365,6 @@ class CERES_EXPORT Solver {
   #endif
 #endif
 
-    // NOTE: This field is deprecated, and is ignored by
-    // Ceres. Solver::Options::num_threads controls threading for all
-    // of Ceres Solver.
-    //
-    // This setting is scheduled to be removed in 1.15.0.
-    int num_linear_solver_threads = -1;
-
     // The order in which variables are eliminated in a linear solver
     // can have a significant of impact on the efficiency and accuracy
     // of the method. e.g., when doing sparse Cholesky factorization,
@@ -923,29 +916,6 @@ class CERES_EXPORT Solver {
     // residual evaluation. This number is not equal to
     // num_threads_given if OpenMP is not available.
     int num_threads_used = -1;
-
-    // NOTE: This field is deprecated,
-    // Solver::Summary::num_threads_given should be used instead.
-    //
-    // This field is scheduled to be removed in 1.15.0. In the interim
-    // the value of this field will always be equal to
-    // num_threads_given.
-    //
-    // Number of threads specified by the user for solving the trust
-    // region problem.
-    int num_linear_solver_threads_given = -1;
-
-    // NOTE: This field is deprecated,
-    // Solver::Summary::num_threads_used should be used instead.
-    //
-    // This field is scheduled to be removed in 1.15.0. In the interim
-    // the value of this field will always be equal to
-    // num_threads_used.
-    //
-    // Number of threads actually used by the solver for solving the
-    // trust region problem. This number is not equal to
-    // num_threads_given if OpenMP is not available.
-    int num_linear_solver_threads_used = -1;
 
     // Type of the linear solver requested by the user.
     LinearSolverType linear_solver_type_given =
