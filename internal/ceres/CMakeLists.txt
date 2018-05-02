@@ -36,6 +36,8 @@ elseif (OPENMP)
   set(CERES_PARALLEL_FOR_SRC parallel_for_openmp.cc)
 elseif (TBB)
   set(CERES_PARALLEL_FOR_SRC parallel_for_tbb.cc)
+else()
+  set(CERES_PARALLEL_FOR_SRC parallel_for_nothreads.cc)
 endif()
 
 set(CERES_INTERNAL_SRC
