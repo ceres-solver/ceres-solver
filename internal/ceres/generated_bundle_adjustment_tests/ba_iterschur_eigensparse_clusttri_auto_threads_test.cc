@@ -37,19 +37,20 @@
 
 #include "bundle_adjustment_test_util.h"
 
-#ifndef CERES_NO_SUITESPARSE
+#ifdef CERES_USE_EIGEN_SPARSE
+#ifndef CERES_NO_THREADS
 
 namespace ceres {
 namespace internal {
 
 TEST_F(BundleAdjustmentTest,
-       IterativeSchur_SuiteSparse_ClusterTridiagonal_AutomaticOrdering) {  // NOLINT
+       IterativeSchur_EigenSparse_ClusterTridiagonal_AutomaticOrdering_Threads) {  // NOLINT
    BundleAdjustmentProblem bundle_adjustment_problem;
    Solver::Options* options =
      bundle_adjustment_problem.mutable_solver_options();
-   options->num_threads = 1;
+   options->num_threads = 4;
    options->linear_solver_type = ITERATIVE_SCHUR;
-   options->sparse_linear_algebra_library_type = SUITE_SPARSE;
+   options->sparse_linear_algebra_library_type = EIGEN_SPARSE;
    options->preconditioner_type = CLUSTER_TRIDIAGONAL;
    if (kAutomaticOrdering) {
      options->linear_solver_ordering.reset();
@@ -61,5 +62,6 @@ TEST_F(BundleAdjustmentTest,
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_NO_SUITESPARSE
+#endif  // CERES_NO_THREADS
+#endif  // CERES_USE_EIGEN_SPARSE
 
