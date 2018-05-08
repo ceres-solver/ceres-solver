@@ -45,13 +45,14 @@ namespace internal {
 TEST_F(BundleAdjustmentTest,
        IterativeSchur_SchurJacobi_UserOrdering_Threads) {  // NOLINT
    BundleAdjustmentProblem bundle_adjustment_problem;
-   Solver::Options* options = bundle_adjustment_problem.mutable_solver_options();
+   Solver::Options* options =
+     bundle_adjustment_problem.mutable_solver_options();
    options->num_threads = 4;
    options->linear_solver_type = ITERATIVE_SCHUR;
    options->sparse_linear_algebra_library_type = NO_SPARSE;
    options->preconditioner_type = SCHUR_JACOBI;
    if (kUserOrdering) {
-    options->linear_solver_ordering.reset();
+     options->linear_solver_ordering.reset();
    }
    Problem* problem = bundle_adjustment_problem.mutable_problem();
    RunSolverForConfigAndExpectResidualsMatch(*options, problem);

@@ -46,13 +46,14 @@ namespace internal {
 TEST_F(BundleAdjustmentTest,
        SparseNormalCholesky_EigenSparse_UserOrdering_Threads) {  // NOLINT
    BundleAdjustmentProblem bundle_adjustment_problem;
-   Solver::Options* options = bundle_adjustment_problem.mutable_solver_options();
+   Solver::Options* options =
+     bundle_adjustment_problem.mutable_solver_options();
    options->num_threads = 4;
    options->linear_solver_type = SPARSE_NORMAL_CHOLESKY;
    options->sparse_linear_algebra_library_type = EIGEN_SPARSE;
    options->preconditioner_type = IDENTITY;
    if (kUserOrdering) {
-    options->linear_solver_ordering.reset();
+     options->linear_solver_ordering.reset();
    }
    Problem* problem = bundle_adjustment_problem.mutable_problem();
    RunSolverForConfigAndExpectResidualsMatch(*options, problem);
