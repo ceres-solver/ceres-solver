@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff8d057f_4fcb782a",
+        "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_iterschur_cxsparse_clustjacobi_auto_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-05-09T16:15:42Z",
+      "side": 1,
+      "message": "Line length.",
+      "revId": "d9d8b46fe1c23ae3cae53da664327aa904364e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728e88eb_05027bc9",
+        "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_iterschur_cxsparse_clustjacobi_auto_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-05-09T16:15:42Z",
+      "side": 1,
+      "message": "Should be double space (needs fixing in template).",
+      "revId": "d9d8b46fe1c23ae3cae53da664327aa904364e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713a1992_85fa10d4",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-05-09T16:15:42Z",
+      "side": 1,
+      "message": "Please consolidate the error prints; these can get combined by or\u0027ing all the checks together.",
+      "revId": "d9d8b46fe1c23ae3cae53da664327aa904364e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
