@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2017 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,35 +26,39 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
-//
-// This is a forwarding header containing the public symbols exported from
-// Ceres. Anything in the "ceres" namespace is available for use.
+// Author: alexs.mac@gmail.com (Alex Stewart)
 
-#ifndef CERES_PUBLIC_CERES_H_
-#define CERES_PUBLIC_CERES_H_
+#ifndef CERES_PUBLIC_COST_FUNCTION_TO_FIRST_ORDER_FUNCTION_H_
+#define CERES_PUBLIC_COST_FUNCTION_TO_FIRST_ORDER_FUNCTION_H_
 
-#include "ceres/autodiff_cost_function.h"
-#include "ceres/autodiff_local_parameterization.h"
+#include <memory>
+#include "ceres/internal/port.h"
 #include "ceres/cost_function.h"
-#include "ceres/cost_function_to_first_order_function.h"
-#include "ceres/cost_function_to_functor.h"
-#include "ceres/covariance.h"
-#include "ceres/crs_matrix.h"
-#include "ceres/dynamic_autodiff_cost_function.h"
-#include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/gradient_problem.h"
-#include "ceres/gradient_problem_solver.h"
-#include "ceres/iteration_callback.h"
-#include "ceres/jet.h"
-#include "ceres/local_parameterization.h"
-#include "ceres/loss_function.h"
-#include "ceres/numeric_diff_cost_function.h"
-#include "ceres/ordered_groups.h"
-#include "ceres/problem.h"
-#include "ceres/sized_cost_function.h"
-#include "ceres/solver.h"
-#include "ceres/types.h"
-#include "ceres/version.h"
 
-#endif  // CERES_PUBLIC_CERES_H_
+namespace ceres {
+
+// Wraps a CostFunction (which may for example be an AutoDiffCostFunction) as
+// a FirstOrderFunction to be solved via a GradientProblem.
+//
+// The CostFunction must have a single parameter block, but can have an
+// arbitrary number of residuals.  The cost of the FirstOrderFunction is
+// taken to be the sum of all of the residuals of the CostFunction.
+class CERES_EXPORT FirstOrderCostFunction : public FirstOrderFunction {
+ public:
+  // Takes ownership of the function.
+  FirstOrderCostFunction(CostFunction* cost_function);
+  virtual ~FirstOrderCostFunction() {}
+
+  virtual bool Evaluate(const double* const parameters,
+                        double* cost,
+                        double* gradient) const;
+  virtual int NumParameters() const;
+
+ private:
+  std::unique_ptr<CostFunction> cost_function_;
+};
+
+}
+
+#endif  // CERES_PUBLIC_COST_FUNCTION_TO_FIRST_ORDER_FUNCTION_H_

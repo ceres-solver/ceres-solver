@@ -66,6 +66,7 @@ set(CERES_INTERNAL_SRC
     context_impl.cc
     coordinate_descent_minimizer.cc
     corrector.cc
+    cost_function_to_first_order_function.cc
     covariance.cc
     covariance_impl.cc
     cxsparse.cc
