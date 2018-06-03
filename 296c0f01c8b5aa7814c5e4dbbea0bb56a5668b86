@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "02fbd95a_e7b4e9f4",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2018-06-03T09:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3885323_61ceac19",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48010dd5_29aec548",
         "filename": "CMakeLists.txt",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9cb67fd_ae4a2d47",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2018-06-03T09:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48010dd5_29aec548",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8d4105b2_5f53357b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2018-06-03T09:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6d4da68_15cf92fe",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5901ca9a_7058bb91",
         "filename": "CMakeLists.txt",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be456e9_1d9b7a8c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2018-06-03T09:50:38Z",
+      "side": 1,
+      "message": "ADD means you introduce extra warning flags, remove means you\u0027re removing it.\n\nFor us in Blender it is important to keep those separated, because of more tricky external libraries structure (some of external libraries are maintained by core developers, and we want all strict flags there).\n\nBut here in Ceres, especially with the explicit tweaks to gmock, we can indeed use one single variable to rule them all. Kinda like that simplicity :)",
+      "parentUuid": "5901ca9a_7058bb91",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1f8999dd_35a0e930",
+        "filename": "cmake/macros.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2018-06-03T09:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55877b21_d70759e1",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1efa70f_55f765ee",
         "filename": "cmake/macros.cmake",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f67a891_ec627b05",
+        "filename": "cmake/macros.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2018-06-03T09:50:38Z",
+      "side": 1,
+      "message": "Just for the note, that variable is not only used for reporting, it is also where check result is cached, so `check_cxx_compiler_flag()` doesn\u0027t re-compile test program on every run.\n\nBut guess we don\u0027t really care here about users of this function not knowing exact variable name for caching.\n\nWill add note in the comment.",
+      "parentUuid": "e1efa70f_55f765ee",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "8123cd52_cad7c942",
+        "filename": "cmake/macros.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2018-06-03T09:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "419086d5_36e4ce00",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2efc47d1_eb3acd0b",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53918811_b51657bb",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2018-06-03T09:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2efc47d1_eb3acd0b",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
