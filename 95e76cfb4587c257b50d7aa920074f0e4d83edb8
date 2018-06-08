@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dcf3019_6abb18cb",
+        "filename": "internal/ceres/gtest/gtest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18157,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-08T05:24:12Z",
+      "side": 1,
+      "message": "this file should not be edited since we do not have control over it. and it comes from upstream.",
+      "range": {
+        "startLine": 18157,
+        "startChar": 1,
+        "endLine": 18157,
+        "endChar": 2
+      },
+      "revId": "95e76cfb4587c257b50d7aa920074f0e4d83edb8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
