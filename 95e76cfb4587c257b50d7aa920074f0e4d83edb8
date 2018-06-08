@@ -22,6 +22,30 @@
       "revId": "95e76cfb4587c257b50d7aa920074f0e4d83edb8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02cd9f9_13dd9a7c",
+        "filename": "internal/ceres/gtest/gtest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18157,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2018-06-08T06:07:25Z",
+      "side": 1,
+      "message": "That is a good point about not modifying code which comes from upstream. However, upstream did adopt this code for a strict compiler flags in b3d9be5c (which was done more than a year ago).\n\nTwo way i see here:\n\n- Update \"bundled\" gtest in Ceres, do it first, as a separate commit. This will bring us to all the latest changes/fixes, and will make this part pf this specific patchset obsolete.\n- Accept such a local modification of upstream file, it corresponds to happenings in upstream. And it\u0027s not like this file gets update that often.\n\nKinda prefer first, and can prepare patch for that.",
+      "parentUuid": "7dcf3019_6abb18cb",
+      "range": {
+        "startLine": 18157,
+        "startChar": 1,
+        "endLine": 18157,
+        "endChar": 2
+      },
+      "revId": "95e76cfb4587c257b50d7aa920074f0e4d83edb8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
