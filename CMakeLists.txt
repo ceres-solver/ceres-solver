@@ -153,6 +153,9 @@ option(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 option(BUILD_EXAMPLES "Build examples" ON)
 option(BUILD_BENCHMARKS "Build Ceres benchmarking suite" ON)
 option(BUILD_SHARED_LIBS "Build Ceres as a shared library." OFF)
+if (ANDROID)
+  option(ANDROID_STRIP_DEBUG_SYMBOLS "Strip debug symbols from Android builds (reduces file sizes)" ON)
+endif()
 if (MSVC)
   option(MSVC_USE_STATIC_CRT
     "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
@@ -340,6 +343,17 @@ if (NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
   message("   will be available when Ceres is used.")
   message("   ===============================================================")
 endif(NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
+
+# ANDROID define is set by the Android CMake toolchain file.
+if (ANDROID AND ANDROID_STRIP_DEBUG_SYMBOLS)
+  # Strip debug information unconditionally to avoid +200MB library file sizes.
+  set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
+  set( CMAKE_SHARED_LINKER_FLAGS  "${CMAKE_SHARED_LINKER_FLAGS} -s" )
+  message("  ================================================================")
+  message("  Please note: When building Ceres for Android, debug information ")
+  message("  is stripped from the Ceres library by default.")
+  message("  ================================================================")
+endif(ANDROID AND ANDROID_STRIP_DEBUG_SYMBOLS)
 
 # GFlags.
 if (GFLAGS)
