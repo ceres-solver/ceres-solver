@@ -341,6 +341,17 @@ if (NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
   message("   ===============================================================")
 endif(NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
 
+# ANDROID define is set by the Android CMake toolchain file.
+if (ANDROID)
+  # Strip debug information unconditionally to avoid +200MB library file sizes.
+  set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
+  set( CMAKE_SHARED_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
+  message("  ================================================================")
+  message("  Please note: When building Ceres for Android, debug information ")
+  message("  is stripped from the Ceres library.")
+  message("  ================================================================")
+endif(ANDROID)
+
 # GFlags.
 if (GFLAGS)
   # Don't search with REQUIRED as we can continue without gflags.

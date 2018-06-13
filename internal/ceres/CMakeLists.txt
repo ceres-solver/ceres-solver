@@ -164,6 +164,9 @@ file(GLOB CERES_INTERNAL_HDRS *.h)
 if (MINIGLOG)
   file(GLOB MINIGLOG_HDRS miniglog/glog/*.h)
   list(APPEND CERES_INTERNAL_HDRS ${MINIGLOG_HDRS})
+  if (ANDROID)
+    list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES log)
+  endif()
 endif()
 
 # Depend also on public headers so they appear in IDEs.
