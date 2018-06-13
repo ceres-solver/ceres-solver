@@ -343,6 +343,11 @@ if (NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
   message("   ===============================================================")
 endif(NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
 
+if (ANDROID)
+    SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -llog -s" )
+    SET( CMAKE_SHARED_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -llog -s" )
+endif(ANDROID)
+
 # GFlags.
 if (GFLAGS)
   # Don't search with REQUIRED as we can continue without gflags.

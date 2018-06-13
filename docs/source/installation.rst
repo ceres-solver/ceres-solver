@@ -495,9 +495,57 @@ Notes:
 Android
 =======
 
-Download the ``Android NDK`` version ``r9d`` or later. Run
-``ndk-build`` from inside the ``jni`` directory. Use the
-``libceres.a`` that gets created.
+.. NOTE::
+
+    You will need Android NDK r15 or higher to build Ceres solver.
+
+To build Ceres for Android, we need to force ``CMake`` to find
+the toolchains from the Android NDK instead of using the standard
+ones. For example, assuming you have specified ``$NDK_DIR``:
+
+.. code-block:: bash
+
+    cmake \
+    -DCMAKE_TOOLCHAIN_FILE=\
+        $NDK_DIR/build/cmake/android.toolchain.cmake \
+    -DEIGEN_INCLUDE_DIR=/path/to/eigen/header \
+    -DANDROID_ABI=armeabi-v7a \
+    -DANDROID_STL=c++_shared \
+    -DANDROID_NATIVE_API_LEVEL=android-24 \
+    -DBUILD_SHARED_LIBS=ON \
+    -DMINIGLOG=ON \
+    <PATH_TO_CERES_SOURCE>
+
+You can build for any Android STL or ABI, but the c++_shared STL
+and the armeabi-v7a or arm64-v8a ABI are recommended for 32bit
+and 64bit architectures, respectively. Several API levels may
+be supported, but it is recommended that you use the highest
+level that is suitable for your Android project.
+
+.. NOTE::
+
+    You must always use the same API level and STL library for
+    your Android project and the Ceres binaries.
+
+After building, you get a ``libceres.so`` library, which you can
+link in your Android build system by using a
+``PREBUILT_SHARED_LIBRARY`` target in your build script.
+
+If you are building any Ceres samples and would like to verify
+your library, you will need to place them in an executable public
+directory together with ``libceres.so`` on your Android device
+(e.g. in /data/local/tmp) and ensure that the STL library from
+your NDK is present in that same directory. You may then execute
+the sample by running for example:
+
+.. code-block:: bash
+    adb shell
+    cd /data/local/tmp
+    LD_LIBRARY_PATH=/data/local/tmp ./helloworld
+
+Note that any solvers or other shared dependencies you include in
+your project must also be present in your android build config and
+your test directory on Android.
 
 .. _section-ios:
 
