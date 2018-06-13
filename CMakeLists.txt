@@ -343,6 +343,19 @@ if (NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
   message("   ===============================================================")
 endif(NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
 
+#ANDROID define is set by the Android cmake toolchain file.
+if (ANDROID)
+    #MINIGLOG requires the android log library
+    if(MINIGLOG)
+        SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -llog" )
+        SET( CMAKE_SHARED_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -llog" )
+    endif(MINIGLOG)
+
+    #Strip debug information unconditionally to avoid +200MB library file sizes.
+    SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
+    SET( CMAKE_SHARED_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
+endif(ANDROID)
+
 # GFlags.
 if (GFLAGS)
   # Don't search with REQUIRED as we can continue without gflags.
