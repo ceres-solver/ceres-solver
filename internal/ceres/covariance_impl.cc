@@ -651,7 +651,6 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
                             &permutation,
                             &cc);
   event_logger.AddEvent("Numeric Factorization");
-  CHECK_NOTNULL(permutation);
   CHECK_NOTNULL(R);
 
   if (rank < cholmod_jacobian.ncol) {
@@ -665,8 +664,14 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   }
 
   vector<int> inverse_permutation(num_cols);
-  for (SuiteSparse_long i = 0; i < num_cols; ++i) {
-    inverse_permutation[permutation[i]] = i;
+  if (permutation) {
+    for (SuiteSparse_long i = 0; i < num_cols; ++i) {
+      inverse_permutation[permutation[i]] = i;
+    }
+  } else {
+    for (SuiteSparse_long i = 0; i < num_cols; ++i) {
+      inverse_permutation[i] = i;
+    }
   }
 
   const int* rows = covariance_matrix_->rows();
