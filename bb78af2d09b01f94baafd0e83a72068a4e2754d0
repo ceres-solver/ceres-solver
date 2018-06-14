@@ -22,6 +22,30 @@
       "revId": "bb78af2d09b01f94baafd0e83a72068a4e2754d0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a16dee78_6de7b339",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 6155
+      },
+      "writtenOn": "2018-06-14T09:29:48Z",
+      "side": 1,
+      "message": "Other way around. Linking the android system library \"log\" is necessary for the android_log_print calls in miniglog and generally doesn\u0027t hurt, so I didn\u0027t guard it beyond the android define. \n-s strips debug symbols, which may be inconvenient in some fringe cases (remote gdb library debugging on Android seems unlikely), but reduces binary size from above 200mb to 2mb. \nWhile this may be done automatically in the final Android application build, I find the binary significantly faster to work with at 2mb, and you\u0027ll avoid people asking about it in Github issues.\n\nIf you\u0027re asking specifically about the Android define, it\u0027s set by the ndk cmake toolchain: https://android.googlesource.com/platform/ndk/+/master/build/cmake/android.toolchain.cmake#299",
+      "parentUuid": "b3f09f32_3c4da946",
+      "range": {
+        "startLine": 346,
+        "startChar": 11,
+        "endLine": 346,
+        "endChar": 12
+      },
+      "revId": "bb78af2d09b01f94baafd0e83a72068a4e2754d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
