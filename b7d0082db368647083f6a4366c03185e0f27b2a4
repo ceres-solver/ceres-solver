@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1caa82d7_8b235700",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-14T20:23:11Z",
+      "side": 1,
+      "message": "please add a comment here to explain what is going on.",
+      "range": {
+        "startLine": 347,
+        "startChar": 8,
+        "endLine": 347,
+        "endChar": 9
+      },
+      "revId": "b7d0082db368647083f6a4366c03185e0f27b2a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d32e3c_0272f209",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-14T20:23:11Z",
+      "side": 1,
+      "message": "don\u0027t delete the ndk-build docs, break up into two subsections.",
+      "range": {
+        "startLine": 497,
+        "startChar": 0,
+        "endLine": 498,
+        "endChar": 0
+      },
+      "revId": "b7d0082db368647083f6a4366c03185e0f27b2a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
