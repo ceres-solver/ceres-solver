@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0bf4545_eab79d12",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-06-15T17:28:28Z",
+      "side": 1,
+      "message": "Space after #\ncmake -\u003e CMake",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15d915c_09fa6f3e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-06-15T17:28:28Z",
+      "side": 1,
+      "message": "Space after #\nandroid -\u003e Android\nComments are full sentences (ends with period).",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9bfd4a4_02b3ff88",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-06-15T17:28:28Z",
+      "side": 1,
+      "message": "Space before (",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49541cc_3d506c12",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-06-15T17:28:28Z",
+      "side": 1,
+      "message": "No space after ( in this case.\n\nPlease follow the same formatting elsewhere in the file-- spacing, capitalization, etc.",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98300338_df4e8ea7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-06-15T17:28:28Z",
+      "side": 1,
+      "message": "This is odd and a bit surprising. This could cause problems when you have an actual issue developing an NDK plugin with Ceres.\n\nCan we track down the source of the huge debug? I bet it\u0027s the schur specializations.\n\nIf this remains enabled, then we need to emit a big warning saying that debug info is stripped from the NDK build because it causes huge .so bloat.",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
