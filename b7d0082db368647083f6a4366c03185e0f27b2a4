@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b11a4947_c3373581",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 6155
+      },
+      "writtenOn": "2018-06-15T09:05:16Z",
+      "side": 1,
+      "message": "Done. See latest patchset.",
+      "parentUuid": "1caa82d7_8b235700",
+      "range": {
+        "startLine": 347,
+        "startChar": 8,
+        "endLine": 347,
+        "endChar": 9
+      },
+      "revId": "b7d0082db368647083f6a4366c03185e0f27b2a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1d32e3c_0272f209",
         "filename": "docs/source/installation.rst",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b7d0082db368647083f6a4366c03185e0f27b2a4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43979a2c_8ebc8468",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 6155
+      },
+      "writtenOn": "2018-06-15T09:05:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1d32e3c_0272f209",
+      "range": {
+        "startLine": 497,
+        "startChar": 0,
+        "endLine": 498,
+        "endChar": 0
+      },
+      "revId": "b7d0082db368647083f6a4366c03185e0f27b2a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
