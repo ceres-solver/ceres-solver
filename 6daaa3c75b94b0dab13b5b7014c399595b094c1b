@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "2e726777_dc434cfa",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-16T17:11:44Z",
+      "side": 1,
+      "message": "The indenting of this section also seems off relative to the rest of the file (2 spaces).",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9bfd4a4_02b3ff88",
         "filename": "CMakeLists.txt",
         "patchSetId": 4
@@ -47,6 +64,23 @@
       "writtenOn": "2018-06-15T17:28:28Z",
       "side": 1,
       "message": "Space before (",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6902a0_4e66cd15",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-16T17:11:44Z",
+      "side": 1,
+      "message": "This section should be removed and replaced with an addition to this block: https://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/CMakeLists.txt#L150 like . so:\n\nif (MINIGLOG)\n  file(GLOB MINIGLOG_HDRS miniglog/glog/*.h)\n  list(APPEND CERES_INTERNAL_HDRS ${MINIGLOG_HDRS})\n  if (ANDROID)\n    list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES log)\n  endif()\nendif()\n\nwhich will declare the Android logging library as a standard PUBLIC link dependency of Ceres.  This is better than updating the linker flags as it means the resulting target information correctly captures all of the link dependencies.",
       "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
