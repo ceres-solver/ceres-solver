@@ -30,13 +30,24 @@
 
 # Avoid 'xxx.cc has no symbols' warnings from source files which are 'empty'
 # when their enclosing #ifdefs are disabled.
-if (CXX11_THREADS)
+if (CERES_THREADING_MODEL STREQUAL "CXX11_THREADS")
   set(CERES_PARALLEL_FOR_SRC parallel_for_cxx.cc thread_pool.cc)
-elseif (OPENMP)
+elseif (CERES_THREADING_MODEL STREQUAL "OPENMP")
   set(CERES_PARALLEL_FOR_SRC parallel_for_openmp.cc)
-elseif (TBB)
+  if (CMAKE_COMPILER_IS_GNUCXX)
+    # OpenMP in GCC requires the GNU OpenMP library.
+    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES gomp)
+  endif()
+  if (NOT MSVC)
+    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${CMAKE_THREAD_LIBS_INIT})
+  endif()
+elseif (CERES_THREADING_MODEL STREQUAL "TBB")
   set(CERES_PARALLEL_FOR_SRC parallel_for_tbb.cc)
-else()
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${TBB_LIBRARIES})
+  if (NOT MSVC)
+    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${CMAKE_THREAD_LIBS_INIT})
+  endif (NOT MSVC)
+elseif (CERES_THREADING_MODEL STREQUAL "NO_THREADS")
   set(CERES_PARALLEL_FOR_SRC parallel_for_nothreads.cc)
 endif()
 
@@ -192,23 +203,6 @@ endif (CXSPARSE AND CXSPARSE_FOUND)
 if (LAPACK_FOUND)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${LAPACK_LIBRARIES})
 endif ()
-
-if (OPENMP_FOUND)
-  # OpenMP support in Clang requires a non-GNU OpenMP library.
-  if (CMAKE_COMPILER_IS_GNUCXX)
-    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES gomp)
-  endif()
-  if (NOT MSVC)
-    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${CMAKE_THREAD_LIBS_INIT})
-  endif()
-endif (OPENMP_FOUND)
-
-if (TBB_FOUND)
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${TBB_LIBRARIES})
-  if (NOT MSVC)
-    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${CMAKE_THREAD_LIBS_INIT})
-  endif (NOT MSVC)
-endif (TBB_FOUND)
 
 set(CERES_LIBRARY_SOURCE
     ${CERES_INTERNAL_SRC}
