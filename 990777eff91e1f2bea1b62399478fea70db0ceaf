@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5799233_3fbd3dc2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-16T23:22:45Z",
+      "side": 1,
+      "message": "CERES_THREADING_MODELS_AVAILABLE",
+      "range": {
+        "startLine": 119,
+        "startChar": 39,
+        "endLine": 119,
+        "endChar": 72
+      },
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08414e8e_7cb12099",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-16T23:22:45Z",
+      "side": 1,
+      "message": "DEFAULT_THREADING_MODEL",
+      "range": {
+        "startLine": 122,
+        "startChar": 45,
+        "endLine": 122,
+        "endChar": 69
+      },
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d70384b_e9f88474",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-16T23:22:45Z",
+      "side": 1,
+      "message": "CERES_THREADING_MODEL is a better variable name?",
+      "range": {
+        "startLine": 124,
+        "startChar": 6,
+        "endLine": 124,
+        "endChar": 19
+      },
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d372c7_0999d086",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-16T23:22:45Z",
+      "side": 1,
+      "message": "I do not understand this. why are you setting CERES_THREADS to CXX11_THREADS?",
+      "range": {
+        "startLine": 205,
+        "startChar": 38,
+        "endLine": 205,
+        "endChar": 51
+      },
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2761a01d_66ca56ff",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-16T23:22:45Z",
+      "side": 1,
+      "message": "set_ceres_threading_model",
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b6a85d_4e26993d",
+        "filename": "cmake/CeresThreadingOptions.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-16T23:22:45Z",
+      "side": 1,
+      "message": "why would the list be empty at this point? is it because the user may have set the list to be too small? otherwise we know that at this point we have at least two entries, no?",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 43
+      },
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ce628c_a282f869",
+        "filename": "cmake/CeresThreadingOptions.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-16T23:22:45Z",
+      "side": 1,
+      "message": "will this trigger a refind or will used cached variables?",
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e27f3b_07dd493d",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-16T23:22:45Z",
+      "side": 1,
+      "message": "CERES_THREADING_MODEL is my preference for this variable name, but I can be convinced otherwise.",
+      "range": {
+        "startLine": 639,
+        "startChar": 5,
+        "endLine": 639,
+        "endChar": 18
+      },
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67a4c02_602b5472",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-16T23:22:45Z",
+      "side": 1,
+      "message": "the comment is about clang, but there is no action taken for clang. \nthis comment should be made about gcc and then the second part of the comment should be about clang and what are the implications here.",
+      "range": {
+        "startLine": 37,
+        "startChar": 28,
+        "endLine": 37,
+        "endChar": 36
+      },
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
