@@ -115,7 +115,22 @@ read_ceres_version_from_source(${Ceres_SOURCE_DIR})
 
 enable_testing()
 
-include(CMakeDependentOption)
+include(CeresThreadingModels)
+include(PrettyPrintCMakeList)
+find_available_ceres_threading_models(CERES_THREADING_MODELS_AVAILABLE)
+pretty_print_cmake_list(PRETTY_CERES_THREADING_MODELS_AVAILABLE
+  ${CERES_THREADING_MODELS_AVAILABLE})
+message("-- Detected available Ceres threading models: "
+  "${PRETTY_CERES_THREADING_MODELS_AVAILABLE}")
+set(CERES_THREADING_MODEL "${CERES_THREADING_MODEL}" CACHE STRING
+  "Ceres threading back-end" FORCE)
+if (NOT CERES_THREADING_MODEL)
+  list(GET CERES_THREADING_MODELS_AVAILABLE 0 DEFAULT_THREADING_MODEL)
+  update_cache_variable(CERES_THREADING_MODEL ${DEFAULT_THREADING_MODEL})
+endif()
+set_property(CACHE CERES_THREADING_MODEL PROPERTY STRINGS
+  ${CERES_THREADING_MODELS_AVAILABLE})
+
 option(MINIGLOG "Use a stripped down version of glog." OFF)
 option(GFLAGS "Enable Google Flags." ON)
 option(SUITESPARSE "Enable SuiteSparse." ON)
@@ -128,18 +143,6 @@ option(SCHUR_SPECIALIZATIONS "Enable fixed-size schur specializations." ON)
 option(CUSTOM_BLAS
        "Use handcoded BLAS routines (usually faster) instead of Eigen."
        ON)
-# Multithreading using OpenMP
-cmake_dependent_option(
-  OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON
-  "NOT TBB;NOT CXX11_THREADS" OFF)
-# Multithreading using TBB
-cmake_dependent_option(
-  TBB "Enable threaded solving in Ceres with TBB (requires TBB and C++11)" OFF
-  "NOT OPENMP;NOT CXX11_THREADS" OFF)
-# Multithreading using C++11 primitives.
-cmake_dependent_option(
-  CXX11_THREADS "Enable threaded solving in Ceres with C++11 primitives" OFF
-  "NOT OPENMP;NOT TBB" OFF)
 # Enable the use of Eigen as a sparse linear algebra library for
 # solving the nonlinear least squares problems.
 option(EIGENSPARSE "Enable Eigen as a sparse linear algebra library." ON)
@@ -203,8 +206,6 @@ if (IOS)
   update_cache_variable(SUITESPARSE OFF)
   update_cache_variable(CXSPARSE OFF)
   update_cache_variable(GFLAGS OFF)
-  update_cache_variable(OPENMP OFF)
-  update_cache_variable(TBB OFF)
   # Apple claims that the BLAS call dsyrk_ is a private API, and will not allow
   # you to submit to the Apple Store if the symbol is present.
   update_cache_variable(LAPACK OFF)
@@ -417,51 +418,12 @@ if (NOT CUSTOM_BLAS)
   message("-- Disabling custom blas")
 endif (NOT CUSTOM_BLAS)
 
-if (OPENMP)
-  # Find quietly, as we can continue without OpenMP if it is not found.
-  find_package(OpenMP QUIET)
-  if (OPENMP_FOUND)
-    message("-- Building with OpenMP.")
-    list(APPEND CERES_COMPILE_OPTIONS CERES_USE_OPENMP)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-  else (OPENMP_FOUND)
-    message("-- Failed to find OpenMP, disabling. This is expected on "
-      "Clang < 3.8, and at least Xcode <= 8.  See Ceres documentation for "
-      "instructions to build with LLVM from Homebrew to enable OpenMP on OS X.")
-    update_cache_variable(OPENMP OFF)
-  endif (OPENMP_FOUND)
-else (OPENMP)
-  message("-- Building without OpenMP, disabling.")
-endif (OPENMP)
+set_ceres_threading_model("${CERES_THREADING_MODEL}")
 
 # Initialise CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles with the
 # contents of CMAKE_CXX_FLAGS such that if the user has passed extra flags
 # they are used when checking for compiler features.
 set(CMAKE_REQUIRED_FLAGS ${CMAKE_CXX_FLAGS})
-
-if (TBB)
-  find_package(TBB QUIET)
-  if (TBB_FOUND)
-    message("-- Building with TBB (version: ${TBB_VERSION}).")
-    list(APPEND CERES_COMPILE_OPTIONS CERES_USE_TBB)
-    include_directories(${TBB_INCLUDE_DIRS})
-  else (TBB_FOUND)
-    message("-- Failed to find TBB, disabling.")
-    update_cache_variable(TBB OFF)
-  endif (TBB_FOUND)
-endif()
-
-if (CXX11_THREADS)
-  message("-- Building with C++11 threads.")
-  list(APPEND CERES_COMPILE_OPTIONS CERES_USE_CXX11_THREADS)
-endif()
-
-if (NOT OPENMP AND NOT TBB AND NOT CXX11_THREADS)
-  message("-- Neither OpenMP, TBB or C++11 threads is enabled, "
-    "disabling multithreading.")
-  list(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
-endif (NOT OPENMP AND NOT TBB AND NOT CXX11_THREADS)
 
 if (BUILD_BENCHMARKS)
   find_package(benchmark QUIET)
