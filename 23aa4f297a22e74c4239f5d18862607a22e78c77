@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "031876fd_6bb5a562",
+        "filename": "cmake/iOS.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-16T20:23:46Z",
+      "side": 1,
+      "message": "this is an odd CL, I understand deleting the code, but the comment to replace it is not really actionable. shouldn\u0027t we just delete the code and be done with it?",
+      "range": {
+        "startLine": 227,
+        "startChar": 2,
+        "endLine": 227,
+        "endChar": 11
+      },
+      "revId": "23aa4f297a22e74c4239f5d18862607a22e78c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
