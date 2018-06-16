@@ -224,11 +224,16 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET "" CACHE STRING
 # Set the architectures for which to build.
 set(CMAKE_OSX_ARCHITECTURES ${IOS_ARCH} CACHE STRING "Build architecture for iOS")
 
-# Skip the platform compiler checks for cross compiling.
-set(CMAKE_CXX_COMPILER_FORCED TRUE)
-set(CMAKE_CXX_COMPILER_WORKS TRUE)
-set(CMAKE_C_COMPILER_FORCED TRUE)
-set(CMAKE_C_COMPILER_WORKS TRUE)
+# IMPORTANT: Do NOT skip the default CMake compiler checks, as these are
+#            required in order to detect and populate variables such as
+#            CMAKE_CXX_COMPILE_FEATURES (required for target_compile_features()).
+#
+# This means that we do NOT set any of the following variables to ON:
+#
+#    CMAKE_CXX_COMPILER_FORCED
+#    CMAKE_CXX_COMPILER_WORKS
+#    CMAKE_C_COMPILER_FORCED
+#    CMAKE_C_COMPILER_WORKS
 
 # All iOS/Darwin specific settings - some may be redundant.
 set(CMAKE_SHARED_LIBRARY_PREFIX "lib")
