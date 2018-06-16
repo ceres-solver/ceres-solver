@@ -664,23 +664,16 @@ Options controlling Ceres configuration
    gains in the ``SPARSE_SCHUR`` solver, you can disable some of the
    template specializations by turning this ``OFF``.
 
-#. ``OPENMP [Default: ON]``: On certain platforms like Android,
-   multi-threading with ``OpenMP`` is not supported. Turn this ``OFF``
-   to disable multi-threading.
-
-#. ``TBB [Default: OFF]``: An alternative to ``OpenMP`` threading library that
-   uses Intel's Thread Building Blocks.  This option is mutually
-   exclusive to ``OPENMP`` and ``CXX11_THREADS``.
+#. ``CERES_THREADING_MODEL [Default: CXX11_THREADS > OPENMP > TBB > NO_THREADS]``:
+   Multi-threading backend Ceres should be compiled with.  This will
+   automatically be set to only accept the available subset of threading
+   options in the CMake GUI.
 
    .. NOTE::
 
       Up to and including version 4.4, TBB was licensed under
       GPL/Commercial terms.  From 2017.x versions onwards, TBB is licensed under
       the Apache 2.0 license (and commerical terms).
-
-#. ``CXX11_THREADS [Default: OFF]``: An alternative to ``OpenMP``
-   threading library that uses a C++11 thread-pool.  This option
-   is mutually exclusive to ``OPENMP`` and ``TBB``.
 
 #. ``BUILD_SHARED_LIBS [Default: OFF]``: By default Ceres is built as
    a static library, turn this ``ON`` to instead build Ceres as a
@@ -859,12 +852,13 @@ The Ceres components which can be specified are:
 #. ``SchurSpecializations``: Ceres built with Schur specializations
    (``SCHUR_SPECIALIZATIONS=ON``).
 
-#. ``OpenMP``: Ceres built with OpenMP (``OPENMP=ON``).
+#. ``OpenMP``: Ceres built with OpenMP (``CERES_THREADING_MODEL=OPENMP``).
 
-#. ``TBB``: Ceres built with Intel Thread Building Blocks (TBB) (``TBB=ON``).
+#. ``TBB``: Ceres built with Intel Thread Building Blocks (TBB)
+   (``CERES_THREADING_MODEL=TBB``).
 
 #. ``Multithreading``: Ceres built with *a* multithreading library.
-   This is equivalent to ``OpenMP`` **OR** ``TBB``.
+   This is equivalent to (``CERES_THREAD != NO_THREADS``).
 
 #. ``C++11``: Ceres built with C++11.
 
