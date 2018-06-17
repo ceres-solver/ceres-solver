@@ -22,6 +22,30 @@
       "revId": "23aa4f297a22e74c4239f5d18862607a22e78c77",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e68590_b35067e5",
+        "filename": "cmake/iOS.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-17T15:14:09Z",
+      "side": 1,
+      "message": "I put this in because a lot of older toolchain files will include them (now in general unnecessarily), so it was more to highlight that its a conscious choice to not do so.  However, I don\u0027t have any particularly strong feelings on it, I will remove it.",
+      "parentUuid": "031876fd_6bb5a562",
+      "range": {
+        "startLine": 227,
+        "startChar": 2,
+        "endLine": 227,
+        "endChar": 11
+      },
+      "revId": "23aa4f297a22e74c4239f5d18862607a22e78c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
