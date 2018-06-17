@@ -46,6 +46,30 @@
       "revId": "fda6214f33ac83508b4be068efa9d22487b7147d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc83508_b8f817c6",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-17T22:48:30Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "0b5e38ec_5c3f5c9c",
+      "range": {
+        "startLine": 671,
+        "startChar": 30,
+        "endLine": 671,
+        "endChar": 35
+      },
+      "revId": "fda6214f33ac83508b4be068efa9d22487b7147d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
