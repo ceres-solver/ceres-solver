@@ -46,6 +46,30 @@
       "revId": "d3b70322bef25173a0714c842b7864c1bd0d0fa0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c1a4fa7_7b154cfd",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-17T22:49:55Z",
+      "side": 1,
+      "message": "I think we should just drop this whole code block.",
+      "parentUuid": "fd3f90b7_4509218a",
+      "range": {
+        "startLine": 541,
+        "startChar": 2,
+        "endLine": 541,
+        "endChar": 9
+      },
+      "revId": "d3b70322bef25173a0714c842b7864c1bd0d0fa0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
