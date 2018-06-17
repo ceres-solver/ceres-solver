@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6921706f_449b9b03",
+        "filename": "cmake/CeresThreadingModels.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-17T19:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5933483_000072e4",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "a8f814ca449494cf3176eac96c610d647fb2170f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea059b74_1d692a3a",
         "filename": "cmake/PrettyPrintCMakeList.cmake",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "56d55380_7f2ab732",
+        "filename": "cmake/PrettyPrintCMakeList.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-17T19:16:03Z",
+      "side": 1,
+      "message": "Nope.  You can just print a list, but then it appears as: \"A;B;C\" which is harder to parse as a human.",
+      "parentUuid": "ea059b74_1d692a3a",
+      "revId": "a8f814ca449494cf3176eac96c610d647fb2170f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50e9cb29_277c2aa5",
         "filename": "docs/source/installation.rst",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2018-06-17T17:40:04Z",
       "side": 1,
       "message": "isn\u0027t this redundant now? this is always true?",
+      "range": {
+        "startLine": 835,
+        "startChar": 10,
+        "endLine": 835,
+        "endChar": 11
+      },
+      "revId": "a8f814ca449494cf3176eac96c610d647fb2170f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95514f54_718d19f4",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-17T19:16:03Z",
+      "side": 1,
+      "message": "Yes, but I still wouldn\u0027t remove it as downstream users might be referencing it in their code via:\n\nfind_package(Ceres REQUIRED COMPONENTS C++11)\n\nwhich would otherwise break which seems rude.",
+      "parentUuid": "50e9cb29_277c2aa5",
       "range": {
         "startLine": 835,
         "startChar": 10,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "c7e1ff3b_91d0e8ff",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-17T19:16:03Z",
+      "side": 1,
+      "message": "Done.\n\nIt was introduced here: https://github.com/ceres-solver/ceres-solver/commit/a8006af3110e98d64fb369e958fc00ec88d771a3 - otherwise users had to manually add the threading library dependencies themselves in their own targets that depended upon the Ceres target (if using OpenMP) from memory.",
+      "parentUuid": "384b9568_642fbc79",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "a8f814ca449494cf3176eac96c610d647fb2170f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "509c4900_72c89fcf",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 3
@@ -102,6 +192,24 @@
       "revId": "a8f814ca449494cf3176eac96c610d647fb2170f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2262e08_6ef8ac99",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-17T19:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "509c4900_72c89fcf",
+      "revId": "a8f814ca449494cf3176eac96c610d647fb2170f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
