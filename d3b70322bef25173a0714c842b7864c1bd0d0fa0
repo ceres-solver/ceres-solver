@@ -22,6 +22,30 @@
       "revId": "d3b70322bef25173a0714c842b7864c1bd0d0fa0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd3f90b7_4509218a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-17T17:55:30Z",
+      "side": 1,
+      "message": "That\u0027s a good question, for some benchmarks -march\u003dnative is faster - for others its not.  One thing it does break is portability, as it tunes for the specific target CPU.  We had it before on Linux so that\u0027s why I left it here.  I don\u0027t feel strongly either way TBH.",
+      "parentUuid": "58e877ee_0872801b",
+      "range": {
+        "startLine": 541,
+        "startChar": 2,
+        "endLine": 541,
+        "endChar": 9
+      },
+      "revId": "d3b70322bef25173a0714c842b7864c1bd0d0fa0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
