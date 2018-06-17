@@ -435,11 +435,6 @@ else (OPENMP)
   message("-- Building without OpenMP, disabling.")
 endif (OPENMP)
 
-# Initialise CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles with the
-# contents of CMAKE_CXX_FLAGS such that if the user has passed extra flags
-# they are used when checking for compiler features.
-set(CMAKE_REQUIRED_FLAGS ${CMAKE_CXX_FLAGS})
-
 if (TBB)
   find_package(TBB QUIET)
   if (TBB_FOUND)
