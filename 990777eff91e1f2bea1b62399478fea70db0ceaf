@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "67e63296_2e7a6e71",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-17T22:53:33Z",
+      "side": 1,
+      "message": "I am a bit perplexed. by this chain of update_cache_variables entirely.\nshouldn\u0027t the regular build system just detect the lack of their presence and do the right thing, why do we have to do anything here at all?",
+      "parentUuid": "7ffb9754_744f9b27",
+      "range": {
+        "startLine": 205,
+        "startChar": 38,
+        "endLine": 205,
+        "endChar": 51
+      },
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2761a01d_66ca56ff",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
