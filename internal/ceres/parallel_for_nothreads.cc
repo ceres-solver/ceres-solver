@@ -31,6 +31,8 @@
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
+#ifdef CERES_NO_THREADS
+
 #include "ceres/parallel_for.h"
 #include "glog/logging.h"
 
@@ -70,3 +72,5 @@ void ParallelFor(ContextImpl* context,
 
 }
 }
+
+#endif  // CERES_NO_THREADS
