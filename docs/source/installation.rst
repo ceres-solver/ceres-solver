@@ -577,6 +577,32 @@ defaults if you know what you are doing.
  ``CMake`` GUI.  If they are not present in the *Standard View*,
  toggle to the *Advanced View* with ``<t>``.
 
+
+Modifying default compilation flags
+-----------------------------------
+
+The ``CMAKE_CXX_FLAGS`` variable can be used to define additional
+default compilation flags for all build types.
+
+For example, if you wished to build Ceres with `-march=native
+<https://gcc.gnu.org/onlinedocs/gcc/x86-Options.html>`_ which is not
+enabled by default (even if ``CMAKE_BUILD_TYPE=Release``) you would invoke
+CMake with:
+
+.. code-block:: bash
+
+       cmake -DCMAKE_CXX_FLAGS="-march=native" <PATH_TO_CERES_SOURCE>
+
+.. NOTE ::
+
+    The use of ``-march=native`` will limit portability, as it will tune the
+    implementation to the specific CPU of the compiling machine (e.g. use of
+    AVX if available).  Run-time segfaults may occur if you then tried to
+    run the resulting binaries on a machine with a different processor, even
+    if it is from the same family (e.g. x86) if the specific options available
+    are different.  Note that the performance gains from the use of
+    ``-march=native`` are not guaranteed to be significant.
+
 .. _options-controlling-ceres-configuration:
 
 Options controlling Ceres configuration
