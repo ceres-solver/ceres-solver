@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "fdff12ce_e559aea5",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-17T19:18:25Z",
+      "side": 1,
+      "message": "Note that CMAKE_THREAD_LIBS_INIT is empty on OS X, but \"-lpthread\" on Linux.",
+      "parentUuid": "c7e1ff3b_91d0e8ff",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "a8f814ca449494cf3176eac96c610d647fb2170f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "509c4900_72c89fcf",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 3
