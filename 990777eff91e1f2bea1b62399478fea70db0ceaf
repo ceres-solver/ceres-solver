@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "7ffb9754_744f9b27",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-17T16:39:45Z",
+      "side": 1,
+      "message": "So, this should be the current default in the case of IOS (\u0026 ANDROID), although its a more explicit specification of what you expect to be available that mimics the previous explicit removal of both TBB \u0026 OPENMP - even if the user had set CERES_THREADS to TBB (assuming that OPENMP would never be available).",
+      "parentUuid": "37d372c7_0999d086",
+      "range": {
+        "startLine": 205,
+        "startChar": 38,
+        "endLine": 205,
+        "endChar": 51
+      },
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2761a01d_66ca56ff",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
@@ -134,6 +158,30 @@
     },
     {
       "key": {
+        "uuid": "d4800224_ffff53d5",
+        "filename": "cmake/CeresThreadingOptions.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-17T16:39:45Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be, and indeed wouldn\u0027t be as the code is currently written.  This was more protective for any future threading model updates to ensure we failed consistently and clearly.",
+      "parentUuid": "d9b6a85d_4e26993d",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 43
+      },
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58ce628c_a282f869",
         "filename": "cmake/CeresThreadingOptions.cmake",
         "patchSetId": 2
@@ -145,6 +193,24 @@
       "writtenOn": "2018-06-16T23:22:45Z",
       "side": 1,
       "message": "will this trigger a refind or will used cached variables?",
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e26830_9471ac13",
+        "filename": "cmake/CeresThreadingOptions.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-17T16:39:45Z",
+      "side": 1,
+      "message": "It will use the cached variables.  We\u0027re using a REQUIRED here in case the user has forced the value of CERES_THREADS via -D even if the value is not in the available subset, which is unfortunately possible.\n\nFor example if you configured Ceres on OS X (default Apple Clang without OpenMP) with:\n\ncmake -DCERES_THREADS\u003dOPENMP \u003cPATH_TO_CERES_SOURCE\u003e\n\nthen it would fail here, although we output the following:\n\n-- Detected available Ceres threading options: CXX11_THREADS;TBB;NO_THREADS\n\nwhich should make it clear why.",
+      "parentUuid": "58ce628c_a282f869",
       "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -194,6 +260,30 @@
       "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecacd860_c02fa38b",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-17T16:39:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a67a4c02_602b5472",
+      "range": {
+        "startLine": 37,
+        "startChar": 28,
+        "endLine": 37,
+        "endChar": 36
+      },
+      "revId": "990777eff91e1f2bea1b62399478fea70db0ceaf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
