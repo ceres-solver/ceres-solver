@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a38aabb2_e88730eb",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-17T17:34:51Z",
+      "side": 1,
+      "message": "will this conflict when cross compiling for android where the ndk will also report clang as the compiler?",
+      "range": {
+        "startLine": 542,
+        "startChar": 6,
+        "endLine": 542,
+        "endChar": 27
+      },
+      "revId": "9a59bb50dba0ca7c177d92c0ce77796e7f8824c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
