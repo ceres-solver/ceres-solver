@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5933483_000072e4",
+        "filename": "cmake/CeresThreadingModels.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-17T17:40:04Z",
+      "side": 1,
+      "message": "maybe add a comment that this is protective.",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "a8f814ca449494cf3176eac96c610d647fb2170f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea059b74_1d692a3a",
+        "filename": "cmake/PrettyPrintCMakeList.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-17T17:40:04Z",
+      "side": 1,
+      "message": "there isn\u0027t a function in cmake already for this?, weird.",
+      "revId": "a8f814ca449494cf3176eac96c610d647fb2170f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e9cb29_277c2aa5",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-17T17:40:04Z",
+      "side": 1,
+      "message": "isn\u0027t this redundant now? this is always true?",
+      "range": {
+        "startLine": 835,
+        "startChar": 10,
+        "endLine": 835,
+        "endChar": 11
+      },
+      "revId": "a8f814ca449494cf3176eac96c610d647fb2170f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "384b9568_642fbc79",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-17T17:40:04Z",
+      "side": 1,
+      "message": "add a comment about this if case. I am not totally sure what is going on here and why.",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "a8f814ca449494cf3176eac96c610d647fb2170f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509c4900_72c89fcf",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-17T17:40:04Z",
+      "side": 1,
+      "message": "same here.",
+      "revId": "a8f814ca449494cf3176eac96c610d647fb2170f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
