@@ -417,6 +417,7 @@ template <typename T>
 inline void EulerAnglesToRotationMatrix(const T* euler,
                                         const int row_stride_parameter,
                                         T* R) {
+  (void)row_stride_parameter;
   EulerAnglesToRotationMatrix(euler, RowMajorAdapter3x3(R));
 }
 
