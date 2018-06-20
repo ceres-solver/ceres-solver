@@ -22,6 +22,30 @@
       "revId": "e49516e4696bfed6adcf24726f2c6db927f31a76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5415cacd_19d6358e",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-20T18:39:08Z",
+      "side": 1,
+      "message": "They should be additive if set via -D yes.  They are empty at the start by default.",
+      "parentUuid": "701bcfce_8defee81",
+      "range": {
+        "startLine": 584,
+        "startChar": 6,
+        "endLine": 584,
+        "endChar": 21
+      },
+      "revId": "e49516e4696bfed6adcf24726f2c6db927f31a76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
