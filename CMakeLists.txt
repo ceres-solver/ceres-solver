@@ -200,11 +200,6 @@ if (IOS)
   update_cache_variable(MINIGLOG ON)
   message(STATUS "Building for iOS: Forcing use of miniglog instead of glog.")
 
-  update_cache_variable(SUITESPARSE OFF)
-  update_cache_variable(CXSPARSE OFF)
-  update_cache_variable(GFLAGS OFF)
-  update_cache_variable(OPENMP OFF)
-  update_cache_variable(TBB OFF)
   # Apple claims that the BLAS call dsyrk_ is a private API, and will not allow
   # you to submit to the Apple Store if the symbol is present.
   update_cache_variable(LAPACK OFF)
