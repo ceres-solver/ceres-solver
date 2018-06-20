@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "701bcfce_8defee81",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-20T18:36:32Z",
+      "side": 1,
+      "message": "are these flags, additive? or do they replace cmake\u0027s own flags? or anything we add in the cmake file?",
+      "range": {
+        "startLine": 584,
+        "startChar": 6,
+        "endLine": 584,
+        "endChar": 21
+      },
+      "revId": "e49516e4696bfed6adcf24726f2c6db927f31a76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
