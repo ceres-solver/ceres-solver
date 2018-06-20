@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d43aaf8b_88733b15",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-20T14:04:07Z",
+      "side": 0,
+      "message": "thank you :)",
+      "range": {
+        "startLine": 204,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 23
+      },
+      "revId": "51dcd40ba592855654fbb5f907498fa271da5124",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
