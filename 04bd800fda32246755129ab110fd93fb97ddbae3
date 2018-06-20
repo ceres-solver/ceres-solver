@@ -22,6 +22,30 @@
       "revId": "04bd800fda32246755129ab110fd93fb97ddbae3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6ab9df_a14d8e69",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-20T09:22:49Z",
+      "side": 1,
+      "message": "See here: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/13700",
+      "parentUuid": "befb6753_f04a8740",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 206,
+        "endChar": 23
+      },
+      "revId": "04bd800fda32246755129ab110fd93fb97ddbae3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
