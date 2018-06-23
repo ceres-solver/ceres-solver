@@ -318,8 +318,7 @@ class CERES_EXPORT Solver {
     // Linear least squares solver options -------------------------------------
 
     LinearSolverType linear_solver_type =
-#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE) && \
-    !defined(CERES_USE_EIGEN_SPARSE)  // NOLINT
+#if defined(CERES_NO_SPARSE)
         DENSE_QR;
 #else
         SPARSE_NORMAL_CHOLESKY;
@@ -353,16 +352,14 @@ class CERES_EXPORT Solver {
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type =
 #if !defined(CERES_NO_SUITESPARSE)
         SUITE_SPARSE;
-#else
-  #if !defined(CERES_NO_CXSPARSE)
+#elif !defined(CERES_NO_ACCELERATE_SPARSE)
+        ACCELERATE_SPARSE;
+#elif !defined(CERES_NO_CXSPARSE)
         CX_SPARSE;
-  #else
-    #if defined(CERES_USE_EIGEN_SPARSE)
+#elif defined(CERES_USE_EIGEN_SPARSE)
         EIGEN_SPARSE;
-    #else
+#else
         NO_SPARSE;
-    #endif
-  #endif
 #endif
 
     // The order in which variables are eliminated in a linear solver
@@ -919,8 +916,7 @@ class CERES_EXPORT Solver {
 
     // Type of the linear solver requested by the user.
     LinearSolverType linear_solver_type_given =
-#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE) && \
-    !defined(CERES_USE_EIGEN_SPARSE)  // NOLINT
+#if defined(CERES_NO_SPARSE)
         DENSE_QR;
 #else
         SPARSE_NORMAL_CHOLESKY;
@@ -932,8 +928,7 @@ class CERES_EXPORT Solver {
     // available, e.g. The user requested SPARSE_NORMAL_CHOLESKY but
     // no sparse linear algebra library was available.
     LinearSolverType linear_solver_type_used =
-#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE) && \
-    !defined(CERES_USE_EIGEN_SPARSE)  // NOLINT
+#if defined(CERES_NO_SPARSE)
         DENSE_QR;
 #else
         SPARSE_NORMAL_CHOLESKY;
