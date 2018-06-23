@@ -89,6 +89,10 @@ optional. For details on customizing the build process, see
   no dependencies on ``LAPACK`` and ``BLAS``. This makes for a simpler
   build process and a smaller binary. **Optional**
 
+- `Apple's Accelerate sparse solvers <https://developer.apple.com/documentation/accelerate/sparse_solvers>`_.
+  As of Xcode 9.0, Apple's Accelerate framework includes support for
+  solving sparse linear systems across macOS, iOS et al. **Optional**
+
 - `BLAS <http://www.netlib.org/blas/>`_ and `LAPACK
   <http://www.netlib.org/lapack/>`_ routines are needed by
   ``SuiteSparse``, and optionally used by Ceres directly for some
@@ -691,7 +695,13 @@ Options controlling Ceres configuration
 
       CXSparse is licensed under the LGPL.
 
-#. ``EIGENSPARSE [Default: OFF]``: By default, Ceres will not use
+#. ``ACCELERATESPARSE [Default: ON]``: By default, Ceres will link to
+   Apple's Accelerate framework directly if a version of it is detected
+   which supports solving sparse linear systems.  Note that on Apple OSs
+   Accelerate usually also provides the BLAS/LAPACK implementations and
+   so would be linked against irrespective of the value of ``ACCELERATESPARSE``.
+
+#. ``EIGENSPARSE [Default: ON]``: By default, Ceres will not use
    Eigen's sparse Cholesky factorization.
 
    .. NOTE::
@@ -896,12 +906,14 @@ The Ceres components which can be specified are:
 
 #. ``CXSparse``: Ceres built with CXSparse (``CXSPARSE=ON``).
 
+#. ``AccelerateSparse``: Ceres built with Apple's Accelerate sparse solvers (``ACCELERATESPARSE=ON``).
+
 #. ``EigenSparse``: Ceres built with Eigen's sparse Cholesky factorization
    (``EIGENSPARSE=ON``).
 
 #. ``SparseLinearAlgebraLibrary``: Ceres built with *at least one* sparse linear
    algebra library.  This is equivalent to ``SuiteSparse`` **OR** ``CXSparse``
-   **OR** ``EigenSparse``.
+   **OR** ``AccelerateSparse``  **OR** ``EigenSparse``.
 
 #. ``SchurSpecializations``: Ceres built with Schur specializations
    (``SCHUR_SPECIALIZATIONS=ON``).

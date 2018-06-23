@@ -204,6 +204,22 @@ INSTANTIATE_TEST_CASE_P(CXSparseCholesky,
                         ParamInfoToString);
 #endif
 
+#ifndef CERES_NO_ACCELERATE_SPARSE
+INSTANTIATE_TEST_CASE_P(AccelerateSparseCholesky,
+                        SparseCholeskyTest,
+                        ::testing::Combine(::testing::Values(ACCELERATE_SPARSE),
+                                           ::testing::Values(AMD, NATURAL),
+                                           ::testing::Values(true, false)),
+                        ParamInfoToString);
+
+INSTANTIATE_TEST_CASE_P(AccelerateSparseCholeskySingle,
+                        SparseCholeskyTest,
+                        ::testing::Combine(::testing::Values(ACCELERATE_SPARSE),
+                                           ::testing::Values(AMD, NATURAL),
+                                           ::testing::Values(true, false)),
+                        ParamInfoToString);
+#endif
+
 #ifdef CERES_USE_EIGEN_SPARSE
 INSTANTIATE_TEST_CASE_P(EigenSparseCholesky,
                         SparseCholeskyTest,

@@ -568,6 +568,12 @@ bool ReorderProgramForSparseNormalCholesky(
     OrderingForSparseNormalCholeskyUsingCXSparse(
         *tsm_block_jacobian_transpose,
         &ordering[0]);
+  } else if (sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
+    // TODO(alex): Investigate what analysis on pre-ordered matrices
+    //             Accelerate supports, but for now disable.
+    // https://github.com/ceres-solver/ceres-solver/issues/394.
+    return true;
+
   } else if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
 #if EIGEN_VERSION_AT_LEAST(3, 2, 2)
        OrderingForSparseNormalCholeskyUsingEigenSparse(

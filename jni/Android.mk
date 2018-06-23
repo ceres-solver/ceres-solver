@@ -108,10 +108,12 @@ LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
                 -DCERES_NO_LAPACK \
                 -DCERES_NO_SUITESPARSE \
                 -DCERES_NO_CXSPARSE \
+                -DCERES_NO_ACCELERATE_SPARSE \
                 -DCERES_USE_EIGEN_SPARSE \
                 -DCERES_USE_OPENMP
 
-LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
+LOCAL_SRC_FILES := $(CERES_SRC_PATH)/accelerate_sparse.cc \
+                   $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/blas.cc \
                    $(CERES_SRC_PATH)/block_evaluate_preparer.cc \
                    $(CERES_SRC_PATH)/block_jacobian_writer.cc \

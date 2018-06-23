@@ -48,6 +48,9 @@ class CompressedRowSparseMatrix;
 // sparsity is not constant across calls to Solve. This means that
 // there is no benefit to symbolically factorizing the matrix and
 // caching this factorization.
+//
+// TODO(alex): Add support for Accelerate sparse solvers:
+// https://github.com/ceres-solver/ceres-solver/issues/397
 class DynamicSparseNormalCholeskySolver
     : public CompressedRowSparseMatrixSolver {
  public:
