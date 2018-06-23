@@ -70,6 +70,10 @@ std::string VersionString() {
   value += "-cxsparse-(" + std::string(CERES_CXSPARSE_VERSION) + ")";
 #endif
 
+#ifndef CERES_NO_ACCELERATE_SPARSE
+  value += "-acceleratesparse";
+#endif
+
 #ifdef CERES_USE_EIGEN_SPARSE
   value += "-eigensparse";
 #endif

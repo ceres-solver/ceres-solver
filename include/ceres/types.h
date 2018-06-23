@@ -159,6 +159,9 @@ enum SparseLinearAlgebraLibraryType {
   // the Simplicial LDLT routines.
   EIGEN_SPARSE,
 
+  // Apple's Accelerate framework sparse linear algebra routines.
+  ACCELERATE_SPARSE,
+
   // No sparse linear solver should be used.  This does not necessarily
   // imply that Ceres was built without any sparse library, although that
   // is the likely use case, merely that one should not be used.
