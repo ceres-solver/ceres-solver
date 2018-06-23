@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4268fbde_1277ff63",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-23T23:50:05Z",
+      "side": 1,
+      "message": "APPLESPARSE or ACCELERATESPARSE or something like that. IOSSPARSE may work too. we will need a small consistent name.",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 9
+      },
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "328fbb88_8319dd40",
+        "filename": "cmake/FindAccelerate.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-23T23:50:05Z",
+      "side": 1,
+      "message": "Accelerate by itself is always present, I recommend calling it AccelerateSparse, which is something that has only become available lately.",
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d03f599_f4e011f7",
+        "filename": "cmake/FindAccelerate.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-23T23:50:05Z",
+      "side": 1,
+      "message": "BTW this Accelerate framework also overlaps with searching for LAPACK and BLAS on ios, as they are also part of the Accelerate framework.\n\nso it would be good to either make this more specific, or to for example skip over lapack and blas finding using other scripts when accelerate is present. this will require some thought.",
+      "range": {
+        "startLine": 32,
+        "startChar": 49,
+        "endLine": 32,
+        "endChar": 58
+      },
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e364e6ea_6ca781d3",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-23T23:50:05Z",
+      "side": 1,
+      "message": "CERES_NO_ACCELERATE_SPARSE ?",
+      "range": {
+        "startLine": 57,
+        "startChar": 1,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52afa143_4bcc8b42",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-23T23:50:05Z",
+      "side": 1,
+      "message": "I am good with ACCELERATE_SPARSE",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 19
+      },
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79866a4f_30aa921c",
+        "filename": "internal/ceres/apple_accelerate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-23T23:50:05Z",
+      "side": 1,
+      "message": "call this accelerate_sparse.h ?",
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b8596a_0dcf1334",
+        "filename": "internal/ceres/sparse_cholesky.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-23T23:50:05Z",
+      "side": 1,
+      "message": "CERES_NO_ACCELERATE_SPARSE",
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
