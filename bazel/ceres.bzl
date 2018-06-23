@@ -29,6 +29,7 @@
 # Support for building Ceres Solver with a specific configuration.
 
 CERES_SRCS = ["internal/ceres/" + filename for filename in [
+    "accelerate_sparse.cc",
     "array_utils.cc",
     "blas.cc",
     "block_evaluate_preparer.cc",
@@ -193,6 +194,7 @@ def ceres_library(name,
         defines = [
             "CERES_NO_SUITESPARSE",
             "CERES_NO_CXSPARSE",
+            "CERES_NO_ACCELERATE_SPARSE",
             "CERES_NO_LAPACK",
             "CERES_USE_EIGEN_SPARSE",
             "CERES_USE_CXX11_THREADS",

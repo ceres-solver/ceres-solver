@@ -320,6 +320,24 @@ TEST(Solver, SparseSchurNoCXSparse) {
 }
 #endif
 
+#if defined(CERES_NO_ACCELERATE_SPARSE)
+TEST(Solver, SparseNormalCholeskyNoAccelerateSparse) {
+  Solver::Options options;
+  options.sparse_linear_algebra_library_type = ACCELERATE_SPARSE;
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  string message;
+  EXPECT_FALSE(options.IsValid(&message));
+}
+
+TEST(Solver, SparseSchurNoAccelerateSparse) {
+  Solver::Options options;
+  options.sparse_linear_algebra_library_type = ACCELERATE_SPARSE;
+  options.linear_solver_type = SPARSE_SCHUR;
+  string message;
+  EXPECT_FALSE(options.IsValid(&message));
+}
+#endif
+
 #if !defined(CERES_USE_EIGEN_SPARSE)
 TEST(Solver, SparseNormalCholeskyNoEigenSparse) {
   Solver::Options options;
