@@ -200,17 +200,13 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, DenseSchur) {
   PreprocessForGivenLinearSolverAndVerify(DENSE_SCHUR);
 }
 
-#if defined(CERES_USE_EIGEN_SPARSE) || \
-  !defined(CERES_NO_SUITESPARSE) ||   \
-  !defined(CERES_NO_CXSPARSE)
+#if !defined(CERES_NO_SPARSE)
 TEST_F(LinearSolverAndEvaluatorCreationTest, SparseNormalCholesky) {
   PreprocessForGivenLinearSolverAndVerify(SPARSE_NORMAL_CHOLESKY);
 }
 #endif
 
-#if defined(CERES_USE_EIGEN_SPARSE) || \
-  !defined(CERES_NO_SUITESPARSE) ||   \
-  !defined(CERES_NO_CXSPARSE)
+#if !defined(CERES_NO_SPARSE)
 TEST_F(LinearSolverAndEvaluatorCreationTest, SparseSchur) {
   PreprocessForGivenLinearSolverAndVerify(SPARSE_SCHUR);
 }

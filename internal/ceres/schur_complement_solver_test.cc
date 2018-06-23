@@ -220,6 +220,20 @@ TEST_F(SchurComplementSolverTest,
 }
 #endif  // CERES_NO_CXSPARSE
 
+#ifndef CERES_NO_ACCELERATE_SPARSE
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithAccelerateSparseSmallProblem) {
+  ComputeAndCompareSolutions(2, false, SPARSE_SCHUR, EIGEN, ACCELERATE_SPARSE, true);
+  ComputeAndCompareSolutions(2, true, SPARSE_SCHUR, EIGEN, ACCELERATE_SPARSE, true);
+}
+
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithAccelerateSparseLargeProblem) {
+  ComputeAndCompareSolutions(3, false, SPARSE_SCHUR, EIGEN, ACCELERATE_SPARSE, true);
+  ComputeAndCompareSolutions(3, true, SPARSE_SCHUR, EIGEN, ACCELERATE_SPARSE, true);
+}
+#endif  // CERES_NO_ACCELERATE_SPARSE
+
 #ifdef CERES_USE_EIGEN_SPARSE
 TEST_F(SchurComplementSolverTest,
        SparseSchurWithEigenSparseSmallProblem) {

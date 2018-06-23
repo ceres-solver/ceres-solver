@@ -182,6 +182,14 @@ INSTANTIATE_TEST_CASE_P(SubsetPreconditionerWithCXSparse,
                         ParamInfoToString);
 #endif
 
+#ifndef CERES_NO_ACCELERATE_SPARSE
+INSTANTIATE_TEST_CASE_P(SubsetPreconditionerWithAccelerateSparse,
+                        SubsetPreconditionerTest,
+                        ::testing::Combine(::testing::Values(ACCELERATE_SPARSE),
+                                           ::testing::Values(true, false)),
+                        ParamInfoToString);
+#endif
+
 #ifdef CERES_USE_EIGEN_SPARSE
 INSTANTIATE_TEST_CASE_P(SubsetPreconditionerWithEigenSparse,
                         SubsetPreconditionerTest,

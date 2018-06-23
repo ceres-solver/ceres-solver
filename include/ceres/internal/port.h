@@ -54,6 +54,24 @@
 #  error One of CERES_USE_OPENMP, CERES_USE_TBB,CERES_USE_CXX11_THREADS or CERES_NO_THREADS must be defined.
 #endif
 
+// CERES_NO_SPARSE should be automatically defined by config.h if Ceres was
+// compiled without any sparse back-end.  Verify that it has not subsequently
+// been inconsistently redefined.
+#if defined(CERES_NO_SPARSE)
+#  if !defined(CERES_NO_SUITESPARSE)
+#    error CERES_NO_SPARSE requires CERES_NO_SUITESPARSE.
+#  endif
+#  if !defined(CERES_NO_CXSPARSE)
+#    error CERES_NO_SPARSE requires CERES_NO_CXSPARSE
+#  endif
+#  if !defined(CERES_NO_ACCELERATE_SPARSE)
+#    error CERES_NO_SPARSE requires CERES_NO_ACCELERATE_SPARSE
+#  endif
+#  if defined(CERES_USE_EIGEN_SPARSE)
+#    error CERES_NO_SPARSE requires !CERES_USE_EIGEN_SPARSE
+#  endif
+#endif
+
 // A macro to signal which functions and classes are exported when
 // building a DLL with MSVC.
 //
