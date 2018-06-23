@@ -79,6 +79,8 @@ function(ceres_compile_options_to_components CURRENT_CERES_COMPILE_OPTIONS CERES
   add_to_output_if_not_found(CURRENT_CERES_COMPILE_OPTIONS ${CERES_COMPONENTS_VAR}
     CERES_NO_CXSPARSE "CXSparse;SparseLinearAlgebraLibrary")
   add_to_output_if_not_found(CURRENT_CERES_COMPILE_OPTIONS ${CERES_COMPONENTS_VAR}
+    CERES_NO_ACCELERATE_SPARSE "AccelerateSparse;SparseLinearAlgebraLibrary")
+  add_to_output_if_not_found(CURRENT_CERES_COMPILE_OPTIONS ${CERES_COMPONENTS_VAR}
     CERES_RESTRICT_SCHUR_SPECIALIZATION "SchurSpecializations")
   add_to_output_if_found(CURRENT_CERES_COMPILE_OPTIONS ${CERES_COMPONENTS_VAR}
     CERES_USE_OPENMP "OpenMP;Multithreading")
