@@ -1,0 +1,214 @@
+// This include must come before any #ifndef check on Ceres compile options.
+#include "ceres/internal/port.h"
+
+#ifndef CERES_NO_ACCELERATE_SPARSE
+
+#include "ceres/accelerate_sparse.h"
+
+#include <algorithm>
+#include <string>
+#include <vector>
+
+#include "ceres/compressed_col_sparse_matrix_utils.h"
+#include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/triplet_sparse_matrix.h"
+#include "glog/logging.h"
+
+#define CASESTR(x) case x: return #x
+
+namespace ceres {
+namespace internal {
+
+const char* SparseStatusToString(SparseStatus_t status) {
+  switch (status) {
+    CASESTR(SparseStatusOK);
+    CASESTR(SparseFactorizationFailed);
+    CASESTR(SparseMatrixIsSingular);
+    CASESTR(SparseInternalError);
+    CASESTR(SparseParameterError);
+    CASESTR(SparseStatusReleased);
+    default:
+      return "UKNOWN";
+  }
+}
+
+template<typename Scalar>
+AccelerateSparse<Scalar>::AccelerateSparse() {}
+
+template<typename Scalar>
+AccelerateSparse<Scalar>::~AccelerateSparse() {}
+
+template<typename Scalar>
+void AccelerateSparse<Scalar>::Solve(NumericFactorization* numeric_factor,
+                                         DenseVector* rhs_and_solution) {
+  SparseSolve(*numeric_factor, *rhs_and_solution);
+}
+
+template<typename Scalar>
+typename AccelerateSparse<Scalar>::ASSparseMatrix
+AccelerateSparse<Scalar>::CreateSparseMatrixTransposeView(
+    CompressedRowSparseMatrix* A) {
+  // Accelerate's columnStarts is a long*, not an int*.  These types might be
+  // different (e.g. ARM on iOS) so always make a copy.
+  column_starts_.resize(A->num_rows() +1); // +1 for final column length.
+  std::copy_n(A->rows(), column_starts_.size(), &column_starts_[0]);
+
+  ASSparseMatrix At;
+  At.structure.rowCount = A->num_cols();
+  At.structure.columnCount = A->num_rows();
+  At.structure.columnStarts = &column_starts_[0];
+  At.structure.rowIndices = A->mutable_cols();
+  At.structure.attributes.transpose = false;
+  // TODO(alex): We report a storage type of LOWER_TRIANGULAR for input, but
+  //             the transpose maps that to upper triangular for Accelerate.
+  At.structure.attributes.triangle = SparseUpperTriangle;
+  At.structure.attributes.kind = SparseSymmetric;
+  At.structure.attributes._reserved = 0;
+  At.structure.attributes._allocatedBySparse = 0;
+  At.structure.blockSize = 1;
+  if (std::is_same<Scalar, double>::value) {
+    At.data = reinterpret_cast<Scalar*>(A->mutable_values());
+  } else {
+    values_ =
+        ConstVectorRef(A->values(), A->num_nonzeros()).template cast<Scalar>();
+    At.data = values_.data();
+  }
+  return At;
+}
+
+template<typename Scalar>
+typename AccelerateSparse<Scalar>::SymbolicFactorization
+AccelerateSparse<Scalar>::AnalyzeCholesky(ASSparseMatrix* A) {
+  return SparseFactor(SparseFactorizationCholesky, A->structure);
+}
+
+template<typename Scalar>
+typename AccelerateSparse<Scalar>::NumericFactorization
+AccelerateSparse<Scalar>::Cholesky(ASSparseMatrix* A,
+                                       SymbolicFactorization* symbolic_factor) {
+  // TODO(alex): Pass factorStorage to recycle memory for resulting numeric
+  //             factorisation.
+  return SparseFactor(*symbolic_factor, *A);
+}
+
+// Instantiate only for the specific template types required/supported s/t the
+// definition can be in the .cc file.
+template class AccelerateSparse<double>;
+template class AccelerateSparse<float>;
+
+template<typename Scalar>
+std::unique_ptr<SparseCholesky>
+AppleAccelerateCholesky<Scalar>::Create(OrderingType ordering_type) {
+  return std::unique_ptr<SparseCholesky>(
+      new AppleAccelerateCholesky<Scalar>(ordering_type));
+}
+
+template<typename Scalar>
+AppleAccelerateCholesky<Scalar>::AppleAccelerateCholesky(
+    const OrderingType ordering_type)
+    : ordering_type_(ordering_type) {}
+
+template<typename Scalar>
+AppleAccelerateCholesky<Scalar>::~AppleAccelerateCholesky() {
+  FreeSymbolicFactorization();
+  FreeNumericFactorization();
+}
+
+template<typename Scalar>
+CompressedRowSparseMatrix::StorageType
+AppleAccelerateCholesky<Scalar>::StorageType() const {
+  return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
+}
+
+template<typename Scalar>
+LinearSolverTerminationType
+AppleAccelerateCholesky<Scalar>::Factorize(CompressedRowSparseMatrix* lhs,
+                                               std::string* message) {
+  CHECK_EQ(lhs->storage_type(), StorageType());
+  if (lhs == NULL) {
+    *message = "Failure: Input lhs is NULL.";
+    return LINEAR_SOLVER_FATAL_ERROR;
+  }
+  typename SparseTypesTrait<Scalar>::SparseMatrix as_lhs =
+      as_.CreateSparseMatrixTransposeView(lhs);
+
+  if (!static_cast<bool>(symbolic_factor_)) {
+    symbolic_factor_.reset(
+        new typename SparseTypesTrait<Scalar>::SymbolicFactorization);
+    *symbolic_factor_ = as_.AnalyzeCholesky(&as_lhs);
+    if (symbolic_factor_->status != SparseStatusOK) {
+      *message = StringPrintf(
+          "Apple Accelerate Failure : Symbolic factorisation failed: %s",
+          SparseStatusToString(symbolic_factor_->status));
+      FreeSymbolicFactorization();
+      return LINEAR_SOLVER_FATAL_ERROR;
+    }
+  }
+
+  FreeNumericFactorization();
+  numeric_factor_.reset(
+      new typename SparseTypesTrait<Scalar>::NumericFactorization(
+          as_.Cholesky(&as_lhs, symbolic_factor_.get())));
+  if (numeric_factor_->status != SparseStatusOK) {
+    *message = StringPrintf(
+        "Apple Accelerate Failure : Numeric factorisation failed: %s",
+        SparseStatusToString(numeric_factor_->status));
+    return LINEAR_SOLVER_FAILURE;
+  }
+
+  return LINEAR_SOLVER_SUCCESS;
+}
+
+template<typename Scalar>
+LinearSolverTerminationType
+AppleAccelerateCholesky<Scalar>::Solve(const double* rhs,
+                                           double* solution,
+                                           std::string* message) {
+  CHECK_EQ(numeric_factor_->status, SparseStatusOK)
+      << "Solve called without a call to Factorize first ("
+      << SparseStatusToString(numeric_factor_->status) << ").";
+  const int num_cols = numeric_factor_->symbolicFactorization.columnCount;
+
+  typename SparseTypesTrait<Scalar>::DenseVector as_rhs_and_solution;
+  as_rhs_and_solution.count = num_cols;
+  if (std::is_same<Scalar, double>::value) {
+    as_rhs_and_solution.data = reinterpret_cast<Scalar*>(solution);
+    std::copy_n(rhs, num_cols, solution);
+  } else {
+    scalar_rhs_and_solution_ =
+        ConstVectorRef(rhs, num_cols).template cast<Scalar>();
+    as_rhs_and_solution.data = scalar_rhs_and_solution_.data();
+  }
+  as_.Solve(numeric_factor_.get(), &as_rhs_and_solution);
+  if (!std::is_same<Scalar, double>::value) {
+    VectorRef(solution, num_cols) =
+        scalar_rhs_and_solution_.template cast<double>();
+  }
+  return LINEAR_SOLVER_SUCCESS;
+}
+
+template<typename Scalar>
+void AppleAccelerateCholesky<Scalar>::FreeSymbolicFactorization() {
+  if (static_cast<bool>(symbolic_factor_)) {
+    SparseCleanup(*symbolic_factor_);
+    symbolic_factor_.reset();
+  }
+}
+
+template<typename Scalar>
+void AppleAccelerateCholesky<Scalar>::FreeNumericFactorization() {
+  if (static_cast<bool>(numeric_factor_)) {
+    SparseCleanup(*numeric_factor_);
+    numeric_factor_.reset();
+  }
+}
+
+// Instantiate only for the specific template types required/supported s/t the
+// definition can be in the .cc file.
+template class AppleAccelerateCholesky<double>;
+template class AppleAccelerateCholesky<float>;
+
+}
+}
+
+#endif  // CERES_NO_ACCELERATE_SPARSE

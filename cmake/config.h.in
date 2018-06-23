@@ -53,6 +53,17 @@
 // If defined, Ceres was compiled without CXSparse.
 @CERES_NO_CXSPARSE@
 
+// If defined, Ceres was compiled without Apple's Accelerate framework solvers.
+@CERES_NO_ACCELERATE_SPARSE@
+
+#if defined(CERES_NO_SUITESPARSE) &&              \
+    defined(CERES_NO_ACCELERATE_SPARSE) &&        \
+    defined(CERES_NO_CXSPARSE) &&                 \
+    !defined(CERES_USE_EIGEN_SPARSE)  // NOLINT
+// If defined Ceres was compiled without any sparse linear algebra support.
+#define CERES_NO_SPARSE
+#endif
+
 // If defined, Ceres was compiled without Schur specializations.
 @CERES_RESTRICT_SCHUR_SPECIALIZATION@
 
