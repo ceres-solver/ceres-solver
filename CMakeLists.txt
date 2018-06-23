@@ -135,6 +135,9 @@ option(MINIGLOG "Use a stripped down version of glog." OFF)
 option(GFLAGS "Enable Google Flags." ON)
 option(SUITESPARSE "Enable SuiteSparse." ON)
 option(CXSPARSE "Enable CXSparse." ON)
+if (APPLE)
+  option(ACCELERATE "Enable use of Accelerate framework sparse solvers." ON)
+endif()
 option(LAPACK "Enable use of LAPACK directly within Ceres." ON)
 # Template specializations for the Schur complement based solvers. If
 # compile time, binary size or compiler performance is an issue, you
@@ -331,15 +334,33 @@ else (CXSPARSE)
                          CXSPARSE_LIBRARY)
 endif (CXSPARSE)
 
+if (ACCELERATE)
+  find_package(Accelerate)
+  if (Accelerate_FOUND)
+    message("-- Found Apple Accelerate framework and sparse solvers, building "
+      "with Accelerate.")
+  else()
+    message("-- Failed to find Apple Accelerate framework (with sparse solvers), "
+      "building without Accelerate.")
+    update_cache_variable(ACCELERATE OFF)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_NO_APPLE_ACCELERATE_SOLVERS)
+  endif()
+else()
+  message("-- Building without Apple Accelerate framework (with sparse solvers).")
+  list(APPEND CERES_COMPILE_OPTIONS CERES_NO_APPLE_ACCELERATE_SOLVERS)
+  mark_as_advanced(FORCE Accelerate_INCLUDE_DIR
+                         Accelerate_LIBRARY)
+endif()
+
 # Ensure that the user understands they have disabled all sparse libraries.
-if (NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
+if (NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE AND NOT ACCELERATE)
   message("   ===============================================================")
   message("   Compiling without any sparse library: SuiteSparse, CXSparse ")
-  message("   & Eigen (Sparse) are all disabled or unavailable.  No sparse ")
-  message("   linear solvers (SPARSE_NORMAL_CHOLESKY & SPARSE_SCHUR)")
+  message("   EigenSparse & Accelerate are all disabled or unavailable.  ")
+  message("   No sparse linear solvers (SPARSE_NORMAL_CHOLESKY & SPARSE_SCHUR)")
   message("   will be available when Ceres is used.")
   message("   ===============================================================")
-endif(NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
+endif()
 
 # GFlags.
 if (GFLAGS)
@@ -452,6 +473,10 @@ endif (SUITESPARSE)
 if (CXSPARSE)
   include_directories(${CXSPARSE_INCLUDE_DIRS})
 endif (CXSPARSE)
+
+if (ACCELERATE)
+  include_directories(${Accelerate_INCLUDE_DIRS})
+endif()
 
 if (GFLAGS)
   include_directories(${GFLAGS_INCLUDE_DIRS})

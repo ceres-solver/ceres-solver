@@ -30,6 +30,7 @@
 
 #include "ceres/sparse_cholesky.h"
 
+#include "ceres/apple_accelerate.h"
 #include "ceres/cxsparse.h"
 #include "ceres/eigensparse.h"
 #include "ceres/float_cxsparse.h"
@@ -78,10 +79,24 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
       } else {
         sparse_cholesky = CXSparseCholesky::Create(ordering_type);
       }
+      break;
 #else
       LOG(FATAL) << "Ceres was compiled without support for CXSparse.";
 #endif
+
+    case ACCELERATE_SPARSE:
+#ifndef CERES_NO_APPLE_ACCELERATE_SOLVERS
+      if (options.use_mixed_precision_solves) {
+        sparse_cholesky = FloatAppleAccelerateCholesky::Create(ordering_type);
+      } else {
+        sparse_cholesky = AppleAccelerateCholesky::Create(ordering_type);
+      }
       break;
+#else
+      LOG(FATAL) << "Ceres was compiled without support for Apple's Accelerate "
+                 << "framework solvers.";
+#endif
+
     default:
       LOG(FATAL) << "Unknown sparse linear algebra library type : "
                  << SparseLinearAlgebraLibraryTypeToString(
