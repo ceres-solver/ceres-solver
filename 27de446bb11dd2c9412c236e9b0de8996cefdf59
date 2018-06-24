@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22c066c2_feda0fcd",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-24T17:12:49Z",
+      "side": 1,
+      "message": "ACCELERATESPARSE as its not just used on iOS - it\u0027s also for macOS, and tvOS - doubtless a brave new frontier for Ceres.",
+      "parentUuid": "4268fbde_1277ff63",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 9
+      },
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "328fbb88_8319dd40",
         "filename": "cmake/FindAccelerate.cmake",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8af9d3_c7ad5e13",
+        "filename": "cmake/FindAccelerate.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-24T17:12:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "328fbb88_8319dd40",
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "05ff64f6_762ca13b",
+        "filename": "cmake/FindAccelerate.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-24T17:12:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d03f599_f4e011f7",
+      "range": {
+        "startLine": 32,
+        "startChar": 49,
+        "endLine": 32,
+        "endChar": 58
+      },
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e364e6ea_6ca781d3",
         "filename": "cmake/config.h.in",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b93262d_32882eea",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-24T17:12:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e364e6ea_6ca781d3",
+      "range": {
+        "startLine": 57,
+        "startChar": 1,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "2ede3597_c8e32a00",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-24T17:12:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52afa143_4bcc8b42",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 19
+      },
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79866a4f_30aa921c",
         "filename": "internal/ceres/apple_accelerate.h",
         "patchSetId": 1
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "81e7eb40_099aac0b",
+        "filename": "internal/ceres/apple_accelerate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-24T17:12:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79866a4f_30aa921c",
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6b8596a_0dcf1334",
         "filename": "internal/ceres/sparse_cholesky.cc",
         "patchSetId": 1
@@ -142,6 +274,24 @@
       "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ed264f_baafb767",
+        "filename": "internal/ceres/sparse_cholesky.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-24T17:12:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6b8596a_0dcf1334",
+      "revId": "27de446bb11dd2c9412c236e9b0de8996cefdf59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
