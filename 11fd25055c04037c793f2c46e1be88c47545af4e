@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c76597b6_03720097",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-24T20:06:21Z",
+      "side": 1,
+      "message": "will this trigger for all ios? I am guessing yes.",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 9
+      },
+      "revId": "11fd25055c04037c793f2c46e1be88c47545af4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb32272_cedacd59",
+        "filename": "cmake/CeresCompileOptionsToComponents.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-24T20:06:21Z",
+      "side": 1,
+      "message": "nit pick, do we have a underscore between accelerate and space or not?\n\nI guess since it is EIGEN_SPARSE ACCELERATE_SPARSE also makes sense.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "11fd25055c04037c793f2c46e1be88c47545af4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244de73e_5fd907d8",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-24T20:06:21Z",
+      "side": 1,
+      "message": "+1",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 32
+      },
+      "revId": "11fd25055c04037c793f2c46e1be88c47545af4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "915f51f2_577972c7",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-24T20:06:21Z",
+      "side": 1,
+      "message": "may also want to add a check in port.h or somewhere which prevents people from defining CERES_NO_SPARSE when any of these other things are actually positive.\n\nalso I think its time to invert CERES_USE_EIGEN_SPARSE, and have it be CERES_NO_EIGEN_SPARSE, but that can be another CL.",
+      "range": {
+        "startLine": 64,
+        "startChar": 1,
+        "endLine": 64,
+        "endChar": 7
+      },
+      "revId": "11fd25055c04037c793f2c46e1be88c47545af4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
