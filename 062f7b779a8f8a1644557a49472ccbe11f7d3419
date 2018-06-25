@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98af87cb_725db2be",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-25T14:11:59Z",
+      "side": 1,
+      "message": "so the implication is that CERES_NO_SPARSE is never defined by the user, it is only a consequence of the user\u0027s defines.  This is worth making more precise/explicit.",
+      "range": {
+        "startLine": 57,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "062f7b779a8f8a1644557a49472ccbe11f7d3419",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
