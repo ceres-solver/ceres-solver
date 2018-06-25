@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa67e2d3_030f7422",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-25T08:40:02Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "c76597b6_03720097",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 9
+      },
+      "revId": "11fd25055c04037c793f2c46e1be88c47545af4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecb32272_cedacd59",
         "filename": "cmake/CeresCompileOptionsToComponents.cmake",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-06-24T20:06:21Z",
       "side": 1,
       "message": "nit pick, do we have a underscore between accelerate and space or not?\n\nI guess since it is EIGEN_SPARSE ACCELERATE_SPARSE also makes sense.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "11fd25055c04037c793f2c46e1be88c47545af4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6919d72_3ac0da4e",
+        "filename": "cmake/CeresCompileOptionsToComponents.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-25T08:40:02Z",
+      "side": 1,
+      "message": "IMO, with a space is clearer, it also reflects that it\u0027s SuiteSparse/CXSparse vs Accelerate\u0027s / Eigen\u0027s Sparse.",
+      "parentUuid": "ecb32272_cedacd59",
       "range": {
         "startLine": 82,
         "startChar": 4,
@@ -82,6 +130,30 @@
       "writtenOn": "2018-06-24T20:06:21Z",
       "side": 1,
       "message": "may also want to add a check in port.h or somewhere which prevents people from defining CERES_NO_SPARSE when any of these other things are actually positive.\n\nalso I think its time to invert CERES_USE_EIGEN_SPARSE, and have it be CERES_NO_EIGEN_SPARSE, but that can be another CL.",
+      "range": {
+        "startLine": 64,
+        "startChar": 1,
+        "endLine": 64,
+        "endChar": 7
+      },
+      "revId": "11fd25055c04037c793f2c46e1be88c47545af4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "887415aa_4fcd1a9e",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-25T08:40:02Z",
+      "side": 1,
+      "message": "Added a check in port.h, and yes we should flip the EIGEN_SPARSE logic to match in another CL.",
+      "parentUuid": "915f51f2_577972c7",
       "range": {
         "startLine": 64,
         "startChar": 1,
