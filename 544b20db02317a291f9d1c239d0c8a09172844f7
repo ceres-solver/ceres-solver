@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4933b40_f64d8e0b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-26T12:43:27Z",
+      "side": 1,
+      "message": "Given Keir\u0027s preference (and to avoid having people have to manually edit the CMakeLists if they want to disable this behaviour) lets add an option that controls this, something like this (default ON as the reduced file size is probably most people\u0027s preference):\n\nif (ANDROID)\n  option(ANDROID_STRIP_DEBUG_SYMBOLS \"Strip debug symbols from Android builds (reduces file sizes)\" ON)\nendif()\n\nat the top of the file with the other options then this if() can be expanded to:\n\nif (ANDROID AND ANDROID_STRIP_DEBUG_SYMBOLS)\n  ...\nendif()",
+      "revId": "544b20db02317a291f9d1c239d0c8a09172844f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad2027f_45ffc59c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-26T12:43:27Z",
+      "side": 1,
+      "message": "Should this not be:\n\nset( CMAKE_SHARED_LINKER_FLAGS  \"${CMAKE_SHARED_LINKER_FLAGS} -s\" )\n\n?  Why would you want to replace the linker flags for shared libraries with those for executables (as well as appending \u0027-s\u0027)?",
+      "revId": "544b20db02317a291f9d1c239d0c8a09172844f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
