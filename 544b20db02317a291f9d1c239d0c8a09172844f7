@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2fc3c2b8_48477274",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 6155
+      },
+      "writtenOn": "2018-06-26T14:00:20Z",
+      "side": 1,
+      "message": "Sure thing!",
+      "parentUuid": "b4933b40_f64d8e0b",
+      "revId": "544b20db02317a291f9d1c239d0c8a09172844f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ad2027f_45ffc59c",
         "filename": "CMakeLists.txt",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "544b20db02317a291f9d1c239d0c8a09172844f7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62aecc7_ea12d03c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 6155
+      },
+      "writtenOn": "2018-06-26T14:00:20Z",
+      "side": 1,
+      "message": "Good catch. In my prebuilts I did the stripping as a postproc, so this was just copied in.",
+      "parentUuid": "7ad2027f_45ffc59c",
+      "revId": "544b20db02317a291f9d1c239d0c8a09172844f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
