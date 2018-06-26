@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22c4a21c_de969c9b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-26T15:29:38Z",
+      "side": 1,
+      "message": "update this message to indicate that you can control it with ANDROID_STRIP_DEBUG_SYMBOLS",
+      "range": {
+        "startLine": 354,
+        "startChar": 48,
+        "endLine": 354,
+        "endChar": 50
+      },
+      "revId": "9f3d9aebed864c80c4a5a13b751a385cf86199ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
