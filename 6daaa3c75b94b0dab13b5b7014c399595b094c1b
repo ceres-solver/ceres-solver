@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44b375dd_0fcfca3e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 6155
+      },
+      "writtenOn": "2018-06-26T12:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0bf4545_eab79d12",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b15d915c_09fa6f3e",
         "filename": "CMakeLists.txt",
         "patchSetId": 4
@@ -50,6 +68,42 @@
       "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054d1071_f349fee8",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 6155
+      },
+      "writtenOn": "2018-06-26T12:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b15d915c_09fa6f3e",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29420c73_18f723a9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 6155
+      },
+      "writtenOn": "2018-06-26T12:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e726777_dc434cfa",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,42 @@
     },
     {
       "key": {
+        "uuid": "3de58115_419d828b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 6155
+      },
+      "writtenOn": "2018-06-26T12:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9bfd4a4_02b3ff88",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0f6f187_0f2a4f8a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 6155
+      },
+      "writtenOn": "2018-06-26T12:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a6902a0_4e66cd15",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d49541cc_3d506c12",
         "filename": "CMakeLists.txt",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "245959e3_0a65dd8f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 6155
+      },
+      "writtenOn": "2018-06-26T12:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d49541cc_3d506c12",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98300338_df4e8ea7",
         "filename": "CMakeLists.txt",
         "patchSetId": 4
@@ -115,6 +223,24 @@
       "writtenOn": "2018-06-15T17:28:28Z",
       "side": 1,
       "message": "This is odd and a bit surprising. This could cause problems when you have an actual issue developing an NDK plugin with Ceres.\n\nCan we track down the source of the huge debug? I bet it\u0027s the schur specializations.\n\nIf this remains enabled, then we need to emit a big warning saying that debug info is stripped from the NDK build because it causes huge .so bloat.",
+      "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccde9b52_3b587a6d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 6155
+      },
+      "writtenOn": "2018-06-26T12:31:45Z",
+      "side": 1,
+      "message": "Sounds consistent with what Alex wrote in his follow-up. It may be possible to strip specifically those build targets, but maybe it could be done in a separate review? I feel it would be better for you guys to take a look here to avoid this patch growing too much.",
+      "parentUuid": "98300338_df4e8ea7",
       "revId": "6daaa3c75b94b0dab13b5b7014c399595b094c1b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
