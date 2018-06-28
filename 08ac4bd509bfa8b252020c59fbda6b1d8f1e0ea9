@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c2073f9_62e39e06",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-28T18:01:40Z",
+      "side": 1,
+      "message": "I vote no, it\u0027s pretty trivial.",
+      "parentUuid": "890fb94d_be9d98ac",
+      "range": {
+        "startLine": 17,
+        "startChar": 15,
+        "endLine": 17,
+        "endChar": 16
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41a5bb51_164aace1",
         "filename": "internal/ceres/accelerate_sparse.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "32e76e63_27f9f142",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-28T18:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41a5bb51_164aace1",
+      "range": {
+        "startLine": 36,
+        "startChar": 17,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffa86141_8447909c",
         "filename": "internal/ceres/accelerate_sparse.cc",
         "patchSetId": 5
@@ -62,6 +110,24 @@
       "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294bc287_6cf00579",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-28T18:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffa86141_8447909c",
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41167e6f_08674e2d",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-28T18:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06b4aa45_92f53598",
+      "range": {
+        "startLine": 43,
+        "startChar": 41,
+        "endLine": 43,
+        "endChar": 52
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "2e394a95_334c1e35",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-28T18:01:40Z",
+      "side": 1,
+      "message": "I can\u0027t imagine so, although std::copy() is always at least as fast as everything else, in this case though it\u0027s more direct to specify start + length rather than creating an end iterator",
+      "parentUuid": "35afab19_27e2a3c0",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 13
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82958ed7_ec0d3fb7",
         "filename": "internal/ceres/accelerate_sparse.cc",
         "patchSetId": 5
@@ -145,6 +259,30 @@
       "writtenOn": "2018-06-28T12:22:08Z",
       "side": 1,
       "message": "I am not sure what the todo here is.\ndoes the library indicate what is the best way to give the matrix to it?",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c3cac9_89d8360f",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-28T18:01:40Z",
+      "side": 1,
+      "message": "No, it expresses no preference.",
+      "parentUuid": "82958ed7_ec0d3fb7",
       "range": {
         "startLine": 62,
         "startChar": 20,
@@ -203,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "f7f96a78_05c6b498",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-28T18:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b38c0c0_7e16e004",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 18
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d69e66f_4c21b29f",
         "filename": "internal/ceres/accelerate_sparse.cc",
         "patchSetId": 5
@@ -214,6 +376,30 @@
       "writtenOn": "2018-06-28T12:22:08Z",
       "side": 1,
       "message": "This copy is potentially expensive, why is analyze cholesky returning by value?",
+      "range": {
+        "startLine": 138,
+        "startChar": 23,
+        "endLine": 138,
+        "endChar": 24
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1da6f7_3395457e",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-28T18:01:40Z",
+      "side": 1,
+      "message": "The Accelerate API takes/returns all of its objects, which then have (potentially referenced counted) pointers to their underlying data, but value.  So there is no extra copy here (at least not an expensive one).",
+      "parentUuid": "2d69e66f_4c21b29f",
       "range": {
         "startLine": 138,
         "startChar": 23,
@@ -249,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "0f2f986f_a0621a0f",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-28T18:01:40Z",
+      "side": 1,
+      "message": "I can update both, logically I think it\u0027s clearer to do the direct assignment in the reset as the Accelerate structs have no defined constructors so their default constructed state is garbage.",
+      "parentUuid": "c482a226_3cb7ad6d",
+      "range": {
+        "startLine": 150,
+        "startChar": 19,
+        "endLine": 150,
+        "endChar": 35
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cdb882a_438db423",
         "filename": "internal/ceres/accelerate_sparse.cc",
         "patchSetId": 5
@@ -269,6 +479,30 @@
       "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4ae422_671e72f1",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-28T18:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cdb882a_438db423",
+      "range": {
+        "startLine": 192,
+        "startChar": 18,
+        "endLine": 192,
+        "endChar": 22
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +529,30 @@
     },
     {
       "key": {
+        "uuid": "d8ba9a7e_ea51adbd",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-28T18:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86aaf097_7effb88f",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 0
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5c90975_5bd299b7",
         "filename": "internal/ceres/reorder_program.cc",
         "patchSetId": 5
@@ -315,6 +573,30 @@
       "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c51cd73_da38fbb7",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-06-28T18:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5c90975_5bd299b7",
+      "range": {
+        "startLine": 573,
+        "startChar": 40,
+        "endLine": 573,
+        "endChar": 43
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
