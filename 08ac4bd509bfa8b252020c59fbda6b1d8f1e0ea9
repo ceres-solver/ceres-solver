@@ -201,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "c13614af_c541550d",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-28T19:52:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "be0f1039_31207393",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 33
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35afab19_27e2a3c0",
         "filename": "internal/ceres/accelerate_sparse.cc",
         "patchSetId": 5
@@ -248,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "27957684_a3f03517",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-28T19:52:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e394a95_334c1e35",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 13
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82958ed7_ec0d3fb7",
         "filename": "internal/ceres/accelerate_sparse.cc",
         "patchSetId": 5
@@ -292,6 +340,30 @@
       "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f664273_a9450254",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-28T19:52:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c3cac9_89d8360f",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -412,6 +484,30 @@
     },
     {
       "key": {
+        "uuid": "ac4522a8_308f7abe",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-28T19:52:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1c1da6f7_3395457e",
+      "range": {
+        "startLine": 138,
+        "startChar": 23,
+        "endLine": 138,
+        "endChar": 24
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c482a226_3cb7ad6d",
         "filename": "internal/ceres/accelerate_sparse.cc",
         "patchSetId": 5
@@ -456,6 +552,30 @@
       "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94d1215_99989d67",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-06-28T19:52:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f2f986f_a0621a0f",
+      "range": {
+        "startLine": 150,
+        "startChar": 19,
+        "endLine": 150,
+        "endChar": 35
+      },
+      "revId": "08ac4bd509bfa8b252020c59fbda6b1d8f1e0ea9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
