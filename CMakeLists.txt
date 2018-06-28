@@ -345,15 +345,23 @@ if (NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
 endif(NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
 
 # ANDROID define is set by the Android CMake toolchain file.
-if (ANDROID AND ANDROID_STRIP_DEBUG_SYMBOLS)
-  # Strip debug information unconditionally to avoid +200MB library file sizes.
-  set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
-  set( CMAKE_SHARED_LINKER_FLAGS  "${CMAKE_SHARED_LINKER_FLAGS} -s" )
+if (ANDROID)
   message("  ================================================================")
-  message("  Please note: When building Ceres for Android, debug information ")
-  message("  is stripped from the Ceres library by default.")
+  if (ANDROID_STRIP_DEBUG_SYMBOLS)
+    # Strip debug information unconditionally to avoid +200MB library file sizes.
+    set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
+    set( CMAKE_SHARED_LINKER_FLAGS  "${CMAKE_SHARED_LINKER_FLAGS} -s" )
+    message("  Stripping debug information from Android build of Ceres library ")
+    message("  to avoid +200MB library files.")
+  else()
+    message("  Warning: not stripping debug information from Android build of ")
+    message("  Ceres library.  This will result in a large (+200MB) library.")
+  endif()
+  message("")
+  message("  You can control whether debug information is stripped via the ")
+  message("  ANDROID_STRIP_DEBUG_SYMBOLS CMake option when configuring Ceres.")
   message("  ================================================================")
-endif(ANDROID AND ANDROID_STRIP_DEBUG_SYMBOLS)
+endif()
 
 # GFlags.
 if (GFLAGS)
