@@ -95,6 +95,9 @@ class AccelerateSparse {
   // symbolic factorization.
   NumericFactorization Cholesky(ASSparseMatrix* A,
                                 SymbolicFactorization* symbolic_factor);
+  // Reuse the NumericFactorization from a previous matrix with the same
+  // symbolic factorization to represent a new numeric factorization.
+  void Cholesky(ASSparseMatrix* A, NumericFactorization* numeric_factor);
 
  private:
   std::vector<long> column_starts_;
