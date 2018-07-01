@@ -472,39 +472,6 @@ if (BUILD_BENCHMARKS)
   mark_as_advanced(benchmark_DIR)
 endif()
 
-include_directories(
-  include
-  internal
-  internal/ceres
-  ${GLOG_INCLUDE_DIRS})
-
-# Eigen SparseQR generates various compiler warnings related to unused and
-# uninitialised local variables.  To avoid having to individually suppress these
-# warnings around the #include statments for Eigen headers across all GCC/Clang
-# versions, we tell CMake to treat Eigen headers as system headers.  This
-# results in all compiler warnings from them being suppressed.
-#
-# Note that this is *not* propagated to clients, ie CERES_INCLUDE_DIRS
-# used by clients after find_package(Ceres) does not identify Eigen as
-# as system headers.
-include_directories(SYSTEM ${EIGEN_INCLUDE_DIRS})
-
-if (SUITESPARSE)
-  include_directories(${SUITESPARSE_INCLUDE_DIRS})
-endif (SUITESPARSE)
-
-if (CXSPARSE)
-  include_directories(${CXSPARSE_INCLUDE_DIRS})
-endif (CXSPARSE)
-
-if (ACCELERATESPARSE)
-  include_directories(${AccelerateSparse_INCLUDE_DIRS})
-endif()
-
-if (GFLAGS)
-  include_directories(${GFLAGS_INCLUDE_DIRS})
-endif (GFLAGS)
-
 if (BUILD_SHARED_LIBS)
   message("-- Building Ceres as a shared library.")
   # The CERES_BUILDING_SHARED_LIBRARY compile definition is NOT stored in
@@ -651,12 +618,6 @@ list(REMOVE_DUPLICATES CERES_COMPILE_OPTIONS)
 include(CreateCeresConfig)
 create_ceres_config("${CERES_COMPILE_OPTIONS}"
   ${Ceres_BINARY_DIR}/config/ceres/internal)
-# Force the location containing the configured config.h to the front of the
-# include_directories list (by default it is appended to the back) to ensure
-# that if the user has an installed version of Ceres in the same location as one
-# of the dependencies (e.g. /usr/local) that we find the config.h we just
-# configured, not the (older) installed config.h.
-include_directories(BEFORE ${Ceres_BINARY_DIR}/config)
 
 add_subdirectory(internal/ceres)
 
