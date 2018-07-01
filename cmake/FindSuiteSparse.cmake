@@ -105,12 +105,6 @@
 # == Serial Graph Partitioning and Fill-reducing Matrix Ordering (METIS)
 # METIS_FOUND
 # METIS_LIBRARY
-#
-# == Intel Thread Building Blocks (TBB)
-# TBB_FOUND
-# TBB_LIBRARY
-# TBB_MALLOC_FOUND
-# TBB_MALLOC_LIBRARY
 
 # Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when
 # FindSuiteSparse was invoked.

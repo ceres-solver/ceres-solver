@@ -43,13 +43,6 @@ elseif (CERES_THREADING_MODEL STREQUAL "OPENMP")
     # Add thread library dependencies for OpenMP to the Ceres target.
     list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${CMAKE_THREAD_LIBS_INIT})
   endif()
-elseif (CERES_THREADING_MODEL STREQUAL "TBB")
-  set(CERES_PARALLEL_FOR_SRC parallel_for_tbb.cc)
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${TBB_LIBRARIES})
-  if (NOT MSVC)
-    # Add thread library dependencies for OpenMP to the Ceres target.
-    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${CMAKE_THREAD_LIBS_INIT})
-  endif (NOT MSVC)
 elseif (CERES_THREADING_MODEL STREQUAL "NO_THREADS")
   set(CERES_PARALLEL_FOR_SRC parallel_for_nothreads.cc)
 endif()

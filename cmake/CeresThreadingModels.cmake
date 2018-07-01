@@ -29,7 +29,7 @@
 # Author: alexs.mac@gmail.com (Alex Stewart)
 
 # Ordered by expected preference.
-set(CERES_THREADING_MODELS "CXX11_THREADS;OPENMP;TBB;NO_THREADS")
+set(CERES_THREADING_MODELS "CXX11_THREADS;OPENMP;NO_THREADS")
 
 function(find_available_ceres_threading_models CERES_THREADING_MODELS_AVAILABLE_VAR)
   set(CERES_THREADING_MODELS_AVAILABLE ${CERES_THREADING_MODELS})
@@ -37,10 +37,6 @@ function(find_available_ceres_threading_models CERES_THREADING_MODELS_AVAILABLE_
   find_package(OpenMP QUIET)
   if (NOT OPENMP_FOUND)
     list(REMOVE_ITEM CERES_THREADING_MODELS_AVAILABLE "OPENMP")
-  endif()
-  find_package(TBB QUIET)
-  if (NOT TBB_FOUND)
-    list(REMOVE_ITEM CERES_THREADING_MODELS_AVAILABLE "TBB")
   endif()
   if (NOT CERES_THREADING_MODELS_AVAILABLE)
     # At least NO_THREADS should never be removed.  This check is purely
@@ -62,12 +58,6 @@ macro(set_ceres_threading_model_to_openmp)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 endmacro()
 
-macro(set_ceres_threading_model_to_tbb)
-  find_package(TBB REQUIRED)
-  list(APPEND CERES_COMPILE_OPTIONS CERES_USE_TBB)
-  include_directories(${TBB_INCLUDE_DIRS})
-endmacro()
-
 macro(set_ceres_threading_model_to_no_threads)
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
 endmacro()
@@ -77,8 +67,6 @@ macro(set_ceres_threading_model CERES_THREADING_MODEL_TO_SET)
     set_ceres_threading_model_to_cxx11_threads()
   elseif ("${CERES_THREADING_MODEL_TO_SET}" STREQUAL "OPENMP")
     set_ceres_threading_model_to_openmp()
-  elseif ("${CERES_THREADING_MODEL_TO_SET}" STREQUAL "TBB")
-    set_ceres_threading_model_to_tbb()
   elseif ("${CERES_THREADING_MODEL_TO_SET}" STREQUAL "NO_THREADS")
     set_ceres_threading_model_to_no_threads()
   else()

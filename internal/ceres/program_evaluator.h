@@ -43,7 +43,7 @@
 // residual jacobians are written directly into their final position in the
 // block sparse matrix by the user's CostFunction; there is no copying.
 //
-// The evaluation is threaded with OpenMP or TBB.
+// The evaluation is threaded with OpenMP or C++11 threads.
 //
 // The EvaluatePreparer and JacobianWriter interfaces are as follows:
 //
@@ -118,7 +118,7 @@ class ProgramEvaluator : public Evaluator {
 #ifdef CERES_NO_THREADS
     if (options_.num_threads > 1) {
       LOG(WARNING)
-          << "Neither OpenMP nor TBB support is compiled into this binary; "
+          << "No threading support is compiled into this binary; "
           << "only options.num_threads = 1 is supported. Switching "
           << "to single threaded mode.";
       options_.num_threads = 1;
