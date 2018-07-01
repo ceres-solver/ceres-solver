@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97126ff4_0493382a",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-01T19:45:04Z",
+      "side": 1,
+      "message": "do we actually need this comment?",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 4
+      },
+      "revId": "a4e6d49b9ee7df94f607f9c5e1f786e8cd802af2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d885b6e1_26262207",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-01T19:45:04Z",
+      "side": 1,
+      "message": "why do we need this?",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 25
+      },
+      "revId": "a4e6d49b9ee7df94f607f9c5e1f786e8cd802af2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db669110_8a863cbd",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-01T19:45:04Z",
+      "side": 1,
+      "message": "add what this is the endif for.",
+      "range": {
+        "startLine": 258,
+        "startChar": 6,
+        "endLine": 258,
+        "endChar": 7
+      },
+      "revId": "a4e6d49b9ee7df94f607f9c5e1f786e8cd802af2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2208071_150f89c7",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-01T19:45:04Z",
+      "side": 1,
+      "message": "is this actually needed? should you talk about how this is an artifact of cmake version upgrade?",
+      "range": {
+        "startLine": 890,
+        "startChar": 12,
+        "endLine": 890,
+        "endChar": 15
+      },
+      "revId": "a4e6d49b9ee7df94f607f9c5e1f786e8cd802af2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b48cd09_1a344f1b",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-01T19:45:04Z",
+      "side": 1,
+      "message": "add blank line before",
+      "range": {
+        "startLine": 278,
+        "startChar": 2,
+        "endLine": 278,
+        "endChar": 7
+      },
+      "revId": "a4e6d49b9ee7df94f607f9c5e1f786e8cd802af2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d21a9fb_721c6a48",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-01T19:45:04Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be the first statement in the series too?",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 26
+      },
+      "revId": "a4e6d49b9ee7df94f607f9c5e1f786e8cd802af2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4bb9b9_572773b7",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-01T19:45:04Z",
+      "side": 1,
+      "message": "blank before, add a comment about what is going on here, otherwise it seems like it is part of the previous block of code.",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 3
+      },
+      "revId": "a4e6d49b9ee7df94f607f9c5e1f786e8cd802af2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f5ab488_3e682d02",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-01T19:45:04Z",
+      "side": 1,
+      "message": "I am curious as to why this chunk of code is in an internal cmake, shouldn\u0027t this be part of the main cmake file, since thats where we are deciding if any of these libraries are available?",
+      "range": {
+        "startLine": 318,
+        "startChar": 4,
+        "endLine": 318,
+        "endChar": 12
+      },
+      "revId": "a4e6d49b9ee7df94f607f9c5e1f786e8cd802af2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b85dbd8_475c4c93",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-01T19:45:04Z",
+      "side": 1,
+      "message": "add comment for the next chunk of lines.",
+      "revId": "a4e6d49b9ee7df94f607f9c5e1f786e8cd802af2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347554af_e42626b0",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-01T19:45:04Z",
+      "side": 1,
+      "message": "is this actually useful? do we generate headers under this directory?",
+      "range": {
+        "startLine": 377,
+        "startChar": 53,
+        "endLine": 377,
+        "endChar": 69
+      },
+      "revId": "a4e6d49b9ee7df94f607f9c5e1f786e8cd802af2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e73818_8ce52121",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-01T19:45:04Z",
+      "side": 1,
+      "message": "move the macro definition inside the if statement itself, since it is useless outside?",
+      "range": {
+        "startLine": 479,
+        "startChar": 0,
+        "endLine": 479,
+        "endChar": 5
+      },
+      "revId": "a4e6d49b9ee7df94f607f9c5e1f786e8cd802af2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}

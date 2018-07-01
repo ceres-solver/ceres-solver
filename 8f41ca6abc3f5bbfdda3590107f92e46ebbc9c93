@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "013d5053_762befc2",
+        "filename": "cmake/uninstall.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-01T19:45:04Z",
+      "side": 0,
+      "message": "this has nothing to do with include directories right? this is just cleanup along the way.",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "8f41ca6abc3f5bbfdda3590107f92e46ebbc9c93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
