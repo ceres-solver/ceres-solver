@@ -115,6 +115,12 @@ AccelerateSparse<Scalar>::Cholesky(ASSparseMatrix* A,
   return SparseFactor(*symbolic_factor, *A);
 }
 
+template<typename Scalar>
+void AccelerateSparse<Scalar>::Cholesky(ASSparseMatrix* A,
+                                        NumericFactorization* numeric_factor) {
+  return SparseRefactor(*A, numeric_factor);
+}
+
 // Instantiate only for the specific template types required/supported s/t the
 // definition can be in the .cc file.
 template class AccelerateSparse<double>;
@@ -169,14 +175,19 @@ AppleAccelerateCholesky<Scalar>::Factorize(CompressedRowSparseMatrix* lhs,
     }
   }
 
-  FreeNumericFactorization();
-  numeric_factor_.reset(
-      new typename SparseTypesTrait<Scalar>::NumericFactorization(
-          as_.Cholesky(&as_lhs, symbolic_factor_.get())));
+  if (!numeric_factor_) {
+    numeric_factor_.reset(
+        new typename SparseTypesTrait<Scalar>::NumericFactorization(
+            as_.Cholesky(&as_lhs, symbolic_factor_.get())));
+  } else {
+    // Recycle memory from previous numeric factorization.
+    as_.Cholesky(&as_lhs, numeric_factor_.get());
+  }
   if (numeric_factor_->status != SparseStatusOK) {
     *message = StringPrintf(
         "Apple Accelerate Failure : Numeric factorisation failed: %s",
         SparseStatusToString(numeric_factor_->status));
+    FreeNumericFactorization();
     return LINEAR_SOLVER_FAILURE;
   }
 
