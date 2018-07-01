@@ -271,6 +271,73 @@ else (BUILD_SHARED_LIBS)
   target_link_libraries(ceres ${CERES_LIBRARY_DEPENDENCIES})
 endif (BUILD_SHARED_LIBS)
 
+target_include_directories(ceres PRIVATE ${Ceres_SOURCE_DIR}/internal)
+target_include_directories(ceres PUBLIC
+  $<BUILD_INTERFACE:${Ceres_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+# Force the location containing the configured config.h to the front of the
+# include_directories list (by default it is appended to the back) to ensure
+# that if the user has an installed version of Ceres in the same location as one
+# of the dependencies (e.g. /usr/local) that we find the config.h we just
+# configured, not the (older) installed config.h.
+target_include_directories(ceres BEFORE PUBLIC
+  $<BUILD_INTERFACE:${Ceres_BINARY_DIR}/config>)
+
+# Eigen SparseQR generates various compiler warnings related to unused and
+# uninitialised local variables.  To avoid having to individually suppress these
+# warnings around the #include statments for Eigen headers across all GCC/Clang
+# versions, we tell CMake to treat Eigen headers as system headers.  This
+# results in all compiler warnings from them being suppressed.
+target_include_directories(ceres SYSTEM PUBLIC ${EIGEN_INCLUDE_DIRS})
+set(CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS "")
+set(CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS "")
+if (MINIGLOG)
+  # Force the miniglog headers to the front of the public include directories
+  # to protect against the case when the user has glog installed in a standard
+  # location (specifically the same as the Ceres install location) but compiled
+  # Ceres with MINIGLOG anyway.  Otherwise: "glog/logging.h" in the public Ceres
+  # headers used in client code would match the installed version of glog, not
+  # the miniglog headers, and the client application would fail to link.
+  #
+  # Note that this is an imperfect fix, as we cannot control the include
+  # directories in client projects, and they could easily invert this ordering
+  # themselves (intentionally or otherwise) and so break their build.
+  target_include_directories(ceres BEFORE PUBLIC
+    $<BUILD_INTERFACE:${Ceres_SOURCE_DIR}/internal/ceres/miniglog>
+    $<INSTALL_INTERFACE:include/ceres/internal/miniglog>)
+elseif (NOT FOUND_INSTALLED_GLOG_CMAKE_CONFIGURATION)
+  # Only append glog include directories if the glog found was not a CMake
+  # exported target that already includes them.
+  list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS
+    ${GLOG_INCLUDE_DIRS})
+endif()
+if (SUITESPARSE)
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
+    ${SUITESPARSE_INCLUDE_DIRS})
+endif()
+if (CXSPARSE)
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
+    ${CXSPARSE_INCLUDE_DIRS})
+endif()
+if (ACCELERATESPARSE)
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
+    ${AccelerateSparse_INCLUDE_DIRS})
+endif()
+if (GFLAGS AND NOT FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION)
+  # Only append gflags include directories if the gflags found was not a CMake
+  # exported target that already includes them.
+  list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS
+    ${GFLAGS_INCLUDE_DIRS})
+endif()
+list(REMOVE_DUPLICATES CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS)
+foreach(INC_DIR ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
+  target_include_directories(ceres PRIVATE ${INC_DIR})
+endforeach()
+list(REMOVE_DUPLICATES CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS)
+foreach(INC_DIR ${CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS})
+  target_include_directories(ceres PUBLIC ${INC_DIR})
+endforeach()
+
 install(TARGETS ceres
         EXPORT  CeresExport
         RUNTIME DESTINATION bin
@@ -289,6 +356,7 @@ if (BUILD_TESTING AND GFLAGS)
               evaluator_test_utils.cc
               numeric_diff_test_utils.cc
               test_util.cc)
+  target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
 
   if (MINIGLOG)
     # When using miniglog, it is compiled into Ceres, thus Ceres becomes
@@ -302,6 +370,11 @@ if (BUILD_TESTING AND GFLAGS)
 
   macro (CERES_TEST NAME)
     add_executable(${NAME}_test ${NAME}_test.cc)
+    # Pull in local headers from the generated test directories when ceres_test()
+    # is invoked there, as well as the private headers in this directory which
+    # may be referenced without the 'ceres' path prefix.
+    target_include_directories(${NAME}_test PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+    target_include_directories(${NAME}_test PUBLIC ${Ceres_SOURCE_DIR}/internal/ceres)
     target_link_libraries(${NAME}_test test_util ceres gtest)
     if (BUILD_SHARED_LIBS)
       # Define gtest-specific shared library flags for linking.
@@ -403,13 +476,18 @@ if (BUILD_TESTING AND GFLAGS)
 
 endif (BUILD_TESTING AND GFLAGS)
 
+macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
+  target_link_libraries(${BENCHMARK_TARGET} ceres benchmark::benchmark)
+  target_include_directories(${BENCHMARK_TARGET} PUBLIC ${Ceres_SOURCE_DIR}/internal)
+endmacro()
+
 if (BUILD_BENCHMARKS)
   add_executable(autodiff_cost_function_benchmark autodiff_cost_function_benchmark.cc)
-  target_link_libraries(autodiff_cost_function_benchmark ceres benchmark::benchmark)
+  add_dependencies_to_benchmark(autodiff_cost_function_benchmark)
 
   add_executable(small_blas_gemv_benchmark small_blas_gemv_benchmark.cc)
-  target_link_libraries(small_blas_gemv_benchmark ceres benchmark::benchmark)
+  add_dependencies_to_benchmark(small_blas_gemv_benchmark)
 
   add_executable(small_blas_gemm_benchmark small_blas_gemm_benchmark.cc)
-  target_link_libraries(small_blas_gemm_benchmark ceres benchmark::benchmark)
+  add_dependencies_to_benchmark(small_blas_gemm_benchmark)
 endif (BUILD_BENCHMARKS)

@@ -867,12 +867,11 @@ used:
 
 .. code-block:: cmake
 
-    cmake_minimum_required(VERSION 2.8)
+    cmake_minimum_required(VERSION 3.5)
 
     project(helloworld)
 
     find_package(Ceres REQUIRED)
-    include_directories(${CERES_INCLUDE_DIRS})
 
     # helloworld
     add_executable(helloworld helloworld.cc)
@@ -885,6 +884,13 @@ directory containing the installed ``CeresConfig.cmake`` file
 (e.g. ``/usr/local/share/Ceres``).  If Ceres was exported, then
 ``Ceres_DIR`` should be the path to the exported Ceres build
 directory.
+
+  .. NOTE ::
+
+     You do not need to call include_directories(${CERES_INCLUDE_DIRS})
+     as the exported Ceres CMake target already contains the definitions
+     of its public include directories which will be automatically
+     included by CMake when compiling a target that links against Ceres.
 
 Specify Ceres components
 -------------------------------------
