@@ -77,7 +77,7 @@ CovarianceImpl::CovarianceImpl(const Covariance::Options& options)
 #ifdef CERES_NO_THREADS
   if (options_.num_threads > 1) {
     LOG(WARNING)
-        << "Neither OpenMP nor TBB support is compiled into this binary; "
+        << "No threading support is compiled into this binary; "
         << "only options.num_threads = 1 is supported. Switching "
         << "to single threaded mode.";
     options_.num_threads = 1;

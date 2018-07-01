@@ -812,7 +812,7 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   evaluator_options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
 #ifdef CERES_NO_THREADS
   LOG_IF(WARNING, evaluate_options.num_threads > 1)
-      << "Neither OpenMP nor TBB support is compiled into this binary; "
+      << "No threading support is compiled into this binary; "
       << "only evaluate_options.num_threads = 1 is supported. Switching "
       << "to single threaded mode.";
   evaluator_options.num_threads = 1;

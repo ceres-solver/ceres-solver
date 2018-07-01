@@ -98,10 +98,6 @@ optional. For details on customizing the build process, see
   ``SuiteSparse``, and optionally used by Ceres directly for some
   operations.
 
-- `TBB <https://www.threadingbuildingblocks.org/>`_ is a C++11 template
-  library for parallel programming that optionally can be used as an
-  alternative to OpenMP. **Optional**
-
   On ``UNIX`` OSes other than Mac OS X we recommend `ATLAS
   <http://math-atlas.sourceforge.net/>`_, which includes ``BLAS`` and
   ``LAPACK`` routines. It is also possible to use `OpenBLAS
@@ -728,16 +724,10 @@ Options controlling Ceres configuration
    gains in the ``SPARSE_SCHUR`` solver, you can disable some of the
    template specializations by turning this ``OFF``.
 
-#. ``CERES_THREADING_MODEL [Default: CXX11_THREADS > OPENMP > TBB > NO_THREADS]``:
+#. ``CERES_THREADING_MODEL [Default: CXX11_THREADS > OPENMP > NO_THREADS]``:
    Multi-threading backend Ceres should be compiled with.  This will
    automatically be set to only accept the available subset of threading
    options in the CMake GUI.
-
-   .. NOTE::
-
-      Up to and including version 4.4, TBB was licensed under
-      GPL/Commercial terms.  From 2017.x versions onwards, TBB is licensed under
-      the Apache 2.0 license (and commerical terms).
 
 #. ``BUILD_SHARED_LIBS [Default: OFF]``: By default Ceres is built as
    a static library, turn this ``ON`` to instead build Ceres as a
@@ -925,9 +915,6 @@ The Ceres components which can be specified are:
    (``SCHUR_SPECIALIZATIONS=ON``).
 
 #. ``OpenMP``: Ceres built with OpenMP (``CERES_THREADING_MODEL=OPENMP``).
-
-#. ``TBB``: Ceres built with Intel Thread Building Blocks (TBB)
-   (``CERES_THREADING_MODEL=TBB``).
 
 #. ``Multithreading``: Ceres built with *a* multithreading library.
    This is equivalent to (``CERES_THREAD != NO_THREADS``).

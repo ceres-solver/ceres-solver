@@ -39,13 +39,6 @@ namespace internal {
 
 ThreadTokenProvider::ThreadTokenProvider(int num_threads) {
   (void)num_threads;
-#ifdef CERES_USE_TBB
-  pool_.set_capacity(num_threads);
-  for (int i = 0; i < num_threads; i++) {
-    pool_.push(i);
-  }
-#endif
-
 #ifdef CERES_USE_CXX11_THREADS
   for (int i = 0; i < num_threads; i++) {
     pool_.Push(i);
@@ -63,12 +56,6 @@ int ThreadTokenProvider::Acquire() {
   return 0;
 #endif
 
-#ifdef CERES_USE_TBB
-  int thread_id;
-  pool_.pop(thread_id);
-  return thread_id;
-#endif
-
 #ifdef CERES_USE_CXX11_THREADS
   int thread_id;
   CHECK(pool_.Wait(&thread_id));
@@ -79,10 +66,6 @@ int ThreadTokenProvider::Acquire() {
 
 void ThreadTokenProvider::Release(int thread_id) {
   (void)thread_id;
-#ifdef CERES_USE_TBB
-  pool_.push(thread_id);
-#endif
-
 #ifdef CERES_USE_CXX11_THREADS
   pool_.Push(thread_id);
 #endif
