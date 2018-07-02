@@ -22,6 +22,30 @@
       "revId": "8f41ca6abc3f5bbfdda3590107f92e46ebbc9c93",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2c2a48_a28d9979",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-07-02T08:44:10Z",
+      "side": 0,
+      "message": "SuiteSparse can still depend on TBB, but it uses the FindTBB.cmake script to detect TBB rather than defining these variables itself, and this documentation is only for the variables that this script defines.",
+      "parentUuid": "4c188ca4_bb3c021d",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 39
+      },
+      "revId": "8f41ca6abc3f5bbfdda3590107f92e46ebbc9c93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
