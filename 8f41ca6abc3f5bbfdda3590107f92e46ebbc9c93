@@ -22,6 +22,30 @@
       "revId": "8f41ca6abc3f5bbfdda3590107f92e46ebbc9c93",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27f1544_8bc13d59",
+        "filename": "cmake/uninstall.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-07-02T11:16:01Z",
+      "side": 0,
+      "message": "Yes, it triggers a warning on newer versions of CMake.",
+      "parentUuid": "013d5053_762befc2",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "8f41ca6abc3f5bbfdda3590107f92e46ebbc9c93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
