@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c74beb7_a6fce11c",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-04T22:31:34Z",
+      "side": 1,
+      "message": "notice that you are constructing the string by referring to numeric_factor_ AFTER calling FreeNumericFactorization(), at which point numeric_factor_ is null.\n\nswap this line with FreeNumericFactorization and you should be good to go.",
+      "range": {
+        "startLine": 188,
+        "startChar": 15,
+        "endLine": 188,
+        "endChar": 27
+      },
+      "revId": "c00130956a6ceebe9b428c487dce292db9951de8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
