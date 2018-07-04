@@ -60,7 +60,7 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
 #endif
 
     case EIGEN_SPARSE:
-#ifdef CERES_USE_EIGEN_SPARSE
+#ifndef CERES_NO_EIGEN_SPARSE
       if (options.use_mixed_precision_solves) {
         sparse_cholesky = FloatEigenSparseCholesky::Create(ordering_type);
       } else {

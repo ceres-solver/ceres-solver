@@ -178,7 +178,7 @@ TEST_F(SparseNormalCholeskySolverTest,
 }
 #endif
 
-#ifdef CERES_USE_EIGEN_SPARSE
+#ifndef CERES_NO_EIGEN_SPARSE
 TEST_F(SparseNormalCholeskySolverTest,
        SparseNormalCholeskyUsingEigenPreOrdering) {
   LinearSolver::Options options;
@@ -200,7 +200,7 @@ TEST_F(SparseNormalCholeskySolverTest,
   options.context = &context;
   TestSolver(options);
 }
-#endif  // CERES_USE_EIGEN_SPARSE
+#endif  // CERES_NO_EIGEN_SPARSE
 
 }  // namespace internal
 }  // namespace ceres

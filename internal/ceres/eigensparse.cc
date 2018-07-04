@@ -30,7 +30,7 @@
 
 #include "ceres/eigensparse.h"
 
-#ifdef CERES_USE_EIGEN_SPARSE
+#ifndef CERES_NO_EIGEN_SPARSE
 
 #include <sstream>
 #include "Eigen/SparseCholesky"
@@ -204,4 +204,4 @@ FloatEigenSparseCholesky::~FloatEigenSparseCholesky() {}
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_USE_EIGEN_SPARSE
+#endif  // CERES_NO_EIGEN_SPARSE

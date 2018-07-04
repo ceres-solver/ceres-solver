@@ -41,8 +41,9 @@
 #ifndef CERES_PUBLIC_INTERNAL_CONFIG_H_
 #define CERES_PUBLIC_INTERNAL_CONFIG_H_
 
-// If defined, use the LGPL code in Eigen.
-@CERES_USE_EIGEN_SPARSE@
+// If defined, Ceres was compiled without support for Eigen's sparse
+// Cholesky factorization support.
+@CERES_NO_EIGEN_SPARSE@
 
 // If defined, Ceres was compiled without LAPACK.
 @CERES_NO_LAPACK@
@@ -59,7 +60,7 @@
 #if defined(CERES_NO_SUITESPARSE) &&              \
     defined(CERES_NO_ACCELERATE_SPARSE) &&        \
     defined(CERES_NO_CXSPARSE) &&                 \
-    !defined(CERES_USE_EIGEN_SPARSE)  // NOLINT
+    defined(CERES_NO_EIGEN_SPARSE)  // NOLINT
 // If defined Ceres was compiled without any sparse linear algebra support.
 #define CERES_NO_SPARSE
 #endif

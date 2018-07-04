@@ -67,11 +67,11 @@ std::string VersionString() {
   value += "-acceleratesparse";
 #endif
 
-#ifdef CERES_USE_EIGEN_SPARSE
+#ifndef CERES_NO_EIGEN_SPARSE
   value += "-eigensparse";
 #endif
 
-#ifdef CERES_RESTRUCT_SCHUR_SPECIALIZATIONS
+#ifdef CERES_RESTRICT_SCHUR_SPECIALIZATIONS
   value += "-no_schur_specializations";
 #endif
 

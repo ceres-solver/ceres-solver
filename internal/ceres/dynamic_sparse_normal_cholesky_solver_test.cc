@@ -121,11 +121,11 @@ TEST_F(DynamicSparseNormalCholeskySolverTest, CXSparse) {
 }
 #endif
 
-#ifdef CERES_USE_EIGEN_SPARSE
+#ifndef CERES_NO_EIGEN_SPARSE
 TEST_F(DynamicSparseNormalCholeskySolverTest, Eigen) {
   TestSolver(EIGEN_SPARSE);
 }
-#endif  // CERES_USE_EIGEN_SPARSE
+#endif  // CERES_NO_EIGEN_SPARSE
 
 }  // namespace internal
 }  // namespace ceres
