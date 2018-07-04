@@ -109,7 +109,6 @@ LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
                 -DCERES_NO_SUITESPARSE \
                 -DCERES_NO_CXSPARSE \
                 -DCERES_NO_ACCELERATE_SPARSE \
-                -DCERES_USE_EIGEN_SPARSE \
                 -DCERES_USE_OPENMP
 
 LOCAL_SRC_FILES := $(CERES_SRC_PATH)/accelerate_sparse.cc \

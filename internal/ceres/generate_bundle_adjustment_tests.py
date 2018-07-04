@@ -201,8 +201,8 @@ def generate_bundle_test(linear_solver,
     preprocessor_conditions_begin.append('#ifndef CERES_NO_ACCELERATE_SPARSE')
     preprocessor_conditions_end.insert(0, '#endif  // CERES_NO_ACCELERATE_SPARSE')
   elif sparse_backend == 'EIGEN_SPARSE':
-    preprocessor_conditions_begin.append('#ifdef CERES_USE_EIGEN_SPARSE')
-    preprocessor_conditions_end.insert(0, '#endif  // CERES_USE_EIGEN_SPARSE')
+    preprocessor_conditions_begin.append('#ifndef CERES_NO_EIGEN_SPARSE')
+    preprocessor_conditions_end.insert(0, '#endif  // CERES_NO_EIGEN_SPARSE')
 
   # Accumulate appropriate #ifdef/#ifndefs for threading conditions.
   if thread_config == MULTI_THREADED:

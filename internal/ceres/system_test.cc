@@ -212,7 +212,7 @@ TEST_F(PowellTest, SparseNormalCholeskyUsingAccelerateSparse) {
 }
 #endif  // CERES_NO_ACCELERATE_SPARSE
 
-#ifdef CERES_USE_EIGEN_SPARSE
+#ifndef CERES_NO_EIGEN_SPARSE
 TEST_F(PowellTest, SparseNormalCholeskyUsingEigenSparse) {
   PowellsFunction powells_function;
   Solver::Options* options = powells_function.mutable_solver_options();
@@ -221,7 +221,7 @@ TEST_F(PowellTest, SparseNormalCholeskyUsingEigenSparse) {
   RunSolverForConfigAndExpectResidualsMatch(*options,
                                             powells_function.mutable_problem());
 }
-#endif  // CERES_USE_EIGEN_SPARSE
+#endif  // CERES_NO_EIGEN_SPARSE
 
 }  // namespace internal
 }  // namespace ceres

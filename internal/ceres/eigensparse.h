@@ -36,7 +36,7 @@
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
-#ifdef CERES_USE_EIGEN_SPARSE
+#ifndef CERES_NO_EIGEN_SPARSE
 
 #include <memory>
 #include <string>
@@ -85,6 +85,6 @@ class FloatEigenSparseCholesky : public SparseCholesky {
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_USE_EIGEN_SPARSE
+#endif  // CERES_NO_EIGEN_SPARSE
 
 #endif  // CERES_INTERNAL_EIGENSPARSE_H_
