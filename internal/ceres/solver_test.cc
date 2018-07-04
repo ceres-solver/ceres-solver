@@ -338,7 +338,7 @@ TEST(Solver, SparseSchurNoAccelerateSparse) {
 }
 #endif
 
-#if !defined(CERES_USE_EIGEN_SPARSE)
+#if defined(CERES_NO_EIGEN_SPARSE)
 TEST(Solver, SparseNormalCholeskyNoEigenSparse) {
   Solver::Options options;
   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
@@ -419,7 +419,7 @@ TEST(Solver, LinearSolverTypeNormalOperation) {
   options.linear_solver_type = SPARSE_SCHUR;
 #if defined(CERES_NO_SUITESPARSE) &&            \
     defined(CERES_NO_CXSPARSE) &&               \
-   !defined(CERES_USE_EIGEN_SPARSE)
+    defined(CERES_NO_EIGEN_SPARSE)
   EXPECT_FALSE(options.IsValid(&message));
 #else
   EXPECT_TRUE(options.IsValid(&message));

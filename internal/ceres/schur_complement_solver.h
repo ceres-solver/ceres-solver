@@ -45,11 +45,6 @@
 #include "ceres/schur_eliminator.h"
 #include "ceres/types.h"
 
-#ifdef CERES_USE_EIGEN_SPARSE
-#include "Eigen/SparseCholesky"
-#include "Eigen/OrderingMethods"
-#endif
-
 namespace ceres {
 namespace internal {
 

@@ -372,7 +372,7 @@ bool IsSparseLinearAlgebraLibraryTypeAvailable(
   }
 
   if (type == EIGEN_SPARSE) {
-#ifdef CERES_USE_EIGEN_SPARSE
+#ifndef CERES_NO_EIGEN_SPARSE
     return true;
 #else
     return false;

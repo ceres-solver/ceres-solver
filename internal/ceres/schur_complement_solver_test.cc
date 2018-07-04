@@ -234,7 +234,7 @@ TEST_F(SchurComplementSolverTest,
 }
 #endif  // CERES_NO_ACCELERATE_SPARSE
 
-#ifdef CERES_USE_EIGEN_SPARSE
+#ifndef CERES_NO_EIGEN_SPARSE
 TEST_F(SchurComplementSolverTest,
        SparseSchurWithEigenSparseSmallProblem) {
   ComputeAndCompareSolutions(2, false, SPARSE_SCHUR, EIGEN, EIGEN_SPARSE, true);
@@ -246,7 +246,7 @@ TEST_F(SchurComplementSolverTest,
   ComputeAndCompareSolutions(3, false, SPARSE_SCHUR, EIGEN, EIGEN_SPARSE, true);
   ComputeAndCompareSolutions(3, true, SPARSE_SCHUR, EIGEN, EIGEN_SPARSE, true);
 }
-#endif  // CERES_USE_EIGEN_SPARSE
+#endif  // CERES_NO_EIGEN_SPARSE
 
 }  // namespace internal
 }  // namespace ceres

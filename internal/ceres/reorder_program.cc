@@ -49,7 +49,7 @@
 #include "ceres/types.h"
 #include "Eigen/SparseCore"
 
-#ifdef CERES_USE_EIGEN_SPARSE
+#ifndef CERES_NO_EIGEN_SPARSE
 #include "Eigen/OrderingMethods"
 #endif
 
@@ -85,7 +85,7 @@ static int MinParameterBlock(const ResidualBlock* residual_block,
   return min_parameter_block_position;
 }
 
-#if EIGEN_VERSION_AT_LEAST(3, 2, 2) && defined(CERES_USE_EIGEN_SPARSE)
+#if EIGEN_VERSION_AT_LEAST(3, 2, 2) && !defined(CERES_NO_EIGEN_SPARSE)
 Eigen::SparseMatrix<int> CreateBlockJacobian(
     const TripletSparseMatrix& block_jacobian_transpose) {
   typedef Eigen::SparseMatrix<int> SparseMatrix;
@@ -183,7 +183,7 @@ void OrderingForSparseNormalCholeskyUsingCXSparse(
 void OrderingForSparseNormalCholeskyUsingEigenSparse(
     const TripletSparseMatrix& tsm_block_jacobian_transpose,
     int* ordering) {
-#ifndef CERES_USE_EIGEN_SPARSE
+#ifdef CERES_NO_EIGEN_SPARSE
   LOG(FATAL) <<
       "SPARSE_NORMAL_CHOLESKY cannot be used with EIGEN_SPARSE "
       "because Ceres was not built with support for "
@@ -210,7 +210,7 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
   for (int i = 0; i < block_hessian.rows(); ++i) {
     ordering[i] = perm.indices()[i];
   }
-#endif  // CERES_USE_EIGEN_SPARSE
+#endif  // CERES_NO_EIGEN_SPARSE
 }
 #endif
 
@@ -385,7 +385,7 @@ void MaybeReorderSchurComplementColumnsUsingEigen(
     const int size_of_first_elimination_group,
     const ProblemImpl::ParameterMap& parameter_map,
     Program* program) {
-#if !EIGEN_VERSION_AT_LEAST(3, 2, 2) || !defined(CERES_USE_EIGEN_SPARSE)
+#if !EIGEN_VERSION_AT_LEAST(3, 2, 2) || defined(CERES_NO_EIGEN_SPARSE)
   return;
 #else
 

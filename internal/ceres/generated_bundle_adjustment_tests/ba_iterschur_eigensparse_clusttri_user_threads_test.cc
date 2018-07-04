@@ -37,7 +37,7 @@
 
 #include "bundle_adjustment_test_util.h"
 
-#ifdef CERES_USE_EIGEN_SPARSE
+#ifndef CERES_NO_EIGEN_SPARSE
 #ifndef CERES_NO_THREADS
 
 namespace ceres {
@@ -63,5 +63,5 @@ TEST_F(BundleAdjustmentTest,
 }  // namespace ceres
 
 #endif  // CERES_NO_THREADS
-#endif  // CERES_USE_EIGEN_SPARSE
+#endif  // CERES_NO_EIGEN_SPARSE
 

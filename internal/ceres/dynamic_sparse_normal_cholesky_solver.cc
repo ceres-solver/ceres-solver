@@ -46,7 +46,7 @@
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
-#ifdef CERES_USE_EIGEN_SPARSE
+#if !defined(CERES_NO_EIGEN_SPARSE)
 #include "Eigen/SparseCholesky"
 #endif
 
@@ -105,7 +105,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
 
 LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(
     CompressedRowSparseMatrix* A, double* rhs_and_solution) {
-#ifndef CERES_USE_EIGEN_SPARSE
+#if defined(CERES_NO_EIGEN_SPARSE)
 
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
@@ -168,7 +168,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(
   }
 
   return summary;
-#endif  // CERES_USE_EIGEN_SPARSE
+#endif  // CERES_NO_EIGEN_SPARSE
 }
 
 LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingCXSparse(

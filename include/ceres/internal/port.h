@@ -63,8 +63,8 @@
 #  if !defined(CERES_NO_ACCELERATE_SPARSE)
 #    error CERES_NO_SPARSE requires CERES_NO_ACCELERATE_SPARSE
 #  endif
-#  if defined(CERES_USE_EIGEN_SPARSE)
-#    error CERES_NO_SPARSE requires !CERES_USE_EIGEN_SPARSE
+#  if !defined(CERES_NO_EIGEN_SPARSE)
+#    error CERES_NO_SPARSE requires CERES_NO_EIGEN_SPARSE
 #  endif
 #endif
 
