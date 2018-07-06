@@ -12,6 +12,8 @@ since 2010. Ceres Solver can solve two kinds of problems.
 Please see [ceres-solver.org](http://ceres-solver.org/) for more
 information.
 
+[![Build Status](https://travis-ci.org/ceres-solver/ceres-solver.svg?branch=master)](https://travis-ci.org/ceres-solver/ceres-solver)
+
 WARNING - Do not make GitHub pull requests!
 -------------------------------------------
 
