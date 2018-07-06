@@ -1,0 +1,70 @@
+language: cpp
+
+matrix:
+  fast_finish: true
+  include:
+  - os: linux
+    dist: trusty
+    sudo: required
+    compiler: gcc
+    env: CERES_BUILD_TARGET=LINUX
+  - os: linux
+    dist: trusty
+    sudo: required
+    compiler: gcc
+    env: CERES_BUILD_TARGET=ANDROID
+  - os: osx
+    osx_image: xcode9.4
+    env: CERES_BUILD_TARGET=OSX
+  - os: osx
+    osx_image: xcode9.4
+    env: CERES_BUILD_TARGET=IOS
+
+env:
+  # As per http://docs.travis-ci.com/user/languages/cpp/#OpenMP-projects don't be greedy with OpenMP.
+  - OMP_NUM_THREADS=4
+
+before_install:
+  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get update -qq; fi
+  - |
+    if [[ "$CERES_BUILD_TARGET" == "ANDROID" ]]; then
+      cd /tmp
+      wget https://dl.google.com/android/repository/android-ndk-r17b-linux-x86_64.zip
+      unzip -qq android-ndk-r17b-linux-x86_64.zip
+    fi
+
+install:
+  - if [ $TRAVIS_OS_NAME = linux ]; then $TRAVIS_BUILD_DIR/travis/install_travis_linux_deps.sh; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then $TRAVIS_BUILD_DIR/travis/install_travis_osx_deps.sh; fi
+
+before_script:
+  - mkdir /tmp/ceres-build
+  - cd /tmp/ceres-build
+
+script:
+  # NOTE: TRAVIS_BUILD_DIR is actually the source directory for Ceres.
+  - |
+    if [[ "$CERES_BUILD_TARGET" == "LINUX" || "$CERES_BUILD_TARGET" == "OSX" ]]; then
+      cmake $TRAVIS_BUILD_DIR
+    fi
+  - |
+    if [[ "$CERES_BUILD_TARGET" == "ANDROID" ]]; then
+      cmake -DCMAKE_TOOLCHAIN_FILE=/tmp/android-ndk-r17b/build/cmake/android.toolchain.cmake -DEIGEN_INCLUDE_DIR=/usr/local/include/eigen3 -DANDROID_ABI=armeabi-v7a -DANDROID_STL=c++_shared -DANDROID_NATIVE_API_LEVEL=android-24 -DMINIGLOG=ON -DBUILD_EXAMPLES=OFF $TRAVIS_BUILD_DIR
+    fi
+  - |
+    if [[ "$CERES_BUILD_TARGET" == "IOS" ]]; then
+      cmake -DCMAKE_TOOLCHAIN_FILE=$TRAVIS_BUILD_DIR/cmake/iOS.cmake -DEIGEN_INCLUDE_DIR=/usr/local/include/eigen3 -DIOS_PLATFORM=OS $TRAVIS_BUILD_DIR
+    fi
+  - make -j 4
+  - |
+    if [[ "$CERES_BUILD_TARGET" == "LINUX" || "$CERES_BUILD_TARGET" == "OSX" ]]; then
+      sudo make install
+      ctest --output-on-failure -j 4
+    fi
+
+notifications:
+  email:
+    - alexs.mac@gmail.com
+    - sandwichmaker@gmail.com
+    - keir@google.com
+    - wjr@google.com
