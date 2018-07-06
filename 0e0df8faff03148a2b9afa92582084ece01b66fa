@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d1b8f61b_02aaca4c",
+        "filename": ".travis.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-07-06T20:00:45Z",
+      "side": 1,
+      "message": "Nope, it\u0027s pulled down above on line 32.  From what I can tell, you have to do it yourself if you\u0027re building with the NDK.",
+      "parentUuid": "279175fa_ca8b9450",
+      "range": {
+        "startLine": 52,
+        "startChar": 13,
+        "endLine": 52,
+        "endChar": 34
+      },
+      "revId": "0e0df8faff03148a2b9afa92582084ece01b66fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3384671_5e736671",
         "filename": ".travis.yml",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cc943b38_81bab51b",
+        "filename": ".travis.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-07-06T20:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3384671_5e736671",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 19
+      },
+      "revId": "0e0df8faff03148a2b9afa92582084ece01b66fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b2d1372_efb7f749",
         "filename": "travis/install_travis_linux_deps.sh",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-07-06T19:56:51Z",
       "side": 1,
       "message": "so this will need to be updated?\nshouldn\u0027t we be using the oldest version supported? I dunno how CI and software versioning should work",
+      "range": {
+        "startLine": 13,
+        "startChar": 38,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "0e0df8faff03148a2b9afa92582084ece01b66fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c099886_55d4c074",
+        "filename": "travis/install_travis_linux_deps.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-07-06T20:00:45Z",
+      "side": 1,
+      "message": "Depends, 3.3.4 came out in June 2017.  IMO as it\u0027s header-only we should be using a new version, and the default version they have means that we would emit warnings telling the user to upgrade to a version \u003e 3.2.2 to get not-asthmatic-ant-with-heavy-shopping sparse performance.",
+      "parentUuid": "7b2d1372_efb7f749",
       "range": {
         "startLine": 13,
         "startChar": 38,
