@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "279175fa_ca8b9450",
+        "filename": ".travis.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-06T19:56:51Z",
+      "side": 1,
+      "message": "we assume that it is installed?",
+      "range": {
+        "startLine": 52,
+        "startChar": 13,
+        "endLine": 52,
+        "endChar": 34
+      },
+      "revId": "0e0df8faff03148a2b9afa92582084ece01b66fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3384671_5e736671",
+        "filename": ".travis.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-06T19:56:51Z",
+      "side": 1,
+      "message": "sandwichmaker@gmail.com is likely better.",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 19
+      },
+      "revId": "0e0df8faff03148a2b9afa92582084ece01b66fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2d1372_efb7f749",
+        "filename": "travis/install_travis_linux_deps.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-07-06T19:56:51Z",
+      "side": 1,
+      "message": "so this will need to be updated?\nshouldn\u0027t we be using the oldest version supported? I dunno how CI and software versioning should work",
+      "range": {
+        "startLine": 13,
+        "startChar": 38,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "0e0df8faff03148a2b9afa92582084ece01b66fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
