@@ -143,7 +143,7 @@ void SparseCholeskySolverUnitTest(
   lhs->ToDenseMatrix(&eigen_lhs);
   EXPECT_NEAR((actual - expected).norm() / actual.norm(),
               0.0,
-              std::numeric_limits<double>::epsilon() * 10)
+              std::numeric_limits<double>::epsilon() * 20)
       << "\n"
       << eigen_lhs;
 }
