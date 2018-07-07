@@ -546,13 +546,6 @@ Note that any solvers or other shared dependencies you include in
 your project must also be present in your android build config and
 your test directory on Android.
 
-Legacy Android
-==============
-
-Download the ``Android NDK`` version ``r9d`` or later. Run
-``ndk-build`` from inside the ``jni`` directory. Use the
-``libceres.a`` that gets created.
-
 .. _section-ios:
 
 iOS
