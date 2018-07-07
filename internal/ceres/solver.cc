@@ -495,13 +495,6 @@ void Solver::Solve(const Solver::Options& options,
   Program* program = problem_impl->mutable_program();
   PreSolveSummarize(options, problem_impl, summary);
 
-  // The main thread also does work so we only need to launch num_threads - 1.
-  problem_impl->context()->EnsureMinimumThreads(options.num_threads - 1);
-
-  // Make sure that all the parameter blocks states are set to the
-  // values provided by the user.
-  program->SetParameterBlockStatePtrsToUserStatePtrs();
-
   // If gradient_checking is enabled, wrap all cost functions in a
   // gradient checker and install a callback that terminates if any gradient
   // error is detected.
@@ -519,6 +512,13 @@ void Solver::Solve(const Solver::Options& options,
     problem_impl = gradient_checking_problem.get();
     program = problem_impl->mutable_program();
   }
+
+  // Make sure that all the parameter blocks states are set to the
+  // values provided by the user.
+  program->SetParameterBlockStatePtrsToUserStatePtrs();
+
+  // The main thread also does work so we only need to launch num_threads - 1.
+  problem_impl->context()->EnsureMinimumThreads(options.num_threads - 1);
 
   std::unique_ptr<Preprocessor> preprocessor(
       Preprocessor::Create(modified_options.minimizer_type));
