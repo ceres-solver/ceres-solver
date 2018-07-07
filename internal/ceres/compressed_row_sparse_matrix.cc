@@ -216,6 +216,11 @@ CompressedRowSparseMatrix* CompressedRowSparseMatrix::FromTripletSparseMatrix(
   CompressedRowSparseMatrix* output =
       new CompressedRowSparseMatrix(num_rows, num_cols, input.num_nonzeros());
 
+  if (num_rows == 0) {
+    // No data to copy.
+    return output;
+  }
+
   // Copy the contents of the cols and values array in the order given
   // by index and count the number of entries in each row.
   int* output_rows = output->mutable_rows();
@@ -291,7 +296,7 @@ void CompressedRowSparseMatrix::RightMultiply(const double* x,
 
       // For upper triangular matrices r <= c, so skip entries with r
       // > c.
-      while (r > cols_[idx] && idx < idx_end) {
+      while (idx < idx_end && r > cols_[idx]) {
         ++idx;
       }
 
@@ -364,7 +369,7 @@ void CompressedRowSparseMatrix::SquaredColumnNorm(double* x) const {
 
       // For upper triangular matrices r <= c, so skip entries with r
       // > c.
-      while (r > cols_[idx] && idx < idx_end) {
+      while (idx < idx_end && r > cols_[idx]) {
         ++idx;
       }
 
