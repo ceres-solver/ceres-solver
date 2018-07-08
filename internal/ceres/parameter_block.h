@@ -128,6 +128,19 @@ class ParameterBlock {
   void SetVarying() { is_constant_ = false; }
   bool IsConstant() const { return is_constant_; }
 
+  double UpperBound(int index) const {
+    return (upper_bounds_ ? upper_bounds_[index]
+                          : std::numeric_limits<double>::max());
+  }
+
+  double LowerBound(int index) const {
+    return (lower_bounds_ ? lower_bounds_[index]
+                          : -std::numeric_limits<double>::max());
+  }
+
+  bool IsUpperBounded() const { return (upper_bounds_ == nullptr); }
+  bool IsLowerBounded() const { return (lower_bounds_ == nullptr); }
+
   // This parameter block's index in an array.
   int index() const { return index_; }
   void set_index(int index) { index_ = index; }
@@ -194,7 +207,11 @@ class ParameterBlock {
   void SetUpperBound(int index, double upper_bound) {
     CHECK_LT(index, size_);
 
-    if (upper_bounds_.get() == NULL) {
+    if (upper_bound >= std::numeric_limits<double>::max() && !upper_bounds_) {
+      return;
+    }
+
+    if (!upper_bounds_) {
       upper_bounds_.reset(new double[size_]);
       std::fill(upper_bounds_.get(),
                 upper_bounds_.get() + size_,
@@ -207,7 +224,11 @@ class ParameterBlock {
   void SetLowerBound(int index, double lower_bound) {
     CHECK_LT(index, size_);
 
-    if (lower_bounds_.get() == NULL) {
+    if (lower_bound <= -std::numeric_limits<double>::max() && !lower_bounds_) {
+      return;
+    }
+
+    if (!lower_bounds_) {
       lower_bounds_.reset(new double[size_]);
       std::fill(lower_bounds_.get(),
                 lower_bounds_.get() + size_,
