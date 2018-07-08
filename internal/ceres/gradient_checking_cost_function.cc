@@ -211,6 +211,17 @@ ProblemImpl* CreateGradientCheckingProblemImpl(
       gradient_checking_problem_impl->SetParameterBlockConstant(
           parameter_block->mutable_user_state());
     }
+
+    for (int i = 0; i <  parameter_block->Size(); ++i) {
+      gradient_checking_problem_impl->SetParameterUpperBound(
+          parameter_block->mutable_user_state(),
+          i,
+          parameter_block->UpperBound(i));
+      gradient_checking_problem_impl->SetParameterLowerBound(
+          parameter_block->mutable_user_state(),
+          i,
+          parameter_block->LowerBound(i));
+    }
   }
 
   // For every ResidualBlock in problem_impl, create a new
