@@ -201,6 +201,14 @@ void Problem::SetParameterUpperBound(double* values,
   problem_impl_->SetParameterUpperBound(values, index, upper_bound);
 }
 
+double Problem::GetParameterUpperBound(double* values, int index) const {
+  return problem_impl_->GetParameterUpperBound(values, index);
+}
+
+double Problem::GetParameterLowerBound(double* values, int index) const {
+  return problem_impl_->GetParameterLowerBound(values, index);
+}
+
 bool Problem::Evaluate(const EvaluateOptions& evaluate_options,
                        double* cost,
                        vector<double>* residuals,
