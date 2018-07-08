@@ -411,5 +411,38 @@ TEST(GradientCheckingProblemImpl, ProblemDimensionsMatch) {
   }
 }
 
+
+TEST(GradientCheckingProblemImpl, ConstrainedProblemBoundsArePropagated) {
+  // Parameter blocks with arbitrarily chosen initial values.
+  double x[] = {1.0, 2.0, 3.0};
+  ProblemImpl problem_impl;
+  problem_impl.AddParameterBlock(x, 3);
+  problem_impl.AddResidualBlock(new UnaryCostFunction(2, 3), NULL, x);
+  problem_impl.SetParameterLowerBound(x,0,0.9);
+  problem_impl.SetParameterUpperBound(x,1,2.5);
+
+  GradientCheckingIterationCallback callback;
+  std::unique_ptr<ProblemImpl> gradient_checking_problem_impl(
+      CreateGradientCheckingProblemImpl(&problem_impl, 1.0, 1.0, &callback));
+
+  // The dimensions of the two problems match.
+  EXPECT_EQ(problem_impl.NumParameterBlocks(),
+            gradient_checking_problem_impl->NumParameterBlocks());
+  EXPECT_EQ(problem_impl.NumResidualBlocks(),
+            gradient_checking_problem_impl->NumResidualBlocks());
+
+  EXPECT_EQ(problem_impl.NumParameters(),
+            gradient_checking_problem_impl->NumParameters());
+  EXPECT_EQ(problem_impl.NumResiduals(),
+            gradient_checking_problem_impl->NumResiduals());
+
+  for (int i = 0; i < 3; ++i) {
+    EXPECT_EQ(problem_impl.GetParameterLowerBound(x, i),
+              gradient_checking_problem_impl->GetParameterLowerBound(x, i));
+    EXPECT_EQ(problem_impl.GetParameterUpperBound(x, i),
+              gradient_checking_problem_impl->GetParameterUpperBound(x, i));
+  }
+}
+
 }  // namespace internal
 }  // namespace ceres

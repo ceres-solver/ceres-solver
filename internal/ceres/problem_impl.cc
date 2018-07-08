@@ -717,6 +717,30 @@ void ProblemImpl::SetParameterUpperBound(double* values,
   parameter_block->SetUpperBound(index, upper_bound);
 }
 
+double ProblemImpl::GetParameterLowerBound(double* values,
+                                         int index) const {
+  ParameterBlock* parameter_block =
+      FindWithDefault(parameter_block_map_, values, NULL);
+  if (parameter_block == NULL) {
+    LOG(FATAL) << "Parameter block not found: " << values
+               << ". You must add the parameter block to the problem before "
+               << "you can get the lower bound on one of its components.";
+  }
+  return parameter_block->LowerBound(index);
+}
+
+double ProblemImpl::GetParameterUpperBound(double* values,
+                                         int index) const {
+  ParameterBlock* parameter_block =
+      FindWithDefault(parameter_block_map_, values, NULL);
+  if (parameter_block == NULL) {
+    LOG(FATAL) << "Parameter block not found: " << values
+               << ". You must add the parameter block to the problem before "
+               << "you can set an upper bound on one of its components.";
+  }
+  return parameter_block->UpperBound(index);
+}
+
 bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
                            double* cost,
                            vector<double>* residuals,

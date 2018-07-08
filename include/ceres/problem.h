@@ -327,9 +327,16 @@ class CERES_EXPORT Problem {
   // associated then NULL is returned.
   const LocalParameterization* GetParameterization(double* values) const;
 
-  // Set the lower/upper bound for the parameter with position "index".
+  // Set the lower/upper bound for the parameter at position "index".
   void SetParameterLowerBound(double* values, int index, double lower_bound);
   void SetParameterUpperBound(double* values, int index, double upper_bound);
+
+  // Get the lower/upper bound for the parameter at position
+  // "index". If the parameter is not bounded by the user, then its
+  // lower bound is -std::numeric_limits<double>::max() and upper
+  // bound is std::numeric_limits<double>::max().
+  double GetParameterLowerBound(double* values, int index) const;
+  double GetParameterUpperBound(double* values, int index) const;
 
   // Number of parameter blocks in the problem. Always equals
   // parameter_blocks().size() and parameter_block_sizes().size().
