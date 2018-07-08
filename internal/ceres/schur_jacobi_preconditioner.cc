@@ -88,19 +88,8 @@ bool SchurJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   const int num_rows = m_->num_rows();
   CHECK_GT(num_rows, 0);
 
-  // We need a dummy rhs vector and a dummy b vector since the Schur
-  // eliminator combines the computation of the reduced camera matrix
-  // with the computation of the right hand side of that linear
-  // system.
-  //
-  // TODO(sameeragarwal): Perhaps its worth refactoring the
-  // SchurEliminator::Eliminate function to allow NULL for the rhs. As
-  // of now it does not seem to be worth the effort.
-  Vector rhs = Vector::Zero(m_->num_rows());
-  Vector b = Vector::Zero(A.num_rows());
-
   // Compute a subset of the entries of the Schur complement.
-  eliminator_->Eliminate(&A, b.data(), D, m_.get(), rhs.data());
+  eliminator_->Eliminate(&A, nullptr, D, m_.get(), nullptr);
   m_->Invert();
   return true;
 }

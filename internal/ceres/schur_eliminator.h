@@ -218,9 +218,6 @@ class SchurEliminatorBase {
 // parameters as template arguments so that they are visible to the
 // compiler and can be used for compile time optimization of the low
 // level linear algebra routines.
-//
-// This implementation is mulithreaded using OpenMP. The level of
-// parallelism is controlled by LinearSolver::Options::num_threads.
 template <int kRowBlockSize = Eigen::Dynamic,
           int kEBlockSize = Eigen::Dynamic,
           int kFBlockSize = Eigen::Dynamic >

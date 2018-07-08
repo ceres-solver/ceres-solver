@@ -176,7 +176,9 @@ Eliminate(const BlockSparseMatrix* A,
           double* rhs) {
   if (lhs->num_rows() > 0) {
     lhs->SetZero();
-    VectorRef(rhs, lhs->num_rows()).setZero();
+    if (rhs) {
+      VectorRef(rhs, lhs->num_rows()).setZero();
+    }
   }
 
   const CompressedRowBlockStructure* bs = A->block_structure();
@@ -276,15 +278,16 @@ Eliminate(const BlockSparseMatrix* A,
         //
         //   rhs = F'b - F'E(E'E)^(-1) E'b
 
-        FixedArray<double, 8> inverse_ete_g(e_block_size);
-        MatrixVectorMultiply<kEBlockSize, kEBlockSize, 0>(
-            inverse_ete.data(),
-            e_block_size,
-            e_block_size,
-            g.get(),
-            inverse_ete_g.get());
-
-        UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.get(), rhs);
+        if (rhs) {
+          FixedArray<double, 8> inverse_ete_g(e_block_size);
+          MatrixVectorMultiply<kEBlockSize, kEBlockSize, 0>(
+              inverse_ete.data(),
+              e_block_size,
+              e_block_size,
+              g.get(),
+              inverse_ete_g.get());
+          UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.get(), rhs);
+        }
 
         // S -= F'E(E'E)^{-1}E'F
         ChunkOuterProduct(
@@ -469,12 +472,13 @@ ChunkDiagonalBlockAndGradient(
             values + e_cell.position, row.block.size, e_block_size,
             ete->data(), 0, 0, e_block_size, e_block_size);
 
-    // g += E_i' b_i
-    MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
-        values + e_cell.position, row.block.size, e_block_size,
-        b + b_pos,
-        g);
-
+    if (b) {
+      // g += E_i' b_i
+      MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
+          values + e_cell.position, row.block.size, e_block_size,
+          b + b_pos,
+          g);
+    }
 
     // buffer = E'F. This computation is done by iterating over the
     // f_blocks for each row in the chunk.
@@ -561,6 +565,10 @@ NoEBlockRowsUpdate(const BlockSparseMatrix* A,
   const CompressedRowBlockStructure* bs = A->block_structure();
   const double* values = A->values();
   for (; row_block_counter < bs->rows.size(); ++row_block_counter) {
+    NoEBlockRowOuterProduct(A, row_block_counter, lhs);
+    if (!rhs) {
+      continue;
+    }
     const CompressedRow& row = bs->rows[row_block_counter];
     for (int c = 0; c < row.cells.size(); ++c) {
       const int block_id = row.cells[c].block_id;
@@ -571,7 +579,6 @@ NoEBlockRowsUpdate(const BlockSparseMatrix* A,
           b + row.block.position,
           rhs + lhs_row_layout_[block]);
     }
-    NoEBlockRowOuterProduct(A, row_block_counter, lhs);
   }
 }
 
