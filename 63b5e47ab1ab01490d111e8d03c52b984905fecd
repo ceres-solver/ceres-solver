@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c896efd_fc59a8e8",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1556,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-07-10T06:47:57Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "63b5e47ab1ab01490d111e8d03c52b984905fecd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
