@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdb37590_8d6a8639",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-07-10T11:14:29Z",
+      "side": 1,
+      "message": "I think this is ambiguous, as I don\u0027t understand purely from reading this whether I do or don\u0027t need to set update_state_every_iteration \u003d true, or whether having an EvaluationCallback implies that update_state_every_iteration is forced to be true.",
+      "revId": "407d7b6abfee0f59354a7dcd62ed98dcc99462f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
