@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e60d120a_a636eb32",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-07-10T06:12:49Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this clear the existing upper bound?",
+      "revId": "b06b0ff302b12e6390c8cb31515888a632bbce8b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa461ef_759e0658",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-07-10T06:12:49Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this clear the existing lower bound?",
+      "revId": "b06b0ff302b12e6390c8cb31515888a632bbce8b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e84fce4_db00ec20",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-07-10T06:12:49Z",
+      "side": 1,
+      "message": "Indentation.",
+      "revId": "b06b0ff302b12e6390c8cb31515888a632bbce8b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549e1b46_0ed99a36",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-07-10T06:12:49Z",
+      "side": 1,
+      "message": "Indentation.",
+      "revId": "b06b0ff302b12e6390c8cb31515888a632bbce8b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
