@@ -66,6 +66,9 @@ struct WigglyBowlCostFunctionAndEvaluationCallback :
       : EvaluationCallback(),
         user_parameter_block(parameter),
         prepare_num_calls(0),
+        prepare_requested_jacobians(false),
+        prepare_new_evaluation_point(false),
+        prepare_parameter_hash(kUninitialized),
         evaluate_num_calls(0),
         evaluate_last_parameter_hash(kUninitialized) {}
 
