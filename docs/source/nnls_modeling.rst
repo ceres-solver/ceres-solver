@@ -1825,7 +1825,7 @@ Instances
    performed. This vector determines the order in which the residuals
    occur, and how the rows of the jacobian are ordered. If
    residual_blocks is empty, then it is assumed to be equal to the
-   vector containing all the parameter blocks.
+   vector containing all the residual blocks.
 
 .. member:: bool Problem::EvaluateOptions::apply_loss_function
 

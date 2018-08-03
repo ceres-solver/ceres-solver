@@ -72,7 +72,7 @@ Setting up your Environment
    * Sign into `http://ceres-solver-review.googlesource.com
      <http://ceres-solver-review.googlesource.com>`_.
 
-   * Click ``Settings -> HTTP Password -> Obtain Password``.
+   * Click ``Settings -> HTTP Credentials -> Obtain Password``.
 
    * (maybe) Select an account for multi-login. This should be the
      same as your Gerrit login.
