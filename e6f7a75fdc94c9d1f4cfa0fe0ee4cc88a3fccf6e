@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9a8922a_2f22fbbc",
+        "filename": "travis/install_travis_osx_deps.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-07T11:17:06Z",
+      "side": 1,
+      "message": "this is weird, why should you need to do this at all?",
+      "revId": "e6f7a75fdc94c9d1f4cfa0fe0ee4cc88a3fccf6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
