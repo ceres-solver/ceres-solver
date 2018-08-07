@@ -16,6 +16,24 @@
       "revId": "e6f7a75fdc94c9d1f4cfa0fe0ee4cc88a3fccf6e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd0cdcd_9d132048",
+        "filename": "travis/install_travis_osx_deps.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-08-07T13:17:36Z",
+      "side": 1,
+      "message": "Because Homebrew returns an error (and error code) from:\n\nbrew install \u003cFORMULA\u003e\n\nif the formula is already installed (which it appears on Travis CI CMake now is).  As we have the \u0027set -e\u0027 statement at the top this then results in an error that breaks the CI.",
+      "parentUuid": "c9a8922a_2f22fbbc",
+      "revId": "e6f7a75fdc94c9d1f4cfa0fe0ee4cc88a3fccf6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
