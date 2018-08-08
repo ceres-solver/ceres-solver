@@ -148,14 +148,14 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
   }
 
   void CheckIntPairToLong(int a, int b) {
-    int64 value = m_->IntPairToLong(a, b);
+    int64_t value = m_->IntPairToLong(a, b);
     EXPECT_GT(value, 0) << "Overflow a = " << a << " b = " << b;
     EXPECT_GT(value, a) << "Overflow a = " << a << " b = " << b;
     EXPECT_GT(value, b) << "Overflow a = " << a << " b = " << b;
   }
 
   void CheckLongToIntPair() {
-    uint64 max_rows =  m_->kMaxRowBlocks;
+    uint64_t max_rows =  m_->kMaxRowBlocks;
     for (int row = max_rows - 10; row < max_rows; ++row) {
       for (int col = 0; col < 10; ++col) {
         int row_computed;

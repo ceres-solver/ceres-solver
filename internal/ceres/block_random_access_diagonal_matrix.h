@@ -37,7 +37,6 @@
 #include <vector>
 
 #include "ceres/block_random_access_matrix.h"
-#include "ceres/integral_types.h"
 #include "ceres/internal/port.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
