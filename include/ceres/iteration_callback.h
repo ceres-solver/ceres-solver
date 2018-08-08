@@ -64,7 +64,7 @@ struct CERES_EXPORT IterationSummary {
         cumulative_time_in_seconds(0.0) {}
 
   // Current iteration number.
-  int32 iteration;
+  int iteration;
 
   // Step was numerically valid, i.e., all values are finite and the
   // step reduces the value of the linearized model.

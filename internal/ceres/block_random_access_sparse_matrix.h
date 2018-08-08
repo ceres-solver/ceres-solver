@@ -31,6 +31,7 @@
 #ifndef CERES_INTERNAL_BLOCK_RANDOM_ACCESS_SPARSE_MATRIX_H_
 #define CERES_INTERNAL_BLOCK_RANDOM_ACCESS_SPARSE_MATRIX_H_
 
+#include <cstdint>
 #include <memory>
 #include <set>
 #include <unordered_map>
@@ -39,7 +40,6 @@
 
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "ceres/integral_types.h"
 #include "ceres/internal/port.h"
 #include "ceres/types.h"
 #include "ceres/small_blas.h"
@@ -93,16 +93,16 @@ class BlockRandomAccessSparseMatrix : public BlockRandomAccessMatrix {
   TripletSparseMatrix* mutable_matrix() { return tsm_.get(); }
 
  private:
-  int64 IntPairToLong(int row, int col) const {
+  int64_t IntPairToLong(int row, int col) const {
     return row * kMaxRowBlocks + col;
   }
 
-  void LongToIntPair(int64 index, int* row, int* col) const {
+  void LongToIntPair(int64_t index, int* row, int* col) const {
     *row = index / kMaxRowBlocks;
     *col = index % kMaxRowBlocks;
   }
 
-  const int64 kMaxRowBlocks;
+  const int64_t kMaxRowBlocks;
 
   // row/column block sizes.
   const std::vector<int> blocks_;
