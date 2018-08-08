@@ -31,6 +31,8 @@
 #ifndef CERES_PUBLIC_EVALUATION_CALLBACK_H_
 #define CERES_PUBLIC_EVALUATION_CALLBACK_H_
 
+#include "ceres/internal/port.h"
+
 namespace ceres {
 
 // Using this callback interface, Ceres can notify you when it is about to
