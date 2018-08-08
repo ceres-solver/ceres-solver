@@ -32,6 +32,8 @@
 #ifndef CERES_PUBLIC_NUMERIC_DIFF_OPTIONS_H_
 #define CERES_PUBLIC_NUMERIC_DIFF_OPTIONS_H_
 
+#include "ceres/internal/port.h"
+
 namespace ceres {
 
 // Options pertaining to numeric differentiation (e.g., convergence criteria,

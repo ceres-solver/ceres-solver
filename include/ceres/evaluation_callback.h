@@ -28,6 +28,8 @@
 //
 // Author: mierle@gmail.com (Keir Mierle)
 
+#include "ceres/internal/port.h"
+
 #ifndef CERES_PUBLIC_EVALUATION_CALLBACK_H_
 #define CERES_PUBLIC_EVALUATION_CALLBACK_H_
 
