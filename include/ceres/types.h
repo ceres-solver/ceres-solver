@@ -44,10 +44,6 @@
 
 namespace ceres {
 
-// Basic integer types. These typedefs are in the Ceres namespace to avoid
-// conflicts with other packages having similar typedefs.
-typedef int   int32;
-
 // Argument type used in interfaces that can optionally take ownership
 // of a passed in argument. If TAKE_OWNERSHIP is passed, the called
 // object takes ownership of the pointer argument, and will call

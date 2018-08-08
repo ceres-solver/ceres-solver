@@ -34,6 +34,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdint>
 #include <numeric>
 #include <string>
 #include <vector>
@@ -65,7 +66,7 @@ bool EvaluateCostFunction(
   CHECK_NOTNULL(jacobians);
   CHECK_NOTNULL(local_jacobians);
 
-  const vector<int32>& block_sizes = function->parameter_block_sizes();
+  const vector<int32_t>& block_sizes = function->parameter_block_sizes();
   const int num_parameter_blocks = block_sizes.size();
 
   // Allocate Jacobian matrices in local space.
@@ -135,7 +136,7 @@ GradientChecker::GradientChecker(
           function, DO_NOT_TAKE_OWNERSHIP, options);
   finite_diff_cost_function_.reset(finite_diff_cost_function);
 
-  const vector<int32>& parameter_block_sizes =
+  const vector<int32_t>& parameter_block_sizes =
       function->parameter_block_sizes();
   const int num_parameter_blocks = parameter_block_sizes.size();
   for (int i = 0; i < num_parameter_blocks; ++i) {
