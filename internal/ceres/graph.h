@@ -35,7 +35,6 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <utility>
-#include "ceres/integral_types.h"
 #include "ceres/map_util.h"
 #include "ceres/pair_hash.h"
 #include "ceres/types.h"

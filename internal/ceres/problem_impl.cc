@@ -33,6 +33,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <cstdint>
 #include <iterator>
 #include <memory>
 #include <set>
@@ -294,7 +295,7 @@ ResidualBlock* ProblemImpl::AddResidualBlock(
            cost_function->parameter_block_sizes().size());
 
   // Check the sizes match.
-  const vector<int32>& parameter_block_sizes =
+  const vector<int32_t>& parameter_block_sizes =
       cost_function->parameter_block_sizes();
 
   if (!options_.disable_all_safety_checks) {

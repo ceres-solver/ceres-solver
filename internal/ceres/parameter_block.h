@@ -32,13 +32,13 @@
 #define CERES_INTERNAL_PARAMETER_BLOCK_H_
 
 #include <algorithm>
+#include <cstdint>
 #include <cstdlib>
 #include <memory>
 #include <limits>
 #include <string>
 #include <unordered_set>
 #include "ceres/array_utils.h"
-#include "ceres/integral_types.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
 #include "ceres/local_parameterization.h"
@@ -393,13 +393,13 @@ class ParameterBlock {
 
   // The index of the parameter. This is used by various other parts of Ceres to
   // permit switching from a ParameterBlock* to an index in another array.
-  int32 index_;
+  int32_t index_;
 
   // The offset of this parameter block inside a larger state vector.
-  int32 state_offset_;
+  int32_t state_offset_;
 
   // The offset of this parameter block inside a larger delta vector.
-  int32 delta_offset_;
+  int32_t delta_offset_;
 
   // If non-null, contains the residual blocks this parameter block is in.
   std::unique_ptr<ResidualBlockSet> residual_blocks_;

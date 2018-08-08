@@ -88,12 +88,14 @@
 #define CERES_PUBLIC_COST_FUNCTION_TO_FUNCTOR_H_
 
 #include <numeric>
+#include <cstdint>
 #include <vector>
 
 #include "ceres/cost_function.h"
 #include "ceres/dynamic_cost_function_to_functor.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/internal/port.h"
+#include "ceres/types.h"
 
 namespace ceres {
 
@@ -124,7 +126,7 @@ class CostFunctionToFunctor {
         << N3 << ", " << N4 << ", " << N5 << ", " << N6 << ", " << N7 << ", "
         << N8 << ", " << N9;
 
-    const std::vector<int32>& parameter_block_sizes =
+    const std::vector<int32_t>& parameter_block_sizes =
         cost_function->parameter_block_sizes();
     const int num_parameter_blocks =
         (N0 > 0) + (N1 > 0) + (N2 > 0) + (N3 > 0) + (N4 > 0) +

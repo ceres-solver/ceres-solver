@@ -40,12 +40,11 @@
 
 #include <vector>
 #include "ceres/internal/port.h"
-#include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
 
-typedef int32 BlockSize;
+typedef int32_t BlockSize;
 
 struct Block {
   Block() : size(-1), position(-1) {}

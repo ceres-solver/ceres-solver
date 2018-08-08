@@ -30,6 +30,7 @@
 
 #include "ceres/residual_block.h"
 
+#include <cstdint>
 #include "gtest/gtest.h"
 #include "ceres/parameter_block.h"
 #include "ceres/sized_cost_function.h"
@@ -45,9 +46,9 @@ using std::vector;
 class TernaryCostFunction: public CostFunction {
  public:
   TernaryCostFunction(int num_residuals,
-                      int32 parameter_block1_size,
-                      int32 parameter_block2_size,
-                      int32 parameter_block3_size) {
+                      int32_t parameter_block1_size,
+                      int32_t parameter_block2_size,
+                      int32_t parameter_block3_size) {
     set_num_residuals(num_residuals);
     mutable_parameter_block_sizes()->push_back(parameter_block1_size);
     mutable_parameter_block_sizes()->push_back(parameter_block2_size);
