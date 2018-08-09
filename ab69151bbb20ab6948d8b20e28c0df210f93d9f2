@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ea0b0a5_0e61e9bf",
+        "filename": "include/ceres/cost_function_to_functor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-08-09T17:01:09Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this just #include \u003ccstdint\u003e instead?",
+      "revId": "ab69151bbb20ab6948d8b20e28c0df210f93d9f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
