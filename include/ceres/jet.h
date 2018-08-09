@@ -158,7 +158,6 @@
 
 #include <cmath>
 #include <iosfwd>
-#include <iostream>  // NOLINT
 #include <limits>
 #include <string>
 

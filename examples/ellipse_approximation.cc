@@ -36,6 +36,7 @@
 // dense but dynamically sparse.
 
 #include <cmath>
+#include <iostream>
 #include <vector>
 #include "ceres/ceres.h"
 #include "glog/logging.h"

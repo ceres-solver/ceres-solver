@@ -31,6 +31,7 @@
 // A simple example of optimizing a sampled function by using cubic
 // interpolation.
 
+#include <iostream>
 #include "ceres/ceres.h"
 #include "ceres/cubic_interpolation.h"
 #include "glog/logging.h"

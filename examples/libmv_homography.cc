@@ -60,6 +60,7 @@
 // This example demonstrates custom exit criterion by having a callback check
 // for image-space error.
 
+#include <iostream>
 #include "ceres/ceres.h"
 #include "glog/logging.h"
 

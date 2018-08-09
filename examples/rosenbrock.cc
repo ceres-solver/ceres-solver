@@ -28,6 +28,7 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <iostream>
 #include "ceres/ceres.h"
 #include "glog/logging.h"
 

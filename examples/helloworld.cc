@@ -33,6 +33,7 @@
 // Minimize 0.5 (10 - x)^2 using jacobian matrix computed using
 // automatic differentiation.
 
+#include <iostream>
 #include "ceres/ceres.h"
 #include "glog/logging.h"
 

@@ -126,7 +126,8 @@
 // odoemtry observations will only be known at run time.
 
 #include <cstdio>
-#include <math.h>
+#include <iostream>
+#include <cmath>
 #include <vector>
 
 #include "ceres/ceres.h"
