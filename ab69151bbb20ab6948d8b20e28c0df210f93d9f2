@@ -16,6 +16,24 @@
       "revId": "ab69151bbb20ab6948d8b20e28c0df210f93d9f2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9546a1c7_4b3a01d7",
+        "filename": "include/ceres/cost_function_to_functor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-09T19:17:24Z",
+      "side": 1,
+      "message": "yep.",
+      "parentUuid": "7ea0b0a5_0e61e9bf",
+      "revId": "ab69151bbb20ab6948d8b20e28c0df210f93d9f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
