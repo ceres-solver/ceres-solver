@@ -38,6 +38,7 @@
 #ifndef CERES_INTERNAL_BLOCK_STRUCTURE_H_
 #define CERES_INTERNAL_BLOCK_STRUCTURE_H_
 
+#include <cstdint>
 #include <vector>
 #include "ceres/internal/port.h"
 
