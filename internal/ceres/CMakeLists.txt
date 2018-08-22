@@ -30,7 +30,6 @@
 
 # Avoid 'xxx.cc has no symbols' warnings from source files which are 'empty'
 # when their enclosing #ifdefs are disabled.
-find_package(Threads QUIET)
 if (CERES_THREADING_MODEL STREQUAL "CXX11_THREADS")
   set(CERES_PARALLEL_FOR_SRC parallel_for_cxx.cc thread_pool.cc)
 elseif (CERES_THREADING_MODEL STREQUAL "OPENMP")
@@ -38,10 +37,6 @@ elseif (CERES_THREADING_MODEL STREQUAL "OPENMP")
   if (CMAKE_COMPILER_IS_GNUCXX)
     # OpenMP in GCC requires the GNU OpenMP library.
     list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES gomp)
-  endif()
-  if (NOT MSVC)
-    # Add thread library dependencies for OpenMP to the Ceres target.
-    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${CMAKE_THREAD_LIBS_INIT})
   endif()
 elseif (CERES_THREADING_MODEL STREQUAL "NO_THREADS")
   set(CERES_PARALLEL_FOR_SRC parallel_for_nothreads.cc)
@@ -176,6 +171,9 @@ else (SCHUR_SPECIALIZATIONS)
 endif (SCHUR_SPECIALIZATIONS)
 
 # Build the list of dependencies for Ceres based on the current configuration.
+find_package(Threads QUIET)
+list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES Threads::Threads)
+
 if (NOT MINIGLOG AND GLOG_FOUND)
   list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES ${GLOG_LIBRARIES})
   if (GFLAGS_FOUND)
