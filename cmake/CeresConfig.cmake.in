@@ -161,6 +161,9 @@ endif(CERES_WAS_INSTALLED)
 # Set the version.
 set(CERES_VERSION @CERES_VERSION@ )
 
+include(CMakeFindDependencyMacro)
+find_dependency(Threads)
+
 # Eigen.
 # Flag set during configuration and build of Ceres.
 set(CERES_EIGEN_VERSION @EIGEN_VERSION@)
