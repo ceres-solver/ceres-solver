@@ -334,7 +334,8 @@ void SetupMinimizerOptions(PreprocessedProblem* pp) {
       options.trust_region_strategy_type;
   strategy_options.dogleg_type = options.dogleg_type;
   pp->minimizer_options.trust_region_strategy.reset(
-      CHECK_NOTNULL(TrustRegionStrategy::Create(strategy_options)));
+      TrustRegionStrategy::Create(strategy_options));
+  CHECK(pp->minimizer_options.trust_region_strategy != nullptr);
 }
 
 }  // namespace
@@ -345,7 +346,7 @@ TrustRegionPreprocessor::~TrustRegionPreprocessor() {
 bool TrustRegionPreprocessor::Preprocess(const Solver::Options& options,
                                          ProblemImpl* problem,
                                          PreprocessedProblem* pp) {
-  CHECK_NOTNULL(pp);
+  CHECK(pp != nullptr);
   pp->options = options;
   ChangeNumThreadsIfNeeded(&pp->options);
 

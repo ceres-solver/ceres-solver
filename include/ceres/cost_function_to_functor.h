@@ -107,7 +107,7 @@ class CostFunctionToFunctor {
   // Takes ownership of cost_function.
   explicit CostFunctionToFunctor(CostFunction* cost_function)
       : cost_functor_(cost_function) {
-    CHECK_NOTNULL(cost_function);
+    CHECK(cost_function != nullptr);
     CHECK(kNumResiduals > 0 || kNumResiduals == DYNAMIC);
 
     // This block breaks the 80 column rule to keep it somewhat readable.

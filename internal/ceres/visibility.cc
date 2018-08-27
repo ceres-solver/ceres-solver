@@ -54,7 +54,7 @@ using std::vector;
 void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
                        const int num_eliminate_blocks,
                        vector<set<int>>* visibility) {
-  CHECK_NOTNULL(visibility);
+  CHECK(visibility != nullptr);
 
   // Clear the visibility vector and resize it to hold a
   // vector for each camera.

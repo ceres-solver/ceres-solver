@@ -109,7 +109,8 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
 
   double start_time = WallTimeInSeconds();
 
-  *CHECK_NOTNULL(summary) = Summary();
+  CHECK(summary != nullptr);
+  *summary = Summary();
   summary->num_parameters                    = problem.NumParameters();
   summary->num_local_parameters              = problem.NumLocalParameters();
   summary->line_search_direction_type        = options.line_search_direction_type;         //  NOLINT

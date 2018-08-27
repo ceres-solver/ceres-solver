@@ -75,7 +75,7 @@ LineSearchPreprocessor::~LineSearchPreprocessor() {
 bool LineSearchPreprocessor::Preprocess(const Solver::Options& options,
                                         ProblemImpl* problem,
                                         PreprocessedProblem* pp) {
-  CHECK_NOTNULL(pp);
+  CHECK(pp != nullptr);
   pp->options = options;
   ChangeNumThreadsIfNeeded(&pp->options);
 

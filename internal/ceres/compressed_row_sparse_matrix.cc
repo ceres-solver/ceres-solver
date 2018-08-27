@@ -246,7 +246,7 @@ CompressedRowSparseMatrix* CompressedRowSparseMatrix::FromTripletSparseMatrix(
 
 CompressedRowSparseMatrix::CompressedRowSparseMatrix(const double* diagonal,
                                                      int num_rows) {
-  CHECK_NOTNULL(diagonal);
+  CHECK(diagonal != nullptr);
 
   num_rows_ = num_rows;
   num_cols_ = num_rows;
@@ -275,8 +275,8 @@ void CompressedRowSparseMatrix::SetZero() {
 // block-aware for higher performance.
 void CompressedRowSparseMatrix::RightMultiply(const double* x,
                                               double* y) const {
-  CHECK_NOTNULL(x);
-  CHECK_NOTNULL(y);
+  CHECK(x != nullptr);
+  CHECK(y != nullptr);
 
   if (storage_type_ == UNSYMMETRIC) {
     for (int r = 0; r < num_rows_; ++r) {
@@ -336,8 +336,8 @@ void CompressedRowSparseMatrix::RightMultiply(const double* x,
 }
 
 void CompressedRowSparseMatrix::LeftMultiply(const double* x, double* y) const {
-  CHECK_NOTNULL(x);
-  CHECK_NOTNULL(y);
+  CHECK(x != nullptr);
+  CHECK(y != nullptr);
 
   if (storage_type_ == UNSYMMETRIC) {
     for (int r = 0; r < num_rows_; ++r) {
@@ -352,7 +352,7 @@ void CompressedRowSparseMatrix::LeftMultiply(const double* x, double* y) const {
 }
 
 void CompressedRowSparseMatrix::SquaredColumnNorm(double* x) const {
-  CHECK_NOTNULL(x);
+  CHECK(x != nullptr);
 
   std::fill(x, x + num_cols_, 0.0);
   if (storage_type_ == UNSYMMETRIC) {
@@ -408,7 +408,7 @@ void CompressedRowSparseMatrix::SquaredColumnNorm(double* x) const {
   }
 }
 void CompressedRowSparseMatrix::ScaleColumns(const double* scale) {
-  CHECK_NOTNULL(scale);
+  CHECK(scale != nullptr);
 
   for (int idx = 0; idx < rows_[num_rows_]; ++idx) {
     values_[idx] *= scale[cols_[idx]];
@@ -416,7 +416,7 @@ void CompressedRowSparseMatrix::ScaleColumns(const double* scale) {
 }
 
 void CompressedRowSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
-  CHECK_NOTNULL(dense_matrix);
+  CHECK(dense_matrix != nullptr);
   dense_matrix->resize(num_rows_, num_cols_);
   dense_matrix->setZero();
 
@@ -504,7 +504,7 @@ void CompressedRowSparseMatrix::AppendRows(const CompressedRowSparseMatrix& m) {
 }
 
 void CompressedRowSparseMatrix::ToTextFile(FILE* file) const {
-  CHECK_NOTNULL(file);
+  CHECK(file != nullptr);
   for (int r = 0; r < num_rows_; ++r) {
     for (int idx = rows_[r]; idx < rows_[r + 1]; ++idx) {
       fprintf(file, "% 10d % 10d %17f\n", r, cols_[idx], values_[idx]);

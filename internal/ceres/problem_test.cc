@@ -128,7 +128,7 @@ TEST(Problem, AddResidualWithNullCostFunctionDies) {
   problem.AddParameterBlock(z, 5);
 
   EXPECT_DEATH_IF_SUPPORTED(problem.AddResidualBlock(NULL, NULL, x),
-                            "'cost_function' Must be non NULL");
+                            "cost_function != nullptr");
 }
 
 TEST(Problem, AddResidualWithIncorrectNumberOfParameterBlocksDies) {
@@ -1097,7 +1097,8 @@ class QuadraticCostFunction : public CostFunction {
 
 // Convert a CRSMatrix to a dense Eigen matrix.
 void CRSToDenseMatrix(const CRSMatrix& input, Matrix* output) {
-  Matrix& m = *CHECK_NOTNULL(output);
+  CHECK(output != nullptr);
+  Matrix& m = *output;
   m.resize(input.num_rows, input.num_cols);
   m.setZero();
   for (int row = 0; row < input.num_rows; ++row) {

@@ -185,7 +185,7 @@ ParameterBlock* ProblemImpl::InternalAddParameterBlock(double* values,
 }
 
 void ProblemImpl::InternalRemoveResidualBlock(ResidualBlock* residual_block) {
-  CHECK_NOTNULL(residual_block);
+  CHECK(residual_block != nullptr);
   // Perform no check on the validity of residual_block, that is handled in
   // the public method: RemoveResidualBlock().
 
@@ -290,7 +290,7 @@ ResidualBlock* ProblemImpl::AddResidualBlock(
     CostFunction* cost_function,
     LossFunction* loss_function,
     const vector<double*>& parameter_blocks) {
-  CHECK_NOTNULL(cost_function);
+  CHECK(cost_function != nullptr);
   CHECK_EQ(parameter_blocks.size(),
            cost_function->parameter_block_sizes().size());
 
@@ -562,7 +562,7 @@ void ProblemImpl::DeleteBlockInVector(vector<Block*>* mutable_blocks,
 }
 
 void ProblemImpl::RemoveResidualBlock(ResidualBlock* residual_block) {
-  CHECK_NOTNULL(residual_block);
+  CHECK(residual_block != nullptr);
 
   // Verify that residual_block identifies a residual in the current problem.
   const string residual_not_found_message =
@@ -958,7 +958,7 @@ bool ProblemImpl::HasParameterBlock(const double* parameter_block) const {
 }
 
 void ProblemImpl::GetParameterBlocks(vector<double*>* parameter_blocks) const {
-  CHECK_NOTNULL(parameter_blocks);
+  CHECK(parameter_blocks != nullptr);
   parameter_blocks->resize(0);
   parameter_blocks->reserve(parameter_block_map_.size());
   for (const auto& entry : parameter_block_map_) {
@@ -968,7 +968,7 @@ void ProblemImpl::GetParameterBlocks(vector<double*>* parameter_blocks) const {
 
 void ProblemImpl::GetResidualBlocks(
     vector<ResidualBlockId>* residual_blocks) const {
-  CHECK_NOTNULL(residual_blocks);
+  CHECK(residual_blocks != nullptr);
   *residual_blocks = program().residual_blocks();
 }
 
@@ -976,7 +976,8 @@ void ProblemImpl::GetParameterBlocksForResidualBlock(
     const ResidualBlockId residual_block,
     vector<double*>* parameter_blocks) const {
   int num_parameter_blocks = residual_block->NumParameterBlocks();
-  CHECK_NOTNULL(parameter_blocks)->resize(num_parameter_blocks);
+  CHECK(parameter_blocks != nullptr);
+  parameter_blocks->resize(num_parameter_blocks);
   for (int i = 0; i < num_parameter_blocks; ++i) {
     (*parameter_blocks)[i] =
         residual_block->parameter_blocks()[i]->mutable_user_state();
@@ -1007,8 +1008,8 @@ void ProblemImpl::GetResidualBlocksForParameterBlock(
   if (options_.enable_fast_removal) {
     // In this case the residual blocks that depend on the parameter block are
     // stored in the parameter block already, so just copy them out.
-    CHECK_NOTNULL(residual_blocks)->resize(
-        parameter_block->mutable_residual_blocks()->size());
+    CHECK(residual_blocks != nullptr);
+    residual_blocks->resize(parameter_block->mutable_residual_blocks()->size());
     std::copy(parameter_block->mutable_residual_blocks()->begin(),
               parameter_block->mutable_residual_blocks()->end(),
               residual_blocks->begin());
@@ -1016,7 +1017,8 @@ void ProblemImpl::GetResidualBlocksForParameterBlock(
   }
 
   // Find residual blocks that depend on the parameter block.
-  CHECK_NOTNULL(residual_blocks)->clear();
+  CHECK(residual_blocks != nullptr);
+  residual_blocks->clear();
   const int num_residual_blocks = NumResidualBlocks();
   for (int i = 0; i < num_residual_blocks; ++i) {
     ResidualBlock* residual_block =

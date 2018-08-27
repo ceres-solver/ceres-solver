@@ -614,7 +614,7 @@ bool DumpLinearLeastSquaresProblemToConsole(const SparseMatrix* A,
                                             const double* b,
                                             const double* x,
                                             int num_eliminate_blocks) {
-  CHECK_NOTNULL(A);
+  CHECK(A != nullptr);
   Matrix AA;
   A->ToDenseMatrix(&AA);
   LOG(INFO) << "A^T: \n" << AA.transpose();
@@ -637,10 +637,10 @@ bool DumpLinearLeastSquaresProblemToConsole(const SparseMatrix* A,
 void WriteArrayToFileOrDie(const string& filename,
                            const double* x,
                            const int size) {
-  CHECK_NOTNULL(x);
+  CHECK(x != nullptr);
   VLOG(2) << "Writing array to: " << filename;
   FILE* fptr = fopen(filename.c_str(), "w");
-  CHECK_NOTNULL(fptr);
+  CHECK(fptr != nullptr);
   for (int i = 0; i < size; ++i) {
     fprintf(fptr, "%17f\n", x[i]);
   }
@@ -653,7 +653,7 @@ bool DumpLinearLeastSquaresProblemToTextFile(const string& filename_base,
                                              const double* b,
                                              const double* x,
                                              int num_eliminate_blocks) {
-  CHECK_NOTNULL(A);
+  CHECK(A != nullptr);
   LOG(INFO) << "writing to: " << filename_base << "*";
 
   string matlab_script;
@@ -667,7 +667,7 @@ bool DumpLinearLeastSquaresProblemToTextFile(const string& filename_base,
   {
     string filename = filename_base + "_A.txt";
     FILE* fptr = fopen(filename.c_str(), "w");
-    CHECK_NOTNULL(fptr);
+    CHECK(fptr != nullptr);
     A->ToTextFile(fptr);
     fclose(fptr);
     StringAppendF(&matlab_script,

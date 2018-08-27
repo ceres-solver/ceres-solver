@@ -178,7 +178,7 @@ void TripletSparseMatrix::LeftMultiply(const double* x, double* y) const {
 }
 
 void TripletSparseMatrix::SquaredColumnNorm(double* x) const {
-  CHECK_NOTNULL(x);
+  CHECK(x != nullptr);
   VectorRef(x, num_cols_).setZero();
   for (int i = 0; i < num_nonzeros_; ++i) {
     x[cols_[i]] += values_[i] * values_[i];
@@ -186,7 +186,7 @@ void TripletSparseMatrix::SquaredColumnNorm(double* x) const {
 }
 
 void TripletSparseMatrix::ScaleColumns(const double* scale) {
-  CHECK_NOTNULL(scale);
+  CHECK(scale != nullptr);
   for (int i = 0; i < num_nonzeros_; ++i) {
     values_[i] = values_[i] * scale[cols_[i]];
   }
@@ -267,7 +267,7 @@ TripletSparseMatrix* TripletSparseMatrix::CreateSparseDiagonalMatrix(
 }
 
 void TripletSparseMatrix::ToTextFile(FILE* file) const {
-  CHECK_NOTNULL(file);
+  CHECK(file != nullptr);
   for (int i = 0; i < num_nonzeros_; ++i) {
     fprintf(file, "% 10d % 10d %17f\n", rows_[i], cols_[i], values_[i]);
   }
