@@ -67,9 +67,9 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {
-  CHECK_NOTNULL(A);
-  CHECK_NOTNULL(x);
-  CHECK_NOTNULL(b);
+  CHECK(A != nullptr);
+  CHECK(x != nullptr);
+  CHECK(b != nullptr);
   CHECK_EQ(A->num_rows(), A->num_cols());
 
   LinearSolver::Summary summary;

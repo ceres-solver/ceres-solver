@@ -90,7 +90,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   double start_time = WallTimeInSeconds();
   double iteration_start_time =  start_time;
 
-  Evaluator* evaluator = CHECK_NOTNULL(options.evaluator.get());
+  CHECK(options.evaluator != nullptr);
+  Evaluator* evaluator = options.evaluator.get();
   const int num_parameters = evaluator->NumParameters();
   const int num_effective_parameters = evaluator->NumEffectiveParameters();
 

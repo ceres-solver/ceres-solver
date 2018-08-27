@@ -52,7 +52,7 @@ class PartitionedMatrixViewTest : public ::testing::Test {
     srand(5);
     std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(2));
-    CHECK_NOTNULL(problem.get());
+    CHECK(problem != nullptr);
     A_.reset(problem->A.release());
 
     num_cols_ = A_->num_cols();

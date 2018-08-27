@@ -162,10 +162,12 @@ void VisibilityBasedPreconditioner::ComputeClusterTridiagonalSparsity(
   // maximum spanning forest of this graph.
   vector<set<int>> cluster_visibility;
   ComputeClusterVisibility(visibility, &cluster_visibility);
-  std::unique_ptr<WeightedGraph<int> > cluster_graph(
-      CHECK_NOTNULL(CreateClusterGraph(cluster_visibility)));
-  std::unique_ptr<WeightedGraph<int> > forest(
-      CHECK_NOTNULL(Degree2MaximumSpanningForest(*cluster_graph)));
+  std::unique_ptr<WeightedGraph<int>> cluster_graph(
+      CreateClusterGraph(cluster_visibility));
+  CHECK(cluster_graph != nullptr);
+  std::unique_ptr<WeightedGraph<int>> forest(
+      Degree2MaximumSpanningForest(*cluster_graph));
+  CHECK(forest != nullptr);
   ForestToClusterPairs(*forest, &cluster_pairs_);
 }
 
@@ -184,8 +186,9 @@ void VisibilityBasedPreconditioner::InitStorage(
 // memberships for each camera block.
 void VisibilityBasedPreconditioner::ClusterCameras(
     const vector<set<int> >& visibility) {
-  std::unique_ptr<WeightedGraph<int> > schur_complement_graph(
-      CHECK_NOTNULL(CreateSchurComplementGraph(visibility)));
+  std::unique_ptr<WeightedGraph<int>> schur_complement_graph(
+      CreateSchurComplementGraph(visibility));
+  CHECK(schur_complement_graph != nullptr);
 
   std::unordered_map<int, int> membership;
 
@@ -430,9 +433,9 @@ LinearSolverTerminationType VisibilityBasedPreconditioner::Factorize() {
 
 void VisibilityBasedPreconditioner::RightMultiply(const double* x,
                                                   double* y) const {
-  CHECK_NOTNULL(x);
-  CHECK_NOTNULL(y);
-  CHECK_NOTNULL(sparse_cholesky_.get());
+  CHECK(x != nullptr);
+  CHECK(y != nullptr);
+  CHECK(sparse_cholesky_ != nullptr);
   std::string message;
   sparse_cholesky_->Solve(x, y, &message);
 }
@@ -462,7 +465,8 @@ bool VisibilityBasedPreconditioner::IsBlockPairOffDiagonal(
 void VisibilityBasedPreconditioner::ForestToClusterPairs(
     const WeightedGraph<int>& forest,
     std::unordered_set<pair<int, int>, pair_hash >* cluster_pairs) const {
-  CHECK_NOTNULL(cluster_pairs)->clear();
+  CHECK(cluster_pairs != nullptr);
+  cluster_pairs->clear();
   const std::unordered_set<int>& vertices = forest.vertices();
   CHECK_EQ(vertices.size(), num_clusters_);
 
@@ -485,7 +489,8 @@ void VisibilityBasedPreconditioner::ForestToClusterPairs(
 void VisibilityBasedPreconditioner::ComputeClusterVisibility(
     const vector<set<int>>& visibility,
     vector<set<int>>* cluster_visibility) const {
-  CHECK_NOTNULL(cluster_visibility)->resize(0);
+  CHECK(cluster_visibility != nullptr);
+  cluster_visibility->resize(0);
   cluster_visibility->resize(num_clusters_);
   for (int i = 0; i < num_blocks_; ++i) {
     const int cluster_id = cluster_membership_[i];
@@ -540,7 +545,8 @@ WeightedGraph<int>* VisibilityBasedPreconditioner::CreateClusterGraph(
 void VisibilityBasedPreconditioner::FlattenMembershipMap(
     const std::unordered_map<int, int>& membership_map,
     vector<int>* membership_vector) const {
-  CHECK_NOTNULL(membership_vector)->resize(0);
+  CHECK(membership_vector != nullptr);
+  membership_vector->resize(0);
   membership_vector->resize(num_blocks_, -1);
 
   std::unordered_map<int, int> cluster_id_to_index;

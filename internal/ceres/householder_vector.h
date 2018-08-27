@@ -46,8 +46,8 @@ template <typename Scalar>
 void ComputeHouseholderVector(const Eigen::Matrix<Scalar, Eigen::Dynamic, 1>& x,
                               Eigen::Matrix<Scalar, Eigen::Dynamic, 1>* v,
                               Scalar* beta) {
-  CHECK_NOTNULL(beta);
-  CHECK_NOTNULL(v);
+  CHECK(beta != nullptr);
+  CHECK(v != nullptr);
   CHECK_GT(x.rows(), 1);
   CHECK_EQ(x.rows(), v->rows());
 

@@ -133,10 +133,12 @@ void TukeyLoss::Evaluate(double s, double* rho) const {
 
 ComposedLoss::ComposedLoss(const LossFunction* f, Ownership ownership_f,
                            const LossFunction* g, Ownership ownership_g)
-    : f_(CHECK_NOTNULL(f)),
-      g_(CHECK_NOTNULL(g)),
+    : f_(f),
+      g_(g),
       ownership_f_(ownership_f),
       ownership_g_(ownership_g) {
+  CHECK(f_ != nullptr);
+  CHECK(g_ != nullptr);
 }
 
 ComposedLoss::~ComposedLoss() {

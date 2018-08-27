@@ -181,7 +181,7 @@ bool Program::IsValid() const {
 }
 
 bool Program::ParameterBlocksAreFinite(string* message) const {
-  CHECK_NOTNULL(message);
+  CHECK(message != nullptr);
   for (int i = 0; i < parameter_blocks_.size(); ++i) {
     const ParameterBlock* parameter_block = parameter_blocks_[i];
     const double* array = parameter_block->user_state();
@@ -220,7 +220,7 @@ bool Program::IsBoundsConstrained() const {
 }
 
 bool Program::IsFeasible(string* message) const {
-  CHECK_NOTNULL(message);
+  CHECK(message != nullptr);
   for (int i = 0; i < parameter_blocks_.size(); ++i) {
     const ParameterBlock* parameter_block = parameter_blocks_[i];
     const double* parameters = parameter_block->user_state();
@@ -273,9 +273,9 @@ Program* Program::CreateReducedProgram(
     vector<double*>* removed_parameter_blocks,
     double* fixed_cost,
     string* error) const {
-  CHECK_NOTNULL(removed_parameter_blocks);
-  CHECK_NOTNULL(fixed_cost);
-  CHECK_NOTNULL(error);
+  CHECK(removed_parameter_blocks != nullptr);
+  CHECK(fixed_cost != nullptr);
+  CHECK(error != nullptr);
 
   std::unique_ptr<Program> reduced_program(new Program(*this));
   if (!reduced_program->RemoveFixedBlocks(removed_parameter_blocks,
@@ -291,9 +291,9 @@ Program* Program::CreateReducedProgram(
 bool Program::RemoveFixedBlocks(vector<double*>* removed_parameter_blocks,
                                 double* fixed_cost,
                                 string* error) {
-  CHECK_NOTNULL(removed_parameter_blocks);
-  CHECK_NOTNULL(fixed_cost);
-  CHECK_NOTNULL(error);
+  CHECK(removed_parameter_blocks != nullptr);
+  CHECK(fixed_cost != nullptr);
+  CHECK(error != nullptr);
 
   std::unique_ptr<double[]> residual_block_evaluate_scratch;
   residual_block_evaluate_scratch.reset(

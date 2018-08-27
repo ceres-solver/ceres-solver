@@ -100,7 +100,7 @@ int IndependentSetOrdering(const Graph<Vertex>& graph,
   const std::unordered_set<Vertex>& vertices = graph.vertices();
   const int num_vertices = vertices.size();
 
-  CHECK_NOTNULL(ordering);
+  CHECK(ordering != nullptr);
   ordering->clear();
   ordering->reserve(num_vertices);
 
@@ -165,7 +165,7 @@ int IndependentSetOrdering(const Graph<Vertex>& graph,
 template <typename Vertex>
 int StableIndependentSetOrdering(const Graph<Vertex>& graph,
                                  std::vector<Vertex>* ordering) {
-  CHECK_NOTNULL(ordering);
+  CHECK(ordering != nullptr);
   const std::unordered_set<Vertex>& vertices = graph.vertices();
   const int num_vertices = vertices.size();
   CHECK_EQ(vertices.size(), ordering->size());

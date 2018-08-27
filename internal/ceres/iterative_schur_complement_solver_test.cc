@@ -63,7 +63,7 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(problem_id));
 
-    CHECK_NOTNULL(problem.get());
+    CHECK(problem != nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
     b_.reset(problem->b.release());
     D_.reset(problem->D.release());
