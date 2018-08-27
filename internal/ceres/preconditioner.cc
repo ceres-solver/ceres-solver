@@ -49,8 +49,7 @@ PreconditionerType Preconditioner::PreconditionerForZeroEBlocks(
 
 SparseMatrixPreconditionerWrapper::SparseMatrixPreconditionerWrapper(
     const SparseMatrix* matrix)
-    : matrix_(CHECK_NOTNULL(matrix)) {
-}
+    : matrix_(ABSL_DIE_IF_NULL(matrix)) {}
 
 SparseMatrixPreconditionerWrapper::~SparseMatrixPreconditionerWrapper() {
 }

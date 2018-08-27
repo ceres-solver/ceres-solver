@@ -52,7 +52,7 @@ namespace {
 // In: Numerische Mathematik, Volume 13, Number 4 (1969), 293-304,
 // Springer Berlin / Heidelberg. DOI: 10.1007/BF02165404
 void BalanceCompanionMatrix(Matrix* companion_matrix_ptr) {
-  CHECK_NOTNULL(companion_matrix_ptr);
+  CHECK(companion_matrix_ptr != nullptr);
   Matrix& companion_matrix = *companion_matrix_ptr;
   Matrix companion_matrix_offdiagonal = companion_matrix;
   companion_matrix_offdiagonal.diagonal().setZero();
@@ -104,7 +104,7 @@ void BalanceCompanionMatrix(Matrix* companion_matrix_ptr) {
 
 void BuildCompanionMatrix(const Vector& polynomial,
                           Matrix* companion_matrix_ptr) {
-  CHECK_NOTNULL(companion_matrix_ptr);
+  CHECK(companion_matrix_ptr != nullptr);
   Matrix& companion_matrix = *companion_matrix_ptr;
 
   const int degree = polynomial.size() - 1;

@@ -225,8 +225,7 @@ class SchurEliminator : public SchurEliminatorBase {
  public:
   explicit SchurEliminator(const LinearSolver::Options& options)
       : num_threads_(options.num_threads),
-        context_(CHECK_NOTNULL(options.context)) {
-  }
+        context_(ABSL_DIE_IF_NULL(options.context)) {}
 
   // SchurEliminatorBase Interface
   virtual ~SchurEliminator();

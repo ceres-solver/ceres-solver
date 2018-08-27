@@ -60,7 +60,9 @@ using std::string;
 using std::vector;
 
 CoordinateDescentMinimizer::CoordinateDescentMinimizer(ContextImpl* context)
-    : context_(CHECK_NOTNULL(context)) {}
+    : context_(context) {
+  CHECK(context_ != nullptr);
+}
 
 CoordinateDescentMinimizer::~CoordinateDescentMinimizer() {
 }
@@ -222,14 +224,17 @@ void CoordinateDescentMinimizer::Solve(Program* program,
 
   Minimizer::Options minimizer_options;
   minimizer_options.evaluator.reset(
-      CHECK_NOTNULL(Evaluator::Create(evaluator_options_, program, &error)));
+      Evaluator::Create(evaluator_options_, program, &error));
+  CHECK(minimizer_options.evaluator != nullptr);
   minimizer_options.jacobian.reset(
-      CHECK_NOTNULL(minimizer_options.evaluator->CreateJacobian()));
+      minimizer_options.evaluator->CreateJacobian());
+  CHECK(minimizer_options.jacobian != nullptr);
 
   TrustRegionStrategy::Options trs_options;
   trs_options.linear_solver = linear_solver;
   minimizer_options.trust_region_strategy.reset(
-      CHECK_NOTNULL(TrustRegionStrategy::Create(trs_options)));
+      TrustRegionStrategy::Create(trs_options));
+  CHECK(minimizer_options.trust_region_strategy != nullptr);
   minimizer_options.is_silent = true;
 
   TrustRegionMinimizer minimizer;

@@ -192,7 +192,8 @@ void LineSearch::Search(double step_size_estimate,
                         double initial_gradient,
                         Summary* summary) const {
   const double start_time = WallTimeInSeconds();
-  *CHECK_NOTNULL(summary) = LineSearch::Summary();
+  CHECK(summary != nullptr);
+  *summary = LineSearch::Summary();
 
   summary->cost_evaluation_time_in_seconds = 0.0;
   summary->gradient_evaluation_time_in_seconds = 0.0;

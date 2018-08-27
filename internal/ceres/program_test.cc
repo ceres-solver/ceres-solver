@@ -97,11 +97,8 @@ TEST(Program, RemoveFixedBlocksNothingConstant) {
   double fixed_cost = 0.0;
   string message;
   std::unique_ptr<Program> reduced_program(
-      CHECK_NOTNULL(problem
-                    .program()
-                    .CreateReducedProgram(&removed_parameter_blocks,
-                                          &fixed_cost,
-                                          &message)));
+      ABSL_DIE_IF_NULL(problem.program().CreateReducedProgram(
+          &removed_parameter_blocks, &fixed_cost, &message)));
 
   EXPECT_EQ(reduced_program->NumParameterBlocks(), 3);
   EXPECT_EQ(reduced_program->NumResidualBlocks(), 3);
@@ -121,11 +118,8 @@ TEST(Program, RemoveFixedBlocksAllParameterBlocksConstant) {
   double fixed_cost = 0.0;
   string message;
   std::unique_ptr<Program> reduced_program(
-      CHECK_NOTNULL(problem
-                    .program()
-                    .CreateReducedProgram(&removed_parameter_blocks,
-                                          &fixed_cost,
-                                          &message)));
+      ABSL_DIE_IF_NULL(problem.program().CreateReducedProgram(
+          &removed_parameter_blocks, &fixed_cost, &message)));
   EXPECT_EQ(reduced_program->NumParameterBlocks(), 0);
   EXPECT_EQ(reduced_program->NumResidualBlocks(), 0);
   EXPECT_EQ(removed_parameter_blocks.size(), 1);
@@ -148,11 +142,8 @@ TEST(Program, RemoveFixedBlocksNoResidualBlocks) {
   double fixed_cost = 0.0;
   string message;
   std::unique_ptr<Program> reduced_program(
-      CHECK_NOTNULL(problem
-                    .program()
-                    .CreateReducedProgram(&removed_parameter_blocks,
-                                          &fixed_cost,
-                                          &message)));
+      ABSL_DIE_IF_NULL(problem.program().CreateReducedProgram(
+          &removed_parameter_blocks, &fixed_cost, &message)));
   EXPECT_EQ(reduced_program->NumParameterBlocks(), 0);
   EXPECT_EQ(reduced_program->NumResidualBlocks(), 0);
   EXPECT_EQ(removed_parameter_blocks.size(), 3);
@@ -177,11 +168,8 @@ TEST(Program, RemoveFixedBlocksOneParameterBlockConstant) {
   double fixed_cost = 0.0;
   string message;
   std::unique_ptr<Program> reduced_program(
-      CHECK_NOTNULL(problem
-                    .program()
-                    .CreateReducedProgram(&removed_parameter_blocks,
-                                          &fixed_cost,
-                                          &message)));
+      ABSL_DIE_IF_NULL(problem.program().CreateReducedProgram(
+          &removed_parameter_blocks, &fixed_cost, &message)));
   EXPECT_EQ(reduced_program->NumParameterBlocks(), 1);
   EXPECT_EQ(reduced_program->NumResidualBlocks(), 1);
 }
@@ -204,11 +192,8 @@ TEST(Program, RemoveFixedBlocksNumEliminateBlocks) {
   double fixed_cost = 0.0;
   string message;
   std::unique_ptr<Program> reduced_program(
-      CHECK_NOTNULL(problem
-                    .program()
-                    .CreateReducedProgram(&removed_parameter_blocks,
-                                          &fixed_cost,
-                                          &message)));
+      ABSL_DIE_IF_NULL(problem.program().CreateReducedProgram(
+          &removed_parameter_blocks, &fixed_cost, &message)));
   EXPECT_EQ(reduced_program->NumParameterBlocks(), 2);
   EXPECT_EQ(reduced_program->NumResidualBlocks(), 2);
 }
@@ -243,11 +228,8 @@ TEST(Program, RemoveFixedBlocksFixedCost) {
   double fixed_cost = 0.0;
   string message;
   std::unique_ptr<Program> reduced_program(
-      CHECK_NOTNULL(problem
-                    .program()
-                    .CreateReducedProgram(&removed_parameter_blocks,
-                                          &fixed_cost,
-                                          &message)));
+      ABSL_DIE_IF_NULL(problem.program().CreateReducedProgram(
+          &removed_parameter_blocks, &fixed_cost, &message)));
 
   EXPECT_EQ(reduced_program->NumParameterBlocks(), 2);
   EXPECT_EQ(reduced_program->NumResidualBlocks(), 2);

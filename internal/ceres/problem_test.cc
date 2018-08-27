@@ -1097,7 +1097,8 @@ class QuadraticCostFunction : public CostFunction {
 
 // Convert a CRSMatrix to a dense Eigen matrix.
 void CRSToDenseMatrix(const CRSMatrix& input, Matrix* output) {
-  Matrix& m = *CHECK_NOTNULL(output);
+  CHECK(output != nullptr);
+  Matrix& m = *output;
   m.resize(input.num_rows, input.num_cols);
   m.setZero();
   for (int row = 0; row < input.num_rows; ++row) {

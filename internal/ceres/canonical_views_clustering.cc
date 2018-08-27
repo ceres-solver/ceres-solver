@@ -99,8 +99,10 @@ void CanonicalViewsClustering::ComputeClustering(
     vector<int>* centers,
     IntMap* membership) {
   options_ = options;
-  CHECK_NOTNULL(centers)->clear();
-  CHECK_NOTNULL(membership)->clear();
+  CHECK(centers != nullptr);
+  CHECK(membership != nullptr);
+  centers->clear();
+  membership->clear();
   graph_ = &graph;
 
   IntSet valid_views;
@@ -203,7 +205,8 @@ void CanonicalViewsClustering::UpdateCanonicalViewAssignments(
 void CanonicalViewsClustering::ComputeClusterMembership(
     const vector<int>& centers,
     IntMap* membership) const {
-  CHECK_NOTNULL(membership)->clear();
+  CHECK(membership != nullptr);
+  membership->clear();
 
   // The i^th cluster has cluster id i.
   IntMap center_to_cluster_id;

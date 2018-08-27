@@ -56,8 +56,8 @@ SubsetPreconditioner::SubsetPreconditioner(
 SubsetPreconditioner::~SubsetPreconditioner() {}
 
 void SubsetPreconditioner::RightMultiply(const double* x, double* y) const {
-  CHECK_NOTNULL(x);
-  CHECK_NOTNULL(y);
+  CHECK(x != nullptr);
+  CHECK(y != nullptr);
   std::string message;
   sparse_cholesky_->Solve(x, y, &message);
 }

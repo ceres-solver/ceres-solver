@@ -175,7 +175,7 @@ ProblemImpl* CreateGradientCheckingProblemImpl(
     double relative_step_size,
     double relative_precision,
     GradientCheckingIterationCallback* callback) {
-  CHECK_NOTNULL(callback);
+  CHECK(callback != nullptr);
   // We create new CostFunctions by wrapping the original CostFunction
   // in a gradient checking CostFunction. So its okay for the
   // ProblemImpl to take ownership of it and destroy it. The

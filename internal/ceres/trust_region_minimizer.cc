@@ -136,9 +136,12 @@ void TrustRegionMinimizer::Init(const Minimizer::Options& options,
   solver_summary_->num_unsuccessful_steps = 0;
   solver_summary_->is_constrained = options.is_constrained;
 
-  evaluator_ = CHECK_NOTNULL(options_.evaluator.get());
-  jacobian_ = CHECK_NOTNULL(options_.jacobian.get());
-  strategy_ = CHECK_NOTNULL(options_.trust_region_strategy.get());
+  CHECK(options_.evaluator != nullptr);
+  CHECK(options_.jacobian != nullptr);
+  CHECK(options_.trust_region_strategy != nullptr);
+  evaluator_ = options_.evaluator.get();
+  jacobian_ = options_.jacobian.get();
+  strategy_ = options_.trust_region_strategy.get();
 
   is_not_silent_ = !options.is_silent;
   inner_iterations_are_enabled_ =
@@ -574,7 +577,7 @@ void TrustRegionMinimizer::DoLineSearch(const Vector& x,
   line_search_options.function = &line_search_function;
 
   std::string message;
-  std::unique_ptr<LineSearch> line_search(CHECK_NOTNULL(
+  std::unique_ptr<LineSearch> line_search(ABSL_DIE_IF_NULL(
       LineSearch::Create(ceres::ARMIJO, line_search_options, &message)));
   LineSearch::Summary line_search_summary;
   line_search_function.Init(x, *delta);

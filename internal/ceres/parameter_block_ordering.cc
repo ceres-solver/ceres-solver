@@ -51,7 +51,8 @@ using std::vector;
 
 int ComputeStableSchurOrdering(const Program& program,
                          vector<ParameterBlock*>* ordering) {
-  CHECK_NOTNULL(ordering)->clear();
+  CHECK(ordering != nullptr);
+  ordering->clear();
   EventLogger event_logger("ComputeStableSchurOrdering");
   std::unique_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
   event_logger.AddEvent("CreateHessianGraph");
@@ -82,7 +83,8 @@ int ComputeStableSchurOrdering(const Program& program,
 
 int ComputeSchurOrdering(const Program& program,
                          vector<ParameterBlock*>* ordering) {
-  CHECK_NOTNULL(ordering)->clear();
+  CHECK(ordering != nullptr);
+  ordering->clear();
 
   std::unique_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
   int independent_set_size = IndependentSetOrdering(*graph, ordering);
@@ -101,7 +103,8 @@ int ComputeSchurOrdering(const Program& program,
 
 void ComputeRecursiveIndependentSetOrdering(const Program& program,
                                             ParameterBlockOrdering* ordering) {
-  CHECK_NOTNULL(ordering)->Clear();
+  CHECK(ordering != nullptr);
+  ordering->Clear();
   const vector<ParameterBlock*> parameter_blocks = program.parameter_blocks();
   std::unique_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
 
@@ -122,7 +125,8 @@ void ComputeRecursiveIndependentSetOrdering(const Program& program,
 }
 
 Graph<ParameterBlock*>* CreateHessianGraph(const Program& program) {
-  Graph<ParameterBlock*>* graph = CHECK_NOTNULL(new Graph<ParameterBlock*>);
+  Graph<ParameterBlock*>* graph = new Graph<ParameterBlock*>;
+  CHECK(graph != nullptr);
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
   for (int i = 0; i < parameter_blocks.size(); ++i) {
     ParameterBlock* parameter_block = parameter_blocks[i];
@@ -157,7 +161,8 @@ Graph<ParameterBlock*>* CreateHessianGraph(const Program& program) {
 
 void OrderingToGroupSizes(const ParameterBlockOrdering* ordering,
                           vector<int>* group_sizes) {
-  CHECK_NOTNULL(group_sizes)->clear();
+  CHECK(group_sizes != nullptr);
+  group_sizes->clear();
   if (ordering == NULL) {
     return;
   }

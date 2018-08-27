@@ -205,7 +205,7 @@ SparseMatrix* BlockJacobianWriter::CreateJacobian() const {
   }
 
   BlockSparseMatrix* jacobian = new BlockSparseMatrix(bs);
-  CHECK_NOTNULL(jacobian);
+  CHECK(jacobian != nullptr);
   return jacobian;
 }
 
