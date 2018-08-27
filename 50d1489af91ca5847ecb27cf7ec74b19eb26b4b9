@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86f8fba3_0d436f6d",
+        "filename": "internal/ceres/block_jacobi_preconditioner_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here and a bunch of other places, you can change CHECK(some_unique_ptr.get() !\u003d nullptr) to just CHECK(some_unique_ptr !\u003d nullptr). I\u0027ll mark all the instances I find.",
+      "range": {
+        "startLine": 51,
+        "startChar": 18,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e85427_c117c52e",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 56,
+        "startChar": 25,
+        "endLine": 56,
+        "endChar": 28
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb68250b_8c7bc684",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 84,
+        "startChar": 16,
+        "endLine": 84,
+        "endChar": 19
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5201e9_919d6678",
+        "filename": "internal/ceres/block_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 50,
+        "startChar": 18,
+        "endLine": 50,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b69b75f_ecc429e0",
+        "filename": "internal/ceres/block_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 54,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af8b011_a81920c4",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 78,
+        "startChar": 18,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc3e69c_ff73d063",
+        "filename": "internal/ceres/dense_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 75,
+        "startChar": 18,
+        "endLine": 75,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf38ca6_05300eeb",
+        "filename": "internal/ceres/implicit_schur_complement_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 62,
+        "startChar": 18,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c97c86_d6ea9547",
+        "filename": "internal/ceres/implicit_schur_complement_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 94,
+        "startChar": 21,
+        "endLine": 94,
+        "endChar": 24
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c2e94b_6499b961",
+        "filename": "internal/ceres/iterative_schur_complement_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba54dca_d9f6e568",
+        "filename": "internal/ceres/loss_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 140,
+        "startChar": 11,
+        "endLine": 140,
+        "endChar": 14
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9b4ffc_da68d5d0",
+        "filename": "internal/ceres/loss_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 141,
+        "startChar": 11,
+        "endLine": 141,
+        "endChar": 14
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b083196_3785b546",
+        "filename": "internal/ceres/partitioned_matrix_view_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 55,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "758a8794_61b8b482",
+        "filename": "internal/ceres/program_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Did you intend to remove the CHECK for this value? Also in multiple tests below.",
+      "range": {
+        "startLine": 99,
+        "startChar": 27,
+        "endLine": 99,
+        "endChar": 42
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f424dccb_59b94c37",
+        "filename": "internal/ceres/residual_block.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Another CHECK lost in transit.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be239bb9_8ed34e00",
+        "filename": "internal/ceres/schur_eliminator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c1792e9_49648198",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Here.",
+      "range": {
+        "startLine": 60,
+        "startChar": 18,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c954ab_083f4feb",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-27T15:22:48Z",
+      "side": 1,
+      "message": "Another CHECK lost in transit.",
+      "range": {
+        "startLine": 580,
+        "startChar": 30,
+        "endLine": 580,
+        "endChar": 41
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
