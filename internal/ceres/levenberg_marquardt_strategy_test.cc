@@ -66,7 +66,7 @@ class RegularizationCheckingLinearSolver : public DenseSparseMatrixSolver {
       const double* b,
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* x) {
-    CHECK_NOTNULL(per_solve_options.D);
+    CHECK(per_solve_options.D != nullptr);
     for (int i = 0; i < num_cols_; ++i) {
       EXPECT_NEAR(per_solve_options.D[i], diagonal_[i], kTolerance)
           << i << " " << per_solve_options.D[i] << " " << diagonal_[i];

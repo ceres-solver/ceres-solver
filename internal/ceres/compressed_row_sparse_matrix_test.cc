@@ -75,7 +75,7 @@ class CompressedRowSparseMatrixTest : public ::testing::Test {
     std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(1));
 
-    CHECK_NOTNULL(problem.get());
+    CHECK(problem != nullptr);
 
     tsm.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
     crsm.reset(CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm));

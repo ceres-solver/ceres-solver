@@ -56,7 +56,7 @@ class SchurEliminatorTest : public ::testing::Test {
   void SetUpFromId(int id) {
     std::unique_ptr<LinearLeastSquaresProblem>
         problem(CreateLinearLeastSquaresProblemFromId(id));
-    CHECK_NOTNULL(problem.get());
+    CHECK(problem != nullptr);
     SetupHelper(problem.get());
   }
 

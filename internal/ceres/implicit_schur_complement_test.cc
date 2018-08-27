@@ -59,7 +59,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(2));
 
-    CHECK_NOTNULL(problem.get());
+    CHECK(problem != nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
     b_.reset(problem->b.release());
     D_.reset(problem->D.release());
@@ -91,7 +91,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
 
     std::unique_ptr<SchurEliminatorBase> eliminator(
         SchurEliminatorBase::Create(options));
-    CHECK_NOTNULL(eliminator.get());
+    CHECK(eliminator != nullptr);
     const bool kFullRankETE = true;
     eliminator->Init(num_eliminate_blocks_, kFullRankETE, bs);
 

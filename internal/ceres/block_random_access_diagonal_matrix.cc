@@ -137,8 +137,8 @@ void BlockRandomAccessDiagonalMatrix::Invert() {
 
 void BlockRandomAccessDiagonalMatrix::RightMultiply(const double* x,
                                                     double* y) const {
-  CHECK_NOTNULL(x);
-  CHECK_NOTNULL(y);
+  CHECK(x != nullptr);
+  CHECK(y != nullptr);
   const double* values = tsm_->values();
   for (int i = 0; i < blocks_.size(); ++i) {
     const int block_size = blocks_[i];

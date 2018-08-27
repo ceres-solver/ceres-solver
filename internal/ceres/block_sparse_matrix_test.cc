@@ -47,11 +47,11 @@ class BlockSparseMatrixTest : public ::testing::Test {
   virtual void SetUp() {
     std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(2));
-    CHECK_NOTNULL(problem.get());
+    CHECK(problem != nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
 
     problem.reset(CreateLinearLeastSquaresProblemFromId(1));
-    CHECK_NOTNULL(problem.get());
+    CHECK(problem != nullptr);
     B_.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
 
     CHECK_EQ(A_->num_rows(), B_->num_rows());

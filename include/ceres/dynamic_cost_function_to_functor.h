@@ -105,7 +105,7 @@ class DynamicCostFunctionToFunctor {
   // Takes ownership of cost_function.
   explicit DynamicCostFunctionToFunctor(CostFunction* cost_function)
       : cost_function_(cost_function) {
-    CHECK_NOTNULL(cost_function);
+    CHECK(cost_function != nullptr);
   }
 
   bool operator()(double const* const* parameters, double* residuals) const {

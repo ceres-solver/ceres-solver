@@ -42,7 +42,8 @@ int ComputeSingleLinkageClustering(
     const SingleLinkageClusteringOptions& options,
     const WeightedGraph<int>& graph,
     std::unordered_map<int, int>* membership) {
-  CHECK_NOTNULL(membership)->clear();
+  CHECK(membership != nullptr);
+  membership->clear();
 
   // Initially each vertex is in its own cluster.
   const std::unordered_set<int>& vertices = graph.vertices();

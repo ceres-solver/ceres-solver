@@ -57,7 +57,7 @@ class SparseNormalCholeskySolverTest : public ::testing::Test {
     std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(2));
 
-    CHECK_NOTNULL(problem.get());
+    CHECK(problem != nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
     b_.reset(problem->b.release());
     D_.reset(problem->D.release());

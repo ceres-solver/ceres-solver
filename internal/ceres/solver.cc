@@ -481,8 +481,8 @@ void Solver::Solve(const Solver::Options& options,
   using internal::Program;
   using internal::WallTimeInSeconds;
 
-  CHECK_NOTNULL(problem);
-  CHECK_NOTNULL(summary);
+  CHECK(problem != nullptr);
+  CHECK(summary != nullptr);
 
   double start_time = WallTimeInSeconds();
   *summary = Summary();

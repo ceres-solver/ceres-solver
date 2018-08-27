@@ -306,9 +306,9 @@ class TypedLinearSolver : public LinearSolver {
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* x) {
     ScopedExecutionTimer total_time("LinearSolver::Solve", &execution_summary_);
-    CHECK_NOTNULL(A);
-    CHECK_NOTNULL(b);
-    CHECK_NOTNULL(x);
+    CHECK(A != nullptr);
+    CHECK(b != nullptr);
+    CHECK(x != nullptr);
     return SolveImpl(down_cast<MatrixType*>(A), b, per_solve_options, x);
   }
 

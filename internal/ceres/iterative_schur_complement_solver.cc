@@ -67,7 +67,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
     double* x) {
   EventLogger event_logger("IterativeSchurComplementSolver::Solve");
 
-  CHECK_NOTNULL(A->block_structure());
+  CHECK(A->block_structure() != nullptr);
   const int num_eliminate_blocks = options_.elimination_groups[0];
   // Initialize a ImplicitSchurComplement object.
   if (schur_complement_ == NULL) {

@@ -164,7 +164,8 @@ cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A,
     return nullptr;
   }
 
-  return CHECK_NOTNULL(factor);
+  CHECK(factor != nullptr);
+  return factor;
 }
 
 cholmod_factor* SuiteSparse::BlockAnalyzeCholesky(cholmod_sparse* A,
@@ -196,7 +197,8 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithUserOrdering(
     return nullptr;
   }
 
-  return CHECK_NOTNULL(factor);
+  CHECK(factor != nullptr);
+  return factor;
 }
 
 cholmod_factor* SuiteSparse::AnalyzeCholeskyWithNaturalOrdering(
@@ -215,7 +217,8 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithNaturalOrdering(
     return nullptr;
   }
 
-  return CHECK_NOTNULL(factor);
+  CHECK(factor != nullptr);
+  return factor;
 }
 
 bool SuiteSparse::BlockAMDOrdering(const cholmod_sparse* A,
@@ -262,8 +265,8 @@ bool SuiteSparse::BlockAMDOrdering(const cholmod_sparse* A,
 LinearSolverTerminationType SuiteSparse::Cholesky(cholmod_sparse* A,
                                                   cholmod_factor* L,
                                                   string* message) {
-  CHECK_NOTNULL(A);
-  CHECK_NOTNULL(L);
+  CHECK(A != nullptr);
+  CHECK(L != nullptr);
 
   // Save the current print level and silence CHOLMOD, otherwise
   // CHOLMOD is prone to dumping stuff to stderr, which can be

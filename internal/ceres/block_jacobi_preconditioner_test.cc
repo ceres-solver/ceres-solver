@@ -48,7 +48,7 @@ class BlockJacobiPreconditionerTest : public ::testing::Test {
     std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(problem_id));
 
-    CHECK_NOTNULL(problem.get());
+    CHECK(problem != nullptr);
     A.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
     D.reset(problem->D.release());
 
