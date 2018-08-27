@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6892b2ca_f4b2e050",
+        "filename": "internal/ceres/block_jacobi_preconditioner_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-27T20:27:03Z",
+      "side": 1,
+      "message": "I copied a patch from ashley who sent me this review via rosie.\nyou are right, I should just be able to compare directly with nullptr.\nI will update the CL.",
+      "parentUuid": "86f8fba3_0d436f6d",
+      "range": {
+        "startLine": 51,
+        "startChar": 18,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04e85427_c117c52e",
         "filename": "internal/ceres/block_sparse_matrix.cc",
         "patchSetId": 2
