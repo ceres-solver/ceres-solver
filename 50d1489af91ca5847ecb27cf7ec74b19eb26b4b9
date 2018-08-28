@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0f22972b_e5000f55",
+        "filename": "internal/ceres/block_jacobi_preconditioner_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6892b2ca_f4b2e050",
+      "range": {
+        "startLine": 51,
+        "startChar": 18,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04e85427_c117c52e",
         "filename": "internal/ceres/block_sparse_matrix.cc",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06a45dc_f7fbc61f",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04e85427_c117c52e",
+      "range": {
+        "startLine": 56,
+        "startChar": 25,
+        "endLine": 56,
+        "endChar": 28
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "64e1dc83_0239aa70",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb68250b_8c7bc684",
+      "range": {
+        "startLine": 84,
+        "startChar": 16,
+        "endLine": 84,
+        "endChar": 19
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc5201e9_919d6678",
         "filename": "internal/ceres/block_sparse_matrix_test.cc",
         "patchSetId": 2
@@ -115,6 +187,30 @@
       "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa60571c_5c225119",
+        "filename": "internal/ceres/block_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc5201e9_919d6678",
+      "range": {
+        "startLine": 50,
+        "startChar": 18,
+        "endLine": 50,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "6d5fe08f_97415179",
+        "filename": "internal/ceres/block_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b69b75f_ecc429e0",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 54,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8af8b011_a81920c4",
         "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
         "patchSetId": 2
@@ -161,6 +281,30 @@
       "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab708486_78eb43f5",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8af8b011_a81920c4",
+      "range": {
+        "startLine": 78,
+        "startChar": 18,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "44c52510_582448f3",
+        "filename": "internal/ceres/dense_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcc3e69c_ff73d063",
+      "range": {
+        "startLine": 75,
+        "startChar": 18,
+        "endLine": 75,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cf38ca6_05300eeb",
         "filename": "internal/ceres/implicit_schur_complement_test.cc",
         "patchSetId": 2
@@ -207,6 +375,30 @@
       "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cde9441_367cfdc9",
+        "filename": "internal/ceres/implicit_schur_complement_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cf38ca6_05300eeb",
+      "range": {
+        "startLine": 62,
+        "startChar": 18,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "403ae39a_d1e27f72",
+        "filename": "internal/ceres/implicit_schur_complement_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c97c86_d6ea9547",
+      "range": {
+        "startLine": 94,
+        "startChar": 21,
+        "endLine": 94,
+        "endChar": 24
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9c2e94b_6499b961",
         "filename": "internal/ceres/iterative_schur_complement_solver_test.cc",
         "patchSetId": 2
@@ -253,6 +469,30 @@
       "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7e5998_bc725c95",
+        "filename": "internal/ceres/iterative_schur_complement_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9c2e94b_6499b961",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -279,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "652af6d5_1b8de802",
+        "filename": "internal/ceres/loss_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ba54dca_d9f6e568",
+      "range": {
+        "startLine": 140,
+        "startChar": 11,
+        "endLine": 140,
+        "endChar": 14
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b9b4ffc_da68d5d0",
         "filename": "internal/ceres/loss_function.cc",
         "patchSetId": 2
@@ -299,6 +563,30 @@
       "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c6033d_756a84fc",
+        "filename": "internal/ceres/loss_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b9b4ffc_da68d5d0",
+      "range": {
+        "startLine": 141,
+        "startChar": 11,
+        "endLine": 141,
+        "endChar": 14
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "b99d1792_d1377b87",
+        "filename": "internal/ceres/partitioned_matrix_view_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b083196_3785b546",
+      "range": {
+        "startLine": 55,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "758a8794_61b8b482",
         "filename": "internal/ceres/program_test.cc",
         "patchSetId": 2
@@ -336,6 +648,30 @@
       "writtenOn": "2018-08-27T15:22:48Z",
       "side": 1,
       "message": "Did you intend to remove the CHECK for this value? Also in multiple tests below.",
+      "range": {
+        "startLine": 99,
+        "startChar": 27,
+        "endLine": 99,
+        "endChar": 42
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a085a457_969eaf77",
+        "filename": "internal/ceres/program_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "yes because the replacement is tedious :/ and this is just a test and it will fine.",
+      "parentUuid": "758a8794_61b8b482",
       "range": {
         "startLine": 99,
         "startChar": 27,
@@ -371,6 +707,30 @@
     },
     {
       "key": {
+        "uuid": "ef3b546a_fff7ab60",
+        "filename": "internal/ceres/residual_block.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "yep, because CHECK_NOTNULL is replaced by ABSL.. which we do not want a dependency on.",
+      "parentUuid": "f424dccb_59b94c37",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be239bb9_8ed34e00",
         "filename": "internal/ceres/schur_eliminator_test.cc",
         "patchSetId": 2
@@ -391,6 +751,30 @@
       "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c01d462_9d360e45",
+        "filename": "internal/ceres/schur_eliminator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be239bb9_8ed34e00",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -417,6 +801,30 @@
     },
     {
       "key": {
+        "uuid": "c9e0d7fc_a3e46027",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c1792e9_49648198",
+      "range": {
+        "startLine": 60,
+        "startChar": 18,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12c954ab_083f4feb",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 2
@@ -428,6 +836,30 @@
       "writtenOn": "2018-08-27T15:22:48Z",
       "side": 1,
       "message": "Another CHECK lost in transit.",
+      "range": {
+        "startLine": 580,
+        "startChar": 30,
+        "endLine": 580,
+        "endChar": 41
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2031561_a08f0ef5",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T03:21:05Z",
+      "side": 1,
+      "message": "yep.",
+      "parentUuid": "12c954ab_083f4feb",
       "range": {
         "startLine": 580,
         "startChar": 30,
