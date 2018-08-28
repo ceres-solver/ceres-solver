@@ -779,6 +779,30 @@
     },
     {
       "key": {
+        "uuid": "1a95a9b5_241db09c",
+        "filename": "internal/ceres/residual_block.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-08-28T15:14:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2341a32f_b2b3748e",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be239bb9_8ed34e00",
         "filename": "internal/ceres/schur_eliminator_test.cc",
         "patchSetId": 2
