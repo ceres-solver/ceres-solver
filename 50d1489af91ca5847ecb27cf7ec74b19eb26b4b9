@@ -684,6 +684,30 @@
     },
     {
       "key": {
+        "uuid": "b2498547_ead91c53",
+        "filename": "internal/ceres/program_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-28T15:05:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a085a457_969eaf77",
+      "range": {
+        "startLine": 99,
+        "startChar": 27,
+        "endLine": 99,
+        "endChar": 42
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f424dccb_59b94c37",
         "filename": "internal/ceres/residual_block.cc",
         "patchSetId": 2
@@ -719,6 +743,30 @@
       "side": 1,
       "message": "yep, because CHECK_NOTNULL is replaced by ABSL.. which we do not want a dependency on.",
       "parentUuid": "f424dccb_59b94c37",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2341a32f_b2b3748e",
+        "filename": "internal/ceres/residual_block.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-28T15:05:45Z",
+      "side": 1,
+      "message": "This one\u0027s worth including in the body of the ctor, since it\u0027s such a crucial code path.",
+      "parentUuid": "ef3b546a_fff7ab60",
       "range": {
         "startLine": 55,
         "startChar": 0,
@@ -869,6 +917,30 @@
       "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a2c86e_1cac1b26",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-08-28T15:05:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2031561_a08f0ef5",
+      "range": {
+        "startLine": 580,
+        "startChar": 30,
+        "endLine": 580,
+        "endChar": 41
+      },
+      "revId": "50d1489af91ca5847ecb27cf7ec74b19eb26b4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
