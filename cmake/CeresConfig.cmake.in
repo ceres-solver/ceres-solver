@@ -323,3 +323,4 @@ message(STATUS "Found " ${CERES_DETECTED_VERSION_STRING})
 # Ceres_FOUND is not (explicitly, i.e. undefined does not count) set
 # to FALSE.
 set(CERES_FOUND TRUE)
+set(Ceres_FOUND TRUE)
