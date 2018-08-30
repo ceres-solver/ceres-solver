@@ -192,4 +192,48 @@ TEST(TinySolver, ParametersAndResidualsDynamic) {
   TestHelper(f, x0);
 }
 
+// A test case for lower bounds
+TEST(TinySolver, LowerBounds) {
+  Vec3 x0(3, 4, 5);
+
+  ExampleStatic f;
+
+  Vec3 x = x0;
+  Vec2 residuals;
+  f(x.data(), residuals.data(), NULL);
+  EXPECT_GT(residuals.squaredNorm() / 2.0, 162.5);
+
+  Vec3 lower(1.0, 2.0, 3.0);
+  TinySolver<ExampleStatic> solver;
+  for (int i = 0; i < 3; ++i)
+    solver.SetLowerBound(i, lower[i]);
+  solver.Solve(f, &x);
+
+  // x+2y+4z >= 17, yz >= 6 => min at lower bound
+  EXPECT_NEAR(162.5, solver.summary.final_cost, 1e-10);
+  EXPECT_NEAR(0.0, (x - lower).squaredNorm(), 1e-10);
+}
+
+// A test case for upper bounds
+TEST(TinySolver, UpperBounds) {
+  Vec3 x0(-3, -4, -5);
+
+  ExampleStatic f;
+
+  Vec3 x = x0;
+  Vec2 residuals;
+  f(x.data(), residuals.data(), NULL);
+  EXPECT_GT(residuals.squaredNorm() / 2.0, 162.5);
+
+  Vec3 upper(-1.0, -2.0, -3.0);
+  TinySolver<ExampleStatic> solver;
+  for (int i = 0; i < 3; ++i)
+    solver.SetUpperBound(i, upper[i]);
+  solver.Solve(f, &x);
+
+  // x+2y+4z <= -17, yz >= 6 => min at upper bound
+  EXPECT_NEAR(162.5, solver.summary.final_cost, 1e-10);
+  EXPECT_NEAR(0.0, (x - upper).squaredNorm(), 1e-10);
+}
+
 }  // namespace ceres

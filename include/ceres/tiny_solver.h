@@ -198,6 +198,7 @@ class TinySolver {
     Initialize<NUM_RESIDUALS, NUM_PARAMETERS>(function);
     assert(x_and_min);
     Parameters& x = *x_and_min;
+    ProjectOntoFeasibleSet(x);
     summary = Summary();
     summary.iterations = 0;
 
@@ -245,7 +246,9 @@ class TinySolver {
         summary.status = RELATIVE_STEP_SIZE_TOO_SMALL;
         break;
       }
+
       x_new_ = x + dx_;
+      ProjectOntoFeasibleSet(x_new_);
 
       // TODO(keir): Add proper handling of errors from user eval of cost
       // functions.
@@ -294,6 +297,34 @@ class TinySolver {
     return summary;
   }
 
+  void SetLowerBound(int index, Scalar lower_bound) {
+    if ((trivial_lower_bounds_ &&
+         lower_bound <= -std::numeric_limits<Scalar>::max()) ||
+        index < 0 || index >= x_new_.rows()) {
+      return;
+    }
+    if (trivial_lower_bounds_) {
+      trivial_lower_bounds_ = false;
+      lower_bounds_.resize(x_new_.rows(), 1);
+      lower_bounds_.fill(-std::numeric_limits<Scalar>::max());
+    }
+    lower_bounds_[index] = lower_bound;
+  }
+
+  void SetUpperBound(int index, Scalar upper_bound) {
+    if ((trivial_upper_bounds_ &&
+         upper_bound >= std::numeric_limits<Scalar>::max()) ||
+        index < 0 || index >= x_new_.rows()) {
+      return;
+    }
+    if (trivial_upper_bounds_) {
+      trivial_upper_bounds_ = false;
+      upper_bounds_.resize(x_new_.rows(), 1);
+      upper_bounds_.fill(std::numeric_limits<Scalar>::max());
+    }
+    upper_bounds_[index] = upper_bound;
+  }
+
   Options options;
   Summary summary;
 
@@ -306,6 +337,9 @@ class TinySolver {
   Eigen::Matrix<Scalar, NUM_RESIDUALS, 1> error_, f_x_new_;
   Eigen::Matrix<Scalar, NUM_RESIDUALS, NUM_PARAMETERS> jacobian_;
   Eigen::Matrix<Scalar, NUM_PARAMETERS, NUM_PARAMETERS> jtj_, jtj_regularized_;
+  Eigen::Matrix<Scalar, NUM_PARAMETERS, 1> upper_bounds_, lower_bounds_;
+
+  bool trivial_upper_bounds_, trivial_lower_bounds_;
 
   // The following definitions are needed for template metaprogramming.
   template <bool Condition, typename T>
@@ -356,6 +390,17 @@ class TinySolver {
     jacobian_.resize(num_residuals, num_parameters);
     jtj_.resize(num_parameters, num_parameters);
     jtj_regularized_.resize(num_parameters, num_parameters);
+    trivial_upper_bounds_ = true;
+    trivial_lower_bounds_ = true;
+  }
+
+  void ProjectOntoFeasibleSet(Eigen::Matrix<Scalar, NUM_PARAMETERS, 1> &x) {
+    if (!trivial_lower_bounds_) {
+      x = x.cwiseMax(lower_bounds_);
+    }
+    if (!trivial_upper_bounds_) {
+      x = x.cwiseMin(upper_bounds_);
+    }
   }
 };
 
