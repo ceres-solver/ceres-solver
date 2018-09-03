@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b216db28_f6b9e424",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-09-03T12:41:56Z",
+      "side": 1,
+      "message": "As stated in the docs above, this is not necessary.  find_package() automatically sets \u003cPackageName\u003e_FOUND to the correct value based provided that this script has run, and Ceres_FOUND has not been explicitly set to any valid \u0027false\u0027 value (FALSE, OFF, 0).  All CMake methods will treat any of the valid \u0027true\u0027 values (TRUE, ON, \u003e 0) equivalently.",
+      "revId": "68dded7db42d8371a3231eeacb1c49ae4babd810",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
