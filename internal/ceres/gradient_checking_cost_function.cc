@@ -74,7 +74,7 @@ class GradientCheckingCostFunction : public CostFunction {
         relative_precision_(relative_precision),
         extra_info_(extra_info),
         callback_(callback) {
-    CHECK_NOTNULL(callback_);
+    CHECK(callback_ != nullptr);
     const vector<int32_t>& parameter_block_sizes =
         function->parameter_block_sizes();
     *mutable_parameter_block_sizes() = parameter_block_sizes;
