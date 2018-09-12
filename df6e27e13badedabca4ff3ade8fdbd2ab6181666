@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56219e7f_33eadbc8",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-12T17:55:34Z",
+      "side": 1,
+      "message": "nice fix.",
+      "revId": "df6e27e13badedabca4ff3ade8fdbd2ab6181666",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90494190_0a7ed636",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-12T17:55:34Z",
+      "side": 1,
+      "message": "is this right? where if this is zero we go to max?",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "df6e27e13badedabca4ff3ade8fdbd2ab6181666",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
