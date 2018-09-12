@@ -63,6 +63,30 @@
       "revId": "df6e27e13badedabca4ff3ade8fdbd2ab6181666",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498ddc12_269aed4b",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-09-12T18:30:27Z",
+      "side": 1,
+      "message": "In a previous review, William thought it was best to respect the users thread count request when std::thread::hardware_concurrency() returns 0.  This does that, but it took me a minute to understand return max here doesn\u0027t say to use max threads, but to not restrict the number of threads the user requested.",
+      "parentUuid": "37602015_0cce6851",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "df6e27e13badedabca4ff3ade8fdbd2ab6181666",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
