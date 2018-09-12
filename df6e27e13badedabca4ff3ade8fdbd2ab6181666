@@ -87,6 +87,30 @@
       "revId": "df6e27e13badedabca4ff3ade8fdbd2ab6181666",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8384c203_0fd53f13",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-12T18:35:54Z",
+      "side": 1,
+      "message": "yes I agree this does it but it depends on the GetNumAllowedThreads() call to enforce to min.\n\nI am just trying to reason about the semantics of this function on its own.\nmy suggestion is, if num_hardware_threads \u003d\u003d 0, then this function should also return zero, with the same semantics, that we have no idea really.\n\nand GetNumAllowedThreads  should deal with the zero case specifically. \n\ninstead of doing a maxint here and depending on a min outside.",
+      "parentUuid": "498ddc12_269aed4b",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "df6e27e13badedabca4ff3ade8fdbd2ab6181666",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
