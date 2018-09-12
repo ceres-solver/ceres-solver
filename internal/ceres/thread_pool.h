@@ -59,6 +59,9 @@ namespace internal {
 //
 class ThreadPool {
  public:
+  // Returns the maximum number of hardware threads.
+  static int MaxNumThreadsAvailable();
+
   // Default constructor with no active threads.  We allow instantiating a
   // thread pool with no threads to support the use case of single threaded
   // Ceres where everything will be executed on the main thread. For single
@@ -66,7 +69,7 @@ class ThreadPool {
   // are expensive to create, and no unused threads shown in the debugger.
   ThreadPool();
 
-  // Instantiates a thread pool with min(num_hardware_threads, num_threads)
+  // Instantiates a thread pool with min(MaxNumThreadsAvailable, num_threads)
   // number of threads.
   explicit ThreadPool(int num_threads);
 
@@ -75,7 +78,7 @@ class ThreadPool {
   ~ThreadPool();
 
   // Resizes the thread pool if it is currently less than the requested number
-  // of threads.  The thread pool will be resized to min(num_hardware_threads,
+  // of threads.  The thread pool will be resized to min(MaxNumThreadsAvailable,
   // num_threads) number of threads.  Resize does not support reducing the
   // thread pool size.  If a smaller number of threads is requested, the thread
   // pool remains the same size.  The thread pool is reused within Ceres with

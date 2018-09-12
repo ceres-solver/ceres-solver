@@ -38,6 +38,10 @@
 namespace ceres {
 namespace internal {
 
+// Returns the maximum number of threads supported by the threading backend
+// Ceres was compiled with.
+int MaxNumThreadsAvailable();
+
 // Execute the function for every element in the range [start, end) with at most
 // num_threads. It will execute all the work on the calling thread if
 // num_threads is 1.

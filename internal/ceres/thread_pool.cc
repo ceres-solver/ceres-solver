@@ -36,6 +36,7 @@
 #include "ceres/thread_pool.h"
 
 #include <cmath>
+#include <limits>
 
 namespace ceres {
 namespace internal {
@@ -43,17 +44,19 @@ namespace {
 
 // Constrain the total number of threads to the amount the hardware can support.
 int GetNumAllowedThreads(int requested_num_threads) {
-  const int num_hardware_threads = std::thread::hardware_concurrency();
-  // hardware_concurrency() can return 0 if the value is not well defined or not
-  // computable.
-  if (num_hardware_threads == 0) {
-    return requested_num_threads;
-  }
-
-  return std::min(requested_num_threads, num_hardware_threads);
+  return std::min(requested_num_threads, ThreadPool::MaxNumThreadsAvailable());
 }
 
 }  // namespace
+
+int ThreadPool::MaxNumThreadsAvailable() {
+  const int num_hardware_threads = std::thread::hardware_concurrency();
+  // hardware_concurrency() can return 0 if the value is not well defined or not
+  // computable.
+  return num_hardware_threads == 0
+      ? std::numeric_limits<int>::max()
+      : num_hardware_threads;
+}
 
 ThreadPool::ThreadPool() { }
 

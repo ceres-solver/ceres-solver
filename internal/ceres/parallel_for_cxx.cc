@@ -117,6 +117,10 @@ struct SharedState {
 
 }  // namespace
 
+int MaxNumThreadsAvailable() {
+  return ThreadPool::MaxNumThreadsAvailable();
+}
+
 // See ParallelFor (below) for more details.
 void ParallelFor(ContextImpl* context,
                  int start,

@@ -39,6 +39,8 @@
 namespace ceres {
 namespace internal {
 
+int MaxNumThreadsAvailable() { return 1; }
+
 void ParallelFor(ContextImpl* context,
                  int start,
                  int end,

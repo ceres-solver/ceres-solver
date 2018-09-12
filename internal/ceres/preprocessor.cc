@@ -31,6 +31,7 @@
 #include "ceres/callbacks.h"
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/line_search_preprocessor.h"
+#include "ceres/parallel_for.h"
 #include "ceres/preprocessor.h"
 #include "ceres/problem_impl.h"
 #include "ceres/solver.h"
@@ -56,15 +57,15 @@ Preprocessor::~Preprocessor() {
 }
 
 void ChangeNumThreadsIfNeeded(Solver::Options* options) {
-#ifdef CERES_NO_THREADS
-  if (options->num_threads > 1) {
+  const int num_threads_available = MaxNumThreadsAvailable();
+  if (options->num_threads > num_threads_available) {
     LOG(WARNING)
-        << "No threading support is compiled into this binary; "
-        << "only options.num_threads = 1 is supported. Switching "
-        << "to single threaded mode.";
-    options->num_threads = 1;
+        << "Specified options.num_threads: " << options->num_threads
+        << " exceeds maximum available from the threading model Ceres "
+        << "was compiled with: " << num_threads_available
+        << ".  Bounding to maximum number available.";
+    options->num_threads = num_threads_available;
   }
-#endif  // CERES_NO_THREADS
 }
 
 void SetupCommonMinimizerOptions(PreprocessedProblem* pp) {

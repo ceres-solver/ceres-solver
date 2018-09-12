@@ -107,8 +107,9 @@ struct PreprocessedProblem {
 
 // Common functions used by various preprocessors.
 
-// If OpenMP support is not available and user has requested more than
-// one thread, then set the *_num_threads options as needed to 1.
+// If the user has specified a num_threads > the maximum number of threads
+// available from the compiled threading model, bound the number of threads
+// to the maximum.
 void ChangeNumThreadsIfNeeded(Solver::Options* options);
 
 // Extract the effective parameter vector from the preprocessed

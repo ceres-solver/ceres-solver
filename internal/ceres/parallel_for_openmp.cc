@@ -38,9 +38,14 @@
 #include "ceres/scoped_thread_token.h"
 #include "ceres/thread_token_provider.h"
 #include "glog/logging.h"
+#include "omp.h"
 
 namespace ceres {
 namespace internal {
+
+int MaxNumThreadsAvailable() {
+  return omp_get_max_threads();
+}
 
 void ParallelFor(ContextImpl* context,
                  int start,
