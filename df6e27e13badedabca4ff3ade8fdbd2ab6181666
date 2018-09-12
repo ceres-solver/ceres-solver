@@ -39,6 +39,30 @@
       "revId": "df6e27e13badedabca4ff3ade8fdbd2ab6181666",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37602015_0cce6851",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-09-12T18:20:04Z",
+      "side": 1,
+      "message": "It replicates the behaviour from before, in that we will always take whatever value the user specifies and try to use it (and report it).\n\nI don\u0027t really see what our other options would be here, 11? 42?  All of these are likely arbitrary and would inflame someone with £££ and a lot of cores.  Although in my experience std::thread::hardware_concurrency() has always returned sane values.",
+      "parentUuid": "90494190_0a7ed636",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "df6e27e13badedabca4ff3ade8fdbd2ab6181666",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
