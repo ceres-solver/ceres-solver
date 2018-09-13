@@ -111,6 +111,30 @@
       "revId": "df6e27e13badedabca4ff3ade8fdbd2ab6181666",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df80f56_186f24e8",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-09-13T08:27:55Z",
+      "side": 1,
+      "message": "I think it\u0027s less intuitive to have this function return a special case that then has to be handed externally.  In terms of the semantics of what will happen if it hardware_concurrency() returns 0, we will blindly try to create as many threads as the user specifies, with no other limits applied (other than the max of ThreadPool::Size()) which is represented by the current behaviour, in that the without any information to the contrary we assume that there is no upper limit.\n\nTBH, I\u0027m wondering about whether we should use hardware_concurrency() at all as a hard maximum.  What if its \u003e 0, but wrong?  For the machines I have to hand (all modern Intel x86) it returns the number of HyperThreaded logical cores (e.g. 8 on a 4-core machine) but I\u0027ve no idea what it does with Zen CPUs or the previous AMD generation CPUs that had faux-HT.\n\nI\u0027m wondering whether we should limit the number of threads at all except in the case of OpenMP when we know there is actually a hard limit we can\u0027t exceed.  In the case of the ThreadPool, we\u0027re imposing an artificial limit based on a function that we know doesn\u0027t always return the right answer, and in one of those failure modes we say the answer is unlimited, why don\u0027t we always do that, as we can after all spawn as many threads as we like, and then have a LOG(WARNING) if it appears to be \u003e hardware_concurrency() but continue with what the user asked for?",
+      "parentUuid": "8384c203_0fd53f13",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "df6e27e13badedabca4ff3ade8fdbd2ab6181666",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
