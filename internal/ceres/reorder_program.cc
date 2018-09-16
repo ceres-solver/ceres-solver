@@ -569,9 +569,12 @@ bool ReorderProgramForSparseNormalCholesky(
         *tsm_block_jacobian_transpose,
         &ordering[0]);
   } else if (sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
-    // TODO(alex): Investigate what analysis on pre-ordered matrices
-    //             Accelerate supports, but for now disable.
-    // https://github.com/ceres-solver/ceres-solver/issues/394.
+    // Accelerate does not provide a function to perform reordering without
+    // performing a full symbolic factorisation.  As such, we have nothing
+    // to gain from trying to reorder the problem here, as it will happen
+    // in AppleAccelerateCholesky::Factorize() (once) and reordering here
+    // would involve performing two symbolic factorisations instead of one
+    // which would have a negative overall impact on performance.
     return true;
 
   } else if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
