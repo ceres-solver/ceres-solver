@@ -773,7 +773,7 @@ directory contains a number of other examples:
 #. `nist.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/nist.cc>`_
    implements and attempts to solves the `NIST
-   <http://www.itl.nist.gov/div898/strd/nls/nls_main.shtm>`_
+   <http://www.itl.nist.gov/div898/strd/nls/nls_main.shtml>`_
    non-linear regression problems.
 
 #. `more_garbow_hillstrom.cc
