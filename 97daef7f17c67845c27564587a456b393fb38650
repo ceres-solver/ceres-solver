@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c80e0a7c_4d2a5172",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-17T13:56:20Z",
+      "side": 1,
+      "message": "why is this enum needed?",
+      "range": {
+        "startLine": 77,
+        "startChar": 24,
+        "endLine": 77,
+        "endChar": 25
+      },
+      "revId": "97daef7f17c67845c27564587a456b393fb38650",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a78c7e19_30fa4963",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-17T13:56:20Z",
+      "side": 1,
+      "message": "fix indentation.",
+      "range": {
+        "startLine": 158,
+        "startChar": 49,
+        "endLine": 158,
+        "endChar": 71
+      },
+      "revId": "97daef7f17c67845c27564587a456b393fb38650",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fcddc79_61c95ddd",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-17T13:56:20Z",
+      "side": 1,
+      "message": "I think this should just be called num_residuals_ and initialized to either kNumResiduals  or overridden, but the suffix \"runtime\" doesn\u0027t add anything and this should always be a valid value anyways.\n\nmaybe just initialize it inline here as\n\nint num_residuals_ \u003d kNumResiduals;\n\nand then override when initializing?",
+      "range": {
+        "startLine": 181,
+        "startChar": 6,
+        "endLine": 181,
+        "endChar": 28
+      },
+      "revId": "97daef7f17c67845c27564587a456b393fb38650",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d92c04_6e444756",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-17T13:56:20Z",
+      "side": 1,
+      "message": "is there any benefit of making this an Eigen matrix beyond it being a dynamically sized array? why not just a bare array owned by a unique_ptr?",
+      "range": {
+        "startLine": 189,
+        "startChar": 16,
+        "endLine": 189,
+        "endChar": 17
+      },
+      "revId": "97daef7f17c67845c27564587a456b393fb38650",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27287dc_4197377a",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-17T13:56:20Z",
+      "side": 1,
+      "message": "fix indentation.",
+      "range": {
+        "startLine": 190,
+        "startChar": 24,
+        "endLine": 190,
+        "endChar": 37
+      },
+      "revId": "97daef7f17c67845c27564587a456b393fb38650",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd32f40_06ff2953",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-17T13:56:20Z",
+      "side": 1,
+      "message": "use std::enable_if?",
+      "range": {
+        "startLine": 194,
+        "startChar": 27,
+        "endLine": 194,
+        "endChar": 28
+      },
+      "revId": "97daef7f17c67845c27564587a456b393fb38650",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
