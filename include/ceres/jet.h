@@ -391,7 +391,7 @@ Jet<T, N> operator/(const Jet<T, N>& f,
   // which holds because v*v = 0.
   const T g_a_inverse = T(1.0) / g.a;
   const T f_a_by_g_a = f.a * g_a_inverse;
-  return Jet<T, N>(f.a * g_a_inverse, (f.v - f_a_by_g_a * g.v) * g_a_inverse);
+  return Jet<T, N>(f_a_by_g_a, (f.v - f_a_by_g_a * g.v) * g_a_inverse);
 }
 
 // Binary / with a scalar: s / x
