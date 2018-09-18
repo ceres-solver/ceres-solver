@@ -31,7 +31,7 @@
 // A simple implementation of N-dimensional dual numbers, for automatically
 // computing exact derivatives of functions.
 //
-// While a complete treatment of the mechanics of automatic differentation is
+// While a complete treatment of the mechanics of automatic differentiation is
 // beyond the scope of this header (see
 // http://en.wikipedia.org/wiki/Automatic_differentiation for details), the
 // basic idea is to extend normal arithmetic with an extra element, "e," often
@@ -49,7 +49,7 @@
 //   f(x) = x^2 ,
 //
 // evaluated at 10. Using normal arithmetic, f(10) = 100, and df/dx(10) = 20.
-// Next, augument 10 with an infinitesimal to get:
+// Next, argument 10 with an infinitesimal to get:
 //
 //   f(10 + e) = (10 + e)^2
 //             = 100 + 2 * 10 * e + e^2
@@ -124,7 +124,7 @@
 //
 //   x = a + \sum_i v[i] t_i
 //
-// A shorthand is to write an element as x = a + u, where u is the pertubation.
+// A shorthand is to write an element as x = a + u, where u is the perturbation.
 // Then, the main point about the arithmetic of jets is that the product of
 // perturbations is zero:
 //
@@ -253,7 +253,7 @@ struct Jet {
   // We allocate Jets on the stack and other places they might not be aligned
   // to X(=16 [SSE], 32 [AVX] etc)-byte boundaries, which would prevent the safe
   // use of vectorisation.  If we have C++11, we can specify the alignment.
-  // However, the standard gives wide lattitude as to what alignments are valid,
+  // However, the standard gives wide latitude as to what alignments are valid,
   // and it might be that the maximum supported alignment *guaranteed* to be
   // supported is < 16, in which case we do not specify an alignment, as this
   // implies the host is not a modern x86 machine.  If using < C++11, we cannot

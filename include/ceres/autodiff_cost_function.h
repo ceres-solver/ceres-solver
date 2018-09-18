@@ -30,7 +30,7 @@
 //
 // Create CostFunctions as needed by the least squares framework, with
 // Jacobians computed via automatic differentiation. For more
-// information on automatic differentation, see the wikipedia article
+// information on automatic differentiation, see the wikipedia article
 // at http://en.wikipedia.org/wiki/Automatic_differentiation
 //
 // To get an auto differentiated cost function, you must define a class with a
@@ -90,7 +90,7 @@
 //                            Dimension of x ---------------+  |
 //                            Dimension of y ------------------+
 //
-// In this example, there is usually an instance for each measumerent of k.
+// In this example, there is usually an instance for each measurement of k.
 //
 // In the instantiation above, the template parameters following
 // "MyScalarCostFunctor", "1, 2, 2", describe the functor as computing a
@@ -138,7 +138,7 @@
 namespace ceres {
 
 // A cost function which computes the derivative of the cost with respect to
-// the parameters (a.k.a. the jacobian) using an autodifferentiation framework.
+// the parameters (a.k.a. the jacobian) using an auto differentiation framework.
 // The first template argument is the functor object, described in the header
 // comment. The second argument is the dimension of the residual (or
 // ceres::DYNAMIC to indicate it will be set at runtime), and subsequent
