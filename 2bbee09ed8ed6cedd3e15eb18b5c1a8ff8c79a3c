@@ -22,6 +22,30 @@
       "revId": "2bbee09ed8ed6cedd3e15eb18b5c1a8ff8c79a3c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1552f227_5051a6b0",
+        "filename": "internal/ceres/tiny_solver_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-18T07:54:50Z",
+      "side": 0,
+      "message": "The function EvaluateResidualsAndJacobians is also used in tiny_solver_autodiff_function_test.cc and I didn\u0027t want to copy the code. Is it better to define EvaluateResidualsAndJacobians in both files locally?",
+      "parentUuid": "af0ec723_920c8ec5",
+      "range": {
+        "startLine": 45,
+        "startChar": 60,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "2bbee09ed8ed6cedd3e15eb18b5c1a8ff8c79a3c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
