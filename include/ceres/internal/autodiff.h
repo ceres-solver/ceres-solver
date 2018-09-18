@@ -30,7 +30,7 @@
 //
 // Computation of the Jacobian matrix for vector-valued functions of multiple
 // variables, using automatic differentiation based on the implementation of
-// dual numbers in jet.h. Before reading the rest of this file, it is adivsable
+// dual numbers in jet.h. Before reading the rest of this file, it is advisable
 // to read jet.h's header comment in detail.
 //
 // The helper wrapper AutoDiff::Differentiate() computes the jacobian of
