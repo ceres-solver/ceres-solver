@@ -16,7 +16,7 @@ please let us know about your interest and skills and we will be happy
 to make a suggestion or three.
 
 We follow Google's `C++ Style Guide
-<http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml>`_ and
+<https://google.github.io/styleguide/cppguide.html>`_ and
 use `git <http://git-scm.com/>`_ for version control. We use the
 `Gerrit <https://ceres-solver-review.googlesource.com/>`_ to collaborate and
 review changes to Ceres. Gerrit enables pre-commit reviews so that
