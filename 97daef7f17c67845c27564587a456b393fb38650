@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "c93480c0_73d43439",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-18T13:59:00Z",
+      "side": 1,
+      "message": "There is already another bare array just above it :). \nAn eigen matrix implies that you are using some sort of matrix/linear algebraic work, even though you are only using it as a dynamically sized container. vector is slightly better,but given that we are already using bare arrays, the argument for introducing a different type for jet_residuals is weak as it makes the code just less consistent.",
+      "parentUuid": "79cfe307_18761dd6",
+      "range": {
+        "startLine": 189,
+        "startChar": 16,
+        "endLine": 189,
+        "endChar": 17
+      },
+      "revId": "97daef7f17c67845c27564587a456b393fb38650",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d27287dc_4197377a",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 5
