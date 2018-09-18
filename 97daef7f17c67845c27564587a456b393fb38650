@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a055b1c_d1061fb9",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-18T07:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c80e0a7c_4d2a5172",
+      "range": {
+        "startLine": 77,
+        "startChar": 24,
+        "endLine": 77,
+        "endChar": 25
+      },
+      "revId": "97daef7f17c67845c27564587a456b393fb38650",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a78c7e19_30fa4963",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "97daef7f17c67845c27564587a456b393fb38650",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6cbc0c4_f2cd9869",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-18T07:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a78c7e19_30fa4963",
+      "range": {
+        "startLine": 158,
+        "startChar": 49,
+        "endLine": 158,
+        "endChar": 71
+      },
+      "revId": "97daef7f17c67845c27564587a456b393fb38650",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bb61478a_dce1061c",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-18T07:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fcddc79_61c95ddd",
+      "range": {
+        "startLine": 181,
+        "startChar": 6,
+        "endLine": 181,
+        "endChar": 28
+      },
+      "revId": "97daef7f17c67845c27564587a456b393fb38650",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36d92c04_6e444756",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2018-09-17T13:56:20Z",
       "side": 1,
       "message": "is there any benefit of making this an Eigen matrix beyond it being a dynamically sized array? why not just a bare array owned by a unique_ptr?",
+      "range": {
+        "startLine": 189,
+        "startChar": 16,
+        "endLine": 189,
+        "endChar": 17
+      },
+      "revId": "97daef7f17c67845c27564587a456b393fb38650",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79cfe307_18761dd6",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-18T07:54:50Z",
+      "side": 1,
+      "message": "I see your point. I chose that because of personal aversion to bare arrays :) What about std::vector? Any disadvantage compared to unique_ptr of a bare array?",
+      "parentUuid": "36d92c04_6e444756",
       "range": {
         "startLine": 189,
         "startChar": 16,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f49039a0_d5f17566",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-18T07:54:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d27287dc_4197377a",
+      "range": {
+        "startLine": 190,
+        "startChar": 24,
+        "endLine": 190,
+        "endChar": 37
+      },
+      "revId": "97daef7f17c67845c27564587a456b393fb38650",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecd32f40_06ff2953",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "97daef7f17c67845c27564587a456b393fb38650",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35c801a_d08aab4f",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-18T07:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecd32f40_06ff2953",
+      "range": {
+        "startLine": 194,
+        "startChar": 27,
+        "endLine": 194,
+        "endChar": 28
+      },
+      "revId": "97daef7f17c67845c27564587a456b393fb38650",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
