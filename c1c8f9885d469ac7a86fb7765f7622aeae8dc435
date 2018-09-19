@@ -105,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "7cb78829_981adc15",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-19T16:45:30Z",
+      "side": 1,
+      "message": "Keir,\nI want to understand this better. whats the problem with a one time allocation at construction?",
+      "parentUuid": "334d9247_227bc00e",
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfa0468c_60ac6952",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 7
