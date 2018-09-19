@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eaf64ba_9ab64b85",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-19T12:26:57Z",
+      "side": 1,
+      "message": "this can be kNumResiduals right?",
+      "range": {
+        "startLine": 114,
+        "startChar": 17,
+        "endLine": 114,
+        "endChar": 30
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc236621_dcef2c08",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-19T12:26:57Z",
+      "side": 1,
+      "message": "drop this comment.",
+      "range": {
+        "startLine": 164,
+        "startChar": 45,
+        "endLine": 164,
+        "endChar": 52
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56d8b4c_d141556a",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-19T12:26:57Z",
+      "side": 1,
+      "message": "drop this comment, or have this next to the member itself.",
+      "range": {
+        "startLine": 166,
+        "startChar": 14,
+        "endLine": 166,
+        "endChar": 24
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8d7096_93acaaae",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-19T12:26:57Z",
+      "side": 1,
+      "message": "Example is a bad prefix, and this is just a functor so how about DynamicResidualsFunctor ?",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 37
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00b84ed_66fa8a2e",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-19T12:26:57Z",
+      "side": 1,
+      "message": "don\u0027t need this anymore?",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 7
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995e4b4e_5e08b6e2",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-19T12:26:57Z",
+      "side": 1,
+      "message": "this is a bad example because it allocates memory on the heap for every evaluation which would be incredibly slow.",
+      "range": {
+        "startLine": 115,
+        "startChar": 16,
+        "endLine": 115,
+        "endChar": 17
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b6c88a8_2189ccf8",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-19T12:26:57Z",
+      "side": 1,
+      "message": "why bother with a helper if its only being used once?",
+      "range": {
+        "startLine": 123,
+        "startChar": 16,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d63ab5_41c2f0f6",
+        "filename": "internal/ceres/tiny_solver_test_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-19T12:26:57Z",
+      "side": 1,
+      "message": "I do not think this needs to be put in an internal namespace.",
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8976530_e5d66cf4",
+        "filename": "internal/ceres/tiny_solver_test_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-19T12:26:57Z",
+      "side": 1,
+      "message": "This is Eigen::Vector2d, no point introducing another typedef, also its not used in this header so why introduce it at all.",
+      "range": {
+        "startLine": 38,
+        "startChar": 32,
+        "endLine": 38,
+        "endChar": 33
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
