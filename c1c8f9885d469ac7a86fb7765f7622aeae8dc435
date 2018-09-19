@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "00178a0b_b44cff68",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-09-19T16:00:08Z",
+      "side": 1,
+      "message": "In Ceres, we generally don\u0027t use \u003d\u003d\u003d\u003d\u003d or ...... style banners. Please just add a one line comment to divide the two examples.",
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9eaf64ba_9ab64b85",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 7
@@ -65,6 +82,40 @@
         "endLine": 166,
         "endChar": 24
       },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334d9247_227bc00e",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-09-19T16:00:08Z",
+      "side": 1,
+      "message": "This breaks a key point of tiny solver: No allocations. For the dynamic case, it makes sense that this is needed; but for the static case, the result of this patch should not change the runtime performance or allocation.\n\nI suggest either making a second member that\u0027s a null pointer in the static case, or some other similar solution.",
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa0468c_60ac6952",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-09-19T16:00:08Z",
+      "side": 1,
+      "message": "Please do not cause allocations to happen in the static case.",
       "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
