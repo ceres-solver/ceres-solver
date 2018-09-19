@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d493601c_c383fa32",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-19T18:46:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00178a0b_b44cff68",
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9eaf64ba_9ab64b85",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7291201_dedc22e9",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-19T18:46:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eaf64ba_9ab64b85",
+      "range": {
+        "startLine": 114,
+        "startChar": 17,
+        "endLine": 114,
+        "endChar": 30
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "54882f98_edb7e6f9",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-19T18:46:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc236621_dcef2c08",
+      "range": {
+        "startLine": 164,
+        "startChar": 45,
+        "endLine": 164,
+        "endChar": 52
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f56d8b4c_d141556a",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 7
@@ -85,6 +151,30 @@
       "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5adf6f56_9822a107",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-19T18:46:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f56d8b4c_d141556a",
+      "range": {
+        "startLine": 166,
+        "startChar": 14,
+        "endLine": 166,
+        "endChar": 24
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "084e2a81_a9d985f4",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-19T18:46:33Z",
+      "side": 1,
+      "message": "If I understand it correctly, no allocations enable better compile time optimization right? That was why I \"missused\" the Eigen::Matrix\u003cT, kNumResiduals,1\u003e class as container for jet_residuals_ before (I just remembered, the change was long time ago, sorry for that).",
+      "parentUuid": "334d9247_227bc00e",
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfa0468c_60ac6952",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 7
@@ -140,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "8eac517d_77f76fc5",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-19T18:46:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bfa0468c_60ac6952",
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad8d7096_93acaaae",
         "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
         "patchSetId": 7
@@ -151,6 +277,30 @@
       "writtenOn": "2018-09-19T12:26:57Z",
       "side": 1,
       "message": "Example is a bad prefix, and this is just a functor so how about DynamicResidualsFunctor ?",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 37
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c17b81_c73e9366",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-19T18:46:33Z",
+      "side": 1,
+      "message": "This was a matter of consistency with the naming of the functors in tiny_solver_test.cc .\nWhat do you think is more important? Or should I change the names in tiny_solver_test.cc?",
+      "parentUuid": "ad8d7096_93acaaae",
       "range": {
         "startLine": 101,
         "startChar": 6,
@@ -186,6 +336,30 @@
     },
     {
       "key": {
+        "uuid": "a9c6bacd_496d282c",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-19T18:46:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c00b84ed_66fa8a2e",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 7
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "995e4b4e_5e08b6e2",
         "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
         "patchSetId": 7
@@ -209,6 +383,30 @@
     },
     {
       "key": {
+        "uuid": "3f82f447_49ae88a2",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-19T18:46:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "995e4b4e_5e08b6e2",
+      "range": {
+        "startLine": 115,
+        "startChar": 16,
+        "endLine": 115,
+        "endChar": 17
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b6c88a8_2189ccf8",
         "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
         "patchSetId": 7
@@ -220,6 +418,30 @@
       "writtenOn": "2018-09-19T12:26:57Z",
       "side": 1,
       "message": "why bother with a helper if its only being used once?",
+      "range": {
+        "startLine": 123,
+        "startChar": 16,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f6120b_8baffdb6",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-19T18:46:33Z",
+      "side": 1,
+      "message": "This was also a matter of consistency with the naming of the functors in tiny_solver_test.cc .\nThere the evaluation is wrapped in a TestHelper with the same interface. I wanted to emphasize on the similarities and differences to the non-autodiff functions. Unnecessary?",
+      "parentUuid": "9b6c88a8_2189ccf8",
       "range": {
         "startLine": 123,
         "startChar": 16,
@@ -249,6 +471,24 @@
     },
     {
       "key": {
+        "uuid": "79675604_23517b6e",
+        "filename": "internal/ceres/tiny_solver_test_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-19T18:46:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93d63ab5_41c2f0f6",
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8976530_e5d66cf4",
         "filename": "internal/ceres/tiny_solver_test_util.h",
         "patchSetId": 7
@@ -269,6 +509,30 @@
       "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4d06c43_2372a619",
+        "filename": "internal/ceres/tiny_solver_test_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-19T18:46:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8976530_e5d66cf4",
+      "range": {
+        "startLine": 38,
+        "startChar": 32,
+        "endLine": 38,
+        "endChar": 33
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
