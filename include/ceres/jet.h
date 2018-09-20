@@ -102,8 +102,9 @@
 //   }
 //
 //   // The "2" means there should be 2 dual number components.
-//   Jet<double, 2> x(0);  // Pick the 0th dual number for x.
-//   Jet<double, 2> y(1);  // Pick the 1st dual number for y.
+//   // It computes the partial derivative at x=10, y=20.
+//   Jet<double, 2> x(10, 0);  // Pick the 0th dual number for x.
+//   Jet<double, 2> y(20, 1);  // Pick the 1st dual number for y.
 //   Jet<double, 2> z = f(x, y);
 //
 //   LOG(INFO) << "df/dx = " << z.v[0]
