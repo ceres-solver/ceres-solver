@@ -478,6 +478,30 @@
     },
     {
       "key": {
+        "uuid": "d1269181_e86d7f1f",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-20T15:04:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8ae22be6_49ce91d6",
+      "range": {
+        "startLine": 123,
+        "startChar": 16,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93d63ab5_41c2f0f6",
         "filename": "internal/ceres/tiny_solver_test_util.h",
         "patchSetId": 7
