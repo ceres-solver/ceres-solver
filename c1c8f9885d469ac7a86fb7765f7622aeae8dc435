@@ -454,6 +454,30 @@
     },
     {
       "key": {
+        "uuid": "8ae22be6_49ce91d6",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-20T14:35:54Z",
+      "side": 1,
+      "message": "I think it just creates a level of indirection for no real good reason. I would go ahead and drop the helper.",
+      "parentUuid": "55f6120b_8baffdb6",
+      "range": {
+        "startLine": 123,
+        "startChar": 16,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "c1c8f9885d469ac7a86fb7765f7622aeae8dc435",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93d63ab5_41c2f0f6",
         "filename": "internal/ceres/tiny_solver_test_util.h",
         "patchSetId": 7
