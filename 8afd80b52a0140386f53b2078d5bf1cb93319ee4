@@ -22,6 +22,30 @@
       "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ae3dc4_f19f12e0",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-20T15:04:54Z",
+      "side": 1,
+      "message": "Would be OK for me.\nIs the slightly higher overhead of Eigen::Matrix a reason to leave it that way?",
+      "parentUuid": "65b3f6af_3e5e7b67",
+      "range": {
+        "startLine": 181,
+        "startChar": 10,
+        "endLine": 181,
+        "endChar": 17
+      },
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
