@@ -90,7 +90,7 @@ class FixedArray {
   // REQUIRES: n >= 0
   // Creates an array object that can store "n" elements.
   //
-  // FixedArray<T> will not zero-initialiaze POD (simple) types like int,
+  // FixedArray<T> will not zero-initialize POD (simple) types like int,
   // double, bool, etc.
   // Non-POD types will be default-initialized just like regular vectors or
   // arrays.
@@ -131,7 +131,7 @@ class FixedArray {
 
  private:
   // Container to hold elements of type T.  This is necessary to handle
-  // the case where T is a a (C-style) array.  The size of InnerContainer
+  // the case where T is a (C-style) array.  The size of InnerContainer
   // and T must be the same, otherwise callers' assumptions about use
   // of this code will be broken.
   struct InnerContainer {

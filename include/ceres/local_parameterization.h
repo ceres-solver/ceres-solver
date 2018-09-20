@@ -60,7 +60,7 @@ namespace ceres {
 // optimize over two dimensional vector delta in the tangent space at
 // that point and then "move" to the point x + delta, where the move
 // operation involves projecting back onto the sphere. Doing so
-// removes a redundent dimension from the optimization, making it
+// removes a redundant dimension from the optimization, making it
 // numerically more robust and efficient.
 //
 // More generally we can define a function

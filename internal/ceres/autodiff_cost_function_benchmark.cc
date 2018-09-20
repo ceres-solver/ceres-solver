@@ -56,7 +56,7 @@ struct Rat43CostFunctor {
 };
 
 // Simple implementation of autodiff using Jets directly instead of
-// going through the machineary of AutoDiffCostFunction, which does
+// going through the machinery of AutoDiffCostFunction, which does
 // the same thing, but much more generically.
 class Rat43Automatic : public ceres::SizedCostFunction<1, 4> {
  public:
