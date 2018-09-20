@@ -76,7 +76,9 @@ TEST(AutodiffCostFunction, BilinearDifferentiationTest) {
 
   cost_function->Evaluate(parameters, &residuals, NULL);
   EXPECT_EQ(10.0, residuals);
+
   cost_function->Evaluate(parameters, &residuals, jacobians);
+  EXPECT_EQ(10.0, residuals);
 
   EXPECT_EQ(3, jacobians[0][0]);
   EXPECT_EQ(4, jacobians[0][1]);
