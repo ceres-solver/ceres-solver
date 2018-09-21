@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "ffeacf3b_4cfd63a7",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-21T17:58:46Z",
+      "side": 1,
+      "message": "consistency with the next line, and it has no real cost.why have bare pointer for one thing and an Eigen matrix for another?",
+      "parentUuid": "e4ecd2e4_31387ba2",
+      "range": {
+        "startLine": 181,
+        "startChar": 10,
+        "endLine": 181,
+        "endChar": 17
+      },
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e4df5c9_de5cf70f",
         "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
         "patchSetId": 8
