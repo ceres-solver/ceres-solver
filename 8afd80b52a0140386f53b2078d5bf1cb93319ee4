@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6fe6005_58245099",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-09-21T17:28:10Z",
+      "side": 1,
+      "message": "Indentation is off here.",
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f441bed1_4d003fd8",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-09-21T17:28:10Z",
+      "side": 1,
+      "message": "Spacing; please stack these parameters.",
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65b3f6af_3e5e7b67",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 8
@@ -67,6 +101,98 @@
         "endLine": 181,
         "endChar": 17
       },
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ecd2e4_31387ba2",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-09-21T17:28:10Z",
+      "side": 1,
+      "message": "What\u0027s the point of changing this? There should be a reason to use an Eigen type here, and there isn\u0027t.",
+      "parentUuid": "863b05fe_c87c3549",
+      "range": {
+        "startLine": 181,
+        "startChar": 10,
+        "endLine": 181,
+        "endChar": 17
+      },
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4df5c9_de5cf70f",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-09-21T17:28:10Z",
+      "side": 1,
+      "message": "There are a bunch of formatting issues in this file; maybe use Google\u0027s linter?",
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bdf2088_81614fbd",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-09-21T17:28:10Z",
+      "side": 1,
+      "message": "Spacing.",
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "887c7675_1405f510",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-09-21T17:28:10Z",
+      "side": 1,
+      "message": "Stack arguments.",
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e8d82d_61b485e9",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-09-21T17:28:10Z",
+      "side": 1,
+      "message": "Trailing space.",
       "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
