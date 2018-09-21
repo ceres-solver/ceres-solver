@@ -46,6 +46,30 @@
       "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863b05fe_c87c3549",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-21T16:41:25Z",
+      "side": 1,
+      "message": "I am not worried about the overhead here.",
+      "parentUuid": "53ae3dc4_f19f12e0",
+      "range": {
+        "startLine": 181,
+        "startChar": 10,
+        "endLine": 181,
+        "endChar": 17
+      },
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
