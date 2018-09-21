@@ -67,7 +67,7 @@ class LinearCostFunction : public CostFunction {
 };
 
 // Tests that ConditionedCostFunction does what it's supposed to.
-TEST(CostFunctionTest, ConditionedCostFunction) {
+TEST(ConditionedCostFunction, NormalOperation) {
   double v1[kTestCostFunctionSize], v2[kTestCostFunctionSize],
       jac[kTestCostFunctionSize * kTestCostFunctionSize],
       result[kTestCostFunctionSize];
@@ -92,17 +92,16 @@ TEST(CostFunctionTest, ConditionedCostFunction) {
     conditioners.push_back(new LinearCostFunction(i + 2, i * 7));
   }
 
-  ConditionedCostFunction conditioned_cost_function(difference_cost_function,
-                                                    conditioners,
-                                                    TAKE_OWNERSHIP);
+  ConditionedCostFunction conditioned_cost_function(
+      difference_cost_function, conditioners, TAKE_OWNERSHIP);
   EXPECT_EQ(difference_cost_function->num_residuals(),
             conditioned_cost_function.num_residuals());
   EXPECT_EQ(difference_cost_function->parameter_block_sizes(),
             conditioned_cost_function.parameter_block_sizes());
 
-  double *parameters[1];
+  double* parameters[1];
   parameters[0] = v1;
-  double *jacs[1];
+  double* jacs[1];
   jacs[0] = jac;
 
   conditioned_cost_function.Evaluate(parameters, result, jacs);
@@ -120,6 +119,22 @@ TEST(CostFunctionTest, ConditionedCostFunction) {
       }
     }
   }
+}
+
+TEST(ConditionedCostFunction, SharedConditionersDoNotTriggerDoubleFree) {
+  // Make a cost function that computes x - v2
+  double v2[kTestCostFunctionSize];
+  VectorRef v2_vector(v2, kTestCostFunctionSize, 1);
+  Matrix identity = Matrix::Identity(kTestCostFunctionSize, kTestCostFunctionSize);
+  NormalPrior* difference_cost_function = new NormalPrior(identity, v2_vector);
+  CostFunction* conditioner = new LinearCostFunction(2, 7);
+  std::vector<CostFunction*> conditioners;
+  for (int i = 0; i < kTestCostFunctionSize; i++) {
+    conditioners.push_back(conditioner);
+  }
+
+  ConditionedCostFunction conditioned_cost_function(
+      difference_cost_function, conditioners, TAKE_OWNERSHIP);
 }
 
 }  // namespace internal
