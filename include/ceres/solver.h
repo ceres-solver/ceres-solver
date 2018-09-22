@@ -77,7 +77,7 @@ class CERES_EXPORT Solver {
     // exactly or inexactly.
     //
     // 2. The trust region approach approximates the objective
-    // function using using a model function (often a quadratic) over
+    // function using a model function (often a quadratic) over
     // a subset of the search space known as the trust region. If the
     // model function succeeds in minimizing the true objective
     // function the trust region is expanded; conversely, otherwise it
@@ -238,7 +238,7 @@ class CERES_EXPORT Solver {
     // in the value of the objective function.
     //
     // This is because allowing for non-decreasing objective function
-    // values in a princpled manner allows the algorithm to "jump over
+    // values in a principled manner allows the algorithm to "jump over
     // boulders" as the method is not restricted to move into narrow
     // valleys while preserving its convergence properties.
     //
@@ -339,7 +339,7 @@ class CERES_EXPORT Solver {
     // available.
     //
     // This setting affects the DENSE_QR, DENSE_NORMAL_CHOLESKY and
-    // DENSE_SCHUR solvers. For small to moderate sized probem EIGEN
+    // DENSE_SCHUR solvers. For small to moderate sized problem EIGEN
     // is a fine choice but for large problems, an optimized LAPACK +
     // BLAS implementation can make a substantial difference in
     // performance.
@@ -388,7 +388,7 @@ class CERES_EXPORT Solver {
     //
     // Given such an ordering, Ceres ensures that the parameter blocks in
     // the lowest numbered group are eliminated first, and then the
-    // parmeter blocks in the next lowest numbered group and so on. Within
+    // parameter blocks in the next lowest numbered group and so on. Within
     // each group, Ceres is free to order the parameter blocks as it
     // chooses.
     //
@@ -434,7 +434,7 @@ class CERES_EXPORT Solver {
     // ITERATIVE_SCHUR.
     //
     // By default this option is disabled and ITERATIVE_SCHUR
-    // evaluates evaluates matrix-vector products between the Schur
+    // evaluates matrix-vector products between the Schur
     // complement and a vector implicitly by exploiting the algebraic
     // expression for the Schur complement.
     //
@@ -492,7 +492,7 @@ class CERES_EXPORT Solver {
     // TODO(sameeragarwal): Further expand the documentation for the
     // following two options.
 
-    // NOTE1: EXPERIMETAL FEATURE, UNDER DEVELOPMENT, USE AT YOUR OWN RISK.
+    // NOTE1: EXPERIMENTAL FEATURE, UNDER DEVELOPMENT, USE AT YOUR OWN RISK.
     //
     // If use_mixed_precision_solves is true, the Gauss-Newton matrix
     // is computed in double precision, but its factorization is
@@ -539,7 +539,7 @@ class CERES_EXPORT Solver {
     // known as Wiberg's algorithm.
     //
     // Ruhe & Wedin (Algorithms for Separable Nonlinear Least Squares
-    // Problems, SIAM Reviews, 22(3), 1980) present an analyis of
+    // Problems, SIAM Reviews, 22(3), 1980) present an analysis of
     // various algorithms for solving separable non-linear least
     // squares problems and refer to "Variable Projection" as
     // Algorithm I in their paper.
@@ -679,7 +679,7 @@ class CERES_EXPORT Solver {
     //
     // The finite differencing is done along each dimension. The
     // reason to use a relative (rather than absolute) step size is
-    // that this way, numeric differentation works for functions where
+    // that this way, numeric differentiation works for functions where
     // the arguments are typically large (e.g. 1e9) and when the
     // values are small (e.g. 1e-5). It is possible to construct
     // "torture cases" which break this finite difference heuristic,
@@ -866,7 +866,7 @@ class CERES_EXPORT Solver {
     // Number of parameter blocks in the problem.
     int num_parameter_blocks = -1;
 
-    // Number of parameters in the probem.
+    // Number of parameters in the problem.
     int num_parameters = -1;
 
     // Dimension of the tangent space of the problem (or the number of
@@ -1035,7 +1035,7 @@ class CERES_EXPORT Solver {
   // Once a least squares problem has been built, this function takes
   // the problem and optimizes it based on the values of the options
   // parameters. Upon return, a detailed summary of the work performed
-  // by the preprocessor, the non-linear minmizer and the linear
+  // by the preprocessor, the non-linear minimizer and the linear
   // solver are reported in the summary object.
   virtual void Solve(const Options& options,
                      Problem* problem,

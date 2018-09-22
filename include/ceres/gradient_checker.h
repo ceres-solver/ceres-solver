@@ -69,7 +69,7 @@ class CERES_EXPORT GradientChecker {
   // parameterizations.
   //
   // function: The cost function to probe.
-  // local_parameterization: A vector of local parameterizations for each
+  // local_parameterizations: A vector of local parameterizations for each
   // parameter. May be NULL or contain NULL pointers to indicate that the
   // respective parameter does not have a local parameterization.
   // options: Options to use for numerical differentiation.
@@ -99,10 +99,10 @@ class CERES_EXPORT GradientChecker {
     // Derivatives as computed by the cost function in local space.
     std::vector<Matrix> local_jacobians;
 
-    // Derivatives as computed by nuerical differentiation in local space.
+    // Derivatives as computed by numerical differentiation in local space.
     std::vector<Matrix> numeric_jacobians;
 
-    // Derivatives as computed by nuerical differentiation in local space.
+    // Derivatives as computed by numerical differentiation in local space.
     std::vector<Matrix> local_numeric_jacobians;
 
     // Contains the maximum relative error found in the local Jacobians.

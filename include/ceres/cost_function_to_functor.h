@@ -46,8 +46,7 @@
 // is a cost function that implements the projection of a point in its
 // local coordinate system onto its image plane and subtracts it from
 // the observed point projection. It can compute its residual and
-// either via analytic or numerical differentiation can compute its
-// jacobians.
+// jacobians either via analytic or numerical differentiation.
 //
 // Now we would like to compose the action of this CostFunction with
 // the action of camera extrinsics, i.e., rotation and

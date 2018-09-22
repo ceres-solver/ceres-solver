@@ -38,7 +38,7 @@
 // during solving. This is especially useful when solving many similar problems;
 // for example, inverse pixel distortion for every pixel on a grid.
 //
-// Note: This code has no depedencies beyond Eigen, including on other parts of
+// Note: This code has no dependencies beyond Eigen, including on other parts of
 // Ceres, so it is possible to take this file alone and put it in another
 // project without the rest of Ceres.
 //
@@ -60,7 +60,7 @@ namespace ceres {
 
 // To use tiny solver, create a class or struct that allows computing the cost
 // function (described below). This is similar to a ceres::CostFunction, but is
-// different to enable statically allocating all memory for the solve
+// different to enable statically allocating all memory for the solver
 // (specifically, enum sizes). Key parts are the Scalar typedef, the enums to
 // describe problem sizes (needed to remove all heap allocations), and the
 // operator() overload to evaluate the cost and (optionally) jacobians.
@@ -75,9 +75,9 @@ namespace ceres {
 //                     double* residuals,
 //                     double* jacobian) const;
 //
-//     int NumResiduals();  -- Needed if NUM_RESIDUALS == Eigen::Dynamic.
-//     int NumParameters(); -- Needed if NUM_PARAMETERS == Eigen::Dynamic.
-//   }
+//     int NumResiduals() const;  -- Needed if NUM_RESIDUALS == Eigen::Dynamic.
+//     int NumParameters() const; -- Needed if NUM_PARAMETERS == Eigen::Dynamic.
+//   };
 //
 // For operator(), the size of the objects is:
 //

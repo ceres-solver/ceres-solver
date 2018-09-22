@@ -60,7 +60,7 @@ class CovarianceImpl;
 // Background
 // ==========
 // One way to assess the quality of the solution returned by a
-// non-linear least squares solve is to analyze the covariance of the
+// non-linear least squares solver is to analyze the covariance of the
 // solution.
 //
 // Let us consider the non-linear regression problem
@@ -158,7 +158,7 @@ class CovarianceImpl;
 // Gauge Invariance
 // ----------------
 // In structure from motion (3D reconstruction) problems, the
-// reconstruction is ambiguous upto a similarity transform. This is
+// reconstruction is ambiguous up to a similarity transform. This is
 // known as a Gauge Ambiguity. Handling Gauges correctly requires the
 // use of SVD or custom inversion algorithms. For small problems the
 // user can use the dense algorithm. For more details see

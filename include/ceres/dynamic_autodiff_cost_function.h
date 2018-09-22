@@ -57,7 +57,7 @@ namespace ceres {
 //     bool operator()(T const* const* parameters, T* residuals) const {
 //       // Use parameters[i] to access the i'th parameter block.
 //     }
-//   }
+//   };
 //
 // Since the sizing of the parameters is done at runtime, you must
 // also specify the sizes after creating the dynamic autodiff cost
@@ -103,7 +103,7 @@ class DynamicAutoDiffCostFunction : public DynamicCostFunction {
     // depends on.
     //
     // To work around this issue, the solution here is to evaluate the
-    // jacobians in a series of passes, each one computing Stripe *
+    // jacobians in a series of passes, each one computing Stride *
     // num_residuals() derivatives. This is done with small, fixed-size jets.
     const int num_parameter_blocks =
         static_cast<int>(parameter_block_sizes().size());

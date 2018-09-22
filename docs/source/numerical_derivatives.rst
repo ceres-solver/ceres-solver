@@ -248,7 +248,7 @@ Let us recall, the error in the central differences formula.
    \end{align}
 
 The key thing to note here is that the terms :math:`K_2, K_4, ...`
-are indepdendent of :math:`h` and only depend on :math:`x`.
+are independent of :math:`h` and only depend on :math:`x`.
 
 Let us now define:
 
@@ -380,7 +380,7 @@ Recommendations
 ===============
 
 Numeric differentiation should be used when you cannot compute the
-derivatives either analytically or using automatic differention. This
+derivatives either analytically or using automatic differentiation. This
 is usually the case when you are calling an external library or
 function whose analytic form you do not know or even if you do, you
 are not in a position to re-write it in a manner required to use

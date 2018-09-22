@@ -57,7 +57,7 @@
 // anything special (i.e. if we used a basic quadratic loss), the
 // residual for the erroneous measurement will result in extreme error
 // due to the quadratic nature of squared loss. This results in the
-// entire solution getting pulled away from the optimimum to reduce
+// entire solution getting pulled away from the optimum to reduce
 // the large error that would otherwise be attributed to the wrong
 // measurement.
 //

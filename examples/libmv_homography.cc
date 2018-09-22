@@ -51,7 +51,7 @@
 // This file demonstrates solving for a homography between two sets of points.
 // A homography describes a transformation between a sets of points on a plane,
 // perspectively projected into two images. The first step is to solve a
-// homogeneous system of equations via singular value decompposition, giving an
+// homogeneous system of equations via singular value decomposition, giving an
 // algebraic solution for the homography, then solving for a final solution by
 // minimizing the symmetric transfer error in image space with Ceres (called the
 // Gold Standard Solution in "Multiple View Geometry"). The routines are based on
@@ -105,7 +105,7 @@ struct EstimateHomographyOptions {
 // forward_error = D(H * x1, x2)
 // backward_error = D(H^-1 * x2, x1)
 //
-// Templated to be used with autodifferenciation.
+// Templated to be used with autodifferentiation.
 template <typename T>
 void SymmetricGeometricDistanceTerms(const Eigen::Matrix<T, 3, 3> &H,
                                      const Eigen::Matrix<T, 2, 1> &x1,

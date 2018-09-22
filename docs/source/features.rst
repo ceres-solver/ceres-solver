@@ -33,7 +33,7 @@ Why?
     space by specifying a :class:`LocalParameterization` object.
 
 * **Solver Choice** Depending on the size, sparsity structure, time &
-  memory budgets, and solution quality requiremnts, different
+  memory budgets, and solution quality requirements, different
   optimization algorithms will suit different needs. To this end,
   Ceres Solver comes with a variety of optimization algorithms:
 

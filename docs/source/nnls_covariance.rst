@@ -67,7 +67,7 @@ Gauge Invariance
 ================
 
 In structure from motion (3D reconstruction) problems, the
-reconstruction is ambiguous upto a similarity transform. This is
+reconstruction is ambiguous up to a similarity transform. This is
 known as a *Gauge Ambiguity*. Handling Gauges correctly requires the
 use of SVD or custom inversion algorithms. For small problems the
 user can use the dense algorithm. For more details see the work of

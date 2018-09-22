@@ -42,7 +42,7 @@ namespace ceres {
 namespace internal {
 
 // A thread-safe thread pool with an unbounded task queue and a resizable number
-// of workers.  The size of the thread pool can be increased by never decreased
+// of workers.  The size of the thread pool can be increased but never decreased
 // in order to support the largest number of threads requested.  The ThreadPool
 // has three states:
 //

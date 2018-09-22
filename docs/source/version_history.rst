@@ -128,7 +128,7 @@ Bug Fixes & Minor Changes
 #. Use target_compile_features() to specify C++11 requirement if
    available. (Alex Stewart)
 #. Update docs: .netrc --> .gitcookies (Keir Mierle)
-#. Fix implicit precission loss warning on 64-bit archs (Ricardo
+#. Fix implicit precision loss warning on 64-bit archs (Ricardo
    Sanchez-Saez)
 #. Optionally use exported Eigen CMake configuration if
    available. (Alex Stewart)
@@ -659,7 +659,7 @@ Backward Incompatible API Changes
    ``GRADIENT_TOLERANCE`` and ``PARAMETER_TOLERANCE`` have all been
    replaced by ``CONVERGENCE``.
 
-   ``NUMERICAL_FAILURE`` has been replaed by ``FAILURE``.
+   ``NUMERICAL_FAILURE`` has been replaced by ``FAILURE``.
 
    ``USER_ABORT`` has been renamed to ``USER_FAILURE``.
 
@@ -724,7 +724,7 @@ Bug Fixes
    the other #._FOUND definitions. (Andreas Franek)
 #. Variety of bug fixes and cleanups to the ``CMake`` build system
    (Alex Stewart)
-#. Removed fictious shared library target from the NDK build.
+#. Removed fictitious shared library target from the NDK build.
 #. Solver::Options now uses ``shared_ptr`` to handle ownership of
    ``Solver::Options::linear_solver_ordering`` and
    ``Solver::Options::inner_iteration_ordering``. As a consequence the
@@ -747,7 +747,7 @@ New Features
    residuals just like ``AutoDiffCostFunction``.
 #. ``Problem`` exposes more of its structure in its API.
 #. Faster automatic differentiation (Tim Langlois)
-#. Added the commonly occuring ``2_d_d`` template specialization for
+#. Added the commonly occurring ``2_d_d`` template specialization for
    the Schur Eliminator.
 #. Faster ``ITERATIVE_SCHUR`` solver using template specializations.
 #. Faster ``SCHUR_JACOBI`` preconditioner construction.
@@ -853,7 +853,7 @@ Bug Fixes
 #. Minor errors in documentation (Pablo Speciale)
 #. Updated depend.cmake to follow CMake IF convention. (Joydeep
    Biswas)
-#. Stablize the schur ordering algorithm.
+#. Stabilize the schur ordering algorithm.
 #. Update license header in split.h.
 #. Enabling -O4 (link-time optimization) only if compiler/linker
    support it. (Alex Stewart)
@@ -1065,7 +1065,7 @@ Bug Fixes
 #. Lots of minor code and lint fixes. (William Rucklidge)
 #. Fixed a bug in ``solver_impl.cc`` residual evaluation. (Markus
    Moll)
-#. Fixed varidic evaluation bug in ``AutoDiff``.
+#. Fixed variadic evaluation bug in ``AutoDiff``.
 #. Fixed ``SolverImpl`` tests.
 #. Fixed a bug in ``DenseSparseMatrix::ToDenseMatrix()``.
 #. Fixed an initialization bug in ``ProgramEvaluator``.
@@ -1325,7 +1325,7 @@ Bug Fixes
 
 #. Fixed integer overflow bug in ``block_random_access_sparse_matrix.cc``.
 #. Renamed some macros to prevent name conflicts.
-#. Fixed incorrent input to ``StateUpdatingCallback``.
+#. Fixed incorrect input to ``StateUpdatingCallback``.
 #. Fixes to AutoDiff tests.
 #. Various internal cleanups.
 
