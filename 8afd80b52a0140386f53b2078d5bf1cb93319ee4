@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06984b4c_c584f636",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-22T16:40:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f6fe6005_58245099",
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f441bed1_4d003fd8",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05baf52b_998ad389",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-22T16:40:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f441bed1_4d003fd8",
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "7e30a020_56ed8271",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-22T16:40:12Z",
+      "side": 1,
+      "message": "I am with Keir here. Leaving it a bare array makes it clear, that dynamic parameter size is not yet supported.",
+      "parentUuid": "ffeacf3b_4cfd63a7",
+      "range": {
+        "startLine": 181,
+        "startChar": 10,
+        "endLine": 181,
+        "endChar": 17
+      },
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e4df5c9_de5cf70f",
         "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
         "patchSetId": 8
@@ -166,6 +226,24 @@
       "writtenOn": "2018-09-21T17:28:10Z",
       "side": 1,
       "message": "There are a bunch of formatting issues in this file; maybe use Google\u0027s linter?",
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c47df3e_24e427c5",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-22T16:40:12Z",
+      "side": 1,
+      "message": "I used cpplint.py from here https://google.github.io/styleguide/cppguide.html#cpplint which didn\u0027t detect these formatting errors (except the one in line 123). What can I use to detect them?",
+      "parentUuid": "7e4df5c9_de5cf70f",
       "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -189,6 +267,24 @@
     },
     {
       "key": {
+        "uuid": "d415659e_922c4194",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-22T16:40:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7bdf2088_81614fbd",
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "887c7675_1405f510",
         "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
         "patchSetId": 8
@@ -206,6 +302,24 @@
     },
     {
       "key": {
+        "uuid": "b47c6904_6d6377b3",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-22T16:40:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "887c7675_1405f510",
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88e8d82d_61b485e9",
         "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
         "patchSetId": 8
@@ -220,6 +334,24 @@
       "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f3674a_1b65a122",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6125
+      },
+      "writtenOn": "2018-09-22T16:40:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88e8d82d_61b485e9",
+      "revId": "8afd80b52a0140386f53b2078d5bf1cb93319ee4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
