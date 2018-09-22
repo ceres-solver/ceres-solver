@@ -49,6 +49,7 @@
 namespace ceres {
 namespace internal {
 
+namespace {
 const char* SparseStatusToString(SparseStatus_t status) {
   switch (status) {
     CASESTR(SparseStatusOK);
@@ -61,11 +62,44 @@ const char* SparseStatusToString(SparseStatus_t status) {
       return "UKNOWN";
   }
 }
+}  // namespace.
+
+// Resizes workspace as required to contain at least required_size bytes
+// aligned to kAccelerateRequiredAlignment and returns a pointer to the
+// aligned start.
+void* ResizeForAccelerateAlignment(const size_t required_size,
+                                   std::vector<uint8_t> *workspace) {
+  // As per the Accelerate documentation, all workspace memory passed to the
+  // sparse solver functions must be 16-byte aligned.
+  constexpr int kAccelerateRequiredAlignment = 16;
+  // Although malloc() on macOS should always be 16-byte aligned, it is unclear
+  // if this holds for new(), or on other Apple OSs (phoneOS, watchOS etc).
+  // As such we assume it is not and use std::align() to create a (potentially
+  // offset) 16-byte aligned sub-buffer of the specified size within workspace.
+  workspace->resize(required_size + kAccelerateRequiredAlignment);
+  size_t size_from_aligned_start = workspace->size();
+  void* aligned_solve_workspace_start =
+      reinterpret_cast<void*>(workspace->data());
+  aligned_solve_workspace_start =
+      std::align(kAccelerateRequiredAlignment,
+                 required_size,
+                 aligned_solve_workspace_start,
+                 size_from_aligned_start);
+  CHECK(aligned_solve_workspace_start != nullptr)
+      << "required_size: " << required_size
+      << ", workspace size: " << workspace->size();
+  return aligned_solve_workspace_start;
+}
 
 template<typename Scalar>
 void AccelerateSparse<Scalar>::Solve(NumericFactorization* numeric_factor,
                                      DenseVector* rhs_and_solution) {
-  SparseSolve(*numeric_factor, *rhs_and_solution);
+  // From SparseSolve() documentation in Solve.h
+  const int required_size =
+      numeric_factor->solveWorkspaceRequiredStatic +
+      numeric_factor->solveWorkspaceRequiredPerRHS;
+  SparseSolve(*numeric_factor, *rhs_and_solution,
+              ResizeForAccelerateAlignment(required_size, &solve_workspace_));
 }
 
 template<typename Scalar>
@@ -118,7 +152,13 @@ AccelerateSparse<Scalar>::Cholesky(ASSparseMatrix* A,
 template<typename Scalar>
 void AccelerateSparse<Scalar>::Cholesky(ASSparseMatrix* A,
                                         NumericFactorization* numeric_factor) {
-  return SparseRefactor(*A, numeric_factor);
+  // From SparseRefactor() documentation in Solve.h
+  const int required_size = std::is_same<Scalar, double>::value
+      ? numeric_factor->symbolicFactorization.workspaceSize_Double
+      : numeric_factor->symbolicFactorization.workspaceSize_Float;
+  return SparseRefactor(*A, numeric_factor,
+                        ResizeForAccelerateAlignment(required_size,
+                                                     &factorization_workspace_));
 }
 
 // Instantiate only for the specific template types required/supported s/t the
