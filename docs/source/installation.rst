@@ -1118,7 +1118,7 @@ compiled Ceres library) directly if it is on the current list of
 search paths.  In which case, no CMake errors will occur, but ``Bar``
 will not link properly, as it does not have the required public link
 dependencies of Ceres, which are stored in the imported target
-defintion.
+definition.
 
 The solution to this is for ``Foo`` (i.e., the project that uses
 Ceres) to invoke ``find_package(Ceres)`` in ``FooConfig.cmake``, thus

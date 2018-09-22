@@ -89,13 +89,13 @@ void AngleAxisToQuaternion(const T* angle_axis, T* quaternion);
 // The value quaternion must be a unit quaternion - it is not normalized first,
 // and angle_axis will be filled with a value whose norm is the angle of
 // rotation in radians, and whose direction is the axis of rotation.
-// The implemention may be used with auto-differentiation up to the first
+// The implementation may be used with auto-differentiation up to the first
 // derivative, higher derivatives may have unexpected results near the origin.
 template<typename T>
 void QuaternionToAngleAxis(const T* quaternion, T* angle_axis);
 
 // Conversions between 3x3 rotation matrix (in column major order) and
-// quaternion rotation representations.  Templated for use with
+// quaternion rotation representations. Templated for use with
 // autodifferentiation.
 template <typename T>
 void RotationMatrixToQuaternion(const T* R, T* quaternion);
@@ -106,7 +106,7 @@ void RotationMatrixToQuaternion(
     T* quaternion);
 
 // Conversions between 3x3 rotation matrix (in column major order) and
-// axis-angle rotation representations.  Templated for use with
+// axis-angle rotation representations. Templated for use with
 // autodifferentiation.
 template <typename T>
 void RotationMatrixToAngleAxis(const T* R, T* angle_axis);

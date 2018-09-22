@@ -97,7 +97,7 @@ function does not matter. Interfacing this function with
    :class:`CostFunctionToFunctor`. The resulting object is a functor
    with a templated :code:`operator()` method, which pipes the
    Jacobian computed by :class:`NumericDiffCostFunction` into the
-   approproate :code:`Jet` objects.
+   appropriate :code:`Jet` objects.
 
 An implementation of the above three steps looks as follows:
 
@@ -168,7 +168,7 @@ is a two step process:
    :class:`CostFunctionToFunctor`. The resulting object is a functor
    with a templated :code:`operator()` method, which pipes the
    Jacobian computed by :class:`NumericDiffCostFunction` into the
-   approproate :code:`Jet` objects.
+   appropriate :code:`Jet` objects.
 
 The resulting code will look as follows:
 

@@ -115,7 +115,7 @@
 // of each of them.
 //
 // WARNING #1: Since the functor will get instantiated with different types for
-// T, you must to convert from other numeric types to T before mixing
+// T, you must convert from other numeric types to T before mixing
 // computations with other variables of type T. In the example above, this is
 // seen where instead of using k_ directly, k_ is wrapped with T(k_).
 //

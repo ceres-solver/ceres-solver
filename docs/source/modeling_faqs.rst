@@ -43,7 +43,7 @@ Modeling
    four dimensional parameterization of the space of three dimensional
    rotations :math:`SO(3)`.  However, the :math:`SO(3)` is a three
    dimensional set, and so is the tangent space of a
-   Quaternion. Therefore, it is sometimes (not always) benefecial to
+   Quaternion. Therefore, it is sometimes (not always) beneficial to
    associate a local parameterization with parameter blocks
    representing a Quaternion. Assuming that the order of entries in
    your parameter block is :math:`w,x,y,z`, you can use

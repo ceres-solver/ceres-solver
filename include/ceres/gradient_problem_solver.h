@@ -300,7 +300,7 @@ class CERES_EXPORT GradientProblemSolver {
     // to compute the next candidate step size as part of a line search.
     double line_search_polynomial_minimization_time_in_seconds = -1.0;
 
-    // Number of parameters in the probem.
+    // Number of parameters in the problem.
     int num_parameters = -1;
 
     // Dimension of the tangent space of the problem.
@@ -329,7 +329,7 @@ class CERES_EXPORT GradientProblemSolver {
   // Once a least squares problem has been built, this function takes
   // the problem and optimizes it based on the values of the options
   // parameters. Upon return, a detailed summary of the work performed
-  // by the preprocessor, the non-linear minmizer and the linear
+  // by the preprocessor, the non-linear minimizer and the linear
   // solver are reported in the summary object.
   virtual void Solve(const GradientProblemSolver::Options& options,
                      const GradientProblem& problem,

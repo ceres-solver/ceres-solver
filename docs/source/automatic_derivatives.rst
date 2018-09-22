@@ -45,7 +45,7 @@ Notice that compared to numeric differentiation, the only difference
 when defining the functor for use with automatic differentiation is
 the signature of the ``operator()``.
 
-In the case of numeric differentition it was
+In the case of numeric differentiation it was
 
 .. code-block:: c++
 
@@ -152,7 +152,7 @@ The summation notation gets tedious, so we will also just write
 .. math::
    x = a + \mathbf{v}.
 
-where the :math:`\epsilon_i`'s are implict. Then, using the same
+where the :math:`\epsilon_i`'s are implicit. Then, using the same
 Taylor series expansion used above, we can see that:
 
 .. math::
