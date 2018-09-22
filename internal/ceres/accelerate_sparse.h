@@ -101,6 +101,8 @@ class AccelerateSparse {
 
  private:
   std::vector<long> column_starts_;
+  std::vector<uint8_t> solve_workspace_;
+  std::vector<uint8_t> factorization_workspace_;
   // Storage for the values of A if Scalar != double (necessitating a copy).
   Eigen::Matrix<Scalar, Eigen::Dynamic, 1> values_;
 };
