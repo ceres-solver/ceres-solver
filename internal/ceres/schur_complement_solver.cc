@@ -286,7 +286,7 @@ void SparseSchurComplementSolver::InitStorage(
     }
   }
 
-  // Remaing rows do not contribute to the chunks and directly go
+  // Remaining rows do not contribute to the chunks and directly go
   // into the schur complement via an outer product.
   for (; r < num_row_blocks; ++r) {
     const CompressedRow& row = bs->rows[r];

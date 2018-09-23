@@ -31,7 +31,7 @@
 # Generate bundle adjustment tests as separate binaries. Since the bundle
 # adjustment tests are fairly processing intensive, serializing them makes the
 # tests take forever to run. Splitting them into separate binaries makes it
-# easier to parallelize in continous integration systems, and makes local
+# easier to parallelize in continuous integration systems, and makes local
 # processing on multi-core workstations much faster.
 
 # Product of ORDERINGS, THREAD_CONFIGS, and SOLVER_CONFIGS is the full set of

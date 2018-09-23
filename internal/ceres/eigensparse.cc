@@ -89,7 +89,7 @@ class EigenSparseCholeskyTemplate : public SparseCholesky {
                       .template cast<typename Solver::Scalar>();
 
     // The two casts are needed if the Scalar in this class is not
-    // double. For code simplicitly we are going to assume that Eigen
+    // double. For code simplicity we are going to assume that Eigen
     // is smart enough to figure out that casting a double Vector to a
     // double Vector is a straight copy. If this turns into a
     // performance bottleneck (unlikely), we can revisit this.

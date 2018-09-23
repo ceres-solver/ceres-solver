@@ -55,8 +55,8 @@ struct CanonicalViewsClusteringOptions;
 // canonical views clustering algorithm.
 //
 // In the following we will use the terms vertices and views
-// interchangably.  Given a weighted Graph G(V,E), the canonical views
-// of G are the the set of vertices that best "summarize" the content
+// interchangeably.  Given a weighted Graph G(V,E), the canonical views
+// of G are the set of vertices that best "summarize" the content
 // of the graph. If w_ij i s the weight connecting the vertex i to
 // vertex j, and C is the set of canonical views. Then the objective
 // of the canonical views algorithm is

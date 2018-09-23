@@ -259,7 +259,7 @@ Eliminate(const BlockSparseMatrix* A,
 
         // Compute the outer product of the e_blocks with themselves (ete
         // = E'E). Compute the product of the e_blocks with the
-        // corresonding f_blocks (buffer = E'F), the gradient of the terms
+        // corresponding f_blocks (buffer = E'F), the gradient of the terms
         // in this chunk (g) and add the outer product of the f_blocks to
         // Schur complement (S += F'F).
         ChunkDiagonalBlockAndGradient(
@@ -590,7 +590,7 @@ NoEBlockRowsUpdate(const BlockSparseMatrix* A,
 // one difference. It does not use any of the template
 // parameters. This is because the algorithm used for detecting the
 // static structure of the matrix A only pays attention to rows with
-// e_blocks. This is becase rows without e_blocks are rare and
+// e_blocks. This is because rows without e_blocks are rare and
 // typically arise from regularization terms in the original
 // optimization problem, and have a very different structure than the
 // rows with e_blocks. Including them in the static structure
@@ -647,7 +647,7 @@ NoEBlockRowOuterProduct(const BlockSparseMatrix* A,
   }
 }
 
-// For a row with an e_block, compute the contribition S += F'F. This
+// For a row with an e_block, compute the contribution S += F'F. This
 // function has the same structure as NoEBlockRowOuterProduct, except
 // that this function uses the template parameters.
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>

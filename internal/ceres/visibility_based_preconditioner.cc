@@ -78,7 +78,7 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
   CHECK(options_.type == CLUSTER_JACOBI || options_.type == CLUSTER_TRIDIAGONAL)
       << "Unknown preconditioner type: " << options_.type;
   num_blocks_ = bs.cols.size() - options_.elimination_groups[0];
-  CHECK_GT(num_blocks_, 0) << "Jacobian should have atleast 1 f_block for "
+  CHECK_GT(num_blocks_, 0) << "Jacobian should have at least 1 f_block for "
                            << "visibility based preconditioning.";
   CHECK(options_.context != NULL);
 
@@ -113,7 +113,7 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
   // preprocessor, so the columns of the Jacobian have not been
   // reordered to minimize fill in when computing its sparse Cholesky
   // factorization. So we must tell the SparseCholesky object to
-  // perform approximiate minimum-degree reordering, which is done by
+  // perform approximate minimum-degree reordering, which is done by
   // setting use_postordering to true.
   sparse_cholesky_options.use_postordering = true;
   sparse_cholesky_ = SparseCholesky::Create(sparse_cholesky_options);
@@ -221,11 +221,11 @@ void VisibilityBasedPreconditioner::ClusterCameras(
 // preconditioner or not.
 //
 // A pair of cameras contribute a cell to the preconditioner if they
-// are part of the same cluster or if the the two clusters that they
+// are part of the same cluster or if the two clusters that they
 // belong have an edge connecting them in the degree-2 maximum
 // spanning forest.
 //
-// For example, a camera pair (i,j) where i belonges to cluster1 and
+// For example, a camera pair (i,j) where i belongs to cluster1 and
 // j belongs to cluster2 (assume that cluster1 < cluster2).
 //
 // The cell corresponding to (i,j) is present in the preconditioner
@@ -255,7 +255,7 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
   //
   // For each e_block/point block we identify the set of cameras
   // seeing it. The cross product of this set with itself is the set
-  // of non-zero cells contibuted by this e_block.
+  // of non-zero cells contributed by this e_block.
   //
   // The time complexity of this is O(nm^2) where, n is the number of
   // 3d points and m is the maximum number of cameras seeing any
@@ -363,7 +363,7 @@ bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   }
 
   // The scaling only affects the tri-diagonal case, since
-  // ScaleOffDiagonalBlocks only pays attenion to the cells that
+  // ScaleOffDiagonalBlocks only pays attention to the cells that
   // belong to the edges of the degree-2 forest. In the CLUSTER_JACOBI
   // case, the preconditioner is guaranteed to be positive
   // semidefinite.
@@ -483,7 +483,7 @@ void VisibilityBasedPreconditioner::ForestToClusterPairs(
   }
 }
 
-// The visibilty set of a cluster is the union of the visibilty sets
+// The visibility set of a cluster is the union of the visibility sets
 // of all its cameras. In other words, the set of points visible to
 // any camera in the cluster.
 void VisibilityBasedPreconditioner::ComputeClusterVisibility(
@@ -524,7 +524,7 @@ WeightedGraph<int>* VisibilityBasedPreconditioner::CreateClusterGraph(
       if (intersection.size() > 0) {
         // Clusters interact strongly when they share a large number
         // of 3D points. The degree-2 maximum spanning forest
-        // alorithm, iterates on the edges in decreasing order of
+        // algorithm, iterates on the edges in decreasing order of
         // their weight, which is the number of points shared by the
         // two cameras that it connects.
         cluster_graph->AddEdge(i, j, intersection.size());

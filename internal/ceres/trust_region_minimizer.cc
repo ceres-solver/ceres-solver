@@ -754,7 +754,7 @@ bool TrustRegionMinimizer::IsStepSuccessful() {
   // small.
   //
   // This can cause the trust region loop to reject this step. To
-  // get around this, we expicitly check if the inner iterations
+  // get around this, we explicitly check if the inner iterations
   // led to a net decrease in the objective function value. If
   // they did, we accept the step even if the trust region ratio
   // is small.

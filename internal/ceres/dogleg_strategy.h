@@ -103,7 +103,7 @@ class DoglegStrategy : public TrustRegionStrategy {
 
   // mu is used to scale the diagonal matrix used to make the
   // Gauss-Newton solve full rank. In each solve, the strategy starts
-  // out with mu = min_mu, and tries values upto max_mu. If the user
+  // out with mu = min_mu, and tries values up to max_mu. If the user
   // reports an invalid step, the value of mu_ is increased so that
   // the next solve starts with a stronger regularization.
   //

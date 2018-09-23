@@ -58,7 +58,7 @@ void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
 
 // Given f_block visibility as computed by the ComputeVisibility
 // function above, construct and return a graph whose vertices are
-// f_blocks and an edge connects two vertices if they have atleast one
+// f_blocks and an edge connects two vertices if they have at least one
 // e_block in common. The weight of this edge is normalized dot
 // product between the visibility vectors of the two
 // vertices/f_blocks.

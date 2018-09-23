@@ -52,7 +52,7 @@ class TripletSparseMatrix;
 
 // This object provides access to solving linear systems using Cholesky
 // factorization with a known symbolic factorization. This features does not
-// explicity exist in CXSparse. The methods in the class are nonstatic because
+// explicitly exist in CXSparse. The methods in the class are nonstatic because
 // the class manages internal scratch space.
 class CXSparse {
  public:

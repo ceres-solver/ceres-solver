@@ -51,7 +51,7 @@ class LineSearchFunction;
 // dimensional optimization problems that arise as subproblems of
 // general multidimensional optimization problems.
 //
-// While finding the exact minimum of a one dimensionl function is
+// While finding the exact minimum of a one dimensional function is
 // hard, instances of LineSearch find a point that satisfies a
 // sufficient decrease condition. Depending on the particular
 // condition used, we get a variety of different line search

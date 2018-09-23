@@ -50,7 +50,7 @@ SchurJacobiPreconditioner::SchurJacobiPreconditioner(
   CHECK_GT(options_.elimination_groups[0], 0);
   const int num_blocks = bs.cols.size() - options_.elimination_groups[0];
   CHECK_GT(num_blocks, 0)
-      << "Jacobian should have atleast 1 f_block for "
+      << "Jacobian should have at least 1 f_block for "
       << "SCHUR_JACOBI preconditioner.";
   CHECK(options_.context != NULL);
 

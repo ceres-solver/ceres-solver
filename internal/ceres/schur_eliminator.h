@@ -51,7 +51,7 @@ namespace internal {
 //
 //  E y + F z = b
 //
-// Where x = [y;z] is a partition of the variables.  The paritioning
+// Where x = [y;z] is a partition of the variables.  The partitioning
 // of the variables is such that, E'E is a block diagonal matrix. Or
 // in other words, the parameter blocks in E form an independent set
 // of the of the graph implied by the block matrix A'A. Then, this
@@ -148,7 +148,7 @@ namespace internal {
 // Where the sum is over chunks and E_k'E_k is dense matrix of size y1
 // x y1.
 //
-// Advanced usage. Uptil now it has been assumed that the user would
+// Advanced usage. Until now it has been assumed that the user would
 // be interested in all of the Schur Complement S. However, it is also
 // possible to use this eliminator to obtain an arbitrary submatrix of
 // the full Schur complement. When the eliminator is generating the
