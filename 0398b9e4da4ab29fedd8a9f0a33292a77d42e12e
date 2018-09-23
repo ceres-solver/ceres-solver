@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed1f7a05_8fd66e25",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-23T03:10:29Z",
+      "side": 1,
+      "message": "yes we must make sure ceres runs on WatchOS !",
+      "range": {
+        "startLine": 76,
+        "startChar": 51,
+        "endLine": 76,
+        "endChar": 52
+      },
+      "revId": "0398b9e4da4ab29fedd8a9f0a33292a77d42e12e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7bb8871_92cc9751",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-23T03:10:29Z",
+      "side": 1,
+      "message": "I am wondering if you are better off not defining these temp variables and calling std::align directly, I think it will actually read easier.\n\nvoid* workspace_aligned_start \u003d \nstd::align(kAccelerateRequiredAlignment, required_size, workspace-\u003edata(), workspace-\u003esize());",
+      "range": {
+        "startLine": 79,
+        "startChar": 13,
+        "endLine": 79,
+        "endChar": 19
+      },
+      "revId": "0398b9e4da4ab29fedd8a9f0a33292a77d42e12e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
