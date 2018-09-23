@@ -45,6 +45,30 @@
       "revId": "0398b9e4da4ab29fedd8a9f0a33292a77d42e12e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483c2d8a_de807076",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-09-23T09:39:01Z",
+      "side": 1,
+      "message": "You can\u0027t unfortunately, as std::align() takes the data pointer and size arguments by reference.",
+      "parentUuid": "d7bb8871_92cc9751",
+      "range": {
+        "startLine": 79,
+        "startChar": 13,
+        "endLine": 79,
+        "endChar": 19
+      },
+      "revId": "0398b9e4da4ab29fedd8a9f0a33292a77d42e12e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
