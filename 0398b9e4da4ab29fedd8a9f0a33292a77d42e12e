@@ -69,6 +69,30 @@
       "revId": "0398b9e4da4ab29fedd8a9f0a33292a77d42e12e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907c916d_b80201ec",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-23T19:15:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "483c2d8a_de807076",
+      "range": {
+        "startLine": 79,
+        "startChar": 13,
+        "endLine": 79,
+        "endChar": 19
+      },
+      "revId": "0398b9e4da4ab29fedd8a9f0a33292a77d42e12e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
