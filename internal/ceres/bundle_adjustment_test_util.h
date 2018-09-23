@@ -128,6 +128,8 @@ class BundleAdjustmentProblem {
     for (int i = 0; i < num_parameters_; ++i) {
       FscanfOrDie(fptr, "%lf", parameters_ + i);
     }
+
+    fclose(fptr);
   }
 
   void BuildProblem() {
@@ -142,7 +144,7 @@ class BundleAdjustmentProblem {
               new BundlerResidual(observations_[2*i + 0],
                                   observations_[2*i + 1]));
 
-      // Each observation correponds to a pair of a camera and a point
+      // Each observation corresponds to a pair of a camera and a point
       // which are identified by camera_index()[i] and
       // point_index()[i] respectively.
       double* camera = cameras + 9 * camera_index_[i];
