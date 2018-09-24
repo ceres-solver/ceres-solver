@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af83e413_093aa89f",
+        "filename": "internal/ceres/tiny_solver_test_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-09-24T17:19:53Z",
+      "side": 1,
+      "message": "Spacing is weird; parameters should be stacked, not aligned by the T*.",
+      "revId": "682459694410a83e73cb4d18fa48420e85d7f7c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
