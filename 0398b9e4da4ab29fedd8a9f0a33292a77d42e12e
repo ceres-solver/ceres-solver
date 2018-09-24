@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ad2b9c17_df526f34",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-09-24T17:22:25Z",
+      "side": 1,
+      "message": "Close with:\n\n}  // namespace",
+      "revId": "0398b9e4da4ab29fedd8a9f0a33292a77d42e12e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed1f7a05_8fd66e25",
         "filename": "internal/ceres/accelerate_sparse.cc",
         "patchSetId": 1
