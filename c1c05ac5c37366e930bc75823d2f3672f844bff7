@@ -16,6 +16,24 @@
       "revId": "c1c05ac5c37366e930bc75823d2f3672f844bff7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54b9e6f_5b8e58ce",
+        "filename": "internal/ceres/conditioned_cost_function_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-25T17:03:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74aadb56_37a42931",
+      "revId": "c1c05ac5c37366e930bc75823d2f3672f844bff7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
