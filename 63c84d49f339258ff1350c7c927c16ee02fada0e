@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f92c827_ef3426d9",
+        "filename": "include/ceres/internal/manual_constructor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-26T23:06:50Z",
+      "side": 1,
+      "message": "this comment is outdated.",
+      "range": {
+        "startLine": 134,
+        "startChar": 29,
+        "endLine": 134,
+        "endChar": 40
+      },
+      "revId": "63c84d49f339258ff1350c7c927c16ee02fada0e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
