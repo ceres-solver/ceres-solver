@@ -22,6 +22,30 @@
       "revId": "63c84d49f339258ff1350c7c927c16ee02fada0e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10804cf_fc014e2f",
+        "filename": "include/ceres/internal/manual_constructor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-09-27T18:55:39Z",
+      "side": 1,
+      "message": "I removed the comment.",
+      "parentUuid": "5f92c827_ef3426d9",
+      "range": {
+        "startLine": 134,
+        "startChar": 29,
+        "endLine": 134,
+        "endChar": 40
+      },
+      "revId": "63c84d49f339258ff1350c7c927c16ee02fada0e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
