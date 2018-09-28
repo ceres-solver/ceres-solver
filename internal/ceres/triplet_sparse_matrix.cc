@@ -97,6 +97,9 @@ TripletSparseMatrix::TripletSparseMatrix(const TripletSparseMatrix& orig)
 
 TripletSparseMatrix& TripletSparseMatrix::operator=(
     const TripletSparseMatrix& rhs) {
+  if (this == &rhs) {
+    return *this;
+  }
   num_rows_ = rhs.num_rows_;
   num_cols_ = rhs.num_cols_;
   num_nonzeros_ = rhs.num_nonzeros_;
