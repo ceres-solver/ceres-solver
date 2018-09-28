@@ -97,12 +97,14 @@ TripletSparseMatrix::TripletSparseMatrix(const TripletSparseMatrix& orig)
 
 TripletSparseMatrix& TripletSparseMatrix::operator=(
     const TripletSparseMatrix& rhs) {
-  num_rows_ = rhs.num_rows_;
-  num_cols_ = rhs.num_cols_;
-  num_nonzeros_ = rhs.num_nonzeros_;
-  max_num_nonzeros_ = rhs.max_num_nonzeros_;
-  AllocateMemory();
-  CopyData(rhs);
+  if (this != &rhs) {
+    num_rows_ = rhs.num_rows_;
+    num_cols_ = rhs.num_cols_;
+    num_nonzeros_ = rhs.num_nonzeros_;
+    max_num_nonzeros_ = rhs.max_num_nonzeros_;
+    AllocateMemory();
+    CopyData(rhs);
+  }
   return *this;
 }
 
