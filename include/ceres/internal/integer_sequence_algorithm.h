@@ -26,48 +26,69 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
+// Author: jodebo_beck@gmx.de (Johannes Beck)
 //
-// A convenience class for cost functions which are statically sized.
-// Compared to the dynamically-sized base class, this reduces boilerplate.
-//
-// The kNumResiduals template parameter can be a constant such as 2 or 5, or it
-// can be ceres::DYNAMIC. If kNumResiduals is ceres::DYNAMIC, then subclasses
-// are responsible for calling set_num_residuals() at runtime.
+// Algorithms to be used together with integer_sequence, like computing the sum
+// or the prefix sum at compile time.
 
-#ifndef CERES_PUBLIC_SIZED_COST_FUNCTION_H_
-#define CERES_PUBLIC_SIZED_COST_FUNCTION_H_
+#ifndef CERES_PUBLIC_INTERNAL_INTEGER_SEQUENCE_ALGORITHM_H_
+#define CERES_PUBLIC_INTERNAL_INTEGER_SEQUENCE_ALGORITHM_H_
 
-#include "ceres/cost_function.h"
-#include "ceres/types.h"
-#include "glog/logging.h"
-#include "internal/parameter_dims.h"
+#include "integer_sequence.h"
 
 namespace ceres {
+namespace internal {
 
-template <int kNumResiduals, int... Ns>
-class SizedCostFunction : public CostFunction {
-  static_assert(kNumResiduals > 0 || kNumResiduals == DYNAMIC,
-                "Cost functions must have at least one residual block.");
+template <typename Seq>
+struct SumImpl;
 
- protected:
-  using Params = internal::ParameterDims<false, Ns...>;
-
-  static_assert(Params::kIsValid,
-                "Invalid parameter block dimension detected. Each parameter "
-                "block dimension must be bigger than zero.");
-
- public:
-  SizedCostFunction() {
-    set_num_residuals(kNumResiduals);
-    *mutable_parameter_block_sizes() = std::vector<int32_t>{Ns...};
-  }
-
-  virtual ~SizedCostFunction() { }
-
-  // Subclasses must implement Evaluate().
+template <typename T, T N, T... Ns>
+struct SumImpl<integer_sequence<T, N, Ns...>> {
+  static constexpr T value = N + SumImpl<integer_sequence<T, Ns...>>::value;
 };
 
+template <typename T>
+struct SumImpl<integer_sequence<T>> {
+  static constexpr T value = T(0);
+};
+
+template <typename Seq>
+struct Sum {
+ private:
+  using T = typename Seq::value_type;
+
+ public:
+  static constexpr T value = SumImpl<Seq>::value;
+};
+
+template <typename T, T Sum, typename SeqIn, typename SeqOut>
+struct PrefixSumImpl;
+
+template <typename T, T Sum, T N, T... Ns, T... Rs>
+struct PrefixSumImpl<T, Sum, integer_sequence<T, N, Ns...>,
+                     integer_sequence<T, Rs...>> {
+  using Type = typename PrefixSumImpl<T, Sum + N, integer_sequence<T, Ns...>,
+                                      integer_sequence<T, Rs..., Sum>>::Type;
+};
+
+template <typename T, T Sum, typename SeqOut>
+struct PrefixSumImpl<T, Sum, integer_sequence<T>, SeqOut> {
+  using Type = SeqOut;
+};
+
+template <typename Seq>
+struct PrefixSumT {
+ private:
+  using T = typename Seq::value_type;
+
+ public:
+  using Type = typename PrefixSumImpl<T, T(0), Seq, integer_sequence<T>>::Type;
+};
+
+template <typename Seq>
+using PrefixSum = typename PrefixSumT<Seq>::Type;
+
+}  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_PUBLIC_SIZED_COST_FUNCTION_H_
+#endif  // CERES_PUBLIC_INTERNAL_INTEGER_SEQUENCE_ALGORITHM_H_

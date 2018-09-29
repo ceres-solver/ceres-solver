@@ -265,14 +265,10 @@ void QuaternionParameterizationTestHelper(
   double* jacobian_array[2] = { NULL, jacobian_ref };
 
   // Autodiff jacobian at delta_x = 0.
-  internal::AutoDiff<Plus,
-                     double,
-                     kGlobalSize,
-                     kLocalSize>::Differentiate(Plus(),
-                                                parameters,
-                                                kGlobalSize,
-                                                x_plus_delta,
-                                                jacobian_array);
+  internal::AutoDiff<Plus, double,
+                     ParameterDims<false, kGlobalSize, kLocalSize>>::
+      Differentiate(Plus(), parameters, kGlobalSize, x_plus_delta,
+                    jacobian_array);
 
   double jacobian[12];
   parameterization.ComputeJacobian(x, jacobian);
