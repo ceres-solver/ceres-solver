@@ -51,8 +51,8 @@ using std::vector;
 typedef Graph<ParameterBlock*> HessianGraph;
 typedef std::unordered_set<ParameterBlock*> VertexSet;
 
-template <int M, int N1 = 0, int N2 = 0, int N3 = 0>
-class DummyCostFunction: public SizedCostFunction<M, N1, N2, N3> {
+template <int M, int... Ns>
+class DummyCostFunction : public SizedCostFunction<M, Ns...> {
   virtual bool Evaluate(double const* const* parameters,
                         double* residuals,
                         double** jacobians) const {

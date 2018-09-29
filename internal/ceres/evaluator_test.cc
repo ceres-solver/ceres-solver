@@ -55,11 +55,16 @@ using std::string;
 using std::vector;
 
 // TODO(keir): Consider pushing this into a common test utils file.
-template<int kFactor, int kNumResiduals,
-         int N0 = 0, int N1 = 0, int N2 = 0, bool kSucceeds = true>
-class ParameterIgnoringCostFunction
-    : public SizedCostFunction<kNumResiduals, N0, N1, N2> {
-  typedef SizedCostFunction<kNumResiduals, N0, N1, N2> Base;
+template <int kFactor, int kNumResiduals, typename ParameterDims,
+          bool kSucceeds = true>
+class ParameterIgnoringCostFunction;
+
+template <int kFactor, int kNumResiduals, int... Ns, bool kSucceeds>
+class ParameterIgnoringCostFunction<kFactor, kNumResiduals,
+                                    ParameterDims<false, Ns...>, kSucceeds>
+    : public SizedCostFunction<kNumResiduals, Ns...> {
+  typedef SizedCostFunction<kNumResiduals, Ns...> Base;
+
  public:
   virtual bool Evaluate(double const* const* parameters,
                         double* residuals,
@@ -216,9 +221,9 @@ void SetSparseMatrixConstant(SparseMatrix* sparse_matrix, double value) {
 }
 
 TEST_P(EvaluatorTest, SingleResidualProblem) {
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 3, 2, 3, 4>,
-                           NULL,
-                           x, y, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<1, 3, ParameterDims<false, 2, 3, 4>>,
+      NULL, x, y, z);
 
   ExpectedEvaluation expected = {
     // Rows/columns
@@ -254,9 +259,9 @@ TEST_P(EvaluatorTest, SingleResidualProblemWithPermutedParameters) {
   // At one point the compressed row evaluator had a bug that went undetected
   // for a long time, since by chance most users added parameters to the problem
   // in the same order that they occurred as parameters to a cost function.
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 3, 4, 3, 2>,
-                           NULL,
-                           z, y, x);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<1, 3, ParameterDims<false, 4, 3, 2>>,
+      NULL, z, y, x);
 
   ExpectedEvaluation expected = {
     // Rows/columns
@@ -297,9 +302,9 @@ TEST_P(EvaluatorTest, SingleResidualProblemWithNuisanceParameters) {
   problem.AddParameterBlock(z, 4);
   problem.AddParameterBlock(d, 3);
 
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 3, 2, 3, 4>,
-                           NULL,
-                           x, y, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<1, 3, ParameterDims<false, 2, 3, 4>>,
+      NULL, x, y, z);
 
   ExpectedEvaluation expected = {
     // Rows/columns
@@ -334,19 +339,19 @@ TEST_P(EvaluatorTest, MultipleResidualProblem) {
   problem.AddParameterBlock(z,  4);
 
   // f(x, y) in R^2
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 2, 2, 3>,
-                           NULL,
-                           x, y);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<1, 2, ParameterDims<false, 2, 3>>, NULL,
+      x, y);
 
   // g(x, z) in R^3
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<2, 3, 2, 4>,
-                           NULL,
-                           x, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<2, 3, ParameterDims<false, 2, 4>>, NULL,
+      x, z);
 
   // h(y, z) in R^4
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<3, 4, 3, 4>,
-                           NULL,
-                           y, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<3, 4, ParameterDims<false, 3, 4>>, NULL,
+      y, z);
 
   ExpectedEvaluation expected = {
     // Rows/columns
@@ -397,19 +402,19 @@ TEST_P(EvaluatorTest, MultipleResidualsWithLocalParameterizations) {
   problem.AddParameterBlock(z, 4, new SubsetParameterization(4, z_fixed));
 
   // f(x, y) in R^2
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 2, 2, 3>,
-                           NULL,
-                           x, y);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<1, 2, ParameterDims<false, 2, 3>>, NULL,
+      x, y);
 
   // g(x, z) in R^3
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<2, 3, 2, 4>,
-                           NULL,
-                           x, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<2, 3, ParameterDims<false, 2, 4>>, NULL,
+      x, z);
 
   // h(y, z) in R^4
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<3, 4, 3, 4>,
-                           NULL,
-                           y, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<3, 4, ParameterDims<false, 3, 4>>, NULL,
+      y, z);
 
   ExpectedEvaluation expected = {
     // Rows/columns
@@ -457,19 +462,19 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
   problem.AddParameterBlock(z,  4);
 
   // f(x, y) in R^2
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 2, 2, 3>,
-                           NULL,
-                           x, y);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<1, 2, ParameterDims<false, 2, 3>>, NULL,
+      x, y);
 
   // g(x, z) in R^3
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<2, 3, 2, 4>,
-                           NULL,
-                           x, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<2, 3, ParameterDims<false, 2, 4>>, NULL,
+      x, z);
 
   // h(y, z) in R^4
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<3, 4, 3, 4>,
-                           NULL,
-                           y, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<3, 4, ParameterDims<false, 3, 4>>, NULL,
+      y, z);
 
   // For this test, "z" is constant.
   problem.SetParameterBlockConstant(z);
@@ -526,7 +531,9 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
 TEST_P(EvaluatorTest, EvaluatorAbortsForResidualsThatFailToEvaluate) {
   // Switch the return value to failure.
   problem.AddResidualBlock(
-      new ParameterIgnoringCostFunction<20, 3, 2, 3, 4, false>, NULL, x, y, z);
+      new ParameterIgnoringCostFunction<20, 3, ParameterDims<false, 2, 3, 4>,
+                                        false>,
+      NULL, x, y, z);
 
   // The values are ignored.
   double state[9];

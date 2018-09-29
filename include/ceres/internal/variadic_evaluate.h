@@ -34,159 +34,55 @@
 
 #include <stddef.h>
 
-#include "ceres/jet.h"
-#include "ceres/types.h"
+#include "ceres/cost_function.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
+#include "ceres/internal/parameter_dims.h"
+#include "ceres/jet.h"
+#include "ceres/types.h"
 #include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
 
-// This block of quasi-repeated code calls the user-supplied functor, which may
-// take a variable number of arguments. This is accomplished by specializing the
-// struct based on the size of the trailing parameters; parameters with 0 size
-// are assumed missing.
-template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
-         int N5, int N6, int N7, int N8, int N9>
-struct VariadicEvaluate {
-  static bool Call(const Functor& functor, T const *const *input, T* output) {
-    return functor(input[0],
-                   input[1],
-                   input[2],
-                   input[3],
-                   input[4],
-                   input[5],
-                   input[6],
-                   input[7],
-                   input[8],
-                   input[9],
-                   output);
-  }
-};
+// For fixed size cost functors
+template <typename Functor, typename T, int Idx, int... Indices>
+inline bool VariadicEvaluateImpl(
+    const Functor& functor, T const* const* input, T* output,
+    integer_sequence<int, Idx, Indices...> /* NOT USED*/) {
+  return functor(input[Idx], input[Indices]..., output);
+}
 
-template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
-         int N5, int N6, int N7, int N8>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, N8, 0> {
-  static bool Call(const Functor& functor, T const *const *input, T* output) {
-    return functor(input[0],
-                   input[1],
-                   input[2],
-                   input[3],
-                   input[4],
-                   input[5],
-                   input[6],
-                   input[7],
-                   input[8],
-                   output);
-  }
-};
+// For dynamic sized cost functors
+template <typename Functor, typename T>
+inline bool VariadicEvaluateImpl(const Functor& functor, T const* const* input,
+                                 T* output,
+                                 integer_sequence<int> /* NOT USED*/) {
+  return functor(input, output);
+}
 
-template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
-         int N5, int N6, int N7>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, 0, 0> {
-  static bool Call(const Functor& functor, T const *const *input, T* output) {
-    return functor(input[0],
-                   input[1],
-                   input[2],
-                   input[3],
-                   input[4],
-                   input[5],
-                   input[6],
-                   input[7],
-                   output);
-  }
-};
+// For ceres cost functors (not ceres::CostFunction)
+template <typename ParameterDims, typename Functor, typename T>
+inline bool VariadicEvaluateImpl(const Functor& functor, T const* const* input,
+                                 T* output, const void* /* NOT USED */) {
+  using ParameterBlockIndices =
+      make_integer_sequence<int, ParameterDims::kNumParameterBlocks>;
+  return VariadicEvaluateImpl(functor, input, output, ParameterBlockIndices());
+}
 
-template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
-         int N5, int N6>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, 0, 0, 0> {
-  static bool Call(const Functor& functor, T const *const *input, T* output) {
-    return functor(input[0],
-                   input[1],
-                   input[2],
-                   input[3],
-                   input[4],
-                   input[5],
-                   input[6],
-                   output);
-  }
-};
+// For ceres::CostFunctions
+template <typename ParameterDims, typename Functor, typename T>
+inline bool VariadicEvaluateImpl(const Functor& functor, T const* const* input,
+                                 T* output,
+                                 const CostFunction* /* NOT USED */) {
+  return functor.Evaluate(input, output, NULL);
+}
 
-template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
-         int N5>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, 0, 0, 0, 0> {
-  static bool Call(const Functor& functor, T const *const *input, T* output) {
-    return functor(input[0],
-                   input[1],
-                   input[2],
-                   input[3],
-                   input[4],
-                   input[5],
-                   output);
-  }
-};
-
-template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, 0, 0, 0, 0, 0> {
-  static bool Call(const Functor& functor, T const *const *input, T* output) {
-    return functor(input[0],
-                   input[1],
-                   input[2],
-                   input[3],
-                   input[4],
-                   output);
-  }
-};
-
-template<typename Functor, typename T, int N0, int N1, int N2, int N3>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, 0, 0, 0, 0, 0, 0> {
-  static bool Call(const Functor& functor, T const *const *input, T* output) {
-    return functor(input[0],
-                   input[1],
-                   input[2],
-                   input[3],
-                   output);
-  }
-};
-
-template<typename Functor, typename T, int N0, int N1, int N2>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, 0, 0, 0, 0, 0, 0, 0> {
-  static bool Call(const Functor& functor, T const *const *input, T* output) {
-    return functor(input[0],
-                   input[1],
-                   input[2],
-                   output);
-  }
-};
-
-template<typename Functor, typename T, int N0, int N1>
-struct VariadicEvaluate<Functor, T, N0, N1, 0, 0, 0, 0, 0, 0, 0, 0> {
-  static bool Call(const Functor& functor, T const *const *input, T* output) {
-    return functor(input[0],
-                   input[1],
-                   output);
-  }
-};
-
-template<typename Functor, typename T, int N0>
-struct VariadicEvaluate<Functor, T, N0, 0, 0, 0, 0, 0, 0, 0, 0, 0> {
-  static bool Call(const Functor& functor, T const *const *input, T* output) {
-    return functor(input[0],
-                   output);
-  }
-};
-
-// Template instantiation for dynamically-sized functors.
-template<typename Functor, typename T>
-struct VariadicEvaluate<Functor, T, ceres::DYNAMIC, ceres::DYNAMIC,
-                        ceres::DYNAMIC, ceres::DYNAMIC, ceres::DYNAMIC,
-                        ceres::DYNAMIC, ceres::DYNAMIC, ceres::DYNAMIC,
-                        ceres::DYNAMIC, ceres::DYNAMIC> {
-  static bool Call(const Functor& functor, T const *const *input, T* output) {
-    return functor(input, output);
-  }
-};
+template <typename ParameterDims, typename Functor, typename T>
+inline bool VariadicEvaluate(const Functor& functor, T const* const* input,
+                             T* output) {
+  return VariadicEvaluateImpl<ParameterDims>(functor, input, output, &functor);
+}
 
 }  // namespace internal
 }  // namespace ceres

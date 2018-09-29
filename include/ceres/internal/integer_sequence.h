@@ -26,48 +26,60 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
+// Author: jodebo_beck@gmx.de (Johannes Beck)
 //
-// A convenience class for cost functions which are statically sized.
-// Compared to the dynamically-sized base class, this reduces boilerplate.
-//
-// The kNumResiduals template parameter can be a constant such as 2 or 5, or it
-// can be ceres::DYNAMIC. If kNumResiduals is ceres::DYNAMIC, then subclasses
-// are responsible for calling set_num_residuals() at runtime.
+// This class mimics std::integer_sequence. That is the reason to follow the
+// naming convention of the stl and not the google one. Once ceres is switching
+// to c++ 14 this class can be removed.
 
-#ifndef CERES_PUBLIC_SIZED_COST_FUNCTION_H_
-#define CERES_PUBLIC_SIZED_COST_FUNCTION_H_
+#ifndef CERES_PUBLIC_INTERNAL_INTEGER_SEQUENCE_H_
+#define CERES_PUBLIC_INTERNAL_INTEGER_SEQUENCE_H_
 
-#include "ceres/cost_function.h"
-#include "ceres/types.h"
-#include "glog/logging.h"
-#include "internal/parameter_dims.h"
+#if __cplusplus >= 201402L
+// We have at least c++ 14 support. Use integer_sequence from the standard.
+// Sometimes the STL implementation uses a compiler intrinsic to generate
+// the sequences which will speed up compilation.
+#include <utility>
 
 namespace ceres {
+namespace internal {
 
-template <int kNumResiduals, int... Ns>
-class SizedCostFunction : public CostFunction {
-  static_assert(kNumResiduals > 0 || kNumResiduals == DYNAMIC,
-                "Cost functions must have at least one residual block.");
+template <typename T, T... Ns>
+using integer_sequence = std::integer_sequence<T, Ns...>;
 
- protected:
-  using Params = internal::ParameterDims<false, Ns...>;
+template <typename T, T N>
+using make_integer_sequence = std::make_integer_sequence<T, N>;
 
-  static_assert(Params::kIsValid,
-                "Invalid parameter block dimension detected. Each parameter "
-                "block dimension must be bigger than zero.");
+}  // namespace internal
+}  // namespace ceres
+#else
 
- public:
-  SizedCostFunction() {
-    set_num_residuals(kNumResiduals);
-    *mutable_parameter_block_sizes() = std::vector<int32_t>{Ns...};
-  }
+namespace ceres {
+namespace internal {
 
-  virtual ~SizedCostFunction() { }
-
-  // Subclasses must implement Evaluate().
+template <typename T, T... Ns>
+struct integer_sequence {
+  using value_type = T;
 };
 
+template <typename T, T CurIdx, T Total, T... Ns>
+struct make_integer_sequence_impl {
+  using type = typename make_integer_sequence_impl<T, CurIdx + 1, Total, Ns...,
+                                                   CurIdx>::type;
+};
+
+template <typename T, T Total, T... Ns>
+struct make_integer_sequence_impl<T, Total, Total, Ns...> {
+  using type = integer_sequence<T, Ns...>;
+};
+
+template <typename T, T N>
+using make_integer_sequence =
+    typename make_integer_sequence_impl<T, 0, N>::type;
+
+}  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_PUBLIC_SIZED_COST_FUNCTION_H_
+#endif
+
+#endif  // CERES_PUBLIC_INTERNAL_INTEGER_SEQUENCE_H_
