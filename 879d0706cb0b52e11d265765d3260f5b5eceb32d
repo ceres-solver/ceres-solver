@@ -1,0 +1,547 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fb12249_53833e83",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "this using statement can be moved inside the Evaluate method as it is not used anywhere else.",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5520ca_6a8690be",
+        "filename": "include/ceres/autodiff_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "instead of using false directly here, I recommend defining a named constant\n\nconst bool kIsStatic \u003d false and use that instead, that way the callsite will read better.",
+      "range": {
+        "startLine": 139,
+        "startChar": 17,
+        "endLine": 139,
+        "endChar": 18
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cbef02_dcd2e0b0",
+        "filename": "include/ceres/autodiff_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "vertically stack function arguments here and elsewhere.",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc73624_4ee7f8e7",
+        "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "see comment about defining a named constant const bool kIsDynamic \u003d true and using it to make the call site easier to read.\n\nalso vertically stack parameters.",
+      "range": {
+        "startLine": 108,
+        "startChar": 59,
+        "endLine": 108,
+        "endChar": 63
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f99947_c21bc8d2",
+        "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "named constant and vertical stacking.",
+      "range": {
+        "startLine": 133,
+        "startChar": 44,
+        "endLine": 133,
+        "endChar": 49
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaca7644_230fc850",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "document template parameters.",
+      "range": {
+        "startLine": 170,
+        "startChar": 14,
+        "endLine": 170,
+        "endChar": 20
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71795445_51ab5369",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "document",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4313cfac_ab694440",
+        "filename": "include/ceres/internal/integer_sequence.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "add tests for this please.",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b8ba68f_a33d6d34",
+        "filename": "include/ceres/internal/integer_sequence.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "add comment to explain what is going on here.",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcae312_ed67358c",
+        "filename": "include/ceres/internal/integer_sequence.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "why the repeated total here? please comment.",
+      "range": {
+        "startLine": 72,
+        "startChar": 42,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89873ead_a6873581",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "document the two algorithms.",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d2e5f5_a0be3427",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "public before private.",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7156fbf2_8a31763f",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "document",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15521d2a_218b8bf1",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "document",
+      "range": {
+        "startLine": 377,
+        "startChar": 0,
+        "endLine": 378,
+        "endChar": 0
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afedfbc3_c3818ba8",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "document class.",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ae215d_80b734c5",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "public before private.",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90d9e2e_c943990e",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "isValid -\u003e IsValid",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71313f01_17d184a0",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "GetDim",
+      "range": {
+        "startLine": 73,
+        "startChar": 23,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28c767e9_7f7184c0",
+        "filename": "include/ceres/internal/variadic_evaluate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "I have to say I do not completely understand the implementation in this file.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7c1afb_50e1c0eb",
+        "filename": "include/ceres/internal/variadic_evaluate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "you are using Idx, why mark this as unused?",
+      "range": {
+        "startLine": 52,
+        "startChar": 50,
+        "endLine": 52,
+        "endChar": 54
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09caea74_7cceab64",
+        "filename": "include/ceres/internal/variadic_evaluate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "forgive my ignorance here, but I do not understand this, is there a recursion happening here which expands on the indices ?",
+      "range": {
+        "startLine": 53,
+        "startChar": 34,
+        "endLine": 53,
+        "endChar": 35
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96a6bfc_19e210f9",
+        "filename": "include/ceres/sized_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "protected comes after public.",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 10
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9feaca_026207ef",
+        "filename": "include/ceres/sized_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "named constant.",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c62ebe7_46badb1e",
+        "filename": "include/ceres/sized_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "nice :).",
+      "range": {
+        "startLine": 63,
+        "startChar": 51,
+        "endLine": 63,
+        "endChar": 58
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b32ebc4c_c855087d",
+        "filename": "internal/ceres/autodiff_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "named constant here and elsewhere.",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba8dce2d_f9115a85",
+        "filename": "internal/ceres/evaluator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "I am a bit confused here, why are you having to pass ParameterDims as an argument to ParameterIgnoringCostFunction if its already inheriting from SizedCostFunction? also why do you need a forward declaration?",
+      "range": {
+        "startLine": 62,
+        "startChar": 27,
+        "endLine": 62,
+        "endChar": 40
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf53c8c_de4315b9",
+        "filename": "internal/ceres/local_parameterization_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-09-30T18:25:31Z",
+      "side": 1,
+      "message": "named constant.",
+      "range": {
+        "startLine": 269,
+        "startChar": 21,
+        "endLine": 269,
+        "endChar": 34
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
