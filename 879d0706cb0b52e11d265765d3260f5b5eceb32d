@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "22cd6cd1_f51fd8f4",
+        "filename": "include/ceres/autodiff_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-10-01T17:31:12Z",
+      "side": 1,
+      "message": "Also consider using an enum instead of true/false.",
+      "parentUuid": "cc5520ca_6a8690be",
+      "range": {
+        "startLine": 139,
+        "startChar": 17,
+        "endLine": 139,
+        "endChar": 18
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51cbef02_dcd2e0b0",
         "filename": "include/ceres/autodiff_local_parameterization.h",
         "patchSetId": 2
@@ -145,6 +169,40 @@
     },
     {
       "key": {
+        "uuid": "3585d339_5eed91ce",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-10-01T17:31:12Z",
+      "side": 1,
+      "message": "This code needs some more comments for future maintainers :)",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd2412f_af07a001",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-10-01T17:31:12Z",
+      "side": 1,
+      "message": "What is \"I\"?",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4313cfac_ab694440",
         "filename": "include/ceres/internal/integer_sequence.h",
         "patchSetId": 2
@@ -213,6 +271,23 @@
       "writtenOn": "2018-09-30T18:25:31Z",
       "side": 1,
       "message": "document the two algorithms.",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4904c432_a269af15",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-10-01T17:31:12Z",
+      "side": 1,
+      "message": "Please add tests.",
       "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
