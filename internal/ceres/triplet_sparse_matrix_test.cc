@@ -172,6 +172,35 @@ TEST(TripletSparseMatrix, AssignmentOperator) {
   EXPECT_DOUBLE_EQ(cpy.values()[1], 5.2);
 }
 
+TEST(TripletSparseMatrix, AssignmentOperatorSelfAssignment) {
+  TripletSparseMatrix orig(2, 5, 4);
+  orig.mutable_rows()[0] = 0;
+  orig.mutable_cols()[0] = 1;
+  orig.mutable_values()[0] = 2.5;
+
+  orig.mutable_rows()[1] = 1;
+  orig.mutable_cols()[1] = 4;
+  orig.mutable_values()[1] = 5.2;
+  orig.set_num_nonzeros(2);
+
+  // Who's on earth gonna do this?
+  orig = orig;
+
+  EXPECT_EQ(orig.num_rows(), 2);
+  EXPECT_EQ(orig.num_cols(), 5);
+  ASSERT_EQ(orig.num_nonzeros(), 2);
+  EXPECT_EQ(orig.max_num_nonzeros(), 4);
+
+  EXPECT_EQ(orig.rows()[0], 0);
+  EXPECT_EQ(orig.rows()[1], 1);
+
+  EXPECT_EQ(orig.cols()[0], 1);
+  EXPECT_EQ(orig.cols()[1], 4);
+
+  EXPECT_DOUBLE_EQ(orig.values()[0], 2.5);
+  EXPECT_DOUBLE_EQ(orig.values()[1], 5.2);
+}
+
 TEST(TripletSparseMatrix, AppendRows) {
   // Build one matrix.
   TripletSparseMatrix m(2, 5, 4);
