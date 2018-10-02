@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30f79a77_d3a73fd3",
+        "filename": "internal/ceres/triplet_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-02T12:33:42Z",
+      "side": 1,
+      "message": "better to do an early return;\n\nif (this \u003d\u003d \u0026rhs) {\n return *this;\n}",
+      "range": {
+        "startLine": 100,
+        "startChar": 21,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "b4eea97c13800fa5d1fc0233679b14bafd8c6fb3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
