@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d33c837_8a63fb88",
+        "filename": "internal/ceres/triplet_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-02T14:21:14Z",
+      "side": 1,
+      "message": "use early return.",
+      "revId": "50407c7b66180168c820fbac2b52349fe2c81ba5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
