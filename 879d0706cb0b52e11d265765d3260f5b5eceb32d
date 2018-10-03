@@ -729,6 +729,30 @@
     },
     {
       "key": {
+        "uuid": "e3a6d9ad_979a4b6e",
+        "filename": "internal/ceres/evaluator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-03T20:19:15Z",
+      "side": 1,
+      "message": "I implemented it that way because the template parameter kSucceeds has a default argument. A defaulted template parameter cannot be used after a variadic template. I have resolved this by using the old implementation and replacing N1, N2, N3 with a variadic template instead. To get rid of the default template argument the kSucceeds parameter will be passed using the constructor.",
+      "parentUuid": "ba8dce2d_f9115a85",
+      "range": {
+        "startLine": 62,
+        "startChar": 27,
+        "endLine": 62,
+        "endChar": 40
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adf53c8c_de4315b9",
         "filename": "internal/ceres/local_parameterization_test.cc",
         "patchSetId": 2
