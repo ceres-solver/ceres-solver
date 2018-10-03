@@ -220,6 +220,24 @@
     },
     {
       "key": {
+        "uuid": "b862a2ce_df03f7f0",
+        "filename": "include/ceres/internal/integer_sequence.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-03T19:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4313cfac_ab694440",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b8ba68f_a33d6d34",
         "filename": "include/ceres/internal/integer_sequence.h",
         "patchSetId": 2
@@ -234,6 +252,24 @@
       "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf21dafa_b6b8882b",
+        "filename": "include/ceres/internal/integer_sequence.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-03T19:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b8ba68f_a33d6d34",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +296,30 @@
     },
     {
       "key": {
+        "uuid": "325df302_30bea55b",
+        "filename": "include/ceres/internal/integer_sequence.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-03T19:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fcae312_ed67358c",
+      "range": {
+        "startLine": 72,
+        "startChar": 42,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89873ead_a6873581",
         "filename": "include/ceres/internal/integer_sequence_algorithm.h",
         "patchSetId": 2
@@ -274,6 +334,24 @@
       "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3000d7_de9fac95",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-03T19:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89873ead_a6873581",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -294,6 +372,24 @@
     },
     {
       "key": {
+        "uuid": "2f2d0327_e5df3d8c",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-03T19:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4904c432_a269af15",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61d2e5f5_a0be3427",
         "filename": "include/ceres/internal/integer_sequence_algorithm.h",
         "patchSetId": 2
@@ -305,6 +401,24 @@
       "writtenOn": "2018-09-30T18:25:31Z",
       "side": 1,
       "message": "public before private.",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2105de74_015dcb74",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-03T19:59:52Z",
+      "side": 1,
+      "message": "This is not possible as T must be visible in line 61 and if T is below line 61 it would result in a compile time error. I changed to class and removed the private. Is this a valid fix?",
+      "parentUuid": "61d2e5f5_a0be3427",
       "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -325,6 +439,24 @@
       "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7edf7ecd_69269d20",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-03T19:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7156fbf2_8a31763f",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
