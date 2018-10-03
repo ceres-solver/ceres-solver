@@ -28,6 +28,7 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <array>
 #include <map>
 
 #include "ceres/ordered_groups.h"
@@ -113,8 +114,8 @@ TEST(TrustRegionPreprocessor, RemoveParameterBlocksSucceeds) {
   EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
 }
 
-template<int kNumResiduals, int N1 = 0, int N2 = 0, int N3 = 0>
-class DummyCostFunction : public SizedCostFunction<kNumResiduals, N1, N2, N3> {
+template <int kNumResiduals, int... Ns>
+class DummyCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -127,30 +128,13 @@ class DummyCostFunction : public SizedCostFunction<kNumResiduals, N1, N2, N3> {
       return true;
     }
 
-    if (jacobians[0] != NULL) {
-      MatrixRef j(jacobians[0], kNumResiduals, N1);
-      j.setOnes();
-      j *= kNumResiduals * N1;
-    }
-
-    if (N2 == 0) {
-      return true;
-    }
-
-    if (jacobians[1] != NULL) {
-      MatrixRef j(jacobians[1], kNumResiduals, N2);
-      j.setOnes();
-      j *= kNumResiduals * N2;
-    }
-
-    if (N3 == 0) {
-      return true;
-    }
-
-    if (jacobians[2] != NULL) {
-      MatrixRef j(jacobians[2], kNumResiduals, N3);
-      j.setOnes();
-      j *= kNumResiduals * N3;
+    std::array<int, sizeof...(Ns)> N{Ns...};
+    for (size_t i = 0; i < N.size(); ++i) {
+      if (jacobians[i] != NULL) {
+        MatrixRef j(jacobians[i], kNumResiduals, N[i]);
+        j.setOnes();
+        j *= kNumResiduals * N[i];
+      }
     }
 
     return true;

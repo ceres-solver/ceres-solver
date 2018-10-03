@@ -62,22 +62,22 @@ class UnaryIdentityCostFunction : public SizedCostFunction<1, 1> {
 };
 
 // Templated base class for the CostFunction signatures.
-template <int kNumResiduals, int N0, int N1, int N2>
-class MockCostFunctionBase : public
-SizedCostFunction<kNumResiduals, N0, N1, N2> {
+template <int kNumResiduals, int... Ns>
+class MockCostFunctionBase : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
   virtual bool Evaluate(double const* const* parameters,
                         double* residuals,
                         double** jacobians) const {
     for (int i = 0; i < kNumResiduals; ++i) {
-      residuals[i] = kNumResiduals +  N0 + N1 + N2;
+      residuals[i] =
+          kNumResiduals + internal::ParameterDims<false, Ns...>::kNumParameters;
     }
     return true;
   }
 };
 
-class UnaryCostFunction : public MockCostFunctionBase<2, 1, 0, 0> {};
-class BinaryCostFunction : public MockCostFunctionBase<2, 1, 1, 0> {};
+class UnaryCostFunction : public MockCostFunctionBase<2, 1> {};
+class BinaryCostFunction : public MockCostFunctionBase<2, 1, 1> {};
 class TernaryCostFunction : public MockCostFunctionBase<2, 1, 1, 1> {};
 
 TEST(Program, RemoveFixedBlocksNothingConstant) {
@@ -247,14 +247,14 @@ TEST(Program, CreateJacobianBlockSparsityTranspose) {
   problem.AddParameterBlock(y, 3);
   problem.AddParameterBlock(&z, 1);
 
-  problem.AddResidualBlock(new MockCostFunctionBase<2, 2, 0, 0>(), NULL, x);
-  problem.AddResidualBlock(new MockCostFunctionBase<3, 1, 2, 0>(), NULL, &z, x);
-  problem.AddResidualBlock(new MockCostFunctionBase<4, 1, 3, 0>(), NULL, &z, y);
-  problem.AddResidualBlock(new MockCostFunctionBase<5, 1, 3, 0>(), NULL, &z, y);
-  problem.AddResidualBlock(new MockCostFunctionBase<1, 2, 1, 0>(), NULL, x, &z);
-  problem.AddResidualBlock(new MockCostFunctionBase<2, 1, 3, 0>(), NULL, &z, y);
-  problem.AddResidualBlock(new MockCostFunctionBase<2, 2, 1, 0>(), NULL, x, &z);
-  problem.AddResidualBlock(new MockCostFunctionBase<1, 3, 0, 0>(), NULL, y);
+  problem.AddResidualBlock(new MockCostFunctionBase<2, 2>(), NULL, x);
+  problem.AddResidualBlock(new MockCostFunctionBase<3, 1, 2>(), NULL, &z, x);
+  problem.AddResidualBlock(new MockCostFunctionBase<4, 1, 3>(), NULL, &z, y);
+  problem.AddResidualBlock(new MockCostFunctionBase<5, 1, 3>(), NULL, &z, y);
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 2, 1>(), NULL, x, &z);
+  problem.AddResidualBlock(new MockCostFunctionBase<2, 1, 3>(), NULL, &z, y);
+  problem.AddResidualBlock(new MockCostFunctionBase<2, 2, 1>(), NULL, x, &z);
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 3>(), NULL, y);
 
   TripletSparseMatrix expected_block_sparse_jacobian(3, 8, 14);
   {
@@ -386,7 +386,7 @@ TEST(Program, ProblemHasNanParameterBlocks) {
   double x[2];
   x[0] = 1.0;
   x[1] = std::numeric_limits<double>::quiet_NaN();
-  problem.AddResidualBlock(new MockCostFunctionBase<1, 2, 0, 0>(), NULL, x);
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 2>(), NULL, x);
   string error;
   EXPECT_FALSE(problem.program().ParameterBlocksAreFinite(&error));
   EXPECT_NE(error.find("has at least one invalid value"),
@@ -396,7 +396,7 @@ TEST(Program, ProblemHasNanParameterBlocks) {
 TEST(Program, InfeasibleParameterBlock) {
   ProblemImpl problem;
   double x[] = {0.0, 0.0};
-  problem.AddResidualBlock(new MockCostFunctionBase<1, 2, 0, 0>(), NULL, x);
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 2>(), NULL, x);
   problem.SetParameterLowerBound(x, 0, 2.0);
   problem.SetParameterUpperBound(x, 0, 1.0);
   string error;
@@ -407,7 +407,7 @@ TEST(Program, InfeasibleParameterBlock) {
 TEST(Program, InfeasibleConstantParameterBlock) {
   ProblemImpl problem;
   double x[] = {0.0, 0.0};
-  problem.AddResidualBlock(new MockCostFunctionBase<1, 2, 0, 0>(), NULL, x);
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 2>(), NULL, x);
   problem.SetParameterLowerBound(x, 0, 1.0);
   problem.SetParameterUpperBound(x, 0, 2.0);
   problem.SetParameterBlockConstant(x);

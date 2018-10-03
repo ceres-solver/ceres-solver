@@ -55,12 +55,14 @@ using std::string;
 using std::vector;
 
 // TODO(keir): Consider pushing this into a common test utils file.
-template<int kFactor, int kNumResiduals,
-         int N0 = 0, int N1 = 0, int N2 = 0, bool kSucceeds = true>
+template <int kFactor, int kNumResiduals, int... Ns>
 class ParameterIgnoringCostFunction
-    : public SizedCostFunction<kNumResiduals, N0, N1, N2> {
-  typedef SizedCostFunction<kNumResiduals, N0, N1, N2> Base;
+    : public SizedCostFunction<kNumResiduals, Ns...> {
+  typedef SizedCostFunction<kNumResiduals, Ns...> Base;
+
  public:
+  ParameterIgnoringCostFunction(bool succeeds = true) : succeeds_(succeeds) {}
+
   virtual bool Evaluate(double const* const* parameters,
                         double* residuals,
                         double** jacobians) const {
@@ -91,8 +93,11 @@ class ParameterIgnoringCostFunction
         }
       }
     }
-    return kSucceeds;
+    return succeeds_;
   }
+
+ private:
+  bool succeeds_;
 };
 
 struct EvaluatorTestOptions {
@@ -457,12 +462,12 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
   problem.AddParameterBlock(z,  4);
 
   // f(x, y) in R^2
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 2, 2, 3>,
+ problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 2, 2, 3>,
                            NULL,
                            x, y);
 
   // g(x, z) in R^3
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<2, 3, 2, 4>,
+ problem.AddResidualBlock(new ParameterIgnoringCostFunction<2, 3, 2, 4>,
                            NULL,
                            x, z);
 
@@ -526,7 +531,7 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
 TEST_P(EvaluatorTest, EvaluatorAbortsForResidualsThatFailToEvaluate) {
   // Switch the return value to failure.
   problem.AddResidualBlock(
-      new ParameterIgnoringCostFunction<20, 3, 2, 3, 4, false>, NULL, x, y, z);
+      new ParameterIgnoringCostFunction<20, 3, 2, 3, 4>(false), NULL, x, y, z);
 
   // The values are ignored.
   double state[9];
