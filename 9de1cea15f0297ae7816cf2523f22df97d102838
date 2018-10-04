@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b72b33c_b51db11b",
+        "filename": "include/ceres/internal/integer_sequence.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-04T21:12:50Z",
+      "side": 1,
+      "message": "Once ceres switches to",
+      "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc95779_ed255b0d",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-04T21:12:50Z",
+      "side": 1,
+      "message": "Recursively",
+      "range": {
+        "startLine": 43,
+        "startChar": 3,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29058188_d841e82f",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-04T21:12:50Z",
+      "side": 1,
+      "message": "I am sorry but I do not understand this comment.\nThe CL description talks about PrefixSum but here you use the term ExclusiveScan.  I think PrefixSum is a better name I think.\n\nif you want to use ExclusiveScan it would be good to link to where this term comes from and define it first before defining the implementation.",
+      "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69dc9d10_c3da7994",
+        "filename": "internal/ceres/integer_sequence_algorithm_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-04T21:12:50Z",
+      "side": 1,
+      "message": "The test messages are not terribly informative.",
+      "range": {
+        "startLine": 39,
+        "startChar": 59,
+        "endLine": 39,
+        "endChar": 60
+      },
+      "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f94839_26daa7e2",
+        "filename": "internal/ceres/integer_sequence_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-04T21:12:50Z",
+      "side": 1,
+      "message": "These messages are not terribly informative.",
+      "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
