@@ -77,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "c52ca322_20860b8d",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-05T11:26:50Z",
+      "side": 1,
+      "message": "Prefix sum is usually a synonym of inclusive scan not exclusive scan (see e.g. https://en.wikipedia.org/wiki/Prefix_sum). I used exclusive scan because since C++17 there is a std::exclusive_scan (https://en.cppreference.com/w/cpp/algorithm/exclusive_scan) and that’s what this algorithm is computing at compile time. I could add more explanation, a link and / or change the name to exclusive prefix sum.",
+      "parentUuid": "29058188_d841e82f",
+      "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69dc9d10_c3da7994",
         "filename": "internal/ceres/integer_sequence_algorithm_test.cc",
         "patchSetId": 1
@@ -88,6 +106,30 @@
       "writtenOn": "2018-10-04T21:12:50Z",
       "side": 1,
       "message": "The test messages are not terribly informative.",
+      "range": {
+        "startLine": 39,
+        "startChar": 59,
+        "endLine": 39,
+        "endChar": 60
+      },
+      "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df5ef27_75f9fe4b",
+        "filename": "internal/ceres/integer_sequence_algorithm_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-05T11:26:50Z",
+      "side": 1,
+      "message": "I am not sure what\u0027s best here to write, as the compiler would point to this location and one would see the content of the static_assert. I would like to leave this empty, if this feature where in C++11.\nWould it be better to change it to something like “Unit test of summing up an integer sequence failed”?",
+      "parentUuid": "69dc9d10_c3da7994",
       "range": {
         "startLine": 39,
         "startChar": 59,
