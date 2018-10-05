@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb052413_6ecc4ff9",
+        "filename": "include/ceres/internal/integer_sequence.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-10-05T00:20:34Z",
+      "side": 1,
+      "message": "Ceres (capitalized).",
+      "parentUuid": "0b72b33c_b51db11b",
+      "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfc95779_ed255b0d",
         "filename": "include/ceres/internal/integer_sequence_algorithm.h",
         "patchSetId": 1
