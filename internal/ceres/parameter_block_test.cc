@@ -63,7 +63,7 @@ TEST(ParameterBlock, SetLocalParameterizationDiesWhenResettingToNull) {
   indices.push_back(1);
   SubsetParameterization subset(3, indices);
   parameter_block.SetParameterization(&subset);
-  EXPECT_DEATH_IF_SUPPORTED(parameter_block.SetParameterization(NULL), "NULL");
+  EXPECT_DEATH_IF_SUPPORTED(parameter_block.SetParameterization(nullptr), "nullptr");
 }
 
 TEST(ParameterBlock,
@@ -84,7 +84,7 @@ TEST(ParameterBlock, SetLocalParameterizationDiesOnNullParameterization) {
   ParameterBlock parameter_block(x, 3, -1);
   std::vector<int> indices;
   indices.push_back(1);
-  EXPECT_DEATH_IF_SUPPORTED(parameter_block.SetParameterization(NULL), "NULL");
+  EXPECT_DEATH_IF_SUPPORTED(parameter_block.SetParameterization(nullptr), "nullptr");
 }
 
 TEST(ParameterBlock, SetParameterizationDiesOnZeroLocalSize) {
@@ -210,7 +210,7 @@ TEST(ParameterBlock, DetectBadLocalParameterization) {
 
 TEST(ParameterBlock, DefaultBounds) {
   double x[2];
-  ParameterBlock parameter_block(x, 2, -1, NULL);
+  ParameterBlock parameter_block(x, 2, -1, nullptr);
   EXPECT_EQ(parameter_block.UpperBoundForParameter(0),
             std::numeric_limits<double>::max());
   EXPECT_EQ(parameter_block.UpperBoundForParameter(1),
@@ -223,7 +223,7 @@ TEST(ParameterBlock, DefaultBounds) {
 
 TEST(ParameterBlock, SetBounds) {
   double x[2];
-  ParameterBlock parameter_block(x, 2, -1, NULL);
+  ParameterBlock parameter_block(x, 2, -1, nullptr);
   parameter_block.SetLowerBound(0, 1);
   parameter_block.SetUpperBound(1, 1);
 
@@ -239,7 +239,7 @@ TEST(ParameterBlock, SetBounds) {
 TEST(ParameterBlock, PlusWithBoundsConstraints) {
   double x[] = {1.0, 0.0};
   double delta[] = {2.0, -10.0};
-  ParameterBlock parameter_block(x, 2, -1, NULL);
+  ParameterBlock parameter_block(x, 2, -1, nullptr);
   parameter_block.SetUpperBound(0, 2.0);
   parameter_block.SetLowerBound(1, -1.0);
   double x_plus_delta[2];
