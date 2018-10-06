@@ -649,7 +649,7 @@ bool ProblemImpl::IsParameterBlockConstant(double* values) const {
     << "Parameter block not found: " << values << ". You must add the "
     << "parameter block to the problem before it can be queried.";
 
-  return parameter_block->IsConstant();
+  return parameter_block->IsSetConstantByUser();
 }
 
 void ProblemImpl::SetParameterBlockVariable(double* values) {
