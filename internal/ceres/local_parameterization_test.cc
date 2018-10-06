@@ -82,7 +82,7 @@ TEST(SubsetParameterization, NegativeParameterIndexDeathTest) {
   constant_parameters.push_back(-1);
   EXPECT_DEATH_IF_SUPPORTED(
       SubsetParameterization parameterization(2, constant_parameters),
-      "greater than zero");
+      "greater than equal to zero");
 }
 
 TEST(SubsetParameterization, GreaterThanSizeParameterIndexDeathTest) {
