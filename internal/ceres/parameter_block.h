@@ -34,8 +34,8 @@
 #include <algorithm>
 #include <cstdint>
 #include <cstdlib>
-#include <memory>
 #include <limits>
+#include <memory>
 #include <string>
 #include <unordered_set>
 #include "ceres/array_utils.h"
@@ -62,29 +62,28 @@ class ResidualBlock;
 // responsible for the proper disposal of the local parameterization.
 class ParameterBlock {
  public:
-  // TODO(keir): Decide what data structure is best here. Should this be a set?
-  // Probably not, because sets are memory inefficient. However, if it's a
-  // vector, you can get into pathological linear performance when removing a
-  // residual block from a problem where all the residual blocks depend on one
-  // parameter; for example, shared focal length in a bundle adjustment
-  // problem. It might be worth making a custom structure that is just an array
-  // when it is small, but transitions to a hash set when it has more elements.
-  //
-  // For now, use a hash set.
   typedef std::unordered_set<ResidualBlock*> ResidualBlockSet;
 
   // Create a parameter block with the user state, size, and index specified.
   // The size is the size of the parameter block and the index is the position
   // of the parameter block inside a Program (if any).
-  ParameterBlock(double* user_state, int size, int index) {
-    Init(user_state, size, index, NULL);
-  }
+  ParameterBlock(double* user_state, int size, int index)
+      : user_state_(user_state),
+        state_(user_state),
+        size_(size),
+        index_(index) {}
 
   ParameterBlock(double* user_state,
                  int size,
                  int index,
-                 LocalParameterization* local_parameterization) {
-    Init(user_state, size, index, local_parameterization);
+                 LocalParameterization* local_parameterization)
+      : user_state_(user_state),
+        state_(user_state),
+        size_(size),
+        index_(index) {
+    if (local_parameterization != nullptr) {
+      SetParameterization(local_parameterization);
+    }
   }
 
   // The size of the parameter block.
@@ -92,12 +91,10 @@ class ParameterBlock {
 
   // Manipulate the parameter state.
   bool SetState(const double* x) {
-    CHECK(x != NULL)
-        << "Tried to set the state of constant parameter "
-        << "with user location " << user_state_;
-    CHECK(!is_constant_)
-        << "Tried to set the state of constant parameter "
-        << "with user location " << user_state_;
+    CHECK(x != nullptr) << "Tried to set the state of constant parameter "
+                        << "with user location " << user_state_;
+    CHECK(!IsConstant()) << "Tried to set the state of constant parameter "
+                         << "with user location " << user_state_;
 
     state_ = x;
     return UpdateLocalParameterizationJacobian();
@@ -106,9 +103,9 @@ class ParameterBlock {
   // Copy the current parameter state out to x. This is "GetState()" rather than
   // simply "state()" since it is actively copying the data into the passed
   // pointer.
-  void GetState(double *x) const {
+  void GetState(double* x) const {
     if (x != state_) {
-      memcpy(x, state_, sizeof(*state_) * size_);
+      std::copy(state_, state_ + size_, x);
     }
   }
 
@@ -116,7 +113,7 @@ class ParameterBlock {
   const double* state() const { return state_; }
   const double* user_state() const { return user_state_; }
   double* mutable_user_state() { return user_state_; }
-  LocalParameterization* local_parameterization() const {
+  const LocalParameterization* local_parameterization() const {
     return local_parameterization_;
   }
   LocalParameterization* mutable_local_parameterization() {
@@ -124,9 +121,10 @@ class ParameterBlock {
   }
 
   // Set this parameter block to vary or not.
-  void SetConstant() { is_constant_ = true; }
-  void SetVarying() { is_constant_ = false; }
-  bool IsConstant() const { return is_constant_; }
+  void SetConstant() { is_set_constant_ = true; }
+  void SetVarying() { is_set_constant_ = false; }
+  bool IsSetConstantByUser() const { return is_set_constant_; }
+  bool IsConstant() const { return (is_set_constant_ || LocalSize() == 0); }
 
   double UpperBound(int index) const {
     return (upper_bounds_ ? upper_bounds_[index]
@@ -155,7 +153,7 @@ class ParameterBlock {
 
   // Methods relating to the parameter block's parameterization.
 
-  // The local to global jacobian. Returns NULL if there is no local
+  // The local to global jacobian. Returns nullptr if there is no local
   // parameterization for this parameter block. The returned matrix is row-major
   // and has Size() rows and  LocalSize() columns.
   const double* LocalParameterizationJacobian() const {
@@ -163,24 +161,25 @@ class ParameterBlock {
   }
 
   int LocalSize() const {
-    return (local_parameterization_ == NULL)
-        ? size_
-        : local_parameterization_->LocalSize();
+    return (local_parameterization_ == nullptr)
+               ? size_
+               : local_parameterization_->LocalSize();
   }
 
   // Set the parameterization. The parameterization can be set exactly once;
   // multiple calls to set the parameterization to different values will crash.
-  // It is an error to pass NULL for the parameterization. The parameter block
-  // does not take ownership of the parameterization.
+  // It is an error to pass nullptr for the parameterization. The parameter
+  // block does not take ownership of the parameterization.
   void SetParameterization(LocalParameterization* new_parameterization) {
-    CHECK(new_parameterization != NULL) << "NULL parameterization invalid.";
+    CHECK(new_parameterization != nullptr)
+        << "nullptr parameterization invalid.";
     // Nothing to do if the new parameterization is the same as the
     // old parameterization.
     if (new_parameterization == local_parameterization_) {
       return;
     }
 
-    CHECK(local_parameterization_ == NULL)
+    CHECK(local_parameterization_ == nullptr)
         << "Can't re-set the local parameterization; it leads to "
         << "ambiguous ownership. Current local parameterization is: "
         << local_parameterization_;
@@ -192,8 +191,8 @@ class ParameterBlock {
         << "accidentally use the wrong parameter block or parameterization?";
 
     CHECK_GT(new_parameterization->LocalSize(), 0)
-        << "Invalid parameterization. Parameterizations must have a positive "
-        << "dimensional tangent space.";
+        << "Invalid parameterization. Parameterizations must have a "
+        << "positive dimensional tangent space.";
 
     local_parameterization_ = new_parameterization;
     local_parameterization_jacobian_.reset(
@@ -241,24 +240,24 @@ class ParameterBlock {
   // Generalization of the addition operation. This is the same as
   // LocalParameterization::Plus() followed by projection onto the
   // hyper cube implied by the bounds constraints.
-  bool Plus(const double *x, const double* delta, double* x_plus_delta) {
-    if (local_parameterization_ != NULL) {
+  bool Plus(const double* x, const double* delta, double* x_plus_delta) {
+    if (local_parameterization_ != nullptr) {
       if (!local_parameterization_->Plus(x, delta, x_plus_delta)) {
         return false;
       }
     } else {
-      VectorRef(x_plus_delta, size_) = ConstVectorRef(x, size_) +
-                                       ConstVectorRef(delta,  size_);
+      VectorRef(x_plus_delta, size_) =
+          ConstVectorRef(x, size_) + ConstVectorRef(delta, size_);
     }
 
     // Project onto the box constraints.
-    if (lower_bounds_.get() != NULL) {
+    if (lower_bounds_.get() != nullptr) {
       for (int i = 0; i < size_; ++i) {
         x_plus_delta[i] = std::max(x_plus_delta[i], lower_bounds_[i]);
       }
     }
 
-    if (upper_bounds_.get() != NULL) {
+    if (upper_bounds_.get() != nullptr) {
       for (int i = 0; i < size_; ++i) {
         x_plus_delta[i] = std::min(x_plus_delta[i], upper_bounds_[i]);
       }
@@ -268,35 +267,36 @@ class ParameterBlock {
   }
 
   std::string ToString() const {
-    return StringPrintf("{ this=%p, user_state=%p, state=%p, size=%d, "
-                        "constant=%d, index=%d, state_offset=%d, "
-                        "delta_offset=%d }",
-                        this,
-                        user_state_,
-                        state_,
-                        size_,
-                        is_constant_,
-                        index_,
-                        state_offset_,
-                        delta_offset_);
+    return StringPrintf(
+        "{ this=%p, user_state=%p, state=%p, size=%d, "
+        "constant=%d, index=%d, state_offset=%d, "
+        "delta_offset=%d }",
+        this,
+        user_state_,
+        state_,
+        size_,
+        is_set_constant_,
+        index_,
+        state_offset_,
+        delta_offset_);
   }
 
   void EnableResidualBlockDependencies() {
-    CHECK(residual_blocks_.get() == NULL)
+    CHECK(residual_blocks_.get() == nullptr)
         << "Ceres bug: There is already a residual block collection "
         << "for parameter block: " << ToString();
     residual_blocks_.reset(new ResidualBlockSet);
   }
 
   void AddResidualBlock(ResidualBlock* residual_block) {
-    CHECK(residual_blocks_.get() != NULL)
+    CHECK(residual_blocks_.get() != nullptr)
         << "Ceres bug: The residual block collection is null for parameter "
         << "block: " << ToString();
     residual_blocks_->insert(residual_block);
   }
 
   void RemoveResidualBlock(ResidualBlock* residual_block) {
-    CHECK(residual_blocks_.get() != NULL)
+    CHECK(residual_blocks_.get() != nullptr)
         << "Ceres bug: The residual block collection is null for parameter "
         << "block: " << ToString();
     CHECK(residual_blocks_->find(residual_block) != residual_blocks_->end())
@@ -306,12 +306,10 @@ class ParameterBlock {
 
   // This is only intended for iterating; perhaps this should only expose
   // .begin() and .end().
-  ResidualBlockSet* mutable_residual_blocks() {
-    return residual_blocks_.get();
-  }
+  ResidualBlockSet* mutable_residual_blocks() { return residual_blocks_.get(); }
 
   double LowerBoundForParameter(int index) const {
-    if (lower_bounds_.get() == NULL) {
+    if (lower_bounds_.get() == nullptr) {
       return -std::numeric_limits<double>::max();
     } else {
       return lower_bounds_[index];
@@ -319,7 +317,7 @@ class ParameterBlock {
   }
 
   double UpperBoundForParameter(int index) const {
-    if (upper_bounds_.get() == NULL) {
+    if (upper_bounds_.get() == nullptr) {
       return std::numeric_limits<double>::max();
     } else {
       return upper_bounds_[index];
@@ -327,27 +325,8 @@ class ParameterBlock {
   }
 
  private:
-  void Init(double* user_state,
-            int size,
-            int index,
-            LocalParameterization* local_parameterization) {
-    user_state_ = user_state;
-    size_ = size;
-    index_ = index;
-    is_constant_ = false;
-    state_ = user_state_;
-
-    local_parameterization_ = NULL;
-    if (local_parameterization != NULL) {
-      SetParameterization(local_parameterization);
-    }
-
-    state_offset_ = -1;
-    delta_offset_ = -1;
-  }
-
   bool UpdateLocalParameterizationJacobian() {
-    if (local_parameterization_ == NULL) {
+    if (local_parameterization_ == nullptr) {
       return true;
     }
 
@@ -356,13 +335,12 @@ class ParameterBlock {
     // at that time.
 
     const int jacobian_size = Size() * LocalSize();
-    InvalidateArray(jacobian_size,
-                    local_parameterization_jacobian_.get());
+    InvalidateArray(jacobian_size, local_parameterization_jacobian_.get());
     if (!local_parameterization_->ComputeJacobian(
-            state_,
-            local_parameterization_jacobian_.get())) {
+            state_, local_parameterization_jacobian_.get())) {
       LOG(WARNING) << "Local parameterization Jacobian computation failed"
-          "for x: " << ConstVectorRef(state_, Size()).transpose();
+                      "for x: "
+                   << ConstVectorRef(state_, Size()).transpose();
       return false;
     }
 
@@ -379,27 +357,27 @@ class ParameterBlock {
     return true;
   }
 
-  double* user_state_;
-  int size_;
-  bool is_constant_;
-  LocalParameterization* local_parameterization_;
+  double* user_state_ = nullptr;
+  int size_ = -1;
+  bool is_set_constant_ = false;
+  LocalParameterization* local_parameterization_ = nullptr;
 
   // The "state" of the parameter. These fields are only needed while the
   // solver is running. While at first glance using mutable is a bad idea, this
   // ends up simplifying the internals of Ceres enough to justify the potential
   // pitfalls of using "mutable."
-  mutable const double* state_;
+  mutable const double* state_ = nullptr;
   mutable std::unique_ptr<double[]> local_parameterization_jacobian_;
 
   // The index of the parameter. This is used by various other parts of Ceres to
   // permit switching from a ParameterBlock* to an index in another array.
-  int32_t index_;
+  int32_t index_ = -1;
 
   // The offset of this parameter block inside a larger state vector.
-  int32_t state_offset_;
+  int32_t state_offset_ = -1;
 
   // The offset of this parameter block inside a larger delta vector.
-  int32_t delta_offset_;
+  int32_t delta_offset_ = -1;
 
   // If non-null, contains the residual blocks this parameter block is in.
   std::unique_ptr<ResidualBlockSet> residual_blocks_;
