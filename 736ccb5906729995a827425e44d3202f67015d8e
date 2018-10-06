@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5955db71_26dc5583",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-10-06T00:23:11Z",
+      "side": 1,
+      "message": "What\u0027s the point of this change?",
+      "revId": "736ccb5906729995a827425e44d3202f67015d8e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
