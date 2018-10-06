@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1cba01d_70664106",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-10-06T01:01:26Z",
+      "side": 1,
+      "message": "80 col (and below).",
+      "revId": "d290e7bd3598ccc93e3148dffa3b1e94e4711e22",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
