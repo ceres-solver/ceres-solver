@@ -49,6 +49,10 @@ bool LocalParameterization::MultiplyByJacobian(const double* x,
                                                const int num_rows,
                                                const double* global_matrix,
                                                double* local_matrix) const {
+  if (LocalSize() == 0) {
+    return true;
+  }
+
   Matrix jacobian(GlobalSize(), LocalSize());
   if (!ComputeJacobian(x, jacobian.data())) {
     return false;
@@ -74,7 +78,7 @@ bool IdentityParameterization::Plus(const double* x,
 
 bool IdentityParameterization::ComputeJacobian(const double* x,
                                                double* jacobian) const {
-  MatrixRef(jacobian, size_, size_) = Matrix::Identity(size_, size_);
+  MatrixRef(jacobian, size_, size_).setIdentity();
   return true;
 }
 
@@ -93,8 +97,8 @@ SubsetParameterization::SubsetParameterization(
     : local_size_(size - constant_parameters.size()), constancy_mask_(size, 0) {
   vector<int> constant = constant_parameters;
   std::sort(constant.begin(), constant.end());
-  CHECK_GE(constant.front(), 0)
-      << "Indices indicating constant parameter must be greater than zero.";
+  CHECK_GE(constant.front(), 0) << "Indices indicating constant parameter must "
+                                   "be greater than equal to zero.";
   CHECK_LT(constant.back(), size)
       << "Indices indicating constant parameter must be less than the size "
       << "of the parameter block.";
@@ -108,7 +112,8 @@ SubsetParameterization::SubsetParameterization(
 bool SubsetParameterization::Plus(const double* x,
                                   const double* delta,
                                   double* x_plus_delta) const {
-  for (int i = 0, j = 0; i < constancy_mask_.size(); ++i) {
+  const int global_size = GlobalSize();
+  for (int i = 0, j = 0; i < global_size; ++i) {
     if (constancy_mask_[i]) {
       x_plus_delta[i] = x[i];
     } else {
@@ -124,9 +129,10 @@ bool SubsetParameterization::ComputeJacobian(const double* x,
     return true;
   }
 
-  MatrixRef m(jacobian, constancy_mask_.size(), local_size_);
+  const int global_size = GlobalSize();
+  MatrixRef m(jacobian, global_size, local_size_);
   m.setZero();
-  for (int i = 0, j = 0; i < constancy_mask_.size(); ++i) {
+  for (int i = 0, j = 0; i < global_size; ++i) {
     if (!constancy_mask_[i]) {
       m(i, j++) = 1.0;
     }
@@ -142,11 +148,12 @@ bool SubsetParameterization::MultiplyByJacobian(const double* x,
     return true;
   }
 
+  const int global_size = GlobalSize();
   for (int row = 0; row < num_rows; ++row) {
-    for (int col = 0, j = 0; col < constancy_mask_.size(); ++col) {
+    for (int col = 0, j = 0; col < global_size; ++col) {
       if (!constancy_mask_[col]) {
-        local_matrix[row * LocalSize() + j++] =
-            global_matrix[row * GlobalSize() + col];
+        local_matrix[row * local_size_ + j++] =
+            global_matrix[row * global_size + col];
       }
     }
   }
