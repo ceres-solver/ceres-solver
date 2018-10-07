@@ -453,8 +453,8 @@ TEST(Solver, CantMixEvaluationCallbackWithInnerIterations) {
   EXPECT_TRUE(options.IsValid(&message));
 }
 
-template<int kNumResiduals, int N1 = 0, int N2 = 0, int N3 = 0>
-class DummyCostFunction : public SizedCostFunction<kNumResiduals, N1, N2, N3> {
+template <int kNumResiduals, int... Ns>
+class DummyCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
   bool Evaluate(double const* const* parameters,
                 double* residuals,

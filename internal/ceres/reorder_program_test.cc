@@ -45,9 +45,8 @@ namespace internal {
 using std::vector;
 
 // Templated base class for the CostFunction signatures.
-template <int kNumResiduals, int N0, int N1, int N2>
-class MockCostFunctionBase : public
-SizedCostFunction<kNumResiduals, N0, N1, N2> {
+template <int kNumResiduals, int... Ns>
+class MockCostFunctionBase : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
   virtual bool Evaluate(double const* const* parameters,
                         double* residuals,
@@ -57,8 +56,8 @@ SizedCostFunction<kNumResiduals, N0, N1, N2> {
   }
 };
 
-class UnaryCostFunction : public MockCostFunctionBase<2, 1, 0, 0> {};
-class BinaryCostFunction : public MockCostFunctionBase<2, 1, 1, 0> {};
+class UnaryCostFunction : public MockCostFunctionBase<2, 1> {};
+class BinaryCostFunction : public MockCostFunctionBase<2, 1, 1> {};
 class TernaryCostFunction : public MockCostFunctionBase<2, 1, 1, 1> {};
 
 TEST(_, ReorderResidualBlockNormalFunction) {
