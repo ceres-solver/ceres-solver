@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ac6a7a2a_408d65ee",
+        "filename": "include/ceres/internal/integer_sequence.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-08T18:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb052413_6ecc4ff9",
+      "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfc95779_ed255b0d",
         "filename": "include/ceres/internal/integer_sequence_algorithm.h",
         "patchSetId": 1
@@ -57,6 +75,30 @@
       "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b1b5b0_7e60de17",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-08T18:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfc95779_ed255b0d",
+      "range": {
+        "startLine": 43,
+        "startChar": 3,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +152,24 @@
       "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7832b367_a4978d3e",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-08T18:43:51Z",
+      "side": 1,
+      "message": "std::exclusive_scan is not constexpr so it is runtime only. The computation here is done at compile time.",
+      "parentUuid": "8806d6f7_cc68fdc8",
+      "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +244,30 @@
     },
     {
       "key": {
+        "uuid": "a07c3e5f_d789a356",
+        "filename": "internal/ceres/integer_sequence_algorithm_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-08T18:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afa70a30_e9964dd4",
+      "range": {
+        "startLine": 39,
+        "startChar": 59,
+        "endLine": 39,
+        "endChar": 60
+      },
+      "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64f94839_26daa7e2",
         "filename": "internal/ceres/integer_sequence_test.cc",
         "patchSetId": 1
@@ -198,6 +282,24 @@
       "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6481e48b_0f0fe112",
+        "filename": "internal/ceres/integer_sequence_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-08T18:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64f94839_26daa7e2",
+      "revId": "9de1cea15f0297ae7816cf2523f22df97d102838",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
