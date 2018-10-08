@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "774d7882_77051ad5",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-08T22:11:36Z",
+      "side": 1,
+      "message": "prefix \"ceres/internal/\"",
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8dc98e4_2eb3e862",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-08T22:11:36Z",
+      "side": 1,
+      "message": "I do not recommend making these using declarations they are almost the same as the underlying types, and actually make code harder to read.",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 32
+      },
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93bb182_8de350a1",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-08T22:11:36Z",
+      "side": 1,
+      "message": "show example usage as part of documentation.",
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f709745_a78b7233",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-08T22:11:36Z",
+      "side": 1,
+      "message": "public before private.\n\nalso why not define this as a freestanding function defined on int_sequence.",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08f71e9_e873f571",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-08T22:11:36Z",
+      "side": 1,
+      "message": "I am not sure I understand the purpose of this.",
+      "range": {
+        "startLine": 80,
+        "startChar": 15,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c478e43_560cbcfa",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-08T22:11:36Z",
+      "side": 1,
+      "message": "move these closer to where the constants are defined?",
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8135a12_4e8879e8",
+        "filename": "internal/ceres/parameter_dims_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-08T22:11:36Z",
+      "side": 1,
+      "message": "no camel case. use google style variable names.",
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
