@@ -500,6 +500,24 @@
     },
     {
       "key": {
+        "uuid": "53e746fa_17abfc68",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-08T20:23:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afedfbc3_c3818ba8",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38ae215d_80b734c5",
         "filename": "include/ceres/internal/parameter_dims.h",
         "patchSetId": 2
@@ -517,6 +535,24 @@
     },
     {
       "key": {
+        "uuid": "8575fc55_acd76475",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-08T20:23:16Z",
+      "side": 1,
+      "message": "I think, this is not possible as IsValid needs to be visible for kIsValid.",
+      "parentUuid": "38ae215d_80b734c5",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c90d9e2e_c943990e",
         "filename": "include/ceres/internal/parameter_dims.h",
         "patchSetId": 2
@@ -531,6 +567,24 @@
       "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192053c0_1ef98bdf",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-08T20:23:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c90d9e2e_c943990e",
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -554,6 +608,30 @@
       "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5951bf37_403224f7",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-08T20:23:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71313f01_17d184a0",
+      "range": {
+        "startLine": 73,
+        "startChar": 23,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "879d0706cb0b52e11d265765d3260f5b5eceb32d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
