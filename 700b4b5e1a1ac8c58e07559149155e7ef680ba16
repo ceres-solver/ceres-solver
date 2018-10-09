@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "75337d79_9f3bb508",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-09T08:25:01Z",
+      "side": 1,
+      "message": "I removed this as it is a duplicate of the class description \u0027ParameterDims\u0027 (as it is reommended in the google style guidelines https://google.github.io/styleguide/cppguide.html#File_Comments)",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "774d7882_77051ad5",
         "filename": "include/ceres/internal/parameter_dims.h",
         "patchSetId": 1
@@ -16,6 +39,24 @@
       "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6565505_fee8f7c1",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-09T08:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "774d7882_77051ad5",
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -42,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "e6c3a53c_1f1cd1a8",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-09T08:25:01Z",
+      "side": 1,
+      "message": "I removed it.",
+      "parentUuid": "b8dc98e4_2eb3e862",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 32
+      },
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b93bb182_8de350a1",
         "filename": "include/ceres/internal/parameter_dims.h",
         "patchSetId": 1
@@ -59,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3057f74c_575f7f42",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-09T08:25:01Z",
+      "side": 1,
+      "message": "Not sure what example will help in understanding the usage of this class. I tried to come up with two exaples.",
+      "parentUuid": "b93bb182_8de350a1",
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f709745_a78b7233",
         "filename": "include/ceres/internal/parameter_dims.h",
         "patchSetId": 1
@@ -70,6 +153,30 @@
       "writtenOn": "2018-10-08T22:11:36Z",
       "side": 1,
       "message": "public before private.\n\nalso why not define this as a freestanding function defined on int_sequence.",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b36b24e_f7c1eee4",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-09T08:25:01Z",
+      "side": 1,
+      "message": "Public before private is not possible here, as IsValid is used in kIsValid so it has to be defined before. Here is an example at compiler explorer: https://godbolt.org/z/vXaLvt.\n\nAnd I vote against it of making it a free function, as not all integer sequences with contain values of zero or less are invalid. This depends on the context. If this should really be a free function I think it should take a ParameterDims not an integer_sequence.",
+      "parentUuid": "2f709745_a78b7233",
       "range": {
         "startLine": 58,
         "startChar": 19,
@@ -105,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "5b8f81f7_32915a92",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-09T08:25:01Z",
+      "side": 1,
+      "message": "Unpacking packed parameters is used in auto diff and numeric diff:\nhttps://ceres-solver.googlesource.com/ceres-solver/+/master/include/ceres/internal/autodiff.h#247\nhttps://ceres-solver.googlesource.com/ceres-solver/+/master/include/ceres/numeric_diff_cost_function.h#244",
+      "parentUuid": "c08f71e9_e873f571",
+      "range": {
+        "startLine": 80,
+        "startChar": 15,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c478e43_560cbcfa",
         "filename": "include/ceres/internal/parameter_dims.h",
         "patchSetId": 1
@@ -122,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "2aa78feb_e33d4a46",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-09T08:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c478e43_560cbcfa",
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8135a12_4e8879e8",
         "filename": "internal/ceres/parameter_dims_test.cc",
         "patchSetId": 1
@@ -136,6 +285,24 @@
       "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ca2f4b_914431b0",
+        "filename": "internal/ceres/parameter_dims_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-09T08:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8135a12_4e8879e8",
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
