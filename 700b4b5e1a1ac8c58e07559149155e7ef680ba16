@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f26969ad_949b81bd",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-09T15:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ca584b9_45827122",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c08f71e9_e873f571",
         "filename": "include/ceres/internal/parameter_dims.h",
         "patchSetId": 1
@@ -281,6 +305,30 @@
       "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8bb3bb_388bb5f9",
+        "filename": "include/ceres/internal/parameter_dims.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-09T15:31:30Z",
+      "side": 1,
+      "message": "The private function only has one call size, but I think, it is not possible to implement it differently without exposing internals to the public function. One needs the offsets as parameter pack to create the array in line 97. Maybe this could be implemented using a default parameter, but this default parameter is probably confusing and should never be set by the user.",
+      "parentUuid": "c49e192c_dee9e484",
+      "range": {
+        "startLine": 80,
+        "startChar": 15,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "700b4b5e1a1ac8c58e07559149155e7ef680ba16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
