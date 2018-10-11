@@ -41,16 +41,16 @@ namespace internal {
 
 // Checks, whether the given parameter block sizes are valid. Valid means every
 // dimension is bigger than zero.
+constexpr bool IsValidParameterDimensionSequence(integer_sequence<int>) {
+  return true;
+}
+
 template <int N, int... Ts>
 constexpr bool IsValidParameterDimensionSequence(
     integer_sequence<int, N, Ts...>) {
   return (N <= 0) ? false
                   : IsValidParameterDimensionSequence(
                         integer_sequence<int, Ts...>());
-}
-
-constexpr bool IsValidParameterDimensionSequence(integer_sequence<int>) {
-  return true;
 }
 
 // Helper class that represents the parameter dimensions. The parameter
