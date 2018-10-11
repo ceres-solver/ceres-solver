@@ -61,7 +61,8 @@ class ParameterIgnoringCostFunction
   typedef SizedCostFunction<kNumResiduals, Ns...> Base;
 
  public:
-  ParameterIgnoringCostFunction(bool succeeds = true) : succeeds_(succeeds) {}
+  explicit ParameterIgnoringCostFunction(bool succeeds = true)
+      : succeeds_(succeeds) {}
 
   virtual bool Evaluate(double const* const* parameters,
                         double* residuals,
@@ -83,7 +84,7 @@ class ParameterIgnoringCostFunction
         //
         // where the multiplication by kFactor makes it easier to distinguish
         // between Jacobians of different residuals for the same parameter.
-        if (jacobians[k] != NULL) {
+        if (jacobians[k] != nullptr) {
           MatrixRef jacobian(jacobians[k],
                              Base::num_residuals(),
                              Base::parameter_block_sizes()[k]);
@@ -173,12 +174,12 @@ struct EvaluatorTest
     ASSERT_TRUE(evaluator->Evaluate(
           &state[0],
           &cost,
-          expected_residuals != NULL ? &residuals[0]  : NULL,
-          expected_gradient  != NULL ? &gradient[0]   : NULL,
-          expected_jacobian  != NULL ? jacobian.get() : NULL));
+          expected_residuals != nullptr ? &residuals[0]  : nullptr,
+          expected_gradient  != nullptr ? &gradient[0]   : nullptr,
+          expected_jacobian  != nullptr ? jacobian.get() : nullptr));
 
     Matrix actual_jacobian;
-    if (expected_jacobian != NULL) {
+    if (expected_jacobian != nullptr) {
       jacobian->ToDenseMatrix(&actual_jacobian);
     }
 
@@ -201,9 +202,9 @@ struct EvaluatorTest
                          expected.num_rows,
                          expected.num_cols,
                          expected.cost,
-                         (i & 1) ? expected.residuals : NULL,
-                         (i & 2) ? expected.gradient  : NULL,
-                         (i & 4) ? expected.jacobian  : NULL);
+                         (i & 1) ? expected.residuals : nullptr,
+                         (i & 2) ? expected.gradient  : nullptr,
+                         (i & 4) ? expected.jacobian  : nullptr);
     }
   }
 
@@ -222,7 +223,7 @@ void SetSparseMatrixConstant(SparseMatrix* sparse_matrix, double value) {
 
 TEST_P(EvaluatorTest, SingleResidualProblem) {
   problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 3, 2, 3, 4>,
-                           NULL,
+                           nullptr,
                            x, y, z);
 
   ExpectedEvaluation expected = {
@@ -260,7 +261,7 @@ TEST_P(EvaluatorTest, SingleResidualProblemWithPermutedParameters) {
   // for a long time, since by chance most users added parameters to the problem
   // in the same order that they occurred as parameters to a cost function.
   problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 3, 4, 3, 2>,
-                           NULL,
+                           nullptr,
                            z, y, x);
 
   ExpectedEvaluation expected = {
@@ -303,7 +304,7 @@ TEST_P(EvaluatorTest, SingleResidualProblemWithNuisanceParameters) {
   problem.AddParameterBlock(d, 3);
 
   problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 3, 2, 3, 4>,
-                           NULL,
+                           nullptr,
                            x, y, z);
 
   ExpectedEvaluation expected = {
@@ -340,17 +341,17 @@ TEST_P(EvaluatorTest, MultipleResidualProblem) {
 
   // f(x, y) in R^2
   problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 2, 2, 3>,
-                           NULL,
+                           nullptr,
                            x, y);
 
   // g(x, z) in R^3
   problem.AddResidualBlock(new ParameterIgnoringCostFunction<2, 3, 2, 4>,
-                           NULL,
+                           nullptr,
                            x, z);
 
   // h(y, z) in R^4
   problem.AddResidualBlock(new ParameterIgnoringCostFunction<3, 4, 3, 4>,
-                           NULL,
+                           nullptr,
                            y, z);
 
   ExpectedEvaluation expected = {
@@ -403,17 +404,17 @@ TEST_P(EvaluatorTest, MultipleResidualsWithLocalParameterizations) {
 
   // f(x, y) in R^2
   problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 2, 2, 3>,
-                           NULL,
+                           nullptr,
                            x, y);
 
   // g(x, z) in R^3
   problem.AddResidualBlock(new ParameterIgnoringCostFunction<2, 3, 2, 4>,
-                           NULL,
+                           nullptr,
                            x, z);
 
   // h(y, z) in R^4
   problem.AddResidualBlock(new ParameterIgnoringCostFunction<3, 4, 3, 4>,
-                           NULL,
+                           nullptr,
                            y, z);
 
   ExpectedEvaluation expected = {
@@ -463,17 +464,17 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
 
   // f(x, y) in R^2
  problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 2, 2, 3>,
-                           NULL,
-                           x, y);
+                          nullptr,
+                          x, y);
 
   // g(x, z) in R^3
  problem.AddResidualBlock(new ParameterIgnoringCostFunction<2, 3, 2, 4>,
-                           NULL,
-                           x, z);
+                          nullptr,
+                          x, z);
 
   // h(y, z) in R^4
   problem.AddResidualBlock(new ParameterIgnoringCostFunction<3, 4, 3, 4>,
-                           NULL,
+                           nullptr,
                            y, z);
 
   // For this test, "z" is constant.
@@ -531,15 +532,20 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
 TEST_P(EvaluatorTest, EvaluatorAbortsForResidualsThatFailToEvaluate) {
   // Switch the return value to failure.
   problem.AddResidualBlock(
-      new ParameterIgnoringCostFunction<20, 3, 2, 3, 4>(false), NULL, x, y, z);
+      new ParameterIgnoringCostFunction<20, 3, 2, 3, 4>(false),
+      nullptr,
+      x,
+      y,
+      z);
 
   // The values are ignored.
   double state[9];
 
-  std::unique_ptr<Evaluator> evaluator(CreateEvaluator(problem.mutable_program()));
+  std::unique_ptr<Evaluator> evaluator(
+      CreateEvaluator(problem.mutable_program()));
   std::unique_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
   double cost;
-  EXPECT_FALSE(evaluator->Evaluate(state, &cost, NULL, NULL, NULL));
+  EXPECT_FALSE(evaluator->Evaluate(state, &cost, nullptr, nullptr, nullptr));
 }
 
 // In the pairs, the first argument is the linear solver type, and the second
@@ -551,25 +557,24 @@ TEST_P(EvaluatorTest, EvaluatorAbortsForResidualsThatFailToEvaluate) {
 INSTANTIATE_TEST_CASE_P(
     LinearSolvers,
     EvaluatorTest,
-    ::testing::Values(
-      EvaluatorTestOptions(DENSE_QR, 0),
-      EvaluatorTestOptions(DENSE_SCHUR, 0),
-      EvaluatorTestOptions(DENSE_SCHUR, 1),
-      EvaluatorTestOptions(DENSE_SCHUR, 2),
-      EvaluatorTestOptions(DENSE_SCHUR, 3),
-      EvaluatorTestOptions(DENSE_SCHUR, 4),
-      EvaluatorTestOptions(SPARSE_SCHUR, 0),
-      EvaluatorTestOptions(SPARSE_SCHUR, 1),
-      EvaluatorTestOptions(SPARSE_SCHUR, 2),
-      EvaluatorTestOptions(SPARSE_SCHUR, 3),
-      EvaluatorTestOptions(SPARSE_SCHUR, 4),
-      EvaluatorTestOptions(ITERATIVE_SCHUR, 0),
-      EvaluatorTestOptions(ITERATIVE_SCHUR, 1),
-      EvaluatorTestOptions(ITERATIVE_SCHUR, 2),
-      EvaluatorTestOptions(ITERATIVE_SCHUR, 3),
-      EvaluatorTestOptions(ITERATIVE_SCHUR, 4),
-      EvaluatorTestOptions(SPARSE_NORMAL_CHOLESKY, 0, false),
-      EvaluatorTestOptions(SPARSE_NORMAL_CHOLESKY, 0, true)));
+    ::testing::Values(EvaluatorTestOptions(DENSE_QR, 0),
+                      EvaluatorTestOptions(DENSE_SCHUR, 0),
+                      EvaluatorTestOptions(DENSE_SCHUR, 1),
+                      EvaluatorTestOptions(DENSE_SCHUR, 2),
+                      EvaluatorTestOptions(DENSE_SCHUR, 3),
+                      EvaluatorTestOptions(DENSE_SCHUR, 4),
+                      EvaluatorTestOptions(SPARSE_SCHUR, 0),
+                      EvaluatorTestOptions(SPARSE_SCHUR, 1),
+                      EvaluatorTestOptions(SPARSE_SCHUR, 2),
+                      EvaluatorTestOptions(SPARSE_SCHUR, 3),
+                      EvaluatorTestOptions(SPARSE_SCHUR, 4),
+                      EvaluatorTestOptions(ITERATIVE_SCHUR, 0),
+                      EvaluatorTestOptions(ITERATIVE_SCHUR, 1),
+                      EvaluatorTestOptions(ITERATIVE_SCHUR, 2),
+                      EvaluatorTestOptions(ITERATIVE_SCHUR, 3),
+                      EvaluatorTestOptions(ITERATIVE_SCHUR, 4),
+                      EvaluatorTestOptions(SPARSE_NORMAL_CHOLESKY, 0, false),
+                      EvaluatorTestOptions(SPARSE_NORMAL_CHOLESKY, 0, true)));
 
 // Simple cost function used to check if the evaluator is sensitive to
 // state changes.
@@ -583,9 +588,9 @@ class ParameterSensitiveCostFunction : public SizedCostFunction<2, 2> {
     residuals[0] = x1 * x1;
     residuals[1] = x2 * x2;
 
-    if (jacobians != NULL) {
+    if (jacobians != nullptr) {
       double* jacobian = jacobians[0];
-      if (jacobian != NULL) {
+      if (jacobian != nullptr) {
         jacobian[0] = 2.0 * x1;
         jacobian[1] = 0.0;
         jacobian[2] = 0.0;
@@ -603,7 +608,7 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
   x[0] = 1.0;
   x[1] = 1.0;
 
-  problem.AddResidualBlock(new ParameterSensitiveCostFunction(), NULL, x);
+  problem.AddResidualBlock(new ParameterSensitiveCostFunction(), nullptr, x);
   Program* program = problem.mutable_program();
   program->SetParameterOffsetsAndIndex();
 
@@ -612,7 +617,8 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
   options.num_eliminate_blocks = 0;
   options.context = problem.context();
   string error;
-  std::unique_ptr<Evaluator> evaluator(Evaluator::Create(options, program, &error));
+  std::unique_ptr<Evaluator> evaluator(
+      Evaluator::Create(options, program, &error));
   std::unique_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
 
   ASSERT_EQ(2, jacobian->num_rows());
@@ -630,15 +636,15 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
   // Cost only; no residuals and no jacobian.
   {
     double cost = -1;
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, NULL, NULL, NULL));
+    ASSERT_TRUE(evaluator->Evaluate(state, &cost, nullptr, nullptr, nullptr));
     EXPECT_EQ(48.5, cost);
   }
 
   // Cost and residuals, no jacobian.
   {
     double cost = -1;
-    double residuals[2] = { -2, -2 };
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, NULL, NULL));
+    double residuals[2] = {-2, -2};
+    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, nullptr, nullptr));
     EXPECT_EQ(48.5, cost);
     EXPECT_EQ(4, residuals[0]);
     EXPECT_EQ(9, residuals[1]);
@@ -647,13 +653,10 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
   // Cost, residuals, and jacobian.
   {
     double cost = -1;
-    double residuals[2] = { -2, -2};
+    double residuals[2] = {-2, -2};
     SetSparseMatrixConstant(jacobian.get(), -1);
-    ASSERT_TRUE(evaluator->Evaluate(state,
-                                    &cost,
-                                    residuals,
-                                    NULL,
-                                    jacobian.get()));
+    ASSERT_TRUE(
+        evaluator->Evaluate(state, &cost, residuals, nullptr, jacobian.get()));
     EXPECT_EQ(48.5, cost);
     EXPECT_EQ(4, residuals[0]);
     EXPECT_EQ(9, residuals[1]);
@@ -661,13 +664,12 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
     jacobian->ToDenseMatrix(&actual_jacobian);
 
     Matrix expected_jacobian(2, 2);
-    expected_jacobian
-        << 2 * state[0], 0,
-           0, 2 * state[1];
+    expected_jacobian << 2 * state[0], 0, 0, 2 * state[1];
 
     EXPECT_TRUE((actual_jacobian.array() == expected_jacobian.array()).all())
-        << "Actual:\n" << actual_jacobian
-        << "\nExpected:\n" << expected_jacobian;
+        << "Actual:\n"
+        << actual_jacobian << "\nExpected:\n"
+        << expected_jacobian;
   }
 }
 

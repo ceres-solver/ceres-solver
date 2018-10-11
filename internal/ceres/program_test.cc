@@ -55,7 +55,7 @@ class UnaryIdentityCostFunction : public SizedCostFunction<1, 1> {
                         double* residuals,
                         double** jacobians) const {
     residuals[0] = parameters[0][0];
-    if (jacobians != NULL && jacobians[0] != NULL) {
+    if (jacobians != nullptr && jacobians[0] != nullptr) {
       jacobians[0][0] = 1.0;
     }
     return true;
@@ -91,15 +91,14 @@ TEST(Program, RemoveFixedBlocksNothingConstant) {
   problem.AddParameterBlock(&x, 1);
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
-  problem.AddResidualBlock(new TernaryCostFunction(), NULL, &x, &y, &z);
+  problem.AddResidualBlock(new UnaryCostFunction(), nullptr, &x);
+  problem.AddResidualBlock(new BinaryCostFunction(), nullptr, &x, &y);
+  problem.AddResidualBlock(new TernaryCostFunction(), nullptr, &x, &y, &z);
 
   vector<double*> removed_parameter_blocks;
   double fixed_cost = 0.0;
   string message;
-  std::unique_ptr<Program> reduced_program(
-      problem.program().CreateReducedProgram(
+  std::unique_ptr<Program> reduced_program(problem.program().CreateReducedProgram(
           &removed_parameter_blocks, &fixed_cost, &message));
 
   EXPECT_EQ(reduced_program->NumParameterBlocks(), 3);
@@ -113,7 +112,7 @@ TEST(Program, RemoveFixedBlocksAllParameterBlocksConstant) {
   double x = 1.0;
 
   problem.AddParameterBlock(&x, 1);
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
+  problem.AddResidualBlock(new UnaryCostFunction(), nullptr, &x);
   problem.SetParameterBlockConstant(&x);
 
   vector<double*> removed_parameter_blocks;
@@ -163,8 +162,8 @@ TEST(Program, RemoveFixedBlocksOneParameterBlockConstant) {
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
 
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
+  problem.AddResidualBlock(new UnaryCostFunction(), nullptr, &x);
+  problem.AddResidualBlock(new BinaryCostFunction(), nullptr, &x, &y);
   problem.SetParameterBlockConstant(&x);
 
   vector<double*> removed_parameter_blocks;
@@ -186,9 +185,9 @@ TEST(Program, RemoveFixedBlocksNumEliminateBlocks) {
   problem.AddParameterBlock(&x, 1);
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
-  problem.AddResidualBlock(new TernaryCostFunction(), NULL, &x, &y, &z);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
+  problem.AddResidualBlock(new UnaryCostFunction(), nullptr, &x);
+  problem.AddResidualBlock(new TernaryCostFunction(), nullptr, &x, &y, &z);
+  problem.AddResidualBlock(new BinaryCostFunction(), nullptr, &x, &y);
   problem.SetParameterBlockConstant(&x);
 
   vector<double*> removed_parameter_blocks;
@@ -210,9 +209,9 @@ TEST(Program, RemoveFixedBlocksFixedCost) {
   problem.AddParameterBlock(&x, 1);
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
-  problem.AddResidualBlock(new UnaryIdentityCostFunction(), NULL, &x);
-  problem.AddResidualBlock(new TernaryCostFunction(), NULL, &x, &y, &z);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
+  problem.AddResidualBlock(new UnaryIdentityCostFunction(), nullptr, &x);
+  problem.AddResidualBlock(new TernaryCostFunction(), nullptr, &x, &y, &z);
+  problem.AddResidualBlock(new BinaryCostFunction(), nullptr, &x, &y);
   problem.SetParameterBlockConstant(&x);
 
   ResidualBlock *expected_removed_block =
@@ -222,8 +221,8 @@ TEST(Program, RemoveFixedBlocksFixedCost) {
   double expected_fixed_cost;
   expected_removed_block->Evaluate(true,
                                    &expected_fixed_cost,
-                                   NULL,
-                                   NULL,
+                                   nullptr,
+                                   nullptr,
                                    scratch.get());
 
 
@@ -249,14 +248,14 @@ TEST(Program, CreateJacobianBlockSparsityTranspose) {
   problem.AddParameterBlock(y, 3);
   problem.AddParameterBlock(&z, 1);
 
-  problem.AddResidualBlock(new MockCostFunctionBase<2, 2>(), NULL, x);
-  problem.AddResidualBlock(new MockCostFunctionBase<3, 1, 2>(), NULL, &z, x);
-  problem.AddResidualBlock(new MockCostFunctionBase<4, 1, 3>(), NULL, &z, y);
-  problem.AddResidualBlock(new MockCostFunctionBase<5, 1, 3>(), NULL, &z, y);
-  problem.AddResidualBlock(new MockCostFunctionBase<1, 2, 1>(), NULL, x, &z);
-  problem.AddResidualBlock(new MockCostFunctionBase<2, 1, 3>(), NULL, &z, y);
-  problem.AddResidualBlock(new MockCostFunctionBase<2, 2, 1>(), NULL, x, &z);
-  problem.AddResidualBlock(new MockCostFunctionBase<1, 3>(), NULL, y);
+  problem.AddResidualBlock(new MockCostFunctionBase<2, 2>(), nullptr, x);
+  problem.AddResidualBlock(new MockCostFunctionBase<3, 1, 2>(), nullptr, &z, x);
+  problem.AddResidualBlock(new MockCostFunctionBase<4, 1, 3>(), nullptr, &z, y);
+  problem.AddResidualBlock(new MockCostFunctionBase<5, 1, 3>(), nullptr, &z, y);
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 2, 1>(), nullptr, x, &z);
+  problem.AddResidualBlock(new MockCostFunctionBase<2, 1, 3>(), nullptr, &z, y);
+  problem.AddResidualBlock(new MockCostFunctionBase<2, 2, 1>(), nullptr, x, &z);
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 3>(), nullptr, y);
 
   TripletSparseMatrix expected_block_sparse_jacobian(3, 8, 14);
   {
@@ -352,7 +351,7 @@ TEST(Program, ReallocationInCreateJacobianBlockSparsityTranspose) {
   }
 
   problem.AddResidualBlock(new NumParameterBlocksCostFunction<1, 20>(),
-                           NULL,
+                           nullptr,
                            parameter_blocks);
 
   TripletSparseMatrix expected_block_sparse_jacobian(20, 1, 20);
@@ -388,7 +387,7 @@ TEST(Program, ProblemHasNanParameterBlocks) {
   double x[2];
   x[0] = 1.0;
   x[1] = std::numeric_limits<double>::quiet_NaN();
-  problem.AddResidualBlock(new MockCostFunctionBase<1, 2>(), NULL, x);
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 2>(), nullptr, x);
   string error;
   EXPECT_FALSE(problem.program().ParameterBlocksAreFinite(&error));
   EXPECT_NE(error.find("has at least one invalid value"),
@@ -398,7 +397,7 @@ TEST(Program, ProblemHasNanParameterBlocks) {
 TEST(Program, InfeasibleParameterBlock) {
   ProblemImpl problem;
   double x[] = {0.0, 0.0};
-  problem.AddResidualBlock(new MockCostFunctionBase<1, 2>(), NULL, x);
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 2>(), nullptr, x);
   problem.SetParameterLowerBound(x, 0, 2.0);
   problem.SetParameterUpperBound(x, 0, 1.0);
   string error;
@@ -409,7 +408,7 @@ TEST(Program, InfeasibleParameterBlock) {
 TEST(Program, InfeasibleConstantParameterBlock) {
   ProblemImpl problem;
   double x[] = {0.0, 0.0};
-  problem.AddResidualBlock(new MockCostFunctionBase<1, 2>(), NULL, x);
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 2>(), nullptr, x);
   problem.SetParameterLowerBound(x, 0, 1.0);
   problem.SetParameterUpperBound(x, 0, 2.0);
   problem.SetParameterBlockConstant(x);

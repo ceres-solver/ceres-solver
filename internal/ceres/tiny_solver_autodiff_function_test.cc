@@ -70,7 +70,7 @@ TEST(TinySolverAutoDiffFunction, SimpleFunction) {
 
   // Check the case with cost-only evaluation.
   residuals.setConstant(555);  // Arbitrary.
-  EXPECT_TRUE(f(&x(0), &residuals(0), NULL));
+  EXPECT_TRUE(f(&x(0), &residuals(0), nullptr));
   EXPECT_NEAR(3.0, residuals(0), kTolerance);
   EXPECT_NEAR(2.0, residuals(1), kTolerance);
 
@@ -110,7 +110,7 @@ class DynamicResidualsFunctor {
   template<typename T>
   bool operator()(const T* parameters, T* residuals) const {
     // Jacobian is not evaluated by cost function, but by autodiff.
-    T* jacobian = NULL;
+    T* jacobian = nullptr;
     return EvaluateResidualsAndJacobians(parameters, residuals, jacobian);
   }
 };
@@ -119,7 +119,7 @@ template<typename Function, typename Vector>
 void TestHelper(const Function& f, const Vector& x0) {
   Vector x = x0;
   Eigen::Vector2d residuals;
-  f(x.data(), residuals.data(), NULL);
+  f(x.data(), residuals.data(), nullptr);
   EXPECT_GT(residuals.squaredNorm() / 2.0, 1e-10);
 
   TinySolver<Function> solver;
@@ -140,7 +140,7 @@ TEST(TinySolverAutoDiffFunction, ResidualsDynamicAutoDiff) {
   AutoDiffCostFunctor f_autodiff(f);
 
   Eigen::Vector2d residuals;
-  f_autodiff(x0.data(), residuals.data(), NULL);
+  f_autodiff(x0.data(), residuals.data(), nullptr);
   EXPECT_GT(residuals.squaredNorm() / 2.0, 1e-10);
 
   TinySolver<AutoDiffCostFunctor> solver;

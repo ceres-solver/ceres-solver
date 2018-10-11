@@ -96,7 +96,7 @@ class FailingCostFunction : public SizedCostFunction<1, 1> {
 TEST(TrustRegionPreprocessor, RemoveParameterBlocksFailed) {
   ProblemImpl problem;
   double x = 3.0;
-  problem.AddResidualBlock(new FailingCostFunction, NULL, &x);
+  problem.AddResidualBlock(new FailingCostFunction, nullptr, &x);
   problem.SetParameterBlockConstant(&x);
   Solver::Options options;
   TrustRegionPreprocessor preprocessor;
@@ -124,13 +124,13 @@ class DummyCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
       residuals[i] = kNumResiduals * kNumResiduals + i;
     }
 
-    if (jacobians == NULL) {
+    if (jacobians == nullptr) {
       return true;
     }
 
     std::array<int, sizeof...(Ns)> N{Ns...};
     for (size_t i = 0; i < N.size(); ++i) {
-      if (jacobians[i] != NULL) {
+      if (jacobians[i] != nullptr) {
         MatrixRef j(jacobians[i], kNumResiduals, N[i]);
         j.setOnes();
         j *= kNumResiduals * N[i];
@@ -147,8 +147,8 @@ class LinearSolverAndEvaluatorCreationTest : public ::testing::Test {
     x_ = 1.0;
     y_ = 1.0;
     z_ = 1.0;
-    problem_.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &x_, &y_);
-    problem_.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &y_, &z_);
+    problem_.AddResidualBlock(new DummyCostFunction<1, 1, 1>, nullptr, &x_, &y_);
+    problem_.AddResidualBlock(new DummyCostFunction<1, 1, 1>, nullptr, &y_, &z_);
   }
 
   void PreprocessForGivenLinearSolverAndVerify(
@@ -161,8 +161,8 @@ class LinearSolverAndEvaluatorCreationTest : public ::testing::Test {
     EXPECT_EQ(pp.options.linear_solver_type, linear_solver_type);
     EXPECT_EQ(pp.linear_solver_options.type, linear_solver_type);
     EXPECT_EQ(pp.evaluator_options.linear_solver_type, linear_solver_type);
-    EXPECT_TRUE(pp.linear_solver.get() != NULL);
-    EXPECT_TRUE(pp.evaluator.get() != NULL);
+    EXPECT_TRUE(pp.linear_solver.get() != nullptr);
+    EXPECT_TRUE(pp.evaluator.get() != nullptr);
   }
 
  protected:
@@ -214,8 +214,8 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, MinimizerIsAwareOfBounds) {
   EXPECT_EQ(pp.linear_solver_options.type, options.linear_solver_type);
   EXPECT_EQ(pp.evaluator_options.linear_solver_type,
             options.linear_solver_type);
-  EXPECT_TRUE(pp.linear_solver.get() != NULL);
-  EXPECT_TRUE(pp.evaluator.get() != NULL);
+  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
+  EXPECT_TRUE(pp.evaluator.get() != nullptr);
   EXPECT_TRUE(pp.minimizer_options.is_constrained);
 }
 
@@ -246,8 +246,8 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, SchurTypeSolverWithGoodOrdering) {
   EXPECT_EQ(pp.options.linear_solver_type, DENSE_SCHUR);
   EXPECT_EQ(pp.linear_solver_options.type, DENSE_SCHUR);
   EXPECT_EQ(pp.evaluator_options.linear_solver_type, DENSE_SCHUR);
-  EXPECT_TRUE(pp.linear_solver.get() != NULL);
-  EXPECT_TRUE(pp.evaluator.get() != NULL);
+  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
+  EXPECT_TRUE(pp.evaluator.get() != nullptr);
 }
 
 TEST_F(LinearSolverAndEvaluatorCreationTest,
@@ -268,8 +268,8 @@ TEST_F(LinearSolverAndEvaluatorCreationTest,
   EXPECT_EQ(pp.options.linear_solver_type, DENSE_QR);
   EXPECT_EQ(pp.linear_solver_options.type, DENSE_QR);
   EXPECT_EQ(pp.evaluator_options.linear_solver_type, DENSE_QR);
-  EXPECT_TRUE(pp.linear_solver.get() != NULL);
-  EXPECT_TRUE(pp.evaluator.get() != NULL);
+  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
+  EXPECT_TRUE(pp.evaluator.get() != nullptr);
 }
 
 TEST_F(LinearSolverAndEvaluatorCreationTest,
@@ -289,14 +289,14 @@ TEST_F(LinearSolverAndEvaluatorCreationTest,
   EXPECT_EQ(pp.options.linear_solver_type, DENSE_SCHUR);
   EXPECT_EQ(pp.linear_solver_options.type, DENSE_SCHUR);
   EXPECT_EQ(pp.evaluator_options.linear_solver_type, DENSE_SCHUR);
-  EXPECT_TRUE(pp.linear_solver.get() != NULL);
-  EXPECT_TRUE(pp.evaluator.get() != NULL);
+  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
+  EXPECT_TRUE(pp.evaluator.get() != nullptr);
 }
 
 TEST(TrustRegionPreprocessorTest, InnerIterationsWithOneParameterBlock) {
   ProblemImpl problem;
   double x = 1.0;
-  problem.AddResidualBlock(new DummyCostFunction<1, 1>, NULL, &x);
+  problem.AddResidualBlock(new DummyCostFunction<1, 1>, nullptr, &x);
 
   Solver::Options options;
   options.use_inner_iterations = true;
@@ -304,9 +304,9 @@ TEST(TrustRegionPreprocessorTest, InnerIterationsWithOneParameterBlock) {
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
-  EXPECT_TRUE(pp.linear_solver.get() != NULL);
-  EXPECT_TRUE(pp.evaluator.get() != NULL);
-  EXPECT_TRUE(pp.inner_iteration_minimizer.get() == NULL);
+  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
+  EXPECT_TRUE(pp.evaluator.get() != nullptr);
+  EXPECT_TRUE(pp.inner_iteration_minimizer.get() == nullptr);
 }
 
 TEST_F(LinearSolverAndEvaluatorCreationTest,
@@ -317,9 +317,9 @@ TEST_F(LinearSolverAndEvaluatorCreationTest,
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
-  EXPECT_TRUE(pp.linear_solver.get() != NULL);
-  EXPECT_TRUE(pp.evaluator.get() != NULL);
-  EXPECT_TRUE(pp.inner_iteration_minimizer.get() != NULL);
+  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
+  EXPECT_TRUE(pp.evaluator.get() != nullptr);
+  EXPECT_TRUE(pp.inner_iteration_minimizer.get() != nullptr);
 }
 
 TEST_F(LinearSolverAndEvaluatorCreationTest,
@@ -347,9 +347,9 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, ValidInnerIterationsOrdering) {
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
-  EXPECT_TRUE(pp.linear_solver.get() != NULL);
-  EXPECT_TRUE(pp.evaluator.get() != NULL);
-  EXPECT_TRUE(pp.inner_iteration_minimizer.get() != NULL);
+  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
+  EXPECT_TRUE(pp.evaluator.get() != nullptr);
+  EXPECT_TRUE(pp.inner_iteration_minimizer.get() != nullptr);
 }
 
 }  // namespace internal
