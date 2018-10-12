@@ -118,7 +118,7 @@ class CERES_EXPORT Solver {
     // method, please see:
     //
     // Nocedal, J. (1980). "Updating Quasi-Newton Matrices with
-    // Limited Storage". Mathematics of Computation 35 (151): 773–782.
+    // Limited Storage". Mathematics of Computation 35 (151): 773-782.
     int max_lbfgs_rank = 20;
 
     // As part of the (L)BFGS update step (BFGS) / right-multiply step (L-BFGS),

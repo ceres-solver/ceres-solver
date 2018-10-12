@@ -221,26 +221,26 @@ enum LineSearchDirectionType {
   // For more details on BFGS see:
   //
   // Broyden, C.G., "The Convergence of a Class of Double-rank Minimization
-  // Algorithms,"; J. Inst. Maths. Applics., Vol. 6, pp 76–90, 1970.
+  // Algorithms,"; J. Inst. Maths. Applics., Vol. 6, pp 76-90, 1970.
   //
   // Fletcher, R., "A New Approach to Variable Metric Algorithms,"
-  // Computer Journal, Vol. 13, pp 317–322, 1970.
+  // Computer Journal, Vol. 13, pp 317-322, 1970.
   //
   // Goldfarb, D., "A Family of Variable Metric Updates Derived by Variational
-  // Means," Mathematics of Computing, Vol. 24, pp 23–26, 1970.
+  // Means," Mathematics of Computing, Vol. 24, pp 23-26, 1970.
   //
   // Shanno, D.F., "Conditioning of Quasi-Newton Methods for Function
-  // Minimization," Mathematics of Computing, Vol. 24, pp 647–656, 1970.
+  // Minimization," Mathematics of Computing, Vol. 24, pp 647-656, 1970.
   //
   // For more details on L-BFGS see:
   //
   // Nocedal, J. (1980). "Updating Quasi-Newton Matrices with Limited
-  // Storage". Mathematics of Computation 35 (151): 773–782.
+  // Storage". Mathematics of Computation 35 (151): 773-782.
   //
   // Byrd, R. H.; Nocedal, J.; Schnabel, R. B. (1994).
   // "Representations of Quasi-Newton Matrices and their use in
   // Limited Memory Methods". Mathematical Programming 63 (4):
-  // 129–156.
+  // 129-156.
   //
   // A general reference for both methods:
   //
