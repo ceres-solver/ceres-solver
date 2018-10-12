@@ -941,11 +941,11 @@ directory contains a number of other examples:
 
    .. [#f9] Giorgio Grisetti, Rainer Kummerle, Cyrill Stachniss, Wolfram
       Burgard. A Tutorial on Graph-Based SLAM. IEEE Intelligent Transportation
-      Systems Magazine, 52(3):199–222, 2010.
+      Systems Magazine, 52(3):199-222, 2010.
 
    .. [#f10] E. Olson, J. Leonard, and S. Teller, “Fast iterative optimization of
       pose graphs with poor initial estimates,” in Robotics and Automation
-      (ICRA), IEEE International Conference on, 2006, pp. 2262–2269.
+      (ICRA), IEEE International Conference on, 2006, pp. 2262-2269.
 
 #. `slam/pose_graph_3d/pose_graph_3d.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/slam/pose_graph_3d/pose_graph_3d.cc>`_

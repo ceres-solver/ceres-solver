@@ -54,7 +54,7 @@ namespace internal {
 // enhanced with scaling rule by Byrd, Nocedal and Schanbel.
 //
 // Nocedal, J. (1980). "Updating Quasi-Newton Matrices with Limited
-// Storage". Mathematics of Computation 35 (151): 773–782.
+// Storage". Mathematics of Computation 35 (151): 773-782.
 //
 // Byrd, R. H.; Nocedal, J.; Schnabel, R. B. (1994).
 // "Representations of Quasi-Newton Matrices and their use in
