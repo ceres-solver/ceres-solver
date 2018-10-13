@@ -120,7 +120,7 @@ class TinySolverAutoDiffFunction {
     NUM_RESIDUALS = kNumResiduals,
   };
 
-  // This is similar to AutoDiff::Differentiate(), but since there is only one
+  // This is similar to AutoDifferentiate(), but since there is only one
   // parameter block it is easier to inline to avoid overhead.
   bool operator()(const T* parameters,
                   T* residuals,
