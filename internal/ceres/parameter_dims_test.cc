@@ -89,11 +89,11 @@ TEST(ParameterDims, GetUnpackedParameters) {
   constexpr int N1 = 4;
   constexpr int N2 = 2;
 
-  using Params = StaticParameterDims<N0, N1, N2>;
+  using ParameterDims = StaticParameterDims<N0, N1, N2>;
 
-  std::array<double, Params::kNumParameters> packed_parameters{};
+  std::array<double, ParameterDims::kNumParameters> packed_parameters{};
   std::array<double*, 3> unpacked_parameters =
-      Params::GetUnpackedParameters(packed_parameters.data());
+      ParameterDims::GetUnpackedParameters(packed_parameters.data());
 
   EXPECT_EQ(packed_parameters.data(), unpacked_parameters[0]);
   EXPECT_EQ(packed_parameters.data() + N0, unpacked_parameters[1]);

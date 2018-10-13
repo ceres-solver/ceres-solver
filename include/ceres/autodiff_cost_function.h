@@ -110,10 +110,6 @@
 //             Dimension of x ------------------------------------+  |
 //             Dimension of y ---------------------------------------+
 //
-// The framework can currently accommodate cost functions of up to 10
-// independent variables, and there is no limit on the dimensionality
-// of each of them.
-//
 // WARNING #1: Since the functor will get instantiated with different types for
 // T, you must convert from other numeric types to T before mixing
 // computations with other variables of type T. In the example above, this is
@@ -153,19 +149,8 @@ namespace ceres {
 // of residuals for a single autodiff cost function at runtime.
 template <typename CostFunctor,
           int kNumResiduals,  // Number of residuals, or ceres::DYNAMIC.
-          int N0,       // Number of parameters in block 0.
-          int N1 = 0,   // Number of parameters in block 1.
-          int N2 = 0,   // Number of parameters in block 2.
-          int N3 = 0,   // Number of parameters in block 3.
-          int N4 = 0,   // Number of parameters in block 4.
-          int N5 = 0,   // Number of parameters in block 5.
-          int N6 = 0,   // Number of parameters in block 6.
-          int N7 = 0,   // Number of parameters in block 7.
-          int N8 = 0,   // Number of parameters in block 8.
-          int N9 = 0>   // Number of parameters in block 9.
-class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals,
-                                                      N0, N1, N2, N3, N4,
-                                                      N5, N6, N7, N8, N9> {
+          int... Ns>          // Number of parameters in each parameter block.
+class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
   // Takes ownership of functor. Uses the template-provided value for the
   // number of residuals ("kNumResiduals").
@@ -186,10 +171,7 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals,
     CHECK_EQ(kNumResiduals, DYNAMIC)
         << "Can't run the dynamic-size constructor if the "
         << "number of residuals is not ceres::DYNAMIC.";
-    SizedCostFunction<kNumResiduals,
-                      N0, N1, N2, N3, N4,
-                      N5, N6, N7, N8, N9>
-        ::set_num_residuals(num_residuals);
+    SizedCostFunction<kNumResiduals, Ns...>::set_num_residuals(num_residuals);
   }
 
   virtual ~AutoDiffCostFunction() {}
@@ -202,20 +184,20 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals,
   virtual bool Evaluate(double const* const* parameters,
                         double* residuals,
                         double** jacobians) const {
+    using ParameterDims =
+        typename SizedCostFunction<kNumResiduals, Ns...>::ParameterDims;
+
     if (!jacobians) {
-      return internal::VariadicEvaluate<
-          CostFunctor, double, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>
-          ::Call(*functor_, parameters, residuals);
+      return internal::VariadicEvaluate<ParameterDims>(*functor_,
+                                                       parameters,
+                                                       residuals);
     }
-    return internal::AutoDiff<CostFunctor, double,
-           N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>::Differentiate(
-               *functor_,
-               parameters,
-               SizedCostFunction<kNumResiduals,
-                                 N0, N1, N2, N3, N4,
-                                 N5, N6, N7, N8, N9>::num_residuals(),
-               residuals,
-               jacobians);
+    return internal::AutoDifferentiate<ParameterDims>(
+        *functor_,
+        parameters,
+        SizedCostFunction<kNumResiduals, Ns...>::num_residuals(),
+        residuals,
+        jacobians);
   }
 
  private:

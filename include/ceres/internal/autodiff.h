@@ -33,7 +33,7 @@
 // dual numbers in jet.h. Before reading the rest of this file, it is advisable
 // to read jet.h's header comment in detail.
 //
-// The helper wrapper AutoDiff::Differentiate() computes the jacobian of
+// The helper wrapper AutoDifferentiate() computes the jacobian of
 // functors with templated operator() taking this form:
 //
 //   struct F {
@@ -142,10 +142,14 @@
 
 #include <stddef.h>
 
-#include "ceres/jet.h"
+#include <array>
+
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
+#include "ceres/internal/parameter_dims.h"
 #include "ceres/internal/variadic_evaluate.h"
+#include "ceres/jet.h"
+#include "ceres/types.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -165,21 +169,51 @@ namespace internal {
 //
 // is what would get put in dst if N was 3, offset was 3, and the jet type JetT
 // was 8-dimensional.
-template <typename JetT, typename T, int N>
-inline void Make1stOrderPerturbation(int offset, const T* src, JetT* dst) {
+template <int Offset, int N, typename T, typename JetT>
+inline void Make1stOrderPerturbation(const T* src, JetT* dst) {
   DCHECK(src);
   DCHECK(dst);
   for (int j = 0; j < N; ++j) {
     dst[j].a = src[j];
     dst[j].v.setZero();
-    dst[j].v[offset + j] = T(1.0);
+    dst[j].v[Offset + j] = T(1.0);
   }
 }
+
+// Calls Make1stOrderPerturbation for every parameter block.
+//
+// Example:
+// If one having three parameter blocks with dimensions (3, 2, 4), the call
+// Make1stOrderPerturbations<integer_sequence<3, 2, 4>::Apply(params, x);
+// will result in the following calls to Make1stOrderPerturbation:
+// Make1stOrderPerturbation<0, 3>(params[0], x + 0);
+// Make1stOrderPerturbation<3, 2>(params[1], x + 3);
+// Make1stOrderPerturbation<5, 4>(params[2], x + 5);
+template <typename Seq, int ParameterIdx = 0, int Offset = 0>
+struct Make1stOrderPerturbations;
+
+template <int N, int... Ns, int ParameterIdx, int Offset>
+struct Make1stOrderPerturbations<integer_sequence<int, N, Ns...>, ParameterIdx,
+                                 Offset> {
+  template <typename T, typename JetT>
+  static void Apply(T const* const* parameters, JetT* x) {
+    Make1stOrderPerturbation<Offset, N>(parameters[ParameterIdx], x + Offset);
+    Make1stOrderPerturbations<integer_sequence<int, Ns...>, ParameterIdx + 1,
+                              Offset + N>::Apply(parameters, x);
+  }
+};
+
+// End of 'recursion'. Nothing more to do.
+template <int ParameterIdx, int Total>
+struct Make1stOrderPerturbations<integer_sequence<int>, ParameterIdx, Total> {
+  template <typename T, typename JetT>
+  static void Apply(T const* const* /* NOT USED */, JetT* /* NOT USED */) {}
+};
 
 // Takes the 0th order part of src, assumed to be a Jet type, and puts it in
 // dst. This is used to pick out the "vector" part of the extended y.
 template <typename JetT, typename T>
-inline void Take0thOrderPart(int M, const JetT *src, T dst) {
+inline void Take0thOrderPart(int M, const JetT* src, T dst) {
   DCHECK(src);
   for (int i = 0; i < M; ++i) {
     dst[i] = src[i].a;
@@ -188,8 +222,8 @@ inline void Take0thOrderPart(int M, const JetT *src, T dst) {
 
 // Takes N 1st order parts, starting at index N0, and puts them in the M x N
 // matrix 'dst'. This is used to pick out the "matrix" parts of the extended y.
-template <typename JetT, typename T, int N0, int N>
-inline void Take1stOrderPart(const int M, const JetT *src, T *dst) {
+template <int N0, int N, typename JetT, typename T>
+inline void Take1stOrderPart(const int M, const JetT* src, T* dst) {
   DCHECK(src);
   DCHECK(dst);
   for (int i = 0; i < M; ++i) {
@@ -198,125 +232,85 @@ inline void Take1stOrderPart(const int M, const JetT *src, T *dst) {
   }
 }
 
-// This is in a struct because default template parameters on a
-// function are not supported in C++03 (though it is available in
-// C++0x). N0 through N9 are the dimension of the input arguments to
-// the user supplied functor.
-template <typename Functor, typename T,
-          int N0 = 0, int N1 = 0, int N2 = 0, int N3 = 0, int N4 = 0,
-          int N5 = 0, int N6 = 0, int N7 = 0, int N8 = 0, int N9 = 0>
-struct AutoDiff {
-  static bool Differentiate(const Functor& functor,
-                            T const *const *parameters,
-                            int num_outputs,
-                            T *function_value,
-                            T **jacobians) {
-    // This block breaks the 80 column rule to keep it somewhat readable.
-    DCHECK_GT(num_outputs, 0);
-    DCHECK((!N1 && !N2 && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
-           ((N1 > 0) && !N2 && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
-           ((N1 > 0) && (N2 > 0) && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||                                   // NOLINT
-           ((N1 > 0) && (N2 > 0) && (N3 > 0) && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||                              // NOLINT
-           ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && !N5 && !N6 && !N7 && !N8 && !N9) ||                         // NOLINT
-           ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && !N6 && !N7 && !N8 && !N9) ||                    // NOLINT
-           ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && !N7 && !N8 && !N9) ||               // NOLINT
-           ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && !N8 && !N9) ||          // NOLINT
-           ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && !N9) ||     // NOLINT
-           ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0)))  // NOLINT
-        << "Zero block cannot precede a non-zero block. Block sizes are "
-        << "(ignore trailing 0s): " << N0 << ", " << N1 << ", " << N2 << ", "
-        << N3 << ", " << N4 << ", " << N5 << ", " << N6 << ", " << N7 << ", "
-        << N8 << ", " << N9;
+// Calls Take1stOrderPart for every parameter block.
+//
+// Example:
+// If one having three parameter blocks with dimensions (3, 2, 4), the call
+// Take1stOrderParts<integer_sequence<3, 2, 4>::Apply(num_outputs,
+//                                                    output,
+//                                                    jacobians);
+// will result in the following calls to Take1stOrderPart:
+// if (jacobians[0]) {
+//   Take1stOrderPart<0, 3>(num_outputs, output, jacobians[0]);
+// }
+// if (jacobians[1]) {
+//   Take1stOrderPart<3, 2>(num_outputs, output, jacobians[1]);
+// }
+// if (jacobians[2]) {
+//   Take1stOrderPart<5, 4>(num_outputs, output, jacobians[2]);
+// }
+template <typename Seq, int ParameterIdx = 0, int Offset = 0>
+struct Take1stOrderParts;
 
-    typedef Jet<T, N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9> JetT;
-    FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(
-        N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9 + num_outputs);
-
-    // These are the positions of the respective jets in the fixed array x.
-    const int jet0  = 0;
-    const int jet1  = N0;
-    const int jet2  = N0 + N1;
-    const int jet3  = N0 + N1 + N2;
-    const int jet4  = N0 + N1 + N2 + N3;
-    const int jet5  = N0 + N1 + N2 + N3 + N4;
-    const int jet6  = N0 + N1 + N2 + N3 + N4 + N5;
-    const int jet7  = N0 + N1 + N2 + N3 + N4 + N5 + N6;
-    const int jet8  = N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7;
-    const int jet9  = N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8;
-
-    const JetT *unpacked_parameters[10] = {
-        x.get() + jet0,
-        x.get() + jet1,
-        x.get() + jet2,
-        x.get() + jet3,
-        x.get() + jet4,
-        x.get() + jet5,
-        x.get() + jet6,
-        x.get() + jet7,
-        x.get() + jet8,
-        x.get() + jet9,
-    };
-
-    JetT* output = x.get() + N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9;
-
-    // Invalidate the output Jets, so that we can detect if the user
-    // did not assign values to all of them.
-    for (int i = 0; i < num_outputs; ++i) {
-      output[i].a = kImpossibleValue;
-      output[i].v.setConstant(kImpossibleValue);
+template <int N, int... Ns, int ParameterIdx, int Offset>
+struct Take1stOrderParts<integer_sequence<int, N, Ns...>, ParameterIdx,
+                         Offset> {
+  template <typename JetT, typename T>
+  static void Apply(int num_outputs, JetT* output, T** jacobians) {
+    if (jacobians[ParameterIdx]) {
+      Take1stOrderPart<Offset, N>(num_outputs, output, jacobians[ParameterIdx]);
     }
-
-#define CERES_MAKE_1ST_ORDER_PERTURBATION(i)                            \
-    if (N ## i) {                                                       \
-      internal::Make1stOrderPerturbation<JetT, T, N ## i>(              \
-          jet ## i,                                                     \
-          parameters[i],                                                \
-          x.get() + jet ## i);                                          \
-    }
-    CERES_MAKE_1ST_ORDER_PERTURBATION(0);
-    CERES_MAKE_1ST_ORDER_PERTURBATION(1);
-    CERES_MAKE_1ST_ORDER_PERTURBATION(2);
-    CERES_MAKE_1ST_ORDER_PERTURBATION(3);
-    CERES_MAKE_1ST_ORDER_PERTURBATION(4);
-    CERES_MAKE_1ST_ORDER_PERTURBATION(5);
-    CERES_MAKE_1ST_ORDER_PERTURBATION(6);
-    CERES_MAKE_1ST_ORDER_PERTURBATION(7);
-    CERES_MAKE_1ST_ORDER_PERTURBATION(8);
-    CERES_MAKE_1ST_ORDER_PERTURBATION(9);
-#undef CERES_MAKE_1ST_ORDER_PERTURBATION
-
-    if (!VariadicEvaluate<Functor, JetT,
-                          N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>::Call(
-        functor, unpacked_parameters, output)) {
-      return false;
-    }
-
-    internal::Take0thOrderPart(num_outputs, output, function_value);
-
-#define CERES_TAKE_1ST_ORDER_PERTURBATION(i) \
-    if (N ## i) { \
-      if (jacobians[i]) { \
-        internal::Take1stOrderPart<JetT, T, \
-                                   jet ## i, \
-                                   N ## i>(num_outputs, \
-                                           output, \
-                                           jacobians[i]); \
-      } \
-    }
-    CERES_TAKE_1ST_ORDER_PERTURBATION(0);
-    CERES_TAKE_1ST_ORDER_PERTURBATION(1);
-    CERES_TAKE_1ST_ORDER_PERTURBATION(2);
-    CERES_TAKE_1ST_ORDER_PERTURBATION(3);
-    CERES_TAKE_1ST_ORDER_PERTURBATION(4);
-    CERES_TAKE_1ST_ORDER_PERTURBATION(5);
-    CERES_TAKE_1ST_ORDER_PERTURBATION(6);
-    CERES_TAKE_1ST_ORDER_PERTURBATION(7);
-    CERES_TAKE_1ST_ORDER_PERTURBATION(8);
-    CERES_TAKE_1ST_ORDER_PERTURBATION(9);
-#undef CERES_TAKE_1ST_ORDER_PERTURBATION
-    return true;
+    Take1stOrderParts<integer_sequence<int, Ns...>, ParameterIdx + 1,
+                      Offset + N>::Apply(num_outputs, output, jacobians);
   }
 };
+
+// End of 'recursion'. Nothing more to do.
+template <int ParameterIdx, int Offset>
+struct Take1stOrderParts<integer_sequence<int>, ParameterIdx, Offset> {
+  template <typename T, typename JetT>
+  static void Apply(int /* NOT USED*/, JetT* /* NOT USED*/,
+                    T** /* NOT USED */) {}
+};
+
+template <typename ParameterDims, typename Functor, typename T>
+inline bool AutoDifferentiate(const Functor& functor,
+                              T const *const *parameters,
+                              int num_outputs,
+                              T* function_value,
+                              T** jacobians) {
+  DCHECK_GT(num_outputs, 0);
+
+  typedef Jet<T, ParameterDims::kNumParameters> JetT;
+  FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(ParameterDims::kNumParameters +
+                                               num_outputs);
+
+  using Parameters = typename ParameterDims::Parameters;
+
+  // These are the positions of the respective jets in the fixed array x.
+  std::array<JetT*, ParameterDims::kNumParameterBlocks> unpacked_parameters =
+      ParameterDims::GetUnpackedParameters(x.get());
+  JetT* output = x.get() + ParameterDims::kNumParameters;
+
+  // Invalidate the output Jets, so that we can detect if the user
+  // did not assign values to all of them.
+  for (int i = 0; i < num_outputs; ++i) {
+    output[i].a = kImpossibleValue;
+    output[i].v.setConstant(kImpossibleValue);
+  }
+
+  Make1stOrderPerturbations<Parameters>::Apply(parameters, x.get());
+
+  if (!VariadicEvaluate<ParameterDims>(functor, unpacked_parameters.data(),
+                                       output)) {
+    return false;
+  }
+
+  Take0thOrderPart(num_outputs, output, function_value);
+  Take1stOrderParts<Parameters>::Apply(num_outputs, output, jacobians);
+
+  return true;
+}
 
 }  // namespace internal
 }  // namespace ceres
