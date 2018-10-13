@@ -42,6 +42,7 @@
 #include "ceres/dynamic_cost_function.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/numeric_diff.h"
+#include "ceres/internal/parameter_dims.h"
 #include "ceres/numeric_diff_options.h"
 #include "glog/logging.h"
 
@@ -103,7 +104,11 @@ class DynamicNumericDiffCostFunction : public DynamicCostFunction {
         << "You must call DynamicNumericDiffCostFunction::AddParameterBlock() "
         << "before DynamicNumericDiffCostFunction::Evaluate().";
 
-    const bool status = EvaluateCostFunctor(parameters, residuals);
+    const bool status =
+        internal::VariadicEvaluate<internal::DynamicParameterDims>(
+            *functor_.get(),
+            parameters,
+            residuals);
     if (jacobians == NULL || !status) {
       return status;
     }
@@ -127,18 +132,18 @@ class DynamicNumericDiffCostFunction : public DynamicCostFunction {
 
     for (size_t block = 0; block < block_sizes.size(); ++block) {
       if (jacobians[block] != NULL &&
-          !NumericDiff<CostFunctor, method, DYNAMIC,
-                       DYNAMIC, DYNAMIC, DYNAMIC, DYNAMIC, DYNAMIC,
-                       DYNAMIC, DYNAMIC, DYNAMIC, DYNAMIC, DYNAMIC,
-                       DYNAMIC, DYNAMIC>::EvaluateJacobianForParameterBlock(
-                                             functor_.get(),
-                                             residuals,
-                                             options_,
-                                             this->num_residuals(),
-                                             block,
-                                             block_sizes[block],
-                                             &parameters_references_copy[0],
-                                             jacobians[block])) {
+          !NumericDiff<CostFunctor, method, ceres::DYNAMIC,
+                       internal::DynamicParameterDims, ceres::DYNAMIC,
+                       ceres::DYNAMIC>::
+              EvaluateJacobianForParameterBlock(
+                  functor_.get(),
+                  residuals,
+                  options_,
+                  this->num_residuals(),
+                  block,
+                  block_sizes[block],
+                  &parameters_references_copy[0],
+                  jacobians[block])) {
         return false;
       }
     }
@@ -146,30 +151,6 @@ class DynamicNumericDiffCostFunction : public DynamicCostFunction {
   }
 
  private:
-  bool EvaluateCostFunctor(double const* const* parameters,
-                           double* residuals) const {
-    return EvaluateCostFunctorImpl(functor_.get(),
-                                   parameters,
-                                   residuals,
-                                   functor_.get());
-  }
-
-  // Helper templates to allow evaluation of a functor or a
-  // CostFunction.
-  bool EvaluateCostFunctorImpl(const CostFunctor* functor,
-                               double const* const* parameters,
-                               double* residuals,
-                               const void* /* NOT USED */) const {
-    return (*functor)(parameters, residuals);
-  }
-
-  bool EvaluateCostFunctorImpl(const CostFunctor* functor,
-                               double const* const* parameters,
-                               double* residuals,
-                               const CostFunction* /* NOT USED */) const {
-    return functor->Evaluate(parameters, residuals, NULL);
-  }
-
   std::unique_ptr<const CostFunctor> functor_;
   Ownership ownership_;
   NumericDiffOptions options_;

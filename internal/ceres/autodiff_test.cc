@@ -194,7 +194,7 @@ TEST(AutoDiff, ProjectiveCameraModel) {
   {
     double *parameters[] = { PX };
     double *jacobians[] = { J_PX };
-    ASSERT_TRUE((AutoDiff<Projective, double, 12 + 4>::Differentiate(
+    ASSERT_TRUE((AutoDifferentiate<StaticParameterDims<12 + 4>>(
         b, parameters, 2, ad_x1, jacobians)));
 
     for (int i = 0; i < 2; ++i) {
@@ -209,7 +209,7 @@ TEST(AutoDiff, ProjectiveCameraModel) {
     double J_X[2 * 4];
     double *parameters[] = { P, X };
     double *jacobians[] = { J_P, J_X };
-    ASSERT_TRUE((AutoDiff<Projective, double, 12, 4>::Differentiate(
+    ASSERT_TRUE((AutoDifferentiate<StaticParameterDims<12, 4>>(
         b, parameters, 2, ad_x2, jacobians)));
 
     for (int i = 0; i < 2; ++i) {
@@ -316,7 +316,7 @@ TEST(AutoDiff, Metric) {
   double J_X[2 * 3];
   double *parameters[] = { q, c, X };
   double *jacobians[] = { J_q, J_c, J_X };
-  ASSERT_TRUE((AutoDiff<Metric, double, 4, 3, 3>::Differentiate(
+  ASSERT_TRUE((AutoDifferentiate<StaticParameterDims<4, 3, 3>>(
       b, parameters, 2, ad_x, jacobians)));
 
   for (int i = 0; i < 2; ++i) {
@@ -366,7 +366,7 @@ TEST(AutoDiff, VaryingNumberOfResidualsForOneCostFunctorType) {
     functor.num_residuals = num_residuals;
 
     // Run autodiff with the new number of residuals.
-    ASSERT_TRUE((AutoDiff<VaryingResidualFunctor, double, 2>::Differentiate(
+    ASSERT_TRUE((AutoDifferentiate<StaticParameterDims<2>>(
         functor, parameters, num_residuals, residuals, jacobians)));
 
     const double kTolerance = 1e-14;
@@ -528,8 +528,8 @@ TEST(AutoDiff, VariadicAutoDiff) {
   {
     Residual1Param functor;
     int num_variables = 1;
-    EXPECT_TRUE((AutoDiff<Residual1Param, double, 1>::Differentiate(
-                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_TRUE((AutoDifferentiate<StaticParameterDims<1>>(
+        functor, parameters, 1, &residual, jacobians)));
     EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
     for (int i = 0; i < num_variables; ++i) {
       EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
@@ -539,8 +539,8 @@ TEST(AutoDiff, VariadicAutoDiff) {
   {
     Residual2Param functor;
     int num_variables = 2;
-    EXPECT_TRUE((AutoDiff<Residual2Param, double, 1, 1>::Differentiate(
-                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_TRUE((AutoDifferentiate<StaticParameterDims<1, 1>>(
+        functor, parameters, 1, &residual, jacobians)));
     EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
     for (int i = 0; i < num_variables; ++i) {
       EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
@@ -550,8 +550,8 @@ TEST(AutoDiff, VariadicAutoDiff) {
   {
     Residual3Param functor;
     int num_variables = 3;
-    EXPECT_TRUE((AutoDiff<Residual3Param, double, 1, 1, 1>::Differentiate(
-                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_TRUE((AutoDifferentiate<StaticParameterDims<1, 1, 1>>(
+        functor, parameters, 1, &residual, jacobians)));
     EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
     for (int i = 0; i < num_variables; ++i) {
       EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
@@ -561,8 +561,8 @@ TEST(AutoDiff, VariadicAutoDiff) {
   {
     Residual4Param functor;
     int num_variables = 4;
-    EXPECT_TRUE((AutoDiff<Residual4Param, double, 1, 1, 1, 1>::Differentiate(
-                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_TRUE((AutoDifferentiate<StaticParameterDims<1, 1, 1, 1>>(
+        functor, parameters, 1, &residual, jacobians)));
     EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
     for (int i = 0; i < num_variables; ++i) {
       EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
@@ -572,8 +572,8 @@ TEST(AutoDiff, VariadicAutoDiff) {
   {
     Residual5Param functor;
     int num_variables = 5;
-    EXPECT_TRUE((AutoDiff<Residual5Param, double, 1, 1, 1, 1, 1>::Differentiate(
-                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_TRUE((AutoDifferentiate<StaticParameterDims<1, 1, 1, 1, 1>>(
+        functor, parameters, 1, &residual, jacobians)));
     EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
     for (int i = 0; i < num_variables; ++i) {
       EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
@@ -583,10 +583,8 @@ TEST(AutoDiff, VariadicAutoDiff) {
   {
     Residual6Param functor;
     int num_variables = 6;
-    EXPECT_TRUE((AutoDiff<Residual6Param,
-                 double,
-                 1, 1, 1, 1, 1, 1>::Differentiate(
-                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_TRUE((AutoDifferentiate<StaticParameterDims<1, 1, 1, 1, 1, 1>>(
+        functor, parameters, 1, &residual, jacobians)));
     EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
     for (int i = 0; i < num_variables; ++i) {
       EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
@@ -596,10 +594,8 @@ TEST(AutoDiff, VariadicAutoDiff) {
   {
     Residual7Param functor;
     int num_variables = 7;
-    EXPECT_TRUE((AutoDiff<Residual7Param,
-                 double,
-                 1, 1, 1, 1, 1, 1, 1>::Differentiate(
-                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_TRUE((AutoDifferentiate<StaticParameterDims<1, 1, 1, 1, 1, 1, 1>>(
+        functor, parameters, 1, &residual, jacobians)));
     EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
     for (int i = 0; i < num_variables; ++i) {
       EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
@@ -609,10 +605,8 @@ TEST(AutoDiff, VariadicAutoDiff) {
   {
     Residual8Param functor;
     int num_variables = 8;
-    EXPECT_TRUE((AutoDiff<
-                 Residual8Param,
-                 double, 1, 1, 1, 1, 1, 1, 1, 1>::Differentiate(
-                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_TRUE((AutoDifferentiate<StaticParameterDims<1, 1, 1, 1, 1, 1, 1, 1>>(
+        functor, parameters, 1, &residual, jacobians)));
     EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
     for (int i = 0; i < num_variables; ++i) {
       EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
@@ -622,11 +616,9 @@ TEST(AutoDiff, VariadicAutoDiff) {
   {
     Residual9Param functor;
     int num_variables = 9;
-    EXPECT_TRUE((AutoDiff<
-                 Residual9Param,
-                 double,
-                 1, 1, 1, 1, 1, 1, 1, 1, 1>::Differentiate(
-                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_TRUE(
+        (AutoDifferentiate<StaticParameterDims<1, 1, 1, 1, 1, 1, 1, 1, 1>>(
+            functor, parameters, 1, &residual, jacobians)));
     EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
     for (int i = 0; i < num_variables; ++i) {
       EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
@@ -636,11 +628,9 @@ TEST(AutoDiff, VariadicAutoDiff) {
   {
     Residual10Param functor;
     int num_variables = 10;
-    EXPECT_TRUE((AutoDiff<
-                 Residual10Param,
-                 double,
-                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1>::Differentiate(
-                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_TRUE(
+        (AutoDifferentiate<StaticParameterDims<1, 1, 1, 1, 1, 1, 1, 1, 1, 1>>(
+            functor, parameters, 1, &residual, jacobians)));
     EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
     for (int i = 0; i < num_variables; ++i) {
       EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
