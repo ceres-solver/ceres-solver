@@ -48,104 +48,22 @@ ResidualBlockId Problem::AddResidualBlock(
     CostFunction* cost_function,
     LossFunction* loss_function,
     const vector<double*>& parameter_blocks) {
-  return problem_impl_->AddResidualBlock(cost_function,
-                                         loss_function,
-                                         parameter_blocks);
-}
-
-ResidualBlockId Problem::AddResidualBlock(
-    CostFunction* cost_function,
-    LossFunction* loss_function,
-    double* x0) {
-  return problem_impl_->AddResidualBlock(cost_function,
-                                         loss_function,
-                                         x0);
-}
-
-ResidualBlockId Problem::AddResidualBlock(
-    CostFunction* cost_function,
-    LossFunction* loss_function,
-    double* x0, double* x1) {
-  return problem_impl_->AddResidualBlock(cost_function,
-                                         loss_function,
-                                         x0, x1);
-}
-
-ResidualBlockId Problem::AddResidualBlock(
-    CostFunction* cost_function,
-    LossFunction* loss_function,
-    double* x0, double* x1, double* x2) {
-  return problem_impl_->AddResidualBlock(cost_function,
-                                         loss_function,
-                                         x0, x1, x2);
-}
-
-ResidualBlockId Problem::AddResidualBlock(
-    CostFunction* cost_function,
-    LossFunction* loss_function,
-    double* x0, double* x1, double* x2, double* x3) {
-  return problem_impl_->AddResidualBlock(cost_function,
-                                         loss_function,
-                                         x0, x1, x2, x3);
-}
-
-ResidualBlockId Problem::AddResidualBlock(
-    CostFunction* cost_function,
-    LossFunction* loss_function,
-    double* x0, double* x1, double* x2, double* x3, double* x4) {
-  return problem_impl_->AddResidualBlock(cost_function,
-                                         loss_function,
-                                         x0, x1, x2, x3, x4);
-}
-
-ResidualBlockId Problem::AddResidualBlock(
-    CostFunction* cost_function,
-    LossFunction* loss_function,
-    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5) {
-  return problem_impl_->AddResidualBlock(cost_function,
-                                         loss_function,
-                                         x0, x1, x2, x3, x4, x5);
-}
-
-ResidualBlockId Problem::AddResidualBlock(
-    CostFunction* cost_function,
-    LossFunction* loss_function,
-    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
-    double* x6) {
-  return problem_impl_->AddResidualBlock(cost_function,
-                                         loss_function,
-                                         x0, x1, x2, x3, x4, x5, x6);
-}
-
-ResidualBlockId Problem::AddResidualBlock(
-    CostFunction* cost_function,
-    LossFunction* loss_function,
-    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
-    double* x6, double* x7) {
-  return problem_impl_->AddResidualBlock(cost_function,
-                                         loss_function,
-                                         x0, x1, x2, x3, x4, x5, x6, x7);
-}
-
-ResidualBlockId Problem::AddResidualBlock(
-    CostFunction* cost_function,
-    LossFunction* loss_function,
-    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
-    double* x6, double* x7, double* x8) {
-  return problem_impl_->AddResidualBlock(cost_function,
-                                         loss_function,
-                                         x0, x1, x2, x3, x4, x5, x6, x7, x8);
-}
-
-ResidualBlockId Problem::AddResidualBlock(
-    CostFunction* cost_function,
-    LossFunction* loss_function,
-    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
-    double* x6, double* x7, double* x8, double* x9) {
   return problem_impl_->AddResidualBlock(
       cost_function,
       loss_function,
-      x0, x1, x2, x3, x4, x5, x6, x7, x8, x9);
+      parameter_blocks.data(),
+      static_cast<int>(parameter_blocks.size()));
+}
+
+ResidualBlockId Problem::AddResidualBlock(
+    CostFunction* cost_function,
+    LossFunction* loss_function,
+    double* const* const parameter_blocks,
+    int num_parameter_blocks) {
+  return problem_impl_->AddResidualBlock(cost_function,
+                                         loss_function,
+                                         parameter_blocks,
+                                         num_parameter_blocks);
 }
 
 void Problem::AddParameterBlock(double* values, int size) {
