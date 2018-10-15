@@ -352,7 +352,8 @@ TEST(Program, ReallocationInCreateJacobianBlockSparsityTranspose) {
 
   problem.AddResidualBlock(new NumParameterBlocksCostFunction<1, 20>(),
                            nullptr,
-                           parameter_blocks);
+                           parameter_blocks.data(),
+                           static_cast<int>(parameter_blocks.size()));
 
   TripletSparseMatrix expected_block_sparse_jacobian(20, 1, 20);
   {
