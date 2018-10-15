@@ -34,6 +34,7 @@
 #ifndef CERES_PUBLIC_PROBLEM_H_
 #define CERES_PUBLIC_PROBLEM_H_
 
+#include <array>
 #include <cstddef>
 #include <map>
 #include <memory>
@@ -212,56 +213,32 @@ class CERES_EXPORT Problem {
   //   problem.AddResidualBlock(new MyUnaryCostFunction(...), NULL, x1);
   //   problem.AddResidualBlock(new MyBinaryCostFunction(...), NULL, x2, x1);
   //
+  // Add a residual block by listing the parameter block pointers
+  // directly instead of wapping them in a container.
+  template <typename... Ts>
+  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
+                                   LossFunction* loss_function,
+                                   double* x0,
+                                   Ts*... xs) {
+    const std::array<double*, sizeof...(Ts) + 1> parameter_blocks{{x0, xs...}};
+    return AddResidualBlock(cost_function, loss_function,
+                            parameter_blocks.data(),
+                            static_cast<int>(parameter_blocks.size()));
+  }
+
+  // Add a residual block by providing a container of parameter blocks.
   ResidualBlockId AddResidualBlock(
       CostFunction* cost_function,
       LossFunction* loss_function,
       const std::vector<double*>& parameter_blocks);
 
-  // Convenience methods for adding residuals with a small number of
-  // parameters. This is the common case. Instead of specifying the
-  // parameter block arguments as a vector, list them as pointers.
-  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
-                                   LossFunction* loss_function,
-                                   double* x0);
-  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
-                                   LossFunction* loss_function,
-                                   double* x0, double* x1);
-  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
-                                   LossFunction* loss_function,
-                                   double* x0, double* x1, double* x2);
-  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
-                                   LossFunction* loss_function,
-                                   double* x0, double* x1, double* x2,
-                                   double* x3);
-  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
-                                   LossFunction* loss_function,
-                                   double* x0, double* x1, double* x2,
-                                   double* x3, double* x4);
-  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
-                                   LossFunction* loss_function,
-                                   double* x0, double* x1, double* x2,
-                                   double* x3, double* x4, double* x5);
-  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
-                                   LossFunction* loss_function,
-                                   double* x0, double* x1, double* x2,
-                                   double* x3, double* x4, double* x5,
-                                   double* x6);
-  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
-                                   LossFunction* loss_function,
-                                   double* x0, double* x1, double* x2,
-                                   double* x3, double* x4, double* x5,
-                                   double* x6, double* x7);
-  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
-                                   LossFunction* loss_function,
-                                   double* x0, double* x1, double* x2,
-                                   double* x3, double* x4, double* x5,
-                                   double* x6, double* x7, double* x8);
-  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
-                                   LossFunction* loss_function,
-                                   double* x0, double* x1, double* x2,
-                                   double* x3, double* x4, double* x5,
-                                   double* x6, double* x7, double* x8,
-                                   double* x9);
+  // Add a residual block by providing a pointer to the parameter block array
+  // and the number of parameter blocks.
+  ResidualBlockId AddResidualBlock(
+      CostFunction* cost_function,
+      LossFunction* loss_function,
+      double* const* const parameter_blocks,
+      int num_parameter_blocks);
 
   // Add a parameter block with appropriate size to the problem.
   // Repeated calls with the same arguments are ignored. Repeated

@@ -266,7 +266,8 @@ ProblemImpl* CreateGradientCheckingProblemImpl(
     gradient_checking_problem_impl->AddResidualBlock(
         gradient_checking_cost_function,
         const_cast<LossFunction*>(residual_block->loss_function()),
-        parameter_blocks);
+        parameter_blocks.data(),
+        static_cast<int>(parameter_blocks.size()));
   }
 
   // Normally, when a problem is given to the solver, we guarantee
