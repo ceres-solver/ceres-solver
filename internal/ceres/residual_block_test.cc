@@ -295,13 +295,13 @@ TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
                           0.0, 1.0, /* 2.0, */ 3.0,
                           0.0, 1.0, /* 2.0, */ 3.0;
 
-  EXPECT_EQ(expected_jacobian_rx, jacobian_rx)
+  EXPECT_TRUE((expected_jacobian_rx.array() == jacobian_rx.array()).all())
       << "\nExpected:\n" << expected_jacobian_rx
       << "\nActual:\n"   << jacobian_rx;
-  EXPECT_EQ(expected_jacobian_ry, jacobian_ry)
+  EXPECT_TRUE((expected_jacobian_ry.array() == jacobian_ry.array()).all())
       << "\nExpected:\n" << expected_jacobian_ry
       << "\nActual:\n"   << jacobian_ry;
-  EXPECT_EQ(expected_jacobian_rz, jacobian_rz)
+  EXPECT_TRUE((expected_jacobian_rz.array() == jacobian_rz.array()).all())
       << "\nExpected:\n " << expected_jacobian_rz
       << "\nActual:\n"   << jacobian_rz;
 
@@ -320,9 +320,9 @@ TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
   EXPECT_EQ(1.0, residuals[1]);
   EXPECT_EQ(2.0, residuals[2]);
 
-  EXPECT_EQ(expected_jacobian_rx, jacobian_rx);
+  EXPECT_TRUE((expected_jacobian_rx.array() == jacobian_rx.array()).all());
   EXPECT_TRUE((jacobian_ry.array() == -1.0).all()) << "\n" << jacobian_ry;
-  EXPECT_EQ(expected_jacobian_rz, jacobian_rz);
+  EXPECT_TRUE((expected_jacobian_rz.array() == jacobian_rz.array()).all());
 }
 
 }  // namespace internal
