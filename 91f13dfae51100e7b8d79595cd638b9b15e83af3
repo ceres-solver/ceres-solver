@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ebf19a4_4104faa9",
+        "filename": "include/ceres/autodiff_local_parameterization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-10-18T16:30:23Z",
+      "side": 1,
+      "message": "These should be indented 2 more; or if they fit, be stacked after the (.",
+      "revId": "91f13dfae51100e7b8d79595cd638b9b15e83af3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
