@@ -16,6 +16,24 @@
       "revId": "91f13dfae51100e7b8d79595cd638b9b15e83af3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5485296f_bc17fd29",
+        "filename": "include/ceres/autodiff_local_parameterization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-19T18:39:40Z",
+      "side": 1,
+      "message": "Done.\nIs there a reason not to use clang-format for the whole code base? It would make life easier.",
+      "parentUuid": "1ebf19a4_4104faa9",
+      "revId": "91f13dfae51100e7b8d79595cd638b9b15e83af3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
