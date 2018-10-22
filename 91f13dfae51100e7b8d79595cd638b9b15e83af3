@@ -34,6 +34,70 @@
       "revId": "91f13dfae51100e7b8d79595cd638b9b15e83af3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ebbcf6fd_f2c8f490",
+        "filename": "include/ceres/autodiff_local_parameterization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:07:24Z",
+      "side": 1,
+      "message": "mostly because it will cause a bunch of churn :/ and destroy a bunch of history/blame in the process.",
+      "parentUuid": "5485296f_bc17fd29",
+      "revId": "91f13dfae51100e7b8d79595cd638b9b15e83af3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "890756c3_fa8b7afd",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:07:24Z",
+      "side": 1,
+      "message": "why change the name for this function from AutoDiff to AutoDifferentiate? Especially since NumericDiff is still called NumericDiff.",
+      "range": {
+        "startLine": 277,
+        "startChar": 12,
+        "endLine": 277,
+        "endChar": 29
+      },
+      "revId": "91f13dfae51100e7b8d79595cd638b9b15e83af3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e8e0cd_c64e8164",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:07:24Z",
+      "side": 1,
+      "message": "T* rather than T *",
+      "range": {
+        "startLine": 280,
+        "startChar": 31,
+        "endLine": 280,
+        "endChar": 32
+      },
+      "revId": "91f13dfae51100e7b8d79595cd638b9b15e83af3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }

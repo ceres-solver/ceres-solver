@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4acdb45_abb86154",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:07:24Z",
+      "side": 1,
+      "message": "x is likely not the best name for this variable.",
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "092f694b_f531f8da",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:07:24Z",
+      "side": 1,
+      "message": "indentation.",
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef837f24_deb37c9b",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:07:24Z",
+      "side": 1,
+      "message": "indentation.",
+      "range": {
+        "startLine": 305,
+        "startChar": 40,
+        "endLine": 305,
+        "endChar": 46
+      },
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53cc1593_2169470f",
+        "filename": "include/ceres/numeric_diff_cost_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:07:24Z",
+      "side": 1,
+      "message": "I think this indicates that Params is a poor name, it should be ParameterDims in SizedCostFunction.",
+      "range": {
+        "startLine": 206,
+        "startChar": 58,
+        "endLine": 206,
+        "endChar": 64
+      },
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e342cb5b_3530751b",
+        "filename": "include/ceres/sized_cost_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:07:24Z",
+      "side": 1,
+      "message": "move this into the public section.",
+      "range": {
+        "startLine": 50,
+        "startChar": 16,
+        "endLine": 50,
+        "endChar": 29
+      },
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994ae51a_564ccef6",
+        "filename": "include/ceres/sized_cost_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:07:24Z",
+      "side": 1,
+      "message": "why protected?",
+      "range": {
+        "startLine": 61,
+        "startChar": 1,
+        "endLine": 61,
+        "endChar": 10
+      },
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fceb4d20_9d011867",
+        "filename": "include/ceres/sized_cost_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:07:24Z",
+      "side": 1,
+      "message": "why not have this public? this does not require the using directive, you can just use the full directive.",
+      "range": {
+        "startLine": 64,
+        "startChar": 24,
+        "endLine": 64,
+        "endChar": 32
+      },
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
