@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e74644f_86061649",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:16:58Z",
+      "side": 1,
+      "message": "Why add this to the public API?",
+      "range": {
+        "startLine": 216,
+        "startChar": 35,
+        "endLine": 217,
+        "endChar": 0
+      },
+      "revId": "fecffdff451e5423152b47be6c98d309a67fc16d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c581956a_ff176fb1",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:16:58Z",
+      "side": 1,
+      "message": "update documentation",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 68
+      },
+      "revId": "fecffdff451e5423152b47be6c98d309a67fc16d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60936a7_b7bc417e",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:16:58Z",
+      "side": 1,
+      "message": "why keep this function around at all, why not just have one impl here and call it from the Problem?",
+      "range": {
+        "startLine": 380,
+        "startChar": 28,
+        "endLine": 380,
+        "endChar": 44
+      },
+      "revId": "fecffdff451e5423152b47be6c98d309a67fc16d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2da322_15af225c",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-10-22T22:16:58Z",
+      "side": 1,
+      "message": "you do not need any of this recursion here, since we know how this object is always called.",
+      "revId": "fecffdff451e5423152b47be6c98d309a67fc16d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
