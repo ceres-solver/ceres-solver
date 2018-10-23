@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25d8b15d_6b343656",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-23T18:47:44Z",
+      "side": 1,
+      "message": "I used the same name as it was before (see line 232). Not sure whats a better name for it.",
+      "parentUuid": "c4acdb45_abb86154",
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "092f694b_f531f8da",
         "filename": "include/ceres/internal/autodiff.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac69d6b0_55f89777",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-23T18:47:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "092f694b_f531f8da",
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "ba255153_ba0fc9c9",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-23T18:47:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef837f24_deb37c9b",
+      "range": {
+        "startLine": 305,
+        "startChar": 40,
+        "endLine": 305,
+        "endChar": 46
+      },
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53cc1593_2169470f",
         "filename": "include/ceres/numeric_diff_cost_function.h",
         "patchSetId": 5
@@ -79,6 +139,30 @@
       "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c62b7c_7886a368",
+        "filename": "include/ceres/numeric_diff_cost_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-23T18:47:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53cc1593_2169470f",
+      "range": {
+        "startLine": 206,
+        "startChar": 58,
+        "endLine": 206,
+        "endChar": 64
+      },
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "c590827d_956bdc93",
+        "filename": "include/ceres/sized_cost_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-23T18:47:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e342cb5b_3530751b",
+      "range": {
+        "startLine": 50,
+        "startChar": 16,
+        "endLine": 50,
+        "endChar": 29
+      },
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "994ae51a_564ccef6",
         "filename": "include/ceres/sized_cost_function.h",
         "patchSetId": 5
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "f2a22521_66b1fe0d",
+        "filename": "include/ceres/sized_cost_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-23T18:47:44Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure if public is needed here as ParameterDims is defined in an internal namespace so this using directive will probably be used only inside ceres. As this using directive is used in derived classes I have put it in protected.\nI changed it to public.",
+      "parentUuid": "994ae51a_564ccef6",
+      "range": {
+        "startLine": 61,
+        "startChar": 1,
+        "endLine": 61,
+        "endChar": 10
+      },
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fceb4d20_9d011867",
         "filename": "include/ceres/sized_cost_function.h",
         "patchSetId": 5
@@ -148,6 +280,30 @@
       "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4c9de4_9cccb22c",
+        "filename": "include/ceres/sized_cost_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-23T18:47:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fceb4d20_9d011867",
+      "range": {
+        "startLine": 64,
+        "startChar": 24,
+        "endLine": 64,
+        "endChar": 32
+      },
+      "revId": "3ed6237b877ec0cfd91f2dab607620ae5647855a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }

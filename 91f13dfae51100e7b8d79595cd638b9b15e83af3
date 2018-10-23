@@ -78,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "ab24a46c_e62f5a63",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-23T18:47:44Z",
+      "side": 1,
+      "message": "Before this was a struct AutoDiff with a static method Differentiate. As the can now be a free function I changed the name from AutoDiff to AutoDifferentiate.\nOn the calling side, it was before:\nAutoDiff::Differentiate(...)\nNow it is\nAutoDifferentiate(...)\n\nI can change it to AutoDiff, if this is better name.",
+      "parentUuid": "890756c3_fa8b7afd",
+      "range": {
+        "startLine": 277,
+        "startChar": 12,
+        "endLine": 277,
+        "endChar": 29
+      },
+      "revId": "91f13dfae51100e7b8d79595cd638b9b15e83af3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27e8e0cd_c64e8164",
         "filename": "include/ceres/internal/autodiff.h",
         "patchSetId": 4
@@ -98,6 +122,30 @@
       "revId": "91f13dfae51100e7b8d79595cd638b9b15e83af3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d50bb86_8d1e2c56",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-23T18:47:44Z",
+      "side": 1,
+      "message": "This is just a copy pase from line 212 (I left it like it was).\nDone.",
+      "parentUuid": "27e8e0cd_c64e8164",
+      "range": {
+        "startLine": 280,
+        "startChar": 31,
+        "endLine": 280,
+        "endChar": 32
+      },
+      "revId": "91f13dfae51100e7b8d79595cd638b9b15e83af3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
