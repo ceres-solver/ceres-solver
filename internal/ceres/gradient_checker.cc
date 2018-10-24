@@ -111,7 +111,7 @@ bool EvaluateCostFunction(
       Matrix global_J_local(global_size, local_size);
       local_parameterizations.at(i)->ComputeJacobian(
           parameters[i], global_J_local.data());
-      local_jacobians->at(i) = jacobians->at(i) * global_J_local;
+      local_jacobians->at(i).noalias() = jacobians->at(i) * global_J_local;
     }
   }
   return true;
