@@ -156,9 +156,9 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
   // number of residuals ("kNumResiduals").
   explicit AutoDiffCostFunction(CostFunctor* functor)
       : functor_(functor) {
-    CHECK_NE(kNumResiduals, DYNAMIC)
-        << "Can't run the fixed-size constructor if the "
-        << "number of residuals is set to ceres::DYNAMIC.";
+    static_assert(kNumResiduals != DYNAMIC,
+                  "Can't run the fixed-size constructor if the number of "
+                  "residuals is set to ceres::DYNAMIC.");
   }
 
   // Takes ownership of functor. Ignores the template-provided
@@ -168,9 +168,9 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
   // numbers of residuals at runtime.
   AutoDiffCostFunction(CostFunctor* functor, int num_residuals)
       : functor_(functor) {
-    CHECK_EQ(kNumResiduals, DYNAMIC)
-        << "Can't run the dynamic-size constructor if the "
-        << "number of residuals is not ceres::DYNAMIC.";
+    static_assert(kNumResiduals == DYNAMIC,
+                  "Can't run the dynamic-size constructor if the number of "
+                  "residuals is not ceres::DYNAMIC.");
     SizedCostFunction<kNumResiduals, Ns...>::set_num_residuals(num_residuals);
   }
 
