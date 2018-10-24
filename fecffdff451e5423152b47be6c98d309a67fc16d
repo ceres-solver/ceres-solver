@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "258c2468_9fc0a281",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-24T18:30:09Z",
+      "side": 1,
+      "message": "This interface can be used in more context, e.g. if the container is not a vector or array. Also if one has a vector with parameter pointers and only a part is needed for that residual block.\n\nI thought about using a pair of iterators but this does as it is right now because of pimpl.",
+      "parentUuid": "6e74644f_86061649",
+      "range": {
+        "startLine": 216,
+        "startChar": 35,
+        "endLine": 217,
+        "endChar": 0
+      },
+      "revId": "fecffdff451e5423152b47be6c98d309a67fc16d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c581956a_ff176fb1",
         "filename": "include/ceres/problem.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "fecffdff451e5423152b47be6c98d309a67fc16d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb95899_cd36d209",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-24T18:30:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c581956a_ff176fb1",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 68
+      },
+      "revId": "fecffdff451e5423152b47be6c98d309a67fc16d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a0f2cc3e_9d578365",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-24T18:30:09Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "d60936a7_b7bc417e",
+      "range": {
+        "startLine": 380,
+        "startChar": 28,
+        "endLine": 380,
+        "endChar": 44
+      },
+      "revId": "fecffdff451e5423152b47be6c98d309a67fc16d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a2da322_15af225c",
         "filename": "internal/ceres/problem_impl.h",
         "patchSetId": 1
@@ -82,6 +154,24 @@
       "writtenOn": "2018-10-22T22:16:58Z",
       "side": 1,
       "message": "you do not need any of this recursion here, since we know how this object is always called.",
+      "revId": "fecffdff451e5423152b47be6c98d309a67fc16d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7607b7_6c79a1d5",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-10-24T18:30:09Z",
+      "side": 1,
+      "message": "I have tried that shortly, but ProblemImpl is directly used in unit tests, e.g.\nhttps://ceres-solver.googlesource.com/ceres-solver/+/master/internal/ceres/evaluator_test.cc\nhttps://ceres-solver.googlesource.com/ceres-solver/+/master/internal/ceres/gradient_checking_cost_function_test.cc\nThey use both the std::vector\u003cdouble*\u003e overload and the (double* p1, double* p2, ...) in many places. I could remove the std::array overload.",
+      "parentUuid": "5a2da322_15af225c",
       "revId": "fecffdff451e5423152b47be6c98d309a67fc16d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
