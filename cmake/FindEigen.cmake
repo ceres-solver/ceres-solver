@@ -192,12 +192,25 @@ if (NOT EIGEN_FOUND)
     Eigen/include/eigen3 # Windows (for C:/Program Files prefix) < 3.3
     Eigen3/include/eigen3 ) # Windows (for C:/Program Files prefix) >= 3.3
 
+  # On macos with Homebrew, the brew prefix is added
+  # CMAKE_PREFIX_PATH, which overrides EIGEN_INCLUDE_DIR_HINTS in the
+  # following find_path, and the brew Eigen version is found (if
+  # installed) instead of the one provided by the hint. So, in that
+  # case we ignore CMAKE_PREFIX_PATH.  See also the comments in ceres'
+  # main CMakeLists.txt around where HOMEBREW_EXECUTABLE is set.
+  if(HOMEBREW_EXECUTABLE AND EIGEN_INCLUDE_DIR_HINTS)
+    set(FIND_PATH_FLAG NO_CMAKE_PATH)
+  else()
+    set(FIND_PATH_FLAG)
+  endif()
+
   # Search supplied hint directories first if supplied.
   find_path(EIGEN_INCLUDE_DIR
     NAMES Eigen/Core
     HINTS ${EIGEN_INCLUDE_DIR_HINTS}
     PATHS ${EIGEN_CHECK_INCLUDE_DIRS}
-    PATH_SUFFIXES ${EIGEN_CHECK_PATH_SUFFIXES})
+    PATH_SUFFIXES ${EIGEN_CHECK_PATH_SUFFIXES}
+    ${FIND_PATH_FLAG})
 
   if (NOT EIGEN_INCLUDE_DIR OR
       NOT EXISTS ${EIGEN_INCLUDE_DIR})

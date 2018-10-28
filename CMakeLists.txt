@@ -87,6 +87,10 @@ add_gerrit_commit_hook(${Ceres_SOURCE_DIR} ${Ceres_BINARY_DIR})
 # CMake in find_path & find_library.  This should ensure that we can
 # still build Ceres even if Homebrew is installed in a non-standard
 # location (not /usr/local).
+# Note: This is a hack that breaks HINTS passed to find_... modules
+# for thirdparty dependencies, since CMAKE_PREFIX_PATH takes
+# precendence over HINTS. See FindEigen.cmake for notes on the
+# workaround needed for making EIGEN_INCLUDE_DIR_HINTS work.
 if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
   find_program(HOMEBREW_EXECUTABLE brew)
   mark_as_advanced(FORCE HOMEBREW_EXECUTABLE)
