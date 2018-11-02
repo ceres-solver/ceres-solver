@@ -137,7 +137,7 @@ int DenseSparseMatrix::num_cols() const {
   return m_.cols();
 }
 
-int DenseSparseMatrix::num_nonzeros() const {
+int64_t DenseSparseMatrix::num_nonzeros() const {
   if (has_diagonal_reserved_ && !has_diagonal_appended_) {
     return (m_.rows() - m_.cols()) * m_.cols();
   }

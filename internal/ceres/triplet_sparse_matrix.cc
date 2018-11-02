@@ -53,7 +53,7 @@ TripletSparseMatrix::~TripletSparseMatrix() {}
 
 TripletSparseMatrix::TripletSparseMatrix(int num_rows,
                                          int num_cols,
-                                         int max_num_nonzeros)
+                                         int64_t max_num_nonzeros)
     : num_rows_(num_rows),
       num_cols_(num_cols),
       max_num_nonzeros_(max_num_nonzeros),
@@ -110,7 +110,7 @@ TripletSparseMatrix& TripletSparseMatrix::operator=(
 }
 
 bool TripletSparseMatrix::AllTripletsWithinBounds() const {
-  for (int i = 0; i < num_nonzeros_; ++i) {
+  for (int64_t i  = 0; i < num_nonzeros_; ++i) {
     if ((rows_[i] < 0) || (rows_[i] >= num_rows_) ||
         (cols_[i] < 0) || (cols_[i] >= num_cols_))
       return false;
@@ -118,7 +118,7 @@ bool TripletSparseMatrix::AllTripletsWithinBounds() const {
   return true;
 }
 
-void TripletSparseMatrix::Reserve(int new_max_num_nonzeros) {
+void TripletSparseMatrix::Reserve(int64_t new_max_num_nonzeros) {
   CHECK_LE(num_nonzeros_, new_max_num_nonzeros)
       << "Reallocation will cause data loss";
 
@@ -130,7 +130,7 @@ void TripletSparseMatrix::Reserve(int new_max_num_nonzeros) {
   int* new_cols = new int[new_max_num_nonzeros];
   double* new_values = new double[new_max_num_nonzeros];
 
-  for (int i = 0; i < num_nonzeros_; ++i) {
+  for (int64_t i = 0; i < num_nonzeros_; ++i) {
     new_rows[i] = rows_[i];
     new_cols[i] = cols_[i];
     new_values[i] = values_[i];
@@ -148,7 +148,7 @@ void TripletSparseMatrix::SetZero() {
   num_nonzeros_ = 0;
 }
 
-void TripletSparseMatrix::set_num_nonzeros(int num_nonzeros) {
+void TripletSparseMatrix::set_num_nonzeros(int64_t num_nonzeros) {
   CHECK_GE(num_nonzeros, 0);
   CHECK_LE(num_nonzeros, max_num_nonzeros_);
   num_nonzeros_ = num_nonzeros;
@@ -161,7 +161,7 @@ void TripletSparseMatrix::AllocateMemory() {
 }
 
 void TripletSparseMatrix::CopyData(const TripletSparseMatrix& orig) {
-  for (int i = 0; i < num_nonzeros_; ++i) {
+  for (int64_t i = 0; i < num_nonzeros_; ++i) {
     rows_[i] = orig.rows_[i];
     cols_[i] = orig.cols_[i];
     values_[i] = orig.values_[i];
@@ -169,13 +169,13 @@ void TripletSparseMatrix::CopyData(const TripletSparseMatrix& orig) {
 }
 
 void TripletSparseMatrix::RightMultiply(const double* x,  double* y) const {
-  for (int i = 0; i < num_nonzeros_; ++i) {
+  for (int64_t i = 0; i < num_nonzeros_; ++i) {
     y[rows_[i]] += values_[i]*x[cols_[i]];
   }
 }
 
 void TripletSparseMatrix::LeftMultiply(const double* x, double* y) const {
-  for (int i = 0; i < num_nonzeros_; ++i) {
+  for (int64_t i = 0; i < num_nonzeros_; ++i) {
     y[cols_[i]] += values_[i]*x[rows_[i]];
   }
 }
@@ -183,14 +183,14 @@ void TripletSparseMatrix::LeftMultiply(const double* x, double* y) const {
 void TripletSparseMatrix::SquaredColumnNorm(double* x) const {
   CHECK(x != nullptr);
   VectorRef(x, num_cols_).setZero();
-  for (int i = 0; i < num_nonzeros_; ++i) {
+  for (int64_t i = 0; i < num_nonzeros_; ++i) {
     x[cols_[i]] += values_[i] * values_[i];
   }
 }
 
 void TripletSparseMatrix::ScaleColumns(const double* scale) {
   CHECK(scale != nullptr);
-  for (int i = 0; i < num_nonzeros_; ++i) {
+  for (int64_t i = 0; i < num_nonzeros_; ++i) {
     values_[i] = values_[i] * scale[cols_[i]];
   }
 }
@@ -199,7 +199,7 @@ void TripletSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
   dense_matrix->resize(num_rows_, num_cols_);
   dense_matrix->setZero();
   Matrix& m = *dense_matrix;
-  for (int i = 0; i < num_nonzeros_; ++i) {
+  for (int64_t i = 0; i < num_nonzeros_; ++i) {
     m(rows_[i], cols_[i]) += values_[i];
   }
 }
@@ -207,7 +207,7 @@ void TripletSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
 void TripletSparseMatrix::AppendRows(const TripletSparseMatrix& B) {
   CHECK_EQ(B.num_cols(), num_cols_);
   Reserve(num_nonzeros_ + B.num_nonzeros_);
-  for (int i = 0; i < B.num_nonzeros_; ++i) {
+  for (int64_t i = 0; i < B.num_nonzeros_; ++i) {
     rows_.get()[num_nonzeros_] = B.rows()[i] + num_rows_;
     cols_.get()[num_nonzeros_] = B.cols()[i];
     values_.get()[num_nonzeros_++] = B.values()[i];
@@ -218,7 +218,7 @@ void TripletSparseMatrix::AppendRows(const TripletSparseMatrix& B) {
 void TripletSparseMatrix::AppendCols(const TripletSparseMatrix& B) {
   CHECK_EQ(B.num_rows(), num_rows_);
   Reserve(num_nonzeros_ + B.num_nonzeros_);
-  for (int i = 0; i < B.num_nonzeros_; ++i, ++num_nonzeros_) {
+  for (int64_t i = 0; i < B.num_nonzeros_; ++i, ++num_nonzeros_) {
     rows_.get()[num_nonzeros_] = B.rows()[i];
     cols_.get()[num_nonzeros_] = B.cols()[i] + num_cols_;
     values_.get()[num_nonzeros_] = B.values()[i];
@@ -242,7 +242,7 @@ void TripletSparseMatrix::Resize(int new_num_rows, int new_num_cols) {
   double* v_ptr = values_.get();
 
   int dropped_terms = 0;
-  for (int i = 0; i < num_nonzeros_; ++i) {
+  for (int64_t i = 0; i < num_nonzeros_; ++i) {
     if ((r_ptr[i] < num_rows_) && (c_ptr[i] < num_cols_)) {
       if (dropped_terms) {
         r_ptr[i-dropped_terms] = r_ptr[i];
@@ -271,7 +271,7 @@ TripletSparseMatrix* TripletSparseMatrix::CreateSparseDiagonalMatrix(
 
 void TripletSparseMatrix::ToTextFile(FILE* file) const {
   CHECK(file != nullptr);
-  for (int i = 0; i < num_nonzeros_; ++i) {
+  for (int64_t i = 0; i < num_nonzeros_; ++i) {
     fprintf(file, "% 10d % 10d %17f\n", rows_[i], cols_[i], values_[i]);
   }
 }
