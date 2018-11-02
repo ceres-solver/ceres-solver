@@ -72,7 +72,7 @@ struct NumericDiff {
     using Eigen::RowMajor;
     using Eigen::ColMajor;
 
-    DCHECK_NOTNULL(jacobian);
+    DCHECK(jacobian);
 
     const int num_residuals_internal =
         (kNumResiduals != ceres::DYNAMIC ? kNumResiduals : num_residuals);
