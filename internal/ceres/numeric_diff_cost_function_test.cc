@@ -32,6 +32,7 @@
 #include "ceres/numeric_diff_cost_function.h"
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <memory>
 #include <string>
@@ -383,6 +384,63 @@ TEST(NumericDiffCostFunction, PartiallyFilledResidualShouldFailEvaluation) {
   // residuals inside NumericDiffCostFunction, there is no way of
   // ensuring that the Jacobian array is invalid.
   EXPECT_FALSE(IsArrayValid(2, residuals));
+}
+
+TEST(NumericDiffCostFunction, ParameterBlockConstant) {
+  constexpr int kNumResiduals = 3;
+  constexpr int kX1 = 5;
+  constexpr int kX2 = 5;
+
+  std::unique_ptr<CostFunction> cost_function;
+  cost_function.reset(new NumericDiffCostFunction<EasyFunctor,
+                                                  CENTRAL,
+                                                  kNumResiduals,
+                                                  kX1,
+                                                  kX2>(new EasyFunctor));
+
+  // Prepare the parameters and residuals.
+  std::array<double, kX1> x1{1e-64, 2.0, 3.0, 4.0, 5.0};
+  std::array<double, kX2> x2{9.0, 9.0, 5.0, 5.0, 1.0};
+  std::array<double*, 2> parameter_blocks{x1.data(), x2.data()};
+
+  std::vector<double> residuals(kNumResiduals, -100000);
+
+  // Evaluate the full jacobian.
+  std::vector<std::vector<double>> jacobian_full_vect(2);
+  jacobian_full_vect[0].resize(kNumResiduals * kX1, -100000);
+  jacobian_full_vect[1].resize(kNumResiduals * kX2, -100000);
+  {
+    std::array<double*, 2> jacobian{jacobian_full_vect[0].data(),
+                                    jacobian_full_vect[1].data()};
+    ASSERT_TRUE(cost_function->Evaluate(
+        parameter_blocks.data(), residuals.data(), jacobian.data()));
+  }
+
+  // Evaluate and check jacobian when first parameter block is constant.
+  {
+    std::vector<double> jacobian_vect(kNumResiduals * kX2, -100000);
+    std::array<double*, 2> jacobian{nullptr, jacobian_vect.data()};
+
+    ASSERT_TRUE(cost_function->Evaluate(
+        parameter_blocks.data(), residuals.data(), jacobian.data()));
+
+    for (int i = 0; i < kNumResiduals * kX2; ++i) {
+      EXPECT_DOUBLE_EQ(jacobian_full_vect[1][i], jacobian_vect[i]);
+    }
+  }
+
+  // Evaluate and check jacobian when second parameter block is constant.
+  {
+    std::vector<double> jacobian_vect(kNumResiduals * kX1, -100000);
+    std::array<double*, 2> jacobian{jacobian_vect.data(), nullptr};
+
+    ASSERT_TRUE(cost_function->Evaluate(
+        parameter_blocks.data(), residuals.data(), jacobian.data()));
+
+    for (int i = 0; i < kNumResiduals * kX1; ++i) {
+      EXPECT_DOUBLE_EQ(jacobian_full_vect[0][i], jacobian_vect[i]);
+    }
+  }
 }
 
 }  // namespace internal

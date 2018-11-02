@@ -72,6 +72,8 @@ struct NumericDiff {
     using Eigen::RowMajor;
     using Eigen::ColMajor;
 
+    DCHECK_NOTNULL(jacobian);
+
     const int num_residuals_internal =
         (kNumResiduals != ceres::DYNAMIC ? kNumResiduals : num_residuals);
     const int parameter_block_index_internal =
@@ -381,7 +383,7 @@ struct NumericDiff {
 // each parameter block.
 //
 // Example:
-// A call to 
+// A call to
 // EvaluateJacobianForParameterBlocks<StaticParameterDims<2, 3>>(
 //        functor,
 //        residuals_at_eval_point,
@@ -392,29 +394,41 @@ struct NumericDiff {
 // will result in the following calls to
 // NumericDiff<...>::EvaluateJacobianForParameterBlock:
 //
-// if (!NumericDiff<
-//          CostFunctor, method, kNumResiduals, ParameterDims, 0,
-//          2>::EvaluateJacobianForParameterBlock(functor,
-//                                                residuals_at_eval_point,
-//                                                options,
-//                                                num_residuals,
-//                                                0,
-//                                                2,
-//                                                parameters,
-//                                                jacobians[0])) {
-//   return false;
+// if (jacobians[0] != nullptr) {
+//   if (!NumericDiff<
+//           CostFunctor,
+//           method,
+//           kNumResiduals,
+//           StaticParameterDims<2, 3>,
+//           0,
+//           2>::EvaluateJacobianForParameterBlock(functor,
+//                                                 residuals_at_eval_point,
+//                                                 options,
+//                                                 num_residuals,
+//                                                 0,
+//                                                 2,
+//                                                 parameters,
+//                                                 jacobians[0])) {
+//     return false;
+//   }
 // }
-// if (!NumericDiff<
-//          CostFunctor, method, kNumResiduals, ParameterDims, 1,
-//          3>::EvaluateJacobianForParameterBlock(functor,
-//                                                residuals_at_eval_point,
-//                                                options,
-//                                                num_residuals,
-//                                                1,
-//                                                3,
-//                                                parameters,
-//                                                jacobians[1])) {
-//   return false;
+// if (jacobians[1] != nullptr) {
+//   if (!NumericDiff<
+//           CostFunctor,
+//           method,
+//           kNumResiduals,
+//           StaticParameterDims<2, 3>,
+//           1,
+//           3>::EvaluateJacobianForParameterBlock(functor,
+//                                                 residuals_at_eval_point,
+//                                                 options,
+//                                                 num_residuals,
+//                                                 1,
+//                                                 3,
+//                                                 parameters,
+//                                                 jacobians[1])) {
+//     return false;
+//   }
 // }
 template <typename ParameterDims,
           typename Parameters = typename ParameterDims::Parameters,
@@ -422,33 +436,46 @@ template <typename ParameterDims,
 struct EvaluateJacobianForParameterBlocks;
 
 template <typename ParameterDims, int N, int... Ns, int ParameterIdx>
-struct EvaluateJacobianForParameterBlocks<
-    ParameterDims, integer_sequence<int, N, Ns...>, ParameterIdx> {
-  template <NumericDiffMethodType method, int kNumResiduals,
+struct EvaluateJacobianForParameterBlocks<ParameterDims,
+                                          integer_sequence<int, N, Ns...>,
+                                          ParameterIdx> {
+  template <NumericDiffMethodType method,
+            int kNumResiduals,
             typename CostFunctor>
   static bool Apply(const CostFunctor* functor,
                     const double* residuals_at_eval_point,
-                    const NumericDiffOptions& options, int num_residuals,
-                    double** parameters, double** jacobians) {
-    if (!NumericDiff<
-            CostFunctor, method, kNumResiduals, ParameterDims, ParameterIdx,
-            N>::EvaluateJacobianForParameterBlock(functor,
-                                                  residuals_at_eval_point,
-                                                  options,
-                                                  num_residuals,
-                                                  ParameterIdx,
-                                                  N,
-                                                  parameters,
-                                                  jacobians[ParameterIdx])) {
-      return false;
+                    const NumericDiffOptions& options,
+                    int num_residuals,
+                    double** parameters,
+                    double** jacobians) {
+    if (jacobians[ParameterIdx] != nullptr) {
+      if (!NumericDiff<
+              CostFunctor,
+              method,
+              kNumResiduals,
+              ParameterDims,
+              ParameterIdx,
+              N>::EvaluateJacobianForParameterBlock(functor,
+                                                    residuals_at_eval_point,
+                                                    options,
+                                                    num_residuals,
+                                                    ParameterIdx,
+                                                    N,
+                                                    parameters,
+                                                    jacobians[ParameterIdx])) {
+        return false;
+      }
     }
-    return EvaluateJacobianForParameterBlocks<
-        ParameterDims, integer_sequence<int, Ns...>, ParameterIdx + 1>::
+
+    return EvaluateJacobianForParameterBlocks<ParameterDims,
+                                              integer_sequence<int, Ns...>,
+                                              ParameterIdx + 1>::
         template Apply<method, kNumResiduals>(functor,
                                               residuals_at_eval_point,
                                               options,
                                               num_residuals,
-                                              parameters, jacobians);
+                                              parameters,
+                                              jacobians);
   }
 };
 
