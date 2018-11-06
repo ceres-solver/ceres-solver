@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ec6b17_b3b1e1ed",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-11-06T15:02:04Z",
+      "side": 1,
+      "message": "Ideally I would prefer this method not be part of the public API.\nIMO it makes the api confusing as we are now offering three methods with very similarly signatures\n\ndouble* const* const parameter_blocks,\nvector\u003cdouble*\u003e parameter_blocks\nstd::array\u003cdouble*, N\u003e parameter_blocks.\n\nI understand the need for them, but is there a way to not have the bare pointer versions and the std::array versions in this file?",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 2
+      },
+      "revId": "465e24a78193d57ba07361e05a70199f798314ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705c1ba9_63ffe309",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-11-06T15:02:04Z",
+      "side": 1,
+      "message": "listing",
+      "revId": "465e24a78193d57ba07361e05a70199f798314ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7f4996_363c3de3",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-11-06T15:02:04Z",
+      "side": 1,
+      "message": "do we need the std::vector version anymore?",
+      "range": {
+        "startLine": 86,
+        "startChar": 34,
+        "endLine": 86,
+        "endChar": 35
+      },
+      "revId": "465e24a78193d57ba07361e05a70199f798314ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8932459c_bfc03bd9",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-11-06T15:02:04Z",
+      "side": 1,
+      "message": "we can drop this std::array version for sure.",
+      "range": {
+        "startLine": 91,
+        "startChar": 10,
+        "endLine": 91,
+        "endChar": 11
+      },
+      "revId": "465e24a78193d57ba07361e05a70199f798314ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
