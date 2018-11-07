@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2fce3c05_a6388986",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-11-07T19:57:10Z",
+      "side": 1,
+      "message": "Done.\nI also documented the std::vector\u003cdouble*\u003e version.",
+      "parentUuid": "60792c21_db47ecc6",
+      "revId": "b297bf8084f86f73e67878b0218f837b9c6ba1a7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12b9d332_05141ccd",
         "filename": "include/ceres/problem.h",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "b297bf8084f86f73e67878b0218f837b9c6ba1a7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3696095_d4c6b241",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-11-07T19:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12b9d332_05141ccd",
+      "range": {
+        "startLine": 229,
+        "startChar": 2,
+        "endLine": 229,
+        "endChar": 10
+      },
+      "revId": "b297bf8084f86f73e67878b0218f837b9c6ba1a7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
