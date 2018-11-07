@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60792c21_db47ecc6",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-11-07T13:11:20Z",
+      "side": 1,
+      "message": "document this method and move this lower.",
+      "revId": "b297bf8084f86f73e67878b0218f837b9c6ba1a7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b9d332_05141ccd",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-11-07T13:11:20Z",
+      "side": 1,
+      "message": "since this is likely the most most common way of using the API, make this the first method after the docs?",
+      "range": {
+        "startLine": 229,
+        "startChar": 2,
+        "endLine": 229,
+        "endChar": 10
+      },
+      "revId": "b297bf8084f86f73e67878b0218f837b9c6ba1a7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
