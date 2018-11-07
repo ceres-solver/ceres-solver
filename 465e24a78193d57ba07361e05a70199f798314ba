@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "080929aa_ff47cf43",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-11-07T05:46:34Z",
+      "side": 1,
+      "message": "I removed the std::array version. There is no implementation problem in making the pointer version private but I do have some cases where I would benefit from having AddResidualBlock with a pointer and length (or a similar interface) which saves me from not copying the parameter pointers into a std::vector\u003c\u003e (and as a bonus it saves an extra memory allocation).\n\nIf one could freely change the interface I would probably use an STL like interface:\n\ntemplate \u003ctypename Iter\u003e\nResidualBlockId AddResidualBlock(\n      CostFunction* cost_function,\n      LossFunction* loss_function,\n      Iter param_blocks_begin,\n      Iter param_blocks_end);\n\nand remove the std::vector\u003c\u003e version (but this would obviously break the API). What about using the iterator version and instead of removing the std::vector\u003c\u003e version mark it deprecated? So for new use cases there is only one \u0027right\u0027 choice but old code still compiles.",
+      "parentUuid": "67ec6b17_b3b1e1ed",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 2
+      },
+      "revId": "465e24a78193d57ba07361e05a70199f798314ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "705c1ba9_63ffe309",
         "filename": "include/ceres/problem.h",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "465e24a78193d57ba07361e05a70199f798314ba",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4985bd55_61c01959",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-11-07T05:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "705c1ba9_63ffe309",
+      "revId": "465e24a78193d57ba07361e05a70199f798314ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c23cb1c5_14399169",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-11-07T05:46:34Z",
+      "side": 1,
+      "message": "It was used. I changed all usages to used the pointer plus length version.",
+      "parentUuid": "3f7f4996_363c3de3",
+      "range": {
+        "startLine": 86,
+        "startChar": 34,
+        "endLine": 86,
+        "endChar": 35
+      },
+      "revId": "465e24a78193d57ba07361e05a70199f798314ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8932459c_bfc03bd9",
         "filename": "internal/ceres/problem_impl.h",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "465e24a78193d57ba07361e05a70199f798314ba",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a442d5b_283c5ea4",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2018-11-07T05:46:34Z",
+      "side": 1,
+      "message": "I added it because I thought it is a good idea to keep the interface the same as in problem.h.\nI removed it.",
+      "parentUuid": "8932459c_bfc03bd9",
+      "range": {
+        "startLine": 91,
+        "startChar": 10,
+        "endLine": 91,
+        "endChar": 11
+      },
+      "revId": "465e24a78193d57ba07361e05a70199f798314ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
