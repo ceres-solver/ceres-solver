@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,6 @@
 
 #include "ceres/autodiff_cost_function.h"
 
-#include <cstddef>
 #include <memory>
 
 #include "gtest/gtest.h"
@@ -74,7 +73,7 @@ TEST(AutodiffCostFunction, BilinearDifferentiationTest) {
 
   double residuals = 0.0;
 
-  cost_function->Evaluate(parameters, &residuals, NULL);
+  cost_function->Evaluate(parameters, &residuals, nullptr);
   EXPECT_EQ(10.0, residuals);
 
   cost_function->Evaluate(parameters, &residuals, jacobians);
@@ -128,7 +127,7 @@ TEST(AutodiffCostFunction, ManyParameterAutodiffInstantiates) {
 
   double residuals = 0.0;
 
-  cost_function->Evaluate(parameters, &residuals, NULL);
+  cost_function->Evaluate(parameters, &residuals, nullptr);
   EXPECT_EQ(45.0, residuals);
 
   cost_function->Evaluate(parameters, &residuals, jacobians);

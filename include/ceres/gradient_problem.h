@@ -33,6 +33,7 @@
 
 #include <memory>
 #include "ceres/internal/port.h"
+#include "ceres/first_order_function.h"
 #include "ceres/local_parameterization.h"
 
 namespace ceres {
@@ -107,18 +108,6 @@ class CERES_EXPORT GradientProblem {
   std::unique_ptr<FirstOrderFunction> function_;
   std::unique_ptr<LocalParameterization> parameterization_;
   std::unique_ptr<double[]> scratch_;
-};
-
-// A FirstOrderFunction object implements the evaluation of a function
-// and its gradient.
-class CERES_EXPORT FirstOrderFunction {
- public:
-  virtual ~FirstOrderFunction() {}
-  // cost is never NULL. gradient may be null.
-  virtual bool Evaluate(const double* const parameters,
-                        double* cost,
-                        double* gradient) const = 0;
-  virtual int NumParameters() const = 0;
 };
 
 }  // namespace ceres
