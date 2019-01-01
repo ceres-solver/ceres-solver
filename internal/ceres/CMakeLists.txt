@@ -392,6 +392,7 @@ if (BUILD_TESTING AND GFLAGS)
 
   ceres_test(array_utils)
   ceres_test(autodiff)
+  ceres_test(autodiff_first_order_function)
   ceres_test(autodiff_cost_function)
   ceres_test(autodiff_local_parameterization)
   ceres_test(block_jacobi_preconditioner)
