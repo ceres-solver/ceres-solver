@@ -264,7 +264,8 @@ class BiCubicInterpolator {
   }
 
   // Evaluate the interpolated function value and/or its
-  // derivative. Returns false if r or c is out of bounds.
+  // derivative. Uses the nearest point on the grid boundary if r or
+  // c is out of bounds.
   void Evaluate(double r, double c,
                 double* f, double* dfdr, double* dfdc) const {
     // BiCubic interpolation requires 16 values around the point being
