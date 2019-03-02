@@ -4,12 +4,12 @@ matrix:
   fast_finish: true
   include:
   - os: linux
-    dist: trusty
+    dist: xenial
     sudo: required
     compiler: gcc
     env: CERES_BUILD_TARGET=LINUX
   - os: linux
-    dist: trusty
+    dist: xenial
     sudo: required
     compiler: gcc
     env: CERES_BUILD_TARGET=ANDROID
