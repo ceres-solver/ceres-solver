@@ -112,9 +112,9 @@ void SparseCholeskySolverUnitTest(
   LinearSolver::Options sparse_cholesky_options;
   sparse_cholesky_options.sparse_linear_algebra_library_type =
       sparse_linear_algebra_library_type;
-  sparse_cholesky_options.use_postordering  = (ordering_type == AMD);
-  std::unique_ptr<SparseCholesky> sparse_cholesky = SparseCholesky::Create(
-      sparse_cholesky_options);
+  sparse_cholesky_options.use_postordering = (ordering_type == AMD);
+  std::unique_ptr<SparseCholesky> sparse_cholesky =
+      SparseCholesky::Create(sparse_cholesky_options);
   const CompressedRowSparseMatrix::StorageType storage_type =
       sparse_cholesky->StorageType();
 
@@ -136,9 +136,9 @@ void SparseCholeskySolverUnitTest(
 
   EXPECT_TRUE(ComputeExpectedSolution(*lhs, rhs, &expected));
   std::string message;
-  EXPECT_EQ(sparse_cholesky->FactorAndSolve(
-                lhs, rhs.data(), actual.data(), &message),
-            LINEAR_SOLVER_SUCCESS);
+  EXPECT_EQ(
+      sparse_cholesky->FactorAndSolve(lhs, rhs.data(), actual.data(), &message),
+      LINEAR_SOLVER_SUCCESS);
   Matrix eigen_lhs;
   lhs->ToDenseMatrix(&eigen_lhs);
   EXPECT_NEAR((actual - expected).norm() / actual.norm(),
@@ -187,53 +187,55 @@ TEST_P(SparseCholeskyTest, FactorAndSolve) {
 }
 
 #ifndef CERES_NO_SUITESPARSE
-INSTANTIATE_TEST_CASE_P(SuiteSparseCholesky,
-                        SparseCholeskyTest,
-                        ::testing::Combine(::testing::Values(SUITE_SPARSE),
-                                           ::testing::Values(AMD, NATURAL),
-                                           ::testing::Values(true, false)),
-                        ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(SuiteSparseCholesky,
+                         SparseCholeskyTest,
+                         ::testing::Combine(::testing::Values(SUITE_SPARSE),
+                                            ::testing::Values(AMD, NATURAL),
+                                            ::testing::Values(true, false)),
+                         ParamInfoToString);
 #endif
 
 #ifndef CERES_NO_CXSPARSE
-INSTANTIATE_TEST_CASE_P(CXSparseCholesky,
-                        SparseCholeskyTest,
-                        ::testing::Combine(::testing::Values(CX_SPARSE),
-                                           ::testing::Values(AMD, NATURAL),
-                                           ::testing::Values(true, false)),
-                        ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(CXSparseCholesky,
+                         SparseCholeskyTest,
+                         ::testing::Combine(::testing::Values(CX_SPARSE),
+                                            ::testing::Values(AMD, NATURAL),
+                                            ::testing::Values(true, false)),
+                         ParamInfoToString);
 #endif
 
 #ifndef CERES_NO_ACCELERATE_SPARSE
-INSTANTIATE_TEST_CASE_P(AccelerateSparseCholesky,
-                        SparseCholeskyTest,
-                        ::testing::Combine(::testing::Values(ACCELERATE_SPARSE),
-                                           ::testing::Values(AMD, NATURAL),
-                                           ::testing::Values(true, false)),
-                        ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(
+    AccelerateSparseCholesky,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(ACCELERATE_SPARSE),
+                       ::testing::Values(AMD, NATURAL),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
 
-INSTANTIATE_TEST_CASE_P(AccelerateSparseCholeskySingle,
-                        SparseCholeskyTest,
-                        ::testing::Combine(::testing::Values(ACCELERATE_SPARSE),
-                                           ::testing::Values(AMD, NATURAL),
-                                           ::testing::Values(true, false)),
-                        ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(
+    AccelerateSparseCholeskySingle,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(ACCELERATE_SPARSE),
+                       ::testing::Values(AMD, NATURAL),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
 #endif
 
 #ifdef CERES_USE_EIGEN_SPARSE
-INSTANTIATE_TEST_CASE_P(EigenSparseCholesky,
-                        SparseCholeskyTest,
-                        ::testing::Combine(::testing::Values(EIGEN_SPARSE),
-                                           ::testing::Values(AMD, NATURAL),
-                                           ::testing::Values(true, false)),
-                        ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(EigenSparseCholesky,
+                         SparseCholeskyTest,
+                         ::testing::Combine(::testing::Values(EIGEN_SPARSE),
+                                            ::testing::Values(AMD, NATURAL),
+                                            ::testing::Values(true, false)),
+                         ParamInfoToString);
 
-INSTANTIATE_TEST_CASE_P(EigenSparseCholeskySingle,
-                        SparseCholeskyTest,
-                        ::testing::Combine(::testing::Values(EIGEN_SPARSE),
-                                           ::testing::Values(AMD, NATURAL),
-                                           ::testing::Values(true, false)),
-                        ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(EigenSparseCholeskySingle,
+                         SparseCholeskyTest,
+                         ::testing::Combine(::testing::Values(EIGEN_SPARSE),
+                                            ::testing::Values(AMD, NATURAL),
+                                            ::testing::Values(true, false)),
+                         ParamInfoToString);
 #endif
 
 class MockSparseCholesky : public SparseCholesky {
@@ -252,12 +254,11 @@ class MockIterativeRefiner : public IterativeRefiner {
  public:
   MockIterativeRefiner() : IterativeRefiner(1) {}
   MOCK_METHOD4(Refine,
-               void (const SparseMatrix& lhs,
-                     const double* rhs,
-                     SparseCholesky* sparse_cholesky,
-                     double* solution));
+               void(const SparseMatrix& lhs,
+                    const double* rhs,
+                    SparseCholesky* sparse_cholesky,
+                    double* solution));
 };
-
 
 using testing::_;
 using testing::Return;
@@ -268,8 +269,7 @@ TEST(RefinedSparseCholesky, StorageType) {
   EXPECT_CALL(*mock_sparse_cholesky, StorageType())
       .Times(1)
       .WillRepeatedly(Return(CompressedRowSparseMatrix::UPPER_TRIANGULAR));
-  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _))
-      .Times(0);
+  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _)).Times(0);
   std::unique_ptr<SparseCholesky> sparse_cholesky(mock_sparse_cholesky);
   std::unique_ptr<IterativeRefiner> iterative_refiner(mock_iterative_refiner);
   RefinedSparseCholesky refined_sparse_cholesky(std::move(sparse_cholesky),
@@ -284,8 +284,7 @@ TEST(RefinedSparseCholesky, Factorize) {
   EXPECT_CALL(*mock_sparse_cholesky, Factorize(_, _))
       .Times(1)
       .WillRepeatedly(Return(LINEAR_SOLVER_SUCCESS));
-  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _))
-      .Times(0);
+  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _)).Times(0);
   std::unique_ptr<SparseCholesky> sparse_cholesky(mock_sparse_cholesky);
   std::unique_ptr<IterativeRefiner> iterative_refiner(mock_iterative_refiner);
   RefinedSparseCholesky refined_sparse_cholesky(std::move(sparse_cholesky),
@@ -302,10 +301,8 @@ TEST(RefinedSparseCholesky, FactorAndSolveWithUnsuccessfulFactorization) {
   EXPECT_CALL(*mock_sparse_cholesky, Factorize(_, _))
       .Times(1)
       .WillRepeatedly(Return(LINEAR_SOLVER_FAILURE));
-  EXPECT_CALL(*mock_sparse_cholesky, Solve(_, _, _))
-      .Times(0);
-  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _))
-      .Times(0);
+  EXPECT_CALL(*mock_sparse_cholesky, Solve(_, _, _)).Times(0);
+  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _)).Times(0);
   std::unique_ptr<SparseCholesky> sparse_cholesky(mock_sparse_cholesky);
   std::unique_ptr<IterativeRefiner> iterative_refiner(mock_iterative_refiner);
   RefinedSparseCholesky refined_sparse_cholesky(std::move(sparse_cholesky),
@@ -314,32 +311,35 @@ TEST(RefinedSparseCholesky, FactorAndSolveWithUnsuccessfulFactorization) {
   std::string message;
   double rhs;
   double solution;
-  EXPECT_EQ(refined_sparse_cholesky.FactorAndSolve(&m, &rhs, &solution, &message),
-            LINEAR_SOLVER_FAILURE);
+  EXPECT_EQ(
+      refined_sparse_cholesky.FactorAndSolve(&m, &rhs, &solution, &message),
+      LINEAR_SOLVER_FAILURE);
 };
 
 TEST(RefinedSparseCholesky, FactorAndSolveWithSuccess) {
   MockSparseCholesky* mock_sparse_cholesky = new MockSparseCholesky;
-  std::unique_ptr<MockIterativeRefiner> mock_iterative_refiner(new MockIterativeRefiner);
+  std::unique_ptr<MockIterativeRefiner> mock_iterative_refiner(
+      new MockIterativeRefiner);
   EXPECT_CALL(*mock_sparse_cholesky, Factorize(_, _))
       .Times(1)
       .WillRepeatedly(Return(LINEAR_SOLVER_SUCCESS));
   EXPECT_CALL(*mock_sparse_cholesky, Solve(_, _, _))
       .Times(1)
       .WillRepeatedly(Return(LINEAR_SOLVER_SUCCESS));
-  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _))
-      .Times(1);
+  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _)).Times(1);
 
   std::unique_ptr<SparseCholesky> sparse_cholesky(mock_sparse_cholesky);
-  std::unique_ptr<IterativeRefiner> iterative_refiner(std::move(mock_iterative_refiner));
+  std::unique_ptr<IterativeRefiner> iterative_refiner(
+      std::move(mock_iterative_refiner));
   RefinedSparseCholesky refined_sparse_cholesky(std::move(sparse_cholesky),
                                                 std::move(iterative_refiner));
   CompressedRowSparseMatrix m(1, 1, 1);
   std::string message;
   double rhs;
   double solution;
-  EXPECT_EQ(refined_sparse_cholesky.FactorAndSolve(&m, &rhs, &solution, &message),
-            LINEAR_SOLVER_SUCCESS);
+  EXPECT_EQ(
+      refined_sparse_cholesky.FactorAndSolve(&m, &rhs, &solution, &message),
+      LINEAR_SOLVER_SUCCESS);
 };
 
 }  // namespace internal

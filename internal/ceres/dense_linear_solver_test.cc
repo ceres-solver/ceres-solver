@@ -111,7 +111,7 @@ TEST_P(DenseLinearSolverTest, _) {
 // least squares problem to randomly generated ones?
 #ifndef CERES_NO_LAPACK
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     DenseLinearSolver,
     DenseLinearSolverTest,
     ::testing::Combine(::testing::Values(DENSE_QR, DENSE_NORMAL_CHOLESKY),
@@ -122,7 +122,7 @@ INSTANTIATE_TEST_CASE_P(
 
 #else
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     DenseLinearSolver,
     DenseLinearSolverTest,
     ::testing::Combine(::testing::Values(DENSE_QR, DENSE_NORMAL_CHOLESKY),

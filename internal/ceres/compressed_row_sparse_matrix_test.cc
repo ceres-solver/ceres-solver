@@ -454,7 +454,7 @@ TEST_P(RightMultiplyTest, _) {
   }
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     CompressedRowSparseMatrix,
     RightMultiplyTest,
     ::testing::Values(CompressedRowSparseMatrix::LOWER_TRIANGULAR,
@@ -522,7 +522,7 @@ TEST_P(LeftMultiplyTest, _) {
   }
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     CompressedRowSparseMatrix,
     LeftMultiplyTest,
     ::testing::Values(CompressedRowSparseMatrix::LOWER_TRIANGULAR,
@@ -586,7 +586,7 @@ TEST_P(SquaredColumnNormTest, _) {
   }
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     CompressedRowSparseMatrix,
     SquaredColumnNormTest,
     ::testing::Values(CompressedRowSparseMatrix::LOWER_TRIANGULAR,

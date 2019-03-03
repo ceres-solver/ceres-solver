@@ -554,7 +554,7 @@ TEST_P(EvaluatorTest, EvaluatorAbortsForResidualsThatFailToEvaluate) {
 //
 // Try all values of num_eliminate_blocks that make sense given that in the
 // tests a maximum of 4 parameter blocks are present.
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     LinearSolvers,
     EvaluatorTest,
     ::testing::Values(EvaluatorTestOptions(DENSE_QR, 0),

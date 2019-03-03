@@ -1050,9 +1050,9 @@ TEST_P(DynamicProblem, GetXXXBlocksForYYYBlock) {
   }
 }
 
-INSTANTIATE_TEST_CASE_P(OptionsInstantiation,
-                        DynamicProblem,
-                        ::testing::Values(true, false));
+INSTANTIATE_TEST_SUITE_P(OptionsInstantiation,
+                         DynamicProblem,
+                         ::testing::Values(true, false));
 
 // Test for Problem::Evaluate
 
