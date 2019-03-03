@@ -70,7 +70,9 @@ class FakeSparseMatrix : public SparseMatrix {
   virtual const double* values() const { return m_.data(); }
   virtual int num_rows() const { return m_.cols(); }
   virtual int num_cols() const { return m_.cols(); }
-  virtual int num_nonzeros() const { return m_.cols() * m_.cols(); }
+  virtual int64_t num_nonzeros() const {
+    return static_cast<int64_t>(m_.cols()) * static_cast<int64_t>(m_.cols());
+  }
 
   // The following methods are not needed for tests in this file.
   virtual void SquaredColumnNorm(double* x) const DO_NOT_CALL;
