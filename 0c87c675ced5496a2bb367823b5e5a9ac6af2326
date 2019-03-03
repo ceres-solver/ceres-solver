@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b90aa026_d4c85cd5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-03-03T18:19:37Z",
+      "side": 1,
+      "message": "Documentation string should also include what the valid choices are?",
+      "range": {
+        "startLine": 160,
+        "startChar": 31,
+        "endLine": 160,
+        "endChar": 32
+      },
+      "revId": "0c87c675ced5496a2bb367823b5e5a9ac6af2326",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6ba985_96815f16",
+        "filename": "cmake/EnableSanitizer.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-03-03T18:19:37Z",
+      "side": 1,
+      "message": "I read this, and other comments like this across our cmake file and cry.\nspeaking of, did ever modernize our cmake file? since we raised our c++ requirements, did we also raise our cmake requirements?",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 24
+      },
+      "revId": "0c87c675ced5496a2bb367823b5e5a9ac6af2326",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
