@@ -67,9 +67,9 @@ DenseSparseMatrix::DenseSparseMatrix(const TripletSparseMatrix& m)
   const double *values = m.values();
   const int *rows = m.rows();
   const int *cols = m.cols();
-  int num_nonzeros = m.num_nonzeros();
+  int64_t num_nonzeros = m.num_nonzeros();
 
-  for (int i = 0; i < num_nonzeros; ++i) {
+  for (int64_t i = 0; i < num_nonzeros; ++i) {
     m_(rows[i], cols[i]) += values[i];
   }
 }
@@ -137,11 +137,12 @@ int DenseSparseMatrix::num_cols() const {
   return m_.cols();
 }
 
-int DenseSparseMatrix::num_nonzeros() const {
+int64_t DenseSparseMatrix::num_nonzeros() const {
   if (has_diagonal_reserved_ && !has_diagonal_appended_) {
-    return (m_.rows() - m_.cols()) * m_.cols();
+    return static_cast<int64_t>(m_.rows() - m_.cols()) *
+           static_cast<int64_t>(m_.cols());
   }
-  return m_.rows() * m_.cols();
+  return static_cast<int64_t>(m_.rows()) * static_cast<int64_t>(m_.cols());
 }
 
 ConstColMajorMatrixRef DenseSparseMatrix::matrix() const {
