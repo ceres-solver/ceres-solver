@@ -116,7 +116,7 @@ void CubicHermiteSpline(const Eigen::Matrix<double, kDataDimension, 1>& p0,
 // Example usage:
 //
 //  const double data[] = {1.0, 2.0, 5.0, 6.0};
-//  Grid1D<double, 1> grid(x, 0, 4);
+//  Grid1D<double, 1> grid(data, 0, 4);
 //  CubicInterpolator<Grid1D<double, 1>> interpolator(grid);
 //  double f, dfdx;
 //  interpolator.Evaluator(1.5, &f, &dfdx);
