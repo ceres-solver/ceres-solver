@@ -98,7 +98,7 @@ class SparseMatrix : public LinearOperator {
 
   virtual int num_rows() const = 0;
   virtual int num_cols() const = 0;
-  virtual int num_nonzeros() const = 0;
+  virtual int64_t num_nonzeros() const = 0;
 };
 
 }  // namespace internal

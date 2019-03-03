@@ -40,18 +40,17 @@
 
 #include <cstdint>
 #include <vector>
+
 #include "ceres/internal/port.h"
 
 namespace ceres {
 namespace internal {
 
-typedef int32_t BlockSize;
-
 struct Block {
   Block() : size(-1), position(-1) {}
   Block(int size_, int position_) : size(size_), position(position_) {}
 
-  BlockSize size;
+  int32_t size;
   int position;  // Position along the row/column.
 };
 
@@ -61,9 +60,9 @@ struct Cell {
       : block_id(block_id_), position(position_) {}
 
   // Column or row block id as the case maybe.
-  int block_id;
+  int block_id = -1;
   // Where in the values array of the jacobian is this cell located.
-  int position;
+  int64_t position = -1;
 };
 
 // Order cell by their block_id;
@@ -80,16 +79,10 @@ struct CompressedList {
 };
 
 typedef CompressedList CompressedRow;
-typedef CompressedList CompressedColumn;
 
 struct CompressedRowBlockStructure {
   std::vector<Block> cols;
   std::vector<CompressedRow> rows;
-};
-
-struct CompressedColumnBlockStructure {
-  std::vector<Block> rows;
-  std::vector<CompressedColumn> cols;
 };
 
 }  // namespace internal
