@@ -260,7 +260,7 @@ class DynamicTwoParameterBlockFunctor {
 };
 
 // Check that AutoDiff(Functor1) == AutoDiff(CostToFunctor(AutoDiff(Functor1)))
-#define TEST_BODY(NAME)                                                        \
+#define TEST_BODY(Functor1)                                                    \
   TEST(CostFunctionToFunctor, Functor1) {                                      \
     typedef AutoDiffCostFunction<Functor1, 2, PARAMETER_BLOCK_SIZES>           \
         CostFunction1;                                                         \
