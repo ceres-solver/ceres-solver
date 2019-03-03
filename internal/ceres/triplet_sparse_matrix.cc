@@ -53,7 +53,7 @@ TripletSparseMatrix::~TripletSparseMatrix() {}
 
 TripletSparseMatrix::TripletSparseMatrix(int num_rows,
                                          int num_cols,
-                                         int max_num_nonzeros)
+                                         int64_t max_num_nonzeros)
     : num_rows_(num_rows),
       num_cols_(num_cols),
       max_num_nonzeros_(max_num_nonzeros),
@@ -115,7 +115,7 @@ bool TripletSparseMatrix::AllTripletsWithinBounds() const {
   return true;
 }
 
-void TripletSparseMatrix::Reserve(int new_max_num_nonzeros) {
+void TripletSparseMatrix::Reserve(int64_t new_max_num_nonzeros) {
   CHECK_LE(num_nonzeros_, new_max_num_nonzeros)
       << "Reallocation will cause data loss";
 
@@ -145,7 +145,7 @@ void TripletSparseMatrix::SetZero() {
   num_nonzeros_ = 0;
 }
 
-void TripletSparseMatrix::set_num_nonzeros(int num_nonzeros) {
+void TripletSparseMatrix::set_num_nonzeros(int64_t num_nonzeros) {
   CHECK_GE(num_nonzeros, 0);
   CHECK_LE(num_nonzeros, max_num_nonzeros_);
   num_nonzeros_ = num_nonzeros;
