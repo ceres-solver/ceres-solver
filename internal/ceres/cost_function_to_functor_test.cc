@@ -259,61 +259,61 @@ class DynamicTwoParameterBlockFunctor {
   }
 };
 
-#define TEST_BODY(NAME)                                                 \
-  TEST(CostFunctionToFunctor, NAME) {                                   \
-    std::unique_ptr<CostFunction> cost_function(                             \
-        new AutoDiffCostFunction<                                       \
-            CostFunctionToFunctor<2, PARAMETER_BLOCK_SIZES >,           \
-                2, PARAMETER_BLOCK_SIZES>(new CostFunctionToFunctor<    \
-                    2, PARAMETER_BLOCK_SIZES >(                         \
-                        new AutoDiffCostFunction<                       \
-                            NAME##Functor, 2, PARAMETER_BLOCK_SIZES >(  \
-                  new NAME##Functor))));                                \
-                                                                        \
-std::unique_ptr<CostFunction> actual_cost_function(                          \
-    new AutoDiffCostFunction<NAME##Functor, 2, PARAMETER_BLOCK_SIZES >( \
-        new NAME##Functor));                                            \
-ExpectCostFunctionsAreEqual(*cost_function, *actual_cost_function);     \
-}
+// Check that AutoDiff(Functor1) == AutoDiff(CostToFunctor(AutoDiff(Functor1)))
+#define TEST_BODY(NAME)                                                        \
+  TEST(CostFunctionToFunctor, Functor1) {                                      \
+    typedef AutoDiffCostFunction<Functor1, 2, PARAMETER_BLOCK_SIZES>           \
+        CostFunction1;                                                         \
+    typedef CostFunctionToFunctor<2, PARAMETER_BLOCK_SIZES> FunctionToFunctor; \
+    typedef AutoDiffCostFunction<FunctionToFunctor, 2, PARAMETER_BLOCK_SIZES>  \
+        CostFunction2;                                                         \
+                                                                               \
+    std::unique_ptr<CostFunction> cost_function(new CostFunction2(             \
+        new FunctionToFunctor(new CostFunction1(new Functor1))));              \
+                                                                               \
+    std::unique_ptr<CostFunction> actual_cost_function(                        \
+        new CostFunction1(new Functor1));                                      \
+    ExpectCostFunctionsAreEqual(*cost_function, *actual_cost_function);        \
+  }
 
 #define PARAMETER_BLOCK_SIZES 2
-TEST_BODY(OneParameterBlock)
+TEST_BODY(OneParameterBlockFunctor)
 #undef PARAMETER_BLOCK_SIZES
 
 #define PARAMETER_BLOCK_SIZES 2,2
-TEST_BODY(TwoParameterBlock)
+TEST_BODY(TwoParameterBlockFunctor)
 #undef PARAMETER_BLOCK_SIZES
 
 #define PARAMETER_BLOCK_SIZES 2,2,2
-TEST_BODY(ThreeParameterBlock)
+TEST_BODY(ThreeParameterBlockFunctor)
 #undef PARAMETER_BLOCK_SIZES
 
 #define PARAMETER_BLOCK_SIZES 2,2,2,2
-TEST_BODY(FourParameterBlock)
+TEST_BODY(FourParameterBlockFunctor)
 #undef PARAMETER_BLOCK_SIZES
 
 #define PARAMETER_BLOCK_SIZES 2,2,2,2,2
-TEST_BODY(FiveParameterBlock)
+TEST_BODY(FiveParameterBlockFunctor)
 #undef PARAMETER_BLOCK_SIZES
 
 #define PARAMETER_BLOCK_SIZES 2,2,2,2,2,2
-TEST_BODY(SixParameterBlock)
+TEST_BODY(SixParameterBlockFunctor)
 #undef PARAMETER_BLOCK_SIZES
 
 #define PARAMETER_BLOCK_SIZES 2,2,2,2,2,2,2
-TEST_BODY(SevenParameterBlock)
+TEST_BODY(SevenParameterBlockFunctor)
 #undef PARAMETER_BLOCK_SIZES
 
 #define PARAMETER_BLOCK_SIZES 2,2,2,2,2,2,2,2
-TEST_BODY(EightParameterBlock)
+TEST_BODY(EightParameterBlockFunctor)
 #undef PARAMETER_BLOCK_SIZES
 
 #define PARAMETER_BLOCK_SIZES 2,2,2,2,2,2,2,2,2
-TEST_BODY(NineParameterBlock)
+TEST_BODY(NineParameterBlockFunctor)
 #undef PARAMETER_BLOCK_SIZES
 
 #define PARAMETER_BLOCK_SIZES 2,2,2,2,2,2,2,2,2,2
-TEST_BODY(TenParameterBlock)
+TEST_BODY(TenParameterBlockFunctor)
 #undef PARAMETER_BLOCK_SIZES
 
 #undef TEST_BODY
