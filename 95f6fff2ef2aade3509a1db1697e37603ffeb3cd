@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06177d77_6435f1ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-03-03T13:01:13Z",
+      "side": 1,
+      "message": "residual blocks, not residual locks",
+      "revId": "95f6fff2ef2aade3509a1db1697e37603ffeb3cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1aa1f5_691a67a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-03-03T13:01:13Z",
+      "side": 1,
+      "message": "Is the problem not really Problem::Evaluate() which is used by Covariance, but also potentially used by other code, e.g. user-code?",
+      "revId": "95f6fff2ef2aade3509a1db1697e37603ffeb3cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dad4a0c_ad221468",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-03-03T13:01:13Z",
+      "side": 1,
+      "message": "anyother costfunction are -\u003e any other CostFunction is called",
+      "revId": "95f6fff2ef2aade3509a1db1697e37603ffeb3cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d8bfcd_1b28f071",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-03-03T13:01:13Z",
+      "side": 1,
+      "message": "IMO, remove comma after \u0027that\u0027 here",
+      "revId": "95f6fff2ef2aade3509a1db1697e37603ffeb3cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f33d85a_bfa3eeb1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-03-03T13:01:13Z",
+      "side": 1,
+      "message": "parameterblocks -\u003e pointers?",
+      "revId": "95f6fff2ef2aade3509a1db1697e37603ffeb3cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78804ca8_020d1789",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-03-03T13:01:13Z",
+      "side": 1,
+      "message": "Minor, but spaces around the \u0027\u003d\u0027 might make this easier to read (and match Google Style)",
+      "revId": "95f6fff2ef2aade3509a1db1697e37603ffeb3cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
