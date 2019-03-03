@@ -72,7 +72,7 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
   void InitialiseDenseReference() {
     dense.resize(num_rows, num_cols);
     dense.setZero();
-    int num_nonzeros = 0;
+    int64_t num_nonzeros = 0;
     for (int i = 0; i < (num_rows * num_cols); ++i) {
       const int r = i / num_cols, c = i % num_cols;
       if (r != c) {
@@ -164,7 +164,7 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
 
   int num_additional_elements;
 
-  int expected_num_nonzeros;
+  int64_t expected_num_nonzeros;
 
   Matrix dense;
   std::unique_ptr<TripletSparseMatrix> tsm;

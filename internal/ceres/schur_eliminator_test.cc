@@ -284,7 +284,7 @@ TEST(SchurEliminatorForOneFBlock, MatchesSchurEliminator) {
 
   BlockSparseMatrix matrix(bs);
   double* values = matrix.mutable_values();
-  for (int i = 0; i < matrix.num_nonzeros(); ++i) {
+  for (int64_t i = 0; i < matrix.num_nonzeros(); ++i) {
     values[i] = RandNormal();
   }
 

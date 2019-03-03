@@ -128,10 +128,10 @@ class InnerProductComputer {
 
   CompressedRowSparseMatrix* CreateResultMatrix(
       const CompressedRowSparseMatrix::StorageType storage_type,
-      int num_nonzeros);
+      int64_t num_nonzeros);
 
-  int ComputeNonzeros(const std::vector<ProductTerm>& product_terms,
-                      std::vector<int>* row_block_nnz);
+  int64_t ComputeNonzeros(const std::vector<ProductTerm>& product_terms,
+                          std::vector<int>* row_block_nnz);
 
   void ComputeOffsetsAndCreateResultMatrix(
       const CompressedRowSparseMatrix::StorageType storage_type,

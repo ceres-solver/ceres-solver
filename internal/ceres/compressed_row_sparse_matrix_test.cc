@@ -203,7 +203,7 @@ TEST_F(CompressedRowSparseMatrixTest, ToCRSMatrix) {
     EXPECT_EQ(crsm->rows()[i], crs_matrix.rows[i]);
   }
 
-  for (int i = 0; i < crsm->num_nonzeros(); ++i) {
+  for (int64_t i = 0; i < crsm->num_nonzeros(); ++i) {
     EXPECT_EQ(crsm->cols()[i], crs_matrix.cols[i]);
     EXPECT_EQ(crsm->values()[i], crs_matrix.values[i]);
   }

@@ -68,7 +68,7 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
   // Count the number of scalar non-zero entries and build the layout
   // object for looking into the values array of the
   // TripletSparseMatrix.
-  int num_nonzeros = 0;
+  int64_t num_nonzeros = 0;
   for (const auto& block_pair : block_pairs) {
     const int row_block_size = blocks_[block_pair.first];
     const int col_block_size = blocks_[block_pair.second];

@@ -95,7 +95,7 @@ SparseMatrix* CompressedRowJacobianWriter::CreateJacobian() const {
   int total_num_effective_parameters = program_->NumEffectiveParameters();
 
   // Count the number of jacobian nonzeros.
-  int num_jacobian_nonzeros = 0;
+  int64_t num_jacobian_nonzeros = 0;
   for (int i = 0; i < residual_blocks.size(); ++i) {
     ResidualBlock* residual_block = residual_blocks[i];
     const int num_residuals = residual_block->NumResiduals();

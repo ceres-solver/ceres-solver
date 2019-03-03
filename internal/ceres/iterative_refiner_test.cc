@@ -70,7 +70,7 @@ class FakeSparseMatrix : public SparseMatrix {
   const double* values() const final { return m_.data(); }
   int num_rows() const final { return m_.cols(); }
   int num_cols() const final { return m_.cols(); }
-  int num_nonzeros() const final { return m_.cols() * m_.cols(); }
+  int64_t num_nonzeros() const final { return m_.cols() * m_.cols(); }
 
   // The following methods are not needed for tests in this file.
   void SquaredColumnNorm(double* x) const final DO_NOT_CALL;

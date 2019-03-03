@@ -53,7 +53,7 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
   const int num_rows = 3 + 4 + 5;
 
   set<pair<int, int>> block_pairs;
-  int num_nonzeros = 0;
+  int64_t num_nonzeros = 0;
   block_pairs.insert(make_pair(0, 0));
   num_nonzeros += blocks[0] * blocks[0];
 

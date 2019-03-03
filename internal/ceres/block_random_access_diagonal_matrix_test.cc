@@ -92,7 +92,7 @@ class BlockRandomAccessDiagonalMatrixTest : public ::testing::Test {
   }
 
  protected:
-  int num_nonzeros_;
+  int64_t num_nonzeros_;
   std::unique_ptr<BlockRandomAccessDiagonalMatrix> m_;
 };
 

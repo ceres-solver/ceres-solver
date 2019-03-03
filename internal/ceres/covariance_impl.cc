@@ -432,7 +432,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   // Compute the number of non-zeros in the covariance matrix.  Along
   // the way flip any covariance blocks which are in the lower
   // triangular part of the matrix.
-  int num_nonzeros = 0;
+  int64_t num_nonzeros = 0;
   CovarianceBlocks covariance_blocks;
   for (int i = 0; i <  original_covariance_blocks.size(); ++i) {
     const pair<const double*, const double*>& block_pair =
@@ -578,13 +578,13 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   // Construct a compressed column form of the Jacobian.
   const int num_rows = jacobian.num_rows;
   const int num_cols = jacobian.num_cols;
-  const int num_nonzeros = jacobian.values.size();
+  const int64_t num_nonzeros = jacobian.values.size();
 
   vector<SuiteSparse_long> transpose_rows(num_cols + 1, 0);
   vector<SuiteSparse_long> transpose_cols(num_nonzeros, 0);
   vector<double> transpose_values(num_nonzeros, 0);
 
-  for (int idx = 0; idx < num_nonzeros; ++idx) {
+  for (int64_t idx = 0; idx < num_nonzeros; ++idx) {
     transpose_rows[jacobian.cols[idx] + 1] += 1;
   }
 

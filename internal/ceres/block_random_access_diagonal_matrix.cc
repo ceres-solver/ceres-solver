@@ -55,7 +55,7 @@ BlockRandomAccessDiagonalMatrix::BlockRandomAccessDiagonalMatrix(
   // Build the row/column layout vector and count the number of scalar
   // rows/columns.
   int num_cols = 0;
-  int num_nonzeros = 0;
+  int64_t num_nonzeros = 0;
   vector<int> block_positions;
   for (int i = 0; i < blocks_.size(); ++i) {
     block_positions.push_back(num_cols);
