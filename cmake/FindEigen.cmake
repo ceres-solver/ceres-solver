@@ -115,6 +115,26 @@ if (NOT DEFINED EIGEN_PREFER_EXPORTED_EIGEN_CMAKE_CONFIGURATION
   set(EIGEN_PREFER_EXPORTED_EIGEN_CMAKE_CONFIGURATION TRUE)
 endif()
 
+# On macOS, add the Homebrew prefix (with appropriate suffixes) to the
+# respective HINTS directories (after any user-specified locations).  This
+# handles Homebrew installations into non-standard locations (not /usr/local).
+# We do not use CMAKE_PREFIX_PATH for this as given the search ordering of
+# find_xxx(), doing so would override any user-specified HINTS locations with
+# the Homebrew version if it exists.
+if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
+  find_program(HOMEBREW_EXECUTABLE brew)
+  mark_as_advanced(FORCE HOMEBREW_EXECUTABLE)
+  if (HOMEBREW_EXECUTABLE)
+    # Detected a Homebrew install, query for its install prefix.
+    execute_process(COMMAND ${HOMEBREW_EXECUTABLE} --prefix
+      OUTPUT_VARIABLE HOMEBREW_INSTALL_PREFIX
+      OUTPUT_STRIP_TRAILING_WHITESPACE)
+    message(STATUS "Detected Homebrew with install prefix: "
+      "${HOMEBREW_INSTALL_PREFIX}, adding to CMake search paths.")
+    list(APPEND EIGEN_INCLUDE_DIR_HINTS "${HOMEBREW_INSTALL_PREFIX}/include")
+  endif()
+endif()
+
 if (EIGEN_PREFER_EXPORTED_EIGEN_CMAKE_CONFIGURATION)
   # Try to find an exported CMake configuration for Eigen.
   #
@@ -147,6 +167,7 @@ if (EIGEN_PREFER_EXPORTED_EIGEN_CMAKE_CONFIGURATION)
   #
   # [1] http://www.cmake.org/cmake/help/v2.8.11/cmake.html#command:find_package
   find_package(Eigen3 QUIET
+                      HINTS ${Eigen3_DIR} ${HOMEBREW_INSTALL_PREFIX}
                       NO_MODULE
                       NO_CMAKE_PACKAGE_REGISTRY
                       NO_CMAKE_BUILDS_PATH)
