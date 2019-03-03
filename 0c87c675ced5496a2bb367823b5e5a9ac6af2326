@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c68c0748_a93ca124",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-03-03T18:38:57Z",
+      "side": 1,
+      "message": "Ideally yes, the problem is that I couldn\u0027t find any way to get list of supported sanitizers from the compiler and GCC in particular is problematic as it requires the gold linker on Linux (often skipped when just the compiler is updated in some packages).  I\u0027ve added some of the common examples.",
+      "parentUuid": "b90aa026_d4c85cd5",
+      "range": {
+        "startLine": 160,
+        "startChar": 31,
+        "endLine": 160,
+        "endChar": 32
+      },
+      "revId": "0c87c675ced5496a2bb367823b5e5a9ac6af2326",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c6ba985_96815f16",
         "filename": "cmake/EnableSanitizer.cmake",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "0c87c675ced5496a2bb367823b5e5a9ac6af2326",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9cbaa4_eedab9ad",
+        "filename": "cmake/EnableSanitizer.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-03-03T18:38:57Z",
+      "side": 1,
+      "message": "Yes we did (to 3.5): https://github.com/ceres-solver/ceres-solver/blob/master/CMakeLists.txt#L32",
+      "parentUuid": "7c6ba985_96815f16",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 24
+      },
+      "revId": "0c87c675ced5496a2bb367823b5e5a9ac6af2326",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
