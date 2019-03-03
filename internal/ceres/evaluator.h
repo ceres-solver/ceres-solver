@@ -65,7 +65,6 @@ class Evaluator {
     LinearSolverType linear_solver_type = DENSE_QR;
     bool dynamic_sparsity = false;
     ContextImpl* context = nullptr;
-    EvaluationCallback* evaluation_callback = nullptr;
   };
 
   static Evaluator* Create(const Options& options,

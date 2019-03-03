@@ -256,7 +256,6 @@ bool SetupEvaluator(PreprocessedProblem* pp) {
   pp->evaluator_options.num_threads = options.num_threads;
   pp->evaluator_options.dynamic_sparsity = options.dynamic_sparsity;
   pp->evaluator_options.context = pp->problem->context();
-  pp->evaluator_options.evaluation_callback = options.evaluation_callback;
   pp->evaluator.reset(Evaluator::Create(pp->evaluator_options,
                                         pp->reduced_program.get(),
                                         &pp->error));
