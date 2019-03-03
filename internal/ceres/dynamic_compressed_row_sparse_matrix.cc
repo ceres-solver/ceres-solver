@@ -37,7 +37,7 @@ namespace internal {
 DynamicCompressedRowSparseMatrix::DynamicCompressedRowSparseMatrix(
   int num_rows,
   int num_cols,
-  int initial_max_num_nonzeros)
+  int64_t initial_max_num_nonzeros)
     : CompressedRowSparseMatrix(num_rows,
                                 num_cols,
                                 initial_max_num_nonzeros) {

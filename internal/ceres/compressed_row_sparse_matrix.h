@@ -90,7 +90,7 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // double the peak memory usage.
   //
   // The storage type is set to UNSYMMETRIC.
-  CompressedRowSparseMatrix(int num_rows, int num_cols, int max_num_nonzeros);
+  CompressedRowSparseMatrix(int num_rows, int num_cols, int64_t max_num_nonzeros);
 
   // Build a square sparse diagonal matrix with num_rows rows and
   // columns. The diagonal m(i,i) = diagonal(i);
@@ -109,7 +109,7 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   virtual void ToTextFile(FILE* file) const;
   virtual int num_rows() const { return num_rows_; }
   virtual int num_cols() const { return num_cols_; }
-  virtual int num_nonzeros() const { return rows_[num_rows_]; }
+  virtual int64_t num_nonzeros() const { return rows_[num_rows_]; }
   virtual const double* values() const { return &values_[0]; }
   virtual double* mutable_values() { return &values_[0]; }
 
@@ -126,7 +126,7 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   CompressedRowSparseMatrix* Transpose() const;
 
   // Destructive array resizing method.
-  void SetMaxNumNonZeros(int num_nonzeros);
+  void SetMaxNumNonZeros(int64_t num_nonzeros);
 
   // Non-destructive array resizing method.
   void set_num_rows(const int num_rows) { num_rows_ = num_rows; }

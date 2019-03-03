@@ -47,7 +47,7 @@ namespace internal {
 class TripletSparseMatrix : public SparseMatrix {
  public:
   TripletSparseMatrix();
-  TripletSparseMatrix(int num_rows, int num_cols, int max_num_nonzeros);
+  TripletSparseMatrix(int num_rows, int num_cols, int64_t max_num_nonzeros);
   TripletSparseMatrix(int num_rows,
                       int num_cols,
                       const std::vector<int>& rows,
@@ -70,17 +70,17 @@ class TripletSparseMatrix : public SparseMatrix {
   virtual void ToTextFile(FILE* file) const;
   virtual int num_rows()        const { return num_rows_;     }
   virtual int num_cols()        const { return num_cols_;     }
-  virtual int num_nonzeros()    const { return num_nonzeros_; }
+  virtual int64_t num_nonzeros()    const { return num_nonzeros_; }
   virtual const double* values()  const { return values_.get(); }
   virtual double* mutable_values()      { return values_.get(); }
-  virtual void set_num_nonzeros(int num_nonzeros);
+  virtual void set_num_nonzeros(int64_t num_nonzeros);
 
   // Increase max_num_nonzeros and correspondingly increase the size
   // of rows_, cols_ and values_. If new_max_num_nonzeros is smaller
   // than max_num_nonzeros_, then num_non_zeros should be less than or
   // equal to new_max_num_nonzeros, otherwise data loss is possible
   // and the method crashes.
-  void Reserve(int new_max_num_nonzeros);
+  void Reserve(int64_t new_max_num_nonzeros);
 
   // Append the matrix B at the bottom of this matrix. B should have
   // the same number of columns as num_cols_.
@@ -94,7 +94,7 @@ class TripletSparseMatrix : public SparseMatrix {
   // bounds are dropped and the num_non_zeros changed accordingly.
   void Resize(int new_num_rows, int new_num_cols);
 
-  int max_num_nonzeros() const { return max_num_nonzeros_; }
+  int64_t max_num_nonzeros() const { return max_num_nonzeros_; }
   const int* rows()      const { return rows_.get();       }
   const int* cols()      const { return cols_.get();       }
   int* mutable_rows()          { return rows_.get();       }
@@ -137,8 +137,8 @@ class TripletSparseMatrix : public SparseMatrix {
 
   int num_rows_;
   int num_cols_;
-  int max_num_nonzeros_;
-  int num_nonzeros_;
+  int64_t max_num_nonzeros_;
+  int64_t num_nonzeros_;
 
   // The data is stored as three arrays. For each i, values_[i] is
   // stored at the location (rows_[i], cols_[i]). If the there are

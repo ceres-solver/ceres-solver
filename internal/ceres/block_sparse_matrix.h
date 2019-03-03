@@ -79,7 +79,7 @@ class BlockSparseMatrix : public SparseMatrix {
 
   virtual int num_rows()         const { return num_rows_;     }
   virtual int num_cols()         const { return num_cols_;     }
-  virtual int num_nonzeros()     const { return num_nonzeros_; }
+  virtual int64_t num_nonzeros() const { return num_nonzeros_; }
   virtual const double* values() const { return values_.get(); }
   virtual double* mutable_values()     { return values_.get(); }
 
@@ -127,8 +127,8 @@ class BlockSparseMatrix : public SparseMatrix {
  private:
   int num_rows_;
   int num_cols_;
-  int num_nonzeros_;
-  int max_num_nonzeros_;
+  int64_t num_nonzeros_;
+  int64_t max_num_nonzeros_;
   std::unique_ptr<double[]> values_;
   std::unique_ptr<CompressedRowBlockStructure> block_structure_;
 };

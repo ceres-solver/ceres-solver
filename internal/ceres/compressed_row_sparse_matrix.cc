@@ -70,7 +70,7 @@ struct RowColLessThan {
 
 void TransposeForCompressedRowSparseStructure(const int num_rows,
                                               const int num_cols,
-                                              const int num_nonzeros,
+                                              const int64_t num_nonzeros,
                                               const int* rows,
                                               const int* cols,
                                               const double* values,
@@ -158,7 +158,7 @@ void AddSymmetricRandomBlock(const int num_rows,
 // This constructor gives you a semi-initialized CompressedRowSparseMatrix.
 CompressedRowSparseMatrix::CompressedRowSparseMatrix(int num_rows,
                                                      int num_cols,
-                                                     int max_num_nonzeros) {
+                                                     int64_t max_num_nonzeros) {
   num_rows_ = num_rows;
   num_cols_ = num_cols;
   storage_type_ = UNSYMMETRIC;
@@ -525,7 +525,7 @@ void CompressedRowSparseMatrix::ToCRSMatrix(CRSMatrix* matrix) const {
   matrix->values.resize(matrix->rows[matrix->num_rows]);
 }
 
-void CompressedRowSparseMatrix::SetMaxNumNonZeros(int num_nonzeros) {
+void CompressedRowSparseMatrix::SetMaxNumNonZeros(int64_t num_nonzeros) {
   CHECK_GE(num_nonzeros, 0);
 
   cols_.resize(num_nonzeros);
