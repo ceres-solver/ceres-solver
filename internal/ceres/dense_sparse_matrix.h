@@ -64,7 +64,7 @@ class DenseSparseMatrix : public SparseMatrix {
   virtual void ToTextFile(FILE* file) const;
   virtual int num_rows() const;
   virtual int num_cols() const;
-  virtual int num_nonzeros() const;
+  virtual int64_t num_nonzeros() const;
   virtual const double* values() const { return m_.data(); }
   virtual double* mutable_values() { return m_.data(); }
 
