@@ -69,8 +69,8 @@ class ParameterBlock {
   // of the parameter block inside a Program (if any).
   ParameterBlock(double* user_state, int size, int index)
       : user_state_(user_state),
-        state_(user_state),
         size_(size),
+        state_(user_state),
         index_(index) {}
 
   ParameterBlock(double* user_state,
@@ -78,8 +78,8 @@ class ParameterBlock {
                  int index,
                  LocalParameterization* local_parameterization)
       : user_state_(user_state),
-        state_(user_state),
         size_(size),
+        state_(user_state),
         index_(index) {
     if (local_parameterization != nullptr) {
       SetParameterization(local_parameterization);
