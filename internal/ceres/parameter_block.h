@@ -367,13 +367,13 @@ class ParameterBlock {
 
   // The index of the parameter. This is used by various other parts of Ceres to
   // permit switching from a ParameterBlock* to an index in another array.
-  int32_t index_ = -1;
+  int index_ = -1;
 
   // The offset of this parameter block inside a larger state vector.
-  int32_t state_offset_ = -1;
+  int state_offset_ = -1;
 
   // The offset of this parameter block inside a larger delta vector.
-  int32_t delta_offset_ = -1;
+  int delta_offset_ = -1;
 
   // If non-null, contains the residual blocks this parameter block is in.
   std::unique_ptr<ResidualBlockSet> residual_blocks_;
