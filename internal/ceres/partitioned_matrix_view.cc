@@ -125,6 +125,11 @@ PartitionedMatrixViewBase::Create(const LinearSolver::Options& options,
  if (options.row_block_size == 2){
    return new PartitionedMatrixView<2, Eigen::Dynamic, Eigen::Dynamic>(matrix, options.elimination_groups[0]);
  }
+ if ((options.row_block_size == 3) &&
+     (options.e_block_size == 3) &&
+     (options.f_block_size == 3)) {
+   return new PartitionedMatrixView<3, 3, 3>(matrix, options.elimination_groups[0]);
+ }
  if ((options.row_block_size == 4) &&
      (options.e_block_size == 4) &&
      (options.f_block_size == 2)) {
