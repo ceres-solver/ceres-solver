@@ -716,7 +716,7 @@ Numeric Differentiation & LocalParameterization
 
    .. code-block:: c++
 
-    struct IntrinsicProjection
+    struct IntrinsicProjection {
       IntrinsicProjection(const double* observation) {
         observation_[0] = observation[0];
         observation_[1] = observation[1];
@@ -748,7 +748,7 @@ Numeric Differentiation & LocalParameterization
      CameraProjection(double* observation)
        intrinsic_projection_(
          new NumericDiffCostFunction<IntrinsicProjection, CENTRAL, 2, 5, 3>(
-           new IntrinsicProjection(observation)) {
+           new IntrinsicProjection(observation))) {
      }
 
      template <typename T>
