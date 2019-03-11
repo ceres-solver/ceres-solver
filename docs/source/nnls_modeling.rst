@@ -724,14 +724,14 @@ Numeric Differentiation & LocalParameterization
 
       bool operator()(const double* calibration,
                       const double* point,
-                      double* residuals) {
+                      double* residuals) const {
         double projection[2];
         ThirdPartyProjectionFunction(calibration, point, projection);
         residuals[0] = observation_[0] - projection[0];
         residuals[1] = observation_[1] - projection[1];
         return true;
       }
-     double observation_[2];
+      double observation_[2];
     };
 
 
@@ -746,10 +746,9 @@ Numeric Differentiation & LocalParameterization
 
    struct CameraProjection {
      CameraProjection(double* observation)
-       intrinsic_projection_(
-         new NumericDiffCostFunction<IntrinsicProjection, CENTRAL, 2, 5, 3>(
-           new IntrinsicProjection(observation))) {
-     }
+        : intrinsic_projection_(
+              new NumericDiffCostFunction<IntrinsicProjection, CENTRAL, 2, 5, 3>(
+                  new IntrinsicProjection(observation))) {}
 
      template <typename T>
      bool operator()(const T* rotation,
@@ -759,12 +758,13 @@ Numeric Differentiation & LocalParameterization
                      T* residuals) const {
        T transformed_point[3];
        RotateAndTranslatePoint(rotation, translation, point, transformed_point);
-       return intrinsic_projection_(intrinsics, transformed_point, residual);
+       return intrinsic_projection_(intrinsics, transformed_point, residuals);
      }
 
     private:
-     CostFunctionToFunctor<2,5,3> intrinsic_projection_;
+     CostFunctionToFunctor<2, 5, 3> intrinsic_projection_;
    };
+
 
 :class:`DynamicCostFunctionToFunctor`
 =====================================
