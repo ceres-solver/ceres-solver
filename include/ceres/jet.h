@@ -303,6 +303,8 @@ struct Jet {
             ? CERES_JET_ALIGN_BYTES : alignof(double);
 
 #undef CERES_JET_ALIGN_BYTES
+  static constexpr bool kNeedsEigenAlignment = kAlignOrNot == Eigen::AutoAlign;
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF(kNeedsEigenAlignment)
   alignas(kAlignment) Eigen::Matrix<T, N, 1, kAlignOrNot> v;
 #endif
 };

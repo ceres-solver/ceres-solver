@@ -39,7 +39,7 @@
 
 namespace ceres {
 namespace internal {
-
+  
 // A FixedArray<T> represents a non-resizable array of T where the
 // length of the array does not need to be a compile time constant.
 //
@@ -74,7 +74,7 @@ namespace internal {
    typedef __int32      ssize_t;
 #endif
 
-template <typename T, ssize_t inline_elements = -1>
+template <typename T, ssize_t inline_elements = -1, bool NeedsEigenAlignment = false>
 class FixedArray {
  public:
   // For playing nicely with stl:
@@ -135,6 +135,7 @@ class FixedArray {
   // and T must be the same, otherwise callers' assumptions about use
   // of this code will be broken.
   struct InnerContainer {
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF(NeedsEigenAlignment)
     T element;
   };
 
@@ -159,8 +160,8 @@ class FixedArray {
 
 // Implementation details follow
 
-template <class T, ssize_t S>
-inline FixedArray<T, S>::FixedArray(typename FixedArray<T, S>::size_type n)
+template <class T, ssize_t S, bool A>
+inline FixedArray<T, S, A>::FixedArray(typename FixedArray<T, S, A>::size_type n)
     : size_(n),
       array_((n <= kInlineElements
               ? reinterpret_cast<InnerContainer*>(inline_space_)
@@ -173,8 +174,8 @@ inline FixedArray<T, S>::FixedArray(typename FixedArray<T, S>::size_type n)
   }
 }
 
-template <class T, ssize_t S>
-inline FixedArray<T, S>::~FixedArray() {
+template <class T, ssize_t S, bool A>
+inline FixedArray<T, S, A>::~FixedArray() {
   if (array_ != reinterpret_cast<InnerContainer*>(inline_space_)) {
     delete[] array_;
   } else {

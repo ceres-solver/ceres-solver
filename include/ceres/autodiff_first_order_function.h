@@ -86,8 +86,8 @@ namespace ceres {
 // first, and are passed as const pointers to arrays of T. The
 // output is the last parameter.
 //
-// Then given this class definition, the auto differentiated FirstOrderFunction for
-// it can be constructed as follows.
+// Then given this class definition, the auto differentiated FirstOrderFunction
+// for it can be constructed as follows.
 //
 //    FirstOrderFunction* function =
 //      new AutoDiffFirstOrderFunction<QuadraticCostFunctor, 4>(
@@ -121,7 +121,9 @@ class AutoDiffFirstOrderFunction : public FirstOrderFunction {
     }
 
     typedef Jet<double, kNumParameters> JetT;
-    internal::FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(kNumParameters);
+    internal::
+        FixedArray<JetT, (256 * 7) / sizeof(JetT), JetT::kNeedsEigenAlignment>
+            x(kNumParameters);
     for (int i = 0; i < kNumParameters; ++i) {
       x[i].a = parameters[i];
       x[i].v.setZero();

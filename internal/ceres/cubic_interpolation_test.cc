@@ -313,6 +313,8 @@ TEST(CubicInterpolator, JetEvaluation) {
 
 class BiCubicInterpolatorTest : public ::testing::Test {
  public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   template <int kDataDimension>
   void RunPolynomialInterpolationTest(const Eigen::Matrix3d& coeff) {
     values_.reset(new double[kNumRows * kNumCols * kDataDimension]);
