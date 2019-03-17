@@ -125,7 +125,7 @@ struct NumericDiff {
     // compute the derivative for that parameter.
     FixedArray<double> temp_residual_array(num_residuals_internal);
     FixedArray<double> residual_array(num_residuals_internal);
-    Map<ResidualVector> residuals(residual_array.get(),
+    Map<ResidualVector> residuals(residual_array.data(),
                                   num_residuals_internal);
 
     for (int j = 0; j < parameter_block_size_internal; ++j) {
@@ -140,8 +140,8 @@ struct NumericDiff {
                                            residuals_at_eval_point,
                                            parameters,
                                            x_plus_delta.data(),
-                                           temp_residual_array.get(),
-                                           residual_array.get())) {
+                                           temp_residual_array.data(),
+                                           residual_array.data())) {
           return false;
         }
       } else {
@@ -152,8 +152,8 @@ struct NumericDiff {
                                     residuals_at_eval_point,
                                     parameters,
                                     x_plus_delta.data(),
-                                    temp_residual_array.get(),
-                                    residual_array.get())) {
+                                    temp_residual_array.data(),
+                                    residual_array.data())) {
           return false;
         }
       }

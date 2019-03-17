@@ -35,13 +35,13 @@
 #include <cstddef>
 #include <vector>
 #include "ceres/corrector.h"
-#include "ceres/parameter_block.h"
-#include "ceres/residual_block_utils.h"
 #include "ceres/cost_function.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
+#include "ceres/parameter_block.h"
+#include "ceres/residual_block_utils.h"
 #include "ceres/small_blas.h"
 
 using Eigen::Dynamic;
@@ -102,16 +102,17 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
   // Invalidate the evaluation buffers so that we can check them after
   // the CostFunction::Evaluate call, to see if all the return values
   // that were required were written to and that they are finite.
-  double** eval_jacobians = (jacobians != NULL) ? global_jacobians.get() : NULL;
+  double** eval_jacobians =
+      (jacobians != NULL) ? global_jacobians.data() : NULL;
 
   InvalidateEvaluation(*this, cost, residuals, eval_jacobians);
 
-  if (!cost_function_->Evaluate(parameters.get(), residuals, eval_jacobians)) {
+  if (!cost_function_->Evaluate(parameters.data(), residuals, eval_jacobians)) {
     return false;
   }
 
   if (!IsEvaluationValid(*this,
-                         parameters.get(),
+                         parameters.data(),
                          cost,
                          residuals,
                          eval_jacobians)) {
@@ -122,7 +123,7 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
         "residual and jacobians that were requested or there was a non-finite value (nan/infinite)\n"  // NOLINT
         "generated during the or jacobian computation. \n\n" +
         EvaluationToString(*this,
-                           parameters.get(),
+                           parameters.data(),
                            cost,
                            residuals,
                            eval_jacobians);

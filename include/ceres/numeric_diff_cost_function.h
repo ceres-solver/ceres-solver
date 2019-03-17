@@ -223,7 +223,7 @@ class NumericDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
     // Create a copy of the parameters which will get mutated.
     FixedArray<double> parameters_copy(kNumParameters);
     std::array<double*, kNumParameterBlocks> parameters_reference_copy =
-        ParameterDims::GetUnpackedParameters(parameters_copy.get());
+        ParameterDims::GetUnpackedParameters(parameters_copy.data());
 
     for (int block = 0; block < kNumParameterBlocks; ++block) {
       memcpy(parameters_reference_copy[block], parameters[block],

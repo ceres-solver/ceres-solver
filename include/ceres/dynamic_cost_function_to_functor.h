@@ -130,8 +130,8 @@ class DynamicCostFunctionToFunctor {
 
     // Build a set of arrays to get the residuals and jacobians from
     // the CostFunction wrapped by this functor.
-    double* parameter_ptr = parameters.get();
-    double* jacobian_ptr = jacobians.get();
+    double* parameter_ptr = parameters.data();
+    double* jacobian_ptr = jacobians.data();
     for (int i = 0; i < num_parameter_blocks; ++i) {
       parameter_blocks[i] = parameter_ptr;
       jacobian_blocks[i] = jacobian_ptr;
@@ -141,9 +141,9 @@ class DynamicCostFunctionToFunctor {
       jacobian_ptr += num_residuals * parameter_block_sizes[i];
     }
 
-    if (!cost_function_->Evaluate(parameter_blocks.get(),
-                                  residuals.get(),
-                                  jacobian_blocks.get())) {
+    if (!cost_function_->Evaluate(parameter_blocks.data(),
+                                  residuals.data(),
+                                  jacobian_blocks.data())) {
       return false;
     }
 

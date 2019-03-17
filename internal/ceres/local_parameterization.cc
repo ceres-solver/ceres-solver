@@ -368,11 +368,11 @@ bool ProductParameterization::ComputeJacobian(const double* x,
     const int local_size = param->LocalSize();
     const int global_size = param->GlobalSize();
 
-    if (!param->ComputeJacobian(x + x_cursor, buffer.get())) {
+    if (!param->ComputeJacobian(x + x_cursor, buffer.data())) {
       return false;
     }
     jacobian.block(x_cursor, delta_cursor, global_size, local_size)
-        = MatrixRef(buffer.get(), global_size, local_size);
+        = MatrixRef(buffer.data(), global_size, local_size);
 
     delta_cursor += local_size;
     x_cursor += global_size;

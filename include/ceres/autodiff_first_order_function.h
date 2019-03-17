@@ -86,8 +86,8 @@ namespace ceres {
 // first, and are passed as const pointers to arrays of T. The
 // output is the last parameter.
 //
-// Then given this class definition, the auto differentiated FirstOrderFunction for
-// it can be constructed as follows.
+// Then given this class definition, the auto differentiated FirstOrderFunction
+// for it can be constructed as follows.
 //
 //    FirstOrderFunction* function =
 //      new AutoDiffFirstOrderFunction<QuadraticCostFunctor, 4>(
@@ -132,7 +132,7 @@ class AutoDiffFirstOrderFunction : public FirstOrderFunction {
     output.a = kImpossibleValue;
     output.v.setConstant(kImpossibleValue);
 
-    if (!(*functor_)(x.get(), &output)) {
+    if (!(*functor_)(x.data(), &output)) {
       return false;
     }
 
