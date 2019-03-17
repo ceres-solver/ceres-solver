@@ -247,7 +247,8 @@ Eliminate(const BlockSparseMatrix* A,
         }
 
         FixedArray<double, 8> g(e_block_size);
-        typename EigenTypes<kEBlockSize>::VectorRef gref(g.get(), e_block_size);
+        typename EigenTypes<kEBlockSize>::VectorRef gref(g.data(),
+                                                         e_block_size);
         gref.setZero();
 
         // We are going to be computing
@@ -263,7 +264,7 @@ Eliminate(const BlockSparseMatrix* A,
         // in this chunk (g) and add the outer product of the f_blocks to
         // Schur complement (S += F'F).
         ChunkDiagonalBlockAndGradient(
-            chunk, A, b, chunk.start, &ete, g.get(), buffer, lhs);
+            chunk, A, b, chunk.start, &ete, g.data(), buffer, lhs);
 
         // Normally one wouldn't compute the inverse explicitly, but
         // e_block_size will typically be a small number like 3, in
@@ -284,9 +285,9 @@ Eliminate(const BlockSparseMatrix* A,
               inverse_ete.data(),
               e_block_size,
               e_block_size,
-              g.get(),
-              inverse_ete_g.get());
-          UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.get(), rhs);
+              g.data(),
+              inverse_ete_g.data());
+          UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.data(), rhs);
         }
 
         // S -= F'E(E'E)^{-1}E'F
@@ -340,9 +341,9 @@ BackSubstitute(const BlockSparseMatrix* A,
 
       FixedArray<double, 8> sj(row.block.size);
 
-      typename EigenTypes<kRowBlockSize>::VectorRef(sj.get(), row.block.size) =
-          typename EigenTypes<kRowBlockSize>::ConstVectorRef
-          (b + bs->rows[chunk.start + j].block.position, row.block.size);
+      typename EigenTypes<kRowBlockSize>::VectorRef(sj.data(), row.block.size) =
+          typename EigenTypes<kRowBlockSize>::ConstVectorRef(
+              b + bs->rows[chunk.start + j].block.position, row.block.size);
 
       for (int c = 1; c < row.cells.size(); ++c) {
         const int f_block_id = row.cells[c].block_id;
@@ -352,12 +353,12 @@ BackSubstitute(const BlockSparseMatrix* A,
         MatrixVectorMultiply<kRowBlockSize, kFBlockSize, -1>(
             values + row.cells[c].position, row.block.size, f_block_size,
             z + lhs_row_layout_[r_block],
-            sj.get());
+            sj.data());
       }
 
       MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
           values + e_cell.position, row.block.size, e_block_size,
-          sj.get(),
+          sj.data(),
           y_ptr);
 
       MatrixTransposeMatrixMultiply
