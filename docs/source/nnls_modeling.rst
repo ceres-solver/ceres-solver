@@ -1386,7 +1386,7 @@ Instances
    .. code-block:: c++
 
      ProductParameterization se3_param(new QuaternionParameterization(),
-                                       new IdentityTransformation(3));
+                                       new IdentityParameterization(3));
 
 
 :class:`AutoDiffLocalParameterization`
