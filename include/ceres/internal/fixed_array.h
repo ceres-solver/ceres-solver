@@ -31,6 +31,7 @@
 #define CERES_PUBLIC_INTERNAL_FIXED_ARRAY_H_
 
 #include <algorithm>
+#include <array>
 #include <cstddef>
 #include <memory>
 #include <tuple>
