@@ -272,6 +272,8 @@ ConstMatrixRef kY(kYData, kYRows, kYCols);
 
 class PointToLineSegmentContourCostFunction : public CostFunction {
  public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   PointToLineSegmentContourCostFunction(const int num_segments,
                                         const Eigen::Vector2d& y)
       : num_segments_(num_segments), y_(y) {

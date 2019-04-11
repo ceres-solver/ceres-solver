@@ -131,6 +131,8 @@ template<typename Function,
                          Function::NUM_PARAMETERS>>>
 class TinySolver {
  public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   enum {
     NUM_RESIDUALS = Function::NUM_RESIDUALS,
     NUM_PARAMETERS = Function::NUM_PARAMETERS

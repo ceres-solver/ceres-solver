@@ -72,7 +72,8 @@ namespace ceres {
 //
 //   TinySolverCostFunctionAdapter cost_function_adapter(*cost_function);
 //
-template <int kNumResiduals = Eigen::Dynamic, int kNumParameters = Eigen::Dynamic>
+template <int kNumResiduals = Eigen::Dynamic,
+          int kNumParameters = Eigen::Dynamic>
 class TinySolverCostFunctionAdapter {
  public:
   typedef double Scalar;
@@ -127,9 +128,14 @@ class TinySolverCostFunctionAdapter {
     return cost_function_.parameter_block_sizes()[0];
   }
 
+  using RowMajorJacobian =
+      Eigen::Matrix<double, NUM_RESIDUALS, NUM_PARAMETERS, Eigen::RowMajor>;
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF(RowMajorJacobian::NeedsToAlign)
+
+ private:
   const CostFunction& cost_function_;
-  mutable Eigen::Matrix<double, NUM_RESIDUALS, NUM_PARAMETERS, Eigen::RowMajor>
-      row_major_jacobian_;
+
+  mutable RowMajorJacobian row_major_jacobian_;
 };
 
 }  // namespace ceres
