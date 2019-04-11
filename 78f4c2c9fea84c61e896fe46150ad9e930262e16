@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b30bd2bc_2afa3cc2",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-11T19:47:56Z",
+      "side": 1,
+      "message": "I added private here, because the variables below seems like private ones. Is this correct?",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 9
+      },
+      "revId": "78f4c2c9fea84c61e896fe46150ad9e930262e16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
