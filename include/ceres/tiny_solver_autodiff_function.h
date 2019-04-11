@@ -109,6 +109,8 @@ template<typename CostFunctor,
          typename T = double>
 class TinySolverAutoDiffFunction {
  public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   TinySolverAutoDiffFunction(const CostFunctor& cost_functor)
       : cost_functor_(cost_functor) {
     Initialize<kNumResiduals>(cost_functor);
