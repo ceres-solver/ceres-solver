@@ -40,6 +40,7 @@
 #include "ceres/internal/algorithm.h"
 #include "ceres/internal/memory.h"
 #include "glog/logging.h"
+#include "Eigen/Core"
 
 namespace ceres {
 namespace internal {
@@ -71,7 +72,7 @@ constexpr static auto kFixedArrayUseDefault = static_cast<size_t>(-1);
 // operators.
 template <typename T,
           size_t N = kFixedArrayUseDefault,
-          typename A = std::allocator<T>>
+          typename A = Eigen::aligned_allocator<T>>
 class FixedArray {
   static_assert(!std::is_array<T>::value || std::extent<T>::value > 0,
                 "Arrays with unknown bounds cannot be used with FixedArray.");
