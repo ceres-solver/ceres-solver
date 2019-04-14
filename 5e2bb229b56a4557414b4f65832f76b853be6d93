@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab88ccff_758db1cb",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-14T19:12:06Z",
+      "side": 1,
+      "message": "This can be simplified by specifying nullptr in line 122.",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 92
+      },
+      "revId": "5e2bb229b56a4557414b4f65832f76b853be6d93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49109d35_8883d8b7",
+        "filename": "include/ceres/internal/fixed_array.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-14T19:12:06Z",
+      "side": 1,
+      "message": "See my reply in 15020 (copy and paste):\nI am not sure if chaning the default allocator of FixedArray to Eigen::aligned_allocator is the right choice. In ceres FixedArray is also used for pointers and doubles (small types). If I have followed the code path in Eigen correctly, the Eigen::aligned_allocator calls Eigen::internal::handmade_aligned_malloc (https://eigen.tuxfamily.org/dox/Memory_8h_source.html) and this one calls:\n\n void *original \u003d std::malloc(size+EIGEN_DEFAULT_ALIGN_BYTES);\n\nThis means, that in addition to the size (e.g. sizeof(double) or sizeof(double*)) the EIGEN_DEFAULT_ALIGN_BYTES is added. This can be up to 64bytes for AVX512. This means instead of allocating 8 bytes for double 72bytes are allocated.",
+      "range": {
+        "startLine": 75,
+        "startChar": 23,
+        "endLine": 75,
+        "endChar": 50
+      },
+      "revId": "5e2bb229b56a4557414b4f65832f76b853be6d93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
