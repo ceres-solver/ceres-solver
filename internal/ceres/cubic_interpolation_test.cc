@@ -313,6 +313,10 @@ TEST(CubicInterpolator, JetEvaluation) {
 
 class BiCubicInterpolatorTest : public ::testing::Test {
  public:
+  // This class needs to have an Eigen aligned operator new as it contains
+  // fixed-size Eigen types.
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   template <int kDataDimension>
   void RunPolynomialInterpolationTest(const Eigen::Matrix3d& coeff) {
     values_.reset(new double[kNumRows * kNumCols * kDataDimension]);

@@ -33,11 +33,12 @@
 #define CERES_PUBLIC_DYNAMIC_AUTODIFF_COST_FUNCTION_H_
 
 #include <cmath>
+#include <memory>
 #include <numeric>
 #include <vector>
 
-#include <memory>
 #include "ceres/dynamic_cost_function.h"
+#include "ceres/internal/fixed_array.h"
 #include "ceres/jet.h"
 #include "glog/logging.h"
 
@@ -112,12 +113,15 @@ class DynamicAutoDiffCostFunction : public DynamicCostFunction {
                                                0);
 
     // Allocate scratch space for the strided evaluation.
-    std::vector<Jet<double, Stride>> input_jets(num_parameters);
-    std::vector<Jet<double, Stride>> output_jets(num_residuals());
+    using JetT = Jet<double, Stride>;
+    internal::FixedArray<JetT, (256 * 7) / sizeof(JetT)> input_jets(
+        num_parameters);
+    internal::FixedArray<JetT, (256 * 7) / sizeof(JetT)> output_jets(
+        num_residuals());
 
     // Make the parameter pack that is sent to the functor (reused).
-    std::vector<Jet<double, Stride>* > jet_parameters(num_parameter_blocks,
-        static_cast<Jet<double, Stride>* >(NULL));
+    internal::FixedArray<Jet<double, Stride>*> jet_parameters(
+        num_parameter_blocks, nullptr);
     int num_active_parameters = 0;
 
     // To handle constant parameters between non-constant parameter blocks, the
