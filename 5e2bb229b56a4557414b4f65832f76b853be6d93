@@ -45,6 +45,30 @@
       "revId": "5e2bb229b56a4557414b4f65832f76b853be6d93",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f0ce3c0_827a4d01",
+        "filename": "include/ceres/internal/fixed_array.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-14T19:19:44Z",
+      "side": 1,
+      "message": "I agree about the extra allocation. But my question is, is that a sufficient enough overhead to worry about? In that, by doing this, we make FixedArray safer to use in our code.\n\nAlso the overhead may appear large compared to a single double, but we usually allocate these arrays to be much larger than that.\n\nBy introducing this type alias, we still need everyone to remember that FixedArrayJet is what we should be using when using Jets or anything else that requires alignment.\n\nWDYT?",
+      "parentUuid": "49109d35_8883d8b7",
+      "range": {
+        "startLine": 75,
+        "startChar": 23,
+        "endLine": 75,
+        "endChar": 50
+      },
+      "revId": "5e2bb229b56a4557414b4f65832f76b853be6d93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
