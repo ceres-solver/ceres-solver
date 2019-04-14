@@ -37,6 +37,8 @@
 #include <tuple>
 #include <type_traits>
 
+#include <Eigen/Core> // For Eigen::aligned_allocator
+
 #include "ceres/internal/algorithm.h"
 #include "ceres/internal/memory.h"
 #include "glog/logging.h"
@@ -45,6 +47,18 @@ namespace ceres {
 namespace internal {
 
 constexpr static auto kFixedArrayUseDefault = static_cast<size_t>(-1);
+
+// The default fixed array allocator.
+//
+// As one can not easily detect if a struct contains or inherits from a fixed
+// size Eigen type, to be safe the Eigen::aligned_allocator is used by default.
+// But trivial types can never contain Eigen types, so std::allocator is used to
+// safe some heap memory.
+template <typename T>
+using FixedArrayDefaultAllocator =
+    typename std::conditional<std::is_trivial<T>::value,
+                              std::allocator<T>,
+                              Eigen::aligned_allocator<T>>::type;
 
 // -----------------------------------------------------------------------------
 // FixedArray
@@ -71,7 +85,7 @@ constexpr static auto kFixedArrayUseDefault = static_cast<size_t>(-1);
 // operators.
 template <typename T,
           size_t N = kFixedArrayUseDefault,
-          typename A = std::allocator<T>>
+          typename A = FixedArrayDefaultAllocator<T>>
 class FixedArray {
   static_assert(!std::is_array<T>::value || std::extent<T>::value > 0,
                 "Arrays with unknown bounds cannot be used with FixedArray.");
