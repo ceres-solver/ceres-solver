@@ -37,6 +37,8 @@
 #include <tuple>
 #include <type_traits>
 
+#include <Eigen/Core> // For Eigen::aligned_allocator
+
 #include "ceres/internal/algorithm.h"
 #include "ceres/internal/memory.h"
 #include "glog/logging.h"
@@ -445,6 +447,13 @@ class FixedArray {
 
   Storage storage_;
 };
+
+// Using declaration for a fixed array jet type.
+// As a jet contains an Eigen fixed-size matrix type, it needs a proper aligned
+// allocator.
+template <typename JetT>
+using FixedArrayJet =
+    FixedArray<JetT, (256 * 7) / sizeof(JetT), Eigen::aligned_allocator<JetT>>;
 
 }  // namespace internal
 }  // namespace ceres

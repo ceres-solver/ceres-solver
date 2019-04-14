@@ -657,7 +657,7 @@ TEST(AutoDiff, AlignedAllocationTest) {
   y += 1;
 
   typedef Jet<double, 2> JetT;
-  FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(3);
+  internal::FixedArrayJet<JetT> x(3);
 
   // Need this to makes sure that x does not get optimized out.
   x[0] = x[0] + JetT(1.0);

@@ -250,61 +250,11 @@ struct Jet {
   T a;
 
   // The infinitesimal part.
-  //
-  // We allocate Jets on the stack and other places they might not be aligned
-  // to X(=16 [SSE], 32 [AVX] etc)-byte boundaries, which would prevent the safe
-  // use of vectorisation.  If we have C++11, we can specify the alignment.
-  // However, the standard gives wide latitude as to what alignments are valid,
-  // and it might be that the maximum supported alignment *guaranteed* to be
-  // supported is < 16, in which case we do not specify an alignment, as this
-  // implies the host is not a modern x86 machine.  If using < C++11, we cannot
-  // specify alignment.
+  Eigen::Matrix<T, N, 1> v;
 
-#if defined(EIGEN_DONT_VECTORIZE)
-  Eigen::Matrix<T, N, 1, Eigen::DontAlign> v;
-#else
-  // Enable vectorisation iff the maximum supported scalar alignment is >=
-  // 16 bytes, as this is the minimum required by Eigen for any vectorisation.
-  //
-  // NOTE: It might be the case that we could get >= 16-byte alignment even if
-  //       max_align_t < 16.  However we can't guarantee that this
-  //       would happen (and it should not for any modern x86 machine) and if it
-  //       didn't, we could get misaligned Jets.
-  static constexpr int kAlignOrNot =
-      // Work around a GCC 4.8 bug
-      // (https://gcc.gnu.org/bugzilla/show_bug.cgi?id=56019) where
-      // std::max_align_t is misplaced.
-#if defined (__GNUC__) && __GNUC__ == 4 && __GNUC_MINOR__ == 8
-      alignof(::max_align_t) >= 16
-#else
-      alignof(std::max_align_t) >= 16
-#endif
-      ? Eigen::AutoAlign : Eigen::DontAlign;
-
-#if defined(EIGEN_MAX_ALIGN_BYTES)
-  // Eigen >= 3.3 supports AVX & FMA instructions that require 32-byte alignment
-  // (greater for AVX512).  Rather than duplicating the detection logic, use
-  // Eigen's macro for the alignment size.
-  //
-  // NOTE: EIGEN_MAX_ALIGN_BYTES can be > 16 (e.g. 32 for AVX), even though
-  //       kMaxAlignBytes will max out at 16.  We are therefore relying on
-  //       Eigen's detection logic to ensure that this does not result in
-  //       misaligned Jets.
-#define CERES_JET_ALIGN_BYTES EIGEN_MAX_ALIGN_BYTES
-#else
-  // Eigen < 3.3 only supported 16-byte alignment.
-#define CERES_JET_ALIGN_BYTES 16
-#endif
-
-  // Default to the native alignment if 16-byte alignment is not guaranteed to
-  // be supported.  We cannot use alignof(T) as if we do, GCC 4.8 complains that
-  // the alignment 'is not an integer constant', although Clang accepts it.
-  static constexpr size_t kAlignment = kAlignOrNot == Eigen::AutoAlign
-            ? CERES_JET_ALIGN_BYTES : alignof(double);
-
-#undef CERES_JET_ALIGN_BYTES
-  alignas(kAlignment) Eigen::Matrix<T, N, 1, kAlignOrNot> v;
-#endif
+  // This struct needs to have an Eigen aligned operator new as it contains
+  // fixed-size Eigen types.
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
 // Unary +

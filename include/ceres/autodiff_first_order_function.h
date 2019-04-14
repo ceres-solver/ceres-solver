@@ -121,7 +121,7 @@ class AutoDiffFirstOrderFunction : public FirstOrderFunction {
     }
 
     typedef Jet<double, kNumParameters> JetT;
-    internal::FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(kNumParameters);
+    internal::FixedArrayJet<JetT> x(kNumParameters);
     for (int i = 0; i < kNumParameters; ++i) {
       x[i].a = parameters[i];
       x[i].v.setZero();

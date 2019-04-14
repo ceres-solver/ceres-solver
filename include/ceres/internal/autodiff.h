@@ -282,8 +282,7 @@ inline bool AutoDifferentiate(const Functor& functor,
   DCHECK_GT(num_outputs, 0);
 
   typedef Jet<T, ParameterDims::kNumParameters> JetT;
-  FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(ParameterDims::kNumParameters +
-                                               num_outputs);
+  internal::FixedArrayJet<JetT> x(ParameterDims::kNumParameters + num_outputs);
 
   using Parameters = typename ParameterDims::Parameters;
 
