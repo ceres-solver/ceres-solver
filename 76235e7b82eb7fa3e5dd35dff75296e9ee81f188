@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "19d8a519_ca884754",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-14T19:22:23Z",
+      "side": 1,
+      "message": "wow thats a nice simplification.\n\nFor my own understanding, where did we miss the chance to simplify earlier ? Is this primarily the result of using C++11?",
+      "parentUuid": "b8eca563_cf1c245a",
+      "range": {
+        "startLine": 306,
+        "startChar": 2,
+        "endLine": 306,
+        "endChar": 8
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c659e194_97a12af8",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 3
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "d6d0e139_ec4f97e3",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 6
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59123eba_0e2abe3a",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-14T19:22:23Z",
+      "side": 1,
+      "message": "should we just make this unconditional? if there is no overhead of doing so, why bother?",
+      "parentUuid": "52fbb165_c349148a",
       "range": {
         "startLine": 132,
         "startChar": 0,
