@@ -834,4 +834,27 @@ TEST(AllocatorSupportTest, SizeValAllocConstructor) {
   }
 }
 
+struct EigenStruct {
+  Eigen::Vector4d data;
+};
+
+static_assert(
+    std::is_same<ceres::internal::FixedArrayDefaultAllocator<double>,
+                 std::allocator<double>>::value,
+    "Double is a trivial type, so std::allocator should be used here.");
+static_assert(
+    std::is_same<ceres::internal::FixedArrayDefaultAllocator<double*>,
+                 std::allocator<double*>>::value,
+    "A pointer is a trivial type, so std::allocator should be used here.");
+static_assert(
+    std::is_same<ceres::internal::FixedArrayDefaultAllocator<Eigen::Matrix4d>,
+                 Eigen::aligned_allocator<Eigen::Matrix4d>>::value,
+    "An Eigen::Matrix4d needs the Eigen::aligned_allocator for proper "
+    "alignment.");
+static_assert(
+    std::is_same<ceres::internal::FixedArrayDefaultAllocator<EigenStruct>,
+                 Eigen::aligned_allocator<EigenStruct>>::value,
+    "A struct containing fixed size Eigen types needs Eigen::aligned_allocator "
+    "for proper alignment.");
+
 }  // namespace

@@ -72,7 +72,8 @@ namespace ceres {
 //
 //   TinySolverCostFunctionAdapter cost_function_adapter(*cost_function);
 //
-template <int kNumResiduals = Eigen::Dynamic, int kNumParameters = Eigen::Dynamic>
+template <int kNumResiduals = Eigen::Dynamic,
+          int kNumParameters = Eigen::Dynamic>
 class TinySolverCostFunctionAdapter {
  public:
   typedef double Scalar;
@@ -80,6 +81,10 @@ class TinySolverCostFunctionAdapter {
     NUM_PARAMETERS = kNumParameters,
     NUM_RESIDUALS = kNumResiduals
   };
+
+  // This struct needs to have an Eigen aligned operator new as it contains
+  // fixed-size Eigen types.
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
   TinySolverCostFunctionAdapter(const CostFunction& cost_function)
       : cost_function_(cost_function) {
@@ -127,6 +132,7 @@ class TinySolverCostFunctionAdapter {
     return cost_function_.parameter_block_sizes()[0];
   }
 
+ private:
   const CostFunction& cost_function_;
   mutable Eigen::Matrix<double, NUM_RESIDUALS, NUM_PARAMETERS, Eigen::RowMajor>
       row_major_jacobian_;

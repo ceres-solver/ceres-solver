@@ -131,6 +131,10 @@ template<typename Function,
                          Function::NUM_PARAMETERS>>>
 class TinySolver {
  public:
+  // This class needs to have an Eigen aligned operator new as it contains
+  // fixed-size Eigen types.
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   enum {
     NUM_RESIDUALS = Function::NUM_RESIDUALS,
     NUM_PARAMETERS = Function::NUM_PARAMETERS

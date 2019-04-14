@@ -109,6 +109,10 @@ template<typename CostFunctor,
          typename T = double>
 class TinySolverAutoDiffFunction {
  public:
+  // This class needs to have an Eigen aligned operator new as it contains
+  // as a member a Jet type, which itself has a fixed-size Eigen type as member.
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   TinySolverAutoDiffFunction(const CostFunctor& cost_functor)
       : cost_functor_(cost_functor) {
     Initialize<kNumResiduals>(cost_functor);
