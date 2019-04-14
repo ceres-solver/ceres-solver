@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dfd6275_d7ac45ee",
+        "filename": "include/ceres/autodiff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-14T00:17:25Z",
+      "side": 1,
+      "message": "Please add comment as to why this is needed here.",
+      "range": {
+        "startLine": 124,
+        "startChar": 14,
+        "endLine": 124,
+        "endChar": 24
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba032038_73d248ff",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-14T00:17:25Z",
+      "side": 1,
+      "message": "I am wondering if this should actually be a FixedArray, which would allow us not to deal with adding an aligned operator to Jets at all.",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 20
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd0424a_efc0775e",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-14T00:17:25Z",
+      "side": 1,
+      "message": "Please add comment as to why this is needed here.",
+      "range": {
+        "startLine": 285,
+        "startChar": 2,
+        "endLine": 285,
+        "endChar": 12
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8fe0c03_8ca18a91",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-14T00:17:25Z",
+      "side": 1,
+      "message": "Please add comment as to why this is needed here. On second thoughts, why not add the ALIGNED_OPERATOR always? is there an overhead ?",
+      "range": {
+        "startLine": 306,
+        "startChar": 2,
+        "endLine": 306,
+        "endChar": 8
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c659e194_97a12af8",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-14T00:17:25Z",
+      "side": 1,
+      "message": "Please add comment as to why this is needed here.",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 33
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148b1f0e_0c357a31",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-14T00:17:25Z",
+      "side": 1,
+      "message": "Please add comment as to why this is needed here.",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 33
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d0e139_ec4f97e3",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-14T00:17:25Z",
+      "side": 1,
+      "message": "Please add comment as to why this is needed here.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 6
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc423c54_b6bc5e58",
+        "filename": "internal/ceres/autodiff_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-14T00:17:25Z",
+      "side": 1,
+      "message": "Please add comment as to why this is needed here.",
+      "range": {
+        "startLine": 660,
+        "startChar": 18,
+        "endLine": 660,
+        "endChar": 19
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc233f9_856aae2c",
+        "filename": "internal/ceres/cubic_interpolation_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-14T00:17:25Z",
+      "side": 1,
+      "message": "Please add comment as to why this is needed here.",
+      "range": {
+        "startLine": 316,
+        "startChar": 2,
+        "endLine": 316,
+        "endChar": 33
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09f2b24_a7a95a85",
+        "filename": "internal/ceres/dynamic_sparsity_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-14T00:17:25Z",
+      "side": 1,
+      "message": "Please add comment as to why this is needed here.",
+      "range": {
+        "startLine": 275,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 33
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
