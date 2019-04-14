@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2916061c_a89b3346",
+        "filename": "include/ceres/autodiff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-14T19:01:35Z",
+      "side": 1,
+      "message": "Added a using declaration `FixedArrayJet` and documented it there.",
+      "parentUuid": "8dfd6275_d7ac45ee",
+      "range": {
+        "startLine": 124,
+        "startChar": 14,
+        "endLine": 124,
+        "endChar": 24
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba032038_73d248ff",
         "filename": "include/ceres/dynamic_autodiff_cost_function.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88537dbb_22a96c9c",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-14T19:01:35Z",
+      "side": 1,
+      "message": "I changed it to FixedArrayJet",
+      "parentUuid": "ba032038_73d248ff",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 20
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "85b6f758_757de1ac",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-14T19:01:35Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "acd0424a_efc0775e",
+      "range": {
+        "startLine": 285,
+        "startChar": 2,
+        "endLine": 285,
+        "endChar": 12
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8fe0c03_8ca18a91",
         "filename": "include/ceres/jet.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8eca563_cf1c245a",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-14T19:01:35Z",
+      "side": 1,
+      "message": "I looked of that bit of code and it seems that the macro logic is not needed. So this part is now simplified by just using the infinite part and a EIGEN_MAKE_ALIGNED_OPERATOR_NEW.",
+      "parentUuid": "b8fe0c03_8ca18a91",
+      "range": {
+        "startLine": 306,
+        "startChar": 2,
+        "endLine": 306,
+        "endChar": 8
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c0c5c6f1_dab3bf80",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-14T19:01:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c659e194_97a12af8",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 33
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "148b1f0e_0c357a31",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a788f2_f16a6495",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-14T19:01:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "148b1f0e_0c357a31",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 33
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "52fbb165_c349148a",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-14T19:01:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6d0e139_ec4f97e3",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 6
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc423c54_b6bc5e58",
         "filename": "internal/ceres/autodiff_test.cc",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde240fc_e291b03b",
+        "filename": "internal/ceres/autodiff_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-14T19:01:35Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "cc423c54_b6bc5e58",
+      "range": {
+        "startLine": 660,
+        "startChar": 18,
+        "endLine": 660,
+        "endChar": 19
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "6c183d4e_97b10876",
+        "filename": "internal/ceres/cubic_interpolation_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-14T19:01:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bc233f9_856aae2c",
+      "range": {
+        "startLine": 316,
+        "startChar": 2,
+        "endLine": 316,
+        "endChar": 33
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d09f2b24_a7a95a85",
         "filename": "internal/ceres/dynamic_sparsity_test.cc",
         "patchSetId": 3
@@ -229,6 +445,30 @@
       "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c15eee_5dfaa79d",
+        "filename": "internal/ceres/dynamic_sparsity_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-14T19:01:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d09f2b24_a7a95a85",
+      "range": {
+        "startLine": 275,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 33
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
