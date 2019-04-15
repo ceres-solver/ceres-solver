@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "f901b394_5d1a0f19",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-15T20:18:13Z",
+      "side": 1,
+      "message": "I am not sure, why the macro logic was here as Eigen itself specifies the alignas internally. Maybe this was because of the alignment detection in the old implementation of FixedArray.",
+      "parentUuid": "19d8a519_ca884754",
+      "range": {
+        "startLine": 306,
+        "startChar": 2,
+        "endLine": 306,
+        "endChar": 8
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c659e194_97a12af8",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 3
@@ -367,6 +391,30 @@
       "side": 1,
       "message": "should we just make this unconditional? if there is no overhead of doing so, why bother?",
       "parentUuid": "52fbb165_c349148a",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 6
+      },
+      "revId": "76235e7b82eb7fa3e5dd35dff75296e9ee81f188",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca77ff40_4bbea375",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-15T20:18:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59123eba_0e2abe3a",
       "range": {
         "startLine": 132,
         "startChar": 0,
