@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51a6a804_a84ed36a",
+        "filename": "internal/ceres/autodiff_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-15T18:26:48Z",
+      "side": 1,
+      "message": "this is already in the internal namespace",
+      "range": {
+        "startLine": 660,
+        "startChar": 2,
+        "endLine": 660,
+        "endChar": 10
+      },
+      "revId": "1877e2962a26aa9a384e69d711c439064d7fc06c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
