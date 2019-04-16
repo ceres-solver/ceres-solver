@@ -49,6 +49,8 @@
 #include <cmath>
 #include <limits>
 
+#include "glog/logging.h"
+
 namespace ceres {
 
 // Trivial wrapper to index linear arrays as matrices, given a fixed
@@ -185,19 +187,33 @@ void QuaternionToRotation(
 // write the transform as (something)*pt + pt, as is clear from the
 // formula below. If you pass in a quaternion with |q|^2 = 2 then you
 // WILL NOT get back 2 times the result you get for a unit quaternion.
+//
+// Inplace rotation is not supported. pt and result must point to different
+// memory locations, otherwise the result will be undefined.
 template <typename T> inline
 void UnitQuaternionRotatePoint(const T q[4], const T pt[3], T result[3]);
 
 // With this function you do not need to assume that q has unit norm.
 // It does assume that the norm is non-zero.
+//
+// Inplace rotation is not supported. pt and result must point to different
+// memory locations, otherwise the result will be undefined.
 template <typename T> inline
 void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]);
 
 // zw = z * w, where * is the Quaternion product between 4 vectors.
+//
+// Inplace quaternion product is not supported. The resulting quaternion zw must
+// not share the memory with the input quaternion z and w, otherwise the result
+// will be undefined.
 template<typename T> inline
 void QuaternionProduct(const T z[4], const T w[4], T zw[4]);
 
 // xy = x cross y;
+//
+// Inplace cross product is not support. The resulting vector x_cross_y must not
+// share the memory with the input vectors x and y, otherwise the result will be
+// undefined.
 template<typename T> inline
 void CrossProduct(const T x[3], const T y[3], T x_cross_y[3]);
 
@@ -205,6 +221,9 @@ template<typename T> inline
 T DotProduct(const T x[3], const T y[3]);
 
 // y = R(angle_axis) * x;
+//
+// Inplace rotation is not supported. pt and result must point to different
+// memory locations, otherwise the result will be undefined.
 template<typename T> inline
 void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]);
 
@@ -505,6 +524,8 @@ void QuaternionToRotation(const T q[4],
 
 template <typename T> inline
 void UnitQuaternionRotatePoint(const T q[4], const T pt[3], T result[3]) {
+  DCHECK_NE(pt, result) << "Inplace rotation is not supported.";
+
   const T t2 =  q[0] * q[1];
   const T t3 =  q[0] * q[2];
   const T t4 =  q[0] * q[3];
@@ -521,6 +542,8 @@ void UnitQuaternionRotatePoint(const T q[4], const T pt[3], T result[3]) {
 
 template <typename T> inline
 void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]) {
+  DCHECK_NE(pt, result) << "Inplace rotation is not supported.";
+
   // 'scale' is 1 / norm(q).
   const T scale = T(1) / sqrt(q[0] * q[0] +
                               q[1] * q[1] +
@@ -540,6 +563,9 @@ void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]) {
 
 template<typename T> inline
 void QuaternionProduct(const T z[4], const T w[4], T zw[4]) {
+  DCHECK_NE(z, zw) << "Inplace quaternion product is not supported.";
+  DCHECK_NE(w, zw) << "Inplace quaternion product is not supported.";
+
   zw[0] = z[0] * w[0] - z[1] * w[1] - z[2] * w[2] - z[3] * w[3];
   zw[1] = z[0] * w[1] + z[1] * w[0] + z[2] * w[3] - z[3] * w[2];
   zw[2] = z[0] * w[2] - z[1] * w[3] + z[2] * w[0] + z[3] * w[1];
@@ -549,6 +575,9 @@ void QuaternionProduct(const T z[4], const T w[4], T zw[4]) {
 // xy = x cross y;
 template<typename T> inline
 void CrossProduct(const T x[3], const T y[3], T x_cross_y[3]) {
+  DCHECK_NE(x, x_cross_y) << "Inplace cross product is not supported.";
+  DCHECK_NE(y, x_cross_y) << "Inplace cross product is not supported.";
+
   x_cross_y[0] = x[1] * y[2] - x[2] * y[1];
   x_cross_y[1] = x[2] * y[0] - x[0] * y[2];
   x_cross_y[2] = x[0] * y[1] - x[1] * y[0];
@@ -561,6 +590,8 @@ T DotProduct(const T x[3], const T y[3]) {
 
 template<typename T> inline
 void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]) {
+  DCHECK_NE(pt, result) << "Inplace rotation is not supported.";
+
   const T theta2 = DotProduct(angle_axis, angle_axis);
   if (theta2 > T(std::numeric_limits<double>::epsilon())) {
     // Away from zero, use the rodriguez formula
