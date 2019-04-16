@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a719570_a15edd05",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-16T19:17:52Z",
+      "side": 1,
+      "message": "I am not sure if debug is the right choice here or if this should also be checked in release mode.",
+      "range": {
+        "startLine": 510,
+        "startChar": 2,
+        "endLine": 510,
+        "endChar": 11
+      },
+      "revId": "7fbf0e992f945111e122738ed9047dfa07346415",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
