@@ -336,6 +336,39 @@ const char* TerminationTypeToString(TerminationType type) {
   }
 }
 
+const char* LoggingTypeToString(LoggingType type) {
+  switch (type) {
+    CASESTR(SILENT);
+    CASESTR(PER_MINIMIZER_ITERATION);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+bool StringtoLoggingType(std::string value, LoggingType* type) {
+  UpperCase(&value);
+  STRENUM(SILENT);
+  STRENUM(PER_MINIMIZER_ITERATION);
+  return false;
+}
+
+
+const char* DumpFormatTypeToString(DumpFormatType type) {
+   switch (type) {
+    CASESTR(CONSOLE);
+    CASESTR(TEXTFILE);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+bool StringtoDumpFormatType(std::string value, DumpFormatType* type) {
+  UpperCase(&value);
+  STRENUM(CONSOLE);
+  STRENUM(TEXTFILE);
+  return false;
+}
+
 #undef CASESTR
 #undef STRENUM
 
