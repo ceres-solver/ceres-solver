@@ -22,6 +22,30 @@
       "revId": "fac46d50eb50d7c0830f673cadc36e63407e40bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9daf7e4_46a437b7",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2019-04-19T17:56:52Z",
+      "side": 1,
+      "message": "Changing the std::vector to std::array would require the number of local parametrization at compile time in the class scope. This means, the number of local parametrizations would need to be added as a template parameter to the class ProductParameterization:\n\n template \u003cint kNumLocalParams\u003e\n class CERES_EXPORT ProductParameterization : public LocalParameterization {\n   // ...\n };\n\nThis would break the current API (but the std::array implementation would be more efficient).",
+      "parentUuid": "c81fdaf1_7bad1433",
+      "range": {
+        "startLine": 300,
+        "startChar": 4,
+        "endLine": 300,
+        "endChar": 7
+      },
+      "revId": "fac46d50eb50d7c0830f673cadc36e63407e40bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
