@@ -46,6 +46,30 @@
       "revId": "fac46d50eb50d7c0830f673cadc36e63407e40bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61b45573_7a1e1898",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-19T18:04:45Z",
+      "side": 1,
+      "message": "ah I had forgotten that std:array is a compile time on stack thing.",
+      "parentUuid": "c9daf7e4_46a437b7",
+      "range": {
+        "startLine": 300,
+        "startChar": 4,
+        "endLine": 300,
+        "endChar": 7
+      },
+      "revId": "fac46d50eb50d7c0830f673cadc36e63407e40bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
