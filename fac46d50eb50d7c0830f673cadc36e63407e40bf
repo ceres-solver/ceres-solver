@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c81fdaf1_7bad1433",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-04-19T14:20:56Z",
+      "side": 1,
+      "message": "for my own education, why go through the array to vector conversion? why not just store an array of unique_ptrs?",
+      "range": {
+        "startLine": 300,
+        "startChar": 4,
+        "endLine": 300,
+        "endChar": 7
+      },
+      "revId": "fac46d50eb50d7c0830f673cadc36e63407e40bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
