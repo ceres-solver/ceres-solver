@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faf4ebea_b1351d99",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2019-04-23T17:24:17Z",
+      "side": 1,
+      "message": "While I was thinking about testing, I was contemplating failures we\u0027d want to detect... something like 32 bit truncation of large indexes. Like the index into a compressed matrix\u0027s column and value list. Which this is... rows_ should be int64_t, as should all variables that refer to values from rows_. There are a lot of these.",
+      "range": {
+        "startLine": 211,
+        "startChar": 14,
+        "endLine": 211,
+        "endChar": 17
+      },
+      "revId": "dd8cd509936ac42f3483e592eefab91844477178",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
