@@ -80,11 +80,11 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
 
   // Put pointers into the scratch space into global_jacobians as appropriate.
   FixedArray<double*, 8> global_jacobians(num_parameter_blocks);
-  if (jacobians != NULL) {
+  if (jacobians != nullptr) {
     for (int i = 0; i < num_parameter_blocks; ++i) {
       const ParameterBlock* parameter_block = parameter_blocks_[i];
-      if (jacobians[i] != NULL &&
-          parameter_block->LocalParameterizationJacobian() != NULL) {
+      if (jacobians[i] != nullptr &&
+          parameter_block->LocalParameterizationJacobian() != nullptr) {
         global_jacobians[i] = scratch;
         scratch += num_residuals * parameter_block->Size();
       } else {
@@ -94,7 +94,7 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
   }
 
   // If the caller didn't request residuals, use the scratch space for them.
-  bool outputting_residuals = (residuals != NULL);
+  bool outputting_residuals = (residuals != nullptr);
   if (!outputting_residuals) {
     residuals = scratch;
   }
@@ -103,7 +103,7 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
   // the CostFunction::Evaluate call, to see if all the return values
   // that were required were written to and that they are finite.
   double** eval_jacobians =
-      (jacobians != NULL) ? global_jacobians.data() : NULL;
+      (jacobians != nullptr) ? global_jacobians.data() : nullptr;
 
   InvalidateEvaluation(*this, cost, residuals, eval_jacobians);
 
@@ -134,13 +134,13 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
   double squared_norm = VectorRef(residuals, num_residuals).squaredNorm();
 
   // Update the jacobians with the local parameterizations.
-  if (jacobians != NULL) {
+  if (jacobians != nullptr) {
     for (int i = 0; i < num_parameter_blocks; ++i) {
-      if (jacobians[i] != NULL) {
+      if (jacobians[i] != nullptr) {
         const ParameterBlock* parameter_block = parameter_blocks_[i];
 
         // Apply local reparameterization to the jacobians.
-        if (parameter_block->LocalParameterizationJacobian() != NULL) {
+        if (parameter_block->LocalParameterizationJacobian() != nullptr) {
           // jacobians[i] = global_jacobians[i] * global_to_local_jacobian.
           MatrixMatrixMultiply<Dynamic, Dynamic, Dynamic, Dynamic, 0>(
               global_jacobians[i],
@@ -155,7 +155,7 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
     }
   }
 
-  if (loss_function_ == NULL || !apply_loss_function) {
+  if (loss_function_ == nullptr || !apply_loss_function) {
     *cost = 0.5 * squared_norm;
     return true;
   }
@@ -166,16 +166,16 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
 
   // No jacobians and not outputting residuals? All done. Doing an early exit
   // here avoids constructing the "Corrector" object below in a common case.
-  if (jacobians == NULL && !outputting_residuals) {
+  if (jacobians == nullptr && !outputting_residuals) {
     return true;
   }
 
   // Correct for the effects of the loss function. The jacobians need to be
   // corrected before the residuals, since they use the uncorrected residuals.
   Corrector correct(squared_norm, rho);
-  if (jacobians != NULL) {
+  if (jacobians != nullptr) {
     for (int i = 0; i < num_parameter_blocks; ++i) {
-      if (jacobians[i] != NULL) {
+      if (jacobians[i] != nullptr) {
         const ParameterBlock* parameter_block = parameter_blocks_[i];
 
         // Correct the jacobians for the loss function.
@@ -205,8 +205,7 @@ int ResidualBlock::NumScratchDoublesForEvaluate() const {
   int scratch_doubles = 1;
   for (int i = 0; i < num_parameters; ++i) {
     const ParameterBlock* parameter_block = parameter_blocks_[i];
-    if (!parameter_block->IsConstant() &&
-        parameter_block->LocalParameterizationJacobian() != NULL) {
+    if (parameter_block->LocalParameterizationJacobian() != nullptr) {
       scratch_doubles += parameter_block->Size();
     }
   }
