@@ -122,6 +122,12 @@ class ProblemImpl {
                 std::vector<double>* gradient,
                 CRSMatrix* jacobian);
 
+  bool EvaluateResidualBlock(ResidualBlock* residual_block,
+                             bool apply_loss_function,
+                             double* cost,
+                             double* residuals,
+                             double** jacobians) const;
+
   int NumParameterBlocks() const;
   int NumParameters() const;
   int NumResidualBlocks() const;
