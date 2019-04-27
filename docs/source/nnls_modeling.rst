@@ -1753,6 +1753,39 @@ Instances
 
    Get the :class:`LossFunction` for the given residual block.
 
+.. function::  bool EvaluateResidualBlock(ResidualBlockId residual_block_id, bool apply_loss_function, double* cost,double* residuals, double** jacobians) const;
+
+   Evaluates the residual block, storing the scalar cost in ``cost``, the
+   residual components in ``residuals``, and the jacobians between the
+   parameters and residuals in ``jacobians[i]``, in row-major order.
+
+   If ``residuals`` is ``nullptr``, the residuals are not computed.
+
+   If ``jacobians`` is ``nullptr``, no Jacobians are computed. If
+   ``jacobians[i]`` is ``nullptr``, then the Jacobian for that
+   parameter block is not computed.
+
+   It is not okay to request the Jacobian w.r.t a parameter block
+   that is constant.
+
+   The return value indicates the success or failure. Even if the
+   function returns false, the caller should expect the output
+   memory locations to have been modified.
+
+   The returned cost and jacobians have had robustification and local
+   parameterizations applied already; for example, the jacobian for a
+   4-dimensional quaternion parameter using the
+   :class:`QuaternionParameterization` is ``num_residuals x 3``
+   instead of ``num_residuals x 4``.
+
+   ``apply_loss_function`` as the name implies allows the user to
+   switch the application of the loss function on and off.
+
+   .. NOTE::
+
+      TODO(sameeragarwal): Clarify interaction with IterationCallback
+      once that cleanup is done.
+
 .. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)
 
    Evaluate a :class:`Problem`. Any of the output pointers can be
@@ -1840,6 +1873,7 @@ Instances
 
    Number of threads to use. (Requires OpenMP).
 
+..
 ``rotation.h``
 ==============
 

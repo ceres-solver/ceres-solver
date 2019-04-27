@@ -41,6 +41,7 @@
 #include <utility>
 #include <vector>
 
+#include "ceres/internal/fixed_array.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_jacobian_writer.h"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -769,6 +770,37 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   program_->SetParameterBlockStatePtrsToUserStatePtrs();
   program_->SetParameterOffsetsAndIndex();
   return status;
+}
+
+bool ProblemImpl::EvaluateResidualBlock(ResidualBlock* residual_block,
+                                        bool apply_loss_function,
+                                        double* cost,
+                                        double* residuals,
+                                        double** jacobians) const {
+  ParameterBlock* const* parameter_blocks = residual_block->parameter_blocks();
+  const int num_parameter_blocks = residual_block->NumParameterBlocks();
+  for (int i = 0; i < num_parameter_blocks; ++i) {
+    ParameterBlock* parameter_block = parameter_blocks[i];
+    if (parameter_block->IsConstant()) {
+      if (jacobians != nullptr && jacobians[i] != nullptr) {
+        LOG(ERROR) << "Jacobian requested for parameter block : " << i
+                   << ". But the parameter block is marked constant.";
+        return false;
+      }
+    } else {
+      CHECK(parameter_block->SetState(parameter_block->user_state()))
+          << "Congratulations, you found a Ceres bug! Please report this error "
+          << "to the developers.";
+    }
+  }
+
+  double dummy_cost = 0.0;
+  FixedArray<double> scratch(residual_block->NumScratchDoublesForEvaluate());
+  return residual_block->Evaluate(apply_loss_function,
+                                  cost ? cost : &dummy_cost,
+                                  residuals,
+                                  jacobians,
+                                  scratch.data());
 }
 
 int ProblemImpl::NumParameterBlocks() const {

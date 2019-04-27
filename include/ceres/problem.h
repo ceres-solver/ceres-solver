@@ -114,8 +114,8 @@ typedef internal::ResidualBlock* ResidualBlockId;
 //
 //   Problem problem;
 //
-//   problem.AddResidualBlock(new MyUnaryCostFunction(...), NULL, x1);
-//   problem.AddResidualBlock(new MyBinaryCostFunction(...), NULL, x2, x3);
+//   problem.AddResidualBlock(new MyUnaryCostFunction(...), nullptr, x1);
+//   problem.AddResidualBlock(new MyBinaryCostFunction(...), nullptr, x2, x3);
 //
 // Please see cost_function.h for details of the CostFunction object.
 class CERES_EXPORT Problem {
@@ -161,7 +161,7 @@ class CERES_EXPORT Problem {
 
     // A Ceres global context to use for solving this problem. This may help to
     // reduce computation time as Ceres can reuse expensive objects to create.
-    // The context object can be NULL, in which case Ceres may create one.
+    // The context object can be nullptr, in which case Ceres may create one.
     //
     // Ceres does NOT take ownership of the pointer.
     Context* context = nullptr;
@@ -181,7 +181,7 @@ class CERES_EXPORT Problem {
   // parameter blocks it expects. The function checks that these match
   // the sizes of the parameter blocks listed in parameter_blocks. The
   // program aborts if a mismatch is detected. loss_function can be
-  // NULL, in which case the cost of the term is just the squared norm
+  // nullptr, in which case the cost of the term is just the squared norm
   // of the residuals.
   //
   // The user has the option of explicitly adding the parameter blocks
@@ -210,8 +210,8 @@ class CERES_EXPORT Problem {
   //
   //   Problem problem;
   //
-  //   problem.AddResidualBlock(new MyUnaryCostFunction(...), NULL, x1);
-  //   problem.AddResidualBlock(new MyBinaryCostFunction(...), NULL, x2, x1);
+  //   problem.AddResidualBlock(new MyUnaryCostFunction(...), nullptr, x1);
+  //   problem.AddResidualBlock(new MyBinaryCostFunction(...), nullptr, x2, x1);
   //
   // Add a residual block by listing the parameter block pointers
   // directly instead of wapping them in a container.
@@ -301,7 +301,7 @@ class CERES_EXPORT Problem {
 
   // Get the local parameterization object associated with this
   // parameter block. If there is no parameterization object
-  // associated then NULL is returned.
+  // associated then nullptr is returned.
   const LocalParameterization* GetParameterization(double* values) const;
 
   // Set the lower/upper bound for the parameter at position "index".
@@ -361,7 +361,7 @@ class CERES_EXPORT Problem {
   const CostFunction* GetCostFunctionForResidualBlock(
       const ResidualBlockId residual_block) const;
 
-  // Get the LossFunction for the given residual block. Returns NULL
+  // Get the LossFunction for the given residual block. Returns nullptr
   // if no loss function is associated with this residual block.
   const LossFunction* GetLossFunctionForResidualBlock(
       const ResidualBlockId residual_block) const;
@@ -415,7 +415,7 @@ class CERES_EXPORT Problem {
     int num_threads = 1;
   };
 
-  // Evaluate Problem. Any of the output pointers can be NULL. Which
+  // Evaluate Problem. Any of the output pointers can be nullptr. Which
   // residual blocks and parameter blocks are used is controlled by
   // the EvaluateOptions struct above.
   //
@@ -425,16 +425,16 @@ class CERES_EXPORT Problem {
   //
   //   Problem problem;
   //   double x = 1;
-  //   problem.AddResidualBlock(new MyCostFunction, NULL, &x);
+  //   problem.AddResidualBlock(new MyCostFunction, nullptr, &x);
   //
   //   double cost = 0.0;
-  //   problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
+  //   problem.Evaluate(Problem::EvaluateOptions(), &cost, nullptr, nullptr, nullptr);
   //
   // The cost is evaluated at x = 1. If you wish to evaluate the
   // problem at x = 2, then
   //
   //    x = 2;
-  //    problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
+  //    problem.Evaluate(Problem::EvaluateOptions(), &cost, nullptr, nullptr, nullptr);
   //
   // is the way to do so.
   //
@@ -454,10 +454,43 @@ class CERES_EXPORT Problem {
                 std::vector<double>* gradient,
                 CRSMatrix* jacobian);
 
+  // Evaluates the residual block, storing the scalar cost in *cost,
+  // the residual components in *residuals, and the jacobians between
+  // the parameters and residuals in jacobians[i], in row-major order.
+  //
+  // If residuals is nullptr, the residuals are not computed.
+  //
+  // If jacobians is nullptr, no Jacobians are computed. If
+  // jacobians[i] is nullptr, then the Jacobian for that parameter
+  // block is not computed.
+  //
+  // It is not okay to request the Jacobian w.r.t a parameter block
+  // that is constant.
+  //
+  // The return value indicates the success or failure. Even if the
+  // function returns false, the caller should expect the output
+  // memory locations to have been modified.
+  //
+  // The returned cost and jacobians have had robustification and
+  // local parameterizations applied already; for example, the
+  // jacobian for a 4-dimensional quaternion parameter using the
+  // "QuaternionParameterization" is num_residuals by 3 instead of
+  // num_residuals by 4.
+  //
+  // apply_loss_function as the name implies allows the user to switch
+  // the application of the loss function on and off.
+  //
+  // TODO(sameeragarwal): Clarify interaction with IterationCallback
+  // once that cleanup is done.
+  bool EvaluateResidualBlock(ResidualBlockId residual_block_id,
+                             bool apply_loss_function,
+                             double* cost,
+                             double* residuals,
+                             double** jacobians) const;
  private:
   friend class Solver;
   friend class Covariance;
-  std::unique_ptr<internal::ProblemImpl> problem_impl_;
+  std::unique_ptr<internal::ProblemImpl> impl_;
 };
 
 }  // namespace ceres
