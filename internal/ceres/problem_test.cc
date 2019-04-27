@@ -30,9 +30,10 @@
 //         keir@google.com (Keir Mierle)
 
 #include "ceres/problem.h"
-#include "ceres/problem_impl.h"
 
 #include <memory>
+
+#include "ceres/autodiff_cost_function.h"
 #include "ceres/casts.h"
 #include "ceres/cost_function.h"
 #include "ceres/crs_matrix.h"
@@ -42,6 +43,7 @@
 #include "ceres/loss_function.h"
 #include "ceres/map_util.h"
 #include "ceres/parameter_block.h"
+#include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/sparse_matrix.h"
@@ -1526,6 +1528,522 @@ TEST_F(ProblemEvaluateTest, LocalParameterization) {
                                                           constant_parameters));
 
   CheckAllEvaluationCombinations(Problem::EvaluateOptions(), expected);
+}
+
+struct IdentityFunctor {
+  template <typename T>
+  bool operator()(const T* x, const T* y, T* residuals) const {
+    residuals[0] = x[0];
+    residuals[1] = x[1];
+    residuals[2] = y[0];
+    residuals[3] = y[1];
+    residuals[4] = y[2];
+    return true;
+  }
+
+  static CostFunction* Create() {
+    return new AutoDiffCostFunction<IdentityFunctor, 5, 2, 3>(
+        new IdentityFunctor);
+  }
+};
+
+class ProblemEvaluateResidualBlockTest : public ::testing::Test {
+ public:
+  static constexpr bool kApplyLossFunction = true;
+  static constexpr bool kDoNotApplyLossFunction = false;
+  static double kLossFunctionScale;
+
+ protected:
+  void SetUp() {
+    loss_function_ = new ScaledLoss(nullptr, 2.0, TAKE_OWNERSHIP);
+  }
+
+  LossFunction* loss_function_;
+  ProblemImpl problem_;
+  double x_[2] = {1, 2};
+  double y_[3] = {1, 2, 3};
+};
+
+double ProblemEvaluateResidualBlockTest::kLossFunctionScale = 2.0;
+
+TEST_F(ProblemEvaluateResidualBlockTest,
+       OneResidualBlockNoLossFunctionFullEval) {
+  ResidualBlockId residual_block_id =
+      problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+  Vector expected_f(5);
+  expected_f << 1, 2, 1, 2, 3;
+  Matrix expected_dfdx = Matrix::Zero(5, 2);
+  expected_dfdx.block(0, 0, 2, 2) = Matrix::Identity(2, 2);
+  Matrix expected_dfdy = Matrix::Zero(5, 3);
+  expected_dfdy.block(2, 0, 3, 3) = Matrix::Identity(3, 3);
+  double expected_cost = expected_f.squaredNorm() / 2.0;
+
+  double actual_cost;
+  Vector actual_f(5);
+  Matrix actual_dfdx(5, 2);
+  Matrix actual_dfdy(5, 3);
+  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             &actual_cost,
+                                             actual_f.data(),
+                                             jacobians));
+
+  EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_cost;
+  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_f;
+  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_dfdx;
+  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_dfdy;
+}
+
+TEST_F(ProblemEvaluateResidualBlockTest,
+       OneResidualBlockNoLossFunctionNullEval) {
+  ResidualBlockId residual_block_id =
+      problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(
+      residual_block_id, kApplyLossFunction, nullptr, nullptr, nullptr));
+}
+
+TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockNoLossFunctionCost) {
+  ResidualBlockId residual_block_id =
+      problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+  Vector expected_f(5);
+  expected_f << 1, 2, 1, 2, 3;
+  Matrix expected_dfdx = Matrix::Zero(5, 2);
+  expected_dfdx.block(0, 0, 2, 2) = Matrix::Identity(2, 2);
+  Matrix expected_dfdy = Matrix::Zero(5, 3);
+  expected_dfdy.block(2, 0, 3, 3) = Matrix::Identity(3, 3);
+  double expected_cost = expected_f.squaredNorm() / 2.0;
+
+  double actual_cost;
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(
+      residual_block_id, kApplyLossFunction, &actual_cost, nullptr, nullptr));
+
+  EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_cost;
+}
+
+TEST_F(ProblemEvaluateResidualBlockTest,
+       OneResidualBlockNoLossFunctionCostAndResidual) {
+  ResidualBlockId residual_block_id =
+      problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+  Vector expected_f(5);
+  expected_f << 1, 2, 1, 2, 3;
+  Matrix expected_dfdx = Matrix::Zero(5, 2);
+  expected_dfdx.block(0, 0, 2, 2) = Matrix::Identity(2, 2);
+  Matrix expected_dfdy = Matrix::Zero(5, 3);
+  expected_dfdy.block(2, 0, 3, 3) = Matrix::Identity(3, 3);
+  double expected_cost = expected_f.squaredNorm() / 2.0;
+
+  double actual_cost;
+  Vector actual_f(5);
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             &actual_cost,
+                                             actual_f.data(),
+                                             nullptr));
+
+  EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_cost;
+  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_f;
+}
+
+TEST_F(ProblemEvaluateResidualBlockTest,
+       OneResidualBlockNoLossFunctionCostResidualAndOneJacobian) {
+  ResidualBlockId residual_block_id =
+      problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+  Vector expected_f(5);
+  expected_f << 1, 2, 1, 2, 3;
+  Matrix expected_dfdx = Matrix::Zero(5, 2);
+  expected_dfdx.block(0, 0, 2, 2) = Matrix::Identity(2, 2);
+  Matrix expected_dfdy = Matrix::Zero(5, 3);
+  expected_dfdy.block(2, 0, 3, 3) = Matrix::Identity(3, 3);
+  double expected_cost = expected_f.squaredNorm() / 2.0;
+
+  double actual_cost;
+  Vector actual_f(5);
+  Matrix actual_dfdx(5, 2);
+  double* jacobians[2] = {actual_dfdx.data(), nullptr};
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             &actual_cost,
+                                             actual_f.data(),
+                                             jacobians));
+
+  EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_cost;
+  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_f;
+  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_dfdx;
+}
+
+TEST_F(ProblemEvaluateResidualBlockTest,
+       OneResidualBlockNoLossFunctionResidual) {
+  ResidualBlockId residual_block_id =
+      problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+  Vector expected_f(5);
+  expected_f << 1, 2, 1, 2, 3;
+  Matrix expected_dfdx = Matrix::Zero(5, 2);
+  expected_dfdx.block(0, 0, 2, 2) = Matrix::Identity(2, 2);
+  Matrix expected_dfdy = Matrix::Zero(5, 3);
+  expected_dfdy.block(2, 0, 3, 3) = Matrix::Identity(3, 3);
+  double expected_cost = expected_f.squaredNorm() / 2.0;
+
+  Vector actual_f(5);
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             nullptr,
+                                             actual_f.data(),
+                                             nullptr));
+
+  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_f;
+}
+
+TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockWithLossFunction) {
+  ResidualBlockId residual_block_id = problem_.AddResidualBlock(
+      IdentityFunctor::Create(), loss_function_, x_, y_);
+  Vector expected_f(5);
+  expected_f << 1, 2, 1, 2, 3;
+  expected_f *= std::sqrt(kLossFunctionScale);
+  Matrix expected_dfdx = Matrix::Zero(5, 2);
+  expected_dfdx.block(0, 0, 2, 2) = Matrix::Identity(2, 2);
+  expected_dfdx *= std::sqrt(kLossFunctionScale);
+  Matrix expected_dfdy = Matrix::Zero(5, 3);
+  expected_dfdy.block(2, 0, 3, 3) = Matrix::Identity(3, 3);
+  expected_dfdy *= std::sqrt(kLossFunctionScale);
+  double expected_cost = expected_f.squaredNorm() / 2.0;
+
+  double actual_cost;
+  Vector actual_f(5);
+  Matrix actual_dfdx(5, 2);
+  Matrix actual_dfdy(5, 3);
+  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             &actual_cost,
+                                             actual_f.data(),
+                                             jacobians));
+
+  EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_cost;
+  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_f;
+  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_dfdx;
+  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_dfdy;
+}
+
+TEST_F(ProblemEvaluateResidualBlockTest,
+       OneResidualBlockWithLossFunctionDisabled) {
+  ResidualBlockId residual_block_id = problem_.AddResidualBlock(
+      IdentityFunctor::Create(), loss_function_, x_, y_);
+  Vector expected_f(5);
+  expected_f << 1, 2, 1, 2, 3;
+  Matrix expected_dfdx = Matrix::Zero(5, 2);
+  expected_dfdx.block(0, 0, 2, 2) = Matrix::Identity(2, 2);
+  Matrix expected_dfdy = Matrix::Zero(5, 3);
+  expected_dfdy.block(2, 0, 3, 3) = Matrix::Identity(3, 3);
+  double expected_cost = expected_f.squaredNorm() / 2.0;
+
+  double actual_cost;
+  Vector actual_f(5);
+  Matrix actual_dfdx(5, 2);
+  Matrix actual_dfdy(5, 3);
+  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kDoNotApplyLossFunction,
+                                             &actual_cost,
+                                             actual_f.data(),
+                                             jacobians));
+
+  EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_cost;
+  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_f;
+  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_dfdx;
+  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_dfdy;
+}
+
+TEST_F(ProblemEvaluateResidualBlockTest,
+       OneResidualBlockWithOneLocalParameterization) {
+  ResidualBlockId residual_block_id =
+      problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+  problem_.SetParameterization(x_, new SubsetParameterization(2, {1}));
+
+  Vector expected_f(5);
+  expected_f << 1, 2, 1, 2, 3;
+  Matrix expected_dfdx = Matrix::Zero(5, 1);
+  expected_dfdx.block(0, 0, 1, 1) = Matrix::Identity(1, 1);
+  Matrix expected_dfdy = Matrix::Zero(5, 3);
+  expected_dfdy.block(2, 0, 3, 3) = Matrix::Identity(3, 3);
+  double expected_cost = expected_f.squaredNorm() / 2.0;
+
+  double actual_cost;
+  Vector actual_f(5);
+  Matrix actual_dfdx(5, 1);
+  Matrix actual_dfdy(5, 3);
+  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             &actual_cost,
+                                             actual_f.data(),
+                                             jacobians));
+
+  EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_cost;
+  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_f;
+  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_dfdx;
+  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_dfdy;
+}
+
+TEST_F(ProblemEvaluateResidualBlockTest,
+       OneResidualBlockWithTwoLocalParameterizations) {
+  ResidualBlockId residual_block_id =
+      problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+  problem_.SetParameterization(x_, new SubsetParameterization(2, {1}));
+  problem_.SetParameterization(y_, new SubsetParameterization(3, {2}));
+
+  Vector expected_f(5);
+  expected_f << 1, 2, 1, 2, 3;
+  Matrix expected_dfdx = Matrix::Zero(5, 1);
+  expected_dfdx.block(0, 0, 1, 1) = Matrix::Identity(1, 1);
+  Matrix expected_dfdy = Matrix::Zero(5, 2);
+  expected_dfdy.block(2, 0, 2, 2) = Matrix::Identity(2, 2);
+  double expected_cost = expected_f.squaredNorm() / 2.0;
+
+  double actual_cost;
+  Vector actual_f(5);
+  Matrix actual_dfdx(5, 1);
+  Matrix actual_dfdy(5, 2);
+  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             &actual_cost,
+                                             actual_f.data(),
+                                             jacobians));
+
+  EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_cost;
+  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_f;
+  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_dfdx;
+  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_dfdy;
+}
+
+TEST_F(ProblemEvaluateResidualBlockTest,
+       OneResidualBlockWithOneConstantParameterBlock) {
+  ResidualBlockId residual_block_id =
+      problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+  problem_.SetParameterBlockConstant(x_);
+
+  Vector expected_f(5);
+  expected_f << 1, 2, 1, 2, 3;
+  Matrix expected_dfdx = Matrix::Zero(5, 2);
+  expected_dfdx.block(0, 0, 2, 2) = Matrix::Identity(2, 2);
+  Matrix expected_dfdy = Matrix::Zero(5, 3);
+  expected_dfdy.block(2, 0, 3, 3) = Matrix::Identity(3, 3);
+  double expected_cost = expected_f.squaredNorm() / 2.0;
+
+  double actual_cost;
+  Vector actual_f(5);
+  Matrix actual_dfdx(5, 2);
+  Matrix actual_dfdy(5, 3);
+
+  // Try evaluating both Jacobians, this should fail.
+  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
+  EXPECT_FALSE(problem_.EvaluateResidualBlock(residual_block_id,
+                                              kApplyLossFunction,
+                                              &actual_cost,
+                                              actual_f.data(),
+                                              jacobians));
+
+  jacobians[0] = nullptr;
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             &actual_cost,
+                                             actual_f.data(),
+                                             jacobians));
+
+  EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_cost;
+  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_f;
+  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_dfdy;
+}
+
+TEST_F(ProblemEvaluateResidualBlockTest,
+       OneResidualBlockWithAllConstantParameterBlocks) {
+  ResidualBlockId residual_block_id =
+      problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+  problem_.SetParameterBlockConstant(x_);
+  problem_.SetParameterBlockConstant(y_);
+
+  Vector expected_f(5);
+  expected_f << 1, 2, 1, 2, 3;
+  Matrix expected_dfdx = Matrix::Zero(5, 2);
+  expected_dfdx.block(0, 0, 2, 2) = Matrix::Identity(2, 2);
+  Matrix expected_dfdy = Matrix::Zero(5, 3);
+  expected_dfdy.block(2, 0, 3, 3) = Matrix::Identity(3, 3);
+  double expected_cost = expected_f.squaredNorm() / 2.0;
+
+  double actual_cost;
+  Vector actual_f(5);
+  Matrix actual_dfdx(5, 2);
+  Matrix actual_dfdy(5, 3);
+
+  // Try evaluating with one or more Jacobians, this should fail.
+  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
+  EXPECT_FALSE(problem_.EvaluateResidualBlock(residual_block_id,
+                                              kApplyLossFunction,
+                                              &actual_cost,
+                                              actual_f.data(),
+                                              jacobians));
+
+  jacobians[0] = nullptr;
+  EXPECT_FALSE(problem_.EvaluateResidualBlock(residual_block_id,
+                                              kApplyLossFunction,
+                                              &actual_cost,
+                                              actual_f.data(),
+                                              jacobians));
+  jacobians[1] = nullptr;
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             &actual_cost,
+                                             actual_f.data(),
+                                             jacobians));
+
+  EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_cost;
+  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_f;
+}
+
+TEST_F(ProblemEvaluateResidualBlockTest,
+       OneResidualBlockWithOneParameterBlockConstantAndParameterBlockChanged) {
+  ResidualBlockId residual_block_id =
+      problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+  problem_.SetParameterBlockConstant(x_);
+
+  x_[0] = 2;
+  y_[2] = 1;
+  Vector expected_f(5);
+  expected_f << 2, 2, 1, 2, 1;
+  Matrix expected_dfdx = Matrix::Zero(5, 2);
+  expected_dfdx.block(0, 0, 2, 2) = Matrix::Identity(2, 2);
+  Matrix expected_dfdy = Matrix::Zero(5, 3);
+  expected_dfdy.block(2, 0, 3, 3) = Matrix::Identity(3, 3);
+  double expected_cost = expected_f.squaredNorm() / 2.0;
+
+  double actual_cost;
+  Vector actual_f(5);
+  Matrix actual_dfdx(5, 2);
+  Matrix actual_dfdy(5, 3);
+
+  // Try evaluating with one or more Jacobians, this should fail.
+  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
+  EXPECT_FALSE(problem_.EvaluateResidualBlock(residual_block_id,
+                                              kApplyLossFunction,
+                                              &actual_cost,
+                                              actual_f.data(),
+                                              jacobians));
+
+  jacobians[0] = nullptr;
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             &actual_cost,
+                                             actual_f.data(),
+                                             jacobians));
+  EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_cost;
+  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_f;
+  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
+              0,
+              std::numeric_limits<double>::epsilon())
+      << actual_dfdy;
 }
 
 TEST(Problem, SetAndGetParameterLowerBound) {
