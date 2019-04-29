@@ -1551,7 +1551,7 @@ class ProblemEvaluateResidualBlockTest : public ::testing::Test {
  public:
   static constexpr bool kApplyLossFunction = true;
   static constexpr bool kDoNotApplyLossFunction = false;
-  static double kLossFunctionScale;
+  static double loss_function_scale_;
 
  protected:
   ProblemImpl problem_;
@@ -1559,7 +1559,7 @@ class ProblemEvaluateResidualBlockTest : public ::testing::Test {
   double y_[3] = {1, 2, 3};
 };
 
-double ProblemEvaluateResidualBlockTest::kLossFunctionScale = 2.0;
+double ProblemEvaluateResidualBlockTest::loss_function_scale_ = 2.0;
 
 TEST_F(ProblemEvaluateResidualBlockTest,
        OneResidualBlockNoLossFunctionFullEval) {
@@ -1714,13 +1714,13 @@ TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockWithLossFunction) {
                                 y_);
   Vector expected_f(5);
   expected_f << 1, 2, 1, 2, 3;
-  expected_f *= std::sqrt(kLossFunctionScale);
+  expected_f *= std::sqrt(loss_function_scale_);
   Matrix expected_dfdx = Matrix::Zero(5, 2);
   expected_dfdx.block(0, 0, 2, 2) = Matrix::Identity(2, 2);
-  expected_dfdx *= std::sqrt(kLossFunctionScale);
+  expected_dfdx *= std::sqrt(loss_function_scale_);
   Matrix expected_dfdy = Matrix::Zero(5, 3);
   expected_dfdy.block(2, 0, 3, 3) = Matrix::Identity(3, 3);
-  expected_dfdy *= std::sqrt(kLossFunctionScale);
+  expected_dfdy *= std::sqrt(loss_function_scale_);
   double expected_cost = expected_f.squaredNorm() / 2.0;
 
   double actual_cost;
