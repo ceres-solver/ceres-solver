@@ -211,7 +211,7 @@ void QuaternionProduct(const T z[4], const T w[4], T zw[4]);
 
 // xy = x cross y;
 //
-// Inplace cross product is not support. The resulting vector x_cross_y must not
+// Inplace cross product is not supported. The resulting vector x_cross_y must not
 // share the memory with the input vectors x and y, otherwise the result will be
 // undefined.
 template<typename T> inline

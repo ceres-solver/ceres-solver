@@ -1554,11 +1554,6 @@ class ProblemEvaluateResidualBlockTest : public ::testing::Test {
   static double kLossFunctionScale;
 
  protected:
-  void SetUp() {
-    loss_function_ = new ScaledLoss(nullptr, 2.0, TAKE_OWNERSHIP);
-  }
-
-  LossFunction* loss_function_;
   ProblemImpl problem_;
   double x_[2] = {1, 2};
   double y_[3] = {1, 2, 3};
@@ -1712,8 +1707,11 @@ TEST_F(ProblemEvaluateResidualBlockTest,
 }
 
 TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockWithLossFunction) {
-  ResidualBlockId residual_block_id = problem_.AddResidualBlock(
-      IdentityFunctor::Create(), loss_function_, x_, y_);
+  ResidualBlockId residual_block_id =
+      problem_.AddResidualBlock(IdentityFunctor::Create(),
+                                new ScaledLoss(nullptr, 2.0, TAKE_OWNERSHIP),
+                                x_,
+                                y_);
   Vector expected_f(5);
   expected_f << 1, 2, 1, 2, 3;
   expected_f *= std::sqrt(kLossFunctionScale);
@@ -1756,8 +1754,11 @@ TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockWithLossFunction) {
 
 TEST_F(ProblemEvaluateResidualBlockTest,
        OneResidualBlockWithLossFunctionDisabled) {
-  ResidualBlockId residual_block_id = problem_.AddResidualBlock(
-      IdentityFunctor::Create(), loss_function_, x_, y_);
+  ResidualBlockId residual_block_id =
+      problem_.AddResidualBlock(IdentityFunctor::Create(),
+                                new ScaledLoss(nullptr, 2.0, TAKE_OWNERSHIP),
+                                x_,
+                                y_);
   Vector expected_f(5);
   expected_f << 1, 2, 1, 2, 3;
   Matrix expected_dfdx = Matrix::Zero(5, 2);
