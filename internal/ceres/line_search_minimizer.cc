@@ -429,14 +429,14 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     }
 
     const double absolute_function_tolerance =
-        options.function_tolerance * previous_state.cost;
-    if (fabs(iteration_summary.cost_change) <= absolute_function_tolerance) {
-      summary->message =
-          StringPrintf("Function tolerance reached. "
-                       "|cost_change|/cost: %e <= %e",
-                       fabs(iteration_summary.cost_change) /
-                       previous_state.cost,
-                       options.function_tolerance);
+        options.function_tolerance * std::abs(previous_state.cost);
+    if (std::abs(iteration_summary.cost_change) <=
+        absolute_function_tolerance) {
+      summary->message = StringPrintf(
+          "Function tolerance reached. "
+          "|cost_change|/cost: %e <= %e",
+          std::abs(iteration_summary.cost_change) / previous_state.cost,
+          options.function_tolerance);
       summary->termination_type = CONVERGENCE;
       VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
       break;
