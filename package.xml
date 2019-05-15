@@ -38,7 +38,7 @@
   <license>New BSD</license>
   <url type="website">http://ceres-solver.org/</url>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>cmake</buildtool_depend>
 
   <depend>atlas</depend>
   <depend>eigen</depend>
