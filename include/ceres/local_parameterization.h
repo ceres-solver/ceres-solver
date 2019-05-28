@@ -280,6 +280,8 @@ class CERES_EXPORT HomogeneousVectorParameterization :
 // rotation is represented using a quaternion.
 class CERES_EXPORT ProductParameterization : public LocalParameterization {
  public:
+  ProductParameterization(const ProductParameterization&) = delete;
+  ProductParameterization& operator=(const ProductParameterization&) = delete;
   //
   // NOTE: The constructor takes ownership of the input local
   // parameterizations.
