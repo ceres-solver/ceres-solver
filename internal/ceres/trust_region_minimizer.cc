@@ -93,7 +93,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       continue;
     }
 
-    if (options_.is_constrained) {
+    if (options_.is_constrained &&
+        options_.max_num_line_search_step_size_iterations > 0) {
       // Use a projected line search to enforce the bounds constraints
       // and improve the quality of the step.
       DoLineSearch(x_, gradient_, x_cost_, &delta_);

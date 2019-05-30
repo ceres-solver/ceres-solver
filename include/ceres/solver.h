@@ -191,6 +191,11 @@ class CERES_EXPORT Solver {
     // Maximum number of trial step size iterations during each line search,
     // if a step size satisfying the search conditions cannot be found within
     // this number of trials, the line search will terminate.
+    //
+    // The minimum allowed value is 0 for trust region minimizer and 1
+    // otherwise. If 0 is specified for the trust region minimizer,
+    // the line search use when solving constrained optimization
+    // problems will be disabled.
     int max_num_line_search_step_size_iterations = 20;
 
     // Maximum number of restarts of the line search direction algorithm before
