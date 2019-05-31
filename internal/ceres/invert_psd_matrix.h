@@ -51,16 +51,24 @@ template <int kSize>
 typename EigenTypes<kSize, kSize>::Matrix InvertPSDMatrix(
     const bool assume_full_rank,
     const typename EigenTypes<kSize, kSize>::Matrix& m) {
+  using MType = typename EigenTypes<kSize, kSize>::Matrix;
   const int size = m.rows();
 
   // If the matrix can be assumed to be full rank, then just use the
   // Cholesky factorization to invert it.
   if (assume_full_rank) {
-    return m.template selfadjointView<Eigen::Upper>().llt().solve(
-        Matrix::Identity(size, size));
+    /*
+    if (kSize > 0) {
+      if (kSize < 5) {
+        return m.inverse();
+      }
+      return m.llt().solve(MType::Identity(kSize, kSize));
+    }
+    */
+    return m.llt().solve(MType::Identity(size, size));
   }
 
-  Eigen::JacobiSVD<Matrix> svd(m, Eigen::ComputeThinU | Eigen::ComputeThinV);
+  Eigen::JacobiSVD<MType> svd(m, Eigen::ComputeThinU | Eigen::ComputeThinV);
   const double tolerance =
       std::numeric_limits<double>::epsilon() * size * svd.singularValues()(0);
 

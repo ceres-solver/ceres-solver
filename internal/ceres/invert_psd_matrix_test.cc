@@ -42,7 +42,7 @@ static const bool kRankDeficient = false;
 template <int kSize>
 typename EigenTypes<kSize, kSize>::Matrix RandomPSDMatrixWithEigenValues(
     const typename EigenTypes<kSize>::Vector& eigenvalues) {
-  typename EigenTypes<kSize, kSize>::Matrix m;
+  typename EigenTypes<kSize, kSize>::Matrix m(eigenvalues.rows(), eigenvalues.rows());
   m.setRandom();
   Eigen::SelfAdjointEigenSolver<typename EigenTypes<kSize, kSize>::Matrix> es(
       m);
@@ -65,7 +65,7 @@ TEST(InvertPSDMatrix, FullRank5x5) {
   const Matrix m = RandomPSDMatrixWithEigenValues<5>(eigenvalues);
   const Matrix inverse_m = InvertPSDMatrix<5>(kFullRank, m);
   EXPECT_NEAR((m * inverse_m - Matrix::Identity(5,5)).norm() / 5.0,  0.0,
-              std::numeric_limits<double>::epsilon());
+              10 * std::numeric_limits<double>::epsilon());
 }
 
 TEST(InvertPSDMatrix, RankDeficient5x5) {
@@ -75,6 +75,30 @@ TEST(InvertPSDMatrix, RankDeficient5x5) {
   eigenvalues(3) = 0.0;
   const Matrix m = RandomPSDMatrixWithEigenValues<5>(eigenvalues);
   const Matrix inverse_m = InvertPSDMatrix<5>(kRankDeficient, m);
+  Matrix pseudo_identity = Matrix::Identity(5, 5);
+  pseudo_identity(3, 3) = 0.0;
+  EXPECT_NEAR((m * inverse_m * m - m).norm() / m.norm(),
+              0.0,
+              10 * std::numeric_limits<double>::epsilon());
+}
+
+TEST(InvertPSDMatrix, DynamicFullRank5x5) {
+  EigenTypes<Eigen::Dynamic>::Vector eigenvalues(5);
+  eigenvalues.setRandom();
+  eigenvalues = eigenvalues.array().abs().matrix();
+  const Matrix m = RandomPSDMatrixWithEigenValues<Eigen::Dynamic>(eigenvalues);
+  const Matrix inverse_m = InvertPSDMatrix<Eigen::Dynamic>(kFullRank, m);
+  EXPECT_NEAR((m * inverse_m - Matrix::Identity(5,5)).norm() / 5.0,  0.0,
+              10 * std::numeric_limits<double>::epsilon());
+}
+
+TEST(InvertPSDMatrix, DynamicRankDeficient5x5) {
+  EigenTypes<Eigen::Dynamic>::Vector eigenvalues(5);
+  eigenvalues.setRandom();
+  eigenvalues = eigenvalues.array().abs().matrix();
+  eigenvalues(3) = 0.0;
+  const Matrix m = RandomPSDMatrixWithEigenValues<Eigen::Dynamic>(eigenvalues);
+  const Matrix inverse_m = InvertPSDMatrix<Eigen::Dynamic>(kRankDeficient, m);
   Matrix pseudo_identity = Matrix::Identity(5, 5);
   pseudo_identity(3, 3) = 0.0;
   EXPECT_NEAR((m * inverse_m * m - m).norm() / m.norm(),
