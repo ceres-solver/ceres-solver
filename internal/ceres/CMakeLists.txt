@@ -511,4 +511,7 @@ if (BUILD_BENCHMARKS)
 
   add_executable(small_blas_gemm_benchmark small_blas_gemm_benchmark.cc)
   add_dependencies_to_benchmark(small_blas_gemm_benchmark)
+
+  add_executable(invert_psd_matrix_benchmark invert_psd_matrix_benchmark.cc)
+  add_dependencies_to_benchmark(invert_psd_matrix_benchmark)
 endif (BUILD_BENCHMARKS)
