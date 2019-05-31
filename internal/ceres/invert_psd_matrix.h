@@ -61,9 +61,10 @@ typename EigenTypes<kSize, kSize>::Matrix InvertPSDMatrix(
   // https://eigen.tuxfamily.org/dox/group__TutorialLinearAlgebra.html#title3
   if (assume_full_rank) {
     if (kSize > 0 && kSize < 5) {
-        return m.inverse();
+      return m.inverse();
     }
-    return m.llt().solve(MType::Identity(size, size));
+    return m.template selfadjointView<Eigen::Upper>().llt().solve(
+        MType::Identity(size, size));
   }
 
   Eigen::JacobiSVD<MType> svd(m, Eigen::ComputeThinU | Eigen::ComputeThinV);
