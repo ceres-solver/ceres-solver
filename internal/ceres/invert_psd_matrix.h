@@ -54,7 +54,7 @@ typename EigenTypes<kSize, kSize>::Matrix InvertPSDMatrix(
   using MType = typename EigenTypes<kSize, kSize>::Matrix;
   const int size = m.rows();
 
-  // If the matrix can be assumed to be full rank, then if its small
+  // If the matrix can be assumed to be full rank, then if it is small
   // (< 5) and fixed size, use Eigen's optimized inverse()
   // implementation.
   //
