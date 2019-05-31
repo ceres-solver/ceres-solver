@@ -992,6 +992,11 @@ elimination group [LiSaad]_.
    search, if a step size satisfying the search conditions cannot be
    found within this number of trials, the line search will stop.
 
+   The minimum allowed value is 0 for trust region minimizer and 1
+   otherwise. If 0 is specified for the trust region minimizer, then
+   line search will not be used when solving constrained optimization
+   problems.
+
    As this is an 'artificial' constraint (one imposed by the user, not
    the underlying math), if ``WOLFE`` line search is being used, *and*
    points satisfying the Armijo sufficient (function) decrease

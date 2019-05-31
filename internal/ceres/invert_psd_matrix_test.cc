@@ -42,7 +42,8 @@ static const bool kRankDeficient = false;
 template <int kSize>
 typename EigenTypes<kSize, kSize>::Matrix RandomPSDMatrixWithEigenValues(
     const typename EigenTypes<kSize>::Vector& eigenvalues) {
-  typename EigenTypes<kSize, kSize>::Matrix m(eigenvalues.rows(), eigenvalues.rows());
+  typename EigenTypes<kSize, kSize>::Matrix m(eigenvalues.rows(),
+                                              eigenvalues.rows());
   m.setRandom();
   Eigen::SelfAdjointEigenSolver<typename EigenTypes<kSize, kSize>::Matrix> es(
       m);
@@ -64,7 +65,8 @@ TEST(InvertPSDMatrix, FullRank5x5) {
   eigenvalues = eigenvalues.array().abs().matrix();
   const Matrix m = RandomPSDMatrixWithEigenValues<5>(eigenvalues);
   const Matrix inverse_m = InvertPSDMatrix<5>(kFullRank, m);
-  EXPECT_NEAR((m * inverse_m - Matrix::Identity(5,5)).norm() / 5.0,  0.0,
+  EXPECT_NEAR((m * inverse_m - Matrix::Identity(5, 5)).norm() / 5.0,
+              0.0,
               10 * std::numeric_limits<double>::epsilon());
 }
 
@@ -88,7 +90,8 @@ TEST(InvertPSDMatrix, DynamicFullRank5x5) {
   eigenvalues = eigenvalues.array().abs().matrix();
   const Matrix m = RandomPSDMatrixWithEigenValues<Eigen::Dynamic>(eigenvalues);
   const Matrix inverse_m = InvertPSDMatrix<Eigen::Dynamic>(kFullRank, m);
-  EXPECT_NEAR((m * inverse_m - Matrix::Identity(5,5)).norm() / 5.0,  0.0,
+  EXPECT_NEAR((m * inverse_m - Matrix::Identity(5, 5)).norm() / 5.0,
+              0.0,
               10 * std::numeric_limits<double>::epsilon());
 }
 
