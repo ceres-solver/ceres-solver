@@ -37,6 +37,9 @@
 #include "ceres/internal/port.h"
 
 namespace ceres {
+
+class EvaluationCallback;
+
 namespace internal {
 
 class ParameterBlock;
@@ -64,6 +67,7 @@ class Program {
   const std::vector<ResidualBlock*>& residual_blocks() const;
   std::vector<ParameterBlock*>* mutable_parameter_blocks();
   std::vector<ResidualBlock*>* mutable_residual_blocks();
+  EvaluationCallback* mutable_evaluation_callback();
 
   // Serialize to/from the program and update states.
   //
@@ -182,6 +186,7 @@ class Program {
   // The Program does not own the ParameterBlock or ResidualBlock objects.
   std::vector<ParameterBlock*> parameter_blocks_;
   std::vector<ResidualBlock*> residual_blocks_;
+  EvaluationCallback* evaluation_callback_ = nullptr;
 
   friend class ProblemImpl;
 };

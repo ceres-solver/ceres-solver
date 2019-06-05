@@ -128,6 +128,8 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
     OPTION_GE(inner_iteration_tolerance, 0.0);
   }
 
+  // TODO(sameeragarwal): This needs to be moved to Solve.
+  /*
   if (options.use_inner_iterations &&
       options.evaluation_callback != NULL) {
     *error =  "Inner iterations (use_inner_iterations = true) can't be "
@@ -135,6 +137,8 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
         "(options.evaluation_callback != NULL).";
     return false;
   }
+  */
+
 
   if (options.use_nonmonotonic_steps) {
     OPTION_GT(max_consecutive_nonmonotonic_steps, 0);

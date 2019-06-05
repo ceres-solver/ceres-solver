@@ -49,6 +49,7 @@
 #include "ceres/cost_function.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/evaluator.h"
+#include "ceres/evaluation_callback.h"
 #include "ceres/internal/port.h"
 #include "ceres/loss_function.h"
 #include "ceres/map_util.h"
@@ -279,6 +280,11 @@ ProblemImpl::~ProblemImpl() {
   // Delete the owned parameterizations.
   STLDeleteUniqueContainerPointers(local_parameterizations_to_delete_.begin(),
                                    local_parameterizations_to_delete_.end());
+
+  if (evaluation_callback_ &&
+      evaluation_callback_ownership_ == TAKE_OWNERSHIP) {
+    delete evaluation_callback_;
+  }
 
   if (context_impl_owned_) {
     delete context_impl_;
@@ -923,6 +929,17 @@ void ProblemImpl::GetResidualBlocksForParameterBlock(
       }
     }
   }
+}
+
+void ProblemImpl::SetEvaluationCallback(EvaluationCallback* callback,
+                                        Ownership ownership) {
+  if (evaluation_callback_ &&
+      evaluation_callback_ownership_ == TAKE_OWNERSHIP) {
+    delete evaluation_callback_;
+  }
+  evaluation_callback_ = callback;
+  evaluation_callback_ownership_ = ownership;
+  program_->evaluation_callback_ = callback;
 }
 
 }  // namespace internal

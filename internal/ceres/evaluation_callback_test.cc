@@ -35,6 +35,7 @@
 #include <vector>
 
 #include "gtest/gtest.h"
+#include "ceres/evaluation_callback.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
@@ -196,11 +197,10 @@ TEST(EvaluationCallback, WithTrustRegionMinimizer) {
   problem_options.cost_function_ownership = DO_NOT_TAKE_OWNERSHIP;
   Problem problem(problem_options);
   problem.AddResidualBlock(&cost_function, NULL, parameters);
-
+  problem.SetEvaluationCallback(&cost_function, DO_NOT_TAKE_OWNERSHIP);
   Solver::Options options;
   options.linear_solver_type = DENSE_QR;
   options.max_num_iterations = 300;  // Cost function is hard.
-  options.evaluation_callback = &cost_function;
 
   // Run the solve. Checking is done inside the cost function / callback.
   Solver::Summary summary;
@@ -243,12 +243,13 @@ static void WithLineSearchMinimizerImpl(
   problem_options.cost_function_ownership = DO_NOT_TAKE_OWNERSHIP;
   Problem problem(problem_options);
   problem.AddResidualBlock(&cost_function, NULL, parameters);
+  problem.SetEvaluationCallback(&cost_function, DO_NOT_TAKE_OWNERSHIP);
 
   Solver::Options options;
   options.linear_solver_type = DENSE_QR;
   options.max_num_iterations = 300;  // Cost function is hard.
   options.minimizer_type = ceres::LINE_SEARCH;
-  options.evaluation_callback = &cost_function;
+
   options.line_search_type = line_search;
   options.line_search_direction_type = line_search_direction;
   options.line_search_interpolation_type = line_search_interpolation;

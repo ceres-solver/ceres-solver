@@ -50,6 +50,7 @@
 namespace ceres {
 
 class CostFunction;
+class EvaluationCallback;
 class LossFunction;
 class LocalParameterization;
 class Solver;
@@ -375,6 +376,21 @@ class CERES_EXPORT Problem {
   void GetResidualBlocksForParameterBlock(
       const double* values,
       std::vector<ResidualBlockId>* residual_blocks) const;
+
+  // TODO(sameeragarwal): Fix documentation
+  //
+  //
+  // If non-NULL, gets notified when Ceres is about to evaluate the
+  // residuals and/or Jacobians. This enables sharing computation
+  // between residuals, which in some cases is important for efficient
+  // cost evaluation. See evaluation_callback.h for details.
+  //
+  // NOTE: Evaluation callbacks are incompatible with inner iterations.
+  //
+  // WARNING: This interacts with update_state_every_iteration. See
+  // the documentation for that option for more details.
+  void SetEvaluationCallback(EvaluationCallback* callback,
+                             Ownership ownership);
 
   // Options struct to control Problem::Evaluate.
   struct EvaluateOptions {
