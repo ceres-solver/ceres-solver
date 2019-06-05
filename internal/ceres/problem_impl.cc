@@ -47,6 +47,7 @@
 #include "ceres/context_impl.h"
 #include "ceres/cost_function.h"
 #include "ceres/crs_matrix.h"
+#include "ceres/evaluation_callback.h"
 #include "ceres/evaluator.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/internal/port.h"
@@ -244,6 +245,7 @@ ProblemImpl::ProblemImpl()
 
 ProblemImpl::ProblemImpl(const Problem::Options& options)
     : options_(options), program_(new internal::Program) {
+  program_->evaluation_callback_ = options.evaluation_callback;
   InitializeContext(options_.context, &context_impl_, &context_impl_owned_);
 }
 
@@ -688,7 +690,8 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   // The main thread also does work so we only need to launch num_threads - 1.
   context_impl_->EnsureMinimumThreads(evaluator_options.num_threads - 1);
   evaluator_options.context = context_impl_;
-
+  evaluator_options.evaluation_callback =
+      program_->mutable_evaluation_callback();
   std::unique_ptr<Evaluator> evaluator(
       new ProgramEvaluator<ScratchEvaluatePreparer,
                            CompressedRowJacobianWriter>(evaluator_options,
