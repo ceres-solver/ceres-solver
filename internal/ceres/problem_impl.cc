@@ -49,6 +49,7 @@
 #include "ceres/cost_function.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/evaluator.h"
+#include "ceres/evaluation_callback.h"
 #include "ceres/internal/port.h"
 #include "ceres/loss_function.h"
 #include "ceres/map_util.h"
@@ -279,6 +280,11 @@ ProblemImpl::~ProblemImpl() {
   // Delete the owned parameterizations.
   STLDeleteUniqueContainerPointers(local_parameterizations_to_delete_.begin(),
                                    local_parameterizations_to_delete_.end());
+
+  if (evaluation_callback_ &&
+      evaluation_callback_ownership_ == TAKE_OWNERSHIP) {
+    delete evaluation_callback_;
+  }
 
   if (context_impl_owned_) {
     delete context_impl_;
@@ -706,7 +712,7 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   // The main thread also does work so we only need to launch num_threads - 1.
   context_impl_->EnsureMinimumThreads(evaluator_options.num_threads - 1);
   evaluator_options.context = context_impl_;
-
+  evaluator_options.evaluation_callback = program_->mutable_evaluation_callback();
   std::unique_ptr<Evaluator> evaluator(
       new ProgramEvaluator<ScratchEvaluatePreparer,
                            CompressedRowJacobianWriter>(evaluator_options,
@@ -923,6 +929,17 @@ void ProblemImpl::GetResidualBlocksForParameterBlock(
       }
     }
   }
+}
+
+void ProblemImpl::SetEvaluationCallback(EvaluationCallback* callback,
+                                        Ownership ownership) {
+  if (evaluation_callback_ &&
+      evaluation_callback_ownership_ == TAKE_OWNERSHIP) {
+    delete evaluation_callback_;
+  }
+  evaluation_callback_ = callback;
+  evaluation_callback_ownership_ = ownership;
+  program_->evaluation_callback_ = callback;
 }
 
 }  // namespace internal
