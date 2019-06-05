@@ -62,7 +62,8 @@ Program::Program() {}
 
 Program::Program(const Program& program)
     : parameter_blocks_(program.parameter_blocks_),
-      residual_blocks_(program.residual_blocks_) {
+      residual_blocks_(program.residual_blocks_),
+      evaluation_callback_(program.evaluation_callback_){
 }
 
 const vector<ParameterBlock*>& Program::parameter_blocks() const {
@@ -79,6 +80,10 @@ vector<ParameterBlock*>* Program::mutable_parameter_blocks() {
 
 vector<ResidualBlock*>* Program::mutable_residual_blocks() {
   return &residual_blocks_;
+}
+
+EvaluationCallback* Program::mutable_evaluation_callback() {
+  return evaluation_callback_;
 }
 
 bool Program::StateVectorToParameterBlocks(const double *state) {

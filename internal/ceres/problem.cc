@@ -190,4 +190,9 @@ void Problem::GetResidualBlocksForParameterBlock(
   impl_->GetResidualBlocksForParameterBlock(values, residual_blocks);
 }
 
+void Problem::SetEvaluationCallback(EvaluationCallback* callback,
+                                    Ownership ownership) {
+  impl_->SetEvaluationCallback(callback, ownership);
+}
+
 }  // namespace ceres

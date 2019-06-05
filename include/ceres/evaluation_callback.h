@@ -35,28 +35,31 @@
 
 namespace ceres {
 
-// Using this callback interface, Ceres can notify you when it is about to
-// evaluate the residuals or jacobians. With the callback, you can share
-// computation between residual blocks by doing the shared computation in
-// PrepareForEvaluation() before Ceres calls CostFunction::Evaluate() on all
-// the residuals. It also enables caching results between a pure residual
-// evaluation and a residual & jacobian evaluation, via the
-// new_evaluation_point argument.
+// Using this callback interface, Ceres can notify you when it is
+// about to evaluate the residuals or jacobians. With the callback,
+// you can share computation between residual blocks by doing the
+// shared computation in PrepareForEvaluation() before Ceres calls
+// CostFunction::Evaluate(). It also enables caching results between a
+// pure residual evaluation and a residual & jacobian evaluation, via
+// the new_evaluation_point argument.
 //
-// One use case for this callback is if the cost function compute is moved to
-// the GPU. In that case, the prepare call does the actual cost function
-// evaluation, and subsequent calls from Ceres to the actual cost functions
-// merely copy the results from the GPU onto the corresponding blocks for Ceres
-// to plug into the solver.
+// One use case for this callback is if the cost function compute is
+// moved to the GPU. In that case, the prepare call does the actual
+// cost function evaluation, and subsequent calls from Ceres to the
+// actual cost functions merely copy the results from the GPU onto the
+// corresponding blocks for Ceres to plug into the solver.
 //
-// NOTE: Ceres provides no mechanism to share data other than the notification
-// from the callback. Users must provide access to pre-computed shared data to
-// their cost functions behind the scenes; this all happens without Ceres
-// knowing. One approach is to put a pointer to the shared data in each cost
-// function (recommended) or to use a global shared variable (discouraged;
-// bug-prone).  As far as Ceres is concerned, it is evaluating cost functions
-// like any other; it just so happens that behind the scenes the cost functions
-// reuse pre-computed data to execute faster.
+// NOTE: Ceres provides no mechanism to share data other than the
+// notification from the callback. Users must provide access to
+// pre-computed shared data to their cost functions behind the scenes;
+// this all happens without Ceres knowing.
+//
+// One approach is to put a pointer to the shared data in each cost
+// function (recommended) or to use a global shared variable
+// (discouraged; bug-prone).  As far as Ceres is concerned, it is
+// evaluating cost functions like any other; it just so happens that
+// behind the scenes the cost functions reuse pre-computed data to
+// execute faster.
 class CERES_EXPORT EvaluationCallback {
  public:
   virtual ~EvaluationCallback() {}

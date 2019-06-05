@@ -1745,15 +1745,40 @@ Instances
    blocks for a parameter block will incur a scan of the entire
    :class:`Problem` object.
 
-.. function:: const CostFunction* GetCostFunctionForResidualBlock(const ResidualBlockId residual_block) const
+.. function:: const CostFunction* Problem::GetCostFunctionForResidualBlock(const ResidualBlockId residual_block) const
 
    Get the :class:`CostFunction` for the given residual block.
 
-.. function:: const LossFunction* GetLossFunctionForResidualBlock(const ResidualBlockId residual_block) const
+.. function:: const LossFunction* Problem::GetLossFunctionForResidualBlock(const ResidualBlockId residual_block) const
 
    Get the :class:`LossFunction` for the given residual block.
 
-.. function::  bool EvaluateResidualBlock(ResidualBlockId residual_block_id, bool apply_loss_function, double* cost,double* residuals, double** jacobians) const;
+.. function:: void Problem::SetEvaluationCallback(EvaluationCallback* callback, Ownership ownership)
+
+  Set/remove an :class:`EvaluationCallback` object. Using this
+  callback interface, Ceres can notify you when it is about to
+  evaluate the residuals or jacobians. With the callback, you can
+  share computation between residual blocks by doing the shared
+  computation in :func:`EvaluationCallback::PrepareForEvaluation()`
+  before Ceres calls CostFunction::Evaluate(). It also enables caching
+  results between a pure residual evaluation and a residual & jacobian
+  evaluation.
+
+  ``ownership`` controls whether the Problem object owns this object or
+  not. If an EvaluationCallback is already associated with the
+  problem with ``ownership = TAKE_OWNERSHIP``, then calling
+  `SetEvaluationCallback`` will cause that object to be deleted.This
+  method can be called any number of times.
+
+  Calling with ``callback = nullptr`` legal and is equivalent to not
+  having an :class:`EvaluationCallback` object associated with this Problem.
+
+  **Note** Evaluation callbacks are incompatible with inner
+  iterations. So calling Solve with
+  ``Solver::Options::use_inner_iterations = true`` will result in an
+  error.
+
+.. function::  bool EvaluateResidualBlock(ResidualBlockId residual_block_id, bool apply_loss_function, double* cost,double* residuals, double** jacobians) const
 
    Evaluates the residual block, storing the scalar cost in ``cost``, the
    residual components in ``residuals``, and the jacobians between the
@@ -1783,8 +1808,21 @@ Instances
 
    .. NOTE::
 
-      TODO(sameeragarwal): Clarify interaction with IterationCallback
-      once that cleanup is done.
+      If an :class:`EvaluationCallback` is associated with the problem
+      then it is the user's responsibility to call
+      :func:`EvaluationCalback::PrepareForEvaluation` it before
+      calling this method.
+
+      This is because, if the user calls this method multiple times,
+      we cannot tell if the underlying parameter blocks have changed
+      between calls or not. So if ``EvaluateResidualBlock`` was
+      responsible for calling the
+      :func:`EvaluationCalback::PrepareForEvaluation`, it will have to
+      do it everytime it is called. Which makes the common case where
+      the parameter blocks do not change, inefficient. So we leave it
+      to the user to call the
+      :func:`EvaluationCalback::PrepareForEvaluation` as needed.
+
 
 .. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)
 
@@ -1832,6 +1870,12 @@ Instances
       :class:`IterationCallback` at the end of an iteration during a
       solve.
 
+   .. NOTE::
+
+      If an EvaluationCallback is associated with the problem, them
+      its PrepareForEvaluation method will be called everytime this
+      method is called with ``new_point = true``.
+
 .. class:: Problem::EvaluateOptions
 
    Options struct that is used to control :func:`Problem::Evaluate`.
@@ -1873,7 +1917,67 @@ Instances
 
    Number of threads to use. (Requires OpenMP).
 
-..
+
+:class:`EvaluationCallback`
+===========================
+
+.. class:: EvaluationCallback
+
+   Interface for receiving callbacks before Ceres evaluates residuals or
+   Jacobians:
+
+   .. code-block:: c++
+
+      class EvaluationCallback {
+       public:
+        virtual ~EvaluationCallback() {}
+        virtual void PrepareForEvaluation()(bool evaluate_jacobians
+                                            bool new_evaluation_point) = 0;
+      };
+
+   Ceres will call ``PrepareForEvaluation()`` every time, and once
+   before it computes the residuals and/or the Jacobians.
+
+   # how does the user's code see parameter values.
+   # what is the contract
+
+   User parameters (the double* values provided by the us)
+   are fixed until the next call to ``PrepareForEvaluation()``. If
+   ``new_evaluation_point == true``, then this is a new point that is
+   different from the last evaluated point. Otherwise, it is the same
+   point that was evaluated previously (either Jacobian or residual)
+   and the user can use cached results from previous evaluations. If
+   ``evaluate_jacobians`` is true, then Ceres will request Jacobians
+   in the upcoming cost evaluation.
+
+   Using this callback interface, Ceres can notify you when it is about
+   to evaluate the residuals or Jacobians. With the callback, you can
+   share computation between residual blocks by doing the shared
+   computation in PrepareForEvaluation() before Ceres calls
+   CostFunction::Evaluate() on all the residuals. It also enables
+   caching results between a pure residual evaluation and a residual &
+   Jacobian evaluation, via the new_evaluation_point argument.
+
+   One use case for this callback is if the cost function compute is
+   moved to the GPU. In that case, the prepare call does the actual cost
+   function evaluation, and subsequent calls from Ceres to the actual
+   cost functions merely copy the results from the GPU onto the
+   corresponding blocks for Ceres to plug into the solver.
+
+   **Note**: Ceres provides no mechanism to share data other than the
+   notification from the callback. Users must provide access to
+   pre-computed shared data to their cost functions behind the scenes;
+   this all happens without Ceres knowing. One approach is to put a
+   pointer to the shared data in each cost function (recommended) or to
+   use a global shared variable (discouraged; bug-prone).  As far as
+   Ceres is concerned, it is evaluating cost functions like any other;
+   it just so happens that behind the scenes the cost functions reuse
+   pre-computed data to execute faster.
+
+   See ``evaluation_callback_test.cc`` for code that explicitly verifies
+   the preconditions between ``PrepareForEvaluation()`` and
+   ``CostFunction::Evaluate()``.
+
 ``rotation.h``
 ==============
 

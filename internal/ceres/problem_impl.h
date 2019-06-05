@@ -53,6 +53,7 @@
 namespace ceres {
 
 class CostFunction;
+class EvaluationCallback;
 class LossFunction;
 class LocalParameterization;
 struct CRSMatrix;
@@ -153,6 +154,9 @@ class ProblemImpl {
       const double* values,
       std::vector<ResidualBlockId>* residual_blocks) const;
 
+  void SetEvaluationCallback(EvaluationCallback* evaluation_callback,
+                             Ownership ownership);
+
   const Program& program() const { return *program_; }
   Program* mutable_program() { return program_.get(); }
 
@@ -206,6 +210,9 @@ class ProblemImpl {
   // destroyed.
   CostFunctionRefCount cost_function_ref_count_;
   LossFunctionRefCount loss_function_ref_count_;
+
+  EvaluationCallback* evaluation_callback_ = nullptr;
+  Ownership evaluation_callback_ownership_ = DO_NOT_TAKE_OWNERSHIP;
 };
 
 }  // namespace internal

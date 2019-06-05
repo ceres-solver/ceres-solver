@@ -102,7 +102,7 @@ TEST(Solver, UpdateStateEveryIterationOption) {
   Problem::Options problem_options;
   problem_options.cost_function_ownership = DO_NOT_TAKE_OWNERSHIP;
   Problem problem(problem_options);
-  problem.AddResidualBlock(cost_function.get(), NULL, &x);
+  problem.AddResidualBlock(cost_function.get(), nullptr, &x);
 
   Solver::Options options;
   options.linear_solver_type = DENSE_QR;
@@ -117,11 +117,11 @@ TEST(Solver, UpdateStateEveryIterationOption) {
   // There are four cases that need to be checked:
   //
   //   (update_state_every_iteration = true|false) X
-  //   (evaluation_callback = NULL|provided)
+  //   (evaluation_callback = nullptr|provided)
   //
   // These need to get checked since there is some interaction between them.
 
-  // First: update_state_every_iteration=false, evaluation_callback=NULL.
+  // First: update_state_every_iteration=false, evaluation_callback=nullptr.
   Solve(options, &problem, &summary);
   num_iterations = summary.num_successful_steps +
                    summary.num_unsuccessful_steps;
@@ -130,7 +130,7 @@ TEST(Solver, UpdateStateEveryIterationOption) {
     EXPECT_EQ(50.0, callback.x_values[i]);
   }
 
-  // Second: update_state_every_iteration=true, evaluation_callback=NULL.
+  // Second: update_state_every_iteration=true, evaluation_callback=nullptr.
   x = 50.0;
   options.update_state_every_iteration = true;
   callback.x_values.clear();
@@ -143,10 +143,10 @@ TEST(Solver, UpdateStateEveryIterationOption) {
 
   NoOpEvaluationCallback evaluation_callback;
 
-  // Third: update_state_every_iteration=true, evaluation_callback=!NULL.
+  problem.SetEvaluationCallback(&evaluation_callback, DO_NOT_TAKE_OWNERSHIP);
+  // Third: update_state_every_iteration=true, evaluation_callback=!nullptr.
   x = 50.0;
   options.update_state_every_iteration = true;
-  options.evaluation_callback = &evaluation_callback;
   callback.x_values.clear();
   Solve(options, &problem, &summary);
   num_iterations = summary.num_successful_steps +
@@ -155,10 +155,9 @@ TEST(Solver, UpdateStateEveryIterationOption) {
   EXPECT_EQ(original_x, callback.x_values[0]);
   EXPECT_NE(original_x, callback.x_values[1]);
 
-  // Fourth: update_state_every_iteration=false, evaluation_callback=!NULL.
+  // Fourth: update_state_every_iteration=false, evaluation_callback=!nullptr.
   x = 50.0;
   options.update_state_every_iteration = false;
-  options.evaluation_callback = &evaluation_callback;
   callback.x_values.clear();
   Solve(options, &problem, &summary);
   num_iterations = summary.num_successful_steps +
@@ -197,7 +196,7 @@ class UnaryIdentityCostFunction : public SizedCostFunction<1, 1> {
                         double* residuals,
                         double** jacobians) const {
     residuals[0] = parameters[0][0];
-    if (jacobians != NULL && jacobians[0] != NULL) {
+    if (jacobians != nullptr && jacobians[0] != nullptr) {
       jacobians[0][0] = 1.0;
     }
     return true;
@@ -259,7 +258,7 @@ TEST(Solver, LineSearchProblemHasZeroResiduals) {
 TEST(Solver, TrustRegionProblemIsConstant) {
   Problem problem;
   double x = 1;
-  problem.AddResidualBlock(new UnaryIdentityCostFunction, NULL, &x);
+  problem.AddResidualBlock(new UnaryIdentityCostFunction, nullptr, &x);
   problem.SetParameterBlockConstant(&x);
   Solver::Options options;
   options.minimizer_type = TRUST_REGION;
@@ -273,7 +272,7 @@ TEST(Solver, TrustRegionProblemIsConstant) {
 TEST(Solver, LineSearchProblemIsConstant) {
   Problem problem;
   double x = 1;
-  problem.AddResidualBlock(new UnaryIdentityCostFunction, NULL, &x);
+  problem.AddResidualBlock(new UnaryIdentityCostFunction, nullptr, &x);
   problem.SetParameterBlockConstant(&x);
   Solver::Options options;
   options.minimizer_type = LINE_SEARCH;
@@ -429,30 +428,6 @@ TEST(Solver, LinearSolverTypeNormalOperation) {
   EXPECT_TRUE(options.IsValid(&message));
 }
 
-TEST(Solver, CantMixEvaluationCallbackWithInnerIterations) {
-  Solver::Options options;
-  NoOpEvaluationCallback evaluation_callback;
-  string message;
-
-  // Can't combine them.
-  options.use_inner_iterations = true;
-  options.evaluation_callback = &evaluation_callback;
-  EXPECT_FALSE(options.IsValid(&message));
-
-  // Either or none is OK.
-  options.use_inner_iterations = false;
-  options.evaluation_callback = &evaluation_callback;
-  EXPECT_TRUE(options.IsValid(&message));
-
-  options.use_inner_iterations = true;
-  options.evaluation_callback = NULL;
-  EXPECT_TRUE(options.IsValid(&message));
-
-  options.use_inner_iterations = false;
-  options.evaluation_callback = NULL;
-  EXPECT_TRUE(options.IsValid(&message));
-}
-
 template <int kNumResiduals, int... Ns>
 class DummyCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
@@ -470,7 +445,7 @@ class DummyCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
 TEST(Solver, FixedCostForConstantProblem) {
   double x = 1.0;
   Problem problem;
-  problem.AddResidualBlock(new DummyCostFunction<2, 1>(), NULL, &x);
+  problem.AddResidualBlock(new DummyCostFunction<2, 1>(), nullptr, &x);
   problem.SetParameterBlockConstant(&x);
   const double expected_cost = 41.0 / 2.0;  // 1/2 * ((4 + 0)^2 + (4 + 1)^2)
   Solver::Options options;

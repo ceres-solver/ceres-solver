@@ -46,6 +46,7 @@
 #include "ceres/dynamic_cost_function.h"
 #include "ceres/dynamic_cost_function_to_functor.h"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
+#include "ceres/evaluation_callback.h"
 #include "ceres/gradient_checker.h"
 #include "ceres/gradient_problem.h"
 #include "ceres/gradient_problem_solver.h"
