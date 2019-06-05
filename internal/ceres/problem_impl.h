@@ -77,11 +77,10 @@ class ProblemImpl {
   ~ProblemImpl();
 
   // See the public problem.h file for description of these methods.
-  ResidualBlockId AddResidualBlock(
-      CostFunction* cost_function,
-      LossFunction* loss_function,
-      double* const* const parameter_blocks,
-      int num_parameter_blocks);
+  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
+                                   LossFunction* loss_function,
+                                   double* const* const parameter_blocks,
+                                   int num_parameter_blocks);
 
   template <typename... Ts>
   ResidualBlockId AddResidualBlock(CostFunction* cost_function,
@@ -101,20 +100,20 @@ class ProblemImpl {
                          LocalParameterization* local_parameterization);
 
   void RemoveResidualBlock(ResidualBlock* residual_block);
-  void RemoveParameterBlock(double* values);
+  void RemoveParameterBlock(const double* values);
 
-  void SetParameterBlockConstant(double* values);
+  void SetParameterBlockConstant(const double* values);
   void SetParameterBlockVariable(double* values);
-  bool IsParameterBlockConstant(double* values) const;
+  bool IsParameterBlockConstant(const double* values) const;
 
   void SetParameterization(double* values,
                            LocalParameterization* local_parameterization);
-  const LocalParameterization* GetParameterization(double* values) const;
+  const LocalParameterization* GetParameterization(const double* values) const;
 
   void SetParameterLowerBound(double* values, int index, double lower_bound);
   void SetParameterUpperBound(double* values, int index, double upper_bound);
-  double GetParameterLowerBound(double* values, int index) const;
-  double GetParameterUpperBound(double* values, int index) const;
+  double GetParameterLowerBound(const double* values, int index) const;
+  double GetParameterUpperBound(const double* values, int index) const;
 
   bool Evaluate(const Problem::EvaluateOptions& options,
                 double* cost,

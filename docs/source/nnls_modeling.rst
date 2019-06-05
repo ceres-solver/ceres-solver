@@ -1618,7 +1618,7 @@ Instances
    jacobian, do not use remove! This may change in a future release.
    Hold the indicated parameter block constant during optimization.
 
-.. function:: void Problem::RemoveParameterBlock(double* values)
+.. function:: void Problem::RemoveParameterBlock(const double* values)
 
    Remove a parameter block from the problem. The parameterization of
    the parameter block, if it exists, will persist until the deletion
@@ -1634,7 +1634,7 @@ Instances
    from the solver uninterpretable. If you depend on the evaluated
    jacobian, do not use remove! This may change in a future release.
 
-.. function:: void Problem::SetParameterBlockConstant(double* values)
+.. function:: void Problem::SetParameterBlockConstant(const double* values)
 
    Hold the indicated parameter block constant during optimization.
 
@@ -1651,7 +1651,7 @@ Instances
    parameterizations only once. The local parameterization can only be
    set once per parameter, and cannot be changed once set.
 
-.. function:: LocalParameterization* Problem::GetParameterization(double* values) const
+.. function:: LocalParameterization* Problem::GetParameterization(const double* values) const
 
    Get the local parameterization object associated with this
    parameter block. If there is no parameterization object associated
@@ -1671,13 +1671,13 @@ Instances
    ``std::numeric_limits<double>::max()``, which is treated by the
    solver as the same as :math:`\infty`.
 
-.. function:: double Problem::GetParameterLowerBound(double* values, int index)
+.. function:: double Problem::GetParameterLowerBound(const double* values, int index)
 
    Get the lower bound for the parameter with position `index`. If the
    parameter is not bounded by the user, then its lower bound is
    ``-std::numeric_limits<double>::max()``.
 
-.. function:: double Problem::GetParameterUpperBound(double* values, int index)
+.. function:: double Problem::GetParameterUpperBound(const double* values, int index)
 
    Get the upper bound for the parameter with position `index`. If the
    parameter is not bounded by the user, then its upper bound is

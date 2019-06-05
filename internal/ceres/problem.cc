@@ -77,11 +77,11 @@ void Problem::RemoveResidualBlock(ResidualBlockId residual_block) {
   impl_->RemoveResidualBlock(residual_block);
 }
 
-void Problem::RemoveParameterBlock(double* values) {
+void Problem::RemoveParameterBlock(const double* values) {
   impl_->RemoveParameterBlock(values);
 }
 
-void Problem::SetParameterBlockConstant(double* values) {
+void Problem::SetParameterBlockConstant(const double* values) {
   impl_->SetParameterBlockConstant(values);
 }
 
@@ -89,7 +89,7 @@ void Problem::SetParameterBlockVariable(double* values) {
   impl_->SetParameterBlockVariable(values);
 }
 
-bool Problem::IsParameterBlockConstant(double* values) const {
+bool Problem::IsParameterBlockConstant(const double* values) const {
   return impl_->IsParameterBlockConstant(values);
 }
 
@@ -99,7 +99,7 @@ void Problem::SetParameterization(
 }
 
 const LocalParameterization* Problem::GetParameterization(
-    double* values) const {
+    const double* values) const {
   return impl_->GetParameterization(values);
 }
 
@@ -115,11 +115,11 @@ void Problem::SetParameterUpperBound(double* values,
   impl_->SetParameterUpperBound(values, index, upper_bound);
 }
 
-double Problem::GetParameterUpperBound(double* values, int index) const {
+double Problem::GetParameterUpperBound(const double* values, int index) const {
   return impl_->GetParameterUpperBound(values, index);
 }
 
-double Problem::GetParameterLowerBound(double* values, int index) const {
+double Problem::GetParameterLowerBound(const double* values, int index) const {
   return impl_->GetParameterLowerBound(values, index);
 }
 

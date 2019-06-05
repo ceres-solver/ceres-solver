@@ -41,7 +41,6 @@
 #include <utility>
 #include <vector>
 
-#include "ceres/internal/fixed_array.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_jacobian_writer.h"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -49,6 +48,7 @@
 #include "ceres/cost_function.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/evaluator.h"
+#include "ceres/internal/fixed_array.h"
 #include "ceres/internal/port.h"
 #include "ceres/loss_function.h"
 #include "ceres/map_util.h"
@@ -71,21 +71,19 @@ using std::vector;
 namespace {
 // Returns true if two regions of memory, a and b, with sizes size_a and size_b
 // respectively, overlap.
-bool RegionsAlias(const double* a, int size_a,
-                  const double* b, int size_b) {
-  return (a < b) ? b < (a + size_a)
-                 : a < (b + size_b);
+bool RegionsAlias(const double* a, int size_a, const double* b, int size_b) {
+  return (a < b) ? b < (a + size_a) : a < (b + size_b);
 }
 
 void CheckForNoAliasing(double* existing_block,
                         int existing_block_size,
                         double* new_block,
                         int new_block_size) {
-  CHECK(!RegionsAlias(existing_block, existing_block_size,
-                      new_block, new_block_size))
+  CHECK(!RegionsAlias(
+      existing_block, existing_block_size, new_block, new_block_size))
       << "Aliasing detected between existing parameter block at memory "
-      << "location " << existing_block
-      << " and has size " << existing_block_size << " with new parameter "
+      << "location " << existing_block << " and has size "
+      << existing_block_size << " with new parameter "
       << "block that has memory address " << new_block << " and would have "
       << "size " << new_block_size << ".";
 }
@@ -138,8 +136,7 @@ ParameterBlock* ProblemImpl::InternalAddParameterBlock(double* values,
       CHECK(size == existing_size)
           << "Tried adding a parameter block with the same double pointer, "
           << values << ", twice, but with different block sizes. Original "
-          << "size was " << existing_size << " but new size is "
-          << size;
+          << "size was " << existing_size << " but new size is " << size;
     }
     return it->second;
   }
@@ -154,18 +151,13 @@ ParameterBlock* ProblemImpl::InternalAddParameterBlock(double* values,
       if (lb != parameter_block_map_.begin()) {
         ParameterMap::iterator previous = lb;
         --previous;
-        CheckForNoAliasing(previous->first,
-                           previous->second->Size(),
-                           values,
-                           size);
+        CheckForNoAliasing(
+            previous->first, previous->second->Size(), values, size);
       }
 
       // If lb is not off the end, check lb for aliasing.
       if (lb != parameter_block_map_.end()) {
-        CheckForNoAliasing(lb->first,
-                           lb->second->Size(),
-                           values,
-                           size);
+        CheckForNoAliasing(lb->first, lb->second->Size(), values, size);
       }
     }
   }
@@ -195,8 +187,8 @@ void ProblemImpl::InternalRemoveResidualBlock(ResidualBlock* residual_block) {
     const int num_parameter_blocks_for_residual =
         residual_block->NumParameterBlocks();
     for (int i = 0; i < num_parameter_blocks_for_residual; ++i) {
-      residual_block->parameter_blocks()[i]
-          ->RemoveResidualBlock(residual_block);
+      residual_block->parameter_blocks()[i]->RemoveResidualBlock(
+          residual_block);
     }
 
     ResidualBlockSet::iterator it = residual_block_set_.find(residual_block);
@@ -246,14 +238,12 @@ void ProblemImpl::DeleteBlock(ParameterBlock* parameter_block) {
 }
 
 ProblemImpl::ProblemImpl()
-    : options_(Problem::Options()),
-      program_(new internal::Program) {
+    : options_(Problem::Options()), program_(new internal::Program) {
   InitializeContext(options_.context, &context_impl_, &context_impl_owned_);
 }
 
 ProblemImpl::ProblemImpl(const Problem::Options& options)
-    : options_(options),
-      program_(new internal::Program) {
+    : options_(options), program_(new internal::Program) {
   InitializeContext(options_.context, &context_impl_, &context_impl_owned_);
 }
 
@@ -286,13 +276,12 @@ ProblemImpl::~ProblemImpl() {
 }
 
 ResidualBlockId ProblemImpl::AddResidualBlock(
-      CostFunction* cost_function,
-      LossFunction* loss_function,
-      double* const* const parameter_blocks,
-      int num_parameter_blocks) {
+    CostFunction* cost_function,
+    LossFunction* loss_function,
+    double* const* const parameter_blocks,
+    int num_parameter_blocks) {
   CHECK(cost_function != nullptr);
-  CHECK_EQ(num_parameter_blocks,
-           cost_function->parameter_block_sizes().size());
+  CHECK_EQ(num_parameter_blocks, cost_function->parameter_block_sizes().size());
 
   // Check the sizes match.
   const vector<int32_t>& parameter_block_sizes =
@@ -309,8 +298,8 @@ ResidualBlockId ProblemImpl::AddResidualBlock(
     sort(sorted_parameter_blocks.begin(), sorted_parameter_blocks.end());
     const bool has_duplicate_items =
         (std::adjacent_find(sorted_parameter_blocks.begin(),
-                            sorted_parameter_blocks.end())
-         != sorted_parameter_blocks.end());
+                            sorted_parameter_blocks.end()) !=
+         sorted_parameter_blocks.end());
     if (has_duplicate_items) {
       string blocks;
       for (int i = 0; i < num_parameter_blocks; ++i) {
@@ -318,17 +307,16 @@ ResidualBlockId ProblemImpl::AddResidualBlock(
       }
 
       LOG(FATAL) << "Duplicate parameter blocks in a residual parameter "
-                 << "are not allowed. Parameter block pointers: ["
-                 << blocks << "]";
+                 << "are not allowed. Parameter block pointers: [" << blocks
+                 << "]";
     }
   }
 
   // Add parameter blocks and convert the double*'s to parameter blocks.
   vector<ParameterBlock*> parameter_block_ptrs(num_parameter_blocks);
   for (int i = 0; i < num_parameter_blocks; ++i) {
-    parameter_block_ptrs[i] =
-        InternalAddParameterBlock(parameter_blocks[i],
-                                  parameter_block_sizes[i]);
+    parameter_block_ptrs[i] = InternalAddParameterBlock(
+        parameter_blocks[i], parameter_block_sizes[i]);
   }
 
   if (!options_.disable_all_safety_checks) {
@@ -337,8 +325,8 @@ ResidualBlockId ProblemImpl::AddResidualBlock(
     for (int i = 0; i < parameter_block_ptrs.size(); ++i) {
       CHECK_EQ(cost_function->parameter_block_sizes()[i],
                parameter_block_ptrs[i]->Size())
-          << "The cost function expects parameter block " << i
-          << " of size " << cost_function->parameter_block_sizes()[i]
+          << "The cost function expects parameter block " << i << " of size "
+          << cost_function->parameter_block_sizes()[i]
           << " but was given a block of size "
           << parameter_block_ptrs[i]->Size();
     }
@@ -383,11 +371,8 @@ void ProblemImpl::AddParameterBlock(double* values, int size) {
 }
 
 void ProblemImpl::AddParameterBlock(
-    double* values,
-    int size,
-    LocalParameterization* local_parameterization) {
-  ParameterBlock* parameter_block =
-      InternalAddParameterBlock(values, size);
+    double* values, int size, LocalParameterization* local_parameterization) {
+  ParameterBlock* parameter_block = InternalAddParameterBlock(values, size);
   if (local_parameterization != NULL) {
     parameter_block->SetParameterization(local_parameterization);
   }
@@ -397,13 +382,12 @@ void ProblemImpl::AddParameterBlock(
 // This is done in constant time by moving an element from the end of the
 // vector over the element to remove, then popping the last element. It
 // destroys the ordering in the interest of speed.
-template<typename Block>
+template <typename Block>
 void ProblemImpl::DeleteBlockInVector(vector<Block*>* mutable_blocks,
                                       Block* block_to_remove) {
   CHECK_EQ((*mutable_blocks)[block_to_remove->index()], block_to_remove)
       << "You found a Ceres bug! \n"
-      << "Block requested: "
-      << block_to_remove->ToString() << "\n"
+      << "Block requested: " << block_to_remove->ToString() << "\n"
       << "Block present: "
       << (*mutable_blocks)[block_to_remove->index()]->ToString();
 
@@ -425,21 +409,20 @@ void ProblemImpl::RemoveResidualBlock(ResidualBlock* residual_block) {
   CHECK(residual_block != nullptr);
 
   // Verify that residual_block identifies a residual in the current problem.
-  const string residual_not_found_message =
-      StringPrintf("Residual block to remove: %p not found. This usually means "
-                   "one of three things have happened:\n"
-                   " 1) residual_block is uninitialised and points to a random "
-                   "area in memory.\n"
-                   " 2) residual_block represented a residual that was added to"
-                   " the problem, but referred to a parameter block which has "
-                   "since been removed, which removes all residuals which "
-                   "depend on that parameter block, and was thus removed.\n"
-                   " 3) residual_block referred to a residual that has already "
-                   "been removed from the problem (by the user).",
-                   residual_block);
+  const string residual_not_found_message = StringPrintf(
+      "Residual block to remove: %p not found. This usually means "
+      "one of three things have happened:\n"
+      " 1) residual_block is uninitialised and points to a random "
+      "area in memory.\n"
+      " 2) residual_block represented a residual that was added to"
+      " the problem, but referred to a parameter block which has "
+      "since been removed, which removes all residuals which "
+      "depend on that parameter block, and was thus removed.\n"
+      " 3) residual_block referred to a residual that has already "
+      "been removed from the problem (by the user).",
+      residual_block);
   if (options_.enable_fast_removal) {
-    CHECK(residual_block_set_.find(residual_block) !=
-          residual_block_set_.end())
+    CHECK(residual_block_set_.find(residual_block) != residual_block_set_.end())
         << residual_not_found_message;
   } else {
     // Perform a full search over all current residuals.
@@ -452,10 +435,10 @@ void ProblemImpl::RemoveResidualBlock(ResidualBlock* residual_block) {
   InternalRemoveResidualBlock(residual_block);
 }
 
-void ProblemImpl::RemoveParameterBlock(double* values) {
-  ParameterBlock* parameter_block =
-      FindWithDefault(parameter_block_map_, values, NULL);
-  if (parameter_block == NULL) {
+void ProblemImpl::RemoveParameterBlock(const double* values) {
+  ParameterBlock* parameter_block = FindWithDefault(
+      parameter_block_map_, const_cast<double*>(values), nullptr);
+  if (parameter_block == nullptr) {
     LOG(FATAL) << "Parameter block not found: " << values
                << ". You must add the parameter block to the problem before "
                << "it can be removed.";
@@ -490,10 +473,10 @@ void ProblemImpl::RemoveParameterBlock(double* values) {
   DeleteBlockInVector(program_->mutable_parameter_blocks(), parameter_block);
 }
 
-void ProblemImpl::SetParameterBlockConstant(double* values) {
-  ParameterBlock* parameter_block =
-      FindWithDefault(parameter_block_map_, values, NULL);
-  if (parameter_block == NULL) {
+void ProblemImpl::SetParameterBlockConstant(const double* values) {
+  ParameterBlock* parameter_block = FindWithDefault(
+      parameter_block_map_, const_cast<double*>(values), nullptr);
+  if (parameter_block == nullptr) {
     LOG(FATAL) << "Parameter block not found: " << values
                << ". You must add the parameter block to the problem before "
                << "it can be set constant.";
@@ -502,20 +485,20 @@ void ProblemImpl::SetParameterBlockConstant(double* values) {
   parameter_block->SetConstant();
 }
 
-bool ProblemImpl::IsParameterBlockConstant(double* values) const {
-  const ParameterBlock* parameter_block =
-      FindWithDefault(parameter_block_map_, values, NULL);
-  CHECK(parameter_block != NULL)
-    << "Parameter block not found: " << values << ". You must add the "
-    << "parameter block to the problem before it can be queried.";
+bool ProblemImpl::IsParameterBlockConstant(const double* values) const {
+  const ParameterBlock* parameter_block = FindWithDefault(
+      parameter_block_map_, const_cast<double*>(values), nullptr);
+  CHECK(parameter_block != nullptr)
+      << "Parameter block not found: " << values << ". You must add the "
+      << "parameter block to the problem before it can be queried.";
 
   return parameter_block->IsSetConstantByUser();
 }
 
 void ProblemImpl::SetParameterBlockVariable(double* values) {
   ParameterBlock* parameter_block =
-      FindWithDefault(parameter_block_map_, values, NULL);
-  if (parameter_block == NULL) {
+      FindWithDefault(parameter_block_map_, values, nullptr);
+  if (parameter_block == nullptr) {
     LOG(FATAL) << "Parameter block not found: " << values
                << ". You must add the parameter block to the problem before "
                << "it can be set varying.";
@@ -525,11 +508,10 @@ void ProblemImpl::SetParameterBlockVariable(double* values) {
 }
 
 void ProblemImpl::SetParameterization(
-    double* values,
-    LocalParameterization* local_parameterization) {
+    double* values, LocalParameterization* local_parameterization) {
   ParameterBlock* parameter_block =
-      FindWithDefault(parameter_block_map_, values, NULL);
-  if (parameter_block == NULL) {
+      FindWithDefault(parameter_block_map_, values, nullptr);
+  if (parameter_block == nullptr) {
     LOG(FATAL) << "Parameter block not found: " << values
                << ". You must add the parameter block to the problem before "
                << "you can set its local parameterization.";
@@ -539,10 +521,10 @@ void ProblemImpl::SetParameterization(
 }
 
 const LocalParameterization* ProblemImpl::GetParameterization(
-    double* values) const {
-  ParameterBlock* parameter_block =
-      FindWithDefault(parameter_block_map_, values, NULL);
-  if (parameter_block == NULL) {
+    const double* values) const {
+  ParameterBlock* parameter_block = FindWithDefault(
+      parameter_block_map_, const_cast<double*>(values), nullptr);
+  if (parameter_block == nullptr) {
     LOG(FATAL) << "Parameter block not found: " << values
                << ". You must add the parameter block to the problem before "
                << "you can get its local parameterization.";
@@ -555,8 +537,8 @@ void ProblemImpl::SetParameterLowerBound(double* values,
                                          int index,
                                          double lower_bound) {
   ParameterBlock* parameter_block =
-      FindWithDefault(parameter_block_map_, values, NULL);
-  if (parameter_block == NULL) {
+      FindWithDefault(parameter_block_map_, values, nullptr);
+  if (parameter_block == nullptr) {
     LOG(FATAL) << "Parameter block not found: " << values
                << ". You must add the parameter block to the problem before "
                << "you can set a lower bound on one of its components.";
@@ -569,8 +551,8 @@ void ProblemImpl::SetParameterUpperBound(double* values,
                                          int index,
                                          double upper_bound) {
   ParameterBlock* parameter_block =
-      FindWithDefault(parameter_block_map_, values, NULL);
-  if (parameter_block == NULL) {
+      FindWithDefault(parameter_block_map_, values, nullptr);
+  if (parameter_block == nullptr) {
     LOG(FATAL) << "Parameter block not found: " << values
                << ". You must add the parameter block to the problem before "
                << "you can set an upper bound on one of its components.";
@@ -578,10 +560,11 @@ void ProblemImpl::SetParameterUpperBound(double* values,
   parameter_block->SetUpperBound(index, upper_bound);
 }
 
-double ProblemImpl::GetParameterLowerBound(double* values, int index) const {
-  ParameterBlock* parameter_block =
-      FindWithDefault(parameter_block_map_, values, NULL);
-  if (parameter_block == NULL) {
+double ProblemImpl::GetParameterLowerBound(const double* values,
+                                           int index) const {
+  ParameterBlock* parameter_block = FindWithDefault(
+      parameter_block_map_, const_cast<double*>(values), nullptr);
+  if (parameter_block == nullptr) {
     LOG(FATAL) << "Parameter block not found: " << values
                << ". You must add the parameter block to the problem before "
                << "you can get the lower bound on one of its components.";
@@ -589,10 +572,11 @@ double ProblemImpl::GetParameterLowerBound(double* values, int index) const {
   return parameter_block->LowerBound(index);
 }
 
-double ProblemImpl::GetParameterUpperBound(double* values, int index) const {
-  ParameterBlock* parameter_block =
-      FindWithDefault(parameter_block_map_, values, NULL);
-  if (parameter_block == NULL) {
+double ProblemImpl::GetParameterUpperBound(const double* values,
+                                           int index) const {
+  ParameterBlock* parameter_block = FindWithDefault(
+      parameter_block_map_, const_cast<double*>(values), nullptr);
+  if (parameter_block == nullptr) {
     LOG(FATAL) << "Parameter block not found: " << values
                << ". You must add the parameter block to the problem before "
                << "you can set an upper bound on one of its components.";
@@ -605,10 +589,8 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
                            vector<double>* residuals,
                            vector<double>* gradient,
                            CRSMatrix* jacobian) {
-  if (cost == NULL &&
-      residuals == NULL &&
-      gradient == NULL &&
-      jacobian == NULL) {
+  if (cost == nullptr && residuals == nullptr && gradient == nullptr &&
+      jacobian == nullptr) {
     LOG(INFO) << "Nothing to do.";
     return true;
   }
@@ -618,7 +600,8 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   Program program;
   *program.mutable_residual_blocks() =
       ((evaluate_options.residual_blocks.size() > 0)
-       ? evaluate_options.residual_blocks : program_->residual_blocks());
+           ? evaluate_options.residual_blocks
+           : program_->residual_blocks());
 
   const vector<double*>& parameter_block_ptrs =
       evaluate_options.parameter_blocks;
@@ -639,10 +622,9 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
     // 1. Convert double* into ParameterBlock*
     parameter_blocks.resize(parameter_block_ptrs.size());
     for (int i = 0; i < parameter_block_ptrs.size(); ++i) {
-      parameter_blocks[i] = FindWithDefault(parameter_block_map_,
-                                            parameter_block_ptrs[i],
-                                            NULL);
-      if (parameter_blocks[i] == NULL) {
+      parameter_blocks[i] = FindWithDefault(
+          parameter_block_map_, parameter_block_ptrs[i], nullptr);
+      if (parameter_blocks[i] == nullptr) {
         LOG(FATAL) << "No known parameter block for "
                    << "Problem::Evaluate::Options.parameter_blocks[" << i << "]"
                    << " = " << parameter_block_ptrs[i];
@@ -712,16 +694,16 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
                            CompressedRowJacobianWriter>(evaluator_options,
                                                         &program));
 
-  if (residuals !=NULL) {
+  if (residuals != nullptr) {
     residuals->resize(evaluator->NumResiduals());
   }
 
-  if (gradient != NULL) {
+  if (gradient != nullptr) {
     gradient->resize(evaluator->NumEffectiveParameters());
   }
 
   std::unique_ptr<CompressedRowSparseMatrix> tmp_jacobian;
-  if (jacobian != NULL) {
+  if (jacobian != nullptr) {
     tmp_jacobian.reset(
         down_cast<CompressedRowSparseMatrix*>(evaluator->CreateJacobian()));
   }
@@ -745,12 +727,13 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   Evaluator::EvaluateOptions evaluator_evaluate_options;
   evaluator_evaluate_options.apply_loss_function =
       evaluate_options.apply_loss_function;
-  bool status = evaluator->Evaluate(evaluator_evaluate_options,
-                                    parameters.data(),
-                                    &tmp_cost,
-                                    residuals != NULL ? &(*residuals)[0] : NULL,
-                                    gradient != NULL ? &(*gradient)[0] : NULL,
-                                    tmp_jacobian.get());
+  bool status =
+      evaluator->Evaluate(evaluator_evaluate_options,
+                          parameters.data(),
+                          &tmp_cost,
+                          residuals != nullptr ? &(*residuals)[0] : nullptr,
+                          gradient != nullptr ? &(*gradient)[0] : nullptr,
+                          tmp_jacobian.get());
 
   // Make the parameter blocks that were temporarily marked constant,
   // variable again.
@@ -759,10 +742,10 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   }
 
   if (status) {
-    if (cost != NULL) {
+    if (cost != nullptr) {
       *cost = tmp_cost;
     }
-    if (jacobian != NULL) {
+    if (jacobian != nullptr) {
       tmp_jacobian->ToCRSMatrix(jacobian);
     }
   }
@@ -807,22 +790,18 @@ int ProblemImpl::NumParameterBlocks() const {
   return program_->NumParameterBlocks();
 }
 
-int ProblemImpl::NumParameters() const {
-  return program_->NumParameters();
-}
+int ProblemImpl::NumParameters() const { return program_->NumParameters(); }
 
 int ProblemImpl::NumResidualBlocks() const {
   return program_->NumResidualBlocks();
 }
 
-int ProblemImpl::NumResiduals() const {
-  return program_->NumResiduals();
-}
+int ProblemImpl::NumResiduals() const { return program_->NumResiduals(); }
 
 int ProblemImpl::ParameterBlockSize(const double* values) const {
-  ParameterBlock* parameter_block =
-      FindWithDefault(parameter_block_map_, const_cast<double*>(values), NULL);
-  if (parameter_block == NULL) {
+  ParameterBlock* parameter_block = FindWithDefault(
+      parameter_block_map_, const_cast<double*>(values), nullptr);
+  if (parameter_block == nullptr) {
     LOG(FATAL) << "Parameter block not found: " << values
                << ". You must add the parameter block to the problem before "
                << "you can get its size.";
@@ -832,9 +811,9 @@ int ProblemImpl::ParameterBlockSize(const double* values) const {
 }
 
 int ProblemImpl::ParameterBlockLocalSize(const double* values) const {
-  ParameterBlock* parameter_block =
-      FindWithDefault(parameter_block_map_, const_cast<double*>(values), NULL);
-  if (parameter_block == NULL) {
+  ParameterBlock* parameter_block = FindWithDefault(
+      parameter_block_map_, const_cast<double*>(values), nullptr);
+  if (parameter_block == nullptr) {
     LOG(FATAL) << "Parameter block not found: " << values
                << ". You must add the parameter block to the problem before "
                << "you can get its local size.";
@@ -886,11 +865,10 @@ const LossFunction* ProblemImpl::GetLossFunctionForResidualBlock(
 }
 
 void ProblemImpl::GetResidualBlocksForParameterBlock(
-    const double* values,
-    vector<ResidualBlockId>* residual_blocks) const {
-  ParameterBlock* parameter_block =
-      FindWithDefault(parameter_block_map_, const_cast<double*>(values), NULL);
-  if (parameter_block == NULL) {
+    const double* values, vector<ResidualBlockId>* residual_blocks) const {
+  ParameterBlock* parameter_block = FindWithDefault(
+      parameter_block_map_, const_cast<double*>(values), nullptr);
+  if (parameter_block == nullptr) {
     LOG(FATAL) << "Parameter block not found: " << values
                << ". You must add the parameter block to the problem before "
                << "you can get the residual blocks that depend on it.";
@@ -912,8 +890,7 @@ void ProblemImpl::GetResidualBlocksForParameterBlock(
   residual_blocks->clear();
   const int num_residual_blocks = NumResidualBlocks();
   for (int i = 0; i < num_residual_blocks; ++i) {
-    ResidualBlock* residual_block =
-        (*(program_->mutable_residual_blocks()))[i];
+    ResidualBlock* residual_block = (*(program_->mutable_residual_blocks()))[i];
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
     for (int j = 0; j < num_parameter_blocks; ++j) {
       if (residual_block->parameter_blocks()[j] == parameter_block) {
