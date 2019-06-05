@@ -50,6 +50,7 @@
 namespace ceres {
 
 class CostFunction;
+class EvaluationCallback;
 class LossFunction;
 class LocalParameterization;
 class Solver;
@@ -165,6 +166,23 @@ class CERES_EXPORT Problem {
     //
     // Ceres does NOT take ownership of the pointer.
     Context* context = nullptr;
+
+    // Using this callback interface, Ceres can notify you when it is
+    // about to evaluate the residuals or jacobians. With the
+    // callback, you can share computation between residual blocks by
+    // doing the shared computation in
+    // EvaluationCallback::PrepareForEvaluation() before Ceres calls
+    // CostFunction::Evaluate(). It also enables caching results
+    // between a pure residual evaluation and a residual & jacobian
+    // evaluation.
+    //
+    // Problem DOES NOT take ownership of the callback.
+    //
+    // NOTE: Evaluation callbacks are incompatible with inner
+    // iterations. So calling Solve with
+    // Solver::Options::use_inner_iterations = true on a Problem with
+    // a non-null evaluation callback is an error.
+    EvaluationCallback* evaluation_callback = nullptr;
   };
 
   // The default constructor is equivalent to the
@@ -448,6 +466,10 @@ class CERES_EXPORT Problem {
   // Note 3: This function cannot be called while the problem is being
   // solved, for example it cannot be called from an IterationCallback
   // at the end of an iteration during a solve.
+  //
+  // Note 4: If an EvaluationCallback is associated with the problem,
+  // then its PrepareForEvaluation method will be called everytime
+  // this method is called with new_point = true.
   bool Evaluate(const EvaluateOptions& options,
                 double* cost,
                 std::vector<double>* residuals,
@@ -480,8 +502,17 @@ class CERES_EXPORT Problem {
   // apply_loss_function as the name implies allows the user to switch
   // the application of the loss function on and off.
   //
-  // TODO(sameeragarwal): Clarify interaction with IterationCallback
-  // once that cleanup is done.
+  // WARNING: If an EvaluationCallback is associated with the problem
+  // then it is the user's responsibility to call it before calling
+  // this method.
+  //
+  // This is because, if the user calls this method multiple times, we
+  // cannot tell if the underlying parameter blocks have changed
+  // between calls or not. So if EvaluateResidualBlock was responsible
+  // for calling the EvaluationCallback, it will have to do it
+  // everytime it is called. Which makes the common case where the
+  // parameter blocks do not change, inefficient. So we leave it to
+  // the user to call the EvaluationCallback as needed.
   bool EvaluateResidualBlock(ResidualBlockId residual_block_id,
                              bool apply_loss_function,
                              double* cost,

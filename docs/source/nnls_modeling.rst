@@ -1536,6 +1536,116 @@ Instances
    delete on each ``cost_function`` or ``loss_function`` pointer only
    once, regardless of how many residual blocks refer to them.
 
+.. class:: Problem::Options
+
+   Options struct that is used to control :class:`Problem::`.
+
+.. member:: Ownership Problem::Options::cost_function_ownership
+
+   Default: ``TAKE_OWNERSHIP``
+
+   This option controls whether the Problem object owns the cost
+   functions.
+
+   If set to TAKE_OWNERSHIP, then the problem object will delete the
+   cost functions on destruction. The destructor is careful to delete
+   the pointers only once, since sharing cost functions is allowed.
+
+.. member:: Ownership Problem::Options::loss_function_ownership
+
+   Default: ``TAKE_OWNERSHIP``
+
+   This option controls whether the Problem object owns the loss
+   functions.
+
+   If set to TAKE_OWNERSHIP, then the problem object will delete the
+   loss functions on destruction. The destructor is careful to delete
+   the pointers only once, since sharing loss functions is allowed.
+
+.. member:: Ownership Problem::Options::local_parameterization_ownership
+
+   Default: ``TAKE_OWNERSHIP``
+
+   This option controls whether the Problem object owns the local
+   parameterizations.
+
+   If set to TAKE_OWNERSHIP, then the problem object will delete the
+   local parameterizations on destruction. The destructor is careful
+   to delete the pointers only once, since sharing local
+   parameterizations is allowed.
+
+.. member:: bool Problem::Options::enable_fast_removal
+
+    Default: ``false``
+
+    If true, trades memory for faster
+    :member:`Problem::RemoveResidualBlock` and
+    :member:`Problem::RemoveParameterBlock` operations.
+
+    By default, :member:`Problem::RemoveParameterBlock` and
+    :member:`Problem::RemoveResidualBlock` take time proportional to
+    the size of the entire problem.  If you only ever remove
+    parameters or residuals from the problem occasionally, this might
+    be acceptable.  However, if you have memory to spare, enable this
+    option to make :member:`Problem::RemoveParameterBlock` take time
+    proportional to the number of residual blocks that depend on it,
+    and :member:`Problem::RemoveResidualBlock` take (on average)
+    constant time.
+
+    The increase in memory usage is twofold: an additional hash set
+    per parameter block containing all the residuals that depend on
+    the parameter block; and a hash set in the problem containing all
+    residuals.
+
+.. member:: bool Problem::Options::disable_all_safety_checks
+
+    Default: `false`
+
+    By default, Ceres performs a variety of safety checks when
+    constructing the problem. There is a small but measurable
+    performance penalty to these checks, typically around 5% of
+    construction time. If you are sure your problem construction is
+    correct, and 5% of the problem construction time is truly an
+    overhead you want to avoid, then you can set
+    disable_all_safety_checks to true.
+
+    **WARNING** Do not set this to true, unless you are absolutely
+    sure of what you are doing.
+
+.. member:: Context* Problem::Options::context
+
+    Default: `nullptr`
+
+    A Ceres global context to use for solving this problem. This may
+    help to reduce computation time as Ceres can reuse expensive
+    objects to create.  The context object can be `nullptr`, in which
+    case Ceres may create one.
+
+    Ceres does NOT take ownership of the pointer.
+
+.. member:: EvaluationCallback* Problem::Options::evaluation_callback
+
+    Default: `nullptr`
+
+    Using this callback interface, Ceres can notify you when it is
+    about to evaluate the residuals or Jacobians. With the callback,
+    you can share computation between residual blocks by doing the
+    shared computation in
+    :member:`EvaluationCallback::PrepareForEvaluation` before Ceres
+    calls :member:`CostFunction::Evaluate`. It also enables caching
+    results between a pure residual evaluation and a residual &
+    Jacobian evaluation.
+
+    Problem does NOT take ownership of the callback.
+
+    .. NOTE::
+
+       Evaluation callbacks are incompatible with inner iterations. So
+       calling Solve with
+       :member:`Solver::Options::use_inner_iterations` set to `true`
+       on a :class:`Problem` with a non-null evaluation callback is an
+       error.
+
 .. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, const vector<double*> parameter_blocks)
 .. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, double *x0, double *x1, ...)
 
@@ -1745,15 +1855,15 @@ Instances
    blocks for a parameter block will incur a scan of the entire
    :class:`Problem` object.
 
-.. function:: const CostFunction* GetCostFunctionForResidualBlock(const ResidualBlockId residual_block) const
+.. function:: const CostFunction* Problem::GetCostFunctionForResidualBlock(const ResidualBlockId residual_block) const
 
    Get the :class:`CostFunction` for the given residual block.
 
-.. function:: const LossFunction* GetLossFunctionForResidualBlock(const ResidualBlockId residual_block) const
+.. function:: const LossFunction* Problem::GetLossFunctionForResidualBlock(const ResidualBlockId residual_block) const
 
    Get the :class:`LossFunction` for the given residual block.
 
-.. function::  bool EvaluateResidualBlock(ResidualBlockId residual_block_id, bool apply_loss_function, double* cost,double* residuals, double** jacobians) const;
+.. function::  bool EvaluateResidualBlock(ResidualBlockId residual_block_id, bool apply_loss_function, double* cost,double* residuals, double** jacobians) const
 
    Evaluates the residual block, storing the scalar cost in ``cost``, the
    residual components in ``residuals``, and the jacobians between the
@@ -1783,8 +1893,21 @@ Instances
 
    .. NOTE::
 
-      TODO(sameeragarwal): Clarify interaction with IterationCallback
-      once that cleanup is done.
+      If an :class:`EvaluationCallback` is associated with the problem
+      then it is the user's responsibility to call
+      :func:`EvaluationCalback::PrepareForEvaluation` it before
+      calling this method.
+
+      This is because, if the user calls this method multiple times,
+      we cannot tell if the underlying parameter blocks have changed
+      between calls or not. So if ``EvaluateResidualBlock`` was
+      responsible for calling the
+      :func:`EvaluationCalback::PrepareForEvaluation`, it will have to
+      do it everytime it is called. Which makes the common case where
+      the parameter blocks do not change, inefficient. So we leave it
+      to the user to call the
+      :func:`EvaluationCalback::PrepareForEvaluation` as needed.
+
 
 .. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)
 
@@ -1832,6 +1955,12 @@ Instances
       :class:`IterationCallback` at the end of an iteration during a
       solve.
 
+   .. NOTE::
+
+      If an EvaluationCallback is associated with the problem, then
+      its PrepareForEvaluation method will be called everytime this
+      method is called with ``new_point = true``.
+
 .. class:: Problem::EvaluateOptions
 
    Options struct that is used to control :func:`Problem::Evaluate`.
@@ -1873,7 +2002,64 @@ Instances
 
    Number of threads to use. (Requires OpenMP).
 
-..
+
+:class:`EvaluationCallback`
+===========================
+
+.. class:: EvaluationCallback
+
+   Interface for receiving callbacks before Ceres evaluates residuals or
+   Jacobians:
+
+   .. code-block:: c++
+
+      class EvaluationCallback {
+       public:
+        virtual ~EvaluationCallback() {}
+        virtual void PrepareForEvaluation()(bool evaluate_jacobians
+                                            bool new_evaluation_point) = 0;
+      };
+
+   Ceres will call ``PrepareForEvaluation()`` every time, and once
+   before it computes the residuals and/or the Jacobians.
+
+   User parameters (the double* values provided by the us)
+   are fixed until the next call to ``PrepareForEvaluation()``. If
+   ``new_evaluation_point == true``, then this is a new point that is
+   different from the last evaluated point. Otherwise, it is the same
+   point that was evaluated previously (either Jacobian or residual)
+   and the user can use cached results from previous evaluations. If
+   ``evaluate_jacobians`` is true, then Ceres will request Jacobians
+   in the upcoming cost evaluation.
+
+   Using this callback interface, Ceres can notify you when it is about
+   to evaluate the residuals or Jacobians. With the callback, you can
+   share computation between residual blocks by doing the shared
+   computation in PrepareForEvaluation() before Ceres calls
+   CostFunction::Evaluate() on all the residuals. It also enables
+   caching results between a pure residual evaluation and a residual &
+   Jacobian evaluation, via the new_evaluation_point argument.
+
+   One use case for this callback is if the cost function compute is
+   moved to the GPU. In that case, the prepare call does the actual cost
+   function evaluation, and subsequent calls from Ceres to the actual
+   cost functions merely copy the results from the GPU onto the
+   corresponding blocks for Ceres to plug into the solver.
+
+   **Note**: Ceres provides no mechanism to share data other than the
+   notification from the callback. Users must provide access to
+   pre-computed shared data to their cost functions behind the scenes;
+   this all happens without Ceres knowing. One approach is to put a
+   pointer to the shared data in each cost function (recommended) or to
+   use a global shared variable (discouraged; bug-prone).  As far as
+   Ceres is concerned, it is evaluating cost functions like any other;
+   it just so happens that behind the scenes the cost functions reuse
+   pre-computed data to execute faster.
+
+   See ``evaluation_callback_test.cc`` for code that explicitly verifies
+   the preconditions between ``PrepareForEvaluation()`` and
+   ``CostFunction::Evaluate()``.
+
 ``rotation.h``
 ==============
 
