@@ -1413,6 +1413,10 @@ elimination group [LiSaad]_.
    on each Newton/Trust region step using a coordinate descent
    algorithm.  For more details, see :ref:`section-inner-iterations`.
 
+   **Note** Inner iterations cannot be used with :class:`Problem`
+   objects that have an :class:`EvaluationCallback` associated with
+   them.
+
 .. member:: double Solver::Options::inner_iteration_tolerance
 
    Default: ``1e-3``
@@ -1603,63 +1607,40 @@ elimination group [LiSaad]_.
    which break this finite difference heuristic, but they do not come
    up often in practice.
 
-.. member:: vector<IterationCallback> Solver::Options::callbacks
-
-   Callbacks that are executed at the end of each iteration of the
-   :class:`Minimizer`. They are executed in the order that they are
-   specified in this vector. By default, parameter blocks are updated
-   only at the end of the optimization, i.e., when the
-   :class:`Minimizer` terminates. This behavior is controlled by
-   :member:`Solver::Options::update_state_every_iteration`. If the user
-   wishes to have access to the updated parameter blocks when his/her
-   callbacks are executed, then set
-   :member:`Solver::Options::update_state_every_iteration` to true.
-
-   The solver does NOT take ownership of these pointers.
-
 .. member:: bool Solver::Options::update_state_every_iteration
 
    Default: ``false``
 
-   If true, the user's parameter blocks are updated at the end of
-   every Minimizer iteration, otherwise they are updated when the
-   Minimizer terminates. This is useful if, for example, the user
-   wishes to visualize the state of the optimization every iteration
-   (in combination with an IterationCallback).
+   If ``update_state_every_iteration`` is ``true``, then Ceres Solver
+   will guarantee that at the end of every iteration and before any
+   user :class:`IterationCallback` is called, the parameter blocks are
+   updated to the current best solution found by the solver. Thus the
+   IterationCallback can inspect the values of the parameter blocks
+   for purposes of computation, visualization or termination.
 
-   **Note**: If :member:`Solver::Options::evaluation_callback` is set,
-   then the behaviour of this flag is slightly different in each case:
+   If ``update_state_every_iteration`` is ``false`` then there is no
+   such guarantee, and user provided :class:`IterationCallback` s should
+   not expect to look at the parameter blocks and interpret their
+   values.
 
-   1. If :member:`Solver::Options::update_state_every_iteration` is
-      false, then the user's state is changed at every residual and/or
-      jacobian evaluation. Any user provided IterationCallbacks should
-      **not** inspect and depend on the user visible state while the
-      solver is running, since they it have undefined contents.
+.. member:: vector<IterationCallback> Solver::Options::callbacks
 
-   2. If :member:`Solver::Options::update_state_every_iteration` is
-      false, then the user's state is changed at every residual and/or
-      jacobian evaluation, BUT the solver will ensure that before the
-      user provided `IterationCallbacks` are called, the user visible
-      state will be updated to the current best point found by the
-      solver.
+   Callbacks that are executed at the end of each iteration of the
+   :class:`Minimizer`. They are executed in the order that they are
+   specified in this vector.
 
-.. member:: bool Solver::Options::evaluation_callback
+   By default, parameter blocks are updated only at the end of the
+   optimization, i.e., when the :class:`Minimizer` terminates. This
+   means that by default, if an :class:`IterationCallback` inspects
+   the parameter blocks, they will not see them changing in the course
+   of the optimization.
 
-   Default: ``NULL``
+   To tell Ceres to update the parameter blocks at the end of each
+   iteration and before calling the user's callback, set
+   :member:`Solver::Options::update_state_every_iteration` to
+   ``true``.
 
-   If non-``NULL``, gets notified when Ceres is about to evaluate the
-   residuals and/or Jacobians. This enables sharing computation between
-   residuals, which in some cases is important for efficient cost
-   evaluation. See :class:`EvaluationCallback` for details.
-
-   **Note**: Evaluation callbacks are incompatible with inner
-   iterations.
-
-   **Warning**: This interacts with
-   :member:`Solver::Options::update_state_every_iteration`. See the
-   documentation for that option for more details.
-
-   The solver does `not`  take ownership of the pointer.
+   The solver does NOT take ownership of these pointers.
 
 :class:`ParameterBlockOrdering`
 ===============================
@@ -1719,62 +1700,6 @@ elimination group [LiSaad]_.
 .. function:: int ParameterBlockOrdering::NumGroups() const
 
    Number of groups with one or more elements.
-
-:class:`EvaluationCallback`
-===========================
-
-.. class:: EvaluationCallback
-
-   Interface for receiving callbacks before Ceres evaluates residuals or
-   Jacobians:
-
-   .. code-block:: c++
-
-      class EvaluationCallback {
-       public:
-        virtual ~EvaluationCallback() {}
-        virtual void PrepareForEvaluation()(bool evaluate_jacobians
-                                            bool new_evaluation_point) = 0;
-      };
-
-   ``PrepareForEvaluation()`` is called before Ceres requests residuals
-   or jacobians for a given setting of the parameters. User parameters
-   (the double* values provided to the cost functions) are fixed until
-   the next call to ``PrepareForEvaluation()``. If
-   ``new_evaluation_point == true``, then this is a new point that is
-   different from the last evaluated point. Otherwise, it is the same
-   point that was evaluated previously (either jacobian or residual) and
-   the user can use cached results from previous evaluations. If
-   ``evaluate_jacobians`` is true, then Ceres will request jacobians in
-   the upcoming cost evaluation.
-
-   Using this callback interface, Ceres can notify you when it is about
-   to evaluate the residuals or jacobians. With the callback, you can
-   share computation between residual blocks by doing the shared
-   computation in PrepareForEvaluation() before Ceres calls
-   CostFunction::Evaluate() on all the residuals. It also enables
-   caching results between a pure residual evaluation and a residual &
-   jacobian evaluation, via the new_evaluation_point argument.
-
-   One use case for this callback is if the cost function compute is
-   moved to the GPU. In that case, the prepare call does the actual cost
-   function evaluation, and subsequent calls from Ceres to the actual
-   cost functions merely copy the results from the GPU onto the
-   corresponding blocks for Ceres to plug into the solver.
-
-   **Note**: Ceres provides no mechanism to share data other than the
-   notification from the callback. Users must provide access to
-   pre-computed shared data to their cost functions behind the scenes;
-   this all happens without Ceres knowing. One approach is to put a
-   pointer to the shared data in each cost function (recommended) or to
-   use a global shared variable (discouraged; bug-prone).  As far as
-   Ceres is concerned, it is evaluating cost functions like any other;
-   it just so happens that behind the scenes the cost functions reuse
-   pre-computed data to execute faster.
-
-   See ``evaluation_callback_test.cc`` for code that explicitly verifies
-   the preconditions between ``PrepareForEvaluation()`` and
-   ``CostFunction::Evaluate()``.
 
 :class:`IterationCallback`
 ==========================
