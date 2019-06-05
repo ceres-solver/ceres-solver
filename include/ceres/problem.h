@@ -268,7 +268,7 @@ class CERES_EXPORT Problem {
   // ordering, rendering the jacobian or residuals returned from the solver
   // uninterpretable. If you depend on the evaluated jacobian, do not use
   // remove! This may change in a future release.
-  void RemoveParameterBlock(double* values);
+  void RemoveParameterBlock(const double* values);
 
   // Remove a residual block from the problem. Any parameters that the residual
   // block depends on are not removed. The cost and loss functions for the
@@ -282,13 +282,13 @@ class CERES_EXPORT Problem {
   void RemoveResidualBlock(ResidualBlockId residual_block);
 
   // Hold the indicated parameter block constant during optimization.
-  void SetParameterBlockConstant(double* values);
+  void SetParameterBlockConstant(const double* values);
 
   // Allow the indicated parameter block to vary during optimization.
   void SetParameterBlockVariable(double* values);
 
   // Returns true if a parameter block is set constant, and false otherwise.
-  bool IsParameterBlockConstant(double* values) const;
+  bool IsParameterBlockConstant(const double* values) const;
 
   // Set the local parameterization for one of the parameter blocks.
   // The local_parameterization is owned by the Problem by default. It
@@ -302,7 +302,7 @@ class CERES_EXPORT Problem {
   // Get the local parameterization object associated with this
   // parameter block. If there is no parameterization object
   // associated then nullptr is returned.
-  const LocalParameterization* GetParameterization(double* values) const;
+  const LocalParameterization* GetParameterization(const double* values) const;
 
   // Set the lower/upper bound for the parameter at position "index".
   void SetParameterLowerBound(double* values, int index, double lower_bound);
@@ -312,8 +312,8 @@ class CERES_EXPORT Problem {
   // "index". If the parameter is not bounded by the user, then its
   // lower bound is -std::numeric_limits<double>::max() and upper
   // bound is std::numeric_limits<double>::max().
-  double GetParameterLowerBound(double* values, int index) const;
-  double GetParameterUpperBound(double* values, int index) const;
+  double GetParameterLowerBound(const double* values, int index) const;
+  double GetParameterUpperBound(const double* values, int index) const;
 
   // Number of parameter blocks in the problem. Always equals
   // parameter_blocks().size() and parameter_block_sizes().size().
