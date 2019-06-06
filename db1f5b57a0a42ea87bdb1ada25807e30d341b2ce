@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e0afad7_4b6826c3",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2019-06-06T23:53:58Z",
+      "side": 1,
+      "message": "This led me to notice that there\u0027s no documentation for IsParameterBlockConstant.",
+      "range": {
+        "startLine": 1637,
+        "startChar": 0,
+        "endLine": 1637,
+        "endChar": 75
+      },
+      "revId": "db1f5b57a0a42ea87bdb1ada25807e30d341b2ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
