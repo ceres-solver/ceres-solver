@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98d1d184_ea7e9fe4",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-06-14T23:17:33Z",
+      "side": 0,
+      "message": "Shouldn\u0027t we still check for this?",
+      "revId": "db1f5b57a0a42ea87bdb1ada25807e30d341b2ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}

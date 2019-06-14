@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5c60035_a1d99b9d",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-06-14T23:17:33Z",
+      "side": 1,
+      "message": "nit: is legal",
+      "revId": "58642c661179991a8ea4fcf595844985476f22c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811ab3c0_b3c7d58d",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-06-14T23:17:33Z",
+      "side": 1,
+      "message": "Why is this not an option instead of a mutable set?",
+      "revId": "58642c661179991a8ea4fcf595844985476f22c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28cb1e0_7ab2aaf4",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-06-14T23:17:33Z",
+      "side": 1,
+      "message": "the --\u003e then",
+      "revId": "58642c661179991a8ea4fcf595844985476f22c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3adce9a_6a71e7f6",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-06-14T23:17:33Z",
+      "side": 1,
+      "message": "Nit: \"Note:\"\n\nI suggest \"Warning:\" instead.",
+      "revId": "58642c661179991a8ea4fcf595844985476f22c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ddab2ea_f04b1e6d",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-06-14T23:17:33Z",
+      "side": 1,
+      "message": "I am unconvinced this operation should be supported; consider making the callback immutable.",
+      "revId": "58642c661179991a8ea4fcf595844985476f22c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
