@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "64de82aa_68edba1e",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-06-15T02:57:25Z",
+      "side": 1,
+      "message": "My thinking is that the problem object gets passed around and things are done to it. If you force it to be in Options, then the evaluation callback may not be available at the time/place where the Problem object is constructed. \n\nSo this is primarily about temporal flexibility. \n\nTo your second point about ownership that you raise elsewhere. I was going for consistency here, we have ownership semantics for everything. This callback is basically a fancy pants costfunction..",
+      "parentUuid": "811ab3c0_b3c7d58d",
+      "revId": "58642c661179991a8ea4fcf595844985476f22c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e28cb1e0_7ab2aaf4",
         "filename": "include/ceres/problem.h",
         "patchSetId": 3
