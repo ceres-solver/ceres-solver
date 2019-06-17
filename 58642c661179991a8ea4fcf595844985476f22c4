@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dae7024a_c8491517",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-06-17T21:12:07Z",
+      "side": 1,
+      "message": "I\u0027m less convinced--- if you\u0027re doing global sharing of compute, then it seems unlikely this style of partial construction will be useful. Furthermore, we support only one callback, not multiple. So for these reasons I suggest we start immutable, and add something like this (runtime settable) later.",
+      "parentUuid": "64de82aa_68edba1e",
+      "revId": "58642c661179991a8ea4fcf595844985476f22c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e28cb1e0_7ab2aaf4",
         "filename": "include/ceres/problem.h",
         "patchSetId": 3
