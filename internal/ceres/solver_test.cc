@@ -336,6 +336,15 @@ TEST(Solver, SparseSchurNoAccelerateSparse) {
   string message;
   EXPECT_FALSE(options.IsValid(&message));
 }
+#else
+TEST(Solver, DynamicSparseNormalCholeskyUnsupportedWithAccelerateSparse) {
+  Solver::Options options;
+  options.sparse_linear_algebra_library_type = ACCELERATE_SPARSE;
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options.dynamic_sparsity = true;
+  string message;
+  EXPECT_FALSE(options.IsValid(&message));
+}
 #endif
 
 #if !defined(CERES_USE_EIGEN_SPARSE)
