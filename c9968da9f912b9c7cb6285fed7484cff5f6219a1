@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7bad00e_c30c89b3",
+        "filename": "internal/ceres/dynamic_sparsity_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-06-26T15:06:21Z",
+      "side": 1,
+      "message": "so this should not be a test here, it should be a test in solver_test.cc since preprocessing should detect this and flag this before we get to the minimizer/linear solver.",
+      "range": {
+        "startLine": 427,
+        "startChar": 2,
+        "endLine": 427,
+        "endChar": 11
+      },
+      "revId": "c9968da9f912b9c7cb6285fed7484cff5f6219a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}

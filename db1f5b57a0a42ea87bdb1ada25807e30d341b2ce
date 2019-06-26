@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aa28e89_2f29a449",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-06-26T15:06:21Z",
+      "side": 0,
+      "message": "what were we thinking?",
+      "range": {
+        "startLine": 362,
+        "startChar": 26,
+        "endLine": 362,
+        "endChar": 0
+      },
+      "revId": "db1f5b57a0a42ea87bdb1ada25807e30d341b2ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
