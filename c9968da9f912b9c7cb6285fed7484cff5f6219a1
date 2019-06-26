@@ -22,6 +22,30 @@
       "revId": "c9968da9f912b9c7cb6285fed7484cff5f6219a1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3ecd16_a666324e",
+        "filename": "internal/ceres/dynamic_sparsity_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-06-26T15:55:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7bad00e_c30c89b3",
+      "range": {
+        "startLine": 427,
+        "startChar": 2,
+        "endLine": 427,
+        "endChar": 11
+      },
+      "revId": "c9968da9f912b9c7cb6285fed7484cff5f6219a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
