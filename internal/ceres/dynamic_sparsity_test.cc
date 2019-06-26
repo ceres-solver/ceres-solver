@@ -423,6 +423,8 @@ TEST(DynamicSparsity, StaticAndDynamicSparsityProduceSameSolution) {
   Solver::Options options;
   options.max_num_iterations = 100;
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  // Accelerate is not currently supported for dynamic sparsity.
+  ASSERT_NE(options.sparse_linear_algebra_library_type, ACCELERATE_SPARSE);
 
   // First, solve `X` and `t` jointly with dynamic_sparsity = true.
   Matrix X0 = X;

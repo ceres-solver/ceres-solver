@@ -358,12 +358,12 @@ class CERES_EXPORT Solver {
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type =
 #if !defined(CERES_NO_SUITESPARSE)
         SUITE_SPARSE;
-#elif !defined(CERES_NO_ACCELERATE_SPARSE)
-        ACCELERATE_SPARSE;
-#elif !defined(CERES_NO_CXSPARSE)
-        CX_SPARSE;
 #elif defined(CERES_USE_EIGEN_SPARSE)
         EIGEN_SPARSE;
+#elif !defined(CERES_NO_CXSPARSE)
+        CX_SPARSE;
+#elif !defined(CERES_NO_ACCELERATE_SPARSE)
+        ACCELERATE_SPARSE;
 #else
         NO_SPARSE;
 #endif

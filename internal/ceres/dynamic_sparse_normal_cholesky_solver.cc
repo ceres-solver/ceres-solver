@@ -92,8 +92,10 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
       summary = SolveImplUsingEigen(A, x);
       break;
     default:
-      LOG(FATAL) << "Unknown sparse linear algebra library : "
-                 << options_.sparse_linear_algebra_library_type;
+      LOG(FATAL) << "Unsupported sparse linear algebra library for "
+                 << "dynamic sparsity: "
+                 << SparseLinearAlgebraLibraryTypeToString(
+                     options_.sparse_linear_algebra_library_type);
   }
 
   if (per_solve_options.D != nullptr) {
