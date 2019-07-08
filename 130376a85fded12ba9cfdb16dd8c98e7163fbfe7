@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad33bb00_3d76f7d0",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1539,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-08T19:24:18Z",
+      "side": 1,
+      "message": "I had to add it, because otherwise I could not add documentation for EvaluationCallback, this whole struct was missing documentation.",
+      "parentUuid": "a517b0d0_266b7d1f",
+      "revId": "130376a85fded12ba9cfdb16dd8c98e7163fbfe7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "530396e8_d1593eef",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "130376a85fded12ba9cfdb16dd8c98e7163fbfe7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ffe68b_73cde9ae",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1639,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-08T19:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "530396e8_d1593eef",
+      "revId": "130376a85fded12ba9cfdb16dd8c98e7163fbfe7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "68c59993_ddbf2dd9",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1867,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-08T19:24:18Z",
+      "side": 1,
+      "message": "this needs deleted, this is obsolete.",
+      "parentUuid": "f4829347_1ef14ff0",
+      "revId": "130376a85fded12ba9cfdb16dd8c98e7163fbfe7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d64a1225_e21916b1",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "86772769_826a65e5",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1884,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-08T19:24:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d64a1225_e21916b1",
+      "revId": "130376a85fded12ba9cfdb16dd8c98e7163fbfe7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22dad6fa_1f2a66d0",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "130376a85fded12ba9cfdb16dd8c98e7163fbfe7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30dc9712_531f868c",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 2052,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-08T19:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22dad6fa_1f2a66d0",
+      "revId": "130376a85fded12ba9cfdb16dd8c98e7163fbfe7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
