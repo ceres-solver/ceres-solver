@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a517b0d0_266b7d1f",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1539,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-08T18:23:49Z",
+      "side": 1,
+      "message": "I\u0027m happy to add this to the docs but maybe next time this could be a separate patch.",
+      "revId": "130376a85fded12ba9cfdb16dd8c98e7163fbfe7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "530396e8_d1593eef",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1639,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-08T18:23:49Z",
+      "side": 1,
+      "message": "Second sentence is probably a copy-and-paste leftover.",
+      "revId": "130376a85fded12ba9cfdb16dd8c98e7163fbfe7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4829347_1ef14ff0",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1867,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-08T18:23:49Z",
+      "side": 1,
+      "message": "Consider working in something like:\n\nWARNING: See note about Problem::EvaluateResidualBlock if you have set an evaluation callback.\n\nBut in either case, this function doesn\u0027t exist anymore. Please rework this into the problem options section.",
+      "revId": "130376a85fded12ba9cfdb16dd8c98e7163fbfe7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d64a1225_e21916b1",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1884,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-08T18:23:49Z",
+      "side": 1,
+      "message": "legal --\u003e is legal",
+      "revId": "130376a85fded12ba9cfdb16dd8c98e7163fbfe7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22dad6fa_1f2a66d0",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 2052,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-08T18:23:49Z",
+      "side": 1,
+      "message": "Fix or remove.",
+      "revId": "130376a85fded12ba9cfdb16dd8c98e7163fbfe7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
