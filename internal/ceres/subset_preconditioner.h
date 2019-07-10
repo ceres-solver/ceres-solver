@@ -58,7 +58,7 @@ class InnerProductComputer;
 // A = [P]
 //     [Q]
 //
-// where P as subset_preconditioner_start_row_block row blocks,
+// where P has subset_preconditioner_start_row_block row blocks,
 // and the preconditioner is the inverse of the matrix Q'Q.
 //
 // Obviously, the smaller this number, the more accurate and

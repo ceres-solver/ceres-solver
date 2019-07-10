@@ -397,18 +397,20 @@ bool Program::IsParameterBlockSetIndependent(
   return true;
 }
 
-TripletSparseMatrix* Program::CreateJacobianBlockSparsityTranspose() const {
+std::unique_ptr<TripletSparseMatrix>
+Program::CreateJacobianBlockSparsityTranspose(int start_residual_block) const {
   // Matrix to store the block sparsity structure of the Jacobian.
-  TripletSparseMatrix* tsm =
-      new TripletSparseMatrix(NumParameterBlocks(),
-                              NumResidualBlocks(),
-                              10 * NumResidualBlocks());
+  const int num_rows = NumParameterBlocks();
+  const int num_cols = NumResidualBlocks() - start_residual_block;
+
+  std::unique_ptr<TripletSparseMatrix> tsm(
+      new TripletSparseMatrix(num_rows, num_cols, 10 * num_cols));
   int num_nonzeros = 0;
   int* rows = tsm->mutable_rows();
   int* cols = tsm->mutable_cols();
   double* values = tsm->mutable_values();
 
-  for (int c = 0; c < residual_blocks_.size(); ++c) {
+  for (int c = start_residual_block; c < residual_blocks_.size(); ++c) {
     const ResidualBlock* residual_block = residual_blocks_[c];
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
     ParameterBlock* const* parameter_blocks =
@@ -430,7 +432,7 @@ TripletSparseMatrix* Program::CreateJacobianBlockSparsityTranspose() const {
 
       const int r = parameter_blocks[j]->index();
       rows[num_nonzeros] = r;
-      cols[num_nonzeros] = c;
+      cols[num_nonzeros] = c - start_residual_block;
       values[num_nonzeros] = 1.0;
       ++num_nonzeros;
     }
