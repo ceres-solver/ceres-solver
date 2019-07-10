@@ -162,6 +162,7 @@ class LinearSolver {
 
     bool use_mixed_precision_solves = false;
     int max_num_refinement_iterations = 0;
+    int subset_preconditioner_start_row_block = -1;
     ContextImpl* context = nullptr;
   };
 

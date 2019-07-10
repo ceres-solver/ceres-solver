@@ -527,18 +527,14 @@ bool ReorderProgramForSchurTypeLinearSolver(
 
   // Schur type solvers also require that their residual blocks be
   // lexicographically ordered.
-  if (!LexicographicallyOrderResidualBlocks(size_of_first_elimination_group,
-                                            program,
-                                            error)) {
-    return false;
-  }
-
-  return true;
+  return LexicographicallyOrderResidualBlocks(
+      size_of_first_elimination_group, program, error);
 }
 
-bool ReorderProgramForSparseNormalCholesky(
+bool ReorderProgramForSparseCholesky(
     const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
     const ParameterBlockOrdering& parameter_block_ordering,
+    int start_row_block,
     Program* program,
     string* error) {
   if (parameter_block_ordering.NumElements() != program->NumParameterBlocks()) {
@@ -552,7 +548,7 @@ bool ReorderProgramForSparseNormalCholesky(
 
   // Compute a block sparse presentation of J'.
   std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
-      program->CreateJacobianBlockSparsityTranspose());
+      program->CreateJacobianBlockSparsityTranspose(start_row_block));
 
   vector<int> ordering(program->NumParameterBlocks(), 0);
   vector<ParameterBlock*>& parameter_blocks =
@@ -600,6 +596,27 @@ bool ReorderProgramForSparseNormalCholesky(
 
   program->SetParameterOffsetsAndIndex();
   return true;
+}
+
+int ReorderResidualBlocksByPartition(
+    const std::unordered_set<ResidualBlockId>& bottom_residual_blocks,
+    Program* program) {
+  auto residual_blocks = program->mutable_residual_blocks();
+  const int num_residual_blocks = residual_blocks->size();
+  std::vector<ResidualBlock*> reordered_residual_blocks(num_residual_blocks, nullptr);
+  int top_cursor = 0;
+  int bottom_cursor = num_residual_blocks - 1;
+  for (auto residual_block : *residual_blocks) {
+    if (bottom_residual_blocks.count(residual_block) == 0) {
+      reordered_residual_blocks[top_cursor++] = residual_block;
+    } else {
+      reordered_residual_blocks[bottom_cursor--] = residual_block;
+    }
+  }
+
+  CHECK_EQ(top_cursor, bottom_cursor + 1);
+  std::swap(*residual_blocks, reordered_residual_blocks);
+  return top_cursor;
 }
 
 }  // namespace internal

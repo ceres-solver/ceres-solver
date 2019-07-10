@@ -750,6 +750,9 @@ preconditioners and Ceres' implementation of them is in its early
 stages and is not as mature as the other preconditioners described
 above.
 
+TODO(sameeragarwal): Rewrite this section and add the description of
+the SubsetPreconditioner.
+
 .. _section-ordering:
 
 Ordering

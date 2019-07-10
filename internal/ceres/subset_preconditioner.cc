@@ -44,7 +44,9 @@ namespace internal {
 SubsetPreconditioner::SubsetPreconditioner(
     const Preconditioner::Options& options, const BlockSparseMatrix& A)
     : options_(options), num_cols_(A.num_cols()) {
-  CHECK_GE(options_.subset_preconditioner_start_row_block, 0);
+  CHECK_GE(options_.subset_preconditioner_start_row_block, 0)
+      << "Congratulations, you found a bug in Ceres. Please report it.";
+
   LinearSolver::Options sparse_cholesky_options;
   sparse_cholesky_options.sparse_linear_algebra_library_type =
       options_.sparse_linear_algebra_library_type;
