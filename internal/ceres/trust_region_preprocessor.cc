@@ -132,6 +132,17 @@ bool ReorderProgram(PreprocessedProblem* pp) {
         &pp->error);
   }
 
+  if (options.linear_solver_type == CGNR &&
+      options.preconditioner_type == SUBSET) {
+    return ReorderProgramForSubsetPreconditioner(
+        options.sparse_linear_algebra_library_type,
+        *options.linear_solver_ordering,
+        options.residual_blocks_for_subset_preconditioner,
+        pp->reduced_program.get(),
+        &pp->linear_solver_options.subset_preconditioner_start_row_block,
+        &pp->error);
+  }
+
   return true;
 }
 

@@ -132,7 +132,7 @@ class Program {
   // the Jacobian matrix.
   //
   // Caller owns the result.
-  TripletSparseMatrix* CreateJacobianBlockSparsityTranspose() const;
+  TripletSparseMatrix* CreateJacobianBlockSparsityTranspose(int start_residual_block = 0) const;
 
   // Create a copy of this program and removes constant parameter
   // blocks and residual blocks with no varying parameter blocks while

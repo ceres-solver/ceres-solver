@@ -112,10 +112,12 @@ enum PreconditionerType {
   // the scene to determine the sparsity structure of the
   // preconditioner. This is done using a clustering algorithm. The
   // available visibility clustering algorithms are described below.
-  //
-  // Note: Requires SuiteSparse.
   CLUSTER_JACOBI,
-  CLUSTER_TRIDIAGONAL
+  CLUSTER_TRIDIAGONAL,
+
+  // Subset preconditioning, uses a subset of the rows of the Jacobian
+  // to construct a preconditioner for the normal equations.
+  SUBSET,
 };
 
 enum VisibilityClusteringType {
