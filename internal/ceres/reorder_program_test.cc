@@ -30,12 +30,12 @@
 
 #include "ceres/reorder_program.h"
 
+#include <random>
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"
-
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -169,7 +169,7 @@ TEST(_, ApplyOrderingNormal) {
 }
 
 #ifndef CERES_NO_SUITESPARSE
-class ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest :
+class ReorderProgramFoSparseCholeskyUsingSuiteSparseTest :
       public ::testing::Test {
  protected:
   void SetUp() {
@@ -188,9 +188,10 @@ class ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest :
         program->parameter_blocks();
 
     std::string error;
-    EXPECT_TRUE(ReorderProgramForSparseNormalCholesky(
+    EXPECT_TRUE(ReorderProgramForSparseCholesky(
                     ceres::SUITE_SPARSE,
                     linear_solver_ordering,
+                    0, /* use all rows */
                     program,
                     &error));
     const vector<ParameterBlock*>& ordered_parameter_blocks =
@@ -208,7 +209,7 @@ class ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest :
   double z_;
 };
 
-TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest,
+TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest,
        EverythingInGroupZero) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
@@ -218,7 +219,7 @@ TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest,
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
-TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest,
+TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest,
        ContiguousGroups) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
@@ -228,7 +229,7 @@ TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest,
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
-TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest,
+TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest,
        GroupsWithGaps) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
@@ -238,7 +239,7 @@ TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest,
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
-TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest,
+TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest,
        NonContiguousStartingAtTwo) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 2);
@@ -248,6 +249,46 @@ TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest,
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 #endif  // CERES_NO_SUITESPARSE
+
+TEST(_, ReorderResidualBlocksbyPartition) {
+  ProblemImpl problem;
+  double x;
+  double y;
+  double z;
+
+  problem.AddParameterBlock(&x, 1);
+  problem.AddParameterBlock(&y, 1);
+  problem.AddParameterBlock(&z, 1);
+
+  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &x);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &y);
+  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &z);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
+  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &y);
+
+  std::vector<ResidualBlockId> residual_block_ids;
+  problem.GetResidualBlocks(&residual_block_ids);
+  std::vector<ResidualBlock*> residual_blocks =
+      problem.program().residual_blocks();
+  auto rng = std::default_random_engine{};
+  for (int i = 1; i < 6; ++i) {
+    std::shuffle(
+        std::begin(residual_block_ids), std::end(residual_block_ids), rng);
+    std::unordered_set<ResidualBlockId> bottom(residual_block_ids.begin(),
+                                               residual_block_ids.begin() + i);
+    const int start_bottom =
+        ReorderResidualBlocksByPartition(bottom, problem.mutable_program());
+    std::vector<ResidualBlock*> actual_residual_blocks =
+        problem.program().residual_blocks();
+    EXPECT_THAT(actual_residual_blocks,
+                testing::UnorderedElementsAreArray(residual_blocks));
+    EXPECT_EQ(start_bottom, residual_blocks.size() - i);
+    for (int j = start_bottom; j < residual_blocks.size(); ++j) {
+      EXPECT_THAT(bottom, ::testing::Contains(actual_residual_blocks[j]));
+    }
+  }
+}
 
 }  // namespace internal
 }  // namespace ceres

@@ -108,8 +108,7 @@ void AlternateLinearSolverAndPreconditionerForSchurTypeLinearSolver(
   VLOG_IF(1, options->logging_type != SILENT) << message;
 }
 
-// For Schur type and SPARSE_NORMAL_CHOLESKY linear solvers, reorder
-// the program to reduce fill-in and increase cache coherency.
+// Reorder the program to reduce fill-in and increase cache coherency.
 bool ReorderProgram(PreprocessedProblem* pp) {
   const Solver::Options& options = pp->options;
   if (IsSchurType(options.linear_solver_type)) {
@@ -122,12 +121,27 @@ bool ReorderProgram(PreprocessedProblem* pp) {
         &pp->error);
   }
 
-
   if (options.linear_solver_type == SPARSE_NORMAL_CHOLESKY &&
       !options.dynamic_sparsity) {
-    return ReorderProgramForSparseNormalCholesky(
+    return ReorderProgramForSparseCholesky(
         options.sparse_linear_algebra_library_type,
         *options.linear_solver_ordering,
+        0, /* use all the rows of the jacobian */
+        pp->reduced_program.get(),
+        &pp->error);
+  }
+
+  if (options.linear_solver_type == CGNR &&
+      options.preconditioner_type == SUBSET) {
+    pp->linear_solver_options.subset_preconditioner_start_row_block =
+        ReorderResidualBlocksByPartition(
+            options.residual_blocks_for_subset_preconditioner,
+            pp->reduced_program.get());
+
+    return ReorderProgramForSparseCholesky(
+        options.sparse_linear_algebra_library_type,
+        *options.linear_solver_ordering,
+        pp->linear_solver_options.subset_preconditioner_start_row_block,
         pp->reduced_program.get(),
         &pp->error);
   }
@@ -141,7 +155,9 @@ bool ReorderProgram(PreprocessedProblem* pp) {
 // too.
 bool SetupLinearSolver(PreprocessedProblem* pp) {
   Solver::Options& options = pp->options;
-  if (options.linear_solver_ordering.get() == NULL) {
+  pp->linear_solver_options = LinearSolver::Options();
+
+  if (!options.linear_solver_ordering) {
     // If the user has not supplied a linear solver ordering, then we
     // assume that they are giving all the freedom to us in choosing
     // the best possible ordering. This intent can be indicated by
@@ -177,7 +193,6 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
   }
 
   // Configure the linear solver.
-  pp->linear_solver_options = LinearSolver::Options();
   pp->linear_solver_options.min_num_iterations =
       options.min_linear_solver_iterations;
   pp->linear_solver_options.max_num_iterations =
@@ -236,7 +251,7 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
   }
 
   pp->linear_solver.reset(LinearSolver::Create(pp->linear_solver_options));
-  return (pp->linear_solver.get() != NULL);
+  return (pp->linear_solver.get() != nullptr);
 }
 
 // Configure and create the evaluator.
@@ -262,7 +277,7 @@ bool SetupEvaluator(PreprocessedProblem* pp) {
                                         pp->reduced_program.get(),
                                         &pp->error));
 
-  return (pp->evaluator.get() != NULL);
+  return (pp->evaluator.get() != nullptr);
 }
 
 // If the user requested inner iterations, then find an inner
@@ -288,7 +303,7 @@ bool SetupInnerIterationMinimizer(PreprocessedProblem* pp) {
     return true;
   }
 
-  if (options.inner_iteration_ordering.get() != NULL) {
+  if (options.inner_iteration_ordering.get() != nullptr) {
     // If the user supplied an ordering, then remove the set of
     // inactive parameter blocks from it
     options.inner_iteration_ordering->Remove(pp->removed_parameter_blocks);

@@ -527,18 +527,14 @@ bool ReorderProgramForSchurTypeLinearSolver(
 
   // Schur type solvers also require that their residual blocks be
   // lexicographically ordered.
-  if (!LexicographicallyOrderResidualBlocks(size_of_first_elimination_group,
-                                            program,
-                                            error)) {
-    return false;
-  }
-
-  return true;
+  return LexicographicallyOrderResidualBlocks(
+      size_of_first_elimination_group, program, error);
 }
 
-bool ReorderProgramForSparseNormalCholesky(
+bool ReorderProgramForSparseCholesky(
     const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
     const ParameterBlockOrdering& parameter_block_ordering,
+    int start_row_block,
     Program* program,
     string* error) {
   if (parameter_block_ordering.NumElements() != program->NumParameterBlocks()) {
@@ -552,7 +548,7 @@ bool ReorderProgramForSparseNormalCholesky(
 
   // Compute a block sparse presentation of J'.
   std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
-      program->CreateJacobianBlockSparsityTranspose());
+      program->CreateJacobianBlockSparsityTranspose(start_row_block));
 
   vector<int> ordering(program->NumParameterBlocks(), 0);
   vector<ParameterBlock*>& parameter_blocks =
@@ -600,6 +596,31 @@ bool ReorderProgramForSparseNormalCholesky(
 
   program->SetParameterOffsetsAndIndex();
   return true;
+}
+
+int ReorderResidualBlocksByPartition(
+    const std::unordered_set<ResidualBlockId>& bottom_residual_blocks,
+    Program* program) {
+  auto residual_blocks = program->mutable_residual_blocks();
+  const int num_residual_blocks = residual_blocks->size();
+  std::vector<ResidualBlock*> bottom;
+  bottom.reserve(bottom_residual_blocks.size());
+  std::vector<ResidualBlock*> top;
+  top.reserve(num_residual_blocks - bottom_residual_blocks.size());
+
+  int num_subset_residuals = 0;
+  for (auto residual_block : *residual_blocks) {
+    if (bottom_residual_blocks.count(residual_block) == 0) {
+      top.push_back(residual_block);
+    } else {
+      bottom.push_back(residual_block);
+    }
+  }
+
+  const int num_top_blocks = top.size();
+  top.insert(std::end(top), bottom.begin(), bottom.end());
+  *residual_blocks = top;
+  return num_top_blocks;
 }
 
 }  // namespace internal

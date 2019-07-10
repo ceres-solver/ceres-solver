@@ -112,10 +112,29 @@ enum PreconditionerType {
   // the scene to determine the sparsity structure of the
   // preconditioner. This is done using a clustering algorithm. The
   // available visibility clustering algorithms are described below.
-  //
-  // Note: Requires SuiteSparse.
   CLUSTER_JACOBI,
-  CLUSTER_TRIDIAGONAL
+  CLUSTER_TRIDIAGONAL,
+
+  // Subset preconditioner is a general purpose preconditioner
+  // linear least squares problems. Given a set of residual blocks,
+  // it uses the corresponding subset of the rows of the Jacobian to
+  // construct a preconditioner.
+  //
+  // Suppose the Jacobian J has been horizontally partitioned as
+  //
+  // J = [P]
+  //     [Q]
+  //
+  // Where, Q is the set of rows corresponding to the residual
+  // blocks in residual_blocks_for_subset_preconditioner.
+  //
+  // The preconditioner is the inverse of the matrix Q'Q.
+  //
+  // Obviously, the efficacy of the preconditioner depends on how
+  // well the matrix Q approximates J'J, or how well the chosen
+  // residual blocks approximate the non-linear least squares
+  // problem.
+  SUBSET,
 };
 
 enum VisibilityClusteringType {
