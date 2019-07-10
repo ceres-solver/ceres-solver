@@ -153,47 +153,38 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
     return false;
   }
 
-  if (options.sparse_linear_algebra_library_type == NO_SPARSE) {
-    const char* error_template =
-        "Can't use %s with "
-        "Solver::Options::sparse_linear_algebra_library_type = NO_SPARSE.";
-    const char* name = nullptr;
-
-    if (options.linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
-        options.linear_solver_type == SPARSE_SCHUR) {
-      name = LinearSolverTypeToString(options.linear_solver_type);
-    } else if (options.linear_solver_type == ITERATIVE_SCHUR &&
-               (options.preconditioner_type == CLUSTER_JACOBI ||
-                options.preconditioner_type == CLUSTER_TRIDIAGONAL)) {
-      name = PreconditionerTypeToString(options.preconditioner_type);
-    }
-
-    if (name != nullptr) {
-      *error = StringPrintf(error_template, name);
-      return false;
-    }
-  } else if (!IsSparseLinearAlgebraLibraryTypeAvailable(
-                 options.sparse_linear_algebra_library_type)) {
-    const char* error_template =
-        "Can't use %s with "
-        "Solver::Options::sparse_linear_algebra_library_type = %s, "
-        "because support was not enabled when Ceres Solver was built.";
+  {
+    const char* sparse_linear_algebra_library_name =
+        SparseLinearAlgebraLibraryTypeToString(
+            options.sparse_linear_algebra_library_type);
     const char* name = nullptr;
     if (options.linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
         options.linear_solver_type == SPARSE_SCHUR) {
       name = LinearSolverTypeToString(options.linear_solver_type);
-    } else if (options.linear_solver_type == ITERATIVE_SCHUR &&
-               (options.preconditioner_type == CLUSTER_JACOBI ||
-                options.preconditioner_type == CLUSTER_TRIDIAGONAL)) {
+    } else if ((options.linear_solver_type == ITERATIVE_SCHUR &&
+                (options.preconditioner_type == CLUSTER_JACOBI ||
+                 options.preconditioner_type == CLUSTER_TRIDIAGONAL)) ||
+               (options.linear_solver_type == CGNR &&
+                options.preconditioner_type == SUBSET)) {
       name = PreconditionerTypeToString(options.preconditioner_type);
     }
 
-    if (name != nullptr) {
-      *error = StringPrintf(error_template,
-                            name,
-                            SparseLinearAlgebraLibraryTypeToString(
-                                options.sparse_linear_algebra_library_type));
-      return false;
+    if (name) {
+      if (options.sparse_linear_algebra_library_type == NO_SPARSE) {
+        *error = StringPrintf(
+            "Can't use %s with "
+            "Solver::Options::sparse_linear_algebra_library_type = %s.",
+            name, sparse_linear_algebra_library_name);
+        return false;
+      } else if (!IsSparseLinearAlgebraLibraryTypeAvailable(
+                     options.sparse_linear_algebra_library_type)) {
+        *error = StringPrintf(
+            "Can't use %s with "
+            "Solver::Options::sparse_linear_algebra_library_type = %s, "
+            "because support was not enabled when Ceres Solver was built.",
+            name, sparse_linear_algebra_library_name);
+        return false;
+      }
     }
   }
 
@@ -224,6 +215,16 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
           "sparsity.";
       return false;
     }
+  }
+
+  if (options.linear_solver_type == CGNR &&
+      options.preconditioner_type == SUBSET &&
+      options.residual_blocks_for_subset_preconditioner.size() == 0) {
+    *error =
+        "When using SUBSET preconditioner, "
+        "Solver::Options::residual_blocks_for_subset_preconditioner cannot be "
+        "empty";
+    return false;
   }
 
   return true;

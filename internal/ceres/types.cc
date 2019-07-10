@@ -78,6 +78,7 @@ const char* PreconditionerTypeToString(PreconditionerType type) {
     CASESTR(SCHUR_JACOBI);
     CASESTR(CLUSTER_JACOBI);
     CASESTR(CLUSTER_TRIDIAGONAL);
+    CASESTR(SUBSET);
     default:
       return "UNKNOWN";
   }
@@ -90,6 +91,7 @@ bool StringToPreconditionerType(string value, PreconditionerType* type) {
   STRENUM(SCHUR_JACOBI);
   STRENUM(CLUSTER_JACOBI);
   STRENUM(CLUSTER_TRIDIAGONAL);
+  STRENUM(SUBSET);
   return false;
 }
 

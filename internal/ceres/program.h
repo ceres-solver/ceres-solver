@@ -131,8 +131,10 @@ class Program {
   // structure corresponding to the block sparsity of the transpose of
   // the Jacobian matrix.
   //
-  // Caller owns the result.
-  TripletSparseMatrix* CreateJacobianBlockSparsityTranspose() const;
+  // start_residual_block which allows the user to ignore the first
+  // start_residual_block residuals.
+  std::unique_ptr<TripletSparseMatrix> CreateJacobianBlockSparsityTranspose(
+      int start_residual_block = 0) const;
 
   // Create a copy of this program and removes constant parameter
   // blocks and residual blocks with no varying parameter blocks while
