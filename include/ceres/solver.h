@@ -34,8 +34,10 @@
 #include <cmath>
 #include <memory>
 #include <string>
+#include <unordered_set>
 #include <vector>
 #include "ceres/crs_matrix.h"
+#include "ceres/problem.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
@@ -43,8 +45,6 @@
 #include "ceres/types.h"
 
 namespace ceres {
-
-class Problem;
 
 // Interface for non-linear least squares solvers.
 class CERES_EXPORT Solver {
@@ -336,6 +336,30 @@ class CERES_EXPORT Solver {
     // preconditioning. This option is used only when the
     // preconditioner_type is CLUSTER_JACOBI or CLUSTER_TRIDIAGONAL.
     VisibilityClusteringType visibility_clustering_type = CANONICAL_VIEWS;
+
+    // Subset preconditioner is a general purpose preconditioner
+    // linear least squares problems. Given a set of residual blocks,
+    // it uses the corresponding subset of the rows of the Jacobian to
+    // construct a preconditioner.
+    //
+    // Suppose the Jacobian J has been horizontally partitioned as
+    //
+    // J = [P]
+    //     [Q]
+    //
+    // Where, Q is the set of rows corresponding to the residual
+    // blocks in residual_blocks_for_subset_preconditioner.
+    //
+    // The preconditioner is the inverse of the matrix Q'Q.
+    //
+    // Obviously, the efficacy of the preconditioner depends on how
+    // well the matrix Q approximates J'J, or how well the chosen
+    // residual blocks approximate the non-linear least squares
+    // problem.
+    //
+    // If Solver::Options::preconditioner_type == SUBSET, then
+    // residual_blocks_for_subset_preconditioner must be non-empty.
+    std::unordered_set<ResidualBlockId> residual_blocks_for_subset_preconditioner;
 
     // Ceres supports using multiple dense linear algebra libraries
     // for dense matrix factorizations. Currently EIGEN and LAPACK are
