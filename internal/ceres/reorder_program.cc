@@ -527,18 +527,14 @@ bool ReorderProgramForSchurTypeLinearSolver(
 
   // Schur type solvers also require that their residual blocks be
   // lexicographically ordered.
-  if (!LexicographicallyOrderResidualBlocks(size_of_first_elimination_group,
-                                            program,
-                                            error)) {
-    return false;
-  }
-
-  return true;
+  return LexicographicallyOrderResidualBlocks(
+      size_of_first_elimination_group, program, error);
 }
 
-bool ReorderProgramForSparseNormalCholesky(
+bool ReorderProgramForSparseCholeskyFactorization(
     const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
     const ParameterBlockOrdering& parameter_block_ordering,
+    int start_row_block,
     Program* program,
     string* error) {
   if (parameter_block_ordering.NumElements() != program->NumParameterBlocks()) {
@@ -552,7 +548,7 @@ bool ReorderProgramForSparseNormalCholesky(
 
   // Compute a block sparse presentation of J'.
   std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
-      program->CreateJacobianBlockSparsityTranspose());
+      program->CreateJacobianBlockSparsityTranspose(start_row_block));
 
   vector<int> ordering(program->NumParameterBlocks(), 0);
   vector<ParameterBlock*>& parameter_blocks =
@@ -600,6 +596,67 @@ bool ReorderProgramForSparseNormalCholesky(
 
   program->SetParameterOffsetsAndIndex();
   return true;
+}
+
+bool ReorderProgramForSparseNormalCholesky(
+    const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+    const ParameterBlockOrdering& parameter_block_ordering,
+    Program* program,
+    string* error) {
+  return ReorderProgramForSparseCholeskyFactorization(
+      sparse_linear_algebra_library_type,
+      parameter_block_ordering,
+      0,
+      program,
+      error);
+}
+
+bool ReorderProgramForSubsetPreconditioner(
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+    const ParameterBlockOrdering& parameter_block_ordering,
+    const std::unordered_set<ResidualBlockId>& residual_blocks_subset,
+    Program* program,
+    int* subset_preconditioner_start_row_block,
+    std::string* error) {
+  auto residual_blocks = program->mutable_residual_blocks();
+  const int num_residual_blocks = residual_blocks->size();
+  std::vector<ResidualBlock*> p;
+  p.reserve(num_residual_blocks - residual_blocks_subset.size());
+  std::vector<ResidualBlock*> q;
+  q.reserve(residual_blocks_subset.size());
+
+  int num_subset_residuals = 0;
+  for (auto residual_block : *residual_blocks) {
+    if (residual_blocks_subset.count(residual_block) == 0) {
+      p.push_back(residual_block);
+    } else {
+      q.push_back(residual_block);
+      num_subset_residuals += residual_block->NumResiduals();
+    }
+  }
+
+  CHECK_GE(num_subset_residuals, program->NumEffectiveParameters())
+      << " P: " << p.size()
+      << " Q: " << q.size()
+      << " SUBSET: " << residual_blocks_subset.size()
+      << " Parameters:  " << program->NumParameters()
+      << " Effective Parameters: " << program->NumEffectiveParameters()
+      << " Residual Blocks:  " << residual_blocks->size();
+
+  if (num_subset_residuals < program->NumEffectiveParameters()) {
+    // TODO(sameeragarwal): Fix this up.
+    return false;
+  }
+
+  *subset_preconditioner_start_row_block = p.size();
+  p.insert(std::end(p), q.begin(), q.end());
+  *residual_blocks = p;
+  return ReorderProgramForSparseCholeskyFactorization(
+      sparse_linear_algebra_library_type,
+      parameter_block_ordering,
+      *subset_preconditioner_start_row_block,
+      program,
+      error);
 }
 
 }  // namespace internal

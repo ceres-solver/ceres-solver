@@ -315,10 +315,22 @@ void SolveProblem(const char* filename) {
                       FLAGS_point_sigma);
 
   BuildProblem(&bal_problem, &problem);
+  std::vector<ResidualBlockId> residual_blocks;
+  problem.GetResidualBlocks(&residual_blocks);
   Solver::Options options;
   SetSolverOptionsFromFlags(&bal_problem, &options);
+
+  int i = 0;
+  for (auto residual_block : residual_blocks) {
+    if (i % 3 == 0) {
+      options.residual_blocks_for_subset_preconditioner.insert(residual_block);
+    }
+    ++i;
+  }
+
   options.gradient_tolerance = 1e-16;
   options.function_tolerance = 1e-16;
+
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";

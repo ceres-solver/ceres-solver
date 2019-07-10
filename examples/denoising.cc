@@ -154,6 +154,21 @@ void SolveProblem(Problem* problem, PGMImage<double>* solution) {
   options.linear_solver_type = ceres::SPARSE_NORMAL_CHOLESKY;
   options.function_tolerance = 1e-3;  // Enough for denoising.
 
+
+
+  std::vector<ResidualBlockId> residual_blocks;
+  problem->GetResidualBlocks(&residual_blocks);
+  int i = 0;
+  for (auto residual_block : residual_blocks) {
+    if (i % 3 == 0) {
+      options.residual_blocks_for_subset_preconditioner.insert(residual_block);
+    }
+    ++i;
+  }
+
+  options.linear_solver_type = ceres::CGNR;
+  options.preconditioner_type = ceres::JACOBI;
+
   ceres::Solver::Summary summary;
   ceres::Solve(options, problem, &summary);
   if (FLAGS_verbose) {

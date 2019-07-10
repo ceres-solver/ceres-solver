@@ -95,6 +95,14 @@ bool ReorderProgramForSparseNormalCholesky(
     Program* program,
     std::string* error);
 
+bool ReorderProgramForSubsetPreconditioner(
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+    const ParameterBlockOrdering& parameter_block_ordering,
+    const std::unordered_set<ResidualBlockId>& residual_blocks_subset,
+    Program* program,
+    int* subset_preconditioner_start_row_block,
+    std::string* error);
+
 }  // namespace internal
 }  // namespace ceres
 

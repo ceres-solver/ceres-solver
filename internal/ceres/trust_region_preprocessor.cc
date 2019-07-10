@@ -132,6 +132,17 @@ bool ReorderProgram(PreprocessedProblem* pp) {
         &pp->error);
   }
 
+  if (options.linear_solver_type == CGNR &&
+      options.preconditioner_type == SUBSET) {
+    return ReorderProgramForSubsetPreconditioner(
+        options.sparse_linear_algebra_library_type,
+        *options.linear_solver_ordering,
+        options.residual_blocks_for_subset_preconditioner,
+        pp->reduced_program.get(),
+        &pp->linear_solver_options.subset_preconditioner_start_row_block,
+        &pp->error);
+  }
+
   return true;
 }
 
@@ -170,6 +181,8 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
     }
   }
 
+  pp->linear_solver_options = LinearSolver::Options();
+
   // Reorder the program to reduce fill in and improve cache coherency
   // of the Jacobian.
   if (!ReorderProgram(pp)) {
@@ -177,7 +190,6 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
   }
 
   // Configure the linear solver.
-  pp->linear_solver_options = LinearSolver::Options();
   pp->linear_solver_options.min_num_iterations =
       options.min_linear_solver_iterations;
   pp->linear_solver_options.max_num_iterations =
