@@ -36,7 +36,7 @@
 namespace ceres {
 namespace internal {
 
-TEST(ParameterBlock, SetLocalParameterizationDiesOnSizeMismatch) {
+TEST(ParameterBlock, SetParameterizationDiesOnSizeMismatch) {
   double x[3] = {1.0, 2.0, 3.0};
   ParameterBlock parameter_block(x, 3, -1);
   std::vector<int> indices;
@@ -46,7 +46,7 @@ TEST(ParameterBlock, SetLocalParameterizationDiesOnSizeMismatch) {
       parameter_block.SetParameterization(&subset_wrong_size), "global");
 }
 
-TEST(ParameterBlock, SetLocalParameterizationWithSameExistingParameterization) {
+TEST(ParameterBlock, SetParameterizationWithSameExistingParameterization) {
   double x[3] = {1.0, 2.0, 3.0};
   ParameterBlock parameter_block(x, 3, -1);
   std::vector<int> indices;
@@ -56,19 +56,34 @@ TEST(ParameterBlock, SetLocalParameterizationWithSameExistingParameterization) {
   parameter_block.SetParameterization(&subset);
 }
 
-TEST(ParameterBlock, SetParameterizationDiesOnZeroLocalSize) {
+TEST(ParameterBlock, SetParameterizationAllowsResettingToNull) {
   double x[3] = {1.0, 2.0, 3.0};
   ParameterBlock parameter_block(x, 3, -1);
   std::vector<int> indices;
-  indices.push_back(0);
   indices.push_back(1);
-  indices.push_back(2);
   SubsetParameterization subset(3, indices);
-  EXPECT_DEATH_IF_SUPPORTED(parameter_block.SetParameterization(&subset),
-                            "positive dimensional tangent");
+  parameter_block.SetParameterization(&subset);
+  EXPECT_EQ(parameter_block.local_parameterization(), &subset);
+  parameter_block.SetParameterization(nullptr);
+  EXPECT_EQ(parameter_block.local_parameterization(), nullptr);
 }
 
-TEST(ParameterBlock, SetLocalParameterizationAndNormalOperation) {
+TEST(ParameterBlock,
+     SetParameterizationAllowsResettingToDifferentParameterization) {
+  double x[3] = {1.0, 2.0, 3.0};
+  ParameterBlock parameter_block(x, 3, -1);
+  std::vector<int> indices;
+  indices.push_back(1);
+  SubsetParameterization subset(3, indices);
+  parameter_block.SetParameterization(&subset);
+  EXPECT_EQ(parameter_block.local_parameterization(), &subset);
+
+  SubsetParameterization subset_different(3, indices);
+  parameter_block.SetParameterization(&subset_different);
+  EXPECT_EQ(parameter_block.local_parameterization(), &subset_different);
+}
+
+TEST(ParameterBlock, SetParameterizationAndNormalOperation) {
   double x[3] = {1.0, 2.0, 3.0};
   ParameterBlock parameter_block(x, 3, -1);
   std::vector<int> indices;
