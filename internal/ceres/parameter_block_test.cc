@@ -56,16 +56,35 @@ TEST(ParameterBlock, SetLocalParameterizationWithSameExistingParameterization) {
   parameter_block.SetParameterization(&subset);
 }
 
-TEST(ParameterBlock, SetParameterizationDiesOnZeroLocalSize) {
+TEST(ParameterBlock, SetLocalParameterizationDiesWhenResettingToNull) {
   double x[3] = {1.0, 2.0, 3.0};
   ParameterBlock parameter_block(x, 3, -1);
   std::vector<int> indices;
-  indices.push_back(0);
   indices.push_back(1);
-  indices.push_back(2);
   SubsetParameterization subset(3, indices);
-  EXPECT_DEATH_IF_SUPPORTED(parameter_block.SetParameterization(&subset),
-                            "positive dimensional tangent");
+  parameter_block.SetParameterization(&subset);
+  EXPECT_DEATH_IF_SUPPORTED(parameter_block.SetParameterization(nullptr), "nullptr");
+}
+
+TEST(ParameterBlock,
+     SetLocalParameterizationDiesWhenResettingToDifferentParameterization) {
+  double x[3] = {1.0, 2.0, 3.0};
+  ParameterBlock parameter_block(x, 3, -1);
+  std::vector<int> indices;
+  indices.push_back(1);
+  SubsetParameterization subset(3, indices);
+  parameter_block.SetParameterization(&subset);
+  SubsetParameterization subset_different(3, indices);
+  EXPECT_DEATH_IF_SUPPORTED(
+      parameter_block.SetParameterization(&subset_different), "re-set");
+}
+
+TEST(ParameterBlock, SetLocalParameterizationDiesOnNullParameterization) {
+  double x[3] = {1.0, 2.0, 3.0};
+  ParameterBlock parameter_block(x, 3, -1);
+  std::vector<int> indices;
+  indices.push_back(1);
+  EXPECT_DEATH_IF_SUPPORTED(parameter_block.SetParameterization(nullptr), "nullptr");
 }
 
 TEST(ParameterBlock, SetLocalParameterizationAndNormalOperation) {
