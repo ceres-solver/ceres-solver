@@ -1776,7 +1776,11 @@ Instances
 
 .. function:: bool Problem::IsParameterBlockConstant(const double* values) const
 
-   Returns true if a parameter block is set constant, and false otherwise.
+   Returns ``true`` if a parameter block is set constant, and false
+   otherwise. A parameter block maybe set constant in two ways. Either
+   by calling ``SetParameterBlockConstant`` or by associating a
+   ``LocalParameterization`` with a zero dimensional tangent space
+   with it.
 
 .. function:: void Problem::SetParameterization(double* values, LocalParameterization* local_parameterization)
 
