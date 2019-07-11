@@ -38,6 +38,7 @@
 #include <memory>
 #include <string>
 #include <unordered_set>
+
 #include "ceres/array_utils.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
@@ -190,9 +191,9 @@ class ParameterBlock {
         << "size of " << new_parameterization->GlobalSize() << ". Did you "
         << "accidentally use the wrong parameter block or parameterization?";
 
-    CHECK_GT(new_parameterization->LocalSize(), 0)
+    CHECK_GE(new_parameterization->LocalSize(), 0)
         << "Invalid parameterization. Parameterizations must have a "
-        << "positive dimensional tangent space.";
+        << "non-negative dimensional tangent space.";
 
     local_parameterization_ = new_parameterization;
     local_parameterization_jacobian_.reset(
