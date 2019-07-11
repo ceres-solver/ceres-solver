@@ -37,6 +37,7 @@
 #include <memory>
 #include <utility>
 
+#include "ceres/autodiff_cost_function.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/cost_function.h"
 #include "ceres/covariance_impl.h"
@@ -1192,6 +1193,87 @@ TEST_F(RankDeficientCovarianceTest, AutomaticTruncation) {
   options.algorithm_type = DENSE_SVD;
   options.null_space_rank = -1;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+}
+
+struct LinearCostFunction {
+  template <typename T>
+  bool operator()(const T* x, const T* y, T* residual) const {
+    residual[0] = T(10.0) - *x;
+    residual[1] = T(5.0) - *y;
+    return true;
+  }
+  static CostFunction* Create() {
+    return new AutoDiffCostFunction<LinearCostFunction, 2, 1, 1>(
+        new LinearCostFunction);
+  }
+};
+
+TEST(Covariance, ZeroSizedLocalParameterizationGetCovariance) {
+  double x = 0.0;
+  double y = 1.0;
+  Problem problem;
+  problem.AddResidualBlock(LinearCostFunction::Create(), nullptr, &x, &y);
+  problem.SetParameterization(&y, new SubsetParameterization(1, {0}));
+  // J = [-1 0]
+  //     [ 0 0]
+  Covariance::Options options;
+  options.algorithm_type = DENSE_SVD;
+  Covariance covariance(options);
+  vector<pair<const double*, const double*>> covariance_blocks;
+  covariance_blocks.push_back(std::make_pair(&x, &x));
+  covariance_blocks.push_back(std::make_pair(&x, &y));
+  covariance_blocks.push_back(std::make_pair(&y, &x));
+  covariance_blocks.push_back(std::make_pair(&y, &y));
+  EXPECT_TRUE(covariance.Compute(covariance_blocks, &problem));
+
+  double value = -1;
+  covariance.GetCovarianceBlock(&x, &x, &value);
+  EXPECT_NEAR(value, 1.0, std::numeric_limits<double>::epsilon());
+
+  value = -1;
+  covariance.GetCovarianceBlock(&x, &y, &value);
+  EXPECT_NEAR(value, 0.0, std::numeric_limits<double>::epsilon());
+
+  value = -1;
+  covariance.GetCovarianceBlock(&y, &x, &value);
+  EXPECT_NEAR(value, 0.0, std::numeric_limits<double>::epsilon());
+
+  value = -1;
+  covariance.GetCovarianceBlock(&y, &y, &value);
+  EXPECT_NEAR(value, 0.0, std::numeric_limits<double>::epsilon());
+}
+
+TEST(Covariance, ZeroSizedLocalParameterizationGetCovarianceInTangentSpace) {
+  double x = 0.0;
+  double y = 1.0;
+  Problem problem;
+  problem.AddResidualBlock(LinearCostFunction::Create(), nullptr, &x, &y);
+  problem.SetParameterization(&y, new SubsetParameterization(1, {0}));
+  // J = [-1 0]
+  //     [ 0 0]
+  Covariance::Options options;
+  options.algorithm_type = DENSE_SVD;
+  Covariance covariance(options);
+  vector<pair<const double*, const double*>> covariance_blocks;
+  covariance_blocks.push_back(std::make_pair(&x, &x));
+  covariance_blocks.push_back(std::make_pair(&x, &y));
+  covariance_blocks.push_back(std::make_pair(&y, &x));
+  covariance_blocks.push_back(std::make_pair(&y, &y));
+  EXPECT_TRUE(covariance.Compute(covariance_blocks, &problem));
+
+  double value = -1;
+  covariance.GetCovarianceBlockInTangentSpace(&x, &x, &value);
+  EXPECT_NEAR(value, 1.0, std::numeric_limits<double>::epsilon());
+
+  value = -1;
+  // The following three calls, should not touch this value, since the
+  // tangent space is of size zero
+  covariance.GetCovarianceBlockInTangentSpace(&x, &y, &value);
+  EXPECT_EQ(value, -1);
+  covariance.GetCovarianceBlockInTangentSpace(&y, &x, &value);
+  EXPECT_EQ(value, -1);
+  covariance.GetCovarianceBlockInTangentSpace(&y, &y, &value);
+  EXPECT_EQ(value, -1);
 }
 
 class LargeScaleCovarianceTest : public ::testing::Test {
