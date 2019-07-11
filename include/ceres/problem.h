@@ -308,7 +308,11 @@ class CERES_EXPORT Problem {
   // Allow the indicated parameter block to vary during optimization.
   void SetParameterBlockVariable(double* values);
 
-  // Returns true if a parameter block is set constant, and false otherwise.
+  // Returns true if a parameter block is set constant, and false
+  // otherwise. A parameter block may be set constant in two
+  // ways. Either by calling SetParameterBlockConstant or by
+  // associating a LocalParameterization with a zero dimensional
+  // tangent space with it.
   bool IsParameterBlockConstant(const double* values) const;
 
   // Set the local parameterization for one of the parameter blocks.
