@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "facf6dc6_c2ef8e2c",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-12T13:51:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eedd478c_e3a9a35c",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c6d3fc8_5ed1fe02",
         "filename": "examples/denoising.cc",
         "patchSetId": 5
@@ -69,6 +87,24 @@
       "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "087ad815_65461447",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-12T13:51:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8948542b_b97b9c5b",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +192,24 @@
       "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4960eea3_2968f637",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-12T13:51:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "afc0aab2_a5a89c93",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {

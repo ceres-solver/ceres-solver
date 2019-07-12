@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8c4d8e8_4f15bfbe",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-12T13:51:38Z",
+      "side": 1,
+      "message": "I\u0027m sorry, I should really know better and should have got this right the first time. Instead this entire function can get replaced with:\n\nstd::partition(residual_blocks-\u003ebegin(),\n               residual_blocks-\u003eend,\n               [](auto r) { return bottom_residual_blocks.count(r) \u003d\u003d 0});",
+      "revId": "7e83b2f1a43849357263c3b915009d33a0aad4ea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
