@@ -31,6 +31,7 @@
 #ifndef CERES_INTERNAL_PROGRAM_H_
 #define CERES_INTERNAL_PROGRAM_H_
 
+#include <memory>
 #include <set>
 #include <string>
 #include <vector>
