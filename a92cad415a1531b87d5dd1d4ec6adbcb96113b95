@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08eda27b_aa800c38",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-12T00:31:12Z",
+      "side": 1,
+      "message": "Seems reasonable to at least add the subset preconditioner explanation in this change.",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6d3fc8_5ed1fe02",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-12T00:31:12Z",
+      "side": 1,
+      "message": "Wow, this is pretty non-obvious! Please expand the comment with some rationale/intutiion as to why this isn\u0027t crazy.",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522df557_3402eef3",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-12T00:31:12Z",
+      "side": 1,
+      "message": "Missing \"for\" at the end.",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4482b9c4_fcc04210",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-12T00:31:12Z",
+      "side": 1,
+      "message": "This is lacking a \". \" before \"Congratulations...\"",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc0aab2_a5a89c93",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-12T00:31:12Z",
+      "side": 1,
+      "message": "Perhaps add a block comment above: \"If we haven\u0027t created a preconditioner yet, create one.\"",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2193930c_a0984c4c",
+        "filename": "internal/ceres/program.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-12T00:31:12Z",
+      "side": 1,
+      "message": "I\u0027m not convinced about this switch to unique pointer. Why? There are other places in the code that do this; I suggest we update them all at once if this is a pattern we want to repeat.",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da88c41_a109f0c5",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-12T00:31:12Z",
+      "side": 1,
+      "message": "You can do this entire operation in-place, but it\u0027s annoying. However doing just 1 extra array is actually less code than what you have in this change. Consider:\n\nvector\u003cResidualBlock*\u003e new_residual_blocks \u003d ...\n\nint top_cursor \u003d 0;\nint bottom_cursor \u003d bottom_residual_blocks.size();\nfor (int i \u003d 0; i \u003c num_residual_blocks; ++i) {\n  if (bottom_residual_blocks.count(residual_block) \u003d\u003d 1) {\n    new_residual_blocks[bottom_cursor++] \u003d residual_blocks[i];\n  } else {\n    new_residual_blocks[top_cursor++] \u003d residual_blocks[i];\n  }\n}\nCHECK_EQ(bottom_cursor, num_residual_blocks);\nCHECK_EQ(top_cursor, num_residual_blocks - bottom_residual_blocks.size()); \n\nstd::swap(*residual_blocks, new_residual_blocks);",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d51283_2e246516",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-12T00:31:12Z",
+      "side": 1,
+      "message": "Consider using either move or swap here instead, since this will do a pointless copy.",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
