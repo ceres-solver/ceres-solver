@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eedd478c_e3a9a35c",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-12T03:35:39Z",
+      "side": 1,
+      "message": "I thought about it, it requires a re-write of the section itself, but I will do it in a follow up CL.\n\nhttps://github.com/ceres-solver/ceres-solver/issues/490",
+      "parentUuid": "08eda27b_aa800c38",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c6d3fc8_5ed1fe02",
         "filename": "examples/denoising.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2019-07-12T00:31:12Z",
       "side": 1,
       "message": "Wow, this is pretty non-obvious! Please expand the comment with some rationale/intutiion as to why this isn\u0027t crazy.",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8948542b_b97b9c5b",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-12T03:35:39Z",
+      "side": 1,
+      "message": "There isn\u0027t a better explanation than, I have no reason to choose one residual block over another. I will add a comment to the effect.",
+      "parentUuid": "1c6d3fc8_5ed1fe02",
       "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b26fb130_2b416ac1",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-12T03:35:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "522df557_3402eef3",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4482b9c4_fcc04210",
         "filename": "internal/ceres/cgnr_solver.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c34ba86_e8014d3c",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-12T03:35:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4482b9c4_fcc04210",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "8bfec0c4_a862ea1e",
+        "filename": "internal/ceres/program.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-12T03:35:39Z",
+      "side": 1,
+      "message": "I am fixing this as we go. No reason not to do it when you see it. Interestingly, the one place this is called, it was already being assigned to a unique ptr.",
+      "parentUuid": "2193930c_a0984c4c",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3da88c41_a109f0c5",
         "filename": "internal/ceres/reorder_program.cc",
         "patchSetId": 5
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "60621438_ff55499c",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-12T03:35:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3da88c41_a109f0c5",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1d51283_2e246516",
         "filename": "internal/ceres/reorder_program.cc",
         "patchSetId": 5
@@ -135,6 +243,24 @@
       "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59b95a8_035e1645",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-12T03:35:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1d51283_2e246516",
+      "revId": "a92cad415a1531b87d5dd1d4ec6adbcb96113b95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
