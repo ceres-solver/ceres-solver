@@ -131,13 +131,13 @@ class Preconditioner : public LinearOperator {
   // LeftMultiply and num_cols are just calls to RightMultiply and
   // num_rows respectively. Update() must be called before
   // RightMultiply can be called.
-  virtual void RightMultiply(const double* x, double* y) const = 0;
-  virtual void LeftMultiply(const double* x, double* y) const {
+  void RightMultiply(const double* x, double* y) const override = 0;
+  void LeftMultiply(const double* x, double* y) const override {
     return RightMultiply(x, y);
   }
 
-  virtual int num_rows() const = 0;
-  virtual int num_cols() const {
+  int num_rows() const override = 0;
+  int num_cols() const override {
     return num_rows();
   }
 };
@@ -149,7 +149,7 @@ template <typename MatrixType>
 class TypedPreconditioner : public Preconditioner {
  public:
   virtual ~TypedPreconditioner() {}
-  virtual bool Update(const LinearOperator& A, const double* D) {
+  bool Update(const LinearOperator& A, const double* D) final {
     return UpdateImpl(*down_cast<const MatrixType*>(&A), D);
   }
 

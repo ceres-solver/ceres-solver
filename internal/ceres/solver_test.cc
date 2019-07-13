@@ -76,7 +76,7 @@ struct QuadraticCostFunctor {
 struct RememberingCallback : public IterationCallback {
   explicit RememberingCallback(double *x) : calls(0), x(x) {}
   virtual ~RememberingCallback() {}
-  virtual CallbackReturnType operator()(const IterationSummary& summary) {
+  CallbackReturnType operator()(const IterationSummary& summary) final {
     x_values.push_back(*x);
     return SOLVER_CONTINUE;
   }
@@ -87,8 +87,8 @@ struct RememberingCallback : public IterationCallback {
 
 struct NoOpEvaluationCallback : EvaluationCallback {
   virtual ~NoOpEvaluationCallback() {}
-  virtual void PrepareForEvaluation(bool evaluate_jacobians,
-                                    bool new_evaluation_point) {
+  void PrepareForEvaluation(bool evaluate_jacobians,
+                            bool new_evaluation_point) final {
     (void) evaluate_jacobians;
     (void) new_evaluation_point;
   }
@@ -225,9 +225,9 @@ struct Quadratic4DCostFunction {
 // A cost function that simply returns its argument.
 class UnaryIdentityCostFunction : public SizedCostFunction<1, 1> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     residuals[0] = parameters[0][0];
     if (jacobians != nullptr && jacobians[0] != nullptr) {
       jacobians[0][0] = 1.0;

@@ -60,7 +60,7 @@ class Fixture : public testing::Test {
 // from the origin.
 class DoglegStrategyFixtureEllipse : public Fixture {
  protected:
-  virtual void SetUp() {
+  void SetUp() final {
     Matrix basis(6, 6);
     // The following lines exceed 80 characters for better readability.
     basis << -0.1046920933796121, -0.7449367449921986, -0.4190744502875876, -0.4480450716142566,  0.2375351607929440, -0.0363053418882862,  // NOLINT
@@ -98,7 +98,7 @@ class DoglegStrategyFixtureEllipse : public Fixture {
 // The gradient at the origin points towards the global minimum.
 class DoglegStrategyFixtureValley : public Fixture {
  protected:
-  virtual void SetUp() {
+  void SetUp() final {
     Vector Ddiag(6);
     Ddiag << 1.0, 2.0, 4.0, 8.0, 16.0, 32.0;
 

@@ -75,7 +75,7 @@ class PowellEvaluator2 : public Evaluator {
   virtual ~PowellEvaluator2() {}
 
   // Implementation of Evaluator interface.
-  virtual SparseMatrix* CreateJacobian() const {
+  SparseMatrix* CreateJacobian() const final {
     CHECK(col1 || col2 || col3 || col4);
     DenseSparseMatrix* dense_jacobian =
         new DenseSparseMatrix(NumResiduals(), NumEffectiveParameters());
@@ -83,12 +83,12 @@ class PowellEvaluator2 : public Evaluator {
     return dense_jacobian;
   }
 
-  virtual bool Evaluate(const Evaluator::EvaluateOptions& evaluate_options,
-                        const double* state,
-                        double* cost,
-                        double* residuals,
-                        double* gradient,
-                        SparseMatrix* jacobian) {
+  bool Evaluate(const Evaluator::EvaluateOptions& evaluate_options,
+                const double* state,
+                double* cost,
+                double* residuals,
+                double* gradient,
+                SparseMatrix* jacobian) final {
     const double x1 = state[0];
     const double x2 = state[1];
     const double x3 = state[2];
@@ -188,9 +188,9 @@ class PowellEvaluator2 : public Evaluator {
     return true;
   }
 
-  virtual bool Plus(const double* state,
-                    const double* delta,
-                    double* state_plus_delta) const {
+  bool Plus(const double* state,
+            const double* delta,
+            double* state_plus_delta) const final {
     int delta_index = 0;
     state_plus_delta[0] = (col1  ? state[0] + delta[delta_index++] : state[0]);
     state_plus_delta[1] = (col2  ? state[1] + delta[delta_index++] : state[1]);
@@ -199,9 +199,9 @@ class PowellEvaluator2 : public Evaluator {
     return true;
   }
 
-  virtual int NumEffectiveParameters() const { return num_active_cols_; }
-  virtual int NumParameters()          const { return 4; }
-  virtual int NumResiduals()           const { return 4; }
+  int NumEffectiveParameters() const final { return num_active_cols_; }
+  int NumParameters()          const final { return 4; }
+  int NumResiduals()           const final { return 4; }
 
  private:
   const int num_active_cols_;

@@ -68,9 +68,9 @@ class CoordinateDescentMinimizer : public Minimizer {
   // Minimizer interface.
   virtual ~CoordinateDescentMinimizer();
 
-  virtual void Minimize(const Minimizer::Options& options,
-                        double* parameters,
-                        Solver::Summary* summary);
+  void Minimize(const Minimizer::Options& options,
+                double* parameters,
+                Solver::Summary* summary) final;
 
   // Verify that each group in the ordering forms an independent set.
   static bool IsOrderingValid(const Program& program,

@@ -41,9 +41,9 @@ class Rosenbrock : public ceres::FirstOrderFunction {
  public:
   virtual ~Rosenbrock() {}
 
-  virtual bool Evaluate(const double* parameters,
-                        double* cost,
-                        double* gradient) const {
+  bool Evaluate(const double* parameters,
+                double* cost,
+                double* gradient) const final {
     const double x = parameters[0];
     const double y = parameters[1];
 
@@ -55,7 +55,7 @@ class Rosenbrock : public ceres::FirstOrderFunction {
     return true;
   }
 
-  virtual int NumParameters() const { return 2; }
+  int NumParameters() const final { return 2; }
 };
 
 TEST(GradientProblemSolver, SolvesRosenbrockWithDefaultOptions) {
@@ -74,9 +74,9 @@ TEST(GradientProblemSolver, SolvesRosenbrockWithDefaultOptions) {
 
 class QuadraticFunction : public ceres::FirstOrderFunction {
   virtual ~QuadraticFunction() {}
-  virtual bool Evaluate(const double* parameters,
-                        double* cost,
-                        double* gradient) const {
+  bool Evaluate(const double* parameters,
+                double* cost,
+                double* gradient) const final {
     const double x = parameters[0];
     *cost = 0.5 * (5.0 - x) * (5.0 - x);
     if (gradient != NULL) {
@@ -85,13 +85,13 @@ class QuadraticFunction : public ceres::FirstOrderFunction {
 
     return true;
   }
-  virtual int NumParameters() const { return 1; }
+  int NumParameters() const final { return 1; }
 };
 
 struct RememberingCallback : public IterationCallback {
   explicit RememberingCallback(double *x) : calls(0), x(x) {}
   virtual ~RememberingCallback() {}
-  virtual CallbackReturnType operator()(const IterationSummary& summary) {
+  CallbackReturnType operator()(const IterationSummary& summary) final {
     x_values.push_back(*x);
     return SOLVER_CONTINUE;
   }

@@ -62,9 +62,9 @@ class Rat43Automatic : public ceres::SizedCostFunction<1, 4> {
  public:
   Rat43Automatic(const Rat43CostFunctor* functor) : functor_(functor) {}
   virtual ~Rat43Automatic() {}
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     if (!jacobians) {
       return (*functor_)(parameters[0], residuals);
     }

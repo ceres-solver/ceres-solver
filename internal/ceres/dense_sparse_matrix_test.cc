@@ -68,7 +68,7 @@ static void CompareMatrices(const SparseMatrix* a, const SparseMatrix* b) {
 
 class DenseSparseMatrixTest : public ::testing::Test {
  protected :
-  virtual void SetUp() {
+  void SetUp() final {
     std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(1));
 

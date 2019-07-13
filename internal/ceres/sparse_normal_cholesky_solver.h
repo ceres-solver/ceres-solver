@@ -58,11 +58,11 @@ class SparseNormalCholeskySolver : public BlockSparseMatrixSolver {
   virtual ~SparseNormalCholeskySolver();
 
  private:
-  virtual LinearSolver::Summary SolveImpl(
+  LinearSolver::Summary SolveImpl(
       BlockSparseMatrix* A,
       const double* b,
       const LinearSolver::PerSolveOptions& options,
-      double* x);
+      double* x) final;
 
   const LinearSolver::Options options_;
   Vector rhs_;

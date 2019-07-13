@@ -84,13 +84,8 @@ namespace internal {
 // Structure to carry a pointer to the array containing a cell and the
 // mutex guarding it.
 struct CellInfo {
-  CellInfo()
-      : values(NULL) {
-  }
-
-  explicit CellInfo(double* ptr)
-      : values(ptr) {
-  }
+  CellInfo() : values(NULL) {}
+  explicit CellInfo(double* ptr) : values(ptr) {}
 
   double* values;
   std::mutex m;

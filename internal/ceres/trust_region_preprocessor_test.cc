@@ -143,7 +143,7 @@ class DummyCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
 
 class LinearSolverAndEvaluatorCreationTest : public ::testing::Test {
  public:
-  virtual void SetUp() {
+  void SetUp() final {
     x_ = 1.0;
     y_ = 1.0;
     z_ = 1.0;

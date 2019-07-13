@@ -73,9 +73,9 @@ static void CheckEvaluation(const CostFunction& cost_function, bool is_good) {
 // valid residuals and jacobians.
 class GoodCostFunction: public SizedCostFunction<1, 1> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     residuals[0] = 1;
     if (jacobians != NULL && jacobians[0] != NULL) {
       jacobians[0][0] = 0.0;
@@ -88,9 +88,9 @@ class GoodCostFunction: public SizedCostFunction<1, 1> {
 // which user code can cause ResidualBlock::Evaluate to fail.
 class NoResidualUpdateCostFunction: public SizedCostFunction<1, 1> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     // Forget to update the residuals.
     // residuals[0] = 1;
     if (jacobians != NULL && jacobians[0] != NULL) {
@@ -102,9 +102,9 @@ class NoResidualUpdateCostFunction: public SizedCostFunction<1, 1> {
 
 class NoJacobianUpdateCostFunction: public SizedCostFunction<1, 1> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     residuals[0] = 1;
     if (jacobians != NULL && jacobians[0] != NULL) {
       // Forget to update the jacobians.
@@ -116,9 +116,9 @@ class NoJacobianUpdateCostFunction: public SizedCostFunction<1, 1> {
 
 class BadResidualCostFunction: public SizedCostFunction<1, 1> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     residuals[0] = std::numeric_limits<double>::infinity();
     if (jacobians != NULL && jacobians[0] != NULL) {
       jacobians[0][0] = 0.0;
@@ -129,9 +129,9 @@ class BadResidualCostFunction: public SizedCostFunction<1, 1> {
 
 class BadJacobianCostFunction: public SizedCostFunction<1, 1> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     residuals[0] = 1.0;
     if (jacobians != NULL && jacobians[0] != NULL) {
       jacobians[0][0] = std::numeric_limits<double>::quiet_NaN();

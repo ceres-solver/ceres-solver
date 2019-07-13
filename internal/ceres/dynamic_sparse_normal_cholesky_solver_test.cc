@@ -49,7 +49,7 @@ namespace internal {
 // sparsity.
 class DynamicSparseNormalCholeskySolverTest : public ::testing::Test {
  protected:
-  virtual void SetUp() {
+  void SetUp() final {
     std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(1));
     A_.reset(CompressedRowSparseMatrix::FromTripletSparseMatrix(
