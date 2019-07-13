@@ -196,9 +196,9 @@ class NumericDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
     }
   }
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const override {
     using internal::FixedArray;
     using internal::NumericDiff;
 

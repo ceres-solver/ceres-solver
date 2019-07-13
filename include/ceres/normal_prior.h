@@ -62,10 +62,9 @@ class CERES_EXPORT NormalPrior: public CostFunction {
   // Check that the number of rows in the vector b are the same as the
   // number of columns in the matrix A, crash otherwise.
   NormalPrior(const Matrix& A, const Vector& b);
-
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const;
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const override;
  private:
   Matrix A_;
   Vector b_;

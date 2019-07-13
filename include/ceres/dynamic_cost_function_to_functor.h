@@ -53,9 +53,9 @@ namespace ceres {
 //  class IntrinsicProjection : public CostFunction {
 //    public:
 //      IntrinsicProjection(const double* observation);
-//      virtual bool Evaluate(double const* const* parameters,
-//                            double* residuals,
-//                            double** jacobians) const;
+//      bool Evaluate(double const* const* parameters,
+//                    double* residuals,
+//                    double** jacobians) const override;
 //  };
 //
 // is a cost function that implements the projection of a point in its

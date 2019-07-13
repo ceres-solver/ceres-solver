@@ -181,16 +181,15 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
   //
   // To handle variadic cost functions, some template magic is needed. It's
   // mostly hidden inside autodiff.h.
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const override {
     using ParameterDims =
         typename SizedCostFunction<kNumResiduals, Ns...>::ParameterDims;
 
     if (!jacobians) {
-      return internal::VariadicEvaluate<ParameterDims>(*functor_,
-                                                       parameters,
-                                                       residuals);
+      return internal::VariadicEvaluate<ParameterDims>(
+          *functor_, parameters, residuals);
     }
     return internal::AutoDifferentiate<ParameterDims>(
         *functor_,
@@ -198,7 +197,7 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
         SizedCostFunction<kNumResiduals, Ns...>::num_residuals(),
         residuals,
         jacobians);
-  }
+  };
 
  private:
   std::unique_ptr<CostFunctor> functor_;
