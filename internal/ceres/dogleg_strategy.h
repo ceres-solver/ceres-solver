@@ -58,15 +58,14 @@ class DoglegStrategy : public TrustRegionStrategy {
   virtual ~DoglegStrategy() {}
 
   // TrustRegionStrategy interface
-  virtual Summary ComputeStep(const PerSolveOptions& per_solve_options,
+  Summary ComputeStep(const PerSolveOptions& per_solve_options,
                               SparseMatrix* jacobian,
                               const double* residuals,
-                              double* step);
-  virtual void StepAccepted(double step_quality);
-  virtual void StepRejected(double step_quality);
-  virtual void StepIsInvalid();
-
-  virtual double Radius() const;
+                              double* step) final;
+  void StepAccepted(double step_quality) final;
+  void StepRejected(double step_quality) final;
+  void StepIsInvalid();
+  double Radius() const final;
 
   // These functions are predominantly for testing.
   Vector gradient() const { return gradient_; }

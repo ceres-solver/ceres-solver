@@ -48,7 +48,7 @@ const double kEpsilon = 1e-14;
 
 class PartitionedMatrixViewTest : public ::testing::Test {
  protected :
-  virtual void SetUp() {
+  void SetUp() final {
     srand(5);
     std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(2));

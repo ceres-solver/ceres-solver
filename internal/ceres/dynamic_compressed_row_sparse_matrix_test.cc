@@ -46,7 +46,7 @@ using std::vector;
 
 class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
  protected:
-  virtual void SetUp() {
+  void SetUp() final {
     num_rows = 7;
     num_cols = 4;
 

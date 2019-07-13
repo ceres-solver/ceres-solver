@@ -61,11 +61,11 @@ class RegularizationCheckingLinearSolver : public DenseSparseMatrixSolver {
   virtual ~RegularizationCheckingLinearSolver() {}
 
  private:
-  virtual LinearSolver::Summary SolveImpl(
+  LinearSolver::Summary SolveImpl(
       DenseSparseMatrix* A,
       const double* b,
       const LinearSolver::PerSolveOptions& per_solve_options,
-      double* x) {
+      double* x) final {
     CHECK(per_solve_options.D != nullptr);
     for (int i = 0; i < num_cols_; ++i) {
       EXPECT_NEAR(per_solve_options.D[i], diagonal_[i], kTolerance)

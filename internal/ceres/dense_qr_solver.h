@@ -83,11 +83,11 @@ class DenseQRSolver: public DenseSparseMatrixSolver {
   explicit DenseQRSolver(const LinearSolver::Options& options);
 
  private:
-  virtual LinearSolver::Summary SolveImpl(
+  LinearSolver::Summary SolveImpl(
       DenseSparseMatrix* A,
       const double* b,
       const LinearSolver::PerSolveOptions& per_solve_options,
-      double* x);
+      double* x) final;
 
   LinearSolver::Summary SolveUsingEigen(
       DenseSparseMatrix* A,

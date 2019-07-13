@@ -48,9 +48,9 @@ using std::vector;
 template <int kNumResiduals, int... Ns>
 class MockCostFunctionBase : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     // Do nothing. This is never called.
     return true;
   }

@@ -225,9 +225,9 @@ TEST(NumericDiffCostFunction,
 template<int num_rows, int num_cols>
 class SizeTestingCostFunction : public SizedCostFunction<num_rows, num_cols> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     return true;
   }
 };

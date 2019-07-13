@@ -78,11 +78,11 @@ class DenseNormalCholeskySolver: public DenseSparseMatrixSolver {
   explicit DenseNormalCholeskySolver(const LinearSolver::Options& options);
 
  private:
-  virtual LinearSolver::Summary SolveImpl(
+  LinearSolver::Summary SolveImpl(
       DenseSparseMatrix* A,
       const double* b,
       const LinearSolver::PerSolveOptions& per_solve_options,
-      double* x);
+      double* x) final;
 
   LinearSolver::Summary SolveUsingLAPACK(
       DenseSparseMatrix* A,

@@ -140,13 +140,13 @@ class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
   virtual ~VisibilityBasedPreconditioner();
 
   // Preconditioner interface
-  virtual void RightMultiply(const double* x, double* y) const;
-  virtual int num_rows() const;
+  void RightMultiply(const double* x, double* y) const final;
+  int num_rows() const final;
 
   friend class VisibilityBasedPreconditionerTest;
 
  private:
-  virtual bool UpdateImpl(const BlockSparseMatrix& A, const double* D);
+  bool UpdateImpl(const BlockSparseMatrix& A, const double* D) final;
   void ComputeClusterJacobiSparsity(const CompressedRowBlockStructure& bs);
   void ComputeClusterTridiagonalSparsity(const CompressedRowBlockStructure& bs);
   void InitStorage(const CompressedRowBlockStructure& bs);

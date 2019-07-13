@@ -80,7 +80,7 @@ std::string ToString(const Solver::Options& options);
 template <typename SystemTestProblem>
 class SystemTest : public ::testing::Test {
  protected:
-  virtual void SetUp() {
+  void SetUp() final {
     SystemTestProblem system_test_problem;
     SolveAndEvaluateFinalResiduals(
         *system_test_problem.mutable_solver_options(),

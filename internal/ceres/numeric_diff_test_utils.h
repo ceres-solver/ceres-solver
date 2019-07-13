@@ -57,9 +57,9 @@ class EasyFunctor {
 
 class EasyCostFunction : public SizedCostFunction<3, 5, 5> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** /* not used */) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** /* not used */) const final {
     return functor_(parameters[0], parameters[1], residuals);
   }
 
@@ -82,9 +82,9 @@ class TranscendentalFunctor {
 
 class TranscendentalCostFunction : public SizedCostFunction<2, 5, 5> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** /* not used */) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** /* not used */) const final {
     return functor_(parameters[0], parameters[1], residuals);
   }
  private:
@@ -101,9 +101,9 @@ class ExponentialFunctor {
 
 class ExponentialCostFunction : public SizedCostFunction<1, 1> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** /* not used */) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** /* not used */) const final {
     return functor_(parameters[0], residuals);
   }
 
@@ -135,9 +135,9 @@ class RandomizedCostFunction : public SizedCostFunction<1, 1> {
       : functor_(noise_factor, random_seed) {
   }
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** /* not used */) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** /* not used */) const final {
     return functor_(parameters[0], residuals);
   }
 

@@ -55,11 +55,11 @@ class CgnrSolver : public BlockSparseMatrixSolver {
   void operator=(const CgnrSolver&) = delete;
   virtual ~CgnrSolver();
 
-  virtual Summary SolveImpl(
+  Summary SolveImpl(
       BlockSparseMatrix* A,
       const double* b,
       const LinearSolver::PerSolveOptions& per_solve_options,
-      double* x);
+      double* x) final;
 
  private:
   const LinearSolver::Options options_;

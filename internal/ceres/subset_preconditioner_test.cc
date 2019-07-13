@@ -88,7 +88,7 @@ std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
 
 class SubsetPreconditionerTest : public ::testing::TestWithParam<Param> {
  protected:
-  virtual void SetUp() {
+  void SetUp() final {
     BlockSparseMatrix::RandomMatrixOptions options;
     options.num_col_blocks = 4;
     options.min_col_block_size = 1;

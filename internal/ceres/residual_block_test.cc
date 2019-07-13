@@ -55,9 +55,9 @@ class TernaryCostFunction: public CostFunction {
     mutable_parameter_block_sizes()->push_back(parameter_block3_size);
   }
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     for (int i = 0; i < num_residuals(); ++i) {
       residuals[i] = i;
     }
@@ -170,9 +170,9 @@ TEST(ResidualBlock, EvaluteWithNoLossFunctionOrLocalParameterizations) {
 // Trivial cost function that accepts three arguments.
 class LocallyParameterizedCostFunction: public SizedCostFunction<3, 2, 3, 4> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     for (int i = 0; i < num_residuals(); ++i) {
       residuals[i] = i;
     }

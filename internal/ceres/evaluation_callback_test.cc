@@ -77,8 +77,8 @@ struct WigglyBowlCostFunctionAndEvaluationCallback :
 
   // Evaluation callback interface. This checks that all the preconditions are
   // met at the point that Ceres calls into it.
-  virtual void PrepareForEvaluation(bool evaluate_jacobians,
-                                    bool new_evaluation_point) {
+  void PrepareForEvaluation(bool evaluate_jacobians,
+                            bool new_evaluation_point) final {
     // At this point, the incoming parameters are implicitly pushed by Ceres
     // into the user parameter blocks; in contrast to in Evaluate().
     uint64_t incoming_parameter_hash = Djb2Hash(user_parameter_block, 2);
@@ -111,9 +111,9 @@ struct WigglyBowlCostFunctionAndEvaluationCallback :
 
   // Cost function interface. This checks that preconditions that were
   // set as part of the PrepareForEvaluation() call are met in this one.
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     // Cost function implementation of the "Wiggly Bowl" function:
     //
     //   1/2 * [(y - a*sin(x))^2 + x^2],

@@ -120,11 +120,11 @@ class SchurComplementSolver : public BlockSparseMatrixSolver {
 
   // LinearSolver methods
   virtual ~SchurComplementSolver() {}
-  virtual LinearSolver::Summary SolveImpl(
+  LinearSolver::Summary SolveImpl(
       BlockSparseMatrix* A,
       const double* b,
       const LinearSolver::PerSolveOptions& per_solve_options,
-      double* x);
+      double* x) override;
 
  protected:
   const LinearSolver::Options& options() const { return options_; }
@@ -158,10 +158,10 @@ class DenseSchurComplementSolver : public SchurComplementSolver {
   virtual ~DenseSchurComplementSolver() {}
 
  private:
-  virtual void InitStorage(const CompressedRowBlockStructure* bs);
-  virtual LinearSolver::Summary SolveReducedLinearSystem(
+  void InitStorage(const CompressedRowBlockStructure* bs) final;
+  LinearSolver::Summary SolveReducedLinearSystem(
       const LinearSolver::PerSolveOptions& per_solve_options,
-      double* solution);
+      double* solution) final;
 };
 
 // Sparse Cholesky factorization based solver.
@@ -174,10 +174,10 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
   virtual ~SparseSchurComplementSolver();
 
  private:
-  virtual void InitStorage(const CompressedRowBlockStructure* bs);
-  virtual LinearSolver::Summary SolveReducedLinearSystem(
+  void InitStorage(const CompressedRowBlockStructure* bs) final;
+  LinearSolver::Summary SolveReducedLinearSystem(
       const LinearSolver::PerSolveOptions& per_solve_options,
-      double* solution);
+      double* solution) final;
   LinearSolver::Summary SolveReducedLinearSystemUsingConjugateGradients(
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* solution);

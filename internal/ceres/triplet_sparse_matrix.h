@@ -58,22 +58,22 @@ class TripletSparseMatrix : public SparseMatrix {
 
   TripletSparseMatrix& operator=(const TripletSparseMatrix& rhs);
 
-  ~TripletSparseMatrix();
+  virtual ~TripletSparseMatrix();
 
   // Implementation of the SparseMatrix interface.
-  virtual void SetZero();
-  virtual void RightMultiply(const double* x, double* y) const;
-  virtual void LeftMultiply(const double* x, double* y) const;
-  virtual void SquaredColumnNorm(double* x) const;
-  virtual void ScaleColumns(const double* scale);
-  virtual void ToDenseMatrix(Matrix* dense_matrix) const;
-  virtual void ToTextFile(FILE* file) const;
-  virtual int num_rows()        const { return num_rows_;     }
-  virtual int num_cols()        const { return num_cols_;     }
-  virtual int num_nonzeros()    const { return num_nonzeros_; }
-  virtual const double* values()  const { return values_.get(); }
-  virtual double* mutable_values()      { return values_.get(); }
-  virtual void set_num_nonzeros(int num_nonzeros);
+  void SetZero() final;
+  void RightMultiply(const double* x, double* y) const final;
+  void LeftMultiply(const double* x, double* y) const final;
+  void SquaredColumnNorm(double* x) const final;
+  void ScaleColumns(const double* scale) final;
+  void ToDenseMatrix(Matrix* dense_matrix) const final;
+  void ToTextFile(FILE* file) const final;
+  int num_rows()        const final   { return num_rows_;     }
+  int num_cols()        const final   { return num_cols_;     }
+  int num_nonzeros()    const final   { return num_nonzeros_; }
+  const double* values()  const final { return values_.get(); }
+  double* mutable_values() final      { return values_.get(); }
+  void set_num_nonzeros(int num_nonzeros);
 
   // Increase max_num_nonzeros and correspondingly increase the size
   // of rows_, cols_ and values_. If new_max_num_nonzeros is smaller

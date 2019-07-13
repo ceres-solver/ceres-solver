@@ -41,9 +41,9 @@
 namespace ceres {
 
 class CostFunction2x3 : public SizedCostFunction<2,3> {
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     double x = parameters[0][0];
     double y = parameters[0][1];
     double z = parameters[0][2];

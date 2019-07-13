@@ -268,9 +268,9 @@ class UnaryCostFunction : public CostFunction {
   }
   virtual ~UnaryCostFunction() {}
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     for (int i = 0; i < num_residuals(); ++i) {
       residuals[i] = 1;
     }
@@ -289,9 +289,9 @@ class BinaryCostFunction: public CostFunction {
     mutable_parameter_block_sizes()->push_back(parameter_block2_size);
   }
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     for (int i = 0; i < num_residuals(); ++i) {
       residuals[i] = 2;
     }
@@ -312,9 +312,9 @@ class TernaryCostFunction: public CostFunction {
     mutable_parameter_block_sizes()->push_back(parameter_block3_size);
   }
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     for (int i = 0; i < num_residuals(); ++i) {
       residuals[i] = 3;
     }

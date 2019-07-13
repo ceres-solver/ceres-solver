@@ -131,7 +131,7 @@ class ProgramEvaluator : public Evaluator {
   }
 
   // Implementation of Evaluator interface.
-  SparseMatrix* CreateJacobian() const {
+  SparseMatrix* CreateJacobian() const final {
     return jacobian_writer_.CreateJacobian();
   }
 
@@ -140,7 +140,7 @@ class ProgramEvaluator : public Evaluator {
                 double* cost,
                 double* residuals,
                 double* gradient,
-                SparseMatrix* jacobian) {
+                SparseMatrix* jacobian) final {
     ScopedExecutionTimer total_timer("Evaluator::Total", &execution_summary_);
     ScopedExecutionTimer call_type_timer(gradient == NULL && jacobian == NULL
                                          ? "Evaluator::Residual"
@@ -287,22 +287,22 @@ class ProgramEvaluator : public Evaluator {
 
   bool Plus(const double* state,
             const double* delta,
-            double* state_plus_delta) const {
+            double* state_plus_delta) const final {
     return program_->Plus(state, delta, state_plus_delta);
   }
 
-  int NumParameters() const {
+  int NumParameters() const final {
     return program_->NumParameters();
   }
-  int NumEffectiveParameters() const {
+  int NumEffectiveParameters() const final {
     return program_->NumEffectiveParameters();
   }
 
-  int NumResiduals() const {
+  int NumResiduals() const final {
     return program_->NumResiduals();
   }
 
-  virtual std::map<std::string, CallStatistics> Statistics() const {
+  std::map<std::string, CallStatistics> Statistics() const final {
     return execution_summary_.statistics();
   }
 
