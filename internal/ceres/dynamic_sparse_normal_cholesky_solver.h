@@ -59,11 +59,11 @@ class DynamicSparseNormalCholeskySolver
   virtual ~DynamicSparseNormalCholeskySolver() {}
 
  private:
-  virtual LinearSolver::Summary SolveImpl(
+  LinearSolver::Summary SolveImpl(
       CompressedRowSparseMatrix* A,
       const double* b,
       const LinearSolver::PerSolveOptions& options,
-      double* x);
+      double* x) final;
 
   LinearSolver::Summary SolveImplUsingSuiteSparse(
       CompressedRowSparseMatrix* A,

@@ -51,9 +51,9 @@ using std::vector;
 // A cost function that simply returns its argument.
 class UnaryIdentityCostFunction : public SizedCostFunction<1, 1> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     residuals[0] = parameters[0][0];
     if (jacobians != nullptr && jacobians[0] != nullptr) {
       jacobians[0][0] = 1.0;
@@ -66,9 +66,9 @@ class UnaryIdentityCostFunction : public SizedCostFunction<1, 1> {
 template <int kNumResiduals, int... Ns>
 class MockCostFunctionBase : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     const int kNumParameters = Sum<integer_sequence<int, Ns...>>::Value;
 
     for (int i = 0; i < kNumResiduals; ++i) {
@@ -339,9 +339,9 @@ class NumParameterBlocksCostFunction : public CostFunction {
   virtual ~NumParameterBlocksCostFunction() {
   }
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     return true;
   }
 };

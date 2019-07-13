@@ -84,7 +84,7 @@ class CgnrLinearOperator : public LinearOperator {
   }
   virtual ~CgnrLinearOperator() {}
 
-  virtual void RightMultiply(const double* x, double* y) const {
+  void RightMultiply(const double* x, double* y) const final {
     std::fill(z_.get(), z_.get() + A_.num_rows(), 0.0);
 
     // z = Ax
@@ -101,12 +101,12 @@ class CgnrLinearOperator : public LinearOperator {
     }
   }
 
-  virtual void LeftMultiply(const double* x, double* y) const {
+  void LeftMultiply(const double* x, double* y) const final {
     RightMultiply(x, y);
   }
 
-  virtual int num_rows() const { return A_.num_cols(); }
-  virtual int num_cols() const { return A_.num_cols(); }
+  int num_rows() const final { return A_.num_cols(); }
+  int num_cols() const final { return A_.num_cols(); }
 
  private:
   const LinearOperator& A_;

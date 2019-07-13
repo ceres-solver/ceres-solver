@@ -113,11 +113,11 @@ class ImplicitSchurComplement : public LinearOperator {
   void Init(const BlockSparseMatrix& A, const double* D, const double* b);
 
   // y += Sx, where S is the Schur complement.
-  virtual void RightMultiply(const double* x, double* y) const;
+  void RightMultiply(const double* x, double* y) const final;
 
   // The Schur complement is a symmetric positive definite matrix,
   // thus the left and right multiply operators are the same.
-  virtual void LeftMultiply(const double* x, double* y) const {
+  void LeftMultiply(const double* x, double* y) const final {
     RightMultiply(x, y);
   }
 
@@ -127,8 +127,8 @@ class ImplicitSchurComplement : public LinearOperator {
   // complement.
   void BackSubstitute(const double* x, double* y);
 
-  virtual int num_rows() const { return A_->num_cols_f(); }
-  virtual int num_cols() const { return A_->num_cols_f(); }
+  int num_rows() const final { return A_->num_cols_f(); }
+  int num_cols() const final { return A_->num_cols_f(); }
   const Vector& rhs()    const { return rhs_;             }
 
   const BlockSparseMatrix* block_diagonal_EtE_inverse() const {

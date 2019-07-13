@@ -84,12 +84,12 @@ class LowRankInverseHessian : public LinearOperator {
   bool Update(const Vector& delta_x, const Vector& delta_gradient);
 
   // LinearOperator interface
-  virtual void RightMultiply(const double* x, double* y) const;
-  virtual void LeftMultiply(const double* x, double* y) const {
+  void RightMultiply(const double* x, double* y) const final;
+  void LeftMultiply(const double* x, double* y) const final {
     RightMultiply(x, y);
   }
-  virtual int num_rows() const { return num_parameters_; }
-  virtual int num_cols() const { return num_parameters_; }
+  int num_rows() const final { return num_parameters_; }
+  int num_cols() const final { return num_parameters_; }
 
  private:
   const int num_parameters_;

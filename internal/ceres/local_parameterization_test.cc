@@ -583,7 +583,7 @@ TEST(HomogeneousVectorParameterization, DeathTests) {
 
 class ProductParameterizationTest : public ::testing::Test {
  protected :
-  virtual void SetUp() {
+  void SetUp() final {
     const int global_size1 = 5;
     std::vector<int> constant_parameters1;
     constant_parameters1.push_back(2);

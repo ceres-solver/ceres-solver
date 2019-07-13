@@ -41,7 +41,7 @@ namespace internal {
 const int kVertexIds[] = {0, 1, 2, 3};
 class CanonicalViewsTest : public ::testing::Test {
  protected:
-  virtual void SetUp() {
+  void SetUp() final {
     // The graph structure is as follows.
     //
     // Vertex weights:   0      2      2      0

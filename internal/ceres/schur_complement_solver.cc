@@ -73,17 +73,17 @@ class BlockRandomAccessSparseMatrixAdapter : public LinearOperator {
   virtual ~BlockRandomAccessSparseMatrixAdapter() {}
 
   // y = y + Ax;
-  virtual void RightMultiply(const double* x, double* y) const {
+  void RightMultiply(const double* x, double* y) const final {
     m_.SymmetricRightMultiply(x, y);
   }
 
   // y = y + A'x;
-  virtual void LeftMultiply(const double* x, double* y) const {
+  void LeftMultiply(const double* x, double* y) const final {
     m_.SymmetricRightMultiply(x, y);
   }
 
-  virtual int num_rows() const { return m_.num_rows(); }
-  virtual int num_cols() const { return m_.num_rows(); }
+  int num_rows() const final { return m_.num_rows(); }
+  int num_cols() const final { return m_.num_rows(); }
 
  private:
   const BlockRandomAccessSparseMatrix& m_;
@@ -99,17 +99,17 @@ class BlockRandomAccessDiagonalMatrixAdapter : public LinearOperator {
   virtual ~BlockRandomAccessDiagonalMatrixAdapter() {}
 
   // y = y + Ax;
-  virtual void RightMultiply(const double* x, double* y) const {
+  void RightMultiply(const double* x, double* y) const final {
     m_.RightMultiply(x, y);
   }
 
   // y = y + A'x;
-  virtual void LeftMultiply(const double* x, double* y) const {
+  void LeftMultiply(const double* x, double* y) const final {
     m_.RightMultiply(x, y);
   }
 
-  virtual int num_rows() const { return m_.num_rows(); }
-  virtual int num_cols() const { return m_.num_rows(); }
+  int num_rows() const final { return m_.num_rows(); }
+  int num_cols() const final { return m_.num_rows(); }
 
  private:
   const BlockRandomAccessDiagonalMatrix& m_;

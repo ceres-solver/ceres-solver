@@ -55,18 +55,18 @@ class DenseSparseMatrix : public SparseMatrix {
   virtual ~DenseSparseMatrix() {}
 
   // SparseMatrix interface.
-  virtual void SetZero();
-  virtual void RightMultiply(const double* x, double* y) const;
-  virtual void LeftMultiply(const double* x, double* y) const;
-  virtual void SquaredColumnNorm(double* x) const;
-  virtual void ScaleColumns(const double* scale);
-  virtual void ToDenseMatrix(Matrix* dense_matrix) const;
-  virtual void ToTextFile(FILE* file) const;
-  virtual int num_rows() const;
-  virtual int num_cols() const;
-  virtual int num_nonzeros() const;
-  virtual const double* values() const { return m_.data(); }
-  virtual double* mutable_values() { return m_.data(); }
+  void SetZero() final;
+  void RightMultiply(const double* x, double* y) const final;
+  void LeftMultiply(const double* x, double* y) const final;
+  void SquaredColumnNorm(double* x) const final;
+  void ScaleColumns(const double* scale) final;
+  void ToDenseMatrix(Matrix* dense_matrix) const final;
+  void ToTextFile(FILE* file) const final;
+  int num_rows() const final;
+  int num_cols() const final;
+  int num_nonzeros() const final;
+  const double* values() const final { return m_.data(); }
+  double* mutable_values() final { return m_.data(); }
 
   ConstColMajorMatrixRef matrix() const;
   ColMajorMatrixRef mutable_matrix();

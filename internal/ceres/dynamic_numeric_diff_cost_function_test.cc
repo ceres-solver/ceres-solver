@@ -310,7 +310,7 @@ class MyThreeParameterCostFunctor {
 
 class ThreeParameterCostFunctorTest : public ::testing::Test {
  protected:
-  virtual void SetUp() {
+  void SetUp() final {
     // Prepare the parameters.
     x_.resize(1);
     x_[0] = 0.0;

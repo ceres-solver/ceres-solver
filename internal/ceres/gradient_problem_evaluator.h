@@ -48,13 +48,13 @@ class GradientProblemEvaluator : public Evaluator {
   explicit GradientProblemEvaluator(const GradientProblem& problem)
       : problem_(problem) {}
   virtual ~GradientProblemEvaluator() {}
-  virtual SparseMatrix* CreateJacobian() const { return NULL; }
-  virtual bool Evaluate(const EvaluateOptions& evaluate_options,
-                        const double* state,
-                        double* cost,
-                        double* residuals,
-                        double* gradient,
-                        SparseMatrix* jacobian) {
+  SparseMatrix* CreateJacobian() const final { return nullptr; }
+  bool Evaluate(const EvaluateOptions& evaluate_options,
+                const double* state,
+                double* cost,
+                double* residuals,
+                double* gradient,
+                SparseMatrix* jacobian) final {
     CHECK(jacobian == NULL);
     ScopedExecutionTimer total_timer("Evaluator::Total", &execution_summary_);
     // The reason we use Residual and Jacobian here even when we are
@@ -70,23 +70,23 @@ class GradientProblemEvaluator : public Evaluator {
     return problem_.Evaluate(state, cost, gradient);
   }
 
-  virtual bool Plus(const double* state,
-                    const double* delta,
-                    double* state_plus_delta) const {
+  bool Plus(const double* state,
+            const double* delta,
+            double* state_plus_delta) const final {
     return problem_.Plus(state, delta, state_plus_delta);
   }
 
-  virtual int NumParameters() const {
+  int NumParameters() const final {
     return problem_.NumParameters();
   }
 
-  virtual int NumEffectiveParameters()  const {
+  int NumEffectiveParameters() const final {
     return problem_.NumLocalParameters();
   }
 
-  virtual int NumResiduals() const { return 1; }
+  int NumResiduals() const final { return 1; }
 
-  virtual std::map<std::string, internal::CallStatistics> Statistics() const {
+  std::map<std::string, internal::CallStatistics> Statistics() const final {
     return execution_summary_.statistics();
   }
 

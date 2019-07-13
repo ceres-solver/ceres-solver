@@ -131,20 +131,20 @@ TEST(ParameterBlock, SetLocalParameterizationAndNormalOperation) {
 struct TestParameterization : public LocalParameterization {
  public:
   virtual ~TestParameterization() {}
-  virtual bool Plus(const double* x,
-                    const double* delta,
-                    double* x_plus_delta) const {
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const final {
     LOG(FATAL) << "Shouldn't get called.";
     return true;
   }
-  virtual bool ComputeJacobian(const double* x,
-                               double* jacobian) const {
+  bool ComputeJacobian(const double* x,
+                       double* jacobian) const final {
     jacobian[0] = *x * 2;
     return true;
   }
 
-  virtual int GlobalSize() const { return 1; }
-  virtual int LocalSize() const { return 1; }
+  int GlobalSize() const final { return 1; }
+  int LocalSize() const final { return 1; }
 };
 
 TEST(ParameterBlock, SetStateUpdatesLocalParameterizationJacobian) {
@@ -178,14 +178,14 @@ class BadLocalParameterization : public LocalParameterization {
   }
 
   virtual ~BadLocalParameterization() {}
-  virtual bool Plus(const double* x,
-                    const double* delta,
-                    double* x_plus_delta) const {
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const final {
     *x_plus_delta = *x + *delta;
     return true;
   }
 
-  virtual bool ComputeJacobian(const double* x, double* jacobian) const {
+  bool ComputeJacobian(const double* x, double* jacobian) const final {
     if (calls_ == 0) {
       jacobian[0] = 0;
     }
@@ -193,8 +193,8 @@ class BadLocalParameterization : public LocalParameterization {
     return true;
   }
 
-  virtual int GlobalSize() const { return 1;}
-  virtual int LocalSize()  const { return 1;}
+  int GlobalSize() const final { return 1;}
+  int LocalSize()  const final { return 1;}
 
  private:
   mutable int calls_;

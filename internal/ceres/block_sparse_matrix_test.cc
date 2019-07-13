@@ -44,7 +44,7 @@ namespace internal {
 
 class BlockSparseMatrixTest : public ::testing::Test {
  protected :
-  virtual void SetUp() {
+  void SetUp() final {
     std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(2));
     CHECK(problem != nullptr);

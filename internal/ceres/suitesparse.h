@@ -290,12 +290,12 @@ class SuiteSparseCholesky : public SparseCholesky {
 
   // SparseCholesky interface.
   virtual ~SuiteSparseCholesky();
-  virtual CompressedRowSparseMatrix::StorageType StorageType() const;
-  virtual LinearSolverTerminationType Factorize(
-      CompressedRowSparseMatrix* lhs, std::string* message);
-  virtual LinearSolverTerminationType Solve(const double* rhs,
-                                            double* solution,
-                                            std::string* message);
+  CompressedRowSparseMatrix::StorageType StorageType() const final;
+  LinearSolverTerminationType Factorize(
+      CompressedRowSparseMatrix* lhs, std::string* message) final;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) final;
  private:
   SuiteSparseCholesky(const OrderingType ordering_type);
 

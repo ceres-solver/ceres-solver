@@ -231,19 +231,19 @@ class SchurEliminator : public SchurEliminatorBase {
 
   // SchurEliminatorBase Interface
   virtual ~SchurEliminator();
-  virtual void Init(int num_eliminate_blocks,
-                    bool assume_full_rank_ete,
-                    const CompressedRowBlockStructure* bs);
-  virtual void Eliminate(const BlockSparseMatrix* A,
-                         const double* b,
-                         const double* D,
-                         BlockRandomAccessMatrix* lhs,
-                         double* rhs);
-  virtual void BackSubstitute(const BlockSparseMatrix* A,
-                              const double* b,
-                              const double* D,
-                              const double* z,
-                              double* y);
+  void Init(int num_eliminate_blocks,
+            bool assume_full_rank_ete,
+            const CompressedRowBlockStructure* bs) final;
+  void Eliminate(const BlockSparseMatrix* A,
+                 const double* b,
+                 const double* D,
+                 BlockRandomAccessMatrix* lhs,
+                 double* rhs) final;
+  void BackSubstitute(const BlockSparseMatrix* A,
+                      const double* b,
+                      const double* D,
+                      const double* z,
+                      double* y) final;
 
  private:
   // Chunk objects store combinatorial information needed to
