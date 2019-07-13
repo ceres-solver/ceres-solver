@@ -83,9 +83,9 @@ class DynamicAutoDiffCostFunction : public DynamicCostFunction {
 
   virtual ~DynamicAutoDiffCostFunction() {}
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const override {
     CHECK_GT(num_residuals(), 0)
         << "You must call DynamicAutoDiffCostFunction::SetNumResiduals() "
         << "before DynamicAutoDiffCostFunction::Evaluate().";
