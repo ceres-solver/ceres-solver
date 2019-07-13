@@ -88,12 +88,12 @@ class SchurJacobiPreconditioner : public BlockSparseMatrixPreconditioner {
   virtual ~SchurJacobiPreconditioner();
 
   // Preconditioner interface.
-  virtual void RightMultiply(const double* x, double* y) const;
-  virtual int num_rows() const;
+  void RightMultiply(const double* x, double* y) const final;
+  int num_rows() const final;
 
  private:
   void InitEliminator(const CompressedRowBlockStructure& bs);
-  virtual bool UpdateImpl(const BlockSparseMatrix& A, const double* D);
+  bool UpdateImpl(const BlockSparseMatrix& A, const double* D) final;
 
   Preconditioner::Options options_;
   std::unique_ptr<SchurEliminatorBase> eliminator_;

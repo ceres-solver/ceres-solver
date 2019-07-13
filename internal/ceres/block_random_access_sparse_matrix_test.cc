@@ -139,7 +139,7 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
 // test it.
 class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
  public:
-  virtual void SetUp() {
+  void SetUp() final {
     vector<int> blocks;
     blocks.push_back(1);
     set<pair<int, int>> block_pairs;

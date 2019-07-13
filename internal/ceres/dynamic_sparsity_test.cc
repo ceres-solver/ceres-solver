@@ -288,9 +288,9 @@ class PointToLineSegmentContourCostFunction : public CostFunction {
     set_num_residuals(2);
   }
 
-  virtual bool Evaluate(const double* const* x,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(const double* const* x,
+                double* residuals,
+                double** jacobians) const final {
     // Convert the preimage position `t` into a segment index `i0` and the
     // line segment interpolation parameter `u`. `i1` is the index of the next
     // control point.

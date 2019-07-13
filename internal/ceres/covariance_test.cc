@@ -63,9 +63,9 @@ class UnaryCostFunction: public CostFunction {
     mutable_parameter_block_sizes()->push_back(parameter_block_size);
   }
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     for (int i = 0; i < num_residuals(); ++i) {
       residuals[i] = 1;
     }
@@ -102,9 +102,9 @@ class BinaryCostFunction: public CostFunction {
     mutable_parameter_block_sizes()->push_back(parameter_block2_size);
   }
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     for (int i = 0; i < num_residuals(); ++i) {
       residuals[i] = 2;
     }
@@ -134,22 +134,22 @@ class PolynomialParameterization : public LocalParameterization {
  public:
   virtual ~PolynomialParameterization() {}
 
-  virtual bool Plus(const double* x,
-                    const double* delta,
-                    double* x_plus_delta) const {
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const final {
     x_plus_delta[0] = delta[0] * x[0];
     x_plus_delta[1] = delta[0] * x[1];
     return true;
   }
 
-  virtual bool ComputeJacobian(const double* x, double* jacobian) const {
+  bool ComputeJacobian(const double* x, double* jacobian) const final {
     jacobian[0] = x[0];
     jacobian[1] = x[1];
     return true;
   }
 
-  virtual int GlobalSize() const { return 2; }
-  virtual int LocalSize() const { return 1; }
+  int GlobalSize() const final { return 2; }
+  int LocalSize() const final { return 1; }
 };
 
 TEST(CovarianceImpl, ComputeCovarianceSparsity) {
@@ -409,7 +409,7 @@ class CovarianceTest : public ::testing::Test {
  protected:
   typedef map<const double*, pair<int, int>> BoundsMap;
 
-  virtual void SetUp() {
+  void SetUp() override {
     double* x = parameters_;
     double* y = x + 2;
     double* z = y + 3;
@@ -1102,7 +1102,7 @@ TEST_F(CovarianceTest, ComputeCovarianceFailure) {
 
 class RankDeficientCovarianceTest : public CovarianceTest {
  protected:
-  virtual void SetUp() {
+  void SetUp() final {
     double* x = parameters_;
     double* y = x + 2;
     double* z = y + 3;
@@ -1196,7 +1196,7 @@ TEST_F(RankDeficientCovarianceTest, AutomaticTruncation) {
 
 class LargeScaleCovarianceTest : public ::testing::Test {
  protected:
-  virtual void SetUp() {
+  void SetUp() final {
     num_parameter_blocks_ = 2000;
     parameter_block_size_ = 5;
     parameters_.reset(

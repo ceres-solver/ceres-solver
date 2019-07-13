@@ -53,16 +53,16 @@ typedef std::unordered_set<ParameterBlock*> VertexSet;
 
 template <int M, int... Ns>
 class DummyCostFunction : public SizedCostFunction<M, Ns...> {
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     return true;
   }
 };
 
 class SchurOrderingTest : public ::testing::Test {
  protected :
-  virtual void SetUp() {
+  void SetUp() final {
     // The explicit calls to AddParameterBlock are necessary because
     // the below tests depend on the specific numbering of the
     // parameter blocks.

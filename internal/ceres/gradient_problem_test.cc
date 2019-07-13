@@ -46,9 +46,9 @@ class QuadraticTestFunction : public ceres::FirstOrderFunction {
     }
   }
 
-  virtual bool Evaluate(const double* parameters,
-                        double* cost,
-                        double* gradient) const {
+  bool Evaluate(const double* parameters,
+                double* cost,
+                double* gradient) const final {
     const double x = parameters[0];
     cost[0] = x * x;
     if (gradient != NULL) {
@@ -57,7 +57,7 @@ class QuadraticTestFunction : public ceres::FirstOrderFunction {
     return true;
   }
 
-  virtual int NumParameters() const { return 1; }
+  int NumParameters() const final { return 1; }
 
  private:
   bool* flag_to_set_on_destruction_;

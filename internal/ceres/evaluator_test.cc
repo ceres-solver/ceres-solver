@@ -64,9 +64,9 @@ class ParameterIgnoringCostFunction
   explicit ParameterIgnoringCostFunction(bool succeeds = true)
       : succeeds_(succeeds) {}
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     for (int i = 0; i < Base::num_residuals(); ++i) {
       residuals[i] = i + 1;
     }
@@ -580,9 +580,9 @@ INSTANTIATE_TEST_SUITE_P(
 // state changes.
 class ParameterSensitiveCostFunction : public SizedCostFunction<2, 2> {
  public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     double x1 = parameters[0][0];
     double x2 = parameters[0][1];
     residuals[0] = x1 * x1;

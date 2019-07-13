@@ -57,10 +57,10 @@ class LinearOperator;
 class ConjugateGradientsSolver : public LinearSolver {
  public:
   explicit ConjugateGradientsSolver(const LinearSolver::Options& options);
-  virtual Summary Solve(LinearOperator* A,
-                        const double* b,
-                        const LinearSolver::PerSolveOptions& per_solve_options,
-                        double* x);
+  Summary Solve(LinearOperator* A,
+                const double* b,
+                const LinearSolver::PerSolveOptions& per_solve_options,
+                double* x) final;
 
  private:
   const LinearSolver::Options options_;

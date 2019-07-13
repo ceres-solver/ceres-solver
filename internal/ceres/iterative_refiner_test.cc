@@ -57,27 +57,27 @@ class FakeSparseMatrix : public SparseMatrix {
   virtual ~FakeSparseMatrix() {}
 
   // y += Ax
-  virtual void RightMultiply(const double* x, double* y) const {
+  void RightMultiply(const double* x, double* y) const final {
     VectorRef(y, m_.cols()) += m_ * ConstVectorRef(x, m_.cols());
   }
   // y += A'x
-  virtual void LeftMultiply(const double* x, double* y) const {
+  void LeftMultiply(const double* x, double* y) const final {
     // We will assume that this is a symmetric matrix.
     RightMultiply(x, y);
   }
 
-  virtual double* mutable_values() { return m_.data(); }
-  virtual const double* values() const { return m_.data(); }
-  virtual int num_rows() const { return m_.cols(); }
-  virtual int num_cols() const { return m_.cols(); }
-  virtual int num_nonzeros() const { return m_.cols() * m_.cols(); }
+  double* mutable_values() final { return m_.data(); }
+  const double* values() const final { return m_.data(); }
+  int num_rows() const final { return m_.cols(); }
+  int num_cols() const final { return m_.cols(); }
+  int num_nonzeros() const final { return m_.cols() * m_.cols(); }
 
   // The following methods are not needed for tests in this file.
-  virtual void SquaredColumnNorm(double* x) const DO_NOT_CALL;
-  virtual void ScaleColumns(const double* scale) DO_NOT_CALL;
-  virtual void SetZero() DO_NOT_CALL;
-  virtual void ToDenseMatrix(Matrix* dense_matrix) const DO_NOT_CALL;
-  virtual void ToTextFile(FILE* file) const DO_NOT_CALL;
+  void SquaredColumnNorm(double* x) const final DO_NOT_CALL;
+  void ScaleColumns(const double* scale) final DO_NOT_CALL;
+  void SetZero() final DO_NOT_CALL;
+  void ToDenseMatrix(Matrix* dense_matrix) const final DO_NOT_CALL;
+  void ToTextFile(FILE* file) const final DO_NOT_CALL;
 
  private:
   Matrix m_;
@@ -92,9 +92,9 @@ class FakeSparseCholesky : public SparseCholesky {
   FakeSparseCholesky(const Matrix& lhs) { lhs_ = lhs.cast<Scalar>(); }
   virtual ~FakeSparseCholesky() {}
 
-  virtual LinearSolverTerminationType Solve(const double* rhs_ptr,
+  LinearSolverTerminationType Solve(const double* rhs_ptr,
                                             double* solution_ptr,
-                                            std::string* message) {
+                                            std::string* message) final {
     const int num_cols = lhs_.cols();
     VectorRef solution(solution_ptr, num_cols);
     ConstVectorRef rhs(rhs_ptr, num_cols);
@@ -103,17 +103,17 @@ class FakeSparseCholesky : public SparseCholesky {
   }
 
   // The following methods are not needed for tests in this file.
-  virtual CompressedRowSparseMatrix::StorageType StorageType() const
+  CompressedRowSparseMatrix::StorageType StorageType() const
       DO_NOT_CALL_WITH_RETURN(CompressedRowSparseMatrix::UPPER_TRIANGULAR);
-  virtual LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
+  LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
                                                 std::string* message)
       DO_NOT_CALL_WITH_RETURN(LINEAR_SOLVER_FAILURE);
 
-  virtual LinearSolverTerminationType FactorAndSolve(
+  LinearSolverTerminationType FactorAndSolve(
       CompressedRowSparseMatrix* lhs,
       const double* rhs,
       double* solution,
-      std::string* message) DO_NOT_CALL_WITH_RETURN(LINEAR_SOLVER_FAILURE);
+      std::string* message) final DO_NOT_CALL_WITH_RETURN(LINEAR_SOLVER_FAILURE);
 
  private:
   Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic> lhs_;

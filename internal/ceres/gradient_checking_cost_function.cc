@@ -83,9 +83,9 @@ class GradientCheckingCostFunction : public CostFunction {
 
   virtual ~GradientCheckingCostFunction() { }
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const final {
     if (!jacobians) {
       // Nothing to check in this case; just forward.
       return function_->Evaluate(parameters, residuals, NULL);

@@ -64,21 +64,21 @@ class BlockRandomAccessDenseMatrix : public BlockRandomAccessMatrix {
   virtual ~BlockRandomAccessDenseMatrix();
 
   // BlockRandomAccessMatrix interface.
-  virtual CellInfo* GetCell(int row_block_id,
-                            int col_block_id,
-                            int* row,
-                            int* col,
-                            int* row_stride,
-                            int* col_stride);
+  CellInfo* GetCell(int row_block_id,
+                    int col_block_id,
+                    int* row,
+                    int* col,
+                    int* row_stride,
+                    int* col_stride) final;
 
   // This is not a thread safe method, it assumes that no cell is
   // locked.
-  virtual void SetZero();
+  void SetZero() final;
 
   // Since the matrix is square with the same row and column block
   // structure, num_rows() = num_cols().
-  virtual int num_rows() const { return num_rows_; }
-  virtual int num_cols() const { return num_rows_; }
+  int num_rows() const final { return num_rows_; }
+  int num_cols() const final { return num_rows_; }
 
   // The underlying matrix storing the cells.
   const double* values() const { return values_.get(); }

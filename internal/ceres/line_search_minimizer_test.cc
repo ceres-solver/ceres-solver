@@ -40,9 +40,9 @@ namespace internal {
 
 class QuadraticFirstOrderFunction : public ceres::FirstOrderFunction {
  public:
-  virtual bool Evaluate(const double* parameters,
-                        double* cost,
-                        double* gradient) const {
+  bool Evaluate(const double* parameters,
+                double* cost,
+                double* gradient) const final {
 
     cost[0] = parameters[0] * parameters[0];
     if (gradient != NULL) {
@@ -51,7 +51,7 @@ class QuadraticFirstOrderFunction : public ceres::FirstOrderFunction {
     return true;
   }
 
-  virtual int NumParameters() const { return 1; }
+  int NumParameters() const final { return 1; }
 };
 
 TEST(LineSearchMinimizerTest, FinalCostIsZero) {

@@ -33,6 +33,7 @@
 #ifdef CERES_USE_EIGEN_SPARSE
 
 #include <sstream>
+
 #include "Eigen/SparseCholesky"
 #include "Eigen/SparseCore"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -48,11 +49,11 @@ class EigenSparseCholeskyTemplate : public SparseCholesky {
  public:
   EigenSparseCholeskyTemplate() : analyzed_(false) {}
   virtual ~EigenSparseCholeskyTemplate() {}
-  virtual CompressedRowSparseMatrix::StorageType StorageType() const {
+  CompressedRowSparseMatrix::StorageType StorageType() const final {
     return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
   }
 
-  virtual LinearSolverTerminationType Factorize(
+  LinearSolverTerminationType Factorize(
       const Eigen::SparseMatrix<typename Solver::Scalar>& lhs,
       std::string* message) {
     if (!analyzed_) {
@@ -104,8 +105,8 @@ class EigenSparseCholeskyTemplate : public SparseCholesky {
     return LINEAR_SOLVER_SUCCESS;
   }
 
-  virtual LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
-                                                std::string* message) {
+  LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
+                                        std::string* message) final {
     CHECK_EQ(lhs->storage_type(), StorageType());
 
     typename Solver::Scalar* values_ptr = NULL;
