@@ -84,9 +84,9 @@ class CERES_EXPORT ConditionedCostFunction : public CostFunction {
                           Ownership ownership);
   virtual ~ConditionedCostFunction();
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const;
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const override;
 
  private:
   std::unique_ptr<CostFunction> wrapped_cost_function_;

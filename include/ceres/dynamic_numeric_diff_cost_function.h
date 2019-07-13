@@ -91,9 +91,9 @@ class DynamicNumericDiffCostFunction : public DynamicCostFunction {
     }
   }
 
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const override {
     using internal::NumericDiff;
     CHECK_GT(num_residuals(), 0)
         << "You must call DynamicNumericDiffCostFunction::SetNumResiduals() "
