@@ -113,9 +113,9 @@ class AutoDiffFirstOrderFunction : public FirstOrderFunction {
 
   virtual ~AutoDiffFirstOrderFunction() {}
 
-  virtual bool Evaluate(const double* const parameters,
-                        double* cost,
-                        double* gradient) const {
+  bool Evaluate(const double* const parameters,
+                double* cost,
+                double* gradient) const override {
     if (gradient == nullptr) {
       return (*functor_)(parameters, cost);
     }
@@ -141,7 +141,7 @@ class AutoDiffFirstOrderFunction : public FirstOrderFunction {
     return true;
   }
 
-  int NumParameters() const { return kNumParameters; }
+  int NumParameters() const override { return kNumParameters; }
 
  private:
   std::unique_ptr<FirstOrderFunctor> functor_;

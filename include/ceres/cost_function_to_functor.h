@@ -38,9 +38,9 @@
 //  class IntrinsicProjection : public SizedCostFunction<2, 5, 3> {
 //    public:
 //      IntrinsicProjection(const double* observation);
-//      virtual bool Evaluate(double const* const* parameters,
-//                            double* residuals,
-//                            double** jacobians) const;
+//      bool Evaluate(double const* const* parameters,
+//                    double* residuals,
+//                    double** jacobians) const override;
 //  };
 //
 // is a cost function that implements the projection of a point in its
