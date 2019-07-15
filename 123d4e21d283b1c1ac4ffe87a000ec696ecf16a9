@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66e4c9ed_2a66aec6",
+        "filename": "internal/ceres/block_random_access_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-07-15T08:08:00Z",
+      "side": 1,
+      "message": "This looks like a linting change unrelated to the use of override/final",
+      "revId": "123d4e21d283b1c1ac4ffe87a000ec696ecf16a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
