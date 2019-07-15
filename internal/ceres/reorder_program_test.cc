@@ -70,12 +70,12 @@ TEST(_, ReorderResidualBlockNormalFunction) {
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
 
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &x);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &y);
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &z);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &y);
+  problem.AddResidualBlock(new UnaryCostFunction(), nullptr, &x);
+  problem.AddResidualBlock(new BinaryCostFunction(), nullptr, &z, &x);
+  problem.AddResidualBlock(new BinaryCostFunction(), nullptr, &z, &y);
+  problem.AddResidualBlock(new UnaryCostFunction(), nullptr, &z);
+  problem.AddResidualBlock(new BinaryCostFunction(), nullptr, &x, &y);
+  problem.AddResidualBlock(new UnaryCostFunction(), nullptr, &y);
 
   ParameterBlockOrdering* linear_solver_ordering = new ParameterBlockOrdering;
   linear_solver_ordering->AddElementToGroup(&x, 0);
@@ -173,12 +173,12 @@ class ReorderProgramFoSparseCholeskyUsingSuiteSparseTest :
       public ::testing::Test {
  protected:
   void SetUp() {
-    problem_.AddResidualBlock(new UnaryCostFunction(), NULL, &x_);
-    problem_.AddResidualBlock(new BinaryCostFunction(), NULL, &z_, &x_);
-    problem_.AddResidualBlock(new BinaryCostFunction(), NULL, &z_, &y_);
-    problem_.AddResidualBlock(new UnaryCostFunction(), NULL, &z_);
-    problem_.AddResidualBlock(new BinaryCostFunction(), NULL, &x_, &y_);
-    problem_.AddResidualBlock(new UnaryCostFunction(), NULL, &y_);
+    problem_.AddResidualBlock(new UnaryCostFunction(), nullptr, &x_);
+    problem_.AddResidualBlock(new BinaryCostFunction(), nullptr, &z_, &x_);
+    problem_.AddResidualBlock(new BinaryCostFunction(), nullptr, &z_, &y_);
+    problem_.AddResidualBlock(new UnaryCostFunction(), nullptr, &z_);
+    problem_.AddResidualBlock(new BinaryCostFunction(), nullptr, &x_, &y_);
+    problem_.AddResidualBlock(new UnaryCostFunction(), nullptr, &y_);
   }
 
   void ComputeAndValidateOrdering(
@@ -260,12 +260,12 @@ TEST(_, ReorderResidualBlocksbyPartition) {
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
 
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &x);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &y);
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &z);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &y);
+  problem.AddResidualBlock(new UnaryCostFunction(), nullptr, &x);
+  problem.AddResidualBlock(new BinaryCostFunction(), nullptr, &z, &x);
+  problem.AddResidualBlock(new BinaryCostFunction(), nullptr, &z, &y);
+  problem.AddResidualBlock(new UnaryCostFunction(), nullptr, &z);
+  problem.AddResidualBlock(new BinaryCostFunction(), nullptr, &x, &y);
+  problem.AddResidualBlock(new UnaryCostFunction(), nullptr, &y);
 
   std::vector<ResidualBlockId> residual_block_ids;
   problem.GetResidualBlocks(&residual_block_ids);

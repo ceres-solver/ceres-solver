@@ -198,7 +198,7 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
     }
   }
 
-  if (options.trust_region_minimizer_iterations_to_dump.size() > 0 &&
+  if (!options.trust_region_minimizer_iterations_to_dump.empty() &&
       options.trust_region_problem_dump_format_type != CONSOLE &&
       options.trust_region_problem_dump_directory.empty()) {
     *error = "Solver::Options::trust_region_problem_dump_directory is empty.";
@@ -219,7 +219,7 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
 
   if (options.linear_solver_type == CGNR &&
       options.preconditioner_type == SUBSET &&
-      options.residual_blocks_for_subset_preconditioner.size() == 0) {
+      options.residual_blocks_for_subset_preconditioner.empty()) {
     *error =
         "When using SUBSET preconditioner, "
         "Solver::Options::residual_blocks_for_subset_preconditioner cannot be "
@@ -285,7 +285,7 @@ bool LineSearchOptionsAreValid(const Solver::Options& options, string* error) {
 #undef OPTION_LT_OPTION
 
 void StringifyOrdering(const vector<int>& ordering, string* report) {
-  if (ordering.size() == 0) {
+  if (ordering.empty()) {
     internal::StringAppendF(report, "AUTOMATIC");
     return;
   }

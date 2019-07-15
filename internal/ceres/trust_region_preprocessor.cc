@@ -251,7 +251,7 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
   }
 
   pp->linear_solver.reset(LinearSolver::Create(pp->linear_solver_options));
-  return (pp->linear_solver.get() != nullptr);
+  return (pp->linear_solver != nullptr);
 }
 
 // Configure and create the evaluator.
@@ -277,7 +277,7 @@ bool SetupEvaluator(PreprocessedProblem* pp) {
                                         pp->reduced_program.get(),
                                         &pp->error));
 
-  return (pp->evaluator.get() != nullptr);
+  return (pp->evaluator != nullptr);
 }
 
 // If the user requested inner iterations, then find an inner
@@ -303,7 +303,7 @@ bool SetupInnerIterationMinimizer(PreprocessedProblem* pp) {
     return true;
   }
 
-  if (options.inner_iteration_ordering.get() != nullptr) {
+  if (options.inner_iteration_ordering != nullptr) {
     // If the user supplied an ordering, then remove the set of
     // inactive parameter blocks from it
     options.inner_iteration_ordering->Remove(pp->removed_parameter_blocks);
