@@ -311,14 +311,14 @@ void InnerProductComputer::Compute() {
       for (int c2 = c2_begin; c2 < c2_end; ++c2, ++cursor) {
         const Cell& cell2 = m_row.cells[c2];
         const int c2_size = bs->cols[cell2.block_id].size;
-        MatrixTransposeMatrixMultiply<Eigen::Dynamic, Eigen::Dynamic,
-                                      Eigen::Dynamic, Eigen::Dynamic, 1>(
-                                          m_values + cell1.position,
-                                          m_row.block.size, c1_size,
-                                          m_values + cell2.position,
-                                          m_row.block.size, c2_size,
-                                          values + result_offsets_[cursor],
-                                          0, 0, c1_size, row_nnz);
+        MatrixTransposeMatrixMultiplyEigen<Eigen::Dynamic, Eigen::Dynamic,
+                                           Eigen::Dynamic, Eigen::Dynamic, 1>(
+                                               m_values + cell1.position,
+                                               m_row.block.size, c1_size,
+                                               m_values + cell2.position,
+                                               m_row.block.size, c2_size,
+                                               values + result_offsets_[cursor],
+                                               0, 0, c1_size, row_nnz);
       }
     }
   }
