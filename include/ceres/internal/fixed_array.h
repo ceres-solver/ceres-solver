@@ -46,6 +46,24 @@
 namespace ceres {
 namespace internal {
 
+// GCC < 5.1 and std::is_trivially_default_constructible workaround
+//
+// The versions of the STL shipped with versions of GCC older than 5.1 are missing a number of type traits,
+// such as std::is_trivially_default_constructible. However, for some of them, equivalent type traits with
+// different names are provided, such as std::has_trivial_default_constructor.
+// In this case, we polyfill the proper standard names using the deprecated std::has_trivial_default_constructor.
+// This must also be done when the compiler is clang when it makes use of the GCC implementation of the STL,
+// which is the default behavior on linux. Properly detecting the version of the GCC STL used by clang cannot
+// be done with the __GNUC__ macro, which are overridden by clang. Instead, we check for the definition of the
+// macro _GLIBCXX_USE_CXX11_ABI which is only defined with GCC versions greater than 5.
+#if !defined(__GNUG__) || defined(_LIBCPP_VERSION) || defined(_GLIBCXX_USE_CXX11_ABI)
+template <class T>
+using std_is_trivially_default_constructible = std::is_trivially_default_constructible<T>;
+#else
+template <class T>
+using std_is_trivially_default_constructible = std::has_trivial_default_constructor<T>;
+#endif
+
 constexpr static auto kFixedArrayUseDefault = static_cast<size_t>(-1);
 
 // The default fixed array allocator.
@@ -100,7 +118,7 @@ class FixedArray {
       typename std::iterator_traits<Iterator>::iterator_category,
       std::forward_iterator_tag>::value>::type;
   static constexpr bool DefaultConstructorIsNonTrivial() {
-    return !std::is_trivially_default_constructible<StorageElement>::value;
+    return !std_is_trivially_default_constructible<StorageElement>::value;
   }
 
  public:
