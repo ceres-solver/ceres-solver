@@ -16,6 +16,24 @@
       "revId": "51b5e23d5bd689a5e008f5c075db040c222d3d37",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f0f00a_a2623c54",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6254
+      },
+      "writtenOn": "2019-07-18T18:18:25Z",
+      "side": 1,
+      "message": "Thank you for the guideline! I\u0027ve now pushed the amended commit.",
+      "parentUuid": "8234badb_01810e50",
+      "revId": "51b5e23d5bd689a5e008f5c075db040c222d3d37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
