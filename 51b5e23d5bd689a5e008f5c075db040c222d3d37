@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8234badb_01810e50",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-07-18T17:48:23Z",
+      "side": 1,
+      "message": "This is *very* minor, but please try to follow this style for commits: https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html (single sentence, capitalised start, \u003c 50 chars).  So prefer something like this:\n\nFixing documentation typo\n\n- Matrix had two columns squeezed together",
+      "revId": "51b5e23d5bd689a5e008f5c075db040c222d3d37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
