@@ -514,4 +514,7 @@ if (BUILD_BENCHMARKS)
 
   add_executable(invert_psd_matrix_benchmark invert_psd_matrix_benchmark.cc)
   add_dependencies_to_benchmark(invert_psd_matrix_benchmark)
+
+  add_executable(schur_eliminator_benchmark schur_eliminator_benchmark.cc)
+  add_dependencies_to_benchmark(schur_eliminator_benchmark)
 endif (BUILD_BENCHMARKS)
