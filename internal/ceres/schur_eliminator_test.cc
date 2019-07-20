@@ -1,44 +1,19 @@
-// Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
-// http://ceres-solver.org/
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are met:
-//
-// * Redistributions of source code must retain the above copyright notice,
-//   this list of conditions and the following disclaimer.
-// * Redistributions in binary form must reproduce the above copyright notice,
-//   this list of conditions and the following disclaimer in the documentation
-//   and/or other materials provided with the distribution.
-// * Neither the name of Google Inc. nor the names of its contributors may be
-//   used to endorse or promote products derived from this software without
-//   specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-// POSSIBILITY OF SUCH DAMAGE.
-//
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include "ceres/schur_eliminator.h"
 
 #include <memory>
+
 #include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_sparse_matrix.h"
+#include "ceres/block_structure.h"
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
 #include "ceres/detect_structure.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
+#include "ceres/random.h"
 #include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
@@ -224,6 +199,139 @@ TEST_F(SchurEliminatorTest, VaryingFBlockSizeWithoutStaticStructure) {
   SetUpFromId(4);
   ComputeReferenceSolution(VectorRef(D.get(), A->num_cols()));
   EliminateSolveAndCompare(VectorRef(D.get(), A->num_cols()), false, 1e-14);
+}
+
+TEST(SchurEliminatorForOneFBlock, MatchesSchurEliminator) {
+  constexpr int kRowBlockSize = 2;
+  constexpr int kEBlockSize = 3;
+  constexpr int kFBlockSize = 6;
+  constexpr int num_e_blocks = 5;
+
+  CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
+  bs->cols.resize(num_e_blocks + 1);
+  int col_pos = 0;
+  for (int i = 0; i < num_e_blocks; ++i) {
+    bs->cols[i].position = col_pos;
+    bs->cols[i].size = kEBlockSize;
+    col_pos += kEBlockSize;
+  }
+  bs->cols.back().position = col_pos;
+  bs->cols.back().size = kFBlockSize;
+
+  bs->rows.resize(2 * num_e_blocks + 1);
+  int row_pos = 0;
+  int cell_pos = 0;
+  for (int i = 0; i < num_e_blocks; ++i) {
+    {
+      auto& row = bs->rows[2 * i];
+      row.block.position = row_pos;
+      row.block.size = kRowBlockSize;
+      row_pos += kRowBlockSize;
+      auto& cells = row.cells;
+      cells.resize(2);
+      cells[0].block_id = i;
+      cells[0].position = cell_pos;
+      cell_pos += kRowBlockSize * kEBlockSize;
+      cells[1].block_id = num_e_blocks;
+      cells[1].position = cell_pos;
+      cell_pos += kRowBlockSize * kFBlockSize;
+    }
+    {
+      auto& row = bs->rows[2 * i + 1];
+      row.block.position = row_pos;
+      row.block.size = kRowBlockSize;
+      row_pos += kRowBlockSize;
+      auto& cells = row.cells;
+      cells.resize(1);
+      cells[0].block_id = i;
+      cells[0].position = cell_pos;
+      cell_pos += kRowBlockSize * kEBlockSize;
+    }
+  }
+
+  {
+    auto& row = bs->rows.back();
+    row.block.position = row_pos;
+    row.block.size = kEBlockSize;
+    row_pos += kRowBlockSize;
+    auto& cells = row.cells;
+    cells.resize(1);
+    cells[0].block_id = num_e_blocks;
+    cells[0].position = cell_pos;
+    cell_pos += kEBlockSize * kEBlockSize;
+  }
+
+  BlockSparseMatrix matrix(bs);
+  double* values = matrix.mutable_values();
+  for (int i = 0; i < matrix.num_nonzeros(); ++i) {
+    values[i] = RandNormal();
+  }
+
+  Vector b(matrix.num_rows());
+  b.setRandom();
+
+  Vector diagonal(matrix.num_cols());
+  diagonal.setOnes();
+
+  std::vector<int> blocks(1, kFBlockSize);
+  BlockRandomAccessDenseMatrix actual_lhs(blocks);
+  BlockRandomAccessDenseMatrix expected_lhs(blocks);
+  Vector actual_rhs(kFBlockSize);
+  Vector expected_rhs(kFBlockSize);
+
+  Vector f_sol(kFBlockSize);
+  f_sol.setRandom();
+  Vector actual_e_sol(num_e_blocks * kEBlockSize);
+  actual_e_sol.setZero();
+  Vector expected_e_sol(num_e_blocks * kEBlockSize);
+  expected_e_sol.setZero();
+
+  {
+    ContextImpl context;
+    LinearSolver::Options linear_solver_options;
+    linear_solver_options.e_block_size = kEBlockSize;
+    linear_solver_options.row_block_size = kRowBlockSize;
+    linear_solver_options.f_block_size = kFBlockSize;
+    linear_solver_options.context = &context;
+    std::unique_ptr<SchurEliminatorBase> eliminator(
+        SchurEliminatorBase::Create(linear_solver_options));
+    eliminator->Init(num_e_blocks, true, matrix.block_structure());
+    eliminator->Eliminate(&matrix, b.data(), diagonal.data(), &expected_lhs,
+                          expected_rhs.data());
+    eliminator->BackSubstitute(&matrix, b.data(), diagonal.data(), f_sol.data(),
+                               actual_e_sol.data());
+  }
+
+  {
+    SchurEliminatorForOneFBlock<2, 3, 6> eliminator;
+    eliminator.Init(num_e_blocks, true, matrix.block_structure());
+    eliminator.Eliminate(&matrix, b.data(), diagonal.data(), &actual_lhs,
+                         actual_rhs.data());
+    eliminator.BackSubstitute(&matrix, b.data(), diagonal.data(), f_sol.data(),
+                              expected_e_sol.data());
+  }
+  ConstMatrixRef actual_lhsref(actual_lhs.values(), actual_lhs.num_cols(),
+                               actual_lhs.num_cols());
+  ConstMatrixRef expected_lhsref(expected_lhs.values(), actual_lhs.num_cols(),
+                                 actual_lhs.num_cols());
+
+  EXPECT_NEAR((actual_lhsref - expected_lhsref).norm() / expected_lhsref.norm(),
+              0.0, 1e-12)
+      << "expected: \n"
+      << expected_lhsref << "\nactual: \n"
+      << actual_lhsref;
+
+  EXPECT_NEAR((actual_rhs - expected_rhs).norm() / expected_rhs.norm(), 0.0,
+              1e-12)
+      << "expected: \n"
+      << expected_rhs << "\nactual: \n"
+      << actual_rhs;
+
+  EXPECT_NEAR((actual_e_sol - expected_e_sol).norm() / expected_e_sol.norm(),
+              0.0, 1e-12)
+      << "expected: \n"
+      << expected_e_sol << "\nactual: \n"
+      << actual_e_sol;
 }
 
 }  // namespace internal
