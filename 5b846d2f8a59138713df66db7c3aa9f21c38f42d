@@ -34,6 +34,24 @@
       "revId": "5b846d2f8a59138713df66db7c3aa9f21c38f42d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf3ccb68_778a58b7",
+        "filename": "include/ceres/normal_prior.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-25T23:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c1bada0_00f7ba5b",
+      "revId": "5b846d2f8a59138713df66db7c3aa9f21c38f42d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
