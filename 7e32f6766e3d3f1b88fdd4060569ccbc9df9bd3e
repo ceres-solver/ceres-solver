@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c1b3340_6361d2dd",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-25T23:29:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33f564dd_0522a5b1",
+      "revId": "7e32f6766e3d3f1b88fdd4060569ccbc9df9bd3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c3df832_aecba1ed",
         "filename": "internal/ceres/trust_region_strategy.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2019-07-25T21:57:46Z",
       "side": 1,
       "message": "Sidenote: Should this be \" \u003d 0\" as well?",
+      "revId": "7e32f6766e3d3f1b88fdd4060569ccbc9df9bd3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe82822_78207f03",
+        "filename": "internal/ceres/trust_region_strategy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-07-25T23:29:08Z",
+      "side": 1,
+      "message": "no its defined in the cc file along with the static method.",
+      "parentUuid": "7c3df832_aecba1ed",
       "revId": "7e32f6766e3d3f1b88fdd4060569ccbc9df9bd3e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
