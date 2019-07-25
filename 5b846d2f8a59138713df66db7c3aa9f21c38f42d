@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bd25060_4510ce76",
+        "filename": "include/ceres/normal_prior.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-07-25T21:33:15Z",
+      "side": 1,
+      "message": "Isn\u0027t this still needed?",
+      "revId": "5b846d2f8a59138713df66db7c3aa9f21c38f42d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
