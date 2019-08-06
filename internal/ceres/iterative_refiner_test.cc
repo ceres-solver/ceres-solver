@@ -103,10 +103,10 @@ class FakeSparseCholesky : public SparseCholesky {
   }
 
   // The following methods are not needed for tests in this file.
-  CompressedRowSparseMatrix::StorageType StorageType() const
+  CompressedRowSparseMatrix::StorageType StorageType() const final
       DO_NOT_CALL_WITH_RETURN(CompressedRowSparseMatrix::UPPER_TRIANGULAR);
   LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
-                                                std::string* message)
+                                                std::string* message) final
       DO_NOT_CALL_WITH_RETURN(LINEAR_SOLVER_FAILURE);
 
   LinearSolverTerminationType FactorAndSolve(

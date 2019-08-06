@@ -141,19 +141,19 @@ bool SubsetParameterization::ComputeJacobian(const double* x,
 }
 
 bool SubsetParameterization::MultiplyByJacobian(const double* x,
-                                               const int num_rows,
-                                               const double* global_matrix,
-                                               double* local_matrix) const {
+                                                const int num_cols,
+                                                const double* global_matrix,
+                                                double* local_matrix) const {
   if (local_size_ == 0) {
     return true;
   }
 
   const int global_size = GlobalSize();
-  for (int row = 0; row < num_rows; ++row) {
-    for (int col = 0, j = 0; col < global_size; ++col) {
-      if (!constancy_mask_[col]) {
-        local_matrix[row * local_size_ + j++] =
-            global_matrix[row * global_size + col];
+  for (int col = 0; col < num_cols; ++col) {
+    for (int i = 0, j = 0; i < global_size; ++i) {
+      if (!constancy_mask_[i]) {
+        local_matrix[col * local_size_ + j++] =
+            global_matrix[col * global_size + i];
       }
     }
   }
