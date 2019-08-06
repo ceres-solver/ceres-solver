@@ -252,21 +252,16 @@ void SolveProblem(Problem* problem, PGMImage<double>* solution) {
 
 int main(int argc, char** argv) {
   using namespace ceres::examples;
-  std::string usage(
-      "This program denoises an image using Ceres.  Sample usage:\n");
-  usage += argv[0];
-  usage += " --input=<noisy image PGM file> --foe_file=<FoE file name>";
-  CERES_GFLAGS_NAMESPACE::SetUsageMessage(usage);
   CERES_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
   if (FLAGS_input.empty()) {
-    std::cerr << "Please provide an image file name.\n";
+    std::cerr << "Please provide an image file name using -input.\n";
     return 1;
   }
 
   if (FLAGS_foe_file.empty()) {
-    std::cerr << "Please provide a Fields of Experts file name.\n";
+    std::cerr << "Please provide a Fields of Experts file name using -foe_file.\n";
     return 1;
   }
 
