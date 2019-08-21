@@ -280,7 +280,8 @@ endif (BUILD_SHARED_LIBS)
 # of the dependencies (e.g. /usr/local) that we find the config.h we just
 # configured, not the (older) installed config.h.
 target_include_directories(ceres BEFORE PUBLIC
-  $<BUILD_INTERFACE:${Ceres_BINARY_DIR}/config>)
+  $<BUILD_INTERFACE:${Ceres_BINARY_DIR}/config>
+  $<INSTALL_INTERFACE:config>)
 target_include_directories(ceres PRIVATE ${Ceres_SOURCE_DIR}/internal)
 target_include_directories(ceres PUBLIC
   $<BUILD_INTERFACE:${Ceres_SOURCE_DIR}/include>
@@ -291,7 +292,9 @@ target_include_directories(ceres PUBLIC
 # warnings around the #include statments for Eigen headers across all GCC/Clang
 # versions, we tell CMake to treat Eigen headers as system headers.  This
 # results in all compiler warnings from them being suppressed.
-target_include_directories(ceres SYSTEM PUBLIC ${EIGEN_INCLUDE_DIRS})
+target_include_directories(ceres SYSTEM PUBLIC
+  $<BUILD_INTERFACE:${EIGEN_INCLUDE_DIRS}>
+  $<INSTALL_INTERFACE:include>)
 
 # Gather the list of public & private include locations for all enabled optional
 # dependencies to be added to the Ceres target.
