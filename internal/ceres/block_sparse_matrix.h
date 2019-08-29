@@ -133,6 +133,25 @@ class BlockSparseMatrix : public SparseMatrix {
   std::unique_ptr<CompressedRowBlockStructure> block_structure_;
 };
 
+class BlockSparseMatrixData {
+ public:
+  BlockSparseMatrixData(const BlockSparseMatrix& m)
+      : block_structure_(m.block_structure()), values_(m.values()){};
+
+  BlockSparseMatrixData(const CompressedRowBlockStructure* block_structure,
+                        const double* values)
+      : block_structure_(block_structure), values_(values) {}
+
+  const CompressedRowBlockStructure* block_structure() const {
+    return block_structure_;
+  }
+  const double* values() const { return values_; }
+
+ private:
+  const CompressedRowBlockStructure* block_structure_;
+  const double* values_;
+};
+
 }  // namespace internal
 }  // namespace ceres
 

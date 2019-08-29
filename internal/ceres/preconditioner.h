@@ -52,6 +52,10 @@ class Preconditioner : public LinearOperator {
     VisibilityClusteringType visibility_clustering_type = CANONICAL_VIEWS;
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type = SUITE_SPARSE;
 
+    std::vector<int> subset_preconditioner_rows;
+
+    // TODO(sameeragarwal): Deprecate this.
+
     // When using the subset preconditioner, all row blocks starting
     // from this row block are used to construct the preconditioner.
     //

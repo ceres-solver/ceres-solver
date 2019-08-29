@@ -44,6 +44,7 @@
 #include "ceres/linear_solver.h"
 #include "ceres/preconditioner.h"
 #include "ceres/schur_jacobi_preconditioner.h"
+#include "ceres/subset_schur_preconditioner.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "ceres/visibility_based_preconditioner.h"
@@ -152,6 +153,8 @@ void IterativeSchurComplementSolver::CreatePreconditioner(
   preconditioner_options.elimination_groups = options_.elimination_groups;
   CHECK(options_.context != NULL);
   preconditioner_options.context = options_.context;
+  preconditioner_options.subset_preconditioner_rows =
+      options_.subset_preconditioner_rows;
 
   switch (options_.preconditioner_type) {
     case JACOBI:
@@ -165,6 +168,10 @@ void IterativeSchurComplementSolver::CreatePreconditioner(
     case CLUSTER_JACOBI:
     case CLUSTER_TRIDIAGONAL:
       preconditioner_.reset(new VisibilityBasedPreconditioner(
+          *A->block_structure(), preconditioner_options));
+      break;
+    case SUBSET:
+      preconditioner_.reset(new SubsetSchurPreconditioner(
           *A->block_structure(), preconditioner_options));
       break;
     default:
