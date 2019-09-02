@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9d8dba2_ff1130fb",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-09-02T15:21:26Z",
+      "side": 1,
+      "message": "This looks suspicious, the configured config.h header is *generated* in \u003cBUILD_DIR\u003e/config/ceres/internal/config.h, but *installed* to \u003cINSTALL_DIR\u003e/include/ceres/internal/config.h.  As such this is referencing a non-existent directory in the installed tree.  You can remove this as it should not be necessary.",
+      "revId": "493d453def5c9ab5b3cfebbc0f60cb34dd416c31",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935af618_c43aa573",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-09-02T15:21:26Z",
+      "side": 1,
+      "message": "This second line is *not* doing the same thing as the comment above explains - it is instead stating that all of Ceres\u0027 own headers should be treated as system headers - that should not be necessary.\n\nThis also doesn\u0027t actually solve the issue you are trying to address, the eigen include directories are now not included when installed rather than built and exported.",
+      "revId": "493d453def5c9ab5b3cfebbc0f60cb34dd416c31",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
