@@ -34,14 +34,14 @@
 # This module defines the following variables which should be referenced
 # by the caller to use the library.
 #
-# CXSPARSE_FOUND: TRUE iff CXSparse and all dependencies have been found.
+# CXSPARSE_FOUND: TRUE if CXSparse and all dependencies have been found.
 # CXSPARSE_INCLUDE_DIRS: Include directories for CXSparse.
 # CXSPARSE_LIBRARIES: Libraries for CXSparse and all dependencies.
 #
 # CXSPARSE_VERSION: Extracted from cs.h.
-# CXSPARSE_MAIN_VERSION: Equal to 3 if CXSPARSE_VERSION = 3.1.2
-# CXSPARSE_SUB_VERSION: Equal to 1 if CXSPARSE_VERSION = 3.1.2
-# CXSPARSE_SUBSUB_VERSION: Equal to 2 if CXSPARSE_VERSION = 3.1.2
+# CXSPARSE_MAJOR_VERSION: Equal to 3 if CXSPARSE_VERSION = 3.1.2
+# CXSPARSE_MINOR_VERSION: Equal to 1 if CXSPARSE_VERSION = 3.1.2
+# CXSPARSE_PATCH_VERSION: Equal to 2 if CXSPARSE_VERSION = 3.1.2
 #
 # The following variables control the behaviour of this module:
 #
@@ -202,23 +202,23 @@ if (CXSPARSE_INCLUDE_DIR)
     file(READ ${CXSPARSE_INCLUDE_DIR}/cs.h CXSPARSE_VERSION_FILE_CONTENTS)
 
     string(REGEX MATCH "#define CS_VER [0-9]+"
-      CXSPARSE_MAIN_VERSION "${CXSPARSE_VERSION_FILE_CONTENTS}")
+      CXSPARSE_MAJOR_VERSION "${CXSPARSE_VERSION_FILE_CONTENTS}")
     string(REGEX REPLACE "#define CS_VER ([0-9]+)" "\\1"
-      CXSPARSE_MAIN_VERSION "${CXSPARSE_MAIN_VERSION}")
+      CXSPARSE_MAJOR_VERSION "${CXSPARSE_MAJOR_VERSION}")
 
     string(REGEX MATCH "#define CS_SUBVER [0-9]+"
-      CXSPARSE_SUB_VERSION "${CXSPARSE_VERSION_FILE_CONTENTS}")
+      CXSPARSE_MINOR_VERSION "${CXSPARSE_VERSION_FILE_CONTENTS}")
     string(REGEX REPLACE "#define CS_SUBVER ([0-9]+)" "\\1"
-      CXSPARSE_SUB_VERSION "${CXSPARSE_SUB_VERSION}")
+      CXSPARSE_MINOR_VERSION "${CXSPARSE_MINOR_VERSION}")
 
     string(REGEX MATCH "#define CS_SUBSUB [0-9]+"
-      CXSPARSE_SUBSUB_VERSION "${CXSPARSE_VERSION_FILE_CONTENTS}")
+      CXSPARSE_PATCH_VERSION "${CXSPARSE_VERSION_FILE_CONTENTS}")
     string(REGEX REPLACE "#define CS_SUBSUB ([0-9]+)" "\\1"
-      CXSPARSE_SUBSUB_VERSION "${CXSPARSE_SUBSUB_VERSION}")
+      CXSPARSE_PATCH_VERSION "${CXSPARSE_PATCH_VERSION}")
 
     # This is on a single line s/t CMake does not interpret it as a list of
     # elements and insert ';' separators which would result in 3.;1.;2 nonsense.
-    set(CXSPARSE_VERSION "${CXSPARSE_MAIN_VERSION}.${CXSPARSE_SUB_VERSION}.${CXSPARSE_SUBSUB_VERSION}")
+    set(CXSPARSE_VERSION "${CXSPARSE_MAJOR_VERSION}.${CXSPARSE_MINOR_VERSION}.${CXSPARSE_PATCH_VERSION}")
   endif (NOT EXISTS ${CXSPARSE_VERSION_FILE})
 endif (CXSPARSE_INCLUDE_DIR)
 
