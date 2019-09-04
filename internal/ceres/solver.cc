@@ -154,6 +154,7 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
   }
 
   {
+    // TODO: this needs fixed.
     const char* sparse_linear_algebra_library_name =
         SparseLinearAlgebraLibraryTypeToString(
             options.sparse_linear_algebra_library_type);
@@ -164,8 +165,7 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
     } else if ((options.linear_solver_type == ITERATIVE_SCHUR &&
                 (options.preconditioner_type == CLUSTER_JACOBI ||
                  options.preconditioner_type == CLUSTER_TRIDIAGONAL)) ||
-               (options.linear_solver_type == CGNR &&
-                options.preconditioner_type == SUBSET)) {
+               (options.preconditioner_type == SUBSET)) {
       name = PreconditionerTypeToString(options.preconditioner_type);
     }
 
@@ -217,7 +217,8 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
     }
   }
 
-  if (options.linear_solver_type == CGNR &&
+  if ((options.linear_solver_type == CGNR ||
+       options.linear_solver_type == ITERATIVE_SCHUR) &&
       options.preconditioner_type == SUBSET &&
       options.residual_blocks_for_subset_preconditioner.empty()) {
     *error =

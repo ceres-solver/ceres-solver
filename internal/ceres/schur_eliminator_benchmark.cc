@@ -142,7 +142,7 @@ void BM_SchurEliminatorEliminate(benchmark::State& state) {
 
   eliminator->Init(num_e_blocks, true, data.matrix().block_structure());
   for (auto _ : state) {
-    eliminator->Eliminate(&data.matrix(),
+    eliminator->Eliminate(BlockSparseMatrixData(data.matrix()),
                           data.b().data(),
                           data.diagonal().data(),
                           data.mutable_lhs(),
@@ -164,13 +164,13 @@ void BM_SchurEliminatorBackSubstitute(benchmark::State& state) {
       SchurEliminatorBase::Create(linear_solver_options));
 
   eliminator->Init(num_e_blocks, true, data.matrix().block_structure());
-  eliminator->Eliminate(&data.matrix(),
+  eliminator->Eliminate(BlockSparseMatrixData(data.matrix()),
                         data.b().data(),
                         data.diagonal().data(),
                         data.mutable_lhs(),
                         data.mutable_rhs()->data());
   for (auto _ : state) {
-    eliminator->BackSubstitute(&data.matrix(),
+    eliminator->BackSubstitute(BlockSparseMatrixData(data.matrix()),
                                data.b().data(),
                                data.diagonal().data(),
                                data.mutable_z()->data(),
@@ -184,7 +184,7 @@ void BM_SchurEliminatorForOneFBlockEliminate(benchmark::State& state) {
   SchurEliminatorForOneFBlock<2, 3, 6> eliminator;
   eliminator.Init(num_e_blocks, true, data.matrix().block_structure());
   for (auto _ : state) {
-    eliminator.Eliminate(&data.matrix(),
+    eliminator.Eliminate(BlockSparseMatrixData(data.matrix()),
                          data.b().data(),
                          data.diagonal().data(),
                          data.mutable_lhs(),
@@ -197,13 +197,13 @@ void BM_SchurEliminatorForOneFBlockBackSubstitute(benchmark::State& state) {
   BenchmarkData data(num_e_blocks);
   SchurEliminatorForOneFBlock<2, 3, 6> eliminator;
   eliminator.Init(num_e_blocks, true, data.matrix().block_structure());
-  eliminator.Eliminate(&data.matrix(),
+  eliminator.Eliminate(BlockSparseMatrixData(data.matrix()),
                        data.b().data(),
                        data.diagonal().data(),
                        data.mutable_lhs(),
                        data.mutable_rhs()->data());
   for (auto _ : state) {
-    eliminator.BackSubstitute(&data.matrix(),
+    eliminator.BackSubstitute(BlockSparseMatrixData(data.matrix()),
                               data.b().data(),
                               data.diagonal().data(),
                               data.mutable_z()->data(),
