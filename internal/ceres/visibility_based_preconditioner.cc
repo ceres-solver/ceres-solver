@@ -185,7 +185,7 @@ void VisibilityBasedPreconditioner::InitStorage(
 // The cluster_membership_ vector is updated to indicate cluster
 // memberships for each camera block.
 void VisibilityBasedPreconditioner::ClusterCameras(
-    const vector<set<int> >& visibility) {
+    const vector<set<int>>& visibility) {
   std::unique_ptr<WeightedGraph<int>> schur_complement_graph(
       CreateSchurComplementGraph(visibility));
   CHECK(schur_complement_graph != nullptr);
@@ -342,7 +342,8 @@ bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   CHECK_GT(num_rows, 0);
 
   // Compute a subset of the entries of the Schur complement.
-  eliminator_->Eliminate(&A, nullptr, D, m_.get(), nullptr);
+  eliminator_->Eliminate(
+      BlockSparseMatrixData(A), nullptr, D, m_.get(), nullptr);
 
   // Try factorizing the matrix. For CLUSTER_JACOBI, this should
   // always succeed modulo some numerical/conditioning problems. For
@@ -464,7 +465,7 @@ bool VisibilityBasedPreconditioner::IsBlockPairOffDiagonal(
 // each vertex.
 void VisibilityBasedPreconditioner::ForestToClusterPairs(
     const WeightedGraph<int>& forest,
-    std::unordered_set<pair<int, int>, pair_hash >* cluster_pairs) const {
+    std::unordered_set<pair<int, int>, pair_hash>* cluster_pairs) const {
   CHECK(cluster_pairs != nullptr);
   cluster_pairs->clear();
   const std::unordered_set<int>& vertices = forest.vertices();

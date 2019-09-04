@@ -98,7 +98,8 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     lhs->resize(num_schur_rows, num_schur_rows);
     rhs->resize(num_schur_rows);
 
-    eliminator->Eliminate(A_.get(), b_.get(), D, &blhs, rhs->data());
+    eliminator->Eliminate(
+        BlockSparseMatrixData(*A_), b_.get(), D, &blhs, rhs->data());
 
     MatrixRef lhs_ref(blhs.mutable_values(), num_schur_rows, num_schur_rows);
 
@@ -114,7 +115,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     VectorRef schur_solution(solution->data() + num_cols_ - num_schur_rows,
                              num_schur_rows);
     schur_solution = lhs->selfadjointView<Eigen::Upper>().llt().solve(*rhs);
-    eliminator->BackSubstitute(A_.get(), b_.get(), D,
+    eliminator->BackSubstitute(BlockSparseMatrixData(*A_), b_.get(), D,
                                schur_solution.data(), solution->data());
   }
 

@@ -49,9 +49,8 @@ SchurJacobiPreconditioner::SchurJacobiPreconditioner(
   CHECK_GT(options_.elimination_groups.size(), 1);
   CHECK_GT(options_.elimination_groups[0], 0);
   const int num_blocks = bs.cols.size() - options_.elimination_groups[0];
-  CHECK_GT(num_blocks, 0)
-      << "Jacobian should have at least 1 f_block for "
-      << "SCHUR_JACOBI preconditioner.";
+  CHECK_GT(num_blocks, 0) << "Jacobian should have at least 1 f_block for "
+                          << "SCHUR_JACOBI preconditioner.";
   CHECK(options_.context != NULL);
 
   std::vector<int> blocks(num_blocks);
@@ -63,8 +62,7 @@ SchurJacobiPreconditioner::SchurJacobiPreconditioner(
   InitEliminator(bs);
 }
 
-SchurJacobiPreconditioner::~SchurJacobiPreconditioner() {
-}
+SchurJacobiPreconditioner::~SchurJacobiPreconditioner() {}
 
 // Initialize the SchurEliminator.
 void SchurJacobiPreconditioner::InitEliminator(
@@ -89,7 +87,8 @@ bool SchurJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   CHECK_GT(num_rows, 0);
 
   // Compute a subset of the entries of the Schur complement.
-  eliminator_->Eliminate(&A, nullptr, D, m_.get(), nullptr);
+  eliminator_->Eliminate(
+      BlockSparseMatrixData(A), nullptr, D, m_.get(), nullptr);
   m_->Invert();
   return true;
 }
@@ -99,9 +98,7 @@ void SchurJacobiPreconditioner::RightMultiply(const double* x,
   m_->RightMultiply(x, y);
 }
 
-int SchurJacobiPreconditioner::num_rows() const {
-  return m_->num_rows();
-}
+int SchurJacobiPreconditioner::num_rows() const { return m_->num_rows(); }
 
 }  // namespace internal
 }  // namespace ceres

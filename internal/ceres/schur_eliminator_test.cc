@@ -57,8 +57,8 @@ namespace internal {
 class SchurEliminatorTest : public ::testing::Test {
  protected:
   void SetUpFromId(int id) {
-    std::unique_ptr<LinearLeastSquaresProblem>
-        problem(CreateLinearLeastSquaresProblemFromId(id));
+    std::unique_ptr<LinearLeastSquaresProblem> problem(
+        CreateLinearLeastSquaresProblemFromId(id));
     CHECK(problem != nullptr);
     SetupHelper(problem.get());
   }
@@ -85,7 +85,7 @@ class SchurEliminatorTest : public ::testing::Test {
     A->ToDenseMatrix(&J);
     VectorRef f(b.get(), J.rows());
 
-    Matrix H  =  (D.cwiseProduct(D)).asDiagonal();
+    Matrix H = (D.cwiseProduct(D)).asDiagonal();
     H.noalias() += J.transpose() * J;
 
     const Vector g = J.transpose() * f;
@@ -101,28 +101,21 @@ class SchurEliminatorTest : public ::testing::Test {
     sol_expected.setZero();
 
     Matrix P = H.block(0, 0, num_eliminate_cols, num_eliminate_cols);
-    Matrix Q = H.block(0,
-                       num_eliminate_cols,
-                       num_eliminate_cols,
-                       schur_size);
-    Matrix R = H.block(num_eliminate_cols,
-                       num_eliminate_cols,
-                       schur_size,
-                       schur_size);
+    Matrix Q = H.block(0, num_eliminate_cols, num_eliminate_cols, schur_size);
+    Matrix R =
+        H.block(num_eliminate_cols, num_eliminate_cols, schur_size, schur_size);
     int row = 0;
     const CompressedRowBlockStructure* bs = A->block_structure();
     for (int i = 0; i < num_eliminate_blocks; ++i) {
-      const int block_size =  bs->cols[i].size;
-      P.block(row, row,  block_size, block_size) =
-          P
-          .block(row, row,  block_size, block_size)
-          .llt()
-          .solve(Matrix::Identity(block_size, block_size));
+      const int block_size = bs->cols[i].size;
+      P.block(row, row, block_size, block_size) =
+          P.block(row, row, block_size, block_size)
+              .llt()
+              .solve(Matrix::Identity(block_size, block_size));
       row += block_size;
     }
 
-    lhs_expected
-        .triangularView<Eigen::Upper>() = R - Q.transpose() * P * Q;
+    lhs_expected.triangularView<Eigen::Upper>() = R - Q.transpose() * P * Q;
     rhs_expected =
         g.tail(schur_size) - Q.transpose() * P * g.head(num_eliminate_cols);
     sol_expected = H.llt().solve(g);
@@ -161,20 +154,18 @@ class SchurEliminatorTest : public ::testing::Test {
     eliminator.reset(SchurEliminatorBase::Create(options));
     const bool kFullRankETE = true;
     eliminator->Init(num_eliminate_blocks, kFullRankETE, A->block_structure());
-    eliminator->Eliminate(A.get(), b.get(), diagonal.data(), &lhs, rhs.data());
+    eliminator->Eliminate(
+        BlockSparseMatrixData(*A), b.get(), diagonal.data(), &lhs, rhs.data());
 
     MatrixRef lhs_ref(lhs.mutable_values(), lhs.num_rows(), lhs.num_cols());
-    Vector reduced_sol  =
-        lhs_ref
-        .selfadjointView<Eigen::Upper>()
-        .llt()
-        .solve(rhs);
+    Vector reduced_sol =
+        lhs_ref.selfadjointView<Eigen::Upper>().llt().solve(rhs);
 
     // Solution to the linear least squares problem.
     Vector sol(num_cols);
     sol.setZero();
     sol.tail(schur_size) = reduced_sol;
-    eliminator->BackSubstitute(A.get(),
+    eliminator->BackSubstitute(BlockSparseMatrixData(*A),
                                b.get(),
                                diagonal.data(),
                                reduced_sol.data(),
@@ -183,9 +174,11 @@ class SchurEliminatorTest : public ::testing::Test {
     Matrix delta = (lhs_ref - lhs_expected).selfadjointView<Eigen::Upper>();
     double diff = delta.norm();
     EXPECT_NEAR(diff / lhs_expected.norm(), 0.0, relative_tolerance);
-    EXPECT_NEAR((rhs - rhs_expected).norm() / rhs_expected.norm(), 0.0,
+    EXPECT_NEAR((rhs - rhs_expected).norm() / rhs_expected.norm(),
+                0.0,
                 relative_tolerance);
-    EXPECT_NEAR((sol - sol_expected).norm() / sol_expected.norm(), 0.0,
+    EXPECT_NEAR((sol - sol_expected).norm() / sol_expected.norm(),
+                0.0,
                 relative_tolerance);
   }
 
@@ -324,39 +317,53 @@ TEST(SchurEliminatorForOneFBlock, MatchesSchurEliminator) {
     std::unique_ptr<SchurEliminatorBase> eliminator(
         SchurEliminatorBase::Create(linear_solver_options));
     eliminator->Init(num_e_blocks, true, matrix.block_structure());
-    eliminator->Eliminate(&matrix, b.data(), diagonal.data(), &expected_lhs,
+    eliminator->Eliminate(BlockSparseMatrixData(matrix),
+                          b.data(),
+                          diagonal.data(),
+                          &expected_lhs,
                           expected_rhs.data());
-    eliminator->BackSubstitute(&matrix, b.data(), diagonal.data(), f_sol.data(),
+    eliminator->BackSubstitute(BlockSparseMatrixData(matrix),
+                               b.data(),
+                               diagonal.data(),
+                               f_sol.data(),
                                actual_e_sol.data());
   }
 
   {
     SchurEliminatorForOneFBlock<2, 3, 6> eliminator;
     eliminator.Init(num_e_blocks, true, matrix.block_structure());
-    eliminator.Eliminate(&matrix, b.data(), diagonal.data(), &actual_lhs,
+    eliminator.Eliminate(BlockSparseMatrixData(matrix),
+                         b.data(),
+                         diagonal.data(),
+                         &actual_lhs,
                          actual_rhs.data());
-    eliminator.BackSubstitute(&matrix, b.data(), diagonal.data(), f_sol.data(),
+    eliminator.BackSubstitute(BlockSparseMatrixData(matrix),
+                              b.data(),
+                              diagonal.data(),
+                              f_sol.data(),
                               expected_e_sol.data());
   }
-  ConstMatrixRef actual_lhsref(actual_lhs.values(), actual_lhs.num_cols(),
-                               actual_lhs.num_cols());
-  ConstMatrixRef expected_lhsref(expected_lhs.values(), actual_lhs.num_cols(),
-                                 actual_lhs.num_cols());
+  ConstMatrixRef actual_lhsref(
+      actual_lhs.values(), actual_lhs.num_cols(), actual_lhs.num_cols());
+  ConstMatrixRef expected_lhsref(
+      expected_lhs.values(), actual_lhs.num_cols(), actual_lhs.num_cols());
 
   EXPECT_NEAR((actual_lhsref - expected_lhsref).norm() / expected_lhsref.norm(),
-              0.0, 1e-12)
+              0.0,
+              1e-12)
       << "expected: \n"
       << expected_lhsref << "\nactual: \n"
       << actual_lhsref;
 
-  EXPECT_NEAR((actual_rhs - expected_rhs).norm() / expected_rhs.norm(), 0.0,
-              1e-12)
+  EXPECT_NEAR(
+      (actual_rhs - expected_rhs).norm() / expected_rhs.norm(), 0.0, 1e-12)
       << "expected: \n"
       << expected_rhs << "\nactual: \n"
       << actual_rhs;
 
   EXPECT_NEAR((actual_e_sol - expected_e_sol).norm() / expected_e_sol.norm(),
-              0.0, 1e-12)
+              0.0,
+              1e-12)
       << "expected: \n"
       << expected_e_sol << "\nactual: \n"
       << actual_e_sol;

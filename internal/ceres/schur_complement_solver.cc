@@ -156,7 +156,11 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
   std::fill(x, x + A->num_cols(), 0.0);
   event_logger.AddEvent("Setup");
 
-  eliminator_->Eliminate(A, b, per_solve_options.D, lhs_.get(), rhs_.get());
+  eliminator_->Eliminate(BlockSparseMatrixData(*A),
+                         b,
+                         per_solve_options.D,
+                         lhs_.get(),
+                         rhs_.get());
   event_logger.AddEvent("Eliminate");
 
   double* reduced_solution = x + A->num_cols() - lhs_->num_cols();
@@ -165,7 +169,8 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
   event_logger.AddEvent("ReducedSolve");
 
   if (summary.termination_type == LINEAR_SOLVER_SUCCESS) {
-    eliminator_->BackSubstitute(A, b, per_solve_options.D, reduced_solution, x);
+    eliminator_->BackSubstitute(
+        BlockSparseMatrixData(*A), b, per_solve_options.D, reduced_solution, x);
     event_logger.AddEvent("BackSubstitute");
   }
 
