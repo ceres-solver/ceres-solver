@@ -89,7 +89,7 @@ bool SchurJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   CHECK_GT(num_rows, 0);
 
   // Compute a subset of the entries of the Schur complement.
-  eliminator_->Eliminate(&A, nullptr, D, m_.get(), nullptr);
+  eliminator_->Eliminate(BlockSparseMatrixData(A), nullptr, D, m_.get(), nullptr);
   m_->Invert();
   return true;
 }

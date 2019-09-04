@@ -161,7 +161,7 @@ class SchurEliminatorTest : public ::testing::Test {
     eliminator.reset(SchurEliminatorBase::Create(options));
     const bool kFullRankETE = true;
     eliminator->Init(num_eliminate_blocks, kFullRankETE, A->block_structure());
-    eliminator->Eliminate(A.get(), b.get(), diagonal.data(), &lhs, rhs.data());
+    eliminator->Eliminate(BlockSparseMatrixData(*A), b.get(), diagonal.data(), &lhs, rhs.data());
 
     MatrixRef lhs_ref(lhs.mutable_values(), lhs.num_rows(), lhs.num_cols());
     Vector reduced_sol  =
@@ -174,7 +174,7 @@ class SchurEliminatorTest : public ::testing::Test {
     Vector sol(num_cols);
     sol.setZero();
     sol.tail(schur_size) = reduced_sol;
-    eliminator->BackSubstitute(A.get(),
+    eliminator->BackSubstitute(BlockSparseMatrixData(*A),
                                b.get(),
                                diagonal.data(),
                                reduced_sol.data(),
@@ -324,18 +324,18 @@ TEST(SchurEliminatorForOneFBlock, MatchesSchurEliminator) {
     std::unique_ptr<SchurEliminatorBase> eliminator(
         SchurEliminatorBase::Create(linear_solver_options));
     eliminator->Init(num_e_blocks, true, matrix.block_structure());
-    eliminator->Eliminate(&matrix, b.data(), diagonal.data(), &expected_lhs,
+    eliminator->Eliminate(BlockSparseMatrixData(matrix), b.data(), diagonal.data(), &expected_lhs,
                           expected_rhs.data());
-    eliminator->BackSubstitute(&matrix, b.data(), diagonal.data(), f_sol.data(),
+    eliminator->BackSubstitute(BlockSparseMatrixData(matrix), b.data(), diagonal.data(), f_sol.data(),
                                actual_e_sol.data());
   }
 
   {
     SchurEliminatorForOneFBlock<2, 3, 6> eliminator;
     eliminator.Init(num_e_blocks, true, matrix.block_structure());
-    eliminator.Eliminate(&matrix, b.data(), diagonal.data(), &actual_lhs,
+    eliminator.Eliminate(BlockSparseMatrixData(matrix), b.data(), diagonal.data(), &actual_lhs,
                          actual_rhs.data());
-    eliminator.BackSubstitute(&matrix, b.data(), diagonal.data(), f_sol.data(),
+    eliminator.BackSubstitute(BlockSparseMatrixData(matrix), b.data(), diagonal.data(), f_sol.data(),
                               expected_e_sol.data());
   }
   ConstMatrixRef actual_lhsref(actual_lhs.values(), actual_lhs.num_cols(),
