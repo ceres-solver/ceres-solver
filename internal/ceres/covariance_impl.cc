@@ -651,7 +651,12 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
                             &permutation,
                             &cc);
   event_logger.AddEvent("Numeric Factorization");
-  CHECK(R != nullptr);
+  if (R == nullptr) {
+    LOG(ERROR) << "Something is wrong. SuiteSparseQR returned R = nullptr.";
+    free(permutation);
+    cholmod_l_finish(&cc);
+    return false;
+  }
 
   if (rank < cholmod_jacobian.ncol) {
     LOG(ERROR) << "Jacobian matrix is rank deficient. "
