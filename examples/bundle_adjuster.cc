@@ -55,6 +55,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <random>
 #include <string>
 #include <vector>
 
@@ -83,7 +84,7 @@ DEFINE_bool(explicit_schur_complement, false, "If using ITERATIVE_SCHUR "
             "then explicitly compute the Schur complement.");
 DEFINE_string(preconditioner, "jacobi", "Options are: "
               "identity, jacobi, schur_jacobi, cluster_jacobi, "
-              "cluster_tridiagonal.");
+              "cluster_tridiagonal, subset.");
 DEFINE_string(visibility_clustering, "canonical_views",
               "single_linkage, canonical_views");
 
@@ -125,6 +126,10 @@ DEFINE_int32(max_num_refinement_iterations, 0, "Iterative refinement iterations"
 DEFINE_string(initial_ply, "", "Export the BAL file data as a PLY file.");
 DEFINE_string(final_ply, "", "Export the refined BAL file data as a PLY "
               "file.");
+DEFINE_double(subset_fraction,
+              0.2,
+              "The fraction of residual blocks to use for the"
+              " subset preconditioner.");
 
 namespace ceres {
 namespace examples {
@@ -252,12 +257,22 @@ void SetSolverOptionsFromFlags(BALProblem* bal_problem,
   SetOrdering(bal_problem, options);
 }
 
-void BuildProblem(BALProblem* bal_problem, Problem* problem) {
+void BuildProblem(BALProblem* bal_problem, Problem* problem, std::unordered_set<ceres::ResidualBlockId>* subset) {
   const int point_block_size = bal_problem->point_block_size();
   const int camera_block_size = bal_problem->camera_block_size();
   double* points = bal_problem->mutable_points();
   double* cameras = bal_problem->mutable_cameras();
 
+  std::unordered_set<int> points_subset;
+  std::default_random_engine engine;
+  std::uniform_real_distribution<> distribution(0, 1);  // rage 0 - 1
+  for (int i = 0; i < bal_problem->num_points(); ++i) {
+     if (distribution(engine) <= FLAGS_subset_fraction) {
+       points_subset.insert(i);
+     }
+  }
+
+  LOG(INFO) << "points: " << bal_problem->num_points() << " " << points_subset.size();
   // Observations is 2*num_observations long array observations =
   // [u_1, u_2, ... , u_n], where each u_i is two dimensional, the x
   // and y positions of the observation.
@@ -284,7 +299,11 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
     double* camera =
         cameras + camera_block_size * bal_problem->camera_index()[i];
     double* point = points + point_block_size * bal_problem->point_index()[i];
-    problem->AddResidualBlock(cost_function, loss_function, camera, point);
+    ceres::ResidualBlockId residual_block_id =
+        problem->AddResidualBlock(cost_function, loss_function, camera, point);
+    if (points_subset.count(bal_problem->point_index()[i])) {
+      subset->insert(residual_block_id);
+    }
   }
 
   if (FLAGS_use_quaternions && FLAGS_use_local_parameterization) {
@@ -297,6 +316,8 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
                                    camera_parameterization);
     }
   }
+
+  LOG(INFO) << "residuals: " << problem->NumResidualBlocks() << " " << subset->size();
 }
 
 void SolveProblem(const char* filename) {
@@ -314,9 +335,35 @@ void SolveProblem(const char* filename) {
                       FLAGS_translation_sigma,
                       FLAGS_point_sigma);
 
-  BuildProblem(&bal_problem, &problem);
   Solver::Options options;
+  BuildProblem(&bal_problem, &problem, &options.residual_blocks_for_subset_preconditioner);
+
   SetSolverOptionsFromFlags(&bal_problem, &options);
+
+  if (1) {
+    options.residual_blocks_for_subset_preconditioner.clear();
+    if ((options.linear_solver_type == ceres::CGNR ||
+         options.linear_solver_type == ceres::ITERATIVE_SCHUR) &&
+        options.preconditioner_type == ceres::SUBSET) {
+      std::vector<ResidualBlockId> residual_blocks;
+      problem.GetResidualBlocks(&residual_blocks);
+
+      // To use the SUBSET preconditioner we need to provide a list of
+      // residual blocks (rows of the Jacobian). The denoising problem
+      // has fairly general sparsity, and there is no apriori reason to
+      // select one residual block over another, so we will randomly
+      // subsample the residual blocks with probability subset_fraction.
+      std::default_random_engine engine;
+      std::uniform_real_distribution<> distribution(0, 1);  // rage 0 - 1
+      for (auto residual_block : residual_blocks) {
+        if (distribution(engine) <= FLAGS_subset_fraction) {
+          options.residual_blocks_for_subset_preconditioner.insert(
+              residual_block);
+        }
+      }
+    }
+  }
+
   options.gradient_tolerance = 1e-16;
   options.function_tolerance = 1e-16;
   Solver::Summary summary;

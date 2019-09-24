@@ -133,6 +133,7 @@ set(CERES_INTERNAL_SRC
     sparse_cholesky.cc
     sparse_normal_cholesky_solver.cc
     subset_preconditioner.cc
+    subset_schur_preconditioner.cc
     split.cc
     stringprintf.cc
     suitesparse.cc

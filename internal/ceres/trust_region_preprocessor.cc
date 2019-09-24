@@ -112,15 +112,37 @@ void AlternateLinearSolverAndPreconditionerForSchurTypeLinearSolver(
 bool ReorderProgram(PreprocessedProblem* pp) {
   const Solver::Options& options = pp->options;
   if (IsSchurType(options.linear_solver_type)) {
-    return ReorderProgramForSchurTypeLinearSolver(
-        options.linear_solver_type,
-        options.sparse_linear_algebra_library_type,
-        pp->problem->parameter_map(),
-        options.linear_solver_ordering.get(),
-        pp->reduced_program.get(),
-        &pp->error);
+    if (!ReorderProgramForSchurTypeLinearSolver(
+            options.linear_solver_type,
+            options.sparse_linear_algebra_library_type,
+            pp->problem->parameter_map(),
+            options.linear_solver_ordering.get(),
+            pp->reduced_program.get(),
+            &pp->error)) {
+      return false;
+    }
+
+    if (options.linear_solver_type == ITERATIVE_SCHUR &&
+        options.preconditioner_type == SUBSET) {
+      std::vector<ResidualBlock*>& residual_blocks =
+          *(pp->reduced_program->mutable_residual_blocks());
+      std::vector<int>& subset_preconditioner_rows =
+          pp->linear_solver_options.subset_preconditioner_rows;
+      subset_preconditioner_rows.reserve(
+          options.residual_blocks_for_subset_preconditioner.size());
+      for (int i = 0; i < residual_blocks.size(); ++i) {
+        if (options.residual_blocks_for_subset_preconditioner.count(
+                residual_blocks[i])) {
+          subset_preconditioner_rows.push_back(i);
+        }
+      }
+    }
+
+    return true;
   }
 
+  // TODO(sameeragarwal): The following two calls to
+  // ReorderProgramForSparseNormalCholesky can be reduced to one.
   if (options.linear_solver_type == SPARSE_NORMAL_CHOLESKY &&
       !options.dynamic_sparsity) {
     return ReorderProgramForSparseCholesky(
