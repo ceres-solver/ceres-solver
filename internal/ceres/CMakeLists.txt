@@ -80,6 +80,7 @@ set(CERES_INTERNAL_SRC
     dynamic_compressed_row_jacobian_writer.cc
     dynamic_compressed_row_sparse_matrix.cc
     dynamic_sparse_normal_cholesky_solver.cc
+    expressions.cc
     evaluator.cc
     eigensparse.cc
     file.cc
@@ -406,6 +407,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(autodiff_first_order_function)
   ceres_test(autodiff_cost_function)
   ceres_test(autodiff_local_parameterization)
+  ceres_test(autodiff_codegen)
   ceres_test(block_jacobi_preconditioner)
   ceres_test(block_random_access_dense_matrix)
   ceres_test(block_random_access_diagonal_matrix)
@@ -505,6 +507,9 @@ endmacro()
 if (BUILD_BENCHMARKS)
   add_executable(autodiff_cost_function_benchmark autodiff_cost_function_benchmark.cc)
   add_dependencies_to_benchmark(autodiff_cost_function_benchmark)
+
+  add_executable(autodiff_codegen_benchmark autodiff_codegen_benchmark.cc)
+  add_dependencies_to_benchmark(autodiff_codegen_benchmark)
 
   add_executable(small_blas_gemv_benchmark small_blas_gemv_benchmark.cc)
   add_dependencies_to_benchmark(small_blas_gemv_benchmark)
