@@ -80,6 +80,7 @@ set(CERES_INTERNAL_SRC
     dynamic_compressed_row_jacobian_writer.cc
     dynamic_compressed_row_sparse_matrix.cc
     dynamic_sparse_normal_cholesky_solver.cc
+    expressions.cc
     evaluator.cc
     eigensparse.cc
     file.cc
@@ -352,6 +353,30 @@ install(TARGETS ceres
         LIBRARY DESTINATION lib${LIB_SUFFIX}
         ARCHIVE DESTINATION lib${LIB_SUFFIX})
 
+
+set(GENERATED_FILE_DIR ${PROJECT_BINARY_DIR}/generated)
+file(MAKE_DIRECTORY ${GENERATED_FILE_DIR})
+
+macro(auto_generate _TARGET _COMPILE_FILE _INPUT_FILE _OUTPUTFILE)
+    set(FULL_OUTPUT_FILE "${GENERATED_FILE_DIR}/${_OUTPUTFILE}")
+    set(EXE_TARGET ${_TARGET}_exe)
+
+    add_executable(${EXE_TARGET} ${_COMPILE_FILE})
+    target_link_libraries(${EXE_TARGET} ceres)
+
+    ADD_CUSTOM_COMMAND(OUTPUT ${FULL_OUTPUT_FILE}
+        COMMAND ${EXE_TARGET} ${FULL_OUTPUT_FILE}
+        DEPENDS ${_INPUT_FILE} ceres
+        )
+    add_custom_target(${_TARGET} ALL DEPENDS ${FULL_OUTPUT_FILE})
+endmacro()
+
+# This block is all for the codegen example. The following steps are performed:
+# 1. Compile program which generates the code (linked to the ceres lib)
+# 2. Run the program from (1.) which outputs a header file in /build_dir/generated
+# 3. Compile the actual benchmark which includes the header from (2.)
+auto_generate(autodiff_codegen_benchmark_exe  autodiff_codegen_benchmark_gen.cc autodiff_codegen_functor.h autodiff_codegen_benchmark_gen.h)
+
 if (BUILD_TESTING AND GFLAGS)
   add_library(gtest gmock_gtest_all.cc gmock_main.cc)
   target_include_directories(gtest PUBLIC ${Ceres_SOURCE_DIR}/internal/ceres)
@@ -406,6 +431,11 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(autodiff_first_order_function)
   ceres_test(autodiff_cost_function)
   ceres_test(autodiff_local_parameterization)
+  ceres_test(autodiff_codegen)
+  # Not very nice for now, but we need that dependency for code generation
+  add_dependencies(autodiff_codegen_test autodiff_codegen_benchmark_exe)
+  target_include_directories(autodiff_codegen_test PUBLIC ${GENERATED_FILE_DIR})
+
   ceres_test(block_jacobi_preconditioner)
   ceres_test(block_random_access_dense_matrix)
   ceres_test(block_random_access_diagonal_matrix)
@@ -502,6 +532,7 @@ macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
                              ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
 endmacro()
 
+
 if (BUILD_BENCHMARKS)
   add_executable(autodiff_cost_function_benchmark autodiff_cost_function_benchmark.cc)
   add_dependencies_to_benchmark(autodiff_cost_function_benchmark)
@@ -517,4 +548,9 @@ if (BUILD_BENCHMARKS)
 
   add_executable(schur_eliminator_benchmark schur_eliminator_benchmark.cc)
   add_dependencies_to_benchmark(schur_eliminator_benchmark)
+
+  add_executable(autodiff_codegen_benchmark autodiff_codegen_benchmark.cc)
+  add_dependencies(autodiff_codegen_benchmark autodiff_codegen_benchmark_exe)
+  add_dependencies_to_benchmark(autodiff_codegen_benchmark)
+  target_include_directories(autodiff_codegen_benchmark PUBLIC ${GENERATED_FILE_DIR})
 endif (BUILD_BENCHMARKS)
