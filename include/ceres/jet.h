@@ -420,6 +420,14 @@ inline bool IsInfinite(double x) { return std::isinf(x);    }
 inline bool IsNaN     (double x) { return std::isnan(x);    }
 inline bool IsNormal  (double x) { return std::isnormal(x); }
 
+
+inline double PHI(bool c, double a, double b) { return c ? a : b; }
+
+template <typename T, int N>
+inline Jet<T, N> PHI(bool c, const Jet<T, N>& f, const Jet<T, N>& g) {
+  return c ? f : g;
+}
+
 // In general, f(a + h) ~= f(a) + f'(a) h, via the chain rule.
 
 // abs(x + h) ~= x + h or -(x + h)
