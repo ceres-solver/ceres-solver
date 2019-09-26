@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fba446f_198cdde0",
+        "filename": "internal/ceres/autodiff_codegen_benchmark.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-09-26T16:44:20Z",
+      "side": 1,
+      "message": "One of the most critical cost functions for many Ceres uses is the reprojection error, classically used in bundle adjustment. Could you re-use the cost function from elsewhere and use that as a benchmark?\n\nIt would be especially impressive to see e.g. simple_bundle_adjuster for example converted to this system-- and see how it performs.",
+      "revId": "422a648c5680cf28c03cea2edd55e01e4c94eef1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af93cf9_d5c4e81c",
+        "filename": "internal/ceres/autodiff_codegen_benchmark.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-09-26T16:44:20Z",
+      "side": 1,
+      "message": "This looks like a manually written benchmark with copy and pasted code, instead of e.g. having the build system generate the intermediate code via codegen.h, then have the hand-written code include the autogen code.\n\nThe reason I am suggesting this is that as we make tweaks to the implementation, it\u0027s important to be able to evaluate the impact of the change. The approach in this file will (I think?) require hand-editing for every autodiff codegen change.",
+      "revId": "422a648c5680cf28c03cea2edd55e01e4c94eef1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
