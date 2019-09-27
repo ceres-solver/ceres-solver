@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "48b561ee_419d3ed4",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-27T03:41:43Z",
+      "side": 1,
+      "message": "most of the changes in this file are formatting changes which make the changes appear huge. \n\nI can commit quit reformatting of this file if it will make it easier for you.",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 17
+      },
+      "revId": "422a648c5680cf28c03cea2edd55e01e4c94eef1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fba446f_198cdde0",
         "filename": "internal/ceres/autodiff_codegen_benchmark.cc",
         "patchSetId": 4
@@ -13,6 +36,24 @@
       "writtenOn": "2019-09-26T16:44:20Z",
       "side": 1,
       "message": "One of the most critical cost functions for many Ceres uses is the reprojection error, classically used in bundle adjustment. Could you re-use the cost function from elsewhere and use that as a benchmark?\n\nIt would be especially impressive to see e.g. simple_bundle_adjuster for example converted to this system-- and see how it performs.",
+      "revId": "422a648c5680cf28c03cea2edd55e01e4c94eef1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4bcfeb_78969877",
+        "filename": "internal/ceres/autodiff_codegen_benchmark.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-27T03:41:43Z",
+      "side": 1,
+      "message": "so I tried doing this with the snavelyreprojectionerror and hit some error around booleans and comparisons.\n\nMaking sure that works out of the box would be great.",
+      "parentUuid": "5fba446f_198cdde0",
       "revId": "422a648c5680cf28c03cea2edd55e01e4c94eef1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
