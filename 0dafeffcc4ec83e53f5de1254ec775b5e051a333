@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e74dac2e_1932a44b",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-27T15:10:21Z",
+      "side": 1,
+      "message": "could you move this to the windows section and integrate it there?",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 18
+      },
+      "revId": "0dafeffcc4ec83e53f5de1254ec775b5e051a333",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
