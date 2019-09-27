@@ -488,6 +488,18 @@ Notes:
    port their build system to something sane like ``CMake``, and get a
    fully supported Windows port.
 
+Installation using vcpkg
+========================
+You can download and install Ceres using the `vcpkg <https://github.com/Microsoft/vcpkg/>`_ dependency manager:
+
+.. code-block:: bash
+    git clone https://github.com/Microsoft/vcpkg.git
+    cd vcpkg
+    ./bootstrap-vcpkg.sh
+    ./vcpkg integrate install
+    ./vcpkg install ceres
+
+The Ceres port in vcpkg is kept up to date by Microsoft team members and community contributors. If the version is out of date, please `create an issue or pull request <https://github.com/Microsoft/vcpkg/>`_ on the vcpkg repository.
 
 .. _section-android:
 
