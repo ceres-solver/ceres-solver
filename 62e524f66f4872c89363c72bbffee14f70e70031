@@ -1,0 +1,1130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f0f38b4_a0f999bb",
+        "filename": "examples/autodiff_codegen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Variable_Names here and elsewhere.",
+      "range": {
+        "startLine": 56,
+        "startChar": 9,
+        "endLine": 56,
+        "endChar": 22
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d320bb92_34fb028f",
+        "filename": "examples/autodiff_codegen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "drop commented code.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 2
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5224582_c758967f",
+        "filename": "examples/autodiff_codegen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "only have one variant, I am not sure why the example code should have optimize \u003d false case.",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 7
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c75371_23e74385",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "2019",
+      "range": {
+        "startLine": 3,
+        "startChar": 25,
+        "endLine": 3,
+        "endChar": 29
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dfc69bc_72d2463e",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "I do not understand refinded.",
+      "range": {
+        "startLine": 33,
+        "startChar": 39,
+        "endLine": 33,
+        "endChar": 47
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff32f2a6_1a35225f",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "its not clear if this overview is useful here, since this is essentially developer documentation rather than user information. i would keep the information here aimed at the user of the code generator.",
+      "range": {
+        "startLine": 66,
+        "startChar": 3,
+        "endLine": 66,
+        "endChar": 11
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86fb66ea_7531a11f",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "this is outdated.",
+      "range": {
+        "startLine": 79,
+        "startChar": 3,
+        "endLine": 79,
+        "endChar": 17
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41704add_38db8cb6",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "ExpressionJet does not exist anymore.",
+      "range": {
+        "startLine": 92,
+        "startChar": 52,
+        "endLine": 92,
+        "endChar": 65
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d313c8_1565eaee",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "who is this reminder for?",
+      "range": {
+        "startLine": 148,
+        "startChar": 55,
+        "endLine": 148,
+        "endChar": 62
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f770be2_6a9f264b",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "what does it mean to be side effect free?",
+      "range": {
+        "startLine": 171,
+        "startChar": 14,
+        "endLine": 171,
+        "endChar": 20
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dccead7_e8770d26",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "this needs to be way higher up where you are offering guidelines on how to define the functor.\n\nI also think it is worth expanding this section substantially. including examples of generating both sides of the branch like you did in angleaxisphi.\n\nalso in those cases does it make sense to generate two different functions and should the Phi function take functions?",
+      "range": {
+        "startLine": 221,
+        "startChar": 38,
+        "endLine": 221,
+        "endChar": 39
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27d54dc_7ff94625",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "this is likely the most common case, and should be the first piece of advice offers to the user.",
+      "range": {
+        "startLine": 249,
+        "startChar": 27,
+        "endLine": 249,
+        "endChar": 28
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3866023_4bb8a23b",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "AUTODIFF_CODE_GEN",
+      "range": {
+        "startLine": 320,
+        "startChar": 8,
+        "endLine": 320,
+        "endChar": 39
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62446295_e4b4eed3",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "This should be a class, not a struct.\n\nWith regards to naming, AutoDiffCodeGenerator",
+      "range": {
+        "startLine": 329,
+        "startChar": 7,
+        "endLine": 329,
+        "endChar": 22
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77dc635c_1cef09b3",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "Instead of Settings we use the word Options in ceres. Also, if this is the Options struct for this class, it would be a good idea to define and document it in this header itself.",
+      "range": {
+        "startLine": 336,
+        "startChar": 47,
+        "endLine": 336,
+        "endChar": 69
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee73c72_c7283ff1",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "ostream",
+      "range": {
+        "startLine": 337,
+        "startChar": 20,
+        "endLine": 337,
+        "endChar": 24
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4a7b086_ebf17e80",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "this is an off pattern. why do you need codefactory at all?",
+      "range": {
+        "startLine": 343,
+        "startChar": 4,
+        "endLine": 343,
+        "endChar": 15
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd943a4b_99eaf1b2",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "FixedArray as an optimization is fine, but since Generate is not run over and over again, if you can simplify code by dropping this, i would recommend it.",
+      "range": {
+        "startLine": 346,
+        "startChar": 14,
+        "endLine": 346,
+        "endChar": 24
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a81b54_65586547",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "shouldn\u0027t the constructor for CodeFactory ensure this?",
+      "range": {
+        "startLine": 356,
+        "startChar": 12,
+        "endLine": 356,
+        "endChar": 26
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b370fac_79aeb2c2",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "variable naming style here and elsewhere \nhttps://google.github.io/styleguide/cppguide.html#Variable_Names",
+      "range": {
+        "startLine": 358,
+        "startChar": 8,
+        "endLine": 358,
+        "endChar": 20
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053d27fd_62849a13",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "document loop.",
+      "range": {
+        "startLine": 359,
+        "startChar": 4,
+        "endLine": 359,
+        "endChar": 7
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5af748_8e1b8db7",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "braces for each branch of the if statement. also a ternary maybe easier to read.",
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3538a8d9_ab04d7b7",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "what does this do, what happens if the check fails?",
+      "range": {
+        "startLine": 380,
+        "startChar": 12,
+        "endLine": 380,
+        "endChar": 17
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81541a0d_fea6aab7",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "f is an odd name.",
+      "range": {
+        "startLine": 382,
+        "startChar": 18,
+        "endLine": 382,
+        "endChar": 19
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28cd87f_842a1e36",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "document loop.",
+      "range": {
+        "startLine": 387,
+        "startChar": 24,
+        "endLine": 387,
+        "endChar": 35
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01dd69ef_1f8f59d7",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "why underscore?",
+      "range": {
+        "startLine": 402,
+        "startChar": 9,
+        "endLine": 402,
+        "endChar": 37
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8981f87b_c930f504",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "document loop.",
+      "range": {
+        "startLine": 406,
+        "startChar": 20,
+        "endLine": 406,
+        "endChar": 21
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ddfa40_535e94bd",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "why are generate and print separate functions?",
+      "range": {
+        "startLine": 422,
+        "startChar": 6,
+        "endLine": 422,
+        "endChar": 14
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ca0399_b2e14303",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "also use C++11 class enum to prevent name collisions?",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11263a16_ab844c03",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "does the prefix BINARY matter since all of these operations are binary to begin with?",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d3b157_cbd94b56",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "add a general comment the structs being defined for each enum type above and what they do.",
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23435694_3f4c9f6e",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "kInvalidExpressionId",
+      "range": {
+        "startLine": 80,
+        "startChar": 23,
+        "endLine": 80,
+        "endChar": 42
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60499da_1c7b9649",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "redundant comment.",
+      "range": {
+        "startLine": 86,
+        "startChar": 23,
+        "endLine": 86,
+        "endChar": 33
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d070de7_4c133468",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "this constructor should also be explicit.",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 12
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200ed10f_5b14b331",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "why is this operator marked \"explicit\" ?",
+      "range": {
+        "startLine": 88,
+        "startChar": 20,
+        "endLine": 88,
+        "endChar": 32
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8bb32a_dd495e46",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "drop the prefixed _",
+      "range": {
+        "startLine": 93,
+        "startChar": 43,
+        "endLine": 93,
+        "endChar": 46
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "112f9729_1435ba29",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "document struct.",
+      "range": {
+        "startLine": 96,
+        "startChar": 7,
+        "endLine": 96,
+        "endChar": 15
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e98f414_d21d6684",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "what is N?",
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a464616_9353b82b",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be a class?",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 6
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c151768f_5938741b",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "this should be a class.\n\nthoroughly document the class and its usage.",
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f63f86_0e9d3269",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "I\u0027d prefer we not do this.",
+      "range": {
+        "startLine": 208,
+        "startChar": 20,
+        "endLine": 208,
+        "endChar": 31
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d06b91f_8e7f4024",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "AutoDiffCodeGeneratorOptions",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 31
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79842739_150f28ba",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "drop the optimize_ prefix.",
+      "range": {
+        "startLine": 220,
+        "startChar": 7,
+        "endLine": 220,
+        "endChar": 32
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10329355_737c3cff",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "this should be a class. thoroughly document class and its usage.\n\neach of these classes should have tests covering their correctness.",
+      "range": {
+        "startLine": 229,
+        "startChar": 7,
+        "endLine": 229,
+        "endChar": 20
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b444e292_7bcca546",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "tests for each of these passes.",
+      "range": {
+        "startLine": 252,
+        "startChar": 7,
+        "endLine": 252,
+        "endChar": 22
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d4ef51_e7ee41ee",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "This needs more documentation, which describes why this struct is needed.",
+      "range": {
+        "startLine": 172,
+        "startChar": 10,
+        "endLine": 172,
+        "endChar": 18
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13172d63_0757421c",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "how will all the branches of this function handled?",
+      "range": {
+        "startLine": 778,
+        "startChar": 17,
+        "endLine": 778,
+        "endChar": 20
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63536e6f_a694e5f1",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "same question here.",
+      "range": {
+        "startLine": 836,
+        "startChar": 21,
+        "endLine": 836,
+        "endChar": 26
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c504f19_95286f0d",
+        "filename": "internal/ceres/autodiff_codegen_functor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "is this how all conditional code will need to be written?\nthis seems onerous, is there no way around this? (I have not read the expression logic yet).",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 6
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2797d5f_39b08e81",
+        "filename": "internal/ceres/autodiff_codegen_functor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-09-29T19:00:23Z",
+      "side": 1,
+      "message": "why not make CERES_EXTERNAL_CONSTANT do the right thing always without needing another ifdef around it?",
+      "range": {
+        "startLine": 122,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 22
+      },
+      "revId": "62e524f66f4872c89363c72bbffee14f70e70031",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
