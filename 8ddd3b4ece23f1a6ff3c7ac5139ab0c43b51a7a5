@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83074cfa_5fe289d7",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-09-29T19:56:04Z",
+      "side": 1,
+      "message": "Please disable clang formatting for this block.",
+      "revId": "8ddd3b4ece23f1a6ff3c7ac5139ab0c43b51a7a5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
