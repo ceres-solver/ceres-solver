@@ -82,6 +82,9 @@ set(CERES_INTERNAL_SRC
     dynamic_sparse_normal_cholesky_solver.cc
     evaluator.cc
     eigensparse.cc
+    expression.cc
+    expression_graph.cc
+    expression_ref.cc
     file.cc
     float_suitesparse.cc
     float_cxsparse.cc
@@ -433,6 +436,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(dynamic_sparsity)
   ceres_test(evaluation_callback)
   ceres_test(evaluator)
+  ceres_test(expression)
   ceres_test(fixed_array)
   ceres_test(gradient_checker)
   ceres_test(gradient_checking_cost_function)
