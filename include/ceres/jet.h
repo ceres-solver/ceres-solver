@@ -168,6 +168,14 @@
 
 namespace ceres {
 
+// The return type of a comparison. <,>,&&,==,...
+// Required for code generation so that we can return an object of
+// "ComparisonExpression" instead of bool.
+template <typename T>
+struct ComparisonReturnType {
+  using type = bool;
+};
+
 template <typename T, int N>
 struct Jet {
   enum { DIMENSION = N };
@@ -353,18 +361,21 @@ inline Jet<T, N> operator/(const Jet<T, N>& f, T s) {
 }
 
 // Binary comparison operators for both scalars and jets.
-#define CERES_DEFINE_JET_COMPARISON_OPERATOR(op)                    \
-  template <typename T, int N>                                      \
-  inline bool operator op(const Jet<T, N>& f, const Jet<T, N>& g) { \
-    return f.a op g.a;                                              \
-  }                                                                 \
-  template <typename T, int N>                                      \
-  inline bool operator op(const T& s, const Jet<T, N>& g) {         \
-    return s op g.a;                                                \
-  }                                                                 \
-  template <typename T, int N>                                      \
-  inline bool operator op(const Jet<T, N>& f, const T& s) {         \
-    return f.a op s;                                                \
+#define CERES_DEFINE_JET_COMPARISON_OPERATOR(op)             \
+  template <typename T, int N>                               \
+  inline typename ComparisonReturnType<T>::type operator op( \
+      const Jet<T, N>& f, const Jet<T, N>& g) {              \
+    return f.a op g.a;                                       \
+  }                                                          \
+  template <typename T, int N>                               \
+  inline typename ComparisonReturnType<T>::type operator op( \
+      const T& s, const Jet<T, N>& g) {                      \
+    return s op g.a;                                         \
+  }                                                          \
+  template <typename T, int N>                               \
+  inline typename ComparisonReturnType<T>::type operator op( \
+      const Jet<T, N>& f, const T& s) {                      \
+    return f.a op s;                                         \
   }
 CERES_DEFINE_JET_COMPARISON_OPERATOR(<)   // NOLINT
 CERES_DEFINE_JET_COMPARISON_OPERATOR(<=)  // NOLINT
@@ -373,6 +384,23 @@ CERES_DEFINE_JET_COMPARISON_OPERATOR(>=)  // NOLINT
 CERES_DEFINE_JET_COMPARISON_OPERATOR(==)  // NOLINT
 CERES_DEFINE_JET_COMPARISON_OPERATOR(!=)  // NOLINT
 #undef CERES_DEFINE_JET_COMPARISON_OPERATOR
+
+template <typename T>
+inline T ternary(bool c, T a, T b) {
+  return c ? a : b;
+}
+
+template <typename T, int N>
+inline Jet<T, N> ternary(typename ComparisonReturnType<T>::type c,
+                         const Jet<T, N>& f,
+                         const Jet<T, N>& g) {
+  Jet<T, N> r;
+  r.a = ternary(c, f.a, g.a);
+  for (int i = 0; i < N; ++i) {
+    r.v[i] = ternary(c, f.v[i], g.v[i]);
+  }
+  return r;
+}
 
 // Pull some functions from namespace std.
 //
