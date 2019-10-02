@@ -1,0 +1,667 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2937a545_dc5c3d22",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Should be in ceres::internal namespace.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6ee935_006e483b",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Needs header comment. What is this class for?",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e25ca2_2c0ea818",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Seeing as this is the only data member on this class, I\u0027m thoroughly confused on how this works! How is the expression tree stored? Perhaps add a bit of a bigger explanation comment somewhere.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed1479ce_d6b923b7",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Blank after.\n\nPlease add blanks after each of these, so the comments are more clearly grouped with the enum items.\n\nPerhaps:\n\nCOMPILE_TIME_CONSTANT",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7081a85d_916cc45e",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this name either.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34d71768_547d7726",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "INPUT_PARAMETER? I\u0027m debating this one. I\u0027ll think about it more.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70239da2_fd9a2df2",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "MULTIPLICATION.\n\nIn general, unless there is a reason to abbreviate, don\u0027t.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f62a8bf_b91f9ca2",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "DIVISION",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d774a2d_51385a8c",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Most Ceres users (and even contributors!) will not know what a PHI function is. Please add a short description and maybe a link so that readers can understand.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a95f370_74d38527",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Document - why have this?",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3baaf5_45e808da",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Please see the Google Style Guide:\n\nhttps://google.github.io/styleguide/cppguide.html\n\nAll these functions should be named capitalized:\n\n  IsSimpleArithmetic()\n\nThis function is likely const, so should be:\n\n  bool IsSimpleArithmetic() const (and many of the ones below).",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50bd7a87_fc5bb79e",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "\"Replace\"",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc892f24_eea57345",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Please make this comment block into one with proper sentences, capitalization, and so on.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632d1323_b43a47ad",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Naming: should use CapitalCase, not camelCase. Should be \"Replace()\".",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26246bb_ef210a6e",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Capitalize; end with a period, etc.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6159ab_960d24ba",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Did you really mean to pass by copy here?",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2642b447_bf160764",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "This is a copy; intended?",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e4bf1e_0aa05a46",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Ah, I see. So there is a global pool of expressions that gets filled up during execution.\n\nPlease document this member. This is a key point. After thinking about it, it\u0027s expected that this is needed. However, there are essentially no global variables in all of Ceres, so this is a big exception, and should get called out.\n\nWould it make sense to split out the \"expression pool\" from the expression class itself? Then the management of all the expressions could be done separately?",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda8f09a_a268f0b3",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Document.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9b2fb7_d869f95e",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "\"function_name_\" isn\u0027t quite right. I suggest simply \"name_\"",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72197eb3_083b2d55",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Document.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0c37eb_f6569b74",
+        "filename": "include/ceres/internal/expression_arithmetic.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "standart --\u003e standard",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5da3b4_26a72bd6",
+        "filename": "include/ceres/internal/expression_arithmetic.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "\"to mark number\" --\u003e \"to mark a number\"",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7efc95_f7f81142",
+        "filename": "include/ceres/internal/expression_arithmetic.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Since this will be part of the public API that users write, we may want to revisit this name.\n\nCERES_AUTODIFF_EXPRESSION_CONSTANT(foo)? Sameer?",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4b475d_07966bf8",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Likely an entirely new comment block needs to get added below the already big header, to explain how there are now 3 primary categories for Jet objects:\n\n(1) Normal scalar (non-derivatives)\n(2) Runtime forward mode autodiff (traditional Ceres autodiff)\n(3) Codegen autodiff\n\nThis doesn\u0027t have to fully explain everything, since the real source of all the explanation will go in the .rst documentation, but this header should at least touch the high level uses.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567e6325_e902cf37",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Since Jet is used in other contexts than code gen autodiff, comments referring to \"code generation\" would be more maintainable if they are more explicit. Perhaps for this comment, instead:\n\n// The return type of a Jet comparison, for example from \u003c, \u0026\u0026, \u003d\u003d.\n//\n// In the context of traditional Ceres Jet operations, this would\n// always be a bool. However, in the autodiff code generation context,\n// the return is always an expression, and so a different type must be\n// used as a return from comparisons.\n//\n// In the autodiff context, this function is overloaded so that \u0027type\u0027\n// is one of the autodiff code generation expression types.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204bc4ff_6a65f492",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Please add a comment above explaining that this is intended for the code gen context (and for the jet version).",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe9fbc0_07b97618",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Please add a bit of explanation for the code gen context.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "445c5ee4_05431a54",
+        "filename": "internal/ceres/code_generation_functors.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Nit: Blank after.\n\nWhat\u0027s \"local_variable\"? Please add comment.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc6eb92_449bd3d6",
+        "filename": "internal/ceres/code_generation_functors.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Don\u0027t abbreviate unless there is a reason to; extra capitalization is unneeded. Generally use full sentences, first word capitalized and end with a period.\n\nIn this case:\n\n// Arithmetic operators",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3db4516_75c85759",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "In Ceres, we never collapse compound statements, and always use {}s.\n\n  if (type_ \u003d\u003d ExpressionType::NOP) {\n    return false;\n  }",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417d3431_c2abf5e4",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Capitalize, end with a period, etc (and for other comments).",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c0ceef_77aaf1af",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Use {}s always.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c66a2d3_f274acba",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Do not collapse; use {}s.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7874ddc2_446dfbbc",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Do not collapse statements.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b87309_e3c81a5a",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "This should likely guard against self-replacement (e.g. see guidelines for overloading operator\u003d()).",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c7e96ea_b42f7c49",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Should be named MakeNop(). The standard at Google is that all-caps abbreviations are treated as words; for example DoHttpThing, StartFtpServer.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa7ba9a_c01f25fe",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "Please document-- what does precise here mean?",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b177ea0_770ae033",
+        "filename": "internal/ceres/expression_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-02T17:18:50Z",
+      "side": 1,
+      "message": "This test doesn\u0027t actually verify anything. It merely constructs the expressions.\n\nFor this test to be convincing, it needs to construct expressions, and then check that the resulting tree is what\u0027s desired.\n\nOne way to do this would be to construct a string output format that could get compared in each test.\n\nAdditionally, we generally discourage \"grab-all\" tests that mash everything together. They are good for the absolute last step, where each of the units are tested, but they are not useful for finding regressions, or even for illustrating how subcomponents are supposed to function.\n\nHere\u0027s how I suggest structuring these tests:\n\nHave a separate TEST() for each expression, and verify that simple cases result in the expression you expect (by, most likely, string comparison).\n\nYou will likely need to use a TEST_F() to clear out the static global before each test. This is one of the big issues with your design: The global list of expressions is going to make testing a bit error prone and hard to understand.",
+      "revId": "b3420e6fdcb5850ce335dc3fdbb4b39069203517",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
