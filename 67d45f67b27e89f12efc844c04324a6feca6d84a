@@ -1,0 +1,1417 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45a406ee_4d18aae9",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "I wouldn\u0027t add forward comments like this right now since we do not know what the final names of these files are going to be.",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 29
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399f3dd8_cfe41f37",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "we only use c++ style (//) comments in this code base.",
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a06619_2f04dd91",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "I am wondering if \"ExpressionRef\" is the best name for this class. Since FooRef seems to indicate that there is an Expression object and this is a reference to it. Whereas, if I understand it correctly, this is the equivalent of a Jet type, which is substituted into the templated functor.\n\nSome ideas:\n\nExpressionNode\nAbstractExpression\nSymbol",
+      "range": {
+        "startLine": 60,
+        "startChar": 14,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49773da_04669450",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "should these two be inside this struct or outside?",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740652cc_89b25b01",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "data members after member functions.",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e7657f_f144f585",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "this struct may benefit from a ToString() method.",
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43dddbc0_02280e58",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "just Id() is better, since the object is already an ExpressionRef.\n\ninfact since this is a struct, why do you have an accessor for this at all? indeed in Expression you directly access .id in Data()",
+      "range": {
+        "startLine": 80,
+        "startChar": 20,
+        "endLine": 80,
+        "endChar": 32
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f624a248_d62b4a03",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "why are they not defined in expression.cc which is where I would expect to see them as the companion cc file?",
+      "range": {
+        "startLine": 82,
+        "startChar": 36,
+        "endLine": 82,
+        "endChar": 57
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6734de8_265c9b40",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "invalid id by default? or are you going to make sure that this is always created via the explicit constructor?",
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd2bce0_641fd17f",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "same question as the constructor about the type and the variable name here.",
+      "range": {
+        "startLine": 96,
+        "startChar": 15,
+        "endLine": 96,
+        "endChar": 16
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac03680_2b7605ce",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "argument is of type ExpressionRef but the variable seems to indicate id? did you mean for this to be ExpressionId?",
+      "range": {
+        "startLine": 97,
+        "startChar": 35,
+        "endLine": 97,
+        "endChar": 48
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8bc9896_c6a4c536",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "should this be named to go with COMPILE_TIME_CONSTANT ? RUNTIME_CONSTANT ? or just a CONSTANT while the other is a COMPILE_TIME_CONSTANT",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 19
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb24edc_b56d6d98",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "OUTPUT_ASSIGNMENT",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 15
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f8ed75_50d75e75",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "ASSIGNMENT",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 8
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f71fb84_02af31d6",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "no UNARY_PLUS?",
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a76d02ce_448794bf",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "do you mean optimized out later, or actually this enum value will go away?",
+      "range": {
+        "startLine": 146,
+        "startChar": 5,
+        "endLine": 146,
+        "endChar": 10
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290a150b_f6c1c1ac",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "class documentation.",
+      "range": {
+        "startLine": 150,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 16
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982ebb68_74250469",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "document method.",
+      "range": {
+        "startLine": 152,
+        "startChar": 7,
+        "endLine": 152,
+        "endChar": 25
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f3ad59_2748a514",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "I understand the reason for these methods, but for some other operations, there maybe other integers that are special too, is it worth just having a single method\n\nIsConstant(double constant) instead? or\n\nIsConstant(int constant) ?",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 64
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b58ef6_93e54fa3",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "pair it with IsReplacableBy",
+      "range": {
+        "startLine": 166,
+        "startChar": 15,
+        "endLine": 166,
+        "endChar": 20
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab468d5e_e28b57fa",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "this is confusingly named. since it sounds like the static methods which return an object, but actually this modifies the current object.",
+      "range": {
+        "startLine": 172,
+        "startChar": 7,
+        "endLine": 172,
+        "endChar": 14
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffecc36f_658366d0",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "ResultTypeAsString()",
+      "range": {
+        "startLine": 176,
+        "startChar": 14,
+        "endLine": 176,
+        "endChar": 30
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d0ab0c_1caaf920",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "only one public section.",
+      "range": {
+        "startLine": 183,
+        "startChar": 1,
+        "endLine": 183,
+        "endChar": 7
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85491cf7_ccdc3ea5",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "move these to the top since they are effectively constructors.",
+      "range": {
+        "startLine": 184,
+        "startChar": 5,
+        "endLine": 184,
+        "endChar": 10
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46049896_37a48bb9",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "define these in the same order as the enums.",
+      "range": {
+        "startLine": 186,
+        "startChar": 36,
+        "endLine": 186,
+        "endChar": 42
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001ca4bc_9bb88390",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "MakeAssignment",
+      "range": {
+        "startLine": 189,
+        "startChar": 23,
+        "endLine": 189,
+        "endChar": 33
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9b5341_740db14d",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "should the enum be named OUTPUT or this should this be name MakeOutputAssignment ?",
+      "range": {
+        "startLine": 191,
+        "startChar": 23,
+        "endLine": 191,
+        "endChar": 33
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22717e1_3c8e01dc",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "MakeFunctionCall",
+      "range": {
+        "startLine": 192,
+        "startChar": 23,
+        "endLine": 192,
+        "endChar": 35
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0df986_1713b8d7",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "Document this method.",
+      "range": {
+        "startLine": 204,
+        "startChar": 21,
+        "endLine": 204,
+        "endChar": 25
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e88c12_d4210527",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "I do not understand this comment.",
+      "range": {
+        "startLine": 207,
+        "startChar": 11,
+        "endLine": 207,
+        "endChar": 12
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77dc2db5_0993cbca",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "Google styleguide disallows static objects with non-trivial destructors, which is the case here. \n\nindeed it is not clear to me what the difference is between this static member and a global static variable in expression.cc. \n\nThis requires some discussion.",
+      "range": {
+        "startLine": 209,
+        "startChar": 21,
+        "endLine": 209,
+        "endChar": 31
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa3db9a_32f13d51",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "MakeExpression",
+      "range": {
+        "startLine": 210,
+        "startChar": 21,
+        "endLine": 210,
+        "endChar": 29
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fdf32a3_fbb5bd86",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "no need for _ suffix",
+      "range": {
+        "startLine": 210,
+        "startChar": 50,
+        "endLine": 210,
+        "endChar": 51
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733401fc_8da8bbd6",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "drop this comment.",
+      "range": {
+        "startLine": 212,
+        "startChar": 5,
+        "endLine": 212,
+        "endChar": 12
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c069ef8_83d4faf7",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "no need for _ suffix, thats for memeber variables not function parameters.",
+      "range": {
+        "startLine": 214,
+        "startChar": 28,
+        "endLine": 214,
+        "endChar": 33
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbcbfc3c_2cdddaeb",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "I think the fact that you are having to call instances of ExpressionRef id, indicates that ExpressionRef is perhaps not the best name for this struct. it shows up as foo.id_.id in expression.cc which reads decidedly weird.",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 15
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b2282af_c6059267",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "This documentation does not cover all the enums.",
+      "range": {
+        "startLine": 218,
+        "startChar": 17,
+        "endLine": 218,
+        "endChar": 18
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da22f30_8bafdc0e",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "OUTPUT_ASSIGNMENT",
+      "range": {
+        "startLine": 221,
+        "startChar": 15,
+        "endLine": 221,
+        "endChar": 28
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a14e2d_ee6d495c",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "we keep this to be non-const because this will get modified during optimization?",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 5
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac56421d_13eacf4b",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "arguments is better since we already use the word parameters in the enum and as a name to elements of a parameter block.",
+      "range": {
+        "startLine": 230,
+        "startChar": 29,
+        "endLine": 230,
+        "endChar": 36
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94be408b_f6261cf9",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "just value_ would work.",
+      "range": {
+        "startLine": 233,
+        "startChar": 9,
+        "endLine": 233,
+        "endChar": 24
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9753deb4_cc94eff8",
+        "filename": "include/ceres/internal/expression_arithmetic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "I am curious as to why this file is separate from expression.h. \n\nPerhaps the thing to do is to have expression_ref.h (or whatever we end up calling it)\nand expression.h with the content of this file in expression_ref.h",
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b812f61_0c2e4bc1",
+        "filename": "include/ceres/internal/expression_arithmetic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "why not extend this to a full list of functions defined on jets? also how do we make sure that this list of expressions does not go out of sync with Jets?",
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb23cb77_b08883a4",
+        "filename": "include/ceres/internal/expression_arithmetic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "doesn\u0027t this require dealing with conditionals?",
+      "range": {
+        "startLine": 131,
+        "startChar": 26,
+        "endLine": 131,
+        "endChar": 27
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25de48a9_04115852",
+        "filename": "include/ceres/internal/expression_arithmetic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "This is just a note - I think for completeness this should not be double, but rather another template which can be double or float. But since all the code generation is for doubles right now, it does not matter, but Jets can be used with floats also.",
+      "range": {
+        "startLine": 170,
+        "startChar": 38,
+        "endLine": 170,
+        "endChar": 39
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43ab2f1_8111a649",
+        "filename": "include/ceres/internal/expression_arithmetic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "Get",
+      "range": {
+        "startLine": 170,
+        "startChar": 27,
+        "endLine": 170,
+        "endChar": 30
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248e4bcd_24233233",
+        "filename": "include/ceres/internal/expression_arithmetic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "Get",
+      "range": {
+        "startLine": 176,
+        "startChar": 26,
+        "endLine": 176,
+        "endChar": 29
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34be254e_44bdde2b",
+        "filename": "include/ceres/internal/expression_arithmetic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "Get",
+      "range": {
+        "startLine": 184,
+        "startChar": 27,
+        "endLine": 184,
+        "endChar": 30
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f75291e_97fe95e1",
+        "filename": "include/ceres/internal/expression_arithmetic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "MakeExternalConstant",
+      "range": {
+        "startLine": 193,
+        "startChar": 48,
+        "endLine": 193,
+        "endChar": 69
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ff6358_92307e83",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "Ternary",
+      "range": {
+        "startLine": 398,
+        "startChar": 9,
+        "endLine": 398,
+        "endChar": 16
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8791e867_d11b80ed",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "Ternary",
+      "range": {
+        "startLine": 403,
+        "startChar": 17,
+        "endLine": 403,
+        "endChar": 24
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b75a733_3a8b7226",
+        "filename": "internal/ceres/code_generation_functors.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "I do not think grouping everything into a single functor like this a great idea.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 6
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a300ae5_37d81b5f",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "what if the other is also a NOP?",
+      "range": {
+        "startLine": 52,
+        "startChar": 13,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c276d22_55e03e88",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "why make a tuple? why is this better than just having an if statement over these four members?",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 11
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d7d411_f2190648",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "argument ids are equal",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 24
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6bed2c_629d15c4",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "what about the case where a subexpression depends on other? maybe this should be called DirectlyDependsOn or IsArgumentOf ?",
+      "range": {
+        "startLine": 76,
+        "startChar": 16,
+        "endLine": 76,
+        "endChar": 21
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853a1b76_2c964cc9",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "id_.id reads weird.",
+      "range": {
+        "startLine": 84,
+        "startChar": 16,
+        "endLine": 84,
+        "endChar": 18
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323185e0_a9222823",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "current_id",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 16
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff00639_c809a33e",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "oh I did not realize when reading the name that this is only about compiletime constants.\n\nIsCompileTimeConstantZero and IsCompileTimeConstantOne respectively.",
+      "range": {
+        "startLine": 99,
+        "startChar": 17,
+        "endLine": 99,
+        "endChar": 31
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943ba2b1_e30f167e",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "maybe expressionref should have ToString() method.",
+      "range": {
+        "startLine": 112,
+        "startChar": 21,
+        "endLine": 112,
+        "endChar": 30
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dce86df_0118a9eb",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "MakeCompileTimeConstant",
+      "range": {
+        "startLine": 115,
+        "startChar": 26,
+        "endLine": 115,
+        "endChar": 38
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa573804_82fd6022",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "This is a critical method, which manages ids, and depends on static storage. I left a comment in the header, this point in the design requires some discussion.",
+      "range": {
+        "startLine": 191,
+        "startChar": 12,
+        "endLine": 191,
+        "endChar": 22
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693ab749_1ce1040d",
+        "filename": "internal/ceres/expression_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-08T14:25:06Z",
+      "side": 1,
+      "message": "I agree with Keir that we should do finer grained testing. Depending on the code generator is not a great idea.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 9
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
