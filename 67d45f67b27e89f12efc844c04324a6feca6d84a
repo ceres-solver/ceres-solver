@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "aa382b3f_a2fe2d24",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-10-09T16:45:18Z",
+      "side": 1,
+      "message": "We want it to be ExpressionRef, because it should be invalid to convert integers/bools into ComparisonExpressions.",
+      "parentUuid": "eac03680_2b7605ce",
+      "range": {
+        "startLine": 97,
+        "startChar": 35,
+        "endLine": 97,
+        "endChar": 48
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8bc9896_c6a4c536",
         "filename": "include/ceres/internal/expression.h",
         "patchSetId": 2
@@ -898,6 +922,30 @@
     },
     {
       "key": {
+        "uuid": "22b9b5aa_da089348",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-10-09T16:45:18Z",
+      "side": 1,
+      "message": "Yes this will be changed during constant folding.",
+      "parentUuid": "f0a14e2d_ee6d495c",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 5
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94be408b_f6261cf9",
         "filename": "include/ceres/internal/expression.h",
         "patchSetId": 2
@@ -938,6 +986,24 @@
     },
     {
       "key": {
+        "uuid": "50aec53a_e6c46ed6",
+        "filename": "include/ceres/internal/expression_arithmetic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-10-09T16:45:18Z",
+      "side": 1,
+      "message": "I\u0027m also not quite sure. Right now we have that cyclic dependency ExpressionRef\u003c-\u003eExpression which makes it hard to define these function in separate headers.",
+      "parentUuid": "9753deb4_cc94eff8",
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b812f61_0c2e4bc1",
         "filename": "include/ceres/internal/expression_arithmetic.h",
         "patchSetId": 2
@@ -966,6 +1032,30 @@
       "writtenOn": "2019-10-08T14:25:06Z",
       "side": 1,
       "message": "doesn\u0027t this require dealing with conditionals?",
+      "range": {
+        "startLine": 131,
+        "startChar": 26,
+        "endLine": 131,
+        "endChar": 27
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d9900d_1fb03f8a",
+        "filename": "include/ceres/internal/expression_arithmetic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-10-09T16:45:18Z",
+      "side": 1,
+      "message": "No, this is just a function with 1 parameter. We don\u0027t care about the implementation here.",
+      "parentUuid": "cb23cb77_b08883a4",
       "range": {
         "startLine": 131,
         "startChar": 26,
@@ -1173,6 +1263,30 @@
       "writtenOn": "2019-10-08T14:25:06Z",
       "side": 1,
       "message": "what if the other is also a NOP?",
+      "range": {
+        "startLine": 52,
+        "startChar": 13,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8689cc2_68b7f235",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-10-09T16:45:18Z",
+      "side": 1,
+      "message": "Then we would replace NOP with NOP, which doesn\u0027t do anything.",
+      "parentUuid": "3a300ae5_37d81b5f",
       "range": {
         "startLine": 52,
         "startChar": 13,
