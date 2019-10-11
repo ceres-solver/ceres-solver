@@ -1,0 +1,773 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59c05c9b_2440b22b",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "do you need all these standard headers? I am pretty sure some of these are not needed anymore.",
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6fef5f0_6d80dee0",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "BINARY_COMPARISON",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 16
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec4a830_3d919abf",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "comment is accidentally broken across three lines.",
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a392604b_133cb7b3",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "expand this class comment.\n\nalso mention that before this class can be used the user needs to call the start method, or rather be explicit in describing this global vector storage that interacts with this class.",
+      "range": {
+        "startLine": 117,
+        "startChar": 49,
+        "endLine": 117,
+        "endChar": 53
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4cec546_d068037e",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "why do these functions return an ExpressionRef? why not just the id? that way this class is entirely decoupled from the reference class which is its own thing.",
+      "range": {
+        "startLine": 122,
+        "startChar": 3,
+        "endLine": 122,
+        "endChar": 4
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8a94f26_3f4fb896",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "MakeCompileTimeConstant",
+      "range": {
+        "startLine": 123,
+        "startChar": 23,
+        "endLine": 123,
+        "endChar": 35
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5b0c59_b98c6ef6",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "in binary arithmetic the type comes before the arguments and in unary after, pick one convention and be consistent.",
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d2128d_3d801096",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "maybe in a high level comment why some MakeFoo require a name, some don\u0027t? and what are the constraints on the name?",
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a00be11_973cdf81",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "I think this is better called IsCompileTimeConstantAndEqualTo() I know this is verbose, but it captures the two things you are checking for.",
+      "range": {
+        "startLine": 150,
+        "startChar": 7,
+        "endLine": 150,
+        "endChar": 17
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d54a31_d31eb8b3",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "If",
+      "range": {
+        "startLine": 162,
+        "startChar": 5,
+        "endLine": 162,
+        "endChar": 7
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a1db1d_0b629616",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "same question as below, this seems like a method that belongs to a higher level construct that uses this class rather than this class itself.",
+      "range": {
+        "startLine": 170,
+        "startChar": 14,
+        "endLine": 170,
+        "endChar": 32
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09029a4e_ef05d3d5",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "I am curious as to why this string generation is part of this class, since naming is a policy decision. You already have a unique id associated with this Expression, so shouldn\u0027t the code generation mechanism take the id and make a decision at the very end as to how to create names out of it?",
+      "range": {
+        "startLine": 174,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 14
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea0f5ab_ff36e6a1",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "function methods before data members.",
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "923e5b02_9396743b",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "I think this is a design smell. Why have something called an ExpressionRef and call it id? why ot just store the id as a const member?",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 15
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c080a2c2_e976c05b",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "do you mean ExpressionTree?\nthat said I am not sure what you mean by this comment. Are you saying all the MakeFoo methods can only be called by ExpressionPool/Tree?",
+      "range": {
+        "startLine": 181,
+        "startChar": 11,
+        "endLine": 181,
+        "endChar": 25
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bdbde0c_af3e3a0a",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "The friend class declaration should either be at the top of the private section or at the bottom.",
+      "range": {
+        "startLine": 183,
+        "startChar": 15,
+        "endLine": 183,
+        "endChar": 29
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9120de8_2ce06d75",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "does this need to be a member? why not a function? also why isn\u0027t this const? do you expect it to change after construction?",
+      "range": {
+        "startLine": 191,
+        "startChar": 19,
+        "endLine": 191,
+        "endChar": 20
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a660fe06_f432afb4",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "arguments here and elsewhere.",
+      "range": {
+        "startLine": 195,
+        "startChar": 42,
+        "endLine": 195,
+        "endChar": 52
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344cf739_a38000bf",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "arguments_ since we are already using the word parameters to mean something else.",
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd3b96d4_ce8b958d",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "does this documentation apply to this file also? it is the same as expression.h",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e16faa_368d837e",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "is this a compile time constant or a runtime constant or it does not matter?",
+      "range": {
+        "startLine": 66,
+        "startChar": 11,
+        "endLine": 66,
+        "endChar": 14
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beff9c4a_ac81ea68",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "update comment",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 60
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6185568c_81a7ed92",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "you have differing generic names for the arguments, it would be good to pick one convention and use it.",
+      "range": {
+        "startLine": 73,
+        "startChar": 43,
+        "endLine": 73,
+        "endChar": 44
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3090f5_c085420e",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "Following",
+      "range": {
+        "startLine": 109,
+        "startChar": 3,
+        "endLine": 109,
+        "endChar": 12
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a8ff3f_b031a63b",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "why is this called an id? why not a ref.\n\nalso does this need to be a ref, and not actually an ExpressionId?",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 15
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d61488d_e194351b",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "see my comment in expression.h, where I think its relatively straightforward to get rid of the dependency.",
+      "range": {
+        "startLine": 155,
+        "startChar": 23,
+        "endLine": 155,
+        "endChar": 24
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd6f694_bb6aba13",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "document this macro and its use. is this for users to use? in which case its odd for it to sit in a file that is in the internal directory/namespace.",
+      "range": {
+        "startLine": 175,
+        "startChar": 1,
+        "endLine": 175,
+        "endChar": 7
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef003df_73dacd97",
+        "filename": "include/ceres/internal/expression_tree.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "odd to call it a tree and then have a note which says its not a tree. How about ExpressionGraph in that case?",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 10
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b10b7f_047dbadb",
+        "filename": "include/ceres/internal/expression_tree.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "describe how you expect this class to be used.\n\nalso does this need to be a class at all?",
+      "range": {
+        "startLine": 49,
+        "startChar": 35,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4b3e5d_0288d3f5",
+        "filename": "include/ceres/internal/expression_tree.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "this function does not return an reference but rather an expression.",
+      "range": {
+        "startLine": 53,
+        "startChar": 28,
+        "endLine": 53,
+        "endChar": 32
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a906cf0d_d20ece45",
+        "filename": "include/ceres/internal/expression_tree.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "since ExpressionRef can answer this question directly, why have this method here at all? can you just call A.DependsOn(B) ?",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 16
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e11535_fbad080f",
+        "filename": "include/ceres/internal/expression_tree.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "ref instead of id.",
+      "range": {
+        "startLine": 60,
+        "startChar": 18,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077bc530_77087a99",
+        "filename": "include/ceres/internal/expression_tree.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "another thought, why not store a reference to data_ in ExpressionRef so that it can get access to its own Reference ? instead of having to go through the ExpressionGraph?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 12
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be04f85_0b893fd3",
+        "filename": "include/ceres/internal/expression_tree.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "describe array lifetimes as a function of Start and Stop.",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 11
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7850099_a294628f",
+        "filename": "include/ceres/internal/expression_tree.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T15:07:20Z",
+      "side": 1,
+      "message": "graph",
+      "range": {
+        "startLine": 79,
+        "startChar": 46,
+        "endLine": 79,
+        "endChar": 50
+      },
+      "revId": "eb4509c32ea1f889ff40baca2dd4be09c5150a92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
