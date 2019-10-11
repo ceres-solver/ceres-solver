@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67be80c3_1dde6fd1",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T16:22:06Z",
+      "side": 1,
+      "message": "Add a comment about how this interacts with global storage and pre-condition for using this class.",
+      "range": {
+        "startLine": 115,
+        "startChar": 9,
+        "endLine": 115,
+        "endChar": 15
+      },
+      "revId": "82ac989ef974e4d201e3a8d011419ecdedea8fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500577ae_f8f2fcc9",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T16:22:06Z",
+      "side": 1,
+      "message": "Minor naming convention (which will create some churn right now but more consistency later on), in ceres factories are usually called CreateFoo.",
+      "range": {
+        "startLine": 120,
+        "startChar": 22,
+        "endLine": 120,
+        "endChar": 45
+      },
+      "revId": "82ac989ef974e4d201e3a8d011419ecdedea8fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c23610a_f67a7e50",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T16:22:06Z",
+      "side": 1,
+      "message": "does the word simple matter? just IsArithmetic() works no? since I imagine your aim here is to do binary and unary arithmetic expressions?",
+      "revId": "82ac989ef974e4d201e3a8d011419ecdedea8fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4acf3cae_4abde706",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T16:22:06Z",
+      "side": 1,
+      "message": "as an argument.",
+      "range": {
+        "startLine": 158,
+        "startChar": 41,
+        "endLine": 158,
+        "endChar": 50
+      },
+      "revId": "82ac989ef974e4d201e3a8d011419ecdedea8fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f17348_d0d5ce05",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T16:22:06Z",
+      "side": 1,
+      "message": "MakeNop()",
+      "range": {
+        "startLine": 162,
+        "startChar": 7,
+        "endLine": 162,
+        "endChar": 18
+      },
+      "revId": "82ac989ef974e4d201e3a8d011419ecdedea8fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf18021_8d07d31b",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T16:22:06Z",
+      "side": 1,
+      "message": "suggested ordering\n\ntype_\nid_\narguments_\nname_\nvalue_\n\nreason being, the first three are in decreasing order of requiredness.",
+      "range": {
+        "startLine": 180,
+        "startChar": 25,
+        "endLine": 180,
+        "endChar": 39
+      },
+      "revId": "82ac989ef974e4d201e3a8d011419ecdedea8fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15914507_c1dc3cbe",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T16:22:06Z",
+      "side": 1,
+      "message": "mark explicit",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 15
+      },
+      "revId": "82ac989ef974e4d201e3a8d011419ecdedea8fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d428ac_8186ff77",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T16:22:06Z",
+      "side": 1,
+      "message": "I recommend just calling it Create, that way you will get invocations of the form ExpressionRef::Create(), which is the pattern in rest of ceres.\n \nI am curious as to why you need a static factory at all? is it because you already have a single argument constructor?",
+      "range": {
+        "startLine": 68,
+        "startChar": 23,
+        "endLine": 68,
+        "endChar": 40
+      },
+      "revId": "82ac989ef974e4d201e3a8d011419ecdedea8fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32abf7b1_56dc0489",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T16:22:06Z",
+      "side": 1,
+      "message": "Arithmetic",
+      "range": {
+        "startLine": 71,
+        "startChar": 3,
+        "endLine": 71,
+        "endChar": 8
+      },
+      "revId": "82ac989ef974e4d201e3a8d011419ecdedea8fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baaa86a6_ba38ec0c",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T16:22:06Z",
+      "side": 1,
+      "message": "should this just be an id, or a ref? name accordingly.",
+      "range": {
+        "startLine": 100,
+        "startChar": 15,
+        "endLine": 100,
+        "endChar": 16
+      },
+      "revId": "82ac989ef974e4d201e3a8d011419ecdedea8fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11446f5_ed3e894b",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T16:22:06Z",
+      "side": 1,
+      "message": "I think instead of using assert, you are better off doing\n\nCHECK(pool) \u003c\u003c \"A very verbose message, which informs the reader that if they are seeing this, there is a bug in ceres and that they should contact the developers with a reproduction\"\n\nsince we are not expecting the user to do the start and stop recording expression stuff no?",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 8
+      },
+      "revId": "82ac989ef974e4d201e3a8d011419ecdedea8fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8a2837_44beb5b0",
+        "filename": "internal/ceres/expression_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T16:22:06Z",
+      "side": 1,
+      "message": "CHECK(!expression_pool) \u003c\u003c \"verbose message\"",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 8
+      },
+      "revId": "82ac989ef974e4d201e3a8d011419ecdedea8fa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
