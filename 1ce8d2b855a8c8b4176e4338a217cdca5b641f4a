@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3589a0b7_4cfa03b1",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T19:24:06Z",
+      "side": 1,
+      "message": "expression_graph.h",
+      "range": {
+        "startLine": 122,
+        "startChar": 24,
+        "endLine": 122,
+        "endChar": 39
+      },
+      "revId": "1ce8d2b855a8c8b4176e4338a217cdca5b641f4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c216c03_25c55eb1",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T19:24:06Z",
+      "side": 1,
+      "message": "initialize to invalid id? like the type?\nalso shouldn\u0027t id be const?",
+      "range": {
+        "startLine": 180,
+        "startChar": 18,
+        "endLine": 180,
+        "endChar": 19
+      },
+      "revId": "1ce8d2b855a8c8b4176e4338a217cdca5b641f4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe5379e_f6577185",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T19:24:06Z",
+      "side": 1,
+      "message": "get -\u003e ExpressionForId()",
+      "range": {
+        "startLine": 59,
+        "startChar": 14,
+        "endLine": 59,
+        "endChar": 17
+      },
+      "revId": "1ce8d2b855a8c8b4176e4338a217cdca5b641f4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1f918d_a75be578",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T19:24:06Z",
+      "side": 1,
+      "message": "into an ExpressionGraph. You can obtain this graph by calling StopRecordingExpressions.",
+      "range": {
+        "startLine": 67,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 28
+      },
+      "revId": "1ce8d2b855a8c8b4176e4338a217cdca5b641f4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5903cb6d_b9745675",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T19:24:06Z",
+      "side": 1,
+      "message": "can this function be called over and over again?",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 79
+      },
+      "revId": "1ce8d2b855a8c8b4176e4338a217cdca5b641f4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649c2699_387e8d28",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T19:24:06Z",
+      "side": 1,
+      "message": "can this function be called over and over again?",
+      "range": {
+        "startLine": 75,
+        "startChar": 11,
+        "endLine": 75,
+        "endChar": 36
+      },
+      "revId": "1ce8d2b855a8c8b4176e4338a217cdca5b641f4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5bf0658_2a7e3409",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T19:24:06Z",
+      "side": 1,
+      "message": "GetCurrentExpressionGraph()",
+      "range": {
+        "startLine": 80,
+        "startChar": 17,
+        "endLine": 80,
+        "endChar": 41
+      },
+      "revId": "1ce8d2b855a8c8b4176e4338a217cdca5b641f4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5a4623_6c7f605d",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T19:24:06Z",
+      "side": 1,
+      "message": "mark const",
+      "range": {
+        "startLine": 58,
+        "startChar": 24,
+        "endLine": 58,
+        "endChar": 25
+      },
+      "revId": "1ce8d2b855a8c8b4176e4338a217cdca5b641f4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11caedc8_22016df4",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T19:24:06Z",
+      "side": 1,
+      "message": "shouldn\u0027t id be const?",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 14
+      },
+      "revId": "1ce8d2b855a8c8b4176e4338a217cdca5b641f4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3250ded_902911f4",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T19:24:06Z",
+      "side": 1,
+      "message": "why not make repeated calls to StopRecordingExpressionsI() a no-op?",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 23
+      },
+      "revId": "1ce8d2b855a8c8b4176e4338a217cdca5b641f4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755f5289_0c344059",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T19:24:06Z",
+      "side": 1,
+      "message": "data_.emplace_back(type, id); is better no?",
+      "range": {
+        "startLine": 63,
+        "startChar": 18,
+        "endLine": 63,
+        "endChar": 22
+      },
+      "revId": "1ce8d2b855a8c8b4176e4338a217cdca5b641f4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a958efbc_70d91941",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-11T19:24:06Z",
+      "side": 1,
+      "message": "is vector the best data structure for this?",
+      "range": {
+        "startLine": 74,
+        "startChar": 14,
+        "endLine": 74,
+        "endChar": 26
+      },
+      "revId": "1ce8d2b855a8c8b4176e4338a217cdca5b641f4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
