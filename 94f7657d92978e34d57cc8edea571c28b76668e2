@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96c8aeee_54ea02db",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "Perhaps ExpressionGraph would be a better name; originally we suggested \"tree\" but missed that it\u0027s really a DAG.",
+      "revId": "94f7657d92978e34d57cc8edea571c28b76668e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052d27d2_7646c8d9",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "In Ceres, we use {}s and a new line always.\n\nFun tidbit:\nhttps://nakedsecurity.sophos.com/2014/02/24/anatomy-of-a-goto-fail-apples-ssl-bug-explained-plus-an-unofficial-patch/",
+      "revId": "94f7657d92978e34d57cc8edea571c28b76668e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4174440_21ca04da",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "This should use a Ceres CHECK_NOTNULL() macro, and have a descriptive message. This is effectively exposed to users (public API) so it should try to be helpful for users when things go wrong.",
+      "revId": "94f7657d92978e34d57cc8edea571c28b76668e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}

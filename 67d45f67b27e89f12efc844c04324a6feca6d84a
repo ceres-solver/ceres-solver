@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "75943420_ac5a7f5b",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "And we also don\u0027t use Doxygen style comments - please look through the other Ceres headers to see the commenting style.",
+      "parentUuid": "399f3dd8_cfe41f37",
+      "revId": "67d45f67b27e89f12efc844c04324a6feca6d84a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3a06619_2f04dd91",
         "filename": "include/ceres/internal/expression.h",
         "patchSetId": 2

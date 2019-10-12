@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff08a4b2_497b50d9",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "c -\u003e condition\na -\u003e if_true\nb -\u003e if_false",
+      "revId": "cf4e4aaf53e6c8bd0e82306a8e93307a16ba3d5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb13754_8a0abec7",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "assignment",
+      "revId": "cf4e4aaf53e6c8bd0e82306a8e93307a16ba3d5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7f8939_ad485c64",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "Please add a short comment here explaining why ExpressionGraph is a friend, to make this file easier to start from when understanding the autodiff system.",
+      "revId": "cf4e4aaf53e6c8bd0e82306a8e93307a16ba3d5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e26e387_57ca8e9e",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "nit: non-cyclic -\u003e acyclic",
+      "revId": "cf4e4aaf53e6c8bd0e82306a8e93307a16ba3d5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83704922_d5fd02e7",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "data_ --\u003e expressions_\n\nPlease add a comment above this member explaining that the expressions internally refer to other expressions via the IDs, forming graphs.",
+      "revId": "cf4e4aaf53e6c8bd0e82306a8e93307a16ba3d5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c896af84_a284ea05",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "I\u0027m not convinced about this; I suggest making this an assert failure. Do we have actual, in-the-field use cases where we would want this behavior (resetting instead of assert failing)? It seems like an easy place for bugs to hide.",
+      "revId": "cf4e4aaf53e6c8bd0e82306a8e93307a16ba3d5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2a1b0d_4e6702d2",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "We don\u0027t use Doxygen for Ceres, so please remove the @brief annotation (and any others).",
+      "revId": "cf4e4aaf53e6c8bd0e82306a8e93307a16ba3d5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302cb6a6_fb9eaf04",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "Perhaps add a short comment here to explain that this ID indexes into the static global ExpressionGraph table.",
+      "revId": "cf4e4aaf53e6c8bd0e82306a8e93307a16ba3d5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0ff50d_80bb6157",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "This is getting into the fine details. Generally in Ceres we indent all code-in-comments by an extra 2 spaces:\n\n  // This is a comment with some code:\n  //\n  //   a \u003d DoTheThing();\n  //   FobTheBar(\u0026a, b);\n  //\n  // Here is more comments about it.\n\nThroughout.",
+      "revId": "cf4e4aaf53e6c8bd0e82306a8e93307a16ba3d5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e7b011_cf96e115",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "autodiff codegen context",
+      "revId": "cf4e4aaf53e6c8bd0e82306a8e93307a16ba3d5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e564d0d_e632f4b6",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "This reference isn\u0027t stable between calls due to vector reallocations. I\u0027m guessing this is OK?",
+      "revId": "cf4e4aaf53e6c8bd0e82306a8e93307a16ba3d5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649b52b1_0b3a24ab",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-12T16:25:50Z",
+      "side": 1,
+      "message": "{}s with new line, always.",
+      "revId": "cf4e4aaf53e6c8bd0e82306a8e93307a16ba3d5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
