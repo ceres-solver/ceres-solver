@@ -50,7 +50,7 @@ class ExpressionGraph {
  public:
   // Creates an expression and adds it to expressions_.
   // The returned reference will be invalid after this function is called again.
-  Expression& MakeExpression(ExpressionType type);
+  Expression& CreateExpression(ExpressionType type);
 
   // Checks if A depends on B.
   // -> B is a descendant of A
@@ -61,7 +61,7 @@ class ExpressionGraph {
     return expressions_[id];
   }
 
-  int Size() { return expressions_.size(); }
+  int Size() const { return expressions_.size(); }
 
  private:
   // All Expressions are referenced by an ExpressionId. The ExpressionId is the

@@ -55,7 +55,7 @@ ExpressionGraph StopRecordingExpressions() {
 
 ExpressionGraph* GetCurrentExpressionGraph() { return expression_pool; }
 
-Expression& ExpressionGraph::MakeExpression(ExpressionType type) {
+Expression& ExpressionGraph::CreateExpression(ExpressionType type) {
   auto id = expressions_.size();
   Expression expr(type, id);
   expressions_.push_back(expr);

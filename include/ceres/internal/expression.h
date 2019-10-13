@@ -30,7 +30,7 @@
 //
 //
 // This file contains the basic expression type, which is used during code
-// creation. Only assignment expressions of the following form are supported:
+// generation. Only assignment expressions of the following form are supported:
 //
 // result = [constant|binary_expr|functioncall]
 //

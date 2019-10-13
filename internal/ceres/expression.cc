@@ -29,10 +29,11 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 
 #include "ceres/internal/expression.h"
-#include <sstream>
+#include <algorithm>
 
 #include "ceres/internal/expression_graph.h"
 #include "glog/logging.h"
+
 namespace ceres {
 namespace internal {
 
@@ -41,7 +42,7 @@ static Expression& MakeExpression(ExpressionType type) {
   CHECK(pool)
       << "The ExpressionGraph has to be created before using Expressions. This "
          "is achieved by calling ceres::StartRecordingExpressions.";
-  return pool->MakeExpression(type);
+  return pool->CreateExpression(type);
 }
 
 ExpressionId Expression::CreateCompileTimeConstant(double v) {
@@ -143,24 +144,9 @@ bool Expression::IsArithmetic() const {
 }
 
 bool Expression::IsReplaceableBy(const Expression& other) const {
-  if (type_ == ExpressionType::NOP) {
-    return false;
-  }
-
-  // Check everything except the id and the params.
-  if (!(type_ == other.type_ && name_ == other.name_ &&
-        value_ == other.value_ &&
-        arguments_.size() == other.arguments_.size())) {
-    return false;
-  }
-
-  // Check if the argument ids are equal.
-  for (int i = 0; i < arguments_.size(); ++i) {
-    if (arguments_[i] != other.arguments_[i]) {
-      return false;
-    }
-  }
-  return true;
+  // Check everything except the id.
+  return (type_ == other.type_ && name_ == other.name_ &&
+          value_ == other.value_ && arguments_ == other.arguments_);
 }
 
 void Expression::Replace(const Expression& other) {
@@ -175,12 +161,8 @@ void Expression::Replace(const Expression& other) {
 }
 
 bool Expression::DirectlyDependsOn(ExpressionId other) const {
-  for (auto p : arguments_) {
-    if (p == other) {
-      return true;
-    }
-  }
-  return false;
+  return (std::find(arguments_.begin(), arguments_.end(), other) !=
+          arguments_.end());
 }
 
 bool Expression::IsCompileTimeConstantAndEqualTo(double constant) const {
