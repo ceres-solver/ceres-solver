@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "042a7b9d_888403df",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-15T14:53:38Z",
+      "side": 1,
+      "message": "generation",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 33,
+        "endChar": 11
+      },
+      "revId": "d6f9bfbd57bc2d72fc7315efb3cff94048466fd9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2f8110_46bb9c02",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-15T14:53:38Z",
+      "side": 1,
+      "message": "CreateExpression",
+      "range": {
+        "startLine": 53,
+        "startChar": 14,
+        "endLine": 53,
+        "endChar": 28
+      },
+      "revId": "d6f9bfbd57bc2d72fc7315efb3cff94048466fd9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419541e8_d7d507f3",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-15T14:53:38Z",
+      "side": 1,
+      "message": "mark const",
+      "range": {
+        "startLine": 64,
+        "startChar": 13,
+        "endLine": 64,
+        "endChar": 14
+      },
+      "revId": "d6f9bfbd57bc2d72fc7315efb3cff94048466fd9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a82dff_3495486d",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-15T14:53:38Z",
+      "side": 1,
+      "message": "Blank line before namespace",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 9
+      },
+      "revId": "d6f9bfbd57bc2d72fc7315efb3cff94048466fd9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2183f31e_57338c66",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-15T14:53:38Z",
+      "side": 1,
+      "message": "why should this function return false if the other expression is also a Nop?",
+      "revId": "d6f9bfbd57bc2d72fc7315efb3cff94048466fd9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d082be_a47e4fdd",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-15T14:53:38Z",
+      "side": 1,
+      "message": "return (std::find(arguments_.begin(), arguments_.end(), other) !\u003d arguments_.end());",
+      "range": {
+        "startLine": 178,
+        "startChar": 14,
+        "endLine": 178,
+        "endChar": 15
+      },
+      "revId": "d6f9bfbd57bc2d72fc7315efb3cff94048466fd9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
