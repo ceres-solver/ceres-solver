@@ -1571,7 +1571,7 @@ elimination group [LiSaad]_.
 
 .. member:: double Solver::Options::gradient_check_relative_precision
 
-   Default: ``1e08``
+   Default: ``1e-8``
 
    Precision to check for in the gradient checker. If the relative
    difference between an element in a Jacobian exceeds this number,
