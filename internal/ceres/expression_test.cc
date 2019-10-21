@@ -29,6 +29,8 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 //
 
+#define CERES_CODEGEN
+
 #include "ceres/internal/expression_graph.h"
 #include "ceres/internal/expression_ref.h"
 

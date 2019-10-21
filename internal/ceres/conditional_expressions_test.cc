@@ -27,63 +27,85 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: darius.rueckert@fau.de (Darius Rueckert)
+//
+
+#define CERES_CODEGEN
 
 #include "ceres/internal/expression_graph.h"
+#include "ceres/internal/expression_ref.h"
 
-#include "glog/logging.h"
+#include "gtest/gtest.h"
+
 namespace ceres {
 namespace internal {
 
-static ExpressionGraph* expression_pool = nullptr;
-
-void StartRecordingExpressions() {
-  CHECK(expression_pool == nullptr)
-      << "Expression recording must be stopped before calling "
-         "StartRecordingExpressions again.";
-  expression_pool = new ExpressionGraph;
+void TestSingleExpressionGraph(const ExpressionGraph& graph,
+                               ExpressionId id,
+                               ExpressionId lhs,
+                               ExpressionType type,
+                               std::vector<ExpressionId> args) {
+  EXPECT_LT(id, graph.Size());
+  auto& expr = graph.ExpressionForId(id);
+  EXPECT_EQ(expr.Id(), lhs);
+  EXPECT_EQ(expr.Type(), type);
+  EXPECT_EQ(expr.Arguments(), args);
 }
 
-ExpressionGraph StopRecordingExpressions() {
-  CHECK(expression_pool)
-      << "Expression recording hasn't started yet or you tried "
-         "to stop it twice.";
-  ExpressionGraph result = std::move(*expression_pool);
-  delete expression_pool;
-  expression_pool = nullptr;
-  return result;
-}
+#define TEST_EXPR(_id, _type, ...) \
+  TestSingleExpressionGraph(       \
+      graph, id++, _id, ExpressionType::_type, {__VA_ARGS__})
 
-ExpressionGraph* GetCurrentExpressionGraph() { return expression_pool; }
+TEST(Expression, Conditionals) {
+  using T = ExpressionRef;
 
-Expression& ExpressionGraph::CreateExpression(ExpressionType type,
-                                              ExpressionId lhs_id) {
-  auto graph_id = static_cast<ExpressionId>(expressions_.size());
-  if (lhs_id == kInvalidExpressionId) {
-    lhs_id = graph_id;
-  }
-  Expression expr(type, lhs_id);
-  expressions_.push_back(expr);
-  return expressions_.back();
-}
+  StartRecordingExpressions();
 
-bool ExpressionGraph::DependsOn(ExpressionId A, ExpressionId B) const {
-  // Depth first search on the expression graph
-  // Equivalent Recursive Implementation:
-  //   if (A.DirectlyDependsOn(B)) return true;
-  //   for (auto p : A.params_) {
-  //     if (pool[p.id].DependsOn(B, pool)) return true;
-  //   }
-  std::vector<ExpressionId> stack = ExpressionForId(A).arguments_;
-  while (!stack.empty()) {
-    auto top = stack.back();
-    stack.pop_back();
-    if (top == B) {
-      return true;
-    }
-    auto& expr = ExpressionForId(top);
-    stack.insert(stack.end(), expr.arguments_.begin(), expr.arguments_.end());
-  }
-  return false;
+  T result;
+  T a(2);
+  T b(3);
+  auto c = a < b;
+  CERES_IF(c) { result = a + b; }
+  CERES_ELSE { result = a - b; }
+  CERES_ENDIF
+  result += a;
+  auto graph = StopRecordingExpressions();
+
+  // Expected code
+  //   v_0 = 2;
+  //   v_1 = 3;
+  //   v_2 = v_0 < v_1;
+  //   if(v_2);
+  //     v_4 = v_0 + v_1;
+  //   else
+  //     v_6 = v_0 - v_1;
+  //     v_4 = v_6
+  //   endif
+  //   v_9 = v_4 + v_0;
+  //   v_4 = v_9;
+
+  ExpressionId id = 0;
+  TEST_EXPR(0, COMPILE_TIME_CONSTANT);
+  TEST_EXPR(1, COMPILE_TIME_CONSTANT);
+  TEST_EXPR(2, BINARY_COMPARISON, 0, 1);
+  TEST_EXPR(3, IF, 2);
+  TEST_EXPR(4, PLUS, 0, 1);
+  TEST_EXPR(5, ELSE);
+  TEST_EXPR(6, MINUS, 0, 1);
+  TEST_EXPR(4, ASSIGNMENT, 6);
+  TEST_EXPR(8, ENDIF);
+  TEST_EXPR(9, PLUS, 4, 0);
+  TEST_EXPR(4, ASSIGNMENT, 9);
+
+  // Variables after execution:
+  //
+  // a      <=> v_0
+  // b      <=> v_1
+  // result <=> v_4
+  EXPECT_EQ(a.id, 0);
+  EXPECT_EQ(b.id, 1);
+  EXPECT_EQ(result.id, 4);
 }
+// Todo: remaining functions of Expression
+
 }  // namespace internal
 }  // namespace ceres
