@@ -55,9 +55,23 @@ ExpressionGraph StopRecordingExpressions() {
 
 ExpressionGraph* GetCurrentExpressionGraph() { return expression_pool; }
 
-Expression& ExpressionGraph::CreateExpression(ExpressionType type) {
-  auto id = expressions_.size();
-  Expression expr(type, id);
+Expression& ExpressionGraph::CreateArithmeticExpression(ExpressionType type,
+                                                        ExpressionId lhs_id) {
+  if (lhs_id == kInvalidExpressionId) {
+    // We are creating a new temporary variable.
+    // -> The new lhs_id is the index into the graph
+    lhs_id = static_cast<ExpressionId>(expressions_.size());
+  } else {
+    // The left hand side already exists.
+  }
+
+  Expression expr(type, lhs_id);
+  expressions_.push_back(expr);
+  return expressions_.back();
+}
+
+Expression& ExpressionGraph::CreateControlExpression(ExpressionType type) {
+  Expression expr(type, kInvalidExpressionId);
   expressions_.push_back(expr);
   return expressions_.back();
 }
