@@ -203,8 +203,14 @@ struct Jet {
   // Constructor from scalar plus variable: a + t_i.
   Jet(const T& value, int k) {
     a = value;
-    v.setZero();
-    v[k] = T(1.0);
+
+    // We use a loop here instead of "v.setZero();v[k]=1;" to get rid of the
+    // double assignment to v[k].
+    // @Sameer This looks probably worse than it actually is, because compilers
+    // are very good at optimizing fixed size loops.
+    for (int i = 0; i < N; ++i) {
+      v[i] = i == k ? T(1.0) : T(0.0);
+    }
   }
 
   // Constructor from scalar and vector part
