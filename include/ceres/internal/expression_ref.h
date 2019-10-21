@@ -52,6 +52,24 @@ struct ExpressionRef {
   // it's automatically converted to the correct expression.
   explicit ExpressionRef(double compile_time_constant);
 
+  // Create an ASSIGNMENT expression from other to this.
+  //
+  // For example:
+  //   a = b;        // With a.id = 5 and b.id = 3
+  // will generate the following assignment:
+  //   v_5 = v_3;
+  //
+  // If this ExpressionRef is currently not pointing to a variable
+  // (id==invalid), then we can eliminate the assignment by just letting "this"
+  // point to the same variable as "other".
+  //
+  // Example:
+  //   a = b;       // With a.id = invalid and b.id = 3
+  // will generate NO expression, but after this line the following will be
+  // true:
+  //    a.id == b.id == 3
+  ExpressionRef& operator=(const ExpressionRef& other);
+
   // Returns v_id
   std::string ToString() const;
 
@@ -152,6 +170,18 @@ inline typename RuntimeConstant<T>::ReturnType MakeRuntimeConstant(
 
 #define CERES_EXPRESSION_RUNTIME_CONSTANT(_v) \
   ceres::internal::MakeRuntimeConstant<T>(_v, #_v)
+
+#ifdef CERES_CODEGEN
+#define CERES_IF(condition_) Expression::CreateIf((condition_).id);
+#define CERES_ELSE Expression::CreateElse();
+#define CERES_ENDIF Expression::CreateEndIf();
+#else
+#define CERES_IF(condition_) if (condition_) {
+#define CERES_ELSE \
+  }                \
+  else {
+#define CERES_ENDIF }
+#endif
 }  // namespace internal
 
 // See jet.h for more info on this type.
