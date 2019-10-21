@@ -50,7 +50,7 @@ struct ExpressionRef {
   // Create a compile time constant expression directly from a double value.
   // This is important so that we can write T(3.14) in our code and
   // it's automatically converted to the correct expression.
-  explicit ExpressionRef(double compile_time_constant);
+  ExpressionRef(double compile_time_constant);
 
   // Returns v_id
   std::string ToString() const;
@@ -152,6 +152,13 @@ inline typename RuntimeConstant<T>::ReturnType MakeRuntimeConstant(
 
 #define CERES_EXPRESSION_RUNTIME_CONSTANT(_v) \
   ceres::internal::MakeRuntimeConstant<T>(_v, #_v)
+
+inline ExpressionRef MakeParameter(const std::string& str) {
+  return ExpressionRef::Create(Expression::CreateParameter(str));
+}
+inline ExpressionRef MakeOutput(ExpressionRef v, const std::string& str) {
+  return ExpressionRef::Create(Expression::CreateOutputAssignment(v.id, str));
+}
 }  // namespace internal
 
 // See jet.h for more info on this type.
