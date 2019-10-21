@@ -48,9 +48,25 @@ namespace internal {
 // A is parent of B    <=>  A has B as a parameter    <=> A.DirectlyDependsOn(B)
 class ExpressionGraph {
  public:
-  // Creates an expression and adds it to expressions_.
-  // The returned reference will be invalid after this function is called again.
-  Expression& CreateExpression(ExpressionType type);
+  // Creates an arithmetic expression of the following form:
+  // <lhs> = <rhs>;
+  //
+  // For example:
+  //   CreateArithmeticExpression(PLUS, 5)
+  // will generate:
+  //   v_5 = __ + __;
+  // The place holders are then set by the CreateXX functions of Expression.
+  //
+  // If lhs_id == kInvalidExpressionId, then a new lhs_id will be generated and
+  // assigned to the created expression.
+  // Calling this function with a lhs_id that doesn't exist results in an
+  // error.
+  Expression& CreateArithmeticExpression(ExpressionType type,
+                                         ExpressionId lhs_id);
+
+  // Control expression don't have a left hand side.
+  // Supported types: IF/ELSE/ENDIF/NOP
+  Expression& CreateControlExpression(ExpressionType type);
 
   // Checks if A depends on B.
   // -> B is a descendant of A

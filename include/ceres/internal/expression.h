@@ -29,17 +29,97 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 //
 //
-// This file contains the basic expression type, which is used during code
-// generation. Only assignment expressions of the following form are supported:
+// Part 3: Conditional Expressions
 //
-// result = [constant|binary_expr|functioncall]
+// Generating code for conditional jumps (if/else) is more complicated than
+// someone might expect. Let's look at a small example to see the
+// problems. After that we explain how the problems are solved in ceres.
 //
-// Examples:
-// v_78 = v_28 / v_62;
-// v_97 = exp(v_20);
-// v_89 = 3.000000;
+// 1    T a = parameters[0][0];
+// 2    T b = 1.0;
+// 3    if(a < b){
+// 4      b = 3.0;
+// 5    }else{
+// 6      b = 4.0;
+// 7    }
+// 8    b += 1.0;
+// 9    residuals[0] = b;
 //
+// Problem 1.
+// We need to genrate code for both branches. In c++ there is no way to execute
+// both branches of an if, but we need to execute them to generate the code.
 //
+// Problem 2.
+// The comparison a < b in line 3 is not convertible to bool. Since the value of
+// a is not known during code generation, the expression a < b can not be
+// evaluated. In fact, a < b will return an expressoin of type
+// BINARY_COMPARISON.
+//
+// Problem 3.
+// There is no way to record that an if was executed. "If" is a special operator
+// which cannot be overloaded. Therefore we can't generate code that contains
+// "if.
+//
+// Problem 4.
+// We have no information about "blocks" or "scopes" during code generation.
+// Even if we could overload the if-operator, there is now way to capture which
+// expression was executed in which branches of the if. For example, we generate
+// code for the else branch. How can we know that the else branch is finished?
+// Is line 8 inside the else-block or already outside?
+//
+// Solution.
+// Instead of using the keywords if/else we insert the macros
+// CERES_IF, CERES_ELSE and CERES_ENDIF. These macros just map to a function,
+// which inserts an expression into the graph. Here is how the example from
+// above looks like with the expanded macros:
+//
+// 1    T a = parameters[0][0];
+// 2    T b = 1.0;
+// 3    CreateIf(a < b);{
+// 4      b = 3.0;
+// 5    }CreateElse();{
+// 6      b = 4.0;
+// 7    }CreateEndif();
+// 8    b += 1.0;
+// 9    residuals[0] = b;
+//
+// Problem 1 solved.
+// There are no branches during code generation, therefore both blocks are
+// evaluated.
+//
+// Problem 2 solved.
+// The function CreateIf(_) does not take a bool as argument, but an
+// ComparisonExpression. Later during code generation an actual "if" is created
+// with the condition as argument.
+//
+// Problem 3 solved.
+// We replaced "if" by a function call so we can record it now.
+//
+// Problem 4 solved.
+// Expression are added into the graph in the correct order. That means, after
+// seeing a CreateIf() we know that all following expression until CreateElse()
+// belong to the true-branch. Similar, all expression from CreateElse() to
+// CreateEndi() belong to the false-branch. This also works recursively with
+// nested ifs.
+//
+// If you want to use the AutoDiff code generation for your cost functors, you
+// have to replace all if/else by the CERES_IF, CERES_ELSE and CERES_ENDIF
+// macros. The example from above looks like this:
+//
+// 1    T a = parameters[0][0];
+// 2    T b = 1.0;
+// 3    CERES_IF(a < b){
+// 4      b = 3.0;
+// 5    }CERES_ELSE{
+// 6      b = 4.0;
+// 7    }CERES_ENDIF;
+// 8    b += 1.0;
+// 9    residuals[0] = b;
+//
+// These macros don't have a negative impact on performance, because they only
+// expand to the CreateIf/.. functions in code generation mode. Otherwise they
+// expand to the if/else keywords. See expression_ref.h for the exact
+// definition.
 #ifndef CERES_PUBLIC_EXPRESSION_H_
 #define CERES_PUBLIC_EXPRESSION_H_
 
@@ -68,8 +148,8 @@ enum class ExpressionType {
   // residual[0] = v_51;
   OUTPUT_ASSIGNMENT,
 
-  // Trivial Assignment
-  // v_1 = v_0;
+  // Trivial assignment
+  // v_3 = v_1
   ASSIGNMENT,
 
   // Binary Arithmetic Operations
@@ -102,6 +182,12 @@ enum class ExpressionType {
   // v_3 = ternary(v_0,v_1,v_2);
   TERNARY,
 
+  // Conditional control expressions if/else/endif.
+  // These are special expressions, because they don't define a new variable.
+  IF,
+  ELSE,
+  ENDIF,
+
   // No Operation. A placeholder for an 'empty' expressions which will be
   // optimized out during code generation.
   NOP
@@ -129,7 +215,7 @@ class Expression {
   static ExpressionId CreateParameter(const std::string& name);
   static ExpressionId CreateOutputAssignment(ExpressionId v,
                                              const std::string& name);
-  static ExpressionId CreateAssignment(ExpressionId v);
+  static ExpressionId CreateAssignment(ExpressionId dst, ExpressionId src);
   static ExpressionId CreateBinaryArithmetic(ExpressionType type,
                                              ExpressionId l,
                                              ExpressionId r);
@@ -144,6 +230,13 @@ class Expression {
   static ExpressionId CreateTernary(ExpressionId condition,
                                     ExpressionId if_true,
                                     ExpressionId if_false);
+
+  // Conditional control expressions are inserted into the graph but can't be
+  // referenced by other expressions. Therefore they don't return an
+  // ExpressionId.
+  static void CreateIf(ExpressionId condition);
+  static void CreateElse();
+  static void CreateEndIf();
 
   // Returns true if the expression type is one of the basic math-operators:
   // +,-,*,/
@@ -170,16 +263,47 @@ class Expression {
   // Converts this expression into a NOP
   void MakeNop();
 
+  ExpressionType type() const { return type_; }
+  ExpressionId lhs_id() const { return lhs_id_; }
+  double value() const { return value_; }
+  const std::string& name() const { return name_; }
+  const std::vector<ExpressionId>& arguments() const { return arguments_; }
+  bool is_ssa() const { return is_ssa_; }
+
  private:
   // Only ExpressionGraph is allowed to call the constructor, because it manages
   // the memory and ids.
   friend class ExpressionGraph;
 
   // Private constructor. Use the "CreateXX" functions instead.
-  Expression(ExpressionType type, ExpressionId id);
+  Expression(ExpressionType type, ExpressionId lhs_id);
 
   ExpressionType type_ = ExpressionType::NOP;
-  const ExpressionId id_ = kInvalidExpressionId;
+
+  // If lhs_id_ >= 0, then this expression is assigned to v_<lhs_id>.
+  // For example:
+  //    v_1 = v_0 + v_0     (Type = PLUS)
+  //    v_3 = sin(v_1)      (Type = FUNCTION_CALL)
+  //      ^
+  //   lhs_id_
+  //
+  // If lhs_id_ == kInvalidExpressionId, then the expression type is not
+  // arithmetic. Currently, only the following types have lhs_id = invalid:
+  // IF,ELSE,ENDIF,NOP
+  const ExpressionId lhs_id_ = kInvalidExpressionId;
+
+  // True if the lhs expression is assigned to only once. In code generation
+  // this flag is used to add a 'const' qualifier to the type.
+  // For example:
+  //   v_5 = v_0 + v_3
+  //   v_6 = v_1 - v_2
+  //   v_5 = v_6
+  //
+  // -> v_5.is_ssa = false
+  // -> v_6.is_ssa = true
+  //
+  // This is set by ExpressionGraph during creation.
+  bool is_ssa_ = true;
 
   // Expressions have different number of arguments. For example a binary "+"
   // has 2 parameters and a function call to "sin" has 1 parameter. Here, a

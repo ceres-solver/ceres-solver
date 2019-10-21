@@ -29,8 +29,7 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 
 #include "ceres/internal/expression_ref.h"
-#include "assert.h"
-#include "ceres/internal/expression.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
@@ -44,8 +43,23 @@ ExpressionRef ExpressionRef::Create(ExpressionId id) {
 std::string ExpressionRef::ToString() const { return std::to_string(id); }
 
 ExpressionRef::ExpressionRef(double compile_time_constant) {
-  (*this) = ExpressionRef::Create(
-      Expression::CreateCompileTimeConstant(compile_time_constant));
+  id = Expression::CreateCompileTimeConstant(compile_time_constant);
+}
+
+ExpressionRef& ExpressionRef::operator=(const ExpressionRef& other) {
+  // Assigning an uninitialized variable to another variable is an error.
+  CHECK_NE(other.id, kInvalidExpressionId) << "Uninitialized Assignment.";
+
+  if (id >= 0) {
+    // Create assignment from other -> this
+    Expression::CreateAssignment(id, other.id);
+  } else {
+    // Special case: "this" expressionref is invalid
+    //    -> Skip assignment
+    //    -> Let "this" point to the same variable as other
+    id = other.id;
+  }
+  return *this;
 }
 
 // Compound operators
