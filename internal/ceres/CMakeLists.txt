@@ -60,6 +60,7 @@ set(CERES_INTERNAL_SRC
     canonical_views_clustering.cc
     cgnr_solver.cc
     callbacks.cc
+    code_generator.cc
     compressed_col_sparse_matrix_utils.cc
     compressed_row_jacobian_writer.cc
     compressed_row_sparse_matrix.cc
@@ -416,6 +417,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(block_sparse_matrix)
   ceres_test(c_api)
   ceres_test(canonical_views_clustering)
+  ceres_test(code_generator)
   ceres_test(compressed_col_sparse_matrix_utils)
   ceres_test(compressed_row_sparse_matrix)
   ceres_test(concurrent_queue)

@@ -170,6 +170,12 @@ class Expression {
   // Converts this expression into a NOP
   void MakeNop();
 
+  ExpressionType Type() const { return type_; }
+  ExpressionId Id() const { return id_; }
+  double Value() const { return value_; }
+  std::string Name() const { return name_; }
+  std::vector<ExpressionId> Arguments() const { return arguments_; }
+
  private:
   // Only ExpressionGraph is allowed to call the constructor, because it manages
   // the memory and ids.
