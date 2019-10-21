@@ -29,7 +29,6 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 
 #include "ceres/internal/expression_ref.h"
-#include "assert.h"
 #include "ceres/internal/expression.h"
 
 namespace ceres {
@@ -44,8 +43,17 @@ ExpressionRef ExpressionRef::Create(ExpressionId id) {
 std::string ExpressionRef::ToString() const { return std::to_string(id); }
 
 ExpressionRef::ExpressionRef(double compile_time_constant) {
-  (*this) = ExpressionRef::Create(
-      Expression::CreateCompileTimeConstant(compile_time_constant));
+  id = Expression::CreateCompileTimeConstant(compile_time_constant);
+}
+
+ExpressionRef& ExpressionRef::operator=(const ExpressionRef& other) {
+  if (id == kInvalidExpressionId) {
+    id = other.id;
+  } else {
+    // The current ExpressionRef is valid -> create an assignment.
+    id = Expression::CreateAssignment(id, other.id);
+  }
+  return *this;
 }
 
 // Compound operators

@@ -72,6 +72,15 @@ enum class ExpressionType {
   // v_1 = v_0;
   ASSIGNMENT,
 
+  // Assignment v_1 = v_0, but the left hand side needs not to the expression
+  // itself. Example:
+  //   v_0 = 0;
+  //   if(c)
+  //      v_0 = v_1;
+  //   else
+  //      v_0 = v_2;
+  MULTI_ASSIGNMENT,
+
   // Binary Arithmetic Operations
   // v_2 = v_0 + v_1
   PLUS,
@@ -102,6 +111,14 @@ enum class ExpressionType {
   // v_3 = ternary(v_0,v_1,v_2);
   TERNARY,
 
+  // Conditional control expressions if/elseif/else/endif.
+  // These are special expressions, because they don't define a new variable.
+  // The create functions don't return an expressionid.
+  IF,
+  ELSEIF,
+  ELSE,
+  ENDIF,
+
   // No Operation. A placeholder for an 'empty' expressions which will be
   // optimized out during code generation.
   NOP
@@ -130,6 +147,7 @@ class Expression {
   static ExpressionId CreateOutputAssignment(ExpressionId v,
                                              const std::string& name);
   static ExpressionId CreateAssignment(ExpressionId v);
+  static ExpressionId CreateAssignment(ExpressionId dst, ExpressionId src);
   static ExpressionId CreateBinaryArithmetic(ExpressionType type,
                                              ExpressionId l,
                                              ExpressionId r);
@@ -144,6 +162,13 @@ class Expression {
   static ExpressionId CreateTernary(ExpressionId condition,
                                     ExpressionId if_true,
                                     ExpressionId if_false);
+
+  // Conditionals are inserted into the graph but can't be referenced by other
+  // expressions.
+  static void CreateIf(ExpressionId condition);
+  static void CreateElseIf(ExpressionId condition);
+  static void CreateElse();
+  static void CreateEndIf();
 
   // Returns true if the expression type is one of the basic math-operators:
   // +,-,*,/
@@ -177,9 +202,17 @@ class Expression {
 
   // Private constructor. Use the "CreateXX" functions instead.
   Expression(ExpressionType type, ExpressionId id);
+  Expression(ExpressionType type, ExpressionId id, ExpressionId lhs_id);
 
   ExpressionType type_ = ExpressionType::NOP;
+
+  // The index of this expression in the graph.
   const ExpressionId id_ = kInvalidExpressionId;
+
+  // The index of the left hand side expression. In most cases id_==lhs_id_
+  // except for multi assignments. Multi assignments are essential in
+  // conditional blocks.
+  const ExpressionId lhs_id_ = kInvalidExpressionId;
 
   // Expressions have different number of arguments. For example a binary "+"
   // has 2 parameters and a function call to "sin" has 1 parameter. Here, a

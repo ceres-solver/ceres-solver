@@ -29,6 +29,8 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 //
 
+#define CERES_CODEGEN
+
 #include "ceres/internal/expression_graph.h"
 #include "ceres/internal/expression_ref.h"
 
@@ -113,6 +115,22 @@ TEST(Expression, DirectlyDependsOn) {
   ASSERT_TRUE(graph.ExpressionForId(d.id).DirectlyDependsOn(c.id));
 }
 
+TEST(Expression, Conditionals) {
+  using T = ExpressionRef;
+
+  StartRecordingExpressions();
+
+  T result;
+  T a(2), b(3);
+
+  CERES_IF(a < b) { result = a + b; }
+  CERES_ELSE { result = a - b; }
+  CERES_ENDIF
+
+  auto graph = StopRecordingExpressions();
+
+  EXPECT_EQ(graph.Size(), 8);
+}
 // Todo: remaining functions of Expression
 
 }  // namespace internal

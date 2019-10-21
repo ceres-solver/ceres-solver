@@ -55,9 +55,13 @@ ExpressionGraph StopRecordingExpressions() {
 
 ExpressionGraph* GetCurrentExpressionGraph() { return expression_pool; }
 
-Expression& ExpressionGraph::CreateExpression(ExpressionType type) {
-  auto id = expressions_.size();
-  Expression expr(type, id);
+Expression& ExpressionGraph::CreateExpression(ExpressionType type,
+                                              ExpressionId lhs_id) {
+  auto id = static_cast<ExpressionId>(expressions_.size());
+  if (lhs_id == kInvalidExpressionId) {
+    lhs_id = id;
+  }
+  Expression expr(type, id, lhs_id);
   expressions_.push_back(expr);
   return expressions_.back();
 }
