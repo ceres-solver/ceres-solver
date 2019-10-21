@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90c08214_46c9ed34",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-21T16:29:27Z",
+      "side": 1,
+      "message": "this is very confusing. I do not understand the documentation or the example.",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 18
+      },
+      "revId": "095926f085466b6cd0afa4cdc05ec56decaa1cef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a5cfc67_d34dd276",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-21T16:29:27Z",
+      "side": 1,
+      "message": "I think these need more documentation, also why is it that we need an ELSEIF is not clear to me.",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 8
+      },
+      "revId": "095926f085466b6cd0afa4cdc05ec56decaa1cef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f495a53b_ff15f123",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-21T16:29:27Z",
+      "side": 1,
+      "message": "is this multiassignment?",
+      "range": {
+        "startLine": 150,
+        "startChar": 22,
+        "endLine": 150,
+        "endChar": 38
+      },
+      "revId": "095926f085466b6cd0afa4cdc05ec56decaa1cef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "270055d8_513f2a6f",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-21T16:29:27Z",
+      "side": 1,
+      "message": "this seems like a code/design smell to me.",
+      "range": {
+        "startLine": 214,
+        "startChar": 5,
+        "endLine": 214,
+        "endChar": 16
+      },
+      "revId": "095926f085466b6cd0afa4cdc05ec56decaa1cef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a5dda6_12471e9c",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-21T16:29:27Z",
+      "side": 1,
+      "message": "This seems like very problematic and confusing semantics.",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 7
+      },
+      "revId": "095926f085466b6cd0afa4cdc05ec56decaa1cef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5a741f_cf5edb8a",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-21T16:29:27Z",
+      "side": 1,
+      "message": "document these macros. also is there a way around not doing this guarded by CERES_CODEGEN?",
+      "range": {
+        "startLine": 162,
+        "startChar": 7,
+        "endLine": 162,
+        "endChar": 20
+      },
+      "revId": "095926f085466b6cd0afa4cdc05ec56decaa1cef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
