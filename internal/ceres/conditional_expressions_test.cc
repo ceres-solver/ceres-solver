@@ -39,82 +39,78 @@
 namespace ceres {
 namespace internal {
 
-TEST(Expression, IsArithmetic) {
+void TestSingleExpressionGraph(const ExpressionGraph& graph,
+                               ExpressionId id,
+                               ExpressionId lhs,
+                               ExpressionType type,
+                               std::vector<ExpressionId> args) {
+  EXPECT_LT(id, graph.Size());
+  auto& expr = graph.ExpressionForId(id);
+  EXPECT_EQ(expr.Id(), lhs);
+  EXPECT_EQ(expr.Type(), type);
+  EXPECT_EQ(expr.Arguments(), args);
+}
+
+#define TEST_EXPR(_id, _type, ...) \
+  TestSingleExpressionGraph(       \
+      graph, id++, _id, ExpressionType::_type, {__VA_ARGS__})
+
+TEST(Expression, Conditionals) {
   using T = ExpressionRef;
 
   StartRecordingExpressions();
 
-  T a(2), b(3);
-  T c = a + b;
-  T d = c + a;
-
+  T result;
+  T a(2);
+  T b(3);
+  auto c = a < b;
+  CERES_IF(c) { result = a + b; }
+  CERES_ELSE { result = a - b; }
+  CERES_ENDIF
+  result += a;
   auto graph = StopRecordingExpressions();
 
-  ASSERT_FALSE(graph.ExpressionForId(a.id).IsArithmetic());
-  ASSERT_FALSE(graph.ExpressionForId(b.id).IsArithmetic());
-  ASSERT_TRUE(graph.ExpressionForId(c.id).IsArithmetic());
-  ASSERT_TRUE(graph.ExpressionForId(d.id).IsArithmetic());
+  // Expected code
+  //   v_0 = 2;
+  //   v_1 = 3;
+  //   v_2 = v_0 < v_1;
+  //   if(v_2);
+  //     v_4 = v_0 + v_1;
+  //   else
+  //     v_6 = v_0 - v_1;
+  //     v_4 = v_6
+  //   endif
+  //   v_9 = v_4 + v_0;
+  //   v_4 = v_9;
+
+  ExpressionId id = 0;
+  TEST_EXPR(0, COMPILE_TIME_CONSTANT);
+  TEST_EXPR(1, COMPILE_TIME_CONSTANT);
+  TEST_EXPR(2, BINARY_COMPARISON, 0, 1);
+  TEST_EXPR(-1, IF, 2);
+  TEST_EXPR(4, PLUS, 0, 1);
+  TEST_EXPR(-1, ELSE);
+  TEST_EXPR(6, MINUS, 0, 1);
+  TEST_EXPR(4, ASSIGNMENT, 6);
+  TEST_EXPR(-1, ENDIF);
+  TEST_EXPR(9, PLUS, 4, 0);
+  TEST_EXPR(4, ASSIGNMENT, 9);
+
+  // Variables after execution:
+  //
+  // a      <=> v_0
+  // b      <=> v_1
+  // result <=> v_4
+  EXPECT_EQ(a.id, 0);
+  EXPECT_EQ(b.id, 1);
+  EXPECT_EQ(result.id, 4);
+
+  // a and b are in ssa-form.
+  // result is not ssa because it is assigned multiple times.
+  ASSERT_TRUE(graph.ExpressionForId(a.id).Ssa());
+  ASSERT_TRUE(graph.ExpressionForId(b.id).Ssa());
+  ASSERT_FALSE(graph.ExpressionForId(result.id).Ssa());
 }
-
-TEST(Expression, IsCompileTimeConstantAndEqualTo) {
-  using T = ExpressionRef;
-
-  StartRecordingExpressions();
-
-  T a(2), b(3);
-  T c = a + b;
-
-  auto graph = StopRecordingExpressions();
-
-  ASSERT_TRUE(graph.ExpressionForId(a.id).IsCompileTimeConstantAndEqualTo(2));
-  ASSERT_FALSE(graph.ExpressionForId(a.id).IsCompileTimeConstantAndEqualTo(0));
-  ASSERT_TRUE(graph.ExpressionForId(b.id).IsCompileTimeConstantAndEqualTo(3));
-  ASSERT_FALSE(graph.ExpressionForId(c.id).IsCompileTimeConstantAndEqualTo(0));
-}
-
-TEST(Expression, IsReplaceableBy) {
-  using T = ExpressionRef;
-
-  StartRecordingExpressions();
-
-  // a2 should be replaceable by a
-  T a(2), b(3), a2(2);
-
-  // two redundant expressions
-  // -> d should be replaceable by c
-  T c = a + b;
-  T d = a + b;
-
-  auto graph = StopRecordingExpressions();
-
-  ASSERT_TRUE(graph.ExpressionForId(a2.id).IsReplaceableBy(
-      graph.ExpressionForId(a.id)));
-  ASSERT_TRUE(
-      graph.ExpressionForId(d.id).IsReplaceableBy(graph.ExpressionForId(c.id)));
-  ASSERT_FALSE(graph.ExpressionForId(d.id).IsReplaceableBy(
-      graph.ExpressionForId(a2.id)));
-}
-
-TEST(Expression, DirectlyDependsOn) {
-  using T = ExpressionRef;
-
-  StartRecordingExpressions();
-
-  T unused(6);
-  T a(2), b(3);
-  T c = a + b;
-  T d = c + a;
-
-  auto graph = StopRecordingExpressions();
-
-  ASSERT_FALSE(graph.ExpressionForId(a.id).DirectlyDependsOn(unused.id));
-  ASSERT_TRUE(graph.ExpressionForId(c.id).DirectlyDependsOn(a.id));
-  ASSERT_TRUE(graph.ExpressionForId(c.id).DirectlyDependsOn(b.id));
-  ASSERT_TRUE(graph.ExpressionForId(d.id).DirectlyDependsOn(a.id));
-  ASSERT_FALSE(graph.ExpressionForId(d.id).DirectlyDependsOn(b.id));
-  ASSERT_TRUE(graph.ExpressionForId(d.id).DirectlyDependsOn(c.id));
-}
-
 // Todo: remaining functions of Expression
 
 }  // namespace internal

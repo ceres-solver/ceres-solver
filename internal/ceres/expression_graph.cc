@@ -55,13 +55,42 @@ ExpressionGraph StopRecordingExpressions() {
 
 ExpressionGraph* GetCurrentExpressionGraph() { return expression_pool; }
 
-Expression& ExpressionGraph::CreateExpression(ExpressionType type) {
-  auto id = expressions_.size();
-  Expression expr(type, id);
+Expression& ExpressionGraph::CreateExpression(ExpressionType type,
+                                              ExpressionId lhs_id) {
+  auto graph_id = static_cast<ExpressionId>(expressions_.size());
+  bool ssa;
+  if (lhs_id == kInvalidExpressionId) {
+    lhs_id = graph_id;
+    // We are creating a new temporary variable.
+    // -> this expression is in ssa.
+    ssa = true;
+  } else {
+    // the left hand side already exists.
+    // -> This and the parent expressions is not in ssa form anymore
+    ssa = false;
+  }
+
+  // The lhs of control expressions is invalid, because they don't define a
+  // variable.
+  switch (type) {
+    case ExpressionType::IF:
+    case ExpressionType::ELSE:
+    case ExpressionType::ENDIF:
+      lhs_id = kInvalidExpressionId;
+      break;
+    default:
+      break;
+  }
+
+  Expression expr(type, lhs_id);
   expressions_.push_back(expr);
+
+  if (!ssa) {
+    expr.ssa_ = false;
+    ExpressionForId(lhs_id).ssa_ = false;
+  }
   return expressions_.back();
 }
-
 bool ExpressionGraph::DependsOn(ExpressionId A, ExpressionId B) const {
   // Depth first search on the expression graph
   // Equivalent Recursive Implementation:

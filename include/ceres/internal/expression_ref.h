@@ -52,6 +52,12 @@ struct ExpressionRef {
   // it's automatically converted to the correct expression.
   explicit ExpressionRef(double compile_time_constant);
 
+  // If this expression is currently invalid, a normal copy construction is
+  // performed.
+  // If this expression is valid, an additional MULTI_ASSIGNMENT expression is
+  // inserted.
+  ExpressionRef& operator=(const ExpressionRef& other);
+
   // Returns v_id
   std::string ToString() const;
 
@@ -152,6 +158,18 @@ inline typename RuntimeConstant<T>::ReturnType MakeRuntimeConstant(
 
 #define CERES_EXPRESSION_RUNTIME_CONSTANT(_v) \
   ceres::internal::MakeRuntimeConstant<T>(_v, #_v)
+
+#ifdef CERES_CODEGEN
+#define CERES_IF(condition_) Expression::CreateIf((condition_).id);
+#define CERES_ELSEIF(condition_) Expression::CreateElseIf((condition_).id);
+#define CERES_ELSE Expression::CreateElse();
+#define CERES_ENDIF Expression::CreateEndIf();
+#else
+#define CERES_IF(condition_) if (condition_)
+#define CERES_ELSEIF(condition_) else if (condition_)
+#define CERES_ELSE else
+#define CERES_ENDIF
+#endif
 }  // namespace internal
 
 // See jet.h for more info on this type.

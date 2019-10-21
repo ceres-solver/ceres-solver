@@ -37,12 +37,13 @@
 namespace ceres {
 namespace internal {
 
-static Expression& MakeExpression(ExpressionType type) {
+static Expression& MakeExpression(ExpressionType type,
+                                  ExpressionId lhs_id = kInvalidExpressionId) {
   auto pool = GetCurrentExpressionGraph();
   CHECK(pool)
       << "The ExpressionGraph has to be created before using Expressions. This "
          "is achieved by calling ceres::StartRecordingExpressions.";
-  return pool->CreateExpression(type);
+  return pool->CreateExpression(type, lhs_id);
 }
 
 ExpressionId Expression::CreateCompileTimeConstant(double v) {
@@ -63,9 +64,10 @@ ExpressionId Expression::CreateParameter(const std::string& name) {
   return expr.id_;
 }
 
-ExpressionId Expression::CreateAssignment(ExpressionId v) {
-  auto& expr = MakeExpression(ExpressionType::ASSIGNMENT);
-  expr.arguments_.push_back(v);
+ExpressionId Expression::CreateAssignment(ExpressionId dst, ExpressionId src) {
+  auto& expr = MakeExpression(ExpressionType::ASSIGNMENT, dst);
+
+  expr.arguments_.push_back(src);
   return expr.id_;
 }
 
@@ -126,6 +128,16 @@ ExpressionId Expression::CreateBinaryArithmetic(ExpressionType type,
   expr.arguments_.push_back(r);
   return expr.id_;
 }
+
+void Expression::CreateIf(ExpressionId condition) {
+  auto& expr = MakeExpression(ExpressionType::IF);
+  expr.arguments_.push_back(condition);
+}
+
+void Expression::CreateElse() { MakeExpression(ExpressionType::ELSE); }
+
+void Expression::CreateEndIf() { MakeExpression(ExpressionType::ENDIF); }
+
 Expression::Expression(ExpressionType type, ExpressionId id)
     : type_(type), id_(id) {}
 

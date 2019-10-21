@@ -49,8 +49,9 @@ namespace internal {
 class ExpressionGraph {
  public:
   // Creates an expression and adds it to expressions_.
+  // If lhs_id == kInvalidExpression then a new variable will be created.
   // The returned reference will be invalid after this function is called again.
-  Expression& CreateExpression(ExpressionType type);
+  Expression& CreateExpression(ExpressionType type, ExpressionId lhs_id);
 
   // Checks if A depends on B.
   // -> B is a descendant of A
