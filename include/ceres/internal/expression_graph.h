@@ -79,6 +79,25 @@ class ExpressionGraph {
 
   int Size() const { return expressions_.size(); }
 
+  // Iterator to obtain each expression id in linear order (=execution order).
+  struct ExpressionIterator {
+   public:
+    ExpressionIterator(ExpressionId value) : value_(value) {}
+    bool operator!=(ExpressionIterator other) const {
+      return value_ != other.value_;
+    }
+    ExpressionId operator*() const { return value_; }
+    ExpressionIterator& operator++() {
+      ++value_;
+      return *this;
+    }
+
+   private:
+    ExpressionId value_;
+  };
+  ExpressionIterator begin() const { return 0; }
+  ExpressionIterator end() const { return expressions_.size(); }
+
  private:
   // All Expressions are referenced by an ExpressionId. The ExpressionId is the
   // index into this array. Each expression has a list of ExpressionId as
