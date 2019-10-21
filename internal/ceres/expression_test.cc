@@ -29,6 +29,8 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 //
 
+#define CERES_CODEGEN
+
 #include "ceres/internal/expression_graph.h"
 #include "ceres/internal/expression_ref.h"
 
@@ -48,10 +50,10 @@ TEST(Expression, IsArithmetic) {
 
   auto graph = StopRecordingExpressions();
 
-  ASSERT_FALSE(graph.ExpressionForId(a.id).IsArithmetic());
-  ASSERT_FALSE(graph.ExpressionForId(b.id).IsArithmetic());
-  ASSERT_TRUE(graph.ExpressionForId(c.id).IsArithmetic());
-  ASSERT_TRUE(graph.ExpressionForId(d.id).IsArithmetic());
+  ASSERT_FALSE(graph.ExpressionForId(a.id).IsArithmeticExpression());
+  ASSERT_FALSE(graph.ExpressionForId(b.id).IsArithmeticExpression());
+  ASSERT_TRUE(graph.ExpressionForId(c.id).IsArithmeticExpression());
+  ASSERT_TRUE(graph.ExpressionForId(d.id).IsArithmeticExpression());
 }
 
 TEST(Expression, IsCompileTimeConstantAndEqualTo) {

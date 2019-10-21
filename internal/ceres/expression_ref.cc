@@ -29,8 +29,7 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 
 #include "ceres/internal/expression_ref.h"
-#include "assert.h"
-#include "ceres/internal/expression.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
@@ -41,11 +40,24 @@ ExpressionRef ExpressionRef::Create(ExpressionId id) {
   return ref;
 }
 
-std::string ExpressionRef::ToString() const { return std::to_string(id); }
-
 ExpressionRef::ExpressionRef(double compile_time_constant) {
-  (*this) = ExpressionRef::Create(
-      Expression::CreateCompileTimeConstant(compile_time_constant));
+  id = Expression::CreateCompileTimeConstant(compile_time_constant);
+}
+
+ExpressionRef& ExpressionRef::operator=(const ExpressionRef& other) {
+  // Assigning an uninitialized variable to another variable is an error.
+  CHECK(other.IsInitialized()) << "Uninitialized Assignment.";
+
+  if (IsInitialized()) {
+    // Create assignment from other -> this
+    Expression::CreateAssignment(id, other.id);
+  } else {
+    // Special case: "this" expressionref is invalid
+    //    -> Skip assignment
+    //    -> Let "this" point to the same variable as other
+    id = other.id;
+  }
+  return *this;
 }
 
 // Compound operators
@@ -71,33 +83,31 @@ ExpressionRef& ExpressionRef::operator/=(ExpressionRef y) {
 
 // Arith. Operators
 ExpressionRef operator-(ExpressionRef x) {
-  return ExpressionRef::Create(
-      Expression::CreateUnaryArithmetic(ExpressionType::UNARY_MINUS, x.id));
+  return ExpressionRef::Create(Expression::CreateUnaryArithmetic("-", x.id));
 }
 
 ExpressionRef operator+(ExpressionRef x) {
-  return ExpressionRef::Create(
-      Expression::CreateUnaryArithmetic(ExpressionType::UNARY_PLUS, x.id));
+  return ExpressionRef::Create(Expression::CreateUnaryArithmetic("+", x.id));
 }
 
 ExpressionRef operator+(ExpressionRef x, ExpressionRef y) {
   return ExpressionRef::Create(
-      Expression::CreateBinaryArithmetic(ExpressionType::PLUS, x.id, y.id));
+      Expression::CreateBinaryArithmetic("+", x.id, y.id));
 }
 
 ExpressionRef operator-(ExpressionRef x, ExpressionRef y) {
   return ExpressionRef::Create(
-      Expression::CreateBinaryArithmetic(ExpressionType::MINUS, x.id, y.id));
+      Expression::CreateBinaryArithmetic("-", x.id, y.id));
 }
 
 ExpressionRef operator/(ExpressionRef x, ExpressionRef y) {
   return ExpressionRef::Create(
-      Expression::CreateBinaryArithmetic(ExpressionType::DIVISION, x.id, y.id));
+      Expression::CreateBinaryArithmetic("/", x.id, y.id));
 }
 
 ExpressionRef operator*(ExpressionRef x, ExpressionRef y) {
-  return ExpressionRef::Create(Expression::CreateBinaryArithmetic(
-      ExpressionType::MULTIPLICATION, x.id, y.id));
+  return ExpressionRef::Create(
+      Expression::CreateBinaryArithmetic("*", x.id, y.id));
 }
 
 // Functions
