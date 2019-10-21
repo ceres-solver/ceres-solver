@@ -44,6 +44,8 @@ ExpressionRef::ExpressionRef(double compile_time_constant) {
   id = Expression::CreateCompileTimeConstant(compile_time_constant);
 }
 
+ExpressionRef::ExpressionRef(const ExpressionRef& other) { *this = other; }
+
 ExpressionRef& ExpressionRef::operator=(const ExpressionRef& other) {
   // Assigning an uninitialized variable to another variable is an error.
   CHECK(other.IsInitialized()) << "Uninitialized Assignment.";
