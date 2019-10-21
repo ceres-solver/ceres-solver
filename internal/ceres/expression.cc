@@ -37,97 +37,120 @@
 namespace ceres {
 namespace internal {
 
-static Expression& MakeExpression(ExpressionType type) {
+// Wrapper for ExpressionGraph::CreateArithmeticExpression, which checks if a
+// graph is currently active. See that function for an explanation.
+static Expression& MakeArithmeticExpression(
+    ExpressionType type, ExpressionId lhs_id = kInvalidExpressionId) {
   auto pool = GetCurrentExpressionGraph();
   CHECK(pool)
       << "The ExpressionGraph has to be created before using Expressions. This "
          "is achieved by calling ceres::StartRecordingExpressions.";
-  return pool->CreateExpression(type);
+  return pool->CreateArithmeticExpression(type, lhs_id);
+}
+
+// Wrapper for ExpressionGraph::CreateControlExpression.
+static Expression& MakeControlExpression(ExpressionType type) {
+  auto pool = GetCurrentExpressionGraph();
+  CHECK(pool)
+      << "The ExpressionGraph has to be created before using Expressions. This "
+         "is achieved by calling ceres::StartRecordingExpressions.";
+  return pool->CreateControlExpression(type);
 }
 
 ExpressionId Expression::CreateCompileTimeConstant(double v) {
-  auto& expr = MakeExpression(ExpressionType::COMPILE_TIME_CONSTANT);
+  auto& expr = MakeArithmeticExpression(ExpressionType::COMPILE_TIME_CONSTANT);
   expr.value_ = v;
-  return expr.id_;
+  return expr.lhs_id_;
 }
 
 ExpressionId Expression::CreateRuntimeConstant(const std::string& name) {
-  auto& expr = MakeExpression(ExpressionType::RUNTIME_CONSTANT);
+  auto& expr = MakeArithmeticExpression(ExpressionType::RUNTIME_CONSTANT);
   expr.name_ = name;
-  return expr.id_;
+  return expr.lhs_id_;
 }
 
 ExpressionId Expression::CreateParameter(const std::string& name) {
-  auto& expr = MakeExpression(ExpressionType::PARAMETER);
+  auto& expr = MakeArithmeticExpression(ExpressionType::PARAMETER);
   expr.name_ = name;
-  return expr.id_;
+  return expr.lhs_id_;
 }
 
-ExpressionId Expression::CreateAssignment(ExpressionId v) {
-  auto& expr = MakeExpression(ExpressionType::ASSIGNMENT);
-  expr.arguments_.push_back(v);
-  return expr.id_;
+ExpressionId Expression::CreateAssignment(ExpressionId dst, ExpressionId src) {
+  auto& expr = MakeArithmeticExpression(ExpressionType::ASSIGNMENT, dst);
+
+  expr.arguments_.push_back(src);
+  return expr.lhs_id_;
 }
 
 ExpressionId Expression::CreateUnaryArithmetic(ExpressionType type,
                                                ExpressionId v) {
-  auto& expr = MakeExpression(type);
+  auto& expr = MakeArithmeticExpression(type);
   expr.arguments_.push_back(v);
-  return expr.id_;
+  return expr.lhs_id_;
 }
 
 ExpressionId Expression::CreateOutputAssignment(ExpressionId v,
                                                 const std::string& name) {
-  auto& expr = MakeExpression(ExpressionType::OUTPUT_ASSIGNMENT);
+  auto& expr = MakeArithmeticExpression(ExpressionType::OUTPUT_ASSIGNMENT);
   expr.arguments_.push_back(v);
   expr.name_ = name;
-  return expr.id_;
+  return expr.lhs_id_;
 }
 
 ExpressionId Expression::CreateFunctionCall(
     const std::string& name, const std::vector<ExpressionId>& params) {
-  auto& expr = MakeExpression(ExpressionType::FUNCTION_CALL);
+  auto& expr = MakeArithmeticExpression(ExpressionType::FUNCTION_CALL);
   expr.arguments_ = params;
   expr.name_ = name;
-  return expr.id_;
+  return expr.lhs_id_;
 }
 
 ExpressionId Expression::CreateTernary(ExpressionId condition,
                                        ExpressionId if_true,
                                        ExpressionId if_false) {
-  auto& expr = MakeExpression(ExpressionType::TERNARY);
+  auto& expr = MakeArithmeticExpression(ExpressionType::TERNARY);
   expr.arguments_.push_back(condition);
   expr.arguments_.push_back(if_true);
   expr.arguments_.push_back(if_false);
-  return expr.id_;
+  return expr.lhs_id_;
 }
 
 ExpressionId Expression::CreateBinaryCompare(const std::string& name,
                                              ExpressionId l,
                                              ExpressionId r) {
-  auto& expr = MakeExpression(ExpressionType::BINARY_COMPARISON);
+  auto& expr = MakeArithmeticExpression(ExpressionType::BINARY_COMPARISON);
   expr.arguments_.push_back(l);
   expr.arguments_.push_back(r);
   expr.name_ = name;
-  return expr.id_;
+  return expr.lhs_id_;
 }
 
 ExpressionId Expression::CreateLogicalNegation(ExpressionId v) {
-  auto& expr = MakeExpression(ExpressionType::LOGICAL_NEGATION);
+  auto& expr = MakeArithmeticExpression(ExpressionType::LOGICAL_NEGATION);
   expr.arguments_.push_back(v);
-  return expr.id_;
+  return expr.lhs_id_;
 }
 
 ExpressionId Expression::CreateBinaryArithmetic(ExpressionType type,
                                                 ExpressionId l,
                                                 ExpressionId r) {
-  auto& expr = MakeExpression(type);
+  auto& expr = MakeArithmeticExpression(type);
   expr.arguments_.push_back(l);
   expr.arguments_.push_back(r);
-  return expr.id_;
+  return expr.lhs_id_;
 }
+
+void Expression::CreateIf(ExpressionId condition) {
+  auto& expr = MakeControlExpression(ExpressionType::IF);
+  expr.arguments_.push_back(condition);
+}
+
+void Expression::CreateElse() { MakeControlExpression(ExpressionType::ELSE); }
+
+void Expression::CreateEndIf() { MakeControlExpression(ExpressionType::ENDIF); }
+
 Expression::Expression(ExpressionType type, ExpressionId id)
-    : type_(type), id_(id) {}
+    : type_(type), lhs_id_(id) {}
 
 bool Expression::IsArithmetic() const {
   switch (type_) {
@@ -150,7 +173,7 @@ bool Expression::IsReplaceableBy(const Expression& other) const {
 }
 
 void Expression::Replace(const Expression& other) {
-  if (other.id_ == id_) {
+  if (other.lhs_id_ == lhs_id_) {
     return;
   }
 

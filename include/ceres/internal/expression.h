@@ -28,18 +28,6 @@
 //
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 //
-//
-// This file contains the basic expression type, which is used during code
-// generation. Only assignment expressions of the following form are supported:
-//
-// result = [constant|binary_expr|functioncall]
-//
-// Examples:
-// v_78 = v_28 / v_62;
-// v_97 = exp(v_20);
-// v_89 = 3.000000;
-//
-//
 #ifndef CERES_PUBLIC_EXPRESSION_H_
 #define CERES_PUBLIC_EXPRESSION_H_
 
@@ -68,8 +56,8 @@ enum class ExpressionType {
   // residual[0] = v_51;
   OUTPUT_ASSIGNMENT,
 
-  // Trivial Assignment
-  // v_1 = v_0;
+  // Trivial assignment
+  // v_3 = v_1
   ASSIGNMENT,
 
   // Binary Arithmetic Operations
@@ -102,6 +90,12 @@ enum class ExpressionType {
   // v_3 = ternary(v_0,v_1,v_2);
   TERNARY,
 
+  // Conditional control expressions if/else/endif.
+  // These are special expressions, because they don't define a new variable.
+  IF,
+  ELSE,
+  ENDIF,
+
   // No Operation. A placeholder for an 'empty' expressions which will be
   // optimized out during code generation.
   NOP
@@ -129,7 +123,7 @@ class Expression {
   static ExpressionId CreateParameter(const std::string& name);
   static ExpressionId CreateOutputAssignment(ExpressionId v,
                                              const std::string& name);
-  static ExpressionId CreateAssignment(ExpressionId v);
+  static ExpressionId CreateAssignment(ExpressionId dst, ExpressionId src);
   static ExpressionId CreateBinaryArithmetic(ExpressionType type,
                                              ExpressionId l,
                                              ExpressionId r);
@@ -144,6 +138,13 @@ class Expression {
   static ExpressionId CreateTernary(ExpressionId condition,
                                     ExpressionId if_true,
                                     ExpressionId if_false);
+
+  // Conditional control expressions are inserted into the graph but can't be
+  // referenced by other expressions. Therefore they don't return an
+  // ExpressionId.
+  static void CreateIf(ExpressionId condition);
+  static void CreateElse();
+  static void CreateEndIf();
 
   // Returns true if the expression type is one of the basic math-operators:
   // +,-,*,/
@@ -170,16 +171,47 @@ class Expression {
   // Converts this expression into a NOP
   void MakeNop();
 
+  ExpressionType type() const { return type_; }
+  ExpressionId lhs_id() const { return lhs_id_; }
+  double value() const { return value_; }
+  const std::string& name() const { return name_; }
+  const std::vector<ExpressionId>& arguments() const { return arguments_; }
+  bool is_ssa() const { return is_ssa_; }
+
  private:
   // Only ExpressionGraph is allowed to call the constructor, because it manages
   // the memory and ids.
   friend class ExpressionGraph;
 
   // Private constructor. Use the "CreateXX" functions instead.
-  Expression(ExpressionType type, ExpressionId id);
+  Expression(ExpressionType type, ExpressionId lhs_id);
 
   ExpressionType type_ = ExpressionType::NOP;
-  const ExpressionId id_ = kInvalidExpressionId;
+
+  // If lhs_id_ >= 0, then this expression is assigned to v_<lhs_id>.
+  // For example:
+  //    v_1 = v_0 + v_0     (Type = PLUS)
+  //    v_3 = sin(v_1)      (Type = FUNCTION_CALL)
+  //      ^
+  //   lhs_id_
+  //
+  // If lhs_id_ == kInvalidExpressionId, then the expression type is not
+  // arithmetic. Currently, only the following types have lhs_id = invalid:
+  // IF,ELSE,ENDIF,NOP
+  const ExpressionId lhs_id_ = kInvalidExpressionId;
+
+  // True if the lhs expression is assigned to only once. In code generation
+  // this flag is used to add a 'const' qualifier to the type.
+  // For example:
+  //   v_5 = v_0 + v_3
+  //   v_6 = v_1 - v_2
+  //   v_5 = v_6
+  //
+  // -> v_5.is_ssa = false
+  // -> v_6.is_ssa = true
+  //
+  // This is set by ExpressionGraph during creation.
+  bool is_ssa_ = true;
 
   // Expressions have different number of arguments. For example a binary "+"
   // has 2 parameters and a function call to "sin" has 1 parameter. Here, a
