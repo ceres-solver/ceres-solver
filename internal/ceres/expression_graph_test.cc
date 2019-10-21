@@ -64,13 +64,13 @@ TEST(ExpressionGraph, Dependencies) {
   T c = a + b;
   T d = c + a;
 
-  auto tree = StopRecordingExpressions();
+  auto graph = StopRecordingExpressions();
 
   // Recursive dependency check
-  ASSERT_TRUE(tree.DependsOn(d.id, c.id));
-  ASSERT_TRUE(tree.DependsOn(d.id, a.id));
-  ASSERT_TRUE(tree.DependsOn(d.id, b.id));
-  ASSERT_FALSE(tree.DependsOn(d.id, unused.id));
+  ASSERT_TRUE(graph.DependsOn(d.id, c.id));
+  ASSERT_TRUE(graph.DependsOn(d.id, a.id));
+  ASSERT_TRUE(graph.DependsOn(d.id, b.id));
+  ASSERT_FALSE(graph.DependsOn(d.id, unused.id));
 }
 
 }  // namespace internal
