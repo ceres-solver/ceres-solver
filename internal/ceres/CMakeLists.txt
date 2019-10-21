@@ -66,6 +66,7 @@ set(CERES_INTERNAL_SRC
     conditioned_cost_function.cc
     conjugate_gradients_solver.cc
     context.cc
+    code_optimizer.cc
     context_impl.cc
     coordinate_descent_minimizer.cc
     corrector.cc
@@ -422,6 +423,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(conditioned_cost_function)
   ceres_test(conjugate_gradients_solver)
   ceres_test(corrector)
+  ceres_test(code_optimizer)
   ceres_test(cost_function_to_functor)
   ceres_test(covariance)
   ceres_test(cubic_interpolation)
