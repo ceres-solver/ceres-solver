@@ -106,16 +106,6 @@ ExpressionId Expression::CreateFunctionCall(
   return expr.lhs_id_;
 }
 
-ExpressionId Expression::CreateTernary(ExpressionId condition,
-                                       ExpressionId if_true,
-                                       ExpressionId if_false) {
-  auto& expr = MakeArithmeticExpression(ExpressionType::TERNARY);
-  expr.arguments_.push_back(condition);
-  expr.arguments_.push_back(if_true);
-  expr.arguments_.push_back(if_false);
-  return expr.lhs_id_;
-}
-
 ExpressionId Expression::CreateBinaryCompare(const std::string& name,
                                              ExpressionId l,
                                              ExpressionId r) {

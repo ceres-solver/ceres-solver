@@ -64,13 +64,33 @@ TEST(ExpressionGraph, Dependencies) {
   T c = a + b;
   T d = c + a;
 
-  auto tree = StopRecordingExpressions();
+  auto graph = StopRecordingExpressions();
 
   // Recursive dependency check
-  ASSERT_TRUE(tree.DependsOn(d.id, c.id));
-  ASSERT_TRUE(tree.DependsOn(d.id, a.id));
-  ASSERT_TRUE(tree.DependsOn(d.id, b.id));
-  ASSERT_FALSE(tree.DependsOn(d.id, unused.id));
+  ASSERT_TRUE(graph.DependsOn(d.id, c.id));
+  ASSERT_TRUE(graph.DependsOn(d.id, a.id));
+  ASSERT_TRUE(graph.DependsOn(d.id, b.id));
+  ASSERT_FALSE(graph.DependsOn(d.id, unused.id));
+}
+
+TEST(ExpressionGraph, Iterator) {
+  using T = ExpressionRef;
+
+  StartRecordingExpressions();
+
+  T a(2), b(3);
+  T c = a + b;
+  T d = c + a;
+
+  auto graph = StopRecordingExpressions();
+  EXPECT_EQ(graph.Size(), 4);
+
+  auto expression_id_iterator = graph.begin();
+  for (ExpressionId i = 0; i < graph.Size(); ++i) {
+    EXPECT_EQ(i, *expression_id_iterator);
+    ++expression_id_iterator;
+  }
+  EXPECT_EQ(*graph.end(), *expression_id_iterator);
 }
 
 }  // namespace internal

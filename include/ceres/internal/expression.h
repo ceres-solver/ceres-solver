@@ -223,11 +223,6 @@ enum class ExpressionType {
   // v_5 = f(v_0,v_1,...)
   FUNCTION_CALL,
 
-  // The ternary ?-operator. Separated from the general function call for easier
-  // access.
-  // v_3 = ternary(v_0,v_1,v_2);
-  TERNARY,
-
   // Conditional control expressions if/else/endif.
   // These are special expressions, because they don't define a new variable.
   IF,
@@ -273,9 +268,6 @@ class Expression {
   static ExpressionId CreateLogicalNegation(ExpressionId v);
   static ExpressionId CreateFunctionCall(
       const std::string& name, const std::vector<ExpressionId>& params);
-  static ExpressionId CreateTernary(ExpressionId condition,
-                                    ExpressionId if_true,
-                                    ExpressionId if_false);
 
   // Conditional control expressions are inserted into the graph but can't be
   // referenced by other expressions. Therefore they don't return an
