@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7d37848_e08dabc8",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "I do not understand this comment. The sentence is broken, and the example does not tell me whats going on.",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 15
+      },
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a12515_696da4de",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "The fact that they do not return an expression id should likely be documented with the create function not here.",
+      "range": {
+        "startLine": 100,
+        "startChar": 26,
+        "endLine": 100,
+        "endChar": 31
+      },
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b30d1b1_23b1d587",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "It is implied here that this is why you do not return expressionids, but it should be made explicit.\n \nThat said, one question, how are else and endif paired with the if? on their own its not clear what restrictions are there for calling them .. what happens if you call CreateElse on its own multiple time, or after a single if, what if createndif is called multiple times?\n\nshouldn\u0027t they take as input the id of the if expression they are binding to?",
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a89fda_8d9d8a5e",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "we usually have accessors like these just be all lower case.\nalso for things like name, arguments, why not return by const reference unless you explicitly intend to make a copy?",
+      "range": {
+        "startLine": 179,
+        "startChar": 16,
+        "endLine": 179,
+        "endChar": 17
+      },
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33dd1e69_c87c667a",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "is_ssa()",
+      "range": {
+        "startLine": 184,
+        "startChar": 7,
+        "endLine": 184,
+        "endChar": 10
+      },
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00897d9_9023bfa9",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "explain more thoroughly what are the conditions under which this will not be true.",
+      "range": {
+        "startLine": 200,
+        "startChar": 35,
+        "endLine": 200,
+        "endChar": 43
+      },
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9573c2df_c2d3aca1",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "is_ssa is better name.",
+      "range": {
+        "startLine": 201,
+        "startChar": 7,
+        "endLine": 201,
+        "endChar": 11
+      },
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108b528d_f78c5243",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "what are the constraints on lhs_id? does it have to exist beforehand? what happens if it doesn\u0027t? also what type of expressions require lhs_id? or can any type of expression have an lhs_id?",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e06b9a_3265d57c",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "what does it mean for an expression to be invalid?",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 14
+      },
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844e6297_1dadb724",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "this comment seems outdated, since MULTI_ASSIGNMENT is not a thing anymore. please update.",
+      "range": {
+        "startLine": 57,
+        "startChar": 48,
+        "endLine": 57,
+        "endChar": 64
+      },
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad8bc2a_b0d4d120",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "I would have the function declaration also have the default value evident, because that tells the caller what the calling convention is.\n\nalso, I actually recommend having two versions of this function with explicit names rather than one overloaded one. \n\nMakeExpression and MakeExpressionWithId, that way the call sites will be more clear as to what is happening and where is it that you actually need an Expression with a given id.",
+      "range": {
+        "startLine": 41,
+        "startChar": 56,
+        "endLine": 41,
+        "endChar": 76
+      },
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d914cdc_f25e6b97",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "same comment about splitting this into two functions.",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62bf74e_f97cd1be",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "Please explain what’s  are the conditions in which these two branches will be taken, because the consequences of this invalid id handling are not clear by just looking at these three lines of code.",
+      "range": {
+        "startLine": 50,
+        "startChar": 10,
+        "endLine": 50,
+        "endChar": 11
+      },
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3b1ea2_fb7d07ea",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-24T14:02:57Z",
+      "side": 1,
+      "message": "Create",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "2ce784207d3ce23b5a757d7fee9262dc56df5be3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
