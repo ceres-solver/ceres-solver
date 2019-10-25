@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "383609be_f400c472",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-25T16:13:47Z",
+      "side": 1,
+      "message": "It\u0027s in reference to SSA form (static single assignment). But yes, that text should be added here with a reference to the Wikipedia page.",
+      "parentUuid": "9b54a429_31d5fe02",
+      "range": {
+        "startLine": 203,
+        "startChar": 13,
+        "endLine": 203,
+        "endChar": 17
+      },
+      "revId": "4349e8c0667a4436d46930a61fd92324edee3d67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b47fc711_7154ad70",
         "filename": "include/ceres/internal/expression_graph.h",
         "patchSetId": 4
@@ -178,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "acf87105_afd1ebee",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-25T16:13:47Z",
+      "side": 1,
+      "message": "In Ceres \"} else {\" is the style.",
+      "parentUuid": "cc43af06_662eeb4c",
+      "range": {
+        "startLine": 181,
+        "startChar": 3,
+        "endLine": 181,
+        "endChar": 19
+      },
+      "revId": "4349e8c0667a4436d46930a61fd92324edee3d67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95e9c502_a564a2a5",
         "filename": "internal/ceres/conditional_expressions_test.cc",
         "patchSetId": 4
@@ -219,6 +267,23 @@
         "endLine": 68,
         "endChar": 12
       },
+      "revId": "4349e8c0667a4436d46930a61fd92324edee3d67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb721c56_e80514a8",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-10-25T16:13:47Z",
+      "side": 1,
+      "message": "We generally don\u0027t put short functions on the same line in Ceres. There are a few violations elsewhere, but there is no need for this one to be on a single line.",
       "revId": "4349e8c0667a4436d46930a61fd92324edee3d67",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
