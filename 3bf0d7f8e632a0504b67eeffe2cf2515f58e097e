@@ -2,6 +2,114 @@
   "comments": [
     {
       "key": {
+        "uuid": "3dafdbd6_41ba27fe",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-25T19:35:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure exactly where to put this explanation, but it would be great to have a higher-level explanation of how this part works. The other expression types are relatively clear, but this one is not.\n\nFor example: What is stored in an \"if\"? Why is there a separate \"endif\"?",
+      "revId": "3bf0d7f8e632a0504b67eeffe2cf2515f58e097e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee00d97_a36709c8",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-25T19:35:36Z",
+      "side": 1,
+      "message": "Nit: Space after \",\".",
+      "range": {
+        "startLine": 55,
+        "startChar": 34,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "3bf0d7f8e632a0504b67eeffe2cf2515f58e097e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1fbf1a_5538a697",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-25T19:35:36Z",
+      "side": 1,
+      "message": "Perhaps expand \"If this (lhs) ExpressionRef ...\"",
+      "revId": "3bf0d7f8e632a0504b67eeffe2cf2515f58e097e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ba07e2_233e1c0c",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-25T19:35:36Z",
+      "side": 1,
+      "message": "This needs a big block comment discussing roughly why the macro is needed, and showing a short example of use (target audience: maintainers).",
+      "revId": "3bf0d7f8e632a0504b67eeffe2cf2515f58e097e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5f233d_e28134d6",
+        "filename": "internal/ceres/conditional_expressions_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-25T19:35:36Z",
+      "side": 1,
+      "message": "The testing feels light to me, and this test is not a unit test: it\u0027s almost an integration test. Please break tests up with focused names explaining what part of conditional expressions are being tested.\n\nHere\u0027s the question to ask yourself: if a test fails, can I quickly identify what part of ExpressionRef is not doing what it should? With this test as written, I expect it will be hard to track down what is going right or wrong.\n\nStart with the most absolute basic part of conditions; verify that in an isolated test, then make another, separate test.\n\nTry to test functionality separately; then as a last step, have a big all-in-one test that checks that when the functionality is run together, it does what\u0027s expected.",
+      "revId": "3bf0d7f8e632a0504b67eeffe2cf2515f58e097e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62778e13_143e4db8",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-25T19:35:36Z",
+      "side": 1,
+      "message": "Unless there is a clear benefit to using auto, please do not use it. In this case, I believe graph_id is an ExpressionId? There isn\u0027t much benefit to using auto here; there aren\u0027t wacky template types or iterators.",
+      "revId": "3bf0d7f8e632a0504b67eeffe2cf2515f58e097e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21da9ec8_82e058d0",
         "filename": "internal/ceres/expression_ref.cc",
         "patchSetId": 5
@@ -13,6 +121,30 @@
       "writtenOn": "2019-10-25T14:10:54Z",
       "side": 1,
       "message": "no exceptions.\nCHECK_NE(other.id, kInvalidExpressionId) \u003c\u003c \"Uninitialized Assignment.\" is the way to go here.",
+      "range": {
+        "startLine": 54,
+        "startChar": 21,
+        "endLine": 54,
+        "endChar": 22
+      },
+      "revId": "3bf0d7f8e632a0504b67eeffe2cf2515f58e097e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e9d8dd_d5ef8c3b",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-25T19:35:36Z",
+      "side": 1,
+      "message": "This does open the discussion about debugging. How are people going to debug what is going wrong with their codegen?\n\nI\u0027m a bit worried about this part. The \"can of worms\" version is that we start tracking __FILE__ and __LINE__ somehow, but that\u0027s likely impossible given that the operators are not macros.",
+      "parentUuid": "21da9ec8_82e058d0",
       "range": {
         "startLine": 54,
         "startChar": 21,
