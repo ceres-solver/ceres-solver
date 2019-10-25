@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b54a429_31d5fe02",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-25T05:18:17Z",
+      "side": 1,
+      "message": "what does assigned to only once mean? please explain.",
+      "range": {
+        "startLine": 203,
+        "startChar": 13,
+        "endLine": 203,
+        "endChar": 17
+      },
+      "revId": "4349e8c0667a4436d46930a61fd92324edee3d67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b47fc711_7154ad70",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-25T05:18:17Z",
+      "side": 1,
+      "message": "This last sentence does not make sense, because just above you are saying that calling with a given lhs_id you will get an expression for that id, so is the expectation that that lhs_id should already exist? what happens if it doesn\u0027t?",
+      "range": {
+        "startLine": 61,
+        "startChar": 41,
+        "endLine": 61,
+        "endChar": 44
+      },
+      "revId": "4349e8c0667a4436d46930a61fd92324edee3d67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3628d101_7b2127e9",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-25T05:18:17Z",
+      "side": 1,
+      "message": "what happens with other\u0027s expression id is invalid? can that happen?",
+      "revId": "4349e8c0667a4436d46930a61fd92324edee3d67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc43af06_662eeb4c",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-25T05:18:17Z",
+      "side": 1,
+      "message": "not sure if the formatting is worth worrying about, you could just make this } else { and I think thats fine.",
+      "range": {
+        "startLine": 181,
+        "startChar": 3,
+        "endLine": 181,
+        "endChar": 19
+      },
+      "revId": "4349e8c0667a4436d46930a61fd92324edee3d67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e9c502_a564a2a5",
+        "filename": "internal/ceres/conditional_expressions_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-25T05:18:17Z",
+      "side": 1,
+      "message": "isn\u0027t CERES_IF and related macros already defining the braces..",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 12
+      },
+      "revId": "4349e8c0667a4436d46930a61fd92324edee3d67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e98a94b_074b86e4",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-25T05:18:17Z",
+      "side": 1,
+      "message": "is_ssa",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 10
+      },
+      "revId": "4349e8c0667a4436d46930a61fd92324edee3d67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2032c287_431ad472",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-25T05:18:17Z",
+      "side": 1,
+      "message": "why are you assigning to expr.is_ssa since it is a temporary. shouldn\u0027t this happen before you add it to the pool?\nshouldn\u0027t this be expressions_.back().is_ssa_ \u003d is_ssa; ?",
+      "range": {
+        "startLine": 78,
+        "startChar": 17,
+        "endLine": 78,
+        "endChar": 18
+      },
+      "revId": "4349e8c0667a4436d46930a61fd92324edee3d67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbff0aa9_1cdf05c2",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-25T05:18:17Z",
+      "side": 1,
+      "message": "so control expressions always have invalid id? aren\u0027t you better off having a special control expression id, maybe for debugging purposes?",
+      "range": {
+        "startLine": 85,
+        "startChar": 24,
+        "endLine": 85,
+        "endChar": 44
+      },
+      "revId": "4349e8c0667a4436d46930a61fd92324edee3d67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
