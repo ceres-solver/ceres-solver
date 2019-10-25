@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21da9ec8_82e058d0",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-10-25T14:10:54Z",
+      "side": 1,
+      "message": "no exceptions.\nCHECK_NE(other.id, kInvalidExpressionId) \u003c\u003c \"Uninitialized Assignment.\" is the way to go here.",
+      "range": {
+        "startLine": 54,
+        "startChar": 21,
+        "endLine": 54,
+        "endChar": 22
+      },
+      "revId": "3bf0d7f8e632a0504b67eeffe2cf2515f58e097e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
