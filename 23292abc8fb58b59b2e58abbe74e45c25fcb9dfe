@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56abb8fe_9ee5d92e",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "This comment jumps to conditionals; but this header comment appears at the very start of the comment header (which generally covers the entire file). Please start with a block about the entire file before this sub-section.",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39888424_5542f27d",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "Ceres",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0bff7a_b3554b90",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "Please fix spacing issues.",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2ad2b7_a9105976",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "} else {",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe586518_d02f2d55",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "C++",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06adec16_54913179",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "\"if\"",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53227b5c_1967c4e8",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "Please fix {} spacing\n\nHow is nesting handled?",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e742b78a_1a57b990",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "Expressions",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7134df_2db771cb",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "expressions",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b6d118_87510857",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "EndIf",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2eaf45b_9dcac41a",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "Please fix spacing issues.",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3b2c16_524f060f",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "So this boolean is a bit concerning to me, because it implies a bunch of stuff in the structure of our ExpressionGraph. See my top level comment.",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a3b4d3a_63875358",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "With this change, this is no longer really an ExpressionGraph; it\u0027s more like an IR.",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62291daf_d639019c",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "This comment mentions the ordering concern; but this critical detail isn\u0027t clearly spelled out or implied that this is a guaranteed property of the object (in which case ExpressionGraph isn\u0027t quite the right name).\n\nI\u0027m still thinking about this. This object is really the \"CodegenIR\"; sometimes it includes expressions.",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9b11b8_f19a06eb",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "With this change, this comment and apparently the meaning of expressions_ changes. It is no longer the case that expressions_ is unordered; suddenly the order matters because there are free-floating \"expressions\" like endif.\n\nPlease substantially expand this comment to explain the semantics of what\u0027s stored here.",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "addccb51_319b27c0",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "This should probably be new_expression_id",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa1e9473_47de4380",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "Here and elsewhere, please use a function to check for valid ID. The way this is written, it\u0027s conflating implementation details (id \u003c 0) with the semantics. By moving to a function, this block would be clearer:\n\n  if (HasValidId()) {\n    ...",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055f0b1b_04f27afd",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-10-31T23:42:32Z",
+      "side": 1,
+      "message": "This says it\u0027s a special case, but when will this happen? Please expand comment to illustrate why this case happens as well.",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
