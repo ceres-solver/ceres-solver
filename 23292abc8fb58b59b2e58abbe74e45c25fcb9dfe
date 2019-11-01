@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60d4ceda_e1da9728",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56abb8fe_9ee5d92e",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39888424_5542f27d",
         "filename": "include/ceres/internal/expression.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a2d1ec_211d1262",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39888424_5542f27d",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "03e102f6_8c423854",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f0bff7a_b3554b90",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c2ad2b7_a9105976",
         "filename": "include/ceres/internal/expression.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c5b5934_3d574e4d",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c2ad2b7_a9105976",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ae7dd2f9_62f1e1a2",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe586518_d02f2d55",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06adec16_54913179",
         "filename": "include/ceres/internal/expression.h",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7ffdd6_5de47465",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06adec16_54913179",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9b87ca5e_f7c2cb1c",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "There is no special handling for nesting. It just works.",
+      "parentUuid": "53227b5c_1967c4e8",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e742b78a_1a57b990",
         "filename": "include/ceres/internal/expression.h",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bce30f1_74bcef38",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e742b78a_1a57b990",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "03b0b512_753a6ceb",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd7134df_2db771cb",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5b6d118_87510857",
         "filename": "include/ceres/internal/expression.h",
         "patchSetId": 6
@@ -169,6 +331,24 @@
       "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603e9cbe_57210650",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5b6d118_87510857",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "cc215f1b_e23393a5",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2eaf45b_9dcac41a",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d3b2c16_524f060f",
         "filename": "include/ceres/internal/expression.h",
         "patchSetId": 6
@@ -200,6 +398,24 @@
       "writtenOn": "2019-10-31T23:42:32Z",
       "side": 1,
       "message": "So this boolean is a bit concerning to me, because it implies a bunch of stuff in the structure of our ExpressionGraph. See my top level comment.",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4bb182_1a5cb9f8",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "I was also thinking about removing this boolean. During and recording and code generation there is no need for this information. Only the optimizer can make use of it.",
+      "parentUuid": "7d3b2c16_524f060f",
       "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -274,6 +490,24 @@
     },
     {
       "key": {
+        "uuid": "abbe6d9d_385f0e9b",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "addccb51_319b27c0",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa1e9473_47de4380",
         "filename": "internal/ceres/expression_ref.cc",
         "patchSetId": 6
@@ -291,6 +525,24 @@
     },
     {
       "key": {
+        "uuid": "41287148_c0a76425",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa1e9473_47de4380",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "055f0b1b_04f27afd",
         "filename": "internal/ceres/expression_ref.cc",
         "patchSetId": 6
@@ -302,6 +554,24 @@
       "writtenOn": "2019-10-31T23:42:32Z",
       "side": 1,
       "message": "This says it\u0027s a special case, but when will this happen? Please expand comment to illustrate why this case happens as well.",
+      "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe568996_272fab08",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-01T09:12:40Z",
+      "side": 1,
+      "message": "This is explained in the header file. Should we duplicate the comment here?",
+      "parentUuid": "055f0b1b_04f27afd",
       "revId": "23292abc8fb58b59b2e58abbe74e45c25fcb9dfe",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
