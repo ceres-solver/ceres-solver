@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73a10753_a627910a",
+        "filename": "cmake/DetectSIMDHostileStackCheckMacOSXcodePairing.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-01T20:16:10Z",
+      "side": 1,
+      "message": "document what this code is actually doing?",
+      "range": {
+        "startLine": 60,
+        "startChar": 20,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "52d6477a42d6f8a1d39742747c83dfcf2b59f01a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
