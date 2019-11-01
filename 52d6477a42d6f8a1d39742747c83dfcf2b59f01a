@@ -22,6 +22,30 @@
       "revId": "52d6477a42d6f8a1d39742747c83dfcf2b59f01a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e198f374_c2f56de7",
+        "filename": "cmake/DetectSIMDHostileStackCheckMacOSXcodePairing.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-11-01T21:01:13Z",
+      "side": 1,
+      "message": "This is the sample minimal test case from [1], but basically my understanding from it and from checking in god-bolt is that it is a fancy no-op, but it is forcing the compiler to generate code that reads the variables.",
+      "parentUuid": "73a10753_a627910a",
+      "range": {
+        "startLine": 60,
+        "startChar": 20,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "52d6477a42d6f8a1d39742747c83dfcf2b59f01a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
