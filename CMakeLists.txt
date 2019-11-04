@@ -80,6 +80,10 @@ list(APPEND CMAKE_MODULE_PATH "${Ceres_SOURCE_DIR}/cmake")
 include(AddCompileFlagsIfSupported)
 include(UpdateCacheVariable)
 
+# Xcode 11.0-1 with macOS 10.15 (Catalina) broke alignment.
+include(DetectBrokenStackCheckMacOSXcodePairing)
+detect_broken_stack_check_macos_xcode_pairing()
+
 # Set up the git hook to make Gerrit Change-Id: lines in commit messages.
 include(AddGerritCommitHook)
 add_gerrit_commit_hook(${Ceres_SOURCE_DIR} ${Ceres_BINARY_DIR})
