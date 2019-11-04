@@ -28,14 +28,19 @@
 #
 # Author: alexs.mac@gmail.com (Alex Stewart)
 
-# As detailed in [1] the combination of macOS 10.15.x (Catalina) and Xcode 11
-# (up to at least 10.15.1 / Xcode 11.1) enables by default -fstack-check which
+# As detailed in [1] the combination of macOS 10.15.x (Catalina) and
+# Xcode 11.0-1 enables by default a broken version of -fstack-check which
 # can break the alignment requirements for SIMD instructions resulting in
-# segfaults from within Eigen.
+# segfaults from within Eigen. This issue was apparently fixed in Xcode 11.2
+# despite not appearing in the official release notes.
+#
+# Although this can be worked around by compiling with -fno-stack-check, we
+# instead prevent generation as the update to Xcode 11.2 is free and failing
+# to include -fno-stack-check *everywhere* could still result in random
+# segfaults.
 #
 # [1]: https://forums.developer.apple.com/thread/121887
-function(detect_simd_hostile_stack_check_macos_xcode_pairing OUT_VAR)
-  set(${OUT_VAR} FALSE PARENT_SCOPE)
+function(detect_broken_stack_check_macos_xcode_pairing)
   if (NOT APPLE)
     return()
   endif()
@@ -45,6 +50,13 @@ function(detect_simd_hostile_stack_check_macos_xcode_pairing OUT_VAR)
     ERROR_QUIET
     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
+  if (MACOS_VERSION VERSION_LESS 10.15)
+    # Only 10.15 (Catalina) is likely to be affected, irrespective of the Xcode
+    # version. Although it is possible to recreate the issue on 10.14 (Mojave)
+    # and Xcode 11.0-1 if -fstack-check is forced on, this is not the default.
+    return()
+  endif()
+
   execute_process(COMMAND xcodebuild -version
     OUTPUT_VARIABLE XCODE_VERSION
     ERROR_QUIET
@@ -52,25 +64,20 @@ function(detect_simd_hostile_stack_check_macos_xcode_pairing OUT_VAR)
   string(REGEX MATCH "Xcode [0-9\\.]+" XCODE_VERSION "${XCODE_VERSION}")
   string(REGEX REPLACE "Xcode ([0-9\\.]+)" "\\1" XCODE_VERSION "${XCODE_VERSION}")
 
-  include(CheckCXXSourceRuns)
-  set(CMAKE_REQUIRED_FLAGS "-mavx -O3")
-  # Minimal test case taken from [1], author: snowcat, segfaults if
-  # -fstack-check is enabled by default on affected macOS / Xcode pairing.
-  check_cxx_source_runs(
-    "int main(void) {
-       register char a __asm(\"rbx\") = 0;
-       char b[5000];
-       char c[100] = {0};
-       asm volatile(\"\" : : \"r,m\"(a), \"r,m\"(b), \"r,m\"(c) : \"memory\");
-       return 0;
-     }"
-     BROKEN_STACK_CHECK_DISABLED_BY_DEFAULT)
-
-   if (NOT BROKEN_STACK_CHECK_DISABLED_BY_DEFAULT)
-     message("-- Detected macOS version: ${MACOS_VERSION} and Xcode version: "
-       "${XCODE_VERSION} with SIMD-hostile -fstack-check enabled by default. "
-       "Unless -fno-stack-check is used, segfaults may occur in any code that "
-       "uses SIMD instructions.")
-     set(${OUT_VAR} TRUE PARENT_SCOPE)
-   endif()
+  if ((XCODE_VERSION VERSION_EQUAL 11.0) OR
+      (XCODE_VERSION VERSION_EQUAL 11.1))
+    message(FATAL_ERROR "Detected macOS version: ${MACOS_VERSION} and "
+      "Xcode version: ${XCODE_VERSION} which combined exhibit an "
+      "-fstack-check bug which can break alignment requirements for at least "
+      "AVX instructions as detailed here [1]."
+      "\n"
+      "This bug affected Xcode 11.0 and 11.1 but only when used with 10.15 "
+      "(Catalina), and was fixed in Xcode 11.2. Without the fix in place, "
+      "random segfaults will occur in Eigen operations used by Ceres that use "
+      "AVX instructions."
+      "\n"
+      "Please update to at least Xcode 11.2."
+      "\n"
+      "[1]: https://forums.developer.apple.com/thread/121887")
+  endif()
 endfunction()
