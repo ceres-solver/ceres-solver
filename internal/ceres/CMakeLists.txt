@@ -349,15 +349,6 @@ foreach(INC_DIR ${CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS})
   target_include_directories(ceres PUBLIC ${INC_DIR})
 endforeach()
 
-include(DetectSIMDHostileStackCheckMacOSXcodePairing)
-detect_simd_hostile_stack_check_macos_xcode_pairing(
-  MUST_DISABLE_STACK_CHECK)
-if (MUST_DISABLE_STACK_CHECK)
-  message("-- Explicitly disabling -fstack-check in Ceres target (both "
-    "for Ceres and for clients) to avoid breaking SIMD alignment.")
-  target_compile_options(ceres PUBLIC "-fno-stack-check")
-endif()
-
 install(TARGETS ceres
         EXPORT  CeresExport
         RUNTIME DESTINATION bin
