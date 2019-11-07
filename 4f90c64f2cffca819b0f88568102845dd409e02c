@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c70e878_6236a9d2",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-07T22:05:04Z",
+      "side": 1,
+      "message": "We aren\u0027t tracking SSA anymore; is this comment still useful?",
+      "revId": "4f90c64f2cffca819b0f88568102845dd409e02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda488f9_34c567f8",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-07T22:05:04Z",
+      "side": 1,
+      "message": "nit: The",
+      "revId": "4f90c64f2cffca819b0f88568102845dd409e02c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
