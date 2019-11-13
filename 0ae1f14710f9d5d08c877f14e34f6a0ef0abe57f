@@ -2,6 +2,190 @@
   "comments": [
     {
       "key": {
+        "uuid": "5d05cf34_d7c4d0bb",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-13T17:36:08Z",
+      "side": 1,
+      "message": "do not depend on transitive inclusion of all depdencies, include all headers explicitly.",
+      "range": {
+        "startLine": 34,
+        "startChar": 28,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b1975b_664cf5dd",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-13T17:36:08Z",
+      "side": 1,
+      "message": "why is this an option? or rather why would the user want to control this? just curious.",
+      "range": {
+        "startLine": 80,
+        "startChar": 26,
+        "endLine": 80,
+        "endChar": 31
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7d03ad_4acc7f2c",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-13T17:36:08Z",
+      "side": 1,
+      "message": "why is this a user controllable thing? shouldn\u0027t this just be a function of the fact that we are using doubles.",
+      "range": {
+        "startLine": 83,
+        "startChar": 42,
+        "endLine": 83,
+        "endChar": 44
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1427cd36_c41d546e",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-13T17:36:08Z",
+      "side": 1,
+      "message": "i\u0027d much rather we ask the user for number of spaces rather than the string. Setting this as a string requires counting, or visually judging as well as the possibility of not entering a white space string at all.",
+      "range": {
+        "startLine": 86,
+        "startChar": 37,
+        "endLine": 86,
+        "endChar": 38
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9260447d_f4db2b2b",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-13T17:36:08Z",
+      "side": 1,
+      "message": "is this actually a choice? isn\u0027t the fact that everything is doubles already backed in?",
+      "range": {
+        "startLine": 92,
+        "startChar": 46,
+        "endLine": 92,
+        "endChar": 52
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07fe2e21_4ce6c882",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-13T17:36:08Z",
+      "side": 1,
+      "message": "why is this a choice?",
+      "range": {
+        "startLine": 93,
+        "startChar": 39,
+        "endLine": 93,
+        "endChar": 43
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5be333_4d8b2031",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-13T17:36:08Z",
+      "side": 1,
+      "message": "why is this a choice? this is basically an optimized pass. The code generator should just print whatever we have, the optimizer is responsible for deciding what survives each pass.",
+      "range": {
+        "startLine": 96,
+        "startChar": 9,
+        "endLine": 96,
+        "endChar": 18
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c69153_42097e2f",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-13T17:36:08Z",
+      "side": 1,
+      "message": "Print -\u003e Generate\n\nI also think that ostream is the wrong way to get output out of this class because testing will be a nightmare.\n\nyou are better off with generating a vector of strings, and verifying that vector of strings is correct. it will allow you to skip over headers and such much more easily.\n\nthen a simple function can dump out the whole function as needed.",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 12
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f25ad7e_28df5a84",
         "filename": "include/ceres/internal/expression_ref.h",
         "patchSetId": 7
