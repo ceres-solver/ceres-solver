@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f25ad7e_28df5a84",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-13T17:26:41Z",
+      "side": 1,
+      "message": "I would rather have a specialization for Jets rather than not marking this explicit.",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d32ba1_654e6fdb",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-13T17:26:41Z",
+      "side": 1,
+      "message": "this needs to be marked explict no?",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 2
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
