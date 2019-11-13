@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba32ec24_88c48ec2",
+        "filename": "cmake/DetectBrokenStackCheckMacOSXcodePairing.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-13T15:23:23Z",
+      "side": 1,
+      "message": "isn\u0027t this simpler to just check that you have versions 11.0 or 11.1 instead of trying to do an inequality comparison here?",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "d0c0363e4cbb7a4a86873ac2163fdbc83874aad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
