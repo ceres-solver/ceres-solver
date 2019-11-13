@@ -50,7 +50,7 @@ struct ExpressionRef {
   // Create a compile time constant expression directly from a double value.
   // This is important so that we can write T(3.14) in our code and
   // it's automatically converted to the correct expression.
-  explicit ExpressionRef(double compile_time_constant);
+  ExpressionRef(double compile_time_constant);
 
   // Create an ASSIGNMENT expression from other to this.
   //
@@ -71,6 +71,7 @@ struct ExpressionRef {
   //
   // If 'other' is not pointing to a variable (id==invalid), we found an
   // uninitialized assignment, which is handled as an error.
+  ExpressionRef(const ExpressionRef& other);
   ExpressionRef& operator=(const ExpressionRef& other);
 
   // Compound operators
@@ -142,13 +143,21 @@ ComparisonExpressionRef operator!(ComparisonExpressionRef a);
 template <typename T>
 struct RuntimeConstant {
   using ReturnType = T;
-  static inline ReturnType Get(double v, const char* name) { return v; }
+  static inline ReturnType Get(double v, const char* /* unused */) { return v; }
+};
+
+template <>
+struct RuntimeConstant<ExpressionRef> {
+  using ReturnType = ExpressionRef;
+  static inline ReturnType Get(double /* unused */, const char* name) {
+    return ExpressionRef::Create(Expression::CreateRuntimeConstant(name));
+  }
 };
 
 template <typename G, int N>
 struct RuntimeConstant<Jet<G, N>> {
   using ReturnType = Jet<G, N>;
-  static inline Jet<G, N> Get(double v, const char* name) {
+  static inline Jet<G, N> Get(double v, const char* /* unused */) {
     return Jet<G, N>(v);
   }
 };
@@ -156,11 +165,11 @@ struct RuntimeConstant<Jet<G, N>> {
 template <int N>
 struct RuntimeConstant<Jet<ExpressionRef, N>> {
   using ReturnType = Jet<ExpressionRef, N>;
-  static inline ReturnType Get(double v, const char* name) {
+  static inline ReturnType Get(double /* unused */, const char* name) {
     // Note: The scalar value of v will be thrown away, because we don't need it
     // during code generation.
-    (void)v;
-    return Jet<ExpressionRef, N>(Expression::CreateRuntimeConstant(name));
+    return Jet<ExpressionRef, N>(
+        ExpressionRef::Create(Expression::CreateRuntimeConstant(name)));
   }
 };
 
@@ -172,6 +181,13 @@ inline typename RuntimeConstant<T>::ReturnType MakeRuntimeConstant(
 
 #define CERES_EXPRESSION_RUNTIME_CONSTANT(_v) \
   ceres::internal::MakeRuntimeConstant<T>(_v, #_v)
+
+inline ExpressionRef MakeParameter(const std::string& str) {
+  return ExpressionRef::Create(Expression::CreateParameter(str));
+}
+inline ExpressionRef MakeOutput(ExpressionRef v, const std::string& str) {
+  return ExpressionRef::Create(Expression::CreateOutputAssignment(v.id, str));
+}
 
 // The CERES_CODEGEN macro is defined by the build system only during code
 // generation. In all other cases the CERES_IF/ELSE macros just expand to the
