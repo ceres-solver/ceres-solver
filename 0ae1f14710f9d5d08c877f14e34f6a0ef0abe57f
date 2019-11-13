@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "39e10d2d_77022a26",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-13T17:56:24Z",
+      "side": 1,
+      "message": "Ok, so my idea with the CodeGenerator class is that it is highly customizable and can be used for much more than just deriving cost functors. \n\nWe also provide a AutodiffCodeGenerator, which does the template magic and uses the CodeGenerator accordingly.\n\nThe reason I added this optional root block here is for generated inline code. For example an experienced user could write stuff like this:\n\nvoid foo()\n{\n  // do some stuff\n  int generated_input \u003d x;\n  #include \"generated_eval.h\"\n  int a \u003d generated_output;\n}",
+      "parentUuid": "e5b1975b_664cf5dd",
+      "range": {
+        "startLine": 80,
+        "startChar": 26,
+        "endLine": 80,
+        "endChar": 31
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d7d03ad_4acc7f2c",
         "filename": "include/ceres/internal/code_generator.h",
         "patchSetId": 7
@@ -59,6 +83,30 @@
       "writtenOn": "2019-11-13T17:36:08Z",
       "side": 1,
       "message": "why is this a user controllable thing? shouldn\u0027t this just be a function of the fact that we are using doubles.",
+      "range": {
+        "startLine": 83,
+        "startChar": 42,
+        "endLine": 83,
+        "endChar": 44
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef6d1556_9c3953da",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-13T17:56:24Z",
+      "side": 1,
+      "message": "Also true.",
+      "parentUuid": "3d7d03ad_4acc7f2c",
       "range": {
         "startLine": 83,
         "startChar": 42,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "2c527c7d_c1d0a08f",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-13T17:56:24Z",
+      "side": 1,
+      "message": "Yup makes sense",
+      "parentUuid": "1427cd36_c41d546e",
+      "range": {
+        "startLine": 86,
+        "startChar": 37,
+        "endLine": 86,
+        "endChar": 38
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9260447d_f4db2b2b",
         "filename": "include/ceres/internal/code_generator.h",
         "patchSetId": 7
@@ -105,6 +177,30 @@
       "writtenOn": "2019-11-13T17:36:08Z",
       "side": 1,
       "message": "is this actually a choice? isn\u0027t the fact that everything is doubles already backed in?",
+      "range": {
+        "startLine": 92,
+        "startChar": 46,
+        "endLine": 92,
+        "endChar": 52
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3517986b_1591203a",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-13T17:56:24Z",
+      "side": 1,
+      "message": "Yes it is actually. Only compile time constants are printed as doubles. So it would be no problem to generate code like this:\n\nfloat v_0 \u003d 0.0;\nfloat v_1 \u003d 1.0;\nfloat v_2 \u003d v_0 + v_1;\n\nIn fact we could also generate templated functors again by setting this to \"T\" and adding the template stuff to the header. This could be potentially be used for higher order derivatives, if required.",
+      "parentUuid": "9260447d_f4db2b2b",
       "range": {
         "startLine": 92,
         "startChar": 46,
@@ -151,6 +247,30 @@
       "writtenOn": "2019-11-13T17:36:08Z",
       "side": 1,
       "message": "why is this a choice? this is basically an optimized pass. The code generator should just print whatever we have, the optimizer is responsible for deciding what survives each pass.",
+      "range": {
+        "startLine": 96,
+        "startChar": 9,
+        "endLine": 96,
+        "endChar": 18
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f505660b_eeee8c14",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-13T17:56:24Z",
+      "side": 1,
+      "message": "Ok true this doesn\u0027t make sense here.",
+      "parentUuid": "1d5be333_4d8b2031",
       "range": {
         "startLine": 96,
         "startChar": 9,
