@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6297e0de_afd020b7",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-13T18:02:33Z",
+      "side": 1,
+      "message": "sure but maybe introduce this later, and for now keep the testing surface clean? because this seriously increases the chance of incorrect code, and I\u0027d like to test things carefully and thoroughly.",
+      "parentUuid": "3517986b_1591203a",
+      "range": {
+        "startLine": 92,
+        "startChar": 46,
+        "endLine": 92,
+        "endChar": 52
+      },
+      "revId": "0ae1f14710f9d5d08c877f14e34f6a0ef0abe57f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07fe2e21_4ce6c882",
         "filename": "include/ceres/internal/code_generator.h",
         "patchSetId": 7
