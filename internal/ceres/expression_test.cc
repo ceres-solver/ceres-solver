@@ -31,10 +31,8 @@
 
 #define CERES_CODEGEN
 
-#include "ceres/internal/expression_graph.h"
-#include "ceres/internal/expression_ref.h"
-
-#include "gtest/gtest.h"
+#include "expression_test.h"
+#include "ceres/jet.h"
 
 namespace ceres {
 namespace internal {
@@ -50,8 +48,8 @@ TEST(Expression, IsArithmetic) {
 
   auto graph = StopRecordingExpressions();
 
-  ASSERT_FALSE(graph.ExpressionForId(a.id).IsArithmeticExpression());
-  ASSERT_FALSE(graph.ExpressionForId(b.id).IsArithmeticExpression());
+  ASSERT_TRUE(graph.ExpressionForId(a.id).IsArithmeticExpression());
+  ASSERT_TRUE(graph.ExpressionForId(b.id).IsArithmeticExpression());
   ASSERT_TRUE(graph.ExpressionForId(c.id).IsArithmeticExpression());
   ASSERT_TRUE(graph.ExpressionForId(d.id).IsArithmeticExpression());
 }
@@ -113,6 +111,51 @@ TEST(Expression, DirectlyDependsOn) {
   ASSERT_TRUE(graph.ExpressionForId(d.id).DirectlyDependsOn(a.id));
   ASSERT_FALSE(graph.ExpressionForId(d.id).DirectlyDependsOn(b.id));
   ASSERT_TRUE(graph.ExpressionForId(d.id).DirectlyDependsOn(c.id));
+}
+
+TEST(Expression, Jet) {
+  using T = Jet<ExpressionRef, 1>;
+
+  StartRecordingExpressions();
+
+  T a(2, 0);
+  T b = a * a;
+
+  auto graph = StopRecordingExpressions();
+
+  // b is valid during the assignment so we expect an
+  // additional assignment expression.
+  EXPECT_EQ(graph.Size(), 8);
+
+  // Expected code
+  //   v_0 = 2;
+  //   v_1 = 0;
+  //   v_2 = 1;
+  //   v_1 = v_2;
+  //   v_3 = v_0 * v_0;
+  //   v_4 = v_0 * v_1;
+  //   v_5 = v_1 * v_0;
+  //   v_6 = v_3 * v_4;
+  //   v_7 = v_5 * v_6;
+
+  // clang-format off
+  // Id, Type, Lhs, Value, Name, Arguments
+  TE(  0,  COMPILE_TIME_CONSTANT,   0,   2,   "",     );
+  TE(  1,  COMPILE_TIME_CONSTANT,   1,   0,   "",     );
+  TE(  2,  COMPILE_TIME_CONSTANT,   2,   1,   "",     );
+  TE(  3,             ASSIGNMENT,   1,   0,   "", 2   );
+  TE(  4,      BINARY_ARITHMETIC,   4,   0,  "*", 0, 0);
+  TE(  5,      BINARY_ARITHMETIC,   5,   0,  "*", 0, 1);
+  TE(  6,      BINARY_ARITHMETIC,   6,   0,  "*", 1, 0);
+  TE(  7,      BINARY_ARITHMETIC,   7,   0,  "+", 5, 6);
+  // clang-format on
+
+  // Variables after execution:
+  //
+  // b.a         <=> v_4
+  // b.v[0]      <=> v_7
+  EXPECT_EQ(b.a.id, 4);
+  EXPECT_EQ(b.v[0].id, 7);
 }
 
 // Todo: remaining functions of Expression

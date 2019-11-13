@@ -55,7 +55,7 @@ TEST(Expression, AssignmentElimination) {
 
   // clang-format off
   // Id  Type                   Lhs  Value Name  Arguments
-  TE(0,  COMPILE_TIME_CONSTANT, 0,   2,     "");
+  TE(0,  COMPILE_TIME_CONSTANT, 0,   2,     "",);
   // clang-format on
 
   // Variables after execution:
