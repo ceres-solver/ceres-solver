@@ -200,6 +200,10 @@ struct Jet {
     v.setZero();
   }
 
+  // The scalar constructor should work for T's which are not implicitly
+  // constructible from double.
+  explicit Jet(double value) : Jet(T(value)) {}
+
   // Constructor from scalar plus variable: a + t_i.
   Jet(const T& value, int k) {
     a = value;
