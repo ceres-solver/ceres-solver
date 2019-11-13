@@ -55,7 +55,7 @@ TEST(Expression, AssignmentElimination) {
 
   // clang-format off
   // Id  Type                   Lhs  Value Name  Arguments
-  TE(0,  COMPILE_TIME_CONSTANT, 0,   2,     "");
+  CHECK_EXPRESSION(0,  COMPILE_TIME_CONSTANT, 0,   2,     "",);
   // clang-format on
 
   // Variables after execution:
@@ -86,9 +86,9 @@ TEST(Expression, Assignment) {
 
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  TE(  0,  COMPILE_TIME_CONSTANT,   0,   2,   "",   );
-  TE(  1,  COMPILE_TIME_CONSTANT,   1,   4,   "",   );
-  TE(  2,             ASSIGNMENT,   1,   0,   "",  0);
+  CHECK_EXPRESSION(  0,  COMPILE_TIME_CONSTANT,   0,   2,   "",   );
+  CHECK_EXPRESSION(  1,  COMPILE_TIME_CONSTANT,   1,   4,   "",   );
+  CHECK_EXPRESSION(  2,             ASSIGNMENT,   1,   0,   "",  0);
   // clang-format on
 
   // Variables after execution:
@@ -123,12 +123,12 @@ TEST(Expression, ConditionalMinimal) {
 
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments...
-  TE(  0, COMPILE_TIME_CONSTANT,   0,   2,   "",      );
-  TE(  1, COMPILE_TIME_CONSTANT,   1,   3,   "",      );
-  TE(  2,     BINARY_COMPARISON,   2,   0,  "<",  0, 1);
-  TE(  3,                    IF,  -1,   0,   "",     2);
-  TE(  4,                  ELSE,  -1,   0,   "",      );
-  TE(  5,                 ENDIF,  -1,   0,   "",      );
+  CHECK_EXPRESSION(  0, COMPILE_TIME_CONSTANT,   0,   2,   "",      );
+  CHECK_EXPRESSION(  1, COMPILE_TIME_CONSTANT,   1,   3,   "",      );
+  CHECK_EXPRESSION(  2,     BINARY_COMPARISON,   2,   0,  "<",  0, 1);
+  CHECK_EXPRESSION(  3,                    IF,  -1,   0,   "",     2);
+  CHECK_EXPRESSION(  4,                  ELSE,  -1,   0,   "",      );
+  CHECK_EXPRESSION(  5,                 ENDIF,  -1,   0,   "",      );
   // clang-format on
 }
 
@@ -162,17 +162,17 @@ TEST(Expression, ConditionalAssignment) {
 
   // clang-format off
   // Id,   Type,                  Lhs, Value, Name, Arguments...
-  TE(  0,  COMPILE_TIME_CONSTANT,    0,    2,   "",      );
-  TE(  1,  COMPILE_TIME_CONSTANT,    1,    3,   "",      );
-  TE(  2,      BINARY_COMPARISON,    2,    0,  "<",  0, 1);
-  TE(  3,                     IF,   -1,    0,   "",     2);
-  TE(  4,      BINARY_ARITHMETIC,    4,    0,  "+",  0, 1);
-  TE(  5,                   ELSE,   -1,    0,   "",      );
-  TE(  6,      BINARY_ARITHMETIC,    6,    0,  "-",  0, 1);
-  TE(  7,             ASSIGNMENT,    4,    0,   "",  6   );
-  TE(  8,                  ENDIF,   -1,    0,   "",      );
-  TE(  9,      BINARY_ARITHMETIC,    9,    0,  "+",  4, 0);
-  TE( 10,             ASSIGNMENT,    4,    0,   "",  9   );
+  CHECK_EXPRESSION(  0,  COMPILE_TIME_CONSTANT,    0,    2,   "",      );
+  CHECK_EXPRESSION(  1,  COMPILE_TIME_CONSTANT,    1,    3,   "",      );
+  CHECK_EXPRESSION(  2,      BINARY_COMPARISON,    2,    0,  "<",  0, 1);
+  CHECK_EXPRESSION(  3,                     IF,   -1,    0,   "",     2);
+  CHECK_EXPRESSION(  4,      BINARY_ARITHMETIC,    4,    0,  "+",  0, 1);
+  CHECK_EXPRESSION(  5,                   ELSE,   -1,    0,   "",      );
+  CHECK_EXPRESSION(  6,      BINARY_ARITHMETIC,    6,    0,  "-",  0, 1);
+  CHECK_EXPRESSION(  7,             ASSIGNMENT,    4,    0,   "",  6   );
+  CHECK_EXPRESSION(  8,                  ENDIF,   -1,    0,   "",      );
+  CHECK_EXPRESSION(  9,      BINARY_ARITHMETIC,    9,    0,  "+",  4, 0);
+  CHECK_EXPRESSION( 10,             ASSIGNMENT,    4,    0,   "",  9   );
   // clang-format on
 
   // Variables after execution:

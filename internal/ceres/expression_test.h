@@ -55,12 +55,12 @@ inline void TestExpression(const Expression& expr,
   EXPECT_EQ(expr.arguments(), arguments);
 }
 
-#define TE(_id, _type, _lhs_id, _value, _name, ...) \
-  TestExpression(graph.ExpressionForId(_id),        \
-                 ExpressionType::_type,             \
-                 _lhs_id,                           \
-                 _value,                            \
-                 _name,                             \
+#define CHECK_EXPRESSION(_id, _type, _lhs_id, _value, _name, ...) \
+  TestExpression(graph.ExpressionForId(_id),                      \
+                 ExpressionType::_type,                           \
+                 _lhs_id,                                         \
+                 _value,                                          \
+                 _name,                                           \
                  {__VA_ARGS__})
 
 }  // namespace internal

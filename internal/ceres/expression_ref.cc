@@ -44,6 +44,8 @@ ExpressionRef::ExpressionRef(double compile_time_constant) {
   id = Expression::CreateCompileTimeConstant(compile_time_constant);
 }
 
+ExpressionRef::ExpressionRef(const ExpressionRef& other) { *this = other; }
+
 ExpressionRef& ExpressionRef::operator=(const ExpressionRef& other) {
   // Assigning an uninitialized variable to another variable is an error.
   CHECK(other.IsInitialized()) << "Uninitialized Assignment.";
@@ -111,8 +113,13 @@ ExpressionRef operator*(ExpressionRef x, ExpressionRef y) {
 }
 
 // Functions
-ExpressionRef sin(ExpressionRef x) {
-  return ExpressionRef::Create(Expression::CreateFunctionCall("sin", {x.id}));
+ExpressionRef MakeFunctionCall(const std::string& name,
+                               const std::vector<ExpressionRef>& params) {
+  std::vector<ExpressionId> ids;
+  for (auto p : params) {
+    ids.push_back(p.id);
+  }
+  return ExpressionRef::Create(Expression::CreateFunctionCall(name, ids));
 }
 
 ExpressionRef Ternary(ComparisonExpressionRef c,

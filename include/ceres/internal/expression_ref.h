@@ -50,7 +50,11 @@ struct ExpressionRef {
   // Create a compile time constant expression directly from a double value.
   // This is important so that we can write T(3.14) in our code and
   // it's automatically converted to the correct expression.
-  explicit ExpressionRef(double compile_time_constant);
+  //
+  // This constructor is implicit, because the line
+  //    T a(0);
+  // must work for T = Jet<ExpressionRef>.
+  ExpressionRef(double compile_time_constant);
 
   // Create an ASSIGNMENT expression from other to this.
   //
@@ -71,6 +75,7 @@ struct ExpressionRef {
   //
   // If 'other' is not pointing to a variable (id==invalid), we found an
   // uninitialized assignment, which is handled as an error.
+  ExpressionRef(const ExpressionRef& other);
   ExpressionRef& operator=(const ExpressionRef& other);
 
   // Compound operators
@@ -96,8 +101,45 @@ ExpressionRef operator*(ExpressionRef x, ExpressionRef y);
 ExpressionRef operator/(ExpressionRef x, ExpressionRef y);
 
 // Functions
-// TODO: Add all function supported by Jet.
-ExpressionRef sin(ExpressionRef x);
+
+// Helper function to create a function call expression.
+// Users can generate code for their own custom functions by adding an overload
+// for ExpressionRef that maps to MakeFunctionCall. See below for examples.
+ExpressionRef MakeFunctionCall(const std::string& name,
+                               const std::vector<ExpressionRef>& params);
+
+#define CERES_DEFINE_UNARY_FUNCTION_CALL(name) \
+  inline ExpressionRef name(ExpressionRef x) { \
+    return MakeFunctionCall(#name, {x});       \
+  }
+#define CERES_DEFINE_BINARY_FUNCTION_CALL(name)                 \
+  inline ExpressionRef name(ExpressionRef x, ExpressionRef y) { \
+    return MakeFunctionCall(#name, {x, y});                     \
+  }
+CERES_DEFINE_UNARY_FUNCTION_CALL(abs);
+CERES_DEFINE_UNARY_FUNCTION_CALL(acos);
+CERES_DEFINE_UNARY_FUNCTION_CALL(asin);
+CERES_DEFINE_UNARY_FUNCTION_CALL(atan);
+CERES_DEFINE_UNARY_FUNCTION_CALL(cbrt);
+CERES_DEFINE_UNARY_FUNCTION_CALL(ceil);
+CERES_DEFINE_UNARY_FUNCTION_CALL(cos);
+CERES_DEFINE_UNARY_FUNCTION_CALL(cosh);
+CERES_DEFINE_UNARY_FUNCTION_CALL(exp);
+CERES_DEFINE_UNARY_FUNCTION_CALL(exp2);
+CERES_DEFINE_UNARY_FUNCTION_CALL(floor);
+CERES_DEFINE_UNARY_FUNCTION_CALL(log);
+CERES_DEFINE_UNARY_FUNCTION_CALL(log2);
+CERES_DEFINE_UNARY_FUNCTION_CALL(sin);
+CERES_DEFINE_UNARY_FUNCTION_CALL(sinh);
+CERES_DEFINE_UNARY_FUNCTION_CALL(sqrt);
+CERES_DEFINE_UNARY_FUNCTION_CALL(tan);
+CERES_DEFINE_UNARY_FUNCTION_CALL(tanh);
+
+CERES_DEFINE_BINARY_FUNCTION_CALL(atan2);
+CERES_DEFINE_BINARY_FUNCTION_CALL(pow);
+
+#undef CERES_DEFINE_UNARY_FUNCTION_CALL
+#undef CERES_DEFINE_BINARY_FUNCTION_CALL
 
 // This additonal type is required, so that we can detect invalid conditions
 // during compile time. For example, the following should create a compile time
@@ -142,13 +184,21 @@ ComparisonExpressionRef operator!(ComparisonExpressionRef a);
 template <typename T>
 struct RuntimeConstant {
   using ReturnType = T;
-  static inline ReturnType Get(double v, const char* name) { return v; }
+  static inline ReturnType Get(double v, const char* /* unused */) { return v; }
+};
+
+template <>
+struct RuntimeConstant<ExpressionRef> {
+  using ReturnType = ExpressionRef;
+  static inline ReturnType Get(double /* unused */, const char* name) {
+    return ExpressionRef::Create(Expression::CreateRuntimeConstant(name));
+  }
 };
 
 template <typename G, int N>
 struct RuntimeConstant<Jet<G, N>> {
   using ReturnType = Jet<G, N>;
-  static inline Jet<G, N> Get(double v, const char* name) {
+  static inline Jet<G, N> Get(double v, const char* /* unused */) {
     return Jet<G, N>(v);
   }
 };
@@ -156,11 +206,11 @@ struct RuntimeConstant<Jet<G, N>> {
 template <int N>
 struct RuntimeConstant<Jet<ExpressionRef, N>> {
   using ReturnType = Jet<ExpressionRef, N>;
-  static inline ReturnType Get(double v, const char* name) {
+  static inline ReturnType Get(double /* unused */, const char* name) {
     // Note: The scalar value of v will be thrown away, because we don't need it
     // during code generation.
-    (void)v;
-    return Jet<ExpressionRef, N>(Expression::CreateRuntimeConstant(name));
+    return Jet<ExpressionRef, N>(
+        ExpressionRef::Create(Expression::CreateRuntimeConstant(name)));
   }
 };
 
@@ -172,6 +222,13 @@ inline typename RuntimeConstant<T>::ReturnType MakeRuntimeConstant(
 
 #define CERES_EXPRESSION_RUNTIME_CONSTANT(_v) \
   ceres::internal::MakeRuntimeConstant<T>(_v, #_v)
+
+inline ExpressionRef MakeParameter(const std::string& name) {
+  return ExpressionRef::Create(Expression::CreateParameter(name));
+}
+inline ExpressionRef MakeOutput(ExpressionRef v, const std::string& name) {
+  return ExpressionRef::Create(Expression::CreateOutputAssignment(v.id, name));
+}
 
 // The CERES_CODEGEN macro is defined by the build system only during code
 // generation. In all other cases the CERES_IF/ELSE macros just expand to the
