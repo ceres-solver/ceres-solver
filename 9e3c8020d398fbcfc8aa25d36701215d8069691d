@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "104716d8_c01a657e",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T10:55:53Z",
+      "side": 1,
+      "message": "explicit?\nor what implicit conversion are you trying to depend on?",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "9e3c8020d398fbcfc8aa25d36701215d8069691d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af727ed3_e4695035",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T10:55:53Z",
+      "side": 1,
+      "message": "This means whenever we add a jet overload we need to ensure there is a corresponding CERES_DEFINE_UNARY_FUNCTION_CALL for it no?\n\nwhat about binary functions like pow?",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 32
+      },
+      "revId": "9e3c8020d398fbcfc8aa25d36701215d8069691d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1905d9_7f185e37",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T10:55:53Z",
+      "side": 1,
+      "message": "str is bad variable name. \nsame below.",
+      "range": {
+        "startLine": 213,
+        "startChar": 57,
+        "endLine": 213,
+        "endChar": 58
+      },
+      "revId": "9e3c8020d398fbcfc8aa25d36701215d8069691d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
