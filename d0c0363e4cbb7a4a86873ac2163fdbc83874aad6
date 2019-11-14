@@ -22,6 +22,30 @@
       "revId": "d0c0363e4cbb7a4a86873ac2163fdbc83874aad6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc71066_4a0a1863",
+        "filename": "cmake/DetectBrokenStackCheckMacOSXcodePairing.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-11-14T09:46:06Z",
+      "side": 1,
+      "message": "Only if there are never any intermediary patch versions, but there aren\u0027t currently any listed and they don\u0027t usually patch older versions so we probably can check for 11.0 and 11.1 explicitly.",
+      "parentUuid": "ba32ec24_88c48ec2",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "d0c0363e4cbb7a4a86873ac2163fdbc83874aad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
