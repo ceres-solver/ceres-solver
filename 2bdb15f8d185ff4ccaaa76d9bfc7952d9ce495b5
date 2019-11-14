@@ -22,6 +22,30 @@
       "revId": "2bdb15f8d185ff4ccaaa76d9bfc7952d9ce495b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15808a3c_5c3f5f2e",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-14T13:02:35Z",
+      "side": 1,
+      "message": "For the following case:\n\nJet\u003cExpressionRef\u003e a(0.0);\n\nThis is important because we want to evaluate our cost functors with T\u003dJet\u003cExpressionRef\u003e and it is common to write something like \nT a \u003d T(0.0);",
+      "parentUuid": "84540665_fba13263",
+      "range": {
+        "startLine": 205,
+        "startChar": 22,
+        "endLine": 205,
+        "endChar": 27
+      },
+      "revId": "2bdb15f8d185ff4ccaaa76d9bfc7952d9ce495b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
