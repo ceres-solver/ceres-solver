@@ -46,6 +46,30 @@
       "revId": "2bdb15f8d185ff4ccaaa76d9bfc7952d9ce495b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbe7f40c_c3cf9cf0",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T13:24:36Z",
+      "side": 1,
+      "message": "Thanks for the explanation, I suspected this to be the case, but I wanted to be sure. \nBut this makes the Jet API appear weird to people who are using this in the normal course of things, where we tell them that T can be float or double, but then have an explicit constructor for doubles. \n\nI\u0027d like Keir to weight in on this, this seems troublesome.",
+      "parentUuid": "15808a3c_5c3f5f2e",
+      "range": {
+        "startLine": 205,
+        "startChar": 22,
+        "endLine": 205,
+        "endChar": 27
+      },
+      "revId": "2bdb15f8d185ff4ccaaa76d9bfc7952d9ce495b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
