@@ -1,0 +1,389 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e180bac7_fba3df6b",
+        "filename": "include/ceres/autodiff_codegen_cost_function.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "why do we need this in this CL?",
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a710d6_be72e444",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "this is not true anymore.",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 15
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "814d6e88_5ef3159a",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "I think for now this should be an constant inside the implementation rather than an exposed option, since changing this can lead to subtle behaviour changes that the user may not be ready for. \n\nalso its not clear what the valid values for this are, and should this even be a string.",
+      "range": {
+        "startLine": 85,
+        "startChar": 16,
+        "endLine": 85,
+        "endChar": 42
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d44198d_2aaa0794",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "I do not think these overloaded function names are a great idea.\n\n\nalso the names themselves are not helpful. I usually define a ToString() function in an object to convert that object into a string, which is not the case here. \n\n\nThis and the function above need better names, which make it explicit that you are generating a string for a given ExpressionId\n\nalso pass indentation_level as a pointer.",
+      "range": {
+        "startLine": 111,
+        "startChar": 14,
+        "endLine": 111,
+        "endChar": 22
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af737dd_141e6d82",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "notice your documentation is hard coding doubles for the type string. even if you are including that as an option.",
+      "range": {
+        "startLine": 113,
+        "startChar": 73,
+        "endLine": 113,
+        "endChar": 79
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3778dce9_7fdfe734",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "I think this loop will read better if it was\n\nfor (int expression_id \u003d 0; expression_id \u003c graph_.Size(); ++expression_id) {\n}\n\nthere is an assumption in this loop that the expression ids are the same as the indices in the graph, is this true? even after we optimize the graph?",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 13
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6de32dc_d268d5ae",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "why not make current_indentation_level a class variable?\nin fact you could just make it a string, so you do not have to constantly generate that whitespace string, and just add or reduce spaces from it?",
+      "range": {
+        "startLine": 57,
+        "startChar": 34,
+        "endLine": 57,
+        "endChar": 51
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04aaa52_55ef16c0",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "why do you need this assert?",
+      "range": {
+        "startLine": 59,
+        "startChar": 30,
+        "endLine": 59,
+        "endChar": 53
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188917eb_bef58d3b",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "i is a bad variable name, it makes it appear its an index, when it is really an expressionid.",
+      "range": {
+        "startLine": 67,
+        "startChar": 13,
+        "endLine": 67,
+        "endChar": 14
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c11aa15_ca2f7bf3",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "document what is happening in this if clause, because its not evident by reading the code.",
+      "range": {
+        "startLine": 71,
+        "startChar": 13,
+        "endLine": 71,
+        "endChar": 17
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b22de56_fd656436",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "why do you need this assert?",
+      "range": {
+        "startLine": 82,
+        "startChar": 15,
+        "endLine": 82,
+        "endChar": 35
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800ce4eb_1a87dfbf",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "is equality the only operator? if so why handle it with a switch statement.",
+      "range": {
+        "startLine": 118,
+        "startChar": 27,
+        "endLine": 118,
+        "endChar": 41
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ae49a9_6a40e7a1",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "document the logic here thoroughly with examples.",
+      "range": {
+        "startLine": 128,
+        "startChar": 3,
+        "endLine": 128,
+        "endChar": 4
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248d0962_8f84c475",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "add something which check fails on finding a case which is not handled and make sure the error message is verbose and indicative of what is going on.",
+      "range": {
+        "startLine": 158,
+        "startChar": 15,
+        "endLine": 158,
+        "endChar": 24
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796abc87_45d71017",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "why do you need this assert? also I prefer you use the CHECK macros.",
+      "range": {
+        "startLine": 166,
+        "startChar": 14,
+        "endLine": 166,
+        "endChar": 19
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2af57ee_14b738b6",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "Define this as a named constant.",
+      "range": {
+        "startLine": 173,
+        "startChar": 22,
+        "endLine": 173,
+        "endChar": 23
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3547959c_8bc84156",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-14T11:27:56Z",
+      "side": 1,
+      "message": "I am not seeing where indentation_level is being changed anywhere",
+      "range": {
+        "startLine": 178,
+        "startChar": 27,
+        "endLine": 178,
+        "endChar": 44
+      },
+      "revId": "ec7fda78e7258545fa503ac08f6d96c0b83b850c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
