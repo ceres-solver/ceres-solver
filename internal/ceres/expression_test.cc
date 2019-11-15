@@ -50,8 +50,8 @@ TEST(Expression, IsArithmetic) {
 
   auto graph = StopRecordingExpressions();
 
-  ASSERT_FALSE(graph.ExpressionForId(a.id).IsArithmeticExpression());
-  ASSERT_FALSE(graph.ExpressionForId(b.id).IsArithmeticExpression());
+  ASSERT_TRUE(graph.ExpressionForId(a.id).IsArithmeticExpression());
+  ASSERT_TRUE(graph.ExpressionForId(b.id).IsArithmeticExpression());
   ASSERT_TRUE(graph.ExpressionForId(c.id).IsArithmeticExpression());
   ASSERT_TRUE(graph.ExpressionForId(d.id).IsArithmeticExpression());
 }
