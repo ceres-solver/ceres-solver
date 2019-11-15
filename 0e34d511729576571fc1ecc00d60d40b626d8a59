@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14772631_742a216a",
+        "filename": "include/ceres/autodiff_codegen_cost_function.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-15T16:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70a59664_cb5f111c",
+      "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2958e96_4a383f81",
         "filename": "include/ceres/internal/expression_graph.h",
         "patchSetId": 12
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "7060791a_82b7ba1b",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-15T16:51:00Z",
+      "side": 1,
+      "message": "Done in expression_graph_test.cc",
+      "parentUuid": "f2958e96_4a383f81",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 13
+      },
+      "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ca250d2_b827ff29",
         "filename": "internal/ceres/code_generator.cc",
         "patchSetId": 12
@@ -62,6 +104,30 @@
       "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3edcd5db_ca574f21",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-15T16:51:00Z",
+      "side": 1,
+      "message": "I\u0027m like 99% sure that adding const to a local POD variable does not change anything. A few simple tests on compiler explorer confirm that even with -O1 all declarations are gone and the compiler uses it\u0027s own live-time analysis.\n\nBut maybe we can reevaluate it if it\u0027s running on bigger kernels.",
+      "parentUuid": "4ca250d2_b827ff29",
+      "range": {
+        "startLine": 55,
+        "startChar": 24,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "9b6c40b7_89a8ffe4",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-15T16:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9da52f34_1580d17a",
+      "range": {
+        "startLine": 72,
+        "startChar": 16,
+        "endLine": 72,
+        "endChar": 19
+      },
+      "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6de5e684_639c22b5",
         "filename": "internal/ceres/code_generator.cc",
         "patchSetId": 12
@@ -131,6 +221,30 @@
       "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c007a8_1efd3fdd",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-15T16:51:00Z",
+      "side": 1,
+      "message": "Added a big block of comment to codegenerator.h that precisely defines the output string of each expression type. \n\nFor testing, my idea is it to write one test case for each expression type.",
+      "parentUuid": "6de5e684_639c22b5",
+      "range": {
+        "startLine": 89,
+        "startChar": 27,
+        "endLine": 89,
+        "endChar": 45
+      },
+      "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
