@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a59664_cb5f111c",
+        "filename": "include/ceres/autodiff_codegen_cost_function.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-15T14:13:29Z",
+      "side": 1,
+      "message": "why is this part of this change?",
+      "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2958e96_4a383f81",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-15T14:13:29Z",
+      "side": 1,
+      "message": "please add tests.",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 13
+      },
+      "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca250d2_b827ff29",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-15T14:13:29Z",
+      "side": 1,
+      "message": "having a declaration like this means that nothing can be declared const, do you worry that this will prevent the compiler from being able to reason about certain optimizations?",
+      "range": {
+        "startLine": 55,
+        "startChar": 24,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e85f2c_732ee2ec",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-15T14:13:29Z",
+      "side": 1,
+      "message": "this makes me wonder if you should have a well specified table, for each expression which says what its type is, instead of it being buried in the code like this.",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 17
+      },
+      "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da52f34_1580d17a",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-15T14:13:29Z",
+      "side": 1,
+      "message": "str is a bad variable name.",
+      "range": {
+        "startLine": 72,
+        "startChar": 16,
+        "endLine": 72,
+        "endChar": 19
+      },
+      "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de5e684_639c22b5",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-15T14:13:29Z",
+      "side": 1,
+      "message": "this function needs very thorough documentation for each case. And then we should have tests that check the guarantees made by this function.",
+      "range": {
+        "startLine": 89,
+        "startChar": 27,
+        "endLine": 89,
+        "endChar": 45
+      },
+      "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c89857_e2967d5a",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-15T14:13:29Z",
+      "side": 1,
+      "message": "these tests are not sufficient, please add a LOT more testing. there is no testing for conditionals for example.",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 18
+      },
+      "revId": "0e34d511729576571fc1ecc00d60d40b626d8a59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
