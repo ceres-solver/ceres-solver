@@ -22,6 +22,30 @@
       "revId": "aebf934edce0872e15fc7aab73f5624c9bcf34d2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95134cd7_013659d1",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-15T15:52:28Z",
+      "side": 1,
+      "message": "Are you sure? An explicit copy constructor will break lots of stuff. \n\nFor example the following will not compile:\n\nExpressionRef a(){\n   return ExpressionRef();\n}",
+      "parentUuid": "289b86c7_b5ad8119",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "aebf934edce0872e15fc7aab73f5624c9bcf34d2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
