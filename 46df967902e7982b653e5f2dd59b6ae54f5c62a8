@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9c4b823_ce3bac91",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-16T16:20:05Z",
+      "side": 1,
+      "message": "I am confused, how is this anything more than just an int? I thought the problem I identified earlier was that you were assuming that indices into the array were exactly expressionids, and that they were contiguous. Is that a guarantee we are making about the expression graph? even when we have the optimizer? will it just be replacing stuff with no-ops while preserving the total number of ids?\n\nin either case this iterator is not needed.",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba55ef78_4bb3bfac",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-16T16:20:05Z",
+      "side": 1,
+      "message": "I do not think using an iterator adds any clarity, you may as well just have an integer based loop on the size of graph_.Size();\n\nunless you expect the iterator do more than just be an integer.",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92f3ebd_da83fa3f",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-16T16:20:05Z",
+      "side": 1,
+      "message": "see my comment about having a table lookup here, rather than having these types buried deep in code.",
+      "range": {
+        "startLine": 65,
+        "startChar": 27,
+        "endLine": 65,
+        "endChar": 44
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5dad86_cc4a4e15",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-16T16:20:05Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 7
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa553bbb_f4a0cea5",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-16T16:20:05Z",
+      "side": 1,
+      "message": "I think the comment block which explains what this function is doing does not belong in the header, it belongs here, so that we can read it, and make sure that implementation matches. in the header it is meant for the user of the class, which is not really useful.",
+      "range": {
+        "startLine": 89,
+        "startChar": 12,
+        "endLine": 89,
+        "endChar": 25
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58cba8fa_c0367c8a",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-16T16:20:05Z",
+      "side": 1,
+      "message": "I am wondering if there is a way of making this table driven, where the enum for this, and the expression it generates live together? just a thought.\n\nanother thought is, if this code will read clearer if you use stringprintf with a format string rather than string concatenation.",
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6a52dc_18233dbe",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-16T16:20:05Z",
+      "side": 1,
+      "message": "what happens here for runtime_constant?",
+      "range": {
+        "startLine": 103,
+        "startChar": 25,
+        "endLine": 103,
+        "endChar": 41
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0492ac72_6854908f",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-16T16:20:05Z",
+      "side": 1,
+      "message": "maybe parameter should be called INPUT_ASSIGNMENT to be symmetric with output assignment. just a thought.",
+      "range": {
+        "startLine": 104,
+        "startChar": 25,
+        "endLine": 104,
+        "endChar": 34
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e6a657_65bd6676",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-16T16:20:05Z",
+      "side": 1,
+      "message": "std::string argument_list \u003d args.size() ? VariableForExpressionId(args[0]) : \"\";\nfor (int i \u003d 1; i \u003c args.size(); ++i) {\n  argument_list +\u003d \",\" + VariableForExpressionId(args[i]);\n}\n\nsimpler ?",
+      "range": {
+        "startLine": 119,
+        "startChar": 11,
+        "endLine": 119,
+        "endChar": 15
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
