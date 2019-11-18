@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d0b36c8_3112ccd0",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T11:29:16Z",
+      "side": 1,
+      "message": "Yes, i want to guarantee that at any time. If an expression is removed it will be replaced by a NOP. Inserting in the middle would be an expensive operation because all ids must be updated.\n\nIt makes life a lot easier tho, and inserting will probably be used very rarely during optimization. \n\n-\u003e Removed this iterator for now",
+      "parentUuid": "a9c4b823_ce3bac91",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba55ef78_4bb3bfac",
         "filename": "internal/ceres/code_generator.cc",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "57705e94_bf6bcf4d",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T11:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba55ef78_4bb3bfac",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d92f3ebd_da83fa3f",
         "filename": "internal/ceres/code_generator.cc",
         "patchSetId": 14
@@ -59,6 +107,30 @@
       "writtenOn": "2019-11-16T16:20:05Z",
       "side": 1,
       "message": "see my comment about having a table lookup here, rather than having these types buried deep in code.",
+      "range": {
+        "startLine": 65,
+        "startChar": 27,
+        "endLine": 65,
+        "endChar": 44
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0413a854_42b6ebaa",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T11:29:16Z",
+      "side": 1,
+      "message": "Moved it to a separate static functions for now. Do you mean an actual table with std::map or like this with a big switch?",
+      "parentUuid": "d92f3ebd_da83fa3f",
       "range": {
         "startLine": 65,
         "startChar": 27,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "27f6b830_6fe26848",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T11:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e5dad86_cc4a4e15",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 7
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa553bbb_f4a0cea5",
         "filename": "internal/ceres/code_generator.cc",
         "patchSetId": 14
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8d627c36_f9a00ec3",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T11:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa553bbb_f4a0cea5",
+      "range": {
+        "startLine": 89,
+        "startChar": 12,
+        "endLine": 89,
+        "endChar": 25
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58cba8fa_c0367c8a",
         "filename": "internal/ceres/code_generator.cc",
         "patchSetId": 14
@@ -128,6 +248,24 @@
       "writtenOn": "2019-11-16T16:20:05Z",
       "side": 1,
       "message": "I am wondering if there is a way of making this table driven, where the enum for this, and the expression it generates live together? just a thought.\n\nanother thought is, if this code will read clearer if you use stringprintf with a format string rather than string concatenation.",
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc416893_8d5f8883",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T11:29:16Z",
+      "side": 1,
+      "message": "I have added braces around each case and precomputed the argument strings. Is it clear enough now?",
+      "parentUuid": "58cba8fa_c0367c8a",
       "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "fcbacaf3_457f29b9",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T11:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c6a52dc_18233dbe",
+      "range": {
+        "startLine": 103,
+        "startChar": 25,
+        "endLine": 103,
+        "endChar": 41
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0492ac72_6854908f",
         "filename": "internal/ceres/code_generator.cc",
         "patchSetId": 14
@@ -168,6 +330,30 @@
       "writtenOn": "2019-11-16T16:20:05Z",
       "side": 1,
       "message": "maybe parameter should be called INPUT_ASSIGNMENT to be symmetric with output assignment. just a thought.",
+      "range": {
+        "startLine": 104,
+        "startChar": 25,
+        "endLine": 104,
+        "endChar": 34
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bbfdf2a_f24cf83d",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T11:29:16Z",
+      "side": 1,
+      "message": "Good a idea for another patch.",
+      "parentUuid": "0492ac72_6854908f",
       "range": {
         "startLine": 104,
         "startChar": 25,
@@ -200,6 +386,30 @@
       "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccfe3471_7271469e",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T11:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2e6a657_65bd6676",
+      "range": {
+        "startLine": 119,
+        "startChar": 11,
+        "endLine": 119,
+        "endChar": 15
+      },
+      "revId": "46df967902e7982b653e5f2dd59b6ae54f5c62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
