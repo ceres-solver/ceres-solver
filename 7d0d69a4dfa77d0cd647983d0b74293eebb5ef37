@@ -22,6 +22,30 @@
       "revId": "7d0d69a4dfa77d0cd647983d0b74293eebb5ef37",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b433ec_86516ab4",
+        "filename": "internal/ceres/expression_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-18T21:40:33Z",
+      "side": 0,
+      "message": "I agree. We still need some sort of test for this; perhaps there are properties of the solution we could check?",
+      "parentUuid": "fae19c38_f69208a5",
+      "range": {
+        "startLine": 116,
+        "startChar": 5,
+        "endLine": 116,
+        "endChar": 15
+      },
+      "revId": "7d0d69a4dfa77d0cd647983d0b74293eebb5ef37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
