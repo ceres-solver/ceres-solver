@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf9e3fcd_af441538",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-18T16:02:08Z",
+      "side": 1,
+      "message": "this assumes that the user defines the right signature of the function. which they will likely not. \nAlso the option only asks for the name, but is essentially assuming that the full signature. \nI think you should generate the signature from the name no?",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 30
+      },
+      "revId": "4ce79b353bb760c748c8cf73ad15f56bc80968d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "664c130b_e92ffb2f",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-18T16:02:08Z",
+      "side": 1,
+      "message": "why not const auto\u0026 ?",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 8
+      },
+      "revId": "4ce79b353bb760c748c8cf73ad15f56bc80968d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca8ec54_fbe63882",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-18T16:02:08Z",
+      "side": 1,
+      "message": "this is great, interleave with the code please, easier to read instead of scrolling up and down.",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 3
+      },
+      "revId": "4ce79b353bb760c748c8cf73ad15f56bc80968d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb291c79_f46d56e1",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-18T16:02:08Z",
+      "side": 1,
+      "message": "this switch statement reads so much better!",
+      "range": {
+        "startLine": 166,
+        "startChar": 15,
+        "endLine": 166,
+        "endChar": 19
+      },
+      "revId": "4ce79b353bb760c748c8cf73ad15f56bc80968d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e520d7dc_c59c1142",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-18T16:02:08Z",
+      "side": 1,
+      "message": "shouldn\u0027t you be using the Options::variable_prefix here?",
+      "range": {
+        "startLine": 233,
+        "startChar": 10,
+        "endLine": 233,
+        "endChar": 12
+      },
+      "revId": "4ce79b353bb760c748c8cf73ad15f56bc80968d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
