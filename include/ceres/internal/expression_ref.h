@@ -56,10 +56,10 @@ struct ExpressionRef {
   // must work for T = Jet<ExpressionRef>.
   ExpressionRef(double compile_time_constant);
 
-  // By adding this constructor (which always throws an error) we can detect
-  // invalid usage of ExpressionRef. ExpressionRef can only be created from
-  // constexpr doubles.
-  ExpressionRef(double& test);
+  // By adding these two constructors (which are intentionally not defined) we
+  // can detect invalid usage of ExpressionRef. ExpressionRef must only be
+  // created from constexpr doubles.
+  ExpressionRef(double&);
 
   // Create an ASSIGNMENT expression from other to this.
   //

@@ -306,6 +306,12 @@ class Expression {
   // Returns true if this expression has a valid lhs.
   bool HasValidLhs() const { return lhs_id_ != kInvalidExpressionId; }
 
+  bool IsEquivalentTo(const Expression& other) const;
+
+  // Check if this is semantically equivalent to other. The actual id's are
+  // irrelevant. 'other' can be from a different ExpressionGraph.
+  bool IsSemanticallyEquivalentTo(const Expression& other) const;
+
   ExpressionType type() const { return type_; }
   ExpressionId lhs_id() const { return lhs_id_; }
   double value() const { return value_; }
@@ -332,7 +338,10 @@ class Expression {
   // If lhs_id_ == kInvalidExpressionId, then the expression type is not
   // arithmetic. Currently, only the following types have lhs_id = invalid:
   // IF,ELSE,ENDIF,NOP
-  const ExpressionId lhs_id_ = kInvalidExpressionId;
+  //
+  // Cannot be const, because the optimizer has to update and move expressions
+  // around.
+  ExpressionId lhs_id_ = kInvalidExpressionId;
 
   // Expressions have different number of arguments. For example a binary "+"
   // has 2 parameters and a function call to "sin" has 1 parameter. Here, a

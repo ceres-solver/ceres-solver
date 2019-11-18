@@ -117,15 +117,13 @@ TEST(Expression, Jet) {
   using T = Jet<ExpressionRef, 1>;
 
   StartRecordingExpressions();
-
   T a(2, 0);
   T b = a * a;
-
+  MakeOutput(b.a, "residual");
+  MakeOutput(b.v[0], "jacobian");
   auto graph = StopRecordingExpressions();
 
-  // b is valid during the assignment so we expect an
-  // additional assignment expression.
-  EXPECT_EQ(graph.Size(), 8);
+  //  EXPECT_EQ(graph.Size(), 10);
 
   // Expected code
   //   v_0 = 2;
@@ -136,26 +134,29 @@ TEST(Expression, Jet) {
   //   v_4 = v_0 * v_1;
   //   v_5 = v_1 * v_0;
   //   v_6 = v_3 * v_4;
-  //   v_7 = v_5 * v_6;
+  //   v_7 = v_5 + v_6;
+  //   residual = v_4;
+  //   jacobian = v_7;
 
+  ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  CHECK_EXPRESSION(  0,  COMPILE_TIME_CONSTANT,   0,   2,   "",     );
-  CHECK_EXPRESSION(  1,  COMPILE_TIME_CONSTANT,   1,   0,   "",     );
-  CHECK_EXPRESSION(  2,  COMPILE_TIME_CONSTANT,   2,   1,   "",     );
-  CHECK_EXPRESSION(  3,             ASSIGNMENT,   1,   0,   "", 2   );
-  CHECK_EXPRESSION(  4,      BINARY_ARITHMETIC,   4,   0,  "*", 0, 0);
-  CHECK_EXPRESSION(  5,      BINARY_ARITHMETIC,   5,   0,  "*", 0, 1);
-  CHECK_EXPRESSION(  6,      BINARY_ARITHMETIC,   6,   0,  "*", 1, 0);
-  CHECK_EXPRESSION(  7,      BINARY_ARITHMETIC,   7,   0,  "+", 5, 6);
+  INSERT_EXPRESSION(reference,  0,  COMPILE_TIME_CONSTANT,   0,   2,   "",     );
+  INSERT_EXPRESSION(reference,  1,  COMPILE_TIME_CONSTANT,   1,   0,   "",     );
+  INSERT_EXPRESSION(reference,  2,  COMPILE_TIME_CONSTANT,   2,   1,   "",     );
+  INSERT_EXPRESSION(reference,  3,             ASSIGNMENT,   1,   0,   "", 2   );
+  INSERT_EXPRESSION(reference,  4,      BINARY_ARITHMETIC,   4,   0,  "*", 0, 0);
+  INSERT_EXPRESSION(reference,  5,      BINARY_ARITHMETIC,   5,   0,  "*", 0, 1);
+  INSERT_EXPRESSION(reference,  6,      BINARY_ARITHMETIC,   6,   0,  "*", 1, 0);
+  INSERT_EXPRESSION(reference,  7,      BINARY_ARITHMETIC,   7,   0,  "+", 5, 6);
+  INSERT_EXPRESSION(reference,  8,      OUTPUT_ASSIGNMENT,   8,   0,  "residual", 4);
+  INSERT_EXPRESSION(reference,  9,      OUTPUT_ASSIGNMENT,   9,   0,  "jacobian", 7);
   // clang-format on
 
-  // Variables after execution:
-  //
-  // b.a         <=> v_4
-  // b.v[0]      <=> v_7
-  EXPECT_EQ(b.a.id, 4);
-  EXPECT_EQ(b.v[0].id, 7);
+  // We can only do a semantic comparison, because in Jet::operator* the
+  // evaluation order of the Jet constructor is undefined. In fact, clang and
+  // gcc produce different results.
+  ASSERT_TRUE(reference.IsSemanticallyEquivalentTo(graph));
 }
 
 // Todo: remaining functions of Expression

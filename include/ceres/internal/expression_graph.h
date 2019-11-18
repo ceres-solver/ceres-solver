@@ -77,6 +77,59 @@ class ExpressionGraph {
     return expressions_[id];
   }
 
+  // Returns true if this expression graph is valid. Valid means that the
+  // generated code will always compile.
+  //
+  // The following conditions are checked.
+  //
+  // 1. All dependencies are backwards
+  //   If expression A has B as a parameter or LHS, then B must be executed
+  //   before A.
+  //
+  // 2. All lhs_ids point to declared variables.
+  //   A variable is declared if id == lhs_id.
+  //
+  // 3. Matching If/Else/Endif expressions
+  //   Every if must be terminated by an endif. An else can be placed between an
+  //   if and endif.
+  bool IsValid() const;
+
+  // Checks if the expression graphs are exactly identical to each other.
+  bool IsEquivalentTo(const ExpressionGraph& other) const;
+
+  // Tests if the generated code for this and other would produce the same
+  // output. By our definition, all expressions except OUTPUT_ASSIGNMENT are
+  // side-effect free. Therefore, this function finds matching
+  // OUTPUT_ASSIGNMENTs and then tests if they were generated in the same way.
+  // The latter test is implemented by simultaneous tree traversal.
+  //
+  // This function is mainly used during correctness tests of the
+  // AutoDiffCodegen system. In some cases the compiler is allowed to change the
+  // execution order of expressions, therefore a direct comparison is not
+  // possible.
+  // https://en.cppreference.com/w/cpp/language/eval_order
+  bool IsSemanticallyEquivalentTo(const ExpressionGraph& other) const;
+
+  // There are currently two control expression which open a new block: IF and
+  // ELSE. This function finds the corresponding IF or ELSE in which block this
+  // expression lies. Calling this method on ELSE or ENDIF will return the
+  // matching IF/ELSE. If this expression doesn't have a parent, it belongs to
+  // the root-block and kInvalidExpressionId is returned.
+  ExpressionId GetParentControlExpression(ExpressionId id) const;
+
+  // Finds the matching IF expression for a given ELSE or ENDIF.
+  // If no matching If was found kInvalidExpressionId is returned.
+  ExpressionId FindMatchingIf(ExpressionId id) const;
+
+  // Insert a new expression at location "id" into the graph. All expression
+  // that are currently behind "id" are updated to the changed ids.
+  void InsertExpression(ExpressionId location,
+                        ExpressionType type,
+                        ExpressionId lhs_id,
+                        const std::vector<ExpressionId>& arguments,
+                        const std::string& name,
+                        double value);
+
   int Size() const { return expressions_.size(); }
 
  private:

@@ -42,26 +42,29 @@
 namespace ceres {
 namespace internal {
 
-inline void TestExpression(const Expression& expr,
-                           ExpressionType type,
-                           ExpressionId lhs_id,
-                           double value,
-                           const std::string& name,
-                           const std::vector<ExpressionId>& arguments) {
-  EXPECT_EQ(static_cast<int>(expr.type()), static_cast<int>(type));
-  EXPECT_EQ(expr.lhs_id(), lhs_id);
-  EXPECT_EQ(expr.value(), value);
-  EXPECT_EQ(expr.name(), name);
-  EXPECT_EQ(expr.arguments(), arguments);
+inline void InsertExpression(ExpressionGraph& graph,
+                             ExpressionId id,
+                             ExpressionType type,
+                             ExpressionId lhs_id,
+                             double value,
+                             const std::string& name,
+                             const std::vector<ExpressionId>& arguments) {
+  //  EXPECT_EQ(static_cast<int>(expr.type()), static_cast<int>(type));
+  //  EXPECT_EQ(expr.lhs_id(), lhs_id);
+  //  EXPECT_EQ(expr.value(), value);
+  //  EXPECT_EQ(expr.name(), name);
+  //  EXPECT_EQ(expr.arguments(), arguments);
+  graph.InsertExpression(id, type, lhs_id, arguments, name, value);
 }
 
-#define CHECK_EXPRESSION(_id, _type, _lhs_id, _value, _name, ...) \
-  TestExpression(graph.ExpressionForId(_id),                      \
-                 ExpressionType::_type,                           \
-                 _lhs_id,                                         \
-                 _value,                                          \
-                 _name,                                           \
-                 {__VA_ARGS__})
+#define INSERT_EXPRESSION(_graph, _id, _type, _lhs_id, _value, _name, ...) \
+  InsertExpression(_graph,                                                 \
+                   _id,                                                    \
+                   ExpressionType::_type,                                  \
+                   _lhs_id,                                                \
+                   _value,                                                 \
+                   _name,                                                  \
+                   {__VA_ARGS__})
 
 }  // namespace internal
 }  // namespace ceres

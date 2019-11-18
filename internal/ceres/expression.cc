@@ -173,5 +173,20 @@ void Expression::MakeNop() {
   arguments_.clear();
 }
 
+bool Expression::IsEquivalentTo(const Expression& other) const {
+  return IsSemanticallyEquivalentTo(other) && lhs_id() == other.lhs_id() &&
+         arguments() == other.arguments();
+}
+
+bool Expression::IsSemanticallyEquivalentTo(const Expression& other) const {
+  if (type() != other.type() || name() != other.name() ||
+      value() != other.value() ||
+      arguments().size() != other.arguments().size()) {
+    return false;
+  }
+
+  return true;
+}
+
 }  // namespace internal
 }  // namespace ceres
