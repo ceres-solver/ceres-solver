@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30750348_dc5f178a",
+        "filename": "internal/ceres/expression_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-18T15:28:59Z",
+      "side": 1,
+      "message": "ceres/expression_test.h",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "93c58a20a428b711ffaacaa8af26c19c0be0462e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73fd0fbf_bec1b39e",
+        "filename": "internal/ceres/expression_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-18T15:28:59Z",
+      "side": 1,
+      "message": "not a huge fan of this macro name, I missed this in a previous CL.\nCould you change this an expectation of some sort, which says what is being tested. reading this macro does not tell me what is being tested.",
+      "range": {
+        "startLine": 143,
+        "startChar": 4,
+        "endLine": 143,
+        "endChar": 5
+      },
+      "revId": "93c58a20a428b711ffaacaa8af26c19c0be0462e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
