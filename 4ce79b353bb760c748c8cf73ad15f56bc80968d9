@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33e424e5_edfac406",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T16:43:03Z",
+      "side": 1,
+      "message": "Let\u0027s leave it like this for now. Only the calling code can generate the right signature, because only the caller knows how the input/output expressions were created. Also in my initial implementation I was generating separate functions for EvaluateResidual and EvaluateJacobian.",
+      "parentUuid": "bf9e3fcd_af441538",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 30
+      },
+      "revId": "4ce79b353bb760c748c8cf73ad15f56bc80968d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "664c130b_e92ffb2f",
         "filename": "internal/ceres/code_generator.cc",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "4ce79b353bb760c748c8cf73ad15f56bc80968d9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba0afb7_008ca39c",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T16:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "664c130b_e92ffb2f",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 8
+      },
+      "revId": "4ce79b353bb760c748c8cf73ad15f56bc80968d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "10af0284_7b667902",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T16:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aca8ec54_fbe63882",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 3
+      },
+      "revId": "4ce79b353bb760c748c8cf73ad15f56bc80968d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb291c79_f46d56e1",
         "filename": "internal/ceres/code_generator.cc",
         "patchSetId": 16
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8d05610f_475c2b21",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T16:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb291c79_f46d56e1",
+      "range": {
+        "startLine": 166,
+        "startChar": 15,
+        "endLine": 166,
+        "endChar": 19
+      },
+      "revId": "4ce79b353bb760c748c8cf73ad15f56bc80968d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e520d7dc_c59c1142",
         "filename": "internal/ceres/code_generator.cc",
         "patchSetId": 16
@@ -114,6 +210,30 @@
       "revId": "4ce79b353bb760c748c8cf73ad15f56bc80968d9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94fba086_e7441242",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-18T16:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e520d7dc_c59c1142",
+      "range": {
+        "startLine": 233,
+        "startChar": 10,
+        "endLine": 233,
+        "endChar": 12
+      },
+      "revId": "4ce79b353bb760c748c8cf73ad15f56bc80968d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
