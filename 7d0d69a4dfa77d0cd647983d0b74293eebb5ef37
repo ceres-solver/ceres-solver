@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae19c38_f69208a5",
+        "filename": "internal/ceres/expression_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-18T21:08:23Z",
+      "side": 0,
+      "message": "I think deleting this test is not a great idea. We should figure out how to make it invariant instead.",
+      "range": {
+        "startLine": 116,
+        "startChar": 5,
+        "endLine": 116,
+        "endChar": 15
+      },
+      "revId": "7d0d69a4dfa77d0cd647983d0b74293eebb5ef37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
