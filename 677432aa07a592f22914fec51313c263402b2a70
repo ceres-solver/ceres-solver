@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fe8517b_52336334",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T14:59:40Z",
+      "side": 1,
+      "message": "debugging junk?",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a85bcfd_0fa803ad",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T14:59:40Z",
+      "side": 1,
+      "message": "So as I am looking at this code I am wondering about two things.\n\n1. The code bears no visual relation to the original code. The original variable names are lost. I understand that this is a consequence of using the C++ templating code, where the name of the variables does not matter, but it will make debugging particularly hard when something fails in more complicated examples.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 48
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1475a7_74d5f712",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T14:59:40Z",
+      "side": 1,
+      "message": "this macro name is too long. CERES_RUNTIME_CONSTANT should be enough.\nbtw what happens if you declare T a \u003d local_variable, will that trigger an error? it should, if it doesn\u0027t then we have a problem.",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 41
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73ae6da_af7d2343",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T14:59:40Z",
+      "side": 1,
+      "message": "Is a call to MakeParameter what we expect in user code?",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 21
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8357747_2afff75f",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T14:59:40Z",
+      "side": 1,
+      "message": "do we expect calls to residual[0] in user code?",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 29
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01423fa5_b55d00f9",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T14:59:40Z",
+      "side": 1,
+      "message": "I think this may come up later also, this indicates to me that we need a more robust mechanism for checking correctness, which has some amount of invariance.",
+      "range": {
+        "startLine": 230,
+        "startChar": 16,
+        "endLine": 230,
+        "endChar": 17
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6edcc56e_fc407913",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T14:59:40Z",
+      "side": 1,
+      "message": "do we expect to use auto in user code?",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 280,
+        "endChar": 6
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75bd8098_02341592",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T14:59:40Z",
+      "side": 1,
+      "message": "same question as above.",
+      "range": {
+        "startLine": 313,
+        "startChar": 12,
+        "endLine": 313,
+        "endChar": 13
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b99fd3c_d1f8a6b5",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T14:59:40Z",
+      "side": 1,
+      "message": "So currently the code generator tests only test directly added code. we do not have any tests which capture the interaction between Jets and expressions no?",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 524,
+        "endChar": 0
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
