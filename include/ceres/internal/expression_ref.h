@@ -56,6 +56,11 @@ struct ExpressionRef {
   // must work for T = Jet<ExpressionRef>.
   ExpressionRef(double compile_time_constant);
 
+  // By adding this constructor (which always throws an error) we can detect
+  // invalid usage of ExpressionRef. ExpressionRef can only be created from
+  // constexpr doubles.
+  ExpressionRef(double& test);
+
   // Create an ASSIGNMENT expression from other to this.
   //
   // For example:
@@ -182,21 +187,21 @@ ComparisonExpressionRef operator!(ComparisonExpressionRef a);
 // This struct is used to mark numbers which are constant over
 // multiple invocations but can differ between instances.
 template <typename T>
-struct RuntimeConstant {
+struct InputAssignment {
   using ReturnType = T;
   static inline ReturnType Get(double v, const char* /* unused */) { return v; }
 };
 
 template <>
-struct RuntimeConstant<ExpressionRef> {
+struct InputAssignment<ExpressionRef> {
   using ReturnType = ExpressionRef;
   static inline ReturnType Get(double /* unused */, const char* name) {
-    return ExpressionRef::Create(Expression::CreateRuntimeConstant(name));
+    return ExpressionRef::Create(Expression::CreateInputAssignment(name));
   }
 };
 
 template <typename G, int N>
-struct RuntimeConstant<Jet<G, N>> {
+struct InputAssignment<Jet<G, N>> {
   using ReturnType = Jet<G, N>;
   static inline Jet<G, N> Get(double v, const char* /* unused */) {
     return Jet<G, N>(v);
@@ -204,27 +209,31 @@ struct RuntimeConstant<Jet<G, N>> {
 };
 
 template <int N>
-struct RuntimeConstant<Jet<ExpressionRef, N>> {
+struct InputAssignment<Jet<ExpressionRef, N>> {
   using ReturnType = Jet<ExpressionRef, N>;
   static inline ReturnType Get(double /* unused */, const char* name) {
     // Note: The scalar value of v will be thrown away, because we don't need it
     // during code generation.
     return Jet<ExpressionRef, N>(
-        ExpressionRef::Create(Expression::CreateRuntimeConstant(name)));
+        ExpressionRef::Create(Expression::CreateInputAssignment(name)));
   }
 };
 
 template <typename T>
-inline typename RuntimeConstant<T>::ReturnType MakeRuntimeConstant(
+inline typename InputAssignment<T>::ReturnType MakeInputAssignment(
     double v, const char* name) {
-  return RuntimeConstant<T>::Get(v, name);
+  return InputAssignment<T>::Get(v, name);
 }
 
-#define CERES_EXPRESSION_RUNTIME_CONSTANT(_v) \
-  ceres::internal::MakeRuntimeConstant<T>(_v, #_v)
+// This macro should be used for local variables in cost functors. Using local
+// variables directly, will compile their current value into the code.
+// Example:
+//  T x = CERES_LOCAL_VARIABLE(observed_x_);
+#define CERES_LOCAL_VARIABLE(_v) \
+  ceres::internal::MakeInputAssignment<T>(_v, #_v)
 
 inline ExpressionRef MakeParameter(const std::string& name) {
-  return ExpressionRef::Create(Expression::CreateParameter(name));
+  return ExpressionRef::Create(Expression::CreateInputAssignment(name));
 }
 inline ExpressionRef MakeOutput(ExpressionRef v, const std::string& name) {
   return ExpressionRef::Create(Expression::CreateOutputAssignment(v.id, name));

@@ -44,6 +44,11 @@ ExpressionRef::ExpressionRef(double compile_time_constant) {
   id = Expression::CreateCompileTimeConstant(compile_time_constant);
 }
 
+ExpressionRef::ExpressionRef(double& test) {
+  CHECK(false)
+      << "ExpressionRefs can only be created from compile-time constants.";
+}
+
 ExpressionRef::ExpressionRef(const ExpressionRef& other) { *this = other; }
 
 ExpressionRef& ExpressionRef::operator=(const ExpressionRef& other) {
@@ -125,7 +130,7 @@ ExpressionRef MakeFunctionCall(const std::string& name,
 ExpressionRef Ternary(ComparisonExpressionRef c,
                       ExpressionRef a,
                       ExpressionRef b) {
-  return ExpressionRef::Create(Expression::CreateTernary(c.id, a.id, b.id));
+  return MakeFunctionCall("ternary", {c.id, a.id, b.id});
 }
 
 #define CERES_DEFINE_EXPRESSION_COMPARISON_OPERATOR(op)                   \
