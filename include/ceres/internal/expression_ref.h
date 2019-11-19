@@ -191,7 +191,7 @@ template <>
 struct RuntimeConstant<ExpressionRef> {
   using ReturnType = ExpressionRef;
   static inline ReturnType Get(double /* unused */, const char* name) {
-    return ExpressionRef::Create(Expression::CreateRuntimeConstant(name));
+    return ExpressionRef::Create(Expression::CreateInputAssignment(name));
   }
 };
 
@@ -210,7 +210,7 @@ struct RuntimeConstant<Jet<ExpressionRef, N>> {
     // Note: The scalar value of v will be thrown away, because we don't need it
     // during code generation.
     return Jet<ExpressionRef, N>(
-        ExpressionRef::Create(Expression::CreateRuntimeConstant(name)));
+        ExpressionRef::Create(Expression::CreateInputAssignment(name)));
   }
 };
 
@@ -224,7 +224,7 @@ inline typename RuntimeConstant<T>::ReturnType MakeRuntimeConstant(
   ceres::internal::MakeRuntimeConstant<T>(_v, #_v)
 
 inline ExpressionRef MakeParameter(const std::string& name) {
-  return ExpressionRef::Create(Expression::CreateParameter(name));
+  return ExpressionRef::Create(Expression::CreateInputAssignment(name));
 }
 inline ExpressionRef MakeOutput(ExpressionRef v, const std::string& name) {
   return ExpressionRef::Create(Expression::CreateOutputAssignment(v.id, name));

@@ -125,7 +125,7 @@ ExpressionRef MakeFunctionCall(const std::string& name,
 ExpressionRef Ternary(ComparisonExpressionRef c,
                       ExpressionRef a,
                       ExpressionRef b) {
-  return ExpressionRef::Create(Expression::CreateTernary(c.id, a.id, b.id));
+  return MakeFunctionCall("ternary", {c.id, a.id, b.id});
 }
 
 #define CERES_DEFINE_EXPRESSION_COMPARISON_OPERATOR(op)                   \

@@ -63,30 +63,9 @@ ExpressionId Expression::CreateCompileTimeConstant(double v) {
   return expr.lhs_id_;
 }
 
-ExpressionId Expression::CreateRuntimeConstant(const std::string& name) {
-  auto& expr = MakeArithmeticExpression(ExpressionType::RUNTIME_CONSTANT);
+ExpressionId Expression::CreateInputAssignment(const std::string& name) {
+  auto& expr = MakeArithmeticExpression(ExpressionType::INPUT_ASSIGNMENT);
   expr.name_ = name;
-  return expr.lhs_id_;
-}
-
-ExpressionId Expression::CreateParameter(const std::string& name) {
-  auto& expr = MakeArithmeticExpression(ExpressionType::PARAMETER);
-  expr.name_ = name;
-  return expr.lhs_id_;
-}
-
-ExpressionId Expression::CreateAssignment(ExpressionId dst, ExpressionId src) {
-  auto& expr = MakeArithmeticExpression(ExpressionType::ASSIGNMENT, dst);
-
-  expr.arguments_.push_back(src);
-  return expr.lhs_id_;
-}
-
-ExpressionId Expression::CreateUnaryArithmetic(const std::string& op,
-                                               ExpressionId v) {
-  auto& expr = MakeArithmeticExpression(ExpressionType::UNARY_ARITHMETIC);
-  expr.name_ = op;
-  expr.arguments_.push_back(v);
   return expr.lhs_id_;
 }
 
@@ -98,21 +77,28 @@ ExpressionId Expression::CreateOutputAssignment(ExpressionId v,
   return expr.lhs_id_;
 }
 
-ExpressionId Expression::CreateFunctionCall(
-    const std::string& name, const std::vector<ExpressionId>& params) {
-  auto& expr = MakeArithmeticExpression(ExpressionType::FUNCTION_CALL);
-  expr.arguments_ = params;
-  expr.name_ = name;
+ExpressionId Expression::CreateAssignment(ExpressionId dst, ExpressionId src) {
+  auto& expr = MakeArithmeticExpression(ExpressionType::ASSIGNMENT, dst);
+
+  expr.arguments_.push_back(src);
   return expr.lhs_id_;
 }
 
-ExpressionId Expression::CreateTernary(ExpressionId condition,
-                                       ExpressionId if_true,
-                                       ExpressionId if_false) {
-  auto& expr = MakeArithmeticExpression(ExpressionType::TERNARY);
-  expr.arguments_.push_back(condition);
-  expr.arguments_.push_back(if_true);
-  expr.arguments_.push_back(if_false);
+ExpressionId Expression::CreateBinaryArithmetic(const std::string& op,
+                                                ExpressionId l,
+                                                ExpressionId r) {
+  auto& expr = MakeArithmeticExpression(ExpressionType::BINARY_ARITHMETIC);
+  expr.name_ = op;
+  expr.arguments_.push_back(l);
+  expr.arguments_.push_back(r);
+  return expr.lhs_id_;
+}
+
+ExpressionId Expression::CreateUnaryArithmetic(const std::string& op,
+                                               ExpressionId v) {
+  auto& expr = MakeArithmeticExpression(ExpressionType::UNARY_ARITHMETIC);
+  expr.name_ = op;
+  expr.arguments_.push_back(v);
   return expr.lhs_id_;
 }
 
@@ -132,13 +118,11 @@ ExpressionId Expression::CreateLogicalNegation(ExpressionId v) {
   return expr.lhs_id_;
 }
 
-ExpressionId Expression::CreateBinaryArithmetic(const std::string& op,
-                                                ExpressionId l,
-                                                ExpressionId r) {
-  auto& expr = MakeArithmeticExpression(ExpressionType::BINARY_ARITHMETIC);
-  expr.name_ = op;
-  expr.arguments_.push_back(l);
-  expr.arguments_.push_back(r);
+ExpressionId Expression::CreateFunctionCall(
+    const std::string& name, const std::vector<ExpressionId>& params) {
+  auto& expr = MakeArithmeticExpression(ExpressionType::FUNCTION_CALL);
+  expr.arguments_ = params;
+  expr.name_ = name;
   return expr.lhs_id_;
 }
 
