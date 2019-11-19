@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad536bf0_3f4ea22c",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T14:44:06Z",
+      "side": 1,
+      "message": "it is a bad sign that all this code is changing and none of the tests are affected.",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 182,
+        "endChar": 25
+      },
+      "revId": "2ab681af1ac823d911ed938c6f2a77ddd6bdb76d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe4b171_252a6e9e",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T14:44:06Z",
+      "side": 1,
+      "message": "this comment does not sound right.",
+      "range": {
+        "startLine": 186,
+        "startChar": 29,
+        "endLine": 186,
+        "endChar": 35
+      },
+      "revId": "2ab681af1ac823d911ed938c6f2a77ddd6bdb76d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea24d1c_c1ae74ee",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T14:44:06Z",
+      "side": 1,
+      "message": "same here, it makes it appear that the assignments are happening to and from strings which is not right.",
+      "range": {
+        "startLine": 191,
+        "startChar": 44,
+        "endLine": 191,
+        "endChar": 50
+      },
+      "revId": "2ab681af1ac823d911ed938c6f2a77ddd6bdb76d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d45b19_a7ad0ec1",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T14:44:06Z",
+      "side": 1,
+      "message": "since the enum runtime constant is no more, should this be renamed too? or simplified further?",
+      "range": {
+        "startLine": 185,
+        "startChar": 7,
+        "endLine": 185,
+        "endChar": 22
+      },
+      "revId": "2ab681af1ac823d911ed938c6f2a77ddd6bdb76d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
