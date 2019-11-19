@@ -183,15 +183,15 @@ enum class ExpressionType {
   // v_0 = 3.1415;
   COMPILE_TIME_CONSTANT,
 
-  // For example a local member of the cost-functor.
+  // Assignment from a user-variable to a generated variable that can be used by
+  // other expressions. This is used for local variables of cost functors and
+  // parameters of a functions.
   // v_0 = _observed_point_x;
-  RUNTIME_CONSTANT,
+  // v_0 = parameters[0][0];
+  INPUT_ASSIGNMENT,
 
-  // Input parameter
-  // v_0 = parameters[1][5];
-  PARAMETER,
-
-  // Output Variable Assignemnt
+  // Assignment from a generated variable to a user-variable. Used to store the
+  // output of a generated cost functor.
   // residual[0] = v_51;
   OUTPUT_ASSIGNMENT,
 
@@ -223,11 +223,6 @@ enum class ExpressionType {
   // v_5 = f(v_0,v_1,...)
   FUNCTION_CALL,
 
-  // The ternary ?-operator. Separated from the general function call for easier
-  // access.
-  // v_3 = ternary(v_0,v_1,v_2);
-  TERNARY,
-
   // Conditional control expressions if/else/endif.
   // These are special expressions, because they don't define a new variable.
   IF,
@@ -257,8 +252,7 @@ class Expression {
   // These functions create the corresponding expression, add them to an
   // internal vector and return a reference to them.
   static ExpressionId CreateCompileTimeConstant(double v);
-  static ExpressionId CreateRuntimeConstant(const std::string& name);
-  static ExpressionId CreateParameter(const std::string& name);
+  static ExpressionId CreateInputAssignment(const std::string& name);
   static ExpressionId CreateOutputAssignment(ExpressionId v,
                                              const std::string& name);
   static ExpressionId CreateAssignment(ExpressionId dst, ExpressionId src);
@@ -273,9 +267,6 @@ class Expression {
   static ExpressionId CreateLogicalNegation(ExpressionId v);
   static ExpressionId CreateFunctionCall(
       const std::string& name, const std::vector<ExpressionId>& params);
-  static ExpressionId CreateTernary(ExpressionId condition,
-                                    ExpressionId if_true,
-                                    ExpressionId if_false);
 
   // Conditional control expressions are inserted into the graph but can't be
   // referenced by other expressions. Therefore they don't return an
