@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72b076c7_d282aa41",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-19T15:48:11Z",
+      "side": 1,
+      "message": "compile",
+      "range": {
+        "startLine": 224,
+        "startChar": 28,
+        "endLine": 224,
+        "endChar": 34
+      },
+      "revId": "380a24dbfd97b62cdb6d046e2e76b31497b413b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
