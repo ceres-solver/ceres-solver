@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f6b8245_894fb89e",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-19T11:22:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7632201d_a8106534",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "8c3de4bd4109ae2eb156a76106a562a3cc747d63",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04ee84c9_20c8d516",
         "filename": "include/ceres/internal/code_generator.h",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "8c3de4bd4109ae2eb156a76106a562a3cc747d63",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198fc6fd_1b31c374",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-19T11:22:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04ee84c9_20c8d516",
+      "range": {
+        "startLine": 35,
+        "startChar": 10,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "8c3de4bd4109ae2eb156a76106a562a3cc747d63",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
