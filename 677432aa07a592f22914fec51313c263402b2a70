@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "b256f27b_da888314",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-19T15:27:52Z",
+      "side": 1,
+      "message": "Yep, debugging generated code is hard. We could try to make it easier with COMMENT_EXPRESSIONS or by letting the user to define custom variable names.",
+      "parentUuid": "3a85bcfd_0fa803ad",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 48
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f1475a7_74d5f712",
         "filename": "internal/ceres/code_generator_test.cc",
         "patchSetId": 20
@@ -59,6 +83,30 @@
       "writtenOn": "2019-11-19T14:59:40Z",
       "side": 1,
       "message": "this macro name is too long. CERES_RUNTIME_CONSTANT should be enough.\nbtw what happens if you declare T a \u003d local_variable, will that trigger an error? it should, if it doesn\u0027t then we have a problem.",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 41
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e530b0_225540b6",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-19T15:27:52Z",
+      "side": 1,
+      "message": "If local_variable is of type double this will not trigger an error.\n\nWe cannot differentiate between\nT a \u003d local_variable;\nand\nT a \u003d 1.0;\n\nThis must be clear to the user from the beginning. One way to remind the user is to require a default constructor on their cost functors.",
+      "parentUuid": "8f1475a7_74d5f712",
       "range": {
         "startLine": 90,
         "startChar": 8,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a61af090_f11d8df5",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-19T15:27:52Z",
+      "side": 1,
+      "message": "No, this is used by the wrapper class which turns user cost functors into code. This should be in the next bigger patch which also includes the cmake integration.",
+      "parentUuid": "c73ae6da_af7d2343",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 21
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8357747_2afff75f",
         "filename": "internal/ceres/code_generator_test.cc",
         "patchSetId": 20
@@ -114,6 +186,30 @@
       "revId": "677432aa07a592f22914fec51313c263402b2a70",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd05203_b27fdc52",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-19T15:27:52Z",
+      "side": 1,
+      "message": "No, same as above.",
+      "parentUuid": "b8357747_2afff75f",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 29
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "259d444c_e773649d",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-19T15:27:52Z",
+      "side": 1,
+      "message": "In this case i would recommend it. The user could also write\n\ntypename ComparisonReturnType\u003cT\u003e::type r1 \u003d a \u003c b;\n\nOf course the best way is to directly use it in an if\n\nCERES_IF(a\u003cb){...",
+      "parentUuid": "6edcc56e_fc407913",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 280,
+        "endChar": 6
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75bd8098_02341592",
         "filename": "internal/ceres/code_generator_test.cc",
         "patchSetId": 20
@@ -186,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "c73e8b64_dfda1fcf",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-19T15:27:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75bd8098_02341592",
+      "range": {
+        "startLine": 313,
+        "startChar": 12,
+        "endLine": 313,
+        "endChar": 13
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b99fd3c_d1f8a6b5",
         "filename": "internal/ceres/code_generator_test.cc",
         "patchSetId": 20
@@ -197,6 +341,30 @@
       "writtenOn": "2019-11-19T14:59:40Z",
       "side": 1,
       "message": "So currently the code generator tests only test directly added code. we do not have any tests which capture the interaction between Jets and expressions no?",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 524,
+        "endChar": 0
+      },
+      "revId": "677432aa07a592f22914fec51313c263402b2a70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b4d03b_9afb1b61",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-19T15:27:52Z",
+      "side": 1,
+      "message": "Yes, I think such test have a lower priority. I\u0027m pretty sure that if Jets them self are correct and Expressions are correct than also Jet+Codegen is correct.\n\nWith the small exception that all Jet functions must be compileable. Convert ifs into CERES_IFs and so on.",
+      "parentUuid": "5b99fd3c_d1f8a6b5",
       "range": {
         "startLine": 524,
         "startChar": 0,
