@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "b0549bf3_6ba624dd",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-11-20T09:15:35Z",
+      "side": 1,
+      "message": "Nit: still missing the \"is\"\n\n\"the current id _is_ identical to the lhs_id\"",
+      "parentUuid": "7215a1ac_45cabce4",
+      "revId": "38c8028ea1d28681daf3d204d27bd03810621331",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94f25c24_b3c9425f",
         "filename": "internal/ceres/code_generator.cc",
         "patchSetId": 22
