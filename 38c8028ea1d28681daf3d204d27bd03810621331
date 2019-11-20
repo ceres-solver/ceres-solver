@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "79503076_3d443031",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-11-20T08:23:28Z",
+      "side": 1,
+      "message": "nit: This is matching the terminating comment; see other header files in Ceres for examples.",
+      "revId": "38c8028ea1d28681daf3d204d27bd03810621331",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ee1a1f4_15c4dc0a",
         "filename": "internal/ceres/code_generator.cc",
         "patchSetId": 22
