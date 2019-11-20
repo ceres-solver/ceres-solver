@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f125087a_d3a5ee2d",
+        "filename": "include/ceres/internal/code_generator.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-11-20T08:22:20Z",
+      "side": 1,
+      "message": "Please document. What do the elements of the vector represent?",
+      "revId": "38c8028ea1d28681daf3d204d27bd03810621331",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee1a1f4_15c4dc0a",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-11-20T08:22:20Z",
+      "side": 1,
+      "message": "nit: current id _is_ iden*tical to the lhs_id",
+      "revId": "38c8028ea1d28681daf3d204d27bd03810621331",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f25c24_b3c9425f",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-11-20T08:22:20Z",
+      "side": 1,
+      "message": "What might be helpful is to put an example output in a comment to illustrate the codegen. It\u0027s relatively clear but would make the code easier to scan.\n\nSame in a few other places.",
+      "revId": "38c8028ea1d28681daf3d204d27bd03810621331",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648e4e39_59fad8b6",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-11-20T08:22:20Z",
+      "side": 1,
+      "message": "This should output Google style:\n\n  \u003c\u003c \"if (\" \u003c\u003c args[0] \u003c\u003c \") {\"",
+      "revId": "38c8028ea1d28681daf3d204d27bd03810621331",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e55fced_dd3616db",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-11-20T08:22:20Z",
+      "side": 1,
+      "message": "nit: Please use static_cast\u003cint\u003e() instead.",
+      "revId": "38c8028ea1d28681daf3d204d27bd03810621331",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3703c085_8d1eeca9",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-11-20T08:22:20Z",
+      "side": 1,
+      "message": "Function call arguments for generated functions should have a space between them:\n\n  \" v_20 \u003d atan2(v_0, v_1)\"",
+      "revId": "38c8028ea1d28681daf3d204d27bd03810621331",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
