@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8167b80_4e882163",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-20T15:14:59Z",
+      "side": 1,
+      "message": "why is this needed?",
+      "range": {
+        "startLine": 262,
+        "startChar": 6,
+        "endLine": 262,
+        "endChar": 17
+      },
+      "revId": "5be2e48835384091bea11aacdee9ffcc474f196c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
