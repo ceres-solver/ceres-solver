@@ -44,11 +44,6 @@ ExpressionRef::ExpressionRef(double compile_time_constant) {
   id = Expression::CreateCompileTimeConstant(compile_time_constant);
 }
 
-ExpressionRef::ExpressionRef(double& test) {
-  CHECK(false)
-      << "ExpressionRefs can only be created from compile-time constants.";
-}
-
 ExpressionRef::ExpressionRef(const ExpressionRef& other) { *this = other; }
 
 ExpressionRef& ExpressionRef::operator=(const ExpressionRef& other) {
