@@ -1,4 +1,4 @@
-// Ceres Solver - A fast non-linear least squares minimizer
+﻿// Ceres Solver - A fast non-linear least squares minimizer
 // Copyright 2019 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
@@ -171,6 +171,18 @@ bool Expression::IsCompileTimeConstantAndEqualTo(double constant) const {
 void Expression::MakeNop() {
   type_ = ExpressionType::NOP;
   arguments_.clear();
+}
+
+bool Expression::operator==(const Expression& other) const {
+  return type() == other.type() && name() == other.name() &&
+         value() == other.value() && lhs_id() == other.lhs_id() &&
+         arguments() == other.arguments();
+}
+
+bool Expression::IsSemanticallyEquivalentTo(const Expression& other) const {
+  return type() == other.type() && name() == other.name() &&
+         value() == other.value() &&
+         arguments().size() == other.arguments().size();
 }
 
 }  // namespace internal

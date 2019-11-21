@@ -1,4 +1,4 @@
-// Ceres Solver - A fast non-linear least squares minimizer
+﻿// Ceres Solver - A fast non-linear least squares minimizer
 // Copyright 2019 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
@@ -305,6 +305,12 @@ class Expression {
 
   // Returns true if this expression has a valid lhs.
   bool HasValidLhs() const { return lhs_id_ != kInvalidExpressionId; }
+
+  bool operator==(const Expression& other) const;
+
+  // Check if this is semantically equivalent to other. The actual id's are
+  // irrelevant. 'other' can be from a different ExpressionGraph.
+  bool IsSemanticallyEquivalentTo(const Expression& other) const;
 
   ExpressionType type() const { return type_; }
   ExpressionId lhs_id() const { return lhs_id_; }

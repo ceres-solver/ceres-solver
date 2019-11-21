@@ -1,4 +1,4 @@
-// Ceres Solver - A fast non-linear least squares minimizer
+﻿// Ceres Solver - A fast non-linear least squares minimizer
 // Copyright 2019 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
@@ -95,5 +95,18 @@ bool ExpressionGraph::DependsOn(ExpressionId A, ExpressionId B) const {
   }
   return false;
 }
+
+bool ExpressionGraph::operator==(const ExpressionGraph& other) const {
+  if (Size() != other.Size()) {
+    return false;
+  }
+  for (ExpressionId id = 0; id < Size(); ++id) {
+    if (!(ExpressionForId(id) == other.ExpressionForId(id))) {
+      return false;
+    }
+  }
+  return true;
+}
+
 }  // namespace internal
 }  // namespace ceres

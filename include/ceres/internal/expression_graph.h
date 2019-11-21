@@ -1,4 +1,4 @@
-// Ceres Solver - A fast non-linear least squares minimizer
+﻿// Ceres Solver - A fast non-linear least squares minimizer
 // Copyright 2019 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
@@ -71,6 +71,8 @@ class ExpressionGraph {
   // Checks if A depends on B.
   // -> B is a descendant of A
   bool DependsOn(ExpressionId A, ExpressionId B) const;
+
+  bool operator==(const ExpressionGraph& other) const;
 
   Expression& ExpressionForId(ExpressionId id) { return expressions_[id]; }
   const Expression& ExpressionForId(ExpressionId id) const {
