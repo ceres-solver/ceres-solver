@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "864bb489_64d00f20",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-21T21:18:39Z",
+      "side": 1,
+      "message": "Can you be more precise what semantic equivalence actually means. The comment does not make it clear.",
+      "range": {
+        "startLine": 313,
+        "startChar": 7,
+        "endLine": 313,
+        "endChar": 33
+      },
+      "revId": "9166679fc8ca83d6455e15f411d4602a9d3ecc2f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
