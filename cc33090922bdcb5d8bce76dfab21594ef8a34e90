@@ -22,6 +22,30 @@
       "revId": "cc33090922bdcb5d8bce76dfab21594ef8a34e90",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece7c13c_f8b013fa",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-21T15:32:35Z",
+      "side": 1,
+      "message": "Works!\n\nAdded also a comment to help users running into a compile error here.",
+      "parentUuid": "ad529aad_9e66ad00",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "cc33090922bdcb5d8bce76dfab21594ef8a34e90",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
