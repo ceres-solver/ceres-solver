@@ -73,5 +73,48 @@ TEST(ExpressionGraph, Dependencies) {
   ASSERT_FALSE(tree.DependsOn(d.id, unused.id));
 }
 
+TEST(ExpressionGraph, InsertExpression) {
+  using T = ExpressionRef;
+
+  StartRecordingExpressions();
+  {
+    T a(2);                   // 0
+    T b(3);                   // 1
+    T five = 5;               // 2
+    a += five;                // 3 + 4
+    T c = a + b;              // 5
+    T d = a * b;              // 6
+    T e = c + d;              // 7
+    MakeOutput(e, "result");  // 8
+  }
+  auto reference = StopRecordingExpressions();
+  EXPECT_EQ(reference.Size(), 9);
+
+  // The expression  a += 5; is missing
+  StartRecordingExpressions();
+  {
+    T a(2);                   // 0
+    T b(3);                   // 1
+    T c = a + b;              // 2
+    T d = a * b;              // 3
+    T e = c + d;              // 4
+    MakeOutput(e, "result");  // 5
+  }
+  auto graph1 = StopRecordingExpressions();
+  EXPECT_EQ(graph1.Size(), 6);
+  ASSERT_FALSE(reference.IsEquivalentTo(graph1));
+
+  // We manually insert the 3 missing expressions
+  graph1.InsertExpression(
+      2, ExpressionType::COMPILE_TIME_CONSTANT, 2, {}, "", 5);
+  graph1.InsertExpression(
+      3, ExpressionType::BINARY_ARITHMETIC, 3, {0, 2}, "+", 0);
+  graph1.InsertExpression(4, ExpressionType::ASSIGNMENT, 0, {3}, "", 0);
+
+  // Now the graphs should be idendical
+  EXPECT_EQ(graph1.Size(), 9);
+  ASSERT_TRUE(reference.IsEquivalentTo(graph1));
+}
+
 }  // namespace internal
 }  // namespace ceres

@@ -31,7 +31,11 @@
 
 #define CERES_CODEGEN
 
-#include "ceres/expression_test.h"
+#include "ceres/internal/expression_graph.h"
+#include "ceres/internal/expression_ref.h"
+
+#include "gtest/gtest.h"
+
 #include "ceres/jet.h"
 
 namespace ceres {
@@ -137,18 +141,19 @@ TEST(Expression, Jet) {
   //   v_5 = v_1 * v_0;
   //   v_6 = v_3 * v_4;
   //   v_7 = v_5 * v_6;
-
+  ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  CHECK_EXPRESSION(  0,  COMPILE_TIME_CONSTANT,   0,   2,   "",     );
-  CHECK_EXPRESSION(  1,  COMPILE_TIME_CONSTANT,   1,   0,   "",     );
-  CHECK_EXPRESSION(  2,  COMPILE_TIME_CONSTANT,   2,   1,   "",     );
-  CHECK_EXPRESSION(  3,             ASSIGNMENT,   1,   0,   "", 2   );
-  CHECK_EXPRESSION(  4,      BINARY_ARITHMETIC,   4,   0,  "*", 0, 0);
-  CHECK_EXPRESSION(  5,      BINARY_ARITHMETIC,   5,   0,  "*", 0, 1);
-  CHECK_EXPRESSION(  6,      BINARY_ARITHMETIC,   6,   0,  "*", 1, 0);
-  CHECK_EXPRESSION(  7,      BINARY_ARITHMETIC,   7,   0,  "+", 5, 6);
+  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,   {}    ,  "",  2);
+  reference.InsertExpression(  1,  ExpressionType::COMPILE_TIME_CONSTANT,   1,   {}    ,  "",  0);
+  reference.InsertExpression(  2,  ExpressionType::COMPILE_TIME_CONSTANT,   2,   {}    ,  "",  1);
+  reference.InsertExpression(  3,             ExpressionType::ASSIGNMENT,   1,   {2}   ,  "",  0);
+  reference.InsertExpression(  4,      ExpressionType::BINARY_ARITHMETIC,   4,   {0, 0}, "*",  0);
+  reference.InsertExpression(  5,      ExpressionType::BINARY_ARITHMETIC,   5,   {0, 1}, "*",  0);
+  reference.InsertExpression(  6,      ExpressionType::BINARY_ARITHMETIC,   6,   {1, 0}, "*",  0);
+  reference.InsertExpression(  7,      ExpressionType::BINARY_ARITHMETIC,   7,   {5, 6}, "+",  0);
   // clang-format on
+  ASSERT_TRUE(reference.IsEquivalentTo(graph));
 
   // Variables after execution:
   //

@@ -173,5 +173,11 @@ void Expression::MakeNop() {
   arguments_.clear();
 }
 
+bool Expression::operator==(const Expression& other) const {
+  return type() == other.type() && lhs_id() == other.lhs_id() &&
+         arguments() == other.arguments() && name() == other.name() &&
+         value() == other.value();
+}
+
 }  // namespace internal
 }  // namespace ceres
