@@ -108,5 +108,39 @@ bool ExpressionGraph::operator==(const ExpressionGraph& other) const {
   return true;
 }
 
+void ExpressionGraph::InsertExpression(
+    ExpressionId location,
+    ExpressionType type,
+    ExpressionId lhs_id,
+    const std::vector<ExpressionId>& arguments,
+    const std::string& name,
+    double value) {
+  ExpressionId last_expression_id = Size() - 1;
+  // Increase size by adding a dummy expression.
+  expressions_.push_back(Expression(ExpressionType::NOP, kInvalidExpressionId));
+
+  // Move everything after id back and update references
+  for (ExpressionId id = last_expression_id; id >= location; --id) {
+    auto& expression = expressions_[id];
+    // Increment reference if it points to a shifted variable.
+    if (expression.lhs_id_ >= location) {
+      expression.lhs_id_++;
+    }
+    for (auto& arg : expression.arguments_) {
+      if (arg >= location) {
+        arg++;
+      }
+    }
+    expressions_[id + 1] = expression;
+  }
+
+  // Insert new expression at the correct place
+  Expression expr(type, lhs_id);
+  expr.arguments_ = arguments;
+  expr.name_ = name;
+  expr.value_ = value;
+  expressions_[location] = expr;
+}
+
 }  // namespace internal
 }  // namespace ceres

@@ -73,5 +73,89 @@ TEST(ExpressionGraph, Dependencies) {
   ASSERT_FALSE(tree.DependsOn(d.id, unused.id));
 }
 
+TEST(ExpressionGraph, InsertExpression_UpdateReferences) {
+  // This test checks if references to shifted expressions are updated
+  // accordingly.
+  using T = ExpressionRef;
+  StartRecordingExpressions();
+  T a(2);       // 0
+  T b(3);       // 1
+  T c = a + b;  // 2
+  auto graph = StopRecordingExpressions();
+
+  // Test if 'a' and 'c' are actually at location 0 and 2
+  auto& a_expr = graph.ExpressionForId(0);
+  EXPECT_EQ(a_expr.type(), ExpressionType::COMPILE_TIME_CONSTANT);
+  EXPECT_EQ(a_expr.value(), 2);
+
+  // At this point 'c' should have 0 and 1 as arguments.
+  auto& c_expr = graph.ExpressionForId(2);
+  EXPECT_EQ(c_expr.type(), ExpressionType::BINARY_ARITHMETIC);
+  EXPECT_EQ(c_expr.arguments()[0], 0);
+  EXPECT_EQ(c_expr.arguments()[1], 1);
+
+  // We insert at the beginning, which shifts everything by one spot.
+  graph.InsertExpression(
+      0, ExpressionType::COMPILE_TIME_CONSTANT, 0, {}, "", 10.2);
+
+  // Test if 'a' and 'c' are actually at location 1 and 3
+  auto& a_expr2 = graph.ExpressionForId(1);
+  EXPECT_EQ(a_expr2.type(), ExpressionType::COMPILE_TIME_CONSTANT);
+  EXPECT_EQ(a_expr2.value(), 2);
+
+  // At this point 'c' should have 1 and 2 as arguments.
+  auto& c_expr2 = graph.ExpressionForId(3);
+  EXPECT_EQ(c_expr2.type(), ExpressionType::BINARY_ARITHMETIC);
+  EXPECT_EQ(c_expr2.arguments()[0], 1);
+  EXPECT_EQ(c_expr2.arguments()[1], 2);
+}
+
+TEST(ExpressionGraph, InsertExpression) {
+  using T = ExpressionRef;
+
+  StartRecordingExpressions();
+
+  {
+    T a(2);                   // 0
+    T b(3);                   // 1
+    T five = 5;               // 2
+    T tmp = a + five;         // 3
+    a = tmp;                  // 4
+    T c = a + b;              // 5
+    T d = a * b;              // 6
+    T e = c + d;              // 7
+    MakeOutput(e, "result");  // 8
+  }
+  auto reference = StopRecordingExpressions();
+  EXPECT_EQ(reference.Size(), 9);
+
+  StartRecordingExpressions();
+
+  {
+    // The expressions 2,3,4 from above are missing.
+    T a(2);                   // 0
+    T b(3);                   // 1
+    T c = a + b;              // 2
+    T d = a * b;              // 3
+    T e = c + d;              // 4
+    MakeOutput(e, "result");  // 5
+  }
+
+  auto graph1 = StopRecordingExpressions();
+  EXPECT_EQ(graph1.Size(), 6);
+  ASSERT_FALSE(reference == graph1);
+
+  // We manually insert the 3 missing expressions
+  // clang-format off
+  graph1.InsertExpression(2, ExpressionType::COMPILE_TIME_CONSTANT, 2,     {},   "",  5);
+  graph1.InsertExpression(3,     ExpressionType::BINARY_ARITHMETIC, 3, {0, 2},  "+",  0);
+  graph1.InsertExpression(4,            ExpressionType::ASSIGNMENT, 0,    {3},   "",  0);
+  // clang-format on
+
+  // Now the graphs are identical!
+  EXPECT_EQ(graph1.Size(), 9);
+  ASSERT_TRUE(reference == graph1);
+}
+
 }  // namespace internal
 }  // namespace ceres
