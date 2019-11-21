@@ -312,6 +312,8 @@ class Expression {
   const std::string& name() const { return name_; }
   const std::vector<ExpressionId>& arguments() const { return arguments_; }
 
+  bool operator==(const Expression& other) const;
+
  private:
   // Only ExpressionGraph is allowed to call the constructor, because it manages
   // the memory and ids.
@@ -332,7 +334,10 @@ class Expression {
   // If lhs_id_ == kInvalidExpressionId, then the expression type is not
   // arithmetic. Currently, only the following types have lhs_id = invalid:
   // IF,ELSE,ENDIF,NOP
-  const ExpressionId lhs_id_ = kInvalidExpressionId;
+  //
+  // Cannot be const, because the optimizer has to update and move expressions
+  // around.
+  ExpressionId lhs_id_ = kInvalidExpressionId;
 
   // Expressions have different number of arguments. For example a binary "+"
   // has 2 parameters and a function call to "sin" has 1 parameter. Here, a
