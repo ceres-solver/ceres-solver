@@ -306,6 +306,23 @@ class Expression {
   // Returns true if this expression has a valid lhs.
   bool HasValidLhs() const { return lhs_id_ != kInvalidExpressionId; }
 
+  // Compares all members with the == operator. If this function succeeds,
+  // IsSemanticallyEquivalentTo will also return true.
+  bool operator==(const Expression& other) const;
+
+  // Semantically equivalent expressions are similar in a way, that the type(),
+  // value(), name(), number of arguments is identical. The lhs_id() and the
+  // argument_ids can differ. For example, the following groups of expressions
+  // are semantically equivalent:
+  //
+  // v_0 = v_1 + v_2;
+  // v_0 = v_1 + v_3;
+  // v_1 = v_1 + v_2;
+  //
+  // v_0 = sin(v_1);
+  // v_3 = sin(v_2);
+  bool IsSemanticallyEquivalentTo(const Expression& other) const;
+
   ExpressionType type() const { return type_; }
   ExpressionId lhs_id() const { return lhs_id_; }
   double value() const { return value_; }

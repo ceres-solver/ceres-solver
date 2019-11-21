@@ -72,6 +72,8 @@ class ExpressionGraph {
   // -> B is a descendant of A
   bool DependsOn(ExpressionId A, ExpressionId B) const;
 
+  bool operator==(const ExpressionGraph& other) const;
+
   Expression& ExpressionForId(ExpressionId id) { return expressions_[id]; }
   const Expression& ExpressionForId(ExpressionId id) const {
     return expressions_[id];
