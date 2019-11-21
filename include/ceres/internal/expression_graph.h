@@ -77,6 +77,19 @@ class ExpressionGraph {
     return expressions_[id];
   }
 
+  // Checks if the expression graphs are exactly identical to each other.
+  bool IsEquivalentTo(const ExpressionGraph& other) const;
+
+  // Insert a new expression at location "location" into the graph. All
+  // expression that are currently behind "location" are updated to the changed
+  // ids.
+  void InsertExpression(ExpressionId location,
+                        ExpressionType type,
+                        ExpressionId lhs_id,
+                        const std::vector<ExpressionId>& arguments,
+                        const std::string& name,
+                        double value);
+
   int Size() const { return expressions_.size(); }
 
  private:
