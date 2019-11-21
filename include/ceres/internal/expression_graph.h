@@ -81,6 +81,16 @@ class ExpressionGraph {
 
   int Size() const { return expressions_.size(); }
 
+  // Insert a new expression at "location" into the graph. All expression
+  // after "location" are moved by one element to the back. References to moved
+  // expression are updated.
+  void InsertExpression(ExpressionId location,
+                        ExpressionType type,
+                        ExpressionId lhs_id,
+                        const std::vector<ExpressionId>& arguments,
+                        const std::string& name,
+                        double value);
+
  private:
   // All Expressions are referenced by an ExpressionId. The ExpressionId is the
   // index into this array. Each expression has a list of ExpressionId as
