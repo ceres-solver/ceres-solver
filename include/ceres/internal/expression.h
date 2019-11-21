@@ -349,7 +349,10 @@ class Expression {
   // If lhs_id_ == kInvalidExpressionId, then the expression type is not
   // arithmetic. Currently, only the following types have lhs_id = invalid:
   // IF,ELSE,ENDIF,NOP
-  const ExpressionId lhs_id_ = kInvalidExpressionId;
+  //
+  // This member cannot be const, because Expressions are moved around during
+  // insertion and by the optimizer.
+  ExpressionId lhs_id_ = kInvalidExpressionId;
 
   // Expressions have different number of arguments. For example a binary "+"
   // has 2 parameters and a function call to "sin" has 1 parameter. Here, a
