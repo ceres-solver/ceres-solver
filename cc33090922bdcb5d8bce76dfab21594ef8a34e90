@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad529aad_9e66ad00",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-21T15:24:15Z",
+      "side": 1,
+      "message": "Will something more explicit like ExpressionRef(double\u0026) \u003d delete work?",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "cc33090922bdcb5d8bce76dfab21594ef8a34e90",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
