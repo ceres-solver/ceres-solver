@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91778e19_79271616",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-22T08:33:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9569dde9_9fe384bd",
+      "range": {
+        "startLine": 354,
+        "startChar": 15,
+        "endLine": 354,
+        "endChar": 18
+      },
+      "revId": "b122e3c4e292a64195e43f32b61950025ec4e359",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d58d55f_e5f18176",
         "filename": "include/ceres/internal/expression_graph.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-11-22T06:25:47Z",
       "side": 1,
       "message": "I am curious as to why you are not passing an expression here? it seems odd to pass all the things that need to go in here instead.",
+      "range": {
+        "startLine": 87,
+        "startChar": 24,
+        "endLine": 87,
+        "endChar": 36
+      },
+      "revId": "b122e3c4e292a64195e43f32b61950025ec4e359",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2812d3c1_c4f70703",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-22T08:33:04Z",
+      "side": 1,
+      "message": "Because currently the constructor to Expression is privat. The idea was to only have expressions inside a graph. If we allow public construction, there might some \"free\" expressions not being in a graph.\n\nI\u0027m not sure tho if that is even a problem. If users have access to the insert function, they can mess with the graph anyways.",
+      "parentUuid": "1d58d55f_e5f18176",
       "range": {
         "startLine": 87,
         "startChar": 24,
@@ -68,6 +116,30 @@
       "revId": "b122e3c4e292a64195e43f32b61950025ec4e359",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a744332_8214dc4c",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-22T08:33:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59fff481_c36e7654",
+      "range": {
+        "startLine": 124,
+        "startChar": 25,
+        "endLine": 124,
+        "endChar": 26
+      },
+      "revId": "b122e3c4e292a64195e43f32b61950025ec4e359",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
