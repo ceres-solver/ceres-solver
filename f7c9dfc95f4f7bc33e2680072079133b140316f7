@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b60adbb2_c99bd6b8",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T16:53:34Z",
+      "side": 1,
+      "message": "this means we do not support functors with dynamic number of residuals? we should document this and other limitations.",
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc46c0d_1038e6e5",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T16:53:34Z",
+      "side": 1,
+      "message": "this bakes the function signature, we should think about how to make the function signature more flexible so that this library can used for other tasks also.\n\nalso isn\u0027t this already happening in the functor?",
+      "range": {
+        "startLine": 75,
+        "startChar": 14,
+        "endLine": 75,
+        "endChar": 24
+      },
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce025fb3_7aff1771",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T16:53:34Z",
+      "side": 1,
+      "message": "why are you having to do this, isn\u0027t this already happening in the functor?",
+      "range": {
+        "startLine": 95,
+        "startChar": 42,
+        "endLine": 95,
+        "endChar": 43
+      },
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50892b25_29d01f9c",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T16:53:34Z",
+      "side": 1,
+      "message": "This is coupled with strings in the other function, we should figure out how to make this more parametric how thesw two functions do not go out of sync.",
+      "range": {
+        "startLine": 133,
+        "startChar": 14,
+        "endLine": 133,
+        "endChar": 30
+      },
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a6ee18_6ea011c4",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T16:53:34Z",
+      "side": 1,
+      "message": "same comment as above.",
+      "range": {
+        "startLine": 141,
+        "startChar": 49,
+        "endLine": 141,
+        "endChar": 54
+      },
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ba954d_786e3d70",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T16:53:34Z",
+      "side": 1,
+      "message": "same comment as above.",
+      "range": {
+        "startLine": 148,
+        "startChar": 14,
+        "endLine": 148,
+        "endChar": 22
+      },
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb181e6c_bd300396",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T16:53:34Z",
+      "side": 1,
+      "message": "just options",
+      "range": {
+        "startLine": 171,
+        "startChar": 37,
+        "endLine": 171,
+        "endChar": 54
+      },
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459562d2_c042a2b1",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T16:53:34Z",
+      "side": 1,
+      "message": "code_generator",
+      "range": {
+        "startLine": 173,
+        "startChar": 28,
+        "endLine": 173,
+        "endChar": 31
+      },
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880cfb22_64883f85",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T16:53:34Z",
+      "side": 1,
+      "message": "we should plan on having the ability to generate the output of every optimizer pass.",
+      "range": {
+        "startLine": 173,
+        "startChar": 14,
+        "endLine": 173,
+        "endChar": 27
+      },
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b59900f_070eff99",
+        "filename": "include/ceres/autodiff_codegen_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T16:53:34Z",
+      "side": 1,
+      "message": "do you intend this function to actually be part of the public API? or is it just a helper class used by the code generator? my sense is that it is the latter, so I would just have it in the autodiff_codegen file in an internal or anonymous namespace as needed.",
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
