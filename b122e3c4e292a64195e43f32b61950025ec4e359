@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f80e1436_8c4a8f84",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T16:41:27Z",
+      "side": 1,
+      "message": "yes I think if the insert function is in the public API then having a public API for Expression is the least of your problems.  This can happen in a follow up CL. I am happy to merge this CL and move on.",
+      "parentUuid": "2812d3c1_c4f70703",
+      "range": {
+        "startLine": 87,
+        "startChar": 24,
+        "endLine": 87,
+        "endChar": 36
+      },
+      "revId": "b122e3c4e292a64195e43f32b61950025ec4e359",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59fff481_c36e7654",
         "filename": "internal/ceres/expression_graph.cc",
         "patchSetId": 2
