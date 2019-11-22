@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9569dde9_9fe384bd",
+        "filename": "include/ceres/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T06:25:47Z",
+      "side": 1,
+      "message": "I do not think you need to add this comment, since there are other members of this class which are not const already.",
+      "range": {
+        "startLine": 354,
+        "startChar": 15,
+        "endLine": 354,
+        "endChar": 18
+      },
+      "revId": "b122e3c4e292a64195e43f32b61950025ec4e359",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d58d55f_e5f18176",
+        "filename": "include/ceres/internal/expression_graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T06:25:47Z",
+      "side": 1,
+      "message": "I am curious as to why you are not passing an expression here? it seems odd to pass all the things that need to go in here instead.",
+      "range": {
+        "startLine": 87,
+        "startChar": 24,
+        "endLine": 87,
+        "endChar": 36
+      },
+      "revId": "b122e3c4e292a64195e43f32b61950025ec4e359",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59fff481_c36e7654",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T06:25:47Z",
+      "side": 1,
+      "message": "auto\u0026 expression \u003d expressions_[id]; (you can make a copy if you like too)\nif (expression.lhs_id \u003e\u003d location) {\n  expression.lhs_id++;\n}\n\nfor (auto\u0026 arg : expression.arguments_) {\n      if (arg \u003e\u003d location) {\n        arg++;\n      }\n    }\n\nexpressions_[id + 1] \u003d expression;\n\nreads a bit easier IMO and saves on constantly referring to the array.",
+      "range": {
+        "startLine": 124,
+        "startChar": 25,
+        "endLine": 124,
+        "endChar": 26
+      },
+      "revId": "b122e3c4e292a64195e43f32b61950025ec4e359",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36339a5_5d83dd61",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-22T06:25:47Z",
+      "side": 1,
+      "message": "why not have the user pass in Expression to this method?",
+      "range": {
+        "startLine": 136,
+        "startChar": 12,
+        "endLine": 136,
+        "endChar": 13
+      },
+      "revId": "b122e3c4e292a64195e43f32b61950025ec4e359",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
