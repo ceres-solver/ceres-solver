@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "bde1deca_438cfbb9",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-22T17:25:02Z",
+      "side": 1,
+      "message": "So the only purpose of this class is to generate code for cost functors. If someone wants to use this library for other tasks they can just call\n\nStartRecording()\n...\ngraph \u003d StopRecording()\n\nI don\u0027t want to put the InputAssignments in the cost functors. That would force you to write code like this at the beginning of every functor:\n\nT x0 \u003d MakeInputAssignemnt(x[0], \"parameters[0][0]\");\nT x1 \u003d MakeInputAssignemnt(x[1], \"parameters[0][1]\");\n// ...",
+      "parentUuid": "7cc46c0d_1038e6e5",
+      "range": {
+        "startLine": 75,
+        "startChar": 14,
+        "endLine": 75,
+        "endChar": 24
+      },
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce025fb3_7aff1771",
         "filename": "include/ceres/autodiff_codegen.h",
         "patchSetId": 2
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "66785938_93357b1f",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-22T17:25:02Z",
+      "side": 1,
+      "message": "Same as above. If we shift it to the functor than the user has to add these lines.",
+      "parentUuid": "ce025fb3_7aff1771",
+      "range": {
+        "startLine": 95,
+        "startChar": 42,
+        "endLine": 95,
+        "endChar": 43
+      },
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50892b25_29d01f9c",
         "filename": "include/ceres/autodiff_codegen.h",
         "patchSetId": 2
@@ -76,6 +124,30 @@
       "writtenOn": "2019-11-22T16:53:34Z",
       "side": 1,
       "message": "This is coupled with strings in the other function, we should figure out how to make this more parametric how thesw two functions do not go out of sync.",
+      "range": {
+        "startLine": 133,
+        "startChar": 14,
+        "endLine": 133,
+        "endChar": 30
+      },
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968daa68_9928153e",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-22T17:25:02Z",
+      "side": 1,
+      "message": "Sure, we can add some options on how the output functions and the parameters are named.",
+      "parentUuid": "50892b25_29d01f9c",
       "range": {
         "startLine": 133,
         "startChar": 14,
@@ -214,6 +286,24 @@
       "writtenOn": "2019-11-22T16:53:34Z",
       "side": 1,
       "message": "do you intend this function to actually be part of the public API? or is it just a helper class used by the code generator? my sense is that it is the latter, so I would just have it in the autodiff_codegen file in an internal or anonymous namespace as needed.",
+      "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670ad7ea_434b693f",
+        "filename": "include/ceres/autodiff_codegen_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-22T17:25:02Z",
+      "side": 1,
+      "message": "No this is not a helper class for the code generator. The main use is that the ParamterDims and numResiduals are now part of the functor type.\n\nThis allows us to generate Code with the following line\n  AutoDiffCodeGenreator\u003cMyFunctor\u003e gen;\n  gen.Generate();\nIf the functor doesn\u0027t derive from this interface we had to write something like this:\n  AutoDiffCodeGenreator\u003cMyFunctor, 1 ,1\u003e gen;\n  gen.Generate();\nI know the second case still looks good, but the problem comes when implementing the CMake integration. During CMake we have to generate a small main.cc file, which runs the code generator. This is much easier in the first case, because only the functor name must be provided.",
+      "parentUuid": "1b59900f_070eff99",
       "revId": "f7c9dfc95f4f7bc33e2680072079133b140316f7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
