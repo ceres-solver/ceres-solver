@@ -31,8 +31,10 @@
 
 #define CERES_CODEGEN
 
-#include "ceres/expression_test.h"
+#include "ceres/internal/expression_graph.h"
+#include "ceres/internal/expression_ref.h"
 #include "ceres/jet.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

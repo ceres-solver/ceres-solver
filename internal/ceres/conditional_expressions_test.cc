@@ -31,7 +31,10 @@
 
 #define CERES_CODEGEN
 
-#include "expression_test.h"
+#include "ceres/internal/expression_graph.h"
+#include "ceres/internal/expression_ref.h"
+
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
@@ -53,10 +56,12 @@ TEST(Expression, AssignmentElimination) {
   // Expected code
   //   v_0 = 2;
 
+  ExpressionGraph reference;
   // clang-format off
   // Id  Type                   Lhs  Value Name  Arguments
-  CHECK_EXPRESSION(0,  COMPILE_TIME_CONSTANT, 0,   2,     "",);
+  reference.InsertExpression(0,  ExpressionType::COMPILE_TIME_CONSTANT, 0,   {}, "", 2);
   // clang-format on
+  EXPECT_EQ(reference, graph);
 
   // Variables after execution:
   //
@@ -84,12 +89,14 @@ TEST(Expression, Assignment) {
   //   v_1 = 4;
   //   v_1 = v_0;
 
+  ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  CHECK_EXPRESSION(  0,  COMPILE_TIME_CONSTANT,   0,   2,   "",   );
-  CHECK_EXPRESSION(  1,  COMPILE_TIME_CONSTANT,   1,   4,   "",   );
-  CHECK_EXPRESSION(  2,             ASSIGNMENT,   1,   0,   "",  0);
+  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,    {}  , "",  2);
+  reference.InsertExpression(  1,  ExpressionType::COMPILE_TIME_CONSTANT,   1,     {} , "",  4);
+  reference.InsertExpression(  2,             ExpressionType::ASSIGNMENT,   1,     {0}, "",  0);
   // clang-format on
+  EXPECT_EQ(reference, graph);
 
   // Variables after execution:
   //
@@ -121,15 +128,17 @@ TEST(Expression, ConditionalMinimal) {
 
   EXPECT_EQ(graph.Size(), 6);
 
+  ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments...
-  CHECK_EXPRESSION(  0, COMPILE_TIME_CONSTANT,   0,   2,   "",      );
-  CHECK_EXPRESSION(  1, COMPILE_TIME_CONSTANT,   1,   3,   "",      );
-  CHECK_EXPRESSION(  2,     BINARY_COMPARISON,   2,   0,  "<",  0, 1);
-  CHECK_EXPRESSION(  3,                    IF,  -1,   0,   "",     2);
-  CHECK_EXPRESSION(  4,                  ELSE,  -1,   0,   "",      );
-  CHECK_EXPRESSION(  5,                 ENDIF,  -1,   0,   "",      );
+  reference.InsertExpression(  0, ExpressionType::COMPILE_TIME_CONSTANT,   0,  {}     ,    "", 2);
+  reference.InsertExpression(  1, ExpressionType::COMPILE_TIME_CONSTANT,   1,  {}     ,    "", 3);
+  reference.InsertExpression(  2,     ExpressionType::BINARY_COMPARISON,   2,  {0, 1} ,   "<", 0);
+  reference.InsertExpression(  3,                    ExpressionType::IF,  -1,  {2}    ,    "", 0);
+  reference.InsertExpression(  4,                  ExpressionType::ELSE,  -1,  {}     ,    "", 0);
+  reference.InsertExpression(  5,                 ExpressionType::ENDIF,  -1,  {}     ,    "", 0);
   // clang-format on
+  EXPECT_EQ(reference, graph);
 }
 
 TEST(Expression, ConditionalAssignment) {
@@ -160,20 +169,22 @@ TEST(Expression, ConditionalAssignment) {
   //   v_9 = v_4 + v_0;
   //   v_4 = v_9;
 
+  ExpressionGraph reference;
   // clang-format off
   // Id,   Type,                  Lhs, Value, Name, Arguments...
-  CHECK_EXPRESSION(  0,  COMPILE_TIME_CONSTANT,    0,    2,   "",      );
-  CHECK_EXPRESSION(  1,  COMPILE_TIME_CONSTANT,    1,    3,   "",      );
-  CHECK_EXPRESSION(  2,      BINARY_COMPARISON,    2,    0,  "<",  0, 1);
-  CHECK_EXPRESSION(  3,                     IF,   -1,    0,   "",     2);
-  CHECK_EXPRESSION(  4,      BINARY_ARITHMETIC,    4,    0,  "+",  0, 1);
-  CHECK_EXPRESSION(  5,                   ELSE,   -1,    0,   "",      );
-  CHECK_EXPRESSION(  6,      BINARY_ARITHMETIC,    6,    0,  "-",  0, 1);
-  CHECK_EXPRESSION(  7,             ASSIGNMENT,    4,    0,   "",  6   );
-  CHECK_EXPRESSION(  8,                  ENDIF,   -1,    0,   "",      );
-  CHECK_EXPRESSION(  9,      BINARY_ARITHMETIC,    9,    0,  "+",  4, 0);
-  CHECK_EXPRESSION( 10,             ASSIGNMENT,    4,    0,   "",  9   );
+  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,    0,   {}    ,   "",   2);
+  reference.InsertExpression(  1,  ExpressionType::COMPILE_TIME_CONSTANT,    1,   {}    ,   "",   3);
+  reference.InsertExpression(  2,      ExpressionType::BINARY_COMPARISON,    2,   {0, 1},  "<",   0);
+  reference.InsertExpression(  3,                     ExpressionType::IF,   -1,   {2}   ,   "",   0);
+  reference.InsertExpression(  4,      ExpressionType::BINARY_ARITHMETIC,    4,   {0, 1},  "+",   0);
+  reference.InsertExpression(  5,                   ExpressionType::ELSE,   -1,   {}    ,   "",   0);
+  reference.InsertExpression(  6,      ExpressionType::BINARY_ARITHMETIC,    6,   {0, 1},  "-",   0);
+  reference.InsertExpression(  7,             ExpressionType::ASSIGNMENT,    4,   {6}   ,   "",   0);
+  reference.InsertExpression(  8,                  ExpressionType::ENDIF,   -1,   {}    ,   "",   0);
+  reference.InsertExpression(  9,      ExpressionType::BINARY_ARITHMETIC,    9,   {4, 0},  "+",   0);
+  reference.InsertExpression( 10,             ExpressionType::ASSIGNMENT,    4,   {9}   ,   "",   0);
   // clang-format on
+  EXPECT_EQ(reference, graph);
 
   // Variables after execution:
   //
