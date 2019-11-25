@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "784b120e_9d3ebca9",
+        "filename": "examples/autodiff_codegen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "I suggest moving the file opening/saving here instead of inside the generator.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d65e859_395fa016",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "This can probably go.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84948ff_99b9344a",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "Please document.\n\nShould this perhaps go in include/ceres/internal? Is this the expected public interface for users?",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad55f57d_c700f9c6",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "This constructor does a ton; please add a comment about it.\n\nAlso please document why this functionality needs to be in the constructor.\n\nI don\u0027t understand why the logic is in the constructor, or why the inheritance is needed, or why this is an object. Is there a reason not to use a function that takes the functor instead, and abandons the inheritance?\n\nThe inheritance needlessly couples the user\u0027s functor object to the autodiff codegen.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b26010c_7b729540",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "Perhaps add a block comment: // Abbreviations to keep below code readable.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db524192_ce3782b7",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "This line may be worth calling out; both here and in the docs above. This is a key point. I could be convinced to rename \"T\" to \"Expr\"; would this make the below code more readable?\n\nExpr\nExprJet?\n\nI am not sold on those names but T isn\u0027t quite doing it for me here.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b2d803_46f762c1",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "This is also a \"big event\" in the function; perhaps explain that this is the  ticker tape for the evaluation.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba099f31_e2f1f71c",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "Perhaps add more explanation here; something to the effect of \"Convert from the double passed from Ceres into codegen Expressions\".",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96add7aa_edc6f372",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "This comment is a bit confusing, since this is a code generator. As I understand it, nothing is actually getting initialized. Perhaps this is for the initial constants known at \"generate time\"?",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78fbf820_af1e1dd3",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "This is the \"big event\" in the function - \"run the cost function\". Perhaps expand this comment a bit to indicate that this is triggering the creation of the expression tree.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c310bb_f92ff5ff",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "It\u0027s worth pointing out here that at this point, the residuals should contain the output expressions due to the evaluation of the user\u0027s cost functor; and this mechanism \"exports\" the values from the code gen context.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a590807f_9290110b",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "Why is the copy needed? Please comment.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a7a91e_5438ee64",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "This should have provisions for some jacobian output pointers to be null. This is something that Ceres supports - requesting only the partial derivatives with respect to the 2nd or 4th or whatever parameter. It\u0027s important for improving performance when some variables are held constant.\n\nThis will functionality (partial jacobian output) also require testing.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d2ed2d_231bdd49",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "I suggest pushing the file writing out of this class entirely, and take as input an ostream. There is no need to couple this to the filesystem, and it makes it clearer to users what the codegen code is doing.\n\nWhat about header .h vs .cc? Does this do only one?",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adcb6337_5460d884",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "Comment adds no value; I suggest deleting.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0249aa_ffed96f4",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "I suggest stacking the output parameters.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed471681_9783ac1e",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "Suggest renaming file --\u003e out",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caeeb451_2330d6b6",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "Our TODO format:\n\n  // TODO(darius): Once the optimizer is in place, call it from\n  // here to optimize the code before generating.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd903dc_bcb6a599",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-25T18:14:03Z",
+      "side": 1,
+      "message": "Please document each member.\nPlease don\u0027t combine these into a single line.\nThese should be named with trailing _.",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
