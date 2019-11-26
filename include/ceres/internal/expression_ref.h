@@ -110,20 +110,15 @@ ExpressionRef operator*(ExpressionRef x, ExpressionRef y);
 ExpressionRef operator/(ExpressionRef x, ExpressionRef y);
 
 // Functions
-
-// Helper function to create a function call expression.
-// Users can generate code for their own custom functions by adding an overload
-// for ExpressionRef that maps to MakeFunctionCall. See below for examples.
-ExpressionRef MakeFunctionCall(const std::string& name,
-                               const std::vector<ExpressionRef>& params);
-
-#define CERES_DEFINE_UNARY_FUNCTION_CALL(name) \
-  inline ExpressionRef name(ExpressionRef x) { \
-    return MakeFunctionCall(#name, {x});       \
+#define CERES_DEFINE_UNARY_FUNCTION_CALL(name)          \
+  inline ExpressionRef name(ExpressionRef x) {          \
+    return ExpressionRef::Create(                       \
+        Expression::CreateFunctionCall(#name, {x.id})); \
   }
 #define CERES_DEFINE_BINARY_FUNCTION_CALL(name)                 \
   inline ExpressionRef name(ExpressionRef x, ExpressionRef y) { \
-    return MakeFunctionCall(#name, {x, y});                     \
+    return ExpressionRef::Create(                               \
+        Expression::CreateFunctionCall(#name, {x.id, y.id}));   \
   }
 CERES_DEFINE_UNARY_FUNCTION_CALL(abs);
 CERES_DEFINE_UNARY_FUNCTION_CALL(acos);
