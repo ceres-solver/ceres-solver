@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "250a3def_4bb37949",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "empty struct for now, no?",
+      "range": {
+        "startLine": 43,
+        "startChar": 15,
+        "endLine": 43,
+        "endChar": 16
+      },
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b64a5fc_f0bb5538",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "add a check that kNumResiduals is not CERES::DYNAMIC.",
+      "range": {
+        "startLine": 47,
+        "startChar": 36,
+        "endLine": 47,
+        "endChar": 49
+      },
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d4d83e_925e8f37",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "I think it is okay to require people to specify the options struct explicitly instead of by default.",
+      "range": {
+        "startLine": 49,
+        "startChar": 44,
+        "endLine": 49,
+        "endChar": 66
+      },
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd55ea2c_f3a61309",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "why not using ExpressionRef \u003d internal::ExpressionRef ?",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb44df6_09484e89",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "This is different from AutoDiffCostFunction,",
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74217482_099f9261",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "you will need to have examples which show how the code generated here will be integrated with CostFunctors that require initialization.",
+      "range": {
+        "startLine": 64,
+        "startChar": 14,
+        "endLine": 64,
+        "endChar": 21
+      },
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d709ca7d_4b2e3ffb",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "these three lines should come befor the startrecordingexpressions no?\nif not, then please add a detailed comment",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 7
+      },
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4897011c_9335ea42",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "J is not a great variable name, also it violates the style guide naming scheme for variables.",
+      "range": {
+        "startLine": 86,
+        "startChar": 15,
+        "endLine": 86,
+        "endChar": 16
+      },
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e1dc71_9962a8eb",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "derivative",
+      "range": {
+        "startLine": 94,
+        "startChar": 48,
+        "endLine": 94,
+        "endChar": 56
+      },
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8281d5f_fbeeb7d1",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "residual_graph",
+      "range": {
+        "startLine": 122,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 21
+      },
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb5355c_0903dc7b",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "J is not a great variable name.",
+      "range": {
+        "startLine": 134,
+        "startChar": 15,
+        "endLine": 134,
+        "endChar": 16
+      },
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2549d1e8_ab4e9f44",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "residual_and_jacobian_graph",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 34
+      },
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0131d331_1ecc6c3f",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "drop this for now.",
+      "range": {
+        "startLine": 147,
+        "startChar": 13,
+        "endLine": 147,
+        "endChar": 14
+      },
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feabe174_62a366ad",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-26T13:48:20Z",
+      "side": 1,
+      "message": "I do not think the EvaluateResidualAndJacobian handles the fact that certain entries of the jacobians array can be null. we need that to handle constant parameter blocks.",
+      "range": {
+        "startLine": 201,
+        "startChar": 28,
+        "endLine": 201,
+        "endChar": 55
+      },
+      "revId": "11a560b49b4d237a0a563bd6ef6320135d4b5e38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
