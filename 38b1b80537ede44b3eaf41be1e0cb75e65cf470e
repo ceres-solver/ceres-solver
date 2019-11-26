@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23c96635_6952e314",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-26T17:20:18Z",
+      "side": 1,
+      "message": "This line appears incorrect-- it appears to generate code that is assuming that\n\n  if jacobians !\u003d NULL, jacobians[i] !\u003d NULL for all i\n\nThis is not the case in Ceres due to fixing of variables. The contract of CostFunction::Evaluate requires handling the case of some NULL jacobians. \n\nWe should probably make this point more clear in cost_function.h; this condition is there but buried in the paragraph \"If jacobians is NULL...\"",
+      "revId": "38b1b80537ede44b3eaf41be1e0cb75e65cf470e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44dab60_01ea1d9d",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-26T17:20:18Z",
+      "side": 1,
+      "message": "This URL is outdated; if it is from other parts of the code we should fix those :)",
+      "revId": "38b1b80537ede44b3eaf41be1e0cb75e65cf470e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2741f5a0_45257b97",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-26T17:20:18Z",
+      "side": 1,
+      "message": "Please stack parameters.",
+      "revId": "38b1b80537ede44b3eaf41be1e0cb75e65cf470e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}

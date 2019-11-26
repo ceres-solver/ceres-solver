@@ -141,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "998a0c6c_28e09852",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-26T17:20:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b26010c_7b729540",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db524192_ce3782b7",
         "filename": "include/ceres/autodiff_codegen.h",
         "patchSetId": 3
@@ -397,6 +415,24 @@
       "side": 1,
       "message": "Is the selection, which parameters are held constant done at compile time?\n\nIf it\u0027s done at run-time by check the jacobian pointer I don\u0027t see why it improves performance with the current implementation.",
       "parentUuid": "01a7a91e_5438ee64",
+      "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af0be11_a9680473",
+        "filename": "include/ceres/autodiff_codegen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2019-11-26T17:20:18Z",
+      "side": 1,
+      "message": "Maybe I\u0027m misunderstanding the generated code; but the resulting generated CostFunction must handle the case that some of the jacobian pointers are NULL. The code that\u0027s generated, unless I misunderstand, is assuming that if any jacobians are requested, all jacobians are requested; this is not always the case.",
+      "parentUuid": "5321dcfb_95811c45",
       "revId": "c7e1aae82ff7d0f31fa232c33ac78d26e8f80a53",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
