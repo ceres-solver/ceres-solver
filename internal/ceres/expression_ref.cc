@@ -112,20 +112,11 @@ ExpressionRef operator*(ExpressionRef x, ExpressionRef y) {
       Expression::CreateBinaryArithmetic("*", x.id, y.id));
 }
 
-// Functions
-ExpressionRef MakeFunctionCall(const std::string& name,
-                               const std::vector<ExpressionRef>& params) {
-  std::vector<ExpressionId> ids;
-  for (auto p : params) {
-    ids.push_back(p.id);
-  }
-  return ExpressionRef::Create(Expression::CreateFunctionCall(name, ids));
-}
-
 ExpressionRef Ternary(ComparisonExpressionRef c,
                       ExpressionRef a,
                       ExpressionRef b) {
-  return MakeFunctionCall("ternary", {c.id, a.id, b.id});
+  return ExpressionRef::Create(
+      Expression::CreateFunctionCall("Ternary", {c.id, a.id, b.id}));
 }
 
 #define CERES_DEFINE_EXPRESSION_COMPARISON_OPERATOR(op)                   \

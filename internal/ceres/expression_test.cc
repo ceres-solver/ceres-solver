@@ -115,5 +115,37 @@ TEST(Expression, DirectlyDependsOn) {
   ASSERT_TRUE(graph.ExpressionForId(d.id).DirectlyDependsOn(c.id));
 }
 
+TEST(Expression, Ternary) {
+  using T = ExpressionRef;
+
+  StartRecordingExpressions();
+  T a(2);                   // 0
+  T b(3);                   // 1
+  auto c = a < b;           // 2
+  T d = Ternary(c, a, b);   // 3
+  MakeOutput(d, "result");  // 4
+  auto graph = StopRecordingExpressions();
+
+  EXPECT_EQ(graph.Size(), 5);
+
+  // Expected code
+  //   v_0 = 2;
+  //   v_1 = 3;
+  //   v_2 = v_0 < v_1;
+  //   v_3 = Ternary(v_2, v_0, v_1);
+  //   result = v_3;
+
+  ExpressionGraph reference;
+  // clang-format off
+  // Id, Type, Lhs, Value, Name, Arguments
+  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  2);
+  reference.InsertExpression(  1,  ExpressionType::COMPILE_TIME_CONSTANT,   1,      {},        "",  3);
+  reference.InsertExpression(  2,      ExpressionType::BINARY_COMPARISON,   2,   {0,1},       "<",  0);
+  reference.InsertExpression(  3,          ExpressionType::FUNCTION_CALL,   3, {2,0,1}, "Ternary",  0);
+  reference.InsertExpression(  4,      ExpressionType::OUTPUT_ASSIGNMENT,   4,     {3},  "result",  0);
+  // clang-format on
+  EXPECT_EQ(reference, graph);
+}
+
 }  // namespace internal
 }  // namespace ceres
