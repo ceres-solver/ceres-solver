@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a3d9aaa_4f5d41b0",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-11-27T16:20:51Z",
+      "side": 1,
+      "message": "This line here is the bug that breaks everything right now. By only copying the ID, a reference to \u0027other\u0027 is created. \n\nT a \u003d 0;\nT b \u003d a;  // \u003c Here b is now a reference to a but it should be a copy.\n\nTo fix this bug, I will insert a new expression here. This new expression will now be created each time a copy is executed. To reduce the amout of copy expression we pass ExpressionRef by value now.",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 18
+      },
+      "revId": "4254af9bdd358d0640fbeb039fbb367ea7f01cb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
