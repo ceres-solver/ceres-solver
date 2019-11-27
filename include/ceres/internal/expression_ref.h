@@ -65,27 +65,43 @@ struct ExpressionRef {
   //   T x = CERES_LOCAL_VARIABLE(local_variable_);
   ExpressionRef(double&) = delete;
 
-  // Create an ASSIGNMENT expression from other to this.
+  // Copy construction/assignment creates an ASSIGNMENT expression from
+  // 'other' to 'this'.
   //
   // For example:
   //   a = b;        // With a.id = 5 and b.id = 3
   // will generate the following assignment:
   //   v_5 = v_3;
   //
-  // If this (lhs) ExpressionRef is currently not pointing to a variable
-  // (id==invalid), then we can eliminate the assignment by just letting "this"
-  // point to the same variable as "other".
+  //  If 'this' ExpressionRef is currently not pointing to a variable
+  // (id==invalid), then an assignment to a new variable is generated. Example:
+  //    T a = 5;
+  //    T b;
+  //    b = a;  // During the assignment 'b' is invalid
   //
-  // Example:
-  //   a = b;       // With a.id = invalid and b.id = 3
-  // will generate NO expression, but after this line the following will be
-  // true:
-  //    a.id == b.id == 3
-  //
-  // If 'other' is not pointing to a variable (id==invalid), we found an
-  // uninitialized assignment, which is handled as an error.
+  // The right hand side of the assignment (= the argument 'other') must be
+  // valid in every case. The following code will result in an error.
+  //   T a;
+  //   T b = a;  // Error: Uninitialized assignment
   ExpressionRef(const ExpressionRef& other);
   ExpressionRef& operator=(const ExpressionRef& other);
+
+  // Similar to the copy assignment above, but if 'this' is uninitialized, we
+  // can remove the copy and therefore eliminate one expression in the graph.
+  // For example:
+  //   T c;
+  //   c = a + b;
+  // will generate
+  //   v_2 = v_0 + v_1
+  // instead of an additional assigment from the temporary 'a + b' to 'c'. In
+  // C++ this concept is called "Copy Elision". This is used by the compiler to
+  // eliminate copies, for example, in a function that returns an object by
+  // value. We implement it ourself here, because large parts of copy elision
+  // are implementation defined, which means that every compiler can do it
+  // differently. More information on copy elision can be found here:
+  // https://en.cppreference.com/w/cpp/language/copy_elision
+  ExpressionRef(ExpressionRef&& other);
+  ExpressionRef& operator=(ExpressionRef&& other);
 
   // Compound operators
   ExpressionRef& operator+=(const ExpressionRef& x);

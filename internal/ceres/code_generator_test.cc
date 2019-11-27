@@ -117,21 +117,23 @@ TEST(CodeGenerator, OUTPUT_ASSIGNMENT) {
 
 TEST(CodeGenerator, ASSIGNMENT) {
   StartRecordingExpressions();
-  T a = T(0);
-  T b = T(1);
-  T c = a;  // < This should not generate a line!
-  a = b;
-  a = a + b;  // < Create temporary + assignment
+  T a = T(0);  // 0
+  T b = T(1);  // 1
+  T c = a;     // 2
+  a = b;       // 3
+  a = a + b;   // 4 + 5
   auto graph = StopRecordingExpressions();
   std::vector<std::string> expected_code = {"{",
                                             "  double v_0;",
                                             "  double v_1;",
-                                            "  double v_3;",
+                                            "  double v_2;",
+                                            "  double v_4;",
                                             "  v_0 = 0;",
                                             "  v_1 = 1;",
+                                            "  v_2 = v_0;",
                                             "  v_0 = v_1;",
-                                            "  v_3 = v_0 + v_1;",
-                                            "  v_0 = v_3;",
+                                            "  v_4 = v_0 + v_1;",
+                                            "  v_0 = v_4;",
                                             "}"};
   GenerateAndCheck(graph, expected_code);
 }
