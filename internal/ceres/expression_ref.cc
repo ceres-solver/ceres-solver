@@ -63,73 +63,74 @@ ExpressionRef& ExpressionRef::operator=(const ExpressionRef& other) {
 }
 
 // Compound operators
-ExpressionRef& ExpressionRef::operator+=(ExpressionRef y) {
-  *this = *this + y;
+ExpressionRef& ExpressionRef::operator+=(const ExpressionRef& x) {
+  *this = *this + x;
   return *this;
 }
 
-ExpressionRef& ExpressionRef::operator-=(ExpressionRef y) {
-  *this = *this - y;
+ExpressionRef& ExpressionRef::operator-=(const ExpressionRef& x) {
+  *this = *this - x;
   return *this;
 }
 
-ExpressionRef& ExpressionRef::operator*=(ExpressionRef y) {
-  *this = *this * y;
+ExpressionRef& ExpressionRef::operator*=(const ExpressionRef& x) {
+  *this = *this * x;
   return *this;
 }
 
-ExpressionRef& ExpressionRef::operator/=(ExpressionRef y) {
-  *this = *this / y;
+ExpressionRef& ExpressionRef::operator/=(const ExpressionRef& x) {
+  *this = *this / x;
   return *this;
 }
 
 // Arith. Operators
-ExpressionRef operator-(ExpressionRef x) {
+ExpressionRef operator-(const ExpressionRef& x) {
   return ExpressionRef::Create(Expression::CreateUnaryArithmetic("-", x.id));
 }
 
-ExpressionRef operator+(ExpressionRef x) {
+ExpressionRef operator+(const ExpressionRef& x) {
   return ExpressionRef::Create(Expression::CreateUnaryArithmetic("+", x.id));
 }
 
-ExpressionRef operator+(ExpressionRef x, ExpressionRef y) {
+ExpressionRef operator+(const ExpressionRef& x, const ExpressionRef& y) {
   return ExpressionRef::Create(
       Expression::CreateBinaryArithmetic("+", x.id, y.id));
 }
 
-ExpressionRef operator-(ExpressionRef x, ExpressionRef y) {
+ExpressionRef operator-(const ExpressionRef& x, const ExpressionRef& y) {
   return ExpressionRef::Create(
       Expression::CreateBinaryArithmetic("-", x.id, y.id));
 }
 
-ExpressionRef operator/(ExpressionRef x, ExpressionRef y) {
+ExpressionRef operator/(const ExpressionRef& x, const ExpressionRef& y) {
   return ExpressionRef::Create(
       Expression::CreateBinaryArithmetic("/", x.id, y.id));
 }
 
-ExpressionRef operator*(ExpressionRef x, ExpressionRef y) {
+ExpressionRef operator*(const ExpressionRef& x, const ExpressionRef& y) {
   return ExpressionRef::Create(
       Expression::CreateBinaryArithmetic("*", x.id, y.id));
 }
 
-ExpressionRef Ternary(ComparisonExpressionRef c,
-                      ExpressionRef a,
-                      ExpressionRef b) {
+ExpressionRef Ternary(const ComparisonExpressionRef& c,
+                      const ExpressionRef& x,
+                      const ExpressionRef& y) {
   return ExpressionRef::Create(
-      Expression::CreateFunctionCall("Ternary", {c.id, a.id, b.id}));
+      Expression::CreateFunctionCall("Ternary", {c.id, x.id, y.id}));
 }
 
-#define CERES_DEFINE_EXPRESSION_COMPARISON_OPERATOR(op)                   \
-  ComparisonExpressionRef operator op(ExpressionRef a, ExpressionRef b) { \
-    return ComparisonExpressionRef(ExpressionRef::Create(                 \
-        Expression::CreateBinaryCompare(#op, a.id, b.id)));               \
+#define CERES_DEFINE_EXPRESSION_COMPARISON_OPERATOR(op)         \
+  ComparisonExpressionRef operator op(const ExpressionRef& x,   \
+                                      const ExpressionRef& y) { \
+    return ComparisonExpressionRef(ExpressionRef::Create(       \
+        Expression::CreateBinaryCompare(#op, x.id, y.id)));     \
   }
 
-#define CERES_DEFINE_EXPRESSION_LOGICAL_OPERATOR(op)               \
-  ComparisonExpressionRef operator op(ComparisonExpressionRef a,   \
-                                      ComparisonExpressionRef b) { \
-    return ComparisonExpressionRef(ExpressionRef::Create(          \
-        Expression::CreateBinaryCompare(#op, a.id, b.id)));        \
+#define CERES_DEFINE_EXPRESSION_LOGICAL_OPERATOR(op)                      \
+  ComparisonExpressionRef operator op(const ComparisonExpressionRef& x,   \
+                                      const ComparisonExpressionRef& y) { \
+    return ComparisonExpressionRef(ExpressionRef::Create(                 \
+        Expression::CreateBinaryCompare(#op, x.id, y.id)));               \
   }
 
 CERES_DEFINE_EXPRESSION_COMPARISON_OPERATOR(<)
@@ -143,9 +144,9 @@ CERES_DEFINE_EXPRESSION_LOGICAL_OPERATOR(||)
 #undef CERES_DEFINE_EXPRESSION_COMPARISON_OPERATOR
 #undef CERES_DEFINE_EXPRESSION_LOGICAL_OPERATOR
 
-ComparisonExpressionRef operator!(ComparisonExpressionRef a) {
+ComparisonExpressionRef operator!(const ComparisonExpressionRef& x) {
   return ComparisonExpressionRef(
-      ExpressionRef::Create(Expression::CreateLogicalNegation(a.id)));
+      ExpressionRef::Create(Expression::CreateLogicalNegation(x.id)));
 }
 
 }  // namespace internal
