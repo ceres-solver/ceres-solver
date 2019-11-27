@@ -88,10 +88,10 @@ struct ExpressionRef {
   ExpressionRef& operator=(const ExpressionRef& other);
 
   // Compound operators
-  ExpressionRef& operator+=(ExpressionRef x);
-  ExpressionRef& operator-=(ExpressionRef x);
-  ExpressionRef& operator*=(ExpressionRef x);
-  ExpressionRef& operator/=(ExpressionRef x);
+  ExpressionRef& operator+=(const ExpressionRef& x);
+  ExpressionRef& operator-=(const ExpressionRef& x);
+  ExpressionRef& operator*=(const ExpressionRef& x);
+  ExpressionRef& operator/=(const ExpressionRef& x);
 
   bool IsInitialized() const { return id != kInvalidExpressionId; }
 
@@ -102,23 +102,23 @@ struct ExpressionRef {
 };
 
 // Arithmetic Operators
-ExpressionRef operator-(ExpressionRef x);
-ExpressionRef operator+(ExpressionRef x);
-ExpressionRef operator+(ExpressionRef x, ExpressionRef y);
-ExpressionRef operator-(ExpressionRef x, ExpressionRef y);
-ExpressionRef operator*(ExpressionRef x, ExpressionRef y);
-ExpressionRef operator/(ExpressionRef x, ExpressionRef y);
+ExpressionRef operator-(const ExpressionRef& x);
+ExpressionRef operator+(const ExpressionRef& x);
+ExpressionRef operator+(const ExpressionRef& x, const ExpressionRef& y);
+ExpressionRef operator-(const ExpressionRef& x, const ExpressionRef& y);
+ExpressionRef operator*(const ExpressionRef& x, const ExpressionRef& y);
+ExpressionRef operator/(const ExpressionRef& x, const ExpressionRef& y);
 
 // Functions
 #define CERES_DEFINE_UNARY_FUNCTION_CALL(name)          \
-  inline ExpressionRef name(ExpressionRef x) {          \
+  inline ExpressionRef name(const ExpressionRef& x) {   \
     return ExpressionRef::Create(                       \
         Expression::CreateFunctionCall(#name, {x.id})); \
   }
-#define CERES_DEFINE_BINARY_FUNCTION_CALL(name)                 \
-  inline ExpressionRef name(ExpressionRef x, ExpressionRef y) { \
-    return ExpressionRef::Create(                               \
-        Expression::CreateFunctionCall(#name, {x.id, y.id}));   \
+#define CERES_DEFINE_BINARY_FUNCTION_CALL(name)                               \
+  inline ExpressionRef name(const ExpressionRef& x, const ExpressionRef& y) { \
+    return ExpressionRef::Create(                                             \
+        Expression::CreateFunctionCall(#name, {x.id, y.id}));                 \
   }
 CERES_DEFINE_UNARY_FUNCTION_CALL(abs);
 CERES_DEFINE_UNARY_FUNCTION_CALL(acos);
@@ -161,27 +161,33 @@ CERES_DEFINE_BINARY_FUNCTION_CALL(pow);
 //   ...
 struct ComparisonExpressionRef {
   ExpressionId id;
-  explicit ComparisonExpressionRef(ExpressionRef ref) : id(ref.id) {}
+  explicit ComparisonExpressionRef(const ExpressionRef& ref) : id(ref.id) {}
 };
 
-ExpressionRef Ternary(ComparisonExpressionRef c,
-                      ExpressionRef a,
-                      ExpressionRef b);
+ExpressionRef Ternary(const ComparisonExpressionRef& c,
+                      const ExpressionRef& x,
+                      const ExpressionRef& y);
 
 // Comparison operators
-ComparisonExpressionRef operator<(ExpressionRef a, ExpressionRef b);
-ComparisonExpressionRef operator<=(ExpressionRef a, ExpressionRef b);
-ComparisonExpressionRef operator>(ExpressionRef a, ExpressionRef b);
-ComparisonExpressionRef operator>=(ExpressionRef a, ExpressionRef b);
-ComparisonExpressionRef operator==(ExpressionRef a, ExpressionRef b);
-ComparisonExpressionRef operator!=(ExpressionRef a, ExpressionRef b);
+ComparisonExpressionRef operator<(const ExpressionRef& x,
+                                  const ExpressionRef& y);
+ComparisonExpressionRef operator<=(const ExpressionRef& x,
+                                   const ExpressionRef& y);
+ComparisonExpressionRef operator>(const ExpressionRef& x,
+                                  const ExpressionRef& y);
+ComparisonExpressionRef operator>=(const ExpressionRef& x,
+                                   const ExpressionRef& y);
+ComparisonExpressionRef operator==(const ExpressionRef& x,
+                                   const ExpressionRef& y);
+ComparisonExpressionRef operator!=(const ExpressionRef& x,
+                                   const ExpressionRef& y);
 
 // Logical Operators
-ComparisonExpressionRef operator&&(ComparisonExpressionRef a,
-                                   ComparisonExpressionRef b);
-ComparisonExpressionRef operator||(ComparisonExpressionRef a,
-                                   ComparisonExpressionRef b);
-ComparisonExpressionRef operator!(ComparisonExpressionRef a);
+ComparisonExpressionRef operator&&(const ComparisonExpressionRef& x,
+                                   const ComparisonExpressionRef& y);
+ComparisonExpressionRef operator||(const ComparisonExpressionRef& x,
+                                   const ComparisonExpressionRef& y);
+ComparisonExpressionRef operator!(const ComparisonExpressionRef& x);
 
 // This struct is used to mark numbers which are constant over
 // multiple invocations but can differ between instances.
@@ -234,7 +240,8 @@ inline typename InputAssignment<T>::ReturnType MakeInputAssignment(
 inline ExpressionRef MakeParameter(const std::string& name) {
   return ExpressionRef::Create(Expression::CreateInputAssignment(name));
 }
-inline ExpressionRef MakeOutput(ExpressionRef v, const std::string& name) {
+inline ExpressionRef MakeOutput(const ExpressionRef& v,
+                                const std::string& name) {
   return ExpressionRef::Create(Expression::CreateOutputAssignment(v.id, name));
 }
 
