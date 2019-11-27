@@ -72,20 +72,21 @@ struct ExpressionRef {
   // will generate the following assignment:
   //   v_5 = v_3;
   //
-  // If this (lhs) ExpressionRef is currently not pointing to a variable
-  // (id==invalid), then we can eliminate the assignment by just letting "this"
-  // point to the same variable as "other".
-  //
-  // Example:
-  //   a = b;       // With a.id = invalid and b.id = 3
-  // will generate NO expression, but after this line the following will be
-  // true:
-  //    a.id == b.id == 3
+  //  If this ExpressionRef is currently not pointing to a variable
+  // (id==invalid), a new variable is created.
   //
   // If 'other' is not pointing to a variable (id==invalid), we found an
   // uninitialized assignment, which is handled as an error.
   ExpressionRef(const ExpressionRef& other);
   ExpressionRef& operator=(const ExpressionRef& other);
+
+  // Similar to the copy assignment above, but if this is uninitialized, we can
+  // remove the copy and therefore eliminate one expression in the graph. This
+  // is a custom-build copy elision. See here for more information:
+  //
+  // https://en.cppreference.com/w/cpp/language/copy_elision
+  ExpressionRef(ExpressionRef&& other);
+  ExpressionRef& operator=(ExpressionRef&& other);
 
   // Compound operators
   ExpressionRef& operator+=(const ExpressionRef& x);

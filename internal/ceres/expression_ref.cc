@@ -49,16 +49,34 @@ ExpressionRef::ExpressionRef(const ExpressionRef& other) { *this = other; }
 ExpressionRef& ExpressionRef::operator=(const ExpressionRef& other) {
   // Assigning an uninitialized variable to another variable is an error.
   CHECK(other.IsInitialized()) << "Uninitialized Assignment.";
+  if (IsInitialized()) {
+    // Create assignment from other -> this
+    Expression::CreateAssignment(id, other.id);
+  } else {
+    // Create a new variable in this
+    // Create assignment from other -> this
+    id = Expression::CreateAssignment(kInvalidExpressionId, other.id);
+  }
+  return *this;
+}
+
+ExpressionRef::ExpressionRef(ExpressionRef&& other) {
+  *this = std::move(other);
+}
+
+ExpressionRef& ExpressionRef::operator=(ExpressionRef&& other) {
+  // Assigning an uninitialized variable to another variable is an error.
+  CHECK(other.IsInitialized()) << "Uninitialized Assignment.";
 
   if (IsInitialized()) {
     // Create assignment from other -> this
     Expression::CreateAssignment(id, other.id);
   } else {
-    // Special case: "this" expressionref is invalid
-    //    -> Skip assignment
-    //    -> Let "this" point to the same variable as other
+    // Special case: 'this' in uninitialized and other is an rvalue.
+    //    -> Implement copy elision by only setting the reference
     id = other.id;
   }
+  other.id = kInvalidExpressionId;
   return *this;
 }
 
