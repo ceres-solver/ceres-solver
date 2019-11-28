@@ -82,7 +82,7 @@ TEST(CodeGenerator, COMPILE_TIME_CONSTANT) {
 TEST(CodeGenerator, INPUT_ASSIGNMENT) {
   double local_variable = 5.0;
   StartRecordingExpressions();
-  T a = CERES_LOCAL_VARIABLE(local_variable);
+  T a = CERES_LOCAL_VARIABLE(T, local_variable);
   T b = MakeParameter("parameters[0][0]");
   T c = a + b;
   auto graph = StopRecordingExpressions();
