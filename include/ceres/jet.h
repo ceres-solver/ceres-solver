@@ -164,23 +164,10 @@
 #include <string>
 
 #include "Eigen/Core"
+#include "ceres/codegen/internal/autodiff_codegen_types.h"
 #include "ceres/internal/port.h"
 
 namespace ceres {
-
-// The return type of a Jet comparison, for example from <, &&, ==.
-//
-// In the context of traditional Ceres Jet operations, this would
-// always be a bool. However, in the autodiff code generation context,
-// the return is always an expression, and so a different type must be
-// used as a return from comparisons.
-//
-// In the autodiff codegen context, this function is overloaded so that 'type'
-// is one of the autodiff code generation expression types.
-template <typename T>
-struct ComparisonReturnType {
-  using type = bool;
-};
 
 template <typename T, int N>
 struct Jet {
@@ -893,6 +880,16 @@ inline std::ostream& operator<<(std::ostream& s, const Jet<T, N>& z) {
   s << "]";
   return s;
 }
+
+namespace internal {
+
+template <typename T, int N>
+struct InputAssignment<Jet<T, N>> {
+  static inline Jet<T, N> Get(double v, const char* name) {
+    return Jet<T, N>(InputAssignment<T>::Get(v, name));
+  }
+};
+}  // namespace internal
 
 }  // namespace ceres
 

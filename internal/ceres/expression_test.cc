@@ -31,8 +31,8 @@
 
 #define CERES_CODEGEN
 
-#include "ceres/internal/expression_graph.h"
-#include "ceres/internal/expression_ref.h"
+#include "ceres/codegen/internal/expression_graph.h"
+#include "ceres/codegen/internal/expression_ref.h"
 #include "ceres/jet.h"
 #include "gtest/gtest.h"
 
@@ -143,85 +143,6 @@ TEST(Expression, Ternary) {
   reference.InsertExpression(  2,      ExpressionType::BINARY_COMPARISON,   2,   {0,1},       "<",  0);
   reference.InsertExpression(  3,          ExpressionType::FUNCTION_CALL,   3, {2,0,1}, "Ternary",  0);
   reference.InsertExpression(  4,      ExpressionType::OUTPUT_ASSIGNMENT,   4,     {3},  "result",  0);
-  // clang-format on
-  EXPECT_EQ(reference, graph);
-}
-
-TEST(Expression, Assignment) {
-  using T = ExpressionRef;
-
-  StartRecordingExpressions();
-  T a = 1;
-  T b = 2;
-  b = a;
-  auto graph = StopRecordingExpressions();
-
-  EXPECT_EQ(graph.Size(), 3);
-
-  ExpressionGraph reference;
-  // clang-format off
-  // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  1);
-  reference.InsertExpression(  1,  ExpressionType::COMPILE_TIME_CONSTANT,   1,      {},        "",  2);
-  reference.InsertExpression(  2,             ExpressionType::ASSIGNMENT,   1,      {0},        "",  0);
-  // clang-format on
-  EXPECT_EQ(reference, graph);
-}
-
-TEST(Expression, AssignmentCreate) {
-  using T = ExpressionRef;
-
-  StartRecordingExpressions();
-  T a = 2;
-  T b = a;
-  auto graph = StopRecordingExpressions();
-
-  EXPECT_EQ(graph.Size(), 2);
-
-  ExpressionGraph reference;
-  // clang-format off
-  // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  2);
-  reference.InsertExpression(  1,             ExpressionType::ASSIGNMENT,   1,      {0},        "",  0);
-  // clang-format on
-  EXPECT_EQ(reference, graph);
-}
-
-TEST(Expression, MoveAssignmentCreate) {
-  using T = ExpressionRef;
-
-  StartRecordingExpressions();
-  T a = 1;
-  T b = std::move(a);
-  auto graph = StopRecordingExpressions();
-
-  EXPECT_EQ(graph.Size(), 1);
-
-  ExpressionGraph reference;
-  // clang-format off
-  // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  1);
-  // clang-format on
-  EXPECT_EQ(reference, graph);
-}
-
-TEST(Expression, MoveAssignment) {
-  using T = ExpressionRef;
-
-  StartRecordingExpressions();
-  T a = 1;
-  T b = 2;
-  b = std::move(a);
-  auto graph = StopRecordingExpressions();
-
-  EXPECT_EQ(graph.Size(), 3);
-
-  ExpressionGraph reference;
-  // clang-format off
-  // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  1);
-  reference.InsertExpression(  1,  ExpressionType::COMPILE_TIME_CONSTANT,   1,      {},        "",  2);
-  reference.InsertExpression(  2,             ExpressionType::ASSIGNMENT,   1,      {0},        "",  0);
   // clang-format on
   EXPECT_EQ(reference, graph);
 }

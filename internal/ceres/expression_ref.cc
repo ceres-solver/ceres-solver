@@ -28,7 +28,7 @@
 //
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 
-#include "ceres/internal/expression_ref.h"
+#include "ceres/codegen/internal/expression_ref.h"
 #include "glog/logging.h"
 
 namespace ceres {

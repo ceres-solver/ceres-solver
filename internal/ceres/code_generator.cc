@@ -28,7 +28,7 @@
 //
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 
-#include "ceres/internal/code_generator.h"
+#include "ceres/codegen/internal/code_generator.h"
 #include <sstream>
 #include "assert.h"
 #include "glog/logging.h"
