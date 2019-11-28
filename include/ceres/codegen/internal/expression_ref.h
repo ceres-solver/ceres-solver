@@ -33,8 +33,8 @@
 #define CERES_PUBLIC_EXPRESSION_REF_H_
 
 #include <string>
-#include "ceres/jet.h"
-#include "expression.h"
+#include "ceres/internal/autodiff_codegen_types.h"
+#include "ceres/internal/expression.h"
 
 namespace ceres {
 namespace internal {
@@ -189,38 +189,13 @@ ComparisonExpressionRef operator||(const ComparisonExpressionRef& x,
                                    const ComparisonExpressionRef& y);
 ComparisonExpressionRef operator!(const ComparisonExpressionRef& x);
 
-// This struct is used to mark numbers which are constant over
-// multiple invocations but can differ between instances.
-template <typename T>
-struct InputAssignment {
-  using ReturnType = T;
-  static inline ReturnType Get(double v, const char* /* unused */) { return v; }
-};
-
 template <>
 struct InputAssignment<ExpressionRef> {
   using ReturnType = ExpressionRef;
   static inline ReturnType Get(double /* unused */, const char* name) {
-    return ExpressionRef::Create(Expression::CreateInputAssignment(name));
-  }
-};
-
-template <typename G, int N>
-struct InputAssignment<Jet<G, N>> {
-  using ReturnType = Jet<G, N>;
-  static inline Jet<G, N> Get(double v, const char* /* unused */) {
-    return Jet<G, N>(v);
-  }
-};
-
-template <int N>
-struct InputAssignment<Jet<ExpressionRef, N>> {
-  using ReturnType = Jet<ExpressionRef, N>;
-  static inline ReturnType Get(double /* unused */, const char* name) {
     // Note: The scalar value of v will be thrown away, because we don't need it
     // during code generation.
-    return Jet<ExpressionRef, N>(
-        ExpressionRef::Create(Expression::CreateInputAssignment(name)));
+    return ExpressionRef::Create(Expression::CreateInputAssignment(name));
   }
 };
 
@@ -230,13 +205,6 @@ inline typename InputAssignment<T>::ReturnType MakeInputAssignment(
   return InputAssignment<T>::Get(v, name);
 }
 
-// This macro should be used for local variables in cost functors. Using local
-// variables directly, will compile their current value into the code.
-// Example:
-//  T x = CERES_LOCAL_VARIABLE(observed_x_);
-#define CERES_LOCAL_VARIABLE(_v) \
-  ceres::internal::MakeInputAssignment<T>(_v, #_v)
-
 inline ExpressionRef MakeParameter(const std::string& name) {
   return ExpressionRef::Create(Expression::CreateInputAssignment(name));
 }
@@ -245,24 +213,8 @@ inline ExpressionRef MakeOutput(const ExpressionRef& v,
   return ExpressionRef::Create(Expression::CreateOutputAssignment(v.id, name));
 }
 
-// The CERES_CODEGEN macro is defined by the build system only during code
-// generation. In all other cases the CERES_IF/ELSE macros just expand to the
-// if/else keywords.
-#ifdef CERES_CODEGEN
-#define CERES_IF(condition_) Expression::CreateIf((condition_).id);
-#define CERES_ELSE Expression::CreateElse();
-#define CERES_ENDIF Expression::CreateEndIf();
-#else
-// clang-format off
-#define CERES_IF(condition_) if (condition_) {
-#define CERES_ELSE } else {
-#define CERES_ENDIF }
-// clang-format on
-#endif
-
 }  // namespace internal
 
-// See jet.h for more info on this type.
 template <>
 struct ComparisonReturnType<internal::ExpressionRef> {
   using type = internal::ComparisonExpressionRef;
