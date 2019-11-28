@@ -30,10 +30,9 @@
 //
 #define CERES_CODEGEN
 
-#include "ceres/internal/code_generator.h"
-#include "ceres/internal/expression_graph.h"
-#include "ceres/internal/expression_ref.h"
-
+#include "ceres/codegen/internal/code_generator.h"
+#include "ceres/codegen/internal/expression_graph.h"
+#include "ceres/codegen/internal/expression_ref.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -82,7 +81,7 @@ TEST(CodeGenerator, COMPILE_TIME_CONSTANT) {
 TEST(CodeGenerator, INPUT_ASSIGNMENT) {
   double local_variable = 5.0;
   StartRecordingExpressions();
-  T a = CERES_LOCAL_VARIABLE(local_variable);
+  T a = CERES_LOCAL_VARIABLE(T, local_variable);
   T b = MakeParameter("parameters[0][0]");
   T c = a + b;
   auto graph = StopRecordingExpressions();

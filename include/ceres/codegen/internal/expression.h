@@ -167,8 +167,8 @@
 // expand to the if/else keywords. See expression_ref.h for the exact
 // definition.
 //
-#ifndef CERES_PUBLIC_EXPRESSION_H_
-#define CERES_PUBLIC_EXPRESSION_H_
+#ifndef CERES_PUBLIC_CODEGEN_INTERNAL_EXPRESSION_H_
+#define CERES_PUBLIC_CODEGEN_INTERNAL_EXPRESSION_H_
 
 #include <string>
 #include <vector>
@@ -370,4 +370,5 @@ class Expression {
 
 }  // namespace internal
 }  // namespace ceres
-#endif
+
+#endif  // CERES_PUBLIC_CODEGEN_INTERNAL_EXPRESSION_H_

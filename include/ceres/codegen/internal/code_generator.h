@@ -28,11 +28,11 @@
 //
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 //
-#ifndef CERES_PUBLIC_CODE_GENERATOR_H_
-#define CERES_PUBLIC_CODE_GENERATOR_H_
+#ifndef CERES_PUBLIC_CODEGEN_INTERNAL_CODE_GENERATOR_H_
+#define CERES_PUBLIC_CODEGEN_INTERNAL_CODE_GENERATOR_H_
 
-#include "ceres/internal/expression.h"
-#include "ceres/internal/expression_graph.h"
+#include "ceres/codegen/internal/expression.h"
+#include "ceres/codegen/internal/expression_graph.h"
 
 #include <string>
 #include <vector>
@@ -120,4 +120,4 @@ class CodeGenerator {
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_PUBLIC_CODE_GENERATOR_H_
+#endif  // CERES_PUBLIC_CODEGEN_INTERNAL_CODE_GENERATOR_H_

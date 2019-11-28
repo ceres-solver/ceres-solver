@@ -28,8 +28,8 @@
 //
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 
-#ifndef CERES_PUBLIC_EXPRESSION_TREE_H_
-#define CERES_PUBLIC_EXPRESSION_TREE_H_
+#ifndef CERES_PUBLIC_CODEGEN_INTERNAL_EXPRESSION_GRAPH_H_
+#define CERES_PUBLIC_CODEGEN_INTERNAL_EXPRESSION_GRAPH_H_
 
 #include <vector>
 
@@ -117,4 +117,5 @@ ExpressionGraph* GetCurrentExpressionGraph();
 
 }  // namespace internal
 }  // namespace ceres
-#endif
+
+#endif  // CERES_PUBLIC_CODEGEN_INTERNAL_EXPRESSION_GRAPH_H_
