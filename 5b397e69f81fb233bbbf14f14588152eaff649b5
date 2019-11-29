@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5f26b3a_70c0d9ca",
+        "filename": "include/ceres/codegen/autodiff_codegen_macros.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-29T18:27:16Z",
+      "side": 1,
+      "message": "since we are already in this directory, this can just be called macros.h",
+      "range": {
+        "startLine": 3,
+        "startChar": 21,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "5b397e69f81fb233bbbf14f14588152eaff649b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7dbb6f_2482b039",
+        "filename": "include/ceres/codegen/internal/autodiff_codegen_types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-29T18:27:16Z",
+      "side": 1,
+      "message": "this can just be called types.h",
+      "range": {
+        "startLine": 6,
+        "startChar": 21,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "5b397e69f81fb233bbbf14f14588152eaff649b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
