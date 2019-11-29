@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49738cf2_7bd34eb5",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-29T15:31:12Z",
+      "side": 1,
+      "message": "these two paragaphs need to be reconciled, I cannot make sense of them together.",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 18
+      },
+      "revId": "307bd08a58ece6f30d48d723b680b6a428d4b734",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1675c06f_0932e5e5",
+        "filename": "include/ceres/internal/expression_ref.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-29T15:31:12Z",
+      "side": 1,
+      "message": "I would go ahead and expand this comment instead of pointing the reader to a link. This was a subtle error and is worthy of documentation for people modifying this code in the future.",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 83,
+        "endChar": 12
+      },
+      "revId": "307bd08a58ece6f30d48d723b680b6a428d4b734",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65ff356_eaa0507a",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-29T15:31:12Z",
+      "side": 1,
+      "message": "add a comment about -fno-elide-constructors",
+      "range": {
+        "startLine": 512,
+        "startChar": 51,
+        "endLine": 512,
+        "endChar": 56
+      },
+      "revId": "307bd08a58ece6f30d48d723b680b6a428d4b734",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a814bba0_160b93a7",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-29T15:31:12Z",
+      "side": 1,
+      "message": "when I was reading the comment in the header it was not evident whose id you were talking about. it is worth being precise about this.",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 32
+      },
+      "revId": "307bd08a58ece6f30d48d723b680b6a428d4b734",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e433b3f4_6f09377a",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-29T15:31:12Z",
+      "side": 1,
+      "message": "to this read this code I need to remember what happens with CreateAssignment when kInvalidExpressionId is passed to it. Please add a comment about it.",
+      "range": {
+        "startLine": 58,
+        "startChar": 21,
+        "endLine": 58,
+        "endChar": 37
+      },
+      "revId": "307bd08a58ece6f30d48d723b680b6a428d4b734",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4531c5_720a423c",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-29T15:31:12Z",
+      "side": 1,
+      "message": "in -\u003e is",
+      "range": {
+        "startLine": 75,
+        "startChar": 30,
+        "endLine": 75,
+        "endChar": 31
+      },
+      "revId": "307bd08a58ece6f30d48d723b680b6a428d4b734",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0332ec1a_c69afc27",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-11-29T15:31:12Z",
+      "side": 1,
+      "message": "expand this copy elision comment.",
+      "range": {
+        "startLine": 76,
+        "startChar": 56,
+        "endLine": 76,
+        "endChar": 65
+      },
+      "revId": "307bd08a58ece6f30d48d723b680b6a428d4b734",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
