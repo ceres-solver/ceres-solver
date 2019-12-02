@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "109b6825_5b96aa30",
+        "filename": "include/ceres/codegen/macros.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T17:32:06Z",
+      "side": 1,
+      "message": "is this the best place for this, given that this file is called macros?",
+      "range": {
+        "startLine": 121,
+        "startChar": 9,
+        "endLine": 121,
+        "endChar": 16
+      },
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12cc41bd_0e80c915",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T17:32:06Z",
+      "side": 1,
+      "message": "what happens here and in the functions below?",
+      "range": {
+        "startLine": 663,
+        "startChar": 12,
+        "endLine": 663,
+        "endChar": 20
+      },
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb7342e_acfcf28b",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T17:32:06Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 338,
+        "endChar": 4
+      },
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609699ca_a9d1df53",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T17:32:06Z",
+      "side": 1,
+      "message": "I think this may require a slightly more general solution where in CERES_CODEGEN mode some of these macros from glog become noops?",
+      "range": {
+        "startLine": 590,
+        "startChar": 8,
+        "endLine": 590,
+        "endChar": 21
+      },
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
