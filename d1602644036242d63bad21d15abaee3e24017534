@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "114aa16b_d89c6474",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T16:10:57Z",
+      "side": 1,
+      "message": "On further thought, I think this file should be called something other than autodiff.h since it has one function, the filename should likely be something related to it. but we can do this in a follow up CL, I am going to go ahead and submit this.",
+      "revId": "d1602644036242d63bad21d15abaee3e24017534",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
