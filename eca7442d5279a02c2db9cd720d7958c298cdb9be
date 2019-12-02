@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b2bf8ad_153bba16",
+        "filename": "include/ceres/codegen/macros.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-02T17:46:32Z",
+      "side": 1,
+      "message": "It must be a public header included by all cost functors. So the place is probably fine but the name of this header might be questionable.",
+      "parentUuid": "109b6825_5b96aa30",
+      "range": {
+        "startLine": 121,
+        "startChar": 9,
+        "endLine": 121,
+        "endChar": 16
+      },
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12cc41bd_0e80c915",
         "filename": "include/ceres/jet.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d004bc86_0b58dec6",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-02T17:46:32Z",
+      "side": 1,
+      "message": "A compiler error. \n\nI will implement them tomorrow.",
+      "parentUuid": "12cc41bd_0e80c915",
+      "range": {
+        "startLine": 663,
+        "startChar": 12,
+        "endLine": 663,
+        "endChar": 20
+      },
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcb7342e_acfcf28b",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2019-12-02T17:32:06Z",
       "side": 1,
       "message": "update",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 338,
+        "endChar": 4
+      },
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dcfd789_c9dbbad4",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-02T17:46:32Z",
+      "side": 1,
+      "message": "I can\u0027t convert this kernel because it uses integer arithmetic.",
+      "parentUuid": "bcb7342e_acfcf28b",
       "range": {
         "startLine": 338,
         "startChar": 2,
