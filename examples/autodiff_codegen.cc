@@ -28,14 +28,12 @@
 //
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 //
-// A simple example showing how to generate code for a cost functor and save it
-// to a file. When running this example, the new file will be created in the
-// current working directory.
+// A simple example showing how to generate code for a cost functor
 //
-// We recommend to use the CMake integration instead of using the
-// AutoDiffCodeGenerator direclty.
+// We recommend to use the CMake integration instead of using
+// GenerateCodeForFunctor directly.
 //
-#include "ceres/autodiff_codegen.h"
+#include "ceres/codegen/autodiff.h"
 
 struct SquareFunctor {
   template <typename T>
