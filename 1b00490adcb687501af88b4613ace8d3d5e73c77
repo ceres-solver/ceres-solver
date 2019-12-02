@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5fc8092_86561df1",
+        "filename": "include/ceres/codegen/internal/code_generator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T14:23:51Z",
+      "side": 1,
+      "message": "update header guard also.",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "1b00490adcb687501af88b4613ace8d3d5e73c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d6a61c_feb3eb8f",
+        "filename": "include/ceres/codegen/internal/expression.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T14:23:51Z",
+      "side": 1,
+      "message": "update header guard",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 34
+      },
+      "revId": "1b00490adcb687501af88b4613ace8d3d5e73c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68dbcef_63b1323a",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T14:23:51Z",
+      "side": 1,
+      "message": "update header guard",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "1b00490adcb687501af88b4613ace8d3d5e73c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cdb6882_5b512643",
+        "filename": "include/ceres/codegen/internal/expression_ref.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T14:23:51Z",
+      "side": 1,
+      "message": "update heder guard.",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "1b00490adcb687501af88b4613ace8d3d5e73c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfdf832_62bfb0cc",
+        "filename": "include/ceres/codegen/internal/types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T14:23:51Z",
+      "side": 1,
+      "message": "update header guard.",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "1b00490adcb687501af88b4613ace8d3d5e73c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04878a11_cb37a6f4",
+        "filename": "include/ceres/codegen/macros.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T14:23:51Z",
+      "side": 1,
+      "message": "update header guard.",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 47
+      },
+      "revId": "1b00490adcb687501af88b4613ace8d3d5e73c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f0f5d6_e8ff50ba",
+        "filename": "internal/ceres/code_generator_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T14:23:51Z",
+      "side": 1,
+      "message": "drop blank",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "1b00490adcb687501af88b4613ace8d3d5e73c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de97dcb_85c63f1d",
+        "filename": "internal/ceres/conditional_expressions_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T14:23:51Z",
+      "side": 1,
+      "message": "drop blank",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "1b00490adcb687501af88b4613ace8d3d5e73c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8550bb2b_5cddc638",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-02T14:23:51Z",
+      "side": 1,
+      "message": "ordering of header files is not correct, \u003calgorithm\u003e should come first.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "1b00490adcb687501af88b4613ace8d3d5e73c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
