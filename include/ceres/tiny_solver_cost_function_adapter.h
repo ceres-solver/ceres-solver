@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2017 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,6 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-
 
 #ifndef CERES_PUBLIC_TINY_SOLVER_COST_FUNCTION_ADAPTER_H_
 #define CERES_PUBLIC_TINY_SOLVER_COST_FUNCTION_ADAPTER_H_
