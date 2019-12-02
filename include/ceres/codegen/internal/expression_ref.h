@@ -208,6 +208,10 @@ ComparisonExpressionRef operator&&(const ComparisonExpressionRef& x,
                                    const ComparisonExpressionRef& y);
 ComparisonExpressionRef operator||(const ComparisonExpressionRef& x,
                                    const ComparisonExpressionRef& y);
+ComparisonExpressionRef operator&(const ComparisonExpressionRef& x,
+                                  const ComparisonExpressionRef& y);
+ComparisonExpressionRef operator|(const ComparisonExpressionRef& x,
+                                  const ComparisonExpressionRef& y);
 ComparisonExpressionRef operator!(const ComparisonExpressionRef& x);
 
 #define CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(name)          \

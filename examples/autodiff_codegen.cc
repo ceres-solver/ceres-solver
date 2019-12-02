@@ -39,6 +39,7 @@ struct SquareFunctor {
   template <typename T>
   bool operator()(const T* x, T* residual) const {
     residual[0] = x[0] * x[0];
+    isfinite(x[0]);
     return true;
   }
 };
