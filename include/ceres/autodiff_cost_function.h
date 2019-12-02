@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -126,6 +126,7 @@
 #define CERES_PUBLIC_AUTODIFF_COST_FUNCTION_H_
 
 #include <memory>
+
 #include "ceres/internal/autodiff.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
@@ -154,8 +155,7 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
   // Takes ownership of functor. Uses the template-provided value for the
   // number of residuals ("kNumResiduals").
-  explicit AutoDiffCostFunction(CostFunctor* functor)
-      : functor_(functor) {
+  explicit AutoDiffCostFunction(CostFunctor* functor) : functor_(functor) {
     static_assert(kNumResiduals != DYNAMIC,
                   "Can't run the fixed-size constructor if the number of "
                   "residuals is set to ceres::DYNAMIC.");

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -53,7 +53,7 @@ class SizedCostFunction : public CostFunction {
   static_assert(internal::StaticParameterDims<Ns...>::kIsValid,
                 "Invalid parameter block dimension detected. Each parameter "
                 "block dimension must be bigger than zero.");
- 
+
   using ParameterDims = internal::StaticParameterDims<Ns...>;
 
   SizedCostFunction() {
@@ -61,7 +61,7 @@ class SizedCostFunction : public CostFunction {
     *mutable_parameter_block_sizes() = std::vector<int32_t>{Ns...};
   }
 
-  virtual ~SizedCostFunction() { }
+  virtual ~SizedCostFunction() {}
 
   // Subclasses must implement Evaluate().
 };

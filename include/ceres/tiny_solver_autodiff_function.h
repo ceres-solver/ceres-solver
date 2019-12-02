@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2017 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,8 @@
 
 #include <memory>
 #include <type_traits>
-#include "Eigen/Core"
 
+#include "Eigen/Core"
 #include "ceres/jet.h"
 #include "ceres/types.h"  // For kImpossibleValue.
 
@@ -103,10 +103,10 @@ namespace ceres {
 //   solver.Solve(f, &x);
 //
 // WARNING: The cost function adapter is not thread safe.
-template<typename CostFunctor,
-         int kNumResiduals,
-         int kNumParameters,
-         typename T = double>
+template <typename CostFunctor,
+          int kNumResiduals,
+          int kNumParameters,
+          typename T = double>
 class TinySolverAutoDiffFunction {
  public:
   // This class needs to have an Eigen aligned operator new as it contains
@@ -126,9 +126,7 @@ class TinySolverAutoDiffFunction {
 
   // This is similar to AutoDifferentiate(), but since there is only one
   // parameter block it is easier to inline to avoid overhead.
-  bool operator()(const T* parameters,
-                  T* residuals,
-                  T* jacobian) const {
+  bool operator()(const T* parameters, T* residuals, T* jacobian) const {
     if (jacobian == NULL) {
       // No jacobian requested, so just directly call the cost function with
       // doubles, skipping jets and derivatives.
@@ -154,9 +152,7 @@ class TinySolverAutoDiffFunction {
 
     // Copy the jacobian out of the derivative part of the residual jets.
     Eigen::Map<Eigen::Matrix<T, kNumResiduals, kNumParameters>> jacobian_matrix(
-        jacobian,
-        num_residuals_,
-        kNumParameters);
+        jacobian, num_residuals_, kNumParameters);
     for (int r = 0; r < num_residuals_; ++r) {
       residuals[r] = jet_residuals_[r].a;
       // Note that while this looks like a fast vectorized write, in practice it
@@ -190,7 +186,7 @@ class TinySolverAutoDiffFunction {
 
   // The number of residuals is dynamically sized and the number of
   // parameters is statically sized.
-  template<int R>
+  template <int R>
   typename std::enable_if<(R == Eigen::Dynamic), void>::type Initialize(
       const CostFunctor& function) {
     jet_residuals_.resize(function.NumResiduals());
@@ -198,7 +194,7 @@ class TinySolverAutoDiffFunction {
   }
 
   // The number of parameters and residuals are statically sized.
-  template<int R>
+  template <int R>
   typename std::enable_if<(R != Eigen::Dynamic), void>::type Initialize(
       const CostFunctor& /* function */) {
     num_residuals_ = kNumResiduals;

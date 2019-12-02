@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,7 @@
 #include <memory>
 #include <utility>
 #include <vector>
+
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/port.h"
 #include "ceres/types.h"
@@ -349,10 +350,9 @@ class CERES_EXPORT Covariance {
   // covariance computation. Please see the documentation for
   // Covariance::Options for more on the conditions under which this
   // function returns false.
-  bool Compute(
-      const std::vector<std::pair<const double*,
-                                  const double*>>& covariance_blocks,
-      Problem* problem);
+  bool Compute(const std::vector<std::pair<const double*, const double*>>&
+                   covariance_blocks,
+               Problem* problem);
 
   // Compute a part of the covariance matrix.
   //
@@ -425,8 +425,8 @@ class CERES_EXPORT Covariance {
   // a square matrix whose row and column count is equal to the sum of
   // the sizes of the individual parameter blocks. The covariance
   // matrix will be a row-major matrix.
-  bool GetCovarianceMatrix(const std::vector<const double *> &parameter_blocks,
-                           double *covariance_matrix);
+  bool GetCovarianceMatrix(const std::vector<const double*>& parameter_blocks,
+                           double* covariance_matrix);
 
   // Return the covariance matrix corresponding to parameter_blocks
   // in the tangent space if a local parameterization is associated
