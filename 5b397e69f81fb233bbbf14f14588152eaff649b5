@@ -45,6 +45,23 @@
       "revId": "5b397e69f81fb233bbbf14f14588152eaff649b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0c08bc_d845d183",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-02T01:52:32Z",
+      "side": 1,
+      "message": "This needs a comment about why this is here and what it is. It\u0027s not obvious when reading jet.h in isolation.",
+      "revId": "5b397e69f81fb233bbbf14f14588152eaff649b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
