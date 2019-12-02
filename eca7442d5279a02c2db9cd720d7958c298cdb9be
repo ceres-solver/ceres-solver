@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6d7a33e1_aab33d66",
+        "filename": "include/ceres/codegen/macros.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-02T19:10:45Z",
+      "side": 1,
+      "message": "I believe the right place for this is int jet.h\n\nThen the autodiff codegen version can go elsewhere.",
+      "parentUuid": "4b2bf8ad_153bba16",
+      "range": {
+        "startLine": 121,
+        "startChar": 9,
+        "endLine": 121,
+        "endChar": 16
+      },
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12cc41bd_0e80c915",
         "filename": "include/ceres/jet.h",
         "patchSetId": 1
@@ -143,6 +167,132 @@
     },
     {
       "key": {
+        "uuid": "951610b1_08233c1c",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-02T19:10:45Z",
+      "side": 1,
+      "message": "We will ultimately have to tackle this one.\n\nThe integer arithmetic is for convenience only; there are only 4 cases in practice. Worst case, we unroll the 4 cases-- ugly, but doable. We could even use a macro.",
+      "parentUuid": "4dcfd789_c9dbbad4",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 338,
+        "endChar": 4
+      },
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d51360_3c17d719",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-02T19:10:45Z",
+      "side": 1,
+      "message": "This needs to have a clang format disable block; the result here is unreadable.",
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38f1507_a8cb1638",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-02T19:10:45Z",
+      "side": 1,
+      "message": "Same here; disable clang format.",
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829ac5ca_a410027b",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-02T19:10:45Z",
+      "side": 1,
+      "message": "Disable clang format for this block.",
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922089b5_1dbf3131",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-02T19:10:45Z",
+      "side": 1,
+      "message": "Disable clang format.",
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35781c90_5df7b815",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-02T19:10:45Z",
+      "side": 1,
+      "message": "This needs clang format disabled.",
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bbec65_df29b2a0",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-02T19:10:45Z",
+      "side": 1,
+      "message": "Please revert this change and add clang format off here.",
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "609699ca_a9d1df53",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 1
@@ -154,6 +304,30 @@
       "writtenOn": "2019-12-02T17:32:06Z",
       "side": 1,
       "message": "I think this may require a slightly more general solution where in CERES_CODEGEN mode some of these macros from glog become noops?",
+      "range": {
+        "startLine": 590,
+        "startChar": 8,
+        "endLine": 590,
+        "endChar": 21
+      },
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52be3341_8b258ce6",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-02T19:10:45Z",
+      "side": 1,
+      "message": "People are going to log. This raises a good question-- what is our logging story for codegen? We need a real solution here - cost function debugging through logs is necessary.\n\nThis may be an entirely separate discussion.",
+      "parentUuid": "609699ca_a9d1df53",
       "range": {
         "startLine": 590,
         "startChar": 8,
