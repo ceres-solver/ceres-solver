@@ -116,4 +116,11 @@
   AddExpressionToGraph(ceres::internal::Expression::CreateEndIf());
 #endif
 
+namespace ceres {
+// A function equivalent to the ternary ?-operator.
+// This function is required, because in the context of code generation a
+// comparison returns an expression type which is not convertible to bool.
+inline double Ternary(bool c, double a, double b) { return c ? a : b; }
+}  // namespace ceres
+
 #endif  // CERES_PUBLIC_CODEGEN_MACROS_H_
