@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2017 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -46,8 +46,9 @@
 
 #include <cstdint>
 #include <vector>
-#include "ceres/internal/port.h"
+
 #include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/port.h"
 
 namespace ceres {
 
@@ -120,18 +121,14 @@ class CERES_EXPORT CostFunction {
     return parameter_block_sizes_;
   }
 
-  int num_residuals() const {
-    return num_residuals_;
-  }
+  int num_residuals() const { return num_residuals_; }
 
  protected:
   std::vector<int32_t>* mutable_parameter_block_sizes() {
     return &parameter_block_sizes_;
   }
 
-  void set_num_residuals(int num_residuals) {
-    num_residuals_ = num_residuals;
-  }
+  void set_num_residuals(int num_residuals) { num_residuals_ = num_residuals; }
 
  private:
   // Cost function signature metadata: number of inputs & their sizes,

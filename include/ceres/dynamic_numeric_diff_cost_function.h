@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -59,7 +59,9 @@ namespace ceres {
 // numeric diff; the expected interface for the cost functors is:
 //
 //   struct MyCostFunctor {
-//     bool operator()(double const* const* parameters, double* residuals) const {
+//     bool operator()(double const*
+//                     const* parameters,
+//                     double* residuals) const {
 //       // Use parameters[i] to access the i'th parameter block.
 //     }
 //   }
@@ -80,10 +82,7 @@ class DynamicNumericDiffCostFunction : public DynamicCostFunction {
       const CostFunctor* functor,
       Ownership ownership = TAKE_OWNERSHIP,
       const NumericDiffOptions& options = NumericDiffOptions())
-      : functor_(functor),
-        ownership_(ownership),
-        options_(options) {
-  }
+      : functor_(functor), ownership_(ownership), options_(options) {}
 
   virtual ~DynamicNumericDiffCostFunction() {
     if (ownership_ != TAKE_OWNERSHIP) {
@@ -106,9 +105,7 @@ class DynamicNumericDiffCostFunction : public DynamicCostFunction {
 
     const bool status =
         internal::VariadicEvaluate<internal::DynamicParameterDims>(
-            *functor_.get(),
-            parameters,
-            residuals);
+            *functor_.get(), parameters, residuals);
     if (jacobians == NULL || !status) {
       return status;
     }
@@ -119,8 +116,8 @@ class DynamicNumericDiffCostFunction : public DynamicCostFunction {
     std::vector<double*> parameters_references_copy(block_sizes.size());
     parameters_references_copy[0] = &parameters_copy[0];
     for (size_t block = 1; block < block_sizes.size(); ++block) {
-      parameters_references_copy[block] = parameters_references_copy[block - 1]
-          + block_sizes[block - 1];
+      parameters_references_copy[block] =
+          parameters_references_copy[block - 1] + block_sizes[block - 1];
     }
 
     // Copy the parameters into the local temp space.
@@ -132,18 +129,20 @@ class DynamicNumericDiffCostFunction : public DynamicCostFunction {
 
     for (size_t block = 0; block < block_sizes.size(); ++block) {
       if (jacobians[block] != NULL &&
-          !NumericDiff<CostFunctor, method, ceres::DYNAMIC,
-                       internal::DynamicParameterDims, ceres::DYNAMIC,
+          !NumericDiff<CostFunctor,
+                       method,
+                       ceres::DYNAMIC,
+                       internal::DynamicParameterDims,
+                       ceres::DYNAMIC,
                        ceres::DYNAMIC>::
-              EvaluateJacobianForParameterBlock(
-                  functor_.get(),
-                  residuals,
-                  options_,
-                  this->num_residuals(),
-                  block,
-                  block_sizes[block],
-                  &parameters_references_copy[0],
-                  jacobians[block])) {
+              EvaluateJacobianForParameterBlock(functor_.get(),
+                                                residuals,
+                                                options_,
+                                                this->num_residuals(),
+                                                block,
+                                                block_sizes[block],
+                                                &parameters_references_copy[0],
+                                                jacobians[block])) {
         return false;
       }
     }
