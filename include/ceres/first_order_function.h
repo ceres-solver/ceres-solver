@@ -28,7 +28,6 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-
 #ifndef CERES_PUBLIC_FIRST_ORDER_FUNCTION_H_
 #define CERES_PUBLIC_FIRST_ORDER_FUNCTION_H_
 

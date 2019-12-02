@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -79,7 +79,7 @@ template <typename CostFunctor, int Stride = 4>
 class DynamicAutoDiffCostFunction : public DynamicCostFunction {
  public:
   explicit DynamicAutoDiffCostFunction(CostFunctor* functor)
-    : functor_(functor) {}
+      : functor_(functor) {}
 
   virtual ~DynamicAutoDiffCostFunction() {}
 
@@ -108,9 +108,8 @@ class DynamicAutoDiffCostFunction : public DynamicCostFunction {
     // num_residuals() derivatives. This is done with small, fixed-size jets.
     const int num_parameter_blocks =
         static_cast<int>(parameter_block_sizes().size());
-    const int num_parameters = std::accumulate(parameter_block_sizes().begin(),
-                                               parameter_block_sizes().end(),
-                                               0);
+    const int num_parameters = std::accumulate(
+        parameter_block_sizes().begin(), parameter_block_sizes().end(), 0);
 
     // Allocate scratch space for the strided evaluation.
     using JetT = Jet<double, Stride>;
@@ -168,8 +167,8 @@ class DynamicAutoDiffCostFunction : public DynamicCostFunction {
     // Evaluate all of the strides. Each stride is a chunk of the derivative to
     // evaluate, typically some size proportional to the size of the SIMD
     // registers of the CPU.
-    int num_strides = static_cast<int>(ceil(num_active_parameters /
-                                            static_cast<float>(Stride)));
+    int num_strides = static_cast<int>(
+        ceil(num_active_parameters / static_cast<float>(Stride)));
 
     int current_derivative_section = 0;
     int current_derivative_section_cursor = 0;
@@ -179,7 +178,7 @@ class DynamicAutoDiffCostFunction : public DynamicCostFunction {
       // non-constant #Stride parameters.
       const int initial_derivative_section = current_derivative_section;
       const int initial_derivative_section_cursor =
-        current_derivative_section_cursor;
+          current_derivative_section_cursor;
 
       int active_parameter_count = 0;
       parameter_cursor = 0;
@@ -189,9 +188,9 @@ class DynamicAutoDiffCostFunction : public DynamicCostFunction {
              ++j, parameter_cursor++) {
           input_jets[parameter_cursor].v.setZero();
           if (active_parameter_count < Stride &&
-              parameter_cursor >= (
-                start_derivative_section[current_derivative_section] +
-                current_derivative_section_cursor)) {
+              parameter_cursor >=
+                  (start_derivative_section[current_derivative_section] +
+                   current_derivative_section_cursor)) {
             if (jacobians[i] != NULL) {
               input_jets[parameter_cursor].v[active_parameter_count] = 1.0;
               ++active_parameter_count;
@@ -218,9 +217,9 @@ class DynamicAutoDiffCostFunction : public DynamicCostFunction {
         for (int j = 0; j < parameter_block_sizes()[i];
              ++j, parameter_cursor++) {
           if (active_parameter_count < Stride &&
-              parameter_cursor >= (
-                start_derivative_section[current_derivative_section] +
-                current_derivative_section_cursor)) {
+              parameter_cursor >=
+                  (start_derivative_section[current_derivative_section] +
+                   current_derivative_section_cursor)) {
             if (jacobians[i] != NULL) {
               for (int k = 0; k < num_residuals(); ++k) {
                 jacobians[i][k * parameter_block_sizes()[i] + j] =
