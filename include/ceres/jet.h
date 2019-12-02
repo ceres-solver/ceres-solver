@@ -378,14 +378,6 @@ CERES_DEFINE_JET_COMPARISON_OPERATOR(==)  // NOLINT
 CERES_DEFINE_JET_COMPARISON_OPERATOR(!=)  // NOLINT
 #undef CERES_DEFINE_JET_COMPARISON_OPERATOR
 
-// A function equivalent to the ternary ?-operator.
-// This function is required, because in the context of code generation a
-// comparison returns an expression type which is not convertible to bool.
-template <typename T>
-inline T Ternary(bool c, T a, T b) {
-  return c ? a : b;
-}
-
 template <typename T, int N>
 inline Jet<T, N> Ternary(typename ComparisonReturnType<T>::type c,
                          const Jet<T, N>& f,
@@ -444,7 +436,7 @@ inline bool IsNormal(double x)   { return std::isnormal(x); }
 // abs(x + h) ~= x + h or -(x + h)
 template <typename T, int N>
 inline Jet<T, N> abs(const Jet<T, N>& f) {
-  return f.a < T(0.0) ? -f : f;
+  return Ternary(f.a < T(0.0), -f, f);
 }
 
 // log(a + h) ~= log(a) + h / a
@@ -589,12 +581,12 @@ inline Jet<T, N> hypot(const Jet<T, N>& x, const Jet<T, N>& y) {
 
 template <typename T, int N>
 inline const Jet<T, N>& fmax(const Jet<T, N>& x, const Jet<T, N>& y) {
-  return x < y ? y : x;
+  return Ternary(x < y, y, x);
 }
 
 template <typename T, int N>
 inline const Jet<T, N>& fmin(const Jet<T, N>& x, const Jet<T, N>& y) {
-  return y < x ? y : x;
+  return Ternary(y < x, y, x);
 }
 
 // Bessel functions of the first kind with integer order equal to 0, 1, n.
@@ -778,25 +770,32 @@ inline Jet<T, N> pow(const Jet<T, N>& f, double g) {
 // != 0, the derivatives are not defined and we return NaN.
 
 template <typename T, int N>
-inline Jet<T, N> pow(double f, const Jet<T, N>& g) {
-  if (f == 0 && g.a > 0) {
+inline Jet<T, N> pow(T f, const Jet<T, N>& g) {
+  Jet<T, N> result;
+
+  CERES_IF(f == T(0) && g.a > T(0)) {
     // Handle case 2.
-    return Jet<T, N>(T(0.0));
+    result = Jet<T, N>(T(0.0));
   }
-  if (f < 0 && g.a == floor(g.a)) {
+  CERES_ENDIF
+  CERES_IF(f < 0 && g.a == floor(g.a)) {
     // Handle case 3.
-    Jet<T, N> ret(pow(f, g.a));
+    result = Jet<T, N>(pow(f, g.a));
     for (int i = 0; i < N; i++) {
-      if (g.v[i] != T(0.0)) {
+      CERES_IF(g.v[i] != T(0.0)) {
         // Return a NaN when g.v != 0.
-        ret.v[i] = std::numeric_limits<T>::quiet_NaN();
+        result.v[i] = std::numeric_limits<T>::quiet_NaN();
       }
+      CERES_ENDIF
     }
-    return ret;
   }
-  // Handle case 1.
-  T const tmp = pow(f, g.a);
-  return Jet<T, N>(tmp, log(f) * tmp * g.v);
+  CERES_ELSE {
+    // Handle case 1.
+    T const tmp = pow(f, g.a);
+    result = Jet<T, N>(tmp, log(f) * tmp * g.v);
+  }
+  CERES_ENDIF
+  return result;
 }
 
 // pow -- both base and exponent are differentiable functions. This has a
@@ -837,32 +836,38 @@ inline Jet<T, N> pow(double f, const Jet<T, N>& g) {
 
 template <typename T, int N>
 inline Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
-  if (f.a == 0 && g.a >= 1) {
+  Jet<T, N> result;
+
+  CERES_IF(f.a == T(0) && g.a >= T(1)) {
     // Handle cases 2 and 3.
-    if (g.a > 1) {
-      return Jet<T, N>(T(0.0));
-    }
-    return f;
+    CERES_IF(g.a > T(1)) { result = Jet<T, N>(T(0.0)); }
+    CERES_ELSE { result = f; }
+    CERES_ENDIF;
   }
-  if (f.a < 0 && g.a == floor(g.a)) {
+  CERES_ENDIF;
+  CERES_IF(f.a < T(0) && g.a == floor(g.a)) {
     // Handle cases 7 and 8.
     T const tmp = g.a * pow(f.a, g.a - T(1.0));
-    Jet<T, N> ret(pow(f.a, g.a), tmp * f.v);
+    result = Jet<T, N>(pow(f.a, g.a), tmp * f.v);
     for (int i = 0; i < N; i++) {
-      if (g.v[i] != T(0.0)) {
+      CERES_IF(g.v[i] != T(0.0)) {
         // Return a NaN when g.v != 0.
-        ret.v[i] = std::numeric_limits<T>::quiet_NaN();
+        result.v[i] = T(std::numeric_limits<double>::quiet_NaN());
       }
+      CERES_ENDIF;
     }
-    return ret;
   }
-  // Handle the remaining cases. For cases 4,5,6,9 we allow the log() function
-  // to generate -HUGE_VAL or NaN, since those cases result in a nonfinite
-  // derivative.
-  T const tmp1 = pow(f.a, g.a);
-  T const tmp2 = g.a * pow(f.a, g.a - T(1.0));
-  T const tmp3 = tmp1 * log(f.a);
-  return Jet<T, N>(tmp1, tmp2 * f.v + tmp3 * g.v);
+  CERES_ELSE {
+    // Handle the remaining cases. For cases 4,5,6,9 we allow the log() function
+    // to generate -HUGE_VAL or NaN, since those cases result in a nonfinite
+    // derivative.
+    T const tmp1 = pow(f.a, g.a);
+    T const tmp2 = g.a * pow(f.a, g.a - T(1.0));
+    T const tmp3 = tmp1 * log(f.a);
+    result = Jet<T, N>(tmp1, tmp2 * f.v + tmp3 * g.v);
+  }
+  CERES_ENDIF;
+  return result;
 }
 
 // Note: This has to be in the ceres namespace for argument dependent lookup to

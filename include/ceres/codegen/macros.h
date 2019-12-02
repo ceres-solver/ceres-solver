@@ -114,4 +114,12 @@
 #define CERES_ENDIF ceres::internal::Expression::CreateEndIf();
 #endif
 
+// A function equivalent to the ternary ?-operator.
+// This function is required, because in the context of code generation a
+// comparison returns an expression type which is not convertible to bool.
+template <typename T>
+inline T Ternary(bool c, const T& a, const T& b) {
+  return c ? a : b;
+}
+
 #endif  // CERES_PUBLIC_CODEGEN_MACROS_H_
