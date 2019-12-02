@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -119,8 +119,8 @@ class DynamicCostFunctionToFunctor {
     const int num_parameter_blocks =
         static_cast<int>(parameter_block_sizes.size());
     const int num_residuals = cost_function_->num_residuals();
-    const int num_parameters = std::accumulate(parameter_block_sizes.begin(),
-                                               parameter_block_sizes.end(), 0);
+    const int num_parameters = std::accumulate(
+        parameter_block_sizes.begin(), parameter_block_sizes.end(), 0);
 
     internal::FixedArray<double> parameters(num_parameters);
     internal::FixedArray<double*> parameter_blocks(num_parameter_blocks);
