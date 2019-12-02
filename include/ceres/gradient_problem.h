@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -32,8 +32,9 @@
 #define CERES_PUBLIC_GRADIENT_PROBLEM_H_
 
 #include <memory>
-#include "ceres/internal/port.h"
+
 #include "ceres/first_order_function.h"
+#include "ceres/internal/port.h"
 #include "ceres/local_parameterization.h"
 
 namespace ceres {

@@ -239,7 +239,8 @@ class CERES_EXPORT Problem {
                                    double* x0,
                                    Ts*... xs) {
     const std::array<double*, sizeof...(Ts) + 1> parameter_blocks{{x0, xs...}};
-    return AddResidualBlock(cost_function, loss_function,
+    return AddResidualBlock(cost_function,
+                            loss_function,
                             parameter_blocks.data(),
                             static_cast<int>(parameter_blocks.size()));
   }
@@ -252,11 +253,10 @@ class CERES_EXPORT Problem {
 
   // Add a residual block by providing a pointer to the parameter block array
   // and the number of parameter blocks.
-  ResidualBlockId AddResidualBlock(
-      CostFunction* cost_function,
-      LossFunction* loss_function,
-      double* const* const parameter_blocks,
-      int num_parameter_blocks);
+  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
+                                   LossFunction* loss_function,
+                                   double* const* const parameter_blocks,
+                                   int num_parameter_blocks);
 
   // Add a parameter block with appropriate size to the problem.
   // Repeated calls with the same arguments are ignored. Repeated
@@ -441,18 +441,18 @@ class CERES_EXPORT Problem {
   // locations pointed to by the parameter block pointers used at the
   // time of the construction of the problem. i.e.,
   //
-  //   Problem problem;
-  //   double x = 1;
-  //   problem.AddResidualBlock(new MyCostFunction, nullptr, &x);
+  //  Problem problem;
+  //  double x = 1;
+  //  problem.AddResidualBlock(new MyCostFunction, nullptr, &x);
   //
-  //   double cost = 0.0;
-  //   problem.Evaluate(Problem::EvaluateOptions(), &cost, nullptr, nullptr, nullptr);
+  //  double cost = 0.0;
+  //  problem.Evaluate(Problem::EvaluateOptions(), &cost, nullptr, nullptr, nullptr);
   //
   // The cost is evaluated at x = 1. If you wish to evaluate the
   // problem at x = 2, then
   //
-  //    x = 2;
-  //    problem.Evaluate(Problem::EvaluateOptions(), &cost, nullptr, nullptr, nullptr);
+  //  x = 2;
+  //  problem.Evaluate(Problem::EvaluateOptions(), &cost, nullptr, nullptr, nullptr);
   //
   // is the way to do so.
   //
@@ -518,6 +518,7 @@ class CERES_EXPORT Problem {
                              double* cost,
                              double* residuals,
                              double** jacobians) const;
+
  private:
   friend class Solver;
   friend class Covariance;

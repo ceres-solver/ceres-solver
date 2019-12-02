@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -34,8 +34,9 @@
 #define CERES_PUBLIC_AUTODIFF_LOCAL_PARAMETERIZATION_H_
 
 #include <memory>
-#include "ceres/local_parameterization.h"
+
 #include "ceres/internal/autodiff.h"
+#include "ceres/local_parameterization.h"
 
 namespace ceres {
 

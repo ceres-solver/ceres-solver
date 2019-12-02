@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -36,12 +36,13 @@
 #include <string>
 #include <unordered_set>
 #include <vector>
+
 #include "ceres/crs_matrix.h"
-#include "ceres/problem.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/ordered_groups.h"
+#include "ceres/problem.h"
 #include "ceres/types.h"
 
 namespace ceres {
@@ -1051,7 +1052,8 @@ class CERES_EXPORT Solver {
 };
 
 // Helper function which avoids going through the interface.
-CERES_EXPORT void Solve(const Solver::Options& options, Problem* problem,
+CERES_EXPORT void Solve(const Solver::Options& options,
+                        Problem* problem,
                         Solver::Summary* summary);
 
 }  // namespace ceres
