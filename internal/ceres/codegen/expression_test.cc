@@ -39,6 +39,7 @@ namespace internal {
 
 TEST(Expression, ConstructorAndAccessors) {
   Expression expr(ExpressionType::LOGICAL_NEGATION,
+                  ExpressionReturnType::BOOLEAN,
                   12345,
                   {1, 5, 8, 10},
                   "TestConstructor",
@@ -54,43 +55,46 @@ TEST(Expression, CreateFunctions) {
   // clang-format off
   // The default constructor creates a NOP!
   EXPECT_EQ(Expression(), Expression(
-            ExpressionType::NOP, kInvalidExpressionId, {}, "", 0));
+            ExpressionType::NOP, ExpressionReturnType::VOID, kInvalidExpressionId, {}, "", 0));
 
   EXPECT_EQ(Expression::CreateCompileTimeConstant(72), Expression(
-            ExpressionType::COMPILE_TIME_CONSTANT, kInvalidExpressionId, {}, "", 72));
+            ExpressionType::COMPILE_TIME_CONSTANT, ExpressionReturnType::SCALAR, kInvalidExpressionId, {}, "", 72));
 
   EXPECT_EQ(Expression::CreateInputAssignment("arguments[0][0]"), Expression(
-            ExpressionType::INPUT_ASSIGNMENT, kInvalidExpressionId, {}, "arguments[0][0]", 0));
+            ExpressionType::INPUT_ASSIGNMENT, ExpressionReturnType::SCALAR, kInvalidExpressionId, {}, "arguments[0][0]", 0));
 
   EXPECT_EQ(Expression::CreateOutputAssignment(ExpressionId(5), "residuals[3]"), Expression(
-            ExpressionType::OUTPUT_ASSIGNMENT, kInvalidExpressionId, {5}, "residuals[3]", 0));
+            ExpressionType::OUTPUT_ASSIGNMENT, ExpressionReturnType::SCALAR, kInvalidExpressionId, {5}, "residuals[3]", 0));
 
   EXPECT_EQ(Expression::CreateAssignment(ExpressionId(3), ExpressionId(5)), Expression(
-            ExpressionType::ASSIGNMENT, 3, {5}, "", 0));
+            ExpressionType::ASSIGNMENT, ExpressionReturnType::SCALAR, 3, {5}, "", 0));
 
   EXPECT_EQ(Expression::CreateBinaryArithmetic("+", ExpressionId(3),ExpressionId(5)), Expression(
-            ExpressionType::BINARY_ARITHMETIC, kInvalidExpressionId, {3,5}, "+", 0));
+            ExpressionType::BINARY_ARITHMETIC, ExpressionReturnType::SCALAR, kInvalidExpressionId, {3,5}, "+", 0));
 
   EXPECT_EQ(Expression::CreateUnaryArithmetic("-", ExpressionId(5)), Expression(
-            ExpressionType::UNARY_ARITHMETIC, kInvalidExpressionId, {5}, "-", 0));
+            ExpressionType::UNARY_ARITHMETIC, ExpressionReturnType::SCALAR, kInvalidExpressionId, {5}, "-", 0));
 
   EXPECT_EQ(Expression::CreateBinaryCompare("<",ExpressionId(3),ExpressionId(5)), Expression(
-            ExpressionType::BINARY_COMPARISON, kInvalidExpressionId, {3,5}, "<", 0));
+            ExpressionType::BINARY_COMPARISON, ExpressionReturnType::BOOLEAN, kInvalidExpressionId, {3,5}, "<", 0));
 
   EXPECT_EQ(Expression::CreateLogicalNegation(ExpressionId(5)), Expression(
-            ExpressionType::LOGICAL_NEGATION, kInvalidExpressionId, {5}, "", 0));
+            ExpressionType::LOGICAL_NEGATION, ExpressionReturnType::BOOLEAN, kInvalidExpressionId, {5}, "", 0));
 
   EXPECT_EQ(Expression::CreateFunctionCall("pow",{ExpressionId(3),ExpressionId(5)}), Expression(
-            ExpressionType::FUNCTION_CALL, kInvalidExpressionId, {3,5}, "pow", 0));
+            ExpressionType::FUNCTION_CALL, ExpressionReturnType::SCALAR, kInvalidExpressionId, {3,5}, "pow", 0));
+
+  EXPECT_EQ(Expression::CreateLogicalFunctionCall("isfinite",{ExpressionId(3)}), Expression(
+            ExpressionType::FUNCTION_CALL, ExpressionReturnType::BOOLEAN, kInvalidExpressionId, {3}, "isfinite", 0));
 
   EXPECT_EQ(Expression::CreateIf(ExpressionId(5)), Expression(
-            ExpressionType::IF, kInvalidExpressionId, {5}, "", 0));
+            ExpressionType::IF, ExpressionReturnType::VOID, kInvalidExpressionId, {5}, "", 0));
 
   EXPECT_EQ(Expression::CreateElse(), Expression(
-            ExpressionType::ELSE, kInvalidExpressionId, {}, "", 0));
+            ExpressionType::ELSE, ExpressionReturnType::VOID, kInvalidExpressionId, {}, "", 0));
 
   EXPECT_EQ(Expression::CreateEndIf(), Expression(
-            ExpressionType::ENDIF, kInvalidExpressionId, {}, "", 0));
+            ExpressionType::ENDIF, ExpressionReturnType::VOID, kInvalidExpressionId, {}, "", 0));
   // clang-format on
 }
 
@@ -180,7 +184,7 @@ TEST(Expression, Replace) {
   expr1.Replace(expr2);
 
   // expr1 should now be an assignment from 7 to 13
-  EXPECT_EQ(expr1, Expression(ExpressionType::ASSIGNMENT, 13, {7}, "", 0));
+  EXPECT_EQ(expr1, Expression(ExpressionType::ASSIGNMENT, ExpressionReturnType::SCALAR, 13, {7}, "", 0));
 }
 
 TEST(Expression, DirectlyDependsOn) {
@@ -199,7 +203,7 @@ TEST(Expression, MakeNop) {
   expr1.MakeNop();
 
   EXPECT_EQ(expr1,
-            Expression(ExpressionType::NOP, kInvalidExpressionId, {}, "", 0));
+            Expression(ExpressionType::NOP, ExpressionReturnType::VOID, kInvalidExpressionId, {}, "", 0));
 }
 
 TEST(Expression, IsSemanticallyEquivalentTo) {

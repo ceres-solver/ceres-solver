@@ -91,7 +91,7 @@ void ExpressionGraph::Insert(ExpressionId location,
                              const Expression& expression) {
   ExpressionId last_expression_id = Size() - 1;
   // Increase size by adding a dummy expression.
-  expressions_.push_back(Expression(ExpressionType::NOP, kInvalidExpressionId));
+  expressions_.push_back(Expression());
 
   // Move everything after id back and update references
   for (ExpressionId id = last_expression_id; id >= location; --id) {
