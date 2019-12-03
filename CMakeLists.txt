@@ -652,6 +652,13 @@ install(FILES ${CERES_HDRS} DESTINATION include/ceres)
 file(GLOB CERES_PUBLIC_INTERNAL_HDRS ${Ceres_SOURCE_DIR}/include/ceres/internal/*.h)
 install(FILES ${CERES_PUBLIC_INTERNAL_HDRS} DESTINATION include/ceres/internal)
 
+# Ceres codegen headers
+file(GLOB CERES_PUBLIC_CODEGEN_HDRS ${Ceres_SOURCE_DIR}/include/ceres/codegen/*.h)
+install(FILES ${CERES_PUBLIC_CODEGEN_HDRS} DESTINATION include/ceres/codegen)
+
+file(GLOB CERES_PUBLIC_CODEGEN_INTERNAL_HDRS ${Ceres_SOURCE_DIR}/include/ceres/codegen/internal/*.h)
+install(FILES ${CERES_PUBLIC_CODEGEN_INTERNAL_HDRS} DESTINATION include/ceres/codegen/internal)
+
 # Also setup installation of Ceres config.h configured with the current
 # build options into the installed headers directory.
 install(FILES ${Ceres_BINARY_DIR}/config/ceres/internal/config.h
