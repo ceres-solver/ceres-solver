@@ -165,7 +165,7 @@ ExpressionRef Ternary(const ComparisonExpressionRef& c,
                       const ExpressionRef& x,
                       const ExpressionRef& y) {
   return AddExpressionToGraph(
-      Expression::CreateFunctionCall("Ternary", {c.id, x.id, y.id}));
+      Expression::CreateScalarFunctionCall("Ternary", {c.id, x.id, y.id}));
 }
 
 #define CERES_DEFINE_EXPRESSION_COMPARISON_OPERATOR(op)         \

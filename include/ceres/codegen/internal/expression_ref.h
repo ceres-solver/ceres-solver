@@ -35,6 +35,7 @@
 #include <string>
 #include "ceres/codegen/internal/expression.h"
 #include "ceres/codegen/internal/types.h"
+
 namespace ceres {
 namespace internal {
 
@@ -130,15 +131,15 @@ ExpressionRef operator*(const ExpressionRef& x, const ExpressionRef& y);
 ExpressionRef operator/(const ExpressionRef& x, const ExpressionRef& y);
 
 // Functions
-#define CERES_DEFINE_UNARY_FUNCTION_CALL(name)          \
-  inline ExpressionRef name(const ExpressionRef& x) {   \
-    return AddExpressionToGraph(                        \
-        Expression::CreateFunctionCall(#name, {x.id})); \
+#define CERES_DEFINE_UNARY_FUNCTION_CALL(name)                \
+  inline ExpressionRef name(const ExpressionRef& x) {         \
+    return AddExpressionToGraph(                              \
+        Expression::CreateScalarFunctionCall(#name, {x.id})); \
   }
 #define CERES_DEFINE_BINARY_FUNCTION_CALL(name)                               \
   inline ExpressionRef name(const ExpressionRef& x, const ExpressionRef& y) { \
     return AddExpressionToGraph(                                              \
-        Expression::CreateFunctionCall(#name, {x.id, y.id}));                 \
+        Expression::CreateScalarFunctionCall(#name, {x.id, y.id}));           \
   }
 CERES_DEFINE_UNARY_FUNCTION_CALL(abs);
 CERES_DEFINE_UNARY_FUNCTION_CALL(acos);
@@ -208,6 +209,19 @@ ComparisonExpressionRef operator&&(const ComparisonExpressionRef& x,
 ComparisonExpressionRef operator||(const ComparisonExpressionRef& x,
                                    const ComparisonExpressionRef& y);
 ComparisonExpressionRef operator!(const ComparisonExpressionRef& x);
+
+#define CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(name)          \
+  inline ComparisonExpressionRef name(const ExpressionRef& x) { \
+    return ComparisonExpressionRef(AddExpressionToGraph(        \
+        Expression::CreateLogicalFunctionCall(#name, {x.id}))); \
+  }
+
+CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(isfinite);
+CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(isinf);
+CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(isnan);
+CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(isnormal);
+
+#undef CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL
 
 template <>
 struct InputAssignment<ExpressionRef> {

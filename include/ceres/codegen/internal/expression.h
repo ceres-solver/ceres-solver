@@ -234,6 +234,21 @@ enum class ExpressionType {
   NOP
 };
 
+enum class ExpressionReturnType {
+  // The expression returns a scalar value (float or double). Used for most
+  // arithmetic operations and function calls.
+  SCALAR,
+  // The expression returns a boolean value. Used for logical expressions
+  //   v_3 = v_1 < v_2
+  // and functions returning a bool
+  //   v_3 = isfinite(v_1);
+  BOOLEAN,
+  // The expressions doesn't return a value. Used for the control
+  // expressions
+  // and NOP.
+  VOID,
+};
+
 // This class contains all data that is required to generate one line of code.
 // Each line has the following form:
 //
@@ -253,6 +268,7 @@ class Expression {
   Expression() = default;
 
   Expression(ExpressionType type,
+             ExpressionReturnType return_type = ExpressionReturnType::VOID,
              ExpressionId lhs_id = kInvalidExpressionId,
              const std::vector<ExpressionId>& arguments = {},
              const std::string& name = "",
@@ -276,8 +292,10 @@ class Expression {
                                         ExpressionId l,
                                         ExpressionId r);
   static Expression CreateLogicalNegation(ExpressionId v);
-  static Expression CreateFunctionCall(const std::string& name,
-                                       const std::vector<ExpressionId>& params);
+  static Expression CreateScalarFunctionCall(
+      const std::string& name, const std::vector<ExpressionId>& params);
+  static Expression CreateLogicalFunctionCall(
+      const std::string& name, const std::vector<ExpressionId>& params);
   static Expression CreateIf(ExpressionId condition);
   static Expression CreateElse();
   static Expression CreateEndIf();
@@ -332,6 +350,7 @@ class Expression {
   bool IsSemanticallyEquivalentTo(const Expression& other) const;
 
   ExpressionType type() const { return type_; }
+  ExpressionReturnType return_type() const { return return_type_; }
   ExpressionId lhs_id() const { return lhs_id_; }
   double value() const { return value_; }
   const std::string& name() const { return name_; }
@@ -342,6 +361,7 @@ class Expression {
 
  private:
   ExpressionType type_ = ExpressionType::NOP;
+  ExpressionReturnType return_type_ = ExpressionReturnType::VOID;
 
   // If lhs_id_ >= 0, then this expression is assigned to v_<lhs_id>.
   // For example:
