@@ -35,6 +35,7 @@
 #include <string>
 #include "ceres/codegen/internal/expression.h"
 #include "ceres/codegen/internal/types.h"
+
 namespace ceres {
 namespace internal {
 
@@ -208,6 +209,19 @@ ComparisonExpressionRef operator&&(const ComparisonExpressionRef& x,
 ComparisonExpressionRef operator||(const ComparisonExpressionRef& x,
                                    const ComparisonExpressionRef& y);
 ComparisonExpressionRef operator!(const ComparisonExpressionRef& x);
+
+#define CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(name)          \
+  inline ComparisonExpressionRef name(const ExpressionRef& x) { \
+    return ComparisonExpressionRef(AddExpressionToGraph(        \
+        Expression::CreateLogicalFunctionCall(#name, {x.id}))); \
+  }
+
+CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(isfinite);
+CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(isinf);
+CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(isnan);
+CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(isnormal);
+
+#undef CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL
 
 template <>
 struct InputAssignment<ExpressionRef> {
