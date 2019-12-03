@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8638cd0_4f6a1695",
+        "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-03T14:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cc2cbe7_cbb37288",
+      "revId": "651ad82f41d8436708c7090f52734a31141e3d9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3a03c9d_fab17391",
         "filename": "include/ceres/gradient_problem.h",
         "patchSetId": 4
@@ -51,6 +69,24 @@
       "revId": "651ad82f41d8436708c7090f52734a31141e3d9a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e50a826_85c4a87b",
+        "filename": "include/ceres/gradient_problem.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-03T14:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ef80d8b_10761576",
+      "revId": "651ad82f41d8436708c7090f52734a31141e3d9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -103,6 +139,24 @@
       "revId": "651ad82f41d8436708c7090f52734a31141e3d9a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c2c924_04fc68f0",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-03T14:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22271734_cb504569",
+      "revId": "651ad82f41d8436708c7090f52734a31141e3d9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
