@@ -214,40 +214,28 @@ unset(CERES_COMPILE_OPTIONS)
 message("-- Building with C++${CMAKE_CXX_STANDARD}")
 
 # Eigen.
-find_package(Eigen REQUIRED)
-if (EIGEN_FOUND)
-  message("-- Found Eigen version ${EIGEN_VERSION}: ${EIGEN_INCLUDE_DIRS}")
-  if (EIGEN_VERSION VERSION_LESS 3.1.0)
-    message(FATAL_ERROR "-- Ceres requires Eigen version >= 3.1.0 in order "
-      "that Eigen/SparseCore be available, detected version of Eigen is: "
-      "${EIGEN_VERSION}")
-  endif (EIGEN_VERSION VERSION_LESS 3.1.0)
-
+# Eigen delivers Eigen3Config.cmake since v3.3.3
+find_package(Eigen3 3.3.3 CONFIG REQUIRED)
+if (EIGEN3_FOUND)
+  message("-- Found Eigen version ${EIGEN3_VERSION_STRING}: ${EIGEN3_INCLUDE_DIRS}")
   if (CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64.*|AARCH64.*)" AND
-      EIGEN_VERSION VERSION_LESS 3.3.4)
+      EIGEN3_VERSION_STRING VERSION_LESS 3.3.4)
     # As per issue #289: https://github.com/ceres-solver/ceres-solver/issues/289
     # the bundle_adjustment_test will fail for Eigen < 3.3.4 on aarch64.
     message(FATAL_ERROR "-- Ceres requires Eigen version >= 3.3.4 on aarch64. "
-      "Detected version of Eigen is: ${EIGEN_VERSION}.")
+      "Detected version of Eigen is: ${EIGEN3_VERSION_STRING}.")
   endif()
 
   if (EIGENSPARSE)
     message("-- Enabling use of Eigen as a sparse linear algebra library.")
     list(APPEND CERES_COMPILE_OPTIONS CERES_USE_EIGEN_SPARSE)
-    if (EIGEN_VERSION VERSION_LESS 3.2.2)
-      message("   WARNING:")
-      message("")
-      message("   Your version of Eigen (${EIGEN_VERSION}) is older than ")
-      message("   version 3.2.2.  The performance of SPARSE_NORMAL_CHOLESKY ")
-      message("   and SPARSE_SCHUR linear solvers will suffer.")
-    endif (EIGEN_VERSION VERSION_LESS 3.2.2)
   else (EIGENSPARSE)
     message("-- Disabling use of Eigen as a sparse linear algebra library.")
     message("   This does not affect the covariance estimation algorithm ")
     message("   which can still use the EIGEN_SPARSE_QR algorithm.")
     add_definitions(-DEIGEN_MPL2_ONLY)
   endif (EIGENSPARSE)
-endif (EIGEN_FOUND)
+endif (EIGEN3_FOUND)
 
 if (LAPACK)
   find_package(LAPACK QUIET)
@@ -747,7 +735,6 @@ install(FILES "${Ceres_BINARY_DIR}/CeresConfig-install.cmake"
         RENAME CeresConfig.cmake
         DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
 install(FILES "${Ceres_BINARY_DIR}/CeresConfigVersion.cmake"
-              "${Ceres_SOURCE_DIR}/cmake/FindEigen.cmake"
               "${Ceres_SOURCE_DIR}/cmake/FindGlog.cmake"
               "${Ceres_SOURCE_DIR}/cmake/FindGflags.cmake"
         DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
