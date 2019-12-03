@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "7ef80d8b_10761576",
+        "filename": "include/ceres/gradient_problem.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-03T14:18:17Z",
+      "side": 1,
+      "message": "if first_order_function.h needs port, it will include it no so why do we have to worry about include order amongst the headers?\n\nalso looking at port.h all it contains are some macros at this point.",
+      "parentUuid": "d3a03c9d_fab17391",
+      "revId": "651ad82f41d8436708c7090f52734a31141e3d9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "641e8290_0dbdba39",
         "filename": "include/ceres/iteration_callback.h",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2019-12-03T10:24:27Z",
       "side": 1,
       "message": "Incorrect reordering.",
+      "revId": "651ad82f41d8436708c7090f52734a31141e3d9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2505d914_d727a504",
+        "filename": "include/ceres/iteration_callback.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-03T14:18:17Z",
+      "side": 1,
+      "message": "how? types.h contains a bunch of enums part of the public API, why should it come before disable_warnings.h? are you thinking port.h?",
+      "parentUuid": "641e8290_0dbdba39",
       "revId": "651ad82f41d8436708c7090f52734a31141e3d9a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -81,6 +117,24 @@
       "writtenOn": "2019-12-03T10:24:27Z",
       "side": 1,
       "message": "Ordering is wrong.",
+      "revId": "651ad82f41d8436708c7090f52734a31141e3d9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101303a6_f59f7405",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-03T14:18:17Z",
+      "side": 1,
+      "message": "see my comment elsewhere.",
+      "parentUuid": "2af8483d_96c2a0f1",
       "revId": "651ad82f41d8436708c7090f52734a31141e3d9a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
