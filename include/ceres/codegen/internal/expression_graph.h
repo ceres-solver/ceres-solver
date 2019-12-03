@@ -63,6 +63,7 @@ class ExpressionGraph {
   // error.
   Expression& CreateArithmeticExpression(ExpressionType type,
                                          ExpressionId lhs_id);
+  Expression& CreateLogicalExpression(ExpressionType type, ExpressionId lhs_id);
 
   // Control expression don't have a left hand side.
   // Supported types: IF/ELSE/ENDIF/NOP
@@ -86,6 +87,7 @@ class ExpressionGraph {
   // expression are updated.
   void InsertExpression(ExpressionId location,
                         ExpressionType type,
+                        ExpressionReturnType return_type,
                         ExpressionId lhs_id,
                         const std::vector<ExpressionId>& arguments,
                         const std::string& name,

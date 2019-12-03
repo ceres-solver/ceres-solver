@@ -65,13 +65,28 @@ Expression& ExpressionGraph::CreateArithmeticExpression(ExpressionType type,
     // The left hand side already exists.
   }
 
-  Expression expr(type, lhs_id);
+  Expression expr(type, ExpressionReturnType::SCALAR, lhs_id);
+  expressions_.push_back(expr);
+  return expressions_.back();
+}
+
+Expression& ExpressionGraph::CreateLogicalExpression(ExpressionType type,
+                                                     ExpressionId lhs_id) {
+  if (lhs_id == kInvalidExpressionId) {
+    // We are creating a new temporary variable.
+    // -> The new lhs_id is the index into the graph
+    lhs_id = static_cast<ExpressionId>(expressions_.size());
+  } else {
+    // The left hand side already exists.
+  }
+
+  Expression expr(type, ExpressionReturnType::BOOLEAN, lhs_id);
   expressions_.push_back(expr);
   return expressions_.back();
 }
 
 Expression& ExpressionGraph::CreateControlExpression(ExpressionType type) {
-  Expression expr(type, kInvalidExpressionId);
+  Expression expr(type, ExpressionReturnType::VOID, kInvalidExpressionId);
   expressions_.push_back(expr);
   return expressions_.back();
 }
@@ -111,13 +126,15 @@ bool ExpressionGraph::operator==(const ExpressionGraph& other) const {
 void ExpressionGraph::InsertExpression(
     ExpressionId location,
     ExpressionType type,
+    ExpressionReturnType return_type,
     ExpressionId lhs_id,
     const std::vector<ExpressionId>& arguments,
     const std::string& name,
     double value) {
   ExpressionId last_expression_id = Size() - 1;
   // Increase size by adding a dummy expression.
-  expressions_.push_back(Expression(ExpressionType::NOP, kInvalidExpressionId));
+  expressions_.push_back(Expression(
+      ExpressionType::NOP, ExpressionReturnType::VOID, kInvalidExpressionId));
 
   // Move everything after id back and update references
   for (ExpressionId id = last_expression_id; id >= location; --id) {
@@ -135,7 +152,7 @@ void ExpressionGraph::InsertExpression(
   }
 
   // Insert new expression at the correct place
-  Expression expr(type, lhs_id);
+  Expression expr(type, return_type, lhs_id);
   expr.arguments_ = arguments;
   expr.name_ = name;
   expr.value_ = value;
