@@ -378,16 +378,14 @@ endif()
 # GFlags.
 if (GFLAGS)
   # Don't search with REQUIRED as we can continue without gflags.
-  find_package(Gflags)
-  if (GFLAGS_FOUND)
-    message("-- Found Google Flags header in: ${GFLAGS_INCLUDE_DIRS}, "
-      "in namespace: ${GFLAGS_NAMESPACE}")
-    add_definitions(-DCERES_GFLAGS_NAMESPACE=${GFLAGS_NAMESPACE})
-  else (GFLAGS_FOUND)
+  find_package(gflags 2.2.0 CONFIG)
+  if (gflags_FOUND)
+    message("-- Found Google Flags header in: ${GFLAGS_INCLUDE_DIR}")
+  else (gflags_FOUND)
     message("-- Did not find Google Flags (gflags), Building without gflags "
       "- no tests or tools will be built!")
     update_cache_variable(GFLAGS OFF)
-  endif (GFLAGS_FOUND)
+  endif (gflags_FOUND)
 else (GFLAGS)
   message("-- Google Flags disabled; no tests or tools will be built!")
   # Mark as advanced (remove from default GUI view) the gflags search
@@ -429,13 +427,13 @@ else (MINIGLOG)
   set(GLOG_GFLAGS_DEPENDENCY_MESSAGE
     " Assuming glog was built with gflags support as gflags was found. "
     "This will make gflags a public dependency of Ceres.")
-  if (NOT GFLAGS_FOUND)
+  if (NOT gflags_FOUND)
     set(GLOG_GFLAGS_DEPENDENCY_MESSAGE
       " Assuming glog was NOT built with gflags support as gflags was "
       "not found.  If glog was built with gflags, please set the "
       "gflags search locations such that it can be found by Ceres.  "
       "Otherwise, Ceres may fail to link due to missing gflags symbols.")
-  endif(NOT GFLAGS_FOUND)
+  endif(NOT gflags_FOUND)
   message("-- Found Google Log (glog)." ${GLOG_GFLAGS_DEPENDENCY_MESSAGE})
 endif (MINIGLOG)
 
@@ -749,7 +747,6 @@ install(FILES "${Ceres_BINARY_DIR}/CeresConfig-install.cmake"
 install(FILES "${Ceres_BINARY_DIR}/CeresConfigVersion.cmake"
               "${Ceres_SOURCE_DIR}/cmake/FindEigen.cmake"
               "${Ceres_SOURCE_DIR}/cmake/FindGlog.cmake"
-              "${Ceres_SOURCE_DIR}/cmake/FindGflags.cmake"
         DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
 
 # Create an uninstall target to remove all installed files.
