@@ -580,7 +580,7 @@ template<typename TestProblem> bool Solve(bool is_constrained, int trial) {
 }  // namespace ceres
 
 int main(int argc, char** argv) {
-  CERES_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
+  GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
   using ceres::examples::Solve;

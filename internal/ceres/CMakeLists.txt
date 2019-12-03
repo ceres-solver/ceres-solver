@@ -180,13 +180,13 @@ list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES Threads::Threads)
 
 if (NOT MINIGLOG AND GLOG_FOUND)
   list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES ${GLOG_LIBRARIES})
-  if (GFLAGS_FOUND)
+  if (gflags_FOUND)
     # If glog & gflags are both found, we assume that glog was built with
     # gflags, as it is awkward to perform a try_compile() to verify this
     # when gflags is an imported target (as it is in newer versions).
     # As glog #includes gflags/gflags.h in glog/logging.h if compiled with
     # gflags, it is thus a public dependency for Ceres in this case.
-    list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES ${GFLAGS_LIBRARIES})
+    list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES gflags)
   endif()
 endif (NOT MINIGLOG AND GLOG_FOUND)
 
@@ -333,12 +333,6 @@ if (ACCELERATESPARSE)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
     ${AccelerateSparse_INCLUDE_DIRS})
 endif()
-if (GFLAGS AND NOT FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION)
-  # Only append gflags include directories if the gflags found was not a CMake
-  # exported target that already includes them.
-  list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS
-    ${GFLAGS_INCLUDE_DIRS})
-endif()
 # Add include locations for optional dependencies to the Ceres target without
 # duplication.
 list(REMOVE_DUPLICATES CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS)
@@ -374,10 +368,10 @@ if (BUILD_TESTING AND GFLAGS)
   if (MINIGLOG)
     # When using miniglog, it is compiled into Ceres, thus Ceres becomes
     # the library against which other libraries should link for logging.
-    target_link_libraries(gtest PUBLIC ${GFLAGS_LIBRARIES} ceres)
+    target_link_libraries(gtest PUBLIC gflags ceres)
     target_link_libraries(test_util PUBLIC ceres gtest)
   else (MINIGLOG)
-    target_link_libraries(gtest PUBLIC ${GFLAGS_LIBRARIES} ${GLOG_LIBRARIES})
+    target_link_libraries(gtest PUBLIC gflags ${GLOG_LIBRARIES})
     target_link_libraries(test_util PUBLIC ceres gtest ${GLOG_LIBRARIES})
   endif (MINIGLOG)
 
