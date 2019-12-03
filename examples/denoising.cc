@@ -252,7 +252,7 @@ void SolveProblem(Problem* problem, PGMImage<double>* solution) {
 
 int main(int argc, char** argv) {
   using namespace ceres::examples;
-  CERES_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
+  GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
   if (FLAGS_input.empty()) {

@@ -197,6 +197,7 @@ endif (EIGEN3_FOUND)
 # Flag set during configuration and build of Ceres.
 set(CERES_USES_MINIGLOG @MINIGLOG@)
 set(CERES_USES_GFLAGS @GFLAGS@)
+set(CERES_GFLAGS_VERSION @gflags_VERSION@)
 if (CERES_USES_MINIGLOG)
   # Output message at standard log level (not the lower STATUS) so that
   # the message is output in GUI during configuration to warn user.
@@ -233,23 +234,13 @@ else(CERES_USES_MINIGLOG)
   # gflags is only a public dependency of Ceres via glog, thus is not required
   # if Ceres was built with MINIGLOG.
   if (CERES_USES_GFLAGS)
-    set(GFLAGS_WAS_BUILT_WITH_CMAKE @FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION@)
-    if (GFLAGS_WAS_BUILT_WITH_CMAKE)
-      set(gflags_DIR "@gflags_DIR@")
-      set(GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION TRUE)
-    else()
-      list(APPEND GFLAGS_INCLUDE_DIR_HINTS "@GFLAGS_INCLUDE_DIR@")
-      get_filename_component(CERES_BUILD_GFLAGS_LIBRARY_DIR "@GFLAGS_LIBRARY@" PATH)
-      list(APPEND GFLAGS_LIBRARY_DIR_HINTS ${CERES_BUILD_GFLAGS_LIBRARY_DIR})
-    endif()
     # Search quietly s/t we control the timing of the error message if not found.
-    find_package(Gflags QUIET)
-    if (GFLAGS_FOUND)
+    find_dependency(gflags ${CERES_GFLAGS_VERSION} CONFIG QUIET)
+    if (gflags_FOUND)
       message(STATUS "Found required Ceres dependency: gflags")
     else()
       ceres_report_not_found("Missing required Ceres "
-        "dependency: gflags. Searched using GFLAGS_INCLUDE_DIR_HINTS: "
-        "${GFLAGS_INCLUDE_DIR_HINTS} and gflags_DIR: ${gflags_DIR}.")
+        "dependency: gflags.")
     endif()
   endif()
 endif(CERES_USES_MINIGLOG)
