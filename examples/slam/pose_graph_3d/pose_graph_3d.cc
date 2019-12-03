@@ -147,7 +147,7 @@ bool OutputPoses(const std::string& filename, const MapOfPoses& poses) {
 
 int main(int argc, char** argv) {
   google::InitGoogleLogging(argv[0]);
-  CERES_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
+  GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
 
   CHECK(FLAGS_input != "") << "Need to specify the filename to read.";
 
