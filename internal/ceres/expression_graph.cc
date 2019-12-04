@@ -55,27 +55,6 @@ ExpressionGraph StopRecordingExpressions() {
 
 ExpressionGraph* GetCurrentExpressionGraph() { return expression_pool; }
 
-Expression& ExpressionGraph::CreateArithmeticExpression(ExpressionType type,
-                                                        ExpressionId lhs_id) {
-  if (lhs_id == kInvalidExpressionId) {
-    // We are creating a new temporary variable.
-    // -> The new lhs_id is the index into the graph
-    lhs_id = static_cast<ExpressionId>(expressions_.size());
-  } else {
-    // The left hand side already exists.
-  }
-
-  Expression expr(type, lhs_id);
-  expressions_.push_back(expr);
-  return expressions_.back();
-}
-
-Expression& ExpressionGraph::CreateControlExpression(ExpressionType type) {
-  Expression expr(type, kInvalidExpressionId);
-  expressions_.push_back(expr);
-  return expressions_.back();
-}
-
 bool ExpressionGraph::DependsOn(ExpressionId A, ExpressionId B) const {
   // Depth first search on the expression graph
   // Equivalent Recursive Implementation:
@@ -140,6 +119,19 @@ void ExpressionGraph::InsertExpression(
   expr.name_ = name;
   expr.value_ = value;
   expressions_[location] = expr;
+}
+
+ExpressionId ExpressionGraph::Add(const Expression& expression,
+                                  bool create_lhs_variable) {
+  if (create_lhs_variable) {
+    // Make a copy so we can modify the lhs_id.
+    Expression copy = expression;
+    copy.lhs_id_ = static_cast<ExpressionId>(expressions_.size());
+    expressions_.push_back(copy);
+  } else {
+    expressions_.push_back(expression);
+  }
+  return expressions_.size() - 1;
 }
 
 }  // namespace internal

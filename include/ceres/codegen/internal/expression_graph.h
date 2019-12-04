@@ -57,10 +57,9 @@ class ExpressionGraph {
   //   v_5 = __ + __;
   // The place holders are then set by the CreateXX functions of Expression.
   //
-  // If lhs_id == kInvalidExpressionId, then a new lhs_id will be generated and
-  // assigned to the created expression.
-  // Calling this function with a lhs_id that doesn't exist results in an
-  // error.
+  // If lhs_id == kInvalidExpressionId, then a new lhs_id will be generated
+  // and assigned to the created expression. Calling this function with a
+  // lhs_id that doesn't exist results in an error.
   Expression& CreateArithmeticExpression(ExpressionType type,
                                          ExpressionId lhs_id);
 
@@ -82,8 +81,8 @@ class ExpressionGraph {
   int Size() const { return expressions_.size(); }
 
   // Insert a new expression at "location" into the graph. All expression
-  // after "location" are moved by one element to the back. References to moved
-  // expression are updated.
+  // after "location" are moved by one element to the back. References to
+  // moved expression are updated.
   void InsertExpression(ExpressionId location,
                         ExpressionType type,
                         ExpressionId lhs_id,
@@ -91,24 +90,27 @@ class ExpressionGraph {
                         const std::string& name,
                         double value);
 
+  ExpressionId Add(const Expression& expression, bool create_lhs_variable);
+
  private:
-  // All Expressions are referenced by an ExpressionId. The ExpressionId is the
-  // index into this array. Each expression has a list of ExpressionId as
+  // All Expressions are referenced by an ExpressionId. The ExpressionId is
+  // the index into this array. Each expression has a list of ExpressionId as
   // arguments. These references form the graph.
   std::vector<Expression> expressions_;
 };
 
-// After calling this method, all operations on 'ExpressionRef' objects will be
-// recorded into an ExpressionGraph. You can obtain this graph by calling
+// After calling this method, all operations on 'ExpressionRef' objects will
+// be recorded into an ExpressionGraph. You can obtain this graph by calling
 // StopRecordingExpressions.
 //
-// Performing expression operations before calling StartRecordingExpressions or
-// calling StartRecodring. twice is an error.
+// Performing expression operations before calling StartRecordingExpressions
+// or calling StartRecodring. twice is an error.
 void StartRecordingExpressions();
 
-// Stops recording and returns all expressions that have been executed since the
-// call to StartRecordingExpressions. The internal ExpressionGraph will be
-// invalidated and a second consecutive call to this method results in an error.
+// Stops recording and returns all expressions that have been executed since
+// the call to StartRecordingExpressions. The internal ExpressionGraph will be
+// invalidated and a second consecutive call to this method results in an
+// error.
 ExpressionGraph StopRecordingExpressions();
 
 // Returns a pointer to the active expression tree.
