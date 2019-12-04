@@ -249,31 +249,37 @@ enum class ExpressionType {
 // ExpressionGraph (see expression_graph.h).
 class Expression {
  public:
-  // These functions create the corresponding expression, add them to an
-  // internal vector and return a reference to them.
-  static ExpressionId CreateCompileTimeConstant(double v);
-  static ExpressionId CreateInputAssignment(const std::string& name);
-  static ExpressionId CreateOutputAssignment(ExpressionId v,
-                                             const std::string& name);
-  static ExpressionId CreateAssignment(ExpressionId dst, ExpressionId src);
-  static ExpressionId CreateBinaryArithmetic(const std::string& op,
-                                             ExpressionId l,
-                                             ExpressionId r);
-  static ExpressionId CreateUnaryArithmetic(const std::string& op,
-                                            ExpressionId v);
-  static ExpressionId CreateBinaryCompare(const std::string& name,
-                                          ExpressionId l,
-                                          ExpressionId r);
-  static ExpressionId CreateLogicalNegation(ExpressionId v);
-  static ExpressionId CreateFunctionCall(
-      const std::string& name, const std::vector<ExpressionId>& params);
+  Expression() = default;
 
-  // Conditional control expressions are inserted into the graph but can't be
-  // referenced by other expressions. Therefore they don't return an
-  // ExpressionId.
-  static void CreateIf(ExpressionId condition);
-  static void CreateElse();
-  static void CreateEndIf();
+  Expression(ExpressionType type,
+             ExpressionId lhs_id = kInvalidExpressionId,
+             const std::vector<ExpressionId>& arguments = {},
+             const std::string& name = "",
+             double value = 0);
+
+  // Helper 'constructors' that create an Expression with the correct type. You
+  // can also use the actual constructor from above, but using the create
+  // functions is less prone to errors.
+  static Expression CreateCompileTimeConstant(double v);
+
+  static Expression CreateInputAssignment(const std::string& name);
+  static Expression CreateOutputAssignment(ExpressionId v,
+                                           const std::string& name);
+  static Expression CreateAssignment(ExpressionId dst, ExpressionId src);
+  static Expression CreateBinaryArithmetic(const std::string& op,
+                                           ExpressionId l,
+                                           ExpressionId r);
+  static Expression CreateUnaryArithmetic(const std::string& op,
+                                          ExpressionId v);
+  static Expression CreateBinaryCompare(const std::string& name,
+                                        ExpressionId l,
+                                        ExpressionId r);
+  static Expression CreateLogicalNegation(ExpressionId v);
+  static Expression CreateFunctionCall(const std::string& name,
+                                       const std::vector<ExpressionId>& params);
+  static Expression CreateIf(ExpressionId condition);
+  static Expression CreateElse();
+  static Expression CreateEndIf();
 
   // Returns true if this is an arithmetic expression.
   // Arithmetic expressions must have a valid left hand side.
@@ -309,6 +315,7 @@ class Expression {
   // Compares all members with the == operator. If this function succeeds,
   // IsSemanticallyEquivalentTo will also return true.
   bool operator==(const Expression& other) const;
+  bool operator!=(const Expression& other) const { return !(*this == other); }
 
   // Semantically equivalent expressions are similar in a way, that the type(),
   // value(), name(), number of arguments is identical. The lhs_id() and the
@@ -329,14 +336,10 @@ class Expression {
   const std::string& name() const { return name_; }
   const std::vector<ExpressionId>& arguments() const { return arguments_; }
 
+  void set_lhs_id(ExpressionId new_lhs_id) { lhs_id_ = new_lhs_id; }
+  std::vector<ExpressionId>* mutable_arguments() { return &arguments_; }
+
  private:
-  // Only ExpressionGraph is allowed to call the constructor, because it manages
-  // the memory and ids.
-  friend class ExpressionGraph;
-
-  // Private constructor. Use the "CreateXX" functions instead.
-  Expression(ExpressionType type, ExpressionId lhs_id);
-
   ExpressionType type_ = ExpressionType::NOP;
 
   // If lhs_id_ >= 0, then this expression is assigned to v_<lhs_id>.
