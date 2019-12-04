@@ -22,6 +22,30 @@
       "revId": "4362a2169966e08394252098c80d1f26764becd0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b459b6_0ee630f1",
+        "filename": "include/ceres/codegen/internal/expression.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-04T15:37:36Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c74b46d8_27561840",
+      "range": {
+        "startLine": 332,
+        "startChar": 9,
+        "endLine": 332,
+        "endChar": 0
+      },
+      "revId": "4362a2169966e08394252098c80d1f26764becd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
