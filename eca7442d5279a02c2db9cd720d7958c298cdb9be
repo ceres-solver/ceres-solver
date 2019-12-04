@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d790380e_86871d2b",
+        "filename": "include/ceres/codegen/macros.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-04T10:31:13Z",
+      "side": 1,
+      "message": "Moving this to Jet.h creates a dependency rotation.h-\u003ejet.h which I don\u0027t like.",
+      "parentUuid": "6d7a33e1_aab33d66",
+      "range": {
+        "startLine": 121,
+        "startChar": 9,
+        "endLine": 121,
+        "endChar": 16
+      },
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12cc41bd_0e80c915",
         "filename": "include/ceres/jet.h",
         "patchSetId": 1
@@ -208,6 +232,24 @@
     },
     {
       "key": {
+        "uuid": "c7c992f5_57615378",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-04T10:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51d51360_3c17d719",
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d38f1507_a8cb1638",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 1
@@ -222,6 +264,24 @@
       "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3876bd7c_2880175d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-04T10:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d38f1507_a8cb1638",
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -242,6 +302,24 @@
     },
     {
       "key": {
+        "uuid": "12e7d5a7_d5946034",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-04T10:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "829ac5ca_a410027b",
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "922089b5_1dbf3131",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 1
@@ -256,6 +334,24 @@
       "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc834d7_e7922e5e",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-04T10:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "922089b5_1dbf3131",
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -276,6 +372,24 @@
     },
     {
       "key": {
+        "uuid": "1e0eb634_5d05d89a",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-04T10:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35781c90_5df7b815",
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3bbec65_df29b2a0",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 1
@@ -290,6 +404,24 @@
       "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a86b448_51cf5510",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-04T10:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3bbec65_df29b2a0",
+      "revId": "eca7442d5279a02c2db9cd720d7958c298cdb9be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
