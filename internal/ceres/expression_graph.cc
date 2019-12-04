@@ -55,25 +55,21 @@ ExpressionGraph StopRecordingExpressions() {
 
 ExpressionGraph* GetCurrentExpressionGraph() { return expression_pool; }
 
-Expression& ExpressionGraph::CreateArithmeticExpression(ExpressionType type,
-                                                        ExpressionId lhs_id) {
-  if (lhs_id == kInvalidExpressionId) {
-    // We are creating a new temporary variable.
-    // -> The new lhs_id is the index into the graph
-    lhs_id = static_cast<ExpressionId>(expressions_.size());
-  } else {
-    // The left hand side already exists.
-  }
-
-  Expression expr(type, lhs_id);
-  expressions_.push_back(expr);
-  return expressions_.back();
+void AddExpressionToActiveGraph(const Expression& expression) {
+  ExpressionGraph* graph = GetCurrentExpressionGraph();
+  CHECK(graph)
+      << "The ExpressionGraph has to be created before using Expressions. This "
+         "is achieved by calling ceres::StartRecordingExpressions.";
+  graph->InsertBack(expression);
 }
 
-Expression& ExpressionGraph::CreateControlExpression(ExpressionType type) {
-  Expression expr(type, kInvalidExpressionId);
-  expressions_.push_back(expr);
-  return expressions_.back();
+ExpressionId AddExpressionToActiveGraphAndCreateVariable(
+    const Expression& expression) {
+  ExpressionGraph* graph = GetCurrentExpressionGraph();
+  CHECK(graph)
+      << "The ExpressionGraph has to be created before using Expressions. This "
+         "is achieved by calling ceres::StartRecordingExpressions.";
+  return graph->InsertBackAndCreateVariable(expression);
 }
 
 bool ExpressionGraph::DependsOn(ExpressionId A, ExpressionId B) const {
@@ -108,13 +104,8 @@ bool ExpressionGraph::operator==(const ExpressionGraph& other) const {
   return true;
 }
 
-void ExpressionGraph::InsertExpression(
-    ExpressionId location,
-    ExpressionType type,
-    ExpressionId lhs_id,
-    const std::vector<ExpressionId>& arguments,
-    const std::string& name,
-    double value) {
+void ExpressionGraph::Insert(ExpressionId location,
+                             const Expression& expression) {
   ExpressionId last_expression_id = Size() - 1;
   // Increase size by adding a dummy expression.
   expressions_.push_back(Expression(ExpressionType::NOP, kInvalidExpressionId));
@@ -135,11 +126,21 @@ void ExpressionGraph::InsertExpression(
   }
 
   // Insert new expression at the correct place
-  Expression expr(type, lhs_id);
-  expr.arguments_ = arguments;
-  expr.name_ = name;
-  expr.value_ = value;
-  expressions_[location] = expr;
+  expressions_[location] = expression;
+}
+
+void ExpressionGraph::InsertBack(const Expression& expression) {
+  // TODO(darius): check if valid
+  expressions_.push_back(expression);
+}
+
+ExpressionId ExpressionGraph::InsertBackAndCreateVariable(
+    const Expression& expression) {
+  // Make a copy so we can modify the lhs_id.
+  Expression copy = expression;
+  copy.lhs_id_ = static_cast<ExpressionId>(expressions_.size());
+  expressions_.push_back(copy);
+  return copy.lhs_id();
 }
 
 }  // namespace internal

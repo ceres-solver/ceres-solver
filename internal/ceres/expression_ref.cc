@@ -29,6 +29,7 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 
 #include "ceres/codegen/internal/expression_ref.h"
+
 #include "glog/logging.h"
 
 namespace ceres {
@@ -40,8 +41,15 @@ ExpressionRef ExpressionRef::Create(ExpressionId id) {
   return ref;
 }
 
+ExpressionRef ExpressionRef::AddToGraph(const Expression& expression) {
+  return ExpressionRef::Create(
+      AddExpressionToActiveGraphAndCreateVariable(expression));
+}
+
 ExpressionRef::ExpressionRef(double compile_time_constant) {
-  id = Expression::CreateCompileTimeConstant(compile_time_constant);
+  id = ExpressionRef::AddToGraph(
+           Expression::CreateCompileTimeConstant(compile_time_constant))
+           .id;
 }
 
 ExpressionRef::ExpressionRef(const ExpressionRef& other) { *this = other; }
@@ -51,13 +59,16 @@ ExpressionRef& ExpressionRef::operator=(const ExpressionRef& other) {
   CHECK(other.IsInitialized()) << "Uninitialized Assignment.";
   if (IsInitialized()) {
     // Create assignment from other -> this
-    Expression::CreateAssignment(this->id, other.id);
+    AddExpressionToActiveGraph(
+        Expression::CreateAssignment(this->id, other.id));
   } else {
     // Create a new variable and
     // Create assignment from other -> this
-    // Passing kInvalidExpressionId to CreateAssignment generates a new variable
-    // name which we store in the id.
-    id = Expression::CreateAssignment(kInvalidExpressionId, other.id);
+    // Passing kInvalidExpressionId to CreateAssignment generates a new
+    // variable name which we store in the id.
+    id = ExpressionRef::AddToGraph(
+             Expression::CreateAssignment(kInvalidExpressionId, other.id))
+             .id;
   }
   return *this;
 }
@@ -72,22 +83,23 @@ ExpressionRef& ExpressionRef::operator=(ExpressionRef&& other) {
 
   if (IsInitialized()) {
     // Create assignment from other -> this
-    Expression::CreateAssignment(id, other.id);
+    AddExpressionToActiveGraph(Expression::CreateAssignment(id, other.id));
   } else {
     // Special case: 'this' is uninitialized and other is an rvalue.
     //    -> Implement copy elision by only setting the reference
     // This reduces the number of generated expressions roughly by a factor
     // of 2. For example, in the following statement:
     //   T c = a + b;
-    // The result of 'a + b' is an rvalue reference to ExpressionRef. Therefore,
-    // the move constructor of 'c' is called. Since 'c' is also uninitialized,
-    // this branch here is taken and the copy is removed. After this function
-    // 'c' will just point to the temporary created by the 'a + b' expression.
-    // This is valid, because we don't have any scoping information and
-    // therefore assume global scope for all temporary variables. The generated
-    // code for the single statement above, is:
+    // The result of 'a + b' is an rvalue reference to ExpressionRef.
+    // Therefore, the move constructor of 'c' is called. Since 'c' is also
+    // uninitialized, this branch here is taken and the copy is removed. After
+    // this function 'c' will just point to the temporary created by the 'a +
+    // b' expression. This is valid, because we don't have any scoping
+    // information and therefore assume global scope for all temporary
+    // variables. The generated code for the single statement above, is:
     //   v_2 = v_0 + v_1;   // With c.id = 2
-    // Without this move constructor the following two lines would be generated:
+    // Without this move constructor the following two lines would be
+    // generated:
     //   v_2 = v_0 + v_1;
     //   v_3 = v_2;        // With c.id = 3
     id = other.id;
@@ -119,51 +131,53 @@ ExpressionRef& ExpressionRef::operator/=(const ExpressionRef& x) {
 
 // Arith. Operators
 ExpressionRef operator-(const ExpressionRef& x) {
-  return ExpressionRef::Create(Expression::CreateUnaryArithmetic("-", x.id));
+  return ExpressionRef::AddToGraph(
+      Expression::CreateUnaryArithmetic("-", x.id));
 }
 
 ExpressionRef operator+(const ExpressionRef& x) {
-  return ExpressionRef::Create(Expression::CreateUnaryArithmetic("+", x.id));
+  return ExpressionRef::AddToGraph(
+      Expression::CreateUnaryArithmetic("+", x.id));
 }
 
 ExpressionRef operator+(const ExpressionRef& x, const ExpressionRef& y) {
-  return ExpressionRef::Create(
+  return ExpressionRef::AddToGraph(
       Expression::CreateBinaryArithmetic("+", x.id, y.id));
 }
 
 ExpressionRef operator-(const ExpressionRef& x, const ExpressionRef& y) {
-  return ExpressionRef::Create(
+  return ExpressionRef::AddToGraph(
       Expression::CreateBinaryArithmetic("-", x.id, y.id));
 }
 
 ExpressionRef operator/(const ExpressionRef& x, const ExpressionRef& y) {
-  return ExpressionRef::Create(
+  return ExpressionRef::AddToGraph(
       Expression::CreateBinaryArithmetic("/", x.id, y.id));
 }
 
 ExpressionRef operator*(const ExpressionRef& x, const ExpressionRef& y) {
-  return ExpressionRef::Create(
+  return ExpressionRef::AddToGraph(
       Expression::CreateBinaryArithmetic("*", x.id, y.id));
 }
 
 ExpressionRef Ternary(const ComparisonExpressionRef& c,
                       const ExpressionRef& x,
                       const ExpressionRef& y) {
-  return ExpressionRef::Create(
+  return ExpressionRef::AddToGraph(
       Expression::CreateFunctionCall("Ternary", {c.id, x.id, y.id}));
 }
 
 #define CERES_DEFINE_EXPRESSION_COMPARISON_OPERATOR(op)         \
   ComparisonExpressionRef operator op(const ExpressionRef& x,   \
                                       const ExpressionRef& y) { \
-    return ComparisonExpressionRef(ExpressionRef::Create(       \
+    return ComparisonExpressionRef(ExpressionRef::AddToGraph(   \
         Expression::CreateBinaryCompare(#op, x.id, y.id)));     \
   }
 
 #define CERES_DEFINE_EXPRESSION_LOGICAL_OPERATOR(op)                      \
   ComparisonExpressionRef operator op(const ComparisonExpressionRef& x,   \
                                       const ComparisonExpressionRef& y) { \
-    return ComparisonExpressionRef(ExpressionRef::Create(                 \
+    return ComparisonExpressionRef(ExpressionRef::AddToGraph(             \
         Expression::CreateBinaryCompare(#op, x.id, y.id)));               \
   }
 
@@ -180,7 +194,7 @@ CERES_DEFINE_EXPRESSION_LOGICAL_OPERATOR(||)
 
 ComparisonExpressionRef operator!(const ComparisonExpressionRef& x) {
   return ComparisonExpressionRef(
-      ExpressionRef::Create(Expression::CreateLogicalNegation(x.id)));
+      ExpressionRef::AddToGraph(Expression::CreateLogicalNegation(x.id)));
 }
 
 }  // namespace internal
