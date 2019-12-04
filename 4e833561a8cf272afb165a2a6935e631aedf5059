@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41d81986_6ca91d51",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-04T19:52:21Z",
+      "side": 1,
+      "message": "In what case is the gflags target not found when gflags_FOUND is true?  Given that you aren\u0027t using GFLAGS_USE_TARGET_NAMESPACE the targets shouldn\u0027t be namespaced.",
+      "revId": "4e833561a8cf272afb165a2a6935e631aedf5059",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
