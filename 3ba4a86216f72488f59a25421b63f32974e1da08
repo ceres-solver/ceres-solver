@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aabd7d37_82b0e050",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T13:37:41Z",
+      "side": 1,
+      "message": "we could just not use ternary operations anywhere in jet.h",
+      "range": {
+        "startLine": 439,
+        "startChar": 9,
+        "endLine": 439,
+        "endChar": 16
+      },
+      "revId": "3ba4a86216f72488f59a25421b63f32974e1da08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
