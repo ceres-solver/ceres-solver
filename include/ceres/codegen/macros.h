@@ -109,9 +109,11 @@
   ceres::internal::InputAssignment<_template_type>::Get(_local_variable, \
                                                         #_local_variable)
 #define CERES_IF(condition_) \
-  ceres::internal::Expression::CreateIf((condition_).id);
-#define CERES_ELSE ceres::internal::Expression::CreateElse();
-#define CERES_ENDIF ceres::internal::Expression::CreateEndIf();
+  AddExpressionToGraph(ceres::internal::Expression::CreateIf((condition_).id));
+#define CERES_ELSE \
+  AddExpressionToGraph(ceres::internal::Expression::CreateElse());
+#define CERES_ENDIF \
+  AddExpressionToGraph(ceres::internal::Expression::CreateEndIf());
 #endif
 
 #endif  // CERES_PUBLIC_CODEGEN_MACROS_H_
