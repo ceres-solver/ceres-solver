@@ -138,11 +138,11 @@ TEST(Expression, Ternary) {
   ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  2);
-  reference.InsertExpression(  1,  ExpressionType::COMPILE_TIME_CONSTANT,   1,      {},        "",  3);
-  reference.InsertExpression(  2,      ExpressionType::BINARY_COMPARISON,   2,   {0,1},       "<",  0);
-  reference.InsertExpression(  3,          ExpressionType::FUNCTION_CALL,   3, {2,0,1}, "Ternary",  0);
-  reference.InsertExpression(  4,      ExpressionType::OUTPUT_ASSIGNMENT,   4,     {3},  "result",  0);
+  reference.Insert(  0, { ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  2});
+  reference.Insert(  1, { ExpressionType::COMPILE_TIME_CONSTANT,   1,      {},        "",  3});
+  reference.Insert(  2, {     ExpressionType::BINARY_COMPARISON,   2,   {0,1},       "<",  0});
+  reference.Insert(  3, {         ExpressionType::FUNCTION_CALL,   3, {2,0,1}, "Ternary",  0});
+  reference.Insert(  4, {     ExpressionType::OUTPUT_ASSIGNMENT,   4,     {3},  "result",  0});
   // clang-format on
   EXPECT_EQ(reference, graph);
 }
@@ -161,9 +161,9 @@ TEST(Expression, Assignment) {
   ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  1);
-  reference.InsertExpression(  1,  ExpressionType::COMPILE_TIME_CONSTANT,   1,      {},        "",  2);
-  reference.InsertExpression(  2,             ExpressionType::ASSIGNMENT,   1,      {0},        "",  0);
+  reference.Insert(  0, { ExpressionType::COMPILE_TIME_CONSTANT,   0,       {},        "",  1});
+  reference.Insert(  1, { ExpressionType::COMPILE_TIME_CONSTANT,   1,       {},        "",  2});
+  reference.Insert(  2, {            ExpressionType::ASSIGNMENT,   1,      {0},        "",  0});
   // clang-format on
   EXPECT_EQ(reference, graph);
 }
@@ -181,8 +181,8 @@ TEST(Expression, AssignmentCreate) {
   ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  2);
-  reference.InsertExpression(  1,             ExpressionType::ASSIGNMENT,   1,      {0},        "",  0);
+  reference.Insert(  0, { ExpressionType::COMPILE_TIME_CONSTANT,   0,       {},        "",  2});
+  reference.Insert(  1, {            ExpressionType::ASSIGNMENT,   1,      {0},        "",  0});
   // clang-format on
   EXPECT_EQ(reference, graph);
 }
@@ -200,7 +200,7 @@ TEST(Expression, MoveAssignmentCreate) {
   ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  1);
+  reference.Insert(  0, { ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  1});
   // clang-format on
   EXPECT_EQ(reference, graph);
 }
@@ -219,9 +219,9 @@ TEST(Expression, MoveAssignment) {
   ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  1);
-  reference.InsertExpression(  1,  ExpressionType::COMPILE_TIME_CONSTANT,   1,      {},        "",  2);
-  reference.InsertExpression(  2,             ExpressionType::ASSIGNMENT,   1,      {0},        "",  0);
+  reference.Insert(  0, { ExpressionType::COMPILE_TIME_CONSTANT,   0,       {},        "",  1});
+  reference.Insert(  1, { ExpressionType::COMPILE_TIME_CONSTANT,   1,       {},        "",  2});
+  reference.Insert(  2, {            ExpressionType::ASSIGNMENT,   1,      {0},        "",  0});
   // clang-format on
   EXPECT_EQ(reference, graph);
 }

@@ -55,27 +55,6 @@ ExpressionGraph StopRecordingExpressions() {
 
 ExpressionGraph* GetCurrentExpressionGraph() { return expression_pool; }
 
-Expression& ExpressionGraph::CreateArithmeticExpression(ExpressionType type,
-                                                        ExpressionId lhs_id) {
-  if (lhs_id == kInvalidExpressionId) {
-    // We are creating a new temporary variable.
-    // -> The new lhs_id is the index into the graph
-    lhs_id = static_cast<ExpressionId>(expressions_.size());
-  } else {
-    // The left hand side already exists.
-  }
-
-  Expression expr(type, lhs_id);
-  expressions_.push_back(expr);
-  return expressions_.back();
-}
-
-Expression& ExpressionGraph::CreateControlExpression(ExpressionType type) {
-  Expression expr(type, kInvalidExpressionId);
-  expressions_.push_back(expr);
-  return expressions_.back();
-}
-
 bool ExpressionGraph::DependsOn(ExpressionId A, ExpressionId B) const {
   // Depth first search on the expression graph
   // Equivalent Recursive Implementation:
@@ -83,7 +62,7 @@ bool ExpressionGraph::DependsOn(ExpressionId A, ExpressionId B) const {
   //   for (auto p : A.params_) {
   //     if (pool[p.id].DependsOn(B, pool)) return true;
   //   }
-  std::vector<ExpressionId> stack = ExpressionForId(A).arguments_;
+  std::vector<ExpressionId> stack = ExpressionForId(A).arguments();
   while (!stack.empty()) {
     auto top = stack.back();
     stack.pop_back();
@@ -91,7 +70,7 @@ bool ExpressionGraph::DependsOn(ExpressionId A, ExpressionId B) const {
       return true;
     }
     auto& expr = ExpressionForId(top);
-    stack.insert(stack.end(), expr.arguments_.begin(), expr.arguments_.end());
+    stack.insert(stack.end(), expr.arguments().begin(), expr.arguments().end());
   }
   return false;
 }
@@ -108,13 +87,8 @@ bool ExpressionGraph::operator==(const ExpressionGraph& other) const {
   return true;
 }
 
-void ExpressionGraph::InsertExpression(
-    ExpressionId location,
-    ExpressionType type,
-    ExpressionId lhs_id,
-    const std::vector<ExpressionId>& arguments,
-    const std::string& name,
-    double value) {
+void ExpressionGraph::Insert(ExpressionId location,
+                             const Expression& expression) {
   ExpressionId last_expression_id = Size() - 1;
   // Increase size by adding a dummy expression.
   expressions_.push_back(Expression(ExpressionType::NOP, kInvalidExpressionId));
@@ -123,10 +97,10 @@ void ExpressionGraph::InsertExpression(
   for (ExpressionId id = last_expression_id; id >= location; --id) {
     auto& expression = expressions_[id];
     // Increment reference if it points to a shifted variable.
-    if (expression.lhs_id_ >= location) {
-      expression.lhs_id_++;
+    if (expression.lhs_id() >= location) {
+      expression.set_lhs_id(expression.lhs_id() + 1);
     }
-    for (auto& arg : expression.arguments_) {
+    for (auto& arg : *expression.mutable_arguments()) {
       if (arg >= location) {
         arg++;
       }
@@ -135,11 +109,24 @@ void ExpressionGraph::InsertExpression(
   }
 
   // Insert new expression at the correct place
-  Expression expr(type, lhs_id);
-  expr.arguments_ = arguments;
-  expr.name_ = name;
-  expr.value_ = value;
-  expressions_[location] = expr;
+  expressions_[location] = expression;
+}
+
+void ExpressionGraph::InsertBack(const Expression& expression) {
+  // TODO(darius): check if valid
+  expressions_.push_back(expression);
+}
+
+ExpressionId ExpressionGraph::InsertBackAndCreateVariable(
+    const Expression& expression) {
+  CHECK(expression.lhs_id() == kInvalidExpressionId)
+      << "The Expression passed to InsertBackAndCreateVariable must not "
+         "reference an existing variable.";
+  // Make a copy so we can modify the lhs_id.
+  Expression copy = expression;
+  copy.set_lhs_id(static_cast<ExpressionId>(expressions_.size()));
+  expressions_.push_back(copy);
+  return copy.lhs_id();
 }
 
 }  // namespace internal

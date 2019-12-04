@@ -95,7 +95,7 @@ TEST(ExpressionGraph, InsertExpression_UpdateReferences) {
   EXPECT_EQ(c_expr.arguments()[1], 1);
 
   // We insert at the beginning, which shifts everything by one spot.
-  graph.InsertExpression(
+  graph.Insert(
       0, ExpressionType::COMPILE_TIME_CONSTANT, 0, {}, "", 10.2);
 
   // Test if 'a' and 'c' are actually at location 1 and 3
@@ -147,9 +147,9 @@ TEST(ExpressionGraph, InsertExpression) {
 
   // We manually insert the 3 missing expressions
   // clang-format off
-  graph1.InsertExpression(2, ExpressionType::COMPILE_TIME_CONSTANT, 2,     {},   "",  5);
-  graph1.InsertExpression(3,     ExpressionType::BINARY_ARITHMETIC, 3, {0, 2},  "+",  0);
-  graph1.InsertExpression(4,            ExpressionType::ASSIGNMENT, 0,    {3},   "",  0);
+  graph1.Insert(2, ExpressionType::COMPILE_TIME_CONSTANT, 2,     {},   "",  5);
+  graph1.Insert(3,     ExpressionType::BINARY_ARITHMETIC, 3, {0, 2},  "+",  0);
+  graph1.Insert(4,            ExpressionType::ASSIGNMENT, 0,    {3},   "",  0);
   // clang-format on
 
   // Now the graphs are identical!
