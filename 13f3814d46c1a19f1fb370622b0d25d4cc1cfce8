@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a79dc4cd_b8e097d1",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T17:37:06Z",
+      "side": 1,
+      "message": "I am curious as I asked elsewhere, what if we only had one variant here, which was the one below, whats the harm in creating an expressionref for everything? this looks like an optimization to me, which complicates the semantics. and only used by conditionals which are not that frequently occuring, so even if we end up creating a few more expressions is that so bad?",
+      "range": {
+        "startLine": 115,
+        "startChar": 5,
+        "endLine": 115,
+        "endChar": 20
+      },
+      "revId": "13f3814d46c1a19f1fb370622b0d25d4cc1cfce8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5ada89_ac6b7752",
+        "filename": "internal/ceres/expression_ref.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T17:37:06Z",
+      "side": 1,
+      "message": "do we really need two variants of this function? what will happen if we only have the one below? the one that creates a variable?",
+      "range": {
+        "startLine": 38,
+        "startChar": 26,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "13f3814d46c1a19f1fb370622b0d25d4cc1cfce8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
