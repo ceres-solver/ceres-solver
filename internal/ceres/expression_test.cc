@@ -28,7 +28,6 @@
 //
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 //
-
 #define CERES_CODEGEN
 
 #include "ceres/codegen/internal/expression_graph.h"
@@ -39,60 +38,134 @@
 namespace ceres {
 namespace internal {
 
-TEST(Expression, IsArithmetic) {
-  using T = ExpressionRef;
+TEST(Expression, ConstructorAndAccessors) {
+  Expression expr(ExpressionType::LOGICAL_NEGATION,
+                  12345,
+                  {1, 5, 8, 10},
+                  "TestConstructor",
+                  57.25);
+  EXPECT_EQ(expr.type(), ExpressionType::LOGICAL_NEGATION);
+  EXPECT_EQ(expr.lhs_id(), 12345);
+  EXPECT_EQ(expr.arguments(), std::vector<ExpressionId>({1, 5, 8, 10}));
+  EXPECT_EQ(expr.name(), "TestConstructor");
+  EXPECT_EQ(expr.value(), 57.25);
+}
 
-  StartRecordingExpressions();
+TEST(Expression, CreateFunctions) {
+  // clang-format off
+  // The default constructor creates a NOP!
+  EXPECT_EQ(Expression(), Expression(
+            ExpressionType::NOP, kInvalidExpressionId, {}, "", 0));
 
-  T a(2), b(3);
-  T c = a + b;
-  T d = c + a;
+  EXPECT_EQ(Expression::CreateCompileTimeConstant(72), Expression(
+            ExpressionType::COMPILE_TIME_CONSTANT, kInvalidExpressionId, {}, "", 72));
 
-  auto graph = StopRecordingExpressions();
+  EXPECT_EQ(Expression::CreateInputAssignment("arguments[0][0]"), Expression(
+            ExpressionType::INPUT_ASSIGNMENT, kInvalidExpressionId, {}, "arguments[0][0]", 0));
 
-  ASSERT_TRUE(graph.ExpressionForId(a.id).IsArithmeticExpression());
-  ASSERT_TRUE(graph.ExpressionForId(b.id).IsArithmeticExpression());
-  ASSERT_TRUE(graph.ExpressionForId(c.id).IsArithmeticExpression());
-  ASSERT_TRUE(graph.ExpressionForId(d.id).IsArithmeticExpression());
+  EXPECT_EQ(Expression::CreateOutputAssignment(ExpressionId(5), "residuals[3]"), Expression(
+            ExpressionType::OUTPUT_ASSIGNMENT, kInvalidExpressionId, {5}, "residuals[3]", 0));
+
+  EXPECT_EQ(Expression::CreateAssignment(ExpressionId(3), ExpressionId(5)), Expression(
+            ExpressionType::ASSIGNMENT, 3, {5}, "", 0));
+
+  EXPECT_EQ(Expression::CreateBinaryArithmetic("+", ExpressionId(3),ExpressionId(5)), Expression(
+            ExpressionType::BINARY_ARITHMETIC, kInvalidExpressionId, {3,5}, "+", 0));
+
+  EXPECT_EQ(Expression::CreateUnaryArithmetic("-", ExpressionId(5)), Expression(
+            ExpressionType::UNARY_ARITHMETIC, kInvalidExpressionId, {5}, "-", 0));
+
+  EXPECT_EQ(Expression::CreateBinaryCompare("<",ExpressionId(3),ExpressionId(5)), Expression(
+            ExpressionType::BINARY_COMPARISON, kInvalidExpressionId, {3,5}, "<", 0));
+
+  EXPECT_EQ(Expression::CreateLogicalNegation(ExpressionId(5)), Expression(
+            ExpressionType::LOGICAL_NEGATION, kInvalidExpressionId, {5}, "", 0));
+
+  EXPECT_EQ(Expression::CreateFunctionCall("pow",{ExpressionId(3),ExpressionId(5)}), Expression(
+            ExpressionType::FUNCTION_CALL, kInvalidExpressionId, {3,5}, "pow", 0));
+
+  EXPECT_EQ(Expression::CreateIf(ExpressionId(5)), Expression(
+            ExpressionType::IF, kInvalidExpressionId, {5}, "", 0));
+
+  EXPECT_EQ(Expression::CreateElse(), Expression(
+            ExpressionType::ELSE, kInvalidExpressionId, {}, "", 0));
+
+  EXPECT_EQ(Expression::CreateEndIf(), Expression(
+            ExpressionType::ENDIF, kInvalidExpressionId, {}, "", 0));
+  // clang-format on
+}
+
+TEST(Expression, IsArithmeticExpression) {
+  ASSERT_TRUE(
+      Expression::CreateCompileTimeConstant(5).IsArithmeticExpression());
+  ASSERT_TRUE(
+      Expression::CreateFunctionCall("pow", {3, 5}).IsArithmeticExpression());
+  // Logical expression are also arithmetic!
+  ASSERT_TRUE(
+      Expression::CreateBinaryCompare("<", 3, 5).IsArithmeticExpression());
+  ASSERT_FALSE(Expression::CreateIf(5).IsArithmeticExpression());
+  ASSERT_FALSE(Expression::CreateEndIf().IsArithmeticExpression());
+  ASSERT_FALSE(Expression().IsArithmeticExpression());
+}
+
+TEST(Expression, IsControlExpression) {
+  // In the current implementation this is the exact opposite of
+  // IsArithmeticExpression.
+  ASSERT_FALSE(Expression::CreateCompileTimeConstant(5).IsControlExpression());
+  ASSERT_FALSE(
+      Expression::CreateFunctionCall("pow", {3, 5}).IsControlExpression());
+  ASSERT_FALSE(
+      Expression::CreateBinaryCompare("<", 3, 5).IsControlExpression());
+  ASSERT_TRUE(Expression::CreateIf(5).IsControlExpression());
+  ASSERT_TRUE(Expression::CreateEndIf().IsControlExpression());
+  ASSERT_TRUE(Expression().IsControlExpression());
 }
 
 TEST(Expression, IsCompileTimeConstantAndEqualTo) {
-  using T = ExpressionRef;
-
-  StartRecordingExpressions();
-
-  T a(2), b(3);
-  T c = a + b;
-
-  auto graph = StopRecordingExpressions();
-
-  ASSERT_TRUE(graph.ExpressionForId(a.id).IsCompileTimeConstantAndEqualTo(2));
-  ASSERT_FALSE(graph.ExpressionForId(a.id).IsCompileTimeConstantAndEqualTo(0));
-  ASSERT_TRUE(graph.ExpressionForId(b.id).IsCompileTimeConstantAndEqualTo(3));
-  ASSERT_FALSE(graph.ExpressionForId(c.id).IsCompileTimeConstantAndEqualTo(0));
+  ASSERT_TRUE(
+      Expression::CreateCompileTimeConstant(5).IsCompileTimeConstantAndEqualTo(
+          5));
+  ASSERT_FALSE(
+      Expression::CreateCompileTimeConstant(3).IsCompileTimeConstantAndEqualTo(
+          5));
+  ASSERT_FALSE(Expression::CreateBinaryCompare("<", 3, 5)
+                   .IsCompileTimeConstantAndEqualTo(5));
 }
 
 TEST(Expression, IsReplaceableBy) {
-  using T = ExpressionRef;
+  // Create 2 identical expression
+  auto expr1 =
+      Expression::CreateBinaryArithmetic("+", ExpressionId(3), ExpressionId(5));
 
-  StartRecordingExpressions();
+  auto expr2 =
+      Expression::CreateBinaryArithmetic("+", ExpressionId(3), ExpressionId(5));
 
-  // a2 should be replaceable by a
-  T a(2), b(3), a2(2);
+  // They are idendical and of course replaceable
+  ASSERT_EQ(expr1, expr2);
+  ASSERT_EQ(expr2, expr1);
+  ASSERT_TRUE(expr1.IsReplaceableBy(expr2));
+  ASSERT_TRUE(expr2.IsReplaceableBy(expr1));
 
-  // two redundant expressions
-  // -> d should be replaceable by c
-  T c = a + b;
-  T d = a + b;
+  // Give them different left hand sides
+  expr1.set_lhs_id(72);
+  expr2.set_lhs_id(42);
 
-  auto graph = StopRecordingExpressions();
+  // v_72 = v_3 + v_5
+  // v_42 = v_3 + v_5
+  // -> They should be replaceable by each other
 
-  ASSERT_TRUE(graph.ExpressionForId(a2.id).IsReplaceableBy(
-      graph.ExpressionForId(a.id)));
-  ASSERT_TRUE(
-      graph.ExpressionForId(d.id).IsReplaceableBy(graph.ExpressionForId(c.id)));
-  ASSERT_FALSE(graph.ExpressionForId(d.id).IsReplaceableBy(
-      graph.ExpressionForId(a2.id)));
+  ASSERT_NE(expr1, expr2);
+  ASSERT_NE(expr2, expr1);
+
+  ASSERT_TRUE(expr1.IsReplaceableBy(expr2));
+  ASSERT_TRUE(expr2.IsReplaceableBy(expr1));
+
+  // A slightly differnt expression with the argument flipped
+  auto expr3 =
+      Expression::CreateBinaryArithmetic("+", ExpressionId(5), ExpressionId(3));
+
+  ASSERT_NE(expr1, expr3);
+  ASSERT_FALSE(expr1.IsReplaceableBy(expr3));
 }
 
 TEST(Expression, DirectlyDependsOn) {
@@ -138,11 +211,11 @@ TEST(Expression, Ternary) {
   ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  2);
-  reference.InsertExpression(  1,  ExpressionType::COMPILE_TIME_CONSTANT,   1,      {},        "",  3);
-  reference.InsertExpression(  2,      ExpressionType::BINARY_COMPARISON,   2,   {0,1},       "<",  0);
-  reference.InsertExpression(  3,          ExpressionType::FUNCTION_CALL,   3, {2,0,1}, "Ternary",  0);
-  reference.InsertExpression(  4,      ExpressionType::OUTPUT_ASSIGNMENT,   4,     {3},  "result",  0);
+  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  2});
+  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   1,      {},        "",  3});
+  reference.InsertBack({     ExpressionType::BINARY_COMPARISON,   2,   {0,1},       "<",  0});
+  reference.InsertBack({         ExpressionType::FUNCTION_CALL,   3, {2,0,1}, "Ternary",  0});
+  reference.InsertBack({     ExpressionType::OUTPUT_ASSIGNMENT,   4,     {3},  "result",  0});
   // clang-format on
   EXPECT_EQ(reference, graph);
 }
@@ -161,9 +234,9 @@ TEST(Expression, Assignment) {
   ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  1);
-  reference.InsertExpression(  1,  ExpressionType::COMPILE_TIME_CONSTANT,   1,      {},        "",  2);
-  reference.InsertExpression(  2,             ExpressionType::ASSIGNMENT,   1,      {0},        "",  0);
+  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   0,       {},        "",  1});
+  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   1,       {},        "",  2});
+  reference.InsertBack({            ExpressionType::ASSIGNMENT,   1,      {0},        "",  0});
   // clang-format on
   EXPECT_EQ(reference, graph);
 }
@@ -181,8 +254,8 @@ TEST(Expression, AssignmentCreate) {
   ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  2);
-  reference.InsertExpression(  1,             ExpressionType::ASSIGNMENT,   1,      {0},        "",  0);
+  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   0,       {},        "",  2});
+  reference.InsertBack({            ExpressionType::ASSIGNMENT,   1,      {0},        "",  0});
   // clang-format on
   EXPECT_EQ(reference, graph);
 }
@@ -200,7 +273,7 @@ TEST(Expression, MoveAssignmentCreate) {
   ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  1);
+  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  1});
   // clang-format on
   EXPECT_EQ(reference, graph);
 }
@@ -219,9 +292,9 @@ TEST(Expression, MoveAssignment) {
   ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  1);
-  reference.InsertExpression(  1,  ExpressionType::COMPILE_TIME_CONSTANT,   1,      {},        "",  2);
-  reference.InsertExpression(  2,             ExpressionType::ASSIGNMENT,   1,      {0},        "",  0);
+  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   0,       {},        "",  1});
+  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   1,       {},        "",  2});
+  reference.InsertBack({            ExpressionType::ASSIGNMENT,   1,      {0},        "",  0});
   // clang-format on
   EXPECT_EQ(reference, graph);
 }
