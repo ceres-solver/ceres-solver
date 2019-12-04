@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "232b84d4_56025fc5",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T15:16:11Z",
+      "side": 1,
+      "message": "moved expressions",
+      "range": {
+        "startLine": 66,
+        "startChar": 21,
+        "endLine": 66,
+        "endChar": 22
+      },
+      "revId": "c0e1b23b9580da0a27d3d26f525a4f6d2854e97b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7f70b9_000123ac",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T15:16:11Z",
+      "side": 1,
+      "message": "this comment does not parse for me.\nespecially the part\n\nThe id of this new variable is inserted into the expression as the lhs_id and additionally returned by this function.",
+      "range": {
+        "startLine": 74,
+        "startChar": 13,
+        "endLine": 74,
+        "endChar": 23
+      },
+      "revId": "c0e1b23b9580da0a27d3d26f525a4f6d2854e97b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef29c07_853b95d3",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T15:16:11Z",
+      "side": 1,
+      "message": "Active does not really add anything no?",
+      "range": {
+        "startLine": 109,
+        "startChar": 5,
+        "endLine": 109,
+        "endChar": 31
+      },
+      "revId": "c0e1b23b9580da0a27d3d26f525a4f6d2854e97b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b11840_8e539f0e",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T15:16:11Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 115,
+        "startChar": 13,
+        "endLine": 115,
+        "endChar": 56
+      },
+      "revId": "c0e1b23b9580da0a27d3d26f525a4f6d2854e97b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5689879_b4cc0635",
+        "filename": "include/ceres/codegen/internal/expression_ref.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T15:16:11Z",
+      "side": 1,
+      "message": "the second sentence is not really needed IMO.",
+      "range": {
+        "startLine": 120,
+        "startChar": 27,
+        "endLine": 120,
+        "endChar": 70
+      },
+      "revId": "c0e1b23b9580da0a27d3d26f525a4f6d2854e97b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d60a816_dc630dee",
+        "filename": "include/ceres/codegen/macros.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T15:16:11Z",
+      "side": 1,
+      "message": "reading this code I am confused, there are so many functions called \"AddExpressionFoo\" now, I do not know where to go looking for this function.",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 15
+      },
+      "revId": "c0e1b23b9580da0a27d3d26f525a4f6d2854e97b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4f00a7_be3d8bf5",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T15:16:11Z",
+      "side": 1,
+      "message": "it would be good to add simple tests for these new constructors since they do not require talking to the graph anymore.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "c0e1b23b9580da0a27d3d26f525a4f6d2854e97b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd530fe5_242ddb78",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T15:16:11Z",
+      "side": 1,
+      "message": "this seems weird IMO, where you take an expression and re-write its lhs_id, shouldn\u0027t you be checking that the lhs id is invalid?",
+      "range": {
+        "startLine": 140,
+        "startChar": 19,
+        "endLine": 140,
+        "endChar": 20
+      },
+      "revId": "c0e1b23b9580da0a27d3d26f525a4f6d2854e97b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}

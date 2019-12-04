@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c74b46d8_27561840",
+        "filename": "include/ceres/codegen/internal/expression.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T15:16:11Z",
+      "side": 0,
+      "message": "Sorry for the churn, but I took a closer look, given the size of this struct and number of methods added to it, I think it is better to keep this as a class.\n\nOnly a minor change is needed to your CL\n\n  void set_lhs_id(ExpressionId new_lhs_id) { lhs_id_ \u003d new_lhs_id; }\n  std::vector\u003cExpressionId\u003e* mutable_arguments() {return \u0026arguments_; }\n private:\n\nand a couple of lines to expression_graph.cc to use these accessors.",
+      "range": {
+        "startLine": 332,
+        "startChar": 9,
+        "endLine": 332,
+        "endChar": 0
+      },
+      "revId": "4362a2169966e08394252098c80d1f26764becd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
