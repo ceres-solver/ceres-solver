@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df4c7ea3_9530c940",
+        "filename": "cmake/FindEigen.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-04T19:45:56Z",
+      "side": 0,
+      "message": "I don\u0027t think we should lose this, for the reasons specified here we should be able to add HOMEBREW_INSTALL_PREFIX to the find_package(Eigen3 ...) call (and the other find_package() calls) via the HINTS option.",
+      "revId": "7fa0f3db41d49412337087d7f956919d81687b2a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
