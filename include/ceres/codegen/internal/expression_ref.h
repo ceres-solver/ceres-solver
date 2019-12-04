@@ -33,9 +33,9 @@
 #define CERES_PUBLIC_EXPRESSION_REF_H_
 
 #include <string>
-#include "ceres/codegen/internal/types.h"
 #include "ceres/codegen/internal/expression.h"
-
+#include "ceres/codegen/internal/expression_graph.h"
+#include "ceres/codegen/internal/types.h"
 namespace ceres {
 namespace internal {
 
@@ -117,6 +117,11 @@ struct ExpressionRef {
   static ExpressionRef Create(ExpressionId id);
 };
 
+// A helper function which calls 'InsertBack' on the currently active graph.
+// This wrapper also checks if StartRecordingExpressions was called. See
+// ExpressionGraph::InsertBack for more information.
+ExpressionRef AddExpressionToGraph(const Expression& expression);
+
 // Arithmetic Operators
 ExpressionRef operator-(const ExpressionRef& x);
 ExpressionRef operator+(const ExpressionRef& x);
@@ -128,12 +133,12 @@ ExpressionRef operator/(const ExpressionRef& x, const ExpressionRef& y);
 // Functions
 #define CERES_DEFINE_UNARY_FUNCTION_CALL(name)          \
   inline ExpressionRef name(const ExpressionRef& x) {   \
-    return ExpressionRef::Create(                       \
+    return AddExpressionToGraph(                        \
         Expression::CreateFunctionCall(#name, {x.id})); \
   }
 #define CERES_DEFINE_BINARY_FUNCTION_CALL(name)                               \
   inline ExpressionRef name(const ExpressionRef& x, const ExpressionRef& y) { \
-    return ExpressionRef::Create(                                             \
+    return AddExpressionToGraph(                                              \
         Expression::CreateFunctionCall(#name, {x.id, y.id}));                 \
   }
 CERES_DEFINE_UNARY_FUNCTION_CALL(abs);
@@ -211,7 +216,7 @@ struct InputAssignment<ExpressionRef> {
   static inline ReturnType Get(double /* unused */, const char* name) {
     // Note: The scalar value of v will be thrown away, because we don't need it
     // during code generation.
-    return ExpressionRef::Create(Expression::CreateInputAssignment(name));
+    return AddExpressionToGraph(Expression::CreateInputAssignment(name));
   }
 };
 
@@ -222,11 +227,11 @@ inline typename InputAssignment<T>::ReturnType MakeInputAssignment(
 }
 
 inline ExpressionRef MakeParameter(const std::string& name) {
-  return ExpressionRef::Create(Expression::CreateInputAssignment(name));
+  return AddExpressionToGraph(Expression::CreateInputAssignment(name));
 }
 inline ExpressionRef MakeOutput(const ExpressionRef& v,
                                 const std::string& name) {
-  return ExpressionRef::Create(Expression::CreateOutputAssignment(v.id, name));
+  return AddExpressionToGraph(Expression::CreateOutputAssignment(v.id, name));
 }
 
 }  // namespace internal

@@ -63,12 +63,12 @@ TEST(Expression, ConditionalMinimal) {
   ExpressionGraph reference;
   // clang-format off
   // Id, Type, Lhs, Value, Name, Arguments...
-  reference.InsertExpression(  0, ExpressionType::COMPILE_TIME_CONSTANT,   0,  {}     ,    "", 2);
-  reference.InsertExpression(  1, ExpressionType::COMPILE_TIME_CONSTANT,   1,  {}     ,    "", 3);
-  reference.InsertExpression(  2,     ExpressionType::BINARY_COMPARISON,   2,  {0, 1} ,   "<", 0);
-  reference.InsertExpression(  3,                    ExpressionType::IF,  -1,  {2}    ,    "", 0);
-  reference.InsertExpression(  4,                  ExpressionType::ELSE,  -1,  {}     ,    "", 0);
-  reference.InsertExpression(  5,                 ExpressionType::ENDIF,  -1,  {}     ,    "", 0);
+  reference.Insert(  0, ExpressionType::COMPILE_TIME_CONSTANT,   0,  {}     ,    "", 2);
+  reference.Insert(  1, ExpressionType::COMPILE_TIME_CONSTANT,   1,  {}     ,    "", 3);
+  reference.Insert(  2,     ExpressionType::BINARY_COMPARISON,   2,  {0, 1} ,   "<", 0);
+  reference.Insert(  3,                    ExpressionType::IF,  -1,  {2}    ,    "", 0);
+  reference.Insert(  4,                  ExpressionType::ELSE,  -1,  {}     ,    "", 0);
+  reference.Insert(  5,                 ExpressionType::ENDIF,  -1,  {}     ,    "", 0);
   // clang-format on
   EXPECT_EQ(reference, graph);
 }
@@ -104,17 +104,17 @@ TEST(Expression, ConditionalAssignment) {
   ExpressionGraph reference;
   // clang-format off
   // Id,   Type,                  Lhs, Value, Name, Arguments...
-  reference.InsertExpression(  0,  ExpressionType::COMPILE_TIME_CONSTANT,    0,   {}    ,   "",   2);
-  reference.InsertExpression(  1,  ExpressionType::COMPILE_TIME_CONSTANT,    1,   {}    ,   "",   3);
-  reference.InsertExpression(  2,      ExpressionType::BINARY_COMPARISON,    2,   {0, 1},  "<",   0);
-  reference.InsertExpression(  3,                     ExpressionType::IF,   -1,   {2}   ,   "",   0);
-  reference.InsertExpression(  4,      ExpressionType::BINARY_ARITHMETIC,    4,   {0, 1},  "+",   0);
-  reference.InsertExpression(  5,                   ExpressionType::ELSE,   -1,   {}    ,   "",   0);
-  reference.InsertExpression(  6,      ExpressionType::BINARY_ARITHMETIC,    6,   {0, 1},  "-",   0);
-  reference.InsertExpression(  7,             ExpressionType::ASSIGNMENT,    4,   {6}   ,   "",   0);
-  reference.InsertExpression(  8,                  ExpressionType::ENDIF,   -1,   {}    ,   "",   0);
-  reference.InsertExpression(  9,      ExpressionType::BINARY_ARITHMETIC,    9,   {4, 0},  "+",   0);
-  reference.InsertExpression( 10,             ExpressionType::ASSIGNMENT,    4,   {9}   ,   "",   0);
+  reference.Insert(  0,  ExpressionType::COMPILE_TIME_CONSTANT,    0,   {}    ,   "",   2);
+  reference.Insert(  1,  ExpressionType::COMPILE_TIME_CONSTANT,    1,   {}    ,   "",   3);
+  reference.Insert(  2,      ExpressionType::BINARY_COMPARISON,    2,   {0, 1},  "<",   0);
+  reference.Insert(  3,                     ExpressionType::IF,   -1,   {2}   ,   "",   0);
+  reference.Insert(  4,      ExpressionType::BINARY_ARITHMETIC,    4,   {0, 1},  "+",   0);
+  reference.Insert(  5,                   ExpressionType::ELSE,   -1,   {}    ,   "",   0);
+  reference.Insert(  6,      ExpressionType::BINARY_ARITHMETIC,    6,   {0, 1},  "-",   0);
+  reference.Insert(  7,             ExpressionType::ASSIGNMENT,    4,   {6}   ,   "",   0);
+  reference.Insert(  8,                  ExpressionType::ENDIF,   -1,   {}    ,   "",   0);
+  reference.Insert(  9,      ExpressionType::BINARY_ARITHMETIC,    9,   {4, 0},  "+",   0);
+  reference.Insert( 10,             ExpressionType::ASSIGNMENT,    4,   {9}   ,   "",   0);
   // clang-format on
   EXPECT_EQ(reference, graph);
 
