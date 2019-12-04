@@ -33,8 +33,8 @@
 #define CERES_PUBLIC_EXPRESSION_REF_H_
 
 #include <string>
-#include "ceres/codegen/internal/types.h"
 #include "ceres/codegen/internal/expression.h"
+#include "ceres/codegen/internal/types.h"
 
 namespace ceres {
 namespace internal {
@@ -117,6 +117,12 @@ struct ExpressionRef {
   static ExpressionRef Create(ExpressionId id);
 };
 
+// A helper function creating and adding a new expression to the current active
+// graph. This includes a test, which checks if StartRecordingExpressions has
+// been called.
+ExpressionRef AddExpression(const Expression& expression,
+                            bool create_lhs_variable = true);
+
 // Arithmetic Operators
 ExpressionRef operator-(const ExpressionRef& x);
 ExpressionRef operator+(const ExpressionRef& x);
@@ -126,15 +132,13 @@ ExpressionRef operator*(const ExpressionRef& x, const ExpressionRef& y);
 ExpressionRef operator/(const ExpressionRef& x, const ExpressionRef& y);
 
 // Functions
-#define CERES_DEFINE_UNARY_FUNCTION_CALL(name)          \
-  inline ExpressionRef name(const ExpressionRef& x) {   \
-    return ExpressionRef::Create(                       \
-        Expression::CreateFunctionCall(#name, {x.id})); \
+#define CERES_DEFINE_UNARY_FUNCTION_CALL(name)                           \
+  inline ExpressionRef name(const ExpressionRef& x) {                    \
+    return AddExpression(Expression::CreateFunctionCall(#name, {x.id})); \
   }
-#define CERES_DEFINE_BINARY_FUNCTION_CALL(name)                               \
-  inline ExpressionRef name(const ExpressionRef& x, const ExpressionRef& y) { \
-    return ExpressionRef::Create(                                             \
-        Expression::CreateFunctionCall(#name, {x.id, y.id}));                 \
+#define CERES_DEFINE_BINARY_FUNCTION_CALL(name)                                \
+  inline ExpressionRef name(const ExpressionRef& x, const ExpressionRef& y) {  \
+    return AddExpression(Expression::CreateFunctionCall(#name, {x.id, y.id})); \
   }
 CERES_DEFINE_UNARY_FUNCTION_CALL(abs);
 CERES_DEFINE_UNARY_FUNCTION_CALL(acos);
@@ -211,7 +215,7 @@ struct InputAssignment<ExpressionRef> {
   static inline ReturnType Get(double /* unused */, const char* name) {
     // Note: The scalar value of v will be thrown away, because we don't need it
     // during code generation.
-    return ExpressionRef::Create(Expression::CreateInputAssignment(name));
+    return AddExpression(Expression::CreateInputAssignment(name));
   }
 };
 
@@ -222,11 +226,11 @@ inline typename InputAssignment<T>::ReturnType MakeInputAssignment(
 }
 
 inline ExpressionRef MakeParameter(const std::string& name) {
-  return ExpressionRef::Create(Expression::CreateInputAssignment(name));
+  return AddExpression(Expression::CreateInputAssignment(name));
 }
 inline ExpressionRef MakeOutput(const ExpressionRef& v,
                                 const std::string& name) {
-  return ExpressionRef::Create(Expression::CreateOutputAssignment(v.id, name));
+  return AddExpression(Expression::CreateOutputAssignment(v.id, name));
 }
 
 }  // namespace internal
