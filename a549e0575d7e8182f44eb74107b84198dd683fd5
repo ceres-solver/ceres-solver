@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1ec98e1_78825bf9",
+        "filename": "include/ceres/codegen/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T13:27:11Z",
+      "side": 1,
+      "message": "what indices? An expression has no notion of indices.",
+      "range": {
+        "startLine": 339,
+        "startChar": 48,
+        "endLine": 339,
+        "endChar": 54
+      },
+      "revId": "a549e0575d7e8182f44eb74107b84198dd683fd5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15625c82_6450e619",
+        "filename": "include/ceres/codegen/internal/expression.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T13:27:11Z",
+      "side": 1,
+      "message": "I do not think ExpressionGraph needs to be a friend class anymore, everything it wants to do is doable via the constructors, or via accessors, indeed at this point isn\u0027t expression a very simple struct? why is it a class at all?",
+      "range": {
+        "startLine": 341,
+        "startChar": 9,
+        "endLine": 341,
+        "endChar": 14
+      },
+      "revId": "a549e0575d7e8182f44eb74107b84198dd683fd5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b14d831_65207ff8",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T13:27:11Z",
+      "side": 1,
+      "message": "document method.\n\nWhat is the difference between InsertExpression and Add/AddExpression ?",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 14
+      },
+      "revId": "a549e0575d7e8182f44eb74107b84198dd683fd5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9e0bb2_d39dde6c",
+        "filename": "include/ceres/codegen/internal/expression_ref.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-04T13:27:11Z",
+      "side": 1,
+      "message": "AddExpresssionToGraph",
+      "range": {
+        "startLine": 123,
+        "startChar": 27,
+        "endLine": 123,
+        "endChar": 28
+      },
+      "revId": "a549e0575d7e8182f44eb74107b84198dd683fd5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
