@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fa545e3_db4cd476",
+        "filename": "include/ceres/codegen/internal/expression.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-05T16:55:33Z",
+      "side": 1,
+      "message": "errors",
+      "range": {
+        "startLine": 262,
+        "startChar": 32,
+        "endLine": 262,
+        "endChar": 37
+      },
+      "revId": "955becd9a69f81eff1e9522f27acf5bea4e734bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e77e800_b4877495",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-05T16:55:33Z",
+      "side": 1,
+      "message": "CHECK_LE is better since it logs the values instead of the boolean comparison.",
+      "range": {
+        "startLine": 133,
+        "startChar": 4,
+        "endLine": 133,
+        "endChar": 9
+      },
+      "revId": "955becd9a69f81eff1e9522f27acf5bea4e734bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
