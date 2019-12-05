@@ -252,6 +252,13 @@ endif (NOT TARGET ceres AND NOT Ceres_BINARY_DIR)
 # Set the expected XX_LIBRARIES variable for FindPackage().
 set(CERES_LIBRARIES ceres)
 
+# If Ceres was built with SuiteSparse also search for it using the same method
+set(CERES_USES_SUITESPARSE @SUITESPARSE@)
+set(CERES_SUITESPARSE_FIND_PACKAGE_MODE @SUITESPARSE_FIND_PACKAGE_MODE@)
+if (CERES_USES_SUITESPARSE) # SuiteSparse
+  find_package(SuiteSparse ${CERES_SUITESPARSE_FIND_PACKAGE_MODE} REQUIRED)
+endif()
+
 # Reset CMake module path to its state when this script was called.
 set(CMAKE_MODULE_PATH ${CALLERS_CMAKE_MODULE_PATH})
 
