@@ -16,6 +16,24 @@
       "revId": "7fa0f3db41d49412337087d7f956919d81687b2a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ff781e_2047ce12",
+        "filename": "cmake/FindEigen.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2019-12-05T07:44:20Z",
+      "side": 0,
+      "message": "copied the HOMEBREW_INSTALL_PREFIX detection to the find_package(Eigen3 ..) call",
+      "parentUuid": "df4c7ea3_9530c940",
+      "revId": "7fa0f3db41d49412337087d7f956919d81687b2a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
