@@ -60,7 +60,6 @@ set(CERES_INTERNAL_SRC
     canonical_views_clustering.cc
     cgnr_solver.cc
     callbacks.cc
-    code_generator.cc
     compressed_col_sparse_matrix_utils.cc
     compressed_row_jacobian_writer.cc
     compressed_row_sparse_matrix.cc
@@ -83,9 +82,6 @@ set(CERES_INTERNAL_SRC
     dynamic_sparse_normal_cholesky_solver.cc
     evaluator.cc
     eigensparse.cc
-    expression.cc
-    expression_graph.cc
-    expression_ref.cc
     file.cc
     float_suitesparse.cc
     float_cxsparse.cc
@@ -151,6 +147,16 @@ set(CERES_INTERNAL_SRC
     visibility_based_preconditioner.cc
     wall_time.cc
 )
+
+if(CODE_GENERATION)
+  set(CERES_CODEGEN_SRC
+      code_generator.cc
+      expression.cc
+      expression_graph.cc
+      expression_ref.cc
+  )
+  list(APPEND CERES_INTERNAL_SRC ${CERES_CODEGEN_SRC})
+endif(CODE_GENERATION)
 
 # Also depend on the header files so that they appear in IDEs.
 file(GLOB CERES_INTERNAL_HDRS *.h)
@@ -497,6 +503,7 @@ if (BUILD_TESTING AND GFLAGS)
 
   add_subdirectory(generated_bundle_adjustment_tests)
 
+  if(CODE_GENERATION)
   # Testing the AutoDiffCodegen system is more complicated, because function- and
   # constructor calls have side-effects. In C++ the evaluation order and
   # the elision of copies is implementation defined. Between different compilers,
@@ -523,6 +530,7 @@ if (BUILD_TESTING AND GFLAGS)
       ceres_test(conditional_expressions)
       ceres_test(expression_graph)
       set(CMAKE_CXX_FLAGS ${CXX_FLAGS_OLD})
+  endif()
   endif()
 
 endif (BUILD_TESTING AND GFLAGS)
