@@ -947,7 +947,6 @@ struct NumTraits<ceres::Jet<T, N>> {
   static inline Real lowest() { return Real(-std::numeric_limits<T>::max()); }
 };
 
-#if EIGEN_VERSION_AT_LEAST(3, 3, 0)
 // Specifying the return type of binary operations between Jets and scalar types
 // allows you to perform matrix/array operations with Eigen matrices and arrays
 // such as addition, subtraction, multiplication, and division where one Eigen
@@ -962,7 +961,6 @@ template <typename BinaryOp, typename T, int N>
 struct ScalarBinaryOpTraits<T, ceres::Jet<T, N>, BinaryOp> {
   typedef ceres::Jet<T, N> ReturnType;
 };
-#endif  // EIGEN_VERSION_AT_LEAST(3, 3, 0)
 
 }  // namespace Eigen
 

@@ -765,8 +765,6 @@ TEST(JetTraitsTest, ClassificationFinite) {
   EXPECT_FALSE(IsNaN(a));
 }
 
-#if EIGEN_VERSION_AT_LEAST(3, 3, 0)
-
 // The following test ensures that Jets have all the appropriate Eigen
 // related traits so that they can be used as part of matrix
 // decompositions.
@@ -900,7 +898,6 @@ TEST(JetTraitsTest, ArrayScalarBinaryOps) {
   ExpectJetsClose(r3(0), r3(0));
   ExpectJetsClose(r4(1), r4(1));
 }
-#endif   // EIGEN_VERSION_AT_LEAST(3, 3, 0)
 
 }  // namespace internal
 }  // namespace ceres
