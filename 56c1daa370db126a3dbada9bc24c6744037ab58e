@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fee28abd_b9457a3d",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-05T14:51:47Z",
+      "side": 1,
+      "message": "debugging junk?",
+      "range": {
+        "startLine": 115,
+        "startChar": 3,
+        "endLine": 115,
+        "endChar": 7
+      },
+      "revId": "56c1daa370db126a3dbada9bc24c6744037ab58e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
