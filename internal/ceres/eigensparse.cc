@@ -143,10 +143,6 @@ std::unique_ptr<SparseCholesky> EigenSparseCholesky::Create(
     const OrderingType ordering_type) {
   std::unique_ptr<SparseCholesky> sparse_cholesky;
 
-  // The preprocessor gymnastics here are dealing with the fact that
-  // before version 3.2.2, Eigen did not support a third template
-  // parameter to specify the ordering and it always defaults to AMD.
-#if EIGEN_VERSION_AT_LEAST(3, 2, 2)
   typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
                                 Eigen::Upper,
                                 Eigen::AMDOrdering<int>>
@@ -161,11 +157,6 @@ std::unique_ptr<SparseCholesky> EigenSparseCholesky::Create(
     sparse_cholesky.reset(
         new EigenSparseCholeskyTemplate<WithNaturalOrdering>());
   }
-#else
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>, Eigen::Upper>
-      WithAMDOrdering;
-  sparse_cholesky.reset(new EigenSparseCholeskyTemplate<WithAMDOrdering>());
-#endif
   return sparse_cholesky;
 }
 
@@ -174,10 +165,6 @@ EigenSparseCholesky::~EigenSparseCholesky() {}
 std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
     const OrderingType ordering_type) {
   std::unique_ptr<SparseCholesky> sparse_cholesky;
-  // The preprocessor gymnastics here are dealing with the fact that
-  // before version 3.2.2, Eigen did not support a third template
-  // parameter to specify the ordering and it always defaults to AMD.
-#if EIGEN_VERSION_AT_LEAST(3, 2, 2)
   typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
                                 Eigen::Upper,
                                 Eigen::AMDOrdering<int>>
@@ -192,11 +179,6 @@ std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
     sparse_cholesky.reset(
         new EigenSparseCholeskyTemplate<WithNaturalOrdering>());
   }
-#else
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>, Eigen::Upper>
-      WithAMDOrdering;
-  sparse_cholesky.reset(new EigenSparseCholeskyTemplate<WithAMDOrdering>());
-#endif
   return sparse_cholesky;
 }
 
