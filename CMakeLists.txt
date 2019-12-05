@@ -280,9 +280,14 @@ if (SUITESPARSE)
   # By default, if SuiteSparse and all dependencies are found, Ceres is
   # built with SuiteSparse support.
 
-  # Check for SuiteSparse and dependencies.
-  find_package(SuiteSparse)
-  if (SUITESPARSE_FOUND)
+  # Check for SuiteSparse and dependencies, prefer SuiteSparseConfig.cmake
+  find_package(SuiteSparse CONFIG)
+  set(SUITESPARSE_FIND_PACKAGE_CONFIG "CONFIG")
+  if (NOT SuiteSparse_FOUND)
+    set(SUITESPARSE_FIND_PACKAGE_CONFIG "")
+    find_package(SuiteSparse)
+  endif()
+  if (SuiteSparse_FOUND)
     # On Ubuntu the system install of SuiteSparse (v3.4.0) up to at least
     # Ubuntu 13.10 cannot be used to link shared libraries.
     if (BUILD_SHARED_LIBS AND
@@ -301,22 +306,32 @@ if (SUITESPARSE)
 
     # By default, if all of SuiteSparse's dependencies are found, Ceres is
     # built with SuiteSparse support.
-    message("-- Found SuiteSparse ${SUITESPARSE_VERSION}, "
+    message("-- Found SuiteSparse ${SuiteSparse_VERSION}, "
             "building with SuiteSparse.")
-  else (SUITESPARSE_FOUND)
+  else (SuiteSparse_FOUND)
     # Disable use of SuiteSparse if it cannot be found and continue.
     message("-- Did not find all SuiteSparse dependencies, disabling "
       "SuiteSparse support.")
     update_cache_variable(SUITESPARSE OFF)
     list(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE)
-  endif (SUITESPARSE_FOUND)
+  endif (SuiteSparse_FOUND)
 else (SUITESPARSE)
   message("-- Building without SuiteSparse.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE)
 endif (SUITESPARSE)
 
 # CXSparse.
-if (CXSPARSE)
+if (CXSPARSE AND TARGET SuiteSparse::cxsparse)
+  # If available use SuiteSparse provided cxsparse target
+  # Extract CXSparse version from cs.h
+  if (NOT CXSPARSE_VERSION)
+    set(CXSPARSE_VERSION ${SuiteSparse_VERSION})
+  endif()
+  set(CXSPARSE_LIBRARIES SuiteSparse::cxsparse)
+  set(CXSPARSE_FOUND TRUE)
+  message("-- Using target SuiteSparse::cxsparse with version: ${CXSPARSE_VERSION}, "
+    "building with CXSparse.")
+elseif (CXSPARSE)
   # Don't search with REQUIRED as we can continue without CXSparse.
   find_package(CXSparse)
   if (CXSPARSE_FOUND)
@@ -330,7 +345,7 @@ if (CXSPARSE)
     update_cache_variable(CXSPARSE OFF)
     list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CXSPARSE)
   endif (CXSPARSE_FOUND)
-else (CXSPARSE)
+else ()
   message("-- Building without CXSparse.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CXSPARSE)
   # Mark as advanced (remove from default GUI view) the CXSparse search
@@ -339,7 +354,7 @@ else (CXSPARSE)
   # CXSPARSE instead of setting them.
   mark_as_advanced(FORCE CXSPARSE_INCLUDE_DIR
                          CXSPARSE_LIBRARY)
-endif (CXSPARSE)
+endif ()
 
 if (ACCELERATESPARSE)
   find_package(AccelerateSparse)

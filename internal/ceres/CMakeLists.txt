@@ -196,11 +196,17 @@ if (NOT MINIGLOG AND GLOG_FOUND)
   endif()
 endif (NOT MINIGLOG AND GLOG_FOUND)
 
-if (SUITESPARSE AND SUITESPARSE_FOUND)
+if (SUITESPARSE AND SuiteSparse_FOUND)
   # Define version information for use in Solver::FullReport.
-  add_definitions(-DCERES_SUITESPARSE_VERSION="${SUITESPARSE_VERSION}")
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${SUITESPARSE_LIBRARIES})
-endif (SUITESPARSE AND SUITESPARSE_FOUND)
+  add_definitions(-DCERES_SUITESPARSE_VERSION="${SuiteSparse_VERSION}")
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES
+    SuiteSparse::amd
+    SuiteSparse::camd
+    SuiteSparse::colamd
+    SuiteSparse::ccolamd
+    SuiteSparse::cholmod
+    SuiteSparse::spqr)
+endif (SUITESPARSE AND SuiteSparse_FOUND)
 
 if (CXSPARSE AND CXSPARSE_FOUND)
   # Define version information for use in Solver::FullReport.
@@ -326,10 +332,6 @@ elseif (NOT FOUND_INSTALLED_GLOG_CMAKE_CONFIGURATION)
   # exported target that already includes them.
   list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS
     ${GLOG_INCLUDE_DIRS})
-endif()
-if (SUITESPARSE)
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
-    ${SUITESPARSE_INCLUDE_DIRS})
 endif()
 if (CXSPARSE)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
