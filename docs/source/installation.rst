@@ -32,7 +32,7 @@ optional. For details on customizing the build process, see
 :ref:`section-customizing` .
 
 - `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_
-  3.2.2 or later **strongly** recommended, 3.1.0 or later **required**.
+  3.3 or later **required**.
 
   .. NOTE ::
 
@@ -409,8 +409,8 @@ dependencies.
 #. Get dependencies; unpack them as subdirectories in ``ceres/``
    (``ceres/eigen``, ``ceres/glog``, etc)
 
-   #. ``Eigen`` 3.1 (needed on Windows; 3.0.x will not work). There is
-      no need to build anything; just unpack the source tarball.
+   #. ``Eigen`` 3.3 . There is no need to build anything; just unpack
+      the source tarball.
 
    #. ``google-glog`` Open up the Visual Studio solution and build it.
    #. ``gflags`` Open up the Visual Studio solution and build it.
@@ -431,7 +431,7 @@ dependencies.
 
 #. Unpack the Ceres tarball into ``ceres``. For the tarball, you
    should get a directory inside ``ceres`` similar to
-   ``ceres-solver-1.3.0``. Alternately, checkout Ceres via ``git`` to
+   ``ceres-solver-1.14.0``. Alternately, checkout Ceres via ``git`` to
    get ``ceres-solver.git`` inside ``ceres``.
 
 #. Install ``CMake``,
@@ -692,15 +692,6 @@ Options controlling Ceres configuration
 
 #. ``EIGENSPARSE [Default: ON]``: By default, Ceres will not use
    Eigen's sparse Cholesky factorization.
-
-   .. NOTE::
-
-      For good performance, use Eigen version 3.2.2 or later.
-
-   .. NOTE::
-
-      Unlike the rest of Eigen (>= 3.1.1 MPL2, < 3.1.1 LGPL), Eigen's sparse
-      Cholesky factorization is (still) licensed under the LGPL.
 
 #. ``GFLAGS [Default: ON]``: Turn this ``OFF`` to build Ceres without
    ``gflags``. This will also prevent some of the example code from
