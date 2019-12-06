@@ -53,6 +53,9 @@ class ExpressionGraph {
   bool DependsOn(ExpressionId A, ExpressionId B) const;
 
   bool operator==(const ExpressionGraph& other) const;
+  bool operator!=(const ExpressionGraph& other) const {
+    return !(*this == other);
+  }
 
   Expression& ExpressionForId(ExpressionId id) { return expressions_[id]; }
   const Expression& ExpressionForId(ExpressionId id) const {
