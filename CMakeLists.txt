@@ -711,10 +711,13 @@ include(CeresCompileOptionsToComponents)
 ceres_compile_options_to_components("${CERES_COMPILE_OPTIONS}"
   CERES_COMPILED_COMPONENTS)
 
+include(CMakePackageConfigHelpers)
+
 # Create a CeresConfigVersion.cmake file containing the version information,
 # used by both export() & install().
-configure_file("${Ceres_SOURCE_DIR}/cmake/CeresConfigVersion.cmake.in"
-               "${Ceres_BINARY_DIR}/CeresConfigVersion.cmake" @ONLY)
+write_basic_package_version_file("${Ceres_BINARY_DIR}/CeresConfigVersion.cmake"
+  VERSION ${CERES_VERSION}
+  COMPATIBILITY SameMajorVersion)
 
 # Install method #1: Put Ceres in CMAKE_INSTALL_PREFIX: /usr/local or equivalent.
 
