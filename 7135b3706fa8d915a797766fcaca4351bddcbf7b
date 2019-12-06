@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f5b8abf_e664407b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-06T20:40:03Z",
+      "side": 1,
+      "message": "As per the Eigen PR, this should pass the corresponding Homebrew location via HINTS",
+      "revId": "7135b3706fa8d915a797766fcaca4351bddcbf7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08f5af3_de7dec44",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-06T20:40:03Z",
+      "side": 1,
+      "message": "1) This should be find_dependency() in CMake 3+\n2) Rather than hardcoding the version here, lets bring it in via @ expansion from the version found when Ceres was built.",
+      "revId": "7135b3706fa8d915a797766fcaca4351bddcbf7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4469f4ec_84c7778a",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-06T20:40:03Z",
+      "side": 1,
+      "message": "We can actually remove this entire block if we use the glog CMake target as well, as then gflags should appear in the interface dependencies for the glog target if required (however that would be in a separate PR)",
+      "revId": "7135b3706fa8d915a797766fcaca4351bddcbf7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
