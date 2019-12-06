@@ -16,6 +16,23 @@
       "revId": "683303bacb9bc6637cc0146264c3d6b002d67069",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47460fe_7843c764",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-06T20:33:39Z",
+      "side": 1,
+      "message": "This should really use find_dependency(): https://cmake.org/cmake/help/v3.14/module/CMakeFindDependencyMacro.html",
+      "revId": "683303bacb9bc6637cc0146264c3d6b002d67069",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
