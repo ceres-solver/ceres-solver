@@ -97,7 +97,6 @@ TEST(CodeGenerator, INPUT_ASSIGNMENT) {
 }
 
 TEST(CodeGenerator, OUTPUT_ASSIGNMENT) {
-  double local_variable = 5.0;
   StartRecordingExpressions();
   T a = 1;
   T b = 0;
@@ -139,8 +138,8 @@ TEST(CodeGenerator, ASSIGNMENT) {
 
 TEST(CodeGenerator, BINARY_ARITHMETIC_SIMPLE) {
   StartRecordingExpressions();
-  T a = T(0);
-  T b = T(1);
+  T a = T(1);
+  T b = T(2);
   T r1 = a + b;
   T r2 = a - b;
   T r3 = a * b;
@@ -153,12 +152,35 @@ TEST(CodeGenerator, BINARY_ARITHMETIC_SIMPLE) {
                                             "  double v_3;",
                                             "  double v_4;",
                                             "  double v_5;",
-                                            "  v_0 = 0;",
-                                            "  v_1 = 1;",
+                                            "  v_0 = 1;",
+                                            "  v_1 = 2;",
                                             "  v_2 = v_0 + v_1;",
                                             "  v_3 = v_0 - v_1;",
                                             "  v_4 = v_0 * v_1;",
                                             "  v_5 = v_0 / v_1;",
+                                            "}"};
+  GenerateAndCheck(graph, expected_code);
+}
+
+TEST(CodeGenerator, BINARY_ARITHMETIC_NESTED) {
+  StartRecordingExpressions();
+  T a = T(1);
+  T b = T(2);
+  T r1 = b - a * (a + b) / a;
+  auto graph = StopRecordingExpressions();
+  std::vector<std::string> expected_code = {"{",
+                                            "  double v_0;",
+                                            "  double v_1;",
+                                            "  double v_2;",
+                                            "  double v_3;",
+                                            "  double v_4;",
+                                            "  double v_5;",
+                                            "  v_0 = 1;",
+                                            "  v_1 = 2;",
+                                            "  v_2 = v_0 + v_1;",
+                                            "  v_3 = v_0 * v_2;",
+                                            "  v_4 = v_3 / v_0;",
+                                            "  v_5 = v_1 - v_4;",
                                             "}"};
   GenerateAndCheck(graph, expected_code);
 }
@@ -168,12 +190,12 @@ TEST(CodeGenerator, BINARY_ARITHMETIC_COMPOUND) {
   //    - The actual operation assigning to a new temporary variable
   //    - An assignment from the temporary to the lhs
   StartRecordingExpressions();
-  T a = T(0);
-  T b = T(1);
-  b += a;
-  b -= a;
-  b *= a;
-  b /= a;
+  T a = T(1);
+  T b = T(2);
+  a += b;
+  a -= b;
+  a *= b;
+  a /= b;
   auto graph = StopRecordingExpressions();
   std::vector<std::string> expected_code = {"{",
                                             "  double v_0;",
@@ -182,16 +204,16 @@ TEST(CodeGenerator, BINARY_ARITHMETIC_COMPOUND) {
                                             "  double v_4;",
                                             "  double v_6;",
                                             "  double v_8;",
-                                            "  v_0 = 0;",
-                                            "  v_1 = 1;",
-                                            "  v_2 = v_1 + v_0;",
-                                            "  v_1 = v_2;",
-                                            "  v_4 = v_1 - v_0;",
-                                            "  v_1 = v_4;",
-                                            "  v_6 = v_1 * v_0;",
-                                            "  v_1 = v_6;",
-                                            "  v_8 = v_1 / v_0;",
-                                            "  v_1 = v_8;",
+                                            "  v_0 = 1;",
+                                            "  v_1 = 2;",
+                                            "  v_2 = v_0 + v_1;",
+                                            "  v_0 = v_2;",
+                                            "  v_4 = v_0 - v_1;",
+                                            "  v_0 = v_4;",
+                                            "  v_6 = v_0 * v_1;",
+                                            "  v_0 = v_6;",
+                                            "  v_8 = v_0 / v_1;",
+                                            "  v_0 = v_8;",
                                             "}"};
   GenerateAndCheck(graph, expected_code);
 }
