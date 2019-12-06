@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8e48fc4_ca0bc8d2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-06T20:20:19Z",
+      "side": 1,
+      "message": "Can you move this block to above the project() declaration on line 65 please, as it\u0027s going to be used for multiple find_package() calls and it relates to environment setup.",
+      "revId": "683303bacb9bc6637cc0146264c3d6b002d67069",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
