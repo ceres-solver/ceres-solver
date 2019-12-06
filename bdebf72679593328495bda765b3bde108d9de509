@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bdc6d4f_e2f403f5",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-06T20:04:31Z",
+      "side": 1,
+      "message": "doesn\u0027t the compiler generate this automatically?",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 12
+      },
+      "revId": "bdebf72679593328495bda765b3bde108d9de509",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
