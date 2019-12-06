@@ -22,6 +22,29 @@
       "revId": "bdebf72679593328495bda765b3bde108d9de509",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac0b9e9_87e23f79",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-06T20:05:28Z",
+      "side": 1,
+      "message": "so this was a bug?",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 2
+      },
+      "revId": "bdebf72679593328495bda765b3bde108d9de509",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
