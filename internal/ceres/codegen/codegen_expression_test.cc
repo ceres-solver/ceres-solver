@@ -28,11 +28,10 @@
 //
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 //
-#define CERES_CODEGEN
-
-#include "ceres/codegen/internal/expression_graph.h"
-#include "ceres/codegen/internal/expression_ref.h"
-#include "ceres/jet.h"
+// This file tests the Expression class. For each member function one test is
+// included here.
+//
+#include "ceres/codegen/internal/expression.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -168,135 +167,61 @@ TEST(Expression, IsReplaceableBy) {
   ASSERT_FALSE(expr1.IsReplaceableBy(expr3));
 }
 
+TEST(Expression, Replace) {
+  auto expr1 =
+      Expression::CreateBinaryArithmetic("+", ExpressionId(3), ExpressionId(5));
+  expr1.set_lhs_id(13);
+
+  auto expr2 =
+      Expression::CreateAssignment(kInvalidExpressionId, ExpressionId(7));
+
+  // We replace the arithmetic expr1 by an assignment from the variable 7. This
+  // is the typical usecase in subexpression elimination.
+  expr1.Replace(expr2);
+
+  // expr1 should now be an assignment from 7 to 13
+  EXPECT_EQ(expr1, Expression(ExpressionType::ASSIGNMENT, 13, {7}, "", 0));
+}
+
 TEST(Expression, DirectlyDependsOn) {
-  using T = ExpressionRef;
+  auto expr1 =
+      Expression::CreateBinaryArithmetic("+", ExpressionId(3), ExpressionId(5));
 
-  StartRecordingExpressions();
+  ASSERT_TRUE(expr1.DirectlyDependsOn(ExpressionId(3)));
+  ASSERT_TRUE(expr1.DirectlyDependsOn(ExpressionId(5)));
+  ASSERT_FALSE(expr1.DirectlyDependsOn(ExpressionId(kInvalidExpressionId)));
+  ASSERT_FALSE(expr1.DirectlyDependsOn(ExpressionId(42)));
+}
+TEST(Expression, MakeNop) {
+  auto expr1 =
+      Expression::CreateBinaryArithmetic("+", ExpressionId(3), ExpressionId(5));
 
-  T unused(6);
-  T a(2), b(3);
-  T c = a + b;
-  T d = c + a;
+  expr1.MakeNop();
 
-  auto graph = StopRecordingExpressions();
-
-  ASSERT_FALSE(graph.ExpressionForId(a.id).DirectlyDependsOn(unused.id));
-  ASSERT_TRUE(graph.ExpressionForId(c.id).DirectlyDependsOn(a.id));
-  ASSERT_TRUE(graph.ExpressionForId(c.id).DirectlyDependsOn(b.id));
-  ASSERT_TRUE(graph.ExpressionForId(d.id).DirectlyDependsOn(a.id));
-  ASSERT_FALSE(graph.ExpressionForId(d.id).DirectlyDependsOn(b.id));
-  ASSERT_TRUE(graph.ExpressionForId(d.id).DirectlyDependsOn(c.id));
+  EXPECT_EQ(expr1,
+            Expression(ExpressionType::NOP, kInvalidExpressionId, {}, "", 0));
 }
 
-TEST(Expression, Ternary) {
-  using T = ExpressionRef;
+TEST(Expression, IsSemanticallyEquivalentTo) {
+  // Create 2 identical expression
+  auto expr1 =
+      Expression::CreateBinaryArithmetic("+", ExpressionId(3), ExpressionId(5));
 
-  StartRecordingExpressions();
-  T a(2);                   // 0
-  T b(3);                   // 1
-  auto c = a < b;           // 2
-  T d = Ternary(c, a, b);   // 3
-  MakeOutput(d, "result");  // 4
-  auto graph = StopRecordingExpressions();
+  auto expr2 =
+      Expression::CreateBinaryArithmetic("+", ExpressionId(3), ExpressionId(5));
 
-  EXPECT_EQ(graph.Size(), 5);
+  ASSERT_TRUE(expr1.IsSemanticallyEquivalentTo(expr1));
+  ASSERT_TRUE(expr1.IsSemanticallyEquivalentTo(expr2));
 
-  // Expected code
-  //   v_0 = 2;
-  //   v_1 = 3;
-  //   v_2 = v_0 < v_1;
-  //   v_3 = Ternary(v_2, v_0, v_1);
-  //   result = v_3;
+  auto expr3 =
+      Expression::CreateBinaryArithmetic("+", ExpressionId(3), ExpressionId(8));
 
-  ExpressionGraph reference;
-  // clang-format off
-  // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  2});
-  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   1,      {},        "",  3});
-  reference.InsertBack({     ExpressionType::BINARY_COMPARISON,   2,   {0,1},       "<",  0});
-  reference.InsertBack({         ExpressionType::FUNCTION_CALL,   3, {2,0,1}, "Ternary",  0});
-  reference.InsertBack({     ExpressionType::OUTPUT_ASSIGNMENT,   4,     {3},  "result",  0});
-  // clang-format on
-  EXPECT_EQ(reference, graph);
-}
+  ASSERT_TRUE(expr1.IsSemanticallyEquivalentTo(expr3));
 
-TEST(Expression, Assignment) {
-  using T = ExpressionRef;
+  auto expr4 =
+      Expression::CreateBinaryArithmetic("-", ExpressionId(3), ExpressionId(5));
 
-  StartRecordingExpressions();
-  T a = 1;
-  T b = 2;
-  b = a;
-  auto graph = StopRecordingExpressions();
-
-  EXPECT_EQ(graph.Size(), 3);
-
-  ExpressionGraph reference;
-  // clang-format off
-  // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   0,       {},        "",  1});
-  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   1,       {},        "",  2});
-  reference.InsertBack({            ExpressionType::ASSIGNMENT,   1,      {0},        "",  0});
-  // clang-format on
-  EXPECT_EQ(reference, graph);
-}
-
-TEST(Expression, AssignmentCreate) {
-  using T = ExpressionRef;
-
-  StartRecordingExpressions();
-  T a = 2;
-  T b = a;
-  auto graph = StopRecordingExpressions();
-
-  EXPECT_EQ(graph.Size(), 2);
-
-  ExpressionGraph reference;
-  // clang-format off
-  // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   0,       {},        "",  2});
-  reference.InsertBack({            ExpressionType::ASSIGNMENT,   1,      {0},        "",  0});
-  // clang-format on
-  EXPECT_EQ(reference, graph);
-}
-
-TEST(Expression, MoveAssignmentCreate) {
-  using T = ExpressionRef;
-
-  StartRecordingExpressions();
-  T a = 1;
-  T b = std::move(a);
-  auto graph = StopRecordingExpressions();
-
-  EXPECT_EQ(graph.Size(), 1);
-
-  ExpressionGraph reference;
-  // clang-format off
-  // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   0,      {},        "",  1});
-  // clang-format on
-  EXPECT_EQ(reference, graph);
-}
-
-TEST(Expression, MoveAssignment) {
-  using T = ExpressionRef;
-
-  StartRecordingExpressions();
-  T a = 1;
-  T b = 2;
-  b = std::move(a);
-  auto graph = StopRecordingExpressions();
-
-  EXPECT_EQ(graph.Size(), 3);
-
-  ExpressionGraph reference;
-  // clang-format off
-  // Id, Type, Lhs, Value, Name, Arguments
-  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   0,       {},        "",  1});
-  reference.InsertBack({ ExpressionType::COMPILE_TIME_CONSTANT,   1,       {},        "",  2});
-  reference.InsertBack({            ExpressionType::ASSIGNMENT,   1,      {0},        "",  0});
-  // clang-format on
-  EXPECT_EQ(reference, graph);
+  ASSERT_FALSE(expr1.IsSemanticallyEquivalentTo(expr4));
 }
 
 }  // namespace internal

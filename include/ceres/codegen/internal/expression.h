@@ -249,6 +249,7 @@ enum class ExpressionType {
 // ExpressionGraph (see expression_graph.h).
 class Expression {
  public:
+  // Creates a NOP expression.
   Expression() = default;
 
   Expression(ExpressionType type,

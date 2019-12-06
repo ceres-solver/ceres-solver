@@ -108,8 +108,17 @@ void ExpressionGraph::Insert(ExpressionId location,
     expressions_[id + 1] = expression;
   }
 
-  // Insert new expression at the correct place
-  expressions_[location] = expression;
+  if (expression.IsControlExpression() ||
+      expression.lhs_id() != kInvalidExpressionId) {
+    // Insert new expression at the correct place
+    expressions_[location] = expression;
+  } else {
+    // Arithmetic expression with invalid lhs
+    // -> Set lhs to location
+    Expression copy = expression;
+    copy.set_lhs_id(location);
+    expressions_[location] = copy;
+  }
 }
 
 ExpressionId ExpressionGraph::InsertBack(const Expression& expression) {

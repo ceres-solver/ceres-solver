@@ -142,8 +142,8 @@ bool Expression::IsCompileTimeConstantAndEqualTo(double constant) const {
 }
 
 void Expression::MakeNop() {
-  type_ = ExpressionType::NOP;
-  arguments_.clear();
+  // The default constructor creates a NOP expression!
+  *this = Expression();
 }
 
 bool Expression::operator==(const Expression& other) const {
