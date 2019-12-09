@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b3fbe76_36f304cb",
+        "filename": "include/ceres/codegen/macros.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-09T17:32:49Z",
+      "side": 1,
+      "message": "I am in still two minds about this, should this be a function or a macro?\nand the fact that this is in a file called macros.h",
+      "range": {
+        "startLine": 123,
+        "startChar": 7,
+        "endLine": 123,
+        "endChar": 13
+      },
+      "revId": "ec976ad211e3ee37af8a7e7ee112cbcba7830dbe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
