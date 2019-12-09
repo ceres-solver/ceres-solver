@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6d471c4_904e9178",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2019-12-09T08:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8e48fc4_ca0bc8d2",
+      "revId": "683303bacb9bc6637cc0146264c3d6b002d67069",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e47460fe_7843c764",
         "filename": "cmake/CeresConfig.cmake.in",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "683303bacb9bc6637cc0146264c3d6b002d67069",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b4613d_ac7cd6f3",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2019-12-09T08:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e47460fe_7843c764",
+      "revId": "683303bacb9bc6637cc0146264c3d6b002d67069",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
