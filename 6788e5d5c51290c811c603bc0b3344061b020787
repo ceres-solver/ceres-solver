@@ -22,6 +22,30 @@
       "revId": "6788e5d5c51290c811c603bc0b3344061b020787",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768fcb3a_c5e1e93d",
+        "filename": "internal/ceres/expression.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-09T16:14:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3824f8a_e5dca10b",
+      "range": {
+        "startLine": 117,
+        "startChar": 23,
+        "endLine": 117,
+        "endChar": 41
+      },
+      "revId": "6788e5d5c51290c811c603bc0b3344061b020787",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
