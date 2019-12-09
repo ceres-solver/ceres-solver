@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8334f117_a06de50d",
+        "filename": "include/ceres/codegen/internal/code_generator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-09T16:51:32Z",
+      "side": 1,
+      "message": "this function is oddly named, and in fact it is not clear why this is here at all. All it it does is convert an enum into a string. I recommend making this a stand alone function.",
+      "range": {
+        "startLine": 106,
+        "startChar": 21,
+        "endLine": 106,
+        "endChar": 42
+      },
+      "revId": "f41832154e1988c9cdee804f7b16739b732dd812",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
