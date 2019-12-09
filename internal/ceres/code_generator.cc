@@ -64,7 +64,7 @@ std::vector<std::string> CodeGenerator::Generate() {
     // Example:    double v_0;
     //
     const std::string declaration_string =
-        indentation_ + DataTypeForExpression(expr.type()) + " " +
+        indentation_ + DataTypeForExpression(expr.return_type()) + " " +
         VariableForExpressionId(id) + ";";
     code.emplace_back(declaration_string);
   }
@@ -248,23 +248,18 @@ std::string CodeGenerator::VariableForExpressionId(ExpressionId id) {
   return options_.variable_prefix + std::to_string(expr.lhs_id());
 }
 
-std::string CodeGenerator::DataTypeForExpression(ExpressionType type) {
-  std::string type_string;
+std::string CodeGenerator::DataTypeForExpression(ExpressionReturnType type) {
   switch (type) {
-    case ExpressionType::BINARY_COMPARISON:
-    case ExpressionType::LOGICAL_NEGATION:
-      type_string = "bool";
-      break;
-    case ExpressionType::IF:
-    case ExpressionType::ELSE:
-    case ExpressionType::ENDIF:
-    case ExpressionType::NOP:
-      type_string = "void";
-      break;
+    case ExpressionReturnType::SCALAR:
+      return "double";
+    case ExpressionReturnType::BOOLEAN:
+      return "bool";
+    case ExpressionReturnType::VOID:
+      return "void";
     default:
-      type_string = "double";
+      CHECK(false) << "Unknown ExpressionReturnType.";
+      return "";
   }
-  return type_string;
 }
 
 void CodeGenerator::PushIndentation() {
