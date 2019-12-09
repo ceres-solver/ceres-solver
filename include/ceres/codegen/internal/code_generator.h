@@ -102,9 +102,6 @@ class CodeGenerator {
   // If the expression does not have a valid name an error is generated.
   std::string VariableForExpressionId(ExpressionId id);
 
-  // Returns the type as a string of the left hand side.
-  static std::string DataTypeForExpression(ExpressionType type);
-
   // Adds one level of indentation. Called when an IF expression is encountered.
   void PushIndentation();
 

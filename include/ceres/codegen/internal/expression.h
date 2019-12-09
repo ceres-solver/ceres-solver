@@ -249,6 +249,8 @@ enum class ExpressionReturnType {
   VOID,
 };
 
+std::string ExpressionReturnTypeToString(ExpressionReturnType type);
+
 // This class contains all data that is required to generate one line of code.
 // Each line has the following form:
 //

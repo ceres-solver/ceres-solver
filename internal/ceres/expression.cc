@@ -30,9 +30,24 @@
 
 #include "ceres/codegen/internal/expression.h"
 #include <algorithm>
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
+
+std::string ExpressionReturnTypeToString(ExpressionReturnType type) {
+  switch (type) {
+    case ExpressionReturnType::SCALAR:
+      return "double";
+    case ExpressionReturnType::BOOLEAN:
+      return "bool";
+    case ExpressionReturnType::VOID:
+      return "void";
+    default:
+      CHECK(false) << "Unknown ExpressionReturnType.";
+      return "";
+  }
+}
 
 Expression::Expression(ExpressionType type,
                        ExpressionReturnType return_type,
