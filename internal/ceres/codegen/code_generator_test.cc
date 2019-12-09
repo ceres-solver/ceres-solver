@@ -376,6 +376,32 @@ TEST(CodeGenerator, FUNCTION_CALL) {
   GenerateAndCheck(graph, expected_code);
 }
 
+TEST(CodeGenerator, LOGICAL_FUNCTION_CALL) {
+  StartRecordingExpressions();
+  T a = T(1);
+
+  isfinite(a);
+  isinf(a);
+  isnan(a);
+  isnormal(a);
+
+  auto graph = StopRecordingExpressions();
+
+  std::vector<std::string> expected_code = {"{",
+                                            "  double v_0;",
+                                            "  bool v_1;",
+                                            "  bool v_2;",
+                                            "  bool v_3;",
+                                            "  bool v_4;",
+                                            "  v_0 = 1;",
+                                            "  v_1 = isfinite(v_0);",
+                                            "  v_2 = isinf(v_0);",
+                                            "  v_3 = isnan(v_0);",
+                                            "  v_4 = isnormal(v_0);",
+                                            "}"};
+  GenerateAndCheck(graph, expected_code);
+}
+
 TEST(CodeGenerator, IF_SIMPLE) {
   StartRecordingExpressions();
   T a = T(0);

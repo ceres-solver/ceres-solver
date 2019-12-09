@@ -103,7 +103,7 @@ class CodeGenerator {
   std::string VariableForExpressionId(ExpressionId id);
 
   // Returns the type as a string of the left hand side.
-  static std::string DataTypeForExpression(ExpressionType type);
+  static std::string DataTypeForExpression(ExpressionReturnType type);
 
   // Adds one level of indentation. Called when an IF expression is encountered.
   void PushIndentation();

@@ -33,8 +33,8 @@
 //
 #define CERES_CODEGEN
 
-#include "ceres/codegen/internal/expression_graph.h"
 #include "ceres/codegen/internal/expression_ref.h"
+#include "ceres/codegen/internal/expression_graph.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -176,7 +176,7 @@ TEST(ExpressionRef, BINARY_ARITHMETIC_NESTED) {
   EXPECT_EQ(reference, graph);
 }
 
-TEST(CodeGenerator, BINARY_ARITHMETIC_COMPOUND) {
+TEST(ExpressionRef, BINARY_ARITHMETIC_COMPOUND) {
   // For each binary compound arithmetic operation, two lines are generated:
   //    - The actual operation assigning to a new temporary variable
   //    - An assignment from the temporary to the lhs
@@ -203,7 +203,7 @@ TEST(CodeGenerator, BINARY_ARITHMETIC_COMPOUND) {
   EXPECT_EQ(reference, graph);
 }
 
-TEST(CodeGenerator, UNARY_ARITHMETIC) {
+TEST(ExpressionRef, UNARY_ARITHMETIC) {
   StartRecordingExpressions();
   T a = T(1);
   T r1 = -a;
@@ -217,7 +217,7 @@ TEST(CodeGenerator, UNARY_ARITHMETIC) {
   EXPECT_EQ(reference, graph);
 }
 
-TEST(CodeGenerator, BINARY_COMPARISON) {
+TEST(ExpressionRef, BINARY_COMPARISON) {
   using BOOL = ComparisonExpressionRef;
   StartRecordingExpressions();
   T a = T(1);
@@ -242,7 +242,7 @@ TEST(CodeGenerator, BINARY_COMPARISON) {
   EXPECT_EQ(reference, graph);
 }
 
-TEST(CodeGenerator, LOGICAL_OPERATORS) {
+TEST(ExpressionRef, LOGICAL_OPERATORS) {
   using BOOL = ComparisonExpressionRef;
   // Tests binary logical operators &&, || and the unary logical operator !
   StartRecordingExpressions();
@@ -266,7 +266,7 @@ TEST(CodeGenerator, LOGICAL_OPERATORS) {
   EXPECT_EQ(reference, graph);
 }
 
-TEST(CodeGenerator, FUNCTION_CALL) {
+TEST(ExpressionRef, SCALAR_FUNCTION_CALL) {
   StartRecordingExpressions();
   T a = T(1);
   T b = T(2);
@@ -318,7 +318,25 @@ TEST(CodeGenerator, FUNCTION_CALL) {
   EXPECT_EQ(reference, graph);
 }
 
-TEST(CodeGenerator, IF) {
+TEST(ExpressionRef, LOGICAL_FUNCTION_CALL) {
+  StartRecordingExpressions();
+  T a = T(1);
+  isfinite(a);
+  isinf(a);
+  isnan(a);
+  isnormal(a);
+  auto graph = StopRecordingExpressions();
+
+  ExpressionGraph reference;
+  reference.InsertBack(Expression::CreateCompileTimeConstant(1));
+  reference.InsertBack(Expression::CreateLogicalFunctionCall("isfinite", {0}));
+  reference.InsertBack(Expression::CreateLogicalFunctionCall("isinf", {0}));
+  reference.InsertBack(Expression::CreateLogicalFunctionCall("isnan", {0}));
+  reference.InsertBack(Expression::CreateLogicalFunctionCall("isnormal", {0}));
+  EXPECT_EQ(reference, graph);
+}
+
+TEST(ExpressionRef, IF) {
   StartRecordingExpressions();
   T a = T(1);
   T b = T(2);
@@ -336,7 +354,7 @@ TEST(CodeGenerator, IF) {
   EXPECT_EQ(reference, graph);
 }
 
-TEST(CodeGenerator, IF_ELSE) {
+TEST(ExpressionRef, IF_ELSE) {
   StartRecordingExpressions();
   T a = T(1);
   T b = T(2);
@@ -356,7 +374,7 @@ TEST(CodeGenerator, IF_ELSE) {
   EXPECT_EQ(reference, graph);
 }
 
-TEST(CodeGenerator, IF_NESTED) {
+TEST(ExpressionRef, IF_NESTED) {
   StartRecordingExpressions();
   T a = T(1);
   T b = T(2);
