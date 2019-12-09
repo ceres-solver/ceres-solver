@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82749e63_2ee2446e",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-09T14:13:54Z",
+      "side": 1,
+      "message": "I don\u0027t think so.\n\nAt least it gives a compile error when using this object in the EXPECT_NE() macro.",
+      "parentUuid": "9bdc6d4f_e2f403f5",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 12
+      },
+      "revId": "bdebf72679593328495bda765b3bde108d9de509",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aac0b9e9_87e23f79",
         "filename": "internal/ceres/expression_graph.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "bdebf72679593328495bda765b3bde108d9de509",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "913defb8_7cfbca50",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-09T14:13:54Z",
+      "side": 1,
+      "message": "Yes, without that this function wasn\u0027t really usable.",
+      "parentUuid": "aac0b9e9_87e23f79",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 2
+      },
+      "revId": "bdebf72679593328495bda765b3bde108d9de509",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
