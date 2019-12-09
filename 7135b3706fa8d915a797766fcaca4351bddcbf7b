@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b95639d_05ff9946",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2019-12-09T09:19:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f5b8abf_e664407b",
+      "revId": "7135b3706fa8d915a797766fcaca4351bddcbf7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b08f5af3_de7dec44",
         "filename": "cmake/CeresConfig.cmake.in",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2c87eadd_38e7c4c0",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2019-12-09T09:19:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b08f5af3_de7dec44",
+      "revId": "7135b3706fa8d915a797766fcaca4351bddcbf7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4469f4ec_84c7778a",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2019-12-06T20:40:03Z",
       "side": 1,
       "message": "We can actually remove this entire block if we use the glog CMake target as well, as then gflags should appear in the interface dependencies for the glog target if required (however that would be in a separate PR)",
+      "revId": "7135b3706fa8d915a797766fcaca4351bddcbf7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54dbc9de_f3f4f4c1",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2019-12-09T09:19:03Z",
+      "side": 1,
+      "message": "Ubuntu, Debian and Arch don\u0027t use the CMake project to create their glog package. Therefor no glog-config.cmake is created or installed.\n\nI think part of the holdup is the missing pkgconfig generation in the latest glog release (v0.4.0). The current master already creates this pkgconfig file. It would be nice if glog would add another release, and for it to get into the next Ubuntu LTS (including the cmake-config file)\n\nhttps://bugs.launchpad.net/ubuntu/+source/google-glog/+bug/1815110\nhttps://bugs.archlinux.org/task/55185",
+      "parentUuid": "4469f4ec_84c7778a",
       "revId": "7135b3706fa8d915a797766fcaca4351bddcbf7b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
