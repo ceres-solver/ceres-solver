@@ -33,16 +33,12 @@
 // We recommend to use the CMake integration instead of using
 // GenerateCodeForFunctor directly.
 //
-#include "autodiff_codegen_functor.h"
-#include "autodiff_codegen_functor_generated.h"
-#include "ceres/codegen/autodiff.h"
 
-int main(int argc, char** argv) {
-  std::vector<std::string> code =
-      ceres::GenerateCodeForFunctor<SquareFunctor, 2, 1, 1>(
-          ceres::AutoDiffCodeGenOptions());
-  for (auto str : code) {
-    std::cout << str << std::endl;
+struct SquareFunctor {
+  template <typename T>
+  bool operator()(const T* x, const T* y, T* residual) const {
+    residual[0] = x[0] * x[0];
+    residual[1] = x[0] * x[1];
+    return true;
   }
-  return 0;
-}
+};
