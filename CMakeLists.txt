@@ -771,6 +771,12 @@ install(FILES "${Ceres_BINARY_DIR}/CeresConfigVersion.cmake"
               "${Ceres_SOURCE_DIR}/cmake/FindGlog.cmake"
         DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
 
+# Install codegen cmake scripts
+install(FILES "${Ceres_SOURCE_DIR}/cmake/codegen_include.h.in"
+              "${Ceres_SOURCE_DIR}/cmake/generate_code_for_functor.cc.in"
+              "${Ceres_SOURCE_DIR}/cmake/CeresCodeGeneration.cmake"
+        DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
+
 if (PROVIDE_UNINSTALL_TARGET)
   # Create an uninstall target to remove all installed files.
   configure_file("${Ceres_SOURCE_DIR}/cmake/uninstall.cmake.in"
