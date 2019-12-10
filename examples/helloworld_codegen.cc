@@ -29,27 +29,37 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 //
 // A simple example showing how to generate code for a cost functor
-//
-// We recommend to use the CMake integration instead of using
-// GenerateCodeForFunctor directly.
-//
-#include "ceres/codegen/autodiff.h"
 
-struct SquareFunctor {
-  template <typename T>
-  bool operator()(const T* x, T* residual) const {
-    residual[0] = x[0] * x[0];
-    isfinite(x[0]);
-    return true;
-  }
-};
+#include "ceres/ceres.h"
+#include "glog/logging.h"
+#include "helloworld_cost_function.h"
+
+using ceres::CostFunction;
+using ceres::Problem;
+using ceres::Solve;
+using ceres::Solver;
 
 int main(int argc, char** argv) {
-  std::vector<std::string> code =
-      ceres::GenerateCodeForFunctor<SquareFunctor, 1, 1>(
-          ceres::AutoDiffCodeGenOptions());
-  for (auto str : code) {
-    std::cout << str << std::endl;
-  }
+  google::InitGoogleLogging(argv[0]);
+
+  // The variable to solve for with its initial value. It will be
+  // mutated in place by the solver.
+  double x = 0.5;
+  const double initial_x = x;
+
+  Problem problem;
+
+  const double kTargetValue = 10.0;
+  CostFunction* cost_function =
+      new mynamespace::HelloWorldCostFunction(kTargetValue);
+  problem.AddResidualBlock(cost_function, NULL, &x);
+
+  Solver::Options options;
+  options.minimizer_progress_to_stdout = true;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+
+  std::cout << summary.BriefReport() << "\n";
+  std::cout << "x : " << initial_x << " -> " << x << "\n";
   return 0;
 }
