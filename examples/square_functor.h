@@ -33,51 +33,13 @@
 // We recommend to use the CMake integration instead of using
 // GenerateCodeForFunctor directly.
 //
-#include "ceres/autodiff_cost_function.h"
-#include "ceres/codegen/autodiff.h"
-#include "ceres/sized_cost_function.h"
 
-#include "ceres/ceres.h"
-#include "glog/logging.h"
-#include "square_functor.h"
+struct SquareFunctor
+{
+  template <typename T>
+  bool operator()(const T* x, T* residual) const {
+    residual[0] = T(10.0) - x[0] * x[0];
+    return true;
+  }
 
-using ceres::AutoDiffCostFunction;
-using ceres::CostFunction;
-using ceres::Problem;
-using ceres::SizedCostFunction;
-using ceres::Solve;
-using ceres::Solver;
-
-class SquareCostFunction : public SizedCostFunction<1, 1> {
- public:
-  virtual ~SquareCostFunction() {}
-// Inject the generated code into the cost function
-#include "square_cost_function.h"
 };
-
-int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
-
-  // The variable to solve for with its initial value. It will be
-  // mutated in place by the solver.
-  double x = 0.5;
-  const double initial_x = x;
-
-  // Build the problem.
-  Problem problem;
-
-  // Set up the only cost function (also known as residual). This uses
-  // auto-differentiation to obtain the derivative (jacobian).
-  CostFunction* cost_function = new SquareCostFunction;
-  problem.AddResidualBlock(cost_function, NULL, &x);
-
-  // Run the solver!
-  Solver::Options options;
-  options.minimizer_progress_to_stdout = true;
-  Solver::Summary summary;
-  Solve(options, &problem, &summary);
-
-  std::cout << summary.BriefReport() << "\n";
-  std::cout << "x : " << initial_x << " -> " << x << "\n";
-  return 0;
-}
