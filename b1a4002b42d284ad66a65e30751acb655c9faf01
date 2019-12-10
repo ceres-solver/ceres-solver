@@ -45,6 +45,30 @@
       "revId": "b1a4002b42d284ad66a65e30751acb655c9faf01",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8e73ae_c3869416",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-10T13:56:45Z",
+      "side": 1,
+      "message": "The inner loop is generated inside the if.",
+      "parentUuid": "07d9b639_e825832c",
+      "range": {
+        "startLine": 240,
+        "startChar": 22,
+        "endLine": 240,
+        "endChar": 41
+      },
+      "revId": "b1a4002b42d284ad66a65e30751acb655c9faf01",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
