@@ -1,3 +1,4 @@
+
 // Ceres Solver - A fast non-linear least squares minimizer
 // Copyright 2019 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
@@ -28,28 +29,34 @@
 //
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 //
-// A simple example showing how to generate code for a cost functor
-//
-// We recommend to use the CMake integration instead of using
-// GenerateCodeForFunctor directly.
-//
-#include "ceres/codegen/autodiff.h"
+#ifndef CERES_PUBLIC_CODEGEN_COST_FUNCTION_H_
+#define CERES_PUBLIC_CODEGEN_COST_FUNCTION_H_
 
-struct SquareFunctor {
-  template <typename T>
-  bool operator()(const T* x, T* residual) const {
-    residual[0] = x[0] * x[0];
-    isfinite(x[0]);
-    return true;
-  }
+#include "ceres/codegen/macros.h"
+#include "ceres/sized_cost_function.h"
+
+namespace ceres{
+
+
+template <int kNumResiduals, int... Ns>
+class GodegenCostFunction
+#ifdef CERES_CODEGEN
+#else
+    : public SizedCostFunction<kNumResiduals,Ns...>
+#endif
+{
+ public:
+  static_assert(kNumResiduals > 0,
+                "Cost functions must have at least one residual block.");
+  static_assert(kNumResiduals != DYNAMIC,
+                "Dynamic residuals are not supported yet.");
+  static_assert(internal::StaticParameterDims<Ns...>::kIsValid,
+                "Invalid parameter block dimension detected. Each parameter "
+                "block dimension must be bigger than zero.");
+
+  using ParameterDims = internal::StaticParameterDims<Ns...>;
 };
 
-int main(int argc, char** argv) {
-  std::vector<std::string> code =
-      ceres::GenerateCodeForFunctor<SquareFunctor, 1, 1>(
-          ceres::AutoDiffCodeGenOptions());
-  for (auto str : code) {
-    std::cout << str << std::endl;
-  }
-  return 0;
-}
+
+}  // namespace ceres
+#endif  // CERES_PUBLIC_CODEGEN_COST_FUNCTION_H_

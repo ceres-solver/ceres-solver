@@ -164,7 +164,7 @@ std::vector<std::string> GenerateCodeForFunctor(
     internal::CodeGenerator::Options generator_options;
     generator_options.function_name =
         "void EvaluateResidual(double const* const* parameters, double* "
-        "residuals)";
+        "residuals) const";
     internal::CodeGenerator gen(residual_graph, generator_options);
     std::vector<std::string> code = gen.Generate();
     output.insert(output.end(), code.begin(), code.end());
@@ -179,7 +179,7 @@ std::vector<std::string> GenerateCodeForFunctor(
     generator_options.function_name =
         "void EvaluateResidualAndJacobian(double const* const* parameters, "
         "double* "
-        "residuals, double** jacobians)";
+        "residuals, double** jacobians) const";
     internal::CodeGenerator gen(residual_and_jacobian_graph, generator_options);
     std::vector<std::string> code = gen.Generate();
     output.insert(output.end(), code.begin(), code.end());
@@ -193,7 +193,7 @@ std::vector<std::string> GenerateCodeForFunctor(
   // in SizedCostFunctions.
   output.emplace_back("bool Evaluate(double const* const* parameters,");
   output.emplace_back("              double* residuals,");
-  output.emplace_back("              double** jacobians) {");
+  output.emplace_back("              double** jacobians) const {");
   output.emplace_back("   if (jacobians) {");
 
   // Create a tmp array of all jacobians and use it for evaluation.
