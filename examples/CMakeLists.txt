@@ -73,8 +73,13 @@ add_executable(simple_bundle_adjuster simple_bundle_adjuster.cc)
 target_link_libraries(simple_bundle_adjuster ceres)
 
 if(CODE_GENERATION)
-  add_executable(autodiff_codegen autodiff_codegen.cc)
-  target_link_libraries(autodiff_codegen ceres)
+    include(CeresCodeGeneration)
+    ceres_cost_functor(
+        NAME SquareFunctor
+        INPUT_FILE ${CMAKE_CURRENT_SOURCE_DIR}/square_functor.h
+        )
+    add_executable(helloworld_codegen helloworld_codegen.cc )
+    target_link_libraries(helloworld_codegen ceres SquareFunctor)
 endif(CODE_GENERATION)
 
 if (GFLAGS)
