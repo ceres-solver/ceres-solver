@@ -28,28 +28,20 @@
 //
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 //
-// A simple example showing how to generate code for a cost functor
-//
-// We recommend to use the CMake integration instead of using
-// GenerateCodeForFunctor directly.
-//
-#include "ceres/codegen/autodiff.h"
+#include "ceres/codegen/cost_function.h"
 
-struct SquareFunctor {
+struct SquareFunctor : public ceres::CodegenCostFunction<1,1>
+{
+  SquareFunctor(double local = 0) : local_(local){}
+
   template <typename T>
   bool operator()(const T* x, T* residual) const {
-    residual[0] = x[0] * x[0];
-    isfinite(x[0]);
+    residual[0] = CERES_LOCAL_VARIABLE(T, local_) - x[0];
     return true;
   }
-};
 
-int main(int argc, char** argv) {
-  std::vector<std::string> code =
-      ceres::GenerateCodeForFunctor<SquareFunctor, 1, 1>(
-          ceres::AutoDiffCodeGenOptions());
-  for (auto str : code) {
-    std::cout << str << std::endl;
-  }
-  return 0;
-}
+  // The generated file will be called "<Class Name in lower case>_generated.h"
+#include "squarefunctor_generated.h"
+
+  double local_;
+};
