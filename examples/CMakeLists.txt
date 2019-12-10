@@ -73,8 +73,15 @@ add_executable(simple_bundle_adjuster simple_bundle_adjuster.cc)
 target_link_libraries(simple_bundle_adjuster ceres)
 
 if(CODE_GENERATION)
-  add_executable(autodiff_codegen autodiff_codegen.cc)
-  target_link_libraries(autodiff_codegen ceres)
+    include(CeresCodeGeneration)
+    CERES_COST_FUNCTOR(
+        NAME SquareFunctor
+        INPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        INPUT_FILE square_functor.h
+        )
+    add_executable(helloworld_codegen helloworld_codegen.cc )
+    # Adding the cost functor to link libraries is enough!
+    target_link_libraries(helloworld_codegen ceres SquareFunctor)
 endif(CODE_GENERATION)
 
 if (GFLAGS)
