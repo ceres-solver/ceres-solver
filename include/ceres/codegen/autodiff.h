@@ -131,7 +131,7 @@ std::vector<std::string> GenerateCodeForFunctor(
   //    jacobians[0][1] = v_352;
   //    ...
   for (int i = 0, total_param_id = 0; i < kNumParameterBlocks;
-       ++i, total_param_id += ParameterDims::GetDim(i)) {
+       total_param_id += ParameterDims::GetDim(i), ++i) {
     for (int r = 0; r < kNumResiduals; ++r) {
       for (int j = 0; j < ParameterDims::GetDim(i); ++j) {
         internal::MakeOutput(
@@ -191,19 +191,65 @@ std::vector<std::string> GenerateCodeForFunctor(
   // EvaluateResidualAndJacobian. This combined function is compatible to
   // CostFunction::Evaluate. Therefore the generated code can be directly used
   // in SizedCostFunctions.
-
   output.emplace_back("bool Evaluate(double const* const* parameters,");
   output.emplace_back("              double* residuals,");
-  output.emplace_back("              double** jacobians)");
-  output.emplace_back("{");
+  output.emplace_back("              double** jacobians) {");
   output.emplace_back("   if (residuals && jacobians) {");
-  output.emplace_back("     EvaluateResidualAndJacobian(");
-  output.emplace_back("         parameters,");
-  output.emplace_back("         residuals,");
-  output.emplace_back("         jacobians);");
-  output.emplace_back("   }");
-  output.emplace_back("   else if (residuals) {");
-  output.emplace_back("     EvaluateResidual(parameters,residuals);");
+
+  // Create a tmp array of all jacobians and use it for evaluation.
+  // The generated code for a <2,3,1,2> cost functor is:
+  //   double jacobians_data[6];
+  //   double* jacobians_tmp[] = {
+  //       jacobians_data + 0,
+  //       jacobians_data + 6,
+  //       jacobians_data + 8,
+  //   };
+  output.emplace_back("     double jacobians_data[" +
+                      std::to_string(kNumParameters * kNumResiduals) + "];");
+  output.emplace_back("     double* jacobians_tmp[] = {");
+  for (int i = 0, total_param_id = 0; i < kNumParameterBlocks;
+       total_param_id += ParameterDims::GetDim(i), ++i) {
+    output.emplace_back("       jacobians_data + " +
+                        std::to_string(kNumResiduals * total_param_id) + ",");
+  }
+  output.emplace_back("     };");
+
+  // Evaluate into the tmp array.
+  output.emplace_back(
+      "     EvaluateResidualAndJacobian(parameters, residuals, "
+      "jacobians_tmp);");
+
+  // Copy the computed jacobians into the output array. Add an if-statement to
+  // test for null-jacobians. The generated code for a <2,3,1,2> cost functor
+  // is:
+  //    if (jacobians[0]) {
+  //      for (int i = 0; i < 6; ++i) {
+  //        jacobians[0][i] = jacobians_tmp[0][i];
+  //      }
+  //    }
+  //    if (jacobians[1]) {
+  //      for (int i = 0; i < 2; ++i) {
+  //        jacobians[1][i] = jacobians_tmp[1][i];
+  //      }
+  //    }
+  //    if (jacobians[2]) {
+  //      for (int i = 0; i < 4; ++i) {
+  //        jacobians[2][i] = jacobians_tmp[2][i];
+  //      }
+  //    }
+  for (int i = 0; i < kNumParameterBlocks; ++i) {
+    output.emplace_back("     if (jacobians[" + std::to_string(i) + "]) {");
+    output.emplace_back(
+        "       for (int i = 0; i < " +
+        std::to_string(ParameterDims::GetDim(i) * kNumResiduals) + "; ++i) {");
+    output.emplace_back("         jacobians[" + std::to_string(i) +
+                        "][i] = jacobians_tmp[" + std::to_string(i) + "][i];");
+    output.emplace_back("       }");
+    output.emplace_back("     }");
+  }
+
+  output.emplace_back("   } else if (residuals) {");
+  output.emplace_back("     EvaluateResidual(parameters, residuals);");
   output.emplace_back("   }");
   output.emplace_back("   return true;");
   output.emplace_back("}");
