@@ -73,8 +73,15 @@ add_executable(simple_bundle_adjuster simple_bundle_adjuster.cc)
 target_link_libraries(simple_bundle_adjuster ceres)
 
 if(CODE_GENERATION)
-  add_executable(autodiff_codegen autodiff_codegen.cc)
-  target_link_libraries(autodiff_codegen ceres)
+  include(CeresCodeGeneration)
+  ceres_generate_cost_function_implementation_for_functor(
+    NAME HelloWorldCostFunction
+    INPUT_FILE helloworld_cost_function.h
+    OUTPUT_DIRECTORY examples
+    NAMESPACE helloworld
+    )
+  add_executable(helloworld_codegen helloworld_codegen.cc )
+  target_link_libraries(helloworld_codegen ceres HelloWorldCostFunction)
 endif(CODE_GENERATION)
 
 if (GFLAGS)
