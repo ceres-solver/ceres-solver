@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ff193a1_2d25ef06",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-10T13:22:42Z",
+      "side": 1,
+      "message": "this function is starting to get a bit unwieldy. What do you think about breaking it up into sub functions?",
+      "range": {
+        "startLine": 45,
+        "startChar": 36,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "8b53fdb1671c96d782820c3c2c3499b4d639c12e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3673f4_aba54a8a",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-10T13:22:42Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be kNumParameters * kNumResiduals?",
+      "range": {
+        "startLine": 208,
+        "startChar": 37,
+        "endLine": 208,
+        "endChar": 51
+      },
+      "revId": "8b53fdb1671c96d782820c3c2c3499b4d639c12e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c249c1b1_711253dc",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-10T13:22:42Z",
+      "side": 1,
+      "message": "same here this should kNumResiduals * ParameterDims::GetDim(i)",
+      "range": {
+        "startLine": 212,
+        "startChar": 42,
+        "endLine": 212,
+        "endChar": 55
+      },
+      "revId": "8b53fdb1671c96d782820c3c2c3499b4d639c12e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c346209a_cea9f8ab",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-10T13:22:42Z",
+      "side": 1,
+      "message": "this is wrong, notice you are only writing one row of the jacobian.",
+      "range": {
+        "startLine": 223,
+        "startChar": 23,
+        "endLine": 223,
+        "endChar": 32
+      },
+      "revId": "8b53fdb1671c96d782820c3c2c3499b4d639c12e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
