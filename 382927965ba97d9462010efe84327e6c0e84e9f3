@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bf05d9e_71491794",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-10T14:08:25Z",
+      "side": 1,
+      "message": "sorry my bad, I need coffee too :/\n\nyou could replace the loop with a memcpy if you wanted.",
+      "range": {
+        "startLine": 244,
+        "startChar": 23,
+        "endLine": 244,
+        "endChar": 36
+      },
+      "revId": "382927965ba97d9462010efe84327e6c0e84e9f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67cd4dbd_3f884c7c",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-10T14:08:25Z",
+      "side": 1,
+      "message": "early return here instead of an else if block, especially since residuals is guaranteed to never be null.",
+      "range": {
+        "startLine": 251,
+        "startChar": 37,
+        "endLine": 251,
+        "endChar": 46
+      },
+      "revId": "382927965ba97d9462010efe84327e6c0e84e9f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
