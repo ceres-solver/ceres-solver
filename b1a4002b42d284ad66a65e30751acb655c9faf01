@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "581bf023_f18fe764",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-10T13:52:06Z",
+      "side": 1,
+      "message": "jacobians_tmp -\u003e jacobian_ptrs",
+      "range": {
+        "startLine": 209,
+        "startChar": 36,
+        "endLine": 209,
+        "endChar": 49
+      },
+      "revId": "b1a4002b42d284ad66a65e30751acb655c9faf01",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d9b639_e825832c",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-10T13:52:06Z",
+      "side": 1,
+      "message": "this is still wrong. this needs to be a memcpy/double loop.",
+      "range": {
+        "startLine": 240,
+        "startChar": 22,
+        "endLine": 240,
+        "endChar": 41
+      },
+      "revId": "b1a4002b42d284ad66a65e30751acb655c9faf01",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
