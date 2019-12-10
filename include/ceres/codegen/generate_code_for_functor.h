@@ -42,18 +42,17 @@ namespace ceres {
 struct AutoDiffCodeGenOptions {};
 
 // TODO(darius): Documentation
-template <typename CostFunctor, int kNumResiduals, int... Ns>
+template <typename CostFunctor>
 std::vector<std::string> GenerateCodeForFunctor(
     const AutoDiffCodeGenOptions& options) {
-  static_assert(kNumResiduals != DYNAMIC,
-                "A dynamic number of residuals is currently not supported.");
   // Define some types and shortcuts to make the code below more readable.
-  using ParameterDims = internal::StaticParameterDims<Ns...>;
+  using ParameterDims = typename CostFunctor::ParameterDims;
   using Parameters = typename ParameterDims::Parameters;
   // Instead of using scalar Jets, we use Jets of ExpressionRef which record
   // their own operations during evaluation.
   using ExpressionRef = internal::ExpressionRef;
   using ExprJet = Jet<ExpressionRef, ParameterDims::kNumParameters>;
+  constexpr int kNumResiduals = CostFunctor::kNumResiduals;
   constexpr int kNumParameters = ParameterDims::kNumParameters;
   constexpr int kNumParameterBlocks = ParameterDims::kNumParameterBlocks;
 
@@ -61,6 +60,10 @@ std::vector<std::string> GenerateCodeForFunctor(
   // Code is generated for the CostFunctor and not an instantiation of it. This
   // is different to AutoDiffCostFunction, which computes the derivatives for
   // a specific object.
+  static_assert(std::is_default_constructible<CostFunctor>::value,
+                "Cost functors used in code generation must have a default "
+                "constructor. If you are using local variables, make sure to "
+                "wrap them into the CERES_LOCAL_VARIABLE macro.");
   CostFunctor functor;
 
   // During recording phase all operations on ExpressionRefs are recorded to an
@@ -164,7 +167,7 @@ std::vector<std::string> GenerateCodeForFunctor(
     internal::CodeGenerator::Options generator_options;
     generator_options.function_name =
         "void EvaluateResidual(double const* const* parameters, double* "
-        "residuals)";
+        "residuals) const";
     internal::CodeGenerator gen(residual_graph, generator_options);
     std::vector<std::string> code = gen.Generate();
     output.insert(output.end(), code.begin(), code.end());
@@ -179,7 +182,7 @@ std::vector<std::string> GenerateCodeForFunctor(
     generator_options.function_name =
         "void EvaluateResidualAndJacobian(double const* const* parameters, "
         "double* "
-        "residuals, double** jacobians)";
+        "residuals, double** jacobians) const";
     internal::CodeGenerator gen(residual_and_jacobian_graph, generator_options);
     std::vector<std::string> code = gen.Generate();
     output.insert(output.end(), code.begin(), code.end());
@@ -193,8 +196,14 @@ std::vector<std::string> GenerateCodeForFunctor(
   // in SizedCostFunctions.
   output.emplace_back("bool Evaluate(double const* const* parameters,");
   output.emplace_back("              double* residuals,");
-  output.emplace_back("              double** jacobians) {");
-  output.emplace_back("   if (jacobians) {");
+  output.emplace_back("              double** jacobians) const {");
+
+
+  output.emplace_back("   if (!jacobians) {");
+  output.emplace_back("     EvaluateResidual(parameters, residuals);");
+  output.emplace_back("     return true;");
+  output.emplace_back("   }");
+
 
   // Create a tmp array of all jacobians and use it for evaluation.
   // The generated code for a <2,3,1,2> cost functor is:
@@ -204,19 +213,19 @@ std::vector<std::string> GenerateCodeForFunctor(
   //       jacobians_data + 6,
   //       jacobians_data + 8,
   //   };
-  output.emplace_back("     double jacobians_data[" +
+  output.emplace_back("   double jacobians_data[" +
                       std::to_string(kNumParameters * kNumResiduals) + "];");
-  output.emplace_back("     double* jacobians_ptrs[] = {");
+  output.emplace_back("   double* jacobians_ptrs[] = {");
   for (int i = 0, total_param_id = 0; i < kNumParameterBlocks;
        total_param_id += ParameterDims::GetDim(i), ++i) {
-    output.emplace_back("       jacobians_data + " +
+    output.emplace_back("     jacobians_data + " +
                         std::to_string(kNumResiduals * total_param_id) + ",");
   }
-  output.emplace_back("     };");
+  output.emplace_back("   };");
 
   // Evaluate into the tmp array.
   output.emplace_back(
-      "     EvaluateResidualAndJacobian(parameters, residuals, "
+      "   EvaluateResidualAndJacobian(parameters, residuals, "
       "jacobians_ptrs);");
 
   // Copy the computed jacobians into the output array. Add an if-statement to
@@ -238,18 +247,15 @@ std::vector<std::string> GenerateCodeForFunctor(
   //      }
   //    }
   for (int i = 0; i < kNumParameterBlocks; ++i) {
-    output.emplace_back("     if (jacobians[" + std::to_string(i) + "]) {");
+    output.emplace_back("   if (jacobians[" + std::to_string(i) + "]) {");
     output.emplace_back(
-        "       for (int i = 0; i < " +
+        "     for (int i = 0; i < " +
         std::to_string(ParameterDims::GetDim(i) * kNumResiduals) + "; ++i) {");
-    output.emplace_back("         jacobians[" + std::to_string(i) +
+    output.emplace_back("       jacobians[" + std::to_string(i) +
                         "][i] = jacobians_ptrs[" + std::to_string(i) + "][i];");
-    output.emplace_back("       }");
     output.emplace_back("     }");
+    output.emplace_back("   }");
   }
-  output.emplace_back("     return true;");
-  output.emplace_back("   }");
-  output.emplace_back("   EvaluateResidual(parameters, residuals);");
   output.emplace_back("   return true;");
   output.emplace_back("}");
 
