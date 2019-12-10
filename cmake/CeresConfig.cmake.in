@@ -299,6 +299,10 @@ if (Ceres_FIND_COMPONENTS)
   endif()
 endif()
 
+if (TARGET ceres)
+    include("${CERES_CURRENT_CONFIG_DIR}/CeresCodeGeneration.cmake")
+endif()
+
 # As we use CERES_REPORT_NOT_FOUND() to abort, if we reach this point we have
 # found Ceres and all required dependencies.
 message(STATUS "Found " ${CERES_DETECTED_VERSION_STRING})
