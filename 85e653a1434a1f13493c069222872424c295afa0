@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d024722_92be4ea5",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-10T16:16:13Z",
+      "side": 1,
+      "message": "INPUT_FILE square_functor.h\nOUTPUT_FILE square_cost_function.h",
+      "range": {
+        "startLine": 83,
+        "startChar": 20,
+        "endLine": 83,
+        "endChar": 54
+      },
+      "revId": "85e653a1434a1f13493c069222872424c295afa0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100b1709_006cfbd3",
+        "filename": "examples/autodiff_codegen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-10T16:16:13Z",
+      "side": 1,
+      "message": "IMO a better example would be to do a version of the hello_world examples\nso we have helloworld.cc/helloworld_analytic_diff.cc/helloworld_numeric_diff.cc\n\nit would be good to have a version of that as helloworld_autodiff_codegen.cc or something like that.",
+      "range": {
+        "startLine": 29,
+        "startChar": 10,
+        "endLine": 29,
+        "endChar": 11
+      },
+      "revId": "85e653a1434a1f13493c069222872424c295afa0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ba16ac_d7b07951",
+        "filename": "examples/autodiff_codegen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-10T16:16:13Z",
+      "side": 1,
+      "message": "One thing I am curious about is, how does one provide data to the functor like image coordinates etc?",
+      "range": {
+        "startLine": 42,
+        "startChar": 13,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "85e653a1434a1f13493c069222872424c295afa0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a188794d_56ce6baa",
+        "filename": "examples/autodiff_codegen_functor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-10T16:16:13Z",
+      "side": 1,
+      "message": "this should be named square_functor.h",
+      "range": {
+        "startLine": 1,
+        "startChar": 20,
+        "endLine": 1,
+        "endChar": 24
+      },
+      "revId": "85e653a1434a1f13493c069222872424c295afa0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
