@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d244979_1a35210f",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-10T14:22:19Z",
+      "side": 1,
+      "message": "GCC automatically inserts mempcy if its worth it in O3.",
+      "parentUuid": "0bf05d9e_71491794",
+      "range": {
+        "startLine": 244,
+        "startChar": 23,
+        "endLine": 244,
+        "endChar": 36
+      },
+      "revId": "382927965ba97d9462010efe84327e6c0e84e9f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67cd4dbd_3f884c7c",
         "filename": "include/ceres/codegen/autodiff.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "382927965ba97d9462010efe84327e6c0e84e9f3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e00384_115af521",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-10T14:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67cd4dbd_3f884c7c",
+      "range": {
+        "startLine": 251,
+        "startChar": 37,
+        "endLine": 251,
+        "endChar": 46
+      },
+      "revId": "382927965ba97d9462010efe84327e6c0e84e9f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
