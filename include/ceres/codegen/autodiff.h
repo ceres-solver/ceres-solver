@@ -42,18 +42,17 @@ namespace ceres {
 struct AutoDiffCodeGenOptions {};
 
 // TODO(darius): Documentation
-template <typename CostFunctor, int kNumResiduals, int... Ns>
+template <typename CostFunctor>
 std::vector<std::string> GenerateCodeForFunctor(
     const AutoDiffCodeGenOptions& options) {
-  static_assert(kNumResiduals != DYNAMIC,
-                "A dynamic number of residuals is currently not supported.");
   // Define some types and shortcuts to make the code below more readable.
-  using ParameterDims = internal::StaticParameterDims<Ns...>;
+  using ParameterDims = typename CostFunctor::ParameterDims;
   using Parameters = typename ParameterDims::Parameters;
   // Instead of using scalar Jets, we use Jets of ExpressionRef which record
   // their own operations during evaluation.
   using ExpressionRef = internal::ExpressionRef;
   using ExprJet = Jet<ExpressionRef, ParameterDims::kNumParameters>;
+  constexpr int kNumResiduals = CostFunctor::kNumResiduals;
   constexpr int kNumParameters = ParameterDims::kNumParameters;
   constexpr int kNumParameterBlocks = ParameterDims::kNumParameterBlocks;
 
@@ -61,6 +60,10 @@ std::vector<std::string> GenerateCodeForFunctor(
   // Code is generated for the CostFunctor and not an instantiation of it. This
   // is different to AutoDiffCostFunction, which computes the derivatives for
   // a specific object.
+  static_assert(std::is_default_constructible<CostFunctor>::value,
+                "Cost functors used in code generation must have a default "
+                "constructor. If you are using local variables, make sure to "
+                "wrap them into the CERES_LOCAL_VARIABLE macro.");
   CostFunctor functor;
 
   // During recording phase all operations on ExpressionRefs are recorded to an
@@ -164,7 +167,7 @@ std::vector<std::string> GenerateCodeForFunctor(
     internal::CodeGenerator::Options generator_options;
     generator_options.function_name =
         "void EvaluateResidual(double const* const* parameters, double* "
-        "residuals)";
+        "residuals) const";
     internal::CodeGenerator gen(residual_graph, generator_options);
     std::vector<std::string> code = gen.Generate();
     output.insert(output.end(), code.begin(), code.end());
@@ -179,7 +182,7 @@ std::vector<std::string> GenerateCodeForFunctor(
     generator_options.function_name =
         "void EvaluateResidualAndJacobian(double const* const* parameters, "
         "double* "
-        "residuals, double** jacobians)";
+        "residuals, double** jacobians) const";
     internal::CodeGenerator gen(residual_and_jacobian_graph, generator_options);
     std::vector<std::string> code = gen.Generate();
     output.insert(output.end(), code.begin(), code.end());
@@ -193,7 +196,7 @@ std::vector<std::string> GenerateCodeForFunctor(
   // in SizedCostFunctions.
   output.emplace_back("bool Evaluate(double const* const* parameters,");
   output.emplace_back("              double* residuals,");
-  output.emplace_back("              double** jacobians) {");
+  output.emplace_back("              double** jacobians) const {");
   output.emplace_back("   if (jacobians) {");
 
   // Create a tmp array of all jacobians and use it for evaluation.
