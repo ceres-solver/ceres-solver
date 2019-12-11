@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc3a0278_b96bc661",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T06:28:35Z",
+      "side": 1,
+      "message": "#include \u003cstring\u003e\n#include \u003cvector\u003e\n#include \u003ciostream\u003e",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 9
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e9c672_8b8bea36",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T06:28:35Z",
+      "side": 1,
+      "message": "lines",
+      "range": {
+        "startLine": 9,
+        "startChar": 27,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4734b01a_7134952b",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T06:28:35Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 5
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fccc6435_f66c2912",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T06:28:35Z",
+      "side": 1,
+      "message": "stream",
+      "range": {
+        "startLine": 13,
+        "startChar": 16,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149887a9_fcef7319",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T06:28:35Z",
+      "side": 1,
+      "message": "str -\u003e line",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce997ef5_e89b08dc",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T06:28:35Z",
+      "side": 1,
+      "message": "square_code_function no? functor is the input.",
+      "range": {
+        "startLine": 78,
+        "startChar": 13,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e560b3_4eb78f29",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T06:28:35Z",
+      "side": 1,
+      "message": "why not generate this part of the header as part of the code generation too? because it requires matching the sizedfunction parameters to what the functor accepts",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b56259_6d57ab19",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T06:28:35Z",
+      "side": 1,
+      "message": "this is not the same cost functor as the other hello world examples, ideally they should be the same.",
+      "range": {
+        "startLine": 41,
+        "startChar": 30,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
