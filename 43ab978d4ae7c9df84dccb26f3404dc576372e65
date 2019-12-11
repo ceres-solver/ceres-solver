@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63396c27_8502ae16",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T15:33:11Z",
+      "side": 1,
+      "message": "also this file is oddly named, this should be \n\ngenerate_code_from_functor.cc.in",
+      "range": {
+        "startLine": 2,
+        "startChar": 16,
+        "endLine": 2,
+        "endChar": 22
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3925177_792e6bd4",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T15:33:11Z",
+      "side": 1,
+      "message": "brace on previous line/clang format this file too.",
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb302a0b_9e3c1155",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T15:33:11Z",
+      "side": 1,
+      "message": "cerr instead of cout?",
+      "range": {
+        "startLine": 19,
+        "startChar": 9,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f49f106_e4afd829",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T15:33:11Z",
+      "side": 1,
+      "message": "don\u0027t need as many of these using directives.",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9271c52d_26fb6a24",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T15:33:11Z",
+      "side": 1,
+      "message": "this does not read right, Functors are templated, you are saying a cost function \u003d new functor?\n\nI see the code generation code now and understand whats going on, but its still a little weird. \n\nI think we may need the equivalent of std::make_unique but applied to autodiff as well as codegen.",
+      "range": {
+        "startLine": 56,
+        "startChar": 36,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448b9392_e92443c5",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T15:33:11Z",
+      "side": 1,
+      "message": "Codegen not Godegen I hope 😊",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 61
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962b6184_8b74cc75",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T15:33:11Z",
+      "side": 1,
+      "message": "I am not sure how I feel about this combination of inheritence and generated code, let me think about this a little bit today.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 3
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0731f85c_02a6388f",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T15:33:11Z",
+      "side": 1,
+      "message": "lower case filename.",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32359612_43f51e7a",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-11T15:33:11Z",
+      "side": 1,
+      "message": "when I asked about local variables, I was primarily wondering about variables passed via the constructor to the functor, like the coordinates of an image for reprojection error.",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
