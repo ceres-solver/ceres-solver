@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37de706f_2bfd3405",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-11T08:28:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc3a0278_b96bc661",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 9
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24e9c672_8b8bea36",
         "filename": "cmake/codegen_functor.cc.in",
         "patchSetId": 3
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "a69677d7_d17a8dfc",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-11T08:28:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24e9c672_8b8bea36",
+      "range": {
+        "startLine": 9,
+        "startChar": 27,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e998ac8_688a4e8f",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-11T08:28:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4734b01a_7134952b",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 5
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fccc6435_f66c2912",
         "filename": "cmake/codegen_functor.cc.in",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d864f4_9f6e20c3",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-11T08:28:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fccc6435_f66c2912",
+      "range": {
+        "startLine": 13,
+        "startChar": 16,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a41dc63d_43502375",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-11T08:28:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "149887a9_fcef7319",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce997ef5_e89b08dc",
         "filename": "examples/CMakeLists.txt",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2019-12-11T06:28:35Z",
       "side": 1,
       "message": "square_code_function no? functor is the input.",
+      "range": {
+        "startLine": 78,
+        "startChar": 13,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58aff16_a3b2f66d",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-11T08:28:47Z",
+      "side": 1,
+      "message": "This must be the name of the type, which is \u0027SquareFunctor\u0027 right now.",
+      "parentUuid": "ce997ef5_e89b08dc",
       "range": {
         "startLine": 78,
         "startChar": 13,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "19846e3c_403756a4",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-11T08:28:47Z",
+      "side": 1,
+      "message": "We can\u0027t really generate it, because the user might want to have local variables, constants or custom constructors.",
+      "parentUuid": "60e560b3_4eb78f29",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1b56259_6d57ab19",
         "filename": "examples/square_functor.h",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b684d7_ca66c93d",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-11T08:28:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1b56259_6d57ab19",
+      "range": {
+        "startLine": 41,
+        "startChar": 30,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "26f78ccd7d6a5fdb8d77f905c58a48051ce442ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
