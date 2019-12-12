@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74c62399_6020f1ee",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-12T08:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63396c27_8502ae16",
+      "range": {
+        "startLine": 2,
+        "startChar": 16,
+        "endLine": 2,
+        "endChar": 22
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3925177_792e6bd4",
         "filename": "cmake/codegen_functor.cc.in",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676f9c5d_e1954c3d",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-12T08:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3925177_792e6bd4",
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3f216226_55544be5",
+        "filename": "cmake/codegen_functor.cc.in",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-12T08:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb302a0b_9e3c1155",
+      "range": {
+        "startLine": 19,
+        "startChar": 9,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f49f106_e4afd829",
         "filename": "examples/helloworld_codegen.cc",
         "patchSetId": 8
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "d1391414_1591ac02",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-12T08:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f49f106_e4afd829",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9271c52d_26fb6a24",
         "filename": "examples/helloworld_codegen.cc",
         "patchSetId": 8
@@ -99,6 +189,30 @@
       "writtenOn": "2019-12-11T15:33:11Z",
       "side": 1,
       "message": "this does not read right, Functors are templated, you are saying a cost function \u003d new functor?\n\nI see the code generation code now and understand whats going on, but its still a little weird. \n\nI think we may need the equivalent of std::make_unique but applied to autodiff as well as codegen.",
+      "range": {
+        "startLine": 56,
+        "startChar": 36,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc501c91_88f8e2fb",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-12T08:33:54Z",
+      "side": 1,
+      "message": "Is that just a naming problem?",
+      "parentUuid": "9271c52d_26fb6a24",
       "range": {
         "startLine": 56,
         "startChar": 36,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "5d08ec85_ec9dabd6",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-12T08:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "448b9392_e92443c5",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 61
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "962b6184_8b74cc75",
         "filename": "examples/square_functor.h",
         "patchSetId": 8
@@ -145,6 +283,30 @@
       "writtenOn": "2019-12-11T15:33:11Z",
       "side": 1,
       "message": "I am not sure how I feel about this combination of inheritence and generated code, let me think about this a little bit today.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 3
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cd80c2_d3640aa6",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-12T08:33:54Z",
+      "side": 1,
+      "message": "That\u0027s probably the only way how we can combine the functor and cost function into a single object. \n\nI think it\u0027s important for usability, because then changing or adding a local variable has to be done only in one place.",
+      "parentUuid": "962b6184_8b74cc75",
       "range": {
         "startLine": 39,
         "startChar": 0,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "349cfb3f_b003a228",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-12T08:33:54Z",
+      "side": 1,
+      "message": "Done, but I like using the exact Class name more.",
+      "parentUuid": "0731f85c_02a6388f",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32359612_43f51e7a",
         "filename": "examples/square_functor.h",
         "patchSetId": 8
@@ -200,6 +386,30 @@
       "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99c43d5_0cb836ea",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-12T08:33:54Z",
+      "side": 1,
+      "message": "That\u0027s not a problem if there also exists a default constructor.",
+      "parentUuid": "32359612_43f51e7a",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "43ab978d4ae7c9df84dccb26f3404dc576372e65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
