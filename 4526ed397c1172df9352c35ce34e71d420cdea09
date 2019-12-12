@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dbd4b52_49d86c80",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-12T20:57:10Z",
+      "side": 1,
+      "message": "SUITESPARSE_FIND_PACKAGE_MODE is clearer, and then this can be either CONFIG, or MODULE",
+      "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a154a87_c1af3093",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-12T20:57:10Z",
+      "side": 1,
+      "message": "This line looks like a copy and paste error",
+      "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1a8180_f27601de",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-12T20:57:10Z",
+      "side": 1,
+      "message": "SuiteSparse is not always built statically, e.g. in Homebrew it is built dynamically, the imported targets need to reflect that.  We can\u0027t leave it out, as then the result would depend on Ceres\u0027 value of BUILD_SHARED_LIBS which is not required to match SuiteSparse\u0027s as if static it would be built with -fPIC",
+      "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19c9686_69b4d83a",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-12T20:57:10Z",
+      "side": 1,
+      "message": "These properties should be set separately outside of this macro after all components have been found, and their targets created.",
+      "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a60eed3_aa93ecd3",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-12T20:57:10Z",
+      "side": 1,
+      "message": "Please add a comment here as to why this is being found here when we also have a separate FindCXSparse",
+      "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfcced72_424b9a6c",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-12T20:57:10Z",
+      "side": 1,
+      "message": "Missing whitespace, this should be: if (TARGET SuiteSparse::cholmod)",
+      "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
