@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0e2f852_b0575f57",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-13T17:11:37Z",
+      "side": 1,
+      "message": "Actually, this is no longer true, they will need to \u0027build\u0027 Eigen to generate the Eigen3Config.cmake, and then actually install it.  The reason is that their CMakeLists, at least in v3.3.7 does not create two versions of their Eigen3Config.cmake script (one for install, one for exported build dirs) they just build the one for install which wouldn\u0027t work for an exported build directory.",
+      "revId": "8b13a8f006b919ce0f0e0512cc6e9c16bf506e9c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
