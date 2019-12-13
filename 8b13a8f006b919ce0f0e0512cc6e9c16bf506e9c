@@ -16,6 +16,24 @@
       "revId": "8b13a8f006b919ce0f0e0512cc6e9c16bf506e9c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70796780_4c08e7f7",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-13T17:43:58Z",
+      "side": 1,
+      "message": "so what should I write here? or do you want to take this on in a follow up CL?",
+      "parentUuid": "c0e2f852_b0575f57",
+      "revId": "8b13a8f006b919ce0f0e0512cc6e9c16bf506e9c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
