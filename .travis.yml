@@ -49,11 +49,11 @@ script:
     fi
   - |
     if [[ "$CERES_BUILD_TARGET" == "ANDROID" ]]; then
-      cmake -DCMAKE_TOOLCHAIN_FILE=/tmp/android-ndk-r20b/build/cmake/android.toolchain.cmake -DEIGEN_INCLUDE_DIR=/usr/include/eigen3 -DANDROID_ABI=arm64-v8a -DANDROID_STL=c++_shared -DANDROID_NATIVE_API_LEVEL=android-29 -DMINIGLOG=ON -DBUILD_EXAMPLES=OFF $TRAVIS_BUILD_DIR
+      cmake -DCMAKE_TOOLCHAIN_FILE=/tmp/android-ndk-r20b/build/cmake/android.toolchain.cmake -DEigen3_DIR=/usr/lib/cmake/eigen3 -DANDROID_ABI=arm64-v8a -DANDROID_STL=c++_shared -DANDROID_NATIVE_API_LEVEL=android-29 -DMINIGLOG=ON -DBUILD_EXAMPLES=OFF $TRAVIS_BUILD_DIR
     fi
   - |
     if [[ "$CERES_BUILD_TARGET" == "IOS" ]]; then
-      cmake -DCMAKE_TOOLCHAIN_FILE=$TRAVIS_BUILD_DIR/cmake/iOS.cmake -DEIGEN_INCLUDE_DIR=/usr/local/include/eigen3 -DIOS_PLATFORM=OS $TRAVIS_BUILD_DIR
+      cmake -DCMAKE_TOOLCHAIN_FILE=$TRAVIS_BUILD_DIR/cmake/iOS.cmake -DEigen3_DIR=/usr/local/share/eigen3/cmake -DIOS_PLATFORM=OS $TRAVIS_BUILD_DIR
     fi
   - make -j 4
   - |
