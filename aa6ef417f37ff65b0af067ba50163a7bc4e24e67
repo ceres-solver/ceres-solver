@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "900d3b9b_f88df1d6",
+        "filename": ".travis.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-13T13:54:51Z",
+      "side": 1,
+      "message": "do ceres docs also need to be updated about -DEigen3_DIR or is this standard?",
+      "range": {
+        "startLine": 56,
+        "startChar": 70,
+        "endLine": 56,
+        "endChar": 81
+      },
+      "revId": "aa6ef417f37ff65b0af067ba50163a7bc4e24e67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
