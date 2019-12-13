@@ -172,7 +172,7 @@ set(CERES_EIGEN_VERSION @EIGEN3_VERSION_STRING@)
 # Search quietly to control the timing of the error message if not found. The
 # search should be for an exact match, but for usability reasons do a soft
 # match and reject with an explanation below.
-find_dependency(Eigen3 ${CERES_EIGEN_VERSION} CONFIG QUIET)
+find_package(Eigen3 ${CERES_EIGEN_VERSION} CONFIG QUIET)
 if (EIGEN3_FOUND)
   if (NOT EIGEN3_VERSION_STRING VERSION_EQUAL CERES_EIGEN_VERSION)
     # CMake's VERSION check in FIND_PACKAGE() will accept any version >= the
@@ -235,7 +235,7 @@ else(CERES_USES_MINIGLOG)
   # if Ceres was built with MINIGLOG.
   if (CERES_USES_GFLAGS)
     # Search quietly s/t we control the timing of the error message if not found.
-    find_dependency(gflags ${CERES_GFLAGS_VERSION} CONFIG QUIET)
+    find_package(gflags ${CERES_GFLAGS_VERSION} CONFIG QUIET)
     if (gflags_FOUND)
       message(STATUS "Found required Ceres dependency: gflags")
     else()
