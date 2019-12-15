@@ -64,20 +64,24 @@ double WallTimeInSeconds() {
 #endif
 }
 
-EventLogger::EventLogger(const std::string& logger_name)
-    : start_time_(WallTimeInSeconds()),
-      last_event_time_(start_time_),
-      events_("") {
-  StringAppendF(&events_,
-                "\n%s\n                                   Delta   Cumulative\n",
-                logger_name.c_str());
+EventLogger::EventLogger(const std::string& logger_name) {
+  if (!VLOG_IS_ON(3)) {
+    return;
+  }
+
+  start_time_ = WallTimeInSeconds();
+  last_event_time_ = start_time_;
+  events_ = StringPrintf(
+      "\n%s\n                                   Delta   Cumulative\n",
+      logger_name.c_str());
 }
 
 EventLogger::~EventLogger() {
-  if (VLOG_IS_ON(3)) {
-    AddEvent("Total");
-    VLOG(2) << "\n" << events_ << "\n";
+  if (!VLOG_IS_ON(3)) {
+    return;
   }
+  AddEvent("Total");
+  VLOG(3) << "\n" << events_ << "\n";
 }
 
 void EventLogger::AddEvent(const std::string& event_name) {
