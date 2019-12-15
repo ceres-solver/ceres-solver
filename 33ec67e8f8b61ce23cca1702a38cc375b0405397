@@ -1,0 +1,361 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e19dc8fd_e2feedb6",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "I think we should change the name of these, as all CERES_ prefixed variables refer to the Ceres project in every other file, whereas here they are referring to a client\u0027s project, not Ceres and it will make it clearer which locations are actually referencing a Ceres installed location for input files.\n\nPerhaps CALLER_\u003cCERES_CODEGEN_BUILD_DIR\u003e",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32925323_a425f152",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "I think include/generated would be clearer here, that way the user calls:\n\n#include \"generated/xxx.h\"\n\nwhich makes the origin clearer",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede1efbe_9740ec0d",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "Please use CMake-style variable names here (underscore separated) rather than Java-style",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87cd3431_50742307",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "I think _generator would be a clearer suffix here",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c192f2_5f6a2916",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "I would move GENERATE_TARGET and OUTPUT_TARGET down to just above where they are actually used",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6deaae9e_5f8f18b2",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "I would remove this and use COST_FUNCTOR_INPUT_FILE directly, I don\u0027t think this improves readability and we\u0027re not using file() to make these absolute, plus you\u0027re referencing COST_FUNCTOR_INPUT_FILE in generate_code_from_functor.cc anyway",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d15ba2b_d3fac72c",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "There\u0027s some inconsistency here, this uses COST_FUNCTOR_NAME but the header uses OUTPUT_NAME which is the lower-case cast of COST_FUNCTOR_NAME.\n\nThis actually results in the following warning when run on macOS, given this discrepancy and as  Linux FSs are case-sensitive I doubt this would compile at all there.\n\ncodegen/include/squarefunctor_generated.h:6:10: warning: non-portable path to file \u0027\"squarefunctor_codegen.h\"\u0027; specified path differs in case from file name on disk [-Wnonportable-include-path]\n#include \"SquareFunctor_codegen.h\"\n         ^~~~~~~~~~~~~~~~~~~~~~~~~\n         \"squarefunctor_codegen.h\"\n\neven though it breaks Google Style, I think it might be easier to avoid any lower-case casting of the functor name and simply use it directly verbatim with whatever case it has natively - that is clearer I think than casting it in some places but not all",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82cba07_88f9726d",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "Given how this is used, I think a better name/path for this would be: include/generated/xxx_evaluate_impl.h\n\nHowever we really need clearer docs about the purpose of each of these files, it wasn\u0027t immediately clear to me why this file existed at all vs directly using the xxx_codegen.h file",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aef8aff_d90dfb0d",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "This won\u0027t work when this function is called from outside Ceres, as CMAKE_SOURCE_DIR will refer to the source directory of the project which invokes this script, not Ceres.\n\nIgnoring the issue of relocatable installations of Ceres, you want to use CMAKE_CURRENT_LIST_DIR, *however* you will need to save this locally outside of this function but in this file s/t it gets executed when the file is include()-ed rather than within this function.  The distinction is that when the file is include()-ed the value will be the directory containing this file, whereas when this function is executed it will be the directory containing the file that invoked this function.\n\nHowever, we need this to work when Ceres is installed and for these generator files to be installed with Ceres via the main Ceres CMakeLists, as a result they should probably be installed into the Ceres CMake installation directory (/usr/local/lib/cmake/Ceres).  To make it easier for people to use this, we should probably invoke include() on this file in CeresConfig.cmake s/t the functions are available after find_package(Ceres XXX), otherwise the caller has to know the resulting path to the Ceres CMake installation directory which is annoying when it is typically found automatically.\n\nThe messy part there is that we currently support both installation and export of Ceres, and in the case of the latter the path to the .in files would be different.  I think the easiest way to fix that is to reference the CERES_WAS_INSTALLED variable which is initialised in CeresConfig.cmake correctly and set the path at the top of this file based on it.\n\nYou *might* be able to do this via the BUILD/INSTALL_INTERFACE generator expressions, but I think you probably can\u0027t given when they would be executed.",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64de68c5_ace4267e",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "You should quote these paths like so: \"${FULL_OUTPUT_FILE}\" as otherwise any paths with spaces in them will not be correctly parsed.\n\nNote that this is a general issue with a variables containing paths in this file, please check them all.",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a551bf8_845527c1",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "This should also pass VERBATIM",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b59360e_adb117a2",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "I would also specify the target_sources() for this target s/t they are captured in IDEs",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc9bfc8_ff22950e",
+        "filename": "cmake/generate_code_from_functor.cc.in",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "Whilst minor, for Google-style ordering these should really come first",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57708e1_8679a3ea",
+        "filename": "cmake/generate_code_from_functor.cc.in",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "Prefer EXIT_FAILURE here from #include \u003ccstdlib\u003e",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c96c834_baf62eca",
+        "filename": "cmake/generate_code_from_functor.cc.in",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "As above, but prefer EXIT_SUCCESS",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae11086_abb03b73",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "Use lower-case for function invocation to match style elsewhere",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae3c473_9e164925",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "This should be private",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9085e9ad_fc899371",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "Space after ceres",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fceaf64_9693a408",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "Trim unused vspace line here",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862d99ce_552a9db5",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "Prefer to trim this unused vspace",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a45cc3_d59959a7",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T18:26:20Z",
+      "side": 1,
+      "message": "Trim unused vspace line",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
