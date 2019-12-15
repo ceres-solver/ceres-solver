@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b480b9dc_8f51f5e8",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-15T16:37:57Z",
+      "side": 1,
+      "message": "This should be SameMajorVersion given the changes that we have made in master (to become Ceres 2.0) are not backwards compatible with Ceres 1.x",
+      "revId": "ef6b6cd5091b9009b4869d2078394acb8c7813a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
