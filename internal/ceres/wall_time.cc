@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -64,8 +64,9 @@ double WallTimeInSeconds() {
 #endif
 }
 
-EventLogger::EventLogger(const std::string& logger_name) {
-  if (!VLOG_IS_ON(3)) {
+EventLogger::EventLogger(const std::string& logger_name)
+    : is_active_(VLOG_IS_ON(3)) {
+  if (!is_active_) {
     return;
   }
 
@@ -77,7 +78,7 @@ EventLogger::EventLogger(const std::string& logger_name) {
 }
 
 EventLogger::~EventLogger() {
-  if (!VLOG_IS_ON(3)) {
+  if (!is_active_) {
     return;
   }
   AddEvent("Total");
@@ -85,7 +86,7 @@ EventLogger::~EventLogger() {
 }
 
 void EventLogger::AddEvent(const std::string& event_name) {
-  if (!VLOG_IS_ON(3)) {
+  if (!is_active) {
     return;
   }
 
