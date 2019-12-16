@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d313cb29_0173bac2",
+        "filename": "internal/ceres/wall_time.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-16T09:22:33Z",
+      "side": 1,
+      "message": "This seems to subtly change the behaviour by using VLOG(3) instead of VLOG(2), it seems unlikely to make that this would make a difference though, was it a typo originally?",
+      "revId": "8547cbd55fdd460bc7a2d16c361510d4ef6fcd5e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7712b1dc_b29183ac",
+        "filename": "internal/ceres/wall_time.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-16T09:22:33Z",
+      "side": 1,
+      "message": "Out of interest, how much does not calling WallTimeInSeconds() save you here vs having this remain const?",
+      "revId": "8547cbd55fdd460bc7a2d16c361510d4ef6fcd5e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
