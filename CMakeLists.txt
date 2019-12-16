@@ -164,6 +164,7 @@ option(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 option(BUILD_EXAMPLES "Build examples" ON)
 option(BUILD_BENCHMARKS "Build Ceres benchmarking suite" ON)
 option(BUILD_SHARED_LIBS "Build Ceres as a shared library." OFF)
+option(PROVIDE_UNINSTALL_TARGET "Add a custom target to ease removal of installed targets" ON)
 option(CODE_GENERATION "Build the code generation module." OFF)
 if(CODE_GENERATION)
     message(WARNING "The code generation module is still under development. The functionality and API of the current implementation might change in the future.")
@@ -762,12 +763,14 @@ install(FILES "${Ceres_BINARY_DIR}/CeresConfigVersion.cmake"
               "${Ceres_SOURCE_DIR}/cmake/FindGlog.cmake"
         DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
 
-# Create an uninstall target to remove all installed files.
-configure_file("${Ceres_SOURCE_DIR}/cmake/uninstall.cmake.in"
-               "${Ceres_BINARY_DIR}/cmake/uninstall.cmake"
-               @ONLY)
-add_custom_target(uninstall
-                  COMMAND ${CMAKE_COMMAND} -P ${Ceres_BINARY_DIR}/cmake/uninstall.cmake)
+if (PROVIDE_UNINSTALL_TARGET)
+  # Create an uninstall target to remove all installed files.
+  configure_file("${Ceres_SOURCE_DIR}/cmake/uninstall.cmake.in"
+                 "${Ceres_BINARY_DIR}/cmake/uninstall.cmake"
+                 @ONLY)
+  add_custom_target(uninstall
+                    COMMAND ${CMAKE_COMMAND} -P ${Ceres_BINARY_DIR}/cmake/uninstall.cmake)
+endif()
 
 # Install method #2: Put Ceres build into local CMake registry.
 #
