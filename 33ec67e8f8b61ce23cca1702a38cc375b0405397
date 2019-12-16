@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bfac56ca_f86d0074",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Renamed to CALLER_CODEGEN_BUILD_DIR for now.",
+      "parentUuid": "e19dc8fd_e2feedb6",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32925323_a425f152",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119a490e_046a3afd",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32925323_a425f152",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7b25d810_2c367c62",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ede1efbe_9740ec0d",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87cd3431_50742307",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7efc7951_2d1b593f",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87cd3431_50742307",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8966c47c_7f68174a",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85c192f2_5f6a2916",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6deaae9e_5f8f18b2",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38798fc5_74903abe",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6deaae9e_5f8f18b2",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "daa4d0ef_ef751ce1",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Converted it all to COST_FUNCTOR_NAME. \n\nI agree that having a few names lower case and a few not is bad. I think, using the native casing of the cost functor type for everything is the clearest.\n\n-\u003e The output target is now SquareFunctor\n-\u003e The generated file is  #include \"codegen/SquareFunctor.h\"",
+      "parentUuid": "6d15ba2b_d3fac72c",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e82cba07_88f9726d",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 9
@@ -135,6 +261,24 @@
       "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0666e4df_3f27022d",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Renamed + added a comment why it is required.",
+      "parentUuid": "e82cba07_88f9726d",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "35ed13fd_09fa6e18",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "It\u0027s working with INSTALL now and should work with export (?). What i have done now is to just copy the required cmake files next to the CeresConfig.cmake.",
+      "parentUuid": "4aef8aff_d90dfb0d",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64de68c5_ace4267e",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 9
@@ -169,6 +331,24 @@
       "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e33a77_5a1432f4",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64de68c5_ace4267e",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "a136a4b7_744aa8ab",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Added VERBATIM here and in add_custom_target",
+      "parentUuid": "5a551bf8_845527c1",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b59360e_adb117a2",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 9
@@ -203,6 +401,24 @@
       "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07652d31_f4467266",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b59360e_adb117a2",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "7e1cc44e_16710efd",
+        "filename": "cmake/generate_code_from_functor.cc.in",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dc9bfc8_ff22950e",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f57708e1_8679a3ea",
         "filename": "cmake/generate_code_from_functor.cc.in",
         "patchSetId": 9
@@ -237,6 +471,24 @@
       "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2aac127_955df083",
+        "filename": "cmake/generate_code_from_functor.cc.in",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f57708e1_8679a3ea",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "5f2f4a8f_280872df",
+        "filename": "cmake/generate_code_from_functor.cc.in",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c96c834_baf62eca",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ae11086_abb03b73",
         "filename": "examples/CMakeLists.txt",
         "patchSetId": 9
@@ -271,6 +541,24 @@
       "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df7801c_f07db517",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done, but not sure if \"ceres_cost_functor\" is the correct name for this.",
+      "parentUuid": "2ae11086_abb03b73",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "70af109a_09f9684b",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ae3c473_9e164925",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9085e9ad_fc899371",
         "filename": "include/ceres/codegen/cost_function.h",
         "patchSetId": 9
@@ -305,6 +611,24 @@
       "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1911cc2_84b9bcff",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9085e9ad_fc899371",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "b2a7d001_5edd0e0d",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fceaf64_9693a408",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "862d99ce_552a9db5",
         "filename": "include/ceres/codegen/cost_function.h",
         "patchSetId": 9
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "62fc44aa_d2b4b674",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "862d99ce_552a9db5",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2a45cc3_d59959a7",
         "filename": "include/ceres/codegen/cost_function.h",
         "patchSetId": 9
@@ -356,6 +716,24 @@
       "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73962b8c_85c6971f",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-16T14:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2a45cc3_d59959a7",
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
