@@ -32,9 +32,11 @@
 //
 // Minimize 0.5 (10 - x)^2 using analytic jacobian matrix.
 
-#include <vector>
 #include "ceres/ceres.h"
 #include "glog/logging.h"
+
+#include <iostream>
+#include <vector>
 
 using ceres::CostFunction;
 using ceres::SizedCostFunction;

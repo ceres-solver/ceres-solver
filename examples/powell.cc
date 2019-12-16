@@ -44,10 +44,12 @@
 // Garbow and Kenneth E. Hillstrom in ACM Transactions on Mathematical Software,
 // Vol 7(1), March 1981.
 
-#include <vector>
 #include "ceres/ceres.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
+
+#include <iostream>
+#include <vector>
 
 using ceres::AutoDiffCostFunction;
 using ceres::CostFunction;

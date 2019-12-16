@@ -63,6 +63,8 @@
 #include "ceres/ceres.h"
 #include "glog/logging.h"
 
+#include <iostream>
+
 typedef Eigen::NumTraits<double> EigenDouble;
 
 typedef Eigen::MatrixXd Mat;

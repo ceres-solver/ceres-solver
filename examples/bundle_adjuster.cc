@@ -51,18 +51,20 @@
 // problems published at University of Washington.
 // http://grail.cs.washington.edu/projects/bal
 
-#include <algorithm>
-#include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <string>
-#include <vector>
-
 #include "bal_problem.h"
 #include "ceres/ceres.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 #include "snavely_reprojection_error.h"
+
+#include <algorithm>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+#include <string>
+#include <vector>
+
 
 DEFINE_string(input, "", "Input File name");
 DEFINE_string(trust_region_strategy, "levenberg_marquardt",

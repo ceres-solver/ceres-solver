@@ -50,12 +50,13 @@
 //
 //   [1] http://www.mathworks.com/matlabcentral/fileexchange/5557-circle-fit/content/circfit.m
 
-#include <cstdio>
-#include <vector>
-
 #include "ceres/ceres.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
+
+#include <cstdio>
+#include <iostream>
+#include <vector>
 
 using ceres::AutoDiffCostFunction;
 using ceres::CauchyLoss;

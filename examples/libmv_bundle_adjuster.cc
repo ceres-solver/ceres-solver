@@ -87,8 +87,14 @@
 // There're existing problem files dumped from blender stored in folder
 // ../data/libmv-ba-problems.
 
+#include "ceres/ceres.h"
+#include "ceres/rotation.h"
+#include "gflags/gflags.h"
+#include "glog/logging.h"
+
 #include <cstdio>
 #include <fcntl.h>
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -107,11 +113,6 @@ typedef unsigned __int32 uint32_t;
 #define O_BINARY 0
 
 #endif
-
-#include "ceres/ceres.h"
-#include "ceres/rotation.h"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
 
 typedef Eigen::Matrix<double, 3, 3> Mat3;
 typedef Eigen::Matrix<double, 6, 1> Vec6;

@@ -31,6 +31,8 @@
 #include "ceres/ceres.h"
 #include "glog/logging.h"
 
+#include <iostream>
+
 // f(x,y) = (1-x)^2 + 100(y - x^2)^2;
 class Rosenbrock : public ceres::FirstOrderFunction {
  public:

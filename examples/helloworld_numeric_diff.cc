@@ -34,6 +34,8 @@
 #include "ceres/ceres.h"
 #include "glog/logging.h"
 
+#include <iostream>
+
 using ceres::NumericDiffCostFunction;
 using ceres::CENTRAL;
 using ceres::CostFunction;

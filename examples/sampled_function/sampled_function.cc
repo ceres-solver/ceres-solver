@@ -35,6 +35,8 @@
 #include "ceres/cubic_interpolation.h"
 #include "glog/logging.h"
 
+#include <iostream>
+
 using ceres::Grid1D;
 using ceres::CubicInterpolator;
 using ceres::AutoDiffCostFunction;

@@ -157,15 +157,16 @@
 #ifndef CERES_PUBLIC_JET_H_
 #define CERES_PUBLIC_JET_H_
 
+#include "ceres/codegen/internal/types.h"
+#include "ceres/internal/port.h"
+
+#include "Eigen/Core"
+
 #include <cmath>
 #include <iosfwd>
-#include <iostream>  // NOLINT
 #include <limits>
 #include <string>
 
-#include "Eigen/Core"
-#include "ceres/codegen/internal/types.h"
-#include "ceres/internal/port.h"
 
 namespace ceres {
 

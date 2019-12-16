@@ -31,6 +31,8 @@
 #include "ceres/ceres.h"
 #include "glog/logging.h"
 
+#include <iostream>
+
 // Data generated using the following octave code.
 //   randn('seed', 23497);
 //   m = 0.3;

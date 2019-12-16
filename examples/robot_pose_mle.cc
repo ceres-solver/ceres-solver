@@ -125,15 +125,16 @@
 // will be computed by a DynamicAutoDiffCostFunction since the number of
 // odoemtry observations will only be known at run time.
 
-#include <cstdio>
-#include <math.h>
-#include <vector>
-
 #include "ceres/ceres.h"
 #include "ceres/dynamic_autodiff_cost_function.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 #include "random.h"
+
+#include <cstdio>
+#include <cmath>
+#include <iostream>
+#include <vector>
 
 using ceres::AutoDiffCostFunction;
 using ceres::DynamicAutoDiffCostFunction;

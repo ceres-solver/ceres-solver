@@ -35,10 +35,12 @@
 // dynamic_sparsity, and how it can benefit problems which are numerically
 // dense but dynamically sparse.
 
-#include <cmath>
-#include <vector>
 #include "ceres/ceres.h"
 #include "glog/logging.h"
+
+#include <cmath>
+#include <iostream>
+#include <vector>
 
 // Data generated with the following Python code.
 //   import numpy as np
