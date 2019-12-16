@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4cf6d4dd_7177ead6",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2019-12-16T10:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dbd4b52_49d86c80",
+      "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a154a87_c1af3093",
         "filename": "CMakeLists.txt",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b164b80_f3cdbf27",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2019-12-16T10:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a154a87_c1af3093",
+      "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f10164ef_662226b3",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2019-12-16T10:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc1a8180_f27601de",
+      "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a19c9686_69b4d83a",
         "filename": "cmake/FindSuiteSparse.cmake",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6bd6714_d5147b22",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2019-12-16T10:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a19c9686_69b4d83a",
+      "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4b2c725e_0f90adbd",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2019-12-16T10:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a60eed3_aa93ecd3",
+      "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfcced72_424b9a6c",
         "filename": "cmake/FindSuiteSparse.cmake",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe6fa60_1c953bd7",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2019-12-16T10:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfcced72_424b9a6c",
+      "revId": "4526ed397c1172df9352c35ce34e71d420cdea09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
