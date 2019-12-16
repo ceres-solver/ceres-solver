@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c60f655_3794e1f9",
+        "filename": "internal/ceres/wall_time.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-16T16:37:42Z",
+      "side": 1,
+      "message": "this was a typo originally. Either everything needs to be at VLOG(2) or VLOG(3).",
+      "parentUuid": "d313cb29_0173bac2",
+      "revId": "8547cbd55fdd460bc7a2d16c361510d4ef6fcd5e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7712b1dc_b29183ac",
         "filename": "internal/ceres/wall_time.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2019-12-16T09:22:33Z",
       "side": 1,
       "message": "Out of interest, how much does not calling WallTimeInSeconds() save you here vs having this remain const?",
+      "revId": "8547cbd55fdd460bc7a2d16c361510d4ef6fcd5e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ee766a_c2e76ee2",
+        "filename": "internal/ceres/wall_time.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-16T16:37:42Z",
+      "side": 1,
+      "message": "in an individual process not much, but at google scale it adds up.",
+      "parentUuid": "7712b1dc_b29183ac",
       "revId": "8547cbd55fdd460bc7a2d16c361510d4ef6fcd5e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
