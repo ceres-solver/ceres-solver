@@ -189,8 +189,8 @@ class CERES_EXPORT Problem {
   // invocation Problem(Problem::Options()).
   Problem();
   explicit Problem(const Options& options);
-  Problem(const Problem&) = delete;
-  void operator=(const Problem&) = delete;
+  Problem(Problem&& problem) = default;
+  Problem& operator=(Problem&& problem) = default;
 
   ~Problem();
 
