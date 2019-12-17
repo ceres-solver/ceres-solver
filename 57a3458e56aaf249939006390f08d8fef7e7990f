@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f788278_a2f41c3b",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-17T21:31:17Z",
+      "side": 0,
+      "message": "why is removing these a good idea? this will break existing code no?",
+      "range": {
+        "startLine": 404,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 6
+      },
+      "revId": "57a3458e56aaf249939006390f08d8fef7e7990f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
