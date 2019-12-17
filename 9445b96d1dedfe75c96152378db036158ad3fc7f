@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3875481_2d700ca7",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-17T13:46:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5606e01d_8e428b8b",
+      "revId": "9445b96d1dedfe75c96152378db036158ad3fc7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62abf74e_9368f575",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fbd819aa_a635d822",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-17T13:46:48Z",
+      "side": 1,
+      "message": "I just do this when I touch a file, but yes we should maybe do that too.",
+      "parentUuid": "62abf74e_9368f575",
+      "revId": "9445b96d1dedfe75c96152378db036158ad3fc7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "318b5c96_e08b33a6",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "9445b96d1dedfe75c96152378db036158ad3fc7f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df8f532_e6299705",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-17T13:46:48Z",
+      "side": 1,
+      "message": "CHECK_NOTNULL does not allow a custom log message.",
+      "parentUuid": "318b5c96_e08b33a6",
+      "revId": "9445b96d1dedfe75c96152378db036158ad3fc7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
