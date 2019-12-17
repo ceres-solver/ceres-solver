@@ -1752,6 +1752,10 @@ Instances
 
    Allow the indicated parameter to vary during optimization.
 
+.. function:: bool Problem::IsParameterBlockConstant(const double* values) const
+
+   Returns true if a parameter block is set constant, and false otherwise.
+
 .. function:: void Problem::SetParameterization(double* values, LocalParameterization* local_parameterization)
 
    Set the local parameterization for one of the parameter blocks.
