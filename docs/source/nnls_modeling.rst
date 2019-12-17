@@ -1762,8 +1762,8 @@ Instances
    The local_parameterization is owned by the Problem by default. It
    is acceptable to set the same parameterization for multiple
    parameters; the destructor is careful to delete local
-   parameterizations only once. The local parameterization can only be
-   set once per parameter, and cannot be changed once set.
+   parameterizations only once. Calling `SetParameterization` with
+   `nullptr` will clear any previously set parameterization.
 
 .. function:: LocalParameterization* Problem::GetParameterization(const double* values) const
 
