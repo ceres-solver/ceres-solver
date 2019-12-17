@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -38,6 +38,7 @@
 #include <memory>
 #include <string>
 #include <unordered_set>
+
 #include "ceres/array_utils.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
@@ -171,18 +172,11 @@ class ParameterBlock {
   // It is an error to pass nullptr for the parameterization. The parameter
   // block does not take ownership of the parameterization.
   void SetParameterization(LocalParameterization* new_parameterization) {
-    CHECK(new_parameterization != nullptr)
-        << "nullptr parameterization invalid.";
     // Nothing to do if the new parameterization is the same as the
     // old parameterization.
     if (new_parameterization == local_parameterization_) {
       return;
     }
-
-    CHECK(local_parameterization_ == nullptr)
-        << "Can't re-set the local parameterization; it leads to "
-        << "ambiguous ownership. Current local parameterization is: "
-        << local_parameterization_;
 
     CHECK(new_parameterization->GlobalSize() == size_)
         << "Invalid parameterization for parameter block. The parameter block "
