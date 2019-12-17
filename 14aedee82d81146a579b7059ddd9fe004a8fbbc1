@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd5906b1_f115a2da",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T19:38:18Z",
+      "side": 1,
+      "message": "I\u0027m always slightly wary of this, it\u0027s legal to do: new double[0]; but the result is a bit weird, you can delete it, but you can\u0027t do anything else with it (even dereference it) legally.  Are we sure that wouldn\u0027t come back to bite us?",
+      "revId": "14aedee82d81146a579b7059ddd9fe004a8fbbc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
