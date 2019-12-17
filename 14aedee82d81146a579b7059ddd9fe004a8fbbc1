@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c239546f_55911984",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:33:55Z",
+      "side": 1,
+      "message": "nit: drop extra blank.",
+      "revId": "14aedee82d81146a579b7059ddd9fe004a8fbbc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd5906b1_f115a2da",
         "filename": "internal/ceres/parameter_block.h",
         "patchSetId": 3
@@ -13,6 +30,24 @@
       "writtenOn": "2019-12-17T19:38:18Z",
       "side": 1,
       "message": "I\u0027m always slightly wary of this, it\u0027s legal to do: new double[0]; but the result is a bit weird, you can delete it, but you can\u0027t do anything else with it (even dereference it) legally.  Are we sure that wouldn\u0027t come back to bite us?",
+      "revId": "14aedee82d81146a579b7059ddd9fe004a8fbbc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0528802_a0c1f406",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:33:55Z",
+      "side": 1,
+      "message": "It could. I\u0027m conflicted here. I agree that zero size is a fine behavior in some cases, but in others it is a bug and we should flag it. Could we make this still a CHECK fail, then instruct the user that if they really want this, flip a config flag?",
+      "parentUuid": "dd5906b1_f115a2da",
       "revId": "14aedee82d81146a579b7059ddd9fe004a8fbbc1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
