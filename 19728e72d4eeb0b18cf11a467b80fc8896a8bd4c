@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "168a8776_fa4d162e",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T10:23:21Z",
+      "side": 0,
+      "message": "Although they are implicitly deleted because of the unique_ptr, it might be clearer to have them explicitly deleted here, it would mean users get a direct rather than indirect error message if they tried to copy a Problem.",
+      "revId": "19728e72d4eeb0b18cf11a467b80fc8896a8bd4c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
