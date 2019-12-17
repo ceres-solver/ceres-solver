@@ -122,6 +122,24 @@ class TernaryCostFunction: public CostFunction {
   }
 };
 
+
+TEST(Problem, MoveConstructor) {
+  Problem src;
+  double x;
+  src.AddParameterBlock(&x, 1);
+  Problem dst(std::move(src));
+  EXPECT_TRUE(dst.HasParameterBlock(&x));
+}
+
+TEST(Problem, MoveAssignment) {
+  Problem src;
+  double x;
+  src.AddParameterBlock(&x, 1);
+  Problem dst;
+  dst = std::move(src);
+  EXPECT_TRUE(dst.HasParameterBlock(&x));
+}
+
 TEST(Problem, AddResidualWithNullCostFunctionDies) {
   double x[3], y[4], z[5];
 
