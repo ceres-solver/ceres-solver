@@ -51,6 +51,24 @@
       "revId": "14aedee82d81146a579b7059ddd9fe004a8fbbc1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30afe98e_7a23921d",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-17T22:31:33Z",
+      "side": 1,
+      "message": "so, this is an API wart (mathematical corner), which especially comes up with SubsetParameterization. \nNotice we do not allow zero sized parameter blocks, only zero sized tangent spaces.\n\nZero sized tangent spaces happen very deliberately, in fact the only way they happen right now is via the subset parameterization.\n\n\nMathematically I believe we are on firm footing, where we are basically saying that the manifold collapses to a single point, with no tangent space. Not doing this leads to all sorts of silly gymnastics where you have parameter blocks which can be held constant in part or a whole. where n-1 parameters require subsetparameterization but n parameter requires SetParameterBlockConstant.\n\nAlso this CL builds on a bunch of work that has been done in refactoring ParameterBlock itself, where the notion of constancy was generalized. See the implementation of IsConstant()",
+      "parentUuid": "c0528802_a0c1f406",
+      "revId": "14aedee82d81146a579b7059ddd9fe004a8fbbc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
