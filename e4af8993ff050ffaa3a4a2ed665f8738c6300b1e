@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab67e771_9202b13a",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T15:07:17Z",
+      "side": 1,
+      "message": "Just thinking should the docs here and in Sphinx state that setting nullptr means to clear the local parameterisation?  It\u0027s maybe not obvious that would work.",
+      "revId": "e4af8993ff050ffaa3a4a2ed665f8738c6300b1e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ea2265_3318a9d1",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T15:07:17Z",
+      "side": 1,
+      "message": "Should this check that the resulting effect is back to normal to verify that the local parameterisation has actually been reset?  This would pass if it just didn\u0027t crash on a nullptr input right ?",
+      "revId": "e4af8993ff050ffaa3a4a2ed665f8738c6300b1e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b48d06_98f36eb9",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2102,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T15:07:17Z",
+      "side": 1,
+      "message": "As before, should this not then verify that the results of GlobalSize() and LocalSize() are reset as expected?",
+      "revId": "e4af8993ff050ffaa3a4a2ed665f8738c6300b1e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
