@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH+3///Bo\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAH+3///E8\u003d",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH+3///FE\u003d",
         "filename": "android/build_android.sh",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2012-08-03T00:40:53Z",
       "side": 1,
       "message": "change",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///Bk\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAH+3///FE\u003d",
       "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH+3///BM\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAH+3///Ew\u003d",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH+3///Es\u003d",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 3
@@ -81,6 +135,24 @@
       "writtenOn": "2012-08-03T00:40:53Z",
       "side": 1,
       "message": "why?",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///Ag\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:27:46Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "AAAH+3///Es\u003d",
       "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH+3///BE\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAH+3///EI\u003d",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH+3///D8\u003d",
         "filename": "internal/ceres/miniglog/glog/logging.h",
         "patchSetId": 3
@@ -115,6 +205,24 @@
       "writtenOn": "2012-08-03T00:40:53Z",
       "side": 1,
       "message": "also I thought you were contracting them into the same output.. \n\neither ways, -1 and 4 are very confusing.",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///A4\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:27:46Z",
+      "side": 1,
+      "message": "Sorry, this is an outdated comment.",
+      "parentUuid": "AAAH+3///D8\u003d",
       "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH+3///A0\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:27:46Z",
+      "side": 1,
+      "message": "Outdate comment.",
+      "parentUuid": "AAAH+3///EE\u003d",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH+3///D4\u003d",
         "filename": "internal/ceres/miniglog/glog/logging.h",
         "patchSetId": 3
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH+3///Aw\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:27:46Z",
+      "side": 1,
+      "message": "Outdated comment; fixed.",
+      "parentUuid": "AAAH+3///D4\u003d",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH+3///Dk\u003d",
         "filename": "internal/ceres/miniglog/glog/logging.h",
         "patchSetId": 3
@@ -166,6 +310,24 @@
       "writtenOn": "2012-08-03T00:40:53Z",
       "side": 1,
       "message": "This contradicts your documentation earlier where negativelevels all go to fatal...",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///As\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:27:46Z",
+      "side": 1,
+      "message": "Comment was outdated.",
+      "parentUuid": "AAAH+3///Dk\u003d",
       "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
