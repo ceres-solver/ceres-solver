@@ -56,37 +56,6 @@ TEST(ParameterBlock, SetLocalParameterizationWithSameExistingParameterization) {
   parameter_block.SetParameterization(&subset);
 }
 
-TEST(ParameterBlock, SetLocalParameterizationDiesWhenResettingToNull) {
-  double x[3] = {1.0, 2.0, 3.0};
-  ParameterBlock parameter_block(x, 3, -1);
-  std::vector<int> indices;
-  indices.push_back(1);
-  SubsetParameterization subset(3, indices);
-  parameter_block.SetParameterization(&subset);
-  EXPECT_DEATH_IF_SUPPORTED(parameter_block.SetParameterization(nullptr), "nullptr");
-}
-
-TEST(ParameterBlock,
-     SetLocalParameterizationDiesWhenResettingToDifferentParameterization) {
-  double x[3] = {1.0, 2.0, 3.0};
-  ParameterBlock parameter_block(x, 3, -1);
-  std::vector<int> indices;
-  indices.push_back(1);
-  SubsetParameterization subset(3, indices);
-  parameter_block.SetParameterization(&subset);
-  SubsetParameterization subset_different(3, indices);
-  EXPECT_DEATH_IF_SUPPORTED(
-      parameter_block.SetParameterization(&subset_different), "re-set");
-}
-
-TEST(ParameterBlock, SetLocalParameterizationDiesOnNullParameterization) {
-  double x[3] = {1.0, 2.0, 3.0};
-  ParameterBlock parameter_block(x, 3, -1);
-  std::vector<int> indices;
-  indices.push_back(1);
-  EXPECT_DEATH_IF_SUPPORTED(parameter_block.SetParameterization(nullptr), "nullptr");
-}
-
 TEST(ParameterBlock, SetParameterizationDiesOnZeroLocalSize) {
   double x[3] = {1.0, 2.0, 3.0};
   ParameterBlock parameter_block(x, 3, -1);
@@ -246,6 +215,33 @@ TEST(ParameterBlock, PlusWithBoundsConstraints) {
   parameter_block.Plus(x, delta, x_plus_delta);
   EXPECT_EQ(x_plus_delta[0], 2.0);
   EXPECT_EQ(x_plus_delta[1], -1.0);
+}
+
+TEST(ParameterBlock, ResetLocalParameterizationToNull) {
+  double x[3] = {1.0, 2.0, 3.0};
+  ParameterBlock parameter_block(x, 3, -1);
+  std::vector<int> indices;
+  indices.push_back(1);
+  SubsetParameterization subset(3, indices);
+  parameter_block.SetParameterization(&subset);
+  parameter_block.SetParameterization(nullptr);
+}
+
+TEST(ParameterBlock, ResetLocalParameterizationToNotNull) {
+  double x[3] = {1.0, 2.0, 3.0};
+  ParameterBlock parameter_block(x, 3, -1);
+  std::vector<int> indices;
+  indices.push_back(1);
+  SubsetParameterization subset(3, indices);
+  parameter_block.SetParameterization(&subset);
+  SubsetParameterization subset_different(3, indices);
+  parameter_block.SetParameterization(&subset_different);
+}
+
+TEST(ParameterBlock, SetNullLocalParameterization) {
+  double x[3] = {1.0, 2.0, 3.0};
+  ParameterBlock parameter_block(x, 3, -1);
+  parameter_block.SetParameterization(nullptr);
 }
 
 }  // namespace internal

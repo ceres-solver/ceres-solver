@@ -2078,5 +2078,30 @@ TEST(Problem, SetAndGetParameterUpperBound) {
             std::numeric_limits<double>::max());
 }
 
+TEST(Problem, SetParameterizationTwice) {
+  Problem problem;
+  double x[] = {1.0, 2.0, 3.0};
+  problem.AddParameterBlock(x, 3);
+  problem.SetParameterization(x, new SubsetParameterization(3, {1}));
+  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 3);
+  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 2);
+
+  problem.SetParameterization(x, new SubsetParameterization(3, {0, 1}));
+  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 3);
+  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 1);
+}
+
+TEST(Problem, SetParameterizationAndThenClearItWithNull) {
+  Problem problem;
+  double x[] = {1.0, 2.0, 3.0};
+  problem.AddParameterBlock(x, 3);
+  problem.SetParameterization(x, new SubsetParameterization(3, {1}));
+  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 3);
+  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 2);
+
+  problem.SetParameterization(x, nullptr);
+  EXPECT_EQ(problem.GetParameterization(x), nullptr);
+}
+
 }  // namespace internal
 }  // namespace ceres

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -113,7 +113,7 @@ void STLDeleteContainerPairFirstPointers(ForwardIterator begin,
 void InitializeContext(Context* context,
                        ContextImpl** context_impl,
                        bool* context_impl_owned) {
-  if (context == NULL) {
+  if (context == nullptr) {
     *context_impl_owned = true;
     *context_impl = new ContextImpl;
   } else {
@@ -126,8 +126,8 @@ void InitializeContext(Context* context,
 
 ParameterBlock* ProblemImpl::InternalAddParameterBlock(double* values,
                                                        int size) {
-  CHECK(values != NULL) << "Null pointer passed to AddParameterBlock "
-                        << "for a parameter with size " << size;
+  CHECK(values != nullptr) << "Null pointer passed to AddParameterBlock "
+                           << "for a parameter with size " << size;
 
   // Ignore the request if there is a block for the given pointer already.
   ParameterMap::iterator it = parameter_block_map_.find(values);
@@ -216,7 +216,7 @@ void ProblemImpl::DeleteBlock(ResidualBlock* residual_block) {
   LossFunction* loss_function =
       const_cast<LossFunction*>(residual_block->loss_function());
   if (options_.loss_function_ownership == TAKE_OWNERSHIP &&
-      loss_function != NULL) {
+      loss_function != nullptr) {
     DecrementValueOrDeleteKey(loss_function, &loss_function_ref_count_);
   }
 
@@ -230,7 +230,7 @@ void ProblemImpl::DeleteBlock(ResidualBlock* residual_block) {
 // without doing a full scan.
 void ProblemImpl::DeleteBlock(ParameterBlock* parameter_block) {
   if (options_.local_parameterization_ownership == TAKE_OWNERSHIP &&
-      parameter_block->local_parameterization() != NULL) {
+      parameter_block->local_parameterization() != nullptr) {
     local_parameterizations_to_delete_.push_back(
         parameter_block->mutable_local_parameterization());
   }
@@ -361,7 +361,7 @@ ResidualBlockId ProblemImpl::AddResidualBlock(
   }
 
   if (options_.loss_function_ownership == TAKE_OWNERSHIP &&
-      loss_function != NULL) {
+      loss_function != nullptr) {
     ++loss_function_ref_count_[loss_function];
   }
 
@@ -375,7 +375,7 @@ void ProblemImpl::AddParameterBlock(double* values, int size) {
 void ProblemImpl::AddParameterBlock(
     double* values, int size, LocalParameterization* local_parameterization) {
   ParameterBlock* parameter_block = InternalAddParameterBlock(values, size);
-  if (local_parameterization != NULL) {
+  if (local_parameterization != nullptr) {
     parameter_block->SetParameterization(local_parameterization);
   }
 }
@@ -517,6 +517,15 @@ void ProblemImpl::SetParameterization(
     LOG(FATAL) << "Parameter block not found: " << values
                << ". You must add the parameter block to the problem before "
                << "you can set its local parameterization.";
+  }
+
+  // If the parameter block already has a local parameterization and
+  // we are to take ownership of local parameterizations, then add it
+  // to local_parameterizations_to_delete_ for eventual deletion.
+  if (parameter_block->local_parameterization_ &&
+      options_.local_parameterization_ownership == TAKE_OWNERSHIP) {
+    local_parameterizations_to_delete_.push_back(
+        parameter_block->local_parameterization_);
   }
 
   parameter_block->SetParameterization(local_parameterization);
