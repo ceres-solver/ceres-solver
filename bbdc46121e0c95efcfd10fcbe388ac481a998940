@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4af0c795_ce9e2775",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T19:32:04Z",
+      "side": 1,
+      "message": "This is incorrect, CXSparse versions are actually completely different to SuiteSparse versions, e.g. CXSparse v3.1.9 is shipped with SuiteSparse v5.1.2 and we need the correct version here.",
+      "revId": "bbdc46121e0c95efcfd10fcbe388ac481a998940",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98f9f6a_023465a6",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 8
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T19:32:04Z",
+      "side": 1,
+      "message": "I would remove this trailing comment, it isn\u0027t adding anything",
+      "revId": "bbdc46121e0c95efcfd10fcbe388ac481a998940",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99fe1c8_bcc7f66e",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 8
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T19:32:04Z",
+      "side": 1,
+      "message": "We should probably include the version of SuiteSparse used when Ceres was built here, we\u0027re after something that the package deems compatible with that one.",
+      "revId": "bbdc46121e0c95efcfd10fcbe388ac481a998940",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b835de9d_9814620a",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T19:32:04Z",
+      "side": 1,
+      "message": "Please also clear the SuiteSparse_INCLUDE_DIRS/LIBRARIES vars defined below here.",
+      "revId": "bbdc46121e0c95efcfd10fcbe388ac481a998940",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a807a0b3_8ab60b40",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 8
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T19:32:04Z",
+      "side": 1,
+      "message": "Include the [NO_TARGET] option with a brief summary (as its non-standard) like:\n\n# NO_TARGET: If specified, do not create an imported CMake target for the component.",
+      "revId": "bbdc46121e0c95efcfd10fcbe388ac481a998940",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca26365_7d187d88",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 8
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T19:32:04Z",
+      "side": 1,
+      "message": "I think we need to update INTERFACE_LINK_LIBRARIES in the SuiteSparse::spqr target with these as well",
+      "revId": "bbdc46121e0c95efcfd10fcbe388ac481a998940",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fce929_950dbb18",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 8
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T19:32:04Z",
+      "side": 1,
+      "message": "can -\u003e can include the",
+      "revId": "bbdc46121e0c95efcfd10fcbe388ac481a998940",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2419d7d_8af9ecbf",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 8
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T19:32:04Z",
+      "side": 1,
+      "message": "At present this means the targets wouldn\u0027t work (but would exist) for a v3.x SuiteSparse so would result in a broken build",
+      "revId": "bbdc46121e0c95efcfd10fcbe388ac481a998940",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003da00e_a26d8f2f",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 8
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T19:32:04Z",
+      "side": 1,
+      "message": "These are all missing the BLAS and LAPACK libraries that should appear here for each library",
+      "revId": "bbdc46121e0c95efcfd10fcbe388ac481a998940",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f6acaf_7e773db7",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 8
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T19:32:04Z",
+      "side": 1,
+      "message": "Wrap this into a single if () with an AND instead of nesting",
+      "revId": "bbdc46121e0c95efcfd10fcbe388ac481a998940",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce72d0d_0646292c",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 8
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T19:32:04Z",
+      "side": 1,
+      "message": "Nitpick, but please start all comments with a capital letter (Google Style: https://google.github.io/styleguide/cppguide.html#Punctuation,_Spelling_and_Grammar)",
+      "revId": "bbdc46121e0c95efcfd10fcbe388ac481a998940",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
