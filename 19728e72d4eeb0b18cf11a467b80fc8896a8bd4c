@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aca2478_80cfd7d7",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T10:18:54Z",
+      "side": 0,
+      "message": "Isn\u0027t this missing an early return below if new_parameterisation \u003d\u003d nullptr ?  As it stands the code now uses new_parameterisation without any null-checking.  I\u0027m assuming that you want to permit nullptr to enable clearing of any existing local parameterisation?",
+      "revId": "19728e72d4eeb0b18cf11a467b80fc8896a8bd4c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f037a37b_b73a02b4",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T10:18:54Z",
+      "side": 0,
+      "message": "Shouldn\u0027t we update these tests to check that resetting via SetLocalParameterisation(nullptr) resets as expected?",
+      "revId": "19728e72d4eeb0b18cf11a467b80fc8896a8bd4c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}

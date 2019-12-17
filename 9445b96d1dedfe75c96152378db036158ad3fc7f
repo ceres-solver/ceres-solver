@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5606e01d_8e428b8b",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T10:18:54Z",
+      "side": 1,
+      "message": "This comment appears to be out of date",
+      "revId": "9445b96d1dedfe75c96152378db036158ad3fc7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62abf74e_9368f575",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T10:18:54Z",
+      "side": 1,
+      "message": "I wonder if we shouldn\u0027t have a separate CL that replaces all instances of NULL with nullptr, the following should do the trick (on macOS):\n\ngrep -lr -e \u0027NULL\u0027 * | xargs sed -i \u0027\u0027 \u0027s/NULL/nullptr/g\u0027",
+      "revId": "9445b96d1dedfe75c96152378db036158ad3fc7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318b5c96_e08b33a6",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T10:18:54Z",
+      "side": 1,
+      "message": "Minor, but prefer CHECK_NOTNULL() ?",
+      "revId": "9445b96d1dedfe75c96152378db036158ad3fc7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7eb7a58_695eec1d",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2092,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-17T10:18:54Z",
+      "side": 1,
+      "message": "I think we should have a SetParameterisation(nullptr) here that checks clearing too",
+      "revId": "9445b96d1dedfe75c96152378db036158ad3fc7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
