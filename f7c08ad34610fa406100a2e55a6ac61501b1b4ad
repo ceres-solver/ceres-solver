@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAG7n///8c\u003d",
+        "filename": "include/ceres/fpclassify.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAG7X////I\u003d",
+      "revId": "f7c08ad34610fa406100a2e55a6ac61501b1b4ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAG7X////E\u003d",
         "filename": "internal/ceres/conjugate_gradients_solver.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAG7n///8Y\u003d",
+        "filename": "internal/ceres/conjugate_gradients_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAG7X////E\u003d",
+      "revId": "f7c08ad34610fa406100a2e55a6ac61501b1b4ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAG7X////A\u003d",
         "filename": "internal/ceres/conjugate_gradients_solver.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2012-06-25T00:40:33Z",
       "side": 1,
       "message": "IsInfinite",
+      "revId": "f7c08ad34610fa406100a2e55a6ac61501b1b4ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAG7n///8U\u003d",
+        "filename": "internal/ceres/conjugate_gradients_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-17T21:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAG7X////A\u003d",
       "revId": "f7c08ad34610fa406100a2e55a6ac61501b1b4ad",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
