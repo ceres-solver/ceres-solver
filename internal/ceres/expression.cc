@@ -160,13 +160,22 @@ Expression Expression::CreateEndIf() {
   return Expression(ExpressionType::ENDIF);
 }
 
+Expression Expression::CreateComment(const std::string& comment) {
+  return Expression(ExpressionType::COMMENT,
+                    ExpressionReturnType::VOID,
+                    kInvalidExpressionId,
+                    {},
+                    comment);
+}
+
 bool Expression::IsArithmeticExpression() const {
   return !IsControlExpression();
 }
 
 bool Expression::IsControlExpression() const {
   return type_ == ExpressionType::IF || type_ == ExpressionType::ELSE ||
-         type_ == ExpressionType::ENDIF || type_ == ExpressionType::NOP;
+         type_ == ExpressionType::ENDIF || type_ == ExpressionType::NOP ||
+         type_ == ExpressionType::COMMENT;
 }
 
 bool Expression::IsReplaceableBy(const Expression& other) const {

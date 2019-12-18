@@ -510,5 +510,13 @@ TEST(CodeGenerator, IF_NESTED_ASSIGNMENT) {
   GenerateAndCheck(graph, expected_code);
 }
 
+TEST(CodeGenerator, COMMENT) {
+  StartRecordingExpressions();
+  CERES_COMMENT("Hello");
+  auto graph = StopRecordingExpressions();
+  std::vector<std::string> expected_code = {"{", "  // Hello", "}"};
+  GenerateAndCheck(graph, expected_code);
+}
+
 }  // namespace internal
 }  // namespace ceres

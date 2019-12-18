@@ -221,6 +221,14 @@ std::string CodeGenerator::ExpressionToString(ExpressionId id) {
       result << indentation_ << "}";
       break;
     }
+    case ExpressionType::COMMENT: {
+      //
+      // Format:     // <name>
+      // Example:    // this is a comment
+      //
+      result << indentation_ << "// " + name;
+      break;
+    }
     case ExpressionType::NOP: {
       //
       // Format:     // <NOP>

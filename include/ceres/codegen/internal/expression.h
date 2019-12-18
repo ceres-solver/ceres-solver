@@ -229,6 +229,10 @@ enum class ExpressionType {
   ELSE,
   ENDIF,
 
+  // A single comment line. Even though comments are 'unused' expression they
+  // will not be optimized away.
+  COMMENT,
+
   // No Operation. A placeholder for an 'empty' expressions which will be
   // optimized out during code generation.
   NOP
@@ -301,6 +305,7 @@ class Expression {
   static Expression CreateIf(ExpressionId condition);
   static Expression CreateElse();
   static Expression CreateEndIf();
+  static Expression CreateComment(const std::string& comment);
 
   // Returns true if this is an arithmetic expression.
   // Arithmetic expressions must have a valid left hand side.

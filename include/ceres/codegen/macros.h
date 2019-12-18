@@ -104,6 +104,7 @@
 #define CERES_IF(condition_) if (condition_)
 #define CERES_ELSE else
 #define CERES_ENDIF
+#define CERES_COMMENT(comment_)
 #else
 #define CERES_LOCAL_VARIABLE(_template_type, _local_variable)            \
   ceres::internal::InputAssignment<_template_type>::Get(_local_variable, \
@@ -114,6 +115,8 @@
   AddExpressionToGraph(ceres::internal::Expression::CreateElse());
 #define CERES_ENDIF \
   AddExpressionToGraph(ceres::internal::Expression::CreateEndIf());
+#define CERES_COMMENT(comment_) \
+  AddExpressionToGraph(ceres::internal::Expression::CreateComment(comment_))
 #endif
 
 namespace ceres {

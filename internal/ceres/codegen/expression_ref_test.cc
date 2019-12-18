@@ -401,5 +401,15 @@ TEST(ExpressionRef, IF_NESTED) {
   EXPECT_EQ(reference, graph);
 }
 
+TEST(ExpressionRef, COMMENT) {
+  StartRecordingExpressions();
+  CERES_COMMENT("This is a comment");
+  auto graph = StopRecordingExpressions();
+
+  ExpressionGraph reference;
+  reference.InsertBack(Expression::CreateComment("This is a comment"));
+  EXPECT_EQ(reference, graph);
+}
+
 }  // namespace internal
 }  // namespace ceres

@@ -169,6 +169,14 @@ TEST(Expression, CreateFunctions) {
                        {},
                        "",
                        0));
+
+  EXPECT_EQ(Expression::CreateComment("Test"),
+            Expression(ExpressionType::COMMENT,
+                       ExpressionReturnType::VOID,
+                       kInvalidExpressionId,
+                       {},
+                       "Test",
+                       0));
 }
 
 TEST(Expression, IsArithmeticExpression) {
@@ -194,6 +202,7 @@ TEST(Expression, IsControlExpression) {
       Expression::CreateBinaryCompare("<", 3, 5).IsControlExpression());
   ASSERT_TRUE(Expression::CreateIf(5).IsControlExpression());
   ASSERT_TRUE(Expression::CreateEndIf().IsControlExpression());
+  ASSERT_TRUE(Expression::CreateComment("Test").IsControlExpression());
   ASSERT_TRUE(Expression().IsControlExpression());
 }
 
