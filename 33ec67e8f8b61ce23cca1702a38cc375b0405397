@@ -562,6 +562,29 @@
     },
     {
       "key": {
+        "uuid": "049aa847_b9301b17",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-18T15:01:12Z",
+      "side": 1,
+      "message": "I think its worth adding an explicit default constructor rather than one with a default value, and explain why that is needed and then make this one be explicit.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 15
+      },
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ae3c473_9e164925",
         "filename": "examples/square_functor.h",
         "patchSetId": 9
@@ -594,6 +617,29 @@
       "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02b0dfd5_5c5fc1df",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-18T15:01:12Z",
+      "side": 1,
+      "message": "target_value_",
+      "range": {
+        "startLine": 46,
+        "startChar": 9,
+        "endLine": 46,
+        "endChar": 15
+      },
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     },
     {
       "key": {
