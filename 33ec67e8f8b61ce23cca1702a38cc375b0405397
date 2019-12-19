@@ -585,6 +585,30 @@
     },
     {
       "key": {
+        "uuid": "d42db21f_ad2bbdc1",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-19T08:40:01Z",
+      "side": 1,
+      "message": "Done + added a static_assert in GenerateCodeForFunctor().",
+      "parentUuid": "049aa847_b9301b17",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 15
+      },
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ae3c473_9e164925",
         "filename": "examples/square_functor.h",
         "patchSetId": 9
@@ -640,6 +664,30 @@
       "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8168cd90_a3f5e37f",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-19T08:40:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02b0dfd5_5c5fc1df",
+      "range": {
+        "startLine": 46,
+        "startChar": 9,
+        "endLine": 46,
+        "endChar": 15
+      },
+      "revId": "33ec67e8f8b61ce23cca1702a38cc375b0405397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
