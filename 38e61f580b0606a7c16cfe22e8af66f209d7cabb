@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70eb49bb_40e0865c",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-20T15:36:56Z",
+      "side": 1,
+      "message": "I would drop the else here as it makes the early return clearer.",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 10
+      },
+      "revId": "38e61f580b0606a7c16cfe22e8af66f209d7cabb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960d1843_deb5b39e",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-20T15:36:56Z",
+      "side": 1,
+      "message": "this continue is not needed.",
+      "range": {
+        "startLine": 169,
+        "startChar": 6,
+        "endLine": 169,
+        "endChar": 14
+      },
+      "revId": "38e61f580b0606a7c16cfe22e8af66f209d7cabb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6afaf303_d2a46fef",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-20T15:36:56Z",
+      "side": 1,
+      "message": "drop the else after this, making the early return more obvious.",
+      "range": {
+        "startLine": 186,
+        "startChar": 6,
+        "endLine": 186,
+        "endChar": 12
+      },
+      "revId": "38e61f580b0606a7c16cfe22e8af66f209d7cabb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e5580dc_2b645cbf",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-20T15:36:56Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 190,
+        "startChar": 13,
+        "endLine": 190,
+        "endChar": 33
+      },
+      "revId": "38e61f580b0606a7c16cfe22e8af66f209d7cabb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6fa009_78fe20ac",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-20T15:36:56Z",
+      "side": 1,
+      "message": "no need for the continue.",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 14
+      },
+      "revId": "38e61f580b0606a7c16cfe22e8af66f209d7cabb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
