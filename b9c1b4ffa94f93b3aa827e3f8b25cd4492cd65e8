@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "41f7a413_38a1bd42",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-20T15:25:58Z",
+      "side": 1,
+      "message": "sure.",
+      "parentUuid": "1352f7dd_98120ab3",
+      "revId": "b9c1b4ffa94f93b3aa827e3f8b25cd4492cd65e8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "019fc81b_b0fca2cb",
         "filename": "internal/ceres/parameter_block_test.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a2d0bd60_362bc3fa",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-20T15:25:58Z",
+      "side": 1,
+      "message": "your confusion is well placed, these were deleted/moved and fixed and a poorly done merge from a previous patch brought them back.",
+      "parentUuid": "019fc81b_b0fca2cb",
+      "revId": "b9c1b4ffa94f93b3aa827e3f8b25cd4492cd65e8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b4ff3f2_2a85e0b4",
         "filename": "internal/ceres/solver_test.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2019-12-20T09:38:38Z",
       "side": 1,
       "message": "Maybe add an EXPECT_TRUE(problem.IsParameterBlockConstant(\u0026y)); ?",
+      "revId": "b9c1b4ffa94f93b3aa827e3f8b25cd4492cd65e8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a5bc605_297716c9",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-20T15:25:58Z",
+      "side": 1,
+      "message": "thats not true actually, it should be false.\nwe make a distinction between being marked constant and being effectively constant. This is why ParameterBlock has separate methods for this.",
+      "parentUuid": "6b4ff3f2_2a85e0b4",
       "revId": "b9c1b4ffa94f93b3aa827e3f8b25cd4492cd65e8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
