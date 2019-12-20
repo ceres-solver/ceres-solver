@@ -74,6 +74,35 @@ class ExpressionGraph {
   // can be used for further operations.
   ExpressionId InsertBack(const Expression& expression);
 
+  // Finds the closing ENDIF expression for a given IF expression. Calling this
+  // method is only valid on IF expressions. If no suitable ENDIF is found,
+  // kInvalidExpressionId is returned. Example:
+  // <id> <expr>    FindMatchingEndif(id)
+  //  0  IF         7
+  //  1    IF       3
+  //  2    ELSE     -
+  //  3    ENDIF    -
+  //  4  ELSE       -
+  //  5    IF       6
+  //  6    ENDIF    -
+  //  7  ENDIF      -
+  ExpressionId FindMatchingEndif(ExpressionId id) const;
+
+  // Similar to FindMatchingEndif, but returns the matching ELSE expression. If
+  // no suitable ELSE is found, kInvalidExpressionId is returned.
+  // FindMatchingElse does not throw an error is this case, because IF without
+  // ELSE is allowed.
+  // <id> <expr>    FindMatchingEndif(id)
+  //  0  IF         4
+  //  1    IF       2
+  //  2    ELSE     -
+  //  3    ENDIF    -
+  //  4  ELSE       -
+  //  5    IF       kInvalidEpressionId
+  //  6    ENDIF    -
+  //  7  ENDIF      -
+  ExpressionId FindMatchingElse(ExpressionId id) const;
+
  private:
   // All Expressions are referenced by an ExpressionId. The ExpressionId is
   // the index into this array. Each expression has a list of ExpressionId as
