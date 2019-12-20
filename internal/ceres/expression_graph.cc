@@ -147,5 +147,60 @@ ExpressionId ExpressionGraph::InsertBack(const Expression& expression) {
   return Size() - 1;
 }
 
+ExpressionId ExpressionGraph::FindMatchingEndif(ExpressionId id) const {
+  CHECK(ExpressionForId(id).type() == ExpressionType::IF)
+      << "FindClosingControlExpression is only valid on IF "
+         "expressions.";
+
+  // Traverse downwards
+  for (ExpressionId i = id + 1; i < Size(); ++i) {
+    const auto& expr = ExpressionForId(i);
+    if (expr.type() == ExpressionType::ENDIF) {
+      return i;
+    }
+    if (expr.type() == ExpressionType::IF) {
+      // Found a nested IF.
+      // -> Jump over the block and continue behind it.
+      auto matching_endif = FindMatchingEndif(i);
+      if (matching_endif == kInvalidExpressionId) {
+        return kInvalidExpressionId;
+      }
+      i = matching_endif;
+    }
+  }
+  CHECK(false) << "IF-ELSE-ENDIF missmatch detected.";
+  return kInvalidExpressionId;
+}
+
+ExpressionId ExpressionGraph::FindMatchingElse(ExpressionId id) const {
+  CHECK(ExpressionForId(id).type() == ExpressionType::IF)
+      << "FindClosingControlExpression is only valid on IF "
+         "expressions.";
+
+  // Traverse downwards
+  for (ExpressionId i = id + 1; i < Size(); ++i) {
+    const auto& expr = ExpressionForId(i);
+    if (expr.type() == ExpressionType::ELSE) {
+      // Found it!
+      return i;
+    }
+    if (expr.type() == ExpressionType::ENDIF) {
+      // Found an endif even though we were looking for an ELSE.
+      // -> Return invalidId
+      return kInvalidExpressionId;
+    }
+    if (expr.type() == ExpressionType::IF) {
+      // Found a nested IF.
+      // -> Jump over the block and continue behind it.
+      auto matching_endif = FindMatchingEndif(i);
+      if (matching_endif == kInvalidExpressionId) {
+        return kInvalidExpressionId;
+      }
+      i = matching_endif;
+    }
+  }
+  return kInvalidExpressionId;
+}
+
 }  // namespace internal
 }  // namespace ceres

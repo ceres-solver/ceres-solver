@@ -31,9 +31,9 @@
 // This file tests the ExpressionGraph class. This test depends on the
 // correctness of Expression.
 //
-#include "ceres/codegen/internal/expression.h"
 #include "ceres/codegen/internal/expression_graph.h"
 
+#include "ceres/codegen/internal/expression.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -144,6 +144,43 @@ TEST(ExpressionGraph, DependsOn) {
 
   // Recursive test
   ASSERT_TRUE(graph.DependsOn(3, 1));
+}
+
+TEST(ExpressionGraph, FindMatchingElseEndif) {
+  ExpressionGraph graph;
+  graph.InsertBack(Expression::CreateCompileTimeConstant(1));
+  graph.InsertBack(Expression::CreateCompileTimeConstant(2));
+  graph.InsertBack(Expression::CreateBinaryCompare("<", 0, 1));
+  graph.InsertBack(Expression::CreateIf(2));
+  graph.InsertBack(Expression::CreateIf(2));
+  graph.InsertBack(Expression::CreateElse());
+  graph.InsertBack(Expression::CreateEndIf());
+  graph.InsertBack(Expression::CreateElse());
+  graph.InsertBack(Expression::CreateIf(2));
+  graph.InsertBack(Expression::CreateEndIf());
+  graph.InsertBack(Expression::CreateEndIf());
+  EXPECT_EQ(graph.Size(), 11);
+
+  // Code              <id>
+  // v_0 = 1            0
+  // v_1 = 2            1
+  // v_2 = v_0 < v_1    2
+  // IF (v_2)           3
+  //   IF (v_2)         4
+  //   ELSE             5
+  //   ENDIF            6
+  // ELSE               7
+  //   IF (v_2)         8
+  //   ENDIF            9
+  // ENDIF              10
+
+  EXPECT_EQ(graph.FindMatchingEndif(3), 10);
+  EXPECT_EQ(graph.FindMatchingEndif(4), 6);
+  EXPECT_EQ(graph.FindMatchingEndif(8), 9);
+
+  EXPECT_EQ(graph.FindMatchingElse(3), 7);
+  EXPECT_EQ(graph.FindMatchingElse(4), 5);
+  EXPECT_EQ(graph.FindMatchingElse(8), kInvalidExpressionId);
 }
 
 TEST(ExpressionGraph, InsertExpression_UpdateReferences) {
