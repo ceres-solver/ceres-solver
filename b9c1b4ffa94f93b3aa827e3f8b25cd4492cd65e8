@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1352f7dd_98120ab3",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-20T09:38:38Z",
+      "side": 1,
+      "message": "This is a bit more general, but perhaps we should rename ParameterBlock::SetParameterisation() to ParameterBlock::SetLocalParameterisation() given that it takes a LocalParameterisation* and that would then match the external API ?",
+      "revId": "b9c1b4ffa94f93b3aa827e3f8b25cd4492cd65e8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "019fc81b_b0fca2cb",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-20T09:38:38Z",
+      "side": 1,
+      "message": "I\u0027m confused, these tests seem to be inconsistent with the implementation of ParameterBlock::SetParameterization() that allows the use of nullptr to reset the local parameterisation, but also allows updating the parameterisation",
+      "revId": "b9c1b4ffa94f93b3aa827e3f8b25cd4492cd65e8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4ff3f2_2a85e0b4",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2019-12-20T09:38:38Z",
+      "side": 1,
+      "message": "Maybe add an EXPECT_TRUE(problem.IsParameterBlockConstant(\u0026y)); ?",
+      "revId": "b9c1b4ffa94f93b3aa827e3f8b25cd4492cd65e8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
