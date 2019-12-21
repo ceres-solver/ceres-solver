@@ -524,13 +524,14 @@ void Solver::Solve(const Solver::Options& options,
       Preprocessor::Create(modified_options.minimizer_type));
   PreprocessedProblem pp;
 
-  const bool status = preprocessor->Preprocess(modified_options, problem_impl, &pp);
-
-  // We check the linear_solver_options.type rather than
-  // modified_options.linear_solver_type because, depending on the
-  // lack of a Schur structure, the preprocessor may change the linear
-  // solver type.
-  if (IsSchurType(pp.linear_solver_options.type)) {
+  const bool preprocessor_status =
+      preprocessor->Preprocess(modified_options, problem_impl, &pp);
+  if (preprocessor_status && IsSchurType(pp.linear_solver_options.type)) {
+    // We check the pp.linear_solver_options.type rather than
+    // modified_options.linear_solver_type because, depending on the
+    // lack of a Schur structure, the preprocessor may change the
+    // linear solver type.
+    //
     // TODO(sameeragarwal): We can likely eliminate the duplicate call
     // to DetectStructure here and inside the linear solver, by
     // calling this in the preprocessor.
@@ -538,33 +539,32 @@ void Solver::Solve(const Solver::Options& options,
     int e_block_size;
     int f_block_size;
     DetectStructure(*static_cast<internal::BlockSparseMatrix*>(
-                        pp.minimizer_options.jacobian.get())
-                    ->block_structure(),
+                         pp.minimizer_options.jacobian.get())
+                         ->block_structure(),
                     pp.linear_solver_options.elimination_groups[0],
                     &row_block_size,
                     &e_block_size,
                     &f_block_size);
     summary->schur_structure_given =
         SchurStructureToString(row_block_size, e_block_size, f_block_size);
-    internal::GetBestSchurTemplateSpecialization(&row_block_size,
-                                                 &e_block_size,
-                                                 &f_block_size);
+    internal::GetBestSchurTemplateSpecialization(
+        &row_block_size, &e_block_size, &f_block_size);
     summary->schur_structure_used =
         SchurStructureToString(row_block_size, e_block_size, f_block_size);
   }
 
-  summary->fixed_cost = pp.fixed_cost;
   summary->preprocessor_time_in_seconds = WallTimeInSeconds() - start_time;
 
-  if (status) {
+  // Only solve if the preprocessor was successful.
+  if (preprocessor_status) {
+    summary->fixed_cost = pp.fixed_cost;
     const double minimizer_start_time = WallTimeInSeconds();
     Minimize(&pp, summary);
     summary->minimizer_time_in_seconds =
         WallTimeInSeconds() - minimizer_start_time;
-  } else {
-    summary->message = pp.error;
   }
 
+  // Post process unconditionally.
   const double postprocessor_start_time = WallTimeInSeconds();
   problem_impl = problem->impl_.get();
   program = problem_impl->mutable_program();
@@ -577,11 +577,15 @@ void Solver::Solve(const Solver::Options& options,
   summary->postprocessor_time_in_seconds =
       WallTimeInSeconds() - postprocessor_start_time;
 
-  // If the gradient checker reported an error, we want to report FAILURE
-  // instead of USER_FAILURE and provide the error log.
   if (gradient_checking_callback.gradient_error_detected()) {
+    // If the gradient checker reported an error, we want to report FAILURE
+    // instead of USER_FAILURE and provide the error log.
     summary->termination_type = FAILURE;
     summary->message = gradient_checking_callback.error_log();
+  } else if (!preprocessor_status) {
+    // If preprocessor failed, then return FAILURE and pipe the error upwards.
+    summary->termination_type = FAILURE;
+    summary->message = pp.error;
   }
 
   summary->total_time_in_seconds = WallTimeInSeconds() - start_time;
