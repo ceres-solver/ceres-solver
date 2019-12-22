@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89d64ac5_4c2b92f3",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-22T01:58:41Z",
+      "side": 1,
+      "message": "This should likely be preprocessor_succeeded or something like that instead of status.",
+      "revId": "f69d433e1f0566ce810fef125218beb9be5e9f3c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5109c90c_fe9fe7d3",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-22T01:58:41Z",
+      "side": 1,
+      "message": "Are these valid if the preprocessor fails?\n\nShouldn\u0027t we essentially bail out of the entire function if preprocessing fails, and report error?",
+      "revId": "f69d433e1f0566ce810fef125218beb9be5e9f3c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee98e9ff_4916a9db",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-22T01:58:41Z",
+      "side": 1,
+      "message": "It doesn\u0027t make sense to do this if the preprocessor failed, and the minimizer didn\u0027t run.\n\nLooking at this logic now after awhile, it\u0027s unclear to me that this was correct before either.",
+      "revId": "f69d433e1f0566ce810fef125218beb9be5e9f3c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80d468b_7f051bf0",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2019-12-22T01:58:41Z",
+      "side": 1,
+      "message": "And also if the preprocessor failed.",
+      "revId": "f69d433e1f0566ce810fef125218beb9be5e9f3c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
