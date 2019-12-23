@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7f0f2da0_a408a03c",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T18:07:48Z",
+      "side": 1,
+      "message": "My objective here is to reduce the amount of surprise as much as possible and it is not evident that this is a generated file. Unless the user is aware of what the filenaming scheme in this cmake file, they will actually have to guess what this file is doing. In fact they would be surprised by a cc file with the same name as the header which they did not create.",
+      "parentUuid": "e3d790d7_c108a7e4",
+      "range": {
+        "startLine": 78,
+        "startChar": 79,
+        "endLine": 78,
+        "endChar": 81
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe4333a8_00af269a",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 16
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "I disagree here. We should keep the option of having one header file with multiple functors.",
       "parentUuid": "fe4333a8_00af269a",
+      "range": {
+        "startLine": 79,
+        "startChar": 66,
+        "endLine": 79,
+        "endChar": 83
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02f41fe_c5e1583d",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T18:07:48Z",
+      "side": 1,
+      "message": "I do not understand. Are you doing this because you want a single file to have multiple functors and then generating multiple evaluate_impl.h file per functor?",
+      "parentUuid": "696328f6_4e862a3c",
       "range": {
         "startLine": 79,
         "startChar": 66,
@@ -166,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "3fadde86_fcc7e0f0",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T18:07:48Z",
+      "side": 1,
+      "message": "fair point.",
+      "parentUuid": "1bb1ac78_f4888d31",
+      "range": {
+        "startLine": 54,
+        "startChar": 36,
+        "endLine": 54,
+        "endChar": 49
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5be1d7b4_86affda8",
         "filename": "examples/square_functor.h",
         "patchSetId": 16
@@ -213,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "37c216e9_1f70b78d",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T18:07:48Z",
+      "side": 1,
+      "message": "you mean Evaluate is abstract for CodeGeneratingCostFunction? thats fine.",
+      "parentUuid": "c24910be_d13d5d7f",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5be8934_14321b0d",
         "filename": "examples/square_functor.h",
         "patchSetId": 16
@@ -248,6 +344,30 @@
       "side": 1,
       "message": "I think it\u0027s the cleanest naming like this (lower case is fine too). I\u0027m not a big fan of unnecessary pre-/post fixes (_impl _eval _generated). Like this you can type \"#include \"codegen/\"\" in your IDE and directly see all your generated files.",
       "parentUuid": "d5be8934_14321b0d",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c6a81b_1c0e027a",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T18:07:48Z",
+      "side": 1,
+      "message": "I do not want to optimize for IDE usage, but I think this raises an interesting point, which we should reason about first.\n\nIs the expected usage here that \n\n1. Generate the code and check it into your source control,\n\nor\n\n(2) Integrate the code generation into your build system? and \n\nI would think about the API and integration differently in these two cases.\n\nmy preference is for (2), but we cannot just assume that cmake is the only build system that will be used, at google we use bazel (an internal variant of it) and there it will definitely be (2), which uses a build rule which is the equivalent to ceres_cost_functor, where this file only \nonly exists as a temporary which is generated everytime build is run (and cached by the underlying build system) and never really visible to the user, and therefore it is really important that we be very clear about what exists and what is generated.",
+      "parentUuid": "1728d644_d3b3002b",
       "range": {
         "startLine": 45,
         "startChar": 18,
@@ -341,6 +461,30 @@
       "side": 1,
       "message": "- During code generation this type is abstract, because evaluate doesn\u0027t exist yet\n- VariadicEvaluate fails because it thinks this is a cost function",
       "parentUuid": "d28e266b_fe382ae4",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ef2502e_59b6fa65",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T18:07:48Z",
+      "side": 1,
+      "message": "ah,  then this is worth documenting the issue here in detail.",
+      "parentUuid": "603740a0_61dd4847",
       "range": {
         "startLine": 41,
         "startChar": 7,
