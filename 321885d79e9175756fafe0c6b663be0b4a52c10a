@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b1caa8e_f877b8fb",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T16:34:10Z",
+      "side": 1,
+      "message": "this leads to upper/mixed case file names.",
+      "range": {
+        "startLine": 74,
+        "startChar": 62,
+        "endLine": 74,
+        "endChar": 79
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36d26bf_01dca591",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T16:34:10Z",
+      "side": 1,
+      "message": "I am wondering if this can\u0027t just be a generic filename that you generate and call, instead of making it cost_functor_name.cc ?",
+      "range": {
+        "startLine": 78,
+        "startChar": 79,
+        "endLine": 78,
+        "endChar": 81
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4333a8_00af269a",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T16:34:10Z",
+      "side": 1,
+      "message": "this leads to SquareFunctor_evaluate_impl.h, how about deriving it from the original header file?",
+      "range": {
+        "startLine": 79,
+        "startChar": 66,
+        "endLine": 79,
+        "endChar": 83
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded7e68b_97f33a86",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T16:34:10Z",
+      "side": 1,
+      "message": "I think you will agree that this reads confusingly as : CostFunction* \u003d new functor.\n\nI am wondering if the code/include structure gets simpler if the user instead of including square_functor.h is asked to include \n\nsquare_functor_generated.h and thats the file ceres_cost_functor generates?\n\nthis way it gets more freedom to do things to the source?",
+      "range": {
+        "startLine": 54,
+        "startChar": 36,
+        "endLine": 54,
+        "endChar": 49
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be1d7b4_86affda8",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T16:34:10Z",
+      "side": 1,
+      "message": "CodegenCostFunction should likely be renamed to CodeGeneratingCostFunction\n\nand objects inheriting from it should not be called a functor.\n\nAlso we need to ensure people are not accidentally invoking Evaluate on subclasses of CodeGeneratingCostFunction.",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5be8934_14321b0d",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T16:34:10Z",
+      "side": 1,
+      "message": "The generated file should not have upper case naming, it should also not be called the same name, thats a recipe for confusion.",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaacb3b4_1593c37f",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T16:34:10Z",
+      "side": 1,
+      "message": "This file should not be called autodiff.h, it should be called generate_code_for_functor.h.\n\nAutoDiffCodeGenOptions should be renamed to\n\nCodeGeneratorOptions",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c6385c_24c5d5d8",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T16:34:10Z",
+      "side": 1,
+      "message": "I looked at the generated code, and it reads better if you check for jacobians array being null and call EvaluateResidual and early return rather than saving it for the end.",
+      "range": {
+        "startLine": 255,
+        "startChar": 26,
+        "endLine": 255,
+        "endChar": 42
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d28e266b_fe382ae4",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T16:34:10Z",
+      "side": 1,
+      "message": "why is this conditional? what do we gain from it?",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
