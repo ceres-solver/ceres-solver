@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdf71120_fb0e70f1",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T13:23:33Z",
+      "side": 1,
+      "message": "suitable",
+      "range": {
+        "startLine": 78,
+        "startChar": 51,
+        "endLine": 78,
+        "endChar": 60
+      },
+      "revId": "d8245d38cc84173905d63f951dc5659b6858e6c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1186e41b_af0fd2a6",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T13:23:33Z",
+      "side": 1,
+      "message": "isn\u0027t it better for this function to return kInvalidExpressionId and the caller can decide how to deal with it?",
+      "range": {
+        "startLine": 79,
+        "startChar": 32,
+        "endLine": 79,
+        "endChar": 33
+      },
+      "revId": "d8245d38cc84173905d63f951dc5659b6858e6c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820b994c_ba439558",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T13:23:33Z",
+      "side": 1,
+      "message": "suitable",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 17
+      },
+      "revId": "d8245d38cc84173905d63f951dc5659b6858e6c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb85946_e71417d3",
+        "filename": "internal/ceres/codegen/expression_graph_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T13:23:33Z",
+      "side": 1,
+      "message": "split the test for the two functions into their own tests.",
+      "range": {
+        "startLine": 177,
+        "startChar": 42,
+        "endLine": 177,
+        "endChar": 43
+      },
+      "revId": "d8245d38cc84173905d63f951dc5659b6858e6c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fca2b9_147541c4",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T13:23:33Z",
+      "side": 1,
+      "message": "see comment about returning invalid id here and letting the caller decide what to do with it.",
+      "range": {
+        "startLine": 171,
+        "startChar": 43,
+        "endLine": 171,
+        "endChar": 51
+      },
+      "revId": "d8245d38cc84173905d63f951dc5659b6858e6c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
