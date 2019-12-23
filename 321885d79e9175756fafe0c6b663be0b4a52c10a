@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "e3d790d7_c108a7e4",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T17:31:24Z",
+      "side": 1,
+      "message": "I don\u0027t get why a generic name is better than the actual cost functor name. Like this, the user can understand this file better and the \"make\" console output is clearer.",
+      "parentUuid": "d36d26bf_01dca591",
+      "range": {
+        "startLine": 78,
+        "startChar": 79,
+        "endLine": 78,
+        "endChar": 81
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe4333a8_00af269a",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 16
@@ -59,6 +83,30 @@
       "writtenOn": "2019-12-23T16:34:10Z",
       "side": 1,
       "message": "this leads to SquareFunctor_evaluate_impl.h, how about deriving it from the original header file?",
+      "range": {
+        "startLine": 79,
+        "startChar": 66,
+        "endLine": 79,
+        "endChar": 83
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696328f6_4e862a3c",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T17:31:24Z",
+      "side": 1,
+      "message": "I disagree here. We should keep the option of having one header file with multiple functors.",
+      "parentUuid": "fe4333a8_00af269a",
       "range": {
         "startLine": 79,
         "startChar": 66,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "1bb1ac78_f4888d31",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T17:31:24Z",
+      "side": 1,
+      "message": "If we don\u0027t include the input file, we also have to generate the \"class stuff\" around the evaluate function. I don\u0027t think this is a good idea, because local variables, constructors and member functions can not be used anymore.",
+      "parentUuid": "ded7e68b_97f33a86",
+      "range": {
+        "startLine": 54,
+        "startChar": 36,
+        "endLine": 54,
+        "endChar": 49
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5be1d7b4_86affda8",
         "filename": "examples/square_functor.h",
         "patchSetId": 16
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "c24910be_d13d5d7f",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T17:31:24Z",
+      "side": 1,
+      "message": "The rename is fine.\n\nI don\u0027t get your second point. CodeGeneratingCostFunction doesn\u0027t have Evaluate so the subclasses either have a correct Evaluate (if included) or none.",
+      "parentUuid": "5be1d7b4_86affda8",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5be8934_14321b0d",
         "filename": "examples/square_functor.h",
         "patchSetId": 16
@@ -128,6 +224,30 @@
       "writtenOn": "2019-12-23T16:34:10Z",
       "side": 1,
       "message": "The generated file should not have upper case naming, it should also not be called the same name, thats a recipe for confusion.",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1728d644_d3b3002b",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T17:31:24Z",
+      "side": 1,
+      "message": "I think it\u0027s the cleanest naming like this (lower case is fine too). I\u0027m not a big fan of unnecessary pre-/post fixes (_impl _eval _generated). Like this you can type \"#include \"codegen/\"\" in your IDE and directly see all your generated files.",
+      "parentUuid": "d5be8934_14321b0d",
       "range": {
         "startLine": 45,
         "startChar": 18,
@@ -206,6 +326,30 @@
       "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603740a0_61dd4847",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T17:31:24Z",
+      "side": 1,
+      "message": "- During code generation this type is abstract, because evaluate doesn\u0027t exist yet\n- VariadicEvaluate fails because it thinks this is a cost function",
+      "parentUuid": "d28e266b_fe382ae4",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
