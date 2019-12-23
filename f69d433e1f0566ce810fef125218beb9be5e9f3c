@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "ca019839_955d3401",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T15:00:04Z",
+      "side": 1,
+      "message": "This is just restoring the program back, this has nothing to do with the preprocessor.\n\nThe thing that may require looking at is PostSolveSummary, but thats already current behaviour.",
+      "parentUuid": "ee98e9ff_4916a9db",
+      "revId": "f69d433e1f0566ce810fef125218beb9be5e9f3c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c80d468b_7f051bf0",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 2

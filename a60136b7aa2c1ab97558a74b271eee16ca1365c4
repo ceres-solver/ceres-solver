@@ -16,6 +16,24 @@
       "revId": "a60136b7aa2c1ab97558a74b271eee16ca1365c4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f87348_b1dfd67f",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-23T15:00:04Z",
+      "side": 0,
+      "message": "it was move above into an unconditional assignment. line 530.",
+      "parentUuid": "fceb1cd1_86641f25",
+      "revId": "a60136b7aa2c1ab97558a74b271eee16ca1365c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
