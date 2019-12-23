@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "04ad8f2c_a05482f7",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T18:47:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b1caa8e_f877b8fb",
+      "range": {
+        "startLine": 74,
+        "startChar": 62,
+        "endLine": 74,
+        "endChar": 79
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d36d26bf_01dca591",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 16
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "My objective here is to reduce the amount of surprise as much as possible and it is not evident that this is a generated file. Unless the user is aware of what the filenaming scheme in this cmake file, they will actually have to guess what this file is doing. In fact they would be surprised by a cc file with the same name as the header which they did not create.",
       "parentUuid": "e3d790d7_c108a7e4",
+      "range": {
+        "startLine": 78,
+        "startChar": 79,
+        "endLine": 78,
+        "endChar": 81
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b22982c_046075ca",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T18:47:59Z",
+      "side": 1,
+      "message": "I think I misunderstood you there. What about something like \u003cfunctor_name\u003e_code_generator.cc?",
+      "parentUuid": "7f0f2da0_a408a03c",
       "range": {
         "startLine": 78,
         "startChar": 79,
@@ -167,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "a2f1e676_631ab364",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T18:47:59Z",
+      "side": 1,
+      "message": "Yes, I want to allow a single file with multiple functors. In the current implementation it\u0027s straight forward because a impl.h file is generated for each functor.",
+      "parentUuid": "a02f41fe_c5e1583d",
+      "range": {
+        "startLine": 79,
+        "startChar": 66,
+        "endLine": 79,
+        "endChar": 83
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ded7e68b_97f33a86",
         "filename": "examples/helloworld_codegen.cc",
         "patchSetId": 16
@@ -238,6 +310,30 @@
     },
     {
       "key": {
+        "uuid": "85446009_20736391",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T18:47:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fadde86_fcc7e0f0",
+      "range": {
+        "startLine": 54,
+        "startChar": 36,
+        "endLine": 54,
+        "endChar": 49
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5be1d7b4_86affda8",
         "filename": "examples/square_functor.h",
         "patchSetId": 16
@@ -297,6 +393,30 @@
       "side": 1,
       "message": "you mean Evaluate is abstract for CodeGeneratingCostFunction? thats fine.",
       "parentUuid": "c24910be_d13d5d7f",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f098acc_db1b33ef",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T18:47:59Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "37c216e9_1f70b78d",
       "range": {
         "startLine": 33,
         "startChar": 7,
@@ -380,6 +500,30 @@
     },
     {
       "key": {
+        "uuid": "7bc8d91b_dc77151f",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T18:47:59Z",
+      "side": 1,
+      "message": "100% (2) here.",
+      "parentUuid": "05c6a81b_1c0e027a",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaacb3b4_1593c37f",
         "filename": "include/ceres/codegen/autodiff.h",
         "patchSetId": 16
@@ -403,6 +547,30 @@
     },
     {
       "key": {
+        "uuid": "f21fbbfc_b6d50387",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T18:47:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaacb3b4_1593c37f",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84c6385c_24c5d5d8",
         "filename": "include/ceres/codegen/autodiff.h",
         "patchSetId": 16
@@ -423,6 +591,30 @@
       "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b7ec91_eda9c819",
+        "filename": "include/ceres/codegen/autodiff.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T18:47:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84c6385c_24c5d5d8",
+      "range": {
+        "startLine": 255,
+        "startChar": 26,
+        "endLine": 255,
+        "endChar": 42
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -485,6 +677,30 @@
       "side": 1,
       "message": "ah,  then this is worth documenting the issue here in detail.",
       "parentUuid": "603740a0_61dd4847",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae40bdd1_850aa52c",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-23T18:47:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ef2502e_59b6fa65",
       "range": {
         "startLine": 41,
         "startChar": 7,
