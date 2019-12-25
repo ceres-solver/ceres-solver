@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "4a30e832_bd0f4591",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-25T01:17:17Z",
+      "side": 1,
+      "message": "that works.",
+      "parentUuid": "7b22982c_046075ca",
+      "range": {
+        "startLine": 78,
+        "startChar": 79,
+        "endLine": 78,
+        "endChar": 81
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe4333a8_00af269a",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 16
@@ -227,6 +251,30 @@
       "side": 1,
       "message": "Yes, I want to allow a single file with multiple functors. In the current implementation it\u0027s straight forward because a impl.h file is generated for each functor.",
       "parentUuid": "a02f41fe_c5e1583d",
+      "range": {
+        "startLine": 79,
+        "startChar": 66,
+        "endLine": 79,
+        "endChar": 83
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acdfb530_e1c543c8",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-25T01:17:17Z",
+      "side": 1,
+      "message": "so I understand the desire to do so, I am wondering if this is a great idea in practice though.\n\nFrom two perspectives.\n\n1. Does this make the user\u0027s mental model of this more complicated?\n2. Do we expect people to actually do this with enough frequency that this is worth it?\n\nMy current thinking here is that users are going to do this one functor per file, creating one cmake entry per file, but maybe I am wrong ?",
+      "parentUuid": "a2f1e676_631ab364",
       "range": {
         "startLine": 79,
         "startChar": 66,
@@ -512,6 +560,30 @@
       "side": 1,
       "message": "100% (2) here.",
       "parentUuid": "05c6a81b_1c0e027a",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0098c04c_627a2616",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2019-12-25T01:17:17Z",
+      "side": 1,
+      "message": "another point, is the directory in which this is being generated hardcoded as codegen?",
+      "parentUuid": "7bc8d91b_dc77151f",
       "range": {
         "startLine": 45,
         "startChar": 18,
