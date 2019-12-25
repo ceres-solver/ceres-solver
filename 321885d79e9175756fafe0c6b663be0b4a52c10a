@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "1ef04bfb_7b831741",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-25T14:13:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a30e832_bd0f4591",
+      "range": {
+        "startLine": 78,
+        "startChar": 79,
+        "endLine": 78,
+        "endChar": 81
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe4333a8_00af269a",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 16
@@ -275,6 +299,30 @@
       "side": 1,
       "message": "so I understand the desire to do so, I am wondering if this is a great idea in practice though.\n\nFrom two perspectives.\n\n1. Does this make the user\u0027s mental model of this more complicated?\n2. Do we expect people to actually do this with enough frequency that this is worth it?\n\nMy current thinking here is that users are going to do this one functor per file, creating one cmake entry per file, but maybe I am wrong ?",
       "parentUuid": "a2f1e676_631ab364",
+      "range": {
+        "startLine": 79,
+        "startChar": 66,
+        "endLine": 79,
+        "endChar": 83
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0850c9c_946ab79d",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 16
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-25T14:13:13Z",
+      "side": 1,
+      "message": "This feels like an unnecessary restriction. I don\u0027t think we should force users to have one functor per file. In the current system we still have to write one cmake entry per functor:\n\n    ceres_cost_functor(\n        NAME BundleAdjustment\n        INPUT_FILE ba.h\n        )\n\n    ceres_cost_functor(\n        NAME BundleAdjustmentOnlyPoints\n        INPUT_FILE ba.h\n        )",
+      "parentUuid": "acdfb530_e1c543c8",
       "range": {
         "startLine": 79,
         "startChar": 66,
@@ -584,6 +632,30 @@
       "side": 1,
       "message": "another point, is the directory in which this is being generated hardcoded as codegen?",
       "parentUuid": "7bc8d91b_dc77151f",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "321885d79e9175756fafe0c6b663be0b4a52c10a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d01fc44_4138aeba",
+        "filename": "examples/square_functor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2019-12-25T14:13:13Z",
+      "side": 1,
+      "message": "Right now the directory is hardcoded. We can keep it as a default value and add an optional argument OUTPUT_DIR to the cmake ceres_cost_functor function.",
+      "parentUuid": "0098c04c_627a2616",
       "range": {
         "startLine": 45,
         "startChar": 18,
