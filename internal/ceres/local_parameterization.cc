@@ -287,6 +287,106 @@ bool HomogeneousVectorParameterization::ComputeJacobian(
   return true;
 }
 
+LineParameterization::LineParameterization(int dimension)
+    : dimension_(dimension) {
+  CHECK_GT(dimension_, 1) << "The dimension of the line needs to be "
+                          << "greater than 1.";
+}
+
+bool LineParameterization::Plus(const double* x_ptr,
+                                const double* delta_ptr,
+                                double* x_plus_delta_ptr) const {
+  // The first half contains the origin point, the second half the line
+  // direction.
+  ConstVectorRef origin_point(x_ptr, dimension_);
+  ConstVectorRef dir(x_ptr + dimension_, dimension_);
+
+  // The delta update has one dimension less for the origin point and the line
+  // direction respectively.
+  ConstVectorRef delta_origin_point(delta_ptr, dimension_ - 1);
+  ConstVectorRef delta_dir(delta_ptr + dimension_ - 1, dimension_ - 1);
+
+  VectorRef origin_point_plus_delta(x_plus_delta_ptr, dimension_);
+  VectorRef dir_plus_delta(x_plus_delta_ptr + dimension_, dimension_);
+
+  const double norm_delta_dir = delta_dir.norm();
+
+  origin_point_plus_delta = origin_point;
+
+  // Shortcut for zero delta direction. If the origin point delta is not zero we
+  // still need the housholder vector for the origin point update step.
+  if (norm_delta_dir == 0.0) {
+    dir_plus_delta = dir;
+
+    if (delta_origin_point.isZero(0.0)) {
+      return true;
+    }
+  }
+
+  Vector v(dimension_);
+  double beta;
+  internal::ComputeHouseholderVector<double>(dir, &v, &beta);
+
+  if (norm_delta_dir != 0.0) {
+    // Map the delta from the minimum representation to the over parameterized
+    // homogeneous vector. See section A6.9.2 on page 624 of Hartley & Zisserman
+    // (2nd Edition) for a detailed description.  Note there is a typo on Page
+    // 625, line 4 so check the book errata.
+    const double norm_delta_div_2 = 0.5 * norm_delta_dir;
+    const double sin_delta_by_delta = sin(norm_delta_div_2) / norm_delta_div_2;
+
+    // Apply the delta update to remain on the unit sphere. See section A6.9.3
+    // on page 625 of Hartley & Zisserman (2nd Edition) for a detailed
+    // description.
+    Vector y(dimension_);
+    y.head(dimension_ - 1) = 0.5 * sin_delta_by_delta * delta_dir;
+    y(dimension_ - 1) = cos(norm_delta_div_2);
+
+    dir_plus_delta = dir.norm() * (y - v * (beta * (v.transpose() * y)));
+  }
+
+  if (!delta_origin_point.isZero(0.0)) {
+    // The null space is in the direction of the line, so the tangent space is
+    // perpendicular to the line direction. This is achieved by using the
+    // householder matrix of the direction and allow only movements
+    // perpendicular to e_n.
+    //
+    // The factor of 0.5 is used to be consistent with the line direction
+    // update.
+    Vector y(dimension_);
+    y << 0.5 * delta_origin_point, 0;
+    origin_point_plus_delta += y - v * (beta * (v.transpose() * y));
+  }
+
+  return true;
+}
+
+bool LineParameterization::ComputeJacobian(const double* x_ptr,
+                                           double* jacobian_ptr) const {
+  ConstVectorRef dir(x_ptr + dimension_, dimension_);
+  MatrixRef jacobian(jacobian_ptr, 2 * dimension_, 2 * (dimension_ - 1));
+
+  // Clear the Jacobian as only half of the matrix is not zero.
+  jacobian.setZero();
+
+  Vector v(dimension_);
+  double beta;
+  internal::ComputeHouseholderVector<double>(dir, &v, &beta);
+
+  // The Jacobian is equal to J = 0.5 * H.leftCols(dimension_ - 1) where H is
+  // the Householder matrix (H = I - beta * v * v') for the origin point. For
+  // the line direction part the Jacobian is scaled by the norm of the
+  // direction.
+  for (int i = 0; i < dimension_ - 1; ++i) {
+    jacobian.block(0, i, dimension_, 1) = -0.5 * beta * v(i) * v;
+    jacobian.col(i)(i) += 0.5;
+  }
+  
+  jacobian.block(dimension_, dimension_ - 1, dimension_, dimension_ - 1) =
+      jacobian.block(0, 0, dimension_, dimension_ - 1) * dir.norm();
+  return true;
+}
+
 bool ProductParameterization::Plus(const double* x,
                                    const double* delta,
                                    double* x_plus_delta) const {
