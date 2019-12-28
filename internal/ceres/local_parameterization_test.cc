@@ -34,7 +34,7 @@
 
 #include "Eigen/Geometry"
 #include "ceres/autodiff_local_parameterization.h"
-#include "ceres/householder_vector.h"
+#include "ceres/internal/householder_vector.h"
 #include "ceres/internal/autodiff.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/local_parameterization.h"
@@ -432,44 +432,41 @@ TEST(EigenQuaternionParameterization, AwayFromZeroTest) {
 }
 
 // Functor needed to implement automatically differentiated Plus for
-// homogeneous vectors. Note this explicitly defined for vectors of size 4.
+// homogeneous vectors.
+template <int Dim>
 struct HomogeneousVectorParameterizationPlus {
-  template<typename Scalar>
-  bool operator()(const Scalar* p_x, const Scalar* p_delta,
+  template <typename Scalar>
+  bool operator()(const Scalar* p_x,
+                  const Scalar* p_delta,
                   Scalar* p_x_plus_delta) const {
-    Eigen::Map<const Eigen::Matrix<Scalar, 4, 1>> x(p_x);
-    Eigen::Map<const Eigen::Matrix<Scalar, 3, 1>> delta(p_delta);
-    Eigen::Map<Eigen::Matrix<Scalar, 4, 1>> x_plus_delta(p_x_plus_delta);
+    Eigen::Map<const Eigen::Matrix<Scalar, Dim, 1>> x(p_x);
+    Eigen::Map<const Eigen::Matrix<Scalar, Dim - 1, 1>> delta(p_delta);
+    Eigen::Map<Eigen::Matrix<Scalar, Dim, 1>> x_plus_delta(p_x_plus_delta);
 
-    const Scalar squared_norm_delta =
-        delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
+    const Scalar squared_norm_delta = delta.squaredNorm();
 
-    Eigen::Matrix<Scalar, 4, 1> y;
+    Eigen::Matrix<Scalar, Dim, 1> y;
     Scalar one_half(0.5);
     if (squared_norm_delta > Scalar(0.0)) {
       Scalar norm_delta = sqrt(squared_norm_delta);
       Scalar norm_delta_div_2 = 0.5 * norm_delta;
-      const Scalar sin_delta_by_delta = sin(norm_delta_div_2) /
-          norm_delta_div_2;
-      y[0] = sin_delta_by_delta * delta[0] * one_half;
-      y[1] = sin_delta_by_delta * delta[1] * one_half;
-      y[2] = sin_delta_by_delta * delta[2] * one_half;
-      y[3] = cos(norm_delta_div_2);
+      const Scalar sin_delta_by_delta =
+          sin(norm_delta_div_2) / norm_delta_div_2;
+      y.template head<Dim - 1>() = sin_delta_by_delta * one_half * delta;
+      y[Dim - 1] = cos(norm_delta_div_2);
 
     } else {
       // We do not just use y = [0,0,0,1] here because that is a
       // constant and when used for automatic differentiation will
       // lead to a zero derivative. Instead we take a first order
       // approximation and evaluate it at zero.
-      y[0] = delta[0] * one_half;
-      y[1] = delta[1] * one_half;
-      y[2] = delta[2] * one_half;
-      y[3] = Scalar(1.0);
+      y.template head<Dim - 1>() = delta * one_half;
+      y[Dim - 1] = Scalar(1.0);
     }
 
-    Eigen::Matrix<Scalar, Eigen::Dynamic, 1> v(4);
+    Eigen::Matrix<Scalar, Dim, 1> v;
     Scalar beta;
-    internal::ComputeHouseholderVector<Scalar>(x, &v, &beta);
+    internal::ComputeHouseholderVector(x, &v, &beta);
 
     x_plus_delta = x.norm() * (y - v * (beta * v.dot(y)));
 
@@ -487,19 +484,17 @@ static void HomogeneousVectorParameterizationHelper(const double* x,
   double x_plus_delta[4] = {0.0, 0.0, 0.0, 0.0};
   homogeneous_vector_parameterization.Plus(x, delta, x_plus_delta);
 
-  const double x_plus_delta_norm =
-      sqrt(x_plus_delta[0] * x_plus_delta[0] +
-           x_plus_delta[1] * x_plus_delta[1] +
-           x_plus_delta[2] * x_plus_delta[2] +
-           x_plus_delta[3] * x_plus_delta[3]);
+  const double x_plus_delta_norm = sqrt(
+      x_plus_delta[0] * x_plus_delta[0] + x_plus_delta[1] * x_plus_delta[1] +
+      x_plus_delta[2] * x_plus_delta[2] + x_plus_delta[3] * x_plus_delta[3]);
 
-  const double x_norm = sqrt(x[0] * x[0] + x[1] * x[1] +
-                             x[2] * x[2] + x[3] * x[3]);
+  const double x_norm =
+      sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2] + x[3] * x[3]);
 
   EXPECT_NEAR(x_plus_delta_norm, x_norm, kTolerance);
 
   // Autodiff jacobian at delta_x = 0.
-  AutoDiffLocalParameterization<HomogeneousVectorParameterizationPlus, 4, 3>
+  AutoDiffLocalParameterization<HomogeneousVectorParameterizationPlus<4>, 4, 3>
       autodiff_jacobian;
 
   double jacobian_autodiff[12];
@@ -580,6 +575,176 @@ TEST(HomogeneousVectorParameterization, DeathTests) {
   EXPECT_DEATH_IF_SUPPORTED(HomogeneousVectorParameterization x(1), "size");
 }
 
+// Functor needed to implement automatically differentiated Plus for
+// line parameterization.
+template <int AmbientSpaceDim>
+struct LineParameterizationPlus {
+  template <typename Scalar>
+  bool operator()(const Scalar* p_x,
+                  const Scalar* p_delta,
+                  Scalar* p_x_plus_delta) const {
+    static constexpr int kTangetSpaceDim = AmbientSpaceDim - 1;
+    Eigen::Map<const Eigen::Matrix<Scalar, AmbientSpaceDim, 1>> origin_point(
+        p_x);
+    Eigen::Map<const Eigen::Matrix<Scalar, AmbientSpaceDim, 1>> dir(
+        p_x + AmbientSpaceDim);
+    Eigen::Map<const Eigen::Matrix<Scalar, kTangetSpaceDim, 1>>
+        delta_origin_point(p_delta);
+    Eigen::Map<Eigen::Matrix<Scalar, AmbientSpaceDim, 1>>
+        origin_point_plus_delta(p_x_plus_delta);
+
+    HomogeneousVectorParameterizationPlus<AmbientSpaceDim> dir_plus;
+    dir_plus(dir.data(),
+             p_delta + kTangetSpaceDim,
+             p_x_plus_delta + AmbientSpaceDim);
+
+    Eigen::Matrix<Scalar, AmbientSpaceDim, 1> v;
+    Scalar beta;
+    internal::ComputeHouseholderVector(dir, &v, &beta);
+
+    Eigen::Matrix<Scalar, AmbientSpaceDim, 1> y;
+    y << 0.5 * delta_origin_point, Scalar(0.0);
+    origin_point_plus_delta = origin_point + y - v * (beta * v.dot(y));
+
+    return true;
+  }
+};
+
+template <int AmbientSpaceDim>
+static void LineParameterizationHelper(const double* x_ptr,
+                                       const double* delta) {
+  const double kTolerance = 1e-14;
+
+  static constexpr int ParameterDim = 2 * AmbientSpaceDim;
+  static constexpr int TangientParameterDim = 2 * (AmbientSpaceDim - 1);
+
+  LineParameterization<AmbientSpaceDim> line_parameterization;
+
+  using ParameterVector = Eigen::Matrix<double, ParameterDim, 1>;
+  ParameterVector x_plus_delta = ParameterVector::Zero();
+  line_parameterization.Plus(x_ptr, delta, x_plus_delta.data());
+
+  // Ensure the update maintains the norm for the line direction.
+  Eigen::Map<const ParameterVector> x(x_ptr);
+  const double dir_plus_delta_norm =
+      x_plus_delta.template tail<AmbientSpaceDim>().norm();
+  const double dir_norm = x.template tail<AmbientSpaceDim>().norm();
+  EXPECT_NEAR(dir_plus_delta_norm, dir_norm, kTolerance);
+
+  // Ensure the update of the origin point is perpendicular to the line
+  // direction.
+  const double dot_prod_val = x.template tail<AmbientSpaceDim>().dot(
+      x_plus_delta.template head<AmbientSpaceDim>() -
+      x.template head<AmbientSpaceDim>());
+  EXPECT_NEAR(dot_prod_val, 0.0, kTolerance);
+
+  // Autodiff jacobian at delta_x = 0.
+  AutoDiffLocalParameterization<LineParameterizationPlus<AmbientSpaceDim>,
+                                ParameterDim,
+                                TangientParameterDim>
+      autodiff_jacobian;
+
+  using JacobianMatrix = Eigen::
+      Matrix<double, ParameterDim, TangientParameterDim, Eigen::RowMajor>;
+  constexpr double kNaN = std::numeric_limits<double>::quiet_NaN();
+  JacobianMatrix jacobian_autodiff = JacobianMatrix::Constant(kNaN);
+  JacobianMatrix jacobian_analytic = JacobianMatrix::Constant(kNaN);
+
+  autodiff_jacobian.ComputeJacobian(x_ptr, jacobian_autodiff.data());
+  line_parameterization.ComputeJacobian(x_ptr, jacobian_analytic.data());
+
+  EXPECT_FALSE(jacobian_autodiff.hasNaN());
+  EXPECT_FALSE(jacobian_analytic.hasNaN());
+  EXPECT_TRUE(jacobian_autodiff.isApprox(jacobian_analytic))
+      << "auto diff:\n"
+      << jacobian_autodiff << "\n"
+      << "analytic diff:\n"
+      << jacobian_analytic;
+}
+
+TEST(LineParameterization, ZeroTest3D) {
+  double x[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+  double delta[4] = {0.0, 0.0, 0.0, 0.0};
+
+  LineParameterizationHelper<3>(x, delta);
+}
+
+TEST(LineParameterization, ZeroTest4D) {
+  double x[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+  double delta[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+
+  LineParameterizationHelper<4>(x, delta);
+}
+
+TEST(LineParameterization, ZeroOriginPointTest3D) {
+  double x[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+  double delta[4] = {0.0, 0.0, 1.0, 2.0};
+
+  LineParameterizationHelper<3>(x, delta);
+}
+
+TEST(LineParameterization, ZeroOriginPointTest4D) {
+  double x[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+  double delta[6] = {0.0, 0.0, 0.0, 1.0, 2.0, 3.0};
+
+  LineParameterizationHelper<4>(x, delta);
+}
+
+TEST(LineParameterization, ZeroDirTest3D) {
+  double x[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+  double delta[4] = {3.0, 2.0, 0.0, 0.0};
+
+  LineParameterizationHelper<3>(x, delta);
+}
+
+TEST(LineParameterization, ZeroDirTest4D) {
+  double x[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+  double delta[6] = {3.0, 2.0, 1.0, 0.0, 0.0, 0.0};
+
+  LineParameterizationHelper<4>(x, delta);
+}
+
+TEST(LineParameterization, AwayFromZeroTest3D1) {
+  Eigen::Matrix<double, 6, 1> x;
+  x.head<3>() << 1.54, 2.32, 1.34;
+  x.tail<3>() << 0.52, 0.25, 0.15;
+  x.tail<3>().normalize();
+
+  double delta[4] = {4.0, 7.0, 1.0, -0.5};
+
+  LineParameterizationHelper<3>(x.data(), delta);
+}
+
+TEST(LineParameterization, AwayFromZeroTest4D1) {
+  Eigen::Matrix<double, 8, 1> x;
+  x.head<4>() << 1.54, 2.32, 1.34, 3.23;
+  x.tail<4>() << 0.52, 0.25, 0.15, 0.45;
+  x.tail<4>().normalize();
+
+  double delta[6] = {4.0, 7.0, -3.0, 0.0, 1.0, -0.5};
+
+  LineParameterizationHelper<4>(x.data(), delta);
+}
+
+TEST(LineParameterization, AwayFromZeroTest3D2) {
+  Eigen::Matrix<double, 6, 1> x;
+  x.head<3>() << 7.54, -2.81, 8.63;
+  x.tail<3>() << 2.52, 5.25, 4.15;
+
+  double delta[4] = {4.0, 7.0, 1.0, -0.5};
+
+  LineParameterizationHelper<3>(x.data(), delta);
+}
+
+TEST(LineParameterization, AwayFromZeroTest4D2) {
+  Eigen::Matrix<double, 8, 1> x;
+  x.head<4>() << 7.54, -2.81, 8.63, 6.93;
+  x.tail<4>() << 2.52, 5.25, 4.15, 1.45;
+
+  double delta[6] = {4.0, 7.0, -3.0, 2.0, 1.0, -0.5};
+
+  LineParameterizationHelper<4>(x.data(), delta);
+}
 
 class ProductParameterizationTest : public ::testing::Test {
  protected :
