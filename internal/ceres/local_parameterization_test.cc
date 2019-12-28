@@ -34,7 +34,7 @@
 
 #include "Eigen/Geometry"
 #include "ceres/autodiff_local_parameterization.h"
-#include "ceres/householder_vector.h"
+#include "ceres/internal/householder_vector.h"
 #include "ceres/internal/autodiff.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/local_parameterization.h"
@@ -469,7 +469,7 @@ struct HomogeneousVectorParameterizationPlus {
 
     Eigen::Matrix<Scalar, Eigen::Dynamic, 1> v(4);
     Scalar beta;
-    internal::ComputeHouseholderVector<Scalar>(x, &v, &beta);
+    internal::ComputeHouseholderVector(x, &v, &beta);
 
     x_plus_delta = x.norm() * (y - v * (beta * v.dot(y)));
 
@@ -580,6 +580,118 @@ TEST(HomogeneousVectorParameterization, DeathTests) {
   EXPECT_DEATH_IF_SUPPORTED(HomogeneousVectorParameterization x(1), "size");
 }
 
+// Functor needed to implement automatically differentiated Plus for
+// line parameterization. Note this explicitly defined for vectors of size 4.
+struct LineParameterizationPlus {
+  template <typename Scalar>
+  bool operator()(const Scalar* p_x,
+                  const Scalar* p_delta,
+                  Scalar* p_x_plus_delta) const {
+    Eigen::Map<const Eigen::Matrix<Scalar, 4, 1>> origin_point(p_x);
+    Eigen::Map<const Eigen::Matrix<Scalar, 4, 1>> dir(p_x + 4);
+    Eigen::Map<const Eigen::Matrix<Scalar, 3, 1>> delta_origin_point(p_delta);
+    Eigen::Map<Eigen::Matrix<Scalar, 4, 1>> origin_point_plus_delta(
+        p_x_plus_delta);
+
+    HomogeneousVectorParameterizationPlus dirPlus;
+    dirPlus(p_x + 4, p_delta + 3, p_x_plus_delta + 4);
+
+    Eigen::Matrix<Scalar, Eigen::Dynamic, 1> v(4);
+    Scalar beta;
+    internal::ComputeHouseholderVector(dir, &v, &beta);
+
+    Eigen::Matrix<Scalar, Eigen::Dynamic, 1> y(4);
+    y << 0.5 * delta_origin_point, Scalar(0.0);
+    origin_point_plus_delta = origin_point + y - v * (beta * v.dot(y));
+
+    return true;
+  }
+};
+
+static void LineParameterizationHelper(const double* x_ptr,
+                                       const double* delta) {
+  const double kTolerance = 1e-14;
+
+  LineParameterization<4> line_parameterization;
+
+  using Vec8 = Eigen::Matrix<double, 8, 1>;
+  Vec8 x_plus_delta = Vec8::Zero();
+  line_parameterization.Plus(x_ptr, delta, x_plus_delta.data());
+
+  // Ensure the update maintains the norm for the line direction.
+  Eigen::Map<const Vec8> x(x_ptr);
+  const double dir_plus_delta_norm = x_plus_delta.tail<4>().norm();
+  const double dir_norm = x.tail<4>().norm();
+  EXPECT_NEAR(dir_plus_delta_norm, dir_norm, kTolerance);
+
+  // Ensure the update of the origin point is perpendicular to the line
+  // direction.
+  const double dot_prod_val =
+      x.tail<4>().dot(x_plus_delta.head<4>() - x.head<4>());
+  EXPECT_NEAR(dot_prod_val, 0.0, kTolerance);
+
+  // Autodiff jacobian at delta_x = 0.
+  AutoDiffLocalParameterization<LineParameterizationPlus, 8, 6>
+      autodiff_jacobian;
+
+  using JacobianMatrix = Eigen::Matrix<double, 8, 6, Eigen::RowMajor>;
+  constexpr double kNaN = std::numeric_limits<double>::quiet_NaN();
+  JacobianMatrix jacobian_autodiff = JacobianMatrix::Constant(kNaN);
+  JacobianMatrix jacobian_analytic = JacobianMatrix::Constant(kNaN);
+
+  line_parameterization.ComputeJacobian(x_ptr, jacobian_analytic.data());
+  autodiff_jacobian.ComputeJacobian(x_ptr, jacobian_autodiff.data());
+
+  EXPECT_FALSE(jacobian_autodiff.hasNaN());
+  EXPECT_FALSE(jacobian_analytic.hasNaN());
+  EXPECT_TRUE(jacobian_autodiff.isApprox(jacobian_analytic))
+      << "auto diff:" << std::endl
+      << jacobian_autodiff << std::endl
+      << "analytic diff:" << std::endl
+      << jacobian_analytic;
+}
+
+TEST(LineParameterization, ZeroTest) {
+  double x[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+  double delta[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+
+  LineParameterizationHelper(x, delta);
+}
+
+TEST(LineParameterization, ZeroOriginPointTest) {
+  double x[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+  double delta[6] = {0.0, 0.0, 0.0, 1.0, 2.0, 3.0};
+
+  LineParameterizationHelper(x, delta);
+}
+
+TEST(LineParameterization, ZeroDirTest) {
+  double x[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+  double delta[6] = {3.0, 2.0, 1.0, 0.0, 0.0, 0.0};
+
+  LineParameterizationHelper(x, delta);
+}
+
+TEST(LineParameterization, AwayFromZeroTest1) {
+  Eigen::Matrix<double, 8, 1> x;
+  x.head<4>() << 1.54, 2.32, 1.34, 3.23;
+  x.tail<4>() << 0.52, 0.25, 0.15, 0.45;
+  x.tail<4>().normalize();
+
+  double delta[6] = {4.0, 7.0, -3.0, 0.0, 1.0, -0.5};
+
+  LineParameterizationHelper(x.data(), delta);
+}
+
+TEST(LineParameterization, AwayFromZeroTest2) {
+  Eigen::Matrix<double, 8, 1> x;
+  x.head<4>() << 7.54, -2.81, 8.63, 6.93;
+  x.tail<4>() << 2.52, 5.25, 4.15, 1.45;
+
+  double delta[6] = {4.0, 7.0, -3.0, 2.0, 1.0, -0.5};
+
+  LineParameterizationHelper(x.data(), delta);
+}
 
 class ProductParameterizationTest : public ::testing::Test {
  protected :

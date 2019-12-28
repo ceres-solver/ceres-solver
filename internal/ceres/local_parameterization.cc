@@ -32,7 +32,7 @@
 
 #include <algorithm>
 #include "Eigen/Geometry"
-#include "ceres/householder_vector.h"
+#include "ceres/internal/householder_vector.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/rotation.h"
@@ -248,16 +248,16 @@ bool HomogeneousVectorParameterization::Plus(const double* x_ptr,
   // (2nd Edition) for a detailed description.  Note there is a typo on Page
   // 625, line 4 so check the book errata.
   const double norm_delta_div_2 = 0.5 * norm_delta;
-  const double sin_delta_by_delta = sin(norm_delta_div_2) /
+  const double sin_delta_by_delta = std::sin(norm_delta_div_2) /
       norm_delta_div_2;
 
   Vector y(size_);
   y.head(size_ - 1) = 0.5 * sin_delta_by_delta * delta;
-  y(size_ - 1) = cos(norm_delta_div_2);
+  y(size_ - 1) = std::cos(norm_delta_div_2);
 
   Vector v(size_);
   double beta;
-  internal::ComputeHouseholderVector<double>(x, &v, &beta);
+  internal::ComputeHouseholderVector(x, &v, &beta);
 
   // Apply the delta update to remain on the unit sphere. See section A6.9.3
   // on page 625 of Hartley & Zisserman (2nd Edition) for a detailed
@@ -274,7 +274,7 @@ bool HomogeneousVectorParameterization::ComputeJacobian(
 
   Vector v(size_);
   double beta;
-  internal::ComputeHouseholderVector<double>(x, &v, &beta);
+  internal::ComputeHouseholderVector(x, &v, &beta);
 
   // The Jacobian is equal to J = 0.5 * H.leftCols(size_ - 1) where H is the
   // Householder matrix (H = I - beta * v * v').
