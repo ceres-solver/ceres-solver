@@ -1339,6 +1339,7 @@ Instances
    same update as :class:`QuaternionParameterization` but takes into
    account Eigen's internal memory element ordering.
 
+.. _`homogeneous_vector_parameterization`:
 .. class:: HomogeneousVectorParameterization
 
    In computer vision, homogeneous vectors are commonly used to
@@ -1362,6 +1363,27 @@ Instances
    last element of :math:`x` is the scalar component of the homogeneous
    vector.
 
+.. class:: LineParameterization
+
+   This class provides a parameterization for lines, where the line is
+   over-parameterized by an origin point and a direction vector. So the
+   parameter vector size needs to be two times the ambient space dimension,
+   where the first half is interpreted as the origin point and the second
+   half as the direction.
+
+   To give an example: Given n distinct points in 3D (measurements) we search
+   for the line which has the closest distance to all of these. We parameterize
+   the line with a 3D origin point and a 3D direction vector. As a cost
+   function the distance between the line and the given points is used.
+   We use six parameters for the line (two 3D vectors) but a line in 3D only
+   has four degrees of freedom. To make the over-parameterization visible to
+   the optimizer and covariance estimator this line parameterization can be
+   used.
+
+   The plus operator for the line direction is the same as for the
+   :ref:`HomogeneousVectorParameterization <homogeneous_vector_parameterization>`.
+   The update of the origin point is perpendicular to the line direction
+   before the update.
 
 .. class:: ProductParameterization
 
