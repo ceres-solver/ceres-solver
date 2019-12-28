@@ -1339,6 +1339,7 @@ Instances
    same update as :class:`QuaternionParameterization` but takes into
    account Eigen's internal memory element ordering.
 
+.. _`homogeneous_vector_parameterization`:
 .. class:: HomogeneousVectorParameterization
 
    In computer vision, homogeneous vectors are commonly used to
@@ -1362,6 +1363,20 @@ Instances
    last element of :math:`x` is the scalar component of the homogeneous
    vector.
 
+.. class:: LineParameterization
+
+    A line in n-dimensional space has :math:`2(n-1)` degrees of freedom.
+    Usually it is cumbersome to use a minimal line representation directly,
+    so a line can be parameterized by two n-d points, namely the origin
+    point and the direction. When using such a parameterization, the local
+    parameterization updates the line with a :math:`2(n-1)` vector.
+
+    It is assumed, that the origin point are stored in the first n entries and
+    the direction are the second n entries. The update of the line direction
+    is similar to the
+    :ref:`HomogeneousVectorParameterization <homogeneous_vector_parameterization>`
+    and is norm preserving. The origin point update is perpendicular
+    to the line direction before the update.
 
 .. class:: ProductParameterization
 
