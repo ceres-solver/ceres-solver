@@ -248,12 +248,12 @@ bool HomogeneousVectorParameterization::Plus(const double* x_ptr,
   // (2nd Edition) for a detailed description.  Note there is a typo on Page
   // 625, line 4 so check the book errata.
   const double norm_delta_div_2 = 0.5 * norm_delta;
-  const double sin_delta_by_delta = sin(norm_delta_div_2) /
+  const double sin_delta_by_delta = std::sin(norm_delta_div_2) /
       norm_delta_div_2;
 
   Vector y(size_);
   y.head(size_ - 1) = 0.5 * sin_delta_by_delta * delta;
-  y(size_ - 1) = cos(norm_delta_div_2);
+  y(size_ - 1) = std::cos(norm_delta_div_2);
 
   Vector v(size_);
   double beta;
@@ -284,6 +284,132 @@ bool HomogeneousVectorParameterization::ComputeJacobian(
   }
   jacobian *= x.norm();
 
+  return true;
+}
+
+LineParameterization::LineParameterization(int ambient_space_dimension)
+    : dimension_(ambient_space_dimension) {
+  CHECK_GT(ambient_space_dimension, 1);
+}
+
+bool LineParameterization::Plus(const double* x_ptr,
+                                const double* delta_ptr,
+                                double* x_plus_delta_ptr) const {
+  // We seek a box plus operator f of the form
+  //
+  //   [o*, d*] = f([o, d], [delta_o, delta_d])
+  //
+  // where o is the origin point, d is the direction vector, delta_o is
+  // the delta of the origin point and delta_d the delta of the direction and
+  // o* and d* is the updated origin point and direction.
+  //
+  // We separate f into the origin point and directional part
+  //   d* = f_d(d, delta_d)
+  //   o* = f_o(o, d, delta_o)
+  //
+  // The direction update function f_d is similar to the homogeneous vector
+  // parameterization:
+  //
+  //   d* = H_{v(d)} [0.5 sinc(0.5 |delta_d|) delta_d, cos(0.5 |delta_d|)]^T
+  //
+  // where H is the householder matrix
+  //   H_{v} = I - (2 / |v|^2) v v^T
+  // and
+  //   v(d) = d - sign(d_n) |d| e_n.
+  //
+  // The origin point update function f_o is defined as
+  //
+  //   o* = o + H_{v(d)} [0.5 delta_o, 0]^T.
+
+  // The first half contains the origin point, the second half the line
+  // direction.
+  ConstVectorRef o(x_ptr, dimension_);
+  ConstVectorRef d(x_ptr + dimension_, dimension_);
+
+  // The delta update has one dimension less for the origin point and the line
+  // direction respectively.
+  ConstVectorRef delta_o(delta_ptr, dimension_ - 1);
+  ConstVectorRef delta_d(delta_ptr + dimension_ - 1, dimension_ - 1);
+
+  VectorRef o_plus_delta(x_plus_delta_ptr, dimension_);
+  VectorRef d_plus_delta(x_plus_delta_ptr + dimension_, dimension_);
+
+  const double norm_delta_d = delta_d.norm();
+
+  o_plus_delta = o;
+
+  // Shortcut for zero delta direction.
+  if (norm_delta_d == 0.0) {
+    d_plus_delta = d;
+
+    if (delta_o.isZero(0.0)) {
+      return true;
+    }
+  }
+
+  // Calculate the householder transformation which is needed for f_d and f_o.
+  Vector v(dimension_);
+  double beta;
+  internal::ComputeHouseholderVector<double>(d, &v, &beta);
+
+  if (norm_delta_d != 0.0) {
+    // Map the delta from the minimum representation to the over parameterized
+    // homogeneous vector. See section A6.9.2 on page 624 of Hartley & Zisserman
+    // (2nd Edition) for a detailed description.  Note there is a typo on Page
+    // 625, line 4 so check the book errata.
+    const double norm_delta_div_2 = 0.5 * norm_delta_d;
+    const double sin_delta_by_delta =
+        std::sin(norm_delta_div_2) / norm_delta_div_2;
+
+    // Apply the delta update to remain on the unit sphere. See section A6.9.3
+    // on page 625 of Hartley & Zisserman (2nd Edition) for a detailed
+    // description.
+    Vector y(dimension_);
+    y.head(dimension_ - 1) = 0.5 * sin_delta_by_delta * delta_d;
+    y(dimension_ - 1) = std::cos(norm_delta_div_2);
+
+    d_plus_delta = d.norm() * (y - v * (beta * (v.transpose() * y)));
+  }
+
+  if (!delta_o.isZero(0.0)) {
+    // The null space is in the direction of the line, so the tangent space is
+    // perpendicular to the line direction. This is achieved by using the
+    // householder matrix of the direction and allow only movements
+    // perpendicular to e_n.
+    //
+    // The factor of 0.5 is used to be consistent with the line direction
+    // update.
+    Vector y(dimension_);
+    y << 0.5 * delta_o, 0;
+    o_plus_delta += y - v * (beta * (v.transpose() * y));
+  }
+
+  return true;
+}
+
+bool LineParameterization::ComputeJacobian(const double* x_ptr,
+                                           double* jacobian_ptr) const {
+  ConstVectorRef d(x_ptr + dimension_, dimension_);
+  MatrixRef jacobian(jacobian_ptr, 2 * dimension_, 2 * (dimension_ - 1));
+
+  // Clear the Jacobian as only half of the matrix is not zero.
+  jacobian.setZero();
+
+  Vector v(dimension_);
+  double beta;
+  internal::ComputeHouseholderVector<double>(d, &v, &beta);
+
+  // The Jacobian is equal to J = 0.5 * H.leftCols(dimension_ - 1) where H is
+  // the Householder matrix (H = I - beta * v * v') for the origin point. For
+  // the line direction part the Jacobian is scaled by the norm of the
+  // direction.
+  for (int i = 0; i < dimension_ - 1; ++i) {
+    jacobian.block(0, i, dimension_, 1) = -0.5 * beta * v(i) * v;
+    jacobian.col(i)(i) += 0.5;
+  }
+
+  jacobian.block(dimension_, dimension_ - 1, dimension_, dimension_ - 1) =
+      jacobian.block(0, 0, dimension_, dimension_ - 1) * d.norm();
   return true;
 }
 

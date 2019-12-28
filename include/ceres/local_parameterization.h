@@ -262,6 +262,39 @@ class CERES_EXPORT HomogeneousVectorParameterization
   const int size_;
 };
 
+// This provides a parameterization for lines, where the line is
+// over-parameterized by an origin point and a direction vector. So the
+// parameter vector size needs to be two times the ambient space dimension,
+// where the first half is interpreted as the origin point and the second half
+// as the direction.
+//
+// The plus operator for the line direction is the same as for the
+// HomogeneousVectorParameterization. The update of the origin point is
+// perpendicular to the line direction before the update.
+//
+// This local parameterization is a special case of the affine Grassmannian
+// manifold (see https://en.wikipedia.org/wiki/Affine_Grassmannian_(manifold))
+// for the case Graff_1(R^n).
+class CERES_EXPORT LineParameterization : public LocalParameterization {
+ public:
+  //
+  // NOTE: The parameter vector size needs to be two times of the specified
+  // ambient space dimension.
+  //
+  explicit LineParameterization(int ambient_space_dimension);
+
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
+  bool ComputeJacobian(const double* x, double* jacobian) const override;
+  int GlobalSize() const override { return 2 * dimension_; }
+  int LocalSize() const override { return 2 * (dimension_ - 1); }
+
+ private:
+  // The ambient space dimension.
+  const int dimension_;
+};
+
 // Construct a local parameterization by taking the Cartesian product
 // of a number of other local parameterizations. This is useful, when
 // a parameter block is the cartesian product of two or more
