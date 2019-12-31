@@ -206,7 +206,6 @@ class NumericDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
 
     using ParameterDims =
         typename SizedCostFunction<kNumResiduals, Ns...>::ParameterDims;
-    using Parameters = typename ParameterDims::Parameters;
 
     constexpr int kNumParameters = ParameterDims::kNumParameters;
     constexpr int kNumParameterBlocks = ParameterDims::kNumParameterBlocks;
