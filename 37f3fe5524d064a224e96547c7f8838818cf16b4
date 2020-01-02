@@ -22,6 +22,30 @@
       "revId": "37f3fe5524d064a224e96547c7f8838818cf16b4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78e9fdb_a835f6a1",
+        "filename": "internal/ceres/invert_psd_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-01-02T19:47:30Z",
+      "side": 1,
+      "message": "I think, rank deficient matrices are handled correctly. Eigen::SVDBase supports a threshold, which is exactly the same value chosen here, to treat near zero SVD values as zero. The implementation of the solve method can be found here:\nhttps://gitlab.com/libeigen/eigen/blob/master/Eigen/src/SVD/SVDBase.h#L292\n\nAs of this comment https://eigen.tuxfamily.org/bz/show_bug.cgi?id\u003d257#c18 it should compute the pseudo-inverse and all the unit test passes. I haven\u0027t looked at the unit test and don\u0027t know, if they test, if the correct pseudo-inverse in calculated.",
+      "parentUuid": "3343c082_500e72e2",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 12
+      },
+      "revId": "37f3fe5524d064a224e96547c7f8838818cf16b4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
