@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3343c082_500e72e2",
+        "filename": "internal/ceres/invert_psd_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-01-02T19:32:00Z",
+      "side": 1,
+      "message": "What happens if the matrix is rank deficient or near rank deficient? I do not think svd.solve computes the pseudo inverse, which was the reason for the original bit of code.",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 12
+      },
+      "revId": "37f3fe5524d064a224e96547c7f8838818cf16b4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
