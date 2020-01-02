@@ -67,16 +67,10 @@ typename EigenTypes<kSize, kSize>::Matrix InvertPSDMatrix(
         MType::Identity(size, size));
   }
 
-  Eigen::JacobiSVD<MType> svd(m, Eigen::ComputeThinU | Eigen::ComputeThinV);
-  const double tolerance =
-      std::numeric_limits<double>::epsilon() * size * svd.singularValues()(0);
-
-  return svd.matrixV() *
-         (svd.singularValues().array() > tolerance)
-             .select(svd.singularValues().array().inverse(), 0)
-             .matrix()
-             .asDiagonal() *
-         svd.matrixU().adjoint();
+  // For a thin SVD the number of columns of the matrix need to be dynamic.
+  using SVDMType = typename EigenTypes<kSize, Eigen::Dynamic>::Matrix;
+  Eigen::JacobiSVD<SVDMType> svd(m, Eigen::ComputeThinU | Eigen::ComputeThinV);
+  return svd.solve(MType::Identity(size, size));
 }
 
 }  // namespace internal
