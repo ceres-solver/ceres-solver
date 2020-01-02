@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "113c4c57_35d31185",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-01-02T22:06:43Z",
+      "side": 1,
+      "message": "is there a scenario in which the user would disable this option and still have a correctly functioning version of ceres? if not then there is no reason to add an option here.",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 182,
+        "endChar": 20
+      },
+      "revId": "57915084c9ed6d7706942a0a0f6319f951e0338c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
