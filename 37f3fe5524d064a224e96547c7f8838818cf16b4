@@ -46,6 +46,30 @@
       "revId": "37f3fe5524d064a224e96547c7f8838818cf16b4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d4b3fa_61671ac6",
+        "filename": "internal/ceres/invert_psd_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-01-02T21:59:19Z",
+      "side": 1,
+      "message": "thanks for the reference, let me take a closer look.",
+      "parentUuid": "b78e9fdb_a835f6a1",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 12
+      },
+      "revId": "37f3fe5524d064a224e96547c7f8838818cf16b4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
