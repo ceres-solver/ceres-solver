@@ -179,6 +179,11 @@ if (MSVC)
   option(MSVC_USE_STATIC_CRT
     "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
 
+  if (${MSVC_VERSION} GREATER 1914)
+    option(MSVC_ENABLE_EXTENDED_ALIGNED_STORAGE
+      "MS Visual Studio: Use extended aligned storage for VS 2007 v15.8 and later which is incompatible with older version but handles Eigen alignments correctly." ON)
+  endif (${MSVC_VERSION} GREATER 1914)
+
   if (BUILD_TESTING AND BUILD_SHARED_LIBS)
     message(
       "-- Disabling tests. The flags BUILD_TESTING and BUILD_SHARED_LIBS"
@@ -546,6 +551,22 @@ if (MSVC)
   # much about. The real solution is to link static versions of Google Log and
   # Google Test, but that seems tricky on Windows. So, disable the warning.
   add_definitions("/wd4251")
+
+  # Add bigobj flag otherwise the build would fail due to large object files
+  # probably resulting from generated headers (like the fixed-size schur
+  # specializations).
+  add_definitions("/bigobj")
+
+  # MSVC 19.15 fixed a non-conforming behaviour for over-aligned types which is
+  # ABI incompatible. As in Ceres over-aligned Eigen types may be used, the
+  # default is to use the extended aligned storage.
+  if (${MSVC_VERSION} GREATER 1914)
+    if (MSVC_ENABLE_EXTENDED_ALIGNED_STORAGE)
+      add_definitions("-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
+    else (MSVC_ENABLE_EXTENDED_ALIGNED_STORAGE)
+      add_definitions("-D_DISABLE_EXTENDED_ALIGNED_STORAG")
+    endif (MSVC_ENABLE_EXTENDED_ALIGNED_STORAGE)
+  endif (${MSVC_VERSION} GREATER 1914)
 
   # Google Flags doesn't have their DLL import/export stuff set up correctly,
   # which results in linker warnings. This is irrelevant for Ceres, so ignore
