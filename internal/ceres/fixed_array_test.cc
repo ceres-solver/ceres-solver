@@ -477,8 +477,8 @@ TEST(FixedArrayTest, TooBigInlinedSpace) {
   // Simulate the data members of ceres::internal::FixedArray, a pointer and a
   // size_t.
   struct Data {
+    std::tuple<size_t, std::allocator<double>> size_alloc_;
     TooBig* p;
-    size_t size;
   };
 
   // Make sure TooBig objects are not inlined for 0 or default size.
