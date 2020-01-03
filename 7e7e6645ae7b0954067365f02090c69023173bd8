@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "2907391a_4f9e98b0",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-01-03T09:24:11Z",
+      "side": 1,
+      "message": "Should this not come first, before the gradient checking test?  Logically I think it would fail first.",
+      "revId": "7e7e6645ae7b0954067365f02090c69023173bd8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "533724f0_d7fa023e",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 4
