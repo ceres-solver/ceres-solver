@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "701640ef_254656da",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2020-01-03T04:53:27Z",
+      "side": 1,
+      "message": "Consider early bailout here if the preprocessor fails; duplicate the time tracking logic.",
+      "revId": "7e7e6645ae7b0954067365f02090c69023173bd8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e9cafa_1bc97d10",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2020-01-03T04:53:27Z",
+      "side": 1,
+      "message": "nit: drop blank.",
+      "revId": "7e7e6645ae7b0954067365f02090c69023173bd8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb2c5c3_ea4739df",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2020-01-03T04:53:27Z",
+      "side": 1,
+      "message": "It\u0027s unclear this is correct. If preprocessing failed, is post processing defined behaviour?",
+      "revId": "7e7e6645ae7b0954067365f02090c69023173bd8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533724f0_d7fa023e",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2020-01-03T04:53:27Z",
+      "side": 1,
+      "message": "The logic around error handling is a bit hard to follow.\nConsider instead moving this block up next to the preprocessor invocation. If the preprocessor fails, there is no recovery; so it seems odd to put the summary setting down here.\n\nConsider doing an early exit in the case of preprocessor failure, and just duplicating the total time line below.",
+      "revId": "7e7e6645ae7b0954067365f02090c69023173bd8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
