@@ -22,6 +22,47 @@
       "revId": "57915084c9ed6d7706942a0a0f6319f951e0338c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb93d86_398535ee",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-01-03T09:10:32Z",
+      "side": 1,
+      "message": "Agreed, I don\u0027t think this should be an option as its required to generate a valid build, but has implications - a message would be better.",
+      "parentUuid": "113c4c57_35d31185",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 182,
+        "endChar": 20
+      },
+      "revId": "57915084c9ed6d7706942a0a0f6319f951e0338c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04918e98_e6066404",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-01-03T09:10:32Z",
+      "side": 1,
+      "message": "This is misspelt: https://devblogs.microsoft.com/cppblog/stl-features-and-fixes-in-vs-2017-15-8/\n\nIt should be _ENABLE_EXTENDED_ALIGNED_STORAGE and _DISABLE_EXTENDED_ALIGNED_STORAGE",
+      "revId": "57915084c9ed6d7706942a0a0f6319f951e0338c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
