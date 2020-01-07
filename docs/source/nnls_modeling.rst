@@ -296,7 +296,80 @@ the corresponding accessors. This information will be verified by the
    would be ``<MyScalarCostFunction, 1, 2>``, which is missing the 2
    as the last template argument.
 
+   
+AutoDiffCodegen
+=============================
 
+   Developing with :class:`AutoDiffCostFunction` is convenient, because the 
+   cost function can be directly modified without having to update the 
+   derivatives. Using :class:`SizedCostFunction` on the other hand, is more
+   tedious and prone to errors, but can achieve higher performance due to 
+   hand optimization of the derivative kernels.
+   
+   The `AutoDiffCodegen` module combines the advantages of both methods
+   by automatically generating highly optimized C-code for templated cost 
+   functors. This is achieved by 
+   `tracing <https://en.wikipedia.org/wiki/Tracing_(software)>`_
+   an autodiff evaluation and converting the trace into an 
+   `intermediate representation <https://en.wikipedia.org/wiki/Intermediate_representation>`_.
+   This intermediate representation is then aggressively 
+   `optimized <https://en.wikipedia.org/wiki/Program_optimization>`_ 
+   and converted into C-code. Finally, the user can include the generated code
+   and use it to solve ceres problems more efficiently. 
+   
+:class:`CodegenCostFunction`
+-----------------------------------------------
+
+.. class:: CodegenCostFunction
+
+   To generate code for your custom functor, it has to derive from 
+   :class:`CodegenCostFunction`. The template parameters are identical
+   to :class:`SizedCostFunction`, so the residual size and parameter block
+   sizes have to be provided.
+   
+   .. code-block:: c++
+
+    #include "ceres/codegen/cost_function.h"
+    
+    class MyCostFunction : public ceres::CodegenCostFunction<1, 2, 2> {
+    
+      MyCostFunction() = default;
+
+      template <typename T>
+      bool operator()(const T* const x , const T* const y, T* e) const {
+        e[0] = x[0] * y[0] - x[1] * y[1];
+        return true;
+      }
+      
+      #include "my_generated_output_dir/mycostfunction.h"
+    };
+
+   - explain default constructor
+   - explain generated #include
+   
+CMake Integration
+-----------------------------------------------
+
+   
+Conditionals
+-----------------------------------------------
+
+   - if/else/endif
+   - ternary
+
+   
+Local Variables
+-----------------------------------------------
+
+   
+Pitfalls / Unsupported
+-----------------------------------------------
+
+   - static evaluation
+   - dynamic integer arithmetic
+   - loops
+   
+   
 :class:`DynamicAutoDiffCostFunction`
 ====================================
 
