@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "620c9878_33cef1f7",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-07T08:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdf71120_fb0e70f1",
+      "range": {
+        "startLine": 78,
+        "startChar": 51,
+        "endLine": 78,
+        "endChar": 60
+      },
+      "revId": "d8245d38cc84173905d63f951dc5659b6858e6c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1186e41b_af0fd2a6",
         "filename": "include/ceres/codegen/internal/expression_graph.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "d8245d38cc84173905d63f951dc5659b6858e6c8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb990f9_0a0afa86",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-07T08:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1186e41b_af0fd2a6",
+      "range": {
+        "startLine": 79,
+        "startChar": 32,
+        "endLine": 79,
+        "endChar": 33
+      },
+      "revId": "d8245d38cc84173905d63f951dc5659b6858e6c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "703d87a0_5d06b9e3",
+        "filename": "include/ceres/codegen/internal/expression_graph.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-07T08:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "820b994c_ba439558",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 17
+      },
+      "revId": "d8245d38cc84173905d63f951dc5659b6858e6c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcb85946_e71417d3",
         "filename": "internal/ceres/codegen/expression_graph_test.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1f93675d_c5083219",
+        "filename": "internal/ceres/codegen/expression_graph_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-07T08:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcb85946_e71417d3",
+      "range": {
+        "startLine": 177,
+        "startChar": 42,
+        "endLine": 177,
+        "endChar": 43
+      },
+      "revId": "d8245d38cc84173905d63f951dc5659b6858e6c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85fca2b9_147541c4",
         "filename": "internal/ceres/expression_graph.cc",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "d8245d38cc84173905d63f951dc5659b6858e6c8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028e6f2c_618b7d10",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-07T08:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85fca2b9_147541c4",
+      "range": {
+        "startLine": 171,
+        "startChar": 43,
+        "endLine": 171,
+        "endChar": 51
+      },
+      "revId": "d8245d38cc84173905d63f951dc5659b6858e6c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
