@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "698250d1_8846fcf3",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-01-07T17:21:22Z",
+      "side": 1,
+      "message": "are we creating a separate library called libHelloWorldCostFunction for this? I thought it was just generating an include header, why does this require a separate library?",
+      "range": {
+        "startLine": 83,
+        "startChar": 51,
+        "endLine": 83,
+        "endChar": 73
+      },
+      "revId": "b1ac7ae93bbfb9cd647d1ad342a0fd728eaa7364",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5512073a_58f80ee9",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-01-07T17:21:22Z",
+      "side": 1,
+      "message": "the comment in bracket is not correct. in fact the whole line can be dropped.",
+      "range": {
+        "startLine": 53,
+        "startChar": 41,
+        "endLine": 53,
+        "endChar": 46
+      },
+      "revId": "b1ac7ae93bbfb9cd647d1ad342a0fd728eaa7364",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09d0f76_dbc89ff2",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-01-07T17:21:22Z",
+      "side": 1,
+      "message": "drop the comment.",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 12
+      },
+      "revId": "b1ac7ae93bbfb9cd647d1ad342a0fd728eaa7364",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf90aeaa_d96e1f59",
+        "filename": "examples/helloworld_cost_function.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-01-07T17:21:22Z",
+      "side": 1,
+      "message": "This form of the macro is new no?",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "b1ac7ae93bbfb9cd647d1ad342a0fd728eaa7364",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0ae7b5_06548611",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-01-07T17:21:22Z",
+      "side": 1,
+      "message": "This class should be documented. Currently reading this header it is not clear as to what the purpose and use of this class is.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "b1ac7ae93bbfb9cd647d1ad342a0fd728eaa7364",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
