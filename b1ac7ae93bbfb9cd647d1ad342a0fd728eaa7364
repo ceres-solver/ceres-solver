@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a932352b_f3691db3",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-08T16:16:38Z",
+      "side": 1,
+      "message": "HelloWorldCostFunction is only an \"interface library\" https://cmake.org/cmake/help/latest/command/add_library.html#interface-libraries.\n\nThis is used to add the correct include directory to the application (the header is generated somewhere in the build directory and the code has to find it).",
+      "parentUuid": "698250d1_8846fcf3",
+      "range": {
+        "startLine": 83,
+        "startChar": 51,
+        "endLine": 83,
+        "endChar": 73
+      },
+      "revId": "b1ac7ae93bbfb9cd647d1ad342a0fd728eaa7364",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5512073a_58f80ee9",
         "filename": "examples/helloworld_codegen.cc",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "b1ac7ae93bbfb9cd647d1ad342a0fd728eaa7364",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e685773f_949c5a7c",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-08T16:16:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5512073a_58f80ee9",
+      "range": {
+        "startLine": 53,
+        "startChar": 41,
+        "endLine": 53,
+        "endChar": 46
+      },
+      "revId": "b1ac7ae93bbfb9cd647d1ad342a0fd728eaa7364",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "04a7713f_7b96351d",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-08T16:16:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d09d0f76_dbc89ff2",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 12
+      },
+      "revId": "b1ac7ae93bbfb9cd647d1ad342a0fd728eaa7364",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf90aeaa_d96e1f59",
         "filename": "examples/helloworld_cost_function.h",
         "patchSetId": 19
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "bed28fc4_de43ca90",
+        "filename": "examples/helloworld_cost_function.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-08T16:16:38Z",
+      "side": 1,
+      "message": "In my first commit it was just CERES_LOCAL_VARIABLE(target_value_) without the \"T\". I have changed it a while ago, because we need the \"T\" to convert the double to the correct Jet type if necessary.",
+      "parentUuid": "cf90aeaa_d96e1f59",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "b1ac7ae93bbfb9cd647d1ad342a0fd728eaa7364",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e0ae7b5_06548611",
         "filename": "include/ceres/codegen/cost_function.h",
         "patchSetId": 19
@@ -114,6 +210,30 @@
       "revId": "b1ac7ae93bbfb9cd647d1ad342a0fd728eaa7364",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22085530_f807b6d6",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-08T16:16:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e0ae7b5_06548611",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "b1ac7ae93bbfb9cd647d1ad342a0fd728eaa7364",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
