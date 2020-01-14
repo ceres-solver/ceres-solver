@@ -33,6 +33,7 @@
 #define CERES_PUBLIC_EXPRESSION_REF_H_
 
 #include <string>
+
 #include "ceres/codegen/internal/expression.h"
 #include "ceres/codegen/internal/types.h"
 
@@ -85,23 +86,6 @@ struct ExpressionRef {
   //   T b = a;  // Error: Uninitialized assignment
   ExpressionRef(const ExpressionRef& other);
   ExpressionRef& operator=(const ExpressionRef& other);
-
-  // Similar to the copy assignment above, but if 'this' is uninitialized, we
-  // can remove the copy and therefore eliminate one expression in the graph.
-  // For example:
-  //   T c;
-  //   c = a + b;
-  // will generate
-  //   v_2 = v_0 + v_1
-  // instead of an additional assigment from the temporary 'a + b' to 'c'. In
-  // C++ this concept is called "Copy Elision". This is used by the compiler to
-  // eliminate copies, for example, in a function that returns an object by
-  // value. We implement it ourself here, because large parts of copy elision
-  // are implementation defined, which means that every compiler can do it
-  // differently. More information on copy elision can be found here:
-  // https://en.cppreference.com/w/cpp/language/copy_elision
-  ExpressionRef(ExpressionRef&& other);
-  ExpressionRef& operator=(ExpressionRef&& other);
 
   // Compound operators
   ExpressionRef& operator+=(const ExpressionRef& x);

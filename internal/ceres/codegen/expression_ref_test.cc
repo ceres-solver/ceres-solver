@@ -34,6 +34,7 @@
 #define CERES_CODEGEN
 
 #include "ceres/codegen/internal/expression_ref.h"
+
 #include "ceres/codegen/internal/expression_graph.h"
 #include "gtest/gtest.h"
 
@@ -109,18 +110,6 @@ TEST(ExpressionRef, AssignmentCreate) {
   ExpressionGraph reference;
   reference.InsertBack(Expression::CreateCompileTimeConstant(2));
   reference.InsertBack(Expression::CreateAssignment(kInvalidExpressionId, 0));
-  EXPECT_EQ(reference, graph);
-}
-
-TEST(ExpressionRef, MoveAssignmentCreate) {
-  StartRecordingExpressions();
-  T a = 2;
-  T b = std::move(a);
-  auto graph = StopRecordingExpressions();
-  EXPECT_EQ(graph.Size(), 1);
-
-  ExpressionGraph reference;
-  reference.InsertBack(Expression::CreateCompileTimeConstant(2));
   EXPECT_EQ(reference, graph);
 }
 

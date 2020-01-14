@@ -76,41 +76,6 @@ ExpressionRef& ExpressionRef::operator=(const ExpressionRef& other) {
   return *this;
 }
 
-ExpressionRef::ExpressionRef(ExpressionRef&& other) {
-  *this = std::move(other);
-}
-
-ExpressionRef& ExpressionRef::operator=(ExpressionRef&& other) {
-  // Assigning an uninitialized variable to another variable is an error.
-  CHECK(other.IsInitialized()) << "Uninitialized Assignment.";
-
-  if (IsInitialized()) {
-    // Create assignment from other -> this
-    AddExpressionToGraph(Expression::CreateAssignment(id, other.id));
-  } else {
-    // Special case: 'this' is uninitialized and other is an rvalue.
-    //    -> Implement copy elision by only setting the reference
-    // This reduces the number of generated expressions roughly by a factor
-    // of 2. For example, in the following statement:
-    //   T c = a + b;
-    // The result of 'a + b' is an rvalue reference to ExpressionRef.
-    // Therefore, the move constructor of 'c' is called. Since 'c' is also
-    // uninitialized, this branch here is taken and the copy is removed. After
-    // this function 'c' will just point to the temporary created by the 'a +
-    // b' expression. This is valid, because we don't have any scoping
-    // information and therefore assume global scope for all temporary
-    // variables. The generated code for the single statement above, is:
-    //   v_2 = v_0 + v_1;   // With c.id = 2
-    // Without this move constructor the following two lines would be
-    // generated:
-    //   v_2 = v_0 + v_1;
-    //   v_3 = v_2;        // With c.id = 3
-    id = other.id;
-  }
-  other.id = kInvalidExpressionId;
-  return *this;
-}
-
 // Compound operators
 ExpressionRef& ExpressionRef::operator+=(const ExpressionRef& x) {
   *this = *this + x;
