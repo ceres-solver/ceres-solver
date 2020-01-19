@@ -43,6 +43,9 @@ using std::vector;
 Problem::Problem() : impl_(new internal::ProblemImpl) {}
 Problem::Problem(const Problem::Options& options)
     : impl_(new internal::ProblemImpl(options)) {}
+// Not inline defaulted in declaration due to use of std::unique_ptr.
+Problem::Problem(Problem&&) = default;
+Problem& Problem::operator=(Problem&&) = default;
 Problem::~Problem() {}
 
 ResidualBlockId Problem::AddResidualBlock(
