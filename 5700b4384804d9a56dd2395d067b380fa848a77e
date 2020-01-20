@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d5853c6_76ab740f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 21
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "232560f7_32bbc1f3",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdb10ca6_2af1411f",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 21
@@ -33,6 +51,24 @@
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e335cedb_1272a08e",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdb10ca6_2af1411f",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5829cb4d_7d109b2e",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a299dc5_a12d054f",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f116fc03_eff94d32",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 21
@@ -67,6 +121,24 @@
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce81ebc6_a90fc318",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f116fc03_eff94d32",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7c8a5644_de7a4ec4",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27704d15_80130853",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35047f95_6dd5d282",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 21
@@ -101,6 +191,24 @@
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9311bb6e_44f98f00",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35047f95_6dd5d282",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "17cee237_e2f06957",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b41da64a_33166766",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6de9029_61567234",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 21
@@ -135,6 +261,24 @@
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a4c826_61b2324a",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6de9029_61567234",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "fa4dd293_6765cdf8",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "954e83ba_5e927888",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db5d450e_f8cceb14",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 21
@@ -169,6 +331,24 @@
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a117ca_0c89df63",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db5d450e_f8cceb14",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "d0eefb19_6029062b",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff434248_649ac96e",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18e00b00_94f39331",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 21
@@ -203,6 +401,24 @@
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1ea16a_d73f92ca",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18e00b00_94f39331",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "b8661364_91a93cdf",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "153072bb_3851b217",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efed50a2_f3da3128",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 21
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "1ff4f53f_193e46bd",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efed50a2_f3da3128",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2e6d007_f90d51aa",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 21
@@ -251,6 +503,24 @@
       "writtenOn": "2020-01-19T19:24:07Z",
       "side": 1,
       "message": "I thought this casting was removed after my previous comments in favour of the native casing of the functor itself?\n\nThis also seems to still be inconsistent, as the GENERATOR_SOURCE uses ${COST_FUNCTOR_NAME}.  I think we should remove all use of the lower-case cast to avoid confusion.",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b05d159_8eb133cf",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "I also prefer native casing, but I changed it back because of Sameer. For now I\u0027ll leave it like that but with lower case functor name for GENERATOR_SOURCE.",
+      "parentUuid": "c2e6d007_f90d51aa",
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "c2f1a1aa_d58d1cac",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5d98f2d_92caded5",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b92bc758_a4b13249",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 21
@@ -288,6 +576,24 @@
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef8f136_4b623bdb",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b92bc758_a4b13249",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "b795aa53_11ead51d",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9328ae92_8a9a9fbb",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70c01068_01195bcc",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 21
@@ -319,6 +643,24 @@
       "writtenOn": "2020-01-19T19:24:07Z",
       "side": 1,
       "message": "There is an additional complication here, what it a client #includes a file from their own project in the functor implementation?  As it stands I think this would fail to compile in that case as the generator does not include the client\u0027s include directory in its target_include_directories() list.\n\nThis would also be an issue for external templated dependencies, the most obvious example I can think of would be Sophus, although I don\u0027t know if that would pass through the code generation system regardless, but it is indicative of a pretty common use-case.\n\nAt the very least, I think we need some clear docs explaining exactly what the requirements for a functor in order that the code generation module will support it - Sameer, WDYT?",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b72b5ec_07d30ee2",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Good point. Even Eigen might be a problem because it is usually located in eigen3/Eigen. The easiest way would be to pass additional optional include directories (or targets) to this function. So for example:\n\n   ceres_generate_cost_function_implementation_for_functor(\n       NAME SquareFunctor\n       INPUT_FILE ${CMAKE_CURRENT_SOURCE_DIR}/square_functor.h\n       DEPENDENCIES Eigen3::Eigen Sophus::Sophus\n       )",
+      "parentUuid": "70c01068_01195bcc",
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "0c95308c_10db5750",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f23ba422_68287b05",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c4f1fe5_3c115cd9",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 21
@@ -356,6 +716,24 @@
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feba1bbc_49a8ef77",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c4f1fe5_3c115cd9",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -376,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "0f8c41fa_83bec95b",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "True, executing a program also doesn\u0027t need dependencies.",
+      "parentUuid": "e511ca7e_637fbe3b",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "010c2349_d347a4d6",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 21
@@ -390,6 +786,24 @@
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1de24f0_a9741e2d",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 21
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "010c2349_d347a4d6",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -410,6 +824,24 @@
     },
     {
       "key": {
+        "uuid": "d4f3a837_aa2f2491",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 21
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07ceffdd_d8985e7d",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a85ef0c7_f72389e5",
         "filename": "cmake/codegen_include.h.in",
         "patchSetId": 21
@@ -424,6 +856,24 @@
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe26d4db_024bfa5b",
+        "filename": "cmake/codegen_include.h.in",
+        "patchSetId": 21
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a85ef0c7_f72389e5",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -461,6 +911,24 @@
     },
     {
       "key": {
+        "uuid": "90c52b73_03f50a21",
+        "filename": "cmake/generate_code_for_functor.cc.in",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab52e247_d9ab84b9",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59f463e0_cc0a1c62",
         "filename": "cmake/generate_code_for_functor.cc.in",
         "patchSetId": 21
@@ -475,6 +943,24 @@
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d849f9e2_e8d64c41",
+        "filename": "cmake/generate_code_for_functor.cc.in",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59f463e0_cc0a1c62",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -495,6 +981,24 @@
     },
     {
       "key": {
+        "uuid": "2e9676b9_52fa2afd",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 21
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d2177ae_54fc2cae",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44f6be96_15b096b5",
         "filename": "examples/helloworld_codegen.cc",
         "patchSetId": 21
@@ -509,6 +1013,24 @@
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0fc9b24_4405f0a4",
+        "filename": "examples/helloworld_codegen.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44f6be96_15b096b5",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -529,6 +1051,24 @@
     },
     {
       "key": {
+        "uuid": "97b725b2_f4771cb2",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfac592e_7a720b85",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0216e992_6264e051",
         "filename": "include/ceres/codegen/cost_function.h",
         "patchSetId": 21
@@ -546,6 +1086,24 @@
     },
     {
       "key": {
+        "uuid": "42f2e5bc_2b38ebff",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0216e992_6264e051",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "003d1227_f6117330",
         "filename": "include/ceres/codegen/cost_function.h",
         "patchSetId": 21
@@ -560,6 +1118,24 @@
       "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f0ca3e_ee3089b3",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-01-20T08:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "003d1227_f6117330",
+      "revId": "5700b4384804d9a56dd2395d067b380fa848a77e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
