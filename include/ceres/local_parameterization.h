@@ -306,6 +306,7 @@ class CERES_EXPORT ProductParameterization : public LocalParameterization {
  public:
   ProductParameterization(const ProductParameterization&) = delete;
   ProductParameterization& operator=(const ProductParameterization&) = delete;
+  virtual ~ProductParameterization() {}
   //
   // NOTE: The constructor takes ownership of the input local
   // parameterizations.
@@ -341,7 +342,8 @@ class CERES_EXPORT ProductParameterization : public LocalParameterization {
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
-  bool ComputeJacobian(const double* x, double* jacobian) const override;
+  bool ComputeJacobian(const double* x,
+                       double* jacobian) const override;
   int GlobalSize() const override { return global_size_; }
   int LocalSize() const override { return local_size_; }
 

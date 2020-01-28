@@ -67,7 +67,7 @@ struct PreprocessedProblem;
 //
 // The output of the Preprocessor is stored in a PreprocessedProblem
 // object.
-class Preprocessor {
+class CERES_EXPORT_INTERNAL Preprocessor {
  public:
   // Factory.
   static Preprocessor* Create(MinimizerType minimizer_type);

@@ -46,7 +46,8 @@ void ReadFileToStringOrDie(const std::string& filename, std::string* data);
 
 // Join two path components, adding a slash if necessary.  If basename is an
 // absolute path then JoinPath ignores dirname and simply returns basename.
-std::string JoinPath(const std::string& dirname, const std::string& basename);
+CERES_EXPORT_INTERNAL std::string JoinPath(const std::string& dirname,
+                                           const std::string& basename);
 
 }  // namespace internal
 }  // namespace ceres

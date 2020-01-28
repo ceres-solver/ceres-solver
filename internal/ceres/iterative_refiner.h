@@ -57,7 +57,7 @@ class SparseMatrix;
 // Definite linear systems.
 //
 // The above iterative loop is run until max_num_iterations is reached.
-class IterativeRefiner {
+class CERES_EXPORT_INTERNAL IterativeRefiner {
  public:
   // max_num_iterations is the number of refinement iterations to
   // perform.

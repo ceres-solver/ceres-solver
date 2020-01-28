@@ -55,7 +55,7 @@ class SparseMatrix;
 // function that is useful for an optimizer that wants to minimize the least
 // squares objective. This insulates the optimizer from issues like Jacobian
 // storage, parameterization, etc.
-class Evaluator {
+class CERES_EXPORT_INTERNAL Evaluator {
  public:
   virtual ~Evaluator();
 

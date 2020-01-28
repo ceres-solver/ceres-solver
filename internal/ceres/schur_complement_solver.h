@@ -107,7 +107,8 @@ class SparseCholesky;
 // set to DENSE_SCHUR and SPARSE_SCHUR
 // respectively. LinearSolver::Options::elimination_groups[0] should
 // be at least 1.
-class SchurComplementSolver : public BlockSparseMatrixSolver {
+class CERES_EXPORT_INTERNAL SchurComplementSolver
+    : public BlockSparseMatrixSolver {
  public:
   explicit SchurComplementSolver(const LinearSolver::Options& options)
       : options_(options) {

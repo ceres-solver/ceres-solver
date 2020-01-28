@@ -233,6 +233,23 @@ add_library(ceres ${CERES_LIBRARY_SOURCE})
 set_target_properties(ceres PROPERTIES
   VERSION ${CERES_VERSION}
   SOVERSION ${CERES_VERSION_MAJOR})
+if (BUILD_SHARED_LIBS)
+  set_target_properties(ceres PROPERTIES
+    # Set the default symbol visibility to hidden to unify the behavior among
+    # the various compilers and to get smaller binaries
+    C_VISIBILITY_PRESET hidden
+    CXX_VISIBILITY_PRESET hidden)
+endif()
+
+# When building as a shared libarary with testing enabled, we need to export
+# internal symbols needed by the unit tests
+if (BUILD_TESTING)
+  target_compile_definitions(ceres
+    PUBLIC
+      CERES_EXPORT_INTERNAL_SYMBOLS
+    )
+endif()
+
 
 # The ability to specify a minimum language version via cxx_std_[11,14,17]
 # requires CMake >= 3.8.  Prior to that we have to specify the compiler features
