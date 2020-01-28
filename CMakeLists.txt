@@ -118,6 +118,11 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${Ceres_BINARY_DIR}/lib)
 set(CMAKE_RELEASE_POSTFIX "")
 set(CMAKE_DEBUG_POSTFIX "-debug")
 
+# Unify the default symbol behavior and get smaller binaries
+set(CMAKE_C_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+#set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
+
 # Read the Ceres version from the source, such that we only ever have a single
 # definition of the Ceres version.
 include(ReadCeresVersionFromSource)
@@ -177,14 +182,8 @@ endif()
 if (MSVC)
   option(MSVC_USE_STATIC_CRT
     "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
+endif()
 
-  if (BUILD_TESTING AND BUILD_SHARED_LIBS)
-    message(
-      "-- Disabling tests. The flags BUILD_TESTING and BUILD_SHARED_LIBS"
-      " are incompatible with MSVC.")
-    update_cache_variable(BUILD_TESTING OFF)
-  endif (BUILD_TESTING AND BUILD_SHARED_LIBS)
-endif (MSVC)
 # Allow user to specify a suffix for the library install directory, the only
 # really sensible option (other than "") being "64", such that:
 # ${CMAKE_INSTALL_PREFIX}/lib -> ${CMAKE_INSTALL_PREFIX}/lib64.
@@ -477,12 +476,18 @@ if (BUILD_SHARED_LIBS)
   # The CERES_BUILDING_SHARED_LIBRARY compile definition is NOT stored in
   # CERES_COMPILE_OPTIONS as it must only be defined when Ceres is compiled
   # not when it is used as it controls the CERES_EXPORT macro which provides
-  # dllimport/export support in MSVC.
+  # symbol import/export support.
   add_definitions(-DCERES_BUILDING_SHARED_LIBRARY)
   list(APPEND CERES_COMPILE_OPTIONS CERES_USING_SHARED_LIBRARY)
 else (BUILD_SHARED_LIBS)
   message("-- Building Ceres as a static library.")
 endif (BUILD_SHARED_LIBS)
+
+# When as a shared libarary with testing enabled, we need to export internal
+# symbols used by the unit tests
+if (BUILD_TESTING)
+  add_definitions(-DCERES_BUILDING_TESTING)
+endif()
 
 # Change the default build type from Debug to Release, while still
 # supporting overriding the build type.

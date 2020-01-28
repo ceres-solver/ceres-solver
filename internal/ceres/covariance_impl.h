@@ -45,7 +45,7 @@ namespace internal {
 
 class CompressedRowSparseMatrix;
 
-class CovarianceImpl {
+class CERES_EXPORT_INTERNAL CovarianceImpl {
  public:
   explicit CovarianceImpl(const Covariance::Options& options);
   ~CovarianceImpl();

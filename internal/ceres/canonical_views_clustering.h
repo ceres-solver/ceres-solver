@@ -94,13 +94,13 @@ struct CanonicalViewsClusteringOptions;
 // It is possible depending on the configuration of the clustering
 // algorithm that some of the vertices may not be assigned to any
 // cluster. In this case they are assigned to a cluster with id = -1;
-void ComputeCanonicalViewsClustering(
+CERES_EXPORT_INTERNAL void ComputeCanonicalViewsClustering(
     const CanonicalViewsClusteringOptions& options,
     const WeightedGraph<int>& graph,
     std::vector<int>* centers,
     std::unordered_map<int, int>* membership);
 
-struct CanonicalViewsClusteringOptions {
+struct CERES_EXPORT_INTERNAL CanonicalViewsClusteringOptions {
   // The minimum number of canonical views to compute.
   int min_views = 3;
 

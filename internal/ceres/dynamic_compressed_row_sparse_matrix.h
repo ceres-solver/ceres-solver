@@ -48,7 +48,7 @@
 namespace ceres {
 namespace internal {
 
-class DynamicCompressedRowSparseMatrix : public CompressedRowSparseMatrix {
+class CERES_EXPORT_INTERNAL DynamicCompressedRowSparseMatrix : public CompressedRowSparseMatrix {
  public:
   // Set the number of rows and columns for the underlyig
   // `CompressedRowSparseMatrix` and set the initial number of maximum non-zero

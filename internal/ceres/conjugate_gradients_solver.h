@@ -54,7 +54,7 @@ class LinearOperator;
 // For more details see the documentation for
 // LinearSolver::PerSolveOptions::r_tolerance and
 // LinearSolver::PerSolveOptions::q_tolerance in linear_solver.h.
-class ConjugateGradientsSolver : public LinearSolver {
+class CERES_EXPORT_INTERNAL ConjugateGradientsSolver : public LinearSolver {
  public:
   explicit ConjugateGradientsSolver(const LinearSolver::Options& options);
   Summary Solve(LinearOperator* A,

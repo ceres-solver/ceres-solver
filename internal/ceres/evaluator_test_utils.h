@@ -31,6 +31,8 @@
 //
 // Test utils used for evaluation testing.
 
+#include "ceres/internal/port.h"
+
 namespace ceres {
 namespace internal {
 
@@ -45,7 +47,7 @@ struct ExpectedEvaluation {
 };
 
 // Compare two evaluations.
-void CompareEvaluations(int expected_num_rows,
+CERES_EXPORT_INTERNAL void CompareEvaluations(int expected_num_rows,
                         int expected_num_cols,
                         double expected_cost,
                         const double* expected_residuals,

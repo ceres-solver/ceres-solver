@@ -351,7 +351,19 @@ add_library(Ceres::ceres ALIAS ceres)
 
 if (BUILD_TESTING AND GFLAGS)
   add_library(gtest gmock_gtest_all.cc gmock_main.cc)
-  target_include_directories(gtest PUBLIC ${Ceres_SOURCE_DIR}/internal/ceres)
+  target_include_directories(gtest PUBLIC
+    ${Ceres_SOURCE_DIR}/internal/ceres
+    ${Ceres_BINARY_DIR}/internal/ceres
+    )
+
+  # Generate a gtest_export.h header that overrides the default
+  # GFLAGS_DLL_DEFINE_FLAG flag in order to support all compilers, not just
+  # MSVC. Note that this header must be included before gflags.h.
+  include(GenerateExportHeader)
+  generate_export_header(gtest
+    EXPORT_MACRO_NAME GFLAGS_DLL_DEFINE_FLAG
+    )
+
   if (BUILD_SHARED_LIBS)
     # Define gtest-specific shared library flags for compilation.
     append_target_property(gtest COMPILE_DEFINITIONS

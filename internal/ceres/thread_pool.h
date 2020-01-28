@@ -57,7 +57,7 @@ namespace internal {
 //  workers to stop.  The workers will finish all of the tasks that have already
 //  been added to the thread pool.
 //
-class ThreadPool {
+class CERES_EXPORT_INTERNAL ThreadPool {
  public:
   // Returns the maximum number of hardware threads.
   static int MaxNumThreadsAvailable();

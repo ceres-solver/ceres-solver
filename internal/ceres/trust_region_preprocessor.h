@@ -36,7 +36,7 @@
 namespace ceres {
 namespace internal {
 
-class TrustRegionPreprocessor : public Preprocessor {
+class CERES_EXPORT TrustRegionPreprocessor : public Preprocessor {
  public:
   virtual ~TrustRegionPreprocessor();
   bool Preprocess(const Solver::Options& options,

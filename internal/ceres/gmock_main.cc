@@ -29,6 +29,10 @@
 //
 // Author: wan@google.com (Zhanyong Wan)
 
+// Must be included before any gflags headers in order to override
+// GFLAGS_DLL_DEFINE_FLAG
+#include "gtest_export.h"
+
 #include <iostream>
 #include "gflags/gflags.h"
 #include "glog/logging.h"
