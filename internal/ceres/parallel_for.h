@@ -33,6 +33,7 @@
 
 #include <functional>
 
+#include "ceres/internal/port.h"
 #include "ceres/context_impl.h"
 
 namespace ceres {
@@ -45,7 +46,7 @@ int MaxNumThreadsAvailable();
 // Execute the function for every element in the range [start, end) with at most
 // num_threads. It will execute all the work on the calling thread if
 // num_threads is 1.
-void ParallelFor(ContextImpl* context,
+CERES_EXPORT_INTERNAL void ParallelFor(ContextImpl* context,
                  int start,
                  int end,
                  int num_threads,
@@ -56,7 +57,7 @@ void ParallelFor(ContextImpl* context,
 // num_threads is 1.  Each invocation of function() will be passed a thread_id
 // in [0, num_threads) that is guaranteed to be distinct from the value passed
 // to any concurrent execution of function().
-void ParallelFor(ContextImpl* context,
+CERES_EXPORT_INTERNAL void ParallelFor(ContextImpl* context,
                  int start,
                  int end,
                  int num_threads,

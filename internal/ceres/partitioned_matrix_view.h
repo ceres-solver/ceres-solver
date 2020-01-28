@@ -41,6 +41,7 @@
 #include <vector>
 
 #include "ceres/block_structure.h"
+#include "ceres/internal/port.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/small_blas.h"
@@ -59,7 +60,7 @@ namespace internal {
 // block structure of the matrix does not satisfy the requirements of
 // the Schur complement solver it will result in unpredictable and
 // wrong output.
-class PartitionedMatrixViewBase {
+class CERES_EXPORT_INTERNAL PartitionedMatrixViewBase {
  public:
   virtual ~PartitionedMatrixViewBase() {}
 

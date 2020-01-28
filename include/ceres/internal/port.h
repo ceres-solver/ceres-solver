@@ -69,12 +69,12 @@
 #endif
 
 // A macro to signal which functions and classes are exported when
-// building a DLL with MSVC.
+// building a shared library.
 //
 // Note that the ordering here is important, CERES_BUILDING_SHARED_LIBRARY
 // is only defined locally when Ceres is compiled, it is never exported to
 // users.  However, in order that we do not have to configure config.h
-// separately for building vs installing, if we are using MSVC and building
+// separately for building vs installing, if we are building
 // a shared library, then both CERES_BUILDING_SHARED_LIBRARY and
 // CERES_USING_SHARED_LIBRARY will be defined when Ceres is compiled.
 // Hence it is important that the check for CERES_BUILDING_SHARED_LIBRARY
@@ -83,8 +83,18 @@
 #define CERES_EXPORT __declspec(dllexport)
 #elif defined(_MSC_VER) && defined(CERES_USING_SHARED_LIBRARY)
 #define CERES_EXPORT __declspec(dllimport)
+#elif defined(__GNUC__)
+#define CERES_EXPORT __attribute__((visibility("default")))
 #else
 #define CERES_EXPORT
+#endif
+
+// Unit tests reach in and test internal functionality so we need a way to make
+// those symbols visible
+#ifdef CERES_EXPORT_INTERNAL_SYMBOLS
+#define CERES_EXPORT_INTERNAL CERES_EXPORT
+#else
+#define CERES_EXPORT_INTERNAL
 #endif
 
 #endif  // CERES_PUBLIC_INTERNAL_PORT_H_

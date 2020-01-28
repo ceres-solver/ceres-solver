@@ -38,6 +38,7 @@
 #include <set>
 #include <vector>
 #include "ceres/graph.h"
+#include "ceres/internal/port.h"
 
 namespace ceres {
 namespace internal {
@@ -52,7 +53,7 @@ struct CompressedRowBlockStructure;
 //
 // In a structure from motion problem, e_blocks correspond to 3D
 // points and f_blocks correspond to cameras.
-void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
+CERES_EXPORT_INTERNAL void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
                        int num_eliminate_blocks,
                        std::vector<std::set<int>>* visibility);
 
@@ -69,7 +70,7 @@ void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
 //
 // Caller acquires ownership of the returned WeightedGraph pointer
 // (heap-allocated).
-WeightedGraph<int>* CreateSchurComplementGraph(
+CERES_EXPORT_INTERNAL WeightedGraph<int>* CreateSchurComplementGraph(
     const std::vector<std::set<int>>& visibility);
 
 }  // namespace internal

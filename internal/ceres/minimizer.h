@@ -48,7 +48,7 @@ class CoordinateDescentMinimizer;
 class LinearSolver;
 
 // Interface for non-linear least squares solvers.
-class Minimizer {
+class CERES_EXPORT_INTERNAL Minimizer {
  public:
   // Options struct to control the behaviour of the Minimizer. Please
   // see solver.h for detailed information about the meaning and
