@@ -33,6 +33,7 @@
 
 #include <string>
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/port.h"
 
 namespace ceres {
 namespace internal {
@@ -45,7 +46,7 @@ namespace internal {
 // line/direction. FunctionSample contains the information in two
 // ways. Information in the ambient space and information along the
 // direction of search.
-struct FunctionSample {
+struct CERES_EXPORT_INTERNAL FunctionSample {
   FunctionSample();
   FunctionSample(double x, double value);
   FunctionSample(double x, double value, double gradient);

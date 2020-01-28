@@ -35,7 +35,7 @@
 namespace ceres {
 namespace internal {
 
-void DetectStructure(const CompressedRowBlockStructure& bs,
+void CERES_EXPORT DetectStructure(const CompressedRowBlockStructure& bs,
                      const int num_eliminate_blocks,
                      int* row_block_size,
                      int* e_block_size,

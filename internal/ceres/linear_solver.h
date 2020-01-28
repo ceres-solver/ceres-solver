@@ -99,7 +99,7 @@ class LinearOperator;
 // The Options struct configures the LinearSolver object for its
 // lifetime. The PerSolveOptions struct is used to specify options for
 // a particular Solve call.
-class LinearSolver {
+class CERES_EXPORT_INTERNAL LinearSolver {
  public:
   struct Options {
     LinearSolverType type = SPARSE_NORMAL_CHOLESKY;

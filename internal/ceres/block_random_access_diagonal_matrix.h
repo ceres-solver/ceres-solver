@@ -46,7 +46,7 @@ namespace internal {
 
 // A thread safe block diagonal matrix implementation of
 // BlockRandomAccessMatrix.
-class BlockRandomAccessDiagonalMatrix : public BlockRandomAccessMatrix {
+class CERES_EXPORT_INTERNAL BlockRandomAccessDiagonalMatrix : public BlockRandomAccessMatrix {
  public:
   // blocks is an array of block sizes.
   explicit BlockRandomAccessDiagonalMatrix(const std::vector<int>& blocks);

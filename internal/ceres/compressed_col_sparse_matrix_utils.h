@@ -47,7 +47,7 @@ namespace internal {
 // and column block j, then it is expected that A contains at least
 // one non-zero entry corresponding to the top left entry of c_ij,
 // as that entry is used to detect the presence of a non-zero c_ij.
-void CompressedColumnScalarMatrixToBlockMatrix(
+CERES_EXPORT_INTERNAL void CompressedColumnScalarMatrixToBlockMatrix(
     const int* scalar_rows,
     const int* scalar_cols,
     const std::vector<int>& row_blocks,
@@ -58,7 +58,7 @@ void CompressedColumnScalarMatrixToBlockMatrix(
 // Given a set of blocks and a permutation of these blocks, compute
 // the corresponding "scalar" ordering, where the scalar ordering of
 // size sum(blocks).
-void BlockOrderingToScalarOrdering(
+CERES_EXPORT_INTERNAL void BlockOrderingToScalarOrdering(
     const std::vector<int>& blocks,
     const std::vector<int>& block_ordering,
     std::vector<int>* scalar_ordering);

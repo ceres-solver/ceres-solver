@@ -46,7 +46,7 @@ namespace internal {
 // Generic trust region minimization algorithm.
 //
 // For example usage, see SolverImpl::Minimize.
-class TrustRegionMinimizer : public Minimizer {
+class CERES_EXPORT_INTERNAL TrustRegionMinimizer : public Minimizer {
  public:
   ~TrustRegionMinimizer();
 

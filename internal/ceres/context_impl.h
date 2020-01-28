@@ -54,7 +54,7 @@ class ContextImpl : public Context {
   // When compiled with C++ threading support, resize the thread pool to have
   // at min(num_thread, num_hardware_threads) where num_hardware_threads is
   // defined by the hardware.  Otherwise this call is a no-op.
-  void EnsureMinimumThreads(int num_threads);
+  CERES_EXPORT_INTERNAL void EnsureMinimumThreads(int num_threads);
 
 #ifdef CERES_USE_CXX_THREADS
   ThreadPool thread_pool;
