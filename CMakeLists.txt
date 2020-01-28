@@ -182,14 +182,8 @@ endif()
 if (MSVC)
   option(MSVC_USE_STATIC_CRT
     "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
+endif()
 
-  if (BUILD_TESTING AND BUILD_SHARED_LIBS)
-    message(
-      "-- Disabling tests. The flags BUILD_TESTING and BUILD_SHARED_LIBS"
-      " are incompatible with MSVC.")
-    update_cache_variable(BUILD_TESTING OFF)
-  endif (BUILD_TESTING AND BUILD_SHARED_LIBS)
-endif (MSVC)
 # Allow user to specify a suffix for the library install directory, the only
 # really sensible option (other than "") being "64", such that:
 # ${CMAKE_INSTALL_PREFIX}/lib -> ${CMAKE_INSTALL_PREFIX}/lib64.
@@ -482,7 +476,7 @@ if (BUILD_SHARED_LIBS)
   # The CERES_BUILDING_SHARED_LIBRARY compile definition is NOT stored in
   # CERES_COMPILE_OPTIONS as it must only be defined when Ceres is compiled
   # not when it is used as it controls the CERES_EXPORT macro which provides
-  # dllimport/export support in MSVC.
+  # symbol import/export support.
   add_definitions(-DCERES_BUILDING_SHARED_LIBRARY)
   list(APPEND CERES_COMPILE_OPTIONS CERES_USING_SHARED_LIBRARY)
 else (BUILD_SHARED_LIBS)

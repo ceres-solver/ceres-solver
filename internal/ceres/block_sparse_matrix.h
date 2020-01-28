@@ -38,6 +38,7 @@
 
 #include "ceres/block_structure.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/port.h"
 #include "ceres/sparse_matrix.h"
 
 namespace ceres {
@@ -53,7 +54,7 @@ class TripletSparseMatrix;
 //
 //   internal/ceres/block_structure.h
 //
-class BlockSparseMatrix : public SparseMatrix {
+class CERES_EXPORT_INTERNAL BlockSparseMatrix : public SparseMatrix {
  public:
   // Construct a block sparse matrix with a fully initialized
   // CompressedRowBlockStructure objected. The matrix takes over
