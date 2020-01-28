@@ -36,6 +36,7 @@
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/context_impl.h"
+#include "ceres/internal/port.h"
 #include "ceres/linear_operator.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
@@ -46,7 +47,7 @@ namespace internal {
 class BlockSparseMatrix;
 class SparseMatrix;
 
-class Preconditioner : public LinearOperator {
+class CERES_EXPORT_INTERNAL Preconditioner : public LinearOperator {
  public:
   struct Options {
     PreconditionerType type = JACOBI;

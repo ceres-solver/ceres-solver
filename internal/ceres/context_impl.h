@@ -45,7 +45,7 @@
 namespace ceres {
 namespace internal {
 
-class ContextImpl : public Context {
+class CERES_EXPORT_INTERNAL ContextImpl : public Context {
  public:
   ContextImpl() {}
   ContextImpl(const ContextImpl&) = delete;

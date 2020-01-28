@@ -302,7 +302,13 @@ class LineParameterization : public LocalParameterization {
 //
 // is the local parameterization for a rigid transformation, where the
 // rotation is represented using a quaternion.
-class CERES_EXPORT ProductParameterization : public LocalParameterization {
+//
+// Note: With MSVC, exporting this whole class results in missing `vftable`
+// symbol linker error when linking bundle_adjuster because a vtable is not
+// generated because this class does not implement any methods of it's own. But
+// the MSVC linker is expecting to find one for some reason. The workaround is
+// to export each overriden virtual method.
+class ProductParameterization : public LocalParameterization {
  public:
   ProductParameterization(const ProductParameterization&) = delete;
   ProductParameterization& operator=(const ProductParameterization&) = delete;
@@ -338,12 +344,13 @@ class CERES_EXPORT ProductParameterization : public LocalParameterization {
     }
   }
 
-  bool Plus(const double* x,
-            const double* delta,
-            double* x_plus_delta) const override;
-  bool ComputeJacobian(const double* x, double* jacobian) const override;
-  int GlobalSize() const override { return global_size_; }
-  int LocalSize() const override { return local_size_; }
+  CERES_EXPORT bool Plus(const double* x,
+                         const double* delta,
+                         double* x_plus_delta) const override;
+  CERES_EXPORT bool ComputeJacobian(const double* x,
+                                    double* jacobian) const override;
+  CERES_EXPORT int GlobalSize() const override { return global_size_; }
+  CERES_EXPORT int LocalSize() const override { return local_size_; }
 
  private:
   std::vector<std::unique_ptr<LocalParameterization>> local_params_;
