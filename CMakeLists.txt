@@ -179,13 +179,13 @@ if (MSVC)
   option(MSVC_USE_STATIC_CRT
     "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
 
-  if (BUILD_TESTING AND BUILD_SHARED_LIBS)
+  if (BUILD_TESTING AND BUILD_SHARED_LIBS AND NOT CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS)
     message(
-      "-- Disabling tests. The flags BUILD_TESTING and BUILD_SHARED_LIBS"
-      " are incompatible with MSVC.")
-    update_cache_variable(BUILD_TESTING OFF)
-  endif (BUILD_TESTING AND BUILD_SHARED_LIBS)
-endif (MSVC)
+      "-- Turning on CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to support building "
+      "tests with MSVC.")
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+  endif()
+endif()
 # Allow user to specify a suffix for the library install directory, the only
 # really sensible option (other than "") being "64", such that:
 # ${CMAKE_INSTALL_PREFIX}/lib -> ${CMAKE_INSTALL_PREFIX}/lib64.
