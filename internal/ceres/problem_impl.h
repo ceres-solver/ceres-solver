@@ -63,7 +63,7 @@ namespace internal {
 class Program;
 class ResidualBlock;
 
-class ProblemImpl {
+class CERES_EXPORT_INTERNAL ProblemImpl {
  public:
   typedef std::map<double*, ParameterBlock*> ParameterMap;
   typedef std::unordered_set<ResidualBlock*> ResidualBlockSet;

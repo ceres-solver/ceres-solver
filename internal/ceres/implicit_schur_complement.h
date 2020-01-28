@@ -38,6 +38,7 @@
 #include "ceres/linear_operator.h"
 #include "ceres/linear_solver.h"
 #include "ceres/partitioned_matrix_view.h"
+#include "ceres/internal/port.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/types.h"
 
@@ -86,7 +87,7 @@ class BlockSparseMatrix;
 // RightMultiply (and the LeftMultiply) methods are not thread safe as
 // they depend on mutable arrays used for the temporaries needed to
 // compute the product y += Sx;
-class ImplicitSchurComplement : public LinearOperator {
+class CERES_EXPORT_INTERNAL ImplicitSchurComplement : public LinearOperator {
  public:
   // num_eliminate_blocks is the number of E blocks in the matrix
   // A.

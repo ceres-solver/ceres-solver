@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_SINGLE_LINKAGE_CLUSTERING_H_
 
 #include <unordered_map>
+#include "ceres/internal/port.h"
 #include "ceres/graph.h"
 
 namespace ceres {
@@ -53,7 +54,7 @@ struct SingleLinkageClusteringOptions {
 //
 // The return value of this function is the number of clusters
 // identified by the algorithm.
-int ComputeSingleLinkageClustering(
+int CERES_EXPORT_INTERNAL ComputeSingleLinkageClustering(
     const SingleLinkageClusteringOptions& options,
     const WeightedGraph<int>& graph,
     std::unordered_map<int, int>* membership);

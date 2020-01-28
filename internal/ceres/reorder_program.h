@@ -43,7 +43,7 @@ namespace internal {
 class Program;
 
 // Reorder the parameter blocks in program using the ordering
-bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
+CERES_EXPORT_INTERNAL bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
                    const ParameterBlockOrdering& ordering,
                    Program* program,
                    std::string* error);
@@ -51,7 +51,7 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
 // Reorder the residuals for program, if necessary, so that the residuals
 // involving each E block occur together. This is a necessary condition for the
 // Schur eliminator, which works on these "row blocks" in the jacobian.
-bool LexicographicallyOrderResidualBlocks(int size_of_first_elimination_group,
+CERES_EXPORT_INTERNAL bool LexicographicallyOrderResidualBlocks(int size_of_first_elimination_group,
                                           Program* program,
                                           std::string* error);
 
@@ -71,7 +71,7 @@ bool LexicographicallyOrderResidualBlocks(int size_of_first_elimination_group,
 //
 // Upon return, ordering contains the parameter block ordering that
 // was used to order the program.
-bool ReorderProgramForSchurTypeLinearSolver(
+CERES_EXPORT_INTERNAL bool ReorderProgramForSchurTypeLinearSolver(
     LinearSolverType linear_solver_type,
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
     const ProblemImpl::ParameterMap& parameter_map,
@@ -89,7 +89,7 @@ bool ReorderProgramForSchurTypeLinearSolver(
 // fill-reducing ordering is available in the sparse linear algebra
 // library (SuiteSparse version >= 4.2.0) then the fill reducing
 // ordering will take it into account, otherwise it will be ignored.
-bool ReorderProgramForSparseCholesky(
+CERES_EXPORT_INTERNAL bool ReorderProgramForSparseCholesky(
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
     const ParameterBlockOrdering& parameter_block_ordering,
     int start_row_block,
@@ -106,7 +106,7 @@ bool ReorderProgramForSparseCholesky(
 // bottom_residual_blocks.size() because we allow
 // bottom_residual_blocks to contain residual blocks not present in
 // the Program.
-int ReorderResidualBlocksByPartition(
+CERES_EXPORT_INTERNAL int ReorderResidualBlocksByPartition(
     const std::unordered_set<ResidualBlockId>& bottom_residual_blocks,
     Program* program);
 

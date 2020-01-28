@@ -45,7 +45,7 @@ namespace internal {
 
 class TripletSparseMatrix;
 
-class CompressedRowSparseMatrix : public SparseMatrix {
+class CERES_EXPORT_INTERNAL CompressedRowSparseMatrix : public SparseMatrix {
  public:
   enum StorageType {
     UNSYMMETRIC,
