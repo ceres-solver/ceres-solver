@@ -81,7 +81,7 @@ optional. For details on customizing the build process, see
 
 - `SuiteSparse
   <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_. Needed for
-  solving large sparse linear systems. **Optional; strongly recomended
+  solving large sparse linear systems. **Optional; strongly recommended
   for large scale bundle adjustment**
 
 - `CXSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_.
