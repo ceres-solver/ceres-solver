@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1fd484c_7761ce84",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "generate_code_from_functor -\u003e generate_code_for_functor\n\ndo you have a test-case where this is verified outside of the Ceres build directory, i.e. an example that imports Ceres and then uses this functionality?  I think this would have caught this.",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eebb61e_463534c3",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 23
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "e -\u003e be",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbcb5277_6e06c025",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 23
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "file name of -\u003e path to",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ca72ff_b84a7626",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 23
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "I checked and GSG has a specific extension for these files: .inc, we should use that here: https://google.github.io/styleguide/cppguide.html#Self_contained_Headers\n\ni.e: ${LOWER_CASE_FUNCTOR_NAME}_evaluate_impl.inc",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edbb4b04_3ff68b14",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 23
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "(2.) -\u003e (3.)",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3373467_da194ace",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 23
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "I think you may actually be able to remove the ALL from this, as the ${COST_FUNCTOR_NAME} target depends on it, and the client will in turn add ${COST_FUNCTOR_NAME} as a dependency for their target.",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d11933_c5697756",
+        "filename": "cmake/codegen_include.h.in",
+        "patchSetId": 23
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "I checked and GSG actually has a separate extension for these files: .inc - we should use that here: https://google.github.io/styleguide/cppguide.html#Self_contained_Headers",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8efd1e21_f4b0da14",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "Prefer: helloworld",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7fe73f_ece6f150",
+        "filename": "examples/helloworld_cost_function.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "Prefer: helloworld",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf80337d_0becd8df",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "To match GSG and the rest of Ceres, this file should be called codegen_cost_function.h s/t it reflects the class name, this is particularly relevant here as Ceres already has a cost_function.h",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf5cf26_e65a2f04",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "Add a comment explaining why the default constructor must exist",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570e6007_f8f878aa",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "Add a comment explaining why this derivation is conditional and why the resulting checks below are duplicated from SizedCostFunction.  I\u0027m not sure this approach is the best here vs:\n\n1) Removing the conditional inheritance\n2) Adding a default no-op implementation of Evaluate() wrapped in #ifdef CERES_CODEGEN without named parameters to avoid unused compiler warnings.\n\n#ifdef CERES_CODEGEN\n  // Never invoked during code generation, the purpose of which is to construct\n  // an implementation of this function.\n  bool Evaluate(double const* const*, double*, double**) const override {}\n#endif  // CERES_CODEGEN\n\nthis reduces all duplication from SizedCostFunction.",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd39efa_c0f076d4",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "I\u0027m not wild about this name, as this is in fact not a CostFunctor in the sense that the rest of Ceres defines it but rather a CostFunction that derives from CodegenCostFunction, but which also includes an operator().\n\nI think DerivedCostFunctor would be clearer here, Sameer and also chime in with suggestions if he has a better one.",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d53cda1_b522b176",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "How does this return void and not bool when the client functor\u0027s operator() returns a bool and does not have to return only true at the end?",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b90944_6a1c5661",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "As above, how does this return void and not bool ?",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7f9c98_226b3e6c",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "As above, why is this not: return EvaluateResidual() ?",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf4107f_c687655e",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "Why declare these variables locally here and not as std::vector\u003cdouble\u003e / std::vector\u003cdouble*\u003e members of CodegenCostFunction where the sizes are known when it is instantiated?  That will be more performant that repeated reallocations and as you are evaluating the full jacobian each time I don\u0027t think you actually need to worry about reinitialising the values but you could reset them to zero here.",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8e7732_5b8c6811",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 1,
+      "message": "As above, why is this not captured from the return value of EvaluateResidualAndJacobian() ?",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f43a1e9_7081a198",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-01T19:50:50Z",
+      "side": 0,
+      "message": "I think you should update this to:\n\nstatic_assert(std::is_base_of\u003cCodegenCostFunction, CostFunctor\u003e::value);\n\nand #include \u003ctype_traits\u003e",
+      "revId": "75e575cae0ea1fdd086d9b68113558d9f67ffa13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
