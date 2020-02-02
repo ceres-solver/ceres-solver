@@ -204,7 +204,7 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
   // vector to determine where the set of columns correspnding to the
   // covariance block begin.
   int offset = 0;
-  while (cols_begin[offset] != col_begin && offset < row_size) {
+  while (offset < row_size && cols_begin[offset] != col_begin) {
     ++offset;
   }
 
