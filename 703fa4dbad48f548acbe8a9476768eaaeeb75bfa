@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff910040_12688133",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "I have one. Will run it with this commit.",
+      "parentUuid": "c1fd484c_7761ce84",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1eebb61e_463534c3",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 23
@@ -33,6 +51,24 @@
       "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633b6002_c419fc0e",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 23
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eebb61e_463534c3",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fb1802a0_1b3ac8b8",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 23
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbcb5277_6e06c025",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37ca72ff_b84a7626",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 23
@@ -67,6 +121,24 @@
       "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ab57b7_4f7ecad4",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 23
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37ca72ff_b84a7626",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "052ca6ed_781609c7",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 23
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edbb4b04_3ff68b14",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3373467_da194ace",
         "filename": "cmake/CeresCodeGeneration.cmake",
         "patchSetId": 23
@@ -101,6 +191,24 @@
       "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf40412_51ea0bfb",
+        "filename": "cmake/CeresCodeGeneration.cmake",
+        "patchSetId": 23
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3373467_da194ace",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c966067e_97fd343c",
+        "filename": "cmake/codegen_include.h.in",
+        "patchSetId": 23
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99d11933_c5697756",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8efd1e21_f4b0da14",
         "filename": "examples/CMakeLists.txt",
         "patchSetId": 23
@@ -135,6 +261,24 @@
       "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff10aed6_f3acf78b",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8efd1e21_f4b0da14",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "452c2210_e2ed46c3",
+        "filename": "examples/helloworld_cost_function.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb7fe73f_ece6f150",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf80337d_0becd8df",
         "filename": "include/ceres/codegen/cost_function.h",
         "patchSetId": 23
@@ -169,6 +331,24 @@
       "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f90b010c_48a1e391",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf80337d_0becd8df",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "8ae47801_d83fb899",
+        "filename": "include/ceres/codegen/cost_function.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Added comment.\n\nA default Evaluate implementation sadly doesn\u0027t work because the VariadicEvaluate will use it instead of the templated functor.",
+      "parentUuid": "570e6007_f8f878aa",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbd39efa_c0f076d4",
         "filename": "include/ceres/codegen/generate_code_for_functor.h",
         "patchSetId": 23
@@ -220,6 +418,24 @@
       "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5fb5750_2424d405",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Changed it to your suggestion for now. This doesn\u0027t change the API so a later change would be trivial.",
+      "parentUuid": "bbd39efa_c0f076d4",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "e6ffd7e0_6bbef1b7",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "So far, we don\u0027t support `return` in generated code. This should be noted in the docu and is part of another patch.",
+      "parentUuid": "7d53cda1_b522b176",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2b90944_6a1c5661",
         "filename": "include/ceres/codegen/generate_code_for_functor.h",
         "patchSetId": 23
@@ -254,6 +488,24 @@
       "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff97f8f6_c999d574",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2b90944_6a1c5661",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "f7f71452_cb350bb3",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d7f9c98_226b3e6c",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bf4107f_c687655e",
         "filename": "include/ceres/codegen/generate_code_for_functor.h",
         "patchSetId": 23
@@ -291,6 +561,24 @@
     },
     {
       "key": {
+        "uuid": "79d3bd5c_6d1b6c59",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Good point. I made myself a note to test this if we have some benchmarks running.\n\nMy guess it that it would not be much better, because currently this line generates the following code:\n\ndouble jacobians_data[10][5];\ndouble* jacbians_ptr[] \u003d ...\n\nIn this case, everything is fixed size on the stack so we don\u0027t have any allocations and the compiler is free to optimize everything.",
+      "parentUuid": "8bf4107f_c687655e",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f8e7732_5b8c6811",
         "filename": "include/ceres/codegen/generate_code_for_functor.h",
         "patchSetId": 23
@@ -305,6 +593,24 @@
       "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f9fe91_ff23e0a7",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f8e7732_5b8c6811",
+      "revId": "703fa4dbad48f548acbe8a9476768eaaeeb75bfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }

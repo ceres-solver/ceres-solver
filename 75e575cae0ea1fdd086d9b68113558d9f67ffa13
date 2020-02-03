@@ -16,6 +16,24 @@
       "revId": "75e575cae0ea1fdd086d9b68113558d9f67ffa13",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc2200f_5777b41c",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-03T17:17:28Z",
+      "side": 0,
+      "message": "I didn\u0027t implement this change because it would like this\n\nstatic_assert(std::is_base_of\u003cCodegenCostFunction\u003cDerivedCostFunctor::kNumResiduals,DerivedCostFunctor::ParameterDims\u003e, CostFunctor\u003e::value);\n\nand it would be kind of redundant, because it only works if this type actually has kNumResiduals and ParameterDims",
+      "parentUuid": "3f43a1e9_7081a198",
+      "revId": "75e575cae0ea1fdd086d9b68113558d9f67ffa13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
