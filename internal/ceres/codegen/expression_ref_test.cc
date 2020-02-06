@@ -284,26 +284,28 @@ TEST(ExpressionRef, SCALAR_FUNCTION_CALL) {
   ExpressionGraph reference;
   reference.InsertBack(Expression::CreateCompileTimeConstant(1));
   reference.InsertBack(Expression::CreateCompileTimeConstant(2));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("abs", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("acos", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("asin", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("atan", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("cbrt", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("ceil", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("cos", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("cosh", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("exp", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("exp2", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("floor", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("log", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("log2", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("sin", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("sinh", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("sqrt", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("tan", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("tanh", {0}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("atan2", {0, 1}));
-  reference.InsertBack(Expression::CreateScalarFunctionCall("pow", {0, 1}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::abs", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::acos", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::asin", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::atan", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::cbrt", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::ceil", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::cos", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::cosh", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::exp", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::exp2", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::floor", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::log", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::log2", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::sin", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::sinh", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::sqrt", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::tan", {0}));
+  reference.InsertBack(Expression::CreateScalarFunctionCall("std::tanh", {0}));
+  reference.InsertBack(
+      Expression::CreateScalarFunctionCall("std::atan2", {0, 1}));
+  reference.InsertBack(
+      Expression::CreateScalarFunctionCall("std::pow", {0, 1}));
   EXPECT_EQ(reference, graph);
 }
 
@@ -318,10 +320,14 @@ TEST(ExpressionRef, LOGICAL_FUNCTION_CALL) {
 
   ExpressionGraph reference;
   reference.InsertBack(Expression::CreateCompileTimeConstant(1));
-  reference.InsertBack(Expression::CreateLogicalFunctionCall("isfinite", {0}));
-  reference.InsertBack(Expression::CreateLogicalFunctionCall("isinf", {0}));
-  reference.InsertBack(Expression::CreateLogicalFunctionCall("isnan", {0}));
-  reference.InsertBack(Expression::CreateLogicalFunctionCall("isnormal", {0}));
+  reference.InsertBack(
+      Expression::CreateLogicalFunctionCall("std::isfinite", {0}));
+  reference.InsertBack(
+      Expression::CreateLogicalFunctionCall("std::isinf", {0}));
+  reference.InsertBack(
+      Expression::CreateLogicalFunctionCall("std::isnan", {0}));
+  reference.InsertBack(
+      Expression::CreateLogicalFunctionCall("std::isnormal", {0}));
   EXPECT_EQ(reference, graph);
 }
 

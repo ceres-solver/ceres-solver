@@ -31,6 +31,7 @@
 #define CERES_CODEGEN
 
 #include "ceres/codegen/internal/code_generator.h"
+
 #include "ceres/codegen/internal/expression_graph.h"
 #include "ceres/codegen/internal/expression_ref.h"
 #include "gtest/gtest.h"
@@ -65,16 +66,23 @@ TEST(CodeGenerator, COMPILE_TIME_CONSTANT) {
   T a = T(0);
   T b = T(123.5);
   T c = T(1 + 1);
-  T d;  // Uninitialized variables should not generate code!
+  T d = T(std::numeric_limits<double>::infinity());
+  T e = T(std::numeric_limits<double>::quiet_NaN());
+  T f;  // Uninitialized variables should not generate code!
   auto graph = StopRecordingExpressions();
-  std::vector<std::string> expected_code = {"{",
-                                            "  double v_0;",
-                                            "  double v_1;",
-                                            "  double v_2;",
-                                            "  v_0 = 0;",
-                                            "  v_1 = 123.5;",
-                                            "  v_2 = 2;",
-                                            "}"};
+  std::vector<std::string> expected_code = {
+      "{",
+      "  double v_0;",
+      "  double v_1;",
+      "  double v_2;",
+      "  double v_3;",
+      "  double v_4;",
+      "  v_0 = 0;",
+      "  v_1 = 123.5;",
+      "  v_2 = 2;",
+      "  v_3 = std::numeric_limits<double>::infinity();",
+      "  v_4 = std::numeric_limits<double>::quiet_NaN();",
+      "}"};
   GenerateAndCheck(graph, expected_code);
 }
 
@@ -352,26 +360,26 @@ TEST(CodeGenerator, FUNCTION_CALL) {
                                             "  double v_21;",
                                             "  v_0 = 0;",
                                             "  v_1 = 1;",
-                                            "  v_2 = abs(v_0);",
-                                            "  v_3 = acos(v_0);",
-                                            "  v_4 = asin(v_0);",
-                                            "  v_5 = atan(v_0);",
-                                            "  v_6 = cbrt(v_0);",
-                                            "  v_7 = ceil(v_0);",
-                                            "  v_8 = cos(v_0);",
-                                            "  v_9 = cosh(v_0);",
-                                            "  v_10 = exp(v_0);",
-                                            "  v_11 = exp2(v_0);",
-                                            "  v_12 = floor(v_0);",
-                                            "  v_13 = log(v_0);",
-                                            "  v_14 = log2(v_0);",
-                                            "  v_15 = sin(v_0);",
-                                            "  v_16 = sinh(v_0);",
-                                            "  v_17 = sqrt(v_0);",
-                                            "  v_18 = tan(v_0);",
-                                            "  v_19 = tanh(v_0);",
-                                            "  v_20 = atan2(v_0, v_1);",
-                                            "  v_21 = pow(v_0, v_1);",
+                                            "  v_2 = std::abs(v_0);",
+                                            "  v_3 = std::acos(v_0);",
+                                            "  v_4 = std::asin(v_0);",
+                                            "  v_5 = std::atan(v_0);",
+                                            "  v_6 = std::cbrt(v_0);",
+                                            "  v_7 = std::ceil(v_0);",
+                                            "  v_8 = std::cos(v_0);",
+                                            "  v_9 = std::cosh(v_0);",
+                                            "  v_10 = std::exp(v_0);",
+                                            "  v_11 = std::exp2(v_0);",
+                                            "  v_12 = std::floor(v_0);",
+                                            "  v_13 = std::log(v_0);",
+                                            "  v_14 = std::log2(v_0);",
+                                            "  v_15 = std::sin(v_0);",
+                                            "  v_16 = std::sinh(v_0);",
+                                            "  v_17 = std::sqrt(v_0);",
+                                            "  v_18 = std::tan(v_0);",
+                                            "  v_19 = std::tanh(v_0);",
+                                            "  v_20 = std::atan2(v_0, v_1);",
+                                            "  v_21 = std::pow(v_0, v_1);",
                                             "}"};
   GenerateAndCheck(graph, expected_code);
 }
@@ -394,10 +402,10 @@ TEST(CodeGenerator, LOGICAL_FUNCTION_CALL) {
                                             "  bool v_3;",
                                             "  bool v_4;",
                                             "  v_0 = 1;",
-                                            "  v_1 = isfinite(v_0);",
-                                            "  v_2 = isinf(v_0);",
-                                            "  v_3 = isnan(v_0);",
-                                            "  v_4 = isnormal(v_0);",
+                                            "  v_1 = std::isfinite(v_0);",
+                                            "  v_2 = std::isinf(v_0);",
+                                            "  v_3 = std::isnan(v_0);",
+                                            "  v_4 = std::isnormal(v_0);",
                                             "}"};
   GenerateAndCheck(graph, expected_code);
 }
