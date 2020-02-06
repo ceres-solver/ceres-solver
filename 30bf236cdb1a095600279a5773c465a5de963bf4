@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c6276a_6e418d42",
+        "filename": "include/ceres/codegen/macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-06T17:32:58Z",
+      "side": 1,
+      "message": "I had not caught this earlier, but why is there \"_\" prefix to these macro argument names?",
+      "range": {
+        "startLine": 103,
+        "startChar": 29,
+        "endLine": 103,
+        "endChar": 43
+      },
+      "revId": "30bf236cdb1a095600279a5773c465a5de963bf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54539091_d25561dc",
+        "filename": "include/ceres/codegen/macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-06T17:32:58Z",
+      "side": 1,
+      "message": "should _template_type should just be type? the word template does nothing.",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 28
+      },
+      "revId": "30bf236cdb1a095600279a5773c465a5de963bf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0132c68_b1adadde",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-06T17:32:58Z",
+      "side": 1,
+      "message": "I did not quite understand this. \nso this is likely worth a comment, if the value is already infinity, at this point, why does explicitly setting to std::numeric_limits\u003cdouble\u003e::infinity()\" better than just using the value?",
+      "range": {
+        "startLine": 120,
+        "startChar": 15,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "30bf236cdb1a095600279a5773c465a5de963bf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e76ff1_92a1660f",
+        "filename": "internal/ceres/codegen/code_generator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-06T17:32:58Z",
+      "side": 1,
+      "message": "is the plan to have a compiler optimization pass which propagates them?",
+      "range": {
+        "startLine": 83,
+        "startChar": 53,
+        "endLine": 83,
+        "endChar": 54
+      },
+      "revId": "30bf236cdb1a095600279a5773c465a5de963bf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
