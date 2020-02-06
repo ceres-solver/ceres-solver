@@ -115,37 +115,37 @@ ExpressionRef operator*(const ExpressionRef& x, const ExpressionRef& y);
 ExpressionRef operator/(const ExpressionRef& x, const ExpressionRef& y);
 
 // Functions
-#define CERES_DEFINE_UNARY_FUNCTION_CALL(name)                \
-  inline ExpressionRef name(const ExpressionRef& x) {         \
-    return AddExpressionToGraph(                              \
-        Expression::CreateScalarFunctionCall(#name, {x.id})); \
+#define CERES_DEFINE_UNARY_FUNCTION_CALL(ns, name)                     \
+  inline ExpressionRef name(const ExpressionRef& x) {                  \
+    return AddExpressionToGraph(                                       \
+        Expression::CreateScalarFunctionCall(#ns "::" #name, {x.id})); \
   }
-#define CERES_DEFINE_BINARY_FUNCTION_CALL(name)                               \
+#define CERES_DEFINE_BINARY_FUNCTION_CALL(ns, name)                           \
   inline ExpressionRef name(const ExpressionRef& x, const ExpressionRef& y) { \
     return AddExpressionToGraph(                                              \
-        Expression::CreateScalarFunctionCall(#name, {x.id, y.id}));           \
+        Expression::CreateScalarFunctionCall(#ns "::" #name, {x.id, y.id}));  \
   }
-CERES_DEFINE_UNARY_FUNCTION_CALL(abs);
-CERES_DEFINE_UNARY_FUNCTION_CALL(acos);
-CERES_DEFINE_UNARY_FUNCTION_CALL(asin);
-CERES_DEFINE_UNARY_FUNCTION_CALL(atan);
-CERES_DEFINE_UNARY_FUNCTION_CALL(cbrt);
-CERES_DEFINE_UNARY_FUNCTION_CALL(ceil);
-CERES_DEFINE_UNARY_FUNCTION_CALL(cos);
-CERES_DEFINE_UNARY_FUNCTION_CALL(cosh);
-CERES_DEFINE_UNARY_FUNCTION_CALL(exp);
-CERES_DEFINE_UNARY_FUNCTION_CALL(exp2);
-CERES_DEFINE_UNARY_FUNCTION_CALL(floor);
-CERES_DEFINE_UNARY_FUNCTION_CALL(log);
-CERES_DEFINE_UNARY_FUNCTION_CALL(log2);
-CERES_DEFINE_UNARY_FUNCTION_CALL(sin);
-CERES_DEFINE_UNARY_FUNCTION_CALL(sinh);
-CERES_DEFINE_UNARY_FUNCTION_CALL(sqrt);
-CERES_DEFINE_UNARY_FUNCTION_CALL(tan);
-CERES_DEFINE_UNARY_FUNCTION_CALL(tanh);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, abs);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, acos);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, asin);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, atan);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, cbrt);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, ceil);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, cos);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, cosh);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, exp);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, exp2);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, floor);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, log);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, log2);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, sin);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, sinh);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, sqrt);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, tan);
+CERES_DEFINE_UNARY_FUNCTION_CALL(std, tanh);
 
-CERES_DEFINE_BINARY_FUNCTION_CALL(atan2);
-CERES_DEFINE_BINARY_FUNCTION_CALL(pow);
+CERES_DEFINE_BINARY_FUNCTION_CALL(std, atan2);
+CERES_DEFINE_BINARY_FUNCTION_CALL(std, pow);
 
 #undef CERES_DEFINE_UNARY_FUNCTION_CALL
 #undef CERES_DEFINE_BINARY_FUNCTION_CALL
@@ -198,16 +198,16 @@ ComparisonExpressionRef operator|(const ComparisonExpressionRef& x,
                                   const ComparisonExpressionRef& y);
 ComparisonExpressionRef operator!(const ComparisonExpressionRef& x);
 
-#define CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(name)          \
-  inline ComparisonExpressionRef name(const ExpressionRef& x) { \
-    return ComparisonExpressionRef(AddExpressionToGraph(        \
-        Expression::CreateLogicalFunctionCall(#name, {x.id}))); \
+#define CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(ns, name)               \
+  inline ComparisonExpressionRef name(const ExpressionRef& x) {          \
+    return ComparisonExpressionRef(AddExpressionToGraph(                 \
+        Expression::CreateLogicalFunctionCall(#ns "::" #name, {x.id}))); \
   }
 
-CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(isfinite);
-CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(isinf);
-CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(isnan);
-CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(isnormal);
+CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(std, isfinite);
+CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(std, isinf);
+CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(std, isnan);
+CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(std, isnormal);
 
 #undef CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL
 

@@ -100,7 +100,7 @@
 // The CERES_CODEGEN macro is defined by the build system only during code
 // generation.
 #ifndef CERES_CODEGEN
-#define CERES_LOCAL_VARIABLE(_template_type, _local_variable) (_local_variable)
+#define CERES_LOCAL_VARIABLE(type, local_variable) type(local_variable)
 #define CERES_IF(condition_) if (condition_)
 #define CERES_ELSE else
 #define CERES_ENDIF
