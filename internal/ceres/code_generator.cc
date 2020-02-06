@@ -29,10 +29,13 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 
 #include "ceres/codegen/internal/code_generator.h"
+
+#include <cmath>
+#include <limits>
 #include <sstream>
+
 #include "assert.h"
 #include "glog/logging.h"
-
 namespace ceres {
 namespace internal {
 
@@ -113,7 +116,23 @@ std::string CodeGenerator::ExpressionToString(ExpressionId id) {
       // Format:     <lhs_id> = <value>;
       // Example:    v_0      = 3.1415;
       //
-      result << indentation_ << lhs << " = " << value << ";";
+      result << indentation_ << lhs << " = ";
+
+      // Putting an inf or nan double into std::stringstream will just print the
+      // strings "inf" and "nan". This is not valid C++ code so we have to check
+      // for this here.
+      if (std::isinf(value)) {
+        if (value > 0) {
+          result << "std::numeric_limits<double>::infinity()";
+        } else {
+          result << "-std::numeric_limits<double>::infinity()";
+        }
+      } else if (std::isnan(value)) {
+        result << "std::numeric_limits<double>::quiet_NaN()";
+      } else {
+        result << value;
+      }
+      result << ";";
       break;
     }
     case ExpressionType::INPUT_ASSIGNMENT: {
