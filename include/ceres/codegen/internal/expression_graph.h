@@ -64,6 +64,12 @@ class ExpressionGraph {
 
   int Size() const { return expressions_.size(); }
 
+  // Erases the expression at "location". All expression after "location" are
+  // moved by one element to the front. References to moved expressions are
+  // updated. Removing an expression that is still referenced somewhere is
+  // undefined behaviour.
+  void Erase(ExpressionId location);
+
   // Insert a new expression at "location" into the graph. All expression
   // after "location" are moved by one element to the back. References to
   // moved expressions are updated.
