@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "dfe3e0cd_34ae2f16",
+        "filename": "include/ceres/codegen/macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-07T07:45:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54539091_d25561dc",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 28
+      },
+      "revId": "30bf236cdb1a095600279a5773c465a5de963bf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3237230e_b392a3a8",
+        "filename": "include/ceres/codegen/macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-07T07:45:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68c6276a_6e418d42",
+      "range": {
+        "startLine": 103,
+        "startChar": 29,
+        "endLine": 103,
+        "endChar": 43
+      },
+      "revId": "30bf236cdb1a095600279a5773c465a5de963bf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0132c68_b1adadde",
         "filename": "internal/ceres/code_generator.cc",
         "patchSetId": 2
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5a5d1502_5d961924",
+        "filename": "internal/ceres/code_generator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-07T07:45:18Z",
+      "side": 1,
+      "message": "I\u0027m answering both comments at the same time here.\n\nPutting an inf or nan double into std::stringstream will just print the\nstrings \"inf\" and \"nan\". This is not valid C++ code. I found this bug when generating code for exp(Jet).",
+      "parentUuid": "d0132c68_b1adadde",
+      "range": {
+        "startLine": 120,
+        "startChar": 15,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "30bf236cdb1a095600279a5773c465a5de963bf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51e76ff1_92a1660f",
         "filename": "internal/ceres/codegen/code_generator_test.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "30bf236cdb1a095600279a5773c465a5de963bf4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed5a28a_ebdd9504",
+        "filename": "internal/ceres/codegen/code_generator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-07T07:45:18Z",
+      "side": 1,
+      "message": "Constant folding will propagate infs and nans. This patch is just a compile fix for the code generator.",
+      "parentUuid": "51e76ff1_92a1660f",
+      "range": {
+        "startLine": 83,
+        "startChar": 53,
+        "endLine": 83,
+        "endChar": 54
+      },
+      "revId": "30bf236cdb1a095600279a5773c465a5de963bf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
