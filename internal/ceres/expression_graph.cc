@@ -87,8 +87,30 @@ bool ExpressionGraph::operator==(const ExpressionGraph& other) const {
   return true;
 }
 
+void ExpressionGraph::Erase(ExpressionId location) {
+  CHECK_GE(location, 0);
+  CHECK_LT(location, Size());
+  // Move everything after id to the front and update references
+  for (ExpressionId id = location + 1; id < Size(); ++id) {
+    expressions_[id - 1] = expressions_[id];
+    auto& expression = expressions_[id - 1];
+    // Decrement reference if it points to a shifted variable.
+    if (expression.lhs_id() >= location) {
+      expression.set_lhs_id(expression.lhs_id() - 1);
+    }
+    for (auto& arg : *expression.mutable_arguments()) {
+      if (arg >= location) {
+        arg--;
+      }
+    }
+  }
+  expressions_.resize(Size() - 1);
+}
+
 void ExpressionGraph::Insert(ExpressionId location,
                              const Expression& expression) {
+  CHECK_GE(location, 0);
+  CHECK_LE(location, Size());
   ExpressionId last_expression_id = Size() - 1;
   // Increase size by adding a dummy expression.
   expressions_.push_back(Expression());
