@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "426ab1cc_72376288",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-08T16:09:59Z",
+      "side": 1,
+      "message": "I recommend using CHECK_GE and CHECK_LT macros, which will also print out the values being compared instead of doing an \u0026\u0026 inside the CHECK macro. it is more helpful for debugging when a crash occurs. And you don\u0027t have to add a comment since it is evident as to what comparison failed.",
+      "range": {
+        "startLine": 91,
+        "startChar": 21,
+        "endLine": 91,
+        "endChar": 22
+      },
+      "revId": "9bab6e5552037b0561325932c3f8bd1ee9f7e286",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9a7d7b_5721f1af",
+        "filename": "internal/ceres/expression_graph.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-08T16:09:59Z",
+      "side": 1,
+      "message": "same comment about CHECK_GE and CHECK_LE as above.",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 43
+      },
+      "revId": "9bab6e5552037b0561325932c3f8bd1ee9f7e286",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
