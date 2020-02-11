@@ -90,7 +90,7 @@ namespace ceres {
 //
 // An example that occurs commonly in Structure from Motion problems
 // is when camera rotations are parameterized using Quaternion. There,
-// it is useful only make updates orthogonal to that 4-vector defining
+// it is useful to only make updates orthogonal to that 4-vector defining
 // the quaternion. One way to do this is to let delta be a 3
 // dimensional vector and define Plus to be
 //
@@ -99,7 +99,7 @@ namespace ceres {
 // The multiplication between the two 4-vectors on the RHS is the
 // standard quaternion product.
 //
-// Given g and a point x, optimizing f can now be restated as
+// Given f and a point x, optimizing f can now be restated as
 //
 //     min  f(Plus(x, delta))
 //    delta
