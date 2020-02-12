@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5544e035_44aeb147",
+        "filename": "include/ceres/codegen/internal/optimization_pass.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-12T17:46:18Z",
+      "side": 1,
+      "message": "I do not see why this needs to be an operator. This should be called Optimize.\n\nalso why is this a mutable reference? it should be ExpressionGraph*\n\nbetter still why not create a new one and return it? why mutate this in place?\n\nAnother thought about return value. is int the thing to return or should this be something more general carry extra statistics? or should it just be a bool?",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f5a181_03b57932",
+        "filename": "include/ceres/codegen/internal/optimization_pass.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-12T17:46:18Z",
+      "side": 1,
+      "message": "is the plan to add passes to this very file? or one pass per file? I think the latter is a better idea instead of just growing this file.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a9e435_0d9e1a1a",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-12T17:46:18Z",
+      "side": 1,
+      "message": "Why do we need a class at all? isn\u0027t this just a single function which applies passes till its done?",
+      "range": {
+        "startLine": 65,
+        "startChar": 27,
+        "endLine": 65,
+        "endChar": 34
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb30d70_a0701e85",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-12T17:46:18Z",
+      "side": 1,
+      "message": "Optimize\n\nsame question as I have for the optimization pass. Also since this is a high level object, why not have this return OptimizerSummary\n\nOptimizer is not a great name in an optimization library. it is confusing.  ExpressionGraphOptimizer ?",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 9
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86cd68b1_5967bbba",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-12T17:46:18Z",
+      "side": 1,
+      "message": "why do you need these objects to be part of the state? is there a cost to creating these objects ? why not just create use and destroy?",
+      "range": {
+        "startLine": 73,
+        "startChar": 30,
+        "endLine": 73,
+        "endChar": 46
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3113cd1_1129467e",
+        "filename": "internal/ceres/codegen/optimization_pass.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-12T17:46:18Z",
+      "side": 1,
+      "message": "sorry having a brain fart moment, but this assumes that there are no expresssions referring to this expression right? how do you guarantee that?",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1cba6a7_4f3bfb01",
+        "filename": "internal/ceres/codegen/optimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-12T17:46:18Z",
+      "side": 1,
+      "message": "I recommend having one test file per optimization pass.",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 14
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
