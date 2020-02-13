@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dbeb9801_ddcc5984",
+        "filename": "include/ceres/codegen/internal/optimization_pass.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-13T12:51:21Z",
+      "side": 1,
+      "message": "I don\u0027t think forcing a hard copy here for every OptimizationPass is ideal. We are copying a vector of vectors which is kind of expensive. If the user of this function wants a copy they can do it manually in advance.",
+      "parentUuid": "5544e035_44aeb147",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4f5a181_03b57932",
         "filename": "include/ceres/codegen/internal/optimization_pass.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2020-02-12T17:46:18Z",
       "side": 1,
       "message": "is the plan to add passes to this very file? or one pass per file? I think the latter is a better idea instead of just growing this file.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec03709e_3969865a",
+        "filename": "include/ceres/codegen/internal/optimization_pass.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-13T12:51:21Z",
+      "side": 1,
+      "message": "Not really sure here. Having one pass per file will create lots of small files (the class declaration is only a few lines).\n\nMy favourite would be to combine the declarations into one file to have a nice overview, but then split the implementations into multiple .cc files. I\u0027m not sure how that fits the google coding style tho.",
+      "parentUuid": "e4f5a181_03b57932",
       "range": {
         "startLine": 49,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c2ad27e3_6e48a3d8",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-13T12:51:21Z",
+      "side": 1,
+      "message": "I think the class is fine here, especially because it also scopes the Options and Summary structs.",
+      "parentUuid": "50a9e435_0d9e1a1a",
+      "range": {
+        "startLine": 65,
+        "startChar": 27,
+        "endLine": 65,
+        "endChar": 34
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdb30d70_a0701e85",
         "filename": "include/ceres/codegen/internal/optimizer.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b28f5a9_b046ddc4",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-13T12:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdb30d70_a0701e85",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 9
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3646947d_4464d3a5",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-13T12:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86cd68b1_5967bbba",
+      "range": {
+        "startLine": 73,
+        "startChar": 30,
+        "endLine": 73,
+        "endChar": 46
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3113cd1_1129467e",
         "filename": "internal/ceres/codegen/optimization_pass.cc",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "37f606ce_e2af465c",
+        "filename": "internal/ceres/codegen/optimization_pass.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-13T12:51:21Z",
+      "side": 1,
+      "message": "Referring to a NOP is illegal in the first place. Such a check should not be part of this optimization pass. Maybe we can add a general functions which checks a graph for correctness.",
+      "parentUuid": "f3113cd1_1129467e",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1cba6a7_4f3bfb01",
         "filename": "internal/ceres/codegen/optimizer_test.cc",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13c707e_3c0e6d66",
+        "filename": "internal/ceres/codegen/optimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-13T12:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1cba6a7_4f3bfb01",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 14
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
