@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "dbb42ef4_cc7f958c",
+        "filename": "include/ceres/codegen/internal/optimization_pass.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-13T17:39:21Z",
+      "side": 1,
+      "message": "two question.\nwhy is this a class at all? why not a function per pass?",
+      "parentUuid": "ec03709e_3969865a",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "68bfcd51d2e324b097ef763f9d7be40021319138",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50a9e435_0d9e1a1a",
         "filename": "include/ceres/codegen/internal/optimizer.h",
         "patchSetId": 1

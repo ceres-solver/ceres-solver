@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62ab19e7_21162515",
+        "filename": "include/ceres/codegen/internal/optimization_pass.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-13T17:39:21Z",
+      "side": 1,
+      "message": "the ints should be num_foo",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 35
+      },
+      "revId": "f8e46ac09c3e70b09d70ed4be9b17d612eaca6f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311a61f0_2b52e2c5",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-13T17:39:21Z",
+      "side": 1,
+      "message": "does this need to be a class? if so, why?",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "f8e46ac09c3e70b09d70ed4be9b17d612eaca6f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad25463f_fc8ef8c9",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-13T17:39:21Z",
+      "side": 1,
+      "message": "max_num_iterations",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 22
+      },
+      "revId": "f8e46ac09c3e70b09d70ed4be9b17d612eaca6f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094e5f6b_975cc28b",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-13T17:39:21Z",
+      "side": 1,
+      "message": "not sure what pass a prefix does. how about eliminate_nops? another reason to not have a class, for what is a function EliminateNops(Graph*);",
+      "range": {
+        "startLine": 61,
+        "startChar": 9,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "f8e46ac09c3e70b09d70ed4be9b17d612eaca6f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a972090_78ace314",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-13T17:39:21Z",
+      "side": 1,
+      "message": "integers should generators be num_foo.",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 18
+      },
+      "revId": "f8e46ac09c3e70b09d70ed4be9b17d612eaca6f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aefb5615_e4841142",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-13T17:39:21Z",
+      "side": 1,
+      "message": "I think these names are too verbose. but lets decide on whether these need to be classes or functions.\nif they are function, then you can just have optimization_passes.h and optimization_passes.cc with one function per pass.",
+      "range": {
+        "startLine": 158,
+        "startChar": 14,
+        "endLine": 158,
+        "endChar": 43
+      },
+      "revId": "f8e46ac09c3e70b09d70ed4be9b17d612eaca6f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
