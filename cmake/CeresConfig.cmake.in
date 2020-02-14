@@ -168,7 +168,7 @@ find_dependency(Threads)
 
 # Import code generation functions s/t they are available for use in client code
 # if find_package(Ceres) is successful.
-include(CeresCodeGeneration.cmake)
+include(CeresCodeGeneration)
 
 # Eigen.
 # Flag set during configuration and build of Ceres.

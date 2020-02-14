@@ -20,7 +20,7 @@ int main() {
     std::cerr << "Could not open file " << output_file << std::endl;
     return EXIT_FAILURE;
   }
-  for (auto line : lines) {
+  for (const auto& line : lines) {
     stream << line << std::endl;
   }
   return EXIT_SUCCESS;
