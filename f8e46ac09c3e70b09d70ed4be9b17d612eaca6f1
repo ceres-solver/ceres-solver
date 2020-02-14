@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "994eed94_95e38e8e",
+        "filename": "include/ceres/codegen/internal/optimization_pass.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-14T08:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62ab19e7_21162515",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 35
+      },
+      "revId": "f8e46ac09c3e70b09d70ed4be9b17d612eaca6f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "311a61f0_2b52e2c5",
         "filename": "include/ceres/codegen/internal/optimizer.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "f8e46ac09c3e70b09d70ed4be9b17d612eaca6f1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dca5343_bda8c594",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-14T08:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "311a61f0_2b52e2c5",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "f8e46ac09c3e70b09d70ed4be9b17d612eaca6f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0adbd724_b955e0b1",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-14T08:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad25463f_fc8ef8c9",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 22
+      },
+      "revId": "f8e46ac09c3e70b09d70ed4be9b17d612eaca6f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "094e5f6b_975cc28b",
         "filename": "include/ceres/codegen/internal/optimizer.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "83afb9f4_3c92438c",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-14T08:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "094e5f6b_975cc28b",
+      "range": {
+        "startLine": 61,
+        "startChar": 9,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "f8e46ac09c3e70b09d70ed4be9b17d612eaca6f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a972090_78ace314",
         "filename": "include/ceres/codegen/internal/optimizer.h",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "f8e46ac09c3e70b09d70ed4be9b17d612eaca6f1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c913f1_1ad5005b",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-14T08:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a972090_78ace314",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 18
+      },
+      "revId": "f8e46ac09c3e70b09d70ed4be9b17d612eaca6f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
