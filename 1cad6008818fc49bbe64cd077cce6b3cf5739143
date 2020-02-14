@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d6ef47d_d056856d",
+        "filename": "include/ceres/codegen/internal/optimization_pass.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-14T15:59:41Z",
+      "side": 1,
+      "message": "since this is called EliminateNops have the files and match the function name, instead of optimization_pass_cleanup_nops.",
+      "range": {
+        "startLine": 49,
+        "startChar": 26,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "1cad6008818fc49bbe64cd077cce6b3cf5739143",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8b5511_db017a37",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-14T15:59:41Z",
+      "side": 1,
+      "message": "Update comment to refer to the new function names.",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "1cad6008818fc49bbe64cd077cce6b3cf5739143",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a0f150_af637117",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-14T15:59:41Z",
+      "side": 1,
+      "message": "For ease of remembering I try and match the name of structs to functions.\n\nso if the function is OptimizeExpressionGraph \nthen I suggest OptimizeExpressionGraphOptions, OptimizeExpressionGraphSummary",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "1cad6008818fc49bbe64cd077cce6b3cf5739143",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f1dd89_234814db",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-14T15:59:41Z",
+      "side": 1,
+      "message": "ExpressionGraphOptimizationOptions",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 40
+      },
+      "revId": "1cad6008818fc49bbe64cd077cce6b3cf5739143",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c4fc5c_ee73d528",
+        "filename": "include/ceres/codegen/internal/optimizer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-14T15:59:41Z",
+      "side": 1,
+      "message": "summaries",
+      "range": {
+        "startLine": 65,
+        "startChar": 39,
+        "endLine": 65,
+        "endChar": 45
+      },
+      "revId": "1cad6008818fc49bbe64cd077cce6b3cf5739143",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd4e495_3d97867e",
+        "filename": "internal/ceres/codegen/optimization_pass_nop_cleanup.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-14T15:59:41Z",
+      "side": 1,
+      "message": "rename this to eliminate_nops.cc",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "1cad6008818fc49bbe64cd077cce6b3cf5739143",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52aefa03_4fb7f46c",
+        "filename": "internal/ceres/codegen/optimization_pass_nop_cleanup_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-14T15:59:41Z",
+      "side": 1,
+      "message": "eliminate_nops_test.cc",
+      "range": {
+        "startLine": 8,
+        "startChar": 24,
+        "endLine": 8,
+        "endChar": 30
+      },
+      "revId": "1cad6008818fc49bbe64cd077cce6b3cf5739143",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
