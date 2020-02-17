@@ -38,7 +38,8 @@
 #
 # The semantic tests, which check the correctness by executing the generated code
 # are still run on all platforms.
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+if (BUILD_TESTING AND GFLAGS)
+  if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CXX_FLAGS_OLD ${CMAKE_CXX_FLAGS})
     # From the man page:
     #   The C++ standard allows an implementation to omit creating a
@@ -54,4 +55,34 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     ceres_test(expression_ref)
     ceres_test(code_generator)
     set(CMAKE_CXX_FLAGS ${CXX_FLAGS_OLD})
+  endif()
+
+  macro (generate_test_functor FUNCTOR_NAME FUNCTOR_FILE)
+    ceres_generate_cost_function_implementation_for_functor(
+      NAME ${FUNCTOR_NAME}
+      INPUT_FILE ${FUNCTOR_FILE}
+      OUTPUT_DIRECTORY tests
+      NAMESPACE test
+      )
+  endmacro()
+
+  # Semantic tests should work on every platform
+  include(CeresCodeGeneration)
+
+
+  generate_test_functor(InputOutputAssignment autodiff_codegen_test.h)
+  generate_test_functor(CompileTimeConstants autodiff_codegen_test.h)
+  generate_test_functor(Assignments autodiff_codegen_test.h)
+  generate_test_functor(BinaryArithmetic autodiff_codegen_test.h)
+  generate_test_functor(UnaryArithmetic autodiff_codegen_test.h)
+  generate_test_functor(BinaryComparison autodiff_codegen_test.h)
+  generate_test_functor(LogicalOperators autodiff_codegen_test.h)
+  generate_test_functor(ScalarFunctions autodiff_codegen_test.h)
+  generate_test_functor(LogicalFunctions autodiff_codegen_test.h)
+  generate_test_functor(Branches autodiff_codegen_test.h)
+  ceres_test(autodiff_codegen)
+  target_link_libraries(autodiff_codegen_test PUBLIC
+    InputOutputAssignment CompileTimeConstants Assignments BinaryArithmetic
+    UnaryArithmetic BinaryComparison LogicalOperators ScalarFunctions
+    LogicalFunctions Branches)
 endif()
