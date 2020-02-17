@@ -186,7 +186,7 @@ class CERES_EXPORT HuberLoss : public LossFunction {
 //
 //   rho(s) = 2 (sqrt(1 + s) - 1).
 //
-// At s = 0: rho = [0, 1, -1/2].
+// At s = 0: rho = [0, 1, -1 / (2 * a^2)].
 class CERES_EXPORT SoftLOneLoss : public LossFunction {
  public:
   explicit SoftLOneLoss(double a) : b_(a * a), c_(1 / b_) {}
@@ -203,7 +203,7 @@ class CERES_EXPORT SoftLOneLoss : public LossFunction {
 //
 //   rho(s) = log(1 + s).
 //
-// At s = 0: rho = [0, 1, -1].
+// At s = 0: rho = [0, 1, -1 / a^2].
 class CERES_EXPORT CauchyLoss : public LossFunction {
  public:
   explicit CauchyLoss(double a) : b_(a * a), c_(1 / b_) {}
@@ -276,12 +276,13 @@ class CERES_EXPORT TolerantLoss : public LossFunction {
 // This is the Tukey biweight loss function which aggressively
 // attempts to suppress large errors.
 //
-// The term is computed as:
+// The term is computed as follows where the equations are scaled by a
+// factor of 2 because the cost function is given by 1/2 rho(s):
 //
-//   rho(s) = a^2 / 6 * (1 - (1 - s / a^2)^3 )   for s <= a^2,
-//   rho(s) = a^2 / 6                            for s >  a^2.
+//   rho(s) = a^2 / 3 * (1 - (1 - s / a^2)^3 )   for s <= a^2,
+//   rho(s) = a^2 / 3                            for s >  a^2.
 //
-// At s = 0: rho = [0, 0.5, -1 / a^2]
+// At s = 0: rho = [0, 1, -2 / a^2]
 class CERES_EXPORT TukeyLoss : public ceres::LossFunction {
  public:
   explicit TukeyLoss(double a) : a_squared_(a * a) {}
