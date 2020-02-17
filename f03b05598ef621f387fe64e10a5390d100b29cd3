@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ef8ff46_e1b5e637",
+        "filename": "include/ceres/codegen/internal/optimization_pass.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-17T16:25:34Z",
+      "side": 1,
+      "message": "these headers are not needed.",
+      "range": {
+        "startLine": 34,
+        "startChar": 33,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "f03b05598ef621f387fe64e10a5390d100b29cd3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8106f66e_a22ec28a",
+        "filename": "include/ceres/codegen/internal/optimization_pass.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-17T16:25:34Z",
+      "side": 1,
+      "message": "unless you are planning on this file growing to something lese, this should be named optimization_pass_summary.h and the headers included in this file are not needed anymore.",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 18
+      },
+      "revId": "f03b05598ef621f387fe64e10a5390d100b29cd3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f61fe85_67b86e7c",
+        "filename": "internal/ceres/codegen/eliminate_nops.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-17T16:25:34Z",
+      "side": 1,
+      "message": "blank before",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 9
+      },
+      "revId": "f03b05598ef621f387fe64e10a5390d100b29cd3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fffdbb78_ba3dadfd",
+        "filename": "internal/ceres/codegen/optimize_expression_graph.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-17T16:25:34Z",
+      "side": 1,
+      "message": "just use summary.iteration as the variable? that way you do not have to worry about how you exit out of the loop.",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "f03b05598ef621f387fe64e10a5390d100b29cd3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
