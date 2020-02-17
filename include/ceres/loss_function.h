@@ -278,10 +278,10 @@ class CERES_EXPORT TolerantLoss : public LossFunction {
 //
 // The term is computed as:
 //
-//   rho(s) = a^2 / 6 * (1 - (1 - s / a^2)^3 )   for s <= a^2,
-//   rho(s) = a^2 / 6                            for s >  a^2.
+//   rho(s) = a^2 / 3 * (1 - (1 - s / a^2)^3 )   for s <= a^2,
+//   rho(s) = a^2 / 3                            for s >  a^2.
 //
-// At s = 0: rho = [0, 0.5, -1 / a^2]
+// At s = 0: rho = [0, 1, -2 / a^2]
 class CERES_EXPORT TukeyLoss : public ceres::LossFunction {
  public:
   explicit TukeyLoss(double a) : a_squared_(a * a) {}
