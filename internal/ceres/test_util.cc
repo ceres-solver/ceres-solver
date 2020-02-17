@@ -34,6 +34,7 @@
 
 #include <algorithm>
 #include <cmath>
+
 #include "ceres/file.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
@@ -54,6 +55,15 @@ namespace ceres {
 namespace internal {
 
 bool ExpectClose(double x, double y, double max_abs_relative_difference) {
+  if (std::isinf(x) && std::isinf(y)) {
+    EXPECT_EQ(std::signbit(x), std::signbit(y));
+    return true;
+  }
+
+  if (std::isnan(x) && std::isnan(y)) {
+    return true;
+  }
+
   double absolute_difference = fabs(x - y);
   double relative_difference = absolute_difference / std::max(fabs(x), fabs(y));
   if (x == 0 || y == 0) {
@@ -63,7 +73,10 @@ bool ExpectClose(double x, double y, double max_abs_relative_difference) {
   }
   if (relative_difference > max_abs_relative_difference) {
     VLOG(1) << StringPrintf("x=%17g y=%17g abs=%17g rel=%17g",
-                            x, y, absolute_difference, relative_difference);
+                            x,
+                            y,
+                            absolute_difference,
+                            relative_difference);
   }
 
   EXPECT_NEAR(relative_difference, 0.0, max_abs_relative_difference);
@@ -108,36 +121,30 @@ void ExpectArraysCloseUptoScale(int n,
   }
 }
 
-void ExpectArraysClose(int n,
-                       const double* p,
-                       const double* q,
-                       double tol) {
+void ExpectArraysClose(int n, const double* p, const double* q, double tol) {
   CHECK_GT(n, 0);
   CHECK(p);
   CHECK(q);
 
   for (int i = 0; i < n; ++i) {
-    EXPECT_TRUE(ExpectClose(p[i], q[i], tol))
-        << "p[" << i << "]" << p[i] << " "
-        << "q[" << i << "]" << q[i] << " "
-        << "tol: " << tol;
+    EXPECT_TRUE(ExpectClose(p[i], q[i], tol)) << "p[" << i << "]" << p[i] << " "
+                                              << "q[" << i << "]" << q[i] << " "
+                                              << "tol: " << tol;
   }
 }
 
 std::string TestFileAbsolutePath(const std::string& filename) {
-  return JoinPath(FLAGS_test_srcdir + CERES_TEST_SRCDIR_SUFFIX,
-                  filename);
+  return JoinPath(FLAGS_test_srcdir + CERES_TEST_SRCDIR_SUFFIX, filename);
 }
 
 std::string ToString(const Solver::Options& options) {
-  return StringPrintf(
-      "(%s, %s, %s, %s, %d)",
-      LinearSolverTypeToString(options.linear_solver_type),
-      SparseLinearAlgebraLibraryTypeToString(
-          options.sparse_linear_algebra_library_type),
-      options.linear_solver_ordering? "USER": "AUTOMATIC",
-      PreconditionerTypeToString(options.preconditioner_type),
-      options.num_threads);
+  return StringPrintf("(%s, %s, %s, %s, %d)",
+                      LinearSolverTypeToString(options.linear_solver_type),
+                      SparseLinearAlgebraLibraryTypeToString(
+                          options.sparse_linear_algebra_library_type),
+                      options.linear_solver_ordering ? "USER" : "AUTOMATIC",
+                      PreconditionerTypeToString(options.preconditioner_type),
+                      options.num_threads);
 }
 
 }  // namespace internal
