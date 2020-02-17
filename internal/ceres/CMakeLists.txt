@@ -497,10 +497,6 @@ if (BUILD_TESTING AND GFLAGS)
 
   add_subdirectory(generated_bundle_adjustment_tests)
 
-  if(CODE_GENERATION)
-    add_subdirectory(codegen)
-  endif()
-
 endif (BUILD_TESTING AND GFLAGS)
 
 macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
@@ -526,3 +522,8 @@ if (BUILD_BENCHMARKS)
   add_executable(schur_eliminator_benchmark schur_eliminator_benchmark.cc)
   add_dependencies_to_benchmark(schur_eliminator_benchmark)
 endif (BUILD_BENCHMARKS)
+
+if(CODE_GENERATION)
+  add_subdirectory(codegen)
+endif()
+
