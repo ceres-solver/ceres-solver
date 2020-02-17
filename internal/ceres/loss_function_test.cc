@@ -81,6 +81,12 @@ void AssertLossFunctionIsValid(const LossFunction& loss, double s) {
 TEST(LossFunction, TrivialLoss) {
   AssertLossFunctionIsValid(TrivialLoss(), 0.357);
   AssertLossFunctionIsValid(TrivialLoss(), 1.792);
+  // Check that at s = 0: rho = [0, 1, 0].
+  double rho[3];
+  TrivialLoss().Evaluate(0.0, rho);
+  ASSERT_NEAR(rho[0], 0.0, 1e-6);
+  ASSERT_NEAR(rho[1], 1.0, 1e-6);
+  ASSERT_NEAR(rho[2], 0.0, 1e-6);
 }
 
 TEST(LossFunction, HuberLoss) {
@@ -88,6 +94,12 @@ TEST(LossFunction, HuberLoss) {
   AssertLossFunctionIsValid(HuberLoss(0.7), 1.792);
   AssertLossFunctionIsValid(HuberLoss(1.3), 0.357);
   AssertLossFunctionIsValid(HuberLoss(1.3), 1.792);
+  // Check that at s = 0: rho = [0, 1, 0].
+  double rho[3];
+  HuberLoss(0.7).Evaluate(0.0, rho);
+  ASSERT_NEAR(rho[0], 0.0, 1e-6);
+  ASSERT_NEAR(rho[1], 1.0, 1e-6);
+  ASSERT_NEAR(rho[2], 0.0, 1e-6);
 }
 
 TEST(LossFunction, SoftLOneLoss) {
@@ -95,6 +107,12 @@ TEST(LossFunction, SoftLOneLoss) {
   AssertLossFunctionIsValid(SoftLOneLoss(0.7), 1.792);
   AssertLossFunctionIsValid(SoftLOneLoss(1.3), 0.357);
   AssertLossFunctionIsValid(SoftLOneLoss(1.3), 1.792);
+  // Check that at s = 0: rho = [0, 1, -1 / (2 * a^2)].
+  double rho[3];
+  SoftLOneLoss(0.7).Evaluate(0.0, rho);
+  ASSERT_NEAR(rho[0], 0.0, 1e-6);
+  ASSERT_NEAR(rho[1], 1.0, 1e-6);
+  ASSERT_NEAR(rho[2], -0.5 / (0.7 * 0.7), 1e-6);
 }
 
 TEST(LossFunction, CauchyLoss) {
@@ -102,6 +120,12 @@ TEST(LossFunction, CauchyLoss) {
   AssertLossFunctionIsValid(CauchyLoss(0.7), 1.792);
   AssertLossFunctionIsValid(CauchyLoss(1.3), 0.357);
   AssertLossFunctionIsValid(CauchyLoss(1.3), 1.792);
+  // Check that at s = 0: rho = [0, 1, -1 / a^2].
+  double rho[3];
+  CauchyLoss(0.7).Evaluate(0.0, rho);
+  ASSERT_NEAR(rho[0], 0.0, 1e-6);
+  ASSERT_NEAR(rho[1], 1.0, 1e-6);
+  ASSERT_NEAR(rho[2], -1.0 / (0.7 * 0.7), 1e-6);
 }
 
 TEST(LossFunction, ArctanLoss) {
@@ -109,6 +133,12 @@ TEST(LossFunction, ArctanLoss) {
   AssertLossFunctionIsValid(ArctanLoss(0.7), 1.792);
   AssertLossFunctionIsValid(ArctanLoss(1.3), 0.357);
   AssertLossFunctionIsValid(ArctanLoss(1.3), 1.792);
+  // Check that at s = 0: rho = [0, 1, 0].
+  double rho[3];
+  ArctanLoss(0.7).Evaluate(0.0, rho);
+  ASSERT_NEAR(rho[0], 0.0, 1e-6);
+  ASSERT_NEAR(rho[1], 1.0, 1e-6);
+  ASSERT_NEAR(rho[2], 0.0, 1e-6);
 }
 
 TEST(LossFunction, TolerantLoss) {
@@ -135,6 +165,12 @@ TEST(LossFunction, TukeyLoss) {
   AssertLossFunctionIsValid(TukeyLoss(0.7), 1.792);
   AssertLossFunctionIsValid(TukeyLoss(1.3), 0.357);
   AssertLossFunctionIsValid(TukeyLoss(1.3), 1.792);
+  // Check that at s = 0: rho = [0, 1, -2 / a^2].
+  double rho[3];
+  TukeyLoss(0.7).Evaluate(0.0, rho);
+  ASSERT_NEAR(rho[0], 0.0, 1e-6);
+  ASSERT_NEAR(rho[1], 1.0, 1e-6);
+  ASSERT_NEAR(rho[2], -2.0 / (0.7 * 0.7), 1e-6);
 }
 
 TEST(LossFunction, ComposedLoss) {
