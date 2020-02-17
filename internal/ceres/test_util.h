@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_TEST_UTIL_H_
 
 #include <string>
+
 #include "ceres/internal/port.h"
 #include "ceres/problem.h"
 #include "ceres/solver.h"
@@ -44,6 +45,9 @@ namespace internal {
 // Expects that x and y have a relative difference of no more than
 // max_abs_relative_difference. If either x or y is zero, then the relative
 // difference is interpreted as an absolute difference.
+//
+// If x and y have the same non-finite value (inf or nan) we treat them as being
+// close. In such a case no error is thrown and true is returned.
 bool ExpectClose(double x, double y, double max_abs_relative_difference);
 
 // Expects that for all i = 1,.., n - 1
@@ -113,11 +117,8 @@ class SystemTest : public ::testing::Test {
     Solver::Summary summary;
     Solve(options, problem, &summary);
     CHECK_NE(summary.termination_type, ceres::FAILURE);
-    problem->Evaluate(Problem::EvaluateOptions(),
-                      nullptr,
-                      final_residuals,
-                      nullptr,
-                      nullptr);
+    problem->Evaluate(
+        Problem::EvaluateOptions(), nullptr, final_residuals, nullptr, nullptr);
   }
 
   std::vector<double> expected_final_residuals_;
