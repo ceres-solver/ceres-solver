@@ -1,0 +1,406 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9776f982_68b9ce29",
+        "filename": "internal/ceres/codegen/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "is there a plan to relax this constraint? because I develop on macos using the default toolchain and at google we use a variety of llvm based toolchains. so having tests that only work with gcc is going to be a long term problem.\n\nalso do all tests need to be gcc only?",
+      "range": {
+        "startLine": 42,
+        "startChar": 27,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02275ec7_5f18007b",
+        "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "blank before",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 9
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef0ecbc_9fc8f417",
+        "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "I am not a fan of tests that do loops (yes we have a bunch of these in ceres, but they are all bad ideas). Also when a test fails, you invariably have to comment all the other values out. \n\nCan you make these value parameterized tests so that each value and each functor give rise to one test? so failure are very clear.\n\n\nhttps://github.com/google/googletest/blob/master/googletest/docs/advanced.md#value-parameterized-tests",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 16
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c582978d_54ce7e59",
+        "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "blank between tests.  also does clang format really make these oneliners?",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 4
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f956a5c_900b4020",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "this file can just be called test_utils.h since it is already in the codegen directory, adding the directory name to the file name is not great.",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 12
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a82bf2_23759fac",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "blank before",
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1ed499_b921c956",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "blank before.",
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4166f840_7df3dbbf",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "I do not understand the docs. If you have a cost function object, then what is operator() doing? it is calling operator() on the cost function object? but cost function objects do not have operator(), they have Evaluate methods. Something does not seem right here.",
+      "range": {
+        "startLine": 39,
+        "startChar": 18,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0789bba_8b2c8bda",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "SizedCostFunctions\nwhy does this need to be SizedCostFunctions? simple CostFunction will do. The templates do nothing useful here, everything is available via the CostFunction interface.",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6e9af9_5206291e",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "is this actually ever used with a deterministic value?",
+      "range": {
+        "startLine": 57,
+        "startChar": 77,
+        "endLine": 57,
+        "endChar": 78
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8879519e_1072bab2",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "f1 -\u003e cost_function",
+      "range": {
+        "startLine": 58,
+        "startChar": 44,
+        "endLine": 58,
+        "endChar": 46
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95814f8c_f7712e52",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "why the suffix _0?",
+      "range": {
+        "startLine": 63,
+        "startChar": 22,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb4e125_87407da6",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "why do you need this to be templated? why not just take CostFunction objects?",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 27
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b851067b_3e4758c4",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "cost_function1",
+      "range": {
+        "startLine": 91,
+        "startChar": 62,
+        "endLine": 91,
+        "endChar": 63
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccbf7f7_86a4e3ef",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "cost_function2",
+      "range": {
+        "startLine": 92,
+        "startChar": 67,
+        "endLine": 92,
+        "endChar": 68
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed88a38d_8159c65d",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "residuals_and_jacobians_1",
+      "range": {
+        "startLine": 96,
+        "startChar": 7,
+        "endLine": 96,
+        "endChar": 28
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1654dc9c_e362da36",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "Make this constant named. Why is it 1e20? shouldn\u0027t this be DBL_EPSILON?",
+      "range": {
+        "startLine": 105,
+        "startChar": 23,
+        "endLine": 105,
+        "endChar": 25
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d9e609_b18fe470",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-02-20T16:00:23Z",
+      "side": 1,
+      "message": "namespace termination seems incorrect. isn\u0027t this ceres::internal rather than test?",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 1
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
