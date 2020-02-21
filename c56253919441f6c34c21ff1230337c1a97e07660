@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bee03df_0a7ffd05",
+        "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-21T16:35:18Z",
+      "side": 1,
+      "message": "I think the naming convention is that this class is called FooTest",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "c56253919441f6c34c21ff1230337c1a97e07660",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d30c6142_8382e2fe",
+        "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-21T16:35:18Z",
+      "side": 1,
+      "message": "generated_cost_function",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 39
+      },
+      "revId": "c56253919441f6c34c21ff1230337c1a97e07660",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5118b145_8f4e0367",
+        "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-21T16:35:18Z",
+      "side": 1,
+      "message": "named constant, and why 1e-20?",
+      "range": {
+        "startLine": 55,
+        "startChar": 62,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "c56253919441f6c34c21ff1230337c1a97e07660",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc289c56_dd2f80fd",
+        "filename": "internal/ceres/codegen/test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-21T16:35:18Z",
+      "side": 1,
+      "message": "I do not understand this, why does Autodiff care about what other methods a struct has? what is the error that you get if you try using a codegen cost function in autodiff?",
+      "range": {
+        "startLine": 47,
+        "startChar": 38,
+        "endLine": 47,
+        "endChar": 46
+      },
+      "revId": "c56253919441f6c34c21ff1230337c1a97e07660",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
