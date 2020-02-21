@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f401b0e_521c06ff",
+        "filename": "internal/ceres/codegen/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Currently only the expression_ref test and code_generator test are gcc-only. With some work the code_generator_test can be platform independent as well.\n\nThe expression_ref_test will never be platform independent, because it relies on implementation defined behavior. We can add a different \"ground truth\" for Clang tho.",
+      "parentUuid": "9776f982_68b9ce29",
+      "range": {
+        "startLine": 42,
+        "startChar": 27,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02275ec7_5f18007b",
         "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01724ec0_04fbedf6",
+        "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02275ec7_5f18007b",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 9
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9b5acaea_b82ade16",
+        "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cef0ecbc_9fc8f417",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 16
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c582978d_54ce7e59",
         "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4022d77_8aecc669",
+        "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "It does make them oneliners, if they have only a single statement and a shorter than the column width.",
+      "parentUuid": "c582978d_54ce7e59",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 4
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4a158550_0f43773f",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f956a5c_900b4020",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 12
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94a82bf2_23759fac",
         "filename": "internal/ceres/codegen/codegen_test_util.h",
         "patchSetId": 3
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "2dec3cce_86901ac1",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94a82bf2_23759fac",
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd1ed499_b921c956",
         "filename": "internal/ceres/codegen/codegen_test_util.h",
         "patchSetId": 3
@@ -148,6 +286,24 @@
       "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa006a6_98d0687c",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd1ed499_b921c956",
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "d6fdcafa_2ab628d8",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4166f840_7df3dbbf",
+      "range": {
+        "startLine": 39,
+        "startChar": 18,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0789bba_8b2c8bda",
         "filename": "internal/ceres/codegen/codegen_test_util.h",
         "patchSetId": 3
@@ -194,6 +374,30 @@
       "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccce6b95_5cebafa2",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0789bba_8b2c8bda",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "6dbb1c31_a6e47654",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8879519e_1072bab2",
+      "range": {
+        "startLine": 58,
+        "startChar": 44,
+        "endLine": 58,
+        "endChar": 46
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95814f8c_f7712e52",
         "filename": "internal/ceres/codegen/codegen_test_util.h",
         "patchSetId": 3
@@ -263,6 +491,30 @@
       "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3119be7d_10131691",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95814f8c_f7712e52",
+      "range": {
+        "startLine": 63,
+        "startChar": 22,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -289,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "dfc0b7fe_b8f5a8ea",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bb4e125_87407da6",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 27
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b851067b_3e4758c4",
         "filename": "internal/ceres/codegen/codegen_test_util.h",
         "patchSetId": 3
@@ -309,6 +585,30 @@
       "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9da32d_7cd000db",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b851067b_3e4758c4",
+      "range": {
+        "startLine": 91,
+        "startChar": 62,
+        "endLine": 91,
+        "endChar": 63
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -335,6 +635,30 @@
     },
     {
       "key": {
+        "uuid": "24b06af6_8f762679",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ccbf7f7_86a4e3ef",
+      "range": {
+        "startLine": 92,
+        "startChar": 67,
+        "endLine": 92,
+        "endChar": 68
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed88a38d_8159c65d",
         "filename": "internal/ceres/codegen/codegen_test_util.h",
         "patchSetId": 3
@@ -355,6 +679,30 @@
       "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3f4ba1_bbe62ed6",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed88a38d_8159c65d",
+      "range": {
+        "startLine": 96,
+        "startChar": 7,
+        "endLine": 96,
+        "endChar": 28
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -381,6 +729,30 @@
     },
     {
       "key": {
+        "uuid": "6b9ae66d_97980849",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1654dc9c_e362da36",
+      "range": {
+        "startLine": 105,
+        "startChar": 23,
+        "endLine": 105,
+        "endChar": 25
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6d9e609_b18fe470",
         "filename": "internal/ceres/codegen/codegen_test_util.h",
         "patchSetId": 3
@@ -401,6 +773,30 @@
       "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b06d7d_135d864d",
+        "filename": "internal/ceres/codegen/codegen_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6d9e609_b18fe470",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 1
+      },
+      "revId": "347e5972a8b9382cca4cafef129b8969d13f2eb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
