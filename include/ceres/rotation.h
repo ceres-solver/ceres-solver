@@ -78,6 +78,33 @@ MatrixAdapter<T, 1, 3> ColumnMajorAdapter3x3(T* pointer);
 template <typename T>
 MatrixAdapter<T, 3, 1> RowMajorAdapter3x3(T* pointer);
 
+// A wrapper to index linear arrays of length 4 as quaternions.
+// Eigen stores the elements in memory as [x, y, z, w] where the real
+// part is last whereas Ceres uses the typical layout [w, x, y, z].
+// When an array "T* array" is wrapped by a
+//
+//   QuaternionAdapter<T, eigen_layout> q
+//
+// the following expressions hold true:
+//
+//   q.w() == q[0]    - real part
+//   q.x() == q[1]    \
+//   q.y() == q[2]    - vector part
+//   q.z() == q[3]    /
+//
+// Conversion functions to and from quaternions accept
+// QuaternionAdapters to permit using Ceres and Eigen layouts.
+template <typename T, bool eigen_layout>
+struct QuaternionAdapter;
+
+// Convenience functions to create a QuaternionAdapter that treats the
+// array pointed to by "pointer" as a quaternion of Ceres or Eigen layout.
+template <typename T>
+QuaternionAdapter<T, false> CeresQuaternionAdapter(T* pointer);
+
+template <typename T>
+QuaternionAdapter<T, true> EigenQuaternionAdapter(T* pointer);
+
 // Convert a value in combined axis-angle representation to a quaternion.
 // The value angle_axis is a triple whose norm is an angle in radians,
 // and whose direction is aligned with the axis of rotation,
@@ -86,6 +113,10 @@ MatrixAdapter<T, 3, 1> RowMajorAdapter3x3(T* pointer);
 // derivative, higher derivatives may have unexpected results near the origin.
 template <typename T>
 void AngleAxisToQuaternion(const T* angle_axis, T* quaternion);
+
+template <typename T, bool eigen_layout>
+void AngleAxisToQuaternion(
+    const T* angle_axis, const QuaternionAdapter<T, eigen_layout>& quaternion);
 
 // Convert a quaternion to the equivalent combined axis-angle representation.
 // The value quaternion must be a unit quaternion - it is not normalized first,
@@ -96,6 +127,10 @@ void AngleAxisToQuaternion(const T* angle_axis, T* quaternion);
 template <typename T>
 void QuaternionToAngleAxis(const T* quaternion, T* angle_axis);
 
+template <typename T, bool eigen_layout>
+void QuaternionToAngleAxis(
+    const QuaternionAdapter<const T, eigen_layout>& quaternion, T* angle_axis);
+
 // Conversions between 3x3 rotation matrix (in column major order) and
 // quaternion rotation representations. Templated for use with
 // autodifferentiation.
@@ -105,6 +140,11 @@ void RotationMatrixToQuaternion(const T* R, T* quaternion);
 template <typename T, int row_stride, int col_stride>
 void RotationMatrixToQuaternion(
     const MatrixAdapter<const T, row_stride, col_stride>& R, T* quaternion);
+
+template <typename T, int row_stride, int col_stride, bool eigen_layout>
+void RotationMatrixToQuaternion(
+    const MatrixAdapter<const T, row_stride, col_stride>& R,
+    const QuaternionAdapter<T, eigen_layout>& quaternion);
 
 // Conversions between 3x3 rotation matrix (in column major order) and
 // axis-angle rotation representations. Templated for use with
@@ -162,6 +202,11 @@ template <typename T, int row_stride, int col_stride>
 inline void QuaternionToScaledRotation(
     const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R);
 
+template <typename T, int row_stride, int col_stride, bool eigen_layout>
+inline void QuaternionToScaledRotation(
+    const QuaternionAdapter<const T, eigen_layout>& q,
+    const MatrixAdapter<T, row_stride, col_stride>& R);
+
 // Same as above except that the rotation matrix is normalized by the
 // Frobenius norm, so that R * R' = I (and det(R) = 1).
 //
@@ -172,6 +217,11 @@ inline void QuaternionToRotation(const T q[4], T R[3 * 3]);
 template <typename T, int row_stride, int col_stride>
 inline void QuaternionToRotation(
     const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R);
+
+template <typename T, int row_stride, int col_stride, bool eigen_layout>
+inline void QuaternionToRotation(
+    const QuaternionAdapter<const T, eigen_layout>& q,
+    const MatrixAdapter<T, row_stride, col_stride>& R);
 
 // Rotates a point pt by a quaternion q:
 //
@@ -187,6 +237,11 @@ inline void QuaternionToRotation(
 template <typename T>
 inline void UnitQuaternionRotatePoint(const T q[4], const T pt[3], T result[3]);
 
+template <typename T, bool eigen_layout>
+inline void UnitQuaternionRotatePoint(
+    const QuaternionAdapter<const T, eigen_layout>& q,
+    const T pt[3], T result[3]);
+
 // With this function you do not need to assume that q has unit norm.
 // It does assume that the norm is non-zero.
 //
@@ -195,6 +250,11 @@ inline void UnitQuaternionRotatePoint(const T q[4], const T pt[3], T result[3]);
 template <typename T>
 inline void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]);
 
+template <typename T, bool eigen_layout>
+inline void QuaternionRotatePoint(
+    const QuaternionAdapter<const T, eigen_layout>& q,
+    const T pt[3], T result[3]);
+
 // zw = z * w, where * is the Quaternion product between 4 vectors.
 //
 // Inplace quaternion product is not supported. The resulting quaternion zw must
@@ -202,6 +262,12 @@ inline void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]);
 // will be undefined.
 template <typename T>
 inline void QuaternionProduct(const T z[4], const T w[4], T zw[4]);
+
+template <typename T, bool eigen_layout>
+inline void QuaternionProduct(
+    const QuaternionAdapter<const T, eigen_layout>& z,
+    const QuaternionAdapter<const T, eigen_layout>& w,
+    const QuaternionAdapter<T, eigen_layout>& zw);
 
 // xy = x cross y;
 //
@@ -245,8 +311,34 @@ MatrixAdapter<T, 3, 1> RowMajorAdapter3x3(T* pointer) {
   return MatrixAdapter<T, 3, 1>(pointer);
 }
 
+template <typename T, bool eigen_layout>
+struct QuaternionAdapter {
+  T* p;
+  explicit QuaternionAdapter(T* pointer) : p(pointer) {}
+
+  T& operator[](int i) const {
+    return p[(i == 0) ? (3 * eigen_layout) : (i - eigen_layout)];
+  }
+
+  T& w() const { return p[3 * eigen_layout]; }
+  T& x() const { return p[1 - eigen_layout]; }
+  T& y() const { return p[2 - eigen_layout]; }
+  T& z() const { return p[3 - eigen_layout]; }
+};
+
+template <typename T>
+QuaternionAdapter<T, false> CeresQuaternionAdapter(T* pointer) {
+  return QuaternionAdapter<T, false>(pointer);
+}
+
 template <typename T>
 inline void AngleAxisToQuaternion(const T* angle_axis, T* quaternion) {
+  AngleAxisToQuaternion(angle_axis, CeresQuaternionAdapter(quaternion));
+}
+
+template <typename T, bool eigen_layout>
+inline void AngleAxisToQuaternion(
+    const T* angle_axis, const QuaternionAdapter<T, eigen_layout>& quaternion) {
   const T& a0 = angle_axis[0];
   const T& a1 = angle_axis[1];
   const T& a2 = angle_axis[2];
@@ -278,6 +370,12 @@ inline void AngleAxisToQuaternion(const T* angle_axis, T* quaternion) {
 
 template <typename T>
 inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
+  QuaternionToAngleAxis(CeresQuaternionAdapter(quaternion), angle_axis);
+}
+
+template <typename T ,bool eigen_layout>
+inline void QuaternionToAngleAxis(
+    const QuaternionAdapter<const T, eigen_layout>& quaternion, T* angle_axis) {
   const T& q1 = quaternion[1];
   const T& q2 = quaternion[2];
   const T& q3 = quaternion[3];
@@ -324,15 +422,22 @@ inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
 }
 
 template <typename T>
-void RotationMatrixToQuaternion(const T* R, T* angle_axis) {
-  RotationMatrixToQuaternion(ColumnMajorAdapter3x3(R), angle_axis);
+void RotationMatrixToQuaternion(const T* R, T* quaternion) {
+  RotationMatrixToQuaternion(ColumnMajorAdapter3x3(R), quaternion);
+}
+
+template <typename T, int row_stride, int col_stride>
+void RotationMatrixToQuaternion(
+    const MatrixAdapter<const T, row_stride, col_stride>& R, T* quaternion) {
+  RotationMatrixToQuaternion(R, CeresQuaternionAdapter(quaternion));
 }
 
 // This algorithm comes from "Quaternion Calculus and Fast Animation",
 // Ken Shoemake, 1987 SIGGRAPH course notes
-template <typename T, int row_stride, int col_stride>
+template <typename T, int row_stride, int col_stride, bool eigen_layout>
 void RotationMatrixToQuaternion(
-    const MatrixAdapter<const T, row_stride, col_stride>& R, T* quaternion) {
+    const MatrixAdapter<const T, row_stride, col_stride>& R,
+    const QuaternionAdapter<T, eigen_layout>& quaternion) {
   const T trace = R(0, 0) + R(1, 1) + R(2, 2);
   if (trace >= 0.0) {
     T t = sqrt(trace + T(1.0));
@@ -475,11 +580,18 @@ inline void QuaternionToScaledRotation(const T q[4], T R[3 * 3]) {
 template <typename T, int row_stride, int col_stride>
 inline void QuaternionToScaledRotation(
     const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R) {
+  QuaternionToScaledRotation(CeresQuaternionAdapter(q), R);
+}
+
+template <typename T, int row_stride, int col_stride, bool eigen_layout>
+inline void QuaternionToScaledRotation(
+    const QuaternionAdapter<const T, eigen_layout>& q,
+    const MatrixAdapter<T, row_stride, col_stride>& R) {
   // Make convenient names for elements of q.
-  T a = q[0];
-  T b = q[1];
-  T c = q[2];
-  T d = q[3];
+  const T& a = q[0];
+  const T& b = q[1];
+  const T& c = q[2];
+  const T& d = q[3];
   // This is not to eliminate common sub-expression, but to
   // make the lines shorter so that they fit in 80 columns!
   T aa = a * a;
@@ -508,6 +620,13 @@ inline void QuaternionToRotation(const T q[4], T R[3 * 3]) {
 template <typename T, int row_stride, int col_stride>
 inline void QuaternionToRotation(
     const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R) {
+  QuaternionToRotation(CeresQuaternionAdapter(q), R);
+}
+
+template <typename T, int row_stride, int col_stride, bool eigen_layout>
+inline void QuaternionToRotation(
+    const QuaternionAdapter<const T, eigen_layout>& q,
+    const MatrixAdapter<T, row_stride, col_stride>& R) {
   QuaternionToScaledRotation(q, R);
 
   T normalizer = q[0] * q[0] + q[1] * q[1] + q[2] * q[2] + q[3] * q[3];
@@ -524,6 +643,13 @@ template <typename T>
 inline void UnitQuaternionRotatePoint(const T q[4],
                                       const T pt[3],
                                       T result[3]) {
+  UnitQuaternionRotatePoint(CeresQuaternionAdapter(q), pt, result);
+}
+
+template <typename T, bool eigen_layout>
+inline void UnitQuaternionRotatePoint(
+    const QuaternionAdapter<const T, eigen_layout>& q,
+    const T pt[3], T result[3]) {
   DCHECK_NE(pt, result) << "Inplace rotation is not supported.";
 
   // clang-format off
@@ -544,6 +670,13 @@ inline void UnitQuaternionRotatePoint(const T q[4],
 
 template <typename T>
 inline void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]) {
+  QuaternionRotatePoint(CeresQuaternionAdapter(q), pt, result);
+}
+
+template <typename T, bool eigen_layout>
+inline void QuaternionRotatePoint(
+    const QuaternionAdapter<const T, eigen_layout>& q,
+    const T pt[3], T result[3]) {
   DCHECK_NE(pt, result) << "Inplace rotation is not supported.";
 
   // 'scale' is 1 / norm(q).
@@ -563,8 +696,18 @@ inline void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]) {
 
 template <typename T>
 inline void QuaternionProduct(const T z[4], const T w[4], T zw[4]) {
-  DCHECK_NE(z, zw) << "Inplace quaternion product is not supported.";
-  DCHECK_NE(w, zw) << "Inplace quaternion product is not supported.";
+  QuaternionProduct(CeresQuaternionAdapter(z),
+                    CeresQuaternionAdapter(w),
+                    CeresQuaternionAdapter(zw));
+}
+
+template <typename T, bool eigen_layout>
+inline void QuaternionProduct(
+    const QuaternionAdapter<const T, eigen_layout>& z,
+    const QuaternionAdapter<const T, eigen_layout>& w,
+    const QuaternionAdapter<T, eigen_layout>& zw) {
+  DCHECK_NE(z.p, zw.p) << "Inplace quaternion product is not supported.";
+  DCHECK_NE(w.p, zw.p) << "Inplace quaternion product is not supported.";
 
   // clang-format off
   zw[0] = z[0] * w[0] - z[1] * w[1] - z[2] * w[2] - z[3] * w[3];
