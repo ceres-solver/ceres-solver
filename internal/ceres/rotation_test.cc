@@ -1026,6 +1026,105 @@ TEST(AngleAxis, NearZeroRotatePointGivesSameAnswerAsRotationMatrix) {
   }
 }
 
+TEST(QuaternionAdapter, CeresReturnTypeAndAccessIsCorrect) {
+  double array[4] = { 1.0, 2.0, 3.0, 4.0 };
+  const float const_array[4] = { 1.0f, 2.0f, 3.0f, 4.0f };
+
+  typedef QuaternionAdapter<double, false> DoubleAdapter;
+  typedef QuaternionAdapter<const float, false> ConstFloatAdapter;
+
+  DoubleAdapter p = CeresQuaternionAdapter(array);
+  ConstFloatAdapter q = CeresQuaternionAdapter(const_array);
+
+  double& (DoubleAdapter::* double_methods[4])() const = {
+    &DoubleAdapter::w,
+    &DoubleAdapter::x,
+    &DoubleAdapter::y,
+    &DoubleAdapter::z,
+  };
+
+  const float& (ConstFloatAdapter::* const_float_methods[4])() const = {
+    &ConstFloatAdapter::w,
+    &ConstFloatAdapter::x,
+    &ConstFloatAdapter::y,
+    &ConstFloatAdapter::z,
+  };
+
+  for (int i = 0; i < 4; ++i) {
+    EXPECT_EQ(p[i], (p.*double_methods[i])());
+    EXPECT_EQ(q[i], (q.*const_float_methods[i])());
+  }
+
+  for (int i = 0; i < 4; ++i) {
+    EXPECT_EQ(p[i], array[i]);
+    EXPECT_EQ(q[i], const_array[i]);
+  }
+}
+
+TEST(QuaternionAdapter, EigenReturnTypeAndAccessIsCorrect) {
+  double array[4] = { 1.0, 2.0, 3.0, 4.0 };
+  const float const_array[4] = { 1.0f, 2.0f, 3.0f, 4.0f };
+
+  typedef QuaternionAdapter<double, true> DoubleAdapter;
+  typedef QuaternionAdapter<const float, true> ConstFloatAdapter;
+
+  DoubleAdapter p = EigenQuaternionAdapter(array);
+  ConstFloatAdapter q = EigenQuaternionAdapter(const_array);
+
+  double& (DoubleAdapter::* double_methods[4])() const = {
+    &DoubleAdapter::w,
+    &DoubleAdapter::x,
+    &DoubleAdapter::y,
+    &DoubleAdapter::z,
+  };
+
+  const float& (ConstFloatAdapter::* const_float_methods[4])() const = {
+    &ConstFloatAdapter::w,
+    &ConstFloatAdapter::x,
+    &ConstFloatAdapter::y,
+    &ConstFloatAdapter::z,
+  };
+
+  for (int i = 0; i < 4; ++i) {
+    EXPECT_EQ(p[i], (p.*double_methods[i])());
+    EXPECT_EQ(q[i], (q.*const_float_methods[i])());
+  }
+
+  for (int i = 1; i < 4; ++i) {
+    EXPECT_EQ(p[i], array[i - 1]);
+    EXPECT_EQ(q[i], const_array[i - 1]);
+  }
+
+  EXPECT_EQ(p[0], array[3]);
+  EXPECT_EQ(q[0], const_array[3]);
+}
+
+TEST(QuaternionAdapter, CeresIsCorrect) {
+  const int expected[4] = { 1, 2, 3, 4 };
+  int array[4];
+  QuaternionAdapter<int, false> q(array);
+  q[0] = 1;
+  q[1] = 2;
+  q[2] = 3;
+  q[3] = 4;
+  for (int k = 0; k < 4; ++k) {
+    EXPECT_EQ(array[k], expected[k]);
+  }
+}
+
+TEST(QuaternionAdapter, EigenIsCorrect) {
+  const int expected[4] = { 2, 3, 4, 1 };
+  int array[4];
+  QuaternionAdapter<int, true> q(array);
+  q[0] = 1;
+  q[1] = 2;
+  q[2] = 3;
+  q[3] = 4;
+  for (int k = 0; k < 4; ++k) {
+    EXPECT_EQ(array[k], expected[k]);
+  }
+}
+
 TEST(MatrixAdapter, RowMajor3x3ReturnTypeAndAccessIsCorrect) {
   double array[9] = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0 };
   const float const_array[9] =
