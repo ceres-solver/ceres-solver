@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6ca9cad_0785b7f3",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-23T14:23:58Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this `AND NOT CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS`, as it\u0027s a binary variable so you wouldn\u0027t be doing any harm by (re)enabling it if it is already enabled and this wouldn\u0027t respect the case when it was explicitly disabled by the user, e.g. via -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS\u003dFALSE, in that case this would just re-enable it anyway - is that what you would expect to happen?\n\nAn alternative here might be to expose this as an option similar to BUILD_SHARED_LIBS s/t the user can control it directly.",
+      "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
