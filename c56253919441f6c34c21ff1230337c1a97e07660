@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "49a4be2c_4974f253",
+        "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-24T16:28:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bee03df_0a7ffd05",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "c56253919441f6c34c21ff1230337c1a97e07660",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d30c6142_8382e2fe",
         "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "c56253919441f6c34c21ff1230337c1a97e07660",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8c4d6a_7d035ea8",
+        "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-24T16:28:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d30c6142_8382e2fe",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 39
+      },
+      "revId": "c56253919441f6c34c21ff1230337c1a97e07660",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e0446f44_b90ab263",
+        "filename": "internal/ceres/codegen/autodiff_codegen_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-24T16:28:03Z",
+      "side": 1,
+      "message": "Not sure, works with 0 as well :)",
+      "parentUuid": "5118b145_8f4e0367",
+      "range": {
+        "startLine": 55,
+        "startChar": 62,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "c56253919441f6c34c21ff1230337c1a97e07660",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc289c56_dd2f80fd",
         "filename": "internal/ceres/codegen/test_utils.h",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2020-02-21T16:35:18Z",
       "side": 1,
       "message": "I do not understand this, why does Autodiff care about what other methods a struct has? what is the error that you get if you try using a codegen cost function in autodiff?",
+      "range": {
+        "startLine": 47,
+        "startChar": 38,
+        "endLine": 47,
+        "endChar": 46
+      },
+      "revId": "c56253919441f6c34c21ff1230337c1a97e07660",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54f4377_096a1aca",
+        "filename": "internal/ceres/codegen/test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-02-24T16:28:03Z",
+      "side": 1,
+      "message": "The error is:\n\nvariadic_evaluate.h:81: error: cannot convert ‘const ceres::Jet\u003cdouble, 3\u003e* const*’ to ‘const double* const*’\n   81 |   return functor.Evaluate(input, output, nullptr);\n      |                           ^~~~~\n      |                           |\n      |                           const ceres::Jet\u003cdouble, 3\u003e* const*\n\nBasically what happens is that VariadicEvaluate will try to call Evaluate() on cost functions and ignores the operator(). Since the input are Jets, Evaluate() doesn\u0027t work anymore. This is explained in the following comment:\n\n// Variadic evaluate is a helper function to evaluate ceres cost function or\n// functors using an input, output and the parameter dimensions. There are\n// several ways different possibilities:\n// 1) If the passed functor is a \u0027ceres::CostFunction\u0027 its evaluate method is\n// called.\n\nSo it always calls Evaluate() even tho the Scalar type are Jets.",
+      "parentUuid": "bc289c56_dd2f80fd",
       "range": {
         "startLine": 47,
         "startChar": 38,
