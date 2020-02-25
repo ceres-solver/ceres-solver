@@ -187,6 +187,30 @@
       "revId": "c56253919441f6c34c21ff1230337c1a97e07660",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aebb2a4_43ddf255",
+        "filename": "internal/ceres/codegen/test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-02-25T04:54:02Z",
+      "side": 1,
+      "message": "aha. variadic evaluate prioritizes Evaluate over operator(). ty.",
+      "parentUuid": "b54f4377_096a1aca",
+      "range": {
+        "startLine": 47,
+        "startChar": 38,
+        "endLine": 47,
+        "endChar": 46
+      },
+      "revId": "c56253919441f6c34c21ff1230337c1a97e07660",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
