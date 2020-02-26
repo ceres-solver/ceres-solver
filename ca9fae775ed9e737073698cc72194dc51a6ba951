@@ -34,6 +34,24 @@
       "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd5d7aa4_97d112bf",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-26T19:45:47Z",
+      "side": 1,
+      "message": "I\u0027m still confused about this as for these two cases:\n\nBUILD_TESTING \u003d ON\nBUILD_SHARED_LIBS \u003d ON\nCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS \u003d OFF (or not defined)\n\n-\u003e Sets CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS \u003d ON\n\nBUILD_TESTING \u003d ON\nBUILD_SHARED_LIBS \u003d ON\nCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS \u003d ON\n\n-\u003e No change\n\nthe post conditions with BUILD_TESTING \u0026\u0026 BUILD_SHARED_LIBS are the same.  So when you say: \"BUILD_TESTING\u003dON build will always Just Work while still leaving the sensible default of CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS\u003dOFF\" that doesn\u0027t seem to be what is happening here, or are you relying on the state of BUILD_SHARED_LIBS being what controls this?",
+      "parentUuid": "2e1aae3d_e6260079",
+      "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
