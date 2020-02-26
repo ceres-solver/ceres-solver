@@ -16,6 +16,24 @@
       "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1aae3d_e6260079",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-02-26T17:14:18Z",
+      "side": 1,
+      "message": "\u003e this wouldn\u0027t respect the case when it was explicitly disabled by the user, e.g. via -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS\u003dFALSE, in that case this would just re-enable it anyway - is that what you would expect to happen?\n\nI\u0027ve seen different approaches to this problem. The advantage with this approach is that a BUILD_TESTING\u003dON build will always Just Work while still leaving the sensible default of CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS\u003dOFF in place if the user were to later turn off BUILD_TESTING.\n\nI\u0027m not sure why the user would pass -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS\u003dFALSE since CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS is off by default.\n\nI\u0027m fine either way though. Consistency with the way Ceres normally handles this is probably the most important factor here.",
+      "parentUuid": "c6ca9cad_0785b7f3",
+      "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
