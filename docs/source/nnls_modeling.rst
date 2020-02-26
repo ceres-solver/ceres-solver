@@ -297,6 +297,258 @@ the corresponding accessors. This information will be verified by the
    as the last template argument.
 
 
+
+AutoDiffCodegen
+=============================
+
+   The `AutoDiffCodegen` module is able to generate optimized C++-code for
+   templated cost functors. The output is a header file containing member
+   functions for residual and jacobian computation. This header is then included
+   into the cost functor class definition to convert the functor into a
+   :class:`SizedCostFunction`.
+
+   The `AutoDiffCodegen` system is integrated into the build system, which
+   allows automatic generation when the functor changes. To use `AutoDiffCodegen`
+   in our project follow these steps:
+
+   1. Place the cost functor into a header file
+   2. Derive the cost functor from :class:`CodegenCostFunction`
+   3. Wrap local variable access into macros (see :ref:`CodeGenLocals`)
+   4. Replace ``if/else`` with ``CERES_IF CERES_ELSE`` macros (see :ref:`CodeGenConditionals`)
+   5. Integrate the generation into your CMakeLists.txt (see :ref:`CodeGenCmake`)
+   6. Include the generated header file inside the cost functor
+
+  .. NOTE ::
+
+    `AutoDiffCodegen` is currently still under development. To enable this
+    feature add ``-DCODE_GENERATION=ON`` to the ceres cmake command.
+    In a future release this will be enabled by default.
+
+-----------------------------------------------
+
+.. class:: CodegenCostFunction
+
+   To generate code for your custom functor, it has to derive from
+   :class:`CodegenCostFunction`. The template parameters are identical
+   to :class:`SizedCostFunction`, so the residual size and parameter block
+   sizes have to be provided. This is an example cost functor taken from the
+   helloworld_codegen example in ``ceres/examples/``.
+
+   .. code-block:: c++
+
+    // helloworld_cost_function.h
+
+    #include "ceres/codegen/codegen_cost_function.h"
+
+    namespace helloworld {
+
+    struct HelloWorldCostFunction : public ceres::CodegenCostFunction<1, 1> {
+    // We need a default constructor, because code is generated for the cost
+    // functor and not a specific instantiation of it.
+    HelloWorldCostFunction() = default;
+    explicit HelloWorldCostFunction(double target_value)
+        : target_value_(target_value) {}
+
+    template <typename T>
+    bool operator()(const T* x, T* residual) const {
+        residual[0] = CERES_LOCAL_VARIABLE(T, target_value_) - x[0];
+        return true;
+    }
+
+    // The include file name is automatically generated as
+    // "<output_dir>/<lower_case_class_name>.h"
+    #include "examples/helloworldcostfunction.h"
+
+    private:
+    double target_value_;
+    };
+
+    }  // namespace helloworld
+
+
+   As you can see, this still looks like a normal cost functor except it has a
+   default constructor and an include in the class body. The included file
+   ``"examples/helloworldcostfunction.h"`` is a generated file which contains
+   the definition of ``Evaluate()``. This file should not exist beforehand and
+   will be created after :ref:`CodeGenCmake`.
+
+   Using an object of :class:`CodegenCostFunction` during optimization is
+   as simple as using ``SizedCostFunction``. Create an object of it and then
+   pass it to the problem as a cost function.
+
+   .. code-block:: c++
+
+    // helloworld_codegen.cc
+    ceres::Problem problem;
+    ceres::CostFunction* cost_function =
+        new helloworld::HelloWorldCostFunction(10.0);
+    problem.AddResidualBlock(cost_function, NULL, &x);
+    // solve ...
+
+
+
+.. _CodeGenLocals:
+
+Local Variables
+-----------------------------------------------
+
+   Directly using local variables in a CodegenCostFunction does not work, because
+   the underlying trace engine cannot differentiate between compile time constants
+   and instantiated member variables. A read of local variable must therefore
+   be wrapped in the ``CERES_LOCAL_VARIABLE`` macro. Generating code for the
+   following functor will result in a compile error:
+
+   .. code-block:: c++
+
+      template <typename T>
+      bool operator()(const T* x, T* residual) const {
+        // Does not work with codegen!
+        residual[0] = T(target_value_) - x[0];
+        return true;
+      }
+    private:
+      double target_value_ = 12;
+
+   To fix this the read of ``target_value_`` inside the ``operator()`` has
+   to be modified:
+
+   .. code-block:: c++
+
+      template <typename T>
+      bool operator()(const T* x, T* residual) const {
+        // Works!
+        residual[0] = CERES_LOCAL_VARIABLE(T, target_value_) - x[0];
+        return true;
+      }
+    private:
+      double target_value_ = 12;
+
+
+.. _CodeGenConditionals:
+
+Conditionals
+-----------------------------------------------
+
+   Due to some limitations in C++ and our implementation approach, the ``if/else`` keywords
+   and the ``?-operator`` are not support with run-time evaluated conditions. If your functor
+   contains such operations a compile error will occur and you have to replace them
+   with the corresponding macros:
+
+   - Replace ``if`` with ``CERES_IF``
+   - Replace ``else`` with ``CERES_ELSE``
+   - Add ``CERES_ENDIF`` at the end of an else-block (or at the end of a stand-alone if-block)
+   - Replace ``?-operators`` with ``ceres::Ternary()``
+
+   Let's look at the following cost functor with all the different cases:
+
+   .. code-block:: c++
+
+    struct MyCostFunctor{
+      template <typename T>
+      bool operator()(const T* x, T* residual) const {
+        // If without else
+        if (x[0]) {
+          residual[0] = T(0);
+        }
+        // If-else
+        if (x[0]) {
+          residual[0] = T(1);
+        } else {
+          residual[0] = T(2);
+        }
+        // ?-operator
+        residual[0] = x[0] ? T(3) : T(4);
+      }
+    };
+
+   This functor can be used in the codegen system, by first deriving from
+   ``CodegenCostFunction``, including the generated header and then applying
+   the if/else replacements described above:
+
+   .. code-block:: c++
+
+    struct MyCostFunction : public ceres::CodegenCostFunction<1, 1> {
+      template <typename T>
+      bool operator()(const T* x, T* residual) const {
+        // If without else
+        CERES_IF (x[0]) {
+          residual[0] = T(0);
+        }CERES_ENDIF;
+        // If-else
+        CERES_IF (x[0]) {
+          residual[0] = T(1);
+        } CERES_ELSE {
+          residual[0] = T(2);
+        } CERES_ENDIF;
+        // ?-operator
+        residual[0] = ceres::Ternary(x[0], T(3), T(4));
+      }
+    #include "examples/conditionalcostfunction.h"
+    };
+
+
+.. _CodeGenCmake:
+
+CMake Integration
+-----------------------------------------------
+
+   To actually generated the header file containing ``Evaluate()`` you have to
+   add two additional lines to your ``CMakeLists.txt``. Without codegen your
+   ``CMakeLists.txt`` should something like this:
+
+   .. code-block:: cmake
+
+    # CMakeLists.txt without codegen
+    find_package(Ceres REQUIRED)
+    add_executable(codegen_helloworld helloworld_codegen.cc)
+    target_link_libraries(codegen_helloworld ceres)
+
+   The first line searches for Ceres and defines the ``ceres`` target if found.
+   Then, an executable is created with a single source file and linked to
+   Ceres.
+
+   Now, to generate the optimized autodiff code only the following function call
+   has to be added to the ``CMakeLists.txt``.
+
+   .. code-block:: cmake
+
+    ceres_generate_cost_function_implementation_for_functor(
+        NAME                HelloWorldCostFunction
+        INPUT_FILE          helloworld_cost_function.h
+        OUTPUT_DIRECTORY    examples
+        NAMESPACE           helloworld
+    )
+
+   As a last step, we want to automatically generate the new header file when
+   we change the cost functor and compile the executable. This is achieved by
+   adding the output target of ``ceres_generate_cost_function_implementation_for_functor``
+   as a dependency to the executable. The name of the output target is identical
+   to the ``NAME`` parameter. So in this case, we update the ``target_link_libraries``
+   command like that:
+
+   .. code-block:: cmake
+
+    target_link_libraries(codegen_helloworld ceres HelloWorldCostFunction)
+
+   The full ``CMakeLists.txt`` for the helloword is:
+
+   .. code-block:: cmake
+
+    # CMakeLists.txt with codegen
+    find_package(Ceres REQUIRED)
+    add_executable(codegen_helloworld helloworld_codegen.cc)
+
+    # Generate code for the cost functor
+    ceres_generate_cost_function_implementation_for_functor(
+        NAME                HelloWorldCostFunction
+        INPUT_FILE          helloworld_cost_function.h
+        OUTPUT_DIRECTORY    examples
+        NAMESPACE           helloworld
+    )
+
+    # Link ceres and the generator target to the executable
+    target_link_libraries(codegen_helloworld ceres HelloWorldCostFunction)
+
 :class:`DynamicAutoDiffCostFunction`
 ====================================
 
