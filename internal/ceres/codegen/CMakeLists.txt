@@ -58,6 +58,7 @@ if (BUILD_TESTING AND GFLAGS)
 
   ceres_test(expression)
   ceres_test(expression_graph)
+  ceres_test(expression_dependencies)
 
   macro (generate_test_functor FUNCTOR_NAME FUNCTOR_FILE)
     ceres_generate_cost_function_implementation_for_functor(

@@ -154,6 +154,7 @@ if(CODE_GENERATION)
       expression.cc
       expression_graph.cc
       expression_ref.cc
+      codegen/expression_dependencies.cc
       codegen/optimize_expression_graph.cc
       codegen/eliminate_nops.cc
   )
