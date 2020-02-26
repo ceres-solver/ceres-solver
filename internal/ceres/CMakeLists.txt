@@ -150,10 +150,10 @@ set(CERES_INTERNAL_SRC
 
 if(CODE_GENERATION)
   set(CERES_CODEGEN_SRC
-      code_generator.cc
-      expression.cc
-      expression_graph.cc
-      expression_ref.cc
+      codegen/code_generator.cc
+      codegen/expression.cc
+      codegen/expression_graph.cc
+      codegen/expression_ref.cc
       codegen/optimize_expression_graph.cc
       codegen/eliminate_nops.cc
   )
