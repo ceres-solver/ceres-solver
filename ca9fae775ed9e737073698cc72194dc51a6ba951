@@ -52,6 +52,24 @@
       "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee9496b_96f23c31",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-02-27T21:50:26Z",
+      "side": 1,
+      "message": "I think maybe the confusion here is that the *non-cached* version of CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS is what gets changed to ON when necessary (when BUILD_TESTING and BUILD_SHARED_LIBS are both enabled) so if CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS has been set as a *cached* variable by the user then that ON/OFF value will be retained, but will be ignored after the `set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)` line is evaluated.",
+      "parentUuid": "dd5d7aa4_97d112bf",
+      "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
