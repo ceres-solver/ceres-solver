@@ -88,6 +88,24 @@
       "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5eb3aab_bdf79429",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-02-28T19:00:46Z",
+      "side": 1,
+      "message": "This is the test I did:\n\n1. Add the following after the if(MSVC) block:\n\n   message(STATUS \"CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS: ${CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS}\")\n\n2. Run the following from a Git Bash shell in a `vcvarsall.bat x64` environment. \n\n$ cmake ~/git/ceres-solver -LAH -GNinja \\\n  -DBUILD_TESTING:BOOL\u003dON \\\n  -DBUILD_SHARED_LIBS:BOOL\u003dON \\\n  -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS:BOOL\u003dOFF \\\n  |\u0026 egrep \u0027CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS|Build files have been written\u0027\n-- Turning on CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to support building tests with MSVC.\n-- CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS: ON\n-- Build files have been written to: C:/Users/tbraunjones/git/ceres-solver-build\nCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS:BOOL\u003dOFF\n\nThe `-LAH` cmake option is used to print out the state of cache variables after configuring completes. We can see that CMake sees the CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS variable as being ON even though the cached version of that variable is OFF.\n\nHere is some further testing which I think is all correct behavior. Does this look like what you would expect as well?\n\n$ rm -rf *\n\n$ cmake ~/git/ceres-solver -LAH -GNinja \\\n  -DBUILD_TESTING:BOOL\u003dON \\\n  -DBUILD_SHARED_LIBS:BOOL\u003dON \\\n  |\u0026 egrep \u0027CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS|Build files have been written\u0027\n-- Turning on CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to support building tests with MSVC.\n-- CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS: ON\n-- Build files have been written to: C:/Users/tbraunjones/git/ceres-solver-build\n\n$ cmake ~/git/ceres-solver -LAH -GNinja \\\n  -DBUILD_TESTING:BOOL\u003dOFF \\\n  |\u0026 egrep \u0027CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS|Build files have been written\u0027\n-- CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS:\n-- Build files have been written to: C:/Users/tbraunjones/git/ceres-solver-build\n\n$ cmake ~/git/ceres-solver -LAH -GNinja \\\n  -DBUILD_TESTING:BOOL\u003dOFF \\\n  -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS:BOOL\u003dON \\\n  |\u0026 egrep \u0027CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS|Build files have been written\u0027\n-- CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS: ON\n-- Build files have been written to: C:/Users/tbraunjones/git/ceres-solver-build\nCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS:BOOL\u003dON\n\n$ cmake ~/git/ceres-solver -LAH -GNinja \\\n  -DBUILD_TESTING:BOOL\u003dON \\\n  -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS:BOOL\u003dON \\\n  |\u0026 egrep \u0027CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS|Build files have been written\u0027\n-- CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS: ON\n-- Build files have been written to: C:/Users/tbraunjones/git/ceres-solver-build\nCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS:BOOL\u003dON\n\n$ rm -rf *\n\n$ cmake ~/git/ceres-solver -LAH -GNinja \\\n  -DBUILD_TESTING:BOOL\u003dOFF \\\n  -DBUILD_SHARED_LIBS:BOOL\u003dON \\\n  |\u0026 egrep \u0027CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS|Build files have been written\u0027\n-- CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS:\n-- Build files have been written to: C:/Users/tbraunjones/git/ceres-solver-build",
+      "parentUuid": "ac324716_3058aa19",
+      "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
