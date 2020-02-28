@@ -70,6 +70,24 @@
       "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac324716_3058aa19",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-02-28T09:45:34Z",
+      "side": 1,
+      "message": "Right I can see the source of the confusion, that\u0027s not how CACHE vs local variables work [1] - local variables override CACHE variables if they have the same name, but they are not persisted.  However, if you set a CACHE variable then CMake also removes any pre-existing local variable with the same name in the current scope.  As a result, I don\u0027t think this is doing what you think it is.\n\n[1]: https://cmake.org/cmake/help/v3.0/command/set.html",
+      "parentUuid": "9ee9496b_96f23c31",
+      "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
