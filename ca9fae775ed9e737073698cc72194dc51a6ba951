@@ -106,6 +106,24 @@
       "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813ba9fe_020e6369",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-03-01T15:54:35Z",
+      "side": 1,
+      "message": "Yes, that\u0027s what I would expect given that a local (re)definition masks an existing cache definition and -D initialises a cache variable.\n\nHowever, as I noted earlier if BUILD_TESTING and BUILD_SHARED_LIBS are both enabled, then the value of initial CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS is irrelevant, it will TRUE once this block completes, there is no reason to add the \u0027AND NOT CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS\u0027 qualifier.\n\nI think the better way to handle this is by making CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS an option, with a default that is (BUILD_TESTING AND BUILD_SHARED_LIBS) like so:\n\nset(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS_DEFAULT FALSE)\nif (BUILD_TESTING AND BUILD_SHARED_LIBS)\n  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS_DEFAULT TRUE)\nendif()\noption(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS\n  \"MS Visual Studio: Export all global symbols in DLL\" ${CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS_DEFAULT})\n\nYou can then choose to add a status message if necessary:\n\nif (CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS)\n  message(\"-- MSVC: Exporting all global symbols in DLL, this will increase the size of the compiled library.\")\nendif()",
+      "parentUuid": "f5eb3aab_bdf79429",
+      "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
