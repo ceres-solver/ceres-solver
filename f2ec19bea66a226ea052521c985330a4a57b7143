@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe1b0161_98873708",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-03-02T21:39:44Z",
+      "side": 1,
+      "message": "I think this should be in the if (MSVC) block, not outside it no?  This option only exists for MSVC, nothing else AFAIK from the CMake docs.",
+      "revId": "f2ec19bea66a226ea052521c985330a4a57b7143",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
