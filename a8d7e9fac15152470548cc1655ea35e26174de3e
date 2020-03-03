@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c7be0db_67a8955b",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2020-03-03T16:47:35Z",
+      "side": 1,
+      "message": "Line length",
+      "revId": "a8d7e9fac15152470548cc1655ea35e26174de3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a95d6f_c7bb0da7",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2020-03-03T16:47:35Z",
+      "side": 1,
+      "message": "nit: Line length",
+      "revId": "a8d7e9fac15152470548cc1655ea35e26174de3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2275004_90dd885e",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2020-03-03T16:47:35Z",
+      "side": 1,
+      "message": "nit: Line length",
+      "revId": "a8d7e9fac15152470548cc1655ea35e26174de3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e00142b_24b85f4c",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2020-03-03T16:47:35Z",
+      "side": 1,
+      "message": "Please document what this class is for.\n\nConsider using an enum instead of a bool for eigen_layout; in my experience, bool arguments are error prone at the callsite.",
+      "revId": "a8d7e9fac15152470548cc1655ea35e26174de3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
