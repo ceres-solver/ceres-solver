@@ -899,5 +899,28 @@ TEST(JetTraitsTest, ArrayScalarBinaryOps) {
   ExpectJetsClose(r4(1), r4(1));
 }
 
+TEST(Jet, nested3x) {
+  typedef Jet<J,2> JJ;
+  typedef Jet<JJ,2> JJJ;
+
+  JJJ x;
+  x.a = JJ(J(1, 0), 0);
+  x.v[0] = JJ(J(1));
+
+  JJJ y = x * x * x;
+
+  ExpectClose(y.a.a.a, 1, kTolerance);
+  ExpectClose(y.v[0].a.a, 3., kTolerance);
+  ExpectClose(y.v[0].v[0].a, 6., kTolerance);
+  ExpectClose(y.v[0].v[0].v[0], 6., kTolerance);
+
+  JJJ e = exp(x);
+
+  ExpectClose(e.a.a.a, kE, kTolerance);
+  ExpectClose(e.v[0].a.a, kE, kTolerance);
+  ExpectClose(e.v[0].v[0].a, kE, kTolerance);
+  ExpectClose(e.v[0].v[0].v[0], kE, kTolerance);
+}
+
 }  // namespace internal
 }  // namespace ceres
