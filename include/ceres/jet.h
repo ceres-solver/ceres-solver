@@ -179,18 +179,18 @@ struct Jet {
   // (where T is a Jet<T, N>). This usually only happens in opt mode. Note that
   // the C++ standard mandates that e.g. default constructed doubles are
   // initialized to 0.0; see sections 8.5 of the C++03 standard.
-  Jet() : a() { v.setZero(); }
+  Jet() : a() { v.setConstant(Scalar()); }
 
   // Constructor from scalar: a + 0.
   explicit Jet(const T& value) {
     a = value;
-    v.setZero();
+    v.setConstant(Scalar());
   }
 
   // Constructor from scalar plus variable: a + t_i.
   Jet(const T& value, int k) {
     a = value;
-    v.setZero();
+    v.setConstant(Scalar());
     v[k] = T(1.0);
   }
 
