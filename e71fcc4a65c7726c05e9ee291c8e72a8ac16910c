@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2745ccd4_2a9a06c6",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-07T00:12:56Z",
+      "side": 1,
+      "message": "drop blank",
+      "revId": "e71fcc4a65c7726c05e9ee291c8e72a8ac16910c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
