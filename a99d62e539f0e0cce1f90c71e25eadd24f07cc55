@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1883731d_b14a5767",
+        "filename": "include/ceres/loss_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2020-03-09T16:12:51Z",
+      "side": 1,
+      "message": "Since this equation differs from the standard Tukey loss function I think it would be good to add a qualify statement why this is multiplied by 2 so future readers know where the discrepancy comes from.",
+      "revId": "a99d62e539f0e0cce1f90c71e25eadd24f07cc55",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
