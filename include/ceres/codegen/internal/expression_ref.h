@@ -46,8 +46,6 @@ namespace internal {
 //
 // ExpressionRef should be passed by value.
 struct ExpressionRef {
-  ExpressionRef() = default;
-
   // Create a compile time constant expression directly from a double value.
   // This is important so that we can write T(3.14) in our code and
   // it's automatically converted to the correct expression.
@@ -55,7 +53,11 @@ struct ExpressionRef {
   // This constructor is implicit, because the line
   //    T a(0);
   // must work for T = Jet<ExpressionRef>.
-  ExpressionRef(double compile_time_constant);
+  ExpressionRef(double compile_time_constant = 0);
+
+  // Adds the expression to the active graph and initializes this ExpressionRef
+  // accordingly.
+  ExpressionRef(const Expression& expression);
 
   // By adding this deleted constructor we can detect invalid usage of
   // ExpressionRef. ExpressionRef must only be created from constexpr doubles.
@@ -97,8 +99,6 @@ struct ExpressionRef {
 
   // The index into the ExpressionGraph data array.
   ExpressionId id = kInvalidExpressionId;
-
-  static ExpressionRef Create(ExpressionId id);
 };
 
 // A helper function which calls 'InsertBack' on the currently active graph.
