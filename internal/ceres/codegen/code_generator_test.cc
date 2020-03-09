@@ -46,7 +46,7 @@ static void GenerateAndCheck(const ExpressionGraph& graph,
   auto code = gen.Generate();
   EXPECT_EQ(code.size(), reference.size());
 
-  for (int i = 0; i < code.size(); ++i) {
+  for (int i = 0; i < std::min(code.size(), reference.size()); ++i) {
     EXPECT_EQ(code[i], reference[i]) << "Invalid Line: " << (i + 1);
   }
 }
@@ -69,7 +69,7 @@ TEST(CodeGenerator, COMPILE_TIME_CONSTANT) {
   T d = T(std::numeric_limits<double>::infinity());
   T e = T(-std::numeric_limits<double>::infinity());
   T f = T(std::numeric_limits<double>::quiet_NaN());
-  T g;  // Uninitialized variables should not generate code!
+  T g;  // Uninitialized variables are 0 initialized.
   auto graph = StopRecordingExpressions();
   std::vector<std::string> expected_code = {
       "{",
@@ -79,12 +79,14 @@ TEST(CodeGenerator, COMPILE_TIME_CONSTANT) {
       "  double v_3;",
       "  double v_4;",
       "  double v_5;",
+      "  double v_6;",
       "  v_0 = 0;",
       "  v_1 = 123.5;",
       "  v_2 = 2;",
       "  v_3 = std::numeric_limits<double>::infinity();",
       "  v_4 = -std::numeric_limits<double>::infinity();",
       "  v_5 = std::numeric_limits<double>::quiet_NaN();",
+      "  v_6 = 0;",
       "}"};
   GenerateAndCheck(graph, expected_code);
 }

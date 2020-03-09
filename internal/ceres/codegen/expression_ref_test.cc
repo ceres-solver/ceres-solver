@@ -48,13 +48,14 @@ TEST(ExpressionRef, COMPILE_TIME_CONSTANT) {
   T a = T(0);
   T b = T(123.5);
   T c = T(1 + 1);
-  T d;  // Uninitialized variables should not generate code!
+  T d;  // Uninitialized variables are also compile time constants
   auto graph = StopRecordingExpressions();
 
   ExpressionGraph reference;
   reference.InsertBack(Expression::CreateCompileTimeConstant(0));
   reference.InsertBack(Expression::CreateCompileTimeConstant(123.5));
   reference.InsertBack(Expression::CreateCompileTimeConstant(2));
+  reference.InsertBack(Expression::CreateCompileTimeConstant(0));
   EXPECT_EQ(reference, graph);
 }
 
