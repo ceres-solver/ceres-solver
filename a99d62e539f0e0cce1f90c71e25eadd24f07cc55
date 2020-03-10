@@ -34,6 +34,24 @@
       "revId": "a99d62e539f0e0cce1f90c71e25eadd24f07cc55",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d65200ec_2cdb6129",
+        "filename": "include/ceres/loss_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2020-03-10T15:27:11Z",
+      "side": 1,
+      "message": "I agree there is a comment in [1] that mentions the loss functions are multiplied by 0.5. When I implemented this and the reviewers didn\u0027t remember this and just used the standard Tukey formula.  So it seems like it needs more attention.\n\nSo I think it would be good to mention in the Tukey comments why the equations might appear to not match the form in the papers so future readers aren\u0027t confused.\n\nSomething like:\n\nThe term is computed as follows where the equations are scaled by a factor of 2 because the cost function is given by 1/2 rho(s):\n\n\n\n[1] https://github.com/ceres-solver/ceres-solver/blob/bf1aff2f0eb5733a5dc9a497d5cf67cff25292e5/include/ceres/loss_function.h#L99",
+      "parentUuid": "3f13fe43_2b9073f1",
+      "revId": "a99d62e539f0e0cce1f90c71e25eadd24f07cc55",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
