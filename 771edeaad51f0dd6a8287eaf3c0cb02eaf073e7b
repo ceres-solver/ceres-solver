@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44036962_5dbc7a02",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T21:48:48Z",
+      "side": 1,
+      "message": "manifold",
+      "range": {
+        "startLine": 276,
+        "startChar": 3,
+        "endLine": 276,
+        "endChar": 11
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba759d97_6bc6171d",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T21:48:48Z",
+      "side": 1,
+      "message": "I think if you are going to document the math in terms of o and d, you may as well use them for variable names also. Or use origin and direction in the docs. Being consistent is good here.",
+      "range": {
+        "startLine": 313,
+        "startChar": 21,
+        "endLine": 313,
+        "endChar": 22
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b247deba_b3201629",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T21:48:48Z",
+      "side": 1,
+      "message": "origin point and origin_point are too verbose.",
+      "range": {
+        "startLine": 333,
+        "startChar": 16,
+        "endLine": 333,
+        "endChar": 21
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033c288d_3f8d86cd",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T21:48:48Z",
+      "side": 1,
+      "message": "if you remove this from here, you can simplify your code structure, where you first deal with the direction delta, and then deal with the origin correction unconditionally.",
+      "range": {
+        "startLine": 345,
+        "startChar": 8,
+        "endLine": 345,
+        "endChar": 26
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8188cd_d3c178a0",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T21:48:48Z",
+      "side": 1,
+      "message": "because you need to use this, this maybe a good reason not to do a templated implementation since you will have to pull this into the public namespace, not a huge deal  something to think about.",
+      "range": {
+        "startLine": 353,
+        "startChar": 11,
+        "endLine": 353,
+        "endChar": 12
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2906a82a_02736869",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T21:48:48Z",
+      "side": 1,
+      "message": "std::sin",
+      "range": {
+        "startLine": 361,
+        "startChar": 38,
+        "endLine": 361,
+        "endChar": 41
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5781d4e3_55e95193",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T21:48:48Z",
+      "side": 1,
+      "message": "std::cos",
+      "range": {
+        "startLine": 368,
+        "startChar": 24,
+        "endLine": 368,
+        "endChar": 27
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56f5bc4_872e0169",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T21:48:48Z",
+      "side": 1,
+      "message": "can\u0027t you do this update unconditionally?",
+      "range": {
+        "startLine": 373,
+        "startChar": 7,
+        "endLine": 373,
+        "endChar": 25
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
