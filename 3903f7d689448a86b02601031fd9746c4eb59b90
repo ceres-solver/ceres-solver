@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f67c1f29_f3e0789e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T01:12:17Z",
+      "side": 1,
+      "message": "This is not quite correct, the default zero initialization always there. \n\nAssuming that you are referring to this:\n\nhttps://ceres-solver-review.googlesource.com/c/ceres-solver/+/16760\n\nthere are no semantic changes being made here.",
+      "range": {
+        "startLine": 11,
+        "startChar": 39,
+        "endLine": 11,
+        "endChar": 40
+      },
+      "revId": "3903f7d689448a86b02601031fd9746c4eb59b90",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a6f821_6411a063",
+        "filename": "include/ceres/codegen/internal/expression_ref.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T01:12:17Z",
+      "side": 1,
+      "message": "I do not think this is a good idea, I\u0027d rather you actually update the default constructor.",
+      "range": {
+        "startLine": 56,
+        "startChar": 23,
+        "endLine": 56,
+        "endChar": 44
+      },
+      "revId": "3903f7d689448a86b02601031fd9746c4eb59b90",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19a3030_e3e972e1",
+        "filename": "include/ceres/codegen/internal/expression_ref.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T01:12:17Z",
+      "side": 1,
+      "message": "isn\u0027t this change unrelated to zero-ing things?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 15
+      },
+      "revId": "3903f7d689448a86b02601031fd9746c4eb59b90",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
