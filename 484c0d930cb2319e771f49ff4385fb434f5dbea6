@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2024192f_8cd49ef2",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-10T21:01:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d70f238_62cb52f2",
+      "range": {
+        "startLine": 267,
+        "startChar": 41,
+        "endLine": 267,
+        "endChar": 50
+      },
+      "revId": "484c0d930cb2319e771f49ff4385fb434f5dbea6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce2600b0_3464d1c4",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "484c0d930cb2319e771f49ff4385fb434f5dbea6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec98016_18bd7f5e",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-10T21:01:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce2600b0_3464d1c4",
+      "range": {
+        "startLine": 292,
+        "startChar": 34,
+        "endLine": 292,
+        "endChar": 43
+      },
+      "revId": "484c0d930cb2319e771f49ff4385fb434f5dbea6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3241e4a1_51fb059c",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-10T21:01:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2822a41_16718d7c",
+      "range": {
+        "startLine": 312,
+        "startChar": 32,
+        "endLine": 312,
+        "endChar": 41
+      },
+      "revId": "484c0d930cb2319e771f49ff4385fb434f5dbea6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9932350b_7a8b96cc",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "484c0d930cb2319e771f49ff4385fb434f5dbea6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5235135_e83e22db",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-10T21:01:14Z",
+      "side": 1,
+      "message": "I removed the comment. It stated, that the householder matrix is needed for updating the origin point and the direction. So if only delta_dir is zero the householder matrix is still needed to calculate the new origin point.",
+      "parentUuid": "9932350b_7a8b96cc",
+      "range": {
+        "startLine": 317,
+        "startChar": 20,
+        "endLine": 317,
+        "endChar": 30
+      },
+      "revId": "484c0d930cb2319e771f49ff4385fb434f5dbea6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
