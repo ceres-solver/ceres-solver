@@ -16,6 +16,24 @@
       "revId": "a99d62e539f0e0cce1f90c71e25eadd24f07cc55",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f13fe43_2b9073f1",
+        "filename": "include/ceres/loss_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 6192
+      },
+      "writtenOn": "2020-03-10T06:30:34Z",
+      "side": 1,
+      "message": "I\u0027m happy to add a comment to clarify that, but it\u0027s something that affects all loss functions, including any the user might define.\n\nFor instance, consider Cauchy and Huber from table 1 in http://www.audentia-gestion.fr/research.microsoft/ZhangIVC-97-01.pdf (p. 24). The implementations in https://github.com/ceres-solver/ceres-solver/blob/bf1aff2f0eb5733a5dc9a497d5cf67cff25292e5/internal/ceres/loss_function.cc#L77 and https://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/loss_function.cc#L53 are also multiplied by 2 wrt the equations in that paper.\n\nI believe the comment you\u0027re requesting is already here: https://github.com/ceres-solver/ceres-solver/blob/bf1aff2f0eb5733a5dc9a497d5cf67cff25292e5/include/ceres/loss_function.h#L99",
+      "parentUuid": "1883731d_b14a5767",
+      "revId": "a99d62e539f0e0cce1f90c71e25eadd24f07cc55",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
