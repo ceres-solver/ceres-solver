@@ -22,6 +22,30 @@
       "revId": "bf1aff2f0eb5733a5dc9a497d5cf67cff25292e5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c949c1_82594c14",
+        "filename": "include/ceres/codegen/internal/expression_ref.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-10T08:31:05Z",
+      "side": 0,
+      "message": "Similar to other comment. The constructor does all the work now. Uninitialized ExpressionRefs don\u0027t exist anymore.",
+      "parentUuid": "aa93b075_2a8e268f",
+      "range": {
+        "startLine": 101,
+        "startChar": 30,
+        "endLine": 101,
+        "endChar": 42
+      },
+      "revId": "bf1aff2f0eb5733a5dc9a497d5cf67cff25292e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
