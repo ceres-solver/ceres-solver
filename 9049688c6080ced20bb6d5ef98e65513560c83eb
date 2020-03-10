@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9d5bf38_575c2afe",
+        "filename": "internal/ceres/codegen/expression_ref.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T13:16:33Z",
+      "side": 1,
+      "message": "just so I am reading this code correctly, you are calling the copy constructor (via c++11 constructor delegation?) with the result of CreateCompileTimeConstant() ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 19
+      },
+      "revId": "9049688c6080ced20bb6d5ef98e65513560c83eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}

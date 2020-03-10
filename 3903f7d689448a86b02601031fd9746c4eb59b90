@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "43bc8892_8ea06a50",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T13:16:33Z",
+      "side": 1,
+      "message": "okay I understand now. I was interpreting the change to refer to Jet\u0027s behaviour w.r.t doubles and forgotten that we are going to instantiate Jets with ExpressionRefs.",
+      "parentUuid": "916e0064_b1e8d20c",
+      "range": {
+        "startLine": 11,
+        "startChar": 39,
+        "endLine": 11,
+        "endChar": 40
+      },
+      "revId": "3903f7d689448a86b02601031fd9746c4eb59b90",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23a6f821_6411a063",
         "filename": "include/ceres/codegen/internal/expression_ref.h",
         "patchSetId": 1
