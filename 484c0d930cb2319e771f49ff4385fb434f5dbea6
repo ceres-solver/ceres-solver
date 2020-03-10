@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d70f238_62cb52f2",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T13:37:31Z",
+      "side": 1,
+      "message": "I think the use of the word dimension is confusing here. Since what you are referring to here is the dimension of the ambient space in which the line lives. \n\nAlso since dimension is not the same as the size of the parameter block itself, it becomes doubly confusing.\n\nambient_space_dimension is verbose but a better description IMO.\n\nIt is also worth linking to the wikipedia page for the affine grassmanian, \n\nhttps://en.wikipedia.org/wiki/Affine_Grassmannian_(manifold)\n\nsince determining the LocalSize of this manifold requires a little bit of work.",
+      "range": {
+        "startLine": 267,
+        "startChar": 41,
+        "endLine": 267,
+        "endChar": 50
+      },
+      "revId": "484c0d930cb2319e771f49ff4385fb434f5dbea6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2600b0_3464d1c4",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T13:37:31Z",
+      "side": 1,
+      "message": "I think you can drop the text message here since the check fail will generate basically the same message.",
+      "range": {
+        "startLine": 292,
+        "startChar": 34,
+        "endLine": 292,
+        "endChar": 43
+      },
+      "revId": "484c0d930cb2319e771f49ff4385fb434f5dbea6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2822a41_16718d7c",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T13:37:31Z",
+      "side": 1,
+      "message": "before starting computations, it is a good idea to define mathematically/algebraically what you are about to do. Right now as I am reading the code it is not clear to me where things are headed.\n\nI think having a precise mathematical description of the plus function will also make the derivation of the plus jacobian much simpler to understand.",
+      "range": {
+        "startLine": 312,
+        "startChar": 32,
+        "endLine": 312,
+        "endChar": 41
+      },
+      "revId": "484c0d930cb2319e771f49ff4385fb434f5dbea6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9932350b_7a8b96cc",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-10T13:37:31Z",
+      "side": 1,
+      "message": "I do not understand this comment",
+      "range": {
+        "startLine": 317,
+        "startChar": 20,
+        "endLine": 317,
+        "endChar": 30
+      },
+      "revId": "484c0d930cb2319e771f49ff4385fb434f5dbea6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
