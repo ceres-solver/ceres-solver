@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f311392d_0bda1274",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-11T08:09:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44036962_5dbc7a02",
+      "range": {
+        "startLine": 276,
+        "startChar": 3,
+        "endLine": 276,
+        "endChar": 11
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba759d97_6bc6171d",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e905919f_5a7e37df",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-11T08:09:23Z",
+      "side": 1,
+      "message": "I used o and d in the code.",
+      "parentUuid": "ba759d97_6bc6171d",
+      "range": {
+        "startLine": 313,
+        "startChar": 21,
+        "endLine": 313,
+        "endChar": 22
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b247deba_b3201629",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2020-03-10T21:48:48Z",
       "side": 1,
       "message": "origin point and origin_point are too verbose.",
+      "range": {
+        "startLine": 333,
+        "startChar": 16,
+        "endLine": 333,
+        "endChar": 21
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eee28ea_e4556481",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-11T08:09:23Z",
+      "side": 1,
+      "message": "Do you mean that origin point is too verbose in that comment or in the code? I renamed origin_point in the code to o.",
+      "parentUuid": "b247deba_b3201629",
       "range": {
         "startLine": 333,
         "startChar": 16,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "433185ec_6f6d7937",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-11T08:09:23Z",
+      "side": 1,
+      "message": "The reason why I added that check here is in case norm_delta_dir and delta_origin_point is zero the Householder vector does not need to be calculated, but I am not sure how often this is the case during optimization.",
+      "parentUuid": "033c288d_3f8d86cd",
+      "range": {
+        "startLine": 345,
+        "startChar": 8,
+        "endLine": 345,
+        "endChar": 26
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f8188cd_d3c178a0",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2020-03-10T21:48:48Z",
       "side": 1,
       "message": "because you need to use this, this maybe a good reason not to do a templated implementation since you will have to pull this into the public namespace, not a huge deal  something to think about.",
+      "range": {
+        "startLine": 353,
+        "startChar": 11,
+        "endLine": 353,
+        "endChar": 12
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1abe24_0e5367de",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-11T08:09:23Z",
+      "side": 1,
+      "message": "The ComputeHouseholderVector function is already in a separate header file (householder_vector.h) and it would be possible to move it to include/ceres/internal and keep the function in the ceres::internal namespace.",
+      "parentUuid": "1f8188cd_d3c178a0",
       "range": {
         "startLine": 353,
         "startChar": 11,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "64562feb_dc872a0e",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-11T08:09:23Z",
+      "side": 1,
+      "message": "I used the code from HomogeneousVectorParameterization so I also updated that part.",
+      "parentUuid": "2906a82a_02736869",
+      "range": {
+        "startLine": 361,
+        "startChar": 38,
+        "endLine": 361,
+        "endChar": 41
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5781d4e3_55e95193",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 2
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "479ae9aa_34696053",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-11T08:09:23Z",
+      "side": 1,
+      "message": "I used the code from HomogeneousVectorParameterization so I also updated that part.",
+      "parentUuid": "5781d4e3_55e95193",
+      "range": {
+        "startLine": 368,
+        "startChar": 24,
+        "endLine": 368,
+        "endChar": 27
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e56f5bc4_872e0169",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2020-03-10T21:48:48Z",
       "side": 1,
       "message": "can\u0027t you do this update unconditionally?",
+      "range": {
+        "startLine": 373,
+        "startChar": 7,
+        "endLine": 373,
+        "endChar": 25
+      },
+      "revId": "771edeaad51f0dd6a8287eaf3c0cb02eaf073e7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7cbf57_34150450",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-11T08:09:23Z",
+      "side": 1,
+      "message": "It would be possible to remove that check, but it would be expensive in case of zero as some dot products and vector products need to  be calculated.",
+      "parentUuid": "e56f5bc4_872e0169",
       "range": {
         "startLine": 373,
         "startChar": 7,
