@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af64e688_5d032e42",
+        "filename": "include/ceres/codegen/generate_code_for_functor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-12T23:33:59Z",
+      "side": 1,
+      "message": "I like this idea! saves on a bunch of copies.",
+      "range": {
+        "startLine": 195,
+        "startChar": 23,
+        "endLine": 195,
+        "endChar": 24
+      },
+      "revId": "75dd30faed13a8d3872a05d1cc86d84665824398",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
