@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ad29dfc_dbecec32",
+        "filename": "include/ceres/codegen/macros.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-12T08:46:59Z",
+      "side": 1,
+      "message": "This is called CERES_EARLY_RETURN instead of CERES_RETURN, because the last return of a CodeGenCostFunctor must still be a \"normal\" return. If we would replace the last return as well the code wouldn\u0027t compile anymore, because the functor must return a value somewhere.",
+      "revId": "e61ceecbb07477a0d897accca103cd0c32099f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
