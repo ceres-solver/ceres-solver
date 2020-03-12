@@ -213,6 +213,14 @@ CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL(std, isnormal);
 
 #undef CERES_DEFINE_UNARY_LOGICAL_FUNCTION_CALL
 
+inline ExpressionRef MakeReturn(const ComparisonExpressionRef& x) {
+  return AddExpressionToGraph(Expression::CreateReturn(x.id));
+}
+
+inline ExpressionRef MakeReturn(bool value) {
+  return AddExpressionToGraph(Expression::CreateConstantReturn(value));
+}
+
 template <>
 struct InputAssignment<ExpressionRef> {
   using ReturnType = ExpressionRef;

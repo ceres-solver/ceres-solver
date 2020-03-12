@@ -29,7 +29,9 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 
 #include "ceres/codegen/internal/expression.h"
+
 #include <algorithm>
+
 #include "glog/logging.h"
 
 namespace ceres {
@@ -147,6 +149,23 @@ Expression Expression::CreateLogicalFunctionCall(
                     name);
 }
 
+Expression Expression::CreateReturn(ExpressionId value) {
+  return Expression(ExpressionType::RETURN,
+                    ExpressionReturnType::VOID,
+                    kInvalidExpressionId,
+                    {value});
+}
+
+Expression Expression::CreateConstantReturn(bool value) {
+  double dvalue = value ? 1.0 : 0.0;
+  return Expression(ExpressionType::RETURN,
+                    ExpressionReturnType::VOID,
+                    kInvalidExpressionId,
+                    {},
+                    "",
+                    dvalue);
+}
+
 Expression Expression::CreateIf(ExpressionId condition) {
   return Expression(ExpressionType::IF,
                     ExpressionReturnType::VOID,
@@ -175,7 +194,7 @@ bool Expression::IsArithmeticExpression() const {
 bool Expression::IsControlExpression() const {
   return type_ == ExpressionType::IF || type_ == ExpressionType::ELSE ||
          type_ == ExpressionType::ENDIF || type_ == ExpressionType::NOP ||
-         type_ == ExpressionType::COMMENT;
+         type_ == ExpressionType::COMMENT || type_ == ExpressionType::RETURN;
 }
 
 bool Expression::IsReplaceableBy(const Expression& other) const {

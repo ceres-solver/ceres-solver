@@ -105,6 +105,7 @@
 #define CERES_ELSE else
 #define CERES_ENDIF
 #define CERES_COMMENT(comment_)
+#define CERES_EARLY_RETURN(value) return (value)
 #else
 #define CERES_LOCAL_VARIABLE(_template_type, _local_variable)            \
   ceres::internal::InputAssignment<_template_type>::Get(_local_variable, \
@@ -117,6 +118,7 @@
   AddExpressionToGraph(ceres::internal::Expression::CreateEndIf());
 #define CERES_COMMENT(comment_) \
   AddExpressionToGraph(ceres::internal::Expression::CreateComment(comment_))
+#define CERES_EARLY_RETURN(value) ceres::internal::MakeReturn(value)
 #endif
 
 namespace ceres {

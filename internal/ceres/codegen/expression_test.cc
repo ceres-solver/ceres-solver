@@ -32,6 +32,7 @@
 // included here.
 //
 #include "ceres/codegen/internal/expression.h"
+
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -137,6 +138,22 @@ TEST(Expression, CreateFunctions) {
                        "pow",
                        0));
 
+  EXPECT_EQ(Expression::CreateReturn(ExpressionId(5)),
+            Expression(ExpressionType::RETURN,
+                       ExpressionReturnType::VOID,
+                       kInvalidExpressionId,
+                       {5},
+                       "",
+                       0));
+
+  EXPECT_EQ(Expression::CreateConstantReturn(true),
+            Expression(ExpressionType::RETURN,
+                       ExpressionReturnType::VOID,
+                       kInvalidExpressionId,
+                       {},
+                       "",
+                       1));
+
   EXPECT_EQ(
       Expression::CreateLogicalFunctionCall("isfinite", {ExpressionId(3)}),
       Expression(ExpressionType::FUNCTION_CALL,
@@ -203,6 +220,7 @@ TEST(Expression, IsControlExpression) {
   ASSERT_TRUE(Expression::CreateIf(5).IsControlExpression());
   ASSERT_TRUE(Expression::CreateEndIf().IsControlExpression());
   ASSERT_TRUE(Expression::CreateComment("Test").IsControlExpression());
+  ASSERT_TRUE(Expression::CreateConstantReturn(false).IsControlExpression());
   ASSERT_TRUE(Expression().IsControlExpression());
 }
 
