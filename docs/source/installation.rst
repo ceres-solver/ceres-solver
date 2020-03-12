@@ -491,19 +491,18 @@ Notes:
 
 .. _section-android:
 
-Building ceres - Using vcpkg
-============================
+Installation using vcpkg
+========================
+You can download and install Ceres using the `vcpkg <https://github.com/Microsoft/vcpkg/>`_ dependency manager:
 
-The url of vcpkg is: https://github.com/Microsoft/vcpkg
-You can download and install ceres using the vcpkg dependency manager:
-
+.. code-block:: bash
     git clone https://github.com/Microsoft/vcpkg.git
     cd vcpkg
     ./bootstrap-vcpkg.sh
     ./vcpkg integrate install
     ./vcpkg install ceres
 
-The ceres port in vcpkg is kept up to date by Microsoft team members and community contributors. If the version is out of date, please create an issue or pull request on the vcpkg repository.
+The Ceres port in vcpkg is kept up to date by Microsoft team members and community contributors. If the version is out of date, please `create an issue or pull request <https://github.com/Microsoft/vcpkg/>`_ on the vcpkg repository.
 
 Android
 =======
