@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a69a3ddf_97511ade",
+        "filename": "internal/ceres/codegen/test_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-03-17T17:02:09Z",
+      "side": 1,
+      "message": "why a relative path?",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 22
+      },
+      "revId": "cec416d5d62683ee2bba18fc4cf284786a757a69",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
