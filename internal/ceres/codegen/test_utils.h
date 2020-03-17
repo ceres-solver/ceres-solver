@@ -31,10 +31,10 @@
 #ifndef CERES_INTERNAL_CODEGEN_TEST_UTILS_H_
 #define CERES_INTERNAL_CODEGEN_TEST_UTILS_H_
 
+#include "../test_util.h"
 #include "ceres/internal/autodiff.h"
 #include "ceres/random.h"
 #include "ceres/sized_cost_function.h"
-#include "test_util.h"
 
 namespace ceres {
 namespace internal {

@@ -88,3 +88,31 @@ if (BUILD_TESTING AND GFLAGS)
     UnaryArithmetic BinaryComparison LogicalOperators ScalarFunctions
     LogicalFunctions Branches)
 endif()
+
+if (BUILD_BENCHMARKS)
+  generate_test_functor(SnavelyReprojectionErrorGen snavely_reprojection_error.h)
+
+  # Benchmark with default compiler flags
+  add_executable(codegen_ba_benchmark codegen_ba_benchmark.cc)
+  add_dependencies_to_benchmark(codegen_ba_benchmark)
+  target_link_libraries(codegen_ba_benchmark PUBLIC SnavelyReprojectionErrorGen)
+
+  # Benchmark with all optimizations (clang only)
+  if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+
+    # Always fine
+    list(APPEND CERES_BENCHMARK_FLAGS "-march=native")
+    list(APPEND CERES_BENCHMARK_FLAGS "-fno-math-errno" "-fno-trapping-math" "-fassociative-math" "-fno-signed-zeros" "-ffp-contract=fast")
+
+    # This enables the 0*x=0 optimization
+    list(APPEND CERES_BENCHMARK_FLAGS "-fno-honor-infinities" "-fno-honor-nans")
+
+    # Total overkill but we want to make sure everything inlineable is inlined.
+    list(APPEND CERES_BENCHMARK_FLAGS "-mllvm" "-inline-threshold=1000000")
+
+    add_executable(codegen_ba_benchmark_fast_math codegen_ba_benchmark.cc)
+    add_dependencies_to_benchmark(codegen_ba_benchmark_fast_math)
+    target_link_libraries(codegen_ba_benchmark_fast_math PUBLIC SnavelyReprojectionErrorGen)
+    target_compile_options(codegen_ba_benchmark_fast_math PRIVATE ${CERES_BENCHMARK_FLAGS})
+  endif()
+endif()
