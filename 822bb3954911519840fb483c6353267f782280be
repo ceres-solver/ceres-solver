@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61e4019f_78fff518",
+        "filename": "internal/ceres/autodiff_benchmarks/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T15:26:25Z",
+      "side": 1,
+      "message": "I do not think adding autodiff as a prefix does anything. Indeed it makes it unintuitive, because we do not usually change the name of the binary from the cc file.",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "822bb3954911519840fb483c6353267f782280be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3b0af7_4b2b30ce",
+        "filename": "internal/ceres/autodiff_benchmarks/linear_benchmark.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T15:26:25Z",
+      "side": 1,
+      "message": "drop this?",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "822bb3954911519840fb483c6353267f782280be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6aefb9_7dcfdd01",
+        "filename": "internal/ceres/autodiff_benchmarks/linear_benchmark.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T15:26:25Z",
+      "side": 1,
+      "message": "blank before this",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 6
+      },
+      "revId": "822bb3954911519840fb483c6353267f782280be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ec4aed_01359c7c",
+        "filename": "internal/ceres/autodiff_benchmarks/linear_benchmark.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T15:26:25Z",
+      "side": 1,
+      "message": "blank before this.",
+      "range": {
+        "startLine": 76,
+        "startChar": 1,
+        "endLine": 76,
+        "endChar": 6
+      },
+      "revId": "822bb3954911519840fb483c6353267f782280be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0cef1a8_85b4556a",
+        "filename": "internal/ceres/autodiff_benchmarks/linear_benchmark.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T15:26:25Z",
+      "side": 1,
+      "message": "blank before this.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 6
+      },
+      "revId": "822bb3954911519840fb483c6353267f782280be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
