@@ -32,62 +32,84 @@
 
 #include "benchmark/benchmark.h"
 #include "ceres/ceres.h"
-#include "snavely_reprojection_error.h"
-#include "test_utils.h"
+#include "codegen/test_utils.h"
+#include "linear_cost_functions.h"
 
 namespace ceres {
 
-static void BM_BAAutoDiff(benchmark::State& state) {
+#ifdef WITH_CODE_GENERATION
+static void BM_Linear1CodeGen(benchmark::State& state) {
+  double parameter_block1[] = {1.};
+  double* parameters[] = {parameter_block1};
+
+  double jacobian1[1];
+  double residuals[1];
+  double* jacobians[] = {jacobian1};
+
+  std::unique_ptr<ceres::CostFunction> cost_function(new Linear1CostFunction());
+
+  while (state.KeepRunning()) {
+    cost_function->Evaluate(parameters, residuals, jacobians);
+  }
+}
+BENCHMARK(BM_Linear1CodeGen);
+#endif
+static void BM_Linear1AutoDiff(benchmark::State& state) {
   using FunctorType =
-      ceres::internal::CostFunctionToFunctor<test::SnavelyReprojectionErrorGen>;
+      ceres::internal::CostFunctionToFunctor<Linear1CostFunction>;
 
-  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9.};
-  double parameter_block2[] = {1., 2., 3.};
-  double* parameters[] = {parameter_block1, parameter_block2};
+  double parameter_block1[] = {1.};
+  double* parameters[] = {parameter_block1};
 
-  double jacobian1[2 * 9];
-  double jacobian2[2 * 3];
-  double residuals[2];
-  double* jacobians[] = {jacobian1, jacobian2};
-
-  const double x = 0.2;
-  const double y = 0.3;
-  std::unique_ptr<ceres::CostFunction> cost_function(
-      new ceres::AutoDiffCostFunction<FunctorType, 2, 9, 3>(
-          new FunctorType(x, y)));
-
-  while (state.KeepRunning()) {
-    cost_function->Evaluate(
-        parameters, residuals, state.range(0) ? jacobians : nullptr);
-  }
-}
-
-static void BM_BACodeGen(benchmark::State& state) {
-  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9.};
-  double parameter_block2[] = {1., 2., 3.};
-  double* parameters[] = {parameter_block1, parameter_block2};
-
-  double jacobian1[2 * 9];
-  double jacobian2[2 * 3];
-  double residuals[2];
-  double* jacobians[] = {jacobian1, jacobian2};
-
-  const double x = 0.2;
-  const double y = 0.3;
+  double jacobian1[1];
+  double residuals[1];
+  double* jacobians[] = {jacobian1};
 
   std::unique_ptr<ceres::CostFunction> cost_function(
-      new test::SnavelyReprojectionErrorGen(x, y));
+      new ceres::AutoDiffCostFunction<FunctorType, 1, 1>(new FunctorType()));
 
   while (state.KeepRunning()) {
-    cost_function->Evaluate(
-        parameters, residuals, state.range(0) ? jacobians : nullptr);
+    cost_function->Evaluate(parameters, residuals, jacobians);
   }
 }
+BENCHMARK(BM_Linear1AutoDiff);
+#ifdef WITH_CODE_GENERATION
+static void BM_Linear10CodeGen(benchmark::State& state) {
+  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9., 10.};
+  double* parameters[] = {parameter_block1};
 
-BENCHMARK(BM_BAAutoDiff)->ArgName("Residual")->Arg(0);
-BENCHMARK(BM_BAAutoDiff)->ArgName("Residual+Jacobian")->Arg(1);
-BENCHMARK(BM_BACodeGen)->ArgName("Residual")->Arg(0);
-BENCHMARK(BM_BACodeGen)->ArgName("Residual+Jacobian")->Arg(1);
+  double jacobian1[10 * 10];
+  double residuals[10];
+  double* jacobians[] = {jacobian1};
+
+  std::unique_ptr<ceres::CostFunction> cost_function(
+      new Linear10CostFunction());
+
+  while (state.KeepRunning()) {
+    cost_function->Evaluate(parameters, residuals, jacobians);
+  }
+}
+BENCHMARK(BM_Linear10CodeGen);
+#endif
+static void BM_Linear10AutoDiff(benchmark::State& state) {
+  using FunctorType =
+      ceres::internal::CostFunctionToFunctor<Linear10CostFunction>;
+
+  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9., 10.};
+  double* parameters[] = {parameter_block1};
+
+  double jacobian1[10 * 10];
+  double residuals[10];
+  double* jacobians[] = {jacobian1};
+
+  std::unique_ptr<ceres::CostFunction> cost_function(
+      new ceres::AutoDiffCostFunction<FunctorType, 10, 10>(new FunctorType()));
+
+  while (state.KeepRunning()) {
+    cost_function->Evaluate(parameters, residuals, jacobians);
+  }
+}
+BENCHMARK(BM_Linear10AutoDiff);
 
 }  // namespace ceres
 
