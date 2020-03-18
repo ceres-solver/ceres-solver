@@ -67,6 +67,24 @@
       "revId": "a8d7e9fac15152470548cc1655ea35e26174de3e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e39c6bd9_7fb7e7e6",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 6197
+      },
+      "writtenOn": "2020-03-18T16:05:00Z",
+      "side": 1,
+      "message": "For document please refer to line 80.\n\nCould you please advise the name of enum?",
+      "parentUuid": "7e00142b_24b85f4c",
+      "revId": "a8d7e9fac15152470548cc1655ea35e26174de3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
