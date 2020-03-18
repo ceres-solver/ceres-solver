@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb729287_0b202a7f",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T21:09:43Z",
+      "side": 0,
+      "message": "why drop these checks?",
+      "range": {
+        "startLine": 566,
+        "startChar": 2,
+        "endLine": 566,
+        "endChar": 11
+      },
+      "revId": "13c7a22cee789fa03a72520b1cb861cd8e9a5a54",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
