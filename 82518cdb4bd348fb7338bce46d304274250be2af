@@ -22,6 +22,30 @@
       "revId": "82518cdb4bd348fb7338bce46d304274250be2af",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe23e95d_c86701fd",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-18T19:46:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68174ea9_f3270ce7",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 16
+      },
+      "revId": "82518cdb4bd348fb7338bce46d304274250be2af",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
