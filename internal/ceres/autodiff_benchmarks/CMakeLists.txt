@@ -13,6 +13,7 @@ if(CODE_GENERATION)
   generate_benchmark_functor(SnavelyReprojectionError snavely_reprojection_error.h)
   generate_benchmark_functor(Linear1CostFunction linear_cost_functions.h)
   generate_benchmark_functor(Linear10CostFunction linear_cost_functions.h)
+  generate_benchmark_functor(Brdf brdf_cost_function.h)
 
   list(APPEND CERES_BENCHMARK_FLAGS "-DWITH_CODE_GENERATION")
 endif()
@@ -46,10 +47,20 @@ add_executable(linear_benchmark_fast_math linear_benchmark.cc)
 add_dependencies_to_benchmark(linear_benchmark_fast_math)
 target_compile_options(linear_benchmark_fast_math PRIVATE ${CERES_BENCHMARK_FAST_MATH_FLAGS})
 
+add_executable(brdf_benchmark brdf_benchmark.cc)
+add_dependencies_to_benchmark(brdf_benchmark)
+target_compile_options(brdf_benchmark PRIVATE ${CERES_BENCHMARK_FLAGS})
+
+add_executable(brdf_benchmark_fast_math brdf_benchmark.cc)
+add_dependencies_to_benchmark(brdf_benchmark_fast_math)
+target_compile_options(brdf_benchmark_fast_math PRIVATE ${CERES_BENCHMARK_FAST_MATH_FLAGS})
+
 if(CODE_GENERATION)
   target_link_libraries(snavely_reprojection_error_benchmark PUBLIC SnavelyReprojectionError)
   target_link_libraries(snavely_reprojection_error_benchmark_fast_math PUBLIC SnavelyReprojectionError)
   target_link_libraries(linear_benchmark PUBLIC Linear1CostFunction Linear10CostFunction)
   target_link_libraries(linear_benchmark_fast_math PUBLIC Linear1CostFunction Linear10CostFunction)
+  target_link_libraries(brdf_benchmark PUBLIC Brdf)
+  target_link_libraries(brdf_benchmark_fast_math PUBLIC Brdf)
 endif()
 
