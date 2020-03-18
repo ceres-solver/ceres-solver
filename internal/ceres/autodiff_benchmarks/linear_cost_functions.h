@@ -29,64 +29,47 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 //
 //
-#ifndef CERES_INTERNAL_CODEGEN_SNAVELY_REPROJECTION_ERROR_H_
-#define CERES_INTERNAL_CODEGEN_SNAVELY_REPROJECTION_ERROR_H_
+#ifndef CERES_INTERNAL_AUTODIFF_BENCHMARKS_LINEAR_COST_FUNCTIONS_H_
+#define CERES_INTERNAL_AUTODIFF_BENCHMARKS_LINEAR_COST_FUNCTIONS_H_
 
 #include "ceres/codegen/codegen_cost_function.h"
 #include "ceres/rotation.h"
+namespace ceres {
 
-namespace test {
-
-struct SnavelyReprojectionErrorGen
-    : public ceres::CodegenCostFunction<2, 9, 3> {
-  SnavelyReprojectionErrorGen(double observed_x, double observed_y)
-      : observed_x(observed_x), observed_y(observed_y) {}
-
-  SnavelyReprojectionErrorGen() = default;
+struct Linear1CostFunction : public ceres::CodegenCostFunction<1, 1> {
   template <typename T>
-  bool operator()(const T* const camera,
-                  const T* const point,
-                  T* residuals) const {
-    T ox = CERES_LOCAL_VARIABLE(T, observed_x);
-    T oy = CERES_LOCAL_VARIABLE(T, observed_y);
-
-    // camera[0,1,2] are the angle-axis rotation.
-    T p[3];
-    ceres::AngleAxisRotatePoint(camera, point, p);
-
-    // camera[3,4,5] are the translation.
-    p[0] += camera[3];
-    p[1] += camera[4];
-    p[2] += camera[5];
-
-    // Compute the center of distortion. The sign change comes from
-    // the camera model that Noah Snavely's Bundler assumes, whereby
-    // the camera coordinate system has a negative z axis.
-    const T xp = -p[0] / p[2];
-    const T yp = -p[1] / p[2];
-
-    // Apply second and fourth order radial distortion.
-    const T& l1 = camera[7];
-    const T& l2 = camera[8];
-    const T r2 = xp * xp + yp * yp;
-    const T distortion = T(1.0) + r2 * (l1 + l2 * r2);
-
-    // Compute final projected point position.
-    const T& focal = camera[6];
-    const T predicted_x = focal * distortion * xp;
-    const T predicted_y = focal * distortion * yp;
-
-    // The error is the difference between the predicted and observed position.
-    residuals[0] = predicted_x - ox;
-    residuals[1] = predicted_y - oy;
-
+  bool operator()(const T* const x, T* residuals) const {
+    residuals[0] = x[0] + T(10);
     return true;
   }
-
-#include "tests/snavelyreprojectionerrorgen.h"
-  double observed_x;
-  double observed_y;
+#ifdef WITH_CODE_GENERATION
+#include "benchmarks/linear1costfunction.h"
+#else
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** jacobians) const {
+    return false;
+  }
+#endif
 };
 
-}  // namespace test
-#endif  // CERES_INTERNAL_CODEGEN_SNAVELY_REPROJECTION_ERROR_H_
+struct Linear10CostFunction : public ceres::CodegenCostFunction<10, 10> {
+  template <typename T>
+  bool operator()(const T* const x, T* residuals) const {
+    for (int i = 0; i < 10; ++i) {
+      residuals[i] = x[i] + T(i);
+    }
+    return true;
+  }
+#ifdef WITH_CODE_GENERATION
+#include "benchmarks/linear10costfunction.h"
+#else
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** jacobians) const {
+    return false;
+  }
+#endif
+};
+}
+#endif  // CERES_INTERNAL_AUTODIFF_BENCHMARKS_LINEAR_COST_FUNCTIONS_H_

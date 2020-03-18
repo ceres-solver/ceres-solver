@@ -511,9 +511,6 @@ macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
 endmacro()
 
 if (BUILD_BENCHMARKS)
-  add_executable(autodiff_cost_function_benchmark autodiff_cost_function_benchmark.cc)
-  add_dependencies_to_benchmark(autodiff_cost_function_benchmark)
-
   add_executable(small_blas_gemv_benchmark small_blas_gemv_benchmark.cc)
   add_dependencies_to_benchmark(small_blas_gemv_benchmark)
 
@@ -525,9 +522,10 @@ if (BUILD_BENCHMARKS)
 
   add_executable(schur_eliminator_benchmark schur_eliminator_benchmark.cc)
   add_dependencies_to_benchmark(schur_eliminator_benchmark)
+
+  add_subdirectory(autodiff_benchmarks)
 endif (BUILD_BENCHMARKS)
 
 if(CODE_GENERATION)
   add_subdirectory(codegen)
 endif()
-
