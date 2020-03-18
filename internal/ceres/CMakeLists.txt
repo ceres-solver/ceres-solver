@@ -43,120 +43,120 @@ elseif (CERES_THREADING_MODEL STREQUAL "NO_THREADS")
 endif()
 
 set(CERES_INTERNAL_SRC
-    ${CERES_PARALLEL_FOR_SRC}
-    accelerate_sparse.cc
-    array_utils.cc
-    blas.cc
-    block_evaluate_preparer.cc
-    block_jacobi_preconditioner.cc
-    block_jacobian_writer.cc
-    block_random_access_dense_matrix.cc
-    block_random_access_diagonal_matrix.cc
-    block_random_access_matrix.cc
-    block_random_access_sparse_matrix.cc
-    block_sparse_matrix.cc
-    block_structure.cc
-    c_api.cc
-    canonical_views_clustering.cc
-    cgnr_solver.cc
-    callbacks.cc
-    compressed_col_sparse_matrix_utils.cc
-    compressed_row_jacobian_writer.cc
-    compressed_row_sparse_matrix.cc
-    conditioned_cost_function.cc
-    conjugate_gradients_solver.cc
-    context.cc
-    context_impl.cc
-    coordinate_descent_minimizer.cc
-    corrector.cc
-    covariance.cc
-    covariance_impl.cc
-    cxsparse.cc
-    dense_normal_cholesky_solver.cc
-    dense_qr_solver.cc
-    dense_sparse_matrix.cc
-    detect_structure.cc
-    dogleg_strategy.cc
-    dynamic_compressed_row_jacobian_writer.cc
-    dynamic_compressed_row_sparse_matrix.cc
-    dynamic_sparse_normal_cholesky_solver.cc
-    evaluator.cc
-    eigensparse.cc
-    file.cc
-    float_suitesparse.cc
-    float_cxsparse.cc
-    function_sample.cc
-    gradient_checker.cc
-    gradient_checking_cost_function.cc
-    gradient_problem.cc
-    gradient_problem_solver.cc
-    implicit_schur_complement.cc
-    inner_product_computer.cc
-    is_close.cc
-    iterative_refiner.cc
-    iterative_schur_complement_solver.cc
-    levenberg_marquardt_strategy.cc
-    lapack.cc
-    line_search.cc
-    line_search_direction.cc
-    line_search_minimizer.cc
-    line_search_preprocessor.cc
-    linear_least_squares_problems.cc
-    linear_operator.cc
-    linear_solver.cc
-    local_parameterization.cc
-    loss_function.cc
-    low_rank_inverse_hessian.cc
-    minimizer.cc
-    normal_prior.cc
-    parallel_utils.cc
-    parameter_block_ordering.cc
-    partitioned_matrix_view.cc
-    polynomial.cc
-    preconditioner.cc
-    preprocessor.cc
-    problem.cc
-    problem_impl.cc
-    program.cc
-    reorder_program.cc
-    residual_block.cc
-    residual_block_utils.cc
-    schur_complement_solver.cc
-    schur_eliminator.cc
-    schur_jacobi_preconditioner.cc
-    schur_templates.cc
-    scratch_evaluate_preparer.cc
-    single_linkage_clustering.cc
-    solver.cc
-    solver_utils.cc
-    sparse_matrix.cc
-    sparse_cholesky.cc
-    sparse_normal_cholesky_solver.cc
-    subset_preconditioner.cc
-    split.cc
-    stringprintf.cc
-    suitesparse.cc
-    thread_token_provider.cc
-    triplet_sparse_matrix.cc
-    trust_region_preprocessor.cc
-    trust_region_minimizer.cc
-    trust_region_step_evaluator.cc
-    trust_region_strategy.cc
-    types.cc
-    visibility.cc
-    visibility_based_preconditioner.cc
-    wall_time.cc
-)
+  ${CERES_PARALLEL_FOR_SRC}
+  accelerate_sparse.cc
+  array_utils.cc
+  blas.cc
+  block_evaluate_preparer.cc
+  block_jacobi_preconditioner.cc
+  block_jacobian_writer.cc
+  block_random_access_dense_matrix.cc
+  block_random_access_diagonal_matrix.cc
+  block_random_access_matrix.cc
+  block_random_access_sparse_matrix.cc
+  block_sparse_matrix.cc
+  block_structure.cc
+  c_api.cc
+  canonical_views_clustering.cc
+  cgnr_solver.cc
+  callbacks.cc
+  compressed_col_sparse_matrix_utils.cc
+  compressed_row_jacobian_writer.cc
+  compressed_row_sparse_matrix.cc
+  conditioned_cost_function.cc
+  conjugate_gradients_solver.cc
+  context.cc
+  context_impl.cc
+  coordinate_descent_minimizer.cc
+  corrector.cc
+  covariance.cc
+  covariance_impl.cc
+  cxsparse.cc
+  dense_normal_cholesky_solver.cc
+  dense_qr_solver.cc
+  dense_sparse_matrix.cc
+  detect_structure.cc
+  dogleg_strategy.cc
+  dynamic_compressed_row_jacobian_writer.cc
+  dynamic_compressed_row_sparse_matrix.cc
+  dynamic_sparse_normal_cholesky_solver.cc
+  evaluator.cc
+  eigensparse.cc
+  file.cc
+  float_suitesparse.cc
+  float_cxsparse.cc
+  function_sample.cc
+  gradient_checker.cc
+  gradient_checking_cost_function.cc
+  gradient_problem.cc
+  gradient_problem_solver.cc
+  implicit_schur_complement.cc
+  inner_product_computer.cc
+  is_close.cc
+  iterative_refiner.cc
+  iterative_schur_complement_solver.cc
+  levenberg_marquardt_strategy.cc
+  lapack.cc
+  line_search.cc
+  line_search_direction.cc
+  line_search_minimizer.cc
+  line_search_preprocessor.cc
+  linear_least_squares_problems.cc
+  linear_operator.cc
+  linear_solver.cc
+  local_parameterization.cc
+  loss_function.cc
+  low_rank_inverse_hessian.cc
+  minimizer.cc
+  normal_prior.cc
+  parallel_utils.cc
+  parameter_block_ordering.cc
+  partitioned_matrix_view.cc
+  polynomial.cc
+  preconditioner.cc
+  preprocessor.cc
+  problem.cc
+  problem_impl.cc
+  program.cc
+  reorder_program.cc
+  residual_block.cc
+  residual_block_utils.cc
+  schur_complement_solver.cc
+  schur_eliminator.cc
+  schur_jacobi_preconditioner.cc
+  schur_templates.cc
+  scratch_evaluate_preparer.cc
+  single_linkage_clustering.cc
+  solver.cc
+  solver_utils.cc
+  sparse_matrix.cc
+  sparse_cholesky.cc
+  sparse_normal_cholesky_solver.cc
+  subset_preconditioner.cc
+  split.cc
+  stringprintf.cc
+  suitesparse.cc
+  thread_token_provider.cc
+  triplet_sparse_matrix.cc
+  trust_region_preprocessor.cc
+  trust_region_minimizer.cc
+  trust_region_step_evaluator.cc
+  trust_region_strategy.cc
+  types.cc
+  visibility.cc
+  visibility_based_preconditioner.cc
+  wall_time.cc
+  )
 
 if(CODE_GENERATION)
   set(CERES_CODEGEN_SRC
-      codegen/code_generator.cc
-      codegen/expression.cc
-      codegen/expression_graph.cc
-      codegen/expression_ref.cc
-      codegen/optimize_expression_graph.cc
-      codegen/eliminate_nops.cc
-  )
+    codegen/code_generator.cc
+    codegen/expression.cc
+    codegen/expression_graph.cc
+    codegen/expression_ref.cc
+    codegen/optimize_expression_graph.cc
+    codegen/eliminate_nops.cc
+    )
   list(APPEND CERES_INTERNAL_SRC ${CERES_CODEGEN_SRC})
 endif(CODE_GENERATION)
 
@@ -219,11 +219,11 @@ if (LAPACK_FOUND)
 endif ()
 
 set(CERES_LIBRARY_SOURCE
-    ${CERES_INTERNAL_SRC}
-    ${CERES_INTERNAL_HDRS}
-    ${CERES_PUBLIC_HDRS}
-    ${CERES_PUBLIC_INTERNAL_HDRS}
-    ${CERES_INTERNAL_SCHUR_FILES})
+  ${CERES_INTERNAL_SRC}
+  ${CERES_INTERNAL_HDRS}
+  ${CERES_PUBLIC_HDRS}
+  ${CERES_PUBLIC_INTERNAL_HDRS}
+  ${CERES_INTERNAL_SCHUR_FILES})
 
 # Primarily for Android, but optionally for others, compile the minimal
 # glog implementation into Ceres.
@@ -235,10 +235,10 @@ endif (MINIGLOG)
 # which we do not maintain.
 include(CheckCXXCompilerFlag)
 check_cxx_compiler_flag("-Wno-missing-declarations"
-                        CHECK_CXX_FLAG_Wno_missing_declarations)
+  CHECK_CXX_FLAG_Wno_missing_declarations)
 if (CHECK_CXX_FLAG_Wno_missing_declarations)
   set_property(SOURCE gmock_gtest_all.cc
-               APPEND_STRING PROPERTY COMPILE_FLAGS "-Wno-missing-declarations")
+    APPEND_STRING PROPERTY COMPILE_FLAGS "-Wno-missing-declarations")
 endif()
 
 add_library(ceres ${CERES_LIBRARY_SOURCE})
@@ -272,15 +272,15 @@ if (BUILD_SHARED_LIBS)
   # When building a shared library, mark all external libraries as
   # PRIVATE so they don't show up as a dependency.
   target_link_libraries(ceres
-        PUBLIC ${CERES_LIBRARY_PUBLIC_DEPENDENCIES}
-        PRIVATE ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
+    PUBLIC ${CERES_LIBRARY_PUBLIC_DEPENDENCIES}
+    PRIVATE ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
 else (BUILD_SHARED_LIBS)
   # When building a static library, all external libraries are
   # PUBLIC(default) since the user needs to link to them.
   # They will be listed in CeresTargets.cmake.
   set(CERES_LIBRARY_DEPENDENCIES
-        ${CERES_LIBRARY_PUBLIC_DEPENDENCIES}
-        ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
+    ${CERES_LIBRARY_PUBLIC_DEPENDENCIES}
+    ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
   target_link_libraries(ceres PUBLIC ${CERES_LIBRARY_DEPENDENCIES})
 endif (BUILD_SHARED_LIBS)
 
@@ -353,10 +353,10 @@ foreach(INC_DIR ${CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS})
 endforeach()
 
 install(TARGETS ceres
-        EXPORT  CeresExport
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION lib${LIB_SUFFIX}
-        ARCHIVE DESTINATION lib${LIB_SUFFIX})
+  EXPORT  CeresExport
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib${LIB_SUFFIX}
+  ARCHIVE DESTINATION lib${LIB_SUFFIX})
 
 if (BUILD_TESTING AND GFLAGS)
   add_library(gtest gmock_gtest_all.cc gmock_main.cc)
@@ -368,10 +368,10 @@ if (BUILD_TESTING AND GFLAGS)
   endif()
 
   add_library(test_util
-              evaluator_test_utils.cc
-              numeric_diff_test_utils.cc
-              test_util.cc
-              codegen/test_utils.cc)
+    evaluator_test_utils.cc
+    numeric_diff_test_utils.cc
+    test_util.cc
+    codegen/test_utils.cc)
   target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
 
   if (MINIGLOG)
@@ -392,8 +392,8 @@ if (BUILD_TESTING AND GFLAGS)
     # dependencies that may be directly referenced.
     target_include_directories(${NAME}_test
       PUBLIC ${CMAKE_CURRENT_LIST_DIR}
-             ${Ceres_SOURCE_DIR}/internal/ceres
-             ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
+      ${Ceres_SOURCE_DIR}/internal/ceres
+      ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
 
     target_link_libraries(${NAME}_test PUBLIC test_util ceres gtest)
     if (BUILD_SHARED_LIBS)
@@ -402,9 +402,9 @@ if (BUILD_TESTING AND GFLAGS)
         GTEST_LINKED_AS_SHARED_LIBRARY)
     endif()
     add_test(NAME ${NAME}_test
-             COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${NAME}_test
-             --test_srcdir
-             ${Ceres_SOURCE_DIR}/data)
+      COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${NAME}_test
+      --test_srcdir
+      ${Ceres_SOURCE_DIR}/data)
   endmacro (CERES_TEST)
 
   ceres_test(algorithm)
@@ -505,9 +505,9 @@ endif (BUILD_TESTING AND GFLAGS)
 macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
   target_link_libraries(${BENCHMARK_TARGET} PUBLIC ceres benchmark::benchmark)
   target_include_directories(${BENCHMARK_TARGET} PUBLIC
-                             ${Ceres_SOURCE_DIR}/internal
-                             ${Ceres_SOURCE_DIR}/internal/ceres
-                             ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
+    ${Ceres_SOURCE_DIR}/internal
+    ${Ceres_SOURCE_DIR}/internal/ceres
+    ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
 endmacro()
 
 if (BUILD_BENCHMARKS)
@@ -531,3 +531,7 @@ if(CODE_GENERATION)
   add_subdirectory(codegen)
 endif()
 
+# TODO: Add support for other compilers
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  add_subdirectory(autodiff_benchmarks)
+endif()
