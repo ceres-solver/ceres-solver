@@ -35,14 +35,13 @@
 #include "ceres/codegen/codegen_cost_function.h"
 #include "ceres/rotation.h"
 
-namespace test {
+namespace benchmark {
 
-struct SnavelyReprojectionErrorGen
-    : public ceres::CodegenCostFunction<2, 9, 3> {
-  SnavelyReprojectionErrorGen(double observed_x, double observed_y)
+struct SnavelyReprojectionError : public ceres::CodegenCostFunction<2, 9, 3> {
+  SnavelyReprojectionError(double observed_x, double observed_y)
       : observed_x(observed_x), observed_y(observed_y) {}
 
-  SnavelyReprojectionErrorGen() = default;
+  SnavelyReprojectionError() = default;
   template <typename T>
   bool operator()(const T* const camera,
                   const T* const point,
@@ -82,11 +81,18 @@ struct SnavelyReprojectionErrorGen
 
     return true;
   }
-
-#include "tests/snavelyreprojectionerrorgen.h"
+#ifdef WITH_CODE_GENERATION
+#include "benchmarks/snavelyreprojectionerror.h"
+#else
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** jacobians) const {
+    return false;
+  }
+#endif
   double observed_x;
   double observed_y;
 };
 
-}  // namespace test
+}  // namespace benchmark
 #endif  // CERES_INTERNAL_CODEGEN_SNAVELY_REPROJECTION_ERROR_H_

@@ -32,14 +32,37 @@
 
 #include "benchmark/benchmark.h"
 #include "ceres/ceres.h"
+#include "codegen/test_utils.h"
 #include "snavely_reprojection_error.h"
-#include "test_utils.h"
 
 namespace ceres {
 
+#ifdef WITH_CODE_GENERATION
+static void BM_BACodeGen(benchmark::State& state) {
+  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9.};
+  double parameter_block2[] = {1., 2., 3.};
+  double* parameters[] = {parameter_block1, parameter_block2};
+
+  double jacobian1[2 * 9];
+  double jacobian2[2 * 3];
+  double residuals[2];
+  double* jacobians[] = {jacobian1, jacobian2};
+
+  const double x = 0.2;
+  const double y = 0.3;
+
+  std::unique_ptr<ceres::CostFunction> cost_function(
+      new benchmark::SnavelyReprojectionError(x, y));
+
+  while (state.KeepRunning()) {
+    cost_function->Evaluate(parameters, residuals, jacobians);
+  }
+}
+BENCHMARK(BM_BACodeGen);
+#endif
 static void BM_BAAutoDiff(benchmark::State& state) {
-  using FunctorType =
-      ceres::internal::CostFunctionToFunctor<test::SnavelyReprojectionErrorGen>;
+  using FunctorType = ceres::internal::CostFunctionToFunctor<
+      benchmark::SnavelyReprojectionError>;
 
   double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9.};
   double parameter_block2[] = {1., 2., 3.};
@@ -57,37 +80,11 @@ static void BM_BAAutoDiff(benchmark::State& state) {
           new FunctorType(x, y)));
 
   while (state.KeepRunning()) {
-    cost_function->Evaluate(
-        parameters, residuals, state.range(0) ? jacobians : nullptr);
+    cost_function->Evaluate(parameters, residuals, jacobians);
   }
 }
 
-static void BM_BACodeGen(benchmark::State& state) {
-  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9.};
-  double parameter_block2[] = {1., 2., 3.};
-  double* parameters[] = {parameter_block1, parameter_block2};
-
-  double jacobian1[2 * 9];
-  double jacobian2[2 * 3];
-  double residuals[2];
-  double* jacobians[] = {jacobian1, jacobian2};
-
-  const double x = 0.2;
-  const double y = 0.3;
-
-  std::unique_ptr<ceres::CostFunction> cost_function(
-      new test::SnavelyReprojectionErrorGen(x, y));
-
-  while (state.KeepRunning()) {
-    cost_function->Evaluate(
-        parameters, residuals, state.range(0) ? jacobians : nullptr);
-  }
-}
-
-BENCHMARK(BM_BAAutoDiff)->ArgName("Residual")->Arg(0);
-BENCHMARK(BM_BAAutoDiff)->ArgName("Residual+Jacobian")->Arg(1);
-BENCHMARK(BM_BACodeGen)->ArgName("Residual")->Arg(0);
-BENCHMARK(BM_BACodeGen)->ArgName("Residual+Jacobian")->Arg(1);
+BENCHMARK(BM_BAAutoDiff);
 
 }  // namespace ceres
 

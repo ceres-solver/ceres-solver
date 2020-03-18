@@ -531,3 +531,7 @@ if(CODE_GENERATION)
   add_subdirectory(codegen)
 endif()
 
+# TODO: Add support for other compilers
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  add_subdirectory(autodiff_benchmarks)
+endif()
