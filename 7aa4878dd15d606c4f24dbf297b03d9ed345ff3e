@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b31672e_7ebd967d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T13:05:28Z",
+      "side": 1,
+      "message": "why is this conditioned on compiler?\nwhat happens if these benchmarks are compiled with gcc?",
+      "range": {
+        "startLine": 535,
+        "startChar": 25,
+        "endLine": 535,
+        "endChar": 33
+      },
+      "revId": "7aa4878dd15d606c4f24dbf297b03d9ed345ff3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a24e565_903d4901",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_ba_benchmark.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T13:05:28Z",
+      "side": 1,
+      "message": "better to call this snavely_reprojection_error_benchmark now that this is in a directory called autodiff_benchmark",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "7aa4878dd15d606c4f24dbf297b03d9ed345ff3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2028c4_944bd260",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_ba_benchmark.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T13:05:28Z",
+      "side": 1,
+      "message": "BM_SnavelyReprojectionCodeGen",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 24
+      },
+      "revId": "7aa4878dd15d606c4f24dbf297b03d9ed345ff3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51de9263_a73f4db8",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_ba_benchmark.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T13:05:28Z",
+      "side": 1,
+      "message": "BM_SnavelyReprojectionAutoDiff",
+      "range": {
+        "startLine": 63,
+        "startChar": 12,
+        "endLine": 63,
+        "endChar": 25
+      },
+      "revId": "7aa4878dd15d606c4f24dbf297b03d9ed345ff3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff393aa_4138b047",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_ba_benchmark.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T13:05:28Z",
+      "side": 1,
+      "message": "blank before this line.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 6
+      },
+      "revId": "7aa4878dd15d606c4f24dbf297b03d9ed345ff3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2feaf64_23ff1652",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_trivial_benchmark.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T13:05:28Z",
+      "side": 1,
+      "message": "trivial is not a great name for this file.\n\nlinear_benchmark.cc is better",
+      "range": {
+        "startLine": 2,
+        "startChar": 25,
+        "endLine": 2,
+        "endChar": 28
+      },
+      "revId": "7aa4878dd15d606c4f24dbf297b03d9ed345ff3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71751d6_034c7118",
+        "filename": "internal/ceres/autodiff_benchmarks/snavely_reprojection_error.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T13:05:28Z",
+      "side": 1,
+      "message": "update header guards.",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 60
+      },
+      "revId": "7aa4878dd15d606c4f24dbf297b03d9ed345ff3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc127b2f_346119f7",
+        "filename": "internal/ceres/autodiff_benchmarks/snavely_reprojection_error.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T13:05:28Z",
+      "side": 1,
+      "message": "top level namespace should always be ceres so ceres::benchmark works here. also be consistent in using it here and in other benchmark related files.",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "7aa4878dd15d606c4f24dbf297b03d9ed345ff3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac614408_290399f6",
+        "filename": "internal/ceres/autodiff_benchmarks/trivial_cost_functions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T13:05:28Z",
+      "side": 1,
+      "message": "linear_cost_functions",
+      "range": {
+        "startLine": 17,
+        "startChar": 17,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "7aa4878dd15d606c4f24dbf297b03d9ed345ff3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
