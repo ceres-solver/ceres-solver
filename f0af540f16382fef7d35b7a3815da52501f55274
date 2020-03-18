@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb3f0697_294011aa",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T20:54:14Z",
+      "side": 1,
+      "message": "lower case.",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 8
+      },
+      "revId": "f0af540f16382fef7d35b7a3815da52501f55274",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d377c4b_226c2191",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T20:54:14Z",
+      "side": 1,
+      "message": "lower case",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 42
+      },
+      "revId": "f0af540f16382fef7d35b7a3815da52501f55274",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3282e679_0338aa0a",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T20:54:14Z",
+      "side": 1,
+      "message": "include header, we do not use pragma once anywhere else.",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "f0af540f16382fef7d35b7a3815da52501f55274",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9b672d_ba2109a4",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T20:54:14Z",
+      "side": 1,
+      "message": "c_ -\u003e c_ptr is better. we reserve c_ for members of classes.",
+      "range": {
+        "startLine": 20,
+        "startChar": 35,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "f0af540f16382fef7d35b7a3815da52501f55274",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b084bf8e_0d424274",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T20:54:14Z",
+      "side": 1,
+      "message": "SchlickFresnel",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 18
+      },
+      "revId": "f0af540f16382fef7d35b7a3815da52501f55274",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27a00ef7_dbcc45e7",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T20:54:14Z",
+      "side": 1,
+      "message": "Aspect",
+      "range": {
+        "startLine": 134,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 10
+      },
+      "revId": "f0af540f16382fef7d35b7a3815da52501f55274",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8046f97_6ad05047",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T20:54:14Z",
+      "side": 1,
+      "message": "SmithG_GGX",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 14
+      },
+      "revId": "f0af540f16382fef7d35b7a3815da52501f55274",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cbc85f6_79b0ccc5",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T20:54:14Z",
+      "side": 1,
+      "message": "what is this?",
+      "range": {
+        "startLine": 146,
+        "startChar": 4,
+        "endLine": 146,
+        "endChar": 8
+      },
+      "revId": "f0af540f16382fef7d35b7a3815da52501f55274",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5631fc_76ccf81e",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T20:54:14Z",
+      "side": 1,
+      "message": "better more informative name also naming style",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 14
+      },
+      "revId": "f0af540f16382fef7d35b7a3815da52501f55274",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1280618_c3a0a530",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T20:54:14Z",
+      "side": 1,
+      "message": "Lerp",
+      "range": {
+        "startLine": 171,
+        "startChar": 11,
+        "endLine": 171,
+        "endChar": 15
+      },
+      "revId": "f0af540f16382fef7d35b7a3815da52501f55274",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522408ab_cd782cea",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-18T20:54:14Z",
+      "side": 1,
+      "message": "why do we need this function?",
+      "range": {
+        "startLine": 183,
+        "startChar": 11,
+        "endLine": 183,
+        "endChar": 14
+      },
+      "revId": "f0af540f16382fef7d35b7a3815da52501f55274",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
