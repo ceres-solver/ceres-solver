@@ -34,6 +34,7 @@
 
 #include "ceres/codegen/codegen_cost_function.h"
 #include "ceres/rotation.h"
+
 namespace ceres {
 
 struct Linear1CostFunction : public ceres::CodegenCostFunction<1, 1> {
@@ -46,8 +47,8 @@ struct Linear1CostFunction : public ceres::CodegenCostFunction<1, 1> {
 #include "benchmarks/linear1costfunction.h"
 #else
   virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+                double* residuals,
+                double** jacobians) const {
     return false;
   }
 #endif
@@ -65,11 +66,12 @@ struct Linear10CostFunction : public ceres::CodegenCostFunction<10, 10> {
 #include "benchmarks/linear10costfunction.h"
 #else
   virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+                double* residuals,
+                double** jacobians) const {
     return false;
   }
 #endif
 };
-}
+}  // namespace ceres
+
 #endif  // CERES_INTERNAL_AUTODIFF_BENCHMARKS_LINEAR_COST_FUNCTIONS_H_
