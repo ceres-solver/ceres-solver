@@ -282,6 +282,30 @@
       "revId": "28c79a3a73c3b6f46fd23d8d906ab11ad1b2c243",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0aee32_cfc16fae",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6197
+      },
+      "writtenOn": "2020-03-19T13:45:10Z",
+      "side": 1,
+      "message": "Acceptable but less impressive. Any more suggestions from others?",
+      "parentUuid": "da4145b5_9a9aa127",
+      "range": {
+        "startLine": 103,
+        "startChar": 28,
+        "endLine": 103,
+        "endChar": 50
+      },
+      "revId": "28c79a3a73c3b6f46fd23d8d906ab11ad1b2c243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
