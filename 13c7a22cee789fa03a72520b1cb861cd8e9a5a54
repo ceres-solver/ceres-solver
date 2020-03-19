@@ -22,6 +22,30 @@
       "revId": "13c7a22cee789fa03a72520b1cb861cd8e9a5a54",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68dc464d_1eae079c",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 6197
+      },
+      "writtenOn": "2020-03-19T13:14:11Z",
+      "side": 0,
+      "message": "Check move to line 709",
+      "parentUuid": "cb729287_0b202a7f",
+      "range": {
+        "startLine": 566,
+        "startChar": 2,
+        "endLine": 566,
+        "endChar": 11
+      },
+      "revId": "13c7a22cee789fa03a72520b1cb861cd8e9a5a54",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }

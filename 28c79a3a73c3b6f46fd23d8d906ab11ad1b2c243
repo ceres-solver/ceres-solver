@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "96d6b59e_ec25f1e7",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6197
+      },
+      "writtenOn": "2020-03-19T13:14:11Z",
+      "side": 1,
+      "message": "The comment is copied from MatrixAdapter with minor changes. Anyway, I will remove it.",
+      "parentUuid": "549659c5_7b2155f0",
+      "range": {
+        "startLine": 86,
+        "startChar": 6,
+        "endLine": 86,
+        "endChar": 11
+      },
+      "revId": "28c79a3a73c3b6f46fd23d8d906ab11ad1b2c243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0bf2f4f_eaa45f52",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 7
@@ -105,6 +129,30 @@
       "writtenOn": "2020-03-18T21:09:43Z",
       "side": 1,
       "message": "I do not think the prefix Ceres here adds anything, Eigen is the special one. If my memory serves me right a better name for this is HamiltonQuaternionAdapter. what do you think? this would require updating the comments about the adapter to reflect this.",
+      "range": {
+        "startLine": 103,
+        "startChar": 28,
+        "endLine": 103,
+        "endChar": 50
+      },
+      "revId": "28c79a3a73c3b6f46fd23d8d906ab11ad1b2c243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7559e6b1_e7ad1c5c",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6197
+      },
+      "writtenOn": "2020-03-19T13:14:11Z",
+      "side": 1,
+      "message": "Hamilton means ijk\u003d−1 while the opposite convention is JPL ijk\u003d1. Hamilton is a mathematical concept and what we need here is a physical storage convention. Note that Ceres/Eigen layouts are both Hamilton quaternions. I am willing to rename if there is a more suitable name.",
+      "parentUuid": "b0bf2f4f_eaa45f52",
       "range": {
         "startLine": 103,
         "startChar": 28,
