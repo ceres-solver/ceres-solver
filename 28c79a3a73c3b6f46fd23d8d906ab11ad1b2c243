@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9d61dedc_ce80a80c",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6197
+      },
+      "writtenOn": "2020-03-19T13:39:05Z",
+      "side": 1,
+      "message": "I\u0027ve removed this quote in new patch. Still weird?",
+      "parentUuid": "84dae209_d9e01133",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 50
+      },
+      "revId": "28c79a3a73c3b6f46fd23d8d906ab11ad1b2c243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0bf2f4f_eaa45f52",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 7
