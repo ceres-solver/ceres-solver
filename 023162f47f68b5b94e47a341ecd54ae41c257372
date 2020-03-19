@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb4c35c8_8c2b9194",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-19T14:54:14Z",
+      "side": 1,
+      "message": "I think these numbers are rather large, IMO typical residuals do not have 50 parameters. they are more in the 20ish range no?",
+      "range": {
+        "startLine": 159,
+        "startChar": 47,
+        "endLine": 159,
+        "endChar": 49
+      },
+      "revId": "023162f47f68b5b94e47a341ecd54ae41c257372",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff5c85f_4bb2a31a",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-19T14:54:14Z",
+      "side": 1,
+      "message": "this is definitely a very large number IMO.",
+      "range": {
+        "startLine": 163,
+        "startChar": 45,
+        "endLine": 163,
+        "endChar": 46
+      },
+      "revId": "023162f47f68b5b94e47a341ecd54ae41c257372",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4fb57e3_6ce8c9b7",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-19T14:54:14Z",
+      "side": 1,
+      "message": "residuals_as_jets or function_values_as_jets",
+      "range": {
+        "startLine": 342,
+        "startChar": 6,
+        "endLine": 342,
+        "endChar": 12
+      },
+      "revId": "023162f47f68b5b94e47a341ecd54ae41c257372",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
