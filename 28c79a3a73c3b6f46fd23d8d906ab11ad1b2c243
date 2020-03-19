@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a1cbb38a_d9c01a8e",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6197
+      },
+      "writtenOn": "2020-03-19T13:18:47Z",
+      "side": 1,
+      "message": "This quote should be kept. It quotes inline soure code.",
+      "parentUuid": "4577bd0d_da7de38f",
+      "range": {
+        "startLine": 84,
+        "startChar": 18,
+        "endLine": 84,
+        "endChar": 19
+      },
+      "revId": "28c79a3a73c3b6f46fd23d8d906ab11ad1b2c243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "549659c5_7b2155f0",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 7
