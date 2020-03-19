@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "447121c3_decfba8f",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_benchmark.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T13:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4035e7d3_898a1615",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 9
+      },
+      "revId": "8a13d390e92ea4c4a547de4a8485c091d4704502",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98266dbd_3169869b",
         "filename": "internal/ceres/autodiff_benchmarks/brdf_benchmark.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "8a13d390e92ea4c4a547de4a8485c091d4704502",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40641ae_dd1e1c93",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_benchmark.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T13:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98266dbd_3169869b",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 9
+      },
+      "revId": "8a13d390e92ea4c4a547de4a8485c091d4704502",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "67410de8_bc226d9f",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T13:54:21Z",
+      "side": 1,
+      "message": "Oops, my bad.",
+      "parentUuid": "1d3105bc_e9d667fb",
+      "range": {
+        "startLine": 35,
+        "startChar": 1,
+        "endLine": 35,
+        "endChar": 7
+      },
+      "revId": "8a13d390e92ea4c4a547de4a8485c091d4704502",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "055a5a18_1d022fa9",
         "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "dc2491ac_ddeaa838",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T13:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "055a5a18_1d022fa9",
+      "range": {
+        "startLine": 180,
+        "startChar": 9,
+        "endLine": 180,
+        "endChar": 16
+      },
+      "revId": "8a13d390e92ea4c4a547de4a8485c091d4704502",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89dde75b_108493db",
         "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2020-03-19T12:12:09Z",
       "side": 1,
       "message": "still not google style",
+      "range": {
+        "startLine": 196,
+        "startChar": 4,
+        "endLine": 196,
+        "endChar": 14
+      },
+      "revId": "8a13d390e92ea4c4a547de4a8485c091d4704502",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf978cd9_2ef68fc2",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T13:54:21Z",
+      "side": 1,
+      "message": "Better like this?",
+      "parentUuid": "89dde75b_108493db",
       "range": {
         "startLine": 196,
         "startChar": 4,
