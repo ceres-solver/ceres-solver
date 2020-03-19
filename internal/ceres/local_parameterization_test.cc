@@ -265,7 +265,7 @@ void QuaternionParameterizationTestHelper(
   double* jacobian_array[2] = { NULL, jacobian_ref };
 
   // Autodiff jacobian at delta_x = 0.
-  internal::AutoDifferentiate<StaticParameterDims<kGlobalSize, kLocalSize>>(
+  internal::AutoDifferentiate<kGlobalSize, StaticParameterDims<kGlobalSize, kLocalSize>>(
       Plus(),
       parameters,
       kGlobalSize,
