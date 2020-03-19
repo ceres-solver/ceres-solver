@@ -306,6 +306,30 @@
       "revId": "28c79a3a73c3b6f46fd23d8d906ab11ad1b2c243",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58bc79e7_6785a1b1",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-19T13:48:50Z",
+      "side": 1,
+      "message": "honestly I do not think DefaultQuaternionAdapter is that great of a name. \nas a totally bonkers suggestion\n\nWXYZQuaternionAdapter\nXYZWQuaternionAdapter \n\nand EigenQuaternionAdapter \u003d XYZWQuaternionAdapter",
+      "parentUuid": "4a0aee32_cfc16fae",
+      "range": {
+        "startLine": 103,
+        "startChar": 28,
+        "endLine": 103,
+        "endChar": 50
+      },
+      "revId": "28c79a3a73c3b6f46fd23d8d906ab11ad1b2c243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
