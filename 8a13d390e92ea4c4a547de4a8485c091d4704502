@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4035e7d3_898a1615",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_benchmark.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-19T12:12:09Z",
+      "side": 1,
+      "message": "you are using lower case in the other file now.",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 9
+      },
+      "revId": "8a13d390e92ea4c4a547de4a8485c091d4704502",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98266dbd_3169869b",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_benchmark.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-19T12:12:09Z",
+      "side": 1,
+      "message": "lower case as in the other file.",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 9
+      },
+      "revId": "8a13d390e92ea4c4a547de4a8485c091d4704502",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3105bc_e9d667fb",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-19T12:12:09Z",
+      "side": 1,
+      "message": "still seeing pragma once.",
+      "range": {
+        "startLine": 35,
+        "startChar": 1,
+        "endLine": 35,
+        "endChar": 7
+      },
+      "revId": "8a13d390e92ea4c4a547de4a8485c091d4704502",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055a5a18_1d022fa9",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-19T12:12:09Z",
+      "side": 1,
+      "message": "Appendix",
+      "range": {
+        "startLine": 180,
+        "startChar": 9,
+        "endLine": 180,
+        "endChar": 16
+      },
+      "revId": "8a13d390e92ea4c4a547de4a8485c091d4704502",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89dde75b_108493db",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-19T12:12:09Z",
+      "side": 1,
+      "message": "still not google style",
+      "range": {
+        "startLine": 196,
+        "startChar": 4,
+        "endLine": 196,
+        "endChar": 14
+      },
+      "revId": "8a13d390e92ea4c4a547de4a8485c091d4704502",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
