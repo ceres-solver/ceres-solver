@@ -193,12 +193,14 @@ template <typename Seq, int ParameterIdx = 0, int Offset = 0>
 struct Make1stOrderPerturbations;
 
 template <int N, int... Ns, int ParameterIdx, int Offset>
-struct Make1stOrderPerturbations<integer_sequence<int, N, Ns...>, ParameterIdx,
+struct Make1stOrderPerturbations<integer_sequence<int, N, Ns...>,
+                                 ParameterIdx,
                                  Offset> {
   template <typename T, typename JetT>
   static void Apply(T const* const* parameters, JetT* x) {
     Make1stOrderPerturbation<Offset, N>(parameters[ParameterIdx], x + Offset);
-    Make1stOrderPerturbations<integer_sequence<int, Ns...>, ParameterIdx + 1,
+    Make1stOrderPerturbations<integer_sequence<int, Ns...>,
+                              ParameterIdx + 1,
                               Offset + N>::Apply(parameters, x);
   }
 };
@@ -253,14 +255,16 @@ template <typename Seq, int ParameterIdx = 0, int Offset = 0>
 struct Take1stOrderParts;
 
 template <int N, int... Ns, int ParameterIdx, int Offset>
-struct Take1stOrderParts<integer_sequence<int, N, Ns...>, ParameterIdx,
+struct Take1stOrderParts<integer_sequence<int, N, Ns...>,
+                         ParameterIdx,
                          Offset> {
   template <typename JetT, typename T>
   static void Apply(int num_outputs, JetT* output, T** jacobians) {
     if (jacobians[ParameterIdx]) {
       Take1stOrderPart<Offset, N>(num_outputs, output, jacobians[ParameterIdx]);
     }
-    Take1stOrderParts<integer_sequence<int, Ns...>, ParameterIdx + 1,
+    Take1stOrderParts<integer_sequence<int, Ns...>,
+                      ParameterIdx + 1,
                       Offset + N>::Apply(num_outputs, output, jacobians);
   }
 };
@@ -269,28 +273,63 @@ struct Take1stOrderParts<integer_sequence<int, N, Ns...>, ParameterIdx,
 template <int ParameterIdx, int Offset>
 struct Take1stOrderParts<integer_sequence<int>, ParameterIdx, Offset> {
   template <typename T, typename JetT>
-  static void Apply(int /* NOT USED*/, JetT* /* NOT USED*/,
+  static void Apply(int /* NOT USED*/,
+                    JetT* /* NOT USED*/,
                     T** /* NOT USED */) {}
 };
 
-template <typename ParameterDims, typename Functor, typename T>
+// Similar to FixedArray, but uses std::array for small sizes.
+template <typename T,
+          int size,
+          int max_stack_size,
+          bool on_stack = size != DYNAMIC && (size < max_stack_size)>
+struct StaticFixedArray {};
+
+template <typename T, int size, int max_stack_size>
+struct StaticFixedArray<T, size, max_stack_size, true> : std::array<T, size> {
+  StaticFixedArray(int s) {}
+};
+
+template <typename T, int size, int max_stack_size>
+struct StaticFixedArray<T, size, max_stack_size, false> : std::vector<T> {
+  StaticFixedArray(int s) : std::vector<T>(s) {}
+};
+
+template <int kNumResiduals,
+          typename ParameterDims,
+          typename Functor,
+          typename T>
 inline bool AutoDifferentiate(const Functor& functor,
-                              T const *const *parameters,
-                              int num_outputs,
+                              T const* const* parameters,
+                              int dynamic_num_outputs,
                               T* function_value,
                               T** jacobians) {
+  using JetT = Jet<T, ParameterDims::kNumParameters>;
+  using Parameters = typename ParameterDims::Parameters;
+
+  if (kNumResiduals != DYNAMIC) {
+    DCHECK_EQ(kNumResiduals, dynamic_num_outputs);
+  }
+  // If the number of residuals is fixed, we use the template argument as the
+  // number of outputs. Otherwise we use the num_outputs parameter. Note: The
+  // ?-operator here is compile-time evaluated, therefore num_outputs is also a
+  // compile-time constant for functors with fixed residuals.
+  const int num_outputs =
+      kNumResiduals == DYNAMIC ? dynamic_num_outputs : kNumResiduals;
   DCHECK_GT(num_outputs, 0);
 
-  typedef Jet<T, ParameterDims::kNumParameters> JetT;
-  FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(ParameterDims::kNumParameters +
-                                               num_outputs);
+  // If the number of parameters exceeds this values, the jets are placed on the
+  // heap. This will reduce performance by a factor of 2-5 on current compilers.
+  constexpr int max_jets_on_stack = 50;
 
-  using Parameters = typename ParameterDims::Parameters;
+  StaticFixedArray<JetT, ParameterDims::kNumParameters, max_jets_on_stack>
+      parameter_data(ParameterDims::kNumParameters);
 
   // These are the positions of the respective jets in the fixed array x.
   std::array<JetT*, ParameterDims::kNumParameterBlocks> unpacked_parameters =
-      ParameterDims::GetUnpackedParameters(x.data());
-  JetT* output = x.data() + ParameterDims::kNumParameters;
+      ParameterDims::GetUnpackedParameters(parameter_data.data());
+
+  StaticFixedArray<JetT, kNumResiduals, max_jets_on_stack> output(num_outputs);
 
   // Invalidate the output Jets, so that we can detect if the user
   // did not assign values to all of them.
@@ -299,15 +338,16 @@ inline bool AutoDifferentiate(const Functor& functor,
     output[i].v.setConstant(kImpossibleValue);
   }
 
-  Make1stOrderPerturbations<Parameters>::Apply(parameters, x.data());
+  Make1stOrderPerturbations<Parameters>::Apply(parameters,
+                                               parameter_data.data());
 
-  if (!VariadicEvaluate<ParameterDims>(functor, unpacked_parameters.data(),
-                                       output)) {
+  if (!VariadicEvaluate<ParameterDims>(
+          functor, unpacked_parameters.data(), output.data())) {
     return false;
   }
 
-  Take0thOrderPart(num_outputs, output, function_value);
-  Take1stOrderParts<Parameters>::Apply(num_outputs, output, jacobians);
+  Take0thOrderPart(num_outputs, output.data(), function_value);
+  Take1stOrderParts<Parameters>::Apply(num_outputs, output.data(), jacobians);
 
   return true;
 }
