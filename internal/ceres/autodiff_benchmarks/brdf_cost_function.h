@@ -58,7 +58,6 @@ struct Brdf : public ceres::CodegenCostFunction<3, 10, 3, 3, 3, 3, 3, 3> {
                   const T* const y_ptr,
                   T* residual) const {
     using ceres::Ternary;
-    using Vec2 = Eigen::Matrix<T, 2, 1>;
     using Vec3 = Eigen::Matrix<T, 3, 1>;
 
     T metallic = material[0];
