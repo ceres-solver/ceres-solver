@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "50a8670a_520ef870",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T14:20:11Z",
+      "side": 1,
+      "message": "Added it as a macro. Most likely needs a rename though.",
+      "parentUuid": "898356fb_12a624ea",
+      "range": {
+        "startLine": 323,
+        "startChar": 16,
+        "endLine": 323,
+        "endChar": 33
+      },
+      "revId": "596656971fa6774b6c3ab64110edbe21d7bacd59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "333f512f_7714cf4e",
         "filename": "include/ceres/internal/autodiff.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "596656971fa6774b6c3ab64110edbe21d7bacd59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8ba5e18_6089271b",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T14:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "333f512f_7714cf4e",
+      "range": {
+        "startLine": 326,
+        "startChar": 6,
+        "endLine": 326,
+        "endChar": 20
+      },
+      "revId": "596656971fa6774b6c3ab64110edbe21d7bacd59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
