@@ -34,7 +34,6 @@
 #include "ceres/internal/autodiff.h"
 #include "ceres/random.h"
 #include "ceres/sized_cost_function.h"
-#include "test_util.h"
 
 namespace ceres {
 namespace internal {

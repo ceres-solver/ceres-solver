@@ -28,7 +28,8 @@
 //
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 
-#include "codegen/test_utils.h"
+#include "ceres/codegen/test_utils.h"
+#include "ceres/test_util.h"
 
 namespace ceres {
 namespace internal {
