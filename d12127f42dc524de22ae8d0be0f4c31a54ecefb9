@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a6dc819_a37452ed",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T13:45:21Z",
+      "side": 1,
+      "message": "You are right this is actually not needed.",
+      "parentUuid": "81a56556_ce21634f",
+      "range": {
+        "startLine": 232,
+        "startChar": 19,
+        "endLine": 232,
+        "endChar": 20
+      },
+      "revId": "d12127f42dc524de22ae8d0be0f4c31a54ecefb9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "286ad00f_178760ea",
         "filename": "include/ceres/internal/autodiff.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2020-03-19T12:32:11Z",
       "side": 1,
       "message": "I do not quite understand this. \nfixedarray also allocates on the stack for small sizes, what is the difference here? is it just the actual limit of elements on the stack or something about fixedarray itself?\n\nIn the expression \nFixedArray\u003cJetT, (256 * 7) / sizeof(JetT)\u003e x(ParameterDims::kNumParameters + num_outputs);\n\n\n256 * 7 / sizeof(JetT) elements should be put on stack. \n\nI think what you are proposing is just to replace that number by 50 no?",
+      "range": {
+        "startLine": 282,
+        "startChar": 26,
+        "endLine": 282,
+        "endChar": 29
+      },
+      "revId": "d12127f42dc524de22ae8d0be0f4c31a54ecefb9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce5f1d7_723227a7",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T13:45:21Z",
+      "side": 1,
+      "message": "It\u0027s about the fixedarray itself. I tried with a larger fixedarray and it didn\u0027t make a difference. Only after replacing it with std::array the full inlining started to happen.\n\nMost likely, we could replace the FixedArray implementation with this code right here and see an overall performance improvement.",
+      "parentUuid": "286ad00f_178760ea",
       "range": {
         "startLine": 282,
         "startChar": 26,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "041a0821_87443313",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T13:45:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b06578f9_482e8363",
+      "range": {
+        "startLine": 307,
+        "startChar": 44,
+        "endLine": 307,
+        "endChar": 45
+      },
+      "revId": "d12127f42dc524de22ae8d0be0f4c31a54ecefb9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c72419bb_7faf1891",
         "filename": "include/ceres/internal/autodiff.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "21c1ad21_ac927cea",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T13:45:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c72419bb_7faf1891",
+      "range": {
+        "startLine": 311,
+        "startChar": 12,
+        "endLine": 311,
+        "endChar": 29
+      },
+      "revId": "d12127f42dc524de22ae8d0be0f4c31a54ecefb9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ad4f6f5_33912216",
         "filename": "include/ceres/internal/autodiff.h",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2020-03-19T12:32:11Z",
       "side": 1,
       "message": "Is it the number of jets or the number of parameters in a Jet? the comment says one thing but the variable name says another.",
+      "range": {
+        "startLine": 318,
+        "startChar": 16,
+        "endLine": 318,
+        "endChar": 33
+      },
+      "revId": "d12127f42dc524de22ae8d0be0f4c31a54ecefb9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d17379b_d519ab53",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T13:45:21Z",
+      "side": 1,
+      "message": "It\u0027s the same here isn\u0027t it?\nnumParameters \u003d\u003d numJets",
+      "parentUuid": "1ad4f6f5_33912216",
       "range": {
         "startLine": 318,
         "startChar": 16,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f5052649_4f52a3c1",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T13:45:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccae0072_c2444f8f",
+      "range": {
+        "startLine": 320,
+        "startChar": 55,
+        "endLine": 320,
+        "endChar": 58
+      },
+      "revId": "d12127f42dc524de22ae8d0be0f4c31a54ecefb9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1079a10d_0222a777",
         "filename": "include/ceres/internal/autodiff.h",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "d12127f42dc524de22ae8d0be0f4c31a54ecefb9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad39aa28_3364ef15",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-19T13:45:21Z",
+      "side": 1,
+      "message": "It\u0027s better like this because with dynamic residuals, we want to keep the parameters separately in a compile-time array.",
+      "parentUuid": "1079a10d_0222a777",
+      "range": {
+        "startLine": 326,
+        "startChar": 57,
+        "endLine": 326,
+        "endChar": 58
+      },
+      "revId": "d12127f42dc524de22ae8d0be0f4c31a54ecefb9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
