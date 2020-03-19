@@ -152,6 +152,17 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
+// If the number of parameters exceeds this values, the corresponding jets are
+// placed on the heap. This will reduce performance by a factor of 2-5 on
+// current compilers.
+#ifndef CERES_AUTODIFF_MAX_PARAMETERS_ON_STACK
+#define CERES_AUTODIFF_MAX_PARAMETERS_ON_STACK 50
+#endif
+
+#ifndef CERES_AUTODIFF_MAX_RESIDUALS_ON_STACK
+#define CERES_AUTODIFF_MAX_RESIDUALS_ON_STACK 20
+#endif
+
 namespace ceres {
 namespace internal {
 
@@ -169,16 +180,23 @@ namespace internal {
 //
 // is what would get put in dst if N was 3, offset was 3, and the jet type JetT
 // was 8-dimensional.
-template <int Offset, int N, typename T, typename JetT>
-inline void Make1stOrderPerturbation(const T* src, JetT* dst) {
-  DCHECK(src);
-  DCHECK(dst);
-  for (int j = 0; j < N; ++j) {
-    dst[j].a = src[j];
-    dst[j].v.setZero();
-    dst[j].v[Offset + j] = T(1.0);
+//
+// The loop from 0 to N is unrolled, because the forward autodiff performance
+// heavily depends on that.
+template <int j, int N, int Offset, typename T, typename JetT>
+struct Make1stOrderPerturbation {
+ public:
+  static void Apply(const T* src, JetT* dst) {
+    dst[j] = JetT(src[j], j + Offset);
+    Make1stOrderPerturbation<j + 1, N, Offset, T, JetT>::Apply(src, dst);
   }
-}
+};
+
+template <int N, int Offset, typename T, typename JetT>
+struct Make1stOrderPerturbation<N, N, Offset, T, JetT> {
+ public:
+  static void Apply(const T* src, JetT* dst) {}
+};
 
 // Calls Make1stOrderPerturbation for every parameter block.
 //
@@ -193,12 +211,15 @@ template <typename Seq, int ParameterIdx = 0, int Offset = 0>
 struct Make1stOrderPerturbations;
 
 template <int N, int... Ns, int ParameterIdx, int Offset>
-struct Make1stOrderPerturbations<integer_sequence<int, N, Ns...>, ParameterIdx,
+struct Make1stOrderPerturbations<integer_sequence<int, N, Ns...>,
+                                 ParameterIdx,
                                  Offset> {
   template <typename T, typename JetT>
   static void Apply(T const* const* parameters, JetT* x) {
-    Make1stOrderPerturbation<Offset, N>(parameters[ParameterIdx], x + Offset);
-    Make1stOrderPerturbations<integer_sequence<int, Ns...>, ParameterIdx + 1,
+    Make1stOrderPerturbation<0, N, Offset, T, JetT>::Apply(
+        parameters[ParameterIdx], x + Offset);
+    Make1stOrderPerturbations<integer_sequence<int, Ns...>,
+                              ParameterIdx + 1,
                               Offset + N>::Apply(parameters, x);
   }
 };
@@ -212,25 +233,95 @@ struct Make1stOrderPerturbations<integer_sequence<int>, ParameterIdx, Total> {
 
 // Takes the 0th order part of src, assumed to be a Jet type, and puts it in
 // dst. This is used to pick out the "vector" part of the extended y.
-template <typename JetT, typename T>
-inline void Take0thOrderPart(int M, const JetT* src, T dst) {
-  DCHECK(src);
-  for (int i = 0; i < M; ++i) {
-    dst[i] = src[i].a;
+//
+// If the residual size is fixed, the loop is unrolled.
+template <int j,
+          int M,
+          typename JetT,
+          typename T,
+          bool dynamic = (M == DYNAMIC)>
+struct Take0thOrderPart {};
+
+template <int j, int M, typename JetT, typename T>
+struct Take0thOrderPart<j, M, JetT, T, true> {
+  static void Apply(const JetT* src, T* dst, const int size) {
+    DCHECK(src);
+    for (int i = 0; i < size; ++i) {
+      dst[i] = src[i].a;
+    }
   }
-}
+};
+
+template <int j, int M, typename JetT, typename T>
+struct Take0thOrderPart<j, M, JetT, T, false> {
+  static void Apply(const JetT* src, T* dst, const int /*unused*/) {
+    if (j == 0) {
+      DCHECK(src);
+    }
+    dst[j] = src[j].a;
+    Take0thOrderPart<j + 1, M, JetT, T, false>::Apply(src, dst, 0);
+  }
+};
+
+template <int M, typename JetT, typename T>
+struct Take0thOrderPart<M, M, JetT, T, false> {
+  static void Apply(const JetT* src, T* dst, const int /*unused*/) {}
+};
 
 // Takes N 1st order parts, starting at index N0, and puts them in the M x N
 // matrix 'dst'. This is used to pick out the "matrix" parts of the extended y.
-template <int N0, int N, typename JetT, typename T>
-inline void Take1stOrderPart(const int M, const JetT* src, T* dst) {
-  DCHECK(src);
-  DCHECK(dst);
-  for (int i = 0; i < M; ++i) {
-    Eigen::Map<Eigen::Matrix<T, N, 1>>(dst + N * i, N) =
-        src[i].v.template segment<N>(N0);
+template <int j, int N, int N0, typename JetT, typename T>
+struct Take1stOrderPartInner {
+ public:
+  static void Apply(const JetT* src, T* dst) {
+    dst[j] = src[0].v[N0 + j];
+    Take1stOrderPartInner<j + 1, N, N0, JetT, T>::Apply(src, dst);
   }
-}
+};
+
+template <int N, int N0, typename JetT, typename T>
+struct Take1stOrderPartInner<N, N, N0, JetT, T> {
+ public:
+  static void Apply(const JetT* src, T* dst) {}
+};
+
+template <int j,
+          int kNumResiduals,
+          int N,
+          int N0,
+          typename JetT,
+          typename T,
+          bool dynamic = (N == DYNAMIC)>
+struct Take1stOrderPart {};
+
+template <int j, int kNumResiduals, int N, int N0, typename JetT, typename T>
+struct Take1stOrderPart<j, kNumResiduals, N, N0, JetT, T, true> {
+  static void Apply(const JetT* src, T* dst, const int output_size) {
+    DCHECK(src);
+    DCHECK(dst);
+    for (int i = 0; i < output_size; ++i) {
+      Take1stOrderPartInner<0, N, N0, JetT, T>::Apply(src + i, dst + N * i);
+    }
+  }
+};
+
+template <int j, int kNumResiduals, int N, int N0, typename JetT, typename T>
+struct Take1stOrderPart<j, kNumResiduals, N, N0, JetT, T, false> {
+  static void Apply(const JetT* src, T* dst, const int /*unused*/) {
+    if (j == 0) {
+      DCHECK(src);
+      DCHECK(dst);
+    }
+    Take1stOrderPartInner<0, N, N0, JetT, T>::Apply(src + j, dst + N * j);
+    Take1stOrderPart<j + 1, kNumResiduals, N, N0, JetT, T, false>::Apply(
+        src, dst, 0);
+  }
+};
+
+template <int kNumResiduals, int N, int N0, typename JetT, typename T>
+struct Take1stOrderPart<kNumResiduals, kNumResiduals, N, N0, JetT, T, false> {
+  static void Apply(const JetT* src, T* dst, const int /*unused*/) {}
+};
 
 // Calls Take1stOrderPart for every parameter block.
 //
@@ -249,65 +340,111 @@ inline void Take1stOrderPart(const int M, const JetT* src, T* dst) {
 // if (jacobians[2]) {
 //   Take1stOrderPart<5, 4>(num_outputs, output, jacobians[2]);
 // }
-template <typename Seq, int ParameterIdx = 0, int Offset = 0>
+template <typename Seq, int kNumResiduals, int ParameterIdx = 0, int Offset = 0>
 struct Take1stOrderParts;
 
-template <int N, int... Ns, int ParameterIdx, int Offset>
-struct Take1stOrderParts<integer_sequence<int, N, Ns...>, ParameterIdx,
+template <int N, int... Ns, int kNumResiduals, int ParameterIdx, int Offset>
+struct Take1stOrderParts<integer_sequence<int, N, Ns...>,
+                         kNumResiduals,
+                         ParameterIdx,
                          Offset> {
   template <typename JetT, typename T>
   static void Apply(int num_outputs, JetT* output, T** jacobians) {
     if (jacobians[ParameterIdx]) {
-      Take1stOrderPart<Offset, N>(num_outputs, output, jacobians[ParameterIdx]);
+      Take1stOrderPart<0, kNumResiduals, N, Offset, JetT, T, true>::Apply(
+          output, jacobians[ParameterIdx], num_outputs);
     }
-    Take1stOrderParts<integer_sequence<int, Ns...>, ParameterIdx + 1,
+    Take1stOrderParts<integer_sequence<int, Ns...>,
+                      kNumResiduals,
+                      ParameterIdx + 1,
                       Offset + N>::Apply(num_outputs, output, jacobians);
   }
 };
 
 // End of 'recursion'. Nothing more to do.
-template <int ParameterIdx, int Offset>
-struct Take1stOrderParts<integer_sequence<int>, ParameterIdx, Offset> {
+template <int kNumResiduals, int ParameterIdx, int Offset>
+struct Take1stOrderParts<integer_sequence<int>,
+                         kNumResiduals,
+                         ParameterIdx,
+                         Offset> {
   template <typename T, typename JetT>
-  static void Apply(int /* NOT USED*/, JetT* /* NOT USED*/,
+  static void Apply(int /* NOT USED*/,
+                    JetT* /* NOT USED*/,
                     T** /* NOT USED */) {}
 };
 
-template <typename ParameterDims, typename Functor, typename T>
+// Similar to FixedArray, but uses std::array for small sizes.
+template <typename T,
+          int size,
+          int max_stack_size,
+          bool on_stack = size != DYNAMIC && (size < max_stack_size)>
+struct StaticFixedArray {};
+
+template <typename T, int size, int max_stack_size>
+struct StaticFixedArray<T, size, max_stack_size, true> : std::array<T, size> {
+  StaticFixedArray(int s) {}
+};
+
+template <typename T, int size, int max_stack_size>
+struct StaticFixedArray<T, size, max_stack_size, false> : std::vector<T> {
+  StaticFixedArray(int s) : std::vector<T>(s) {}
+};
+
+template <int kNumResiduals,
+          typename ParameterDims,
+          typename Functor,
+          typename T>
 inline bool AutoDifferentiate(const Functor& functor,
-                              T const *const *parameters,
-                              int num_outputs,
+                              T const* const* parameters,
+                              int dynamic_num_outputs,
                               T* function_value,
                               T** jacobians) {
+  using JetT = Jet<T, ParameterDims::kNumParameters>;
+  using Parameters = typename ParameterDims::Parameters;
+
+  if (kNumResiduals != DYNAMIC) {
+    DCHECK_EQ(kNumResiduals, dynamic_num_outputs);
+  }
+  // If the number of residuals is fixed, we use the template argument as the
+  // number of outputs. Otherwise we use the num_outputs parameter. Note: The
+  // ?-operator here is compile-time evaluated, therefore num_outputs is also
+  // a compile-time constant for functors with fixed residuals.
+  const int num_outputs =
+      kNumResiduals == DYNAMIC ? dynamic_num_outputs : kNumResiduals;
   DCHECK_GT(num_outputs, 0);
 
-  typedef Jet<T, ParameterDims::kNumParameters> JetT;
-  FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(ParameterDims::kNumParameters +
-                                               num_outputs);
-
-  using Parameters = typename ParameterDims::Parameters;
+  StaticFixedArray<JetT,
+                   ParameterDims::kNumParameters,
+                   CERES_AUTODIFF_MAX_PARAMETERS_ON_STACK>
+      parameters_as_jets(ParameterDims::kNumParameters);
 
   // These are the positions of the respective jets in the fixed array x.
   std::array<JetT*, ParameterDims::kNumParameterBlocks> unpacked_parameters =
-      ParameterDims::GetUnpackedParameters(x.data());
-  JetT* output = x.data() + ParameterDims::kNumParameters;
+      ParameterDims::GetUnpackedParameters(parameters_as_jets.data());
+
+  StaticFixedArray<JetT, kNumResiduals, CERES_AUTODIFF_MAX_RESIDUALS_ON_STACK>
+      residuals_as_jets(num_outputs);
 
   // Invalidate the output Jets, so that we can detect if the user
   // did not assign values to all of them.
   for (int i = 0; i < num_outputs; ++i) {
-    output[i].a = kImpossibleValue;
-    output[i].v.setConstant(kImpossibleValue);
+    residuals_as_jets[i].a = kImpossibleValue;
+    residuals_as_jets[i].v.setConstant(kImpossibleValue);
   }
 
-  Make1stOrderPerturbations<Parameters>::Apply(parameters, x.data());
+  Make1stOrderPerturbations<Parameters>::Apply(parameters,
+                                               parameters_as_jets.data());
 
-  if (!VariadicEvaluate<ParameterDims>(functor, unpacked_parameters.data(),
-                                       output)) {
+  if (!VariadicEvaluate<ParameterDims>(
+          functor, unpacked_parameters.data(), residuals_as_jets.data())) {
     return false;
   }
 
-  Take0thOrderPart(num_outputs, output, function_value);
-  Take1stOrderParts<Parameters>::Apply(num_outputs, output, jacobians);
+  Take0thOrderPart<0, kNumResiduals, JetT, T>::Apply(
+      residuals_as_jets.data(), function_value, num_outputs);
+
+  Take1stOrderParts<Parameters, kNumResiduals>::Apply(
+      num_outputs, residuals_as_jets.data(), jacobians);
 
   return true;
 }

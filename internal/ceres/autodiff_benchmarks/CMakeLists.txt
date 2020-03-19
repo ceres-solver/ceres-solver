@@ -22,6 +22,7 @@ endif()
 # TODO: Add support for other compilers
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   list(APPEND CERES_BENCHMARK_FLAGS "-mllvm" "-inline-threshold=1000000")
+  list(APPEND CERES_BENCHMARK_FLAGS "-march=native")
 
   # All other flags + fast-math
   list(APPEND CERES_BENCHMARK_FAST_MATH_FLAGS ${CERES_BENCHMARK_FLAGS} "-ffast-math")
