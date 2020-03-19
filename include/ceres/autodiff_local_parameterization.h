@@ -135,6 +135,7 @@ class AutoDiffLocalParameterization : public LocalParameterization {
     const double* parameter_ptrs[2] = {x, zero_delta};
     double* jacobian_ptrs[2] = {NULL, jacobian};
     return internal::AutoDifferentiate<
+        kGlobalSize,
         internal::StaticParameterDims<kGlobalSize, kLocalSize>>(
         *functor_, parameter_ptrs, kGlobalSize, x_plus_delta, jacobian_ptrs);
   }
