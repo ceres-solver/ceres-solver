@@ -34,6 +34,7 @@
 
 #include "ceres/codegen/codegen_cost_function.h"
 #include "ceres/rotation.h"
+
 namespace ceres {
 
 struct Linear1CostFunction : public ceres::CodegenCostFunction<1, 1> {
@@ -71,5 +72,6 @@ struct Linear10CostFunction : public ceres::CodegenCostFunction<10, 10> {
   }
 #endif
 };
-}
+}  // namespace ceres
+
 #endif  // CERES_INTERNAL_AUTODIFF_BENCHMARKS_LINEAR_COST_FUNCTIONS_H_
