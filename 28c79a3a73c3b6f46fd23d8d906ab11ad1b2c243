@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d432ef0b_21b8bfcd",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-19T13:23:59Z",
+      "side": 1,
+      "message": "its weird for the quote to span two lines like that, which makes this quote hard to read.",
+      "parentUuid": "a1cbb38a_d9c01a8e",
+      "range": {
+        "startLine": 84,
+        "startChar": 18,
+        "endLine": 84,
+        "endChar": 19
+      },
+      "revId": "28c79a3a73c3b6f46fd23d8d906ab11ad1b2c243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "549659c5_7b2155f0",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 7
@@ -177,6 +201,30 @@
       "side": 1,
       "message": "Hamilton means ijk\u003d−1 while the opposite convention is JPL ijk\u003d1. Hamilton is a mathematical concept and what we need here is a physical storage convention. Note that Ceres/Eigen layouts are both Hamilton quaternions. I am willing to rename if there is a more suitable name.",
       "parentUuid": "b0bf2f4f_eaa45f52",
+      "range": {
+        "startLine": 103,
+        "startChar": 28,
+        "endLine": 103,
+        "endChar": 50
+      },
+      "revId": "28c79a3a73c3b6f46fd23d8d906ab11ad1b2c243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4145b5_9a9aa127",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-19T13:23:59Z",
+      "side": 1,
+      "message": "you are right I am mixing storage convention with mathematical concepts.\nDefaultQuaternionAdapter?",
+      "parentUuid": "7559e6b1_e7ad1c5c",
       "range": {
         "startLine": 103,
         "startChar": 28,
