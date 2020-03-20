@@ -193,12 +193,14 @@ template <typename Seq, int ParameterIdx = 0, int Offset = 0>
 struct Make1stOrderPerturbations;
 
 template <int N, int... Ns, int ParameterIdx, int Offset>
-struct Make1stOrderPerturbations<integer_sequence<int, N, Ns...>, ParameterIdx,
+struct Make1stOrderPerturbations<integer_sequence<int, N, Ns...>,
+                                 ParameterIdx,
                                  Offset> {
   template <typename T, typename JetT>
   static void Apply(T const* const* parameters, JetT* x) {
     Make1stOrderPerturbation<Offset, N>(parameters[ParameterIdx], x + Offset);
-    Make1stOrderPerturbations<integer_sequence<int, Ns...>, ParameterIdx + 1,
+    Make1stOrderPerturbations<integer_sequence<int, Ns...>,
+                              ParameterIdx + 1,
                               Offset + N>::Apply(parameters, x);
   }
 };
@@ -253,14 +255,16 @@ template <typename Seq, int ParameterIdx = 0, int Offset = 0>
 struct Take1stOrderParts;
 
 template <int N, int... Ns, int ParameterIdx, int Offset>
-struct Take1stOrderParts<integer_sequence<int, N, Ns...>, ParameterIdx,
+struct Take1stOrderParts<integer_sequence<int, N, Ns...>,
+                         ParameterIdx,
                          Offset> {
   template <typename JetT, typename T>
   static void Apply(int num_outputs, JetT* output, T** jacobians) {
     if (jacobians[ParameterIdx]) {
       Take1stOrderPart<Offset, N>(num_outputs, output, jacobians[ParameterIdx]);
     }
-    Take1stOrderParts<integer_sequence<int, Ns...>, ParameterIdx + 1,
+    Take1stOrderParts<integer_sequence<int, Ns...>,
+                      ParameterIdx + 1,
                       Offset + N>::Apply(num_outputs, output, jacobians);
   }
 };
@@ -269,13 +273,17 @@ struct Take1stOrderParts<integer_sequence<int, N, Ns...>, ParameterIdx,
 template <int ParameterIdx, int Offset>
 struct Take1stOrderParts<integer_sequence<int>, ParameterIdx, Offset> {
   template <typename T, typename JetT>
-  static void Apply(int /* NOT USED*/, JetT* /* NOT USED*/,
+  static void Apply(int /* NOT USED*/,
+                    JetT* /* NOT USED*/,
                     T** /* NOT USED */) {}
 };
 
-template <typename ParameterDims, typename Functor, typename T>
+template <int kNumResiduals,
+          typename ParameterDims,
+          typename Functor,
+          typename T>
 inline bool AutoDifferentiate(const Functor& functor,
-                              T const *const *parameters,
+                              T const* const* parameters,
                               int num_outputs,
                               T* function_value,
                               T** jacobians) {
@@ -301,8 +309,8 @@ inline bool AutoDifferentiate(const Functor& functor,
 
   Make1stOrderPerturbations<Parameters>::Apply(parameters, x.data());
 
-  if (!VariadicEvaluate<ParameterDims>(functor, unpacked_parameters.data(),
-                                       output)) {
+  if (!VariadicEvaluate<ParameterDims>(
+          functor, unpacked_parameters.data(), output)) {
     return false;
   }
 

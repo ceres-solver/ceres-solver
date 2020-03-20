@@ -191,7 +191,7 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
       return internal::VariadicEvaluate<ParameterDims>(
           *functor_, parameters, residuals);
     }
-    return internal::AutoDifferentiate<ParameterDims>(
+    return internal::AutoDifferentiate<kNumResiduals, ParameterDims>(
         *functor_,
         parameters,
         SizedCostFunction<kNumResiduals, Ns...>::num_residuals(),
