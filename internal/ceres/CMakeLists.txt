@@ -409,6 +409,7 @@ if (BUILD_TESTING AND GFLAGS)
 
   ceres_test(algorithm)
   ceres_test(array_utils)
+  ceres_test(array_selector)
   ceres_test(autodiff)
   ceres_test(autodiff_first_order_function)
   ceres_test(autodiff_cost_function)
