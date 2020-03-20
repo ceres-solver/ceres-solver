@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "cb0474eb_aadcc6f4",
+        "filename": "include/ceres/internal/static_fixed_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-20T16:46:43Z",
+      "side": 1,
+      "message": "I am not sure we need this at all, FixedArray does the needful on the heap anyways. This can just be FixedArray.",
+      "range": {
+        "startLine": 56,
+        "startChar": 15,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "a29857570856c8ee9e0d6b84009aedd532835202",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be773cf4_e771f5fb",
         "filename": "include/ceres/internal/static_fixed_array.h",
         "patchSetId": 2
