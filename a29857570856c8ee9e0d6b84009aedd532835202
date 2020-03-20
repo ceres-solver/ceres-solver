@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f20a68eb_56f364a6",
+        "filename": "include/ceres/internal/static_fixed_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-20T16:44:12Z",
+      "side": 1,
+      "message": "blank before",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 9
+      },
+      "revId": "a29857570856c8ee9e0d6b84009aedd532835202",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be773cf4_e771f5fb",
+        "filename": "include/ceres/internal/static_fixed_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-20T16:44:12Z",
+      "side": 1,
+      "message": "I think max_stack_size is confusing, because it is usually measured in bytes not number of elements.\n\nso maybe instead of using size\n\nwe use\n\nsize -\u003e num_elements\nmax_stack_size -\u003e max_num_elements_on_stack\n\nso it becomes evident that we are dealing with elements and we will need to multiply by their size to see things in bytes.",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 18
+      },
+      "revId": "a29857570856c8ee9e0d6b84009aedd532835202",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d496ec1_1605941e",
+        "filename": "include/ceres/internal/static_fixed_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-20T16:44:12Z",
+      "side": 1,
+      "message": "whats the point of these default values? I do not understand.",
+      "range": {
+        "startLine": 61,
+        "startChar": 22,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "a29857570856c8ee9e0d6b84009aedd532835202",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
