@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "166d3192_e0d92718",
+        "filename": "include/ceres/internal/static_fixed_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-20T16:56:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f20a68eb_56f364a6",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 9
+      },
+      "revId": "a29857570856c8ee9e0d6b84009aedd532835202",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb0474eb_aadcc6f4",
         "filename": "include/ceres/internal/static_fixed_array.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a29857570856c8ee9e0d6b84009aedd532835202",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a50113_cba6a9e7",
+        "filename": "include/ceres/internal/static_fixed_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-20T16:56:10Z",
+      "side": 1,
+      "message": "We need this, because FixedArray would waste stack memory here.",
+      "parentUuid": "cb0474eb_aadcc6f4",
+      "range": {
+        "startLine": 56,
+        "startChar": 15,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "a29857570856c8ee9e0d6b84009aedd532835202",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0c57f21c_6d20e28b",
+        "filename": "include/ceres/internal/static_fixed_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-20T16:56:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be773cf4_e771f5fb",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 18
+      },
+      "revId": "a29857570856c8ee9e0d6b84009aedd532835202",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d496ec1_1605941e",
         "filename": "include/ceres/internal/static_fixed_array.h",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2020-03-20T16:44:12Z",
       "side": 1,
       "message": "whats the point of these default values? I do not understand.",
+      "range": {
+        "startLine": 61,
+        "startChar": 22,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "a29857570856c8ee9e0d6b84009aedd532835202",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11e5b24_470941df",
+        "filename": "include/ceres/internal/static_fixed_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-20T16:56:10Z",
+      "side": 1,
+      "message": "That\u0027s how I do the partial template specialization. Is there an other way?",
+      "parentUuid": "4d496ec1_1605941e",
       "range": {
         "startLine": 61,
         "startChar": 22,
