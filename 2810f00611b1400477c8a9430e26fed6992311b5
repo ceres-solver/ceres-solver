@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb4c9601_a2c6882f",
+        "filename": "internal/ceres/local_parameterization_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-20T14:55:01Z",
+      "side": 1,
+      "message": "clang-format this?",
+      "range": {
+        "startLine": 268,
+        "startChar": 12,
+        "endLine": 268,
+        "endChar": 29
+      },
+      "revId": "2810f00611b1400477c8a9430e26fed6992311b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
