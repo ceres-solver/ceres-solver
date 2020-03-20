@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "483c5c52_e3c024aa",
+        "filename": "include/ceres/internal/static_fixed_array.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-20T18:00:31Z",
+      "side": 1,
+      "message": "rename file.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 2
+      },
+      "revId": "1c303e09630f4b9f52642216902e407c9c249689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1424e31e_d7e23fdb",
+        "filename": "internal/ceres/static_fixed_array_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-20T18:00:31Z",
+      "side": 1,
+      "message": "rename file.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "1c303e09630f4b9f52642216902e407c9c249689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
