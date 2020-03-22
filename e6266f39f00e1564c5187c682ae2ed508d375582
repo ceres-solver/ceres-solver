@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df9f9cba_eee25d55",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-22T13:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48d3e26d_8e065433",
+      "range": {
+        "startLine": 1368,
+        "startChar": 16,
+        "endLine": 1368,
+        "endChar": 27
+      },
+      "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3fb6513_0d08662a",
         "filename": "include/ceres/internal/line_parameterization.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703c6c06_8279526e",
+        "filename": "include/ceres/internal/line_parameterization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-22T13:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3fb6513_0d08662a",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 45
+      },
+      "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f82ff9e9_ed160261",
+        "filename": "include/ceres/internal/line_parameterization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-22T13:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec68548f_8cb29c86",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 20
+      },
+      "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aaca320_a6cc0c0f",
         "filename": "include/ceres/internal/line_parameterization.h",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25c6752_b2437b2e",
+        "filename": "include/ceres/internal/line_parameterization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-22T13:43:16Z",
+      "side": 1,
+      "message": "same",
+      "parentUuid": "9aaca320_a6cc0c0f",
+      "range": {
+        "startLine": 56,
+        "startChar": 42,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c77986f7_0cde328f",
+        "filename": "include/ceres/internal/line_parameterization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-22T13:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f1ea429_e5513274",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88e2d332_5ce89095",
         "filename": "include/ceres/internal/line_parameterization.h",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3257f6_f55c25e6",
+        "filename": "include/ceres/internal/line_parameterization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-22T13:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88e2d332_5ce89095",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 16
+      },
+      "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "d1919c32_b16ef1d5",
+        "filename": "include/ceres/internal/line_parameterization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-22T13:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1002a1d_a7ec3d87",
+      "range": {
+        "startLine": 75,
+        "startChar": 15,
+        "endLine": 75,
+        "endChar": 21
+      },
+      "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5fd98f3_bdb2ae55",
         "filename": "include/ceres/internal/line_parameterization.h",
         "patchSetId": 4
@@ -174,6 +342,30 @@
       "writtenOn": "2020-03-18T13:29:46Z",
       "side": 1,
       "message": "you can skip this check no? and just do the update unconditionally?",
+      "range": {
+        "startLine": 120,
+        "startChar": 15,
+        "endLine": 120,
+        "endChar": 21
+      },
+      "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26eb9ecb_5eb2fc32",
+        "filename": "include/ceres/internal/line_parameterization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-22T13:43:16Z",
+      "side": 1,
+      "message": "From a numerical point of view zero is not a problem but there are multiple vector calculus operators for delta_o \u003d\u003d 0.0 which all results in zero, so this should be more efficient.",
+      "parentUuid": "a5fd98f3_bdb2ae55",
       "range": {
         "startLine": 120,
         "startChar": 15,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "423f4637_612d9ac4",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-22T13:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62683674_a6964f78",
+      "range": {
+        "startLine": 294,
+        "startChar": 9,
+        "endLine": 294,
+        "endChar": 18
+      },
+      "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d22ab7e_8b00bbaf",
         "filename": "internal/ceres/local_parameterization_test.cc",
         "patchSetId": 4
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "2c879958_f9972382",
+        "filename": "internal/ceres/local_parameterization_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-22T13:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d22ab7e_8b00bbaf",
+      "range": {
+        "startLine": 611,
+        "startChar": 12,
+        "endLine": 611,
+        "endChar": 38
+      },
+      "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "756a9c78_2ef0e047",
         "filename": "internal/ceres/local_parameterization_test.cc",
         "patchSetId": 4
@@ -243,6 +483,30 @@
       "writtenOn": "2020-03-18T13:29:46Z",
       "side": 1,
       "message": "why this particular magical number ? :)",
+      "range": {
+        "startLine": 613,
+        "startChar": 26,
+        "endLine": 613,
+        "endChar": 27
+      },
+      "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "badb0fae_daa9ba32",
+        "filename": "internal/ceres/local_parameterization_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2020-03-22T13:43:16Z",
+      "side": 1,
+      "message": "I took the number from HomogeneousVectorParameterizationHelper.",
+      "parentUuid": "756a9c78_2ef0e047",
       "range": {
         "startLine": 613,
         "startChar": 26,
