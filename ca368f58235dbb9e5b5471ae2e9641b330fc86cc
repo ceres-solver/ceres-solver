@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26ba44bf_0c735aa2",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-23T12:17:30Z",
+      "side": 1,
+      "message": "maybe move this chunk of code closer to residuals_as_jets? that way we are readying all the parameters code and then all the residuals code.",
+      "range": {
+        "startLine": 307,
+        "startChar": 2,
+        "endLine": 313,
+        "endChar": 28
+      },
+      "revId": "ca368f58235dbb9e5b5471ae2e9641b330fc86cc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f58082_fa12b738",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-23T12:17:30Z",
+      "side": 1,
+      "message": "this comment is not quite right anymore, it still refers to the fixed array.",
+      "range": {
+        "startLine": 320,
+        "startChar": 59,
+        "endLine": 320,
+        "endChar": 64
+      },
+      "revId": "ca368f58235dbb9e5b5471ae2e9641b330fc86cc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
