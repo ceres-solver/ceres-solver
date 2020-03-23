@@ -181,14 +181,20 @@ namespace internal {
 //
 // is what would get put in dst if N was 3, offset was 3, and the jet type JetT
 // was 8-dimensional.
-template <int Offset, int N, typename T, typename JetT>
-inline void Make1stOrderPerturbation(const T* src, JetT* dst) {
-  DCHECK(src);
-  DCHECK(dst);
-  for (int j = 0; j < N; ++j) {
-    dst[j] = JetT(src[j], Offset + j);
+template <int j, int N, int Offset, typename T, typename JetT>
+struct Make1stOrderPerturbation {
+ public:
+  static void Apply(const T* src, JetT* dst) {
+    dst[j] = JetT(src[j], j + Offset);
+    Make1stOrderPerturbation<j + 1, N, Offset, T, JetT>::Apply(src, dst);
   }
-}
+};
+
+template <int N, int Offset, typename T, typename JetT>
+struct Make1stOrderPerturbation<N, N, Offset, T, JetT> {
+ public:
+  static void Apply(const T* src, JetT* dst) {}
+};
 
 // Calls Make1stOrderPerturbation for every parameter block.
 //
@@ -208,7 +214,10 @@ struct Make1stOrderPerturbations<integer_sequence<int, N, Ns...>,
                                  Offset> {
   template <typename T, typename JetT>
   static void Apply(T const* const* parameters, JetT* x) {
-    Make1stOrderPerturbation<Offset, N>(parameters[ParameterIdx], x + Offset);
+    //    Make1stOrderPerturbation<Offset, N>(parameters[ParameterIdx], x +
+    //    Offset);
+    Make1stOrderPerturbation<0, N, Offset, T, JetT>::Apply(
+        parameters[ParameterIdx], x + Offset);
     Make1stOrderPerturbations<integer_sequence<int, Ns...>,
                               ParameterIdx + 1,
                               Offset + N>::Apply(parameters, x);
