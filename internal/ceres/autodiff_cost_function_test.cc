@@ -166,7 +166,6 @@ TEST(AutoDiffCostFunction, PartiallyFilledResidualShouldFailEvaluation) {
   InvalidateArray(2, jacobian);
   InvalidateArray(2, residuals);
   EXPECT_TRUE(cost_function->Evaluate(parameters, residuals, jacobians));
-  EXPECT_FALSE(IsArrayValid(2, jacobian));
   EXPECT_FALSE(IsArrayValid(2, residuals));
 }
 

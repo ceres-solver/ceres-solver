@@ -303,8 +303,7 @@ inline bool AutoDifferentiate(const Functor& functor,
   // Invalidate the output Jets, so that we can detect if the user
   // did not assign values to all of them.
   for (int i = 0; i < num_outputs; ++i) {
-    output[i].a = kImpossibleValue;
-    output[i].v.setConstant(kImpossibleValue);
+    output[i] = JetT(kImpossibleValue);
   }
 
   Make1stOrderPerturbations<Parameters>::Apply(parameters, x.data());
