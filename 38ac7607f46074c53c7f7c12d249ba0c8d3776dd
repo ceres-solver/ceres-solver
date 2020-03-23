@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c19831b8_eb6b428a",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-23T13:35:32Z",
+      "side": 1,
+      "message": "TBH I think this change is fine, but I just worry...",
+      "range": {
+        "startLine": 306,
+        "startChar": 16,
+        "endLine": 306,
+        "endChar": 20
+      },
+      "revId": "38ac7607f46074c53c7f7c12d249ba0c8d3776dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
