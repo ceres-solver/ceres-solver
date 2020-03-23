@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2ab512d1_ad5be973",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-23T13:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26ba44bf_0c735aa2",
+      "range": {
+        "startLine": 307,
+        "startChar": 2,
+        "endLine": 313,
+        "endChar": 28
+      },
+      "revId": "ca368f58235dbb9e5b5471ae2e9641b330fc86cc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80f58082_fa12b738",
         "filename": "include/ceres/internal/autodiff.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "ca368f58235dbb9e5b5471ae2e9641b330fc86cc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5f1fd0_f03482df",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-23T13:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80f58082_fa12b738",
+      "range": {
+        "startLine": 320,
+        "startChar": 59,
+        "endLine": 320,
+        "endChar": 64
+      },
+      "revId": "ca368f58235dbb9e5b5471ae2e9641b330fc86cc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
