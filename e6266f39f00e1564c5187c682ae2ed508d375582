@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "811bbbfd_2965d699",
+        "filename": "include/ceres/internal/line_parameterization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-23T14:03:21Z",
+      "side": 1,
+      "message": "given that this is a corner case and requires exact equality to zero which, I think we should aim for simpler code.",
+      "parentUuid": "26eb9ecb_5eb2fc32",
+      "range": {
+        "startLine": 120,
+        "startChar": 15,
+        "endLine": 120,
+        "endChar": 21
+      },
+      "revId": "e6266f39f00e1564c5187c682ae2ed508d375582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62683674_a6964f78",
         "filename": "include/ceres/local_parameterization.h",
         "patchSetId": 4
