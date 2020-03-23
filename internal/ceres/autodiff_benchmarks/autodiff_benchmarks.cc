@@ -78,7 +78,6 @@ static void BM_Linear1AutoDiff(benchmark::State& state) {
   }
 }
 BENCHMARK(BM_Linear1AutoDiff)->Arg(0)->Arg(1);
-;
 
 #ifdef WITH_CODE_GENERATION
 static void BM_Linear10CodeGen(benchmark::State& state) {
@@ -98,7 +97,6 @@ static void BM_Linear10CodeGen(benchmark::State& state) {
   }
 }
 BENCHMARK(BM_Linear10CodeGen)->Arg(0)->Arg(1);
-;
 #endif
 
 static void BM_Linear10AutoDiff(benchmark::State& state) {
@@ -121,7 +119,6 @@ static void BM_Linear10AutoDiff(benchmark::State& state) {
   }
 }
 BENCHMARK(BM_Linear10AutoDiff)->Arg(0)->Arg(1);
-;
 
 // From the NIST problem collection.
 struct Rat43CostFunctor {
@@ -185,7 +182,6 @@ static void BM_SnavelyReprojectionCodeGen(benchmark::State& state) {
   }
 }
 BENCHMARK(BM_SnavelyReprojectionCodeGen)->Arg(0)->Arg(1);
-;
 #endif
 
 static void BM_SnavelyReprojectionAutoDiff(benchmark::State& state) {
@@ -214,7 +210,6 @@ static void BM_SnavelyReprojectionAutoDiff(benchmark::State& state) {
 }
 
 BENCHMARK(BM_SnavelyReprojectionAutoDiff)->Arg(0)->Arg(1);
-;
 
 #ifdef WITH_CODE_GENERATION
 static void BM_BrdfCodeGen(benchmark::State& state) {
@@ -252,7 +247,6 @@ static void BM_BrdfCodeGen(benchmark::State& state) {
 }
 
 BENCHMARK(BM_BrdfCodeGen)->Arg(0)->Arg(1);
-;
 #endif
 
 static void BM_BrdfAutoDiff(benchmark::State& state) {
@@ -292,7 +286,6 @@ static void BM_BrdfAutoDiff(benchmark::State& state) {
 }
 
 BENCHMARK(BM_BrdfAutoDiff)->Arg(0)->Arg(1);
-;
 
 }  // namespace ceres
 
