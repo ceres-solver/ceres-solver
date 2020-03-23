@@ -179,16 +179,16 @@ struct Jet {
   // (where T is a Jet<T, N>). This usually only happens in opt mode. Note that
   // the C++ standard mandates that e.g. default constructed doubles are
   // initialized to 0.0; see sections 8.5 of the C++03 standard.
-  Jet() : a() { v.setConstant(Scalar()); }
+  EIGEN_ALWAYS_INLINE Jet() : a() { v.setConstant(Scalar()); }
 
   // Constructor from scalar: a + 0.
-  explicit Jet(const T& value) {
+  EIGEN_ALWAYS_INLINE explicit Jet(const T& value) {
     a = value;
     v.setConstant(Scalar());
   }
 
   // Constructor from scalar plus variable: a + t_i.
-  Jet(const T& value, int k) {
+  EIGEN_ALWAYS_INLINE Jet(const T& value, int k) {
     a = value;
     v.setConstant(Scalar());
     v[k] = T(1.0);
@@ -199,7 +199,7 @@ struct Jet {
   // to be passed in without being fully evaluated until
   // they are assigned to v
   template <typename Derived>
-  EIGEN_STRONG_INLINE Jet(const T& a, const Eigen::DenseBase<Derived>& v)
+  EIGEN_ALWAYS_INLINE Jet(const T& a, const Eigen::DenseBase<Derived>& v)
       : a(a), v(v) {}
 
   // Compound operators
