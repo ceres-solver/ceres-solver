@@ -22,6 +22,30 @@
       "revId": "50da6834f43cab3813680aae53880c2748658014",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b33ecb9_c931537a",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-24T18:43:38Z",
+      "side": 1,
+      "message": "it became available in 3.3, which is the minimum required version, so we should be fine.",
+      "parentUuid": "7eb811a1_e4085e88",
+      "range": {
+        "startLine": 755,
+        "startChar": 9,
+        "endLine": 755,
+        "endChar": 15
+      },
+      "revId": "50da6834f43cab3813680aae53880c2748658014",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
