@@ -82,7 +82,7 @@ bool Covariance::GetCovarianceBlockInTangentSpace(
 
 bool Covariance::GetCovarianceMatrix(
     const vector<const double*>& parameter_blocks,
-    double* covariance_matrix) {
+    double* covariance_matrix) const {
   return impl_->GetCovarianceMatrixInTangentOrAmbientSpace(parameter_blocks,
                                                            true,  // ambient
                                                            covariance_matrix);
@@ -90,7 +90,7 @@ bool Covariance::GetCovarianceMatrix(
 
 bool Covariance::GetCovarianceMatrixInTangentSpace(
     const std::vector<const double *>& parameter_blocks,
-    double *covariance_matrix) {
+    double *covariance_matrix) const {
   return impl_->GetCovarianceMatrixInTangentOrAmbientSpace(parameter_blocks,
                                                            false,  // tangent
                                                            covariance_matrix);

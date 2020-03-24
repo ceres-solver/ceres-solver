@@ -426,7 +426,7 @@ class CERES_EXPORT Covariance {
   // the sizes of the individual parameter blocks. The covariance
   // matrix will be a row-major matrix.
   bool GetCovarianceMatrix(const std::vector<const double*>& parameter_blocks,
-                           double* covariance_matrix);
+                           double* covariance_matrix) const;
 
   // Return the covariance matrix corresponding to parameter_blocks
   // in the tangent space if a local parameterization is associated
@@ -445,7 +445,7 @@ class CERES_EXPORT Covariance {
   // blocks. The covariance matrix will be a row-major matrix.
   bool GetCovarianceMatrixInTangentSpace(
       const std::vector<const double*>& parameter_blocks,
-      double* covariance_matrix);
+      double* covariance_matrix) const;
 
  private:
   std::unique_ptr<internal::CovarianceImpl> impl_;
