@@ -206,9 +206,9 @@ struct Make1stOrderPerturbation<N, N, Offset, T, JetT> {
 // If one having three parameter blocks with dimensions (3, 2, 4), the call
 // Make1stOrderPerturbations<integer_sequence<3, 2, 4>::Apply(params, x);
 // will result in the following calls to Make1stOrderPerturbation:
-// Make1stOrderPerturbation<0, 0, 3>::Apply(params[0], x + 0);
-// Make1stOrderPerturbation<0, 3, 2>::Apply(params[1], x + 3);
-// Make1stOrderPerturbation<0, 5, 4>::Apply(params[2], x + 5);
+// Make1stOrderPerturbation<0, 3, 0>::Apply(params[0], x + 0);
+// Make1stOrderPerturbation<0, 2, 3>::Apply(params[1], x + 3);
+// Make1stOrderPerturbation<0, 4, 5>::Apply(params[2], x + 5);
 template <typename Seq, int ParameterIdx = 0, int Offset = 0>
 struct Make1stOrderPerturbations;
 
