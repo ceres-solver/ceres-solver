@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eb811a1_e4085e88",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-24T16:21:20Z",
+      "side": 1,
+      "message": "what version of Eigen does this become available? I am trying to remember if this lines up with our minimum Eigen version requirements.",
+      "range": {
+        "startLine": 755,
+        "startChar": 9,
+        "endLine": 755,
+        "endChar": 15
+      },
+      "revId": "50da6834f43cab3813680aae53880c2748658014",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
