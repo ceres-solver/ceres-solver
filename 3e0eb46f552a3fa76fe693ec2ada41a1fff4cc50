@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dfb5e72_daa52a4a",
+        "filename": "internal/ceres/autodiff_benchmarks/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-25T13:24:11Z",
+      "side": 1,
+      "message": "I do not think STREQUAL works, you need MATCHES",
+      "range": {
+        "startLine": 8,
+        "startChar": 35,
+        "endLine": 8,
+        "endChar": 43
+      },
+      "revId": "3e0eb46f552a3fa76fe693ec2ada41a1fff4cc50",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "245e92fa_83ac852f",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-25T13:24:11Z",
+      "side": 1,
+      "message": "This needs to be guarded by codegen no?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 29
+      },
+      "revId": "3e0eb46f552a3fa76fe693ec2ada41a1fff4cc50",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9217e0f0_85644ba9",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-25T13:24:11Z",
+      "side": 1,
+      "message": "kParameterBlockSize",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "3e0eb46f552a3fa76fe693ec2ada41a1fff4cc50",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45059e0_77e6e25e",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-25T13:24:11Z",
+      "side": 1,
+      "message": "calling another benchmark from here is not good style. This is simple enough code, it is worth replicating.",
+      "range": {
+        "startLine": 71,
+        "startChar": 13,
+        "endLine": 71,
+        "endChar": 14
+      },
+      "revId": "3e0eb46f552a3fa76fe693ec2ada41a1fff4cc50",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2bc0ca_318209f9",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-25T13:24:11Z",
+      "side": 1,
+      "message": "same comment as above",
+      "range": {
+        "startLine": 77,
+        "startChar": 23,
+        "endLine": 77,
+        "endChar": 24
+      },
+      "revId": "3e0eb46f552a3fa76fe693ec2ada41a1fff4cc50",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7601961c_b951385a",
+        "filename": "internal/ceres/autodiff_benchmarks/constant_cost_functions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-25T13:24:11Z",
+      "side": 1,
+      "message": "kNumParameters or better still kParameterBlockSize",
+      "range": {
+        "startLine": 40,
+        "startChar": 14,
+        "endLine": 40,
+        "endChar": 28
+      },
+      "revId": "3e0eb46f552a3fa76fe693ec2ada41a1fff4cc50",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81755d1_587058c8",
+        "filename": "internal/ceres/autodiff_benchmarks/constant_cost_functions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-25T13:24:11Z",
+      "side": 1,
+      "message": "you should not need this, we are not doing this anywhere else.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 21
+      },
+      "revId": "3e0eb46f552a3fa76fe693ec2ada41a1fff4cc50",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc13d1e_51ca94be",
+        "filename": "internal/ceres/autodiff_benchmarks/constant_cost_functions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-25T13:24:11Z",
+      "side": 1,
+      "message": "why do you need this?",
+      "range": {
+        "startLine": 60,
+        "startChar": 23,
+        "endLine": 60,
+        "endChar": 38
+      },
+      "revId": "3e0eb46f552a3fa76fe693ec2ada41a1fff4cc50",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
