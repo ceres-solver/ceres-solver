@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8c3fabe_eee8c201",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-25T19:13:16Z",
+      "side": 1,
+      "message": "this is repeated below.",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 38
+      },
+      "revId": "28f8ffb96edfcd9c0c6a2969a4f918d1769a9dba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f764fe05_bc21984d",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-25T19:13:16Z",
+      "side": 1,
+      "message": "there is no need to do this, just instantiate it and use it. it is also not a functor it is a full cost function.",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "28f8ffb96edfcd9c0c6a2969a4f918d1769a9dba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36edc60d_44a9ca9e",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-25T19:13:16Z",
+      "side": 1,
+      "message": "repeated below.",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 15
+      },
+      "revId": "28f8ffb96edfcd9c0c6a2969a4f918d1769a9dba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f106a9db_40b0ce4a",
+        "filename": "internal/ceres/autodiff_benchmarks/constant_cost_functions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-25T19:13:16Z",
+      "side": 1,
+      "message": "just constant_cost_function.h",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 20
+      },
+      "revId": "28f8ffb96edfcd9c0c6a2969a4f918d1769a9dba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
