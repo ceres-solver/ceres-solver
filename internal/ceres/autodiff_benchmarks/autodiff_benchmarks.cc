@@ -36,8 +36,62 @@
 #include "ceres/autodiff_benchmarks/snavely_reprojection_error.h"
 #include "ceres/ceres.h"
 #include "ceres/codegen/test_utils.h"
+#include "ceres/autodiff_benchmarks/constant_cost_functions.h"
 
 namespace ceres {
+
+
+template <int num_parameters>
+static void BM_Constant(benchmark::State& state, CostFunction* cost_function) {
+  using Functor = ConstantCostFunction<num_parameters>;
+
+  constexpr int num_residuals = 1;
+  std::array<double, num_parameters> parameters_values;
+  std::iota(parameters_values.begin(), parameters_values.end(), 0);
+  double* parameters[] = {parameters_values.data()};
+
+  std::array<double, num_residuals> residuals;
+
+  std::array<double, num_residuals * num_parameters> jacobian_values;
+  double* jacobians[] = {jacobian_values.data()};
+
+  for (auto _ : state) {
+    cost_function->Evaluate(parameters, residuals.data(), jacobians);
+  }
+}
+
+template <int num_parameters>
+static void BM_ConstantAutodiff(benchmark::State& state) {
+  using Functor = ConstantCostFunction<num_parameters>;
+  using AutoDiffFunctor = ceres::internal::CostFunctionToFunctor<Functor>;
+
+  std::unique_ptr<ceres::CostFunction> cost_function(
+      new ceres::AutoDiffCostFunction<AutoDiffFunctor, 1, num_parameters>(
+          new AutoDiffFunctor()));
+  BM_Constant<num_parameters>(state, cost_function.get());
+}
+
+template <int num_parameters>
+static void BM_ConstantAnalytic(benchmark::State& state) {
+  using Functor = ConstantCostFunction<num_parameters>;
+  std::unique_ptr<ceres::CostFunction> cost_function(new Functor());
+  BM_Constant<num_parameters>(state, cost_function.get());
+}
+
+BENCHMARK_TEMPLATE(BM_ConstantAnalytic, 1);
+BENCHMARK_TEMPLATE(BM_ConstantAutodiff, 1);
+BENCHMARK_TEMPLATE(BM_ConstantAnalytic, 10);
+BENCHMARK_TEMPLATE(BM_ConstantAutodiff, 10);
+BENCHMARK_TEMPLATE(BM_ConstantAnalytic, 20);
+BENCHMARK_TEMPLATE(BM_ConstantAutodiff, 20);
+BENCHMARK_TEMPLATE(BM_ConstantAnalytic, 30);
+BENCHMARK_TEMPLATE(BM_ConstantAutodiff, 30);
+BENCHMARK_TEMPLATE(BM_ConstantAnalytic, 40);
+BENCHMARK_TEMPLATE(BM_ConstantAutodiff, 40);
+BENCHMARK_TEMPLATE(BM_ConstantAnalytic, 50);
+BENCHMARK_TEMPLATE(BM_ConstantAutodiff, 50);
+BENCHMARK_TEMPLATE(BM_ConstantAnalytic, 60);
+BENCHMARK_TEMPLATE(BM_ConstantAutodiff, 60);
 
 #ifdef WITH_CODE_GENERATION
 static void BM_Linear1CodeGen(benchmark::State& state) {

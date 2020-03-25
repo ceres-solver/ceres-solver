@@ -5,6 +5,8 @@ endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   list(APPEND CERES_BENCHMARK_FLAGS "-mllvm" "-inline-threshold=1000000")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+  list(APPEND CERES_BENCHMARK_FLAGS "-finline-limit=10000000")
 endif()
 
 add_executable(autodiff_benchmarks autodiff_benchmarks.cc)
