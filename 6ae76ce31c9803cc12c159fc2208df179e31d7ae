@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b718f5ae_f5906d41",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-03-26T22:54:42Z",
+      "side": 1,
+      "message": "add a comment that this is the end of the recursion.",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 8
+      },
+      "revId": "6ae76ce31c9803cc12c159fc2208df179e31d7ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab42afe2_0e5f43ce",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-03-26T22:54:42Z",
+      "side": 1,
+      "message": "also be consistent with Take0thOrderPartInner where the end of the recursion comes before the general case.",
+      "range": {
+        "startLine": 198,
+        "startChar": 34,
+        "endLine": 198,
+        "endChar": 38
+      },
+      "revId": "6ae76ce31c9803cc12c159fc2208df179e31d7ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
