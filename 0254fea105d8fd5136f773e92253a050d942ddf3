@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6baef9d7_6b3d4450",
+        "filename": "internal/ceres/autodiff_benchmarks/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-26T17:04:39Z",
+      "side": 1,
+      "message": "did this affect things?",
+      "range": {
+        "startLine": 9,
+        "startChar": 45,
+        "endLine": 9,
+        "endChar": 46
+      },
+      "revId": "0254fea105d8fd5136f773e92253a050d942ddf3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a406f5b2_cf83c945",
+        "filename": "internal/ceres/autodiff_benchmarks/constant_cost_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-26T17:04:39Z",
+      "side": 1,
+      "message": "don\u0027t need this anymore.",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 20
+      },
+      "revId": "0254fea105d8fd5136f773e92253a050d942ddf3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
