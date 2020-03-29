@@ -29,11 +29,14 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 
 #include <memory>
+#include <random>
 
 #include "benchmark/benchmark.h"
 #include "ceres/autodiff_benchmarks/brdf_cost_function.h"
 #include "ceres/autodiff_benchmarks/constant_cost_function.h"
 #include "ceres/autodiff_benchmarks/linear_cost_functions.h"
+#include "ceres/autodiff_benchmarks/photometric_error.h"
+#include "ceres/autodiff_benchmarks/relative_pose_error.h"
 #include "ceres/autodiff_benchmarks/snavely_reprojection_error.h"
 #include "ceres/ceres.h"
 #include "ceres/codegen/test_utils.h"
@@ -269,6 +272,100 @@ static void BM_SnavelyReprojectionAutoDiff(benchmark::State& state) {
 }
 
 BENCHMARK(BM_SnavelyReprojectionAutoDiff)->Arg(0)->Arg(1);
+
+static void BM_PhotometricAutoDiff(benchmark::State& state) {
+  constexpr int PATCH_SIZE = 8;
+
+  using FunctorType = PhotometricError<PATCH_SIZE>;
+  using ImageType = Eigen::Matrix<uint8_t, 128, 128, Eigen::RowMajor>;
+
+  // prepare parameter / residual / jacobian blocks
+  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7.};
+  double parameter_block2[] = {1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1};
+  double parameter_block3[] = {1.};
+  double* parameters[] = {parameter_block1, parameter_block2, parameter_block3};
+
+  Eigen::Map<Eigen::Quaterniond>(parameter_block1).normalize();
+  Eigen::Map<Eigen::Quaterniond>(parameter_block2).normalize();
+
+  double jacobian1[FunctorType::PATCH_SIZE * FunctorType::POSE_SIZE];
+  double jacobian2[FunctorType::PATCH_SIZE * FunctorType::POSE_SIZE];
+  double jacobian3[FunctorType::PATCH_SIZE * FunctorType::POINT_SIZE];
+  double residuals[FunctorType::PATCH_SIZE];
+  double* jacobians[] = {jacobian1, jacobian2, jacobian3};
+
+  // prepare data (fixed seed for repeatability)
+  std::mt19937::result_type seed = 42;
+  std::mt19937 gen(seed);
+  std::uniform_real_distribution<double> uniform01(0.0, 1.0);
+  std::uniform_int_distribution<unsigned int> uniform0255(0, 255);
+
+  FunctorType::Patch<double> intensities_host =
+      FunctorType::Patch<double>::NullaryExpr(
+          [&]() { return uniform0255(gen); });
+
+  // set bearing vector's z component to 1, i.e. pointing away from the camera,
+  // to ensure they are (likely) in the domain of the projection function (given
+  // a small rotation between host and target frame)
+  FunctorType::PatchVectors<double> bearings_host =
+      FunctorType::PatchVectors<double>::NullaryExpr(
+          [&]() { return uniform01(gen); });
+  bearings_host.row(2).array() = 1;
+  bearings_host.colwise().normalize();
+
+  ImageType image = ImageType::NullaryExpr(
+      [&]() { return static_cast<uint8_t>(uniform0255(gen)); });
+  FunctorType::Grid grid(image.data(), 0, image.rows(), 0, image.cols());
+  FunctorType::Interpolator image_target(grid);
+
+  FunctorType::Intrinsics intrinsics;
+  intrinsics << 128, 128, 1, -1, 0.5, 0.5;
+
+  std::unique_ptr<ceres::CostFunction> cost_function(
+      new ceres::AutoDiffCostFunction<FunctorType,
+                                      FunctorType::PATCH_SIZE,
+                                      FunctorType::POSE_SIZE,
+                                      FunctorType::POSE_SIZE,
+                                      FunctorType::POINT_SIZE>(new FunctorType(
+          intensities_host, bearings_host, image_target, intrinsics)));
+
+  for (auto _ : state) {
+    cost_function->Evaluate(
+        parameters, residuals, state.range(0) ? jacobians : nullptr);
+  }
+}
+
+BENCHMARK(BM_PhotometricAutoDiff)->Arg(0)->Arg(1);
+
+static void BM_RelativePoseAutoDiff(benchmark::State& state) {
+  using FunctorType = RelativePoseError;
+
+  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7.};
+  double parameter_block2[] = {1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1};
+  double* parameters[] = {parameter_block1, parameter_block2};
+
+  Eigen::Map<Eigen::Quaterniond>(parameter_block1).normalize();
+  Eigen::Map<Eigen::Quaterniond>(parameter_block2).normalize();
+
+  double jacobian1[6 * 7];
+  double jacobian2[6 * 7];
+  double residuals[6];
+  double* jacobians[] = {jacobian1, jacobian2};
+
+  Eigen::Quaterniond q_i_j = Eigen::Quaterniond(1, 2, 3, 4).normalized();
+  Eigen::Vector3d t_i_j(1, 2, 3);
+
+  std::unique_ptr<ceres::CostFunction> cost_function(
+      new ceres::AutoDiffCostFunction<FunctorType, 6, 7, 7>(
+          new FunctorType(q_i_j, t_i_j)));
+
+  for (auto _ : state) {
+    cost_function->Evaluate(
+        parameters, residuals, state.range(0) ? jacobians : nullptr);
+  }
+}
+
+BENCHMARK(BM_RelativePoseAutoDiff)->Arg(0)->Arg(1);
 
 #ifdef WITH_CODE_GENERATION
 static void BM_BrdfCodeGen(benchmark::State& state) {
