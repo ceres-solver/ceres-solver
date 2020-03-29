@@ -29,11 +29,13 @@
 // Author: darius.rueckert@fau.de (Darius Rueckert)
 
 #include <memory>
+#include <random>
 
 #include "benchmark/benchmark.h"
 #include "ceres/autodiff_benchmarks/brdf_cost_function.h"
 #include "ceres/autodiff_benchmarks/constant_cost_function.h"
 #include "ceres/autodiff_benchmarks/linear_cost_functions.h"
+#include "ceres/autodiff_benchmarks/photometric_error.h"
 #include "ceres/autodiff_benchmarks/snavely_reprojection_error.h"
 #include "ceres/ceres.h"
 #include "ceres/codegen/test_utils.h"
@@ -269,6 +271,65 @@ static void BM_SnavelyReprojectionAutoDiff(benchmark::State& state) {
 }
 
 BENCHMARK(BM_SnavelyReprojectionAutoDiff)->Arg(0)->Arg(1);
+
+static void BM_PhotometricAutoDiff(benchmark::State& state) {
+  using ResidualType = PhotometricError<8>;
+  using FunctorType = ceres::internal::CostFunctionToFunctor<ResidualType>;
+  using ImageType = Eigen::Matrix<uint8_t, 128, 128, Eigen::RowMajorBit>;
+
+  // prepare parameter / residual / jacobian blocks
+  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7.};
+  double parameter_block2[] = {1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1};
+  double parameter_block3[] = {1.};
+  double* parameters[] = {parameter_block1, parameter_block2, parameter_block3};
+
+  Eigen::Map<Eigen::Quaternion<double>>(parameter_block1).normalize();
+  Eigen::Map<Eigen::Quaternion<double>>(parameter_block2).normalize();
+
+  double jacobian1[ResidualType::PATCH_SIZE * ResidualType::POSE_SIZE];
+  double jacobian2[ResidualType::PATCH_SIZE * ResidualType::POSE_SIZE];
+  double jacobian3[ResidualType::PATCH_SIZE * ResidualType::POINT_SIZE];
+  double residuals[ResidualType::PATCH_SIZE];
+  double* jacobians[] = {jacobian1, jacobian2, jacobian3};
+
+  // prepare data
+  std::mt19937::result_type seed = 42;  // fixed seed for repeatability
+  std::mt19937 gen(seed);
+  std::uniform_real_distribution<double> uniform01(0.0, 1.0);
+  std::uniform_int_distribution<uint8_t> uniform0255(0, 255);
+
+  ResidualType::Patch<double> intensities_host =
+      ResidualType::Patch<double>::NullaryExpr(
+          [&]() { return uniform0255(gen); });
+
+  ResidualType::PatchVectors<double> bearings_host =
+      ResidualType::PatchVectors<double>::NullaryExpr(
+          [&]() { return uniform01(gen); });
+  bearings_host.row(2).array() = 1;  // set all z to 1.0
+  bearings_host.colwise().normalize();
+
+  ImageType image = ImageType::NullaryExpr([&]() { return uniform0255(gen); });
+  ResidualType::Grid grid(image.data(), 0, image.rows(), 0, image.cols());
+  ResidualType::Interpolator image_target(grid);
+
+  ResidualType::Intrinsics intrinsics;
+  intrinsics << 128, 128, 1, -1, 0.5, 0.5;
+
+  std::unique_ptr<ceres::CostFunction> cost_function(
+      new ceres::AutoDiffCostFunction<FunctorType,
+                                      ResidualType::PATCH_SIZE,
+                                      ResidualType::POSE_SIZE,
+                                      ResidualType::POSE_SIZE,
+                                      ResidualType::POINT_SIZE>(new FunctorType(
+          intensities_host, bearings_host, image_target, intrinsics)));
+
+  for (auto _ : state) {
+    cost_function->Evaluate(
+        parameters, residuals, state.range(0) ? jacobians : nullptr);
+  }
+}
+
+BENCHMARK(BM_PhotometricAutoDiff)->Arg(0)->Arg(1);
 
 #ifdef WITH_CODE_GENERATION
 static void BM_BrdfCodeGen(benchmark::State& state) {
