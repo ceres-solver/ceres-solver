@@ -206,6 +206,40 @@
       "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd17274_dbc0e41c",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-30T06:57:08Z",
+      "side": 1,
+      "message": "Codegen doesn\u0027t work with images yet. It\u0027s still fine for a normal autodiff benchmark tho.",
+      "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beae033b_8986b421",
+        "filename": "internal/ceres/autodiff_benchmarks/relative_pose_error.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-30T06:57:08Z",
+      "side": 1,
+      "message": "If you want this to be working with codegen, you have to wrap access into the CERES_LOCAL_VARIABLE macro. Otherwise, the variables at trace-time are compiled as constants.",
+      "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
