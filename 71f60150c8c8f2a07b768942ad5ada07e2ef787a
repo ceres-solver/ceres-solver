@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e609b81_0f800e44",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-31T13:02:05Z",
+      "side": 1,
+      "message": "since you are not doing codegen, no need to inherit from SizedCostFunction",
+      "range": {
+        "startLine": 82,
+        "startChar": 20,
+        "endLine": 82,
+        "endChar": 37
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f39ad3_33b4a1eb",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-31T13:02:05Z",
+      "side": 1,
+      "message": "you setting the residual and the derivative to zero. is that a good idea?",
+      "range": {
+        "startLine": 170,
+        "startChar": 18,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc02d2b3_7c4a8639",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-31T13:02:05Z",
+      "side": 1,
+      "message": "since you are not doing any codegen, you can drop this method.",
+      "range": {
+        "startLine": 185,
+        "startChar": 23,
+        "endLine": 185,
+        "endChar": 24
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750ad576_2e8f4d6b",
+        "filename": "internal/ceres/autodiff_benchmarks/relative_pose_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-31T13:02:05Z",
+      "side": 1,
+      "message": "no need to inherit.",
+      "range": {
+        "startLine": 46,
+        "startChar": 41,
+        "endLine": 46,
+        "endChar": 58
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472fc600_45724870",
+        "filename": "internal/ceres/autodiff_benchmarks/relative_pose_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-31T13:02:05Z",
+      "side": 1,
+      "message": "Estimate and similarly capitalize beginning of sentences here and elsehwere.",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 15
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925814f2_2ac501dd",
+        "filename": "internal/ceres/autodiff_benchmarks/relative_pose_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-31T13:02:05Z",
+      "side": 1,
+      "message": "drop the Evaluate method.",
+      "range": {
+        "startLine": 82,
+        "startChar": 24,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
