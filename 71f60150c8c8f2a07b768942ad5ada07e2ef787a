@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5658f8b6_a7ff730c",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-03-31T16:38:55Z",
+      "side": 1,
+      "message": "I think the current implementation is fine and we should keep it in the benchmark. There shouldn\u0027t be a problem with this, if the initial guess is decent and you are using a local solver (GN, LM).",
+      "parentUuid": "e1400a80_f0487134",
+      "range": {
+        "startLine": 170,
+        "startChar": 18,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc02d2b3_7c4a8639",
         "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
         "patchSetId": 6
