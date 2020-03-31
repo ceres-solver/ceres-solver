@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "e1400a80_f0487134",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T15:38:59Z",
+      "side": 1,
+      "message": "This is related to previous discussions about what to do when a point cannot be projected (or similarly elsewhere: projects out-of-bounds). See https://groups.google.com/forum/#!topic/ceres-solver/BrOMbQq3j1c/discussion, https://groups.google.com/forum/#!topic/ceres-solver/NtlMWYr1gFE/discussion, https://groups.google.com/forum/#!topic/ceres-solver/FGEAHnoXXJ0/discussion.\n\nFrom my empirical experience I can say that this rarely happens (a 3d point that can be projected at the start of the optimization, but becomes \"invalid\" during the optimization), and this ad-hoc solution works fine. I haven\u0027t seen an alternative way of dealing with this that was really convincing and isn\u0027t without it\u0027s own drawback, at least IMHO.\n\nHowever, here for the benchmark, I don\u0027t mind changing it to whatever is acceptable. Maybe `return false`? For the current benchmark data the case isn\u0027t triggered anyway (on my machine).\n\nActually, I would like to ensure we avoid hitting this case for the benchmark. Can we make it fail if we do hit this case with the generated test data? What do you think about throwing an exception? That would crash the benchmark and make it noticeable. (Note that this is only for the developer that might change the benchmark. Since the benchmark should be deterministic, if it doesn\u0027t throw once, it shouldn\u0027t throw ever. Although I\u0027m not sure if different \u003crandom\u003e implementation\u0027s might give different numbers for the same seed...)",
+      "parentUuid": "75f39ad3_33b4a1eb",
+      "range": {
+        "startLine": 170,
+        "startChar": 18,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc02d2b3_7c4a8639",
         "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
         "patchSetId": 6
@@ -105,6 +129,30 @@
       "writtenOn": "2020-03-31T13:02:05Z",
       "side": 1,
       "message": "Estimate and similarly capitalize beginning of sentences here and elsehwere.",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 15
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7816820_99a26654",
+        "filename": "internal/ceres/autodiff_benchmarks/relative_pose_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T15:38:59Z",
+      "side": 1,
+      "message": "Ok. If its not a full sentence (like here: no verb), do you prefer a period at the end or not?",
+      "parentUuid": "472fc600_45724870",
       "range": {
         "startLine": 61,
         "startChar": 7,
