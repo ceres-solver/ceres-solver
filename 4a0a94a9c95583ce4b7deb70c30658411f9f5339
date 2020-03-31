@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a31c1b9d_e8f1025b",
+        "filename": "internal/ceres/autodiff_benchmarks/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T11:28:45Z",
+      "side": 1,
+      "message": "I removed all codegen related parts for the newly added benchmarks as suggested by Darius.",
+      "parentUuid": "65cba460_57ced417",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b7acb7c_6299077d",
         "filename": "internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68abb29_32147962",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T11:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b7acb7c_6299077d",
+      "range": {
+        "startLine": 277,
+        "startChar": 40,
+        "endLine": 277,
+        "endChar": 41
+      },
+      "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c342fa16_44343c96",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T11:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f7c3cdf_45b28750",
+      "range": {
+        "startLine": 279,
+        "startChar": 60,
+        "endLine": 279,
+        "endChar": 71
+      },
+      "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c68b91f_a6dc6f53",
         "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2020-03-29T14:50:23Z",
       "side": 1,
       "message": "Is there a paper reference for this cost function?",
+      "range": {
+        "startLine": 46,
+        "startChar": 39,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5197fe94_eaa1b78b",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T11:28:45Z",
+      "side": 1,
+      "message": "Added references and expanded explanation.",
+      "parentUuid": "2c68b91f_a6dc6f53",
       "range": {
         "startLine": 46,
         "startChar": 39,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f407baf8_a742c7f6",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T11:28:45Z",
+      "side": 1,
+      "message": "Without _ the line `static constexpr int PATCH_SIZE \u003d PATCH_SIZE_;` would not work. I later use  `PhotometricError::PATCH_SIZE`. Do you suggest alternative naming?",
+      "parentUuid": "5533ca26_3504b305",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 30
+      },
+      "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b909cf3c_50f3acfa",
         "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209093d1_bc5e2852",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T11:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b909cf3c_50f3acfa",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 14
+      },
+      "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "943431de_4a9ed51f",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T11:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ef7915d_febcb373",
+      "range": {
+        "startLine": 78,
+        "startChar": 30,
+        "endLine": 78,
+        "endChar": 33
+      },
+      "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fedfa3d_79915b51",
         "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
         "patchSetId": 4
@@ -183,6 +351,30 @@
       "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5f88c2_a3253b3e",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T11:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fedfa3d_79915b51",
+      "range": {
+        "startLine": 87,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 14
+      },
+      "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "9f86187b_17f01475",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T11:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42fa505a_3c72b347",
+      "range": {
+        "startLine": 92,
+        "startChar": 31,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bd17274_dbc0e41c",
         "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
         "patchSetId": 4
@@ -226,6 +442,24 @@
     },
     {
       "key": {
+        "uuid": "73f52835_105e275d",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T11:28:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4bd17274_dbc0e41c",
+      "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "beae033b_8986b421",
         "filename": "internal/ceres/autodiff_benchmarks/relative_pose_error.h",
         "patchSetId": 4
@@ -240,6 +474,24 @@
       "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b9b54e_2926965a",
+        "filename": "internal/ceres/autodiff_benchmarks/relative_pose_error.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T11:28:45Z",
+      "side": 1,
+      "message": "I followed your advice and removed codegen bits for the newly added benchmarks. (PS: I don\u0027t know much about the codegen feature.)",
+      "parentUuid": "beae033b_8986b421",
+      "revId": "4a0a94a9c95583ce4b7deb70c30658411f9f5339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
