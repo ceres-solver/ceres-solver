@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c94a916_f4345df6",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T17:50:19Z",
+      "side": 1,
+      "message": "Thanks! Brain was on auto pilot for refactoring.",
+      "parentUuid": "7e609b81_0f800e44",
+      "range": {
+        "startLine": 82,
+        "startChar": 20,
+        "endLine": 82,
+        "endChar": 37
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75f39ad3_33b4a1eb",
         "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
         "patchSetId": 6
@@ -120,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "8c3ee1a6_e8371111",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T17:50:19Z",
+      "side": 1,
+      "message": "In PS7 I replaced this with an exception. It\u0027s not triggered. Ok like this?",
+      "parentUuid": "5658f8b6_a7ff730c",
+      "range": {
+        "startLine": 170,
+        "startChar": 18,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc02d2b3_7c4a8639",
         "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
         "patchSetId": 6
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "9fe3d7fc_5b03e881",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T17:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc02d2b3_7c4a8639",
+      "range": {
+        "startLine": 185,
+        "startChar": 23,
+        "endLine": 185,
+        "endChar": 24
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "750ad576_2e8f4d6b",
         "filename": "internal/ceres/autodiff_benchmarks/relative_pose_error.h",
         "patchSetId": 6
@@ -163,6 +235,30 @@
       "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f50b266_3a50c5c0",
+        "filename": "internal/ceres/autodiff_benchmarks/relative_pose_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T17:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "750ad576_2e8f4d6b",
+      "range": {
+        "startLine": 46,
+        "startChar": 41,
+        "endLine": 46,
+        "endChar": 58
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -237,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "ce6df91a_4174f33c",
+        "filename": "internal/ceres/autodiff_benchmarks/relative_pose_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T17:50:19Z",
+      "side": 1,
+      "message": "Capitalized all instances and added periods.",
+      "parentUuid": "b7816820_99a26654",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 15
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "925814f2_2ac501dd",
         "filename": "internal/ceres/autodiff_benchmarks/relative_pose_error.h",
         "patchSetId": 6
@@ -257,6 +377,30 @@
       "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ee18b5_a4ddd5ec",
+        "filename": "internal/ceres/autodiff_benchmarks/relative_pose_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-03-31T17:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "925814f2_2ac501dd",
+      "range": {
+        "startLine": 82,
+        "startChar": 24,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
