@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "fde2b512_99758147",
+        "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-31T17:45:55Z",
+      "side": 1,
+      "message": "my comment was from the point of view correctness, you are right that from a benchmarking perspective it doesn\u0027t really matter.",
+      "parentUuid": "5658f8b6_a7ff730c",
+      "range": {
+        "startLine": 170,
+        "startChar": 18,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc02d2b3_7c4a8639",
         "filename": "internal/ceres/autodiff_benchmarks/photometric_error.h",
         "patchSetId": 6
@@ -177,6 +201,30 @@
       "side": 1,
       "message": "Ok. If its not a full sentence (like here: no verb), do you prefer a period at the end or not?",
       "parentUuid": "472fc600_45724870",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 15
+      },
+      "revId": "71f60150c8c8f2a07b768942ad5ada07e2ef787a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47627e2a_acf50638",
+        "filename": "internal/ceres/autodiff_benchmarks/relative_pose_error.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-03-31T17:45:55Z",
+      "side": 1,
+      "message": "Full sentences.",
+      "parentUuid": "b7816820_99a26654",
       "range": {
         "startLine": 61,
         "startChar": 7,
