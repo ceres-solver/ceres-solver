@@ -72,18 +72,6 @@ target_link_libraries(robust_curve_fitting ceres)
 add_executable(simple_bundle_adjuster simple_bundle_adjuster.cc)
 target_link_libraries(simple_bundle_adjuster ceres)
 
-if(CODE_GENERATION)
-  include(CeresCodeGeneration)
-  ceres_generate_cost_function_implementation_for_functor(
-    NAME HelloWorldCostFunction
-    INPUT_FILE helloworld_cost_function.h
-    OUTPUT_DIRECTORY examples
-    NAMESPACE helloworld
-    )
-  add_executable(helloworld_codegen helloworld_codegen.cc )
-  target_link_libraries(helloworld_codegen ceres HelloWorldCostFunction)
-endif(CODE_GENERATION)
-
 if (GFLAGS)
   add_executable(powell powell.cc)
   target_link_libraries(powell ceres ${GFLAGS_LIBRARIES})
