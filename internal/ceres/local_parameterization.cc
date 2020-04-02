@@ -31,10 +31,11 @@
 #include "ceres/local_parameterization.h"
 
 #include <algorithm>
+
 #include "Eigen/Geometry"
-#include "ceres/internal/householder_vector.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
+#include "ceres/internal/householder_vector.h"
 #include "ceres/rotation.h"
 #include "glog/logging.h"
 
@@ -42,8 +43,7 @@ namespace ceres {
 
 using std::vector;
 
-LocalParameterization::~LocalParameterization() {
-}
+LocalParameterization::~LocalParameterization() {}
 
 bool LocalParameterization::MultiplyByJacobian(const double* x,
                                                const int num_rows,
@@ -86,9 +86,8 @@ bool IdentityParameterization::MultiplyByJacobian(const double* x,
                                                   const int num_cols,
                                                   const double* global_matrix,
                                                   double* local_matrix) const {
-  std::copy(global_matrix,
-            global_matrix + num_cols * GlobalSize(),
-            local_matrix);
+  std::copy(
+      global_matrix, global_matrix + num_cols * GlobalSize(), local_matrix);
   return true;
 }
 
@@ -183,10 +182,18 @@ bool QuaternionParameterization::Plus(const double* x,
 
 bool QuaternionParameterization::ComputeJacobian(const double* x,
                                                  double* jacobian) const {
-  jacobian[0] = -x[1]; jacobian[1]  = -x[2]; jacobian[2]  = -x[3];  // NOLINT
-  jacobian[3] =  x[0]; jacobian[4]  =  x[3]; jacobian[5]  = -x[2];  // NOLINT
-  jacobian[6] = -x[3]; jacobian[7]  =  x[0]; jacobian[8]  =  x[1];  // NOLINT
-  jacobian[9] =  x[2]; jacobian[10] = -x[1]; jacobian[11] =  x[0];  // NOLINT
+  jacobian[0] = -x[1];
+  jacobian[1] = -x[2];
+  jacobian[2] = -x[3];  // NOLINT
+  jacobian[3] = x[0];
+  jacobian[4] = x[3];
+  jacobian[5] = -x[2];  // NOLINT
+  jacobian[6] = -x[3];
+  jacobian[7] = x[0];
+  jacobian[8] = x[1];  // NOLINT
+  jacobian[9] = x[2];
+  jacobian[10] = -x[1];
+  jacobian[11] = x[0];  // NOLINT
   return true;
 }
 
@@ -216,10 +223,18 @@ bool EigenQuaternionParameterization::Plus(const double* x_ptr,
 
 bool EigenQuaternionParameterization::ComputeJacobian(const double* x,
                                                       double* jacobian) const {
-  jacobian[0] =  x[3]; jacobian[1]  =  x[2]; jacobian[2]  = -x[1];  // NOLINT
-  jacobian[3] = -x[2]; jacobian[4]  =  x[3]; jacobian[5]  =  x[0];  // NOLINT
-  jacobian[6] =  x[1]; jacobian[7]  = -x[0]; jacobian[8]  =  x[3];  // NOLINT
-  jacobian[9] = -x[0]; jacobian[10] = -x[1]; jacobian[11] = -x[2];  // NOLINT
+  jacobian[0] = x[3];
+  jacobian[1] = x[2];
+  jacobian[2] = -x[1];  // NOLINT
+  jacobian[3] = -x[2];
+  jacobian[4] = x[3];
+  jacobian[5] = x[0];  // NOLINT
+  jacobian[6] = x[1];
+  jacobian[7] = -x[0];
+  jacobian[8] = x[3];  // NOLINT
+  jacobian[9] = -x[0];
+  jacobian[10] = -x[1];
+  jacobian[11] = -x[2];  // NOLINT
   return true;
 }
 
@@ -248,8 +263,8 @@ bool HomogeneousVectorParameterization::Plus(const double* x_ptr,
   // (2nd Edition) for a detailed description.  Note there is a typo on Page
   // 625, line 4 so check the book errata.
   const double norm_delta_div_2 = 0.5 * norm_delta;
-  const double sin_delta_by_delta = std::sin(norm_delta_div_2) /
-      norm_delta_div_2;
+  const double sin_delta_by_delta =
+      std::sin(norm_delta_div_2) / norm_delta_div_2;
 
   Vector y(size_);
   y.head(size_ - 1) = 0.5 * sin_delta_by_delta * delta;
@@ -257,12 +272,13 @@ bool HomogeneousVectorParameterization::Plus(const double* x_ptr,
 
   Vector v(size_);
   double beta;
-  internal::ComputeHouseholderVector(x, &v, &beta);
+  internal::ComputeHouseholderVector<ConstVectorRef, double, Eigen::Dynamic>(
+      x, &v, &beta);
 
   // Apply the delta update to remain on the unit sphere. See section A6.9.3
   // on page 625 of Hartley & Zisserman (2nd Edition) for a detailed
   // description.
-  x_plus_delta = x.norm() * (y -  v * (beta * (v.transpose() * y)));
+  x_plus_delta = x.norm() * (y - v * (beta * (v.transpose() * y)));
 
   return true;
 }
@@ -274,7 +290,8 @@ bool HomogeneousVectorParameterization::ComputeJacobian(
 
   Vector v(size_);
   double beta;
-  internal::ComputeHouseholderVector(x, &v, &beta);
+  internal::ComputeHouseholderVector<ConstVectorRef, double, Eigen::Dynamic>(
+      x, &v, &beta);
 
   // The Jacobian is equal to J = 0.5 * H.leftCols(size_ - 1) where H is the
   // Householder matrix (H = I - beta * v * v').
@@ -293,9 +310,8 @@ bool ProductParameterization::Plus(const double* x,
   int x_cursor = 0;
   int delta_cursor = 0;
   for (const auto& param : local_params_) {
-    if (!param->Plus(x + x_cursor,
-                     delta + delta_cursor,
-                     x_plus_delta + x_cursor)) {
+    if (!param->Plus(
+            x + x_cursor, delta + delta_cursor, x_plus_delta + x_cursor)) {
       return false;
     }
     delta_cursor += param->LocalSize();
@@ -320,8 +336,8 @@ bool ProductParameterization::ComputeJacobian(const double* x,
     if (!param->ComputeJacobian(x + x_cursor, buffer.data())) {
       return false;
     }
-    jacobian.block(x_cursor, delta_cursor, global_size, local_size)
-        = MatrixRef(buffer.data(), global_size, local_size);
+    jacobian.block(x_cursor, delta_cursor, global_size, local_size) =
+        MatrixRef(buffer.data(), global_size, local_size);
 
     delta_cursor += local_size;
     x_cursor += global_size;
