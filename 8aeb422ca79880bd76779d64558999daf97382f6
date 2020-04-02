@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3a92291_4376cb65",
+        "filename": "include/ceres/internal/line_parameterization.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-04-02T14:58:13Z",
+      "side": 1,
+      "message": "Is it worth adding a comment here about why these types are explicitly specified?",
+      "revId": "8aeb422ca79880bd76779d64558999daf97382f6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
