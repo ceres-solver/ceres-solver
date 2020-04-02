@@ -101,25 +101,6 @@ BENCHMARK_TEMPLATE(BM_ConstantAutodiff, 50);
 BENCHMARK_TEMPLATE(BM_ConstantAnalytic, 60);
 BENCHMARK_TEMPLATE(BM_ConstantAutodiff, 60);
 
-#ifdef WITH_CODE_GENERATION
-static void BM_Linear1CodeGen(benchmark::State& state) {
-  double parameter_block1[] = {1.};
-  double* parameters[] = {parameter_block1};
-
-  double jacobian1[1];
-  double residuals[1];
-  double* jacobians[] = {jacobian1};
-
-  std::unique_ptr<ceres::CostFunction> cost_function(new Linear1CostFunction());
-
-  for (auto _ : state) {
-    cost_function->Evaluate(
-        parameters, residuals, state.range(0) ? jacobians : nullptr);
-  }
-}
-BENCHMARK(BM_Linear1CodeGen)->Arg(0)->Arg(1);
-#endif
-
 static void BM_Linear1AutoDiff(benchmark::State& state) {
   using FunctorType =
       ceres::internal::CostFunctionToFunctor<Linear1CostFunction>;
@@ -140,26 +121,6 @@ static void BM_Linear1AutoDiff(benchmark::State& state) {
   }
 }
 BENCHMARK(BM_Linear1AutoDiff)->Arg(0)->Arg(1);
-
-#ifdef WITH_CODE_GENERATION
-static void BM_Linear10CodeGen(benchmark::State& state) {
-  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9., 10.};
-  double* parameters[] = {parameter_block1};
-
-  double jacobian1[10 * 10];
-  double residuals[10];
-  double* jacobians[] = {jacobian1};
-
-  std::unique_ptr<ceres::CostFunction> cost_function(
-      new Linear10CostFunction());
-
-  for (auto _ : state) {
-    cost_function->Evaluate(
-        parameters, residuals, state.range(0) ? jacobians : nullptr);
-  }
-}
-BENCHMARK(BM_Linear10CodeGen)->Arg(0)->Arg(1);
-#endif
 
 static void BM_Linear10AutoDiff(benchmark::State& state) {
   using FunctorType =
@@ -220,31 +181,6 @@ static void BM_Rat43AutoDiff(benchmark::State& state) {
   }
 }
 BENCHMARK(BM_Rat43AutoDiff)->Arg(0)->Arg(1);
-
-#ifdef WITH_CODE_GENERATION
-static void BM_SnavelyReprojectionCodeGen(benchmark::State& state) {
-  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9.};
-  double parameter_block2[] = {1., 2., 3.};
-  double* parameters[] = {parameter_block1, parameter_block2};
-
-  double jacobian1[2 * 9];
-  double jacobian2[2 * 3];
-  double residuals[2];
-  double* jacobians[] = {jacobian1, jacobian2};
-
-  const double x = 0.2;
-  const double y = 0.3;
-
-  std::unique_ptr<ceres::CostFunction> cost_function(
-      new SnavelyReprojectionError(x, y));
-
-  for (auto _ : state) {
-    cost_function->Evaluate(
-        parameters, residuals, state.range(0) ? jacobians : nullptr);
-  }
-}
-BENCHMARK(BM_SnavelyReprojectionCodeGen)->Arg(0)->Arg(1);
-#endif
 
 static void BM_SnavelyReprojectionAutoDiff(benchmark::State& state) {
   using FunctorType =
@@ -366,44 +302,6 @@ static void BM_RelativePoseAutoDiff(benchmark::State& state) {
 }
 
 BENCHMARK(BM_RelativePoseAutoDiff)->Arg(0)->Arg(1);
-
-#ifdef WITH_CODE_GENERATION
-static void BM_BrdfCodeGen(benchmark::State& state) {
-  using FunctorType = ceres::internal::CostFunctionToFunctor<Brdf>;
-
-  double material[] = {1., 2., 3., 4., 5., 6., 7., 8., 9., 10.};
-  auto c = Eigen::Vector3d(0.1, 0.2, 0.3);
-  auto n = Eigen::Vector3d(-0.1, 0.5, 0.2).normalized();
-  auto v = Eigen::Vector3d(0.5, -0.2, 0.9).normalized();
-  auto l = Eigen::Vector3d(-0.3, 0.4, -0.3).normalized();
-  auto x = Eigen::Vector3d(0.5, 0.7, -0.1).normalized();
-  auto y = Eigen::Vector3d(0.2, -0.2, -0.2).normalized();
-
-  double* parameters[7] = {
-      material, c.data(), n.data(), v.data(), l.data(), x.data(), y.data()};
-
-  double jacobian[(10 + 6 * 3) * 3];
-  double residuals[3];
-  double* jacobians[7] = {
-      jacobian + 0,
-      jacobian + 10 * 3,
-      jacobian + 13 * 3,
-      jacobian + 16 * 3,
-      jacobian + 19 * 3,
-      jacobian + 22 * 3,
-      jacobian + 25 * 3,
-  };
-
-  std::unique_ptr<ceres::CostFunction> cost_function(new Brdf());
-
-  for (auto _ : state) {
-    cost_function->Evaluate(
-        parameters, residuals, state.range(0) ? jacobians : nullptr);
-  }
-}
-
-BENCHMARK(BM_BrdfCodeGen)->Arg(0)->Arg(1);
-#endif
 
 static void BM_BrdfAutoDiff(benchmark::State& state) {
   using FunctorType = ceres::internal::CostFunctionToFunctor<Brdf>;

@@ -32,29 +32,19 @@
 #ifndef CERES_INTERNAL_AUTODIFF_BENCHMARKS_LINEAR_COST_FUNCTIONS_H_
 #define CERES_INTERNAL_AUTODIFF_BENCHMARKS_LINEAR_COST_FUNCTIONS_H_
 
-#include "ceres/codegen/codegen_cost_function.h"
 #include "ceres/rotation.h"
 
 namespace ceres {
 
-struct Linear1CostFunction : public ceres::CodegenCostFunction<1, 1> {
+struct Linear1CostFunction {
   template <typename T>
   bool operator()(const T* const x, T* residuals) const {
     residuals[0] = x[0] + T(10);
     return true;
   }
-#ifdef WITH_CODE_GENERATION
-#include "benchmarks/linear1costfunction.h"
-#else
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
-    return false;
-  }
-#endif
 };
 
-struct Linear10CostFunction : public ceres::CodegenCostFunction<10, 10> {
+struct Linear10CostFunction {
   template <typename T>
   bool operator()(const T* const x, T* residuals) const {
     for (int i = 0; i < 10; ++i) {
@@ -62,15 +52,6 @@ struct Linear10CostFunction : public ceres::CodegenCostFunction<10, 10> {
     }
     return true;
   }
-#ifdef WITH_CODE_GENERATION
-#include "benchmarks/linear10costfunction.h"
-#else
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
-    return false;
-  }
-#endif
 };
 }  // namespace ceres
 
