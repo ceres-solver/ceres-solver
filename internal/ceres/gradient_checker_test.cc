@@ -154,7 +154,7 @@ class BadTestTerm : public CostFunction {
         if (jacobians[j]) {
           for (int u = 0; u < parameter_block_sizes()[j]; ++u) {
             // See comments before class.
-            jacobians[j][u] = -f * a_[j][u] + 0.001;
+            jacobians[j][u] = -f * a_[j][u] + 1e-7;
           }
         }
       }
@@ -168,7 +168,7 @@ class BadTestTerm : public CostFunction {
   vector<vector<double>> a_;  // our vectors.
 };
 
-const double kTolerance = 1e-6;
+const double kTolerance = 1e-12;
 
 static void CheckDimensions(const GradientChecker::ProbeResults& results,
                             const std::vector<int>& parameter_sizes,

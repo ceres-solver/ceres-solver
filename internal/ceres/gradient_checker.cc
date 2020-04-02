@@ -130,9 +130,9 @@ GradientChecker::GradientChecker(
     local_parameterizations_.resize(function->parameter_block_sizes().size(),
                                     NULL);
   }
-  DynamicNumericDiffCostFunction<CostFunction, CENTRAL>*
+  DynamicNumericDiffCostFunction<CostFunction, RIDDERS>*
       finite_diff_cost_function =
-      new DynamicNumericDiffCostFunction<CostFunction, CENTRAL>(
+      new DynamicNumericDiffCostFunction<CostFunction, RIDDERS>(
           function, DO_NOT_TAKE_OWNERSHIP, options);
   finite_diff_cost_function_.reset(finite_diff_cost_function);
 
