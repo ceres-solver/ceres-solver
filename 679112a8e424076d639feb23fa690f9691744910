@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3a520ab_9a26f270",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 1780,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-04-02T10:12:22Z",
+      "side": 1,
+      "message": "nitpick: maybe -\u003e may be",
+      "revId": "679112a8e424076d639feb23fa690f9691744910",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43903ce5_b170c31a",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-04-02T10:12:22Z",
+      "side": 1,
+      "message": "nitpick: maybe -\u003e may be",
+      "revId": "679112a8e424076d639feb23fa690f9691744910",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980e7797_e32ab89e",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-04-02T10:12:22Z",
+      "side": 1,
+      "message": "This test name shouldn\u0027t include Dies right?  It\u0027s not actually dying",
+      "revId": "679112a8e424076d639feb23fa690f9691744910",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9f2d49_bf17bd22",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-04-02T10:12:22Z",
+      "side": 1,
+      "message": "This is a separate point, but I don\u0027t actually see anything in parameter_block.h about a negative index mapping to no associated index in an originating Program, perhaps we should add one",
+      "revId": "679112a8e424076d639feb23fa690f9691744910",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b899da_7c66ea95",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-04-02T10:12:22Z",
+      "side": 1,
+      "message": "This also doesn\u0027t seem to be a death-test, so the name shouldn\u0027t have Dies in it should it ?",
+      "revId": "679112a8e424076d639feb23fa690f9691744910",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c7d808_cac514c0",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-04-02T10:12:22Z",
+      "side": 1,
+      "message": "This test doesn\u0027t actually seem to be testing anything - shouldn\u0027t we have an EXPECT_EQ(parameter_block.local_parameterization(), nullptr) if we\u0027re testing the default case?  Although from the name I would assume that the test we want is:\n\nparameter_block.SetParameterization(nullptr);\nEXPECT_EQ(parameter_block.local_parameterization(), nullptr);\n\nrather than verifying that the default is nullptr.",
+      "revId": "679112a8e424076d639feb23fa690f9691744910",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
