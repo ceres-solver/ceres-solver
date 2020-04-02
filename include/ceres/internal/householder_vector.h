@@ -42,8 +42,11 @@ namespace internal {
 // vector as pivot instead of first. This computes the vector v with v(n) = 1
 // and beta such that H = I - beta * v * v^T is orthogonal and
 // H * x = ||x||_2 * e_n.
-template <typename Derived, typename Scalar, int N>
-void ComputeHouseholderVector(const Eigen::DenseBase<Derived>& x,
+//
+// NOTE: Some versions of MSVC have trouble deducing the type of v if
+// you do not specify all the template arguments explicitly.
+template <typename XVectorType, typename Scalar, int N>
+void ComputeHouseholderVector(const XVectorType& x,
                               Eigen::Matrix<Scalar, N, 1>* v,
                               Scalar* beta) {
   CHECK(beta != nullptr);

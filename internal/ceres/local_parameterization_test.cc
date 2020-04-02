@@ -452,7 +452,14 @@ struct HomogeneousVectorParameterizationPlus {
 
     Eigen::Matrix<Scalar, Dim, 1> v;
     Scalar beta;
-    internal::ComputeHouseholderVector(x, &v, &beta);
+
+    // NOTE: The explicit template arguments are needed here because
+    // ComputeHouseholderVector is templated and some versions of MSVC
+    // have trouble deducing the type of v automatically.
+    internal::ComputeHouseholderVector<
+        Eigen::Map<const Eigen::Matrix<Scalar, Dim, 1>>,
+        Scalar,
+        Dim>(x, &v, &beta);
 
     x_plus_delta = x.norm() * (y - v * (beta * v.dot(y)));
 
@@ -586,7 +593,14 @@ struct LineParameterizationPlus {
 
     Eigen::Matrix<Scalar, AmbientSpaceDim, 1> v;
     Scalar beta;
-    internal::ComputeHouseholderVector(dir, &v, &beta);
+
+    // NOTE: The explicit template arguments are needed here because
+    // ComputeHouseholderVector is templated and some versions of MSVC
+    // have trouble deducing the type of v automatically.
+    internal::ComputeHouseholderVector<
+        Eigen::Map<const Eigen::Matrix<Scalar, AmbientSpaceDim, 1>>,
+        Scalar,
+        AmbientSpaceDim>(dir, &v, &beta);
 
     Eigen::Matrix<Scalar, AmbientSpaceDim, 1> y;
     y << 0.5 * delta_origin_point, Scalar(0.0);
