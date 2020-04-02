@@ -16,6 +16,24 @@
       "revId": "8aeb422ca79880bd76779d64558999daf97382f6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c48e1e_1f7079df",
+        "filename": "include/ceres/internal/line_parameterization.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-04-02T15:04:17Z",
+      "side": 1,
+      "message": "so these are spread all over and I am not sure what the point of annotating all of them will be. also this breaks the build on msvc.. so its not a subtle change.",
+      "parentUuid": "a3a92291_4376cb65",
+      "revId": "8aeb422ca79880bd76779d64558999daf97382f6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
