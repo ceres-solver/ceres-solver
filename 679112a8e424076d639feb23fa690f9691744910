@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a57689a_ad3b392f",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 1780,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-04-02T13:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3a520ab_9a26f270",
+      "revId": "679112a8e424076d639feb23fa690f9691744910",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43903ce5_b170c31a",
         "filename": "include/ceres/problem.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "679112a8e424076d639feb23fa690f9691744910",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f717642b_8b56fa13",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-04-02T13:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43903ce5_b170c31a",
+      "revId": "679112a8e424076d639feb23fa690f9691744910",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "deb0920e_60632451",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-04-02T13:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "980e7797_e32ab89e",
+      "revId": "679112a8e424076d639feb23fa690f9691744910",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad9f2d49_bf17bd22",
         "filename": "internal/ceres/parameter_block_test.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2020-04-02T10:12:22Z",
       "side": 1,
       "message": "This is a separate point, but I don\u0027t actually see anything in parameter_block.h about a negative index mapping to no associated index in an originating Program, perhaps we should add one",
+      "revId": "679112a8e424076d639feb23fa690f9691744910",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60dc90e2_ebba6b52",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-04-02T13:44:19Z",
+      "side": 1,
+      "message": "That would be a test at the level of program no? since these parameter blocks can do whatever they want. Thats just a bit of data used by the program object and the parameter block does nothing with it.",
+      "parentUuid": "ad9f2d49_bf17bd22",
       "revId": "679112a8e424076d639feb23fa690f9691744910",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1ae72c16_1c4e1c90",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-04-02T13:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20b899da_7c66ea95",
+      "revId": "679112a8e424076d639feb23fa690f9691744910",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09c7d808_cac514c0",
         "filename": "internal/ceres/parameter_block_test.cc",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "679112a8e424076d639feb23fa690f9691744910",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501937bd_f92943b5",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-04-02T13:44:19Z",
+      "side": 1,
+      "message": "my bad merge comes back to haunt me.",
+      "parentUuid": "09c7d808_cac514c0",
+      "revId": "679112a8e424076d639feb23fa690f9691744910",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
