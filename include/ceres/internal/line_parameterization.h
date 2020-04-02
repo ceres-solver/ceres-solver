@@ -53,8 +53,8 @@ bool LineParameterization<AmbientSpaceDimension>::Plus(
   //   d* = Plus_d(d, delta_d)
   //   o* = Plus_o(o, d, delta_o)
   //
-  // The direction update function Plus_d is the same as for the homogeneous vector
-  // parameterization:
+  // The direction update function Plus_d is the same as for the homogeneous
+  // vector parameterization:
   //
   //   d* = H_{v(d)} [0.5 sinc(0.5 |delta_d|) delta_d, cos(0.5 |delta_d|)]^T
   //
@@ -70,11 +70,11 @@ bool LineParameterization<AmbientSpaceDimension>::Plus(
   static constexpr int kDim = AmbientSpaceDimension;
   using AmbientVector = Eigen::Matrix<double, kDim, 1>;
   using AmbientVectorRef = Eigen::Map<Eigen::Matrix<double, kDim, 1>>;
-  using ConstAmbientVectorRef = Eigen::Map<const Eigen::Matrix<double, kDim, 1>>;
+  using ConstAmbientVectorRef =
+      Eigen::Map<const Eigen::Matrix<double, kDim, 1>>;
   using ConstTangentVectorRef =
       Eigen::Map<const Eigen::Matrix<double, kDim - 1, 1>>;
-  
-  
+
   ConstAmbientVectorRef o(x_ptr);
   ConstAmbientVectorRef d(x_ptr + kDim);
 
@@ -99,7 +99,8 @@ bool LineParameterization<AmbientSpaceDimension>::Plus(
   // Calculate the householder transformation which is needed for f_d and f_o.
   AmbientVector v;
   double beta;
-  internal::ComputeHouseholderVector(d, &v, &beta);
+  internal::ComputeHouseholderVector<ConstAmbientVectorRef, double, kDim>(
+      d, &v, &beta);
 
   if (norm_delta_d != 0.0) {
     // Map the delta from the minimum representation to the over parameterized
@@ -139,7 +140,8 @@ bool LineParameterization<AmbientSpaceDimension>::ComputeJacobian(
     const double* x_ptr, double* jacobian_ptr) const {
   static constexpr int kDim = AmbientSpaceDimension;
   using AmbientVector = Eigen::Matrix<double, kDim, 1>;
-  using ConstAmbientVectorRef = Eigen::Map<const Eigen::Matrix<double, kDim, 1>>;  
+  using ConstAmbientVectorRef =
+      Eigen::Map<const Eigen::Matrix<double, kDim, 1>>;
   using MatrixRef = Eigen::Map<
       Eigen::Matrix<double, 2 * kDim, 2 * (kDim - 1), Eigen::RowMajor>>;
 
@@ -151,7 +153,8 @@ bool LineParameterization<AmbientSpaceDimension>::ComputeJacobian(
 
   AmbientVector v;
   double beta;
-  internal::ComputeHouseholderVector(d, &v, &beta);
+  internal::ComputeHouseholderVector<ConstAmbientVectorRef, double, kDim>(
+      d, &v, &beta);
 
   // The Jacobian is equal to J = 0.5 * H.leftCols(kDim - 1) where H is
   // the Householder matrix (H = I - beta * v * v') for the origin point. For
