@@ -35,7 +35,6 @@
 #include <Eigen/Core>
 #include <cmath>
 
-#include "ceres/codegen/codegen_cost_function.h"
 namespace ceres {
 
 // The brdf is based on:
@@ -44,7 +43,7 @@ namespace ceres {
 //
 // The implementation is based on:
 // https://github.com/wdas/brdf/blob/master/src/brdfs/disney.brdf
-struct Brdf : public ceres::CodegenCostFunction<3, 10, 3, 3, 3, 3, 3, 3> {
+struct Brdf {
  public:
   Brdf() {}
 
@@ -57,7 +56,6 @@ struct Brdf : public ceres::CodegenCostFunction<3, 10, 3, 3, 3, 3, 3, 3> {
                   const T* const x_ptr,
                   const T* const y_ptr,
                   T* residual) const {
-    using ceres::Ternary;
     using Vec3 = Eigen::Matrix<T, 3, 1>;
 
     T metallic = material[0];
@@ -121,8 +119,8 @@ struct Brdf : public ceres::CodegenCostFunction<3, 10, 3, 3, 3, 3, 3, 3> {
     const T aspct = Aspect(anisotropic);
     const T ax_temp = Square(roughness) / aspct;
     const T ay_temp = Square(roughness) * aspct;
-    const T ax = Ternary(ax_temp < eps, eps, ax_temp);
-    const T ay = Ternary(ay_temp < eps, eps, ay_temp);
+    const T ax = (ax_temp < eps ? eps : ax_temp);
+    const T ay = (ay_temp < eps ? eps : ay_temp);
     const T ds = GTR2Aniso(n_dot_h, h_dot_x, h_dot_y, ax, ay);
     const T fh = SchlickFresnel(l_dot_h);
     const Vec3 fs = Lerp(c_spec0, Vec3(T(1), T(1), T(1)), fh);
@@ -180,13 +178,13 @@ struct Brdf : public ceres::CodegenCostFunction<3, 10, 3, 3, 3, 3, 3, 3> {
   T GTR1(const T& n_dot_h, const T& a) const {
     T result = T(0);
 
-    CERES_IF(a >= T(1)) { result = T(1 / M_PI); }
-    CERES_ELSE {
+    if (a >= T(1)) {
+      result = T(1 / M_PI);
+    } else {
       const T a2 = a * a;
       const T t = T(1) + (a2 - T(1)) * n_dot_h * n_dot_h;
       result = (a2 - T(1)) / (T(M_PI) * T(log(a2) * t));
     }
-    CERES_ENDIF;
     return result;
   }
 
@@ -217,16 +215,6 @@ struct Brdf : public ceres::CodegenCostFunction<3, 10, 3, 3, 3, 3, 3, 3> {
   inline T Square(const T& x) const {
     return x * x;
   }
-
-#ifdef WITH_CODE_GENERATION
-#include "benchmarks/brdf.h"
-#else
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
-    return false;
-  }
-#endif
 };
 
 }  // namespace ceres

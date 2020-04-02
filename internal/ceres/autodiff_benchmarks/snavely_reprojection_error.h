@@ -32,12 +32,11 @@
 #ifndef CERES_INTERNAL_AUTODIFF_BENCHMARK_SNAVELY_REPROJECTION_ERROR_H_
 #define CERES_INTERNAL_AUTODIFF_BENCHMARK_SNAVELY_REPROJECTION_ERROR_H_
 
-#include "ceres/codegen/codegen_cost_function.h"
 #include "ceres/rotation.h"
 
 namespace ceres {
 
-struct SnavelyReprojectionError : public ceres::CodegenCostFunction<2, 9, 3> {
+struct SnavelyReprojectionError  {
   SnavelyReprojectionError(double observed_x, double observed_y)
       : observed_x(observed_x), observed_y(observed_y) {}
 
@@ -81,15 +80,6 @@ struct SnavelyReprojectionError : public ceres::CodegenCostFunction<2, 9, 3> {
 
     return true;
   }
-#ifdef WITH_CODE_GENERATION
-#include "benchmarks/snavelyreprojectionerror.h"
-#else
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
-    return false;
-  }
-#endif
   double observed_x;
   double observed_y;
 };
