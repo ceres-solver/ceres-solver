@@ -42,7 +42,7 @@ static void HouseholderTestHelper(const Vector& x) {
   // Check to ensure that H * x = ||x|| * [0 ... 0 1]'.
   Vector v(x.rows());
   double beta;
-  ComputeHouseholderVector(x, &v, &beta);
+  ComputeHouseholderVector<Vector, double, Eigen::Dynamic>(x, &v, &beta);
   Vector result = x - beta * v * (v.transpose() * x);
 
   Vector expected_result(x.rows());
