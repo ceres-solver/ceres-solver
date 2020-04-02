@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "edbc470c_a72e6b34",
+        "filename": "internal/ceres/autodiff_benchmarks/brdf_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-04-02T13:47:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d98b9578_b413b48a",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 3
+      },
+      "revId": "66991a6c44c26be9acb4f4453204829bd4d1cf8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae6a8926_06699581",
         "filename": "internal/ceres/autodiff_benchmarks/linear_cost_functions.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "66991a6c44c26be9acb4f4453204829bd4d1cf8c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a94284_b0cd411c",
+        "filename": "internal/ceres/autodiff_benchmarks/linear_cost_functions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-04-02T13:47:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae6a8926_06699581",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "66991a6c44c26be9acb4f4453204829bd4d1cf8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
