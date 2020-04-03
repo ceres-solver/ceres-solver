@@ -22,6 +22,30 @@
       "revId": "ea35bed1b55865637f7a0e93ca27b8240a231343",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0336c52_679396a2",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6265
+      },
+      "writtenOn": "2020-04-03T13:40:39Z",
+      "side": 1,
+      "message": "The constant benchmark has an analytic Evaluate() function.",
+      "parentUuid": "f4db1a9c_104d87ea",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 18
+      },
+      "revId": "ea35bed1b55865637f7a0e93ca27b8240a231343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
