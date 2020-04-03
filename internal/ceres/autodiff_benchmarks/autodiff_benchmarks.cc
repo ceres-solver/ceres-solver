@@ -41,7 +41,6 @@
 #include "ceres/ceres.h"
 
 namespace ceres {
-
 namespace internal {
 
 // If we want to use functors with both operator() and an Evaluate() method
@@ -54,7 +53,7 @@ namespace internal {
 template <typename CostFunction>
 struct CostFunctionToFunctor {
     template <typename... _Args>
-    CostFunctionToFunctor(_Args&&... __args)
+    explicit CostFunctionToFunctor(_Args&&... __args)
         : cost_function(std::forward<_Args>(__args)...) {}
 
     template <typename... _Args>
@@ -64,7 +63,8 @@ struct CostFunctionToFunctor {
 
     CostFunction cost_function;
 };
-}
+
+}  // namespace internal
 
 template <int kParameterBlockSize>
 static void BM_ConstantAnalytic(benchmark::State& state) {

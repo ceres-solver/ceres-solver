@@ -2123,16 +2123,12 @@ TEST(Problem, SetParameterizationAndThenClearItWithNull) {
   EXPECT_EQ(problem.ParameterBlockSize(x), 3);
 }
 
-TEST(Solver, ZeroSizedLocalParameterizationHoldsParameterBlockConstant) {
+TEST(Solver, ZeroSizedLocalParameterizationMeansParameterBlockIsConstant) {
   double x = 0.0;
   double y = 1.0;
   Problem problem;
   problem.AddResidualBlock(new BinaryCostFunction(1, 1, 1), nullptr, &x, &y);
   problem.SetParameterization(&y, new SubsetParameterization(1, {0}));
-  // Zero dimensional tangent space means that the block is
-  // effectively constant, but because the user did not mark it
-  // constant explicitly, the user will not see it as constant when
-  // querying IsParameterBlockConstant.
   EXPECT_TRUE(problem.IsParameterBlockConstant(&y));
 }
 
