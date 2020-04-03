@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0d99390_ee1b76d6",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-04-03T13:46:52Z",
+      "side": 1,
+      "message": "if we want to use functors with both operator() and an Evaluate() method with AutoDiff then this wrapper class here has to be used.",
+      "range": {
+        "startLine": 47,
+        "startChar": 25,
+        "endLine": 47,
+        "endChar": 33
+      },
+      "revId": "f6e661d4dc847802d276aa5bcd89caa92c504fe7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
