@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4db1a9c_104d87ea",
+        "filename": "internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-04-03T13:35:17Z",
+      "side": 1,
+      "message": "why do we need this anymore? since there are no more Evaluate methods.",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 18
+      },
+      "revId": "ea35bed1b55865637f7a0e93ca27b8240a231343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
