@@ -39,9 +39,36 @@
 #include "ceres/autodiff_benchmarks/relative_pose_error.h"
 #include "ceres/autodiff_benchmarks/snavely_reprojection_error.h"
 #include "ceres/ceres.h"
-#include "ceres/codegen/test_utils.h"
 
 namespace ceres {
+    
+namespace internal {
+
+// CodegenCostFunctions have both, an templated operator() and the Evaluate()
+// function. The operator() is used during code generation and Evaluate() is
+// used during execution.
+//
+// If we want to use the operator() during execution (with autodiff) this
+// wrapper class here has to be used. Autodiff doesn't support functors that
+// have an Evaluate() function.
+//
+// CostFunctionToFunctor hides the Evaluate() function, because it doesn't
+// derive from CostFunction. Autodiff sees it as a simple functor and will use
+// the operator() as expected.
+template <typename CostFunction>
+struct CostFunctionToFunctor {
+    template <typename... _Args>
+    CostFunctionToFunctor(_Args&&... __args)
+        : cost_function(std::forward<_Args>(__args)...) {}
+
+    template <typename... _Args>
+    bool operator()(_Args&&... __args) const {
+        return cost_function(std::forward<_Args>(__args)...);
+    }
+
+    CostFunction cost_function;
+};
+}
 
 template <int kParameterBlockSize>
 static void BM_ConstantAnalytic(benchmark::State& state) {

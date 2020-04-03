@@ -370,8 +370,7 @@ if (BUILD_TESTING AND GFLAGS)
   add_library(test_util
               evaluator_test_utils.cc
               numeric_diff_test_utils.cc
-              test_util.cc
-              codegen/test_utils.cc)
+              test_util.cc)
   target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
 
   if (MINIGLOG)
@@ -527,6 +526,3 @@ if (BUILD_BENCHMARKS)
   add_subdirectory(autodiff_benchmarks)
 endif (BUILD_BENCHMARKS)
 
-if(CODE_GENERATION)
-  add_subdirectory(codegen)
-endif()
