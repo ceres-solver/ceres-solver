@@ -148,18 +148,6 @@ set(CERES_INTERNAL_SRC
     wall_time.cc
 )
 
-if(CODE_GENERATION)
-  set(CERES_CODEGEN_SRC
-      codegen/code_generator.cc
-      codegen/expression.cc
-      codegen/expression_graph.cc
-      codegen/expression_ref.cc
-      codegen/optimize_expression_graph.cc
-      codegen/eliminate_nops.cc
-  )
-  list(APPEND CERES_INTERNAL_SRC ${CERES_CODEGEN_SRC})
-endif(CODE_GENERATION)
-
 # Also depend on the header files so that they appear in IDEs.
 file(GLOB CERES_INTERNAL_HDRS *.h)
 if (MINIGLOG)

@@ -48,7 +48,7 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
-#include "codegen/macros.h"
+
 #include "glog/logging.h"
 
 namespace ceres {
@@ -253,7 +253,7 @@ inline void AngleAxisToQuaternion(const T* angle_axis, T* quaternion) {
   const T theta_squared = a0 * a0 + a1 * a1 + a2 * a2;
 
   // For points not at the origin, the full conversion is numerically stable.
-  CERES_IF(theta_squared > T(0.0)) {
+  if (theta_squared > T(0.0)) {
     const T theta = sqrt(theta_squared);
     const T half_theta = theta * T(0.5);
     const T k = sin(half_theta) / theta;
@@ -261,8 +261,7 @@ inline void AngleAxisToQuaternion(const T* angle_axis, T* quaternion) {
     quaternion[1] = a0 * k;
     quaternion[2] = a1 * k;
     quaternion[3] = a2 * k;
-  }
-  CERES_ELSE {
+  } else {
     // At the origin, sqrt() will produce NaN in the derivative since
     // the argument is zero.  By approximating with a Taylor series,
     // and truncating at one term, the value and first derivatives will be
@@ -273,7 +272,6 @@ inline void AngleAxisToQuaternion(const T* angle_axis, T* quaternion) {
     quaternion[2] = a1 * k;
     quaternion[3] = a2 * k;
   }
-  CERES_ENDIF;
 }
 
 template <typename T>
@@ -285,7 +283,7 @@ inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
 
   // For quaternions representing non-zero rotation, the conversion
   // is numerically stable.
-  CERES_IF(sin_squared_theta > T(0.0)) {
+  if (sin_squared_theta > T(0.0)) {
     const T sin_theta = sqrt(sin_squared_theta);
     const T& cos_theta = quaternion[0];
 
@@ -302,15 +300,14 @@ inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
     //   theta - pi = atan(sin(theta - pi), cos(theta - pi))
     //              = atan(-sin(theta), -cos(theta))
     //
-    const T two_theta = T(2.0) * Ternary((cos_theta < T(0.0)),
-                                         atan2(-sin_theta, -cos_theta),
-                                         atan2(sin_theta, cos_theta));
+    const T two_theta =
+        T(2.0) * ((cos_theta < T(0.0)) ? atan2(-sin_theta, -cos_theta)
+                                       : atan2(sin_theta, cos_theta));
     const T k = two_theta / sin_theta;
     angle_axis[0] = q1 * k;
     angle_axis[1] = q2 * k;
     angle_axis[2] = q3 * k;
-  }
-  CERES_ELSE {
+  } else {
     // For zero rotation, sqrt() will produce NaN in the derivative since
     // the argument is zero.  By approximating with a Taylor series,
     // and truncating at one term, the value and first derivatives will be
@@ -320,7 +317,6 @@ inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
     angle_axis[1] = q2 * k;
     angle_axis[2] = q3 * k;
   }
-  CERES_ENDIF;
 }
 
 template <typename T>
@@ -391,7 +387,7 @@ void AngleAxisToRotationMatrix(
     const T* angle_axis, const MatrixAdapter<T, row_stride, col_stride>& R) {
   static const T kOne = T(1.0);
   const T theta2 = DotProduct(angle_axis, angle_axis);
-  CERES_IF(theta2 > T(std::numeric_limits<double>::epsilon())) {
+  if (theta2 > T(std::numeric_limits<double>::epsilon())) {
     // We want to be careful to only evaluate the square root if the
     // norm of the angle_axis vector is greater than zero. Otherwise
     // we get a division by zero.
@@ -414,8 +410,7 @@ void AngleAxisToRotationMatrix(
     R(1, 2) = -wx*sintheta   + wy*wz*(kOne -    costheta);
     R(2, 2) =     costheta   + wz*wz*(kOne -    costheta);
     // clang-format on
-  }
-  CERES_ELSE {
+  } else {
     // Near zero, we switch to using the first order Taylor expansion.
     R(0, 0) = kOne;
     R(1, 0) = angle_axis[2];
@@ -427,7 +422,6 @@ void AngleAxisToRotationMatrix(
     R(1, 2) = -angle_axis[0];
     R(2, 2) = kOne;
   }
-  CERES_ENDIF;
 }
 
 template <typename T>
@@ -597,7 +591,7 @@ inline void AngleAxisRotatePoint(const T angle_axis[3],
   DCHECK_NE(pt, result) << "Inplace rotation is not supported.";
 
   const T theta2 = DotProduct(angle_axis, angle_axis);
-  CERES_IF(theta2 > T(std::numeric_limits<double>::epsilon())) {
+  if (theta2 > T(std::numeric_limits<double>::epsilon())) {
     // Away from zero, use the rodriguez formula
     //
     //   result = pt costheta +
@@ -628,8 +622,7 @@ inline void AngleAxisRotatePoint(const T angle_axis[3],
     result[0] = pt[0] * costheta + w_cross_pt[0] * sintheta + w[0] * tmp;
     result[1] = pt[1] * costheta + w_cross_pt[1] * sintheta + w[1] * tmp;
     result[2] = pt[2] * costheta + w_cross_pt[2] * sintheta + w[2] * tmp;
-  }
-  CERES_ELSE {
+  } else {
     // Near zero, the first order Taylor approximation of the rotation
     // matrix R corresponding to a vector w and angle w is
     //
@@ -655,7 +648,6 @@ inline void AngleAxisRotatePoint(const T angle_axis[3],
     result[1] = pt[1] + w_cross_pt[1];
     result[2] = pt[2] + w_cross_pt[2];
   }
-  CERES_ENDIF;
 }
 
 }  // namespace ceres

@@ -36,7 +36,7 @@
 
 namespace ceres {
 
-struct SnavelyReprojectionError  {
+struct SnavelyReprojectionError {
   SnavelyReprojectionError(double observed_x, double observed_y)
       : observed_x(observed_x), observed_y(observed_y) {}
 
@@ -45,8 +45,8 @@ struct SnavelyReprojectionError  {
   bool operator()(const T* const camera,
                   const T* const point,
                   T* residuals) const {
-    T ox = CERES_LOCAL_VARIABLE(T, observed_x);
-    T oy = CERES_LOCAL_VARIABLE(T, observed_y);
+    T ox = T(observed_x);
+    T oy = T(observed_y);
 
     // camera[0,1,2] are the angle-axis rotation.
     T p[3];

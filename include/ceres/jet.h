@@ -164,7 +164,6 @@
 #include <string>
 
 #include "Eigen/Core"
-#include "ceres/codegen/internal/types.h"
 #include "ceres/internal/port.h"
 
 namespace ceres {
@@ -354,21 +353,18 @@ inline Jet<T, N> operator/(const Jet<T, N>& f, T s) {
 }
 
 // Binary comparison operators for both scalars and jets.
-#define CERES_DEFINE_JET_COMPARISON_OPERATOR(op)             \
-  template <typename T, int N>                               \
-  inline typename ComparisonReturnType<T>::type operator op( \
-      const Jet<T, N>& f, const Jet<T, N>& g) {              \
-    return f.a op g.a;                                       \
-  }                                                          \
-  template <typename T, int N>                               \
-  inline typename ComparisonReturnType<T>::type operator op( \
-      const T& s, const Jet<T, N>& g) {                      \
-    return s op g.a;                                         \
-  }                                                          \
-  template <typename T, int N>                               \
-  inline typename ComparisonReturnType<T>::type operator op( \
-      const Jet<T, N>& f, const T& s) {                      \
-    return f.a op s;                                         \
+#define CERES_DEFINE_JET_COMPARISON_OPERATOR(op)                    \
+  template <typename T, int N>                                      \
+  inline bool operator op(const Jet<T, N>& f, const Jet<T, N>& g) { \
+    return f.a op g.a;                                              \
+  }                                                                 \
+  template <typename T, int N>                                      \
+  inline bool operator op(const T& s, const Jet<T, N>& g) {         \
+    return s op g.a;                                                \
+  }                                                                 \
+  template <typename T, int N>                                      \
+  inline bool operator op(const Jet<T, N>& f, const T& s) {         \
+    return f.a op s;                                                \
   }
 CERES_DEFINE_JET_COMPARISON_OPERATOR(<)   // NOLINT
 CERES_DEFINE_JET_COMPARISON_OPERATOR(<=)  // NOLINT
@@ -377,18 +373,6 @@ CERES_DEFINE_JET_COMPARISON_OPERATOR(>=)  // NOLINT
 CERES_DEFINE_JET_COMPARISON_OPERATOR(==)  // NOLINT
 CERES_DEFINE_JET_COMPARISON_OPERATOR(!=)  // NOLINT
 #undef CERES_DEFINE_JET_COMPARISON_OPERATOR
-
-template <typename T, int N>
-inline Jet<T, N> Ternary(typename ComparisonReturnType<T>::type c,
-                         const Jet<T, N>& f,
-                         const Jet<T, N>& g) {
-  Jet<T, N> r;
-  r.a = Ternary(c, f.a, g.a);
-  for (int i = 0; i < N; ++i) {
-    r.v[i] = Ternary(c, f.v[i], g.v[i]);
-  }
-  return r;
-}
 
 // Pull some functions from namespace std.
 //
@@ -436,7 +420,7 @@ inline bool IsNormal(double x)   { return std::isnormal(x); }
 // abs(x + h) ~= x + h or -(x + h)
 template <typename T, int N>
 inline Jet<T, N> abs(const Jet<T, N>& f) {
-  return Ternary(f.a < T(0.0), -f, f);
+  return (f.a < T(0.0) ? -f : f);
 }
 
 // log(a + h) ~= log(a) + h / a
@@ -581,12 +565,12 @@ inline Jet<T, N> hypot(const Jet<T, N>& x, const Jet<T, N>& y) {
 
 template <typename T, int N>
 inline Jet<T, N> fmax(const Jet<T, N>& x, const Jet<T, N>& y) {
-  return Ternary(x < y, y, x);
+  return x < y ? y : x;
 }
 
 template <typename T, int N>
 inline Jet<T, N> fmin(const Jet<T, N>& x, const Jet<T, N>& y) {
-  return Ternary(y < x, y, x);
+  return y < x ? y : x;
 }
 
 // Bessel functions of the first kind with integer order equal to 0, 1, n.
@@ -659,7 +643,7 @@ inline Jet<T, N> BesselJn(int n, const Jet<T, N>& f) {
 
 // The jet is finite if all parts of the jet are finite.
 template <typename T, int N>
-inline typename ComparisonReturnType<T>::type isfinite(const Jet<T, N>& f) {
+inline bool isfinite(const Jet<T, N>& f) {
   // Branchless implementation. This is more efficient for the false-case and
   // works with the codegen system.
   auto result = isfinite(f.a);
@@ -671,7 +655,7 @@ inline typename ComparisonReturnType<T>::type isfinite(const Jet<T, N>& f) {
 
 // The jet is infinite if any part of the Jet is infinite.
 template <typename T, int N>
-inline typename ComparisonReturnType<T>::type isinf(const Jet<T, N>& f) {
+inline bool isinf(const Jet<T, N>& f) {
   auto result = isinf(f.a);
   for (int i = 0; i < N; ++i) {
     result = result | isinf(f.v[i]);
@@ -681,7 +665,7 @@ inline typename ComparisonReturnType<T>::type isinf(const Jet<T, N>& f) {
 
 // The jet is NaN if any part of the jet is NaN.
 template <typename T, int N>
-inline typename ComparisonReturnType<T>::type isnan(const Jet<T, N>& f) {
+inline bool isnan(const Jet<T, N>& f) {
   auto result = isnan(f.a);
   for (int i = 0; i < N; ++i) {
     result = result | isnan(f.v[i]);
@@ -691,7 +675,7 @@ inline typename ComparisonReturnType<T>::type isnan(const Jet<T, N>& f) {
 
 // The jet is normal if all parts of the jet are normal.
 template <typename T, int N>
-inline typename ComparisonReturnType<T>::type isnormal(const Jet<T, N>& f) {
+inline bool isnormal(const Jet<T, N>& f) {
   auto result = isnormal(f.a);
   for (int i = 0; i < N; ++i) {
     result = result & isnormal(f.v[i]);
@@ -701,23 +685,23 @@ inline typename ComparisonReturnType<T>::type isnormal(const Jet<T, N>& f) {
 
 // Legacy functions from the pre-C++11 days.
 template <typename T, int N>
-inline typename ComparisonReturnType<T>::type IsFinite(const Jet<T, N>& f) {
+inline bool IsFinite(const Jet<T, N>& f) {
   return isfinite(f);
 }
 
 template <typename T, int N>
-inline typename ComparisonReturnType<T>::type IsNaN(const Jet<T, N>& f) {
+inline bool IsNaN(const Jet<T, N>& f) {
   return isnan(f);
 }
 
 template <typename T, int N>
-inline typename ComparisonReturnType<T>::type IsNormal(const Jet<T, N>& f) {
+inline bool IsNormal(const Jet<T, N>& f) {
   return isnormal(f);
 }
 
 // The jet is infinite if any part of the jet is infinite.
 template <typename T, int N>
-inline typename ComparisonReturnType<T>::type IsInfinite(const Jet<T, N>& f) {
+inline bool IsInfinite(const Jet<T, N>& f) {
   return isinf(f);
 }
 
@@ -759,29 +743,25 @@ template <typename T, int N>
 inline Jet<T, N> pow(T f, const Jet<T, N>& g) {
   Jet<T, N> result;
 
-  CERES_IF(f == T(0) && g.a > T(0)) {
+  if (f == T(0) && g.a > T(0)) {
     // Handle case 2.
     result = Jet<T, N>(T(0.0));
-  }
-  CERES_ELSE {
-    CERES_IF(f < 0 && g.a == floor(g.a)) {  // Handle case 3.
+  } else {
+    if (f < 0 && g.a == floor(g.a)) {  // Handle case 3.
       result = Jet<T, N>(pow(f, g.a));
       for (int i = 0; i < N; i++) {
-        CERES_IF(g.v[i] != T(0.0)) {
+        if (g.v[i] != T(0.0)) {
           // Return a NaN when g.v != 0.
           result.v[i] = std::numeric_limits<T>::quiet_NaN();
         }
-        CERES_ENDIF
       }
-    }
-    CERES_ELSE {
+    } else {
       // Handle case 1.
       T const tmp = pow(f, g.a);
       result = Jet<T, N>(tmp, log(f) * tmp * g.v);
     }
-    CERES_ENDIF;
   }
-  CERES_ENDIF
+
   return result;
 }
 
@@ -825,26 +805,26 @@ template <typename T, int N>
 inline Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
   Jet<T, N> result;
 
-  CERES_IF(f.a == T(0) && g.a >= T(1)) {
+  if (f.a == T(0) && g.a >= T(1)) {
     // Handle cases 2 and 3.
-    CERES_IF(g.a > T(1)) { result = Jet<T, N>(T(0.0)); }
-    CERES_ELSE { result = f; }
-    CERES_ENDIF;
-  }
-  CERES_ELSE {
-    CERES_IF(f.a < T(0) && g.a == floor(g.a)) {
+    if (g.a > T(1)) {
+      result = Jet<T, N>(T(0.0));
+    } else {
+      result = f;
+    }
+
+  } else {
+    if (f.a < T(0) && g.a == floor(g.a)) {
       // Handle cases 7 and 8.
       T const tmp = g.a * pow(f.a, g.a - T(1.0));
       result = Jet<T, N>(pow(f.a, g.a), tmp * f.v);
       for (int i = 0; i < N; i++) {
-        CERES_IF(g.v[i] != T(0.0)) {
+        if (g.v[i] != T(0.0)) {
           // Return a NaN when g.v != 0.
           result.v[i] = T(std::numeric_limits<double>::quiet_NaN());
         }
-        CERES_ENDIF;
       }
-    }
-    CERES_ELSE {
+    } else {
       // Handle the remaining cases. For cases 4,5,6,9 we allow the log()
       // function to generate -HUGE_VAL or NaN, since those cases result in a
       // nonfinite derivative.
@@ -853,9 +833,8 @@ inline Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
       T const tmp3 = tmp1 * log(f.a);
       result = Jet<T, N>(tmp1, tmp2 * f.v + tmp3 * g.v);
     }
-    CERES_ENDIF;
   }
-  CERES_ENDIF;
+
   return result;
 }
 
@@ -874,19 +853,6 @@ inline std::ostream& operator<<(std::ostream& s, const Jet<T, N>& z) {
   s << "]";
   return s;
 }
-
-namespace internal {
-// In the context of AutoDiffCodeGen, local variables can be added using the
-// CERES_LOCAL_VARIABLE macro defined in ceres/codegen/macros.h. This partial
-// specialization defined how local variables of type double are converted to
-// Jet<T>.
-template <typename T, int N>
-struct InputAssignment<Jet<T, N>> {
-  static inline Jet<T, N> Get(double v, const char* name) {
-    return Jet<T, N>(InputAssignment<T>::Get(v, name));
-  }
-};
-}  // namespace internal
 }  // namespace ceres
 
 namespace Eigen {
