@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a399292_b3ef5b87",
+        "filename": "internal/ceres/autodiff_benchmarks/snavely_reprojection_error.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-04-08T13:47:41Z",
+      "side": 1,
+      "message": "don\u0027t need to do this conversion and can directly use this when subtracting below. but this is a minor point.",
+      "range": {
+        "startLine": 48,
+        "startChar": 13,
+        "endLine": 48,
+        "endChar": 23
+      },
+      "revId": "e751d6e4f0daa9f691c5ed25ca8dc564875d8bef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
