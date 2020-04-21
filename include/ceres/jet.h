@@ -855,6 +855,70 @@ inline std::ostream& operator<<(std::ostream& s, const Jet<T, N>& z) {
 }
 }  // namespace ceres
 
+namespace std {
+template <typename T, int N>
+struct numeric_limits<ceres::Jet<T, N>> {
+  static constexpr bool is_specialized = true;
+  static constexpr bool is_signed = std::numeric_limits<T>::is_signed;
+  static constexpr bool is_integer = std::numeric_limits<T>::is_integer;
+  static constexpr bool is_exact = std::numeric_limits<T>::is_exact;
+  static constexpr bool has_infinity = std::numeric_limits<T>::has_infinity;
+  static constexpr bool has_quiet_NaN = std::numeric_limits<T>::has_quiet_NaN;
+  static constexpr bool has_signaling_NaN =
+      std::numeric_limits<T>::has_signaling_NaN;
+  static constexpr bool is_iec559 = std::numeric_limits<T>::is_iec559;
+  static constexpr bool is_bounded = std::numeric_limits<T>::is_bounded;
+  static constexpr bool is_modulo = std::numeric_limits<T>::is_modulo;
+
+  static constexpr std::float_denorm_style has_denorm =
+      std::numeric_limits<T>::has_denorm;
+  static constexpr std::float_round_style round_style =
+      std::numeric_limits<T>::round_style;
+
+  static constexpr int digits = std::numeric_limits<T>::digits;
+  static constexpr int digits10 = std::numeric_limits<T>::digits10;
+  static constexpr int max_digits10 = std::numeric_limits<T>::max_digits10;
+  static constexpr int radix = std::numeric_limits<T>::radix;
+  static constexpr int min_exponent = std::numeric_limits<T>::min_exponent;
+  static constexpr int min_exponent10 = std::numeric_limits<T>::max_exponent10;
+  static constexpr int max_exponent = std::numeric_limits<T>::max_exponent;
+  static constexpr int max_exponent10 = std::numeric_limits<T>::max_exponent10;
+  static constexpr bool traps = std::numeric_limits<T>::traps;
+  static constexpr bool tinyness_before =
+      std::numeric_limits<T>::tinyness_before;
+
+  static constexpr ceres::Jet<T, N> min() noexcept {
+    return ceres::Jet<T, N>(std::numeric_limits<T>::min());
+  }
+  static constexpr ceres::Jet<T, N> lowest() noexcept {
+    return ceres::Jet<T, N>(std::numeric_limits<T>::lowest());
+  }
+  static constexpr ceres::Jet<T, N> epsilon() noexcept {
+    return ceres::Jet<T, N>(std::numeric_limits<T>::epsilon());
+  }
+  static constexpr ceres::Jet<T, N> round_error() noexcept {
+    return ceres::Jet<T, N>(std::numeric_limits<T>::round_error());
+  }
+  static constexpr ceres::Jet<T, N> infinity() noexcept {
+    return ceres::Jet<T, N>(std::numeric_limits<T>::infinity());
+  }
+  static constexpr ceres::Jet<T, N> quiet_NaN() noexcept {
+    return ceres::Jet<T, N>(std::numeric_limits<T>::quiet_NaN());
+  }
+  static constexpr ceres::Jet<T, N> signaling_NaN() noexcept {
+    return ceres::Jet<T, N>(std::numeric_limits<T>::signaling_NaN());
+  }
+  static constexpr ceres::Jet<T, N> denorm_min() noexcept {
+    return ceres::Jet<T, N>(std::numeric_limits<T>::denorm_min());
+  }
+
+  static constexpr ceres::Jet<T, N> max() noexcept {
+    return ceres::Jet<T, N>(std::numeric_limits<T>::max());
+  }
+};
+
+}  // namespace std
+
 namespace Eigen {
 
 // Creating a specialization of NumTraits enables placing Jet objects inside
