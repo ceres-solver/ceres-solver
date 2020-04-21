@@ -214,7 +214,7 @@ void CanonicalViewsClustering::ComputeClusterMembership(
     center_to_cluster_id[centers[i]] = i;
   }
 
-  static const int kInvalidClusterId = -1;
+  static constexpr int kInvalidClusterId = -1;
 
   const IntSet& views = graph_->vertices();
   for (const auto& view : views) {

@@ -125,7 +125,7 @@ WeightedGraph<int>* CreateSchurComplementGraph(
   // Add vertices and initialize the pairs for self edges so that self
   // edges are guaranteed. This is needed for the Canonical views
   // algorithm to work correctly.
-  static const double kSelfEdgeWeight = 1.0;
+  static constexpr double kSelfEdgeWeight = 1.0;
   for (int i = 0; i < visibility.size(); ++i) {
     graph->AddVertex(i);
     graph->AddEdge(i, i, kSelfEdgeWeight);

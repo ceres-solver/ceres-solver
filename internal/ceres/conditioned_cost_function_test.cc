@@ -41,7 +41,7 @@ namespace ceres {
 namespace internal {
 
 // The size of the cost functions we build.
-static const int kTestCostFunctionSize = 3;
+static constexpr int kTestCostFunctionSize = 3;
 
 // A simple cost function: return ax + b.
 class LinearCostFunction : public CostFunction {

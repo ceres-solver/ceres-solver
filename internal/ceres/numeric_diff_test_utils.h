@@ -39,10 +39,10 @@ namespace ceres {
 namespace internal {
 
 // Noise factor for randomized cost function.
-static const double kNoiseFactor = 0.01;
+static constexpr double kNoiseFactor = 0.01;
 
 // Default random seed for randomized cost function.
-static const unsigned int kRandomSeed = 1234;
+static constexpr unsigned int kRandomSeed = 1234;
 
 // y1 = x1'x2      -> dy1/dx1 = x2,               dy1/dx2 = x1
 // y2 = (x1'x2)^2  -> dy2/dx1 = 2 * x2 * (x1'x2), dy2/dx2 = 2 * x1 * (x1'x2)
