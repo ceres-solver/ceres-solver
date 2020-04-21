@@ -80,7 +80,7 @@ static void SetNumericDiffOptions(ceres::NumericDiffOptions* options) {
 
 #define BEGIN_MGH_PROBLEM(name, num_parameters, num_residuals)            \
   struct name {                                                           \
-    static const int kNumParameters = num_parameters;                     \
+    static constexpr int kNumParameters = num_parameters;                 \
     static const double initial_x[kNumParameters];                        \
     static const double lower_bounds[kNumParameters];                     \
     static const double upper_bounds[kNumParameters];                     \

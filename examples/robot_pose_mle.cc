@@ -160,7 +160,7 @@ DEFINE_double(range_stddev, 0.01, "The standard deviation of range readings of "
               "the robot.");
 
 // The stride length of the dynamic_autodiff_cost_function evaluator.
-static const int kStride = 10;
+static constexpr int kStride = 10;
 
 struct OdometryConstraint {
   typedef AutoDiffCostFunction<OdometryConstraint, 1, 1> OdometryCostFunction;

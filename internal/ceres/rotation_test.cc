@@ -334,7 +334,7 @@ TEST(Rotation, QuaternionToAngleAxisAngleIsLessThanPi) {
   EXPECT_LE(angle, kPi);
 }
 
-static const int kNumTrials = 10000;
+static constexpr int kNumTrials = 10000;
 
 // Takes a bunch of random axis/angle values, converts them to quaternions,
 // and back again.
@@ -475,7 +475,7 @@ TEST(Rotation, NearPiAngleAxisRoundTrip) {
 
 TEST(Rotation, AtPiAngleAxisRoundTrip) {
   // A rotation of kPi about the X axis;
-  static const double kMatrix[3][3] = {
+  static constexpr double kMatrix[3][3] = {
     {1.0,  0.0,  0.0},
     {0.0,  -1.0,  0.0},
     {0.0,  0.0,  -1.0}

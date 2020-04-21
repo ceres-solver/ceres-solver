@@ -102,7 +102,9 @@ void TolerantLoss::Evaluate(double s, double rho[3]) const {
   // large, it will overflow.  Since numerically 1 + e^x == e^x when the
   // x is greater than about ln(2^53) for doubles, beyond this threshold
   // we substitute x for ln(1 + e^x) as a numerically equivalent approximation.
-  static const double kLog2Pow53 = 36.7;  // ln(MathLimits<double>::kEpsilon).
+
+  // ln(MathLimits<double>::kEpsilon).
+  static constexpr double kLog2Pow53 = 36.7;
   if (x > kLog2Pow53) {
     rho[0] = s - a_ - c_;
     rho[1] = 1.0;

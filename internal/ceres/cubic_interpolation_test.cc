@@ -38,7 +38,7 @@
 namespace ceres {
 namespace internal {
 
-static const double kTolerance = 1e-12;
+static constexpr double kTolerance = 1e-12;
 
 TEST(Grid1D, OneDataDimension) {
   int x[] = {1, 2, 3};
@@ -255,8 +255,8 @@ class CubicInterpolatorTest : public ::testing::Test {
   }
 
  private:
-  static const int kNumSamples = 10;
-  static const int kNumTestSamples = 100;
+  static constexpr int kNumSamples = 10;
+  static constexpr int kNumTestSamples = 100;
   std::unique_ptr<double[]> values_;
 };
 
@@ -375,10 +375,10 @@ class BiCubicInterpolatorTest : public ::testing::Test {
 
 
   Eigen::Matrix3d coeff_;
-  static const int kNumRows = 10;
-  static const int kNumCols = 10;
-  static const int kNumRowSamples = 100;
-  static const int kNumColSamples = 100;
+  static constexpr int kNumRows = 10;
+  static constexpr int kNumCols = 10;
+  static constexpr int kNumRowSamples = 100;
+  static constexpr int kNumColSamples = 100;
   std::unique_ptr<double[]> values_;
 };
 

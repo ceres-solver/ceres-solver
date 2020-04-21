@@ -307,8 +307,8 @@ class EndianAwareFileReader {
     return value;
   }
  private:
-  static const long int kLittleEndian = 0x03020100ul;
-  static const long int kBigEndian = 0x00010203ul;
+  static constexpr long int kLittleEndian = 0x03020100ul;
+  static constexpr long int kBigEndian = 0x00010203ul;
 
   // Switch endian type between big to little.
   template <typename T>

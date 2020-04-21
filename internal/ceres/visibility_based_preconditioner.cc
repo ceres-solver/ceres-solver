@@ -65,9 +65,9 @@ using std::vector;
 //
 // This will require some more work on the clustering algorithm and
 // possibly some more refactoring of the code.
-static const double kCanonicalViewsSizePenaltyWeight = 3.0;
-static const double kCanonicalViewsSimilarityPenaltyWeight = 0.0;
-static const double kSingleLinkageMinSimilarity = 0.9;
+static constexpr double kCanonicalViewsSizePenaltyWeight = 3.0;
+static constexpr double kCanonicalViewsSimilarityPenaltyWeight = 0.0;
+static constexpr double kSingleLinkageMinSimilarity = 0.9;
 
 VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
     const CompressedRowBlockStructure& bs,

@@ -36,8 +36,8 @@
 namespace ceres {
 namespace internal {
 
-static const bool kFullRank = true;
-static const bool kRankDeficient = false;
+static constexpr bool kFullRank = true;
+static constexpr bool kRankDeficient = false;
 
 template <int kSize>
 typename EigenTypes<kSize, kSize>::Matrix RandomPSDMatrixWithEigenValues(
