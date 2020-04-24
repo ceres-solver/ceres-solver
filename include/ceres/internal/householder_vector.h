@@ -42,21 +42,22 @@ namespace internal {
 // vector as pivot instead of first. This computes the vector v with v(n) = 1
 // and beta such that H = I - beta * v * v^T is orthogonal and
 // H * x = ||x||_2 * e_n.
-//
-// NOTE: Some versions of MSVC have trouble deducing the type of v if
-// you do not specify all the template arguments explicitly.
-template <typename XVectorType, typename Scalar, int N>
-void ComputeHouseholderVector(const XVectorType& x,
-                              Eigen::Matrix<Scalar, N, 1>* v,
+template <typename Scalar>
+void ComputeHouseholderVector(const Scalar* x_ptr,
+                              Scalar* v_ptr,
+                              int size,
                               Scalar* beta) {
   CHECK(beta != nullptr);
-  CHECK(v != nullptr);
-  CHECK_GT(x.rows(), 1);
-  CHECK_EQ(x.rows(), v->rows());
+  CHECK(v_ptr != nullptr);
+  CHECK(x_ptr != nullptr);
+  CHECK_GT(size, 1);
+
+  Eigen::Map<const Eigen::Matrix<Scalar, Eigen::Dynamic, 1>> x(x_ptr, size);
+  Eigen::Map<Eigen::Matrix<Scalar, Eigen::Dynamic, 1>> v(v_ptr, size);
 
   Scalar sigma = x.head(x.rows() - 1).squaredNorm();
-  *v = x;
-  (*v)(v->rows() - 1) = Scalar(1.0);
+  v = x;
+  v(v.rows() - 1) = Scalar(1.0);
 
   *beta = Scalar(0.0);
   const Scalar& x_pivot = x(x.rows() - 1);
@@ -79,7 +80,7 @@ void ComputeHouseholderVector(const XVectorType& x,
 
   *beta = Scalar(2.0) * v_pivot * v_pivot / (sigma + v_pivot * v_pivot);
 
-  v->head(v->rows() - 1) /= v_pivot;
+  v.head(v.rows() - 1) /= v_pivot;
 }
 
 }  // namespace internal

@@ -42,11 +42,7 @@ static void HouseholderTestHelper(const Vector& x) {
   // Check to ensure that H * x = ||x|| * [0 ... 0 1]'.
   Vector v(x.rows());
   double beta;
-
-  // NOTE: The explicit template arguments are needed here because
-  // ComputeHouseholderVector is templated and some versions of MSVC
-  // have trouble deducing the type of v automatically.
-  ComputeHouseholderVector<Vector, double, Eigen::Dynamic>(x, &v, &beta);
+  ComputeHouseholderVector(x.data(), v.data(), x.rows(), &beta);
   Vector result = x - beta * v * (v.transpose() * x);
 
   Vector expected_result(x.rows());

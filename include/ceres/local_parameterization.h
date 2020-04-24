@@ -266,7 +266,7 @@ class CERES_EXPORT HomogeneousVectorParameterization
 // over-parameterized by an origin point and a direction vector. So the
 // parameter vector size needs to be two times the ambient space dimension,
 // where the first half is interpreted as the origin point and the second half
-// as the direction.
+// as the direction. The ambient space dimension must be at least 2.
 //
 // The plus operator for the line direction is the same as for the
 // HomogeneousVectorParameterization. The update of the origin point is
@@ -275,18 +275,18 @@ class CERES_EXPORT HomogeneousVectorParameterization
 // This local parameterization is a special case of the affine Grassmannian
 // manifold (see https://en.wikipedia.org/wiki/Affine_Grassmannian_(manifold))
 // for the case Graff_1(R^n).
-template <int AmbientSpaceDimension>
 class CERES_EXPORT LineParameterization : public LocalParameterization {
  public:
-  static_assert(AmbientSpaceDimension >= 2,
-                "The ambient space must be at least 2");
-
+  explicit LineParameterization(int ambient_space_dimension);
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
   bool ComputeJacobian(const double* x, double* jacobian) const override;
-  int GlobalSize() const override { return 2 * AmbientSpaceDimension; }
-  int LocalSize() const override { return 2 * (AmbientSpaceDimension - 1); }
+  int GlobalSize() const override { return 2 * dim_; }
+  int LocalSize() const override { return 2 * (dim_ - 1); }
+
+ private:
+  int dim_;
 };
 
 // Construct a local parameterization by taking the Cartesian product
@@ -355,7 +355,6 @@ class CERES_EXPORT ProductParameterization : public LocalParameterization {
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"
-#include "ceres/internal/line_parameterization.h"
 
 #endif  // CERES_PUBLIC_LOCAL_PARAMETERIZATION_H_
 
