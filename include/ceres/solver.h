@@ -792,22 +792,22 @@ class CERES_EXPORT Solver {
     // accepted. Unless use_non_monotonic_steps is true this is also
     // the number of steps in which the objective function value/cost
     // went down.
-    int num_successful_steps = -1.0;
+    int num_successful_steps = -1;
 
     // Number of minimizer iterations in which the step was rejected
     // either because it did not reduce the cost enough or the step
     // was not numerically valid.
-    int num_unsuccessful_steps = -1.0;
+    int num_unsuccessful_steps = -1;
 
     // Number of times inner iterations were performed.
-    int num_inner_iteration_steps = -1.0;
+    int num_inner_iteration_steps = -1;
 
     // Total number of iterations inside the line search algorithm
     // across all invocations. We call these iterations "steps" to
     // distinguish them from the outer iterations of the line search
     // and trust region minimizer algorithms which call the line
     // search algorithm as a subroutine.
-    int num_line_search_steps = -1.0;
+    int num_line_search_steps = -1;
 
     // All times reported below are wall times.
 
