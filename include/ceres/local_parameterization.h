@@ -276,7 +276,7 @@ class CERES_EXPORT HomogeneousVectorParameterization
 // manifold (see https://en.wikipedia.org/wiki/Affine_Grassmannian_(manifold))
 // for the case Graff_1(R^n).
 template <int AmbientSpaceDimension>
-class CERES_EXPORT LineParameterization : public LocalParameterization {
+class LineParameterization : public LocalParameterization {
  public:
   static_assert(AmbientSpaceDimension >= 2,
                 "The ambient space must be at least 2");
