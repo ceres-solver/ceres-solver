@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1762eb86_66c48376",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-04-27T17:36:29Z",
+      "side": 1,
+      "message": "why does this need to be inlined? also its a virtual function, do you really expect to this get inlined?",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 184,
+        "endChar": 8
+      },
+      "revId": "bea3cb0dca56884a3d8d5fc6ede212a9aaa20a6a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
