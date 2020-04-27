@@ -40,7 +40,7 @@ template <int kParameterBlockSize>
 struct ConstantCostFunction
     : public ceres::SizedCostFunction<1, kParameterBlockSize> {
   template <typename T>
-  bool operator()(const T* const x, T* residuals) const {
+  inline bool operator()(const T* const x, T* residuals) const {
     residuals[0] = T(5);
     return true;
   }

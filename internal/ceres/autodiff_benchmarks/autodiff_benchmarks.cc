@@ -57,7 +57,7 @@ struct CostFunctionToFunctor {
         : cost_function(std::forward<_Args>(__args)...) {}
 
     template <typename... _Args>
-    bool operator()(_Args&&... __args) const {
+    inline bool operator()(_Args&&... __args) const {
         return cost_function(std::forward<_Args>(__args)...);
     }
 
@@ -171,7 +171,7 @@ struct Rat43CostFunctor {
   Rat43CostFunctor(const double x, const double y) : x_(x), y_(y) {}
 
   template <typename T>
-  bool operator()(const T* parameters, T* residuals) const {
+  inline bool operator()(const T* parameters, T* residuals) const {
     const T& b1 = parameters[0];
     const T& b2 = parameters[1];
     const T& b3 = parameters[2];

@@ -38,7 +38,7 @@ namespace ceres {
 
 struct Linear1CostFunction {
   template <typename T>
-  bool operator()(const T* const x, T* residuals) const {
+  inline bool operator()(const T* const x, T* residuals) const {
     residuals[0] = x[0] + T(10);
     return true;
   }
@@ -46,7 +46,7 @@ struct Linear1CostFunction {
 
 struct Linear10CostFunction {
   template <typename T>
-  bool operator()(const T* const x, T* residuals) const {
+  inline bool operator()(const T* const x, T* residuals) const {
     for (int i = 0; i < 10; ++i) {
       residuals[i] = x[i] + T(i);
     }
