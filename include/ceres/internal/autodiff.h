@@ -184,7 +184,7 @@ namespace internal {
 template <int j, int N, int Offset, typename T, typename JetT>
 struct Make1stOrderPerturbation {
  public:
-  static void Apply(const T* src, JetT* dst) {
+  inline static void Apply(const T* src, JetT* dst) {
     if (j == 0) {
       DCHECK(src);
       DCHECK(dst);
@@ -217,7 +217,7 @@ struct Make1stOrderPerturbations<integer_sequence<int, N, Ns...>,
                                  ParameterIdx,
                                  Offset> {
   template <typename T, typename JetT>
-  static void Apply(T const* const* parameters, JetT* x) {
+  inline static void Apply(T const* const* parameters, JetT* x) {
     Make1stOrderPerturbation<0, N, Offset, T, JetT>::Apply(
         parameters[ParameterIdx], x + Offset);
     Make1stOrderPerturbations<integer_sequence<int, Ns...>,
@@ -280,7 +280,7 @@ struct Take1stOrderParts<integer_sequence<int, N, Ns...>,
                          ParameterIdx,
                          Offset> {
   template <typename JetT, typename T>
-  static void Apply(int num_outputs, JetT* output, T** jacobians) {
+  inline static void Apply(int num_outputs, JetT* output, T** jacobians) {
     if (jacobians[ParameterIdx]) {
       Take1stOrderPart<Offset, N>(num_outputs, output, jacobians[ParameterIdx]);
     }

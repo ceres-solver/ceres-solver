@@ -102,8 +102,8 @@ struct PhotometricError {
         intrinsics_(intrinsics) {}
 
   template <typename T>
-  bool Project(Eigen::Matrix<T, 2, 1>& proj,
-               const Eigen::Matrix<T, 3, 1>& p) const {
+  inline bool Project(Eigen::Matrix<T, 2, 1>& proj,
+                      const Eigen::Matrix<T, 3, 1>& p) const {
     const double& fx = intrinsics_[0];
     const double& fy = intrinsics_[1];
     const double& cx = intrinsics_[2];
@@ -136,10 +136,10 @@ struct PhotometricError {
   }
 
   template <typename T>
-  bool operator()(const T* const pose_host_ptr,
-                  const T* const pose_target_ptr,
-                  const T* const idist_ptr,
-                  T* residuals_ptr) const {
+  inline bool operator()(const T* const pose_host_ptr,
+                         const T* const pose_target_ptr,
+                         const T* const idist_ptr,
+                         T* residuals_ptr) const {
     Eigen::Map<const Eigen::Quaternion<T>> q_w_h(pose_host_ptr);
     Eigen::Map<const Eigen::Matrix<T, 3, 1>> t_w_h(pose_host_ptr + 4);
     Eigen::Map<const Eigen::Quaternion<T>> q_w_t(pose_target_ptr);
