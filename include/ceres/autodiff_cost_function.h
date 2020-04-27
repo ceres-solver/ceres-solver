@@ -181,9 +181,9 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
   //
   // To handle variadic cost functions, some template magic is needed. It's
   // mostly hidden inside autodiff.h.
-  bool Evaluate(double const* const* parameters,
-                double* residuals,
-                double** jacobians) const override {
+  inline bool Evaluate(double const* const* parameters,
+                       double* residuals,
+                       double** jacobians) const override {
     using ParameterDims =
         typename SizedCostFunction<kNumResiduals, Ns...>::ParameterDims;
 

@@ -48,9 +48,9 @@ struct RelativePoseError {
       : meas_q_i_j_(q_i_j), meas_t_i_j_(t_i_j) {}
 
   template <typename T>
-  bool operator()(const T* const pose_i_ptr,
-                  const T* const pose_j_ptr,
-                  T* residuals_ptr) const {
+  inline bool operator()(const T* const pose_i_ptr,
+                         const T* const pose_j_ptr,
+                         T* residuals_ptr) const {
     Eigen::Map<const Eigen::Quaternion<T>> q_w_i(pose_i_ptr);
     Eigen::Map<const Eigen::Matrix<T, 3, 1>> t_w_i(pose_i_ptr + 4);
     Eigen::Map<const Eigen::Quaternion<T>> q_w_j(pose_j_ptr);
