@@ -16,6 +16,24 @@
       "revId": "f2ec19bea66a226ea052521c985330a4a57b7143",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318bf229_8f850d7f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-05-07T14:12:57Z",
+      "side": 1,
+      "message": "Moved into the `if (MSVC)` block.\n\nI had left it outside the MSVC block since the CMake documentation says CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS applies to all MS-compatible tools which seems to be emphasized by the name (i.e. it\u0027s not CMAKE_MSVC_EXPORT_ALL_SYMBOLS). Seems likely that it will include clang today and potentially others in the future, but until then it\u0027s fine to just keep things simple.",
+      "parentUuid": "fe1b0161_98873708",
+      "revId": "f2ec19bea66a226ea052521c985330a4a57b7143",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }

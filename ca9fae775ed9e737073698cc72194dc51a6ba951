@@ -124,6 +124,24 @@
       "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32d95be_58e4b18c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-05-07T14:12:57Z",
+      "side": 1,
+      "message": "That looks good to me. Done in Patch Set 4.",
+      "parentUuid": "813ba9fe_020e6369",
+      "revId": "ca9fae775ed9e737073698cc72194dc51a6ba951",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
