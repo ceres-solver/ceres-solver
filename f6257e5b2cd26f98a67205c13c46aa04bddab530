@@ -22,6 +22,30 @@
       "revId": "f6257e5b2cd26f98a67205c13c46aa04bddab530",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2c4488_5601bdba",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5770
+      },
+      "writtenOn": "2020-05-07T12:37:59Z",
+      "side": 1,
+      "message": "Yes, looking closer it is possible for the compiler (or end user) to do something that wouldn\u0027t make sense.\n\nHow about a default (blank) constructor, and a move constructor which moves the ownership? That should make std::vector\u003cAutoDiffCostFunction\u003c...\u003e\u003e with reserve() and emplace_back() work without copy constructors, and solves the question of who owns the internal functor pointer.",
+      "parentUuid": "a85eaa99_56abfad5",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 10
+      },
+      "revId": "f6257e5b2cd26f98a67205c13c46aa04bddab530",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
