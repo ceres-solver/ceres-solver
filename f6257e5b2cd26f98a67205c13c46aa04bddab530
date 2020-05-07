@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a85eaa99_56abfad5",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-05-07T12:05:51Z",
+      "side": 1,
+      "message": "This is going to be a problem.\nImagine the following sequence of events.\n\n1. Create an AutoDiffCostFunction which owns the functor\n2. Assign it to another AutoDiffCostFunction\n3. Delete the first one.\n4. you are left with a dangling reference in the second functor.",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 10
+      },
+      "revId": "f6257e5b2cd26f98a67205c13c46aa04bddab530",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
