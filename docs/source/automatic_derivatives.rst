@@ -266,7 +266,6 @@ the Jacobian as follows:
 
 Indeed, this is essentially how :class:`AutoDiffCostFunction` works.
 
-
 Pitfalls
 ========
 

@@ -654,6 +654,7 @@ void EuclideanBundleCommonIntrinsics(const vector<Marker> &all_markers,
   PrintCameraIntrinsics("Original intrinsics: ", camera_intrinsics);
 
   ceres::Problem::Options problem_options;
+  problem_options.cost_function_ownership = ceres::DO_NOT_TAKE_OWNERSHIP;
   ceres::Problem problem(problem_options);
 
   // Convert cameras rotations to angle axis and merge with translation
@@ -678,6 +679,11 @@ void EuclideanBundleCommonIntrinsics(const vector<Marker> &all_markers,
         new ceres::SubsetParameterization(6, constant_translation);
   }
 
+  std::vector<OpenCVReprojectionError> errors;
+  std::vector<ceres::AutoDiffCostFunction<OpenCVReprojectionError, 2, 8, 6, 3>> costFunctions;
+  errors.reserve(all_markers.size());
+  costFunctions.reserve(all_markers.size());
+
   int num_residuals = 0;
   bool have_locked_camera = false;
   for (int i = 0; i < all_markers.size(); ++i) {
@@ -692,11 +698,10 @@ void EuclideanBundleCommonIntrinsics(const vector<Marker> &all_markers,
     // camera translaiton.
     double *current_camera_R_t = &all_cameras_R_t[camera->image](0);
 
-    problem.AddResidualBlock(new ceres::AutoDiffCostFunction<
-        OpenCVReprojectionError, 2, 8, 6, 3>(
-            new OpenCVReprojectionError(
-                marker.x,
-                marker.y)),
+    errors.emplace_back(marker.x, marker.y);
+    costFunctions.emplace_back(&errors.back(), ceres::DO_NOT_TAKE_OWNERSHIP);
+
+    problem.AddResidualBlock(&costFunctions.back(),
         NULL,
         camera_intrinsics,
         current_camera_R_t,
