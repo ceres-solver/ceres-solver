@@ -266,6 +266,14 @@ the Jacobian as follows:
 
 Indeed, this is essentially how :class:`AutoDiffCostFunction` works.
 
+Memory Management
+-----------------
+
+By default :class:`AutoDiffCostFunction` will take ownership of the cost
+functor pointer passed to it, and will call the cost functor's destructor
+when the :class:`AutoDiffCostFunction` itself is deleted. However, this may be
+undesirable in certain cases, thus it is also possible to specify
+:class:`DO_NOT_TAKE_OWNERSHIP` as a second argument in the constructor.
 
 Pitfalls
 ========
