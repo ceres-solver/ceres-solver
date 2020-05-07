@@ -268,6 +268,21 @@ the corresponding accessors. This information will be verified by the
    computing a 1-dimensional output from two arguments, both
    2-dimensional.
 
+   By default :class:`AutoDiffCostFunction` will take ownership of the cost
+   functor pointer passed to it, ie. will call `delete` on the cost functor
+   when the :class:`AutoDiffCostFunction` itself is deleted. However, this may
+   be undesirable in certain cases, therefore it is also possible to specify
+   :class:`DO_NOT_TAKE_OWNERSHIP` as a second argument in the constructor,
+   while passing a pointer to a cost functor which does not need to be deleted
+   by the AutoDiffCostFunction. For example:
+
+   .. code-block:: c++
+
+    MyScalarCostFunctor functor(1.0)
+    CostFunction* cost_function
+        = new AutoDiffCostFunction<MyScalarCostFunctor, 1, 2, 2>(
+            &functor, DO_NOT_TAKE_OWNERSHIP);
+
    :class:`AutoDiffCostFunction` also supports cost functions with a
    runtime-determined number of residuals. For example:
 
