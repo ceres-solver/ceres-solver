@@ -1133,7 +1133,7 @@ elimination group [LiSaad]_.
 
 .. member:: double Solver::Options::min_lm_diagonal
 
-   Default: ``1e6``
+   Default: ``1e-6``
 
    The ``LEVENBERG_MARQUARDT`` strategy, uses a diagonal matrix to
    regularize the trust region step. This is the lower bound on
