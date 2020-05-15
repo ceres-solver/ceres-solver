@@ -91,6 +91,18 @@ macro(CERES_REPORT_NOT_FOUND REASON_MSG)
   return()
 endmacro(CERES_REPORT_NOT_FOUND)
 
+
+# ceres_message([mode] "message text")
+#
+# Wraps the standard cmake 'message' command, but suppresses output
+# if the QUIET flag was passed to the find_package(Ceres ...) call.
+function(ceres_message)
+  if (NOT Ceres_FIND_QUIETLY)
+    message(${ARGN})
+  endif()
+endfunction()
+
+
 # ceres_pretty_print_cmake_list( OUTPUT_VAR [item1 [item2 ... ]] )
 #
 # Sets ${OUTPUT_VAR} in the caller's scope to a human-readable string
@@ -185,7 +197,7 @@ if (EIGEN3_FOUND)
       "Wikipedia article http://en.wikipedia.org/wiki/One_Definition_Rule "
       "for more details")
   endif ()
-  message(STATUS "Found required Ceres dependency: "
+  ceres_message(STATUS "Found required Ceres dependency: "
     "Eigen version ${CERES_EIGEN_VERSION} in ${EIGEN3_INCLUDE_DIRS}")
 else (EIGEN3_FOUND)
   ceres_report_not_found("Missing required Ceres "
@@ -201,7 +213,7 @@ set(CERES_GFLAGS_VERSION @gflags_VERSION@)
 if (CERES_USES_MINIGLOG)
   # Output message at standard log level (not the lower STATUS) so that
   # the message is output in GUI during configuration to warn user.
-  message("-- Found Ceres compiled with miniglog substitute "
+  ceres_message("-- Found Ceres compiled with miniglog substitute "
     "for glog, beware this will likely cause problems if glog is later linked.")
 else(CERES_USES_MINIGLOG)
   # As imported CMake targets are not re-exported when a dependent target is
@@ -224,7 +236,7 @@ else(CERES_USES_MINIGLOG)
   # Search quietly s/t we control the timing of the error message if not found.
   find_package(Glog QUIET)
   if (GLOG_FOUND)
-    message(STATUS "Found required Ceres dependency: glog")
+    ceres_message(STATUS "Found required Ceres dependency: glog")
   else()
     ceres_report_not_found("Missing required Ceres "
       "dependency: glog. Searched using GLOG_INCLUDE_DIR_HINTS: "
@@ -237,7 +249,7 @@ else(CERES_USES_MINIGLOG)
     # Search quietly s/t we control the timing of the error message if not found.
     find_package(gflags ${CERES_GFLAGS_VERSION} CONFIG QUIET)
     if (gflags_FOUND)
-      message(STATUS "Found required Ceres dependency: gflags")
+      ceres_message(STATUS "Found required Ceres dependency: gflags")
     else()
       ceres_report_not_found("Missing required Ceres "
         "dependency: gflags.")
@@ -301,7 +313,7 @@ endif()
 
 # As we use CERES_REPORT_NOT_FOUND() to abort, if we reach this point we have
 # found Ceres and all required dependencies.
-message(STATUS "Found " ${CERES_DETECTED_VERSION_STRING})
+ceres_message(STATUS "Found " ${CERES_DETECTED_VERSION_STRING})
 
 # Set CERES_FOUND to be equivalent to Ceres_FOUND, which is set to
 # TRUE by FindPackage() if this file is found and run, and after which
