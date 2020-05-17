@@ -579,9 +579,14 @@ inline Jet<T, N> fmin(const Jet<T, N>& x, const Jet<T, N>& y) {
 // _j[0,1,n]().  Where available on MSVC, use _j[0,1,n]() to avoid deprecated
 // function errors in client code (the specific warning is suppressed when
 // Ceres itself is built).
+//
+// Newer gcc/clang on MINGW have neither j[0,1,n] nor _j[0,1,n], but do have the
+// new C++ standard std::cyl_bessel_j. So use it for C++ 17 or greater.
 inline double BesselJ0(double x) {
 #if defined(CERES_MSVC_USE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
   return _j0(x);
+#elif __cplusplus >= 201703U
+  return std::cyl_bessel_j(0.0, x);
 #else
   return j0(x);
 #endif
@@ -589,6 +594,8 @@ inline double BesselJ0(double x) {
 inline double BesselJ1(double x) {
 #if defined(CERES_MSVC_USE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
   return _j1(x);
+#elif __cplusplus >= 201703U
+  return std::cyl_bessel_j(1.0, x);
 #else
   return j1(x);
 #endif
@@ -596,6 +603,8 @@ inline double BesselJ1(double x) {
 inline double BesselJn(int n, double x) {
 #if defined(CERES_MSVC_USE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
   return _jn(n, x);
+#elif __cplusplus >= 201703U
+  return std::cyl_bessel_j(static_cast<double>(n), x);
 #else
   return jn(n, x);
 #endif
