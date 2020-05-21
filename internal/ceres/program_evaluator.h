@@ -104,12 +104,12 @@ struct NullJacobianFinalizer {
   void operator()(SparseMatrix* jacobian, int num_parameters) {}
 };
 
-template<typename EvaluatePreparer,
-         typename JacobianWriter,
-         typename JacobianFinalizer = NullJacobianFinalizer>
+template <typename EvaluatePreparer,
+          typename JacobianWriter,
+          typename JacobianFinalizer = NullJacobianFinalizer>
 class ProgramEvaluator : public Evaluator {
  public:
-  ProgramEvaluator(const Evaluator::Options &options, Program* program)
+  ProgramEvaluator(const Evaluator::Options& options, Program* program)
       : options_(options),
         program_(program),
         jacobian_writer_(options, program),
@@ -117,17 +117,16 @@ class ProgramEvaluator : public Evaluator {
             jacobian_writer_.CreateEvaluatePreparers(options.num_threads)) {
 #ifdef CERES_NO_THREADS
     if (options_.num_threads > 1) {
-      LOG(WARNING)
-          << "No threading support is compiled into this binary; "
-          << "only options.num_threads = 1 is supported. Switching "
-          << "to single threaded mode.";
+      LOG(WARNING) << "No threading support is compiled into this binary; "
+                   << "only options.num_threads = 1 is supported. Switching "
+                   << "to single threaded mode.";
       options_.num_threads = 1;
     }
-#endif // CERES_NO_THREADS
+#endif  // CERES_NO_THREADS
 
     BuildResidualLayout(*program, &residual_layout_);
-    evaluate_scratch_.reset(CreateEvaluatorScratch(*program,
-                                                   options.num_threads));
+    evaluate_scratch_.reset(
+        CreateEvaluatorScratch(*program, options.num_threads));
   }
 
   // Implementation of Evaluator interface.
@@ -142,10 +141,10 @@ class ProgramEvaluator : public Evaluator {
                 double* gradient,
                 SparseMatrix* jacobian) final {
     ScopedExecutionTimer total_timer("Evaluator::Total", &execution_summary_);
-    ScopedExecutionTimer call_type_timer(gradient == NULL && jacobian == NULL
-                                         ? "Evaluator::Residual"
-                                         : "Evaluator::Jacobian",
-                                         &execution_summary_);
+    ScopedExecutionTimer call_type_timer(
+        gradient == nullptr && jacobian == nullptr ? "Evaluator::Residual"
+                                                   : "Evaluator::Jacobian",
+        &execution_summary_);
 
     // The parameters are stateful, so set the state before evaluating.
     if (!program_->StateVectorToParameterBlocks(state)) {
@@ -153,27 +152,28 @@ class ProgramEvaluator : public Evaluator {
     }
 
     // Notify the user about a new evaluation point if they are interested.
-    if (options_.evaluation_callback != NULL) {
+    if (options_.evaluation_callback != nullptr) {
       program_->CopyParameterBlockStateToUserState();
       options_.evaluation_callback->PrepareForEvaluation(
-          /*jacobians=*/(gradient != NULL || jacobian != NULL),
+          /*jacobians=*/(gradient != nullptr || jacobian != nullptr),
           evaluate_options.new_evaluation_point);
     }
 
-    if (residuals != NULL) {
+    if (residuals != nullptr) {
       VectorRef(residuals, program_->NumResiduals()).setZero();
     }
 
-    if (jacobian != NULL) {
+    if (jacobian != nullptr) {
       jacobian->SetZero();
     }
 
     // Each thread gets it's own cost and evaluate scratch space.
     for (int i = 0; i < options_.num_threads; ++i) {
       evaluate_scratch_[i].cost = 0.0;
-      if (gradient != NULL) {
+      if (gradient != nullptr) {
         VectorRef(evaluate_scratch_[i].gradient.get(),
-                  program_->NumEffectiveParameters()).setZero();
+                  program_->NumEffectiveParameters())
+            .setZero();
       }
     }
 
@@ -197,16 +197,16 @@ class ProgramEvaluator : public Evaluator {
 
           // Prepare block residuals if requested.
           const ResidualBlock* residual_block = program_->residual_blocks()[i];
-          double* block_residuals = NULL;
-          if (residuals != NULL) {
+          double* block_residuals = nullptr;
+          if (residuals != nullptr) {
             block_residuals = residuals + residual_layout_[i];
-          } else if (gradient != NULL) {
+          } else if (gradient != nullptr) {
             block_residuals = scratch->residual_block_residuals.get();
           }
 
           // Prepare block jacobians if requested.
-          double** block_jacobians = NULL;
-          if (jacobian != NULL || gradient != NULL) {
+          double** block_jacobians = nullptr;
+          if (jacobian != nullptr || gradient != nullptr) {
             preparer->Prepare(residual_block,
                               i,
                               jacobian,
@@ -229,15 +229,13 @@ class ProgramEvaluator : public Evaluator {
           scratch->cost += block_cost;
 
           // Store the jacobians, if they were requested.
-          if (jacobian != NULL) {
-            jacobian_writer_.Write(i,
-                                   residual_layout_[i],
-                                   block_jacobians,
-                                   jacobian);
+          if (jacobian != nullptr) {
+            jacobian_writer_.Write(
+                i, residual_layout_[i], block_jacobians, jacobian);
           }
 
           // Compute and store the gradient, if it was requested.
-          if (gradient != NULL) {
+          if (gradient != nullptr) {
             int num_residuals = residual_block->NumResiduals();
             int num_parameter_blocks = residual_block->NumParameterBlocks();
             for (int j = 0; j < num_parameter_blocks; ++j) {
@@ -262,12 +260,12 @@ class ProgramEvaluator : public Evaluator {
 
       // Sum the cost and gradient (if requested) from each thread.
       (*cost) = 0.0;
-      if (gradient != NULL) {
+      if (gradient != nullptr) {
         VectorRef(gradient, num_parameters).setZero();
       }
       for (int i = 0; i < options_.num_threads; ++i) {
         (*cost) += evaluate_scratch_[i].cost;
-        if (gradient != NULL) {
+        if (gradient != nullptr) {
           VectorRef(gradient, num_parameters) +=
               VectorRef(evaluate_scratch_[i].gradient.get(), num_parameters);
         }
@@ -277,7 +275,7 @@ class ProgramEvaluator : public Evaluator {
       // `num_parameters` is passed to the finalizer so that additional
       // storage can be reserved for additional diagonal elements if
       // necessary.
-      if (jacobian != NULL) {
+      if (jacobian != nullptr) {
         JacobianFinalizer f;
         f(jacobian, num_parameters);
       }
@@ -291,16 +289,12 @@ class ProgramEvaluator : public Evaluator {
     return program_->Plus(state, delta, state_plus_delta);
   }
 
-  int NumParameters() const final {
-    return program_->NumParameters();
-  }
+  int NumParameters() const final { return program_->NumParameters(); }
   int NumEffectiveParameters() const final {
     return program_->NumEffectiveParameters();
   }
 
-  int NumResiduals() const final {
-    return program_->NumResiduals();
-  }
+  int NumResiduals() const final { return program_->NumResiduals(); }
 
   std::map<std::string, CallStatistics> Statistics() const final {
     return execution_summary_.statistics();
@@ -319,8 +313,7 @@ class ProgramEvaluator : public Evaluator {
       VectorRef(gradient.get(), num_parameters).setZero();
       residual_block_residuals.reset(
           new double[max_residuals_per_residual_block]);
-      jacobian_block_ptrs.reset(
-          new double*[max_parameters_per_residual_block]);
+      jacobian_block_ptrs.reset(new double*[max_parameters_per_residual_block]);
     }
 
     double cost;
