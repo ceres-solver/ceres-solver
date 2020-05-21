@@ -146,7 +146,7 @@ void TrustRegionMinimizer::Init(const Minimizer::Options& options,
 
   is_not_silent_ = !options.is_silent;
   inner_iterations_are_enabled_ =
-      options.inner_iteration_minimizer.get() != NULL;
+      options.inner_iteration_minimizer.get() != nullptr;
   inner_iterations_were_useful_ = false;
 
   num_parameters_ = evaluator_->NumParameters();
@@ -492,7 +492,7 @@ void TrustRegionMinimizer::DoInnerIterationsIfNeeded() {
       options_, inner_iteration_x_.data(), &inner_iteration_summary);
   double inner_iteration_cost;
   if (!evaluator_->Evaluate(
-          inner_iteration_x_.data(), &inner_iteration_cost, NULL, NULL, NULL)) {
+          inner_iteration_x_.data(), &inner_iteration_cost, nullptr, nullptr, nullptr)) {
     VLOG_IF(2, is_not_silent_) << "Inner iteration failed.";
     return;
   }
@@ -734,7 +734,7 @@ void TrustRegionMinimizer::ComputeCandidatePointAndEvaluateCost() {
   }
 
   if (!evaluator_->Evaluate(
-          candidate_x_.data(), &candidate_cost_, NULL, NULL, NULL)) {
+          candidate_x_.data(), &candidate_cost_, nullptr, nullptr, nullptr)) {
     LOG_IF(WARNING, is_not_silent_)
         << "Step failed to evaluate. "
         << "Treating it as a step with infinite cost";
