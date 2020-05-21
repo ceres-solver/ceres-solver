@@ -142,7 +142,7 @@ class ProgramEvaluator : public Evaluator {
                 double* gradient,
                 SparseMatrix* jacobian) final {
     ScopedExecutionTimer total_timer("Evaluator::Total", &execution_summary_);
-    ScopedExecutionTimer call_type_timer(gradient == NULL && jacobian == NULL
+    ScopedExecutionTimer call_type_timer(gradient == nullptr && jacobian == nullptr
                                          ? "Evaluator::Residual"
                                          : "Evaluator::Jacobian",
                                          &execution_summary_);
@@ -153,25 +153,25 @@ class ProgramEvaluator : public Evaluator {
     }
 
     // Notify the user about a new evaluation point if they are interested.
-    if (options_.evaluation_callback != NULL) {
+    if (options_.evaluation_callback != nullptr) {
       program_->CopyParameterBlockStateToUserState();
       options_.evaluation_callback->PrepareForEvaluation(
-          /*jacobians=*/(gradient != NULL || jacobian != NULL),
+          /*jacobians=*/(gradient != nullptr || jacobian != nullptr),
           evaluate_options.new_evaluation_point);
     }
 
-    if (residuals != NULL) {
+    if (residuals != nullptr) {
       VectorRef(residuals, program_->NumResiduals()).setZero();
     }
 
-    if (jacobian != NULL) {
+    if (jacobian != nullptr) {
       jacobian->SetZero();
     }
 
     // Each thread gets it's own cost and evaluate scratch space.
     for (int i = 0; i < options_.num_threads; ++i) {
       evaluate_scratch_[i].cost = 0.0;
-      if (gradient != NULL) {
+      if (gradient != nullptr) {
         VectorRef(evaluate_scratch_[i].gradient.get(),
                   program_->NumEffectiveParameters()).setZero();
       }
@@ -197,16 +197,16 @@ class ProgramEvaluator : public Evaluator {
 
           // Prepare block residuals if requested.
           const ResidualBlock* residual_block = program_->residual_blocks()[i];
-          double* block_residuals = NULL;
-          if (residuals != NULL) {
+          double* block_residuals = nullptr;
+          if (residuals != nullptr) {
             block_residuals = residuals + residual_layout_[i];
-          } else if (gradient != NULL) {
+          } else if (gradient != nullptr) {
             block_residuals = scratch->residual_block_residuals.get();
           }
 
           // Prepare block jacobians if requested.
-          double** block_jacobians = NULL;
-          if (jacobian != NULL || gradient != NULL) {
+          double** block_jacobians = nullptr;
+          if (jacobian != nullptr || gradient != nullptr) {
             preparer->Prepare(residual_block,
                               i,
                               jacobian,
@@ -229,7 +229,7 @@ class ProgramEvaluator : public Evaluator {
           scratch->cost += block_cost;
 
           // Store the jacobians, if they were requested.
-          if (jacobian != NULL) {
+          if (jacobian != nullptr) {
             jacobian_writer_.Write(i,
                                    residual_layout_[i],
                                    block_jacobians,
@@ -237,7 +237,7 @@ class ProgramEvaluator : public Evaluator {
           }
 
           // Compute and store the gradient, if it was requested.
-          if (gradient != NULL) {
+          if (gradient != nullptr) {
             int num_residuals = residual_block->NumResiduals();
             int num_parameter_blocks = residual_block->NumParameterBlocks();
             for (int j = 0; j < num_parameter_blocks; ++j) {
@@ -262,12 +262,12 @@ class ProgramEvaluator : public Evaluator {
 
       // Sum the cost and gradient (if requested) from each thread.
       (*cost) = 0.0;
-      if (gradient != NULL) {
+      if (gradient != nullptr) {
         VectorRef(gradient, num_parameters).setZero();
       }
       for (int i = 0; i < options_.num_threads; ++i) {
         (*cost) += evaluate_scratch_[i].cost;
-        if (gradient != NULL) {
+        if (gradient != nullptr) {
           VectorRef(gradient, num_parameters) +=
               VectorRef(evaluate_scratch_[i].gradient.get(), num_parameters);
         }
@@ -277,7 +277,7 @@ class ProgramEvaluator : public Evaluator {
       // `num_parameters` is passed to the finalizer so that additional
       // storage can be reserved for additional diagonal elements if
       // necessary.
-      if (jacobian != NULL) {
+      if (jacobian != nullptr) {
         JacobianFinalizer f;
         f(jacobian, num_parameters);
       }

@@ -118,9 +118,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   // Do initial cost and gradient evaluation.
   if (!evaluator->Evaluate(x.data(),
                            &(current_state.cost),
-                           NULL,
+                           nullptr,
                            current_state.gradient.data(),
-                           NULL)) {
+                           nullptr)) {
     summary->termination_type = FAILURE;
     summary->message = "Initial cost and jacobian evaluation failed.";
     LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
@@ -193,7 +193,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       line_search(LineSearch::Create(options.line_search_type,
                                      line_search_options,
                                      &summary->message));
-  if (line_search.get() == NULL) {
+  if (line_search.get() == nullptr) {
     summary->termination_type = FAILURE;
     LOG_IF(ERROR, is_not_silent) << "Terminating: " << summary->message;
     return;
@@ -338,9 +338,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       if (!evaluator->Evaluate(evaluate_options,
                                optimal_point.vector_x.data(),
                                &(current_state.cost),
-                               NULL,
+                               nullptr,
                                current_state.gradient.data(),
-                               NULL)) {
+                               nullptr)) {
         summary->termination_type = FAILURE;
         summary->message = "Cost and jacobian evaluation failed.";
         LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
