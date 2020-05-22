@@ -35,12 +35,11 @@
 #include <set>
 #include <string>
 #include <vector>
+
 #include "ceres/internal/port.h"
+#include "ceres/evaluation_callback.h"
 
 namespace ceres {
-
-class EvaluationCallback;
-
 namespace internal {
 
 class ParameterBlock;
@@ -76,8 +75,8 @@ class Program {
   // computation of the Jacobian of its local parameterization. If
   // this computation fails for some reason, then this method returns
   // false and the state of the parameter blocks cannot be trusted.
-  bool StateVectorToParameterBlocks(const double *state);
-  void ParameterBlocksToStateVector(double *state) const;
+  bool StateVectorToParameterBlocks(const double* state);
+  void ParameterBlocksToStateVector(double* state) const;
 
   // Copy internal state to the user's parameters.
   void CopyParameterBlockStateToUserState();

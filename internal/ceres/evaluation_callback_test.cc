@@ -28,24 +28,25 @@
 //
 // Author: mierle@gmail.com (Keir Mierle)
 
-#include "ceres/solver.h"
+#include "ceres/evaluation_callback.h"
 
 #include <cmath>
 #include <limits>
 #include <vector>
 
-#include "gtest/gtest.h"
-#include "ceres/evaluation_callback.h"
-#include "ceres/sized_cost_function.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
+#include "ceres/sized_cost_function.h"
+#include "ceres/autodiff_cost_function.h"
+#include "ceres/solver.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
 
 // Use an inline hash function to avoid portability wrangling. Algorithm from
 // Daniel Bernstein, known as the "djb2" hash.
-template<typename T>
+template <typename T>
 uint64_t Djb2Hash(const T* data, const int size) {
   uint64_t hash = 5381;
   const uint8_t* data_as_bytes = reinterpret_cast<const uint8_t*>(data);
@@ -59,11 +60,9 @@ const double kUninitialized = 0;
 
 // Generally multiple inheritance is a terrible idea, but in this (test)
 // case it makes for a relatively elegant test implementation.
-struct WigglyBowlCostFunctionAndEvaluationCallback :
-      SizedCostFunction<2, 2>,
-      EvaluationCallback  {
-
-  explicit WigglyBowlCostFunctionAndEvaluationCallback(double *parameter)
+struct WigglyBowlCostFunctionAndEvaluationCallback : SizedCostFunction<2, 2>,
+                                                     EvaluationCallback {
+  explicit WigglyBowlCostFunctionAndEvaluationCallback(double* parameter)
       : EvaluationCallback(),
         user_parameter_block(parameter),
         prepare_num_calls(0),
@@ -134,10 +133,10 @@ struct WigglyBowlCostFunctionAndEvaluationCallback :
     residuals[0] = y - a * sin(x);
     residuals[1] = x;
     if (jacobians != NULL) {
-      (*jacobians)[2 * 0 + 0] = - a * cos(x);  // df1/dx
-      (*jacobians)[2 * 0 + 1] = 1.0;           // df1/dy
-      (*jacobians)[2 * 1 + 0] = 1.0;           // df2/dx
-      (*jacobians)[2 * 1 + 1] = 0.0;           // df2/dy
+      (*jacobians)[2 * 0 + 0] = -a * cos(x);  // df1/dx
+      (*jacobians)[2 * 0 + 1] = 1.0;          // df1/dy
+      (*jacobians)[2 * 1 + 0] = 1.0;          // df2/dx
+      (*jacobians)[2 * 1 + 1] = 0.0;          // df2/dy
     }
 
     uint64_t incoming_parameter_hash = Djb2Hash(*parameters, 2);
@@ -212,24 +211,105 @@ TEST(EvaluationCallback, WithTrustRegionMinimizer) {
   EXPECT_GT(summary.num_unsuccessful_steps, 10);
 
   // Ensure PrepareForEvaluation() is called the appropriate number of times.
-  EXPECT_EQ(cost_function.prepare_num_calls,
-            // Unsuccessful steps are evaluated only once (no jacobians).
-            summary.num_unsuccessful_steps +
-            // Successful steps are evaluated twice: with and without jacobians.
-            2 * summary.num_successful_steps
-            // Final iteration doesn't re-evaluate the jacobian.
-            // Note: This may be sensitive to tweaks to the TR algorithm; if
-            // this becomes too brittle, remove this EXPECT_EQ() entirely.
-            - 1);
+  EXPECT_EQ(
+      cost_function.prepare_num_calls,
+      // Unsuccessful steps are evaluated only once (no jacobians).
+      summary.num_unsuccessful_steps +
+          // Successful steps are evaluated twice: with and without jacobians.
+          2 * summary.num_successful_steps
+          // Final iteration doesn't re-evaluate the jacobian.
+          // Note: This may be sensitive to tweaks to the TR algorithm; if
+          // this becomes too brittle, remove this EXPECT_EQ() entirely.
+          - 1);
 
   // Ensure the callback calls ran a reasonable number of times.
   EXPECT_GT(cost_function.prepare_num_calls, 0);
   EXPECT_GT(cost_function.evaluate_num_calls, 0);
-  EXPECT_EQ(cost_function.prepare_num_calls,
-            cost_function.evaluate_num_calls);
+  EXPECT_EQ(cost_function.prepare_num_calls, cost_function.evaluate_num_calls);
 
   // Ensure that the parameters did actually change.
   EXPECT_NE(Djb2Hash(parameters, 2), original_parameters_hash);
+}
+
+// r = 1 - x
+struct LinearResidual {
+  template <typename T>
+  bool operator()(const T* x, T* residuals) const {
+    residuals[0] = 1.0 - x[0];
+    return true;
+  }
+
+  static CostFunction* Create() {
+    return new AutoDiffCostFunction<LinearResidual, 1, 1>(new LinearResidual);
+  };
+};
+
+// Increments a counter everytime PrepareForEvaluation is called.
+class IncrementingEvaluationCallback : public EvaluationCallback {
+ public:
+  void PrepareForEvaluation(bool evaluate_jacobians,
+                            bool new_evaluation_point) final {
+    (void) evaluate_jacobians;
+    (void) new_evaluation_point;
+    counter_ += 1.0;
+  }
+
+  const double counter() const { return counter_; }
+
+ private:
+  double counter_ = -1;
+};
+
+
+// r = IncrementingEvaluationCallback::counter - x
+struct EvaluationCallbackResidual {
+  EvaluationCallbackResidual(const IncrementingEvaluationCallback& callback)
+      : callback_(callback) {}
+
+  template <typename T>
+  bool operator()(const T* x, T* residuals) const {
+    residuals[0] = callback_.counter() - x[0];
+    return true;
+  }
+
+  const IncrementingEvaluationCallback& callback_;
+
+  static CostFunction* Create(IncrementingEvaluationCallback& callback) {
+    return new AutoDiffCostFunction<EvaluationCallbackResidual, 1, 1>(
+        new EvaluationCallbackResidual(callback));
+  };
+};
+
+// The following test, constructs a problem with residual blocks all
+// of whose parameters are constant, so they are evaluated once
+// outside the Minimizer to compute Solver::Summary::fixed_cost.
+//
+// The cost function for this residual block depends on the
+// IncrementingEvaluationCallback::counter_, by checking the value of
+// the fixed cost, we can check if the IncrementingEvaluationCallback
+// was called.
+TEST(EvaluationCallback, EvaluationCallbackIsCalledBeforeFixedCostIsEvaluated) {
+  double x = 1;
+  double y = 2;
+  std::unique_ptr<IncrementingEvaluationCallback> callback(
+      new IncrementingEvaluationCallback);
+  Problem::Options problem_options;
+  problem_options.evaluation_callback = callback.get();
+  Problem problem(problem_options);
+  problem.AddResidualBlock(LinearResidual::Create(), nullptr, &x);
+  problem.AddResidualBlock(
+      EvaluationCallbackResidual::Create(*callback),
+      nullptr,
+      &y);
+  problem.SetParameterBlockConstant(&y);
+
+  Solver::Options options;
+  options.linear_solver_type = DENSE_QR;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.fixed_cost, 2.0);
+  EXPECT_EQ(summary.final_cost, summary.fixed_cost);
+  EXPECT_GT(callback->counter(), 0);
 }
 
 static void WithLineSearchMinimizerImpl(
@@ -262,8 +342,7 @@ static void WithLineSearchMinimizerImpl(
   // Ensure the callback calls ran a reasonable number of times.
   EXPECT_GT(summary.num_line_search_steps, 10);
   EXPECT_GT(cost_function.prepare_num_calls, 30);
-  EXPECT_EQ(cost_function.prepare_num_calls,
-            cost_function.evaluate_num_calls);
+  EXPECT_EQ(cost_function.prepare_num_calls, cost_function.evaluate_num_calls);
 
   // Ensure that the parameters did actually change.
   EXPECT_NE(Djb2Hash(parameters, 2), original_parameters_hash);
