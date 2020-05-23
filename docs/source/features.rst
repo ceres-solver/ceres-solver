@@ -63,7 +63,7 @@ Why?
 
 * **Covariance estimation** - Evaluate the sensitivity/uncertainty of
   the solution by evaluating all or part of the covariance
-  matrix. Ceres is one of the few solvers that allows you to to do
+  matrix. Ceres is one of the few solvers that allows you to do
   this analysis at scale.
 
 * **Community** Since its release as an open source software, Ceres
