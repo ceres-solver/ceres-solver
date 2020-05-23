@@ -47,7 +47,8 @@ using ceres::Solve;
 // automatic differentiation wrapper around it to generate its
 // derivatives.
 struct CostFunctor {
-  template <typename T> bool operator()(const T* const x, T* residual) const {
+  template <typename T> 
+  bool operator()(const T* const x, T* residual) const {
     residual[0] = 10.0 - x[0];
     return true;
   }
@@ -68,7 +69,7 @@ int main(int argc, char** argv) {
   // auto-differentiation to obtain the derivative (jacobian).
   CostFunction* cost_function =
       new AutoDiffCostFunction<CostFunctor, 1, 1>(new CostFunctor);
-  problem.AddResidualBlock(cost_function, NULL, &x);
+  problem.AddResidualBlock(cost_function, nullptr, &x);
 
   // Run the solver!
   Solver::Options options;
