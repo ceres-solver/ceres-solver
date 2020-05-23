@@ -44,7 +44,7 @@ Why?
     solvers - dense QR and dense Cholesky factorization (using
     `Eigen`_ or `LAPACK`_) for dense problems, sparse Cholesky
     factorization (`SuiteSparse`_, `CXSparse`_ or `Eigen`_) for large
-    sparse problems custom Schur complement based dense, sparse, and
+    sparse problems, custom Schur complement based dense, sparse, and
     iterative linear solvers for `bundle adjustment`_ problems.
 
   - **Line Search Solvers** - When the problem size is so large that
