@@ -729,6 +729,7 @@ endif ()
 # imported library targets for Ceres (with dependency relations) which can be
 # used in target_link_libraries() calls in the client project to use Ceres.
 install(EXPORT CeresExport
+        NAMESPACE Ceres::
         DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR} FILE CeresTargets.cmake)
 
 # Save the relative path from the installed CeresConfig.cmake file to the
@@ -784,7 +785,9 @@ if (EXPORT_BUILD_DIR)
 
   # Analogously to install(EXPORT ...), export the Ceres target from the build
   # directory as a package called Ceres into the local CMake package registry.
-  export(TARGETS ceres FILE ${Ceres_BINARY_DIR}/CeresTargets.cmake)
+  export(TARGETS ceres
+         NAMESPACE Ceres::
+         FILE ${Ceres_BINARY_DIR}/CeresTargets.cmake)
   export(PACKAGE ${CMAKE_PROJECT_NAME})
 
   # Configure a CeresConfig.cmake file for the export of the Ceres build
