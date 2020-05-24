@@ -44,7 +44,7 @@ set(CMAKE_CXX_STANDARD ${DEFAULT_CXX_STANDARD} CACHE STRING
   "C++ standard (minimum 11)" FORCE)
 # Restrict CMAKE_CXX_STANDARD to the valid versions permitted and ensure that
 # if one was forced via -D that it is in the valid set.
-set(ALLOWED_CXX_STANDARDS 11 14 17)
+set(ALLOWED_CXX_STANDARDS 11 14 17 20)
 set_property(CACHE CMAKE_CXX_STANDARD PROPERTY STRINGS ${ALLOWED_CXX_STANDARDS})
 list(FIND ALLOWED_CXX_STANDARDS ${CMAKE_CXX_STANDARD} POSITION)
 if (POSITION LESS 0)
