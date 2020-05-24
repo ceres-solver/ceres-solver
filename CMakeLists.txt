@@ -757,8 +757,13 @@ install(FILES "${Ceres_BINARY_DIR}/CeresConfig-install.cmake"
         RENAME CeresConfig.cmake
         DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
 install(FILES "${Ceres_BINARY_DIR}/CeresConfigVersion.cmake"
-              "${Ceres_SOURCE_DIR}/cmake/FindGlog.cmake"
         DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
+if (GLOG_FOUND AND NOT FOUND_INSTALLED_GLOG_CMAKE_CONFIGURATION)
+  # Version of glog detected was not built with CMake, install our glog module
+  # file to enable detection in CeresConfig.
+  install(FILES "${Ceres_SOURCE_DIR}/cmake/FindGlog.cmake"
+          DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
+endif()
 
 if (PROVIDE_UNINSTALL_TARGET)
   # Create an uninstall target to remove all installed files.
