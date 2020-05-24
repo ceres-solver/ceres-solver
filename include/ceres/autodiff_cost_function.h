@@ -54,7 +54,7 @@
 // for a series of measurements, where there is an instance of the cost function
 // for each measurement k.
 //
-// The actual cost added to the total problem is e^2, or (k - x'k)^2; however,
+// The actual cost added to the total problem is e^2, or (k - x'y)^2; however,
 // the squaring is implicitly done by the optimization framework.
 //
 // To write an auto-differentiable cost function for the above model, first
