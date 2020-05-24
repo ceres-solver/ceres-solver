@@ -262,7 +262,7 @@ if (NOT TARGET ceres AND NOT Ceres_BINARY_DIR)
   include(${CERES_CURRENT_CONFIG_DIR}/CeresTargets.cmake)
 endif (NOT TARGET ceres AND NOT Ceres_BINARY_DIR)
 # Set the expected XX_LIBRARIES variable for FindPackage().
-set(CERES_LIBRARIES ceres)
+set(CERES_LIBRARIES Ceres::ceres)
 
 # Reset CMake module path to its state when this script was called.
 set(CMAKE_MODULE_PATH ${CALLERS_CMAKE_MODULE_PATH})
@@ -320,3 +320,11 @@ ceres_message(STATUS "Found " ${CERES_DETECTED_VERSION_STRING})
 # Ceres_FOUND is not (explicitly, i.e. undefined does not count) set
 # to FALSE.
 set(CERES_FOUND TRUE)
+
+if (NOT TARGET ceres)
+  # For backwards compatibility, create a local 'alias' target with the
+  # non-namespace-qualified Ceres target name. Note that this is not a
+  # true ALIAS library in CMake terms as they cannot point to imported targets.
+  add_library(ceres INTERFACE IMPORTED)
+  set_target_properties(ceres PROPERTIES INTERFACE_LINK_LIBRARIES Ceres::ceres)
+endif()

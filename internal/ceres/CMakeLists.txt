@@ -346,6 +346,9 @@ install(TARGETS ceres
         LIBRARY DESTINATION lib${LIB_SUFFIX}
         ARCHIVE DESTINATION lib${LIB_SUFFIX})
 
+# Create a local alias target that matches the expected installed target.
+add_library(Ceres::ceres ALIAS ceres)
+
 if (BUILD_TESTING AND GFLAGS)
   add_library(gtest gmock_gtest_all.cc gmock_main.cc)
   target_include_directories(gtest PUBLIC ${Ceres_SOURCE_DIR}/internal/ceres)
@@ -364,11 +367,11 @@ if (BUILD_TESTING AND GFLAGS)
   if (MINIGLOG)
     # When using miniglog, it is compiled into Ceres, thus Ceres becomes
     # the library against which other libraries should link for logging.
-    target_link_libraries(gtest PUBLIC gflags ceres)
-    target_link_libraries(test_util PUBLIC ceres gtest)
+    target_link_libraries(gtest PUBLIC gflags Ceres::ceres)
+    target_link_libraries(test_util PUBLIC Ceres::ceres gtest)
   else (MINIGLOG)
     target_link_libraries(gtest PUBLIC gflags ${GLOG_LIBRARIES})
-    target_link_libraries(test_util PUBLIC ceres gtest ${GLOG_LIBRARIES})
+    target_link_libraries(test_util PUBLIC Ceres::ceres gtest ${GLOG_LIBRARIES})
   endif (MINIGLOG)
 
   macro (CERES_TEST NAME)
@@ -382,7 +385,7 @@ if (BUILD_TESTING AND GFLAGS)
              ${Ceres_SOURCE_DIR}/internal/ceres
              ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
 
-    target_link_libraries(${NAME}_test PUBLIC test_util ceres gtest)
+    target_link_libraries(${NAME}_test PUBLIC test_util Ceres::ceres gtest)
     if (BUILD_SHARED_LIBS)
       # Define gtest-specific shared library flags for linking.
       append_target_property(${NAME}_test COMPILE_DEFINITIONS
@@ -491,7 +494,7 @@ if (BUILD_TESTING AND GFLAGS)
 endif (BUILD_TESTING AND GFLAGS)
 
 macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
-  target_link_libraries(${BENCHMARK_TARGET} PUBLIC ceres benchmark::benchmark)
+  target_link_libraries(${BENCHMARK_TARGET} PUBLIC Ceres::ceres benchmark::benchmark)
   target_include_directories(${BENCHMARK_TARGET} PUBLIC
                              ${Ceres_SOURCE_DIR}/internal
                              ${Ceres_SOURCE_DIR}/internal/ceres
