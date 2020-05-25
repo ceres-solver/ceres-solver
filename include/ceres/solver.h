@@ -338,10 +338,10 @@ class CERES_EXPORT Solver {
     // preconditioner_type is CLUSTER_JACOBI or CLUSTER_TRIDIAGONAL.
     VisibilityClusteringType visibility_clustering_type = CANONICAL_VIEWS;
 
-    // Subset preconditioner is a general purpose preconditioner for
-    // linear least squares problems. Given a set of residual blocks,
-    // it uses the corresponding subset of the rows of the Jacobian to
-    // construct a preconditioner.
+    // Subset preconditioner is a preconditioner for problems with
+    // general sparsity. Given a subset of residual blocks of a
+    // problem, it uses the corresponding subset of the rows of the
+    // Jacobian to construct a preconditioner.
     //
     // Suppose the Jacobian J has been horizontally partitioned as
     //
