@@ -693,7 +693,7 @@ step algorithm.
 .. _section-preconditioner:
 
 Preconditioner
---------------
+==============
 
 The convergence rate of Conjugate Gradients for
 solving :eq:`normal` depends on the distribution of eigenvalues
@@ -726,37 +726,96 @@ expensive it is use. For example, Incomplete Cholesky factorization
 based preconditioners have much better convergence behavior than the
 Jacobi preconditioner, but are also much more expensive.
 
-The simplest of all preconditioners is the diagonal or Jacobi
-preconditioner, i.e., :math:`M=\operatorname{diag}(A)`, which for
-block structured matrices like :math:`H` can be generalized to the
-block Jacobi preconditioner. Ceres implements the block Jacobi
-preconditioner and refers to it as ``JACOBI``. When used with
-:ref:`section-cgnr` it refers to the block diagonal of :math:`H` and
-when used with :ref:`section-iterative_schur` it refers to the block
-diagonal of :math:`B` [Mandel]_.
+For a survey of the state of the art in preconditioning linear least
+squares problems with general sparsity structure see [GouldScott]_.
+
+Ceres Solver comes with an number of preconditioners suited for
+problems with general sparsity as well as the special sparsity
+structure encountered in bundle adjustment problems.
+
+``JACOBI``
+----------
+
+The  simplest  of  all  preconditioners  is  the  diagonal  or  Jacobi
+preconditioner,  i.e.,   :math:`M=\operatorname{diag}(A)`,  which  for
+block structured  matrices like  :math:`H` can  be generalized  to the
+block Jacobi  preconditioner. The  ``JACOBI`` preconditioner  in Ceres
+when used  with :ref:`section-cgnr`  refers to  the block  diagonal of
+:math:`H` and when used  with :ref:`section-iterative_schur` refers to
+the block  diagonal of  :math:`B` [Mandel]_. For  detailed performance
+data about the performance of ``JACOBI`` on bundle adjustment problems
+see [Agarwal]_.
+
+
+``SCHUR_JACOBI``
+----------------
 
 Another obvious choice for :ref:`section-iterative_schur` is the block
 diagonal of the Schur complement matrix :math:`S`, i.e, the block
-Jacobi preconditioner for :math:`S`. Ceres implements it and refers to
-is as the ``SCHUR_JACOBI`` preconditioner.
+Jacobi preconditioner for :math:`S`. In Ceres we refer to it as the
+``SCHUR_JACOBI`` preconditioner.  For detailed performance data about
+the performance of ``SCHUR_JACOBI`` on bundle adjustment problems see
+[Agarwal]_.
+
+
+``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL``
+----------------------------------------------
 
 For bundle adjustment problems arising in reconstruction from
 community photo collections, more effective preconditioners can be
 constructed by analyzing and exploiting the camera-point visibility
-structure of the scene [KushalAgarwal]_. Ceres implements the two
-visibility based preconditioners described by Kushal & Agarwal as
-``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL``. These are fairly new
-preconditioners and Ceres' implementation of them is in its early
-stages and is not as mature as the other preconditioners described
-above.
+structure of the scene.
 
-TODO(sameeragarwal): Rewrite this section and add the description of
-the SubsetPreconditioner.
+The key idea is to cluster the cameras based on the visibility
+structure of the scene. The similarity between a pair of cameras
+:math:`i` and :math:`j` is given by:
+
+  .. math:: S_{ij} = \frac{|V_i \cap V_j|}{|V_i| |V_j|}
+
+Here :math:`V_i` is the set of scene points visible in camera
+:math:`i`. This idea was first exploited by [KushalAgarwal]_ to create
+the ``CLUSTER_JACOBI`` and the ``CLUSTER_TRIDIAGONAL`` preconditioners
+which Ceres implements.
+
+The performance of these two preconditioners obviously depends on the
+speed and clustering quality of the clustering algorithm used when
+building the preconditioner. In the original paper, [KushalAgarwal]_
+used the Canonical Views algorithm [Simon]_, which while producing
+high quality clusterings can be quite expensive for large graphs. So,
+Ceres supports two visibility clustering algorithms -
+``CANONICAL_VIEWS`` and ``SINGLE_LINKAGE``. The former is as the name
+implies Canonical Views algorithm of [Simon]_. The latter is the the
+classic `Single Linkage Clustering
+<https://en.wikipedia.org/wiki/Single-linkage_clustering>`_
+algorithm. The choice of clustering algorithm is controlled by
+:member:`Solver::Options::visibility_clustering_type`.
+
+``SUBSET``
+----------
+
+This is a  preconditioner for problems with general  sparsity. Given a
+subset  of residual  blocks of  a problem,  it uses  the corresponding
+subset  of the  rows of  the  Jacobian to  construct a  preconditioner
+[Dellaert]_.
+
+Suppose the Jacobian :math:`J` has been horizontally partitioned as
+
+  .. math:: J = \begin{bmatrix} P \\ Q \end{bmatrix}
+
+Where, :math:`Q` is the set of rows corresponding to the residual
+blocks in
+:member:`Solver::Options::residual_blocks_for_subset_preconditioner`. The
+preconditioner is the matrix :math:`(Q^\top Q)^{-1}`.
+
+Obviously, the efficacy of the preconditioner depends on how well the
+matrix :math:`Q` approximates :math:`J^\top J`, or how well the chosen
+residual blocks approximate the full problem.
+
 
 .. _section-ordering:
 
 Ordering
---------
+========
 
 The order in which variables are eliminated in a linear solver can
 have a significant of impact on the efficiency and accuracy of the
@@ -1236,6 +1295,29 @@ elimination group [LiSaad]_.
    sparsity structure of the problem, but generally speaking we
    recommend that you try ``CANONICAL_VIEWS`` first and if it is too
    expensive try ``SINGLE_LINKAGE``.
+
+.. member:: std::unordered_set<ResidualBlockId> residual_blocks_for_subset_preconditioner
+
+   ``SUBSET`` preconditioner is a preconditioner for problems with
+   general sparsity. Given a subset of residual blocks of a problem,
+   it uses the corresponding subset of the rows of the Jacobian to
+   construct a preconditioner.
+
+   Suppose the Jacobian :math:`J` has been horizontally partitioned as
+
+       .. math:: J = \begin{bmatrix} P \\ Q \end{bmatrix}
+
+   Where, :math:`Q` is the set of rows corresponding to the residual
+   blocks in
+   :member:`Solver::Options::residual_blocks_for_subset_preconditioner`. The
+   preconditioner is the matrix :math:`(Q^\top Q)^{-1}`.
+
+   Obviously, the efficacy of the preconditioner depends on how well
+   the matrix :math:`Q` approximates :math:`J^\top J`, or how well the
+   chosen residual blocks approximate the full problem.
+
+   If ``Solver::Options::preconditioner_type == SUBSET``, then
+   ``residual_blocks_for_subset_preconditioner`` must be non-empty.
 
 .. member:: DenseLinearAlgebraLibrary Solver::Options::dense_linear_algebra_library_type
 

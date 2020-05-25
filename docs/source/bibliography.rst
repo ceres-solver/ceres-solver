@@ -31,10 +31,18 @@ Bibliography
 .. [Conn] A.R. Conn, N.I.M. Gould, and P.L. Toint, **Trust region
    methods**, *Society for Industrial Mathematics*, 2000.
 
+.. [Dellaert] F. Dellaert, J. Carlson, V. Ila, K. Ni and C. E. Thorpe,
+   **Subgraph-preconditioned conjugate gradients for large scale SLAM**,
+   *International Conference on Intelligent Robots and Systems*, 2010.
+
 .. [GolubPereyra] G.H. Golub and V. Pereyra, **The differentiation of
    pseudo-inverses and nonlinear least squares problems whose
    variables separate**, *SIAM Journal on numerical analysis*,
    10(2):413-432, 1973.
+
+.. [GouldScott] N. Gould and J. Scott, **The State-of-the-Art of
+   Preconditioners for Sparse Linear Least-Squares Problems**,
+   *ACM Trans. Math. Softw.*, 43(4), 2017.
 
 .. [HartleyZisserman] R.I. Hartley & A. Zisserman, **Multiview
    Geometry in Computer Vision**, Cambridge University Press, 2004.
@@ -107,6 +115,10 @@ Bibliography
 
 .. [Saad] Y. Saad, **Iterative methods for sparse linear
    systems**, SIAM, 2003.
+
+.. [Simon] I. Simon, N. Snavely and S. M. Seitz, **Scene Summarization
+   for Online Image Collections**, *International Conference on
+    Computer Vision*, 2007.
 
 .. [Stigler] S. M. Stigler, **Gauss and the invention of least
    squares**, *The Annals of Statistics*, 9(3):465-474, 1981.
