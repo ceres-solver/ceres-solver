@@ -201,7 +201,7 @@ TEST(EvaluationCallback, WithTrustRegionMinimizer) {
 
   Solver::Options options;
   options.linear_solver_type = DENSE_QR;
-  options.max_num_iterations = 300;  // Cost function is hard.
+  options.max_num_iterations = 50;
 
   // Run the solve. Checking is done inside the cost function / callback.
   Solver::Summary summary;
@@ -248,7 +248,7 @@ static void WithLineSearchMinimizerImpl(
 
   Solver::Options options;
   options.linear_solver_type = DENSE_QR;
-  options.max_num_iterations = 300;  // Cost function is hard.
+  options.max_num_iterations = 50;
   options.minimizer_type = ceres::LINE_SEARCH;
 
   options.line_search_type = line_search;
