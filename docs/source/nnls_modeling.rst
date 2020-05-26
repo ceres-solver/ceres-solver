@@ -108,29 +108,29 @@ the corresponding accessors. This information will be verified by the
    that contains the :math:`i^{\text{th}}` parameter block that the
    ``CostFunction`` depends on.
 
-   ``parameters`` is never ``NULL``.
+   ``parameters`` is never ``nullptr``.
 
    ``residuals`` is an array of size ``num_residuals_``.
 
-   ``residuals`` is never ``NULL``.
+   ``residuals`` is never ``nullptr``.
 
    ``jacobians`` is an array of arrays of size
    ``CostFunction::parameter_block_sizes_.size()``.
 
-   If ``jacobians`` is ``NULL``, the user is only expected to compute
+   If ``jacobians`` is ``nullptr``, the user is only expected to compute
    the residuals.
 
    ``jacobians[i]`` is a row-major array of size ``num_residuals x
    parameter_block_sizes_[i]``.
 
-   If ``jacobians[i]`` is **not** ``NULL``, the user is required to
+   If ``jacobians[i]`` is **not** ``nullptr``, the user is required to
    compute the Jacobian of the residual vector with respect to
    ``parameters[i]`` and store it in this array, i.e.
 
    ``jacobians[i][r * parameter_block_sizes_[i] + c]`` =
    :math:`\frac{\displaystyle \partial \text{residual}[r]}{\displaystyle \partial \text{parameters}[i][c]}`
 
-   If ``jacobians[i]`` is ``NULL``, then this computation can be
+   If ``jacobians[i]`` is ``nullptr``, then this computation can be
    skipped. This is the case when the corresponding parameter block is
    marked constant.
 
@@ -914,7 +914,7 @@ Numeric Differentiation & LocalParameterization
 
        std::vector<LocalParameterization*> local_parameterizations;
        local_parameterizations.push_back(my_parameterization);
-       local_parameterizations.push_back(NULL);
+       local_parameterizations.push_back(nullptr);
 
        std::vector parameter1;
        std::vector parameter2;
@@ -1109,8 +1109,8 @@ their shape graphically. More details can be found in
    Given a loss function :math:`\rho(s)` and a scalar :math:`a`, :class:`ScaledLoss`
    implements the function :math:`a \rho(s)`.
 
-   Since we treat a ``NULL`` Loss function as the Identity loss
-   function, :math:`rho` = ``NULL``: is a valid input and will result
+   Since we treat a ``nullptr`` Loss function as the Identity loss
+   function, :math:`rho` = ``nullptr``: is a valid input and will result
    in the input being scaled by :math:`a`. This provides a simple way
    of implementing a scaled ResidualBlock.
 
@@ -1588,7 +1588,7 @@ quaternion, a local parameterization can be constructed as
    the parameter blocks it expects. The function checks that these
    match the sizes of the parameter blocks listed in
    ``parameter_blocks``. The program aborts if a mismatch is
-   detected. ``loss_function`` can be ``NULL``, in which case the cost
+   detected. ``loss_function`` can be ``nullptr``, in which case the cost
    of the term is just the squared norm of the residuals.
 
    The user has the option of explicitly adding the parameter blocks
@@ -1726,14 +1726,17 @@ quaternion, a local parameterization can be constructed as
 
     Default: `nullptr`
 
-    Using this callback interface, Ceres can notify you when it is
-    about to evaluate the residuals or Jacobians. With the callback,
-    you can share computation between residual blocks by doing the
-    shared computation in
+    Using this callback interface, Ceres will notify you when it is
+    about to evaluate the residuals or Jacobians.
+
+    If an ``evaluation_callback`` is present, Ceres will update the
+    parameter blocks to the values that will be used when calling
+    :func:`CostFunction::Evaluate` before calling
+    :func:`EvaluationCallback::PrepareForEvaluation`. One can then use
+    this callback to share (or cache) computation between cost
+    functions by doing the shared computation in
     :func:`EvaluationCallback::PrepareForEvaluation` before Ceres
-    calls :func:`CostFunction::Evaluate`. It also enables caching
-    results between a pure residual evaluation and a residual &
-    Jacobian evaluation.
+    calls :func:`CostFunction::Evaluate`.
 
     Problem does NOT take ownership of the callback.
 
@@ -1745,6 +1748,13 @@ quaternion, a local parameterization can be constructed as
        on a :class:`Problem` with a non-null evaluation callback is an
        error.
 
+    .. NOTE::
+
+       If an ``evaluation_callback`` is present, then it is the user's
+       responsibility to call its
+       :func:`EvaluationCalback::PrepareForEvaluation` method before
+       calling :func:`Problem::EvaluateResidualBlock`.
+
 .. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, const vector<double*> parameter_blocks)
 .. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, double *x0, double *x1, ...)
 
@@ -1753,7 +1763,7 @@ quaternion, a local parameterization can be constructed as
    parameter blocks it expects. The function checks that these match
    the sizes of the parameter blocks listed in parameter_blocks. The
    program aborts if a mismatch is detected. loss_function can be
-   NULL, in which case the cost of the term is just the squared norm
+   nullptr, in which case the cost of the term is just the squared norm
    of the residuals.
 
    The parameter blocks may be passed together as a
@@ -1792,10 +1802,10 @@ quaternion, a local parameterization can be constructed as
 
       Problem problem;
 
-      problem.AddResidualBlock(new MyUnaryCostFunction(...), NULL, x1);
-      problem.AddResidualBlock(new MyBinaryCostFunction(...), NULL, x2, x1);
-      problem.AddResidualBlock(new MyUnaryCostFunction(...), NULL, v1);
-      problem.AddResidualBlock(new MyBinaryCostFunction(...), NULL, v2);
+      problem.AddResidualBlock(new MyUnaryCostFunction(...), nullptr, x1);
+      problem.AddResidualBlock(new MyBinaryCostFunction(...), nullptr, x2, x1);
+      problem.AddResidualBlock(new MyUnaryCostFunction(...), nullptr, v1);
+      problem.AddResidualBlock(new MyBinaryCostFunction(...), nullptr, v2);
 
 .. function:: void Problem::AddParameterBlock(double* values, int size, LocalParameterization* local_parameterization)
 
@@ -1872,7 +1882,7 @@ quaternion, a local parameterization can be constructed as
 
    Get the local parameterization object associated with this
    parameter block. If there is no parameterization object associated
-   then `NULL` is returned
+   then `nullptr` is returned
 
 .. function:: void Problem::SetParameterLowerBound(double* values, int index, double lower_bound)
 
@@ -2001,25 +2011,26 @@ quaternion, a local parameterization can be constructed as
    .. NOTE::
 
       If an :class:`EvaluationCallback` is associated with the problem
-      then it is the user's responsibility to call
-      :func:`EvaluationCalback::PrepareForEvaluation` it before
+      then it is the user's responsibility to call its
+      :func:`EvaluationCalback::PrepareForEvaluation` method before
       calling this method.
 
       This is because, if the user calls this method multiple times,
       we cannot tell if the underlying parameter blocks have changed
       between calls or not. So if ``EvaluateResidualBlock`` was
-      responsible for calling the
+      responsible for calling
       :func:`EvaluationCalback::PrepareForEvaluation`, it will have to
-      do it everytime it is called. Which makes the common case where
-      the parameter blocks do not change, inefficient. So we leave it
-      to the user to call the
-      :func:`EvaluationCalback::PrepareForEvaluation` as needed.
+      do so everytime it is called. This makes the common case where
+      the parameter blocks do not change between calls to
+      ``EvaluateResidualBlocks`` inefficient. So we leave it to the
+      user to call :func:`EvaluationCallback::PrepareForEvaluation` as
+      needed.
 
 
 .. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)
 
    Evaluate a :class:`Problem`. Any of the output pointers can be
-   `NULL`. Which residual blocks and parameter blocks are used is
+   `nullptr`. Which residual blocks and parameter blocks are used is
    controlled by the :class:`Problem::EvaluateOptions` struct below.
 
    .. NOTE::
@@ -2033,10 +2044,10 @@ quaternion, a local parameterization can be constructed as
 
         Problem problem;
         double x = 1;
-        problem.Add(new MyCostFunction, NULL, &x);
+        problem.Add(new MyCostFunction, nullptr, &x);
 
         double cost = 0.0;
-        problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
+        problem.Evaluate(Problem::EvaluateOptions(), &cost, nullptr, nullptr, nullptr);
 
       The cost is evaluated at `x = 1`. If you wish to evaluate the
       problem at `x = 2`, then
@@ -2044,7 +2055,7 @@ quaternion, a local parameterization can be constructed as
       .. code-block:: c++
 
          x = 2;
-         problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
+         problem.Evaluate(Problem::EvaluateOptions(), &cost, nullptr, nullptr, nullptr);
 
       is the way to do so.
 
@@ -2064,9 +2075,9 @@ quaternion, a local parameterization can be constructed as
 
    .. NOTE::
 
-      If an EvaluationCallback is associated with the problem, then
-      its PrepareForEvaluation method will be called everytime this
-      method is called with ``new_point = true``.
+      If an :class:`EvaluationCallback` is associated with the
+      problem, then its ``PrepareForEvaluation`` method will be called
+      everytime this method is called with ``new_point = true``.
 
 .. class:: Problem::EvaluateOptions
 
@@ -2107,7 +2118,8 @@ quaternion, a local parameterization can be constructed as
 
 .. member:: int Problem::EvaluateOptions::num_threads
 
-   Number of threads to use. (Requires OpenMP).
+   Number of threads to use. (Requires Ceres to be compiled with
+   ``OpenMP`` or ``C++11`` threads).
 
 
 :class:`EvaluationCallback`
@@ -2127,25 +2139,27 @@ quaternion, a local parameterization can be constructed as
                                             bool new_evaluation_point) = 0;
       };
 
-   Ceres will call ``PrepareForEvaluation()`` every time, and once
-   before it computes the residuals and/or the Jacobians.
+   Ceres will call ``PrepareForEvaluation`` every time, and once
+   before it computes the residuals and/or the Jacobians. Before
+   calling ``PrepareForEvaluation``, Ceres will update the parameter
+   blocks to the values that will be used for evaluating the cost
+   functions. These values are are fixed until the next call to
+   ``PrepareForEvaluation``. If ``new_evaluation_point == true``, then
+   this is a new point that is different from the last evaluated
+   point. Otherwise, it is the same point that was evaluated
+   previously (either Jacobian or residual) and the user can use
+   cached results from previous evaluations. If ``evaluate_jacobians``
+   is true, then Ceres will request Jacobians in the upcoming cost
+   function evaluation.
 
-   User parameters (the double* values provided by the us)
-   are fixed until the next call to ``PrepareForEvaluation()``. If
-   ``new_evaluation_point == true``, then this is a new point that is
-   different from the last evaluated point. Otherwise, it is the same
-   point that was evaluated previously (either Jacobian or residual)
-   and the user can use cached results from previous evaluations. If
-   ``evaluate_jacobians`` is true, then Ceres will request Jacobians
-   in the upcoming cost evaluation.
-
-   Using this callback interface, Ceres can notify you when it is about
-   to evaluate the residuals or Jacobians. With the callback, you can
-   share computation between residual blocks by doing the shared
-   computation in PrepareForEvaluation() before Ceres calls
-   CostFunction::Evaluate() on all the residuals. It also enables
-   caching results between a pure residual evaluation and a residual &
-   Jacobian evaluation, via the new_evaluation_point argument.
+   Using this callback interface, Ceres can notify you when it is
+   about to evaluate the residuals or Jacobians. With the callback,
+   you can share computation between residual blocks by doing the
+   shared computation in ``PrepareForEvaluation`` before Ceres calls
+   :func:`CostFunction::Evaluate` on all the residuals. It also
+   enables caching results between a pure residual evaluation and a
+   residual & Jacobian evaluation, via the ``new_evaluation_point``
+   argument.
 
    One use case for this callback is if the cost function compute is
    moved to the GPU. In that case, the prepare call does the actual cost

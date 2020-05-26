@@ -181,7 +181,7 @@ The resulting code will look as follows:
                            double* residuals,
                            double** jacobians) const {
        if (!jacobians) {
-         ComputeDistortionValueAndJacobian(parameters[0][0], residuals, NULL);
+         ComputeDistortionValueAndJacobian(parameters[0][0], residuals, nullptr);
        } else {
          ComputeDistortionValueAndJacobian(parameters[0][0], residuals, jacobians[0]);
        }

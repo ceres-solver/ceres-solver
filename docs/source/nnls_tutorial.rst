@@ -111,7 +111,7 @@ Ceres solve it.
      // auto-differentiation to obtain the derivative (jacobian).
      CostFunction* cost_function =
          new AutoDiffCostFunction<CostFunctor, 1, 1>(new CostFunctor);
-     problem.AddResidualBlock(cost_function, NULL, &x);
+     problem.AddResidualBlock(cost_function, nullptr, &x);
 
      // Run the solver!
      Solver::Options options;
@@ -212,7 +212,7 @@ Which is added to the :class:`Problem` as:
   CostFunction* cost_function =
     new NumericDiffCostFunction<NumericDiffCostFunctor, ceres::CENTRAL, 1, 1>(
         new NumericDiffCostFunctor);
-  problem.AddResidualBlock(cost_function, NULL, &x);
+  problem.AddResidualBlock(cost_function, nullptr, &x);
 
 Notice the parallel from when we were using automatic differentiation
 
@@ -220,7 +220,7 @@ Notice the parallel from when we were using automatic differentiation
 
   CostFunction* cost_function =
       new AutoDiffCostFunction<CostFunctor, 1, 1>(new CostFunctor);
-  problem.AddResidualBlock(cost_function, NULL, &x);
+  problem.AddResidualBlock(cost_function, nullptr, &x);
 
 The construction looks almost identical to the one used for automatic
 differentiation, except for an extra template parameter that indicates
@@ -261,7 +261,7 @@ x`.
       residuals[0] = 10 - x;
 
       // Compute the Jacobian if asked for.
-      if (jacobians != NULL && jacobians[0] != NULL) {
+      if (jacobians != nullptr && jacobians[0] != nullptr) {
         jacobians[0][0] = -1;
       }
       return true;
@@ -358,13 +358,13 @@ respectively. Using these, the problem can be constructed as follows:
   // Add residual terms to the problem using the using the autodiff
   // wrapper to get the derivatives automatically.
   problem.AddResidualBlock(
-    new AutoDiffCostFunction<F1, 1, 1, 1>(new F1), NULL, &x1, &x2);
+    new AutoDiffCostFunction<F1, 1, 1, 1>(new F1), nullptr, &x1, &x2);
   problem.AddResidualBlock(
-    new AutoDiffCostFunction<F2, 1, 1, 1>(new F2), NULL, &x3, &x4);
+    new AutoDiffCostFunction<F2, 1, 1, 1>(new F2), nullptr, &x3, &x4);
   problem.AddResidualBlock(
-    new AutoDiffCostFunction<F3, 1, 1, 1>(new F3), NULL, &x2, &x3)
+    new AutoDiffCostFunction<F3, 1, 1, 1>(new F3), nullptr, &x2, &x3)
   problem.AddResidualBlock(
-    new AutoDiffCostFunction<F4, 1, 1, 1>(new F4), NULL, &x1, &x4);
+    new AutoDiffCostFunction<F4, 1, 1, 1>(new F4), nullptr, &x1, &x4);
 
 
 Note that each ``ResidualBlock`` only depends on the two parameters
@@ -496,7 +496,7 @@ Assuming the observations are in a :math:`2n` sized array called
    CostFunction* cost_function =
         new AutoDiffCostFunction<ExponentialResidual, 1, 1, 1>(
             new ExponentialResidual(data[2 * i], data[2 * i + 1]));
-   problem.AddResidualBlock(cost_function, NULL, &m, &c);
+   problem.AddResidualBlock(cost_function, nullptr, &m, &c);
  }
 
 Compiling and running `examples/curve_fitting.cc
@@ -568,7 +568,7 @@ outliers. To associate a loss function with a residual block, we change
 
 .. code-block:: c++
 
-   problem.AddResidualBlock(cost_function, NULL , &m, &c);
+   problem.AddResidualBlock(cost_function, nullptr , &m, &c);
 
 to
 
@@ -697,7 +697,7 @@ as follows:
             bal_problem.observations()[2 * i + 0],
             bal_problem.observations()[2 * i + 1]);
    problem.AddResidualBlock(cost_function,
-                            NULL /* squared loss */,
+                            nullptr /* squared loss */,
                             bal_problem.mutable_camera_for_observation(i),
                             bal_problem.mutable_point_for_observation(i));
  }

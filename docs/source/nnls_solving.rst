@@ -1373,13 +1373,13 @@ elimination group [LiSaad]_.
 
 .. member:: shared_ptr<ParameterBlockOrdering> Solver::Options::linear_solver_ordering
 
-   Default: ``NULL``
+   Default: ``nullptr``
 
    An instance of the ordering object informs the solver about the
    desired order in which parameter blocks should be eliminated by the
    linear solvers. See section~\ref{sec:ordering`` for more details.
 
-   If ``NULL``, the solver is free to choose an ordering that it
+   If ``nullptr``, the solver is free to choose an ordering that it
    thinks is best.
 
    See :ref:`section-ordering` for more details.
@@ -1518,14 +1518,15 @@ elimination group [LiSaad]_.
 
 .. member:: shared_ptr<ParameterBlockOrdering> Solver::Options::inner_iteration_ordering
 
-   Default: ``NULL``
+   Default: ``nullptr``
 
    If :member:`Solver::Options::use_inner_iterations` true, then the
    user has two choices.
 
    1. Let the solver heuristically decide which parameter blocks to
       optimize in each inner iteration. To do this, set
-      :member:`Solver::Options::inner_iteration_ordering` to ``NULL``.
+      :member:`Solver::Options::inner_iteration_ordering` to
+      ``nullptr``.
 
    2. Specify a collection of of ordered independent sets. The lower
       numbered groups are optimized before the higher number groups
