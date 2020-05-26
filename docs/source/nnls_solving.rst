@@ -1704,9 +1704,9 @@ elimination group [LiSaad]_.
    for purposes of computation, visualization or termination.
 
    If ``update_state_every_iteration`` is ``false`` then there is no
-   such guarantee, and user provided :class:`IterationCallback` s should
-   not expect to look at the parameter blocks and interpret their
-   values.
+   such guarantee, and user provided :class:`IterationCallback` s
+   should not expect to look at the parameter blocks and interpret
+   their values.
 
 .. member:: vector<IterationCallback> Solver::Options::callbacks
 
@@ -1794,7 +1794,7 @@ elimination group [LiSaad]_.
    :class:`IterationSummary` describes the state of the minimizer at
    the end of each iteration.
 
-.. member:: int32 IterationSummary::iteration
+.. member:: int IterationSummary::iteration
 
    Current iteration number.
 
