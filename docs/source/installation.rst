@@ -538,6 +538,7 @@ your NDK is present in that same directory. You may then execute
 the sample by running for example:
 
 .. code-block:: bash
+
     adb shell
     cd /data/local/tmp
     LD_LIBRARY_PATH=/data/local/tmp ./helloworld

@@ -70,7 +70,7 @@ Then, given :math:`\left[x_{1}, ... , x_{k}\right]`,
 :class:`CostFunction` is responsible for computing the vector
 :math:`f\left(x_{1},...,x_{k}\right)` and the Jacobian matrices
 
-.. math:: J_i =  \frac{\partial}{\partial x_i} f(x_1, ..., x_k) \quad \forall i \in \{1, \ldots, k\}
+.. math:: J_i =  D_i f(x_1, ..., x_k) \quad \forall i \in \{1, \ldots, k\}
 
 .. class:: CostFunction
 
@@ -370,6 +370,12 @@ the corresponding accessors. This information will be verified by the
     TODO(sameeragarwal): Add documentation for the constructor and for
     NumericDiffOptions. Update DynamicNumericDiffOptions in a similar
     manner.
+
+    TODO(sameeragarwal): Update AutoDiffCostFunction and
+    NumericDiffCostFunction documentation to point to variadic impl.
+
+    TODO(sameeragarwal): Check that Problem documentation for
+    AddResidualBlock can deal with the variadic impl.
 
   .. code-block:: c++
 
@@ -1197,6 +1203,113 @@ problems.
 
 .. class:: LocalParameterization
 
+  In many optimization problems, especially sensor fusion problems,
+  one has to model quantities that live in spaces known as `Manifolds
+  <https://en.wikipedia.org/wiki/Manifold>`_ , for example the
+  rotation/orientation of a sensor that is represented by a
+  `Quaternion
+  <https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation>`_.
+
+  Manifolds are spaces, which locally look like Euclidean spaces. More
+  precisely, at each point on the manifold there is a linear space
+  that is tangent to the manifold. It has dimension equal to the
+  intrinsic dimension of the manifold itself, which is less than or
+  equal to the ambient space in which the manifold is embedded.
+
+  For example, the tangent space to a point on a sphere in three
+  dimensions is the two dimensional plane that is tangent to the
+  sphere at that point. There are two reasons tangent spaces are
+  interesting:
+
+  1. They are Euclidean spaces, so the usual vector space operations
+     apply there, which makes numerical operations easy.
+
+  2. Movement in the tangent space translate into movements along the
+     manifold.  Movements perpendicular to the tangent space do not
+     translate into movements on the manifold.
+
+     Returning to our sphere example, moving in the 2 dimensional
+     plane tangent to the sphere and projecting back onto the sphere
+     will move you away from the point you started from but moving
+     along the normal at the same point and the projecting back onto
+     the sphere brings you back to the point.
+
+  Besides the mathematical niceness, modeling manifold valued
+  quantities correctly and paying attention to their geometry has
+  practical benefits too:
+
+  1. It naturally constrains the quantity to the manifold through out
+     the optimization. Freeing the user from hacks like *quaternion
+     normalization*.
+
+  2. It reduces the dimension of the optimization problem to its
+     *natural* size. For example, a quantity restricted to a line, is a
+     one dimensional object regardless of the dimension of the ambient
+     space in which this line lives.
+
+     Working in the tangent space reduces not just the computational
+     complexity of the optimization algorithm, but also improves the
+     numerical behaviour of the algorithm.
+
+  A basic operation one can perform on a manifold is the
+  :math:`\boxplus` operation that computes the result of moving along
+  delta in the tangent space at x, and then projecting back onto the
+  manifold that x belongs to. Also known as a *Retraction*,
+  :math:`\boxplus` is a generalization of vector addition in Euclidean
+  spaces. Formally, :math:`\boxplus` is a smooth map from a
+  manifold :math:`\mathcal{M}` and its tangent space
+  :math:`T_\mathcal{M}` to the manifold :math:`\mathcal{M}` that
+  obeys the identity
+
+  .. math::  \boxplus(x, 0) = x,\quad \forall x.
+
+  That is, it ensures that the tangent space is *centered* at :math:`x`
+  and the zero vector is the identity element. For more see
+  [Hertzberg]_ and section A.6.9 of [HartleyZisserman]_.
+
+  Let us consider two examples:
+
+  The Euclidean space :math:`R^n` is the simplest example of a
+  manifold. It has dimension :math:`n` (and so does its tangent space)
+  and :math:`\boxplus` is the familiar vector sum operation.
+
+    .. math:: \boxplus(x, \Delta) = x + \Delta
+
+  A more interesting case is :math:`SO(3)`, the special orthogonal
+  group in three dimensions - the space of 3x3 rotation
+  matrices. :math:`SO(3)` is a three dimensional manifold embedded in
+  :math:`R^9` or :math:`R^{3\times 3}`.
+
+  :math:`\boxplus` on :math:`SO(3)` is defined using the *Exponential*
+  map, from the tangent space (:math:`R^3`) to the manifold. The
+  Exponential map :math:`\operatorname{Exp}` is defined as:
+
+  .. math::
+
+     \operatorname{Exp}([p,q,r]) = \left [ \begin{matrix}
+     \cos \theta + cp^2 & -sr + cpq        &  sq + cpr \\
+     sr + cpq         & \cos \theta + cq^2& -sp + cqr \\
+     -sq + cpr        & sp + cqr         & \cos \theta + cr^2
+     \end{matrix} \right ]
+
+  where,
+
+  .. math::
+     \theta = \sqrt{p^2 + q^2 + r^2}, s = \frac{\sin \theta}{\theta},
+     c = \frac{1 - \cos \theta}{\theta^2}.
+
+  Then,
+
+  .. math::
+
+     \boxplus(x, \Delta) = x \operatorname{Exp}(\Delta)
+
+  The ``LocalParameterization`` interface allows the user to define
+  and associate with parameter blocks the manifold that they belong
+  to. It does so by defining the ``Plus`` (:math:`\boxplus`) operation
+  and its derivative with respect to :math:`\Delta` at :math:`\Delta =
+  0`.
+
    .. code-block:: c++
 
      class LocalParameterization {
@@ -1214,43 +1327,6 @@ problems.
        virtual int LocalSize() const = 0;
      };
 
-   Sometimes the parameters :math:`x` can overparameterize a
-   problem. In that case it is desirable to choose a parameterization
-   to remove the null directions of the cost. More generally, if
-   :math:`x` lies on a manifold of a smaller dimension than the
-   ambient space that it is embedded in, then it is numerically and
-   computationally more effective to optimize it using a
-   parameterization that lives in the tangent space of that manifold
-   at each point.
-
-   For example, a sphere in three dimensions is a two dimensional
-   manifold, embedded in a three dimensional space. At each point on
-   the sphere, the plane tangent to it defines a two dimensional
-   tangent space. For a cost function defined on this sphere, given a
-   point :math:`x`, moving in the direction normal to the sphere at
-   that point is not useful. Thus a better way to parameterize a point
-   on a sphere is to optimize over two dimensional vector
-   :math:`\Delta x` in the tangent space at the point on the sphere
-   point and then "move" to the point :math:`x + \Delta x`, where the
-   move operation involves projecting back onto the sphere. Doing so
-   removes a redundant dimension from the optimization, making it
-   numerically more robust and efficient.
-
-   More generally we can define a function
-
-   .. math:: x' = \boxplus(x, \Delta x),
-
-   where :math:`x'` has the same size as :math:`x`, and :math:`\Delta
-   x` is of size less than or equal to :math:`x`. The function
-   :math:`\boxplus`, generalizes the definition of vector
-   addition. Thus it satisfies the identity
-
-   .. math:: \boxplus(x, 0) = x,\quad \forall x.
-
-   Instances of :class:`LocalParameterization` implement the
-   :math:`\boxplus` operation and its derivative with respect to
-   :math:`\Delta x` at :math:`\Delta x = 0`.
-
 
 .. function:: int LocalParameterization::GlobalSize()
 
@@ -1259,156 +1335,157 @@ problems.
 
 .. function:: int LocalParameterization::LocalSize()
 
-   The size of the tangent space
-   that :math:`\Delta x` lives in.
+   The size of the tangent space that :math:`\Delta` lives in.
 
 .. function:: bool LocalParameterization::Plus(const double* x, const double* delta, double* x_plus_delta) const
 
-    :func:`LocalParameterization::Plus` implements :math:`\boxplus(x,\Delta x)`.
+    :func:`LocalParameterization::Plus` implements :math:`\boxplus(x,\Delta)`.
 
 .. function:: bool LocalParameterization::ComputeJacobian(const double* x, double* jacobian) const
 
    Computes the Jacobian matrix
 
-   .. math:: J = \left . \frac{\partial }{\partial \Delta x} \boxplus(x,\Delta x)\right|_{\Delta x = 0}
+   .. math:: J = D_2 \boxplus(x, 0)
 
    in row major form.
 
 .. function:: bool MultiplyByJacobian(const double* x, const int num_rows, const double* global_matrix, double* local_matrix) const
 
-   local_matrix = global_matrix * jacobian
+   ``local_matrix = global_matrix * jacobian``
 
-   global_matrix is a num_rows x GlobalSize  row major matrix.
-   local_matrix is a num_rows x LocalSize row major matrix.
-   jacobian is the matrix returned by :func:`LocalParameterization::ComputeJacobian` at :math:`x`.
+   ``global_matrix`` is a ``num_rows x GlobalSize``  row major matrix.
+   ``local_matrix`` is a ``num_rows x LocalSize`` row major matrix.
+   ``jacobian`` is the matrix returned by :func:`LocalParameterization::ComputeJacobian` at :math:`x`.
 
-   This is only used by GradientProblem. For most normal uses, it is
-   okay to use the default implementation.
+   This is only used by :class:`GradientProblem`. For most normal
+   uses, it is okay to use the default implementation.
 
-Instances
----------
+Ceres Solver ships with a number of commonly used instances of
+:class:`LocalParameterization`. Another great place to find high
+quality implementations of :math:`\boxplus` operations on a variety of
+manifolds is the `Sophus <https://github.com/strasdat/Sophus>`_
+library developed by Hauke Strasdat and his collaborators.
 
-.. class:: IdentityParameterization
+:class:`IdentityParameterization`
+---------------------------------
 
-   A trivial version of :math:`\boxplus` is when :math:`\Delta x` is
-   of the same size as :math:`x` and
+A trivial version of :math:`\boxplus` is when :math:`\Delta` is of the
+same size as :math:`x` and
 
-   .. math::  \boxplus(x, \Delta x) = x + \Delta x
+.. math::  \boxplus(x, \Delta) = x + \Delta
 
-.. class:: SubsetParameterization
+This is the same as :math:`x` living in a Euclidean manifold.
 
-   A more interesting case if :math:`x` is a two dimensional vector,
-   and the user wishes to hold the first coordinate constant. Then,
-   :math:`\Delta x` is a scalar and :math:`\boxplus` is defined as
+:class:`QuaternionParameterization`
+-----------------------------------
 
-   .. math::
+Another example that occurs commonly in Structure from Motion problems
+is when camera rotations are parameterized using a quaternion. This is
+a 3-dimensional manifold that lives in 4-dimensional space.
 
-      \boxplus(x, \Delta x) = x + \left[ \begin{array}{c} 0 \\ 1
-                                  \end{array} \right] \Delta x
+.. math:: \boxplus(x, \Delta) = \left[ \cos(|\Delta|), \frac{\sin\left(|\Delta|\right)}{|\Delta|} \Delta \right] * x
 
-   :class:`SubsetParameterization` generalizes this construction to
-   hold any part of a parameter block constant.
+The multiplication :math:`*` between the two 4-vectors on the right
+hand side is the standard quaternion product.
 
-.. class:: QuaternionParameterization
+:class:`EigenQuaternionParameterization`
+----------------------------------------
 
-   Another example that occurs commonly in Structure from Motion
-   problems is when camera rotations are parameterized using a
-   quaternion. There, it is useful only to make updates orthogonal to
-   that 4-vector defining the quaternion. One way to do this is to let
-   :math:`\Delta x` be a 3 dimensional vector and define
-   :math:`\boxplus` to be
+`Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_ uses a
+different internal memory layout for the elements of the quaternion
+than what is commonly used. Specifically, Eigen stores the elements in
+memory as :math:`(x, y, z, w)`, i.e., the *real* part (:math:`w`) is
+stored as the last element. Note, when creating an Eigen quaternion
+through the constructor the elements are accepted in :math:`w, x, y,
+z` order.
 
-    .. math:: \boxplus(x, \Delta x) = \left[ \cos(|\Delta x|), \frac{\sin\left(|\Delta x|\right)}{|\Delta x|} \Delta x \right] * x
-      :label: quaternion
+Since Ceres operates on parameter blocks which are raw ``double``
+pointers this difference is important and requires a different
+parameterization. :class:`EigenQuaternionParameterization` uses the
+same ``Plus`` operation as :class:`QuaternionParameterization` but
+takes into account Eigen's internal memory element ordering.
 
-   The multiplication between the two 4-vectors on the right hand side
-   is the standard quaternion
-   product. :class:`QuaternionParameterization` is an implementation
-   of :eq:`quaternion`.
+:class:`SubsetParameterization`
+-------------------------------
 
-.. class:: EigenQuaternionParameterization
+Suppose :math:`x` is a two dimensional vector, and the user wishes to
+hold the first coordinate constant. Then, :math:`\Delta` is a scalar
+and :math:`\boxplus` is defined as
 
-   Eigen uses a different internal memory layout for the elements of the
-   quaternion than what is commonly used. Specifically, Eigen stores the
-   elements in memory as [x, y, z, w] where the real part is last
-   whereas it is typically stored first. Note, when creating an Eigen
-   quaternion through the constructor the elements are accepted in w, x,
-   y, z order. Since Ceres operates on parameter blocks which are raw
-   double pointers this difference is important and requires a different
-   parameterization. :class:`EigenQuaternionParameterization` uses the
-   same update as :class:`QuaternionParameterization` but takes into
-   account Eigen's internal memory element ordering.
+.. math:: \boxplus(x, \Delta) = x + \left[ \begin{array}{c} 0 \\ 1 \end{array} \right] \Delta
 
-.. _`homogeneous_vector_parameterization`:
-.. class:: HomogeneousVectorParameterization
+:class:`SubsetParameterization` generalizes this construction to hold
+any part of a parameter block constant by specifying the set of
+coordinates that are held constant.
 
-   In computer vision, homogeneous vectors are commonly used to
-   represent entities in projective geometry such as points in
-   projective space. One example where it is useful to use this
-   over-parameterization is in representing points whose triangulation
-   is ill-conditioned. Here it is advantageous to use homogeneous
-   vectors, instead of an Euclidean vector, because it can represent
-   points at infinity.
+.. NOTE::
+   It is legal to hold all coordinates of a parameter block to constant
+   using a :class:`SubsetParameterization`. It is the same as calling
+   :func:`Problem::SetParameterBlockConstant` on that parameter block.
 
-   When using homogeneous vectors it is useful to only make updates
-   orthogonal to that :math:`n`-vector defining the homogeneous
-   vector [HartleyZisserman]_. One way to do this is to let :math:`\Delta x`
-   be a :math:`n-1` dimensional vector and define :math:`\boxplus` to be
+:class:`HomogeneousVectorParameterization`
+------------------------------------------
 
-    .. math:: \boxplus(x, \Delta x) = \left[ \frac{\sin\left(0.5 |\Delta x|\right)}{|\Delta x|} \Delta x, \cos(0.5 |\Delta x|) \right] * x
+In computer vision, homogeneous vectors are commonly used to represent
+objects in projective geometry such as points in projective space. One
+example where it is useful to use this over-parameterization is in
+representing points whose triangulation is ill-conditioned. Here it is
+advantageous to use homogeneous vectors, instead of an Euclidean
+vector, because it can represent points at and near infinity.
 
-   The multiplication between the two vectors on the right hand side
-   is defined as an operator which applies the update orthogonal to
-   :math:`x` to remain on the sphere. Note, it is assumed that
-   last element of :math:`x` is the scalar component of the homogeneous
-   vector.
+:class:`HomogeneousVectorParameterization` defines a
+:class:`LocalParameterization` for an :math:`n-1` dimensional
+manifold that embedded in :math:`n` dimensional space where the
+scale of the vector does not matter, i.e., elements of the
+projective space :math:`\mathbb{P}^{n-1}`. It assumes that the last
+coordinate of the :math:`n`-vector is the *scalar* component of the
+homogenous vector, i.e., *finite* points in this representation are
+those for which the *scalar* component is non-zero.
 
-.. class:: LineParameterization
+Further, ``HomogeneousVectorParameterization::Plus`` preserves the
+scale of :math:`x`.
 
-   This class provides a parameterization for lines, where the line is
-   over-parameterized by an origin point and a direction vector. So the
-   parameter vector size needs to be two times the ambient space dimension,
-   where the first half is interpreted as the origin point and the second
-   half as the direction.
+:class:`LineParameterization`
+-----------------------------
 
-   To give an example: Given n distinct points in 3D (measurements) we search
-   for the line which has the closest distance to all of these. We parameterize
-   the line with a 3D origin point and a 3D direction vector. As a cost
-   function the distance between the line and the given points is used.
-   We use six parameters for the line (two 3D vectors) but a line in 3D only
-   has four degrees of freedom. To make the over-parameterization visible to
-   the optimizer and covariance estimator this line parameterization can be
-   used.
+This class provides a parameterization for lines, where the line is
+defined using an origin point and a direction vector. So the
+parameter vector size needs to be two times the ambient space
+dimension, where the first half is interpreted as the origin point
+and the second half as the direction. This local parameterization is
+a special case of the `Affine Grassmannian manifold
+<https://en.wikipedia.org/wiki/Affine_Grassmannian_(manifold))>`_
+for the case :math:`\operatorname{Graff}_1(R^n)`.
 
-   The plus operator for the line direction is the same as for the
-   :ref:`HomogeneousVectorParameterization <homogeneous_vector_parameterization>`.
-   The update of the origin point is perpendicular to the line direction
-   before the update.
+Note that this is a parameterization for a line, rather than a point
+constrained to lie on a line. It is useful when one wants to optimize
+over the space of lines. For example, :math:`n` distinct points in 3D
+(measurements) we want to find the line that minimizes the sum of
+squared distances to all the points.
 
-.. class:: ProductParameterization
+:class:`ProductParameterization`
+--------------------------------
 
-   Consider an optimization problem over the space of rigid
-   transformations :math:`SE(3)`, which is the Cartesian product of
-   :math:`SO(3)` and :math:`\mathbb{R}^3`. Suppose you are using
-   Quaternions to represent the rotation, Ceres ships with a local
-   parameterization for that and :math:`\mathbb{R}^3` requires no, or
-   :class:`IdentityParameterization` parameterization. So how do we
-   construct a local parameterization for a parameter block a rigid
-   transformation?
+Consider an optimization problem over the space of rigid
+transformations :math:`SE(3)`, which is the Cartesian product of
+:math:`SO(3)` and :math:`\mathbb{R}^3`. Suppose you are using
+Quaternions to represent the rotation, Ceres ships with a local
+parameterization for that and :math:`\mathbb{R}^3` requires no, or
+:class:`IdentityParameterization` parameterization. So how do we
+construct a local parameterization for a parameter block a rigid
+transformation?
 
-   In cases, where a parameter block is the Cartesian product of a
-   number of manifolds and you have the local parameterization of the
-   individual manifolds available, :class:`ProductParameterization`
-   can be used to construct a local parameterization of the cartesian
-   product. For the case of the rigid transformation, where say you
-   have a parameter block of size 7, where the first four entries
-   represent the rotation as a quaternion, a local parameterization
-   can be constructed as
+In cases, where a parameter block is the Cartesian product of a number
+of manifolds and you have the local parameterization of the individual
+manifolds available, :class:`ProductParameterization` can be used to
+construct a local parameterization of the cartesian product. For the
+case of the rigid transformation, where say you have a parameter block
+of size 7, where the first four entries represent the rotation as a
+quaternion, a local parameterization can be constructed as
 
-   .. code-block:: c++
-
-     ProductParameterization se3_param(new QuaternionParameterization(),
-                                       new IdentityParameterization(3));
+.. code-block:: c++
+   ProductParameterization se3_param(new QuaternionParameterization(),
+                                     new IdentityParameterization(3));
 
 
 :class:`AutoDiffLocalParameterization`
@@ -1601,17 +1678,17 @@ Instances
     Default: ``false``
 
     If true, trades memory for faster
-    :member:`Problem::RemoveResidualBlock` and
-    :member:`Problem::RemoveParameterBlock` operations.
+    :func:`Problem::RemoveResidualBlock` and
+    :func:`Problem::RemoveParameterBlock` operations.
 
-    By default, :member:`Problem::RemoveParameterBlock` and
-    :member:`Problem::RemoveResidualBlock` take time proportional to
+    By default, :func:`Problem::RemoveParameterBlock` and
+    :func:`Problem::RemoveResidualBlock` take time proportional to
     the size of the entire problem.  If you only ever remove
     parameters or residuals from the problem occasionally, this might
     be acceptable.  However, if you have memory to spare, enable this
-    option to make :member:`Problem::RemoveParameterBlock` take time
+    option to make :func:`Problem::RemoveParameterBlock` take time
     proportional to the number of residual blocks that depend on it,
-    and :member:`Problem::RemoveResidualBlock` take (on average)
+    and :func:`Problem::RemoveResidualBlock` take (on average)
     constant time.
 
     The increase in memory usage is twofold: an additional hash set
@@ -1653,8 +1730,8 @@ Instances
     about to evaluate the residuals or Jacobians. With the callback,
     you can share computation between residual blocks by doing the
     shared computation in
-    :member:`EvaluationCallback::PrepareForEvaluation` before Ceres
-    calls :member:`CostFunction::Evaluate`. It also enables caching
+    :func:`EvaluationCallback::PrepareForEvaluation` before Ceres
+    calls :func:`CostFunction::Evaluate`. It also enables caching
     results between a pure residual evaluation and a residual &
     Jacobian evaluation.
 

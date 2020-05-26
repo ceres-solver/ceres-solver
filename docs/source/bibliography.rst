@@ -47,6 +47,11 @@ Bibliography
 .. [HartleyZisserman] R.I. Hartley & A. Zisserman, **Multiview
    Geometry in Computer Vision**, Cambridge University Press, 2004.
 
+.. [Hertzberg] C. Hertzberg, R. Wagner, U. Frese and L. Schroder,
+   **Integrating Generic Sensor Fusion Algorithms with Sound State
+   Representations through Encapsulation of Manifolds**, *Information
+   Fusion*, 14(1):57-77, 2013.
+
 .. [KanataniMorris] K. Kanatani and D. D. Morris, **Gauges and gauge
    transformations for uncertainty description of geometric structure
    with indeterminacy**, *IEEE Transactions on Information Theory*
