@@ -1560,7 +1560,7 @@ Instances
 
 .. class:: Problem::Options
 
-   Options struct that is used to control :class:`Problem::`.
+   Options struct that is used to control :class:`Problem`.
 
 .. member:: Ownership Problem::Options::cost_function_ownership
 
