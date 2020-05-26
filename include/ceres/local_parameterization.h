@@ -358,4 +358,3 @@ class CERES_EXPORT ProductParameterization : public LocalParameterization {
 #include "ceres/internal/line_parameterization.h"
 
 #endif  // CERES_PUBLIC_LOCAL_PARAMETERIZATION_H_
-
