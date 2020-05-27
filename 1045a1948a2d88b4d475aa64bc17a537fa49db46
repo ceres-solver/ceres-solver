@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20202b3e_ad4f1f13",
+        "filename": "docs/source/conf.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-05-27T18:23:31Z",
+      "side": 1,
+      "message": "This should probably replicate the original comment that this exists because MathJax does not use TeX fonts by default",
+      "revId": "1045a1948a2d88b4d475aa64bc17a537fa49db46",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
