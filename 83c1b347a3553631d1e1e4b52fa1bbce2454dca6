@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7893c76_d2289847",
+        "filename": "docs/source/conf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-05-27T19:14:44Z",
+      "side": 1,
+      "message": "sizing",
+      "revId": "83c1b347a3553631d1e1e4b52fa1bbce2454dca6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
