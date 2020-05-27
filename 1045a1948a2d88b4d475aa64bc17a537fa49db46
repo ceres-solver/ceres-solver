@@ -16,6 +16,24 @@
       "revId": "1045a1948a2d88b4d475aa64bc17a537fa49db46",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdfda17_f361d4c8",
+        "filename": "docs/source/conf.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-05-27T19:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20202b3e_ad4f1f13",
+      "revId": "1045a1948a2d88b4d475aa64bc17a537fa49db46",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
