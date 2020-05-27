@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f53f8d50_4361a6f0",
+        "filename": "docs/source/gradient_solver.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-05-27T18:16:56Z",
+      "side": 1,
+      "message": "nitpick, but: \u0027cost is guaranteed to never be nullptr\u0027 is better grammatically",
+      "revId": "fcf7206810781615b2e633459cfde457651e6ba7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ebd858_7808b467",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-05-27T18:16:56Z",
+      "side": 1,
+      "message": "This maybe isn\u0027t completely clear that the parameter blocks we are referring to are the user-provided pointers.  In the docs for update_state_every_iteration we emphasise that it is the \u0027user\u0027s parameter blocks\u0027 that are updated, I think something like that here would be helpful.",
+      "revId": "fcf7206810781615b2e633459cfde457651e6ba7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b0d522_84a38e5b",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1946,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-05-27T18:16:56Z",
+      "side": 1,
+      "message": "So IMO, these semantics seem counter intuitive, as Problem::Evaluate() always invokes the callback, but Problem::EvaluateResidualBlock() does not.  I think I would prefer that the default API was always safe, and so always called the callback and then we had a separate interface that was very explicitly named to highlight that it passed new_evaluation_point \u003d false to the callback - but still called it:\n\nEvaluateResidualBlockAssumingParametersUnchanged();\n\nwhich would then mean that the default behaviour was always safe, and the user has to use a different API that makes it incredibly obvious what they are assuming, and their callback is still responsible for whatever caching it might wish to do.",
+      "revId": "fcf7206810781615b2e633459cfde457651e6ba7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff744748_2efbbb3c",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-05-27T18:16:56Z",
+      "side": 1,
+      "message": "This sentence also feels out of step with how EvaluateResidualBlocks() currently works",
+      "revId": "fcf7206810781615b2e633459cfde457651e6ba7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899c72ee_6ea54dff",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-05-27T18:16:56Z",
+      "side": 1,
+      "message": "as before, I think \u0027update the user\u0027s parameter blocks\u0027 for clarity",
+      "revId": "fcf7206810781615b2e633459cfde457651e6ba7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
