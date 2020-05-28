@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0725f165_dd031289",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2020-05-28T04:45:15Z",
+      "side": 1,
+      "message": "There are a bunch of double spaces in here; not sure why. Consider removing them.",
+      "revId": "00f561c681d644e95760a1191446d7cb08343c38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d91de85_c997dc5f",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2020-05-28T04:45:15Z",
+      "side": 1,
+      "message": "Consider removing \"obviously\"; this won\u0027t be the case for some readers.",
+      "revId": "00f561c681d644e95760a1191446d7cb08343c38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
