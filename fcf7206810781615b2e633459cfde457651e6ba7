@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "9cfc039e_b77d3ecd",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1946,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-05-28T08:39:47Z",
+      "side": 1,
+      "message": "Why would they need a helper method with the above?  I\u0027m thinking that the API of EvaluateResidualBlock() \u0026 EvaluateResidualBlockAssumingParametersUnchanged() would be identical, and both would always invoke the callback if present the only difference is that they set new_evaluation_point to true / false respectively.  That seems like a trivial extra function call in our impl for a safer API and we can remove the qualifications about evaluation callbacks which IMO muddy the waters from the strong statements in the EvaluationCallback docs that Ceres will *always* invoke the callback, to most of the time Ceres will, except in this case.",
+      "parentUuid": "1b926681_65c8f3d7",
+      "revId": "fcf7206810781615b2e633459cfde457651e6ba7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff744748_2efbbb3c",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 1
