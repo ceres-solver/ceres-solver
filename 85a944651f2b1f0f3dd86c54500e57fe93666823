@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "623c7c0e_d7c01c81",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-05-28T05:36:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaae75c1_af1ab1ce",
+      "revId": "85a944651f2b1f0f3dd86c54500e57fe93666823",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f11cd784_974a7373",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "03e6e201_11fab090",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-05-28T05:36:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f11cd784_974a7373",
+      "revId": "85a944651f2b1f0f3dd86c54500e57fe93666823",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a594278_b6e592fe",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2020-05-28T04:53:34Z",
       "side": 1,
       "message": "Why switch these from member to func? member is correct, unless there is some change in Sphinx.",
+      "revId": "85a944651f2b1f0f3dd86c54500e57fe93666823",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6354c68d_8206c5f7",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-05-28T05:36:30Z",
+      "side": 1,
+      "message": "member is only for data members. :func: is the right thing to do here.",
+      "parentUuid": "0a594278_b6e592fe",
       "revId": "85a944651f2b1f0f3dd86c54500e57fe93666823",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
