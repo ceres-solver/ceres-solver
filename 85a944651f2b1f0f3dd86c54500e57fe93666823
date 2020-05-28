@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaae75c1_af1ab1ce",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2020-05-28T04:53:34Z",
+      "side": 1,
+      "message": "Consider using a \".. note\" construct here to call this aspect out.\n\nIt may also be worth mentioning the relationship to setting an entire parameter block constant. And also, the edge case of setting all the elements constant by subsetting everything away.",
+      "revId": "85a944651f2b1f0f3dd86c54500e57fe93666823",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11cd784_974a7373",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2020-05-28T04:53:34Z",
+      "side": 1,
+      "message": "Hard tabs inserted; probably not intended.",
+      "revId": "85a944651f2b1f0f3dd86c54500e57fe93666823",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a594278_b6e592fe",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2020-05-28T04:53:34Z",
+      "side": 1,
+      "message": "Why switch these from member to func? member is correct, unless there is some change in Sphinx.",
+      "revId": "85a944651f2b1f0f3dd86c54500e57fe93666823",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
