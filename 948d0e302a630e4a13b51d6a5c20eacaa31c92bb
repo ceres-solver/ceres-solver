@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1c854bc_c0556aeb",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2020-05-28T05:01:33Z",
+      "side": 1,
+      "message": "Parameters may need to be marked as unused.",
+      "revId": "948d0e302a630e4a13b51d6a5c20eacaa31c92bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f0494c2_d2d0f0ee",
+        "filename": "internal/ceres/evaluation_callback_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2020-05-28T05:01:33Z",
+      "side": 1,
+      "message": "Consider adding a paragraph to give more explanation here, that discusses the solver internals.",
+      "revId": "948d0e302a630e4a13b51d6a5c20eacaa31c92bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
