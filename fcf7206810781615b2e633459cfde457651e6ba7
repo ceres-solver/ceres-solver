@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "1b926681_65c8f3d7",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1946,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2020-05-28T05:04:01Z",
+      "side": 1,
+      "message": "We considered this originally, but the typical cases end up with duplicated code, with users needing to do a helper method. At that point, it seemed like the extra explicitness wasn\u0027t helping.",
+      "parentUuid": "65b0d522_84a38e5b",
+      "revId": "fcf7206810781615b2e633459cfde457651e6ba7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff744748_2efbbb3c",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 1
