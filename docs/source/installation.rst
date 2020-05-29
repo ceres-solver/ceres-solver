@@ -411,8 +411,34 @@ dependencies.
    #. ``Eigen`` 3.3 . There is no need to build anything; just unpack
       the source tarball.
 
-   #. ``google-glog`` Open up the Visual Studio solution and build it.
-   #. ``gflags`` Open up the Visual Studio solution and build it.
+   #. ``google-glog``
+
+      Approach 1
+
+      #. Open up the Visual Studio solution and build it.
+
+      Approach 2
+
+      #. On Visual Studio (VS) 2017 or later, you can directly open cmake
+         folders without the need for setting up VS project or solution.
+
+      #. In the latter case, you need to open the google-glog folder on VS.
+         Choose the appropriate build configuration Debug/Release.
+         (The default build configuration is debug. In order to switch to release
+         configuration you need to make changes to the CMakeSettings.json file)
+         Switch to Cmake Targets View on the Solution Explorer.
+         Right Click **google-glog Project** target and hit **Build All** followed by
+         **Install**.
+
+   #. ``gflags``
+
+      Approach 1
+   
+      #. Open up the Visual Studio solution and build it.
+
+      Approach 2
+
+      #. Please see the instrucitons above for google-glog as they are identical with only changes in the directory/project names.
 
    #. (Experimental) ``SuiteSparse`` Previously SuiteSparse was not
       available on Windows, recently it has become possible to build
@@ -433,40 +459,59 @@ dependencies.
    ``ceres-solver-1.14.0``. Alternately, checkout Ceres via ``git`` to
    get ``ceres-solver.git`` inside ``ceres``.
 
-#. Install ``CMake``,
+   Approach 1
 
-#. Make a dir ``ceres/ceres-bin`` (for an out-of-tree build)
+   #. Install ``CMake``
 
-#. Run ``CMake``; select the ``ceres-solver-X.Y.Z`` or
-   ``ceres-solver.git`` directory for the CMake file. Then select the
-   ``ceres-bin`` for the build dir.
+   #. Make a dir ``ceres/ceres-bin`` (for an out-of-tree build)
 
-#. Try running ``Configure``. It won't work. It'll show a bunch of options.
-   You'll need to set:
+   #. Run ``CMake``; select the ``ceres-solver-X.Y.Z`` or
+      ``ceres-solver.git`` ceres source directory. Then select the
+      ``ceres-bin`` for the build dir.
 
-   #. ``EIGEN_INCLUDE_DIR_HINTS``
-   #. ``GLOG_INCLUDE_DIR_HINTS``
-   #. ``GLOG_LIBRARY_DIR_HINTS``
-   #. ``GFLAGS_INCLUDE_DIR_HINTS``
-   #. ``GFLAGS_LIBRARY_DIR_HINTS``
-   #. (Optional) ``SUITESPARSE_INCLUDE_DIR_HINTS``
-   #. (Optional) ``SUITESPARSE_LIBRARY_DIR_HINTS``
-   #. (Optional) ``CXSPARSE_INCLUDE_DIR_HINTS``
-   #. (Optional) ``CXSPARSE_LIBRARY_DIR_HINTS``
+   #. Try running ``Configure``. It won't work. It'll show a bunch of options.
+      You'll need to set:
 
-   to the appropriate directories where you unpacked/built them. If
-   any of the variables are not visible in the ``CMake`` GUI, create a
-   new entry for them.  We recommend using the
-   ``<NAME>_(INCLUDE/LIBRARY)_DIR_HINTS`` variables rather than
-   setting the ``<NAME>_INCLUDE_DIR`` & ``<NAME>_LIBRARY`` variables
-   directly to keep all of the validity checking, and to avoid having
-   to specify the library files manually.
+      #. ``Eigen3_DIR`` (If not auto-detected)
+      #. ``GLOG_INCLUDE_DIR_HINTS``
+      #. ``GLOG_LIBRARY_DIR_HINTS``
+      #. ``gflags_DIR`` (If not auto-detected)
+      #. (Optional) ``SUITESPARSE_INCLUDE_DIR_HINTS``
+      #. (Optional) ``SUITESPARSE_LIBRARY_DIR_HINTS``
+      #. (Optional) ``CXSPARSE_INCLUDE_DIR_HINTS``
+      #. (Optional) ``CXSPARSE_LIBRARY_DIR_HINTS``
 
-#. You may have to tweak some more settings to generate a MSVC
-   project.  After each adjustment, try pressing Configure & Generate
-   until it generates successfully.
+      to the appropriate directories where you unpacked/built them. If
+      any of the variables are not visible in the ``CMake`` GUI, create a
+      new entry for them.  We recommend using the
+      ``<NAME>_(INCLUDE/LIBRARY)_DIR_HINTS`` variables rather than
+      setting the ``<NAME>_INCLUDE_DIR`` & ``<NAME>_LIBRARY`` variables
+      directly to keep all of the validity checking, and to avoid having
+      to specify the library files manually.
 
-#. Open the solution and build it in MSVC
+   #. You may have to tweak some more settings to generate a MSVC
+      project.  After each adjustment, try pressing Configure & Generate
+      until it generates successfully.
+
+   #. Open the solution and build it in MSVC
+
+   Approach 2
+
+   #. On Visual Studio (VS) 2017 or later, you can directly open cmake
+      folders without the need for setting up VS project or solution.
+
+   #. Open the ``ceres-solver-X.Y.Z`` or
+      ``ceres-solver.git`` ceres source directory on VS.
+   
+   #. Choose the appropriate build configuration Debug/Release.
+      (The default build configuration is debug. In order to switch to release
+      configuration you need to make changes to the CMakeSettings.json file to
+      ensure that all upstream library paths are set to their corresponding
+      release target paths)
+
+   #. Switch to Cmake Targets View on the Solution Explorer.
+      Right Click **Ceres Project** target and hit **Build All** followed by
+      **Install**.
 
 
 To run the tests, select the ``RUN_TESTS`` target and hit **Build
