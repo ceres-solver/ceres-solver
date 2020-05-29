@@ -144,7 +144,7 @@ void VisibilityBasedPreconditioner::ComputeClusterJacobiSparsity(
 }
 
 // Determine the sparsity structure of the CLUSTER_TRIDIAGONAL
-// preconditioner. It clusters cameras using using the scene
+// preconditioner. It clusters cameras using the scene
 // visibility and then finds the strongly interacting pairs of
 // clusters by constructing another graph with the clusters as
 // vertices and approximating it with a degree-2 maximum spanning
