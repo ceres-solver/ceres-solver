@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "649a60ae_af8c26f7",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-05-30T11:07:10Z",
+      "side": 1,
+      "message": "Rather than copy \u0026 pasting these instructions, I would just replace them with a reference to see instructions for google-glog as they are identical bar the directory/project names.",
+      "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e523cf67_42c231ac",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-05-30T11:07:10Z",
+      "side": 1,
+      "message": "\u0027directory for the CMake file\u0027 -\u003e \u0027Ceres source directory\u0027",
+      "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ffc144_20c2eaab",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-05-30T11:07:10Z",
+      "side": 1,
+      "message": "This is actually out of date, we have removed Ceres\u0027 find modules for Eigen \u0026 gflags as our minimum required versions for them should now be built with CMake so we can use their exported CMake configs instead.  As a result the EIGEN/GFLAGS_INCLUDE/LIBRARY_DIR_HINTS vars will not have any effect, you would need to set Eigen3_DIR and gflags_DIR instead if they were not auto-detected.",
+      "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2cac400_905a5d3a",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-05-30T11:07:10Z",
+      "side": 1,
+      "message": "Is it true that if using MSVC 2017 you do not need to set any of the detection vars listed above in Approach #1?  I\u0027m surprised if that\u0027s true for at least things like CXSPARSE but also for glog depending on how it was built.",
+      "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
