@@ -196,7 +196,7 @@ def ceres_library(name,
             "CERES_NO_ACCELERATE_SPARSE",
             "CERES_NO_LAPACK",
             "CERES_USE_EIGEN_SPARSE",
-            "CERES_USE_CXX11_THREADS",
+            "CERES_USE_CXX_THREADS",
         ],
         includes = [
             "config",

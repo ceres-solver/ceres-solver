@@ -30,7 +30,7 @@
 
 # Avoid 'xxx.cc has no symbols' warnings from source files which are 'empty'
 # when their enclosing #ifdefs are disabled.
-if (CERES_THREADING_MODEL STREQUAL "CXX11_THREADS")
+if (CERES_THREADING_MODEL STREQUAL "CXX_THREADS")
   set(CERES_PARALLEL_FOR_SRC parallel_for_cxx.cc thread_pool.cc)
 elseif (CERES_THREADING_MODEL STREQUAL "OPENMP")
   set(CERES_PARALLEL_FOR_SRC parallel_for_openmp.cc)
@@ -397,7 +397,6 @@ if (BUILD_TESTING AND GFLAGS)
              ${Ceres_SOURCE_DIR}/data)
   endmacro (CERES_TEST)
 
-  ceres_test(algorithm)
   ceres_test(array_utils)
   ceres_test(array_selector)
   ceres_test(autodiff)
@@ -442,7 +441,6 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(implicit_schur_complement)
   ceres_test(inner_product_computer)
   ceres_test(invert_psd_matrix)
-  ceres_test(integer_sequence)
   ceres_test(integer_sequence_algorithm)
   ceres_test(is_close)
   ceres_test(iterative_refiner)
