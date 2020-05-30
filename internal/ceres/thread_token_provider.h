@@ -34,15 +34,15 @@
 #include "ceres/internal/config.h"
 #include "ceres/internal/port.h"
 
-#ifdef CERES_USE_CXX11_THREADS
+#ifdef CERES_USE_CXX_THREADS
 #include "ceres/concurrent_queue.h"
 #endif
 
 namespace ceres {
 namespace internal {
 
-// Helper for C++11 thread number identification that is similar to
-// omp_get_thread_num() behaviour. This is necessary to support C++11
+// Helper for C++ thread number identification that is similar to
+// omp_get_thread_num() behaviour. This is necessary to support C++
 // threading with a sequential thread id. This is used to access preallocated
 // resources in the parallelized code parts.  The sequence of tokens varies from
 // 0 to num_threads - 1 that can be acquired to identify the thread in a thread
@@ -78,7 +78,7 @@ class ThreadTokenProvider {
   void Release(int thread_id);
 
  private:
-#ifdef CERES_USE_CXX11_THREADS
+#ifdef CERES_USE_CXX_THREADS
   // This queue initially holds a sequence from 0..num_threads-1. Every
   // Acquire() call the first number is removed from here. When the token is not
   // needed anymore it shall be given back with corresponding Release()
