@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c8a4af0_1783f42d",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 6342
+      },
+      "writtenOn": "2020-05-30T12:44:46Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll update.",
+      "parentUuid": "649a60ae_af8c26f7",
+      "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e523cf67_42c231ac",
         "filename": "docs/source/installation.rst",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2020-05-30T11:07:10Z",
       "side": 1,
       "message": "\u0027directory for the CMake file\u0027 -\u003e \u0027Ceres source directory\u0027",
+      "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a95d24a_747db3d5",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 6342
+      },
+      "writtenOn": "2020-05-30T12:44:46Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll update.",
+      "parentUuid": "e523cf67_42c231ac",
       "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3324d9d2_9759b262",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 6342
+      },
+      "writtenOn": "2020-05-30T12:44:46Z",
+      "side": 1,
+      "message": "1. My understanding is that we need \"{*}_INCLUDE_DIR_HINTS\" for those projects not installed through CMake. gflags and glog(glog has an optional dependency on gflags), both support CMake installation. In this case, we need \"{*}_INCLUDE_DIR_HINTS\" only for SuiteSparse and CXSparse right?\n\n2. Yes, I\u0027ll add \"{*}_DIR\" instruction for CMake based projects which are not auto-detected.",
+      "parentUuid": "09ffc144_20c2eaab",
+      "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2cac400_905a5d3a",
         "filename": "docs/source/installation.rst",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2020-05-30T11:07:10Z",
       "side": 1,
       "message": "Is it true that if using MSVC 2017 you do not need to set any of the detection vars listed above in Approach #1?  I\u0027m surprised if that\u0027s true for at least things like CXSPARSE but also for glog depending on how it was built.",
+      "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f62281c_73ecb6fd",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 6342
+      },
+      "writtenOn": "2020-05-30T12:44:46Z",
+      "side": 1,
+      "message": "1. I\u0027m sorry, I did not install the optional dependencies SuiteSparse and CXSparse. We need to add detection vars for both of them. I\u0027ll try installing them and update the instructions accordingly.\n\n2. I was able to install both gflags and glog as cmake debug/release targets. At the time of building ceres, cmake auto-detects the gflags_DIR, glog_DIR, and Eigen3_DIR paths. I just had to update these {*}_DIR paths to point to either debug/release target paths according to the build mode chosen for ceres. I have tried to capture these changes in the instructions pointing to update CMakeSettings.json file. Please let me know how we can bring this out more clearly.",
+      "parentUuid": "e2cac400_905a5d3a",
       "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
