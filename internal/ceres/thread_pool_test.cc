@@ -31,7 +31,7 @@
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
-#ifdef CERES_USE_CXX11_THREADS
+#ifdef CERES_USE_CXX_THREADS
 
 #include "ceres/thread_pool.h"
 
@@ -197,4 +197,4 @@ TEST(ThreadPool, Resize) {
 }  // namespace internal
 }  // namespace ceres
 
-#endif // CERES_USE_CXX11_THREADS
+#endif // CERES_USE_CXX_THREADS

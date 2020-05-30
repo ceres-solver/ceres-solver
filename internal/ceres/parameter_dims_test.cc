@@ -26,28 +26,29 @@
 
 #include <gtest/gtest.h>
 #include <type_traits>
+#include <utility>
 
 namespace ceres {
 namespace internal {
 
 // Is valid parameter dims unit test
-static_assert(IsValidParameterDimensionSequence(integer_sequence<int>()) ==
+static_assert(IsValidParameterDimensionSequence(std::integer_sequence<int>()) ==
                   true,
               "Unit test of is valid parameter dimension sequence failed.");
 static_assert(
-    IsValidParameterDimensionSequence(integer_sequence<int, 2, 1>()) == true,
+    IsValidParameterDimensionSequence(std::integer_sequence<int, 2, 1>()) == true,
     "Unit test of is valid parameter dimension sequence failed.");
 static_assert(
-    IsValidParameterDimensionSequence(integer_sequence<int, 0, 1>()) == false,
+    IsValidParameterDimensionSequence(std::integer_sequence<int, 0, 1>()) == false,
     "Unit test of is valid parameter dimension sequence failed.");
 static_assert(
-    IsValidParameterDimensionSequence(integer_sequence<int, 3, 0>()) == false,
+    IsValidParameterDimensionSequence(std::integer_sequence<int, 3, 0>()) == false,
     "Unit test of is valid parameter dimension sequence failed.");
 
 // Static parameter dims unit test
 static_assert(
     std::is_same<StaticParameterDims<4, 2, 1>::Parameters,
-                 integer_sequence<int, 4, 2, 1>>::value == true,
+                 std::integer_sequence<int, 4, 2, 1>>::value == true,
     "Unit test of type 'parameters' for static parameter dims failed.");
 
 static_assert(StaticParameterDims<4, 2, 1>::kIsValid == true,
