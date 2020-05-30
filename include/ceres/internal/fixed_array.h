@@ -39,7 +39,6 @@
 
 #include <Eigen/Core> // For Eigen::aligned_allocator
 
-#include "ceres/internal/algorithm.h"
 #include "ceres/internal/memory.h"
 #include "glog/logging.h"
 
@@ -312,7 +311,7 @@ class FixedArray {
   // Relational operators. Equality operators are elementwise using
   // `operator==`, while order operators order FixedArrays lexicographically.
   friend bool operator==(const FixedArray& lhs, const FixedArray& rhs) {
-    return internal::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+    return std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
   }
 
   friend bool operator!=(const FixedArray& lhs, const FixedArray& rhs) {

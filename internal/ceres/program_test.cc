@@ -33,6 +33,7 @@
 #include <cmath>
 #include <limits>
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include "ceres/internal/integer_sequence_algorithm.h"
@@ -69,7 +70,7 @@ class MockCostFunctionBase : public SizedCostFunction<kNumResiduals, Ns...> {
   bool Evaluate(double const* const* parameters,
                 double* residuals,
                 double** jacobians) const final {
-    const int kNumParameters = Sum<integer_sequence<int, Ns...>>::Value;
+    const int kNumParameters = Sum<std::integer_sequence<int, Ns...>>::Value;
 
     for (int i = 0; i < kNumResiduals; ++i) {
       residuals[i] = kNumResiduals + kNumParameters;
