@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc2f09ef_c73ad5fa",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-05-30T17:13:20Z",
+      "side": 1,
+      "message": "\"threads multithreading\" reads odd.",
+      "range": {
+        "startLine": 78,
+        "startChar": 49,
+        "endLine": 78,
+        "endChar": 71
+      },
+      "revId": "53a8785bb4a8c961f964b7ed1aaa77af2527c1c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ed15f7_c486905e",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-05-30T17:13:20Z",
+      "side": 1,
+      "message": "Or starting with 2.0",
+      "range": {
+        "startLine": 26,
+        "startChar": 28,
+        "endLine": 26,
+        "endChar": 32
+      },
+      "revId": "53a8785bb4a8c961f964b7ed1aaa77af2527c1c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
