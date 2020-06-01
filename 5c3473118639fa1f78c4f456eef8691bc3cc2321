@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "d1f9b882_30cd8df1",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-06-01T08:27:37Z",
+      "side": 1,
+      "message": "Yes, the *_DIR_HINTS vars are for dependencies found via a module (i.e. FindXXX.cmake) supplied with Ceres.  We provide these when the dependency is either not built with CMake, or where the default versions on our supported OSs are not built with CMake, even if later versions of the projects are.\n\nCurrently we ship modules for: glog, CXSparse \u0026 SuiteSparse (and AccelerateSparse \u0026 TBB).  Unfortunately, although gflags is built with CMake in Ubuntu 18.04, glog is not.\n\nHowever - our module for glog *will* detect and use a CMake config for glog if the version of glog found is new enough to be built with CMake.  As a result glog_DIR will work provided that the version of glog is new enough, otherwise you would need to set the *_DIR_HINTS vars for it.",
+      "parentUuid": "3324d9d2_9759b262",
+      "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2cac400_905a5d3a",
         "filename": "docs/source/installation.rst",
         "patchSetId": 1
