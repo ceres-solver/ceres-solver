@@ -532,5 +532,25 @@ TEST(Solver, ZeroSizedLocalParameterizationHoldsParameterBlockConstant) {
   EXPECT_EQ(y, 1.0);
 }
 
+TEST(Solver, EmptySubsetParameterization) {
+  double x = 0.0;
+  double y = 1.0;
+  Problem problem;
+  problem.AddResidualBlock(LinearCostFunction::Create(), nullptr, &x, &y);
+  problem.SetParameterization(&y, new SubsetParameterization(1, {}));
+  EXPECT_FALSE(problem.IsParameterBlockConstant(&y));
+
+  Solver::Options options;
+  options.function_tolerance = 0.0;
+  options.gradient_tolerance = 0.0;
+  options.parameter_tolerance = 0.0;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+
+  EXPECT_EQ(summary.termination_type, CONVERGENCE);
+  EXPECT_NEAR(x, 10.0, 1e-7);
+  EXPECT_NEAR(y, 5.0, 1e-7);
+}
+
 }  // namespace internal
 }  // namespace ceres
