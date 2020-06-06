@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be6b6e4b_19f2b02c",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-06-06T00:21:16Z",
+      "side": 1,
+      "message": "Frederic, this is a very indirect test. A simpler test would be to directly test SubsetParameterization in local_parameterization_test.cc",
+      "range": {
+        "startLine": 535,
+        "startChar": 5,
+        "endLine": 535,
+        "endChar": 11
+      },
+      "revId": "b377ab61519107fca1aed58d4ed732b981c48020",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
