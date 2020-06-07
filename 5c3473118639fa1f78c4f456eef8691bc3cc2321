@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b0182db7_91b5b694",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 6342
+      },
+      "writtenOn": "2020-06-07T07:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c8a4af0_1783f42d",
+      "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e523cf67_42c231ac",
         "filename": "docs/source/installation.rst",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1450efa1_21f4d1ea",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 6342
+      },
+      "writtenOn": "2020-06-07T07:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a95d24a_747db3d5",
+      "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "Yes, the *_DIR_HINTS vars are for dependencies found via a module (i.e. FindXXX.cmake) supplied with Ceres.  We provide these when the dependency is either not built with CMake, or where the default versions on our supported OSs are not built with CMake, even if later versions of the projects are.\n\nCurrently we ship modules for: glog, CXSparse \u0026 SuiteSparse (and AccelerateSparse \u0026 TBB).  Unfortunately, although gflags is built with CMake in Ubuntu 18.04, glog is not.\n\nHowever - our module for glog *will* detect and use a CMake config for glog if the version of glog found is new enough to be built with CMake.  As a result glog_DIR will work provided that the version of glog is new enough, otherwise you would need to set the *_DIR_HINTS vars for it.",
       "parentUuid": "3324d9d2_9759b262",
+      "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e05122_52ade2e6",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 6342
+      },
+      "writtenOn": "2020-06-07T07:12:32Z",
+      "side": 1,
+      "message": "1. I installed SuiteSparse using CMake with LAPACK and BLAS included as shared libraries. But when building Ceres, I get a linker error of the following form: \nLNK2019\tunresolved external symbol dsyrk_ referenced in function \"public: static void __cdecl ceres::internal::BLAS::SymmetricRankKUpdate(int,int,double const *,bool,double,double,double *)\"\nAdded \"SUITESPARSE_INCLUDE_DIR_HINTS\" and \"SUITESPARSE_LIBRARY_DIR_HINTS\" options for Ceres.\nI tried building Ceres as a shared library using the flag \"BUILD_SHARED_LIBS\" as well as static library. Both options give the same linker error mentioned above.\n\n2. The links for CXSparse cmake build point to repos which are at least 8 years old. Should we still provide instructions for CXSparse?",
+      "parentUuid": "d1f9b882_30cd8df1",
       "revId": "5c3473118639fa1f78c4f456eef8691bc3cc2321",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
