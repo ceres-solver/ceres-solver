@@ -73,10 +73,10 @@
 
 // If defined, Ceres was compiled without multithreading support.
 @CERES_NO_THREADS@
-// If defined Ceres was compiled with OpenMP multithreading support.
+// If defined Ceres was compiled with OpenMP multithreading.
 @CERES_USE_OPENMP@
-// If defined Ceres was compiled with C++11 thread support.
-@CERES_USE_CXX11_THREADS@
+// If defined Ceres was compiled with modern C++ multithreading.
+@CERES_USE_CXX_THREADS@
 
 // If defined, Ceres was built as a shared library.
 @CERES_USING_SHARED_LIBRARY@

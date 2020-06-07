@@ -32,8 +32,8 @@
 #define CERES_PUBLIC_INTERNAL_PARAMETER_DIMS_H_
 
 #include <array>
+#include <utility>
 
-#include "ceres/internal/integer_sequence.h"
 #include "ceres/internal/integer_sequence_algorithm.h"
 
 namespace ceres {
@@ -41,16 +41,16 @@ namespace internal {
 
 // Checks, whether the given parameter block sizes are valid. Valid means every
 // dimension is bigger than zero.
-constexpr bool IsValidParameterDimensionSequence(integer_sequence<int>) {
+constexpr bool IsValidParameterDimensionSequence(std::integer_sequence<int>) {
   return true;
 }
 
 template <int N, int... Ts>
 constexpr bool IsValidParameterDimensionSequence(
-    integer_sequence<int, N, Ts...>) {
+    std::integer_sequence<int, N, Ts...>) {
   return (N <= 0) ? false
                   : IsValidParameterDimensionSequence(
-                        integer_sequence<int, Ts...>());
+                        std::integer_sequence<int, Ts...>());
 }
 
 // Helper class that represents the parameter dimensions. The parameter
@@ -66,7 +66,7 @@ constexpr bool IsValidParameterDimensionSequence(
 template <bool IsDynamic, int... Ns>
 class ParameterDims {
  public:
-  using Parameters = integer_sequence<int, Ns...>;
+  using Parameters = std::integer_sequence<int, Ns...>;
 
   // The parameter dimensions are only valid if all parameter block dimensions
   // are greater than zero.
@@ -82,7 +82,7 @@ class ParameterDims {
                 "At least one parameter block must be specified.");
 
   static constexpr int kNumParameters =
-      Sum<integer_sequence<int, Ns...>>::Value;
+      Sum<std::integer_sequence<int, Ns...>>::Value;
 
   static constexpr int GetDim(int dim) { return params_[dim]; }
 
@@ -98,7 +98,7 @@ class ParameterDims {
  private:
   template <typename T, int... Indices>
   static inline std::array<T*, kNumParameterBlocks> GetUnpackedParameters(
-      T* ptr, integer_sequence<int, Indices...>) {
+      T* ptr, std::integer_sequence<int, Indices...>) {
     return std::array<T*, kNumParameterBlocks>{{ptr + Indices...}};
   }
 

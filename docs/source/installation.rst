@@ -23,9 +23,8 @@ Dependencies
 
   .. NOTE ::
 
-    All versions of Ceres > 1.14 require a **fully C++11-compliant**
-    compiler.  In versions <= 1.14, C++11 was an optional requirement
-    controlled by the ``CXX11 [Default: OFF]`` build option.
+    Starting with v2.0 Ceres requires a **fully C++14-compliant**
+    compiler.  In versions <= 1.14, C++11 was an optional requirement.
 
 Ceres relies on a number of open source libraries, some of which are
 optional. For details on customizing the build process, see
@@ -378,7 +377,7 @@ Windows
   <https://github.com/tbennun/ceres-windows>`_ for Ceres Solver by Tal
   Ben-Nun.
 
-On Windows, we support building with Visual Studio 2013 Release 4 or newer. Note
+On Windows, we support building with Visual Studio 2015.2 of newer. Note
 that the Windows port is less featureful and less tested than the
 Linux or Mac OS X versions due to the lack of an officially supported
 way of building SuiteSparse and CXSparse.  There are however a number
@@ -754,7 +753,7 @@ Options controlling Ceres configuration
    gains in the ``SPARSE_SCHUR`` solver, you can disable some of the
    template specializations by turning this ``OFF``.
 
-#. ``CERES_THREADING_MODEL [Default: CXX11_THREADS > OPENMP > NO_THREADS]``:
+#. ``CERES_THREADING_MODEL [Default: CXX_THREADS > OPENMP > NO_THREADS]``:
    Multi-threading backend Ceres should be compiled with.  This will
    automatically be set to only accept the available subset of threading
    options in the CMake GUI.
@@ -948,8 +947,6 @@ The Ceres components which can be specified are:
 
 #. ``Multithreading``: Ceres built with *a* multithreading library.
    This is equivalent to (``CERES_THREAD != NO_THREADS``).
-
-#. ``C++11``: Ceres built with C++11.
 
 To specify one/multiple Ceres components use the ``COMPONENTS`` argument to
 `find_package()

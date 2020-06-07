@@ -143,6 +143,7 @@
 #include <stddef.h>
 
 #include <array>
+#include <utility>
 
 #include "ceres/internal/array_selector.h"
 #include "ceres/internal/eigen.h"
@@ -213,14 +214,14 @@ template <typename Seq, int ParameterIdx = 0, int Offset = 0>
 struct Make1stOrderPerturbations;
 
 template <int N, int... Ns, int ParameterIdx, int Offset>
-struct Make1stOrderPerturbations<integer_sequence<int, N, Ns...>,
+struct Make1stOrderPerturbations<std::integer_sequence<int, N, Ns...>,
                                  ParameterIdx,
                                  Offset> {
   template <typename T, typename JetT>
   inline static void Apply(T const* const* parameters, JetT* x) {
     Make1stOrderPerturbation<0, N, Offset, T, JetT>::Apply(
         parameters[ParameterIdx], x + Offset);
-    Make1stOrderPerturbations<integer_sequence<int, Ns...>,
+    Make1stOrderPerturbations<std::integer_sequence<int, Ns...>,
                               ParameterIdx + 1,
                               Offset + N>::Apply(parameters, x);
   }
@@ -228,7 +229,7 @@ struct Make1stOrderPerturbations<integer_sequence<int, N, Ns...>,
 
 // End of 'recursion'. Nothing more to do.
 template <int ParameterIdx, int Total>
-struct Make1stOrderPerturbations<integer_sequence<int>, ParameterIdx, Total> {
+struct Make1stOrderPerturbations<std::integer_sequence<int>, ParameterIdx, Total> {
   template <typename T, typename JetT>
   static void Apply(T const* const* /* NOT USED */, JetT* /* NOT USED */) {}
 };
@@ -276,7 +277,7 @@ template <typename Seq, int ParameterIdx = 0, int Offset = 0>
 struct Take1stOrderParts;
 
 template <int N, int... Ns, int ParameterIdx, int Offset>
-struct Take1stOrderParts<integer_sequence<int, N, Ns...>,
+struct Take1stOrderParts<std::integer_sequence<int, N, Ns...>,
                          ParameterIdx,
                          Offset> {
   template <typename JetT, typename T>
@@ -284,7 +285,7 @@ struct Take1stOrderParts<integer_sequence<int, N, Ns...>,
     if (jacobians[ParameterIdx]) {
       Take1stOrderPart<Offset, N>(num_outputs, output, jacobians[ParameterIdx]);
     }
-    Take1stOrderParts<integer_sequence<int, Ns...>,
+    Take1stOrderParts<std::integer_sequence<int, Ns...>,
                       ParameterIdx + 1,
                       Offset + N>::Apply(num_outputs, output, jacobians);
   }
@@ -292,7 +293,7 @@ struct Take1stOrderParts<integer_sequence<int, N, Ns...>,
 
 // End of 'recursion'. Nothing more to do.
 template <int ParameterIdx, int Offset>
-struct Take1stOrderParts<integer_sequence<int>, ParameterIdx, Offset> {
+struct Take1stOrderParts<std::integer_sequence<int>, ParameterIdx, Offset> {
   template <typename T, typename JetT>
   static void Apply(int /* NOT USED*/,
                     JetT* /* NOT USED*/,
