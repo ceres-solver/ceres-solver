@@ -36,6 +36,7 @@
 #include <stddef.h>
 
 #include <type_traits>
+#include <utility>
 
 #include "ceres/cost_function.h"
 #include "ceres/internal/parameter_dims.h"
@@ -47,7 +48,7 @@ namespace internal {
 template <typename Functor, typename T, int... Indices>
 inline bool VariadicEvaluateImpl(const Functor& functor, T const* const* input,
                                  T* output, std::false_type /*is_dynamic*/,
-                                 integer_sequence<int, Indices...>) {
+                                 std::integer_sequence<int, Indices...>) {
   static_assert(sizeof...(Indices),
                 "Invalid number of parameter blocks. At least one parameter "
                 "block must be specified.");
@@ -58,7 +59,7 @@ inline bool VariadicEvaluateImpl(const Functor& functor, T const* const* input,
 template <typename Functor, typename T>
 inline bool VariadicEvaluateImpl(const Functor& functor, T const* const* input,
                                  T* output, std::true_type /*is_dynamic*/,
-                                 integer_sequence<int>) {
+                                 std::integer_sequence<int>) {
   return functor(input, output);
 }
 
@@ -67,7 +68,7 @@ template <typename ParameterDims, typename Functor, typename T>
 inline bool VariadicEvaluateImpl(const Functor& functor, T const* const* input,
                                  T* output, const void* /* NOT USED */) {
   using ParameterBlockIndices =
-      make_integer_sequence<int, ParameterDims::kNumParameterBlocks>;
+      std::make_integer_sequence<int, ParameterDims::kNumParameterBlocks>;
   using IsDynamic = std::integral_constant<bool, ParameterDims::kIsDynamic>;
   return VariadicEvaluateImpl(functor, input, output, IsDynamic(),
                               ParameterBlockIndices());

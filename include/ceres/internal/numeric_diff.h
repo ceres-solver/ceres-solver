@@ -36,6 +36,7 @@
 #define CERES_PUBLIC_INTERNAL_NUMERIC_DIFF_H_
 
 #include <cstring>
+#include <utility>
 
 #include "Eigen/Dense"
 #include "Eigen/StdVector"
@@ -437,7 +438,7 @@ struct EvaluateJacobianForParameterBlocks;
 
 template <typename ParameterDims, int N, int... Ns, int ParameterIdx>
 struct EvaluateJacobianForParameterBlocks<ParameterDims,
-                                          integer_sequence<int, N, Ns...>,
+                                          std::integer_sequence<int, N, Ns...>,
                                           ParameterIdx> {
   template <NumericDiffMethodType method,
             int kNumResiduals,
@@ -468,7 +469,7 @@ struct EvaluateJacobianForParameterBlocks<ParameterDims,
     }
 
     return EvaluateJacobianForParameterBlocks<ParameterDims,
-                                              integer_sequence<int, Ns...>,
+                                              std::integer_sequence<int, Ns...>,
                                               ParameterIdx + 1>::
         template Apply<method, kNumResiduals>(functor,
                                               residuals_at_eval_point,
@@ -481,7 +482,7 @@ struct EvaluateJacobianForParameterBlocks<ParameterDims,
 
 // End of 'recursion'. Nothing more to do.
 template <typename ParameterDims, int ParameterIdx>
-struct EvaluateJacobianForParameterBlocks<ParameterDims, integer_sequence<int>,
+struct EvaluateJacobianForParameterBlocks<ParameterDims, std::integer_sequence<int>,
                                           ParameterIdx> {
   template <NumericDiffMethodType method, int kNumResiduals,
             typename CostFunctor>

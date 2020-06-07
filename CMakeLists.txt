@@ -32,19 +32,19 @@
 cmake_minimum_required(VERSION 3.5)
 cmake_policy(VERSION 3.5)
 
-# Set the C++ version (must be >= C++11) when compiling Ceres.
+# Set the C++ version (must be >= C++14) when compiling Ceres.
 #
 # Reflect a user-specified (via -D) CMAKE_CXX_STANDARD if present, otherwise
-# default to C++11.
+# default to C++14.
 set(DEFAULT_CXX_STANDARD ${CMAKE_CXX_STANDARD})
 if (NOT DEFAULT_CXX_STANDARD)
-  set(DEFAULT_CXX_STANDARD 11)
+  set(DEFAULT_CXX_STANDARD 14)
 endif()
 set(CMAKE_CXX_STANDARD ${DEFAULT_CXX_STANDARD} CACHE STRING
-  "C++ standard (minimum 11)" FORCE)
+  "C++ standard (minimum 14)" FORCE)
 # Restrict CMAKE_CXX_STANDARD to the valid versions permitted and ensure that
 # if one was forced via -D that it is in the valid set.
-set(ALLOWED_CXX_STANDARDS 11 14 17 20)
+set(ALLOWED_CXX_STANDARDS 14 17 20)
 set_property(CACHE CMAKE_CXX_STANDARD PROPERTY STRINGS ${ALLOWED_CXX_STANDARDS})
 list(FIND ALLOWED_CXX_STANDARDS ${CMAKE_CXX_STANDARD} POSITION)
 if (POSITION LESS 0)
@@ -56,11 +56,13 @@ endif()
 set(CMAKE_CXX_STANDARD_REQUIRED ON CACHE BOOL "")
 mark_as_advanced(CMAKE_CXX_STANDARD_REQUIRED)
 
-# MSVC versions < 2013 did not fully support >= C++11.
+# MSVC versions < 2015 did not fully support >= C++14, and technically even
+# 2015 did not support a couple of smaller features
 if (CMAKE_CXX_COMPILER_ID MATCHES MSVC AND
-    CMAKE_CXX_COMPILER_VERSION VERSION_LESS 12.0)
+    CMAKE_CXX_COMPILER_VERSION VERSION_LESS 14.0)
   message(FATAL_ERROR "Invalid CMAKE_CXX_COMPILER_VERSION: "
-    "${CMAKE_CXX_COMPILER_VERSION}. Ceres requires at least MSVC 2013 Update 4+")
+    "${CMAKE_CXX_COMPILER_VERSION}. Ceres requires at least MSVC 2015 for "
+    "C++14 support.")
 endif()
 
 # On macOS, add the Homebrew prefix (with appropriate suffixes) to the

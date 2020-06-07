@@ -31,39 +31,40 @@
 #include "ceres/internal/integer_sequence_algorithm.h"
 
 #include <type_traits>
+#include <utility>
 
 namespace ceres {
 namespace internal {
 
 // Unit tests for summation of integer sequence.
-static_assert(Sum<integer_sequence<int>>::Value == 0,
+static_assert(Sum<std::integer_sequence<int>>::Value == 0,
               "Unit test of summing up an integer sequence failed.");
-static_assert(Sum<integer_sequence<int, 2>>::Value == 2,
+static_assert(Sum<std::integer_sequence<int, 2>>::Value == 2,
               "Unit test of summing up an integer sequence failed.");
-static_assert(Sum<integer_sequence<int, 2, 3>>::Value == 5,
+static_assert(Sum<std::integer_sequence<int, 2, 3>>::Value == 5,
               "Unit test of summing up an integer sequence failed.");
-static_assert(Sum<integer_sequence<int, 2, 3, 10>>::Value == 15,
+static_assert(Sum<std::integer_sequence<int, 2, 3, 10>>::Value == 15,
               "Unit test of summing up an integer sequence failed.");
-static_assert(Sum<integer_sequence<int, 2, 3, 10, 4>>::Value == 19,
+static_assert(Sum<std::integer_sequence<int, 2, 3, 10, 4>>::Value == 19,
               "Unit test of summing up an integer sequence failed.");
-static_assert(Sum<integer_sequence<int, 2, 3, 10, 4, 1>>::Value == 20,
+static_assert(Sum<std::integer_sequence<int, 2, 3, 10, 4, 1>>::Value == 20,
               "Unit test of summing up an integer sequence failed.");
 
 // Unit tests for exclusive scan of integer sequence.
-static_assert(std::is_same<ExclusiveScan<integer_sequence<int>>,
-                           integer_sequence<int>>::value,
+static_assert(std::is_same<ExclusiveScan<std::integer_sequence<int>>,
+                           std::integer_sequence<int>>::value,
               "Unit test of calculating the exclusive scan of an integer "
               "sequence failed.");
-static_assert(std::is_same<ExclusiveScan<integer_sequence<int, 2>>,
-                           integer_sequence<int, 0>>::value,
+static_assert(std::is_same<ExclusiveScan<std::integer_sequence<int, 2>>,
+                           std::integer_sequence<int, 0>>::value,
               "Unit test of calculating the exclusive scan of an integer "
               "sequence failed.");
-static_assert(std::is_same<ExclusiveScan<integer_sequence<int, 2, 1>>,
-                           integer_sequence<int, 0, 2>>::value,
+static_assert(std::is_same<ExclusiveScan<std::integer_sequence<int, 2, 1>>,
+                           std::integer_sequence<int, 0, 2>>::value,
               "Unit test of calculating the exclusive scan of an integer "
               "sequence failed.");
-static_assert(std::is_same<ExclusiveScan<integer_sequence<int, 2, 1, 10>>,
-                           integer_sequence<int, 0, 2, 3>>::value,
+static_assert(std::is_same<ExclusiveScan<std::integer_sequence<int, 2, 1, 10>>,
+                           std::integer_sequence<int, 0, 2, 3>>::value,
               "Unit test of calculating the exclusive scan of an integer "
               "sequence failed.");
 
