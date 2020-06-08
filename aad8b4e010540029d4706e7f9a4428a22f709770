@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40d89823_9ba95f7f",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-06-08T15:05:46Z",
+      "side": 1,
+      "message": "shouldn\u0027t this entire section be split into two approaches? it seems odd to interleave them",
+      "range": {
+        "startLine": 370,
+        "startChar": 0,
+        "endLine": 370,
+        "endChar": 7
+      },
+      "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
