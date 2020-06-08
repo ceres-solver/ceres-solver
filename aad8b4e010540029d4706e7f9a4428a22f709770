@@ -22,6 +22,30 @@
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61df23f4_b2f81c73",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 6342
+      },
+      "writtenOn": "2020-06-08T15:16:35Z",
+      "side": 1,
+      "message": "Yes, I agree we can split the approaches at the main stage. The main reason I didn\u0027t do that is because the instructions for setting up the toplevel directory and upacking Eigen tarball were common for both the approaches.",
+      "parentUuid": "40d89823_9ba95f7f",
+      "range": {
+        "startLine": 370,
+        "startChar": 0,
+        "endLine": 370,
+        "endChar": 7
+      },
+      "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
