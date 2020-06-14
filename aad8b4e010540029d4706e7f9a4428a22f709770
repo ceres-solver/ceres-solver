@@ -46,6 +46,40 @@
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e2f297_4a3ed3c4",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-06-14T14:29:02Z",
+      "side": 1,
+      "message": "If you are using a recent version of glog (the expected case) and building with CMake, then like gflags you would only need to set glog_DIR",
+      "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef3b91f_b8196cdd",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-06-14T14:29:02Z",
+      "side": 1,
+      "message": "I\u0027m confused here about why this does not include any of the dependency identification above, are you assuming that the user has built all of the dependencies using this new CMake support in VS and therefore the detection will be automatic?  That would not be the case for SuiteSparse or CXSparse by default for example.",
+      "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
