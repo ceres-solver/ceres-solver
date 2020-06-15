@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "f045ee34_25e413f3",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 6342
+      },
+      "writtenOn": "2020-06-15T12:58:18Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll make the change.",
+      "parentUuid": "34e2f297_4a3ed3c4",
+      "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aef3b91f_b8196cdd",
         "filename": "docs/source/installation.rst",
         "patchSetId": 3
@@ -77,6 +95,24 @@
       "writtenOn": "2020-06-14T14:29:02Z",
       "side": 1,
       "message": "I\u0027m confused here about why this does not include any of the dependency identification above, are you assuming that the user has built all of the dependencies using this new CMake support in VS and therefore the detection will be automatic?  That would not be the case for SuiteSparse or CXSparse by default for example.",
+      "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8b9212_ec38dc9e",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 6342
+      },
+      "writtenOn": "2020-06-15T12:58:18Z",
+      "side": 1,
+      "message": "I understand your point. This is the exact problem which I\u0027m facing right now. (I\u0027d posted a question regarding this on the previous patch. Ideally unresolved comments from previous patches should carry forward to the latest patch, not sure why the carry forward is not happening).\n\nAnyway,\n\n1. I installed SuiteSparse using CMake with LAPACK and BLAS included as shared libraries. But when building Ceres, I get a linker error of the following form: \nLNK2019\tunresolved external symbol dsyrk_ referenced in function \"public: static void __cdecl ceres::internal::BLAS::SymmetricRankKUpdate(int,int,double const *,bool,double,double,double *)\"\nAdded \"SUITESPARSE_INCLUDE_DIR_HINTS\" and \"SUITESPARSE_LIBRARY_DIR_HINTS\" options for Ceres.\nI tried building Ceres as a shared library using the flag \"BUILD_SHARED_LIBS\" as well as static library. Both options give the same linker error mentioned above.\n\n2. The links for CXSparse cmake build point to repos which are at least 8 years old. Should we still provide instructions for CXSparse?\n\nI\u0027ll update the instructions after we resolve this issue.",
+      "parentUuid": "aef3b91f_b8196cdd",
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
