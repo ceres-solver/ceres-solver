@@ -1152,8 +1152,7 @@ their shape graphically. More details can be found in
 Theory
 ------
 
-Let us consider a problem with a single problem and a single parameter
-block.
+Let us consider a problem with a single parameter block.
 
 .. math::
 
@@ -1171,8 +1170,8 @@ where the terms involving the second derivatives of :math:`f(x)` have
 been ignored. Note that :math:`H(x)` is indefinite if
 :math:`\rho''f(x)^\top f(x) + \frac{1}{2}\rho' < 0`. If this is not
 the case, then its possible to re-weight the residual and the Jacobian
-matrix such that the corresponding linear least squares problem for
-the robustified Gauss-Newton step.
+matrix such that the robustified Gauss-Newton step corresponds to an
+ordinary linear least squares problem.
 
 
 Let :math:`\alpha` be a root of
@@ -1193,7 +1192,7 @@ In the case :math:`2 \rho''\left\|f(x)\right\|^2 + \rho' \lesssim 0`,
 we limit :math:`\alpha \le 1- \epsilon` for some small
 :math:`\epsilon`. For more details see [Triggs]_.
 
-With this simple rescaling, one can use any Jacobian based non-linear
+With this simple rescaling, one can apply any Jacobian based non-linear
 least squares algorithm to robustified non-linear least squares
 problems.
 
