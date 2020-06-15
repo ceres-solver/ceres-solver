@@ -166,10 +166,10 @@ Before going further, let us make some notational simplifications. We
 will assume that the matrix :math:`\frac{1}{\sqrt{\mu}} D` has been concatenated
 at the bottom of the matrix :math:`J` and similarly a vector of zeros
 has been added to the bottom of the vector :math:`f` and the rest of
-our discussion will be in terms of :math:`J` and :math:`f`, i.e, the
+our discussion will be in terms of :math:`J` and :math:`F`, i.e, the
 linear least squares problem.
 
-.. math:: \min_{\Delta x} \frac{1}{2} \|J(x)\Delta x + f(x)\|^2 .
+.. math:: \min_{\Delta x} \frac{1}{2} \|J(x)\Delta x + F(x)\|^2 .
    :label: simple
 
 For all but the smallest problems the solution of :eq:`simple` in
@@ -648,11 +648,11 @@ can be quite substantial.
      access to :math:`S` via its product with a vector, one way to
      evaluate :math:`Sx` is to observe that
 
-     .. math::  x_1 &= E^\top x
-     .. math::  x_2 &= C^{-1} x_1
-     .. math::  x_3 &= Ex_2\\
-     .. math::  x_4 &= Bx\\
-     .. math::   Sx &= x_4 - x_3
+     .. math::  x_1 &= E^\top x\\
+                x_2 &= C^{-1} x_1\\
+                x_3 &= Ex_2\\
+                x_4 &= Bx\\
+                Sx &= x_4 - x_3
         :label: schurtrick1
 
      Thus, we can run PCG on :math:`S` with the same computational
