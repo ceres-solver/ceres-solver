@@ -25,7 +25,7 @@ covariance. Then the maximum likelihood estimate of :math:`x` given
 observations :math:`y` is the solution to the non-linear least squares
 problem:
 
-.. math:: x^* = \arg \min_x \|f(x)\|^2
+.. math:: x^* = \arg \min_x \|y - f(x)\|^2
 
 And the covariance of :math:`x^*` is given by
 
@@ -169,7 +169,7 @@ cases.
       :member:`Covaraince::Options::sparse_linear_algebra_library_type`
       to ``SUITE_SPARSE``.
 
-      Neither ``SPARSE_QR`` cannot compute the covariance if the
+      ``SPARSE_QR`` cannot compute the covariance if the
       Jacobian is rank deficient.
 
 
