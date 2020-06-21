@@ -116,6 +116,24 @@
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c17b2a_c2bfd7c6",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-06-21T16:15:15Z",
+      "side": 1,
+      "message": "For 1), what is the value of LAPACK_LIBRARIES?  There should be a line like this: \"-- Found LAPACK library: XXX\" in the configure output\n\n2. CXSparse is typically distributed as part of SuiteSparse, but it has different licensing, so yes we do still support it",
+      "parentUuid": "cb8b9212_ec38dc9e",
+      "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
