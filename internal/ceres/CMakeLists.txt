@@ -222,6 +222,7 @@ add_library(ceres_internal OBJECT
     linear_operator.cc
     linear_solver.cc
     low_rank_inverse_hessian.cc
+    marginalization.cc
     minimizer.cc
     parallel_utils.cc
     parameter_block_ordering.cc
@@ -500,6 +501,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(local_parameterization)
   ceres_test(loss_function)
   ceres_test(manifold)
+  ceres_test(marginalization)
   ceres_test(minimizer)
   ceres_test(normal_prior)
   ceres_test(numeric_diff_cost_function)

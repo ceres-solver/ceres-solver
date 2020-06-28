@@ -80,7 +80,7 @@ class CERES_NO_EXPORT BlockJacobianWriter {
   // Stores the position of each residual / parameter jacobian.
   //
   // The block sparse matrix that this writer writes to is stored as a set of
-  // contiguos dense blocks, one after each other; see BlockSparseMatrix. The
+  // contiguous dense blocks, one after each other; see BlockSparseMatrix. The
   // "double* values_" member of the block sparse matrix contains all of these
   // blocks. Given a pointer to the first element of a block and the size of
   // that block, it's possible to write to it.
