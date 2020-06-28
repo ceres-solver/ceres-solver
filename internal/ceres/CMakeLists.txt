@@ -107,6 +107,8 @@ set(CERES_INTERNAL_SRC
     local_parameterization.cc
     loss_function.cc
     low_rank_inverse_hessian.cc
+    marginalizable_parameterization.cc
+    marginalization.cc
     minimizer.cc
     normal_prior.cc
     parallel_utils.cc
@@ -466,8 +468,10 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(levenberg_marquardt_strategy)
   ceres_test(line_search_minimizer)
   ceres_test(line_search_preprocessor)
+  ceres_test(linear_cost_function)
   ceres_test(local_parameterization)
   ceres_test(loss_function)
+  ceres_test(marginalization)
   ceres_test(minimizer)
   ceres_test(normal_prior)
   ceres_test(numeric_diff_cost_function)
