@@ -22,6 +22,30 @@
       "revId": "b377ab61519107fca1aed58d4ed732b981c48020",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b168d230_a639c3a2",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 6362
+      },
+      "writtenOn": "2020-06-29T20:51:36Z",
+      "side": 1,
+      "message": "This is exactly as indirect as the test above:\n- it checks that the constructor (which was previously crashing) works (and I suppose that\u0027s the trivial test you would add in local_parameterization_test.cc)\n- it checks that the full pipeline works - other parts of the code may assume that SubsetParameterization keeps *some* parameters constant.\n\nSorry, but I spent alredy too much time on this. This test is valid. My patch fixes a bug in ceres (which was segfaulting, not even throwing an exception). Feel free to add more tests, but this is overkill IMHO.",
+      "parentUuid": "be6b6e4b_19f2b02c",
+      "range": {
+        "startLine": 535,
+        "startChar": 5,
+        "endLine": 535,
+        "endChar": 11
+      },
+      "revId": "b377ab61519107fca1aed58d4ed732b981c48020",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
