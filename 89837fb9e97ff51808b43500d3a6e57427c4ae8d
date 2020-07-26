@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d09122c_ffa4a9ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-07-26T18:58:26Z",
+      "side": 1,
+      "message": "This addresses the same basic issue as was raised in https://ceres-solver-review.googlesource.com/c/ceres-solver/+/17580 for Eigen",
+      "revId": "89837fb9e97ff51808b43500d3a6e57427c4ae8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
