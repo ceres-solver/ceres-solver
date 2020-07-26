@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab1a3414_8f7cad3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-07-26T18:43:30Z",
+      "side": 1,
+      "message": "This should address the discussion here: https://github.com/ceres-solver/ceres-solver/commit/33dd469a53383743af00a711a6a85e64c35177e8",
+      "revId": "d29f1d720aba58df2176f5405a58108c50b2b086",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
