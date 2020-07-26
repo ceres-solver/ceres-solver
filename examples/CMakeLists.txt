@@ -72,41 +72,41 @@ target_link_libraries(simple_bundle_adjuster Ceres::ceres)
 
 if (GFLAGS)
   add_executable(powell powell.cc)
-  target_link_libraries(powell Ceres::ceres ${GFLAGS_LIBRARIES})
+  target_link_libraries(powell Ceres::ceres gflags)
 
   add_executable(nist nist.cc)
-  target_link_libraries(nist Ceres::ceres ${GFLAGS_LIBRARIES})
+  target_link_libraries(nist Ceres::ceres gflags)
   if (MSVC)
     target_compile_options(nist PRIVATE "/bigobj")
   endif()
 
   add_executable(more_garbow_hillstrom more_garbow_hillstrom.cc)
-  target_link_libraries(more_garbow_hillstrom Ceres::ceres ${GFLAGS_LIBRARIES})
+  target_link_libraries(more_garbow_hillstrom Ceres::ceres gflags)
 
   add_executable(circle_fit circle_fit.cc)
-  target_link_libraries(circle_fit Ceres::ceres ${GFLAGS_LIBRARIES})
+  target_link_libraries(circle_fit Ceres::ceres gflags)
 
   add_executable(bundle_adjuster
                  bundle_adjuster.cc
                  bal_problem.cc)
-  target_link_libraries(bundle_adjuster Ceres::ceres ${GFLAGS_LIBRARIES})
+  target_link_libraries(bundle_adjuster Ceres::ceres gflags)
 
   add_executable(libmv_bundle_adjuster
                  libmv_bundle_adjuster.cc)
-  target_link_libraries(libmv_bundle_adjuster Ceres::ceres ${GFLAGS_LIBRARIES})
+  target_link_libraries(libmv_bundle_adjuster Ceres::ceres gflags)
 
   add_executable(libmv_homography
                  libmv_homography.cc)
-  target_link_libraries(libmv_homography Ceres::ceres ${GFLAGS_LIBRARIES})
+  target_link_libraries(libmv_homography Ceres::ceres gflags)
 
   add_executable(denoising
                  denoising.cc
                  fields_of_experts.cc)
-  target_link_libraries(denoising Ceres::ceres ${GFLAGS_LIBRARIES})
+  target_link_libraries(denoising Ceres::ceres gflags)
 
   add_executable(robot_pose_mle
                  robot_pose_mle.cc)
-  target_link_libraries(robot_pose_mle Ceres::ceres ${GFLAGS_LIBRARIES})
+  target_link_libraries(robot_pose_mle Ceres::ceres gflags)
 
 endif (GFLAGS)
 
