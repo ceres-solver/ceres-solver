@@ -239,8 +239,7 @@ message("-- Building with C++${CMAKE_CXX_STANDARD}")
 
 # Eigen.
 # Eigen delivers Eigen3Config.cmake since v3.3.3
-find_package(Eigen3 3.3 CONFIG REQUIRED
-  HINTS ${HOMEBREW_INCLUDE_DIR_HINTS})
+find_package(Eigen3 3.3 REQUIRED HINTS ${HOMEBREW_INCLUDE_DIR_HINTS})
 if (EIGEN3_FOUND)
   message("-- Found Eigen version ${EIGEN3_VERSION_STRING}: ${EIGEN3_INCLUDE_DIRS}")
   if (CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64.*|AARCH64.*)" AND

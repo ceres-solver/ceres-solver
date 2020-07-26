@@ -444,7 +444,6 @@ dependencies.
 #. Try running ``Configure``. It won't work. It'll show a bunch of options.
    You'll need to set:
 
-   #. ``EIGEN_INCLUDE_DIR_HINTS``
    #. ``GLOG_INCLUDE_DIR_HINTS``
    #. ``GLOG_LIBRARY_DIR_HINTS``
    #. (Optional) ``SUITESPARSE_INCLUDE_DIR_HINTS``
