@@ -253,12 +253,12 @@ else(CERES_USES_MINIGLOG)
   # if Ceres was built with MINIGLOG.
   if (CERES_USES_GFLAGS)
     # Search quietly s/t we control the timing of the error message if not found.
-    find_package(gflags ${CERES_GFLAGS_VERSION} CONFIG QUIET)
-    if (gflags_FOUND)
+    find_package(gflags ${CERES_GFLAGS_VERSION} QUIET)
+    if (gflags_FOUND AND TARGET gflags)
       ceres_message(STATUS "Found required Ceres dependency: gflags")
     else()
       ceres_report_not_found("Missing required Ceres "
-        "dependency: gflags.")
+        "dependency: gflags (not found, or not found as exported CMake target).")
     endif()
   endif()
 endif(CERES_USES_MINIGLOG)

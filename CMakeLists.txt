@@ -391,25 +391,24 @@ endif()
 # GFlags.
 if (GFLAGS)
   # Don't search with REQUIRED as we can continue without gflags.
-  find_package(gflags 2.2.0 CONFIG
-    HINTS "${HOMEBREW_INCLUDE_DIR_HINTS}")
+  find_package(gflags 2.2.0 HINTS "${HOMEBREW_INCLUDE_DIR_HINTS}")
   if (gflags_FOUND)
-    message("-- Found Google Flags version ${gflags_VERSION}: ${GFLAGS_INCLUDE_DIR}")
+    if (TARGET gflags)
+      message("-- Found Google Flags (gflags) version ${gflags_VERSION}: ${gflags_DIR}")
+    else()
+      message("-- Detected version of gflags: ${gflags_VERSION} does not define "
+        "expected gflags CMake target which should be exported by gflags 2.2+. "
+        "Building without gflags.")
+      update_cache_variable(GFLAGS OFF)
+    endif()
   else (gflags_FOUND)
-    message("-- Did not find Google Flags (gflags), Building without gflags "
-      "- no tests or tools will be built!")
+    message("-- Did not find Google Flags (gflags), Building without gflags.")
     update_cache_variable(GFLAGS OFF)
   endif (gflags_FOUND)
-else (GFLAGS)
-  message("-- Google Flags disabled; no tests or tools will be built!")
-  # Mark as advanced (remove from default GUI view) the gflags search
-  # variables in case user enabled GFLAGS, FindGflags did not find it, so
-  # made search variables visible in GUI for user to set, but then user disables
-  # GFLAGS instead of setting them.
-  mark_as_advanced(FORCE GFLAGS_INCLUDE_DIR
-                         GFLAGS_LIBRARY
-                         GFLAGS_NAMESPACE)
-endif (GFLAGS)
+endif()
+if (NOT GFLAGS)
+  message("-- Use of gflags disabled - no tests or tools will be built!")
+endif()
 
 # MiniGLog.
 if (MINIGLOG)
