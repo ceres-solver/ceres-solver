@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d33868f_b0694ff3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-07-31T20:54:28Z",
+      "side": 1,
+      "message": "My apologies for taking so long to reply.\nI changed jobs within google a few weeks ago, so things have been a bit busy, I hope to have more time going forward.\n\nI have some API suggestions, but I have also printed out the papers you have referenced and I will read them over the next few days so that I can understand and review the implementation correctly. \n\nIt is worth thinking through how you expect this API to be used. Are you expecting people to just construct a problem and then marginalize a set of variables? in which case it should just be one function that does that.\n\nwhat is the use case for them wanting to access the cost function? that leads to an unnecessarily complicated API. Is it for testing? if so, testing what?\n\n",
+      "revId": "bd13d1eb81324a88ddfaa6843251043994635621",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9b3e50b_93ab2b31",
+        "filename": "include/ceres/marginalization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-07-31T20:54:28Z",
+      "side": 1,
+      "message": "Why not just call this\n\nLinearCostFunction ?\n\nresidual \u003d \\sum_i A_i x_i + b no?",
+      "range": {
+        "startLine": 92,
+        "startChar": 22,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "bd13d1eb81324a88ddfaa6843251043994635621",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d2f4a43_1d101a70",
+        "filename": "include/ceres/marginalization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-07-31T20:54:28Z",
+      "side": 1,
+      "message": "purely from an API perspective, it is not clear to me why this is a class. this is just two functions which require no state. \n\nFurther the documentation belongs here rather up above with the MarginalFactorCostFunction. That object should live in its own file and be tested independently.\n\nin fact MarginalFactorCostFunction has nothing to do with marginalization, it is a linear cost function.  So it should be given a name which is more indicative of what it does rather than what it is used for and tested as such.",
+      "range": {
+        "startLine": 143,
+        "startChar": 6,
+        "endLine": 143,
+        "endChar": 18
+      },
+      "revId": "bd13d1eb81324a88ddfaa6843251043994635621",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
