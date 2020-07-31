@@ -151,6 +151,9 @@ class DynamicAutoDiffCostFunction : public DynamicCostFunction {
       }
     }
 
+    if (num_active_parameters == 0) {
+      return (*functor_)(parameters, residuals);
+    }
     // When `num_active_parameters % Stride != 0` then it can be the case
     // that `active_parameter_count < Stride` while parameter_cursor is less
     // than the total number of parameters and with no remaining non-constant

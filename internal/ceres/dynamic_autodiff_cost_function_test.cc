@@ -771,5 +771,51 @@ TEST_F(SixParameterCostFunctorTest, TestSixParameterJacobianVCCVCV) {
   }
 }
 
+class ValueError {
+ public:
+  explicit ValueError(double target_value) : target_value_(target_value) {}
+
+  template <typename T>
+  bool operator()(const T* value, T* residual) const {
+    *residual = *value - T(target_value_);
+    return true;
+  }
+
+ protected:
+  double target_value_;
+};
+
+class DynamicValueError {
+ public:
+  explicit DynamicValueError(double target_value)
+      : target_value_(target_value) {}
+
+  template <typename T>
+  bool operator()(T const* const* parameters, T* residual) const {
+    residual[0] = T(target_value_) - parameters[0][0];
+    return true;
+  }
+
+ protected:
+  double target_value_;
+};
+
+TEST(DynamicAutoDiffCostFunction,
+     EvaluateWithEmptyJacobiansArrayComputesResidual) {
+  const double target_value = 1.0;
+  double parameter = 0;
+  ceres::DynamicAutoDiffCostFunction<DynamicValueError, 1> cost_function(
+      new DynamicValueError(target_value));
+  cost_function.AddParameterBlock(1);
+  cost_function.SetNumResiduals(1);
+
+  double* parameter_blocks[1] = {&parameter};
+  double* jacobians[1] = {nullptr};
+  double residual;
+
+  EXPECT_TRUE(cost_function.Evaluate(parameter_blocks, &residual, jacobians));
+  EXPECT_EQ(residual, target_value);
+}
+
 }  // namespace internal
 }  // namespace ceres
