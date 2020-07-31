@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "289b3b14_5bd302ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-07-31T21:35:12Z",
+      "side": 1,
+      "message": "Sorry for the delayed reply.\n\nI think I am okay with the changes to autodiff_cost_function.h. Keir what do you think?\nI also think there is no need to make changes to libmv. If Keir agrees, then this new behaviour also needs tests and an update to the documentation.",
+      "revId": "f470bdf4d9f5495fece8dc46a5f174bf6c462121",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
