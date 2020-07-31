@@ -75,6 +75,33 @@ TEST(IdentityParameterization, EverythingTest) {
   EXPECT_EQ((local_matrix - global_matrix).norm(), 0.0);
 }
 
+TEST(SubsetParameterization, EmptyConstantParameters) {
+  std::vector<int> constant_parameters;
+  SubsetParameterization parameterization(3, constant_parameters);
+  EXPECT_EQ(parameterization.GlobalSize(), 3);
+  EXPECT_EQ(parameterization.LocalSize(), 3);
+  double x[3] = {1, 2, 3};
+  double delta[3] = {4, 5, 6};
+  double x_plus_delta[3] = {-1, -2, -3};
+  parameterization.Plus(x, delta, x_plus_delta);
+  EXPECT_EQ(x_plus_delta[0], x[0] + delta[0]);
+  EXPECT_EQ(x_plus_delta[1], x[1] + delta[1]);
+  EXPECT_EQ(x_plus_delta[2], x[2] + delta[2]);
+
+  Matrix jacobian(3, 3);
+  Matrix expected_jacobian(3, 3);
+  expected_jacobian.setIdentity();
+  parameterization.ComputeJacobian(x, jacobian.data());
+  EXPECT_EQ(jacobian, expected_jacobian);
+
+  Matrix global_matrix(3, 5);
+  global_matrix.setRandom();
+  Matrix local_matrix(3, 5);
+  parameterization.MultiplyByJacobian(
+      x, 5, global_matrix.data(), local_matrix.data());
+  EXPECT_EQ(global_matrix, local_matrix);
+}
+
 TEST(SubsetParameterization, NegativeParameterIndexDeathTest) {
   std::vector<int> constant_parameters;
   constant_parameters.push_back(-1);
