@@ -16,6 +16,23 @@
       "revId": "f470bdf4d9f5495fece8dc46a5f174bf6c462121",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e4de315_1b45169a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-07-31T21:37:03Z",
+      "side": 1,
+      "message": "In part because NumericDiffCostFunction already has these semantics. It does not have a move constructor, it would be a good idea to do the same there also. \nalso it is worth updating DynamicAutoDiffCostFunction to have the same semantics. \n",
+      "revId": "f470bdf4d9f5495fece8dc46a5f174bf6c462121",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
