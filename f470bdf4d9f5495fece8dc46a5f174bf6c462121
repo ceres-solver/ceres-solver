@@ -33,6 +33,23 @@
       "revId": "f470bdf4d9f5495fece8dc46a5f174bf6c462121",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a685f8a1_22472292",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2020-08-01T00:43:53Z",
+      "side": 1,
+      "message": "I\u0027m on the fence, but slightly not in favor of this change since it is adding 8 bytes of RAM to every autodiff cost function. Julian, do you have actual benchmark numbers to show the impact of trading the per-cost function RAM in exchange for allocator calls?",
+      "revId": "f470bdf4d9f5495fece8dc46a5f174bf6c462121",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
