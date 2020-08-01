@@ -50,6 +50,23 @@
       "revId": "f470bdf4d9f5495fece8dc46a5f174bf6c462121",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e32f589e_9c5e8f20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2020-08-01T00:47:29Z",
+      "side": 1,
+      "message": "After some debate, this brings autodiff in line with numeric diff, so let\u0027s merge it.",
+      "revId": "f470bdf4d9f5495fece8dc46a5f174bf6c462121",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
