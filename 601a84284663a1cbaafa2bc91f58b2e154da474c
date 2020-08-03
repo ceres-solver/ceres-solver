@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "05e275d7_932fcfff",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-08-03T16:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd94dabb_e8ff9162",
+      "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d55610d3_13da8509",
         "filename": "include/ceres/problem.h",
         "patchSetId": 1
@@ -67,6 +85,24 @@
       "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24e51db_5048947d",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-08-03T16:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d55610d3_13da8509",
+      "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "12f68229_d5e1e1d4",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-08-03T16:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7341937_aee830af",
+      "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a69ffa8f_020cc56b",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 1
@@ -98,6 +152,24 @@
       "writtenOn": "2020-08-03T13:34:38Z",
       "side": 1,
       "message": "This change looks unrelated?",
+      "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb50ac2_5e96faa3",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-08-03T16:54:04Z",
+      "side": 1,
+      "message": "yes I fixed it as I saw it. The default value is likely too low.",
+      "parentUuid": "a69ffa8f_020cc56b",
       "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
