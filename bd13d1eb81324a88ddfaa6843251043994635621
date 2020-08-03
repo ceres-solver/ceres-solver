@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "648695a6_aa482d0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2020-08-03T02:58:29Z",
+      "side": 1,
+      "message": "No problem! Thank you for taking a look, Sameer. See below re. the API.",
+      "parentUuid": "3d33868f_b0694ff3",
+      "revId": "bd13d1eb81324a88ddfaa6843251043994635621",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9b3e50b_93ab2b31",
         "filename": "include/ceres/marginalization.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ef887607_1f609d0d",
+        "filename": "include/ceres/marginalization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2020-08-03T02:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9b3e50b_93ab2b31",
+      "range": {
+        "startLine": 92,
+        "startChar": 22,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "bd13d1eb81324a88ddfaa6843251043994635621",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d2f4a43_1d101a70",
         "filename": "include/ceres/marginalization.h",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2020-07-31T20:54:28Z",
       "side": 1,
       "message": "purely from an API perspective, it is not clear to me why this is a class. this is just two functions which require no state. \n\nFurther the documentation belongs here rather up above with the MarginalFactorCostFunction. That object should live in its own file and be tested independently.\n\nin fact MarginalFactorCostFunction has nothing to do with marginalization, it is a linear cost function.  So it should be given a name which is more indicative of what it does rather than what it is used for and tested as such.",
+      "range": {
+        "startLine": 143,
+        "startChar": 6,
+        "endLine": 143,
+        "endChar": 18
+      },
+      "revId": "bd13d1eb81324a88ddfaa6843251043994635621",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa4c86c_c5b8ca04",
+        "filename": "include/ceres/marginalization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2020-08-03T02:58:29Z",
+      "side": 1,
+      "message": "Regarding the API, I have use cases in mind for MarginalizeOutVariables, which modifies the graph provided (e.g. in sensor fusion). I did not demonstrate the use of the other function that provides the linear cost function, but I had some applications in mind where it would be convenient (e.g. if one wants to approximate the marginal factor, or if one wants to maintain marginal factors for different linearization points). After giving this some additional thought, I think it may be best to keep the cost function internal. Users could make a few small changes to address these uncommon use cases if needed.\n\nSeparated out the linear cost function and renamed.",
+      "parentUuid": "5d2f4a43_1d101a70",
       "range": {
         "startLine": 143,
         "startChar": 6,
