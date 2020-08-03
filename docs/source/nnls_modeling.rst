@@ -1725,14 +1725,17 @@ quaternion, a local parameterization can be constructed as
 
     Default: `nullptr`
 
-    Using this callback interface, Ceres can notify you when it is
-    about to evaluate the residuals or Jacobians. With the callback,
-    you can share computation between residual blocks by doing the
-    shared computation in
+    Using this callback interface, Ceres will notify you when it is
+    about to evaluate the residuals or Jacobians.
+
+    If an ``evaluation_callback`` is present, Ceres will update the
+    user's parameter blocks to the values that will be used when
+    calling :func:`CostFunction::Evaluate` before calling
+    :func:`EvaluationCallback::PrepareForEvaluation`. One can then use
+    this callback to share (or cache) computation between cost
+    functions by doing the shared computation in
     :func:`EvaluationCallback::PrepareForEvaluation` before Ceres
-    calls :func:`CostFunction::Evaluate`. It also enables caching
-    results between a pure residual evaluation and a residual &
-    Jacobian evaluation.
+    calls :func:`CostFunction::Evaluate`.
 
     Problem does NOT take ownership of the callback.
 
@@ -1752,8 +1755,8 @@ quaternion, a local parameterization can be constructed as
    parameter blocks it expects. The function checks that these match
    the sizes of the parameter blocks listed in parameter_blocks. The
    program aborts if a mismatch is detected. loss_function can be
-   nullptr, in which case the cost of the term is just the squared norm
-   of the residuals.
+   `nullptr`, in which case the cost of the term is just the squared
+   norm of the residuals.
 
    The parameter blocks may be passed together as a
    ``vector<double*>``, or as up to ten separate ``double*`` pointers.
@@ -1997,22 +2000,35 @@ quaternion, a local parameterization can be constructed as
    ``apply_loss_function`` as the name implies allows the user to
    switch the application of the loss function on and off.
 
-   .. NOTE::
+   .. NOTE:: If an :class:`EvaluationCallback` is associated with the
+      problem, then its
+      :func:`EvaluationCallback::PrepareForEvaluation` method will be
+      called every time this method is called with `new_point =
+      true`. This conservatively assumes that the user may have
+      changed the parameter values since the previous call to evaluate
+      / solve.  For improved efficiency, and only if you know that the
+      parameter values have not changed between calls, see
+      :func:`Problem::EvaluateResidualBlockAssumingParametersUnchanged`.
 
-      If an :class:`EvaluationCallback` is associated with the problem
-      then it is the user's responsibility to call
-      :func:`EvaluationCalback::PrepareForEvaluation` it before
-      calling this method.
 
-      This is because, if the user calls this method multiple times,
-      we cannot tell if the underlying parameter blocks have changed
-      between calls or not. So if ``EvaluateResidualBlock`` was
-      responsible for calling the
-      :func:`EvaluationCalback::PrepareForEvaluation`, it will have to
-      do it everytime it is called. Which makes the common case where
-      the parameter blocks do not change, inefficient. So we leave it
-      to the user to call the
-      :func:`EvaluationCalback::PrepareForEvaluation` as needed.
+.. function::  bool EvaluateResidualBlockAssumingParametersUnchanged(ResidualBlockId residual_block_id, bool apply_loss_function, double* cost,double* residuals, double** jacobians) const
+
+    Same as :func:`Problem::EvaluateResidualBlock` except that if an
+    :class:`EvaluationCallback` is associated with the problem, then
+    its :func:`EvaluationCallback::PrepareForEvaluation` method will
+    be called every time this method is called with new_point = false.
+
+    This means, if an :class:`EvaluationCallback` is associated with
+    the problem then it is the user's responsibility to call
+    :func:`EvaluationCallback::PrepareForEvaluation` before calling
+    this method if necessary, i.e. iff the parameter values have been
+    changed since the last call to evaluate / solve.'
+
+    This is because, as the name implies, we assume that the parameter
+    blocks did not change since the last time
+    :func:`EvaluationCallback::PrepareForEvaluation` was called (via
+    :func:`Solve`, :func:`Problem:Evaluate` or
+    :func:`Problem:EvaluateResidualBlock`).
 
 
 .. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)
@@ -2126,11 +2142,15 @@ quaternion, a local parameterization can be constructed as
                                             bool new_evaluation_point) = 0;
       };
 
-   Ceres will call ``PrepareForEvaluation()`` every time, and once
-   before it computes the residuals and/or the Jacobians.
+.. function:: void EvaluationCallback::PrepareForEvaluation(bool evaluate_jacobians, bool new_evaluation_point)
 
-   User parameters (the double* values provided by the us)
-   are fixed until the next call to ``PrepareForEvaluation()``. If
+   Ceres will call :func:`EvaluationCallback::PrepareForEvaluation`
+   every time, and once before it computes the residuals and/or the
+   Jacobians.
+
+   User parameters (the double* values provided by the us) are fixed
+   until the next call to
+   :func:`EvaluationCallback::PrepareForEvaluation`. If
    ``new_evaluation_point == true``, then this is a new point that is
    different from the last evaluated point. Otherwise, it is the same
    point that was evaluated previously (either Jacobian or residual)
@@ -2138,33 +2158,37 @@ quaternion, a local parameterization can be constructed as
    ``evaluate_jacobians`` is true, then Ceres will request Jacobians
    in the upcoming cost evaluation.
 
-   Using this callback interface, Ceres can notify you when it is about
-   to evaluate the residuals or Jacobians. With the callback, you can
-   share computation between residual blocks by doing the shared
-   computation in PrepareForEvaluation() before Ceres calls
-   CostFunction::Evaluate() on all the residuals. It also enables
-   caching results between a pure residual evaluation and a residual &
-   Jacobian evaluation, via the new_evaluation_point argument.
+   Using this callback interface, Ceres can notify you when it is
+   about to evaluate the residuals or Jacobians. With the callback,
+   you can share computation between residual blocks by doing the
+   shared computation in
+   :func:`EvaluationCallback::PrepareForEvaluation` before Ceres calls
+   :func:`CostFunction::Evaluate` on all the residuals. It also
+   enables caching results between a pure residual evaluation and a
+   residual & Jacobian evaluation, via the ``new_evaluation_point``
+   argument.
 
    One use case for this callback is if the cost function compute is
-   moved to the GPU. In that case, the prepare call does the actual cost
-   function evaluation, and subsequent calls from Ceres to the actual
-   cost functions merely copy the results from the GPU onto the
+   moved to the GPU. In that case, the prepare call does the actual
+   cost function evaluation, and subsequent calls from Ceres to the
+   actual cost functions merely copy the results from the GPU onto the
    corresponding blocks for Ceres to plug into the solver.
 
    **Note**: Ceres provides no mechanism to share data other than the
    notification from the callback. Users must provide access to
    pre-computed shared data to their cost functions behind the scenes;
    this all happens without Ceres knowing. One approach is to put a
-   pointer to the shared data in each cost function (recommended) or to
-   use a global shared variable (discouraged; bug-prone).  As far as
-   Ceres is concerned, it is evaluating cost functions like any other;
-   it just so happens that behind the scenes the cost functions reuse
-   pre-computed data to execute faster.
+   pointer to the shared data in each cost function (recommended) or
+   to use a global shared variable (discouraged; bug-prone).  As far
+   as Ceres is concerned, it is evaluating cost functions like any
+   other; it just so happens that behind the scenes the cost functions
+   reuse pre-computed data to execute faster.
 
-   See ``evaluation_callback_test.cc`` for code that explicitly verifies
-   the preconditions between ``PrepareForEvaluation()`` and
-   ``CostFunction::Evaluate()``.
+   See ``evaluation_callback_test.cc`` for code that explicitly
+   verifies the preconditions between
+   :func:`EvaluationCallback::PrepareForEvaluation` and
+   :func:`CostFunction::Evaluate`.
+
 
 ``rotation.h``
 ==============
