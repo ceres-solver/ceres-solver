@@ -16,6 +16,108 @@
       "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ddb55316_0671c9db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-03T13:34:38Z",
+      "side": 1,
+      "message": "IMO, I think this is a better external API as it\u0027s harder to misuse",
+      "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd94dabb_e8ff9162",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-03T13:34:38Z",
+      "side": 1,
+      "message": "everytime -\u003e every time",
+      "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55610d3_13da8509",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-03T13:34:38Z",
+      "side": 1,
+      "message": "\u0027... \u003d true.\u0027 -\u003e ... \u003d true. This conservatively assumes that the user may have changed the parameter values since the previous call to evaluate / solve.  For improved efficiency, and only if you know that the parameter values have not changed between calls, see EvaluateResidualBlockAssumingParametersUnchanged().",
+      "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7341937_aee830af",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-03T13:34:38Z",
+      "side": 1,
+      "message": "Add to end of sentence: \u0027, if necessary, i.e. iff the parameter values have been changed since the last call to evaluate / solve.\u0027",
+      "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a69ffa8f_020cc56b",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-03T13:34:38Z",
+      "side": 1,
+      "message": "This change looks unrelated?",
+      "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4913a335_301c3d67",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-03T13:34:38Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be being used at present",
+      "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
