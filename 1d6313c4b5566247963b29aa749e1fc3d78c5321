@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "008fff9f_086e4745",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-08-03T10:54:49Z",
+      "side": 1,
+      "message": "This is now fixed at head.\n\nhttps://ceres-solver-review.googlesource.com/c/ceres-solver/+/17640",
+      "revId": "1d6313c4b5566247963b29aa749e1fc3d78c5321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
