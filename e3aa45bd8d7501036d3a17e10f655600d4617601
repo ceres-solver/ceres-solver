@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f09c7530_0d2705e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6372
+      },
+      "writtenOn": "2020-08-03T11:43:34Z",
+      "side": 1,
+      "message": "Sorry for hijacking this discussion. As a potential user, I really appreciate this functionality and want to add a little comment regarding the API.\n\nIt would be great to have access to the resulting linear sub-system. The reason is: a linear cost function is the standard way to represent the sub-system, but for things like Quaternions it might be better to do this as manifold operation. With access to the resulting sub-system, everyone could choose whether to use the provided linear cost function or to create a custom one.\nMaybe this could be achieved by exposing one of the lower level functions?",
+      "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
