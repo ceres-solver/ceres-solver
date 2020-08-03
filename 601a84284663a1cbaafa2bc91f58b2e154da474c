@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bbf49ba_f535bcb5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-08-03T12:00:38Z",
+      "side": 1,
+      "message": "Folks here is a rough CL following up on Alex\u0027s comments on \nhttps://ceres-solver-review.googlesource.com/c/ceres-solver/+/17420\n\nIf this looks sane to you, I will add tests and update the documentation and send it out for a full review.",
+      "revId": "601a84284663a1cbaafa2bc91f58b2e154da474c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
