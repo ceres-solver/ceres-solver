@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c2cc1f9_f277f8fa",
+        "filename": "docs/source/gradient_solver.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-08-03T16:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f53f8d50_4361a6f0",
+      "revId": "fcf7206810781615b2e633459cfde457651e6ba7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1ebd858_7808b467",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "fcf7206810781615b2e633459cfde457651e6ba7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63bbdd2_22b953f9",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-08-03T16:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1ebd858_7808b467",
+      "revId": "fcf7206810781615b2e633459cfde457651e6ba7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -120,6 +156,24 @@
       "revId": "fcf7206810781615b2e633459cfde457651e6ba7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bbc56ec_4f94c95b",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-08-03T16:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "899c72ee_6ea54dff",
+      "revId": "fcf7206810781615b2e633459cfde457651e6ba7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
