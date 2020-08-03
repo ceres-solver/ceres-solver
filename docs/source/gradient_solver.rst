@@ -33,10 +33,10 @@ Modeling
 .. function:: bool FirstOrderFunction::Evaluate(const double* const parameters, double* cost, double* gradient) const
 
    Evaluate the cost/value of the function. If ``gradient`` is not
-   ``NULL`` then evaluate the gradient too. If evaluation is
+   ``nullptr`` then evaluate the gradient too. If evaluation is
    successful return, ``true`` else return ``false``.
 
-   ``cost`` guaranteed to be never ``NULL``, ``gradient`` can be ``NULL``.
+   ``cost`` guaranteed to be never ``nullptr``, ``gradient`` can be ``nullptr``.
 
 .. function:: int FirstOrderFunction::NumParameters() const
 
