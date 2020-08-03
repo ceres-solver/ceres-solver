@@ -1570,6 +1570,8 @@ class ProblemEvaluateResidualBlockTest : public ::testing::Test {
  public:
   static constexpr bool kApplyLossFunction = true;
   static constexpr bool kDoNotApplyLossFunction = false;
+  static constexpr bool kNewPoint = true;
+  static constexpr bool kNotNewPoint = false;
   static double loss_function_scale_;
 
  protected:
@@ -1599,6 +1601,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1625,8 +1628,12 @@ TEST_F(ProblemEvaluateResidualBlockTest,
        OneResidualBlockNoLossFunctionNullEval) {
   ResidualBlockId residual_block_id =
       problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
-  EXPECT_TRUE(problem_.EvaluateResidualBlock(
-      residual_block_id, kApplyLossFunction, nullptr, nullptr, nullptr));
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             kNewPoint,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr));
 }
 
 TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockNoLossFunctionCost) {
@@ -1637,8 +1644,12 @@ TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockNoLossFunctionCost) {
   double expected_cost = expected_f.squaredNorm() / 2.0;
 
   double actual_cost;
-  EXPECT_TRUE(problem_.EvaluateResidualBlock(
-      residual_block_id, kApplyLossFunction, &actual_cost, nullptr, nullptr));
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             kNewPoint,
+                                             &actual_cost,
+                                             nullptr,
+                                             nullptr));
 
   EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
               0,
@@ -1658,6 +1669,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   Vector actual_f(5);
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              nullptr));
@@ -1688,6 +1700,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), nullptr};
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1715,6 +1728,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   Vector actual_f(5);
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              nullptr,
                                              actual_f.data(),
                                              nullptr));
@@ -1749,6 +1763,7 @@ TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockWithLossFunction) {
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1793,6 +1808,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kDoNotApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1836,6 +1852,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1880,6 +1897,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1923,6 +1941,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_FALSE(problem_.EvaluateResidualBlock(residual_block_id,
                                               kApplyLossFunction,
+                                              kNewPoint,
                                               &actual_cost,
                                               actual_f.data(),
                                               jacobians));
@@ -1930,6 +1949,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   jacobians[0] = nullptr;
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1968,6 +1988,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_FALSE(problem_.EvaluateResidualBlock(residual_block_id,
                                               kApplyLossFunction,
+                                              kNewPoint,
                                               &actual_cost,
                                               actual_f.data(),
                                               jacobians));
@@ -1975,12 +1996,14 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   jacobians[0] = nullptr;
   EXPECT_FALSE(problem_.EvaluateResidualBlock(residual_block_id,
                                               kApplyLossFunction,
+                                              kNewPoint,
                                               &actual_cost,
                                               actual_f.data(),
                                               jacobians));
   jacobians[1] = nullptr;
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -2018,6 +2041,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_FALSE(problem_.EvaluateResidualBlock(residual_block_id,
                                               kApplyLossFunction,
+                                              kNewPoint,
                                               &actual_cost,
                                               actual_f.data(),
                                               jacobians));
@@ -2025,6 +2049,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   jacobians[0] = nullptr;
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
