@@ -108,29 +108,29 @@ the corresponding accessors. This information will be verified by the
    that contains the :math:`i^{\text{th}}` parameter block that the
    ``CostFunction`` depends on.
 
-   ``parameters`` is never ``NULL``.
+   ``parameters`` is never ``nullptr``.
 
    ``residuals`` is an array of size ``num_residuals_``.
 
-   ``residuals`` is never ``NULL``.
+   ``residuals`` is never ``nullptr``.
 
    ``jacobians`` is an array of arrays of size
    ``CostFunction::parameter_block_sizes_.size()``.
 
-   If ``jacobians`` is ``NULL``, the user is only expected to compute
+   If ``jacobians`` is ``nullptr``, the user is only expected to compute
    the residuals.
 
    ``jacobians[i]`` is a row-major array of size ``num_residuals x
    parameter_block_sizes_[i]``.
 
-   If ``jacobians[i]`` is **not** ``NULL``, the user is required to
+   If ``jacobians[i]`` is **not** ``nullptr``, the user is required to
    compute the Jacobian of the residual vector with respect to
    ``parameters[i]`` and store it in this array, i.e.
 
    ``jacobians[i][r * parameter_block_sizes_[i] + c]`` =
    :math:`\frac{\displaystyle \partial \text{residual}[r]}{\displaystyle \partial \text{parameters}[i][c]}`
 
-   If ``jacobians[i]`` is ``NULL``, then this computation can be
+   If ``jacobians[i]`` is ``nullptr``, then this computation can be
    skipped. This is the case when the corresponding parameter block is
    marked constant.
 
@@ -914,7 +914,7 @@ Numeric Differentiation & LocalParameterization
 
        std::vector<LocalParameterization*> local_parameterizations;
        local_parameterizations.push_back(my_parameterization);
-       local_parameterizations.push_back(NULL);
+       local_parameterizations.push_back(nullptr);
 
        std::vector parameter1;
        std::vector parameter2;
@@ -1109,8 +1109,8 @@ their shape graphically. More details can be found in
    Given a loss function :math:`\rho(s)` and a scalar :math:`a`, :class:`ScaledLoss`
    implements the function :math:`a \rho(s)`.
 
-   Since we treat a ``NULL`` Loss function as the Identity loss
-   function, :math:`rho` = ``NULL``: is a valid input and will result
+   Since we treat a ``nullptr`` Loss function as the Identity loss
+   function, :math:`rho` = ``nullptr``: is a valid input and will result
    in the input being scaled by :math:`a`. This provides a simple way
    of implementing a scaled ResidualBlock.
 
@@ -1587,7 +1587,7 @@ quaternion, a local parameterization can be constructed as
    the parameter blocks it expects. The function checks that these
    match the sizes of the parameter blocks listed in
    ``parameter_blocks``. The program aborts if a mismatch is
-   detected. ``loss_function`` can be ``NULL``, in which case the cost
+   detected. ``loss_function`` can be ``nullptr``, in which case the cost
    of the term is just the squared norm of the residuals.
 
    The user has the option of explicitly adding the parameter blocks
@@ -1752,7 +1752,7 @@ quaternion, a local parameterization can be constructed as
    parameter blocks it expects. The function checks that these match
    the sizes of the parameter blocks listed in parameter_blocks. The
    program aborts if a mismatch is detected. loss_function can be
-   NULL, in which case the cost of the term is just the squared norm
+   nullptr, in which case the cost of the term is just the squared norm
    of the residuals.
 
    The parameter blocks may be passed together as a
@@ -1791,10 +1791,10 @@ quaternion, a local parameterization can be constructed as
 
       Problem problem;
 
-      problem.AddResidualBlock(new MyUnaryCostFunction(...), NULL, x1);
-      problem.AddResidualBlock(new MyBinaryCostFunction(...), NULL, x2, x1);
-      problem.AddResidualBlock(new MyUnaryCostFunction(...), NULL, v1);
-      problem.AddResidualBlock(new MyBinaryCostFunction(...), NULL, v2);
+      problem.AddResidualBlock(new MyUnaryCostFunction(...), nullptr, x1);
+      problem.AddResidualBlock(new MyBinaryCostFunction(...), nullptr, x2, x1);
+      problem.AddResidualBlock(new MyUnaryCostFunction(...), nullptr, v1);
+      problem.AddResidualBlock(new MyBinaryCostFunction(...), nullptr, v2);
 
 .. function:: void Problem::AddParameterBlock(double* values, int size, LocalParameterization* local_parameterization)
 
@@ -1871,7 +1871,7 @@ quaternion, a local parameterization can be constructed as
 
    Get the local parameterization object associated with this
    parameter block. If there is no parameterization object associated
-   then `NULL` is returned
+   then `nullptr` is returned
 
 .. function:: void Problem::SetParameterLowerBound(double* values, int index, double lower_bound)
 
@@ -2018,7 +2018,7 @@ quaternion, a local parameterization can be constructed as
 .. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)
 
    Evaluate a :class:`Problem`. Any of the output pointers can be
-   `NULL`. Which residual blocks and parameter blocks are used is
+   `nullptr`. Which residual blocks and parameter blocks are used is
    controlled by the :class:`Problem::EvaluateOptions` struct below.
 
    .. NOTE::
@@ -2032,10 +2032,10 @@ quaternion, a local parameterization can be constructed as
 
         Problem problem;
         double x = 1;
-        problem.Add(new MyCostFunction, NULL, &x);
+        problem.Add(new MyCostFunction, nullptr, &x);
 
         double cost = 0.0;
-        problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
+        problem.Evaluate(Problem::EvaluateOptions(), &cost, nullptr, nullptr, nullptr);
 
       The cost is evaluated at `x = 1`. If you wish to evaluate the
       problem at `x = 2`, then
@@ -2043,7 +2043,7 @@ quaternion, a local parameterization can be constructed as
       .. code-block:: c++
 
          x = 2;
-         problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
+         problem.Evaluate(Problem::EvaluateOptions(), &cost, nullptr, nullptr, nullptr);
 
       is the way to do so.
 
