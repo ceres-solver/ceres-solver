@@ -49,6 +49,7 @@
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
 
 namespace ceres {
 namespace internal {
@@ -1570,6 +1571,8 @@ class ProblemEvaluateResidualBlockTest : public ::testing::Test {
  public:
   static constexpr bool kApplyLossFunction = true;
   static constexpr bool kDoNotApplyLossFunction = false;
+  static constexpr bool kNewPoint = true;
+  static constexpr bool kNotNewPoint = false;
   static double loss_function_scale_;
 
  protected:
@@ -1599,6 +1602,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1625,8 +1629,12 @@ TEST_F(ProblemEvaluateResidualBlockTest,
        OneResidualBlockNoLossFunctionNullEval) {
   ResidualBlockId residual_block_id =
       problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
-  EXPECT_TRUE(problem_.EvaluateResidualBlock(
-      residual_block_id, kApplyLossFunction, nullptr, nullptr, nullptr));
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             kNewPoint,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr));
 }
 
 TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockNoLossFunctionCost) {
@@ -1637,8 +1645,12 @@ TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockNoLossFunctionCost) {
   double expected_cost = expected_f.squaredNorm() / 2.0;
 
   double actual_cost;
-  EXPECT_TRUE(problem_.EvaluateResidualBlock(
-      residual_block_id, kApplyLossFunction, &actual_cost, nullptr, nullptr));
+  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
+                                             kApplyLossFunction,
+                                             kNewPoint,
+                                             &actual_cost,
+                                             nullptr,
+                                             nullptr));
 
   EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
               0,
@@ -1658,6 +1670,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   Vector actual_f(5);
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              nullptr));
@@ -1688,6 +1701,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), nullptr};
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1715,6 +1729,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   Vector actual_f(5);
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              nullptr,
                                              actual_f.data(),
                                              nullptr));
@@ -1749,6 +1764,7 @@ TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockWithLossFunction) {
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1793,6 +1809,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kDoNotApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1836,6 +1853,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1880,6 +1898,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1923,6 +1942,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_FALSE(problem_.EvaluateResidualBlock(residual_block_id,
                                               kApplyLossFunction,
+                                              kNewPoint,
                                               &actual_cost,
                                               actual_f.data(),
                                               jacobians));
@@ -1930,6 +1950,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   jacobians[0] = nullptr;
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -1968,6 +1989,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_FALSE(problem_.EvaluateResidualBlock(residual_block_id,
                                               kApplyLossFunction,
+                                              kNewPoint,
                                               &actual_cost,
                                               actual_f.data(),
                                               jacobians));
@@ -1975,12 +1997,14 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   jacobians[0] = nullptr;
   EXPECT_FALSE(problem_.EvaluateResidualBlock(residual_block_id,
                                               kApplyLossFunction,
+                                              kNewPoint,
                                               &actual_cost,
                                               actual_f.data(),
                                               jacobians));
   jacobians[1] = nullptr;
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -2018,6 +2042,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_FALSE(problem_.EvaluateResidualBlock(residual_block_id,
                                               kApplyLossFunction,
+                                              kNewPoint,
                                               &actual_cost,
                                               actual_f.data(),
                                               jacobians));
@@ -2025,6 +2050,7 @@ TEST_F(ProblemEvaluateResidualBlockTest,
   jacobians[0] = nullptr;
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
+                                             kNewPoint,
                                              &actual_cost,
                                              actual_f.data(),
                                              jacobians));
@@ -2130,6 +2156,107 @@ TEST(Solver, ZeroSizedLocalParameterizationMeansParameterBlockIsConstant) {
   problem.AddResidualBlock(new BinaryCostFunction(1, 1, 1), nullptr, &x, &y);
   problem.SetParameterization(&y, new SubsetParameterization(1, {0}));
   EXPECT_TRUE(problem.IsParameterBlockConstant(&y));
+}
+
+class MockEvaluationCallback : public EvaluationCallback {
+ public:
+  MOCK_METHOD2(PrepareForEvaluation, void(bool, bool));
+};
+
+
+TEST(ProblemEvaluate, CallsEvaluationCallbackWithoutJacobian) {
+  MockEvaluationCallback evaluation_callback;
+  EXPECT_CALL(evaluation_callback, PrepareForEvaluation(false, true)).Times(1);
+
+  Problem::Options options;
+  options.evaluation_callback = &evaluation_callback;
+  ProblemImpl problem(options);
+  double x_[2] = {1, 2};
+  double y_[3] = {1, 2, 3};
+  ResidualBlockId residual_block_id =
+      problem.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+
+  double actual_cost;
+  Vector actual_f(5);
+  Matrix actual_dfdx(5, 2);
+  Matrix actual_dfdy(5, 3);
+  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
+  EXPECT_TRUE(problem.Evaluate(Problem::EvaluateOptions(),
+                               &actual_cost, nullptr, nullptr, nullptr));
+}
+
+TEST(ProblemEvaluate, CallsEvaluationCallbackWithJacobian) {
+  MockEvaluationCallback evaluation_callback;
+  EXPECT_CALL(evaluation_callback, PrepareForEvaluation(true, true)).Times(1);
+
+  Problem::Options options;
+  options.evaluation_callback = &evaluation_callback;
+  ProblemImpl problem(options);
+  double x_[2] = {1, 2};
+  double y_[3] = {1, 2, 3};
+  ResidualBlockId residual_block_id =
+      problem.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+
+  double actual_cost;
+  Vector actual_f(5);
+  Matrix actual_dfdx(5, 2);
+  Matrix actual_dfdy(5, 3);
+  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
+  ceres::CRSMatrix jacobian;
+  EXPECT_TRUE(problem.Evaluate(Problem::EvaluateOptions(),
+                               &actual_cost, nullptr, nullptr, &jacobian));
+}
+
+TEST(ProblemEvaluateResidualBlock, NewPointCallsEvaluationCallback) {
+  MockEvaluationCallback evaluation_callback;
+  EXPECT_CALL(evaluation_callback, PrepareForEvaluation(true, true)).Times(1);
+
+  Problem::Options options;
+  options.evaluation_callback = &evaluation_callback;
+  ProblemImpl problem(options);
+  double x_[2] = {1, 2};
+  double y_[3] = {1, 2, 3};
+  ResidualBlockId residual_block_id =
+      problem.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+
+  double actual_cost;
+  Vector actual_f(5);
+  Matrix actual_dfdx(5, 2);
+  Matrix actual_dfdy(5, 3);
+  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
+  EXPECT_TRUE(problem.EvaluateResidualBlock(residual_block_id,
+                                            true,
+                                            true,
+                                            &actual_cost,
+                                            actual_f.data(),
+                                            jacobians));
+
+}
+
+TEST(ProblemEvaluateResidualBlock, OldPointCallsEvaluationCallback) {
+  MockEvaluationCallback evaluation_callback;
+  EXPECT_CALL(evaluation_callback, PrepareForEvaluation(true, false)).Times(1);
+
+  Problem::Options options;
+  options.evaluation_callback = &evaluation_callback;
+  ProblemImpl problem(options);
+  double x_[2] = {1, 2};
+  double y_[3] = {1, 2, 3};
+  ResidualBlockId residual_block_id =
+      problem.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+
+  double actual_cost;
+  Vector actual_f(5);
+  Matrix actual_dfdx(5, 2);
+  Matrix actual_dfdy(5, 3);
+  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
+  EXPECT_TRUE(problem.EvaluateResidualBlock(residual_block_id,
+                                            true,
+                                            false,
+                                            &actual_cost,
+                                            actual_f.data(),
+                                            jacobians));
+
 }
 
 }  // namespace internal
