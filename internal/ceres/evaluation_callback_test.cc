@@ -260,19 +260,19 @@ class IncrementingEvaluationCallback : public EvaluationCallback {
   double counter_ = -1;
 };
 
-
 // r = IncrementingEvaluationCallback::counter - x
 struct EvaluationCallbackResidual {
-  EvaluationCallbackResidual(const IncrementingEvaluationCallback& callback)
-      : callback_(callback) {}
+  explicit EvaluationCallbackResidual(
+      const IncrementingEvaluationCallback& callback)
+      : callback(callback) {}
 
   template <typename T>
   bool operator()(const T* x, T* residuals) const {
-    residuals[0] = callback_.counter() - x[0];
+    residuals[0] = callback.counter() - x[0];
     return true;
   }
 
-  const IncrementingEvaluationCallback& callback_;
+  const IncrementingEvaluationCallback& callback;
 
   static CostFunction* Create(IncrementingEvaluationCallback& callback) {
     return new AutoDiffCostFunction<EvaluationCallbackResidual, 1, 1>(
@@ -298,9 +298,7 @@ TEST(EvaluationCallback, EvaluationCallbackIsCalledBeforeFixedCostIsEvaluated) {
   Problem problem(problem_options);
   problem.AddResidualBlock(LinearResidual::Create(), nullptr, &x);
   problem.AddResidualBlock(
-      EvaluationCallbackResidual::Create(*callback),
-      nullptr,
-      &y);
+      EvaluationCallbackResidual::Create(*callback), nullptr, &y);
   problem.SetParameterBlockConstant(&y);
 
   Solver::Options options;
