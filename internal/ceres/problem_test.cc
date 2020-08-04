@@ -2177,14 +2177,9 @@ TEST(ProblemEvaluate, CallsEvaluationCallbackWithoutJacobian) {
   ProblemImpl problem(options);
   double x_[2] = {1, 2};
   double y_[3] = {1, 2, 3};
-  ResidualBlockId residual_block_id =
-      problem.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+  problem.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
 
   double actual_cost;
-  Vector actual_f(5);
-  Matrix actual_dfdx(5, 2);
-  Matrix actual_dfdy(5, 3);
-  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_TRUE(problem.Evaluate(
       Problem::EvaluateOptions(), &actual_cost, nullptr, nullptr, nullptr));
 }
@@ -2203,14 +2198,9 @@ TEST(ProblemEvaluate, CallsEvaluationCallbackWithJacobian) {
   ProblemImpl problem(options);
   double x_[2] = {1, 2};
   double y_[3] = {1, 2, 3};
-  ResidualBlockId residual_block_id =
-      problem.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
+  problem.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
 
   double actual_cost;
-  Vector actual_f(5);
-  Matrix actual_dfdx(5, 2);
-  Matrix actual_dfdy(5, 3);
-  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   ceres::CRSMatrix jacobian;
   EXPECT_TRUE(problem.Evaluate(
       Problem::EvaluateOptions(), &actual_cost, nullptr, nullptr, &jacobian));
