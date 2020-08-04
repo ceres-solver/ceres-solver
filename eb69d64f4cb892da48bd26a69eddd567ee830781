@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1119a7ff_2c42a504",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 2145,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-04T17:08:55Z",
+      "side": 1,
+      "message": "Should these have the :func:`EvaluationCallback::PrepareForEvaluation` prefix ?",
+      "revId": "eb69d64f4cb892da48bd26a69eddd567ee830781",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c945d4_d3ace4ee",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-04T17:08:55Z",
+      "side": 1,
+      "message": "This still doesn\u0027t seem to be being used at present?",
+      "revId": "eb69d64f4cb892da48bd26a69eddd567ee830781",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43b10a2_ccc1b4f8",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2169,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-04T17:08:55Z",
+      "side": 1,
+      "message": "Perhaps these two bool args would be better as: kEvaluateJacobians \u0026 kNewPoint / kNotNewPoint?  That might make these tests slightly easier to parse without having to verify the ordering of the two args (of the same type).",
+      "revId": "eb69d64f4cb892da48bd26a69eddd567ee830781",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "580d07a2_e7baff13",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-04T17:08:55Z",
+      "side": 1,
+      "message": "Should we also have a test that calls EvaluateResidualBlockAssumingParametersUnchanged() here and verifies that that only calls PrepareForEvaluation() with false?  Ditto the public version of EvaluateResidualBlock() that does not specify whether this is a new point or not.\n\nIn fact, when I first read this as problem_test I assumed that this would be testing the public API, but it\u0027s actually problem_impl_test as it\u0027s using the private API.",
+      "revId": "eb69d64f4cb892da48bd26a69eddd567ee830781",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
