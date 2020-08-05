@@ -69,6 +69,24 @@
       "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fc5a7ac_be3b049b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2020-08-05T17:30:38Z",
+      "side": 1,
+      "message": "I think we are clear on the following point, but I just want to say explicitly that the marginalization prior is on the global coordinates of the Markov blanket, it is integrating out the marginalized variables wrt their local coordinates. Integrating out in overparameterized global coordinates would of course neglect information and is not appropriate for manifolds.\n\nAs I see it, the primary choice in the formulation is whether to compute the prior on the global coordinates or local coordinates of the Markov blanket variables. I have seen both approaches taken, but the former is a bit simpler for the reasons Tim noted. I\u0027m not sure in what cases the latter would be preferred? It may be possible to approximate ominus using the pseudoinverse of the Jacobian of the parameterization, but that may not be ideal.",
+      "parentUuid": "fb745263_969570c5",
+      "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
