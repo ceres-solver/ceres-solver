@@ -34,6 +34,24 @@
       "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10f21a72_7af31ba3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6372
+      },
+      "writtenOn": "2020-08-05T09:38:29Z",
+      "side": 1,
+      "message": "I could imagine two different approaches, the fist one requires only minimal changes:\n\n1.a) MarginalizeOutVariables() returns the ResidualBlockId of the new linear cost function.\n1.b) LinearCostFunction() has a getter for its jacobian and linear residual(b).\n\u003d\u003e This would allow the user to get the involved parameter blocks (using the ResidualBlockId) as well as the linear subsystem. It would be possible to remove the LinearCostFunction and replace it with a custom one.\n\nThe second approach would be more involved:\n2.a) MarginalizeOutVariables() doesn\u0027t add the LinearCostFunction to the problem at all. Instead, it returns jacobian, linear residual and the parameter blocks of the markov blanket. Maybe also their sizes for convenience.\n2.b) It is up to the user to add the new LinearCostFunction.\n2.c) The current MarginalizeOutVariables() function becomes MarginalizeOutVariablesAndAddCost().\n\u003d\u003e The user would have the explicit choice whether to use a custom cost function or the provided one.\n\nTo be honest, I\u0027m not sure how many user will use a custom cost function. I would use it in some cases, but the majority might be totally fine with the provided one. So I slightly prefer the first solution -- it has a cleaner interface.\nReturning the ResidualBlockId for the new cost function should done anyway, otherwise it would be impossible to remove it explicitly from the problem.",
+      "parentUuid": "e19735c9_7e4867aa",
+      "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
