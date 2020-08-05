@@ -122,8 +122,7 @@ Bibliography
    systems**, SIAM, 2003.
 
 .. [Simon] I. Simon, N. Snavely and S. M. Seitz, **Scene Summarization
-   for Online Image Collections**, *International Conference on
-    Computer Vision*, 2007.
+   for Online Image Collections**, *International Conference on Computer Vision*, 2007.
 
 .. [Stigler] S. M. Stigler, **Gauss and the invention of least
    squares**, *The Annals of Statistics*, 9(3):465-474, 1981.

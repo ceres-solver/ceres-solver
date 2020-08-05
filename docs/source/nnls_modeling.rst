@@ -1483,6 +1483,7 @@ of size 7, where the first four entries represent the rotation as a
 quaternion, a local parameterization can be constructed as
 
 .. code-block:: c++
+
    ProductParameterization se3_param(new QuaternionParameterization(),
                                      new IdentityParameterization(3));
 
@@ -2027,8 +2028,8 @@ quaternion, a local parameterization can be constructed as
     This is because, as the name implies, we assume that the parameter
     blocks did not change since the last time
     :func:`EvaluationCallback::PrepareForEvaluation` was called (via
-    :func:`Solve`, :func:`Problem:Evaluate` or
-    :func:`Problem:EvaluateResidualBlock`).
+    :func:`Solve`, :func:`Problem::Evaluate` or
+    :func:`Problem::EvaluateResidualBlock`).
 
 
 .. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)

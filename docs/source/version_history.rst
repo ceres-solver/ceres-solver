@@ -10,7 +10,7 @@ Version History
 New Features
 ------------
 #. Ceres Solver now requires a C++14 compatible compiler, Eigen
-   version > 3.3 & CMake version >= 3.5, XCode version >= 11.2 (Sameer
+   version >= 3.3 & CMake version >= 3.5, XCode version >= 11.2 (Sameer
    Agarwal, Alex Stewart & Keir Mierle)
 #. C++ threading based multi-threading support. (Mike Vitus)
 #. :func:`Problem::AddResidualBlock`, :class:`SizedFunction`,
@@ -51,7 +51,7 @@ Backward Incompatible API Changes
 #. ``EvaluationCallback`` has been moved from ``Solver::Options`` to
    ``Problem::Options`` for a more correct API.
 #. Removed ``Android.mk`` based build.
-#. Remove ``Solver::Options::num_linear_solver_threads`` is no more.
+#. ``Solver::Options::num_linear_solver_threads`` is no more.
 
 Bug Fixes & Minor Changes
 -------------------------
@@ -64,7 +64,7 @@ Bug Fixes & Minor Changes
 #. Allow :class:`SubsetParameterization` to accept an empty vector of
    constant parameters. (Sameer Agarwal & Frédéric Devernay)
 #. Fix a bug in DynamicAutoDiffCostFunction when all parameters are
-constant (Ky Waegel & Sameer Agarwal)
+   constant (Ky Waegel & Sameer Agarwal)
 #. Fixed incorrect argument name in ``RotationMatrixToQuaternion``
    (Alex Stewart & Frank Dellaert)
 #. Do not export class template LineParameterization (huangqinjin)
