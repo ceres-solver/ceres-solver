@@ -52,6 +52,23 @@
       "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb745263_969570c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6372
+      },
+      "writtenOn": "2020-08-05T14:37:55Z",
+      "side": 1,
+      "message": "\u003e Patch Set 4:\n\u003e \n\u003e Tim,\n\u003e \n\u003e Is the presence of the manifold the only reason to do this? if so, shouldn\u0027t the margnialization function account for the presence of the manifold instead of the user having to do this?\n\u003e \n\u003e Sameer\n\nHi Sameer,\n\nit is at least the only reason that I\u0027m aware off.\n\nI think an \"ideal\" marginalization should care about manifolds. But this requires to implement a box-minus operator for each local parameterization in order to construct the correct cost function.\nSince the number of blocks of this function can vary at runtime, autodiff isn\u0027t a good option. So Jacobians are also required for this operator.\n\nIt is possible, but exhaustive to do it for the general case. It would also raise the burden of writing new local parameterizations, because everyone would have to implement an additional minus operator.\nOn the other hand it is relatively easy to do for a specific case, where only one ore two local parametrizations are involved.\n\nAdditionally, marginalization is a linear approximation anyway. So it seems acceptable to do this further approximation for the cost function.\nHowever, an interface to represent it exactly would be nice. :-)\n\nBest Regards\nTim",
+      "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
