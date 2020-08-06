@@ -87,6 +87,24 @@
       "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02ff32ad_914c568d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6372
+      },
+      "writtenOn": "2020-08-06T09:22:48Z",
+      "side": 1,
+      "message": "You are totally right Evan, I have written too vague about this point. The marginalization itself takes care of the manifolds. I was just thinking about the prior which is constructed afterwards.\n\nI guess, the manifold prior might be more accurate in cases where the variable is moved further away from its linearization point.\nA simple example I could imagine is a angular variable wrapped to +-pi. If the linearization point is close to pi and the variable is -pi, a linear prior would have a large residual while the residual on the manifold is small. Similar things could happen for other representations of rotations.",
+      "parentUuid": "6fc5a7ac_be3b049b",
+      "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
