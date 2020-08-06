@@ -105,6 +105,24 @@
       "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ac8c6ca_1f0238b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2020-08-06T17:10:27Z",
+      "side": 1,
+      "message": "Tim, thanks for clarifying and the input. Very interested to understand a bit better. Maybe I am still missing a subtlety you have in mind, but I do believe the unit circle / rotation example would be handled appropriately:\n\nLet\u0027s say the manifold here is the unit circle in R2 and the Markov blanket variable takes a value on this manifold. Applying this CR, the mean of the marginalization prior computed on the Markov blanket could be, say, (-1, 0) as it is represented in global coordinates, so that values near +/- pi have small residuals. Note that the CR does not represent the Markov blanket in any local coordinate system. This CR should come up with a linear cost function like [1,0] * ([x,y] - [-1, 0])^T.\n\nLet\u0027s take the same example and interpret the angular variable as the variable to marginalize out. +-pi represents the case where it is moving far from its linearization point, and then all bets are off. Note that in marginalization, we represent the variables to marginalize out as a delta (local coordinates) from some linearization point, which is on the manifold, and we minimize wrt this delta. We require that the minimizer of this delta be small.\n\nThe alternative I had in mind was to compute a linear constraint on the delta (local coordinates) of the Markov blanket from some linearization point determined at the time of marginalization. I guess I don\u0027t see a strong motivation for doing this instead, and as you point out, it involves ominus.",
+      "parentUuid": "02ff32ad_914c568d",
+      "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
