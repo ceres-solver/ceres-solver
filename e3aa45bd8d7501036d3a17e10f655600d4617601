@@ -123,6 +123,24 @@
       "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16465be2_1e0edac2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6372
+      },
+      "writtenOn": "2020-08-07T08:09:09Z",
+      "side": 1,
+      "message": "Evan, you are right, for the unit circle it would be handled appropriately.\n\nI had something different in mind when I was thinking about an angular variable:\nhttps://github.com/ceres-solver/ceres-solver/blob/master/examples/slam/pose_graph_2d/angle_local_parameterization.h\n\nIt also represents a rotation, but local and global coordinates are in almost the same space. However, small differences in local coordinates can lead to big differences in the global space. For example: Assume a linearization around pi. The linear cost function would be 1*(phi - pi) with phi as optimized variable.\nAfter a small positive optimization step on phi, its value would be somewhere close to -pi, because it got wrapped by the local param. Now the linear cost is about 2*pi while the actual distance in local coordinates is rather small.\n\nHowever, one could argue that the angle local parametrization might not be the best choice to represent rotation in 2D.\nI think that the linear cost can be problematic for all local parametrization whose global coordinates are not in a euclidean space. Quaternion are another example, two quaternions that are close in the local space could be far apart in the global space.\n\nFinally, I have to admit that my understanding of manifold algebra is quite limited. So please tell me if I missing something.",
+      "parentUuid": "0ac8c6ca_1f0238b2",
+      "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
