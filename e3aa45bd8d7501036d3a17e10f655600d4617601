@@ -141,6 +141,24 @@
       "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0984ec3b_ae6aaa45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2020-08-08T23:31:37Z",
+      "side": 1,
+      "message": "Tim, thanks for sharing this, and it\u0027s clear to me now. Roughly, this method requires that the curvature of the global parameterization wrt local is small for the Markov blanket variables. As you said, global coordinates should locally resemble a Euclidean space. Viewed another way, suppose we are doing linear least squares with the identity parameterization, where marginalization works perfectly. If we then reparameterize the variables, this prior can be arbitrarily \"bad\" depending on the curvature of the parameterization.\n\nI will make these points explicit in marginalization.h and that the parameterizations should be chosen judiciously for optimal performance (e.g. SO(3)).\n\nI think the CR is useful for many of the common cases. If the user must use a highly nonlinear parameterization, maybe the options are 1) accept suboptimal accuracy, 2) change the parameterization just before marginalization, 3) further manipulate the linear equations on a case-by-case basis. Enabling Ceres to compute the prior on local coordinates would require handling ominus and more cumbersome expressions. The API choice seems to me like a tradeoff between simplicity and covering these cases.",
+      "parentUuid": "16465be2_1e0edac2",
+      "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
