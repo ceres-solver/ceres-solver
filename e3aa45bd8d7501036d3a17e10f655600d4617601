@@ -177,6 +177,24 @@
       "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "474200eb_7ed6cf12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2020-08-09T17:50:17Z",
+      "side": 1,
+      "message": "Good points. I suppose one should choose a parameterization that avoids the -q/q symmetry. There is a comment in the iSAM code that they do not usually use quaternions in the GLCs...\n\nThank you for these great suggestions regarding API. I think these changes would keep it simple and support the use cases we discussed.",
+      "parentUuid": "da0eb28c_aa4bd1bc",
+      "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
