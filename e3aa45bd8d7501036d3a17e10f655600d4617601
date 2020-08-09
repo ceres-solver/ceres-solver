@@ -159,6 +159,24 @@
       "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da0eb28c_aa4bd1bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6372
+      },
+      "writtenOn": "2020-08-09T09:56:22Z",
+      "side": 1,
+      "message": "Evan, thanks for your patience and understanding. I have to correct my former statement about the quaternion parametrization. The unit quaternions should behave much more like your unit ring example. I\u0027m not sure whether these unit quaternions are restricted to a positive real part or not, otherwise the symmetry q and -q could be crucial.\nThe R3 equivalent of my angle example would be Euler angles, which are a bad choice anyway.\n\nAnyway... I agree with you, your work will be extremely useful for the vast majority of applications, including mine. Thanks for that! :-)\n\nI just would like to suggest again two subtle changes of the API:\n1) MarginalizeOutVariables() could return he ResidualBlockId of the new cost function. This would be consistent with Problem::AddResidualBlock and give the user the possibility to remove the cost function if required.\nIn case of failure it could return the nullptr.\n\n2) If LinearCostFunction() has a getter function for its jacobian and linear residual(b), the user would be able to access the linear subsystem and do whatever might be required to handle a special case.",
+      "parentUuid": "0984ec3b_ae6aaa45",
+      "revId": "e3aa45bd8d7501036d3a17e10f655600d4617601",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
