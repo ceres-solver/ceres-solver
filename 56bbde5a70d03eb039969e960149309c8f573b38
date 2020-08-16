@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "325657d1_6a1c7a24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-08-16T21:44:30Z",
+      "side": 1,
+      "message": "\u003e Why not hide all symbols by default for all platforms and export what we need? Currently some internal functions like StringPrintf is used by tests. It\u0027s OK for GCC since it exports all symbols by default.\n\u003e But MSVC is the opposite way. By add the following setting to cmake\n\u003e \n\u003e set(CMAKE_C_VISIBILITY_PRESET hidden)\n\u003e set(CMAKE_CXX_VISIBILITY_PRESET hidden)\n\u003e set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)\n\u003e \n\u003e The size of libceres.so reduced from 4.1MB to 3.5MB. We can add CERES_EXPORT to StringPrintf or a new macro CERES_EXPORT_INTERNAL which is defined as CERES_EXPORT when BUILD_TESTING is ON. Such way, we unify the behavior of GCC and MSVC and get smaller binary.\n\nI updated the patch to take this approach. It requires CERES_EXPORT_INTERNAL to be applied in quite a bit of internal only functionality that needs to be exposed for unit tests, but still achieves a reduction in the shared library size based on my testing with gcc 7.5.0 on Ubuntu 18.04.\n\nlibceres.so size:\n  master:                            3824K  \n  this patch with BUILD_TESTING\u003dON:  3444K\n  this patch with BUILD_TESTING\u003dOFF: 3384K\n\nAnd, of course, also achieves the original goal of being able to build unit tests on MSVC with BUILD_SHARED_LIBS\u003dON.",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
