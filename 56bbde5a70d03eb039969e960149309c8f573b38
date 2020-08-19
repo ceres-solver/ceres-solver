@@ -16,6 +16,380 @@
       "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c544131_c73d2516",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Thanks for trying this Taylor, I\u0027m not wild about the scale of these changes but it does have the attraction that missing export macros will now fail on all platforms, as none of the Ceres maintainers use Windows, so I think on balance it is still worth doing.\n\nI experimented with several things on macOS (Clang) \u0026 Linux (GCC), the easiest was as mentioned in one of my comments removing the top-level specification of the visibility and replacing it with a target-specific specification for just the Ceres target itself:\n\nset_target_properties(ceres PROPERTIES\n  VERSION ${CERES_VERSION}\n  SOVERSION ${CERES_VERSION_MAJOR})\n  C_VISIBILITY_PRESET hidden\n  CXX_VISIBILITY_PRESET hidden)\n\nthat works on both of the above compilers and it removes the need for the gflags/gtest define header.",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f208f06_251c8370",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Remove this line as its commented out",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12b9111_c1a48fc2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "I would rather this was specific about what the effect is rather than a situation when the effect is required, so I think CERES_EXPORT_INTERNAL_SYMBOLS would be a better fit here.",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef98dd5_4aa5cfda",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "There are several issues here:\n\n1) It\u0027s confusing from this where the problem is, you\u0027re referring to gflags, but generating an export header for gtest.\n\n2) Why do you think this is needed, it is not needed on Clang when building this CL even though the change in visibility is being respected.\n\nI\u0027m deeply reluctant to accept any solution that involves modifying these export definitions for external libraries, as that sounds like we\u0027re doing something wrong.  The visibility set in the top-level CMakeLists is also being passed to the examples which also use gflags and yet don\u0027t need this, so I\u0027m not clear why we would need it here.\n\nI think this might be best handled by not relying on CMAKE_\u003cLANG\u003e_VISIBILITY_PRESET for the Ceres target and instead explicitly setting the visibility for it alone via its \u003cLANG\u003e_VISIBILITY_PRESET property, as I think its only the Ceres target that we care about the visibility of.",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c919f9_ba0c7331",
+        "filename": "internal/ceres/block_jacobi_preconditioner.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Missing port.h",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f67f697a_73f9b43b",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Missing port.h",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f0a682_bcde2d91",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Missing port.h",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12a7067_ec6b722b",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Missing port.h",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15bf2ece_cf16eef5",
+        "filename": "internal/ceres/canonical_views_clustering.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Missing port.h",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3d699b_2b26245c",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Missing port.h",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd912cd1_af1b715c",
+        "filename": "internal/ceres/covariance_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Missing port.h",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70505e06_ae489878",
+        "filename": "internal/ceres/dense_qr_solver.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Missing port.h",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d680ed99_76f59d81",
+        "filename": "internal/ceres/dense_sparse_matrix.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Missing port.h",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5550fbfb_b271f1eb",
+        "filename": "internal/ceres/detect_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Missing port.h",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf70fb7_6d969535",
+        "filename": "internal/ceres/detect_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Why is this not _INTERNAL ?",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1084b47e_43917c66",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Missing port.h",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32ed1e8_2956e9f0",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "missing port.h",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5bb2008_38af08d2",
+        "filename": "internal/ceres/gmock_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "As per previous comments, if we\u0027re modifying this definition for an external library, then I think we\u0027re doing something wrong.",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2bc7e1_5e474b06",
+        "filename": "internal/ceres/gradient_checking_cost_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Missing port.h",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0023e04_228e9e25",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Why not _INTERNAL ?",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd79ce7_e875e63c",
+        "filename": "internal/ceres/subset_preconditioner.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Why not _INTERNAL ?",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bdd4f6b_6965d1b9",
+        "filename": "internal/ceres/trust_region_preprocessor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-08-19T19:14:02Z",
+      "side": 1,
+      "message": "Why not _INTERNAL ?",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
