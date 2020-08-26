@@ -16,6 +16,40 @@
       "revId": "cd78fe04ffe4c8343ec8df59ab41990aa49ecb36",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cf8c68e_3770a24f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2020-08-26T07:24:28Z",
+      "side": 1,
+      "message": "Please update the RST documentation as well, since this is one of the more heavily used interfaces.\n\nAs an aside: I realized we could likely pack the ownership into the last bit of the pointer. These autodiff cost functions will be at least 4-byte aligned, and for the most part, 8-byte aligned. It\u0027s maybe worthwhile to avoid the extra bloat. I\u0027m OK to merge the patch without this change though; it can be a followup.\n\nThanks Julien for sticking with this series!",
+      "revId": "cd78fe04ffe4c8343ec8df59ab41990aa49ecb36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15b65c88_839c62d7",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2020-08-26T07:24:28Z",
+      "side": 1,
+      "message": "Nit: Comments should be full sentences; at least, capitalized and end with a period.",
+      "revId": "cd78fe04ffe4c8343ec8df59ab41990aa49ecb36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
