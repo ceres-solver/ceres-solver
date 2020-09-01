@@ -309,8 +309,9 @@ if (SUITESPARSEQR_FOUND)
   find_package(TBB QUIET)
   if (TBB_FOUND)
     message(STATUS "Found Intel Thread Building Blocks (TBB) library "
-      "(${TBB_VERSION}) assuming SuiteSparseQR was compiled "
-      "with TBB.")
+      "(${TBB_VERSION_MAJOR}.${TBB_VERSION_MINOR} / ${TBB_INTERFACE_VERSION}) "
+      "include location: ${TBB_INCLUDE_DIRS}. Assuming SuiteSparseQR was "
+      "compiled with TBB.")
     # Add the TBB libraries to the SuiteSparseQR libraries (the only
     # libraries to optionally depend on TBB).
     list(APPEND SUITESPARSEQR_LIBRARY ${TBB_LIBRARIES})
