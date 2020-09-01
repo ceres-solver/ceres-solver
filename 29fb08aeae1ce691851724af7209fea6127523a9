@@ -16,6 +16,23 @@
       "revId": "29fb08aeae1ce691851724af7209fea6127523a9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1b5c217_3d681006",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-01T15:23:27Z",
+      "side": 1,
+      "message": "Thanks for the patch. This works for me with an externally supplied custom FindEigen3 module (https://gitlab.com/NikolausDemmel/ceres-test-deps/-/jobs/714051327) or also with the manually tweaked, externally supplied and manually adapted configuration files (https://gitlab.com/NikolausDemmel/ceres-test-deps/-/jobs/714054515).",
+      "revId": "29fb08aeae1ce691851724af7209fea6127523a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
