@@ -49,20 +49,44 @@
 # free to make use of it in any way you like.
 #-------------------------------------------------------------------
 #
-#=============================================================================
-# Copyright 2010-2012 Kitware, Inc.
-# Copyright 2012      Rolf Eike Beer <eike@sf-mail.de>
+# =========================================================================
+# Taken from Copyright.txt in the root of the VTK source tree as per
+# instructions to substitute the full license in place of the summary
+# reference when distributing outside of VTK
+# =========================================================================
 #
-# Distributed under the OSI-approved BSD License (the "License");
-# see accompanying file Copyright.txt for details.
+#  Program:   Visualization Toolkit
+#  Module:    Copyright.txt
 #
-# This software is distributed WITHOUT ANY WARRANTY; without even the
-# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the License for more information.
-#=============================================================================
-# (To distribute this file outside of CMake, substitute the full
-#  License text for the above reference.)
-
+# Copyright (c) 1993-2015 Ken Martin, Will Schroeder, Bill Lorensen
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice,
+#   this list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+#
+# * Neither name of Ken Martin, Will Schroeder, or Bill Lorensen nor the names
+#   of any contributors may be used to endorse or promote products derived
+#   from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# =========================================================================*/
 
 #=============================================================================
 #  FindTBB helper functions and macros
@@ -344,9 +368,24 @@ find_path(TBB_INCLUDE_DIR
 find_library(TBB_LIBRARY_RELEASE
              NAMES ${TBB_LIBRARY_NAMES}
              PATHS ${TBB_LIB_SEARCH_PATH})
-find_library(TBB_LIBRARY_DEBUG
-             NAMES ${TBB_LIBRARY_NAMES_DEBUG}
-             PATHS ${TBB_LIB_SEARCH_PATH})
+if (TBB_LIBRARY_RELEASE)
+  # To avoid finding a mismatched set of release & debug libraries from
+  # different installations if the first found does not have debug libraries
+  # by forcing the search for debug to only occur within the detected release
+  # library directory (if found).  Although this would break detection if the
+  # release & debug libraries were shipped in different directories, this is
+  # not the case in the official TBB releases for any platform.
+  get_filename_component(
+    FOUND_RELEASE_LIB_DIR "${TBB_LIBRARY_RELEASE}" DIRECTORY)
+  find_library(TBB_LIBRARY_DEBUG
+               NAMES ${TBB_LIBRARY_NAMES_DEBUG}
+               PATHS ${FOUND_RELEASE_LIB_DIR}
+               NO_DEFAULT_PATH)
+else()
+  find_library(TBB_LIBRARY_DEBUG
+               NAMES ${TBB_LIBRARY_NAMES_DEBUG}
+               PATHS ${TBB_LIB_SEARCH_PATH})
+endif()
 make_library_set(TBB_LIBRARY)
 
 findpkg_finish(TBB tbb)

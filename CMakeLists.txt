@@ -31,6 +31,11 @@
 
 cmake_minimum_required(VERSION 3.5)
 cmake_policy(VERSION 3.5)
+if (POLICY CMP0074)
+  # FindTBB.cmake uses TBB_ROOT in a way that is historical, but also compliant
+  # with CMP0074 so suppress the legacy compatibility warning and allow its use.
+  cmake_policy(SET CMP0074 NEW)
+endif()
 
 # Set the C++ version (must be >= C++14) when compiling Ceres.
 #
