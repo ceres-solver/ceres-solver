@@ -81,7 +81,7 @@ if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
       OUTPUT_STRIP_TRAILING_WHITESPACE)
     message(STATUS "Detected Homebrew with install prefix: "
       "${HOMEBREW_INSTALL_PREFIX}, adding to CMake search paths.")
-    list(APPEND HOMEBREW_INCLUDE_DIR_HINTS "${HOMEBREW_INSTALL_PREFIX}/include")
+    list(APPEND CMAKE_PREFIX_PATH "${HOMEBREW_INSTALL_PREFIX}")
   endif()
 endif()
 
@@ -239,7 +239,7 @@ message("-- Building with C++${CMAKE_CXX_STANDARD}")
 
 # Eigen.
 # Eigen delivers Eigen3Config.cmake since v3.3.3
-find_package(Eigen3 3.3 REQUIRED HINTS ${HOMEBREW_INCLUDE_DIR_HINTS})
+find_package(Eigen3 3.3 REQUIRED)
 if (EIGEN3_FOUND)
   message("-- Found Eigen version ${EIGEN3_VERSION_STRING}: ${EIGEN3_INCLUDE_DIRS}")
   if (CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64.*|AARCH64.*)" AND
@@ -390,7 +390,7 @@ endif()
 # GFlags.
 if (GFLAGS)
   # Don't search with REQUIRED as we can continue without gflags.
-  find_package(gflags 2.2.0 HINTS "${HOMEBREW_INCLUDE_DIR_HINTS}")
+  find_package(gflags 2.2.0)
   if (gflags_FOUND)
     if (TARGET gflags)
       message("-- Found Google Flags (gflags) version ${gflags_VERSION}: ${gflags_DIR}")
