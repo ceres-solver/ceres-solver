@@ -37,14 +37,17 @@
 namespace ceres {
 
 template <int kParameterBlockSize>
-struct ConstantCostFunction
-    : public ceres::SizedCostFunction<1, kParameterBlockSize> {
+struct ConstantCostFunction {
   template <typename T>
   inline bool operator()(const T* const x, T* residuals) const {
     residuals[0] = T(5);
     return true;
   }
+};
 
+template <int kParameterBlockSize>
+struct AnalyticConstantCostFunction
+    : public ceres::SizedCostFunction<1, kParameterBlockSize> {
   virtual bool Evaluate(double const* const* parameters,
                         double* residuals,
                         double** jacobians) const {
