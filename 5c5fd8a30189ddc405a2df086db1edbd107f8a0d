@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "351658ef_3d9e0dc1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-01T09:25:38Z",
+      "side": 1,
+      "message": "After checking the structure of the current TBB releases for all platforms, I think we can be more aggressive and ensure that the release/debug libraries all live in the same directory to avoid confusion - this may however still cause issues with people trying to run with local builds, but as this is a find module, they really shouldn\u0027t be using this mechanism to detect those so I think this is probably OK.",
+      "revId": "5c5fd8a30189ddc405a2df086db1edbd107f8a0d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
