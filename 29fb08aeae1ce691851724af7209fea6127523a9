@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60d96d6f_2ab77f7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-01T09:26:40Z",
+      "side": 1,
+      "message": "Nikolaus, please can you try this CL on your setup to ensure that it satisfies your needs.",
+      "revId": "29fb08aeae1ce691851724af7209fea6127523a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
