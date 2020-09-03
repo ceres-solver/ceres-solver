@@ -39,6 +39,30 @@
       "revId": "de2e9c51e486b9c69fd925a5f7f7556248030334",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51101e16_36b6f6ed",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 5770
+      },
+      "writtenOn": "2020-09-03T17:21:19Z",
+      "side": 1,
+      "message": "Done. Thanks, that makes more sense, I clearly don\u0027t know my way around the docs well enough.",
+      "parentUuid": "f5d48dc3_1ce478a9",
+      "range": {
+        "startLine": 269,
+        "startChar": 7,
+        "endLine": 269,
+        "endChar": 17
+      },
+      "revId": "de2e9c51e486b9c69fd925a5f7f7556248030334",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
