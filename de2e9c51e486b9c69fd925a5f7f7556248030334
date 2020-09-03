@@ -16,6 +16,29 @@
       "revId": "de2e9c51e486b9c69fd925a5f7f7556248030334",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5d48dc3_1ce478a9",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-03T17:03:04Z",
+      "side": 1,
+      "message": "this is the wrong place to edit, this is just an article on automatic differentiation. The edits should go into nnls_modeling.rst in the section on AutoDiffCostFunction.",
+      "range": {
+        "startLine": 269,
+        "startChar": 7,
+        "endLine": 269,
+        "endChar": 17
+      },
+      "revId": "de2e9c51e486b9c69fd925a5f7f7556248030334",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
