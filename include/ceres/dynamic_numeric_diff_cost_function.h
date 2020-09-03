@@ -84,6 +84,10 @@ class DynamicNumericDiffCostFunction : public DynamicCostFunction {
       const NumericDiffOptions& options = NumericDiffOptions())
       : functor_(functor), ownership_(ownership), options_(options) {}
 
+  explicit DynamicNumericDiffCostFunction(
+      DyanamicNumericDiffCostFunction&& other)
+      : functor_(std::move(other.functor_)), ownership_(other.ownership_) {}
+
   virtual ~DynamicNumericDiffCostFunction() {
     if (ownership_ != TAKE_OWNERSHIP) {
       functor_.release();
