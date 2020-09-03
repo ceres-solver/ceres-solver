@@ -153,8 +153,8 @@ template <typename CostFunctor,
           int... Ns>          // Number of parameters in each parameter block.
 class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
-  // Takes ownership of functor by default. Uses the template-provided value for
-  // the number of residuals ("kNumResiduals").
+  // Takes ownership of functor by default. Uses the template-provided
+  // value for the number of residuals ("kNumResiduals").
   explicit AutoDiffCostFunction(CostFunctor* functor,
                                 Ownership ownership = TAKE_OWNERSHIP)
       : functor_(functor), ownership_(ownership) {
@@ -168,9 +168,9 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
   //
   // This allows for having autodiff cost functions which return varying
   // numbers of residuals at runtime.
-  explicit AutoDiffCostFunction(CostFunctor* functor,
-                                int num_residuals,
-                                Ownership ownership = TAKE_OWNERSHIP)
+  AutoDiffCostFunction(CostFunctor* functor,
+                       int num_residuals,
+                       Ownership ownership = TAKE_OWNERSHIP)
       : functor_(functor), ownership_(ownership) {
     static_assert(kNumResiduals == DYNAMIC,
                   "Can't run the dynamic-size constructor if the number of "

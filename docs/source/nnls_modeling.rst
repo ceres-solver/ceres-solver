@@ -152,9 +152,7 @@ the corresponding accessors. This information will be verified by the
 
    .. code-block:: c++
 
-    template<int kNumResiduals,
-             int N0 = 0, int N1 = 0, int N2 = 0, int N3 = 0, int N4 = 0,
-             int N5 = 0, int N6 = 0, int N7 = 0, int N8 = 0, int N9 = 0>
+    template<int kNumResiduals, int... Ns>
     class SizedCostFunction : public CostFunction {
      public:
       virtual bool Evaluate(double const* const* parameters,
@@ -177,23 +175,16 @@ the corresponding accessors. This information will be verified by the
 
      template <typename CostFunctor,
             int kNumResiduals,  // Number of residuals, or ceres::DYNAMIC.
-            int N0,       // Number of parameters in block 0.
-            int N1 = 0,   // Number of parameters in block 1.
-            int N2 = 0,   // Number of parameters in block 2.
-            int N3 = 0,   // Number of parameters in block 3.
-            int N4 = 0,   // Number of parameters in block 4.
-            int N5 = 0,   // Number of parameters in block 5.
-            int N6 = 0,   // Number of parameters in block 6.
-            int N7 = 0,   // Number of parameters in block 7.
-            int N8 = 0,   // Number of parameters in block 8.
-            int N9 = 0>   // Number of parameters in block 9.
+            int... Ns>          // Size of each parameter block
      class AutoDiffCostFunction : public
-     SizedCostFunction<kNumResiduals, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9> {
+     SizedCostFunction<kNumResiduals, Ns> {
       public:
-       explicit AutoDiffCostFunction(CostFunctor* functor);
+       AutoDiffCostFunction(CostFunctor* functor, ownership = TAKE_OWNERSHIP);
        // Ignore the template parameter kNumResiduals and use
        // num_residuals instead.
-       AutoDiffCostFunction(CostFunctor* functor, int num_residuals);
+       AutoDiffCostFunction(CostFunctor* functor,
+                            int num_residuals,
+                            ownership = TAKE_OWNERSHIP);
      };
 
    To get an auto differentiated cost function, you must define a
@@ -299,10 +290,6 @@ the corresponding accessors. This information will be verified by the
                Dimension of x ------------------------------------+  |
                Dimension of y ---------------------------------------+
 
-   The framework can currently accommodate cost functions of up to 10
-   independent variables, and there is no limit on the dimensionality
-   of each of them.
-
    **WARNING 1** A common beginner's error when first using
    :class:`AutoDiffCostFunction` is to get the sizing wrong. In particular,
    there is a tendency to set the template parameters to (dimension of
@@ -318,10 +305,9 @@ the corresponding accessors. This information will be verified by the
 .. class:: DynamicAutoDiffCostFunction
 
    :class:`AutoDiffCostFunction` requires that the number of parameter
-   blocks and their sizes be known at compile time. It also has an
-   upper limit of 10 parameter blocks. In a number of applications,
-   this is not enough e.g., Bezier curve fitting, Neural Network
-   training etc.
+   blocks and their sizes be known at compile time. In a number of
+   applications, this is not enough e.g., Bezier curve fitting, Neural
+   Network training etc.
 
      .. code-block:: c++
 
@@ -386,9 +372,6 @@ the corresponding accessors. This information will be verified by the
     NumericDiffOptions. Update DynamicNumericDiffOptions in a similar
     manner.
 
-    TODO(sameeragarwal): Update AutoDiffCostFunction and
-    NumericDiffCostFunction documentation to point to variadic impl.
-
     TODO(sameeragarwal): Check that Problem documentation for
     AddResidualBlock can deal with the variadic impl.
 
@@ -397,18 +380,9 @@ the corresponding accessors. This information will be verified by the
       template <typename CostFunctor,
                 NumericDiffMethodType method = CENTRAL,
                 int kNumResiduals,  // Number of residuals, or ceres::DYNAMIC.
-                int N0,       // Number of parameters in block 0.
-                int N1 = 0,   // Number of parameters in block 1.
-                int N2 = 0,   // Number of parameters in block 2.
-                int N3 = 0,   // Number of parameters in block 3.
-                int N4 = 0,   // Number of parameters in block 4.
-                int N5 = 0,   // Number of parameters in block 5.
-                int N6 = 0,   // Number of parameters in block 6.
-                int N7 = 0,   // Number of parameters in block 7.
-                int N8 = 0,   // Number of parameters in block 8.
-                int N9 = 0>   // Number of parameters in block 9.
+		int.. Ns>           // Size of each parameter block.
       class NumericDiffCostFunction : public
-      SizedCostFunction<kNumResiduals, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9> {
+      SizedCostFunction<kNumResiduals, Ns> {
       };
 
   To get a numerically differentiated :class:`CostFunction`, you must
@@ -504,10 +478,6 @@ the corresponding accessors. This information will be verified by the
                Dimension of x ------------------------------------------------+  |
                Dimension of y ---------------------------------------------------+
 
-
-  The framework can currently accommodate cost functions of up to 10
-  independent variables, and there is no limit on the dimensionality
-  of each of them.
 
   There are three available numeric differentiation schemes in ceres-solver:
 
@@ -616,8 +586,7 @@ Numeric Differentiation & LocalParameterization
 
    Like :class:`AutoDiffCostFunction` :class:`NumericDiffCostFunction`
    requires that the number of parameter blocks and their sizes be
-   known at compile time. It also has an upper limit of 10 parameter
-   blocks. In a number of applications, this is not enough.
+   known at compile time. In a number of applications, this is not enough.
 
      .. code-block:: c++
 
@@ -1578,7 +1547,7 @@ quaternion, a local parameterization can be constructed as
    :class:`Problem` holds the robustified bounds constrained
    non-linear least squares problem :eq:`ceresproblem_modeling`. To
    create a least squares problem, use the
-   :func:`Problem::AddResidualBlock` and
+   :func:`Problem::AddResiualBlock` and
    :func:`Problem::AddParameterBlock` methods.
 
    For example a problem containing 3 parameter blocks of sizes 3, 4
@@ -1764,7 +1733,10 @@ quaternion, a local parameterization can be constructed as
        error.
 
 .. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, const vector<double*> parameter_blocks)
-.. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, double *x0, double *x1, ...)
+
+.. function:: template <typename Ts..> ResidualBlockId
+	      Problem::AddResidualBlock(CostFunction* cost_function,
+	      LossFunction* loss_function, double* x0, Ts... xs)
 
    Add a residual block to the overall cost function. The cost
    function carries with it information about the sizes of the
@@ -1775,7 +1747,7 @@ quaternion, a local parameterization can be constructed as
    norm of the residuals.
 
    The parameter blocks may be passed together as a
-   ``vector<double*>``, or as up to ten separate ``double*`` pointers.
+   ``vector<double*>``, or ``double*`` pointers.
 
    The user has the option of explicitly adding the parameter blocks
    using AddParameterBlock. This causes additional correctness
