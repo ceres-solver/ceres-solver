@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d0c1374_cc0e8c2d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-03T18:58:12Z",
+      "side": 1,
+      "message": "OK, this should fix your issues Nikolaus, it does for me when I have both installs as the HINTS have a higher priority than the PATHS variables that TBB was originally using, I\u0027ve also ensured that we fix the paths for all libraries, which was an oversight on my behalf originally.",
+      "revId": "4e69a475cd7d7cbed983f5aebf79ae13a46e5415",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
