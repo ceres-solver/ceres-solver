@@ -16,6 +16,24 @@
       "revId": "4e69a475cd7d7cbed983f5aebf79ae13a46e5415",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8104a918_49f8c6f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-03T19:40:36Z",
+      "side": 1,
+      "message": "Thanks Alex. Indeed, looks good for me now: https://gitlab.com/NikolausDemmel/ceres-test-deps/-/pipelines/185502619",
+      "parentUuid": "3d0c1374_cc0e8c2d",
+      "revId": "4e69a475cd7d7cbed983f5aebf79ae13a46e5415",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
