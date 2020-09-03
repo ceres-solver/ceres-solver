@@ -571,6 +571,28 @@ TEST(Jet, Jet) {
     EXPECT_EQ(expected, b);
   }
 
+  { // Check that erf works.
+    J a = MakeJet(10.123, -2.7, 1e-3);
+    J b = erf(a);
+    J expected = MakeJet(erf(a.a), 0.0, 0.0);
+    EXPECT_EQ(expected, b);
+  }
+  NumericalTest("erf", erf<double, 2>, -1.0);
+  NumericalTest("erf", erf<double, 2>, 1e-5);
+  NumericalTest("erf", erf<double, 2>, 0.5);
+  NumericalTest("erf", erf<double, 2>, 100.0);
+
+  { // Check that erfc works.
+    J a = MakeJet(10.123, -2.7, 1e-3);
+    J b = erfc(a);
+    J expected = MakeJet(erfc(a.a), 0.0, 0.0);
+    EXPECT_EQ(expected, b);
+  }
+  NumericalTest("erfc", erfc<double, 2>, -1.0);
+  NumericalTest("erfc", erfc<double, 2>, 1e-5);
+  NumericalTest("erfc", erfc<double, 2>, 0.5);
+  NumericalTest("erfc", erfc<double, 2>, 100.0);
+
   { // Check that cbrt(x * x * x) == x.
     J z = x * x * x;
     J w = cbrt(z);
