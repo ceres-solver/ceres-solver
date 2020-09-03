@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e62d1002_868b5a8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5770
+      },
+      "writtenOn": "2020-09-03T10:50:16Z",
+      "side": 1,
+      "message": "Interesting idea, yes that sounds like it could be an optimization, there\u0027s certainly a spare couple bits hiding in there. Might be a bit complicated to guarantee the safety we have now, that\u0027s definitely worthy a PR on its own.",
+      "parentUuid": "4cf8c68e_3770a24f",
+      "revId": "cd78fe04ffe4c8343ec8df59ab41990aa49ecb36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15b65c88_839c62d7",
         "filename": "include/ceres/autodiff_cost_function.h",
         "patchSetId": 6
@@ -50,6 +68,24 @@
       "revId": "cd78fe04ffe4c8343ec8df59ab41990aa49ecb36",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3904dd_349742e3",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5770
+      },
+      "writtenOn": "2020-09-03T10:50:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15b65c88_839c62d7",
+      "revId": "cd78fe04ffe4c8343ec8df59ab41990aa49ecb36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
