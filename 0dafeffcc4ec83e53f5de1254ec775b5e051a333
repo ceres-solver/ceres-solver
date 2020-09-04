@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fb5b7f8c_1dce6c3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-04T14:25:20Z",
+      "side": 1,
+      "message": "we are nearing 2.0 release, if anyone would like to do something about this CL.",
+      "revId": "0dafeffcc4ec83e53f5de1254ec775b5e051a333",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e74dac2e_1932a44b",
         "filename": "docs/source/installation.rst",
         "patchSetId": 1
