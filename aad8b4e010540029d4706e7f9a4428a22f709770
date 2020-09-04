@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4c1dddbe_f6b40217",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-04T14:40:44Z",
+      "side": 1,
+      "message": "ping? 2.0.0 is almost out of the door.",
+      "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d89823_9ba95f7f",
         "filename": "docs/source/installation.rst",
         "patchSetId": 3
