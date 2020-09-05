@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "7c1108a8_1e90f645",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6342
+      },
+      "writtenOn": "2020-09-05T17:30:06Z",
+      "side": 1,
+      "message": "Hi Sameer and Alex, I have the bandwidth to make the necessary changes. Can one of you please answer my last question about building ceres as a shared library(.dll) v/s static library?\n\nLooking at https://ceres-solver-review.googlesource.com/c/ceres-solver/+/16580, there was a mention of building ceres.dll.\n\nIn this case, we should be adding instructions for both dynamic and static linking right?",
+      "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d89823_9ba95f7f",
         "filename": "docs/source/installation.rst",
         "patchSetId": 3
