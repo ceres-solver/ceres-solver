@@ -360,7 +360,8 @@ class CERES_EXPORT Solver {
     //
     // If Solver::Options::preconditioner_type == SUBSET, then
     // residual_blocks_for_subset_preconditioner must be non-empty.
-    std::unordered_set<ResidualBlockId> residual_blocks_for_subset_preconditioner;
+    std::unordered_set<ResidualBlockId>
+        residual_blocks_for_subset_preconditioner;
 
     // Ceres supports using multiple dense linear algebra libraries
     // for dense matrix factorizations. Currently EIGEN and LAPACK are

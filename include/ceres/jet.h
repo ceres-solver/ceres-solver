@@ -580,14 +580,14 @@ inline Jet<T, N> fmin(const Jet<T, N>& x, const Jet<T, N>& y) {
 // erf(x + h) = erf(x) + h * 2*exp(-x^2)/sqrt(pi)
 template <typename T, int N>
 inline Jet<T, N> erf(const Jet<T, N>& x) {
-    return Jet<T, N>(erf(x.a), x.v * M_2_SQRTPI * exp(-x.a*x.a));
+  return Jet<T, N>(erf(x.a), x.v * M_2_SQRTPI * exp(-x.a * x.a));
 }
 
 // erfc(x) = 1-erf(x)
 // erfc(x + h) = erfc(x) + h * (-2*exp(-x^2)/sqrt(pi))
 template <typename T, int N>
 inline Jet<T, N> erfc(const Jet<T, N>& x) {
-    return Jet<T, N>(erfc(x.a), -x.v * M_2_SQRTPI * exp(-x.a*x.a));
+  return Jet<T, N>(erfc(x.a), -x.v * M_2_SQRTPI * exp(-x.a * x.a));
 }
 
 // Bessel functions of the first kind with integer order equal to 0, 1, n.

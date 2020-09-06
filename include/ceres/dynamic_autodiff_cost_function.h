@@ -79,7 +79,6 @@ namespace ceres {
 template <typename CostFunctor, int Stride = 4>
 class DynamicAutoDiffCostFunction : public DynamicCostFunction {
  public:
-
   // Takes ownership by default.
   DynamicAutoDiffCostFunction(CostFunctor* functor,
                               Ownership ownership = TAKE_OWNERSHIP)

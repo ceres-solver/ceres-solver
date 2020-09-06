@@ -229,7 +229,9 @@ struct Make1stOrderPerturbations<std::integer_sequence<int, N, Ns...>,
 
 // End of 'recursion'. Nothing more to do.
 template <int ParameterIdx, int Total>
-struct Make1stOrderPerturbations<std::integer_sequence<int>, ParameterIdx, Total> {
+struct Make1stOrderPerturbations<std::integer_sequence<int>,
+                                 ParameterIdx,
+                                 Total> {
   template <typename T, typename JetT>
   static void Apply(T const* const* /* NOT USED */, JetT* /* NOT USED */) {}
 };

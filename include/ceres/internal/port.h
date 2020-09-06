@@ -35,17 +35,17 @@
 #include "ceres/internal/config.h"
 
 #if defined(CERES_USE_OPENMP)
-#  if defined(CERES_USE_CXX_THREADS) || defined(CERES_NO_THREADS)
-#    error CERES_USE_OPENMP is mutually exclusive to CERES_USE_CXX_THREADS and CERES_NO_THREADS
-#  endif
+#if defined(CERES_USE_CXX_THREADS) || defined(CERES_NO_THREADS)
+#error CERES_USE_OPENMP is mutually exclusive to CERES_USE_CXX_THREADS and CERES_NO_THREADS
+#endif
 #elif defined(CERES_USE_CXX_THREADS)
-#  if defined(CERES_USE_OPENMP) || defined(CERES_NO_THREADS)
-#    error CERES_USE_CXX_THREADS is mutually exclusive to CERES_USE_OPENMP, CERES_USE_CXX_THREADS and CERES_NO_THREADS
-#  endif
+#if defined(CERES_USE_OPENMP) || defined(CERES_NO_THREADS)
+#error CERES_USE_CXX_THREADS is mutually exclusive to CERES_USE_OPENMP, CERES_USE_CXX_THREADS and CERES_NO_THREADS
+#endif
 #elif defined(CERES_NO_THREADS)
-#  if defined(CERES_USE_OPENMP) || defined(CERES_USE_CXX_THREADS)
-#    error CERES_NO_THREADS is mutually exclusive to CERES_USE_OPENMP and CERES_USE_CXX_THREADS
-#  endif
+#if defined(CERES_USE_OPENMP) || defined(CERES_USE_CXX_THREADS)
+#error CERES_NO_THREADS is mutually exclusive to CERES_USE_OPENMP and CERES_USE_CXX_THREADS
+#endif
 #else
 #  error One of CERES_USE_OPENMP, CERES_USE_CXX_THREADS or CERES_NO_THREADS must be defined.
 #endif
@@ -54,18 +54,18 @@
 // compiled without any sparse back-end.  Verify that it has not subsequently
 // been inconsistently redefined.
 #if defined(CERES_NO_SPARSE)
-#  if !defined(CERES_NO_SUITESPARSE)
-#    error CERES_NO_SPARSE requires CERES_NO_SUITESPARSE.
-#  endif
-#  if !defined(CERES_NO_CXSPARSE)
-#    error CERES_NO_SPARSE requires CERES_NO_CXSPARSE
-#  endif
-#  if !defined(CERES_NO_ACCELERATE_SPARSE)
-#    error CERES_NO_SPARSE requires CERES_NO_ACCELERATE_SPARSE
-#  endif
-#  if defined(CERES_USE_EIGEN_SPARSE)
-#    error CERES_NO_SPARSE requires !CERES_USE_EIGEN_SPARSE
-#  endif
+#if !defined(CERES_NO_SUITESPARSE)
+#error CERES_NO_SPARSE requires CERES_NO_SUITESPARSE.
+#endif
+#if !defined(CERES_NO_CXSPARSE)
+#error CERES_NO_SPARSE requires CERES_NO_CXSPARSE
+#endif
+#if !defined(CERES_NO_ACCELERATE_SPARSE)
+#error CERES_NO_SPARSE requires CERES_NO_ACCELERATE_SPARSE
+#endif
+#if defined(CERES_USE_EIGEN_SPARSE)
+#error CERES_NO_SPARSE requires !CERES_USE_EIGEN_SPARSE
+#endif
 #endif
 
 // A macro to signal which functions and classes are exported when
@@ -80,11 +80,11 @@
 // Hence it is important that the check for CERES_BUILDING_SHARED_LIBRARY
 // happens first.
 #if defined(_MSC_VER) && defined(CERES_BUILDING_SHARED_LIBRARY)
-# define CERES_EXPORT __declspec(dllexport)
+#define CERES_EXPORT __declspec(dllexport)
 #elif defined(_MSC_VER) && defined(CERES_USING_SHARED_LIBRARY)
-# define CERES_EXPORT __declspec(dllimport)
+#define CERES_EXPORT __declspec(dllimport)
 #else
-# define CERES_EXPORT
+#define CERES_EXPORT
 #endif
 
 #endif  // CERES_PUBLIC_INTERNAL_PORT_H_
