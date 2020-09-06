@@ -453,13 +453,15 @@ class CERES_EXPORT Problem {
   //   problem.AddResidualBlock(new MyCostFunction, nullptr, &x);
   //
   //   double cost = 0.0;
-  //   problem.Evaluate(Problem::EvaluateOptions(), &cost, nullptr, nullptr, nullptr);
+  //   problem.Evaluate(Problem::EvaluateOptions(), &cost,
+  //                    nullptr, nullptr, nullptr);
   //
   // The cost is evaluated at x = 1. If you wish to evaluate the
   // problem at x = 2, then
   //
   //   x = 2;
-  //   problem.Evaluate(Problem::EvaluateOptions(), &cost, nullptr, nullptr, nullptr);
+  //   problem.Evaluate(Problem::EvaluateOptions(), &cost,
+  //                    nullptr, nullptr, nullptr);
   //
   // is the way to do so.
   //

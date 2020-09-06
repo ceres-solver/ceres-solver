@@ -354,8 +354,8 @@ class CERES_EXPORT ProductParameterization : public LocalParameterization {
 
 }  // namespace ceres
 
+// clang-format off
 #include "ceres/internal/reenable_warnings.h"
 #include "ceres/internal/line_parameterization.h"
 
 #endif  // CERES_PUBLIC_LOCAL_PARAMETERIZATION_H_
-
