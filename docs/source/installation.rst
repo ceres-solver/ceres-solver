@@ -83,6 +83,14 @@ optional. For details on customizing the build process, see
   solving large sparse linear systems. **Optional; strongly recomended
   for large scale bundle adjustment**
 
+  .. NOTE ::
+
+     If SuiteSparseQR is found, Ceres attempts to find the Intel
+     Thread Building Blocks (TBB) library. If found, Ceres assumes
+     SuiteSparseQR was compiled with TBB support and will link to the
+     found TBB version. You can customize the searched TBB location
+     with the ``TBB_ROOT`` variable.
+
 - `CXSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_.
   Similar to ``SuiteSparse`` but simpler and slower. CXSparse has
   no dependencies on ``LAPACK`` and ``BLAS``. This makes for a simpler
@@ -444,6 +452,12 @@ dependencies.
 #. Try running ``Configure``. It won't work. It'll show a bunch of options.
    You'll need to set:
 
+FIXME: since ``EIGEN_INCLUDE_DIR_HINTS``, ``GFLAGS_INCLUDE_DIR_HINTS``
+and ``GFLAGS_LIBRARY_DIR_HINTS`` was removed, these instructions won't
+work to find those dependencies (in particular eigen, for which it
+says just unpack; you need to run build & install to generate the
+cmake configs and then point cmake it that location...)
+
    #. ``GLOG_INCLUDE_DIR_HINTS``
    #. ``GLOG_LIBRARY_DIR_HINTS``
    #. (Optional) ``SUITESPARSE_INCLUDE_DIR_HINTS``
@@ -497,6 +511,8 @@ Android
 To build Ceres for Android, we need to force ``CMake`` to find
 the toolchains from the Android NDK instead of using the standard
 ones. For example, assuming you have specified ``$NDK_DIR``:
+
+FIXME: EIGEN_INCLUDE_DIR was removed
 
 .. code-block:: bash
 
@@ -555,6 +571,8 @@ iOS
 To build Ceres for iOS, we need to force ``CMake`` to find the
 toolchains from the iOS SDK instead of using the standard ones. For
 example:
+
+FIXME: EIGEN_INCLUDE_DIR was removed
 
 .. code-block:: bash
 
@@ -718,10 +736,10 @@ Options controlling Ceres configuration
    solely for installation, and so must be installed in order for
    clients to use it.  Turn this ``ON`` to export Ceres' build
    directory location into the `user's local CMake package registry
-   <http://www.cmake.org/cmake/help/v3.2/manual/cmake-packages.7.html#user-package-registry>`_
+   <http://www.cmake.org/cmake/help/v3.5/manual/cmake-packages.7.html#user-package-registry>`_
    where it will be detected **without requiring installation** in a
    client project using CMake when `find_package(Ceres)
-   <http://www.cmake.org/cmake/help/v3.2/command/find_package.html>`_
+   <http://www.cmake.org/cmake/help/v3.5/command/find_package.html>`_
    is invoked.
 
 #. ``BUILD_DOCUMENTATION [Default: OFF]``: Use this to enable building
@@ -757,8 +775,16 @@ Options controlling Ceres dependency locations
 ----------------------------------------------
 
 Ceres uses the ``CMake`` `find_package
-<http://www.cmake.org/cmake/help/v3.2/command/find_package.html>`_
-function to find all of its dependencies using
+<http://www.cmake.org/cmake/help/v3.5/command/find_package.html>`_
+function to find all of its dependencies. Dependencies that reliably
+provide config files on all supported platforms are expected to be
+found in "Config" mode of ``find_package`` (``Eigen``, ``gflags``).
+This means you can use the standard ``CMake`` facilities to customize
+where these dependencies are found, such as ``CMAKE_PREFIX_PATH``,
+the ``<DEPENDENCY_NAME>_DIR`` variables, or since ``CMake`` 3.12 the
+``<DEPENDENCY_NAME>_ROOT`` variables.
+
+Other dependencies are found using
 ``Find<DEPENDENCY_NAME>.cmake`` scripts which are either included in
 Ceres (for most dependencies) or are shipped as standard with
 ``CMake`` (for ``LAPACK`` & ``BLAS``).  These scripts will search all
@@ -814,7 +840,7 @@ Using Ceres with CMake
 ======================
 
 In order to use Ceres in client code with CMake using `find_package()
-<http://www.cmake.org/cmake/help/v3.2/command/find_package.html>`_
+<http://www.cmake.org/cmake/help/v3.5/command/find_package.html>`_
 then either:
 
 #. Ceres must have been installed with ``make install``.  If the
@@ -862,6 +888,7 @@ directory.
      as the exported Ceres CMake target already contains the definitions
      of its public include directories which will be automatically
      included by CMake when compiling a target that links against Ceres.
+     In fact, since v2.0 ``CERES_INCLUDE_DIRS`` is not even set.
 
 Specify Ceres components
 -------------------------------------
@@ -902,7 +929,7 @@ The Ceres components which can be specified are:
 
 To specify one/multiple Ceres components use the ``COMPONENTS`` argument to
 `find_package()
-<http://www.cmake.org/cmake/help/v3.2/command/find_package.html>`_ like so:
+<http://www.cmake.org/cmake/help/v3.5/command/find_package.html>`_ like so:
 
 .. code-block:: cmake
 
@@ -920,7 +947,7 @@ Specify Ceres version
 
 Additionally, when CMake has found Ceres it can optionally check the package
 version, if it has been specified in the `find_package()
-<http://www.cmake.org/cmake/help/v3.2/command/find_package.html>`_
+<http://www.cmake.org/cmake/help/v3.5/command/find_package.html>`_
 call.  For example:
 
 .. code-block:: cmake
@@ -978,9 +1005,9 @@ following references are very useful:
 
     All libraries and executables built using CMake are represented as
     *targets* created using `add_library()
-    <http://www.cmake.org/cmake/help/v3.2/command/add_library.html>`_
+    <http://www.cmake.org/cmake/help/v3.5/command/add_library.html>`_
     and `add_executable()
-    <http://www.cmake.org/cmake/help/v3.2/command/add_executable.html>`_.
+    <http://www.cmake.org/cmake/help/v3.5/command/add_executable.html>`_.
     Targets encapsulate the rules and dependencies (which can be other
     targets) required to build or link against an object.  This allows
     CMake to implicitly manage dependency chains.  Thus it is
@@ -996,7 +1023,7 @@ and compiled libraries, a set of CMake-specific project configuration
 files are also installed to: ``<INSTALL_ROOT>/lib/cmake/Ceres`` (if Ceres
 is installed), or created in the build directory (if Ceres' build
 directory is exported).  When `find_package
-<http://www.cmake.org/cmake/help/v3.2/command/find_package.html>`_ is
+<http://www.cmake.org/cmake/help/v3.5/command/find_package.html>`_ is
 invoked, CMake checks various standard install locations (including
 ``/usr/local`` on Linux & UNIX systems), and the local CMake package
 registry for CMake configuration files for the project to be found
@@ -1049,9 +1076,9 @@ due to missing references to Ceres public dependencies.
 Note that this description applies both to projects that are
 **installed** using CMake, and to those whose **build directory is
 exported** using `export()
-<http://www.cmake.org/cmake/help/v3.2/command/export.html>`_ (instead
+<http://www.cmake.org/cmake/help/v3.5/command/export.html>`_ (instead
 of `install()
-<http://www.cmake.org/cmake/help/v3.2/command/install.html>`_).  Ceres
+<http://www.cmake.org/cmake/help/v3.5/command/install.html>`_).  Ceres
 supports both installation and export of its build directory if the
 ``EXPORT_BUILD_DIR`` option is enabled, see
 :ref:`section-customizing`.
@@ -1067,7 +1094,7 @@ and it is these copied files that are used by any client code.  When a
 project's build directory is **exported**, instead of copying the
 compiled libraries and headers, CMake creates an entry for the project
 in the `user's local CMake package registry
-<http://www.cmake.org/cmake/help/v3.2/manual/cmake-packages.7.html#user-package-registry>`_,
+<http://www.cmake.org/cmake/help/v3.5/manual/cmake-packages.7.html#user-package-registry>`_,
 ``<USER_HOME>/.cmake/packages`` on Linux & OS X, which contains the
 path to the project's build directory which will be checked by CMake
 during a call to ``find_package()``.  The effect of which is that any
@@ -1118,3 +1145,33 @@ Ceres) to invoke ``find_package(Ceres)`` in ``FooConfig.cmake``, thus
     # CMake's search list before this call.
     include(CMakeFindDependencyMacro)
     find_dependency(Ceres)
+
+.. _section-migration
+
+Migration
+=========
+
+The following include some hints for migrating from previous versions.
+
+Version 2.0
+-----------
+
+- When using Ceres with CMake, the target name is now ``Ceres::ceres``
+  following modern naming convetions. The legacy target ``ceres``
+  exists for backwards compatibility, but is
+  deprecated. ``CERES_INCLUDE_DIRS`` is not set any more, as the
+  exported Ceres CMake target already contains the definitions of its
+  public include directories which will be automatically included by
+  CMake when compiling a target that links against Ceres.
+- When building Ceres, some dependencies (Eigen, gflags) are not found
+  using custom ``Find<DEPENDENCY_NAME>.cmake`` modules any
+  more. Hence, instead of the custom variables (``<DEPENDENCY_NAME (CAPS)>_INCLUDE_DIR_HINTS``,
+  ``<DEPENDENCY_NAME (CAPS)>_INCLUDE_DIR``, etc) you should use
+  standard CMake facilities to customize where these dependencies
+  are found, such as ``CMAKE_PREFIX_PATH``, the ``<DEPENDENCY_NAME>_DIR``
+  variables, or since CMake 3.12 the ``<DEPENDENCY_NAME>_ROOT`` variables.
+- While TBB is not used any more directly by Ceres, it might still try
+  to link against it, if SuiteSparseQR was found. The variable (environment
+  or CMake) to customize this is ``TBB_ROOT`` (used to be ``TBBROOT``).
+  For example, use ``cmake -DTBB_ROOT=/opt/intel/tbb ...`` when you want to
+  link against TBB installed from Intel's binary packages on Linux.
