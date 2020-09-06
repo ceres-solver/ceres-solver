@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d923942_a64038be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-06T19:38:28Z",
+      "side": 1,
+      "message": "Addresses https://github.com/ceres-solver/ceres-solver/issues/621\n\nI fixed Sameer\u0027s points (include order, enums).\n\nI verfied that different versions of clang-format format this code the same (version 6-11): https://gitlab.com/NikolausDemmel/ceres-solver/-/pipelines/186551980/builds\n\nOpen questions:\n- This is only for the \u0027include\u0027 folder. Should I reformat all sources (also \u0027examples\u0027, \u0027internal\u0027) in one CL, or separately?\n- Should I add a script to run clang-format on all source files? (see https://gitlab.com/NikolausDemmel/ceres-solver/-/commit/9e4700496e91a3c1d772aab1d9a8213a1cd3a539)\n- Would it make sense to add a travis CI job that checks the formatting? (similar to this, but just one clang-format version: https://gitlab.com/NikolausDemmel/ceres-solver/-/commit/63aacbd3b5039ea7dddc766e36f25ab15dccd8ac)",
+      "revId": "1d9445b2684bfc04a6ea46ced2408367ddeaba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
