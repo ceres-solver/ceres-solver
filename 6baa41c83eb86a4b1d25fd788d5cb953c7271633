@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb83c6b2_3109469a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-06T20:21:12Z",
+      "side": 1,
+      "message": "I just stumbled upon this. It would be indeed nice to have in ceres.\n\n@Evan, I didn\u0027t review all of the discussion and the full diff in detail yet, but since you mentioned the VINSmono and the okvis paper, I was woundering if/how this deals with first-estimate Jacobians? ",
+      "revId": "6baa41c83eb86a4b1d25fd788d5cb953c7271633",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
