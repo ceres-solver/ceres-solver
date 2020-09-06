@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cefdbb2a_9307c4dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-06T22:19:30Z",
+      "side": 1,
+      "message": "`*.pyc` are generated (for me on macOS) when running the file generators with `python generate_....py`",
+      "revId": "c76478c4898f3af11a6a826ac89c261205f4dd96",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
