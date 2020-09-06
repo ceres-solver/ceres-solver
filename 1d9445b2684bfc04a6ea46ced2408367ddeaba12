@@ -16,6 +16,23 @@
       "revId": "1d9445b2684bfc04a6ea46ced2408367ddeaba12",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fda3fb0_79f4f9f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-06T20:35:55Z",
+      "side": 1,
+      "message": "Just to get a sense of the changes for internal sources and examples, here is the raw result of applying clang format to them. There are several places that need to be fixed, like the list of sample data, which I didn\u0027t do yet, so it\u0027s not yet meant for detailed review.\n\n- internal sources: https://gitlab.com/NikolausDemmel/ceres-solver/-/commit/6050ed6795b73014d6ffa825cf9bc0a979b2e55a\n- examples: https://gitlab.com/NikolausDemmel/ceres-solver/-/commit/6c1472205fa4f9aa91f5e70451eab2c92e3a48d8\n\nUnfortunately, looks like there is some (minor) discrepancy with clang-format version 6 (default on Ubuntu 18.04) and clang-format version 11 (latest release): https://gitlab.com/NikolausDemmel/ceres-solver/-/pipelines/186568953/builds",
+      "revId": "1d9445b2684bfc04a6ea46ced2408367ddeaba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
