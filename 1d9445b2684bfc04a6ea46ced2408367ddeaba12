@@ -100,6 +100,30 @@
     },
     {
       "key": {
+        "uuid": "765232af_a06f8cb2",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-07T21:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0075cbce_e7a3397c",
+      "range": {
+        "startLine": 457,
+        "startChar": 7,
+        "endLine": 457,
+        "endChar": 14
+      },
+      "revId": "1d9445b2684bfc04a6ea46ced2408367ddeaba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e838979a_206e9d3c",
         "filename": "include/ceres/problem.h",
         "patchSetId": 1
@@ -120,6 +144,30 @@
       "revId": "1d9445b2684bfc04a6ea46ced2408367ddeaba12",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28ed01d_78952d20",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-07T21:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e838979a_206e9d3c",
+      "range": {
+        "startLine": 463,
+        "startChar": 7,
+        "endLine": 463,
+        "endChar": 14
+      },
+      "revId": "1d9445b2684bfc04a6ea46ced2408367ddeaba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }

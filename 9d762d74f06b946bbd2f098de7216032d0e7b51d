@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c9c51ff_b22f38d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-07T21:44:49Z",
+      "side": 1,
+      "message": "OK, addressed the comments so it should be good to go.\n\nAny comments on my initial questions (see first comment)?\n\nDo you want the \u0027format_all.sh\u0027 script committed?\n\nWhat about the CI job that checks formatting? I assume travis is the tool of choice still (even though github has now built-in CI).",
+      "revId": "9d762d74f06b946bbd2f098de7216032d0e7b51d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
