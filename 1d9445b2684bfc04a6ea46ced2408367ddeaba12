@@ -76,6 +76,30 @@
     },
     {
       "key": {
+        "uuid": "0075cbce_e7a3397c",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-07T08:22:47Z",
+      "side": 1,
+      "message": "This is what clang format does due to line width. I can fix by wrapping the whole comment block in \"clang format off\", or else reindent the second line to at least align with the open brackets?",
+      "parentUuid": "89dc872b_700e9943",
+      "range": {
+        "startLine": 457,
+        "startChar": 7,
+        "endLine": 457,
+        "endChar": 14
+      },
+      "revId": "1d9445b2684bfc04a6ea46ced2408367ddeaba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e838979a_206e9d3c",
         "filename": "include/ceres/problem.h",
         "patchSetId": 1
