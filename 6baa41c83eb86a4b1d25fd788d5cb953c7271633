@@ -16,6 +16,24 @@
       "revId": "6baa41c83eb86a4b1d25fd788d5cb953c7271633",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f61e881a_d0479453",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2020-09-07T02:45:28Z",
+      "side": 1,
+      "message": "Hi Nikolaus, appreciate your input as well, and this is a great question. As of now, this PR does nothing special for FEJ. In computing the marginalization prior, it recomputes the Jacobians and residuals using the state at the time of marginalization. \n\nI have not implemented the FEJ-EKF, so please correct me if I am wrong, but here is my understanding and my initial thoughts on how it could be implement with this feature and a few changes. In an FEJ-EKF setting, my understanding is that the Jacobians for state propagation and measurement are computed with the first available estimate, while the residual is computed as in the traditional EKF with the estimate after the update. This can be viewed as marginalization, but different states are required for the Jacobian and residual calculations. I think in Ceres, two calls to Evaluate would be required, one with the current state to compute the residuals and another with first estimates to compute the Jacobians. The API would just have to be amended to accept first estimates as an additional optional argument, and these would be passed a few function calls down to where Evaluate is called. The \"gradient\" would have to be computed outside of Evaluate with the desired J and r. Please let me know if you think decoupling Jacobian and residual calculations in this way would be valid and support the use case you have in mind.",
+      "parentUuid": "cb83c6b2_3109469a",
+      "revId": "6baa41c83eb86a4b1d25fd788d5cb953c7271633",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
