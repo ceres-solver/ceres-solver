@@ -16,6 +16,23 @@
       "revId": "ddfa65303eb6f72be34ef1afd9ba9bc50e6ef073",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec84aaa1_1222d872",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-07T00:03:45Z",
+      "side": 1,
+      "message": "One thing I noticed while working on the install doc was the very prominent note on an issue with SuiteSparse and building as a shared library \"up to at least Ubuntu 14.04\", and recommends installing suitesparse 4.2.1 from a PPA, which is also included in the \"install dependencies\" code block, that I suspect some people just copy\u0026paste without reading the surrounding text in all detail.\n\nSince 14.04 is EOL (at least for the public) and 16.04 seems to already have 4.4.6 (https://packages.ubuntu.com/xenial/libsuitesparse-dev), maybe all this should just be removed from the docs?",
+      "revId": "ddfa65303eb6f72be34ef1afd9ba9bc50e6ef073",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
