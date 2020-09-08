@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d521eead_9aa3434f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-08T00:05:29Z",
+      "side": 1,
+      "message": "Some things I noticed while going over the cmake docs.",
+      "revId": "bb67f1acc4804b7ff702fb23a26440e6c5341b32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
