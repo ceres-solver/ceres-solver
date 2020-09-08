@@ -16,6 +16,52 @@
       "revId": "7b6b2491cc1be0b3abb67338366d8d69bef3a402",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf09f776_f9ed2a79",
+        "filename": "examples/bal_problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-08T16:19:32Z",
+      "side": 1,
+      "message": "I am in two minds about this, on one hand automatic formatting, on the other hand, this is actively worse readability :/",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 5
+      },
+      "revId": "7b6b2491cc1be0b3abb67338366d8d69bef3a402",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04264ef9_7c42b4ae",
+        "filename": "examples/slam/pose_graph_3d/pose_graph_3d.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-08T16:19:32Z",
+      "side": 1,
+      "message": "This can be made a range based loop now no?",
+      "range": {
+        "startLine": 133,
+        "startChar": 12,
+        "endLine": 133,
+        "endChar": 15
+      },
+      "revId": "7b6b2491cc1be0b3abb67338366d8d69bef3a402",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
