@@ -47,23 +47,23 @@ struct Pose3d {
   Eigen::Quaterniond q;
 
   // The name of the data type in the g2o file format.
-  static std::string name() {
-    return "VERTEX_SE3:QUAT";
-  }
+  static std::string name() { return "VERTEX_SE3:QUAT"; }
 
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
 inline std::istream& operator>>(std::istream& input, Pose3d& pose) {
-  input >> pose.p.x() >> pose.p.y() >> pose.p.z() >> pose.q.x() >>
-      pose.q.y() >> pose.q.z() >> pose.q.w();
+  input >> pose.p.x() >> pose.p.y() >> pose.p.z() >> pose.q.x() >> pose.q.y() >>
+      pose.q.z() >> pose.q.w();
   // Normalize the quaternion to account for precision loss due to
   // serialization.
   pose.q.normalize();
   return input;
 }
 
-typedef std::map<int, Pose3d, std::less<int>,
+typedef std::map<int,
+                 Pose3d,
+                 std::less<int>,
                  Eigen::aligned_allocator<std::pair<const int, Pose3d> > >
     MapOfPoses;
 
@@ -83,9 +83,7 @@ struct Constraint3d {
   Eigen::Matrix<double, 6, 6> information;
 
   // The name of the data type in the g2o file format.
-  static std::string name() {
-    return "EDGE_SE3:QUAT";
-  }
+  static std::string name() { return "EDGE_SE3:QUAT"; }
 
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };

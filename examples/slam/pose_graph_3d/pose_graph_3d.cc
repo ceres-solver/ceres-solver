@@ -28,8 +28,8 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
 
 #include "ceres/ceres.h"
@@ -48,7 +48,8 @@ namespace {
 // Constructs the nonlinear least squares optimization problem from the pose
 // graph constraints.
 void BuildOptimizationProblem(const VectorOfConstraints& constraints,
-                              MapOfPoses* poses, ceres::Problem* problem) {
+                              MapOfPoses* poses,
+                              ceres::Problem* problem) {
   CHECK(poses != NULL);
   CHECK(problem != NULL);
   if (constraints.empty()) {
@@ -62,7 +63,8 @@ void BuildOptimizationProblem(const VectorOfConstraints& constraints,
 
   for (VectorOfConstraints::const_iterator constraints_iter =
            constraints.begin();
-       constraints_iter != constraints.end(); ++constraints_iter) {
+       constraints_iter != constraints.end();
+       ++constraints_iter) {
     const Constraint3d& constraint = *constraints_iter;
 
     MapOfPoses::iterator pose_begin_iter = poses->find(constraint.id_begin);
@@ -78,7 +80,8 @@ void BuildOptimizationProblem(const VectorOfConstraints& constraints,
     ceres::CostFunction* cost_function =
         PoseGraph3dErrorTerm::Create(constraint.t_be, sqrt_information);
 
-    problem->AddResidualBlock(cost_function, loss_function,
+    problem->AddResidualBlock(cost_function,
+                              loss_function,
                               pose_begin_iter->second.p.data(),
                               pose_begin_iter->second.q.coeffs().data(),
                               pose_end_iter->second.p.data(),
@@ -127,11 +130,16 @@ bool OutputPoses(const std::string& filename, const MapOfPoses& poses) {
     LOG(ERROR) << "Error opening the file: " << filename;
     return false;
   }
-  for (std::map<int, Pose3d, std::less<int>,
+  for (std::map<int,
+                Pose3d,
+                std::less<int>,
                 Eigen::aligned_allocator<std::pair<const int, Pose3d> > >::
            const_iterator poses_iter = poses.begin();
-       poses_iter != poses.end(); ++poses_iter) {
-    const std::map<int, Pose3d, std::less<int>,
+       poses_iter != poses.end();
+       ++poses_iter) {
+    const std::map<int,
+                   Pose3d,
+                   std::less<int>,
                    Eigen::aligned_allocator<std::pair<const int, Pose3d> > >::
         value_type& pair = *poses_iter;
     outfile << pair.first << " " << pair.second.p.transpose() << " "

@@ -3,3 +3,4 @@ BinPackArguments: false
 BinPackParameters: false
 PointerAlignment: Left
 DerivePointerAlignment: false
+CommentPragmas: NOLINT.*

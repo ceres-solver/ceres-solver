@@ -71,7 +71,8 @@ void BuildOptimizationProblem(const std::vector<Constraint2d>& constraints,
 
   for (std::vector<Constraint2d>::const_iterator constraints_iter =
            constraints.begin();
-       constraints_iter != constraints.end(); ++constraints_iter) {
+       constraints_iter != constraints.end();
+       ++constraints_iter) {
     const Constraint2d& constraint = *constraints_iter;
 
     std::map<int, Pose2d>::iterator pose_begin_iter =
@@ -88,16 +89,19 @@ void BuildOptimizationProblem(const std::vector<Constraint2d>& constraints,
     // Ceres will take ownership of the pointer.
     ceres::CostFunction* cost_function = PoseGraph2dErrorTerm::Create(
         constraint.x, constraint.y, constraint.yaw_radians, sqrt_information);
-    problem->AddResidualBlock(
-        cost_function, loss_function, &pose_begin_iter->second.x,
-        &pose_begin_iter->second.y, &pose_begin_iter->second.yaw_radians,
-        &pose_end_iter->second.x, &pose_end_iter->second.y,
-        &pose_end_iter->second.yaw_radians);
+    problem->AddResidualBlock(cost_function,
+                              loss_function,
+                              &pose_begin_iter->second.x,
+                              &pose_begin_iter->second.y,
+                              &pose_begin_iter->second.yaw_radians,
+                              &pose_end_iter->second.x,
+                              &pose_end_iter->second.y,
+                              &pose_end_iter->second.yaw_radians);
 
     problem->SetParameterization(&pose_begin_iter->second.yaw_radians,
-                                angle_local_parameterization);
+                                 angle_local_parameterization);
     problem->SetParameterization(&pose_end_iter->second.yaw_radians,
-                                angle_local_parameterization);
+                                 angle_local_parameterization);
   }
 
   // The pose graph optimization problem has three DOFs that are not fully
@@ -107,8 +111,7 @@ void BuildOptimizationProblem(const std::vector<Constraint2d>& constraints,
   // internal damping which mitigate this issue, but it is better to properly
   // constrain the gauge freedom. This can be done by setting one of the poses
   // as constant so the optimizer cannot change it.
-  std::map<int, Pose2d>::iterator pose_start_iter =
-      poses->begin();
+  std::map<int, Pose2d>::iterator pose_start_iter = poses->begin();
   CHECK(pose_start_iter != poses->end()) << "There are no poses.";
   problem->SetParameterBlockConstant(&pose_start_iter->second.x);
   problem->SetParameterBlockConstant(&pose_start_iter->second.y);
@@ -141,10 +144,11 @@ bool OutputPoses(const std::string& filename,
     return false;
   }
   for (std::map<int, Pose2d>::const_iterator poses_iter = poses.begin();
-       poses_iter != poses.end(); ++poses_iter) {
+       poses_iter != poses.end();
+       ++poses_iter) {
     const std::map<int, Pose2d>::value_type& pair = *poses_iter;
-    outfile <<  pair.first << " " << pair.second.x << " " << pair.second.y
-            << ' ' << pair.second.yaw_radians << '\n';
+    outfile << pair.first << " " << pair.second.x << " " << pair.second.y << ' '
+            << pair.second.yaw_radians << '\n';
   }
   return true;
 }

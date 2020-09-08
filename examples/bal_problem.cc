@@ -35,6 +35,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+
 #include "Eigen/Core"
 #include "ceres/rotation.h"
 #include "glog/logging.h"
@@ -46,7 +47,7 @@ namespace {
 typedef Eigen::Map<Eigen::VectorXd> VectorRef;
 typedef Eigen::Map<const Eigen::VectorXd> ConstVectorRef;
 
-template<typename T>
+template <typename T>
 void FscanfOrDie(FILE* fptr, const char* format, T* value) {
   int num_scanned = fscanf(fptr, format, value);
   if (num_scanned != 1) {
@@ -82,9 +83,8 @@ BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
   FscanfOrDie(fptr, "%d", &num_points_);
   FscanfOrDie(fptr, "%d", &num_observations_);
 
-  VLOG(1) << "Header: " << num_cameras_
-          << " " << num_points_
-          << " " << num_observations_;
+  VLOG(1) << "Header: " << num_cameras_ << " " << num_points_ << " "
+          << num_observations_;
 
   point_index_ = new int[num_observations_];
   camera_index_ = new int[num_observations_];
@@ -97,7 +97,7 @@ BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
     FscanfOrDie(fptr, "%d", camera_index_ + i);
     FscanfOrDie(fptr, "%d", point_index_ + i);
     for (int j = 0; j < 2; ++j) {
-      FscanfOrDie(fptr, "%lf", observations_ + 2*i + j);
+      FscanfOrDie(fptr, "%lf", observations_ + 2 * i + j);
     }
   }
 
@@ -119,7 +119,7 @@ BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
       quaternion_cursor += 4;
       original_cursor += 3;
       for (int j = 4; j < 10; ++j) {
-       *quaternion_cursor++ = *original_cursor++;
+        *quaternion_cursor++ = *original_cursor++;
       }
     }
     // Copy the rest of the points.
@@ -127,7 +127,7 @@ BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
       *quaternion_cursor++ = *original_cursor++;
     }
     // Swap in the quaternion parameters.
-    delete []parameters_;
+    delete[] parameters_;
     parameters_ = quaternion_parameters;
   }
 }
@@ -181,25 +181,25 @@ void BALProblem::WriteToFile(const std::string& filename) const {
 void BALProblem::WriteToPLYFile(const std::string& filename) const {
   std::ofstream of(filename.c_str());
 
-  of << "ply"
-     << '\n' << "format ascii 1.0"
-     << '\n' << "element vertex " << num_cameras_ + num_points_
-     << '\n' << "property float x"
-     << '\n' << "property float y"
-     << '\n' << "property float z"
-     << '\n' << "property uchar red"
-     << '\n' << "property uchar green"
-     << '\n' << "property uchar blue"
-     << '\n' << "end_header" << std::endl;
+  of << "ply" << '\n'
+     << "format ascii 1.0" << '\n'
+     << "element vertex " << num_cameras_ + num_points_ << '\n'
+     << "property float x" << '\n'
+     << "property float y" << '\n'
+     << "property float z" << '\n'
+     << "property uchar red" << '\n'
+     << "property uchar green" << '\n'
+     << "property uchar blue" << '\n'
+     << "end_header" << std::endl;
 
   // Export extrinsic data (i.e. camera centers) as green points.
   double angle_axis[3];
   double center[3];
-  for (int i = 0; i < num_cameras(); ++i)  {
+  for (int i = 0; i < num_cameras(); ++i) {
     const double* camera = cameras() + camera_block_size() * i;
     CameraToAngleAxisAndCenter(camera, angle_axis, center);
-    of << center[0] << ' ' << center[1] << ' ' << center[2]
-       << " 0 255 0" << '\n';
+    of << center[0] << ' ' << center[1] << ' ' << center[2] << " 0 255 0"
+       << '\n';
   }
 
   // Export the structure (i.e. 3D Points) as white points.
@@ -226,9 +226,8 @@ void BALProblem::CameraToAngleAxisAndCenter(const double* camera,
 
   // c = -R't
   Eigen::VectorXd inverse_rotation = -angle_axis_ref;
-  AngleAxisRotatePoint(inverse_rotation.data(),
-                       camera + camera_block_size() - 6,
-                       center);
+  AngleAxisRotatePoint(
+      inverse_rotation.data(), camera + camera_block_size() - 6, center);
   VectorRef(center, 3) *= -1.0;
 }
 
@@ -243,12 +242,9 @@ void BALProblem::AngleAxisAndCenterToCamera(const double* angle_axis,
   }
 
   // t = -R * c
-  AngleAxisRotatePoint(angle_axis,
-                       center,
-                       camera + camera_block_size() - 6);
+  AngleAxisRotatePoint(angle_axis, center, camera + camera_block_size() - 6);
   VectorRef(camera + camera_block_size() - 6, 3) *= -1.0;
 }
-
 
 void BALProblem::Normalize() {
   // Compute the marginal median of the geometry.
@@ -329,10 +325,10 @@ void BALProblem::Perturb(const double rotation_sigma,
 }
 
 BALProblem::~BALProblem() {
-  delete []point_index_;
-  delete []camera_index_;
-  delete []observations_;
-  delete []parameters_;
+  delete[] point_index_;
+  delete[] camera_index_;
+  delete[] observations_;
+  delete[] parameters_;
 }
 
 }  // namespace examples

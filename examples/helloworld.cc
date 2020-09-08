@@ -78,7 +78,6 @@ int main(int argc, char** argv) {
   Solve(options, &problem, &summary);
 
   std::cout << summary.BriefReport() << "\n";
-  std::cout << "x : " << initial_x
-            << " -> " << x << "\n";
+  std::cout << "x : " << initial_x << " -> " << x << "\n";
   return 0;
 }

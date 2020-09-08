@@ -35,23 +35,23 @@
 #include "ceres/cubic_interpolation.h"
 #include "glog/logging.h"
 
-using ceres::Grid1D;
-using ceres::CubicInterpolator;
 using ceres::AutoDiffCostFunction;
 using ceres::CostFunction;
+using ceres::CubicInterpolator;
+using ceres::Grid1D;
 using ceres::Problem;
-using ceres::Solver;
 using ceres::Solve;
+using ceres::Solver;
 
 // A simple cost functor that interfaces an interpolated table of
 // values with automatic differentiation.
 struct InterpolatedCostFunctor {
   explicit InterpolatedCostFunctor(
       const CubicInterpolator<Grid1D<double> >& interpolator)
-      : interpolator_(interpolator) {
-  }
+      : interpolator_(interpolator) {}
 
-  template<typename T> bool operator()(const T* x, T* residuals) const {
+  template <typename T>
+  bool operator()(const T* x, T* residuals) const {
     interpolator_.Evaluate(*x, residuals);
     return true;
   }

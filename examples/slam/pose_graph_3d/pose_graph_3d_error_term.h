@@ -33,7 +33,6 @@
 
 #include "Eigen/Core"
 #include "ceres/autodiff_cost_function.h"
-
 #include "types.h"
 
 namespace ceres {
@@ -75,8 +74,10 @@ class PoseGraph3dErrorTerm {
       : t_ab_measured_(t_ab_measured), sqrt_information_(sqrt_information) {}
 
   template <typename T>
-  bool operator()(const T* const p_a_ptr, const T* const q_a_ptr,
-                  const T* const p_b_ptr, const T* const q_b_ptr,
+  bool operator()(const T* const p_a_ptr,
+                  const T* const q_a_ptr,
+                  const T* const p_b_ptr,
+                  const T* const q_b_ptr,
                   T* residuals_ptr) const {
     Eigen::Map<const Eigen::Matrix<T, 3, 1> > p_a(p_a_ptr);
     Eigen::Map<const Eigen::Quaternion<T> > q_a(q_a_ptr);

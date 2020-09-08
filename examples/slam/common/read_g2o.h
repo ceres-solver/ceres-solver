@@ -97,7 +97,9 @@ void ReadConstraint(std::ifstream* infile,
 // where I_ij is the (i, j)-th entry of the information matrix for the
 // measurement. Only the upper-triangular part is stored. The measurement order
 // is the delta position followed by the delta orientation.
-template <typename Pose, typename Constraint, typename MapAllocator,
+template <typename Pose,
+          typename Constraint,
+          typename MapAllocator,
           typename VectorAllocator>
 bool ReadG2oFile(const std::string& filename,
                  std::map<int, Pose, std::less<int>, MapAllocator>* poses,

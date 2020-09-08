@@ -37,6 +37,7 @@
 
 #include <cmath>
 #include <vector>
+
 #include "ceres/ceres.h"
 #include "glog/logging.h"
 
@@ -53,6 +54,7 @@
 
 const int kYRows = 212;
 const int kYCols = 2;
+// clang-format off
 const double kYData[kYRows * kYCols] = {
   +3.871364e+00, +9.916027e-01,
   +3.864003e+00, +1.034148e+00,
@@ -267,6 +269,7 @@ const double kYData[kYRows * kYCols] = {
   +3.870542e+00, +9.996121e-01,
   +3.865424e+00, +1.028474e+00
 };
+// clang-format on
 ceres::ConstMatrixRef kY(kYData, kYRows, kYCols);
 
 class PointToLineSegmentContourCostFunction : public ceres::CostFunction {
@@ -382,9 +385,8 @@ int main(int argc, char** argv) {
 
   // Eigen::MatrixXd is column major so we define our own MatrixXd which is
   // row major. Eigen::VectorXd can be used directly.
-  typedef Eigen::Matrix<double,
-                        Eigen::Dynamic, Eigen::Dynamic,
-                        Eigen::RowMajor> MatrixXd;
+  typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>
+      MatrixXd;
   using Eigen::VectorXd;
 
   // `X` is the matrix of control points which make up the contour of line
@@ -420,18 +422,18 @@ int main(int argc, char** argv) {
   for (int i = 0; i < num_observations; ++i) {
     parameter_blocks[0] = &t[i];
     problem.AddResidualBlock(
-      PointToLineSegmentContourCostFunction::Create(num_segments, kY.row(i)),
-      NULL,
-      parameter_blocks);
+        PointToLineSegmentContourCostFunction::Create(num_segments, kY.row(i)),
+        NULL,
+        parameter_blocks);
   }
 
   // Add regularization to minimize the length of the line segment contour.
   for (int i = 0; i < num_segments; ++i) {
     problem.AddResidualBlock(
-      EuclideanDistanceFunctor::Create(sqrt(regularization_weight)),
-      NULL,
-      X.data() + 2 * i,
-      X.data() + 2 * ((i + 1) % num_segments));
+        EuclideanDistanceFunctor::Create(sqrt(regularization_weight)),
+        NULL,
+        X.data() + 2 * i,
+        X.data() + 2 * ((i + 1) % num_segments));
   }
 
   ceres::Solver::Options options;

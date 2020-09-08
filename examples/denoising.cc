@@ -261,7 +261,8 @@ int main(int argc, char** argv) {
   }
 
   if (FLAGS_foe_file.empty()) {
-    std::cerr << "Please provide a Fields of Experts file name using -foe_file.\n";
+    std::cerr << "Please provide a Fields of Experts file name using -foe_file."
+                 "\n";
     return 1;
   }
 

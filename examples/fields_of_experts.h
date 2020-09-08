@@ -47,10 +47,9 @@
 #include <iostream>
 #include <vector>
 
-#include "ceres/loss_function.h"
 #include "ceres/cost_function.h"
+#include "ceres/loss_function.h"
 #include "ceres/sized_cost_function.h"
-
 #include "pgm_image.h"
 
 namespace ceres {
@@ -78,7 +77,7 @@ class FieldsOfExpertsCost : public ceres::CostFunction {
 //
 class FieldsOfExpertsLoss : public ceres::LossFunction {
  public:
-  explicit FieldsOfExpertsLoss(double alpha) : alpha_(alpha) { }
+  explicit FieldsOfExpertsLoss(double alpha) : alpha_(alpha) {}
   virtual void Evaluate(double, double*) const;
 
  private:
@@ -97,19 +96,13 @@ class FieldsOfExperts {
   bool LoadFromFile(const std::string& filename);
 
   // Side length of a square filter in this FoE. They are all of the same size.
-  int Size() const {
-    return size_;
-  }
+  int Size() const { return size_; }
 
   // Total number of pixels the filter covers.
-  int NumVariables() const {
-    return size_ * size_;
-  }
+  int NumVariables() const { return size_ * size_; }
 
   // Number of filters used by the FoE.
-  int NumFilters() const {
-    return num_filters_;
-  }
+  int NumFilters() const { return num_filters_; }
 
   // Creates a new cost function. The caller is responsible for deallocating the
   // memory. alpha_index specifies which filter is used in the cost function.
@@ -119,12 +112,8 @@ class FieldsOfExperts {
   ceres::LossFunction* NewLossFunction(int alpha_index) const;
 
   // Gets the delta pixel indices for all pixels in a patch.
-  const std::vector<int>& GetXDeltaIndices() const {
-    return x_delta_indices_;
-  }
-  const std::vector<int>& GetYDeltaIndices() const {
-    return y_delta_indices_;
-  }
+  const std::vector<int>& GetXDeltaIndices() const { return x_delta_indices_; }
+  const std::vector<int>& GetYDeltaIndices() const { return y_delta_indices_; }
 
  private:
   // The side length of a square filter.

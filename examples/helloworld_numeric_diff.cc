@@ -34,12 +34,12 @@
 #include "ceres/ceres.h"
 #include "glog/logging.h"
 
-using ceres::NumericDiffCostFunction;
 using ceres::CENTRAL;
 using ceres::CostFunction;
+using ceres::NumericDiffCostFunction;
 using ceres::Problem;
-using ceres::Solver;
 using ceres::Solve;
+using ceres::Solver;
 
 // A cost functor that implements the residual r = 10 - x.
 struct CostFunctor {
@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
   // Set up the only cost function (also known as residual). This uses
   // numeric differentiation to obtain the derivative (jacobian).
   CostFunction* cost_function =
-      new NumericDiffCostFunction<CostFunctor, CENTRAL, 1, 1> (new CostFunctor);
+      new NumericDiffCostFunction<CostFunctor, CENTRAL, 1, 1>(new CostFunctor);
   problem.AddResidualBlock(cost_function, NULL, &x);
 
   // Run the solver!
@@ -73,7 +73,6 @@ int main(int argc, char** argv) {
   Solve(options, &problem, &summary);
 
   std::cout << summary.BriefReport() << "\n";
-  std::cout << "x : " << initial_x
-            << " -> " << x << "\n";
+  std::cout << "x : " << initial_x << " -> " << x << "\n";
   return 0;
 }

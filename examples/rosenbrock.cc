@@ -53,7 +53,6 @@ class Rosenbrock : public ceres::FirstOrderFunction {
   virtual int NumParameters() const { return 2; }
 };
 
-
 int main(int argc, char** argv) {
   google::InitGoogleLogging(argv[0]);
 
@@ -68,7 +67,7 @@ int main(int argc, char** argv) {
 
   std::cout << summary.FullReport() << "\n";
   std::cout << "Initial x: " << -1.2 << " y: " << 1.0 << "\n";
-  std::cout << "Final   x: " << parameters[0]
-            << " y: " << parameters[1] << "\n";
+  std::cout << "Final   x: " << parameters[0] << " y: " << parameters[1]
+            << "\n";
   return 0;
 }

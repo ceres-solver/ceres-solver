@@ -48,7 +48,7 @@
 // consider instead of using this one. If you already have a decent guess, Ceres
 // can squeeze down the last bit of error.
 //
-//   [1] http://www.mathworks.com/matlabcentral/fileexchange/5557-circle-fit/content/circfit.m
+//   [1] http://www.mathworks.com/matlabcentral/fileexchange/5557-circle-fit/content/circfit.m  // NOLINT
 
 #include <cstdio>
 #include <vector>
@@ -65,8 +65,10 @@ using ceres::Problem;
 using ceres::Solve;
 using ceres::Solver;
 
-DEFINE_double(robust_threshold, 0.0, "Robust loss parameter. Set to 0 for "
-              "normal squared error (no robustification).");
+DEFINE_double(robust_threshold,
+              0.0,
+              "Robust loss parameter. Set to 0 for normal squared error (no "
+              "robustification).");
 
 // The cost for a single sample. The returned residual is related to the
 // distance of the point from the circle (passed in as x, y, m parameters).
@@ -76,10 +78,11 @@ DEFINE_double(robust_threshold, 0.0, "Robust loss parameter. Set to 0 for "
 class DistanceFromCircleCost {
  public:
   DistanceFromCircleCost(double xx, double yy) : xx_(xx), yy_(yy) {}
-  template <typename T> bool operator()(const T* const x,
-                                        const T* const y,
-                                        const T* const m,  // r = m^2
-                                        T* residual) const {
+  template <typename T>
+  bool operator()(const T* const x,
+                  const T* const y,
+                  const T* const m,  // r = m^2
+                  T* residual) const {
     // Since the radius is parameterized as m^2, unpack m to get r.
     T r = *m * *m;
 
@@ -97,7 +100,7 @@ class DistanceFromCircleCost {
     // distance in the metric sense (it has units distance^2) it produces more
     // robust fits when there are outliers. This is because the cost surface is
     // more convex.
-    residual[0] = r*r - xp*xp - yp*yp;
+    residual[0] = r * r - xp * xp - yp * yp;
     return true;
   }
 
@@ -137,7 +140,7 @@ int main(int argc, char** argv) {
   double xx, yy;
   int num_points = 0;
   while (scanf("%lf %lf\n", &xx, &yy) == 2) {
-    CostFunction *cost =
+    CostFunction* cost =
         new AutoDiffCostFunction<DistanceFromCircleCost, 1, 1, 1, 1>(
             new DistanceFromCircleCost(xx, yy));
     problem.AddResidualBlock(cost, loss, &x, &y, &m);
