@@ -33,6 +33,24 @@
       "revId": "ddfa65303eb6f72be34ef1afd9ba9bc50e6ef073",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1bb9a3d2_7da29506",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-08T00:06:33Z",
+      "side": 1,
+      "message": "See: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/17820",
+      "parentUuid": "ec84aaa1_1222d872",
+      "revId": "ddfa65303eb6f72be34ef1afd9ba9bc50e6ef073",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
