@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1f12f31_624a3b44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-08T15:58:21Z",
+      "side": 1,
+      "message": "Next batch of reformatting, this time for examples.",
+      "revId": "7b6b2491cc1be0b3abb67338366d8d69bef3a402",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
