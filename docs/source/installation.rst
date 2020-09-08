@@ -97,7 +97,7 @@ optional. For details on customizing the build process, see
   ``SuiteSparse``, and optionally used by Ceres directly for some
   operations.
 
-  On ``UNIX`` OSes other than Mac OS X we recommend `ATLAS
+  On ``UNIX`` OSes other than macOS we recommend `ATLAS
   <http://math-atlas.sourceforge.net/>`_, which includes ``BLAS`` and
   ``LAPACK`` routines. It is also possible to use `OpenBLAS
   <https://github.com/xianyi/OpenBLAS>`_ . However, one needs to be
@@ -105,7 +105,7 @@ optional. For details on customizing the build process, see
   <https://github.com/xianyi/OpenBLAS/wiki/faq#wiki-multi-threaded>`_
   inside ``OpenBLAS`` as it conflicts with use of threads in Ceres.
 
-  Mac OS X ships with an optimized ``LAPACK`` and ``BLAS``
+  MacOS ships with an optimized ``LAPACK`` and ``BLAS``
   implementation as part of the ``Accelerate`` framework. The Ceres
   build system will automatically detect and use it.
 
@@ -123,18 +123,11 @@ Linux
 We will use `Ubuntu <http://www.ubuntu.com>`_ as our example linux
 distribution.
 
-.. NOTE::
+  .. NOTE ::
 
- Up to at least Ubuntu 14.04, the SuiteSparse package in the official
- package repository (built from SuiteSparse v3.4.0) **cannot** be used
- to build Ceres as a *shared* library.  Thus if you want to build
- Ceres as a shared library using SuiteSparse, you must perform a
- source install of SuiteSparse or use an external PPA (see `bug report
- here
- <https://bugs.launchpad.net/ubuntu/+source/suitesparse/+bug/1333214>`_).
- It is recommended that you use the current version of SuiteSparse
- (4.2.1 at the time of writing).
-
+    These instructions are for Ubuntu 18.04 and newer. On Ubuntu 16.04
+    you need to manually get a more recent version of Eigen, such as
+    3.3.7.
 
 Start by installing all the dependencies.
 
@@ -143,20 +136,12 @@ Start by installing all the dependencies.
      # CMake
      sudo apt-get install cmake
      # google-glog + gflags
-     sudo apt-get install libgoogle-glog-dev
+     sudo apt-get install libgoogle-glog-dev libgflags-dev
      # BLAS & LAPACK
      sudo apt-get install libatlas-base-dev
      # Eigen3
      sudo apt-get install libeigen3-dev
      # SuiteSparse and CXSparse (optional)
-     # - If you want to build Ceres as a *static* library (the default)
-     #   you can use the SuiteSparse package in the main Ubuntu package
-     #   repository:
-     sudo apt-get install libsuitesparse-dev
-     # - However, if you want to build Ceres as a *shared* library, you must
-     #   add the following PPA:
-     sudo add-apt-repository ppa:bzindovic/suitesparse-bugfix-1319687
-     sudo apt-get update
      sudo apt-get install libsuitesparse-dev
 
 We are now ready to build, test, and install Ceres.
@@ -240,28 +225,14 @@ this.
 
 .. section-osx:
 
-Mac OS X
-========
-.. NOTE::
+macOS
+=====
 
- Ceres will not compile using Xcode 4.5.x (Clang version 4.1) due to a
- bug in that version of Clang.  If you are running Xcode 4.5.x, please
- update to Xcode >= 4.6.x before attempting to build Ceres.
+On macOS, you can either use `Homebrew
+<https://brew.sh/>`_ (recomended) or `MacPorts
+<https://www.macports.org/>`_ to install Ceres Solver.
 
-
-On OS X, you can either use `MacPorts <https://www.macports.org/>`_ or
-`Homebrew <http://mxcl.github.com/homebrew/>`_ to install Ceres Solver.
-
-If using `MacPorts <https://www.macports.org/>`_, then
-
-.. code-block:: bash
-
-   sudo port install ceres-solver
-
-will install the latest version.
-
-If using `Homebrew <http://mxcl.github.com/homebrew/>`_ and assuming
-that you have the ``homebrew/science`` [#f1]_ tap enabled, then
+If using `Homebrew <https://brew.sh/>`_, then
 
 .. code-block:: bash
 
@@ -276,9 +247,17 @@ dependencies and
 
 will install the latest version in the git repo.
 
+If using `MacPorts <https://www.macports.org/>`_, then
+
+.. code-block:: bash
+
+   sudo port install ceres-solver
+
+will install the latest version.
+
 You can also install each of the dependencies by hand using `Homebrew
-<http://mxcl.github.com/homebrew/>`_. There is no need to install
-``BLAS`` or ``LAPACK`` separately as OS X ships with optimized
+<https://brew.sh/>`_. There is no need to install
+``BLAS`` or ``LAPACK`` separately as macOS ships with optimized
 ``BLAS`` and ``LAPACK`` routines as part of the `vecLib
 <https://developer.apple.com/library/mac/#documentation/Performance/Conceptual/vecLib/Reference/reference.html>`_
 framework.
@@ -288,7 +267,7 @@ framework.
       # CMake
       brew install cmake
       # google-glog and gflags
-      brew install glog
+      brew install glog gflags
       # Eigen3
       brew install eigen
       # SuiteSparse and CXSparse
@@ -309,13 +288,13 @@ We are now ready to build, test, and install Ceres.
    # documentation for the EXPORT_BUILD_DIR option for more information.
    make install
 
-Building with OpenMP on OS X
-----------------------------
+Building with OpenMP on macOS
+-----------------------------
 
 Up to at least Xcode 8, OpenMP support was disabled in Apple's version of
 Clang.  However, you can install the latest version of the LLVM toolchain
 from Homebrew which does support OpenMP, and thus build Ceres with OpenMP
-support on OS X.  To do this, you must install llvm via Homebrew:
+support on macOS.  To do this, you must install llvm via Homebrew:
 
 .. code-block:: bash
 
@@ -339,9 +318,8 @@ following:
    export LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
    export CPPFLAGS="-I/usr/local/opt/llvm/include"
    export PATH="/usr/local/opt/llvm/bin:$PATH"
-   # Force CMake to use the Homebrew version of Clang.  OpenMP will be
-   # automatically enabled if it is detected that the compiler supports it.
-   cmake -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ ../ceres-solver-2.0.0
+   # Force CMake to use the Homebrew version of Clang and enable OpenMP.
+   cmake -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ -DCERES_THREADING_MODEL=OPENMP ../ceres-solver-2.0.0
    make -j3
    make test
    # Optionally install Ceres.  It can also be exported using CMake which
@@ -351,19 +329,6 @@ following:
 
 Like the Linux build, you should now be able to run
 ``bin/simple_bundle_adjuster``.
-
-
-.. rubric:: Footnotes
-
-.. [#f1] Ceres and many of its dependencies are in `homebrew/science
-   <https://github.com/Homebrew/homebrew-science>`_ tap. So, if you
-   don't have this tap enabled, then you will need to enable it as
-   follows before executing any of the commands in this section.
-
-   .. code-block:: bash
-
-      brew tap homebrew/science
-
 
 .. _section-windows:
 
@@ -379,7 +344,7 @@ Windows
 
 On Windows, we support building with Visual Studio 2015.2 of newer. Note
 that the Windows port is less featureful and less tested than the
-Linux or Mac OS X versions due to the lack of an officially supported
+Linux or macOS versions due to the lack of an officially supported
 way of building SuiteSparse and CXSparse.  There are however a number
 of unofficial ways of building these libraries. Building on Windows
 also a bit more involved since there is no automated way to install
@@ -1068,7 +1033,7 @@ project's build directory is **exported**, instead of copying the
 compiled libraries and headers, CMake creates an entry for the project
 in the `user's local CMake package registry
 <http://www.cmake.org/cmake/help/v3.2/manual/cmake-packages.7.html#user-package-registry>`_,
-``<USER_HOME>/.cmake/packages`` on Linux & OS X, which contains the
+``<USER_HOME>/.cmake/packages`` on Linux & macOS, which contains the
 path to the project's build directory which will be checked by CMake
 during a call to ``find_package()``.  The effect of which is that any
 client code uses the compiled libraries and headers in the build
