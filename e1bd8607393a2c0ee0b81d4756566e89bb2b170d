@@ -39,6 +39,30 @@
       "revId": "e1bd8607393a2c0ee0b81d4756566e89bb2b170d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3005011_7243054d",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-08T18:36:36Z",
+      "side": 1,
+      "message": "Yes, I was wondering where to put it. It\u0027s too much detail for the release notes maybe. But OTOH it would be nice to have one place where all the info is that ppl that have a working setup with 1.14 might need to consider when migrating to 2.0. As opposed to distilling the info from the long installation document, where most things they already know. Hence the extra section. The idea was that maybe there would be additional subsections for v2.1, v2.2, v3.0 or something. But maybe that is unlikely and by that time the v2.0 migration info can be removed... Whatever you decide is fine by me.",
+      "parentUuid": "e4ada3fd_244d917d",
+      "range": {
+        "startLine": 1116,
+        "startChar": 0,
+        "endLine": 1116,
+        "endChar": 9
+      },
+      "revId": "e1bd8607393a2c0ee0b81d4756566e89bb2b170d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
