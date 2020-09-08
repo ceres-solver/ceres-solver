@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9c92ee0_33c9940e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-08T16:21:17Z",
+      "side": 1,
+      "message": "Alex can you take a look please.",
+      "revId": "e1bd8607393a2c0ee0b81d4756566e89bb2b170d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4ada3fd_244d917d",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-08T16:21:17Z",
+      "side": 1,
+      "message": "I am wondering if there should be a note at the top or this should be in the style of NOTE:: instead of being a section at the bottom.",
+      "range": {
+        "startLine": 1116,
+        "startChar": 0,
+        "endLine": 1116,
+        "endChar": 9
+      },
+      "revId": "e1bd8607393a2c0ee0b81d4756566e89bb2b170d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
