@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45c0a5a0_cf09a4c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Thanks for the review, Alex. I\u0027ve cleaned up the patch to address your comments.",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}

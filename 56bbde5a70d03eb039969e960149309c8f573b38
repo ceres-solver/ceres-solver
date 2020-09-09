@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "a6a17c0b_a3da4c28",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f208f06_251c8370",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c12b9111_c1a48fc2",
         "filename": "CMakeLists.txt",
         "patchSetId": 7
@@ -101,6 +119,24 @@
       "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041b018f_f3f39119",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c12b9111_c1a48fc2",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +157,24 @@
     },
     {
       "key": {
+        "uuid": "56d47dda_41c1aa00",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Yep, makes sense. Applied the \u003cLANG\u003e_VISIBILITY_PRESET properties to to the ceres target only.",
+      "parentUuid": "3ef98dd5_4aa5cfda",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7c919f9_ba0c7331",
         "filename": "internal/ceres/block_jacobi_preconditioner.h",
         "patchSetId": 7
@@ -135,6 +189,24 @@
       "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "898bc0e5_ca775cdc",
+        "filename": "internal/ceres/block_jacobi_preconditioner.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7c919f9_ba0c7331",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +227,24 @@
     },
     {
       "key": {
+        "uuid": "a805feaf_4570a790",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Already included on line 40",
+      "parentUuid": "f67f697a_73f9b43b",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39f0a682_bcde2d91",
         "filename": "internal/ceres/block_random_access_sparse_matrix.h",
         "patchSetId": 7
@@ -169,6 +259,24 @@
       "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566e0fe7_db8bcefd",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Already included on line 43",
+      "parentUuid": "39f0a682_bcde2d91",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +297,24 @@
     },
     {
       "key": {
+        "uuid": "3de7c142_c6a5b3e6",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a12a7067_ec6b722b",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15bf2ece_cf16eef5",
         "filename": "internal/ceres/canonical_views_clustering.h",
         "patchSetId": 7
@@ -203,6 +329,24 @@
       "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910f332b_80f33dab",
+        "filename": "internal/ceres/canonical_views_clustering.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15bf2ece_cf16eef5",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +367,24 @@
     },
     {
       "key": {
+        "uuid": "e6e450f2_a08bc71e",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db3d699b_2b26245c",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd912cd1_af1b715c",
         "filename": "internal/ceres/covariance_impl.h",
         "patchSetId": 7
@@ -237,6 +399,24 @@
       "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec0e50a2_c994174b",
+        "filename": "internal/ceres/covariance_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd912cd1_af1b715c",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +437,24 @@
     },
     {
       "key": {
+        "uuid": "6f7eb253_0da2dc7a",
+        "filename": "internal/ceres/dense_qr_solver.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70505e06_ae489878",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d680ed99_76f59d81",
         "filename": "internal/ceres/dense_sparse_matrix.h",
         "patchSetId": 7
@@ -271,6 +469,24 @@
       "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a97c89f_6c506802",
+        "filename": "internal/ceres/dense_sparse_matrix.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d680ed99_76f59d81",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +507,24 @@
     },
     {
       "key": {
+        "uuid": "2f8055a4_e517a18b",
+        "filename": "internal/ceres/detect_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "No longer needed",
+      "parentUuid": "5550fbfb_b271f1eb",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdf70fb7_6d969535",
         "filename": "internal/ceres/detect_structure.cc",
         "patchSetId": 7
@@ -305,6 +539,24 @@
       "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac540477_36c0604d",
+        "filename": "internal/ceres/detect_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "This was a mistake - does not need to be exported to build unit tests. Removed the export macro.",
+      "parentUuid": "fdf70fb7_6d969535",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +577,24 @@
     },
     {
       "key": {
+        "uuid": "f4cfd066_08a6d47a",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1084b47e_43917c66",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f32ed1e8_2956e9f0",
         "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.h",
         "patchSetId": 7
@@ -339,6 +609,24 @@
       "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1262e85_dc633208",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f32ed1e8_2956e9f0",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +647,24 @@
     },
     {
       "key": {
+        "uuid": "d367408a_dba5d19b",
+        "filename": "internal/ceres/gmock_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "No longer needed - removed",
+      "parentUuid": "d5bb2008_38af08d2",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c2bc7e1_5e474b06",
         "filename": "internal/ceres/gradient_checking_cost_function.h",
         "patchSetId": 7
@@ -373,6 +679,24 @@
       "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8317d7_fa7ee59c",
+        "filename": "internal/ceres/gradient_checking_cost_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c2bc7e1_5e474b06",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +717,24 @@
     },
     {
       "key": {
+        "uuid": "a291a634_28597878",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "This was a mistake - does not need to be exported to build unit tests. Removed the export macro.",
+      "parentUuid": "d0023e04_228e9e25",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cd79ce7_e875e63c",
         "filename": "internal/ceres/subset_preconditioner.h",
         "patchSetId": 7
@@ -410,6 +752,24 @@
     },
     {
       "key": {
+        "uuid": "1143419c_3da4eca0",
+        "filename": "internal/ceres/subset_preconditioner.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "This was a mistake - does not need to be exported to build unit tests. Removed the export macro.",
+      "parentUuid": "4cd79ce7_e875e63c",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bdd4f6b_6965d1b9",
         "filename": "internal/ceres/trust_region_preprocessor.h",
         "patchSetId": 7
@@ -424,6 +784,24 @@
       "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30552a9e_abf1cc2a",
+        "filename": "internal/ceres/trust_region_preprocessor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-09-09T02:44:17Z",
+      "side": 1,
+      "message": "This was a mistake - does not need to be exported to build unit tests. Removed the export macro.",
+      "parentUuid": "3bdd4f6b_6965d1b9",
+      "revId": "56bbde5a70d03eb039969e960149309c8f573b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
