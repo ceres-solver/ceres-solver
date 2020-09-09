@@ -16,6 +16,23 @@
       "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a768d792_765c9da2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-09T15:59:41Z",
+      "side": 1,
+      "message": "Thanks for updating the patch Taylor, Alex is out for a bit, he will look at this once he is back.",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
