@@ -169,8 +169,6 @@ class BadTestTerm : public CostFunction {
   vector<vector<double>> a_;  // our vectors.
 };
 
-
-
 static void CheckDimensions(const GradientChecker::ProbeResults& results,
                             const std::vector<int>& parameter_sizes,
                             const std::vector<int>& local_parameter_sizes,

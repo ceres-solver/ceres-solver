@@ -32,7 +32,9 @@
 #define CERES_INTERNAL_CONTEXT_IMPL_H_
 
 // This include must come before any #ifndef check on Ceres compile options.
+// clang-format off
 #include "ceres/internal/port.h"
+// clanf-format on
 
 #include "ceres/context.h"
 

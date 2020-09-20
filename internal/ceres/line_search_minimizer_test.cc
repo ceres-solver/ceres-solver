@@ -43,7 +43,6 @@ class QuadraticFirstOrderFunction : public ceres::FirstOrderFunction {
   bool Evaluate(const double* parameters,
                 double* cost,
                 double* gradient) const final {
-
     cost[0] = parameters[0] * parameters[0];
     if (gradient != NULL) {
       gradient[0] = 2.0 * parameters[0];

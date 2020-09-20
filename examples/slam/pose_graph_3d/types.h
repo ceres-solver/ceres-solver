@@ -64,7 +64,7 @@ inline std::istream& operator>>(std::istream& input, Pose3d& pose) {
 typedef std::map<int,
                  Pose3d,
                  std::less<int>,
-                 Eigen::aligned_allocator<std::pair<const int, Pose3d> > >
+                 Eigen::aligned_allocator<std::pair<const int, Pose3d>>>
     MapOfPoses;
 
 // The constraint between two vertices in the pose graph. The constraint is the
@@ -103,7 +103,7 @@ inline std::istream& operator>>(std::istream& input, Constraint3d& constraint) {
   return input;
 }
 
-typedef std::vector<Constraint3d, Eigen::aligned_allocator<Constraint3d> >
+typedef std::vector<Constraint3d, Eigen::aligned_allocator<Constraint3d>>
     VectorOfConstraints;
 
 }  // namespace examples

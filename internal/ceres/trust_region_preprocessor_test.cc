@@ -28,6 +28,8 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include "ceres/trust_region_preprocessor.h"
+
 #include <array>
 #include <map>
 
@@ -35,7 +37,6 @@
 #include "ceres/problem_impl.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"
-#include "ceres/trust_region_preprocessor.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -147,8 +148,10 @@ class LinearSolverAndEvaluatorCreationTest : public ::testing::Test {
     x_ = 1.0;
     y_ = 1.0;
     z_ = 1.0;
-    problem_.AddResidualBlock(new DummyCostFunction<1, 1, 1>, nullptr, &x_, &y_);
-    problem_.AddResidualBlock(new DummyCostFunction<1, 1, 1>, nullptr, &y_, &z_);
+    problem_.AddResidualBlock(
+        new DummyCostFunction<1, 1, 1>, nullptr, &x_, &y_);
+    problem_.AddResidualBlock(
+        new DummyCostFunction<1, 1, 1>, nullptr, &y_, &z_);
   }
 
   void PreprocessForGivenLinearSolverAndVerify(
@@ -322,8 +325,7 @@ TEST_F(LinearSolverAndEvaluatorCreationTest,
   EXPECT_TRUE(pp.inner_iteration_minimizer.get() != nullptr);
 }
 
-TEST_F(LinearSolverAndEvaluatorCreationTest,
-       InvalidInnerIterationsOrdering) {
+TEST_F(LinearSolverAndEvaluatorCreationTest, InvalidInnerIterationsOrdering) {
   Solver::Options options;
   options.use_inner_iterations = true;
   options.inner_iteration_ordering.reset(new ParameterBlockOrdering);

@@ -32,8 +32,9 @@
 #define CERES_INTERNAL_ITERATIVE_SCHUR_COMPLEMENT_SOLVER_H_
 
 #include <memory>
-#include "ceres/linear_solver.h"
+
 #include "ceres/internal/eigen.h"
+#include "ceres/linear_solver.h"
 #include "ceres/types.h"
 
 namespace ceres {
@@ -70,17 +71,17 @@ class Preconditioner;
 class IterativeSchurComplementSolver : public BlockSparseMatrixSolver {
  public:
   explicit IterativeSchurComplementSolver(const LinearSolver::Options& options);
-  IterativeSchurComplementSolver(const IterativeSchurComplementSolver&) = delete;
+  IterativeSchurComplementSolver(const IterativeSchurComplementSolver&) =
+      delete;
   void operator=(const IterativeSchurComplementSolver&) = delete;
 
   virtual ~IterativeSchurComplementSolver();
 
  private:
-  LinearSolver::Summary SolveImpl(
-      BlockSparseMatrix* A,
-      const double* b,
-      const LinearSolver::PerSolveOptions& options,
-      double* x) final;
+  LinearSolver::Summary SolveImpl(BlockSparseMatrix* A,
+                                  const double* b,
+                                  const LinearSolver::PerSolveOptions& options,
+                                  double* x) final;
 
   void CreatePreconditioner(BlockSparseMatrix* A);
 

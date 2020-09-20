@@ -33,6 +33,7 @@
 #define CERES_INTERNAL_POLYNOMIAL_SOLVER_H_
 
 #include <vector>
+
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
 

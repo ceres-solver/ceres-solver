@@ -29,7 +29,9 @@
 // Author: vitus@google.com (Michael Vitus)
 
 // This include must come before any #ifndef check on Ceres compile options.
+// clang-format off
 #include "ceres/internal/port.h"
+// clang-format on
 
 #include "ceres/parallel_for.h"
 
@@ -64,8 +66,9 @@ TEST(ParallelFor, NumThreads) {
 
   for (int num_threads = 1; num_threads <= 8; ++num_threads) {
     std::vector<int> values(size, 0);
-    ParallelFor(&context, 0, size, num_threads,
-                [&values](int i) { values[i] = std::sqrt(i); });
+    ParallelFor(&context, 0, size, num_threads, [&values](int i) {
+      values[i] = std::sqrt(i);
+    });
     EXPECT_THAT(values, ElementsAreArray(expected_results));
   }
 }
@@ -84,8 +87,10 @@ TEST(ParallelForWithThreadId, NumThreads) {
 
   for (int num_threads = 1; num_threads <= 8; ++num_threads) {
     std::vector<int> values(size, 0);
-    ParallelFor(&context, 0, size, num_threads,
-                [&values](int thread_id, int i) { values[i] = std::sqrt(i); });
+    ParallelFor(
+        &context, 0, size, num_threads, [&values](int thread_id, int i) {
+          values[i] = std::sqrt(i);
+        });
     EXPECT_THAT(values, ElementsAreArray(expected_results));
   }
 }
@@ -146,7 +151,10 @@ TEST(ParallelForWithThreadId, UniqueThreadIds) {
   std::mutex mutex;
   std::condition_variable condition;
   int count = 0;
-  ParallelFor(&context, 0, 2, 2,
+  ParallelFor(&context,
+              0,
+              2,
+              2,
               [&x, &mutex, &condition, &count](int thread_id, int i) {
                 std::unique_lock<std::mutex> lock(mutex);
                 x[i] = thread_id;
@@ -155,7 +163,7 @@ TEST(ParallelForWithThreadId, UniqueThreadIds) {
                 condition.wait(lock, [&]() { return count == 2; });
               });
 
-  EXPECT_THAT(x, UnorderedElementsAreArray({0,1}));
+  EXPECT_THAT(x, UnorderedElementsAreArray({0, 1}));
 }
 #endif  // CERES_NO_THREADS
 

@@ -47,7 +47,7 @@ using ceres::Solver;
 // values with automatic differentiation.
 struct InterpolatedCostFunctor {
   explicit InterpolatedCostFunctor(
-      const CubicInterpolator<Grid1D<double> >& interpolator)
+      const CubicInterpolator<Grid1D<double>>& interpolator)
       : interpolator_(interpolator) {}
 
   template <typename T>
@@ -57,13 +57,13 @@ struct InterpolatedCostFunctor {
   }
 
   static CostFunction* Create(
-      const CubicInterpolator<Grid1D<double> >& interpolator) {
+      const CubicInterpolator<Grid1D<double>>& interpolator) {
     return new AutoDiffCostFunction<InterpolatedCostFunctor, 1, 1>(
         new InterpolatedCostFunctor(interpolator));
   }
 
  private:
-  const CubicInterpolator<Grid1D<double> >& interpolator_;
+  const CubicInterpolator<Grid1D<double>>& interpolator_;
 };
 
 int main(int argc, char** argv) {
@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
   }
 
   Grid1D<double> array(values, 0, kNumSamples);
-  CubicInterpolator<Grid1D<double> > interpolator(array);
+  CubicInterpolator<Grid1D<double>> interpolator(array);
 
   double x = 1.0;
   Problem problem;

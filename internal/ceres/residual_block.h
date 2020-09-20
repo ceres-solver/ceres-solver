@@ -105,7 +105,6 @@ class ResidualBlock {
                 double** jacobians,
                 double* scratch) const;
 
-
   const CostFunction* cost_function() const { return cost_function_; }
   const LossFunction* loss_function() const { return loss_function_; }
 

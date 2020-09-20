@@ -28,11 +28,12 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include "ceres/block_random_access_sparse_matrix.h"
+
 #include <limits>
 #include <memory>
 #include <vector>
 
-#include "ceres/block_random_access_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
@@ -77,9 +78,8 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
     int col;
     int row_stride;
     int col_stride;
-    CellInfo* cell =  m.GetCell(row_block_id, col_block_id,
-                                &row, &col,
-                                &row_stride, &col_stride);
+    CellInfo* cell = m.GetCell(
+        row_block_id, col_block_id, &row, &col, &row_stride, &col_stride);
     EXPECT_TRUE(cell != NULL);
     EXPECT_EQ(row, 0);
     EXPECT_EQ(col, 0);
@@ -87,9 +87,9 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
     EXPECT_EQ(col_stride, blocks[col_block_id]);
 
     // Write into the block
-    MatrixRef(cell->values, row_stride, col_stride).block(
-        row, col, blocks[row_block_id], blocks[col_block_id]) =
-        (row_block_id + 1) * (col_block_id +1) *
+    MatrixRef(cell->values, row_stride, col_stride)
+        .block(row, col, blocks[row_block_id], blocks[col_block_id]) =
+        (row_block_id + 1) * (col_block_id + 1) *
         Matrix::Ones(blocks[row_block_id], blocks[col_block_id]);
   }
 
@@ -103,9 +103,8 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
   double kTolerance = 1e-14;
 
   // (0, 0)
-  EXPECT_NEAR((dense.block(0, 0, 3, 3) - Matrix::Ones(3, 3)).norm(),
-              0.0,
-              kTolerance);
+  EXPECT_NEAR(
+      (dense.block(0, 0, 3, 3) - Matrix::Ones(3, 3)).norm(), 0.0, kTolerance);
   // (1, 1)
   EXPECT_NEAR((dense.block(3, 3, 4, 4) - 2 * 2 * Matrix::Ones(4, 4)).norm(),
               0.0,
@@ -120,8 +119,8 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
               kTolerance);
 
   // There is nothing else in the matrix besides these four blocks.
-  EXPECT_NEAR(dense.norm(), sqrt(9. + 16. * 16. + 36. * 20. + 9. * 15.),
-              kTolerance);
+  EXPECT_NEAR(
+      dense.norm(), sqrt(9. + 16. * 16. + 36. * 20. + 9. * 15.), kTolerance);
 
   Vector x = Vector::Ones(dense.rows());
   Vector actual_y = Vector::Zero(dense.rows());
@@ -131,8 +130,7 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
   m.SymmetricRightMultiply(x.data(), actual_y.data());
   EXPECT_NEAR((expected_y - actual_y).norm(), 0.0, kTolerance)
       << "actual: " << actual_y.transpose() << "\n"
-      << "expected: " << expected_y.transpose()
-      << "matrix: \n " << dense;
+      << "expected: " << expected_y.transpose() << "matrix: \n " << dense;
 }
 
 // IntPairToLong is private, thus this fixture is needed to access and
@@ -155,14 +153,13 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
   }
 
   void CheckLongToIntPair() {
-    uint64_t max_rows =  m_->kMaxRowBlocks;
+    uint64_t max_rows = m_->kMaxRowBlocks;
     for (int row = max_rows - 10; row < max_rows; ++row) {
       for (int col = 0; col < 10; ++col) {
         int row_computed;
         int col_computed;
-        m_->LongToIntPair(m_->IntPairToLong(row, col),
-                          &row_computed,
-                          &col_computed);
+        m_->LongToIntPair(
+            m_->IntPairToLong(row, col), &row_computed, &col_computed);
         EXPECT_EQ(row, row_computed);
         EXPECT_EQ(col, col_computed);
       }

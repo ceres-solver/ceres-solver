@@ -31,6 +31,7 @@
 #include "ceres/subset_preconditioner.h"
 
 #include <memory>
+
 #include "Eigen/Dense"
 #include "Eigen/SparseCore"
 #include "ceres/block_sparse_matrix.h"

@@ -31,6 +31,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 
 #include <memory>
+
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -309,15 +310,14 @@ TEST(TripletSparseMatrix, AppendCols) {
 
 TEST(TripletSparseMatrix, CreateDiagonalMatrix) {
   std::unique_ptr<double[]> values(new double[10]);
-  for (int i = 0; i < 10; ++i)
-    values[i] = i;
+  for (int i = 0; i < 10; ++i) values[i] = i;
 
   std::unique_ptr<TripletSparseMatrix> m(
       TripletSparseMatrix::CreateSparseDiagonalMatrix(values.get(), 10));
   EXPECT_EQ(m->num_rows(), 10);
   EXPECT_EQ(m->num_cols(), 10);
   ASSERT_EQ(m->num_nonzeros(), 10);
-  for (int i = 0; i < 10 ; ++i) {
+  for (int i = 0; i < 10; ++i) {
     EXPECT_EQ(m->rows()[i], i);
     EXPECT_EQ(m->cols()[i], i);
     EXPECT_EQ(m->values()[i], i);
@@ -331,7 +331,7 @@ TEST(TripletSparseMatrix, Resize) {
     for (int j = 0; j < 20; ++j) {
       m.mutable_rows()[nnz] = i;
       m.mutable_cols()[nnz] = j;
-      m.mutable_values()[nnz++] = i+j;
+      m.mutable_values()[nnz++] = i + j;
     }
   }
   m.set_num_nonzeros(nnz);

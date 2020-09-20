@@ -35,10 +35,11 @@
 #define CERES_INTERNAL_IMPLICIT_SCHUR_COMPLEMENT_H_
 
 #include <memory>
+
+#include "ceres/internal/eigen.h"
 #include "ceres/linear_operator.h"
 #include "ceres/linear_solver.h"
 #include "ceres/partitioned_matrix_view.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/types.h"
 
 namespace ceres {
@@ -129,7 +130,7 @@ class ImplicitSchurComplement : public LinearOperator {
 
   int num_rows() const final { return A_->num_cols_f(); }
   int num_cols() const final { return A_->num_cols_f(); }
-  const Vector& rhs()    const { return rhs_;             }
+  const Vector& rhs() const { return rhs_; }
 
   const BlockSparseMatrix* block_diagonal_EtE_inverse() const {
     return block_diagonal_EtE_inverse_.get();

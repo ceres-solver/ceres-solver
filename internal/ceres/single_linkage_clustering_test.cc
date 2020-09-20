@@ -31,6 +31,7 @@
 #include "ceres/single_linkage_clustering.h"
 
 #include <unordered_map>
+
 #include "ceres/graph.h"
 #include "gtest/gtest.h"
 

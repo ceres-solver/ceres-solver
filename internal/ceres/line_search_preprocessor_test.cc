@@ -28,9 +28,10 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include "ceres/line_search_preprocessor.h"
+
 #include <map>
 
-#include "ceres/line_search_preprocessor.h"
 #include "ceres/problem_impl.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"

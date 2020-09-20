@@ -28,8 +28,9 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/line_search_minimizer.h"
 #include "ceres/minimizer.h"
+
+#include "ceres/line_search_minimizer.h"
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
@@ -49,7 +50,6 @@ Minimizer* Minimizer::Create(MinimizerType minimizer_type) {
   LOG(FATAL) << "Unknown minimizer_type: " << minimizer_type;
   return NULL;
 }
-
 
 Minimizer::~Minimizer() {}
 

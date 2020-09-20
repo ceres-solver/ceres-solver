@@ -31,6 +31,7 @@
 #include "ceres/visibility_based_preconditioner.h"
 
 #include <memory>
+
 #include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_random_access_sparse_matrix.h"

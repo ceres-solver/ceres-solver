@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_SUBSET_PRECONDITIONER_H_
 
 #include <memory>
+
 #include "ceres/preconditioner.h"
 
 namespace ceres {

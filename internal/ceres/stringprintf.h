@@ -55,9 +55,9 @@ namespace internal {
 // have an implicit 'this' argument, the arguments of such methods
 // should be counted from two, not one."
 #define CERES_PRINTF_ATTRIBUTE(string_index, first_to_check) \
-    __attribute__((__format__ (__printf__, string_index, first_to_check)))
+  __attribute__((__format__(__printf__, string_index, first_to_check)))
 #define CERES_SCANF_ATTRIBUTE(string_index, first_to_check) \
-    __attribute__((__format__ (__scanf__, string_index, first_to_check)))
+  __attribute__((__format__(__scanf__, string_index, first_to_check)))
 #else
 #define CERES_PRINTF_ATTRIBUTE(string_index, first_to_check)
 #endif
@@ -68,7 +68,9 @@ extern std::string StringPrintf(const char* format, ...)
     CERES_PRINTF_ATTRIBUTE(1, 2);
 
 // Store result into a supplied string and return it.
-extern const std::string& SStringPrintf(std::string* dst, const char* format, ...)
+extern const std::string& SStringPrintf(std::string* dst,
+                                        const char* format,
+                                        ...)
     // Tell the compiler to do printf format string checking.
     CERES_PRINTF_ATTRIBUTE(2, 3);
 

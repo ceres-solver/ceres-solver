@@ -125,7 +125,7 @@ class FieldsOfExperts {
   // The coefficients in front of each term.
   std::vector<double> alpha_;
   // The filters used for the dot product with image patches.
-  std::vector<std::vector<double> > filters_;
+  std::vector<std::vector<double>> filters_;
 };
 
 }  // namespace examples

@@ -31,8 +31,8 @@
 #include "ceres/covariance.h"
 
 #include <algorithm>
-#include <cstdint>
 #include <cmath>
+#include <cstdint>
 #include <map>
 #include <memory>
 #include <utility>
@@ -54,7 +54,7 @@ using std::map;
 using std::pair;
 using std::vector;
 
-class UnaryCostFunction: public CostFunction {
+class UnaryCostFunction : public CostFunction {
  public:
   UnaryCostFunction(const int num_residuals,
                     const int32_t parameter_block_size,
@@ -86,8 +86,7 @@ class UnaryCostFunction: public CostFunction {
   vector<double> jacobian_;
 };
 
-
-class BinaryCostFunction: public CostFunction {
+class BinaryCostFunction : public CostFunction {
  public:
   BinaryCostFunction(const int num_residuals,
                      const int32_t parameter_block1_size,
@@ -193,6 +192,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsity) {
   //  . . . . . . X X X X
   //  . . . . . . X X X X
 
+  // clang-format off
   int expected_rows[] = {0, 5, 10, 15, 18, 21, 24, 28, 32, 36, 40};
   int expected_cols[] = {0, 6, 7, 8, 9,
                          1, 2, 3, 4, 5,
@@ -204,7 +204,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsity) {
                          6, 7, 8, 9,
                          6, 7, 8, 9,
                          6, 7, 8, 9};
-
+  // clang-format on
 
   vector<pair<const double*, const double*>> covariance_blocks;
   covariance_blocks.push_back(make_pair(block1, block1));
@@ -216,8 +216,8 @@ TEST(CovarianceImpl, ComputeCovarianceSparsity) {
 
   Covariance::Options options;
   CovarianceImpl covariance_impl(options);
-  EXPECT_TRUE(covariance_impl
-              .ComputeCovarianceSparsity(covariance_blocks, &problem));
+  EXPECT_TRUE(
+      covariance_impl.ComputeCovarianceSparsity(covariance_blocks, &problem));
 
   const CompressedRowSparseMatrix* crsm = covariance_impl.covariance_matrix();
 
@@ -228,17 +228,13 @@ TEST(CovarianceImpl, ComputeCovarianceSparsity) {
   const int* rows = crsm->rows();
   for (int r = 0; r < crsm->num_rows() + 1; ++r) {
     EXPECT_EQ(rows[r], expected_rows[r])
-        << r << " "
-        << rows[r] << " "
-        << expected_rows[r];
+        << r << " " << rows[r] << " " << expected_rows[r];
   }
 
   const int* cols = crsm->cols();
   for (int c = 0; c < crsm->num_nonzeros(); ++c) {
     EXPECT_EQ(cols[c], expected_cols[c])
-        << c << " "
-        << cols[c] << " "
-        << expected_cols[c];
+        << c << " " << cols[c] << " " << expected_cols[c];
   }
 }
 
@@ -280,6 +276,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithConstantParameterBlock) {
   //  . . . X X X X
   //  . . . X X X X
 
+  // clang-format off
   int expected_rows[] = {0, 5, 7, 9, 13, 17, 21, 25};
   int expected_cols[] = {0, 3, 4, 5, 6,
                          1, 2,
@@ -288,6 +285,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithConstantParameterBlock) {
                          3, 4, 5, 6,
                          3, 4, 5, 6,
                          3, 4, 5, 6};
+  // clang-format on
 
   vector<pair<const double*, const double*>> covariance_blocks;
   covariance_blocks.push_back(make_pair(block1, block1));
@@ -299,8 +297,8 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithConstantParameterBlock) {
 
   Covariance::Options options;
   CovarianceImpl covariance_impl(options);
-  EXPECT_TRUE(covariance_impl
-              .ComputeCovarianceSparsity(covariance_blocks, &problem));
+  EXPECT_TRUE(
+      covariance_impl.ComputeCovarianceSparsity(covariance_blocks, &problem));
 
   const CompressedRowSparseMatrix* crsm = covariance_impl.covariance_matrix();
 
@@ -311,17 +309,13 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithConstantParameterBlock) {
   const int* rows = crsm->rows();
   for (int r = 0; r < crsm->num_rows() + 1; ++r) {
     EXPECT_EQ(rows[r], expected_rows[r])
-        << r << " "
-        << rows[r] << " "
-        << expected_rows[r];
+        << r << " " << rows[r] << " " << expected_rows[r];
   }
 
   const int* cols = crsm->cols();
   for (int c = 0; c < crsm->num_nonzeros(); ++c) {
     EXPECT_EQ(cols[c], expected_cols[c])
-        << c << " "
-        << cols[c] << " "
-        << expected_cols[c];
+        << c << " " << cols[c] << " " << expected_cols[c];
   }
 }
 
@@ -361,6 +355,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
   //  . . . X X X X
   //  . . . X X X X
 
+  // clang-format off
   int expected_rows[] = {0, 5, 7, 9, 13, 17, 21, 25};
   int expected_cols[] = {0, 3, 4, 5, 6,
                          1, 2,
@@ -369,6 +364,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
                          3, 4, 5, 6,
                          3, 4, 5, 6,
                          3, 4, 5, 6};
+  // clang-format on
 
   vector<pair<const double*, const double*>> covariance_blocks;
   covariance_blocks.push_back(make_pair(block1, block1));
@@ -380,8 +376,8 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
 
   Covariance::Options options;
   CovarianceImpl covariance_impl(options);
-  EXPECT_TRUE(covariance_impl
-              .ComputeCovarianceSparsity(covariance_blocks, &problem));
+  EXPECT_TRUE(
+      covariance_impl.ComputeCovarianceSparsity(covariance_blocks, &problem));
 
   const CompressedRowSparseMatrix* crsm = covariance_impl.covariance_matrix();
 
@@ -392,17 +388,13 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
   const int* rows = crsm->rows();
   for (int r = 0; r < crsm->num_rows() + 1; ++r) {
     EXPECT_EQ(rows[r], expected_rows[r])
-        << r << " "
-        << rows[r] << " "
-        << expected_rows[r];
+        << r << " " << rows[r] << " " << expected_rows[r];
   }
 
   const int* cols = crsm->cols();
   for (int c = 0; c < crsm->num_nonzeros(); ++c) {
     EXPECT_EQ(cols[c], expected_cols[c])
-        << c << " "
-        << cols[c] << " "
-        << expected_cols[c];
+        << c << " " << cols[c] << " " << expected_cols[c];
   }
 }
 
@@ -423,40 +415,33 @@ class CovarianceTest : public ::testing::Test {
     z[0] = 3;
 
     {
-      double jacobian[] = { 1.0, 0.0, 0.0, 1.0};
+      double jacobian[] = {1.0, 0.0, 0.0, 1.0};
       problem_.AddResidualBlock(new UnaryCostFunction(2, 2, jacobian), NULL, x);
     }
 
     {
-      double jacobian[] = { 2.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 2.0 };
+      double jacobian[] = {2.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 2.0};
       problem_.AddResidualBlock(new UnaryCostFunction(3, 3, jacobian), NULL, y);
     }
 
     {
       double jacobian = 5.0;
-      problem_.AddResidualBlock(new UnaryCostFunction(1, 1, &jacobian),
-                                NULL,
-                                z);
+      problem_.AddResidualBlock(
+          new UnaryCostFunction(1, 1, &jacobian), NULL, z);
     }
 
     {
-      double jacobian1[] = { 1.0, 2.0, 3.0 };
-      double jacobian2[] = { -5.0, -6.0 };
+      double jacobian1[] = {1.0, 2.0, 3.0};
+      double jacobian2[] = {-5.0, -6.0};
       problem_.AddResidualBlock(
-          new BinaryCostFunction(1, 3, 2, jacobian1, jacobian2),
-          NULL,
-          y,
-          x);
+          new BinaryCostFunction(1, 3, 2, jacobian1, jacobian2), NULL, y, x);
     }
 
     {
-      double jacobian1[] = {2.0 };
-      double jacobian2[] = { 3.0, -2.0 };
+      double jacobian1[] = {2.0};
+      double jacobian2[] = {3.0, -2.0};
       problem_.AddResidualBlock(
-          new BinaryCostFunction(1, 1, 2, jacobian1, jacobian2),
-          NULL,
-          z,
-          x);
+          new BinaryCostFunction(1, 1, 2, jacobian1, jacobian2), NULL, z, x);
     }
 
     all_covariance_blocks_.push_back(make_pair(x, x));
@@ -482,8 +467,7 @@ class CovarianceTest : public ::testing::Test {
 
   // Computes covariance in tangent space.
   void ComputeAndCompareCovarianceBlocksInTangentSpace(
-                                         const Covariance::Options& options,
-                                         const double* expected_covariance) {
+      const Covariance::Options& options, const double* expected_covariance) {
     ComputeAndCompareCovarianceBlocksInTangentOrAmbientSpace(
         options,
         false,  // tangent
@@ -549,8 +533,9 @@ class CovarianceTest : public ::testing::Test {
                                     bool lift_covariance_to_ambient_space,
                                     const Covariance& covariance,
                                     const double* expected_covariance) {
-    const BoundsMap& column_bounds = lift_covariance_to_ambient_space ?
-        column_bounds_ : local_column_bounds_;
+    const BoundsMap& column_bounds = lift_covariance_to_ambient_space
+                                         ? column_bounds_
+                                         : local_column_bounds_;
     const int row_begin = FindOrDie(column_bounds, block1).first;
     const int row_end = FindOrDie(column_bounds, block1).second;
     const int col_begin = FindOrDie(column_bounds, block2).first;
@@ -558,13 +543,10 @@ class CovarianceTest : public ::testing::Test {
 
     Matrix actual(row_end - row_begin, col_end - col_begin);
     if (lift_covariance_to_ambient_space) {
-      EXPECT_TRUE(covariance.GetCovarianceBlock(block1,
-                                                block2,
-                                                actual.data()));
+      EXPECT_TRUE(covariance.GetCovarianceBlock(block1, block2, actual.data()));
     } else {
-      EXPECT_TRUE(covariance.GetCovarianceBlockInTangentSpace(block1,
-                                                              block2,
-                                                              actual.data()));
+      EXPECT_TRUE(covariance.GetCovarianceBlockInTangentSpace(
+          block1, block2, actual.data()));
     }
 
     int dof = 0;  // degrees of freedom = sum of LocalSize()s
@@ -572,22 +554,22 @@ class CovarianceTest : public ::testing::Test {
       dof = std::max(dof, bound.second.second);
     }
     ConstMatrixRef expected(expected_covariance, dof, dof);
-    double diff_norm = (expected.block(row_begin,
-                                       col_begin,
-                                       row_end - row_begin,
-                                       col_end - col_begin) - actual).norm();
+    double diff_norm =
+        (expected.block(
+             row_begin, col_begin, row_end - row_begin, col_end - col_begin) -
+         actual)
+            .norm();
     diff_norm /= (row_end - row_begin) * (col_end - col_begin);
 
     const double kTolerance = 1e-5;
     EXPECT_NEAR(diff_norm, 0.0, kTolerance)
         << "rows: " << row_begin << " " << row_end << "  "
         << "cols: " << col_begin << " " << col_end << "  "
-        << "\n\n expected: \n " << expected.block(row_begin,
-                                                  col_begin,
-                                                  row_end - row_begin,
-                                                  col_end - col_begin)
-        << "\n\n actual: \n " << actual
-        << "\n\n full expected: \n" << expected;
+        << "\n\n expected: \n "
+        << expected.block(
+               row_begin, col_begin, row_end - row_begin, col_end - col_begin)
+        << "\n\n actual: \n " << actual << "\n\n full expected: \n"
+        << expected;
   }
 
   double parameters_[6];
@@ -596,7 +578,6 @@ class CovarianceTest : public ::testing::Test {
   BoundsMap column_bounds_;
   BoundsMap local_column_bounds_;
 };
-
 
 TEST_F(CovarianceTest, NormalBehavior) {
   // J
@@ -620,6 +601,7 @@ TEST_F(CovarianceTest, NormalBehavior) {
   //    6  -4  0   0   0 29
 
   // inv(J'J) computed using octave.
+  // clang-format off
   double expected_covariance[] = {
      7.0747e-02,  -8.4923e-03,   1.6821e-02,   3.3643e-02,   5.0464e-02,  -1.5809e-02,  // NOLINT
     -8.4923e-03,   8.1352e-02,   2.4758e-02,   4.9517e-02,   7.4275e-02,   1.2978e-02,  // NOLINT
@@ -628,6 +610,7 @@ TEST_F(CovarianceTest, NormalBehavior) {
      5.0464e-02,   7.4275e-02,  -2.8906e-03,  -5.7813e-03,   2.4133e-01,  -1.9598e-04,  // NOLINT
     -1.5809e-02,   1.2978e-02,  -6.5325e-05,  -1.3065e-04,  -1.9598e-04,   3.9544e-02,  // NOLINT
   };
+  // clang-format on
 
   Covariance::Options options;
 
@@ -669,6 +652,7 @@ TEST_F(CovarianceTest, ThreadedNormalBehavior) {
   //    6  -4  0   0   0 29
 
   // inv(J'J) computed using octave.
+  // clang-format off
   double expected_covariance[] = {
      7.0747e-02,  -8.4923e-03,   1.6821e-02,   3.3643e-02,   5.0464e-02,  -1.5809e-02,  // NOLINT
     -8.4923e-03,   8.1352e-02,   2.4758e-02,   4.9517e-02,   7.4275e-02,   1.2978e-02,  // NOLINT
@@ -677,6 +661,7 @@ TEST_F(CovarianceTest, ThreadedNormalBehavior) {
      5.0464e-02,   7.4275e-02,  -2.8906e-03,  -5.7813e-03,   2.4133e-01,  -1.9598e-04,  // NOLINT
     -1.5809e-02,   1.2978e-02,  -6.5325e-05,  -1.3065e-04,  -1.9598e-04,   3.9544e-02,  // NOLINT
   };
+  // clang-format on
 
   Covariance::Options options;
   options.num_threads = 4;
@@ -721,6 +706,7 @@ TEST_F(CovarianceTest, ConstantParameterBlock) {
   //  0  0  0  0  0 29
 
   // pinv(J'J) computed using octave.
+  // clang-format off
   double expected_covariance[] = {
               0,            0,            0,            0,            0,            0,  // NOLINT
               0,            0,            0,            0,            0,            0,  // NOLINT
@@ -728,6 +714,7 @@ TEST_F(CovarianceTest, ConstantParameterBlock) {
               0,            0,     -0.02778,      0.19444,     -0.08333,     -0.00000,  // NOLINT
               0,            0,     -0.04167,     -0.08333,      0.12500,     -0.00000,  // NOLINT
               0,            0,     -0.00000,     -0.00000,     -0.00000,      0.03448   // NOLINT
+      // clang-format on
   };
 
   Covariance::Options options;
@@ -778,6 +765,7 @@ TEST_F(CovarianceTest, LocalParameterization) {
 
   // A * inv((J*A)'*(J*A)) * A'
   // Computed using octave.
+  // clang-format off
   double expected_covariance[] = {
     0.01766,   0.01766,   0.02158,   0.04316,   0.00000,  -0.00122,
     0.01766,   0.01766,   0.02158,   0.04316,   0.00000,  -0.00122,
@@ -786,6 +774,7 @@ TEST_F(CovarianceTest, LocalParameterization) {
     0.00000,   0.00000,   0.00000,   0.00000,   0.00000,   0.00000,
    -0.00122,  -0.00122,  -0.00149,  -0.00298,   0.00000,   0.03457
   };
+  // clang-format on
 
   Covariance::Options options;
 
@@ -840,12 +829,14 @@ TEST_F(CovarianceTest, LocalParameterizationInTangentSpace) {
 
   // inv((J*A)'*(J*A))
   // Computed using octave.
+  // clang-format off
   double expected_covariance[] = {
     0.01766,   0.02158,   0.04316,   -0.00122,
     0.02158,   0.24860,  -0.00281,   -0.00149,
     0.04316,  -0.00281,   0.24439,   -0.00298,
    -0.00122,  -0.00149,  -0.00298,    0.03457  // NOLINT
   };
+  // clang-format on
 
   Covariance::Options options;
 
@@ -903,12 +894,14 @@ TEST_F(CovarianceTest, LocalParameterizationInTangentSpaceWithConstantBlocks) {
 
   // pinv((J*A)'*(J*A))
   // Computed using octave.
+  // clang-format off
   double expected_covariance[] = {
     0.0, 0.0, 0.0, 0.0,
     0.0, 0.0, 0.0, 0.0,
     0.0, 0.0, 0.0, 0.0,
     0.0, 0.0, 0.0, 0.034482 // NOLINT
   };
+  // clang-format on
 
   Covariance::Options options;
 
@@ -951,6 +944,7 @@ TEST_F(CovarianceTest, TruncatedRank) {
   // 3.4142 is the smallest eigen value of J'J. The following matrix
   // was obtained by dropping the eigenvector corresponding to this
   // eigenvalue.
+  // clang-format off
   double expected_covariance[] = {
      5.4135e-02,  -3.5121e-02,   1.7257e-04,   3.4514e-04,   5.1771e-04,  -1.6076e-02,  // NOLINT
     -3.5121e-02,   3.8667e-02,  -1.9288e-03,  -3.8576e-03,  -5.7864e-03,   1.2549e-02,  // NOLINT
@@ -959,7 +953,7 @@ TEST_F(CovarianceTest, TruncatedRank) {
      5.1771e-04,  -5.7864e-03,  -5.2946e-02,  -1.0589e-01,   9.1162e-02,  -9.9988e-04,  // NOLINT
     -1.6076e-02,   1.2549e-02,  -3.3329e-04,  -6.6659e-04,  -9.9988e-04,   3.9539e-02   // NOLINT
   };
-
+  // clang-format on
 
   {
     Covariance::Options options;
@@ -1109,40 +1103,33 @@ class RankDeficientCovarianceTest : public CovarianceTest {
     double* z = y + 3;
 
     {
-      double jacobian[] = { 1.0, 0.0, 0.0, 1.0};
+      double jacobian[] = {1.0, 0.0, 0.0, 1.0};
       problem_.AddResidualBlock(new UnaryCostFunction(2, 2, jacobian), NULL, x);
     }
 
     {
-      double jacobian[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+      double jacobian[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
       problem_.AddResidualBlock(new UnaryCostFunction(3, 3, jacobian), NULL, y);
     }
 
     {
       double jacobian = 5.0;
-      problem_.AddResidualBlock(new UnaryCostFunction(1, 1, &jacobian),
-                                NULL,
-                                z);
+      problem_.AddResidualBlock(
+          new UnaryCostFunction(1, 1, &jacobian), NULL, z);
     }
 
     {
-      double jacobian1[] = { 0.0, 0.0, 0.0 };
-      double jacobian2[] = { -5.0, -6.0 };
+      double jacobian1[] = {0.0, 0.0, 0.0};
+      double jacobian2[] = {-5.0, -6.0};
       problem_.AddResidualBlock(
-          new BinaryCostFunction(1, 3, 2, jacobian1, jacobian2),
-          NULL,
-          y,
-          x);
+          new BinaryCostFunction(1, 3, 2, jacobian1, jacobian2), NULL, y, x);
     }
 
     {
-      double jacobian1[] = {2.0 };
-      double jacobian2[] = { 3.0, -2.0 };
+      double jacobian1[] = {2.0};
+      double jacobian2[] = {3.0, -2.0};
       problem_.AddResidualBlock(
-          new BinaryCostFunction(1, 1, 2, jacobian1, jacobian2),
-          NULL,
-          z,
-          x);
+          new BinaryCostFunction(1, 1, 2, jacobian1, jacobian2), NULL, z, x);
     }
 
     all_covariance_blocks_.push_back(make_pair(x, x));
@@ -1180,6 +1167,7 @@ TEST_F(RankDeficientCovarianceTest, AutomaticTruncation) {
   //   6 -4  0  0  0 29
 
   // pinv(J'J) computed using octave.
+  // clang-format off
   double expected_covariance[] = {
      0.053998,  -0.033145,   0.000000,   0.000000,   0.000000,  -0.015744,
     -0.033145,   0.045067,   0.000000,   0.000000,   0.000000,   0.013074,
@@ -1188,6 +1176,7 @@ TEST_F(RankDeficientCovarianceTest, AutomaticTruncation) {
      0.000000,   0.000000,   0.000000,   0.000000,   0.000000,   0.000000,
     -0.015744,   0.013074,   0.000000,   0.000000,   0.000000,   0.039543
   };
+  // clang-format on
 
   Covariance::Options options;
   options.algorithm_type = DENSE_SVD;
@@ -1290,11 +1279,11 @@ class LargeScaleCovarianceTest : public ::testing::Test {
       jacobian *= (i + 1);
 
       double* block_i = parameters_.get() + i * parameter_block_size_;
-      problem_.AddResidualBlock(new UnaryCostFunction(parameter_block_size_,
-                                                      parameter_block_size_,
-                                                      jacobian.data()),
-                                NULL,
-                                block_i);
+      problem_.AddResidualBlock(
+          new UnaryCostFunction(
+              parameter_block_size_, parameter_block_size_, jacobian.data()),
+          NULL,
+          block_i);
       for (int j = i; j < num_parameter_blocks_; ++j) {
         double* block_j = parameters_.get() + j * parameter_block_size_;
         all_covariance_blocks_.push_back(make_pair(block_i, block_j));
@@ -1326,8 +1315,10 @@ class LargeScaleCovarianceTest : public ::testing::Test {
       covariance.GetCovarianceBlock(block_i, block_i, actual.data());
       EXPECT_NEAR((expected - actual).norm(), 0.0, kTolerance)
           << "block: " << i << ", " << i << "\n"
-          << "expected: \n" << expected << "\n"
-          << "actual: \n" << actual;
+          << "expected: \n"
+          << expected << "\n"
+          << "actual: \n"
+          << actual;
 
       expected.setZero();
       for (int j = i + 1; j < num_parameter_blocks_; ++j) {
@@ -1335,8 +1326,10 @@ class LargeScaleCovarianceTest : public ::testing::Test {
         covariance.GetCovarianceBlock(block_i, block_j, actual.data());
         EXPECT_NEAR((expected - actual).norm(), 0.0, kTolerance)
             << "block: " << i << ", " << j << "\n"
-            << "expected: \n" << expected << "\n"
-            << "actual: \n" << actual;
+            << "expected: \n"
+            << expected << "\n"
+            << "actual: \n"
+            << actual;
       }
     }
   }

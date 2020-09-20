@@ -36,8 +36,8 @@
 #include <string>
 #include <vector>
 
-#include "ceres/internal/port.h"
 #include "ceres/evaluation_callback.h"
+#include "ceres/internal/port.h"
 
 namespace ceres {
 namespace internal {

@@ -31,6 +31,7 @@
 #include "ceres/graph.h"
 
 #include <unordered_set>
+
 #include "gtest/gtest.h"
 
 namespace ceres {

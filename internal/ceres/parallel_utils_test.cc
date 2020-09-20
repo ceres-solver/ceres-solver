@@ -29,7 +29,10 @@
 // Author: wjr@google.com (William Rucklidge)
 
 // This include must come before any #ifndef check on Ceres compile options.
+// clang-format off
 #include "ceres/internal/port.h"
+// clang-format on
+
 #include "ceres/parallel_utils.h"
 
 #include "glog/logging.h"

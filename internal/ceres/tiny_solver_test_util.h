@@ -34,7 +34,7 @@
 
 namespace ceres {
 
-template<typename T>
+template <typename T>
 bool EvaluateResidualsAndJacobians(const T* parameters,
                                    T* residuals,
                                    T* jacobian) {

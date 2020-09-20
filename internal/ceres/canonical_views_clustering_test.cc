@@ -32,6 +32,7 @@
 #include "ceres/canonical_views_clustering.h"
 
 #include <unordered_map>
+
 #include "ceres/graph.h"
 #include "gtest/gtest.h"
 
@@ -109,7 +110,6 @@ TEST_F(CanonicalViewsTest, SizePenaltyTest) {
   EXPECT_EQ(centers_.size(), 1);
   EXPECT_EQ(centers_[0], kVertexIds[1]);
 }
-
 
 // Increases view score weight so vertex 2 will be chosen.
 TEST_F(CanonicalViewsTest, ViewScoreTest) {
