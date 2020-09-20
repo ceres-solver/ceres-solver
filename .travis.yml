@@ -1,16 +1,14 @@
 language: cpp
 
-matrix:
+jobs:
   fast_finish: true
   include:
   - os: linux
     dist: bionic
-    sudo: required
     compiler: gcc
     env: CERES_BUILD_TARGET=LINUX
   - os: linux
     dist: bionic
-    sudo: required
     compiler: gcc
     env: CERES_BUILD_TARGET=ANDROID
   - os: osx
@@ -19,13 +17,20 @@ matrix:
   - os: osx
     osx_image: xcode11.2
     env: CERES_BUILD_TARGET=IOS
+  - os: linux
+    dist: bionic
+    language: shell
+    env: CERES_BUILD_TARGET=STATIC_CHECKS
+  # don't see formatting issues a critical -> allow job to fail
+  allow_failures:
+  - env: CERES_BUILD_TARGET=STATIC_CHECKS
 
 env:
   # As per http://docs.travis-ci.com/user/languages/cpp/#OpenMP-projects don't be greedy with OpenMP.
   - OMP_NUM_THREADS=4
 
 before_install:
-  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get update -qq; fi
+  - if [ $TRAVIS_OS_NAME = linux ] && [ $CERES_BUILD_TARGET != STATIC_CHECKS ]; then sudo apt-get update -qq; fi
   - |
     if [[ "$CERES_BUILD_TARGET" == "ANDROID" ]]; then
       cd /tmp
@@ -34,8 +39,8 @@ before_install:
     fi
 
 install:
-  - if [ $TRAVIS_OS_NAME = linux ]; then $TRAVIS_BUILD_DIR/travis/install_travis_linux_deps.sh; fi
-  - if [ $TRAVIS_OS_NAME = osx ]; then $TRAVIS_BUILD_DIR/travis/install_travis_osx_deps.sh; fi
+  - if [ $TRAVIS_OS_NAME = linux ] && [ $CERES_BUILD_TARGET != STATIC_CHECKS ]; then $TRAVIS_BUILD_DIR/travis/install_travis_linux_deps.sh; fi
+  - if [ $TRAVIS_OS_NAME = osx ] && [ $CERES_BUILD_TARGET != STATIC_CHECKS ]; then $TRAVIS_BUILD_DIR/travis/install_travis_osx_deps.sh; fi
 
 before_script:
   - mkdir /tmp/ceres-build
@@ -43,6 +48,7 @@ before_script:
 
 script:
   # NOTE: TRAVIS_BUILD_DIR is actually the source directory for Ceres.
+  - if [[ "$CERES_BUILD_TARGET" == STATIC_CHECKS ]]; then "$TRAVIS_BUILD_DIR"/travis/static_checks.sh && exit 0 || exit 1; fi
   - |
     if [[ "$CERES_BUILD_TARGET" == "LINUX" || "$CERES_BUILD_TARGET" == "OSX" ]]; then
       cmake $TRAVIS_BUILD_DIR
