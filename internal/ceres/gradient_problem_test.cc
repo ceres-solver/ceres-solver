@@ -65,9 +65,7 @@ class QuadraticTestFunction : public ceres::FirstOrderFunction {
 
 TEST(GradientProblem, TakesOwnershipOfFirstOrderFunction) {
   bool is_destructed = false;
-  {
-    ceres::GradientProblem problem(new QuadraticTestFunction(&is_destructed));
-  }
+  { ceres::GradientProblem problem(new QuadraticTestFunction(&is_destructed)); }
   EXPECT_TRUE(is_destructed);
 }
 

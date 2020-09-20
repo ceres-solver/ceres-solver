@@ -33,7 +33,10 @@
 // implementation, rather than having a test that goes through all the
 // Program and Problem machinery.
 
+#include "ceres/trust_region_minimizer.h"
+
 #include <cmath>
+
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/cost_function.h"
 #include "ceres/dense_qr_solver.h"
@@ -43,7 +46,6 @@
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
 #include "ceres/problem.h"
-#include "ceres/trust_region_minimizer.h"
 #include "ceres/trust_region_strategy.h"
 #include "gtest/gtest.h"
 
@@ -59,6 +61,7 @@ namespace internal {
 template <bool col1, bool col2, bool col3, bool col4>
 class PowellEvaluator2 : public Evaluator {
  public:
+  // clang-format off
   PowellEvaluator2()
       : num_active_cols_(
           (col1 ? 1 : 0) +
@@ -71,6 +74,7 @@ class PowellEvaluator2 : public Evaluator {
             << col3 << " "
             << col4;
   }
+  // clang-format on
 
   virtual ~PowellEvaluator2() {}
 
@@ -111,7 +115,7 @@ class PowellEvaluator2 : public Evaluator {
             << "f3=" << f3 << ", "
             << "f4=" << f4 << ".";
 
-    *cost = (f1*f1 + f2*f2 + f3*f3 + f4*f4) / 2.0;
+    *cost = (f1 * f1 + f2 * f2 + f3 * f3 + f4 * f4) / 2.0;
 
     VLOG(1) << "Cost: " << *cost;
 
@@ -132,34 +136,42 @@ class PowellEvaluator2 : public Evaluator {
 
       int column_index = 0;
       if (col1) {
+        // clang-format off
         jacobian_matrix.col(column_index++) <<
             1.0,
             0.0,
             0.0,
             sqrt(10.0) * 2.0 * (x1 - x4) * (1.0 - x4);
+        // clang-format on
       }
       if (col2) {
+        // clang-format off
         jacobian_matrix.col(column_index++) <<
             10.0,
             0.0,
             2.0*(x2 - 2.0*x3)*(1.0 - 2.0*x3),
             0.0;
+        // clang-format on
       }
 
       if (col3) {
+        // clang-format off
         jacobian_matrix.col(column_index++) <<
             0.0,
             sqrt(5.0),
             2.0*(x2 - 2.0*x3)*(x2 - 2.0),
             0.0;
+        // clang-format on
       }
 
       if (col4) {
+        // clang-format off
         jacobian_matrix.col(column_index++) <<
             0.0,
             -sqrt(5.0),
             0.0,
             sqrt(10.0) * 2.0 * (x1 - x4) * (x1 - 1.0);
+        // clang-format on
       }
       VLOG(1) << "\n" << jacobian_matrix;
     }
@@ -167,7 +179,7 @@ class PowellEvaluator2 : public Evaluator {
     if (gradient != NULL) {
       int column_index = 0;
       if (col1) {
-        gradient[column_index++] = f1  + f4 * sqrt(10.0) * 2.0 * (x1 - x4);
+        gradient[column_index++] = f1 + f4 * sqrt(10.0) * 2.0 * (x1 - x4);
       }
 
       if (col2) {
@@ -192,16 +204,16 @@ class PowellEvaluator2 : public Evaluator {
             const double* delta,
             double* state_plus_delta) const final {
     int delta_index = 0;
-    state_plus_delta[0] = (col1  ? state[0] + delta[delta_index++] : state[0]);
-    state_plus_delta[1] = (col2  ? state[1] + delta[delta_index++] : state[1]);
-    state_plus_delta[2] = (col3  ? state[2] + delta[delta_index++] : state[2]);
-    state_plus_delta[3] = (col4  ? state[3] + delta[delta_index++] : state[3]);
+    state_plus_delta[0] = (col1 ? state[0] + delta[delta_index++] : state[0]);
+    state_plus_delta[1] = (col2 ? state[1] + delta[delta_index++] : state[1]);
+    state_plus_delta[2] = (col3 ? state[2] + delta[delta_index++] : state[2]);
+    state_plus_delta[3] = (col4 ? state[3] + delta[delta_index++] : state[3]);
     return true;
   }
 
   int NumEffectiveParameters() const final { return num_active_cols_; }
-  int NumParameters()          const final { return 4; }
-  int NumResiduals()           const final { return 4; }
+  int NumParameters() const final { return 4; }
+  int NumResiduals() const final { return 4; }
 
  private:
   const int num_active_cols_;
@@ -209,13 +221,13 @@ class PowellEvaluator2 : public Evaluator {
 
 // Templated function to hold a subset of the columns fixed and check
 // if the solver converges to the optimal values or not.
-template<bool col1, bool col2, bool col3, bool col4>
+template <bool col1, bool col2, bool col3, bool col4>
 void IsTrustRegionSolveSuccessful(TrustRegionStrategyType strategy_type) {
   Solver::Options solver_options;
   LinearSolver::Options linear_solver_options;
   DenseQRSolver linear_solver(linear_solver_options);
 
-  double parameters[4] = { 3, -1, 0, 1.0 };
+  double parameters[4] = {3, -1, 0, 1.0};
 
   // If the column is inactive, then set its value to the optimal
   // value.
@@ -263,6 +275,7 @@ TEST(TrustRegionMinimizer, PowellsSingularFunctionUsingLevenbergMarquardt) {
   //   IsSolveSuccessful<true, true, false, true>();
 
   const TrustRegionStrategyType kStrategy = LEVENBERG_MARQUARDT;
+  // clang-format off
   IsTrustRegionSolveSuccessful<true,  true,  true,  true >(kStrategy);
   IsTrustRegionSolveSuccessful<true,  true,  true,  false>(kStrategy);
   IsTrustRegionSolveSuccessful<true,  false, true,  true >(kStrategy);
@@ -277,6 +290,7 @@ TEST(TrustRegionMinimizer, PowellsSingularFunctionUsingLevenbergMarquardt) {
   IsTrustRegionSolveSuccessful<false, true,  false, false>(kStrategy);
   IsTrustRegionSolveSuccessful<false, false, true,  false>(kStrategy);
   IsTrustRegionSolveSuccessful<false, false, false, true >(kStrategy);
+  // clang-format on
 }
 
 TEST(TrustRegionMinimizer, PowellsSingularFunctionUsingDogleg) {
@@ -287,6 +301,7 @@ TEST(TrustRegionMinimizer, PowellsSingularFunctionUsingDogleg) {
   //  IsTrustRegionSolveSuccessful<true,  true,  true,  true >(kStrategy);
 
   const TrustRegionStrategyType kStrategy = DOGLEG;
+  // clang-format off
   IsTrustRegionSolveSuccessful<true,  true,  true,  false>(kStrategy);
   IsTrustRegionSolveSuccessful<true,  false, true,  true >(kStrategy);
   IsTrustRegionSolveSuccessful<false, true,  true,  true >(kStrategy);
@@ -300,8 +315,8 @@ TEST(TrustRegionMinimizer, PowellsSingularFunctionUsingDogleg) {
   IsTrustRegionSolveSuccessful<false, true,  false, false>(kStrategy);
   IsTrustRegionSolveSuccessful<false, false, true,  false>(kStrategy);
   IsTrustRegionSolveSuccessful<false, false, false, true >(kStrategy);
+  // clang-format on
 }
-
 
 class CurveCostFunction : public CostFunction {
  public:
@@ -352,11 +367,11 @@ class CurveCostFunction : public CostFunction {
         for (int dim = 0; dim < 2; dim++) {
           jacobians[i][dim] = 0.;
 
-          if (norm_u > std::numeric_limits< double >::min()) {
+          if (norm_u > std::numeric_limits<double>::min()) {
             jacobians[i][dim] -= u[dim] / norm_u;
           }
 
-          if (norm_v > std::numeric_limits< double >::min()) {
+          if (norm_v > std::numeric_limits<double>::min()) {
             jacobians[i][dim] += v[dim] / norm_v;
           }
         }
@@ -367,8 +382,8 @@ class CurveCostFunction : public CostFunction {
   }
 
  private:
-  int     num_vertices_;
-  double  target_length_;
+  int num_vertices_;
+  double target_length_;
 };
 
 TEST(TrustRegionMinimizer, JacobiScalingTest) {
@@ -376,7 +391,7 @@ TEST(TrustRegionMinimizer, JacobiScalingTest) {
   std::vector<double*> y(N);
   const double pi = 3.1415926535897932384626433;
   for (int i = 0; i < N; i++) {
-    double theta = i * 2. * pi/ static_cast< double >(N);
+    double theta = i * 2. * pi / static_cast<double>(N);
     y[i] = new double[2];
     y[i][0] = cos(theta);
     y[i][1] = sin(theta);
@@ -391,7 +406,7 @@ TEST(TrustRegionMinimizer, JacobiScalingTest) {
   EXPECT_LE(summary.final_cost, 1e-10);
 
   for (int i = 0; i < N; i++) {
-    delete []y[i];
+    delete[] y[i];
   }
 }
 
@@ -403,8 +418,7 @@ struct ExpCostFunctor {
   }
 
   static CostFunction* Create() {
-    return new AutoDiffCostFunction<ExpCostFunctor, 1, 1>(
-        new ExpCostFunctor);
+    return new AutoDiffCostFunction<ExpCostFunctor, 1, 1>(new ExpCostFunctor);
   }
 };
 

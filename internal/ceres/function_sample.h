@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_FUNCTION_SAMPLE_H_
 
 #include <string>
+
 #include "ceres/internal/eigen.h"
 
 namespace ceres {
@@ -84,9 +85,6 @@ struct FunctionSample {
   // value is a finite number.
   bool gradient_is_valid;
 };
-
-
-
 
 }  // namespace internal
 }  // namespace ceres

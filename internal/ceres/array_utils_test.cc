@@ -30,9 +30,10 @@
 
 #include "ceres/array_utils.h"
 
-#include <limits>
 #include <cmath>
+#include <limits>
 #include <vector>
+
 #include "gtest/gtest.h"
 
 namespace ceres {

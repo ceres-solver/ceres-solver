@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_BLOCK_JACOBI_PRECONDITIONER_H_
 
 #include <memory>
+
 #include "ceres/block_random_access_diagonal_matrix.h"
 #include "ceres/preconditioner.h"
 

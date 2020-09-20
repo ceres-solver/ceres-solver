@@ -32,7 +32,10 @@
 #define CERES_INTERNAL_ITERATIVE_REFINER_H_
 
 // This include must come before any #ifndef check on Ceres compile options.
+// clang-format off
 #include "ceres/internal/port.h"
+// clang-format on
+
 #include "ceres/internal/eigen.h"
 
 namespace ceres {

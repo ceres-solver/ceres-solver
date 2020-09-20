@@ -167,7 +167,7 @@ using std::vector;
 void SplitStringUsingChar(const string& full,
                           const char delim,
                           vector<string>* result) {
-  std::back_insert_iterator<vector<string> > it(*result);
+  std::back_insert_iterator<vector<string>> it(*result);
 
   const char* p = full.data();
   const char* end = p + full.size();
@@ -606,7 +606,7 @@ int RegressionDriver(const string& filename) {
       ceres::TinySolverCostFunctionAdapter<Eigen::Dynamic, num_parameters> cfa(
           *cost_function);
       typedef ceres::TinySolver<
-          ceres::TinySolverCostFunctionAdapter<Eigen::Dynamic, num_parameters> >
+          ceres::TinySolverCostFunctionAdapter<Eigen::Dynamic, num_parameters>>
           Solver;
       Solver solver;
       solver.options.max_num_iterations = FLAGS_num_iterations;

@@ -28,8 +28,10 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include <cmath>
 #include "ceres/autodiff_local_parameterization.h"
+
+#include <cmath>
+
 #include "ceres/local_parameterization.h"
 #include "ceres/rotation.h"
 #include "gtest/gtest.h"
@@ -48,8 +50,7 @@ struct IdentityPlus {
 };
 
 TEST(AutoDiffLocalParameterizationTest, IdentityParameterization) {
-  AutoDiffLocalParameterization<IdentityPlus, 3, 3>
-      parameterization;
+  AutoDiffLocalParameterization<IdentityPlus, 3, 3> parameterization;
 
   double x[3] = {1.0, 2.0, 3.0};
   double delta[3] = {0.0, 1.0, 2.0};
@@ -71,9 +72,8 @@ TEST(AutoDiffLocalParameterizationTest, IdentityParameterization) {
 }
 
 struct ScaledPlus {
-  explicit ScaledPlus(const double &scale_factor)
-     : scale_factor_(scale_factor)
-  {}
+  explicit ScaledPlus(const double& scale_factor)
+      : scale_factor_(scale_factor) {}
 
   template <typename T>
   bool operator()(const T* x, const T* delta, T* x_plus_delta) const {
@@ -89,8 +89,8 @@ struct ScaledPlus {
 TEST(AutoDiffLocalParameterizationTest, ScaledParameterization) {
   const double kTolerance = 1e-14;
 
-  AutoDiffLocalParameterization<ScaledPlus, 3, 3>
-      parameterization(new ScaledPlus(1.2345));
+  AutoDiffLocalParameterization<ScaledPlus, 3, 3> parameterization(
+      new ScaledPlus(1.2345));
 
   double x[3] = {1.0, 2.0, 3.0};
   double delta[3] = {0.0, 1.0, 2.0};
@@ -112,7 +112,7 @@ TEST(AutoDiffLocalParameterizationTest, ScaledParameterization) {
 }
 
 struct QuaternionPlus {
-  template<typename T>
+  template <typename T>
   bool operator()(const T* x, const T* delta, T* x_plus_delta) const {
     const T squared_norm_delta =
         delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
@@ -147,7 +147,6 @@ static void QuaternionParameterizationTestHelper(const double* x,
   double x_plus_delta_ref[4] = {0.0, 0.0, 0.0, 0.0};
   double jacobian_ref[12];
 
-
   QuaternionParameterization ref_parameterization;
   ref_parameterization.Plus(x, delta, x_plus_delta_ref);
   ref_parameterization.ComputeJacobian(x, jacobian_ref);
@@ -162,20 +161,22 @@ static void QuaternionParameterizationTestHelper(const double* x,
     EXPECT_NEAR(x_plus_delta[i], x_plus_delta_ref[i], kTolerance);
   }
 
+  // clang-format off
   const double x_plus_delta_norm =
       sqrt(x_plus_delta[0] * x_plus_delta[0] +
            x_plus_delta[1] * x_plus_delta[1] +
            x_plus_delta[2] * x_plus_delta[2] +
            x_plus_delta[3] * x_plus_delta[3]);
+  // clang-format on
 
   EXPECT_NEAR(x_plus_delta_norm, 1.0, kTolerance);
 
   for (int i = 0; i < 12; ++i) {
     EXPECT_TRUE(std::isfinite(jacobian[i]));
     EXPECT_NEAR(jacobian[i], jacobian_ref[i], kTolerance)
-        << "Jacobian mismatch: i = " << i
-        << "\n Expected \n" << ConstMatrixRef(jacobian_ref, 4, 3)
-        << "\n Actual \n" << ConstMatrixRef(jacobian, 4, 3);
+        << "Jacobian mismatch: i = " << i << "\n Expected \n"
+        << ConstMatrixRef(jacobian_ref, 4, 3) << "\n Actual \n"
+        << ConstMatrixRef(jacobian, 4, 3);
   }
 }
 
@@ -185,13 +186,14 @@ TEST(AutoDiffLocalParameterization, QuaternionParameterizationZeroTest) {
   QuaternionParameterizationTestHelper(x, delta);
 }
 
-
 TEST(AutoDiffLocalParameterization, QuaternionParameterizationNearZeroTest) {
   double x[4] = {0.52, 0.25, 0.15, 0.45};
+  // clang-format off
   double norm_x = sqrt(x[0] * x[0] +
                        x[1] * x[1] +
                        x[2] * x[2] +
                        x[3] * x[3]);
+  // clang-format on
   for (int i = 0; i < 4; ++i) {
     x[i] = x[i] / norm_x;
   }
@@ -206,10 +208,12 @@ TEST(AutoDiffLocalParameterization, QuaternionParameterizationNearZeroTest) {
 
 TEST(AutoDiffLocalParameterization, QuaternionParameterizationNonZeroTest) {
   double x[4] = {0.52, 0.25, 0.15, 0.45};
+  // clang-format off
   double norm_x = sqrt(x[0] * x[0] +
                        x[1] * x[1] +
                        x[2] * x[2] +
                        x[3] * x[3]);
+  // clang-format on
 
   for (int i = 0; i < 4; ++i) {
     x[i] = x[i] / norm_x;

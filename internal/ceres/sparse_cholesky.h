@@ -32,9 +32,12 @@
 #define CERES_INTERNAL_SPARSE_CHOLESKY_H_
 
 // This include must come before any #ifndef check on Ceres compile options.
+// clang-format off
 #include "ceres/internal/port.h"
+// clang-format on
 
 #include <memory>
+
 #include "ceres/linear_solver.h"
 #include "glog/logging.h"
 
@@ -88,8 +91,8 @@ class SparseCholesky {
   // Subsequent calls to Factorize will use that symbolic
   // factorization assuming that the sparsity of the matrix has
   // remained constant.
-  virtual LinearSolverTerminationType Factorize(
-      CompressedRowSparseMatrix* lhs, std::string* message) = 0;
+  virtual LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
+                                                std::string* message) = 0;
 
   // Computes the solution to the equation
   //
@@ -106,7 +109,6 @@ class SparseCholesky {
       const double* rhs,
       double* solution,
       std::string* message);
-
 };
 
 class IterativeRefiner;
@@ -120,8 +122,8 @@ class RefinedSparseCholesky : public SparseCholesky {
   virtual ~RefinedSparseCholesky();
 
   virtual CompressedRowSparseMatrix::StorageType StorageType() const;
-  virtual LinearSolverTerminationType Factorize(
-      CompressedRowSparseMatrix* lhs, std::string* message);
+  virtual LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
+                                                std::string* message);
   virtual LinearSolverTerminationType Solve(const double* rhs,
                                             double* solution,
                                             std::string* message);

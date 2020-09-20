@@ -38,6 +38,7 @@
 #include <map>
 #include <string>
 #include <vector>
+
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -74,11 +75,11 @@ enum LinearSolverTerminationType {
 // algebra library should use before computing a sparse factorization
 // (usually Cholesky).
 enum OrderingType {
-  NATURAL, // Do not re-order the matrix. This is useful when the
-           // matrix has been ordered using a fill-reducing ordering
-           // already.
-  AMD      // Use the Approximate Minimum Degree algorithm to re-order
-           // the matrix.
+  NATURAL,  // Do not re-order the matrix. This is useful when the
+            // matrix has been ordered using a fill-reducing ordering
+            // already.
+  AMD       // Use the Approximate Minimum Degree algorithm to re-order
+            // the matrix.
 };
 
 class LinearOperator;
@@ -215,7 +216,6 @@ class LinearSolver {
     // used a preconditioner.
     LinearOperator* preconditioner = nullptr;
 
-
     // The following tolerance related options only makes sense for
     // iterative solvers. Direct solvers ignore them.
 
@@ -329,10 +329,12 @@ class TypedLinearSolver : public LinearSolver {
 
 // Linear solvers that depend on acccess to the low level structure of
 // a SparseMatrix.
+// clang-format off
 typedef TypedLinearSolver<BlockSparseMatrix>         BlockSparseMatrixSolver;          // NOLINT
 typedef TypedLinearSolver<CompressedRowSparseMatrix> CompressedRowSparseMatrixSolver;  // NOLINT
 typedef TypedLinearSolver<DenseSparseMatrix>         DenseSparseMatrixSolver;          // NOLINT
 typedef TypedLinearSolver<TripletSparseMatrix>       TripletSparseMatrixSolver;        // NOLINT
+// clang-format on
 
 }  // namespace internal
 }  // namespace ceres

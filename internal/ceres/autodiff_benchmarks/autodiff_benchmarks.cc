@@ -55,13 +55,14 @@ class ToDynamic {
 
   template <typename T>
   bool operator()(const T* const* parameters, T* residuals) const {
-    return Apply(parameters, residuals,
-                 std::make_index_sequence<kNumParameterBlocks>());
+    return Apply(
+        parameters, residuals, std::make_index_sequence<kNumParameterBlocks>());
   }
 
  private:
   template <typename T, size_t... Indices>
-  bool Apply(const T* const* parameters, T* residuals,
+  bool Apply(const T* const* parameters,
+             T* residuals,
              std::index_sequence<Indices...>) const {
     return cost_function_(parameters[Indices]..., residuals);
   }
@@ -109,7 +110,9 @@ struct CostFunctionFactory {};
 
 template <>
 struct CostFunctionFactory<kNotDynamic> {
-  template <typename CostFunctor, int kNumResiduals, int... Ns,
+  template <typename CostFunctor,
+            int kNumResiduals,
+            int... Ns,
             typename... Args>
   static std::unique_ptr<ceres::CostFunction> Create(Args&&... args) {
     return std::make_unique<
@@ -120,7 +123,9 @@ struct CostFunctionFactory<kNotDynamic> {
 
 template <>
 struct CostFunctionFactory<kDynamic> {
-  template <typename CostFunctor, int kNumResiduals, int... Ns,
+  template <typename CostFunctor,
+            int kNumResiduals,
+            int... Ns,
             typename... Args>
   static std::unique_ptr<ceres::CostFunction> Create(Args&&... args) {
     constexpr const int kNumParameterBlocks = sizeof...(Ns);
@@ -147,8 +152,8 @@ static void BM_ConstantAutodiff(benchmark::State& state) {
   double* jacobians[] = {jacobian_values.data()};
 
   std::unique_ptr<ceres::CostFunction> cost_function =
-      CostFunctionFactory<kIsDynamic>::template Create<
-          ConstantCostFunction<kParameterBlockSize>, 1, 1>();
+      CostFunctionFactory<kIsDynamic>::
+          template Create<ConstantCostFunction<kParameterBlockSize>, 1, 1>();
 
   for (auto _ : state) {
     cost_function->Evaluate(parameters, residuals.data(), jacobians);
@@ -186,13 +191,12 @@ static void BM_Linear1AutoDiff(benchmark::State& state) {
   double residuals[1];
   double* jacobians[] = {jacobian1};
 
-  std::unique_ptr<ceres::CostFunction> cost_function =
-      CostFunctionFactory<kIsDynamic>::template Create<Linear1CostFunction, 1,
-                                                       1>();
+  std::unique_ptr<ceres::CostFunction> cost_function = CostFunctionFactory<
+      kIsDynamic>::template Create<Linear1CostFunction, 1, 1>();
 
   for (auto _ : state) {
-    cost_function->Evaluate(parameters, residuals,
-                            state.range(0) ? jacobians : nullptr);
+    cost_function->Evaluate(
+        parameters, residuals, state.range(0) ? jacobians : nullptr);
   }
 }
 BENCHMARK_TEMPLATE(BM_Linear1AutoDiff, kNotDynamic)->Arg(0)->Arg(1);
@@ -207,13 +211,12 @@ static void BM_Linear10AutoDiff(benchmark::State& state) {
   double residuals[10];
   double* jacobians[] = {jacobian1};
 
-  std::unique_ptr<ceres::CostFunction> cost_function =
-      CostFunctionFactory<kIsDynamic>::template Create<Linear10CostFunction, 10,
-                                                       10>();
+  std::unique_ptr<ceres::CostFunction> cost_function = CostFunctionFactory<
+      kIsDynamic>::template Create<Linear10CostFunction, 10, 10>();
 
   for (auto _ : state) {
-    cost_function->Evaluate(parameters, residuals,
-                            state.range(0) ? jacobians : nullptr);
+    cost_function->Evaluate(
+        parameters, residuals, state.range(0) ? jacobians : nullptr);
   }
 }
 BENCHMARK_TEMPLATE(BM_Linear10AutoDiff, kNotDynamic)->Arg(0)->Arg(1);
@@ -255,8 +258,8 @@ static void BM_Rat43AutoDiff(benchmark::State& state) {
           x, y);
 
   for (auto _ : state) {
-    cost_function->Evaluate(parameters, &residuals,
-                            state.range(0) ? jacobians : nullptr);
+    cost_function->Evaluate(
+        parameters, &residuals, state.range(0) ? jacobians : nullptr);
   }
 }
 BENCHMARK_TEMPLATE(BM_Rat43AutoDiff, kNotDynamic)->Arg(0)->Arg(1);
@@ -275,13 +278,12 @@ static void BM_SnavelyReprojectionAutoDiff(benchmark::State& state) {
 
   const double x = 0.2;
   const double y = 0.3;
-  std::unique_ptr<ceres::CostFunction> cost_function =
-      CostFunctionFactory<kIsDynamic>::template Create<SnavelyReprojectionError,
-                                                       2, 9, 3>(x, y);
+  std::unique_ptr<ceres::CostFunction> cost_function = CostFunctionFactory<
+      kIsDynamic>::template Create<SnavelyReprojectionError, 2, 9, 3>(x, y);
 
   for (auto _ : state) {
-    cost_function->Evaluate(parameters, residuals,
-                            state.range(0) ? jacobians : nullptr);
+    cost_function->Evaluate(
+        parameters, residuals, state.range(0) ? jacobians : nullptr);
   }
 }
 
@@ -338,14 +340,16 @@ static void BM_PhotometricAutoDiff(benchmark::State& state) {
   intrinsics << 128, 128, 1, -1, 0.5, 0.5;
 
   std::unique_ptr<ceres::CostFunction> cost_function =
-      CostFunctionFactory<kIsDynamic>::template Create<
-          FunctorType, FunctorType::PATCH_SIZE, FunctorType::POSE_SIZE,
-          FunctorType::POSE_SIZE, FunctorType::POINT_SIZE>(
+      CostFunctionFactory<kIsDynamic>::template Create<FunctorType,
+                                                       FunctorType::PATCH_SIZE,
+                                                       FunctorType::POSE_SIZE,
+                                                       FunctorType::POSE_SIZE,
+                                                       FunctorType::POINT_SIZE>(
           intensities_host, bearings_host, image_target, intrinsics);
 
   for (auto _ : state) {
-    cost_function->Evaluate(parameters, residuals,
-                            state.range(0) ? jacobians : nullptr);
+    cost_function->Evaluate(
+        parameters, residuals, state.range(0) ? jacobians : nullptr);
   }
 }
 
@@ -376,8 +380,8 @@ static void BM_RelativePoseAutoDiff(benchmark::State& state) {
           q_i_j, t_i_j);
 
   for (auto _ : state) {
-    cost_function->Evaluate(parameters, residuals,
-                            state.range(0) ? jacobians : nullptr);
+    cost_function->Evaluate(
+        parameters, residuals, state.range(0) ? jacobians : nullptr);
   }
 }
 
@@ -396,24 +400,25 @@ static void BM_BrdfAutoDiff(benchmark::State& state) {
   auto x = Eigen::Vector3d(0.5, 0.7, -0.1).normalized();
   auto y = Eigen::Vector3d(0.2, -0.2, -0.2).normalized();
 
-  double* parameters[7] = {material, c.data(), n.data(), v.data(),
-                           l.data(), x.data(), y.data()};
+  double* parameters[7] = {
+      material, c.data(), n.data(), v.data(), l.data(), x.data(), y.data()};
 
   double jacobian[(10 + 6 * 3) * 3];
   double residuals[3];
+  // clang-format off
   double* jacobians[7] = {
       jacobian + 0,      jacobian + 10 * 3, jacobian + 13 * 3,
       jacobian + 16 * 3, jacobian + 19 * 3, jacobian + 22 * 3,
       jacobian + 25 * 3,
   };
+  // clang-format on
 
-  std::unique_ptr<ceres::CostFunction> cost_function =
-      CostFunctionFactory<kIsDynamic>::template Create<FunctorType, 3, 10, 3, 3,
-                                                       3, 3, 3, 3>();
+  std::unique_ptr<ceres::CostFunction> cost_function = CostFunctionFactory<
+      kIsDynamic>::template Create<FunctorType, 3, 10, 3, 3, 3, 3, 3, 3>();
 
   for (auto _ : state) {
-    cost_function->Evaluate(parameters, residuals,
-                            state.range(0) ? jacobians : nullptr);
+    cost_function->Evaluate(
+        parameters, residuals, state.range(0) ? jacobians : nullptr);
   }
 }
 

@@ -30,6 +30,7 @@
 //         sameeragarwal@google.com (Sameer Agarwal)
 
 #include "ceres/evaluator_test_utils.h"
+
 #include "ceres/internal/eigen.h"
 #include "gtest/gtest.h"
 
@@ -51,37 +52,39 @@ void CompareEvaluations(int expected_num_rows,
   if (expected_residuals != NULL) {
     ConstVectorRef expected_residuals_vector(expected_residuals,
                                              expected_num_rows);
-    ConstVectorRef actual_residuals_vector(actual_residuals,
-                                           expected_num_rows);
-    EXPECT_TRUE((actual_residuals_vector.array() ==
-                 expected_residuals_vector.array()).all())
-        << "Actual:\n" << actual_residuals_vector
-        << "\nExpected:\n" << expected_residuals_vector;
+    ConstVectorRef actual_residuals_vector(actual_residuals, expected_num_rows);
+    EXPECT_TRUE(
+        (actual_residuals_vector.array() == expected_residuals_vector.array())
+            .all())
+        << "Actual:\n"
+        << actual_residuals_vector << "\nExpected:\n"
+        << expected_residuals_vector;
   }
 
   if (expected_gradient != NULL) {
     ConstVectorRef expected_gradient_vector(expected_gradient,
                                             expected_num_cols);
-    ConstVectorRef actual_gradient_vector(actual_gradient,
-                                            expected_num_cols);
+    ConstVectorRef actual_gradient_vector(actual_gradient, expected_num_cols);
 
-    EXPECT_TRUE((actual_gradient_vector.array() ==
-                 expected_gradient_vector.array()).all())
-        << "Actual:\n" << actual_gradient_vector.transpose()
-        << "\nExpected:\n" << expected_gradient_vector.transpose();
+    EXPECT_TRUE(
+        (actual_gradient_vector.array() == expected_gradient_vector.array())
+            .all())
+        << "Actual:\n"
+        << actual_gradient_vector.transpose() << "\nExpected:\n"
+        << expected_gradient_vector.transpose();
   }
 
   if (expected_jacobian != NULL) {
-    ConstMatrixRef expected_jacobian_matrix(expected_jacobian,
-                                            expected_num_rows,
-                                            expected_num_cols);
-    ConstMatrixRef actual_jacobian_matrix(actual_jacobian,
-                                          expected_num_rows,
-                                          expected_num_cols);
-    EXPECT_TRUE((actual_jacobian_matrix.array() ==
-                 expected_jacobian_matrix.array()).all())
-        << "Actual:\n" << actual_jacobian_matrix
-        << "\nExpected:\n" << expected_jacobian_matrix;
+    ConstMatrixRef expected_jacobian_matrix(
+        expected_jacobian, expected_num_rows, expected_num_cols);
+    ConstMatrixRef actual_jacobian_matrix(
+        actual_jacobian, expected_num_rows, expected_num_cols);
+    EXPECT_TRUE(
+        (actual_jacobian_matrix.array() == expected_jacobian_matrix.array())
+            .all())
+        << "Actual:\n"
+        << actual_jacobian_matrix << "\nExpected:\n"
+        << expected_jacobian_matrix;
   }
 }
 

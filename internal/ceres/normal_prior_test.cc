@@ -32,9 +32,9 @@
 
 #include <cstddef>
 
-#include "gtest/gtest.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/random.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
@@ -42,8 +42,7 @@ namespace internal {
 namespace {
 
 void RandomVector(Vector* v) {
-  for (int r = 0; r < v->rows(); ++r)
-    (*v)[r] = 2 * RandDouble() - 1;
+  for (int r = 0; r < v->rows(); ++r) (*v)[r] = 2 * RandDouble() - 1;
 }
 
 void RandomMatrix(Matrix* m) {
@@ -67,11 +66,10 @@ TEST(NormalPriorTest, ResidualAtRandomPosition) {
       Matrix A(num_rows, num_cols);
       RandomMatrix(&A);
 
-      double * x = new double[num_cols];
-      for (int i = 0; i < num_cols; ++i)
-        x[i] = 2 * RandDouble() - 1;
+      double* x = new double[num_cols];
+      for (int i = 0; i < num_cols; ++i) x[i] = 2 * RandDouble() - 1;
 
-      double * jacobian = new double[num_rows * num_cols];
+      double* jacobian = new double[num_rows * num_cols];
       Vector residuals(num_rows);
 
       NormalPrior prior(A, b);
@@ -87,8 +85,8 @@ TEST(NormalPriorTest, ResidualAtRandomPosition) {
       double jacobian_diff_norm = (J - A).norm();
       EXPECT_NEAR(jacobian_diff_norm, 0.0, 1e-10);
 
-      delete []x;
-      delete []jacobian;
+      delete[] x;
+      delete[] jacobian;
     }
   }
 }
@@ -104,9 +102,8 @@ TEST(NormalPriorTest, ResidualAtRandomPositionNullJacobians) {
       Matrix A(num_rows, num_cols);
       RandomMatrix(&A);
 
-      double * x = new double[num_cols];
-      for (int i = 0; i < num_cols; ++i)
-        x[i] = 2 * RandDouble() - 1;
+      double* x = new double[num_cols];
+      for (int i = 0; i < num_cols; ++i) x[i] = 2 * RandDouble() - 1;
 
       double* jacobians[1];
       jacobians[0] = NULL;
@@ -127,8 +124,7 @@ TEST(NormalPriorTest, ResidualAtRandomPositionNullJacobians) {
           (residuals - A * (VectorRef(x, num_cols) - b)).squaredNorm();
       EXPECT_NEAR(residual_diff_norm, 0, 1e-10);
 
-
-      delete []x;
+      delete[] x;
     }
   }
 }

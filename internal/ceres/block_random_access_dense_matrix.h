@@ -31,11 +31,10 @@
 #ifndef CERES_INTERNAL_BLOCK_RANDOM_ACCESS_DENSE_MATRIX_H_
 #define CERES_INTERNAL_BLOCK_RANDOM_ACCESS_DENSE_MATRIX_H_
 
-#include "ceres/block_random_access_matrix.h"
-
 #include <memory>
 #include <vector>
 
+#include "ceres/block_random_access_matrix.h"
 #include "ceres/internal/port.h"
 
 namespace ceres {

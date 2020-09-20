@@ -93,8 +93,8 @@ class FakeSparseCholesky : public SparseCholesky {
   virtual ~FakeSparseCholesky() {}
 
   LinearSolverTerminationType Solve(const double* rhs_ptr,
-                                            double* solution_ptr,
-                                            std::string* message) final {
+                                    double* solution_ptr,
+                                    std::string* message) final {
     const int num_cols = lhs_.cols();
     VectorRef solution(solution_ptr, num_cols);
     ConstVectorRef rhs(rhs_ptr, num_cols);
@@ -106,14 +106,14 @@ class FakeSparseCholesky : public SparseCholesky {
   CompressedRowSparseMatrix::StorageType StorageType() const final
       DO_NOT_CALL_WITH_RETURN(CompressedRowSparseMatrix::UPPER_TRIANGULAR);
   LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
-                                                std::string* message) final
+                                        std::string* message) final
       DO_NOT_CALL_WITH_RETURN(LINEAR_SOLVER_FAILURE);
 
-  LinearSolverTerminationType FactorAndSolve(
-      CompressedRowSparseMatrix* lhs,
-      const double* rhs,
-      double* solution,
-      std::string* message) final DO_NOT_CALL_WITH_RETURN(LINEAR_SOLVER_FAILURE);
+  LinearSolverTerminationType FactorAndSolve(CompressedRowSparseMatrix* lhs,
+                                             const double* rhs,
+                                             double* solution,
+                                             std::string* message) final
+      DO_NOT_CALL_WITH_RETURN(LINEAR_SOLVER_FAILURE);
 
  private:
   Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic> lhs_;

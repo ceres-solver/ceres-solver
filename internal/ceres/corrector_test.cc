@@ -32,11 +32,12 @@
 
 #include <algorithm>
 #include <cmath>
-#include <cstring>
 #include <cstdlib>
-#include "gtest/gtest.h"
-#include "ceres/random.h"
+#include <cstring>
+
 #include "ceres/internal/eigen.h"
+#include "ceres/random.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
@@ -44,15 +45,13 @@ namespace internal {
 // If rho[1] is zero, the Corrector constructor should crash.
 TEST(Corrector, ZeroGradientDeathTest) {
   const double kRho[] = {0.0, 0.0, 1.0};
-  EXPECT_DEATH_IF_SUPPORTED({Corrector c(1.0, kRho);},
-               ".*");
+  EXPECT_DEATH_IF_SUPPORTED({ Corrector c(1.0, kRho); }, ".*");
 }
 
 // If rho[1] is negative, the Corrector constructor should crash.
 TEST(Corrector, NegativeGradientDeathTest) {
   const double kRho[] = {0.0, -0.1, 1.0};
-  EXPECT_DEATH_IF_SUPPORTED({Corrector c(1.0, kRho);},
-               ".*");
+  EXPECT_DEATH_IF_SUPPORTED({ Corrector c(1.0, kRho); }, ".*");
 }
 
 TEST(Corrector, ScalarCorrection) {
@@ -68,8 +67,7 @@ TEST(Corrector, ScalarCorrection) {
 
   // Thus the expected value of the residual is
   // residual[i] * sqrt(kRho[1]) / (1.0 - kAlpha).
-  const double kExpectedResidual =
-      residuals * sqrt(kRho[1]) / (1 - kAlpha);
+  const double kExpectedResidual = residuals * sqrt(kRho[1]) / (1 - kAlpha);
 
   // The jacobian in this case will be
   // sqrt(kRho[1]) * (1 - kAlpha) * jacobian.
@@ -123,13 +121,11 @@ TEST(Corrector, ScalarCorrectionAlphaClamped) {
 
   // Thus the expected value of the residual is
   // residual[i] * sqrt(kRho[1]) / (1.0 - kAlpha).
-  const double kExpectedResidual =
-      residuals * sqrt(kRho[1]) / (1.0 - kAlpha);
+  const double kExpectedResidual = residuals * sqrt(kRho[1]) / (1.0 - kAlpha);
 
   // The jacobian in this case will be scaled by
   // sqrt(rho[1]) * (1 - alpha) * J.
-  const double kExpectedJacobian = sqrt(kRho[1]) *
-      (1.0 - kAlpha) * jacobian;
+  const double kExpectedJacobian = sqrt(kRho[1]) * (1.0 - kAlpha) * jacobian;
 
   Corrector c(sq_norm, kRho);
   c.CorrectJacobian(1, 1, &residuals, &jacobian);
@@ -168,10 +164,8 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximation) {
   srand(5);
   for (int iter = 0; iter < 10000; ++iter) {
     // Initialize the jacobian and residual.
-    for (int i = 0; i < 2 * 3; ++i)
-      jacobian[i] = RandDouble();
-    for (int i = 0; i < 3; ++i)
-      residuals[i] = RandDouble();
+    for (int i = 0; i < 2 * 3; ++i) jacobian[i] = RandDouble();
+    for (int i = 0; i < 3; ++i) residuals[i] = RandDouble();
 
     const double sq_norm = res.dot(res);
 
@@ -188,19 +182,19 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximation) {
 
     // Ground truth values.
     g_res = sqrt(rho[1]) / (1.0 - kAlpha) * res;
-    g_jac = sqrt(rho[1]) * (jac - kAlpha / sq_norm *
-                            res * res.transpose() * jac);
+    g_jac =
+        sqrt(rho[1]) * (jac - kAlpha / sq_norm * res * res.transpose() * jac);
 
     g_grad = rho[1] * jac.transpose() * res;
     g_hess = rho[1] * jac.transpose() * jac +
-        2.0 * rho[2] * jac.transpose() * res * res.transpose() * jac;
+             2.0 * rho[2] * jac.transpose() * res * res.transpose() * jac;
 
     Corrector c(sq_norm, rho);
     c.CorrectJacobian(3, 2, residuals, jacobian);
     c.CorrectResiduals(3, residuals);
 
     // Corrected gradient and hessian.
-    c_grad  = jac.transpose() * res;
+    c_grad = jac.transpose() * res;
     c_hess = jac.transpose() * jac;
 
     ASSERT_NEAR((g_res - res).norm(), 0.0, 1e-10);
@@ -236,8 +230,7 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximationZeroResidual) {
   srand(5);
   for (int iter = 0; iter < 10000; ++iter) {
     // Initialize the jacobian.
-    for (int i = 0; i < 2 * 3; ++i)
-      jacobian[i] = RandDouble();
+    for (int i = 0; i < 2 * 3; ++i) jacobian[i] = RandDouble();
 
     // Zero residuals
     res.setZero();
@@ -254,7 +247,7 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximationZeroResidual) {
 
     g_grad = rho[1] * jac.transpose() * res;
     g_hess = rho[1] * jac.transpose() * jac +
-        2.0 * rho[2] * jac.transpose() * res * res.transpose() * jac;
+             2.0 * rho[2] * jac.transpose() * res * res.transpose() * jac;
 
     Corrector c(sq_norm, rho);
     c.CorrectJacobian(3, 2, residuals, jacobian);

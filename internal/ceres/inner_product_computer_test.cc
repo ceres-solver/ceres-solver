@@ -32,14 +32,14 @@
 
 #include <memory>
 #include <numeric>
+
+#include "Eigen/SparseCore"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/random.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
-
-#include "Eigen/SparseCore"
 
 namespace ceres {
 namespace internal {
@@ -134,7 +134,6 @@ TEST(InnerProductComputer, NormalOperation) {
         inner_product_computer.reset(InnerProductComputer::Create(
             *random_matrix, CompressedRowSparseMatrix::UPPER_TRIANGULAR));
         COMPUTE_AND_COMPARE;
-
       }
     }
   }
@@ -215,7 +214,6 @@ TEST(InnerProductComputer, SubMatrix) {
             end_row_block,
             CompressedRowSparseMatrix::UPPER_TRIANGULAR));
         COMPUTE_AND_COMPARE;
-
       }
     }
   }

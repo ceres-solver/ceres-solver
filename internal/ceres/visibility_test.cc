@@ -46,8 +46,7 @@ namespace internal {
 using std::set;
 using std::vector;
 
-class VisibilityTest : public ::testing::Test {
-};
+class VisibilityTest : public ::testing::Test {};
 
 TEST(VisibilityTest, SimpleMatrix) {
   //   A = [1 0 0 0 0 1
@@ -100,14 +99,15 @@ TEST(VisibilityTest, SimpleMatrix) {
   }
   bs.cols.resize(num_cols);
 
-  vector< set<int>> visibility;
+  vector<set<int>> visibility;
   ComputeVisibility(bs, num_eliminate_blocks, &visibility);
   ASSERT_EQ(visibility.size(), num_cols - num_eliminate_blocks);
   for (int i = 0; i < visibility.size(); ++i) {
     ASSERT_EQ(visibility[i].size(), 1);
   }
 
-  std::unique_ptr<WeightedGraph<int> > graph(CreateSchurComplementGraph(visibility));
+  std::unique_ptr<WeightedGraph<int>> graph(
+      CreateSchurComplementGraph(visibility));
   EXPECT_EQ(graph->vertices().size(), visibility.size());
   for (int i = 0; i < visibility.size(); ++i) {
     EXPECT_EQ(graph->VertexWeight(i), 1.0);
@@ -121,13 +121,11 @@ TEST(VisibilityTest, SimpleMatrix) {
       }
 
       EXPECT_EQ(graph->EdgeWeight(i, j), edge_weight)
-          << "Edge: " << i << " " << j
-          << " weight: " << graph->EdgeWeight(i, j)
+          << "Edge: " << i << " " << j << " weight: " << graph->EdgeWeight(i, j)
           << " expected weight: " << edge_weight;
     }
   }
 }
-
 
 TEST(VisibilityTest, NoEBlocks) {
   //   A = [1 0 0 0 0 0
@@ -183,8 +181,8 @@ TEST(VisibilityTest, NoEBlocks) {
     ASSERT_EQ(visibility[i].size(), 0);
   }
 
-  std::unique_ptr<WeightedGraph<int> > graph(
-					     CreateSchurComplementGraph(visibility));
+  std::unique_ptr<WeightedGraph<int>> graph(
+      CreateSchurComplementGraph(visibility));
   EXPECT_EQ(graph->vertices().size(), visibility.size());
   for (int i = 0; i < visibility.size(); ++i) {
     EXPECT_EQ(graph->VertexWeight(i), 1.0);
@@ -197,8 +195,7 @@ TEST(VisibilityTest, NoEBlocks) {
         edge_weight = 1.0;
       }
       EXPECT_EQ(graph->EdgeWeight(i, j), edge_weight)
-          << "Edge: " << i << " " << j
-          << " weight: " << graph->EdgeWeight(i, j)
+          << "Edge: " << i << " " << j << " weight: " << graph->EdgeWeight(i, j)
           << " expected weight: " << edge_weight;
     }
   }

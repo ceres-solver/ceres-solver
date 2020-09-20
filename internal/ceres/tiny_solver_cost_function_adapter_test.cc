@@ -40,7 +40,7 @@
 
 namespace ceres {
 
-class CostFunction2x3 : public SizedCostFunction<2,3> {
+class CostFunction2x3 : public SizedCostFunction<2, 3> {
   bool Evaluate(double const* const* parameters,
                 double* residuals,
                 double** jacobians) const final {
@@ -48,7 +48,7 @@ class CostFunction2x3 : public SizedCostFunction<2,3> {
     double y = parameters[0][1];
     double z = parameters[0][2];
 
-    residuals[0] = x + 2*y + 4*z;
+    residuals[0] = x + 2 * y + 4 * z;
     residuals[1] = y * z;
 
     if (jacobians && jacobians[0]) {
@@ -65,10 +65,11 @@ class CostFunction2x3 : public SizedCostFunction<2,3> {
   }
 };
 
-template<int kNumResiduals, int kNumParameters>
+template <int kNumResiduals, int kNumParameters>
 void TestHelper() {
   std::unique_ptr<CostFunction> cost_function(new CostFunction2x3);
-  typedef  TinySolverCostFunctionAdapter<kNumResiduals, kNumParameters> CostFunctionAdapter;
+  typedef TinySolverCostFunctionAdapter<kNumResiduals, kNumParameters>
+      CostFunctionAdapter;
   CostFunctionAdapter cfa(*cost_function);
   EXPECT_EQ(CostFunctionAdapter::NUM_RESIDUALS, kNumResiduals);
   EXPECT_EQ(CostFunctionAdapter::NUM_PARAMETERS, kNumParameters);
@@ -80,7 +81,7 @@ void TestHelper() {
   Eigen::Matrix<double, 2, 3, Eigen::ColMajor> actual_jacobian;
   Eigen::Matrix<double, 2, 3, Eigen::RowMajor> expected_jacobian;
 
-  double xyz[3] = { 1.0, -1.0, 2.0};
+  double xyz[3] = {1.0, -1.0, 2.0};
   double* parameters[1] = {xyz};
 
   // Check that residual only evaluation works.

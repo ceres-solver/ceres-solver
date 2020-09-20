@@ -34,6 +34,7 @@
 #include "ceres/evaluator.h"
 
 #include <memory>
+
 #include "ceres/casts.h"
 #include "ceres/cost_function.h"
 #include "ceres/crs_matrix.h"
@@ -105,17 +106,16 @@ struct EvaluatorTestOptions {
   EvaluatorTestOptions(LinearSolverType linear_solver_type,
                        int num_eliminate_blocks,
                        bool dynamic_sparsity = false)
-    : linear_solver_type(linear_solver_type),
-      num_eliminate_blocks(num_eliminate_blocks),
-      dynamic_sparsity(dynamic_sparsity) {}
+      : linear_solver_type(linear_solver_type),
+        num_eliminate_blocks(num_eliminate_blocks),
+        dynamic_sparsity(dynamic_sparsity) {}
 
   LinearSolverType linear_solver_type;
   int num_eliminate_blocks;
   bool dynamic_sparsity;
 };
 
-struct EvaluatorTest
-    : public ::testing::TestWithParam<EvaluatorTestOptions> {
+struct EvaluatorTest : public ::testing::TestWithParam<EvaluatorTestOptions> {
   Evaluator* CreateEvaluator(Program* program) {
     // This program is straight from the ProblemImpl, and so has no index/offset
     // yet; compute it here as required by the evaluator implementations.
@@ -123,13 +123,15 @@ struct EvaluatorTest
 
     if (VLOG_IS_ON(1)) {
       string report;
-      StringAppendF(&report, "Creating evaluator with type: %d",
+      StringAppendF(&report,
+                    "Creating evaluator with type: %d",
                     GetParam().linear_solver_type);
       if (GetParam().linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
-        StringAppendF(&report, ", dynamic_sparsity: %d",
-                      GetParam().dynamic_sparsity);
+        StringAppendF(
+            &report, ", dynamic_sparsity: %d", GetParam().dynamic_sparsity);
       }
-      StringAppendF(&report, " and num_eliminate_blocks: %d",
+      StringAppendF(&report,
+                    " and num_eliminate_blocks: %d",
                     GetParam().num_eliminate_blocks);
       VLOG(1) << report;
     }
@@ -142,7 +144,7 @@ struct EvaluatorTest
     return Evaluator::Create(options, program, &error);
   }
 
-  void EvaluateAndCompare(ProblemImpl *problem,
+  void EvaluateAndCompare(ProblemImpl* problem,
                           int expected_num_rows,
                           int expected_num_cols,
                           double expected_cost,
@@ -171,12 +173,14 @@ struct EvaluatorTest
 
     vector<double> state(evaluator->NumParameters());
 
+    // clang-format off
     ASSERT_TRUE(evaluator->Evaluate(
           &state[0],
           &cost,
           expected_residuals != nullptr ? &residuals[0]  : nullptr,
           expected_gradient  != nullptr ? &gradient[0]   : nullptr,
           expected_jacobian  != nullptr ? jacobian.get() : nullptr));
+    // clang-format on
 
     Matrix actual_jacobian;
     if (expected_jacobian != nullptr) {
@@ -196,15 +200,15 @@ struct EvaluatorTest
   }
 
   // Try all combinations of parameters for the evaluator.
-  void CheckAllEvaluationCombinations(const ExpectedEvaluation &expected) {
+  void CheckAllEvaluationCombinations(const ExpectedEvaluation& expected) {
     for (int i = 0; i < 8; ++i) {
       EvaluateAndCompare(&problem,
                          expected.num_rows,
                          expected.num_cols,
                          expected.cost,
                          (i & 1) ? expected.residuals : nullptr,
-                         (i & 2) ? expected.gradient  : nullptr,
-                         (i & 4) ? expected.jacobian  : nullptr);
+                         (i & 2) ? expected.gradient : nullptr,
+                         (i & 4) ? expected.jacobian : nullptr);
     }
   }
 
@@ -217,15 +221,15 @@ struct EvaluatorTest
 };
 
 static void SetSparseMatrixConstant(SparseMatrix* sparse_matrix, double value) {
-  VectorRef(sparse_matrix->mutable_values(),
-            sparse_matrix->num_nonzeros()).setConstant(value);
+  VectorRef(sparse_matrix->mutable_values(), sparse_matrix->num_nonzeros())
+      .setConstant(value);
 }
 
 TEST_P(EvaluatorTest, SingleResidualProblem) {
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 3, 2, 3, 4>,
-                           nullptr,
-                           x, y, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<1, 3, 2, 3, 4>, nullptr, x, y, z);
 
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     3, 9,
@@ -245,14 +249,15 @@ TEST_P(EvaluatorTest, SingleResidualProblem) {
       1, 2,   1, 2, 3,   1, 2, 3, 4
     }
   };
+  // clang-format on
   CheckAllEvaluationCombinations(expected);
 }
 
 TEST_P(EvaluatorTest, SingleResidualProblemWithPermutedParameters) {
   // Add the parameters in explicit order to force the ordering in the program.
-  problem.AddParameterBlock(x,  2);
-  problem.AddParameterBlock(y,  3);
-  problem.AddParameterBlock(z,  4);
+  problem.AddParameterBlock(x, 2);
+  problem.AddParameterBlock(y, 3);
+  problem.AddParameterBlock(z, 4);
 
   // Then use a cost function which is similar to the others, but swap around
   // the ordering of the parameters to the cost function. This shouldn't affect
@@ -260,10 +265,10 @@ TEST_P(EvaluatorTest, SingleResidualProblemWithPermutedParameters) {
   // At one point the compressed row evaluator had a bug that went undetected
   // for a long time, since by chance most users added parameters to the problem
   // in the same order that they occurred as parameters to a cost function.
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 3, 4, 3, 2>,
-                           nullptr,
-                           z, y, x);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<1, 3, 4, 3, 2>, nullptr, z, y, x);
 
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     3, 9,
@@ -283,6 +288,7 @@ TEST_P(EvaluatorTest, SingleResidualProblemWithPermutedParameters) {
       1, 2,   1, 2, 3,   1, 2, 3, 4
     }
   };
+  // clang-format on
   CheckAllEvaluationCombinations(expected);
 }
 
@@ -303,10 +309,10 @@ TEST_P(EvaluatorTest, SingleResidualProblemWithNuisanceParameters) {
   problem.AddParameterBlock(z, 4);
   problem.AddParameterBlock(d, 3);
 
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 3, 2, 3, 4>,
-                           nullptr,
-                           x, y, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<1, 3, 2, 3, 4>, nullptr, x, y, z);
 
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     3, 16,
@@ -330,30 +336,29 @@ TEST_P(EvaluatorTest, SingleResidualProblemWithNuisanceParameters) {
       0, 0,    1, 2,    0,    1, 2, 3,    0,    1, 2, 3, 4,    0, 0, 0
     }
   };
+  // clang-format on
   CheckAllEvaluationCombinations(expected);
 }
 
 TEST_P(EvaluatorTest, MultipleResidualProblem) {
   // Add the parameters in explicit order to force the ordering in the program.
-  problem.AddParameterBlock(x,  2);
-  problem.AddParameterBlock(y,  3);
-  problem.AddParameterBlock(z,  4);
+  problem.AddParameterBlock(x, 2);
+  problem.AddParameterBlock(y, 3);
+  problem.AddParameterBlock(z, 4);
 
   // f(x, y) in R^2
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 2, 2, 3>,
-                           nullptr,
-                           x, y);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<1, 2, 2, 3>, nullptr, x, y);
 
   // g(x, z) in R^3
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<2, 3, 2, 4>,
-                           nullptr,
-                           x, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<2, 3, 2, 4>, nullptr, x, z);
 
   // h(y, z) in R^4
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<3, 4, 3, 4>,
-                           nullptr,
-                           y, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<3, 4, 3, 4>, nullptr, y, z);
 
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     9, 9,
@@ -385,12 +390,13 @@ TEST_P(EvaluatorTest, MultipleResidualProblem) {
                       0, 0,    3, 6, 9,    3, 6, 9, 12
     }
   };
+  // clang-format on
   CheckAllEvaluationCombinations(expected);
 }
 
 TEST_P(EvaluatorTest, MultipleResidualsWithLocalParameterizations) {
   // Add the parameters in explicit order to force the ordering in the program.
-  problem.AddParameterBlock(x,  2);
+  problem.AddParameterBlock(x, 2);
 
   // Fix y's first dimension.
   vector<int> y_fixed;
@@ -403,20 +409,18 @@ TEST_P(EvaluatorTest, MultipleResidualsWithLocalParameterizations) {
   problem.AddParameterBlock(z, 4, new SubsetParameterization(4, z_fixed));
 
   // f(x, y) in R^2
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 2, 2, 3>,
-                           nullptr,
-                           x, y);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<1, 2, 2, 3>, nullptr, x, y);
 
   // g(x, z) in R^3
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<2, 3, 2, 4>,
-                           nullptr,
-                           x, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<2, 3, 2, 4>, nullptr, x, z);
 
   // h(y, z) in R^4
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<3, 4, 3, 4>,
-                           nullptr,
-                           y, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<3, 4, 3, 4>, nullptr, y, z);
 
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     9, 7,
@@ -448,6 +452,7 @@ TEST_P(EvaluatorTest, MultipleResidualsWithLocalParameterizations) {
                       0, 0,    6, 9,    3, 9, 12
     }
   };
+  // clang-format on
   CheckAllEvaluationCombinations(expected);
 }
 
@@ -458,24 +463,21 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
   double z[4];
 
   // Add the parameters in explicit order to force the ordering in the program.
-  problem.AddParameterBlock(x,  2);
-  problem.AddParameterBlock(y,  3);
-  problem.AddParameterBlock(z,  4);
+  problem.AddParameterBlock(x, 2);
+  problem.AddParameterBlock(y, 3);
+  problem.AddParameterBlock(z, 4);
 
   // f(x, y) in R^2
- problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 2, 2, 3>,
-                          nullptr,
-                          x, y);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<1, 2, 2, 3>, nullptr, x, y);
 
   // g(x, z) in R^3
- problem.AddResidualBlock(new ParameterIgnoringCostFunction<2, 3, 2, 4>,
-                          nullptr,
-                          x, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<2, 3, 2, 4>, nullptr, x, z);
 
   // h(y, z) in R^4
-  problem.AddResidualBlock(new ParameterIgnoringCostFunction<3, 4, 3, 4>,
-                           nullptr,
-                           y, z);
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<3, 4, 3, 4>, nullptr, y, z);
 
   // For this test, "z" is constant.
   problem.SetParameterBlockConstant(z);
@@ -493,6 +495,7 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
   ParameterBlock* parameter_block_z = parameter_blocks->back();
   parameter_blocks->pop_back();
 
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     9, 5,
@@ -523,6 +526,7 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
                       0, 0,    3, 6, 9
     }
   };
+  // clang-format on
   CheckAllEvaluationCombinations(expected);
 
   // Restore parameter block z, so it will get freed in a consistent way.

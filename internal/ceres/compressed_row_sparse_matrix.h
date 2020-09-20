@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_COMPRESSED_ROW_SPARSE_MATRIX_H_
 
 #include <vector>
+
 #include "ceres/internal/port.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"

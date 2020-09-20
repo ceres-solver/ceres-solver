@@ -37,6 +37,7 @@
 
 #include <set>
 #include <vector>
+
 #include "ceres/graph.h"
 
 namespace ceres {

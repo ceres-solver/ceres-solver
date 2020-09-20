@@ -31,6 +31,7 @@
 #include "ceres/reorder_program.h"
 
 #include <random>
+
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
@@ -107,9 +108,7 @@ TEST(_, ReorderResidualBlockNormalFunction) {
 
   std::string message;
   EXPECT_TRUE(LexicographicallyOrderResidualBlocks(
-                  2,
-                  problem.mutable_program(),
-                  &message));
+      2, problem.mutable_program(), &message));
   EXPECT_EQ(residual_blocks.size(), expected_residual_blocks.size());
   for (int i = 0; i < expected_residual_blocks.size(); ++i) {
     EXPECT_EQ(residual_blocks[i], expected_residual_blocks[i]);
@@ -132,10 +131,8 @@ TEST(_, ApplyOrderingOrderingTooSmall) {
 
   Program program(problem.program());
   std::string message;
-  EXPECT_FALSE(ApplyOrdering(problem.parameter_map(),
-                             linear_solver_ordering,
-                             &program,
-                             &message));
+  EXPECT_FALSE(ApplyOrdering(
+      problem.parameter_map(), linear_solver_ordering, &program, &message));
 }
 
 TEST(_, ApplyOrderingNormal) {
@@ -156,10 +153,8 @@ TEST(_, ApplyOrderingNormal) {
   Program* program = problem.mutable_program();
   std::string message;
 
-  EXPECT_TRUE(ApplyOrdering(problem.parameter_map(),
-                            linear_solver_ordering,
-                            program,
-                            &message));
+  EXPECT_TRUE(ApplyOrdering(
+      problem.parameter_map(), linear_solver_ordering, program, &message));
   const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
 
   EXPECT_EQ(parameter_blocks.size(), 3);
@@ -169,8 +164,8 @@ TEST(_, ApplyOrderingNormal) {
 }
 
 #ifndef CERES_NO_SUITESPARSE
-class ReorderProgramFoSparseCholeskyUsingSuiteSparseTest :
-      public ::testing::Test {
+class ReorderProgramFoSparseCholeskyUsingSuiteSparseTest
+    : public ::testing::Test {
  protected:
   void SetUp() {
     problem_.AddResidualBlock(new UnaryCostFunction(), nullptr, &x_);
@@ -188,12 +183,11 @@ class ReorderProgramFoSparseCholeskyUsingSuiteSparseTest :
         program->parameter_blocks();
 
     std::string error;
-    EXPECT_TRUE(ReorderProgramForSparseCholesky(
-                    ceres::SUITE_SPARSE,
-                    linear_solver_ordering,
-                    0, /* use all rows */
-                    program,
-                    &error));
+    EXPECT_TRUE(ReorderProgramForSparseCholesky(ceres::SUITE_SPARSE,
+                                                linear_solver_ordering,
+                                                0, /* use all rows */
+                                                program,
+                                                &error));
     const vector<ParameterBlock*>& ordered_parameter_blocks =
         program->parameter_blocks();
     EXPECT_EQ(ordered_parameter_blocks.size(),
@@ -219,8 +213,7 @@ TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest,
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
-TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest,
-       ContiguousGroups) {
+TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest, ContiguousGroups) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
   linear_solver_ordering.AddElementToGroup(&y_, 1);
@@ -229,8 +222,7 @@ TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest,
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
-TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest,
-       GroupsWithGaps) {
+TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest, GroupsWithGaps) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
   linear_solver_ordering.AddElementToGroup(&y_, 2);

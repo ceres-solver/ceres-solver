@@ -89,7 +89,8 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
       if (options.use_mixed_precision_solves) {
         sparse_cholesky = AppleAccelerateCholesky<float>::Create(ordering_type);
       } else {
-        sparse_cholesky = AppleAccelerateCholesky<double>::Create(ordering_type);
+        sparse_cholesky =
+            AppleAccelerateCholesky<double>::Create(ordering_type);
       }
       break;
 #else

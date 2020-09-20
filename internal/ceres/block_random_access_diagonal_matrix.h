@@ -50,7 +50,8 @@ class BlockRandomAccessDiagonalMatrix : public BlockRandomAccessMatrix {
  public:
   // blocks is an array of block sizes.
   explicit BlockRandomAccessDiagonalMatrix(const std::vector<int>& blocks);
-  BlockRandomAccessDiagonalMatrix(const BlockRandomAccessDiagonalMatrix&) = delete;
+  BlockRandomAccessDiagonalMatrix(const BlockRandomAccessDiagonalMatrix&) =
+      delete;
   void operator=(const BlockRandomAccessDiagonalMatrix&) = delete;
 
   // The destructor is not thread safe. It assumes that no one is

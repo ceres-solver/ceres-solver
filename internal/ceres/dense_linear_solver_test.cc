@@ -29,6 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <memory>
+
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
 #include "ceres/linear_least_squares_problems.h"

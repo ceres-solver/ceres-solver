@@ -25,6 +25,7 @@
 #include "ceres/internal/parameter_dims.h"
 
 #include <gtest/gtest.h>
+
 #include <type_traits>
 #include <utility>
 
@@ -35,15 +36,15 @@ namespace internal {
 static_assert(IsValidParameterDimensionSequence(std::integer_sequence<int>()) ==
                   true,
               "Unit test of is valid parameter dimension sequence failed.");
-static_assert(
-    IsValidParameterDimensionSequence(std::integer_sequence<int, 2, 1>()) == true,
-    "Unit test of is valid parameter dimension sequence failed.");
-static_assert(
-    IsValidParameterDimensionSequence(std::integer_sequence<int, 0, 1>()) == false,
-    "Unit test of is valid parameter dimension sequence failed.");
-static_assert(
-    IsValidParameterDimensionSequence(std::integer_sequence<int, 3, 0>()) == false,
-    "Unit test of is valid parameter dimension sequence failed.");
+static_assert(IsValidParameterDimensionSequence(
+                  std::integer_sequence<int, 2, 1>()) == true,
+              "Unit test of is valid parameter dimension sequence failed.");
+static_assert(IsValidParameterDimensionSequence(
+                  std::integer_sequence<int, 0, 1>()) == false,
+              "Unit test of is valid parameter dimension sequence failed.");
+static_assert(IsValidParameterDimensionSequence(
+                  std::integer_sequence<int, 3, 0>()) == false,
+              "Unit test of is valid parameter dimension sequence failed.");
 
 // Static parameter dims unit test
 static_assert(

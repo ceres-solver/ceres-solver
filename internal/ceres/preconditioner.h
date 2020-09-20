@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_PRECONDITIONER_H_
 
 #include <vector>
+
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/context_impl.h"
@@ -50,7 +51,8 @@ class Preconditioner : public LinearOperator {
   struct Options {
     PreconditionerType type = JACOBI;
     VisibilityClusteringType visibility_clustering_type = CANONICAL_VIEWS;
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type = SUITE_SPARSE;
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type =
+        SUITE_SPARSE;
 
     // When using the subset preconditioner, all row blocks starting
     // from this row block are used to construct the preconditioner.
@@ -137,9 +139,7 @@ class Preconditioner : public LinearOperator {
   }
 
   int num_rows() const override = 0;
-  int num_cols() const override {
-    return num_rows();
-  }
+  int num_cols() const override { return num_rows(); }
 };
 
 // This templated subclass of Preconditioner serves as a base class for
@@ -159,9 +159,11 @@ class TypedPreconditioner : public Preconditioner {
 
 // Preconditioners that depend on access to the low level structure
 // of a SparseMatrix.
-typedef TypedPreconditioner<SparseMatrix>              SparseMatrixPreconditioner;               // NOLINT
-typedef TypedPreconditioner<BlockSparseMatrix>         BlockSparseMatrixPreconditioner;          // NOLINT
-typedef TypedPreconditioner<CompressedRowSparseMatrix> CompressedRowSparseMatrixPreconditioner;  // NOLINT
+// clang-format off
+typedef TypedPreconditioner<SparseMatrix>              SparseMatrixPreconditioner;
+typedef TypedPreconditioner<BlockSparseMatrix>         BlockSparseMatrixPreconditioner;
+typedef TypedPreconditioner<CompressedRowSparseMatrix> CompressedRowSparseMatrixPreconditioner;
+// clang-format on
 
 // Wrap a SparseMatrix object as a preconditioner.
 class SparseMatrixPreconditionerWrapper : public SparseMatrixPreconditioner {

@@ -31,6 +31,7 @@
 #include "ceres/dynamic_compressed_row_sparse_matrix.h"
 
 #include <memory>
+
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
@@ -60,14 +61,10 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
     InitialiseDenseReference();
     InitialiseSparseMatrixReferences();
 
-    dcrsm.reset(new DynamicCompressedRowSparseMatrix(num_rows,
-                                                     num_cols,
-                                                     0));
+    dcrsm.reset(new DynamicCompressedRowSparseMatrix(num_rows, num_cols, 0));
   }
 
-  void Finalize() {
-    dcrsm->Finalize(num_additional_elements);
-  }
+  void Finalize() { dcrsm->Finalize(num_additional_elements); }
 
   void InitialiseDenseReference() {
     dense.resize(num_rows, num_cols);
@@ -96,9 +93,8 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
     }
     ASSERT_EQ(values.size(), expected_num_nonzeros);
 
-    tsm.reset(new TripletSparseMatrix(num_rows,
-                                      num_cols,
-                                      expected_num_nonzeros));
+    tsm.reset(
+        new TripletSparseMatrix(num_rows, num_cols, expected_num_nonzeros));
     copy(rows.begin(), rows.end(), tsm->mutable_rows());
     copy(cols.begin(), cols.end(), tsm->mutable_cols());
     copy(values.begin(), values.end(), tsm->mutable_values());

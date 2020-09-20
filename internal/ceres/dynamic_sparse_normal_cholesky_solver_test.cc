@@ -29,6 +29,8 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <memory>
+
+#include "Eigen/Cholesky"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/context_impl.h"
@@ -38,8 +40,6 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
-
-#include "Eigen/Cholesky"
 
 namespace ceres {
 namespace internal {
