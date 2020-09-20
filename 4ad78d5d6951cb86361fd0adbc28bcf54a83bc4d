@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5a3def3_1e078ca7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-20T20:17:12Z",
+      "side": 1,
+      "message": "I\u0027m sorry this affects so many files.\n\nEssentially I just ran clang-format and then went back to fix some obvious bad formats with clang-format on/off and a few manual cstring breaks.\n\nI\u0027m a bit worried about possible side effects due to changed include orders (ideally it should not matter, but you never know...).\n\nWhereever port.h was specifically mentioned to matter b/c of #ifdefs, I enforced its order to remain unchanged. (I believe in other files the port.h include order should not matter, and in any case it seems clang-format will never reorder includes across preprocessor directives.)\n\nAnother change is setting the standard to \u0027Cpp11\u0027 for clang-format, such that closing template brackets don\u0027t have a space. Hence a few changes in examples.\n\nThere is now also a ./scripts/format_all.sh script.\n\n",
+      "revId": "4ad78d5d6951cb86361fd0adbc28bcf54a83bc4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
