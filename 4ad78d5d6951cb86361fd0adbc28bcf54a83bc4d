@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6541bbb8_a8f877c0",
+        "filename": ".clang-format",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-20T22:08:38Z",
+      "side": 1,
+      "message": "is there one for c++14?",
+      "range": {
+        "startLine": 2,
+        "startChar": 10,
+        "endLine": 2,
+        "endChar": 15
+      },
+      "revId": "4ad78d5d6951cb86361fd0adbc28bcf54a83bc4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5a3def3_1e078ca7",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -16,6 +39,40 @@
       "revId": "4ad78d5d6951cb86361fd0adbc28bcf54a83bc4d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6adee97_05e45a75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-20T22:08:38Z",
+      "side": 1,
+      "message": "Thanks for doing this Nikolaus. This cleans up almost a decade worth of crud.",
+      "revId": "4ad78d5d6951cb86361fd0adbc28bcf54a83bc4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f034efad_01e12b2f",
+        "filename": "internal/ceres/gmock_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-20T22:08:38Z",
+      "side": 1,
+      "message": "This file should count as generated file, since we pull it from upstream.",
+      "revId": "4ad78d5d6951cb86361fd0adbc28bcf54a83bc4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
