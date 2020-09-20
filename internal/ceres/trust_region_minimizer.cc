@@ -85,7 +85,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     iteration_start_time_in_secs_ = WallTimeInSeconds();
 
     const double previous_gradient_norm = iteration_summary_.gradient_norm;
-    const double previous_gradient_max_norm = iteration_summary_.gradient_max_norm;
+    const double previous_gradient_max_norm =
+        iteration_summary_.gradient_max_norm;
 
     iteration_summary_ = IterationSummary();
     iteration_summary_.iteration =
@@ -114,8 +115,6 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     if (FunctionToleranceReached()) {
       return;
     }
-
-
 
     if (IsStepSuccessful()) {
       RETURN_IF_ERROR_AND_LOG(HandleSuccessfulStep());
