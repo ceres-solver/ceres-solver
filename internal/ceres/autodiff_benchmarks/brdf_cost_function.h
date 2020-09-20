@@ -190,10 +190,10 @@ struct Brdf {
 
   template <typename T>
   inline T GTR2Aniso(const T& n_dot_h,
-              const T& h_dot_x,
-              const T& h_dot_y,
-              const T& ax,
-              const T& ay) const {
+                     const T& h_dot_x,
+                     const T& h_dot_y,
+                     const T& ax,
+                     const T& ay) const {
     return T(1) / (T(M_PI) * ax * ay *
                    Square(Square(h_dot_x / ax) + Square(h_dot_y / ay) +
                           n_dot_h * n_dot_h));
@@ -205,10 +205,10 @@ struct Brdf {
   }
 
   template <typename Derived1, typename Derived2>
-  inline typename Derived1::PlainObject
-  Lerp(const Eigen::MatrixBase<Derived1>& a,
-       const Eigen::MatrixBase<Derived2>& b,
-       typename Derived1::Scalar alpha) const {
+  inline typename Derived1::PlainObject Lerp(
+      const Eigen::MatrixBase<Derived1>& a,
+      const Eigen::MatrixBase<Derived2>& b,
+      typename Derived1::Scalar alpha) const {
     return (typename Derived1::Scalar(1) - alpha) * a + alpha * b;
   }
 

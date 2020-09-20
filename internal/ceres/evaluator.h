@@ -124,12 +124,8 @@ class Evaluator {
                 double* residuals,
                 double* gradient,
                 SparseMatrix* jacobian) {
-    return Evaluate(EvaluateOptions(),
-                    state,
-                    cost,
-                    residuals,
-                    gradient,
-                    jacobian);
+    return Evaluate(
+        EvaluateOptions(), state, cost, residuals, gradient, jacobian);
   }
 
   // Make a change delta (of size NumEffectiveParameters()) to state (of size
@@ -152,7 +148,7 @@ class Evaluator {
 
   // This is the effective number of parameters that the optimizer may adjust.
   // This applies when there are parameterizations on some of the parameters.
-  virtual int NumEffectiveParameters()  const = 0;
+  virtual int NumEffectiveParameters() const = 0;
 
   // The number of residuals in the optimization problem.
   virtual int NumResiduals() const = 0;

@@ -37,7 +37,6 @@
 #include <thread>
 
 #include "ceres/concurrent_queue.h"
-
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -304,4 +303,4 @@ TEST(ConcurrentQueue, StopAndEnableWaiters) {
 }  // namespace internal
 }  // namespace ceres
 
-#endif // CERES_USE_CXX_THREADS
+#endif  // CERES_USE_CXX_THREADS

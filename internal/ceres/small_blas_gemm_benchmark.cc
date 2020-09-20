@@ -29,6 +29,7 @@
 // Authors: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <iostream>
+
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"
 #include "ceres/small_blas.h"
@@ -103,11 +104,13 @@ void BM_MatrixMatrixMultiplyDynamic(benchmark::State& state) {
   int iter = 0;
   for (auto _ : state) {
     // a += b * c
+    // clang-format off
     MatrixMatrixMultiply
         <Eigen::Dynamic, Eigen::Dynamic,Eigen::Dynamic,Eigen::Dynamic, 1>
         (data.GetB(iter), b_rows, b_cols,
          data.GetC(iter), c_rows, c_cols,
          data.GetA(iter), 0, 0, a_rows, a_cols);
+    // clang-format on
     iter = (iter + 1) % num_elements;
   }
 }
@@ -147,11 +150,13 @@ void BM_MatrixTransposeMatrixMultiplyDynamic(benchmark::State& state) {
   int iter = 0;
   for (auto _ : state) {
     // a += b' * c
+    // clang-format off
     MatrixTransposeMatrixMultiply
         <Eigen::Dynamic,Eigen::Dynamic,Eigen::Dynamic,Eigen::Dynamic, 1>
         (data.GetB(iter), b_rows, b_cols,
          data.GetC(iter), c_rows, c_cols,
          data.GetA(iter), 0, 0, a_rows, a_cols);
+    // clang-format on
     iter = (iter + 1) % num_elements;
   }
 }
@@ -159,7 +164,7 @@ void BM_MatrixTransposeMatrixMultiplyDynamic(benchmark::State& state) {
 BENCHMARK(BM_MatrixTransposeMatrixMultiplyDynamic)
     ->Apply(MatrixTransposeMatrixMultiplySizeArguments);
 
-}  // internal
+}  // namespace internal
 }  // namespace ceres
 
 BENCHMARK_MAIN();

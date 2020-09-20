@@ -30,6 +30,7 @@
 // Author: wan@google.com (Zhanyong Wan)
 
 #include <iostream>
+
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 #include "gmock/gmock.h"
@@ -46,7 +47,7 @@ DEFINE_string(test_srcdir, "", "The location of the source code.");
 // Windows. See the following link to track the current status of this bug:
 // http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=394464  // NOLINT
 #if GTEST_OS_WINDOWS_MOBILE
-# include <tchar.h>  // NOLINT
+#include <tchar.h>  // NOLINT
 
 GTEST_API_ int _tmain(int argc, TCHAR** argv) {
 #else

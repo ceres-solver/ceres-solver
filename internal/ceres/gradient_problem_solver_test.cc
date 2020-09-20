@@ -28,9 +28,9 @@
 //
 // Author: strandmark@google.com (Petter Strandmark)
 
-#include "ceres/gradient_problem.h"
 #include "ceres/gradient_problem_solver.h"
 
+#include "ceres/gradient_problem.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -89,17 +89,16 @@ class QuadraticFunction : public ceres::FirstOrderFunction {
 };
 
 struct RememberingCallback : public IterationCallback {
-  explicit RememberingCallback(double *x) : calls(0), x(x) {}
+  explicit RememberingCallback(double* x) : calls(0), x(x) {}
   virtual ~RememberingCallback() {}
   CallbackReturnType operator()(const IterationSummary& summary) final {
     x_values.push_back(*x);
     return SOLVER_CONTINUE;
   }
   int calls;
-  double *x;
+  double* x;
   std::vector<double> x_values;
 };
-
 
 TEST(Solver, UpdateStateEveryIterationOption) {
   double x = 50.0;

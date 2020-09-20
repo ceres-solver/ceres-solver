@@ -29,10 +29,11 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 //         mierle@gmail.com (Keir Mierle)
 
-#include <cstddef>
-
-#include <memory>
 #include "ceres/dynamic_numeric_diff_cost_function.h"
+
+#include <cstddef>
+#include <memory>
+
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -87,16 +88,14 @@ TEST(DynamicNumericdiffCostFunctionTest, TestResiduals) {
   vector<double*> parameter_blocks(2);
   parameter_blocks[0] = &param_block_0[0];
   parameter_blocks[1] = &param_block_1[0];
-  EXPECT_TRUE(cost_function.Evaluate(&parameter_blocks[0],
-                                     residuals.data(),
-                                     NULL));
+  EXPECT_TRUE(
+      cost_function.Evaluate(&parameter_blocks[0], residuals.data(), NULL));
   for (int r = 0; r < 10; ++r) {
     EXPECT_EQ(1.0 * r, residuals.at(r * 2));
     EXPECT_EQ(-1.0 * r, residuals.at(r * 2 + 1));
   }
   EXPECT_EQ(0, residuals.at(20));
 }
-
 
 TEST(DynamicNumericdiffCostFunctionTest, TestJacobian) {
   // Test the residual counting.
@@ -128,9 +127,8 @@ TEST(DynamicNumericdiffCostFunctionTest, TestJacobian) {
   jacobian.push_back(jacobian_vect[1].data());
 
   // Test jacobian computation.
-  EXPECT_TRUE(cost_function.Evaluate(parameter_blocks.data(),
-                                     residuals.data(),
-                                     jacobian.data()));
+  EXPECT_TRUE(cost_function.Evaluate(
+      parameter_blocks.data(), residuals.data(), jacobian.data()));
 
   for (int r = 0; r < 10; ++r) {
     EXPECT_EQ(-1.0 * r, residuals.at(r * 2));
@@ -139,11 +137,11 @@ TEST(DynamicNumericdiffCostFunctionTest, TestJacobian) {
   EXPECT_EQ(420, residuals.at(20));
   for (int p = 0; p < 10; ++p) {
     // Check "A" Jacobian.
-    EXPECT_NEAR(-1.0, jacobian_vect[0][2*p * 10 + p], kTolerance);
+    EXPECT_NEAR(-1.0, jacobian_vect[0][2 * p * 10 + p], kTolerance);
     // Check "B" Jacobian.
-    EXPECT_NEAR(+1.0, jacobian_vect[0][(2*p+1) * 10 + p], kTolerance);
-    jacobian_vect[0][2*p * 10 + p] = 0.0;
-    jacobian_vect[0][(2*p+1) * 10 + p] = 0.0;
+    EXPECT_NEAR(+1.0, jacobian_vect[0][(2 * p + 1) * 10 + p], kTolerance);
+    jacobian_vect[0][2 * p * 10 + p] = 0.0;
+    jacobian_vect[0][(2 * p + 1) * 10 + p] = 0.0;
   }
 
   // Check "C" Jacobian for first parameter block.
@@ -165,7 +163,8 @@ TEST(DynamicNumericdiffCostFunctionTest, TestJacobian) {
   }
 }
 
-TEST(DynamicNumericdiffCostFunctionTest, JacobianWithFirstParameterBlockConstant) {  // NOLINT
+TEST(DynamicNumericdiffCostFunctionTest,
+     JacobianWithFirstParameterBlockConstant) {  // NOLINT
   // Test the residual counting.
   vector<double> param_block_0(10, 0.0);
   for (int i = 0; i < 10; ++i) {
@@ -195,9 +194,8 @@ TEST(DynamicNumericdiffCostFunctionTest, JacobianWithFirstParameterBlockConstant
   jacobian.push_back(jacobian_vect[1].data());
 
   // Test jacobian computation.
-  EXPECT_TRUE(cost_function.Evaluate(parameter_blocks.data(),
-                                     residuals.data(),
-                                     jacobian.data()));
+  EXPECT_TRUE(cost_function.Evaluate(
+      parameter_blocks.data(), residuals.data(), jacobian.data()));
 
   for (int r = 0; r < 10; ++r) {
     EXPECT_EQ(-1.0 * r, residuals.at(r * 2));
@@ -215,7 +213,8 @@ TEST(DynamicNumericdiffCostFunctionTest, JacobianWithFirstParameterBlockConstant
   }
 }
 
-TEST(DynamicNumericdiffCostFunctionTest, JacobianWithSecondParameterBlockConstant) {  // NOLINT
+TEST(DynamicNumericdiffCostFunctionTest,
+     JacobianWithSecondParameterBlockConstant) {  // NOLINT
   // Test the residual counting.
   vector<double> param_block_0(10, 0.0);
   for (int i = 0; i < 10; ++i) {
@@ -245,9 +244,8 @@ TEST(DynamicNumericdiffCostFunctionTest, JacobianWithSecondParameterBlockConstan
   jacobian.push_back(NULL);
 
   // Test jacobian computation.
-  EXPECT_TRUE(cost_function.Evaluate(parameter_blocks.data(),
-                                     residuals.data(),
-                                     jacobian.data()));
+  EXPECT_TRUE(cost_function.Evaluate(
+      parameter_blocks.data(), residuals.data(), jacobian.data()));
 
   for (int r = 0; r < 10; ++r) {
     EXPECT_EQ(-1.0 * r, residuals.at(r * 2));
@@ -256,11 +254,11 @@ TEST(DynamicNumericdiffCostFunctionTest, JacobianWithSecondParameterBlockConstan
   EXPECT_EQ(420, residuals.at(20));
   for (int p = 0; p < 10; ++p) {
     // Check "A" Jacobian.
-    EXPECT_NEAR(-1.0, jacobian_vect[0][2*p * 10 + p], kTolerance);
+    EXPECT_NEAR(-1.0, jacobian_vect[0][2 * p * 10 + p], kTolerance);
     // Check "B" Jacobian.
-    EXPECT_NEAR(+1.0, jacobian_vect[0][(2*p+1) * 10 + p], kTolerance);
-    jacobian_vect[0][2*p * 10 + p] = 0.0;
-    jacobian_vect[0][(2*p+1) * 10 + p] = 0.0;
+    EXPECT_NEAR(+1.0, jacobian_vect[0][(2 * p + 1) * 10 + p], kTolerance);
+    jacobian_vect[0][2 * p * 10 + p] = 0.0;
+    jacobian_vect[0][(2 * p + 1) * 10 + p] = 0.0;
   }
 
   // Check "C" Jacobian for first parameter block.
@@ -331,10 +329,10 @@ class ThreeParameterCostFunctorTest : public ::testing::Test {
 
     // Prepare the cost function.
     typedef DynamicNumericDiffCostFunction<MyThreeParameterCostFunctor>
-      DynamicMyThreeParameterCostFunction;
-    DynamicMyThreeParameterCostFunction * cost_function =
-      new DynamicMyThreeParameterCostFunction(
-        new MyThreeParameterCostFunctor());
+        DynamicMyThreeParameterCostFunction;
+    DynamicMyThreeParameterCostFunction* cost_function =
+        new DynamicMyThreeParameterCostFunction(
+            new MyThreeParameterCostFunctor());
     cost_function->AddParameterBlock(1);
     cost_function->AddParameterBlock(2);
     cost_function->AddParameterBlock(3);
@@ -432,9 +430,8 @@ class ThreeParameterCostFunctorTest : public ::testing::Test {
 
 TEST_F(ThreeParameterCostFunctorTest, TestThreeParameterResiduals) {
   vector<double> residuals(7, -100000);
-  EXPECT_TRUE(cost_function_->Evaluate(parameter_blocks_.data(),
-                                       residuals.data(),
-                                       NULL));
+  EXPECT_TRUE(cost_function_->Evaluate(
+      parameter_blocks_.data(), residuals.data(), NULL));
   for (int i = 0; i < 7; ++i) {
     EXPECT_EQ(expected_residuals_[i], residuals[i]);
   }
@@ -448,9 +445,8 @@ TEST_F(ThreeParameterCostFunctorTest, TestThreeParameterJacobian) {
   jacobian.push_back(jacobian_vect_[1].data());
   jacobian.push_back(jacobian_vect_[2].data());
 
-  EXPECT_TRUE(cost_function_->Evaluate(parameter_blocks_.data(),
-                                       residuals.data(),
-                                       jacobian.data()));
+  EXPECT_TRUE(cost_function_->Evaluate(
+      parameter_blocks_.data(), residuals.data(), jacobian.data()));
 
   for (int i = 0; i < 7; ++i) {
     EXPECT_EQ(expected_residuals_[i], residuals[i]);
@@ -478,9 +474,8 @@ TEST_F(ThreeParameterCostFunctorTest,
   jacobian.push_back(jacobian_vect_[1].data());
   jacobian.push_back(NULL);
 
-  EXPECT_TRUE(cost_function_->Evaluate(parameter_blocks_.data(),
-                                       residuals.data(),
-                                       jacobian.data()));
+  EXPECT_TRUE(cost_function_->Evaluate(
+      parameter_blocks_.data(), residuals.data(), jacobian.data()));
 
   for (int i = 0; i < 7; ++i) {
     EXPECT_EQ(expected_residuals_[i], residuals[i]);
@@ -500,9 +495,8 @@ TEST_F(ThreeParameterCostFunctorTest,
   jacobian.push_back(NULL);
   jacobian.push_back(jacobian_vect_[2].data());
 
-  EXPECT_TRUE(cost_function_->Evaluate(parameter_blocks_.data(),
-                                       residuals.data(),
-                                       jacobian.data()));
+  EXPECT_TRUE(cost_function_->Evaluate(
+      parameter_blocks_.data(), residuals.data(), jacobian.data()));
 
   for (int i = 0; i < 7; ++i) {
     EXPECT_EQ(expected_residuals_[i], residuals[i]);

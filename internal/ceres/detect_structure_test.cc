@@ -28,11 +28,12 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include "ceres/detect_structure.h"
+
 #include "Eigen/Core"
+#include "ceres/block_structure.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
-#include "ceres/block_structure.h"
-#include "ceres/detect_structure.h"
 
 namespace ceres {
 namespace internal {
@@ -78,11 +79,8 @@ TEST(DetectStructure, EverythingStatic) {
   int e_block_size = 0;
   int f_block_size = 0;
   const int num_eliminate_blocks = 1;
-  DetectStructure(bs,
-                  num_eliminate_blocks,
-                  &row_block_size,
-                  &e_block_size,
-                  &f_block_size);
+  DetectStructure(
+      bs, num_eliminate_blocks, &row_block_size, &e_block_size, &f_block_size);
 
   EXPECT_EQ(row_block_size, expected_row_block_size);
   EXPECT_EQ(e_block_size, expected_e_block_size);
@@ -130,11 +128,8 @@ TEST(DetectStructure, DynamicRow) {
   int e_block_size = 0;
   int f_block_size = 0;
   const int num_eliminate_blocks = 1;
-  DetectStructure(bs,
-                  num_eliminate_blocks,
-                  &row_block_size,
-                  &e_block_size,
-                  &f_block_size);
+  DetectStructure(
+      bs, num_eliminate_blocks, &row_block_size, &e_block_size, &f_block_size);
 
   EXPECT_EQ(row_block_size, expected_row_block_size);
   EXPECT_EQ(e_block_size, expected_e_block_size);
@@ -145,7 +140,6 @@ TEST(DetectStructure, DynamicFBlockDifferentRows) {
   const int expected_row_block_size = 2;
   const int expected_e_block_size = 3;
   const int expected_f_block_size = Eigen::Dynamic;
-
 
   CompressedRowBlockStructure bs;
 
@@ -183,11 +177,8 @@ TEST(DetectStructure, DynamicFBlockDifferentRows) {
   int e_block_size = 0;
   int f_block_size = 0;
   const int num_eliminate_blocks = 1;
-  DetectStructure(bs,
-                  num_eliminate_blocks,
-                  &row_block_size,
-                  &e_block_size,
-                  &f_block_size);
+  DetectStructure(
+      bs, num_eliminate_blocks, &row_block_size, &e_block_size, &f_block_size);
 
   EXPECT_EQ(row_block_size, expected_row_block_size);
   EXPECT_EQ(e_block_size, expected_e_block_size);
@@ -235,11 +226,8 @@ TEST(DetectStructure, DynamicEBlock) {
   int e_block_size = 0;
   int f_block_size = 0;
   const int num_eliminate_blocks = 2;
-  DetectStructure(bs,
-                  num_eliminate_blocks,
-                  &row_block_size,
-                  &e_block_size,
-                  &f_block_size);
+  DetectStructure(
+      bs, num_eliminate_blocks, &row_block_size, &e_block_size, &f_block_size);
 
   EXPECT_EQ(row_block_size, expected_row_block_size);
   EXPECT_EQ(e_block_size, expected_e_block_size);
@@ -279,11 +267,8 @@ TEST(DetectStructure, DynamicFBlockSameRow) {
   int e_block_size = 0;
   int f_block_size = 0;
   const int num_eliminate_blocks = 1;
-  DetectStructure(bs,
-                  num_eliminate_blocks,
-                  &row_block_size,
-                  &e_block_size,
-                  &f_block_size);
+  DetectStructure(
+      bs, num_eliminate_blocks, &row_block_size, &e_block_size, &f_block_size);
 
   EXPECT_EQ(row_block_size, expected_row_block_size);
   EXPECT_EQ(e_block_size, expected_e_block_size);

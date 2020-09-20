@@ -32,6 +32,8 @@
 
 #include <memory>
 #include <numeric>
+
+#include "Eigen/SparseCore"
 #include "ceres/casts.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
@@ -40,8 +42,6 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
-
-#include "Eigen/SparseCore"
 
 namespace ceres {
 namespace internal {
@@ -445,11 +445,12 @@ TEST_P(RightMultiplyTest, _) {
                   0.0,
                   std::numeric_limits<double>::epsilon() * 10)
           << "\n"
-          << dense
-          << "x:\n"
+          << dense << "x:\n"
           << x.transpose() << "\n"
-          << "expected: \n" << expected_y.transpose() << "\n"
-          << "actual: \n" << actual_y.transpose();
+          << "expected: \n"
+          << expected_y.transpose() << "\n"
+          << "actual: \n"
+          << actual_y.transpose();
     }
   }
 }
@@ -513,11 +514,12 @@ TEST_P(LeftMultiplyTest, _) {
                   0.0,
                   std::numeric_limits<double>::epsilon() * 10)
           << "\n"
-          << dense
-          << "x\n"
+          << dense << "x\n"
           << x.transpose() << "\n"
-          << "expected: \n" << expected_y.transpose() << "\n"
-          << "actual: \n" << actual_y.transpose();
+          << "expected: \n"
+          << expected_y.transpose() << "\n"
+          << "actual: \n"
+          << actual_y.transpose();
     }
   }
 }
@@ -579,9 +581,10 @@ TEST_P(SquaredColumnNormTest, _) {
                   0.0,
                   std::numeric_limits<double>::epsilon() * 10)
           << "\n"
-          << dense
-          << "expected: \n" << expected.transpose() << "\n"
-          << "actual: \n" << actual.transpose();
+          << dense << "expected: \n"
+          << expected.transpose() << "\n"
+          << "actual: \n"
+          << actual.transpose();
     }
   }
 }
@@ -593,7 +596,6 @@ INSTANTIATE_TEST_SUITE_P(
                       CompressedRowSparseMatrix::UPPER_TRIANGULAR,
                       CompressedRowSparseMatrix::UNSYMMETRIC),
     ParamInfoToString);
-
 
 // TODO(sameeragarwal) Add tests for the random matrix creation methods.
 

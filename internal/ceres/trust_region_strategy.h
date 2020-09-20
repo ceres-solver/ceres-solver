@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_TRUST_REGION_STRATEGY_H_
 
 #include <string>
+
 #include "ceres/internal/port.h"
 #include "ceres/linear_solver.h"
 

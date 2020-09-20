@@ -66,7 +66,7 @@ void AssertLossFunctionIsValid(const LossFunction& loss, double s) {
   ASSERT_NEAR(fd_1, rho[1], 1e-6);
 
   // Second derivative.
-  const double fd_2 = (fwd[0] - 2*rho[0] + bwd[0]) / (kH * kH);
+  const double fd_2 = (fwd[0] - 2 * rho[0] + bwd[0]) / (kH * kH);
   ASSERT_NEAR(fd_2, rho[2], 1e-6);
 }
 }  // namespace
@@ -219,15 +219,16 @@ TEST(LossFunction, ScaledLoss) {
     AssertLossFunctionIsValid(scaled_loss, 1.792);
   }
   {
-    ScaledLoss scaled_loss(
-        new TolerantLoss(1.3, 0.1), 10, TAKE_OWNERSHIP);
+    ScaledLoss scaled_loss(new TolerantLoss(1.3, 0.1), 10, TAKE_OWNERSHIP);
     AssertLossFunctionIsValid(scaled_loss, 1.792);
   }
   {
-    ScaledLoss scaled_loss(
-        new ComposedLoss(
-            new HuberLoss(0.8), TAKE_OWNERSHIP,
-            new TolerantLoss(1.3, 0.5), TAKE_OWNERSHIP), 10, TAKE_OWNERSHIP);
+    ScaledLoss scaled_loss(new ComposedLoss(new HuberLoss(0.8),
+                                            TAKE_OWNERSHIP,
+                                            new TolerantLoss(1.3, 0.5),
+                                            TAKE_OWNERSHIP),
+                           10,
+                           TAKE_OWNERSHIP);
     AssertLossFunctionIsValid(scaled_loss, 1.792);
   }
 }
@@ -235,8 +236,7 @@ TEST(LossFunction, ScaledLoss) {
 TEST(LossFunction, LossFunctionWrapper) {
   // Initialization
   HuberLoss loss_function1(1.0);
-  LossFunctionWrapper loss_function_wrapper(new HuberLoss(1.0),
-                                            TAKE_OWNERSHIP);
+  LossFunctionWrapper loss_function_wrapper(new HuberLoss(1.0), TAKE_OWNERSHIP);
 
   double s = 0.862;
   double rho_gold[3];
@@ -281,7 +281,6 @@ TEST(LossFunction, LossFunctionWrapper) {
   for (int i = 0; i < 3; ++i) {
     EXPECT_NEAR(rho[i], rho_gold[i], 1e-12);
   }
-
 }
 
 }  // namespace internal

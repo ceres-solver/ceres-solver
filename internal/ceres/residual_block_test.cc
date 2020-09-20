@@ -31,11 +31,12 @@
 #include "ceres/residual_block.h"
 
 #include <cstdint>
-#include "gtest/gtest.h"
-#include "ceres/parameter_block.h"
-#include "ceres/sized_cost_function.h"
+
 #include "ceres/internal/eigen.h"
 #include "ceres/local_parameterization.h"
+#include "ceres/parameter_block.h"
+#include "ceres/sized_cost_function.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
@@ -43,7 +44,7 @@ namespace internal {
 using std::vector;
 
 // Trivial cost function that accepts three arguments.
-class TernaryCostFunction: public CostFunction {
+class TernaryCostFunction : public CostFunction {
  public:
   TernaryCostFunction(int num_residuals,
                       int32_t parameter_block1_size,
@@ -64,9 +65,8 @@ class TernaryCostFunction: public CostFunction {
     if (jacobians) {
       for (int k = 0; k < 3; ++k) {
         if (jacobians[k] != NULL) {
-          MatrixRef jacobian(jacobians[k],
-                             num_residuals(),
-                             parameter_block_sizes()[k]);
+          MatrixRef jacobian(
+              jacobians[k], num_residuals(), parameter_block_sizes()[k]);
           jacobian.setConstant(k);
         }
       }
@@ -109,12 +109,12 @@ TEST(ResidualBlock, EvaluteWithNoLossFunctionOrLocalParameterizations) {
   // Verify cost-only evaluation.
   double cost;
   residual_block.Evaluate(true, &cost, NULL, NULL, scratch);
-  EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
+  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
 
   // Verify cost and residual evaluation.
   double residuals[3];
   residual_block.Evaluate(true, &cost, residuals, NULL, scratch);
-  EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
+  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
   EXPECT_EQ(2.0, residuals[2]);
@@ -131,14 +131,11 @@ TEST(ResidualBlock, EvaluteWithNoLossFunctionOrLocalParameterizations) {
   jacobian_ry.setConstant(-1.0);
   jacobian_rz.setConstant(-1.0);
 
-  double *jacobian_ptrs[3] = {
-    jacobian_rx.data(),
-    jacobian_ry.data(),
-    jacobian_rz.data()
-  };
+  double* jacobian_ptrs[3] = {
+      jacobian_rx.data(), jacobian_ry.data(), jacobian_rz.data()};
 
   residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
-  EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
+  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
   EXPECT_EQ(2.0, residuals[2]);
@@ -157,18 +154,20 @@ TEST(ResidualBlock, EvaluteWithNoLossFunctionOrLocalParameterizations) {
   jacobian_ptrs[1] = NULL;  // Don't compute the jacobian for y.
 
   residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
-  EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
+  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
   EXPECT_EQ(2.0, residuals[2]);
 
+  // clang-format off
   EXPECT_TRUE((jacobian_rx.array() ==  0.0).all()) << "\n" << jacobian_rx;
   EXPECT_TRUE((jacobian_ry.array() == -1.0).all()) << "\n" << jacobian_ry;
   EXPECT_TRUE((jacobian_rz.array() ==  2.0).all()) << "\n" << jacobian_rz;
+  // clang-format on
 }
 
 // Trivial cost function that accepts three arguments.
-class LocallyParameterizedCostFunction: public SizedCostFunction<3, 2, 3, 4> {
+class LocallyParameterizedCostFunction : public SizedCostFunction<3, 2, 3, 4> {
  public:
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -189,9 +188,8 @@ class LocallyParameterizedCostFunction: public SizedCostFunction<3, 2, 3, 4> {
         //   0 1 2 3 4 ...
         //
         if (jacobians[k] != NULL) {
-          MatrixRef jacobian(jacobians[k],
-                             num_residuals(),
-                             parameter_block_sizes()[k]);
+          MatrixRef jacobian(
+              jacobians[k], num_residuals(), parameter_block_sizes()[k]);
           for (int j = 0; j < k + 2; ++j) {
             jacobian.col(j).setConstant(j);
           }
@@ -243,17 +241,17 @@ TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
   EXPECT_EQ(parameters[0], residual_block.parameter_blocks()[0]);
   EXPECT_EQ(parameters[1], residual_block.parameter_blocks()[1]);
   EXPECT_EQ(parameters[2], residual_block.parameter_blocks()[2]);
-  EXPECT_EQ(3*(2 + 4) + 3, residual_block.NumScratchDoublesForEvaluate());
+  EXPECT_EQ(3 * (2 + 4) + 3, residual_block.NumScratchDoublesForEvaluate());
 
   // Verify cost-only evaluation.
   double cost;
   residual_block.Evaluate(true, &cost, NULL, NULL, scratch);
-  EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
+  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
 
   // Verify cost and residual evaluation.
   double residuals[3];
   residual_block.Evaluate(true, &cost, residuals, NULL, scratch);
-  EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
+  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
   EXPECT_EQ(2.0, residuals[2]);
@@ -270,17 +268,16 @@ TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
   jacobian_ry.setConstant(-1.0);
   jacobian_rz.setConstant(-1.0);
 
-  double *jacobian_ptrs[3] = {
-    jacobian_rx.data(),
-    jacobian_ry.data(),
-    jacobian_rz.data()
-  };
+  double* jacobian_ptrs[3] = {
+      jacobian_rx.data(), jacobian_ry.data(), jacobian_rz.data()};
 
   residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
-  EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
+  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
   EXPECT_EQ(2.0, residuals[2]);
+
+  // clang-format off
 
   Matrix expected_jacobian_rx(3, 1);
   expected_jacobian_rx << 1.0, 1.0, 1.0;
@@ -305,6 +302,8 @@ TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
       << "\nExpected:\n " << expected_jacobian_rz
       << "\nActual:\n"   << jacobian_rz;
 
+  // clang-format on
+
   // Verify cost, residual, and partial jacobian evaluation.
   cost = 0.0;
   VectorRef(residuals, 3).setConstant(0.0);
@@ -315,7 +314,7 @@ TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
   jacobian_ptrs[1] = NULL;  // Don't compute the jacobian for y.
 
   residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
-  EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
+  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
   EXPECT_EQ(2.0, residuals[2]);

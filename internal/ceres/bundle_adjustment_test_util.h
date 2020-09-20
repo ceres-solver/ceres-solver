@@ -37,9 +37,8 @@
 #include <cstdlib>
 #include <string>
 
-#include "ceres/internal/port.h"
-
 #include "ceres/autodiff_cost_function.h"
+#include "ceres/internal/port.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/problem.h"
 #include "ceres/rotation.h"
@@ -73,29 +72,31 @@ class BundleAdjustmentProblem {
   }
 
   ~BundleAdjustmentProblem() {
-    delete []point_index_;
-    delete []camera_index_;
-    delete []observations_;
-    delete []parameters_;
+    delete[] point_index_;
+    delete[] camera_index_;
+    delete[] observations_;
+    delete[] parameters_;
   }
 
   Problem* mutable_problem() { return &problem_; }
   Solver::Options* mutable_solver_options() { return &options_; }
 
-  int num_cameras()            const { return num_cameras_;        }
-  int num_points()             const { return num_points_;         }
-  int num_observations()       const { return num_observations_;   }
-  const int* point_index()     const { return point_index_;  }
+  // clang-format off
+  int num_cameras()            const { return num_cameras_; }
+  int num_points()             const { return num_points_; }
+  int num_observations()       const { return num_observations_; }
+  const int* point_index()     const { return point_index_; }
   const int* camera_index()    const { return camera_index_; }
   const double* observations() const { return observations_; }
-  double* mutable_cameras() { return parameters_; }
-  double* mutable_points() { return parameters_  + 9 * num_cameras_; }
+  double* mutable_cameras()          { return parameters_; }
+  double* mutable_points()           { return parameters_ + 9 * num_cameras_; }
+  // clang-format on
 
   static double kResidualTolerance;
 
  private:
   void ReadData(const string& filename) {
-    FILE * fptr = fopen(filename.c_str(), "r");
+    FILE* fptr = fopen(filename.c_str(), "r");
 
     if (!fptr) {
       LOG(FATAL) << "File Error: unable to open file " << filename;
@@ -106,9 +107,8 @@ class BundleAdjustmentProblem {
     FscanfOrDie(fptr, "%d", &num_points_);
     FscanfOrDie(fptr, "%d", &num_observations_);
 
-    VLOG(1) << "Header: " << num_cameras_
-            << " " << num_points_
-            << " " << num_observations_;
+    VLOG(1) << "Header: " << num_cameras_ << " " << num_points_ << " "
+            << num_observations_;
 
     point_index_ = new int[num_observations_];
     camera_index_ = new int[num_observations_];
@@ -121,7 +121,7 @@ class BundleAdjustmentProblem {
       FscanfOrDie(fptr, "%d", camera_index_ + i);
       FscanfOrDie(fptr, "%d", point_index_ + i);
       for (int j = 0; j < 2; ++j) {
-        FscanfOrDie(fptr, "%lf", observations_ + 2*i + j);
+        FscanfOrDie(fptr, "%lf", observations_ + 2 * i + j);
       }
     }
 
@@ -141,8 +141,8 @@ class BundleAdjustmentProblem {
       // outputs a 2 dimensional residual.
       CostFunction* cost_function =
           new AutoDiffCostFunction<BundlerResidual, 2, 9, 3>(
-              new BundlerResidual(observations_[2*i + 0],
-                                  observations_[2*i + 1]));
+              new BundlerResidual(observations_[2 * i + 0],
+                                  observations_[2 * i + 1]));
 
       // Each observation corresponds to a pair of a camera and a point
       // which are identified by camera_index()[i] and
@@ -170,8 +170,8 @@ class BundleAdjustmentProblem {
     options_.parameter_tolerance = 1e-10;
   }
 
-  template<typename T>
-  void FscanfOrDie(FILE *fptr, const char *format, T *value) {
+  template <typename T>
+  void FscanfOrDie(FILE* fptr, const char* format, T* value) {
     int num_scanned = fscanf(fptr, format, value);
     if (num_scanned != 1) {
       LOG(FATAL) << "Invalid UW data file.";
@@ -186,7 +186,7 @@ class BundleAdjustmentProblem {
   struct BundlerResidual {
     // (u, v): the position of the observation with respect to the image
     // center point.
-    BundlerResidual(double u, double v): u(u), v(v) {}
+    BundlerResidual(double u, double v) : u(u), v(v) {}
 
     template <typename T>
     bool operator()(const T* const camera,
@@ -207,12 +207,12 @@ class BundleAdjustmentProblem {
       // Compute the center of distortion.  The sign change comes from
       // the camera model that Noah Snavely's Bundler assumes, whereby
       // the camera coordinate system has a negative z axis.
-      T xp = - focal * p[0] / p[2];
-      T yp = - focal * p[1] / p[2];
+      T xp = -focal * p[0] / p[2];
+      T yp = -focal * p[1] / p[2];
 
       // Apply second and fourth order radial distortion.
-      T r2 = xp*xp + yp*yp;
-      T distortion = T(1.0) + r2  * (l1 + l2  * r2);
+      T r2 = xp * xp + yp * yp;
+      T distortion = T(1.0) + r2 * (l1 + l2 * r2);
 
       residuals[0] = distortion * xp - u;
       residuals[1] = distortion * yp - v;

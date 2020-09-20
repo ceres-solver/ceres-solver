@@ -133,14 +133,14 @@ bool OutputPoses(const std::string& filename, const MapOfPoses& poses) {
   for (std::map<int,
                 Pose3d,
                 std::less<int>,
-                Eigen::aligned_allocator<std::pair<const int, Pose3d> > >::
+                Eigen::aligned_allocator<std::pair<const int, Pose3d>>>::
            const_iterator poses_iter = poses.begin();
        poses_iter != poses.end();
        ++poses_iter) {
     const std::map<int,
                    Pose3d,
                    std::less<int>,
-                   Eigen::aligned_allocator<std::pair<const int, Pose3d> > >::
+                   Eigen::aligned_allocator<std::pair<const int, Pose3d>>>::
         value_type& pair = *poses_iter;
     outfile << pair.first << " " << pair.second.p.transpose() << " "
             << pair.second.q.x() << " " << pair.second.q.y() << " "

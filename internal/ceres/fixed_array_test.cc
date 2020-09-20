@@ -15,6 +15,7 @@
 #include "ceres/internal/fixed_array.h"
 
 #include <stdio.h>
+
 #include <cstring>
 #include <list>
 #include <memory>

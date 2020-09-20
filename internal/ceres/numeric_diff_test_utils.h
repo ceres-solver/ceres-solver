@@ -51,8 +51,7 @@ class EasyFunctor {
  public:
   bool operator()(const double* x1, const double* x2, double* residuals) const;
   void ExpectCostFunctionEvaluationIsNearlyCorrect(
-      const CostFunction& cost_function,
-      NumericDiffMethodType method) const;
+      const CostFunction& cost_function, NumericDiffMethodType method) const;
 };
 
 class EasyCostFunction : public SizedCostFunction<3, 5, 5> {
@@ -76,8 +75,7 @@ class TranscendentalFunctor {
  public:
   bool operator()(const double* x1, const double* x2, double* residuals) const;
   void ExpectCostFunctionEvaluationIsNearlyCorrect(
-      const CostFunction& cost_function,
-      NumericDiffMethodType method) const;
+      const CostFunction& cost_function, NumericDiffMethodType method) const;
 };
 
 class TranscendentalCostFunction : public SizedCostFunction<2, 5, 5> {
@@ -87,6 +85,7 @@ class TranscendentalCostFunction : public SizedCostFunction<2, 5, 5> {
                 double** /* not used */) const final {
     return functor_(parameters[0], parameters[1], residuals);
   }
+
  private:
   TranscendentalFunctor functor_;
 };
@@ -117,8 +116,7 @@ class ExponentialCostFunction : public SizedCostFunction<1, 1> {
 class RandomizedFunctor {
  public:
   RandomizedFunctor(double noise_factor, unsigned int random_seed)
-      : noise_factor_(noise_factor), random_seed_(random_seed) {
-  }
+      : noise_factor_(noise_factor), random_seed_(random_seed) {}
 
   bool operator()(const double* x1, double* residuals) const;
   void ExpectCostFunctionEvaluationIsNearlyCorrect(
@@ -132,8 +130,7 @@ class RandomizedFunctor {
 class RandomizedCostFunction : public SizedCostFunction<1, 1> {
  public:
   RandomizedCostFunction(double noise_factor, unsigned int random_seed)
-      : functor_(noise_factor, random_seed) {
-  }
+      : functor_(noise_factor, random_seed) {}
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -144,7 +141,6 @@ class RandomizedCostFunction : public SizedCostFunction<1, 1> {
  private:
   RandomizedFunctor functor_;
 };
-
 
 }  // namespace internal
 }  // namespace ceres

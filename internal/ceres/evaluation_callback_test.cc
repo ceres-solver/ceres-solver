@@ -34,10 +34,10 @@
 #include <limits>
 #include <vector>
 
+#include "ceres/autodiff_cost_function.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/sized_cost_function.h"
-#include "ceres/autodiff_cost_function.h"
 #include "ceres/solver.h"
 #include "gtest/gtest.h"
 
@@ -249,8 +249,8 @@ class IncrementingEvaluationCallback : public EvaluationCallback {
  public:
   void PrepareForEvaluation(bool evaluate_jacobians,
                             bool new_evaluation_point) final {
-    (void) evaluate_jacobians;
-    (void) new_evaluation_point;
+    (void)evaluate_jacobians;
+    (void)new_evaluation_point;
     counter_ += 1.0;
   }
 

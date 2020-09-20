@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_REORDER_PROGRAM_H_
 
 #include <string>
+
 #include "ceres/internal/port.h"
 #include "ceres/parameter_block_ordering.h"
 #include "ceres/problem_impl.h"

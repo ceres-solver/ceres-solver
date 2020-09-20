@@ -30,11 +30,11 @@
 // Author: mierle@gmail.com (Keir Mierle)
 
 #include "ceres/tiny_solver.h"
-#include "ceres/tiny_solver_test_util.h"
 
 #include <algorithm>
 #include <cmath>
 
+#include "ceres/tiny_solver_test_util.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -66,9 +66,7 @@ class ExampleParametersDynamic {
     NUM_PARAMETERS = Eigen::Dynamic,
   };
 
-  int NumParameters() const {
-    return 3;
-  }
+  int NumParameters() const { return 3; }
 
   bool operator()(const double* parameters,
                   double* residuals,
@@ -85,9 +83,7 @@ class ExampleResidualsDynamic {
     NUM_PARAMETERS = 3,
   };
 
-  int NumResiduals() const {
-    return 2;
-  }
+  int NumResiduals() const { return 2; }
 
   bool operator()(const double* parameters,
                   double* residuals,
@@ -104,13 +100,9 @@ class ExampleAllDynamic {
     NUM_PARAMETERS = Eigen::Dynamic,
   };
 
-  int NumResiduals() const {
-    return 2;
-  }
+  int NumResiduals() const { return 2; }
 
-  int NumParameters() const {
-    return 3;
-  }
+  int NumParameters() const { return 3; }
 
   bool operator()(const double* parameters,
                   double* residuals,
@@ -119,7 +111,7 @@ class ExampleAllDynamic {
   }
 };
 
-template<typename Function, typename Vector>
+template <typename Function, typename Vector>
 void TestHelper(const Function& f, const Vector& x0) {
   Vector x = x0;
   Vec2 residuals;

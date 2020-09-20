@@ -31,8 +31,9 @@
 #include "ceres/small_blas.h"
 
 #include <limits>
-#include "gtest/gtest.h"
+
 #include "ceres/internal/eigen.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
@@ -62,6 +63,7 @@ TEST(BLAS, MatrixMatrixMultiply) {
       Matrix C_plus_ref = C;
       Matrix C_minus_ref = C;
       Matrix C_assign_ref = C;
+      // clang-format off
       for (int start_row_c = 0; start_row_c + kRowA < row_stride_c; ++start_row_c) {
         for (int start_col_c = 0; start_col_c + kColB < col_stride_c; ++start_col_c) {
           C_plus_ref.block(start_row_c, start_col_c, kRowA, kColB) +=
@@ -80,7 +82,6 @@ TEST(BLAS, MatrixMatrixMultiply) {
               << "start_col_c  : " << start_col_c << "\n"
               << "Cref : \n" << C_plus_ref << "\n"
               << "C: \n" << C_plus;
-
 
           C_minus_ref.block(start_row_c, start_col_c, kRowA, kColB) -=
               A * B;
@@ -117,6 +118,7 @@ TEST(BLAS, MatrixMatrixMultiply) {
               << "C: \n" << C_assign;
         }
       }
+      // clang-format on
     }
   }
 }
@@ -133,7 +135,7 @@ TEST(BLAS, MatrixTransposeMatrixMultiply) {
   B.setOnes();
 
   for (int row_stride_c = kColA; row_stride_c < 3 * kColA; ++row_stride_c) {
-    for (int col_stride_c = kColB; col_stride_c <  3 * kColB; ++col_stride_c) {
+    for (int col_stride_c = kColB; col_stride_c < 3 * kColB; ++col_stride_c) {
       Matrix C(row_stride_c, col_stride_c);
       C.setOnes();
 
@@ -144,6 +146,7 @@ TEST(BLAS, MatrixTransposeMatrixMultiply) {
       Matrix C_plus_ref = C;
       Matrix C_minus_ref = C;
       Matrix C_assign_ref = C;
+      // clang-format off
       for (int start_row_c = 0; start_row_c + kColA < row_stride_c; ++start_row_c) {
         for (int start_col_c = 0; start_col_c + kColB < col_stride_c; ++start_col_c) {
           C_plus_ref.block(start_row_c, start_col_c, kColA, kColB) +=
@@ -198,6 +201,7 @@ TEST(BLAS, MatrixTransposeMatrixMultiply) {
               << "C: \n" << C_assign;
         }
       }
+      // clang-format on
     }
   }
 }
@@ -228,6 +232,7 @@ TEST(BLAS, MatrixMatrixMultiplyNaive) {
       Matrix C_plus_ref = C;
       Matrix C_minus_ref = C;
       Matrix C_assign_ref = C;
+      // clang-format off
       for (int start_row_c = 0; start_row_c + kRowA < row_stride_c; ++start_row_c) {
         for (int start_col_c = 0; start_col_c + kColB < col_stride_c; ++start_col_c) {
           C_plus_ref.block(start_row_c, start_col_c, kRowA, kColB) +=
@@ -246,7 +251,6 @@ TEST(BLAS, MatrixMatrixMultiplyNaive) {
               << "start_col_c  : " << start_col_c << "\n"
               << "Cref : \n" << C_plus_ref << "\n"
               << "C: \n" << C_plus;
-
 
           C_minus_ref.block(start_row_c, start_col_c, kRowA, kColB) -=
               A * B;
@@ -283,6 +287,7 @@ TEST(BLAS, MatrixMatrixMultiplyNaive) {
               << "C: \n" << C_assign;
         }
       }
+      // clang-format on
     }
   }
 }
@@ -299,7 +304,7 @@ TEST(BLAS, MatrixTransposeMatrixMultiplyNaive) {
   B.setOnes();
 
   for (int row_stride_c = kColA; row_stride_c < 3 * kColA; ++row_stride_c) {
-    for (int col_stride_c = kColB; col_stride_c <  3 * kColB; ++col_stride_c) {
+    for (int col_stride_c = kColB; col_stride_c < 3 * kColB; ++col_stride_c) {
       Matrix C(row_stride_c, col_stride_c);
       C.setOnes();
 
@@ -310,6 +315,7 @@ TEST(BLAS, MatrixTransposeMatrixMultiplyNaive) {
       Matrix C_plus_ref = C;
       Matrix C_minus_ref = C;
       Matrix C_assign_ref = C;
+      // clang-format off
       for (int start_row_c = 0; start_row_c + kColA < row_stride_c; ++start_row_c) {
         for (int start_col_c = 0; start_col_c + kColB < col_stride_c; ++start_col_c) {
           C_plus_ref.block(start_row_c, start_col_c, kColA, kColB) +=
@@ -364,6 +370,7 @@ TEST(BLAS, MatrixTransposeMatrixMultiplyNaive) {
               << "C: \n" << C_assign;
         }
       }
+      // clang-format on
     }
   }
 }
@@ -388,6 +395,7 @@ TEST(BLAS, MatrixVectorMultiply) {
       Vector c_minus_ref = c;
       Vector c_assign_ref = c;
 
+      // clang-format off
       c_plus_ref += A * b;
       MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
           A.data(), num_rows_a, num_cols_a,
@@ -417,6 +425,7 @@ TEST(BLAS, MatrixVectorMultiply) {
           << "c += A * b \n"
           << "c_ref : \n" << c_assign_ref << "\n"
           << "c: \n" << c_assign;
+      // clang-format on
     }
   }
 }
@@ -441,6 +450,7 @@ TEST(BLAS, MatrixTransposeVectorMultiply) {
       Vector c_minus_ref = c;
       Vector c_assign_ref = c;
 
+      // clang-format off
       c_plus_ref += A.transpose() * b;
       MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
           A.data(), num_rows_a, num_cols_a,
@@ -470,6 +480,7 @@ TEST(BLAS, MatrixTransposeVectorMultiply) {
           << "c += A' * b \n"
           << "c_ref : \n" << c_assign_ref << "\n"
           << "c: \n" << c_assign;
+      // clang-format on
     }
   }
 }

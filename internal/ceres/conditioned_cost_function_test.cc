@@ -125,7 +125,8 @@ TEST(ConditionedCostFunction, SharedConditionersDoNotTriggerDoubleFree) {
   // Make a cost function that computes x - v2
   double v2[kTestCostFunctionSize];
   VectorRef v2_vector(v2, kTestCostFunctionSize, 1);
-  Matrix identity = Matrix::Identity(kTestCostFunctionSize, kTestCostFunctionSize);
+  Matrix identity =
+      Matrix::Identity(kTestCostFunctionSize, kTestCostFunctionSize);
   NormalPrior* difference_cost_function = new NormalPrior(identity, v2_vector);
   CostFunction* conditioner = new LinearCostFunction(2, 7);
   std::vector<CostFunction*> conditioners;

@@ -53,10 +53,10 @@ namespace ceres {
 namespace internal {
 
 using std::vector;
+using testing::_;
 using testing::AllOf;
 using testing::AnyNumber;
 using testing::HasSubstr;
-using testing::_;
 
 // Pick a (non-quadratic) function whose derivative are easy:
 //
@@ -65,12 +65,12 @@ using testing::_;
 //
 // where 'a' is a vector of the same size as 'x'. In the block
 // version, they are both block vectors, of course.
-template<int bad_block = 1, int bad_variable = 2>
+template <int bad_block = 1, int bad_variable = 2>
 class TestTerm : public CostFunction {
  public:
   // The constructor of this function needs to know the number
   // of blocks desired, and the size of each block.
-  TestTerm(int arity, int const *dim) : arity_(arity) {
+  TestTerm(int arity, int const* dim) : arity_(arity) {
     // Make 'arity' random vectors.
     a_.resize(arity_);
     for (int j = 0; j < arity_; ++j) {
@@ -107,7 +107,7 @@ class TestTerm : public CostFunction {
         if (jacobians[j]) {
           for (int u = 0; u < parameter_block_sizes()[j]; ++u) {
             // See comments before class.
-            jacobians[j][u] = - f * a_[j][u];
+            jacobians[j][u] = -f * a_[j][u];
 
             if (bad_block == j && bad_variable == u) {
               // Whoopsiedoopsie! Deliberately introduce a faulty jacobian entry
@@ -135,7 +135,7 @@ TEST(GradientCheckingCostFunction, ResidualsAndJacobiansArePreservedTest) {
 
   // Test with 3 blocks of size 2, 3 and 4.
   int const arity = 3;
-  int const dim[arity] = { 2, 3, 4 };
+  int const dim[arity] = {2, 3, 4};
 
   // Make a random set of blocks.
   vector<double*> parameters(arity);
@@ -164,17 +164,16 @@ TEST(GradientCheckingCostFunction, ResidualsAndJacobiansArePreservedTest) {
   TestTerm<-1, -1> term(arity, dim);
   GradientCheckingIterationCallback callback;
   std::unique_ptr<CostFunction> gradient_checking_cost_function(
-      CreateGradientCheckingCostFunction(&term, NULL,
+      CreateGradientCheckingCostFunction(&term,
+                                         NULL,
                                          kRelativeStepSize,
                                          kRelativePrecision,
-                                         "Ignored.", &callback));
-  term.Evaluate(&parameters[0],
-                &original_residual,
-                &original_jacobians[0]);
+                                         "Ignored.",
+                                         &callback));
+  term.Evaluate(&parameters[0], &original_residual, &original_jacobians[0]);
 
-  gradient_checking_cost_function->Evaluate(&parameters[0],
-                                            &residual,
-                                            &jacobians[0]);
+  gradient_checking_cost_function->Evaluate(
+      &parameters[0], &residual, &jacobians[0]);
   EXPECT_EQ(original_residual, residual);
 
   for (int j = 0; j < arity; j++) {
@@ -193,7 +192,7 @@ TEST(GradientCheckingCostFunction, SmokeTest) {
 
   // Test with 3 blocks of size 2, 3 and 4.
   int const arity = 3;
-  int const dim[arity] = { 2, 3, 4 };
+  int const dim[arity] = {2, 3, 4};
 
   // Make a random set of blocks.
   vector<double*> parameters(arity);
@@ -221,17 +220,18 @@ TEST(GradientCheckingCostFunction, SmokeTest) {
     TestTerm<1, 2> term(arity, dim);
     GradientCheckingIterationCallback callback;
     std::unique_ptr<CostFunction> gradient_checking_cost_function(
-        CreateGradientCheckingCostFunction(&term, NULL,
+        CreateGradientCheckingCostFunction(&term,
+                                           NULL,
                                            kRelativeStepSize,
                                            kRelativePrecision,
-                                           "Fuzzy banana", &callback));
-    EXPECT_TRUE(
-        gradient_checking_cost_function->Evaluate(&parameters[0], &residual,
-                                                  &jacobians[0]));
+                                           "Fuzzy banana",
+                                           &callback));
+    EXPECT_TRUE(gradient_checking_cost_function->Evaluate(
+        &parameters[0], &residual, &jacobians[0]));
     EXPECT_TRUE(callback.gradient_error_detected());
     EXPECT_TRUE(callback.error_log().find("Fuzzy banana") != std::string::npos);
-    EXPECT_TRUE(callback.error_log().find("(1,0,2) Relative error worse than")
-                != std::string::npos);
+    EXPECT_TRUE(callback.error_log().find(
+                    "(1,0,2) Relative error worse than") != std::string::npos);
   }
 
   // The gradient is correct, so no errors are reported.
@@ -240,13 +240,14 @@ TEST(GradientCheckingCostFunction, SmokeTest) {
     TestTerm<-1, -1> term(arity, dim);
     GradientCheckingIterationCallback callback;
     std::unique_ptr<CostFunction> gradient_checking_cost_function(
-        CreateGradientCheckingCostFunction(&term, NULL,
+        CreateGradientCheckingCostFunction(&term,
+                                           NULL,
                                            kRelativeStepSize,
                                            kRelativePrecision,
-                                           "Fuzzy banana", &callback));
-    EXPECT_TRUE(
-        gradient_checking_cost_function->Evaluate(&parameters[0], &residual,
-                                                  &jacobians[0]));
+                                           "Fuzzy banana",
+                                           &callback));
+    EXPECT_TRUE(gradient_checking_cost_function->Evaluate(
+        &parameters[0], &residual, &jacobians[0]));
     EXPECT_FALSE(callback.gradient_error_detected());
   }
 
@@ -279,7 +280,7 @@ class UnaryCostFunction : public CostFunction {
 };
 
 // Trivial cost function that accepts two arguments.
-class BinaryCostFunction: public CostFunction {
+class BinaryCostFunction : public CostFunction {
  public:
   BinaryCostFunction(int num_residuals,
                      int32_t parameter_block1_size,
@@ -300,7 +301,7 @@ class BinaryCostFunction: public CostFunction {
 };
 
 // Trivial cost function that accepts three arguments.
-class TernaryCostFunction: public CostFunction {
+class TernaryCostFunction : public CostFunction {
  public:
   TernaryCostFunction(int num_residuals,
                       int32_t parameter_block1_size,
@@ -324,7 +325,7 @@ class TernaryCostFunction: public CostFunction {
 
 // Verify that the two ParameterBlocks are formed from the same user
 // array and have the same LocalParameterization object.
-static void ParameterBlocksAreEquivalent(const ParameterBlock*  left,
+static void ParameterBlocksAreEquivalent(const ParameterBlock* left,
                                          const ParameterBlock* right) {
   CHECK(left != nullptr);
   CHECK(right != nullptr);
@@ -349,8 +350,10 @@ TEST(GradientCheckingProblemImpl, ProblemDimensionsMatch) {
   problem_impl.SetParameterBlockConstant(y);
   problem_impl.AddParameterBlock(z, 5);
   problem_impl.AddParameterBlock(w, 4, new QuaternionParameterization);
-  problem_impl.AddResidualBlock(new UnaryCostFunction(2, 3), NULL, x);
-  problem_impl.AddResidualBlock(new BinaryCostFunction(6, 5, 4) ,
+  // clang-format off
+  problem_impl.AddResidualBlock(new UnaryCostFunction(2, 3),
+                                NULL, x);
+  problem_impl.AddResidualBlock(new BinaryCostFunction(6, 5, 4),
                                 NULL, z, y);
   problem_impl.AddResidualBlock(new BinaryCostFunction(3, 3, 5),
                                 new TrivialLoss, x, z);
@@ -358,6 +361,7 @@ TEST(GradientCheckingProblemImpl, ProblemDimensionsMatch) {
                                 NULL, z, x);
   problem_impl.AddResidualBlock(new TernaryCostFunction(1, 5, 3, 4),
                                 NULL, z, x, y);
+  // clang-format on
 
   GradientCheckingIterationCallback callback;
   std::unique_ptr<ProblemImpl> gradient_checking_problem_impl(
@@ -392,8 +396,7 @@ TEST(GradientCheckingProblemImpl, ProblemDimensionsMatch) {
 
   for (int i = 0; i < program.residual_blocks().size(); ++i) {
     // Compare the sizes of the two ResidualBlocks.
-    const ResidualBlock* original_residual_block =
-        program.residual_blocks()[i];
+    const ResidualBlock* original_residual_block = program.residual_blocks()[i];
     const ResidualBlock* new_residual_block =
         gradient_checking_program.residual_blocks()[i];
     EXPECT_EQ(original_residual_block->NumParameterBlocks(),
@@ -412,15 +415,14 @@ TEST(GradientCheckingProblemImpl, ProblemDimensionsMatch) {
   }
 }
 
-
 TEST(GradientCheckingProblemImpl, ConstrainedProblemBoundsArePropagated) {
   // Parameter blocks with arbitrarily chosen initial values.
   double x[] = {1.0, 2.0, 3.0};
   ProblemImpl problem_impl;
   problem_impl.AddParameterBlock(x, 3);
   problem_impl.AddResidualBlock(new UnaryCostFunction(2, 3), NULL, x);
-  problem_impl.SetParameterLowerBound(x,0,0.9);
-  problem_impl.SetParameterUpperBound(x,1,2.5);
+  problem_impl.SetParameterLowerBound(x, 0, 0.9);
+  problem_impl.SetParameterUpperBound(x, 1, 2.5);
 
   GradientCheckingIterationCallback callback;
   std::unique_ptr<ProblemImpl> gradient_checking_problem_impl(

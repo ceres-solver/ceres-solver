@@ -48,8 +48,8 @@
 #include "ceres/sized_cost_function.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
-#include "gtest/gtest.h"
 #include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
@@ -80,7 +80,7 @@ class UnaryCostFunction : public CostFunction {
 };
 
 // Trivial cost function that accepts two arguments.
-class BinaryCostFunction: public CostFunction {
+class BinaryCostFunction : public CostFunction {
  public:
   BinaryCostFunction(int num_residuals,
                      int32_t parameter_block1_size,
@@ -101,7 +101,7 @@ class BinaryCostFunction: public CostFunction {
 };
 
 // Trivial cost function that accepts three arguments.
-class TernaryCostFunction: public CostFunction {
+class TernaryCostFunction : public CostFunction {
  public:
   TernaryCostFunction(int num_residuals,
                       int32_t parameter_block1_size,
@@ -122,7 +122,6 @@ class TernaryCostFunction: public CostFunction {
     return true;
   }
 };
-
 
 TEST(Problem, MoveConstructor) {
   Problem src;
@@ -172,23 +171,23 @@ TEST(Problem, AddResidualWithDifferentSizesOnTheSameVariableDies) {
 
   Problem problem;
   problem.AddResidualBlock(new UnaryCostFunction(2, 3), NULL, x);
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddResidualBlock(
-                                new UnaryCostFunction(
-                                    2, 4 /* 4 != 3 */), NULL, x),
-                            "different block sizes");
+  EXPECT_DEATH_IF_SUPPORTED(
+      problem.AddResidualBlock(
+          new UnaryCostFunction(2, 4 /* 4 != 3 */), NULL, x),
+      "different block sizes");
 }
 
 TEST(Problem, AddResidualWithDuplicateParametersDies) {
   double x[3], z[5];
 
   Problem problem;
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddResidualBlock(
-                                new BinaryCostFunction(2, 3, 3), NULL, x, x),
-                            "Duplicate parameter blocks");
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddResidualBlock(
-                                new TernaryCostFunction(1, 5, 3, 5),
-                                NULL, z, x, z),
-                            "Duplicate parameter blocks");
+  EXPECT_DEATH_IF_SUPPORTED(
+      problem.AddResidualBlock(new BinaryCostFunction(2, 3, 3), NULL, x, x),
+      "Duplicate parameter blocks");
+  EXPECT_DEATH_IF_SUPPORTED(
+      problem.AddResidualBlock(
+          new TernaryCostFunction(1, 5, 3, 5), NULL, z, x, z),
+      "Duplicate parameter blocks");
 }
 
 TEST(Problem, AddResidualWithIncorrectSizesOfParameterBlockDies) {
@@ -201,9 +200,9 @@ TEST(Problem, AddResidualWithIncorrectSizesOfParameterBlockDies) {
 
   // The cost function expects the size of the second parameter, z, to be 4
   // instead of 5 as declared above. This is fatal.
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddResidualBlock(
-      new BinaryCostFunction(2, 3, 4), NULL, x, z),
-               "different block sizes");
+  EXPECT_DEATH_IF_SUPPORTED(
+      problem.AddResidualBlock(new BinaryCostFunction(2, 3, 4), NULL, x, z),
+      "different block sizes");
 }
 
 TEST(Problem, AddResidualAddsDuplicatedParametersOnlyOnce) {
@@ -230,7 +229,7 @@ TEST(Problem, AddParameterWithDifferentSizesOnTheSameVariableDies) {
                             "different block sizes");
 }
 
-static double *IntToPtr(int i) {
+static double* IntToPtr(int i) {
   return reinterpret_cast<double*>(sizeof(double) * i);  // NOLINT
 }
 
@@ -246,16 +245,16 @@ TEST(Problem, AddParameterWithAliasedParametersDies) {
   // ones marked with o==o and aliasing ones marked with o--o.
 
   Problem problem;
-  problem.AddParameterBlock(IntToPtr(5),  5);  // x
+  problem.AddParameterBlock(IntToPtr(5), 5);   // x
   problem.AddParameterBlock(IntToPtr(13), 3);  // y
 
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr( 4), 2),
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr(4), 2),
                             "Aliasing detected");
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr( 4), 3),
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr(4), 3),
                             "Aliasing detected");
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr( 4), 9),
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr(4), 9),
                             "Aliasing detected");
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr( 8), 3),
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr(8), 3),
                             "Aliasing detected");
   EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr(12), 2),
                             "Aliasing detected");
@@ -263,7 +262,7 @@ TEST(Problem, AddParameterWithAliasedParametersDies) {
                             "Aliasing detected");
 
   // These ones should work.
-  problem.AddParameterBlock(IntToPtr( 2), 3);
+  problem.AddParameterBlock(IntToPtr(2), 3);
   problem.AddParameterBlock(IntToPtr(10), 3);
   problem.AddParameterBlock(IntToPtr(16), 2);
 
@@ -306,17 +305,20 @@ TEST(Problem, AddingParametersAndResidualsResultsInExpectedProblem) {
   EXPECT_EQ(7, problem.NumParameters());
 
   problem.AddParameterBlock(z, 5);
-  EXPECT_EQ(3,  problem.NumParameterBlocks());
+  EXPECT_EQ(3, problem.NumParameterBlocks());
   EXPECT_EQ(12, problem.NumParameters());
 
   // Add a parameter that has a local parameterization.
-  w[0] = 1.0; w[1] = 0.0; w[2] = 0.0; w[3] = 0.0;
+  w[0] = 1.0;
+  w[1] = 0.0;
+  w[2] = 0.0;
+  w[3] = 0.0;
   problem.AddParameterBlock(w, 4, new QuaternionParameterization);
-  EXPECT_EQ(4,  problem.NumParameterBlocks());
+  EXPECT_EQ(4, problem.NumParameterBlocks());
   EXPECT_EQ(16, problem.NumParameters());
 
   problem.AddResidualBlock(new UnaryCostFunction(2, 3), NULL, x);
-  problem.AddResidualBlock(new BinaryCostFunction(6, 5, 4) , NULL, z, y);
+  problem.AddResidualBlock(new BinaryCostFunction(6, 5, 4), NULL, z, y);
   problem.AddResidualBlock(new BinaryCostFunction(3, 3, 5), NULL, x, z);
   problem.AddResidualBlock(new BinaryCostFunction(7, 5, 3), NULL, z, x);
   problem.AddResidualBlock(new TernaryCostFunction(1, 5, 3, 4), NULL, z, x, y);
@@ -328,12 +330,10 @@ TEST(Problem, AddingParametersAndResidualsResultsInExpectedProblem) {
 
 class DestructorCountingCostFunction : public SizedCostFunction<3, 4, 5> {
  public:
-  explicit DestructorCountingCostFunction(int *num_destructions)
+  explicit DestructorCountingCostFunction(int* num_destructions)
       : num_destructions_(num_destructions) {}
 
-  virtual ~DestructorCountingCostFunction() {
-    *num_destructions_ += 1;
-  }
+  virtual ~DestructorCountingCostFunction() { *num_destructions_ += 1; }
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -463,8 +463,7 @@ struct DynamicProblem : public ::testing::TestWithParam<bool> {
   // The next block of functions until the end are only for testing the
   // residual block removals.
   void ExpectParameterBlockContainsResidualBlock(
-      double* values,
-      ResidualBlock* residual_block) {
+      double* values, ResidualBlock* residual_block) {
     ParameterBlock* parameter_block =
         FindOrDie(problem->parameter_map(), values);
     EXPECT_TRUE(ContainsKey(*(parameter_block->mutable_residual_blocks()),
@@ -478,12 +477,9 @@ struct DynamicProblem : public ::testing::TestWithParam<bool> {
   }
 
   // Degenerate case.
-  void ExpectParameterBlockContains(double* values) {
-    ExpectSize(values, 0);
-  }
+  void ExpectParameterBlockContains(double* values) { ExpectSize(values, 0); }
 
-  void ExpectParameterBlockContains(double* values,
-                                    ResidualBlock* r1) {
+  void ExpectParameterBlockContains(double* values, ResidualBlock* r1) {
     ExpectSize(values, 1);
     ExpectParameterBlockContainsResidualBlock(values, r1);
   }
@@ -598,8 +594,8 @@ TEST(Problem, RemoveParameterBlockWithUnknownPtrDies) {
   Problem problem;
   problem.AddParameterBlock(x, 3);
 
-  EXPECT_DEATH_IF_SUPPORTED(
-      problem.RemoveParameterBlock(y), "Parameter block not found:");
+  EXPECT_DEATH_IF_SUPPORTED(problem.RemoveParameterBlock(y),
+                            "Parameter block not found:");
 }
 
 TEST(Problem, GetParameterization) {
@@ -610,7 +606,7 @@ TEST(Problem, GetParameterization) {
   problem.AddParameterBlock(x, 3);
   problem.AddParameterBlock(y, 2);
 
-  LocalParameterization* parameterization =  new IdentityParameterization(3);
+  LocalParameterization* parameterization = new IdentityParameterization(3);
   problem.SetParameterization(x, parameterization);
   EXPECT_EQ(problem.GetParameterization(x), parameterization);
   EXPECT_TRUE(problem.GetParameterization(y) == NULL);
@@ -626,8 +622,7 @@ TEST(Problem, ParameterBlockQueryTest) {
   vector<int> constant_parameters;
   constant_parameters.push_back(0);
   problem.SetParameterization(
-      x,
-      new SubsetParameterization(3, constant_parameters));
+      x, new SubsetParameterization(3, constant_parameters));
   EXPECT_EQ(problem.ParameterBlockSize(x), 3);
   EXPECT_EQ(problem.ParameterBlockLocalSize(x), 2);
   EXPECT_EQ(problem.ParameterBlockLocalSize(y), 4);
@@ -714,6 +709,8 @@ TEST_P(DynamicProblem, RemoveParameterBlockWithResiduals) {
   EXPECT_EQ(z, GetParameterBlock(1)->user_state());
   EXPECT_EQ(w, GetParameterBlock(2)->user_state());
 
+  // clang-format off
+
   // Add all combinations of cost functions.
   CostFunction* cost_yzw = new TernaryCostFunction(1, 4, 5, 3);
   CostFunction* cost_yz  = new BinaryCostFunction (1, 4, 5);
@@ -764,12 +761,16 @@ TEST_P(DynamicProblem, RemoveParameterBlockWithResiduals) {
   problem->RemoveParameterBlock(y);
   EXPECT_EQ(0, problem->NumParameterBlocks());
   EXPECT_EQ(0, NumResidualBlocks());
+
+  // clang-format on
 }
 
 TEST_P(DynamicProblem, RemoveResidualBlock) {
   problem->AddParameterBlock(y, 4);
   problem->AddParameterBlock(z, 5);
   problem->AddParameterBlock(w, 3);
+
+  // clang-format off
 
   // Add all combinations of cost functions.
   CostFunction* cost_yzw = new TernaryCostFunction(1, 4, 5, 3);
@@ -885,12 +886,16 @@ TEST_P(DynamicProblem, RemoveResidualBlock) {
     ExpectParameterBlockContains(z);
     ExpectParameterBlockContains(w);
   }
+
+  // clang-format on
 }
 
 TEST_P(DynamicProblem, RemoveInvalidResidualBlockDies) {
   problem->AddParameterBlock(y, 4);
   problem->AddParameterBlock(z, 5);
   problem->AddParameterBlock(w, 3);
+
+  // clang-format off
 
   // Add all combinations of cost functions.
   CostFunction* cost_yzw = new TernaryCostFunction(1, 4, 5, 3);
@@ -908,6 +913,8 @@ TEST_P(DynamicProblem, RemoveInvalidResidualBlockDies) {
   ResidualBlock* r_y   = problem->AddResidualBlock(cost_y,   NULL, y);
   ResidualBlock* r_z   = problem->AddResidualBlock(cost_z,   NULL, z);
   ResidualBlock* r_w   = problem->AddResidualBlock(cost_w,   NULL, w);
+
+  // clang-format on
 
   // Remove r_yzw.
   problem->RemoveResidualBlock(r_yzw);
@@ -938,7 +945,7 @@ TEST_P(DynamicProblem, RemoveInvalidResidualBlockDies) {
 }
 
 // Check that a null-terminated array, a, has the same elements as b.
-template<typename T>
+template <typename T>
 void ExpectVectorContainsUnordered(const T* a, const vector<T>& b) {
   // Compute the size of a.
   int size = 0;
@@ -963,8 +970,8 @@ void ExpectVectorContainsUnordered(const T* a, const vector<T>& b) {
 }
 
 static void ExpectProblemHasResidualBlocks(
-    const ProblemImpl &problem,
-    const ResidualBlockId *expected_residual_blocks) {
+    const ProblemImpl& problem,
+    const ResidualBlockId* expected_residual_blocks) {
   vector<ResidualBlockId> residual_blocks;
   problem.GetResidualBlocks(&residual_blocks);
   ExpectVectorContainsUnordered(expected_residual_blocks, residual_blocks);
@@ -974,6 +981,8 @@ TEST_P(DynamicProblem, GetXXXBlocksForYYYBlock) {
   problem->AddParameterBlock(y, 4);
   problem->AddParameterBlock(z, 5);
   problem->AddParameterBlock(w, 3);
+
+  // clang-format off
 
   // Add all combinations of cost functions.
   CostFunction* cost_yzw = new TernaryCostFunction(1, 4, 5, 3);
@@ -1070,6 +1079,8 @@ TEST_P(DynamicProblem, GetXXXBlocksForYYYBlock) {
         get_parameter_blocks_cases[i].expected_parameter_blocks,
         parameter_blocks);
   }
+
+  // clang-format on
 }
 
 INSTANTIATE_TEST_SUITE_P(OptionsInstantiation,
@@ -1108,8 +1119,8 @@ class QuadraticCostFunction : public CostFunction {
     for (int j = 0; j < kNumParameterBlocks; ++j) {
       if (jacobians[j] != NULL) {
         MatrixRef(jacobians[j], kNumResiduals, kNumResiduals) =
-            (-2.0 * (j + 1.0) *
-             ConstVectorRef(parameters[j], kNumResiduals)).asDiagonal();
+            (-2.0 * (j + 1.0) * ConstVectorRef(parameters[j], kNumResiduals))
+                .asDiagonal();
       }
     }
 
@@ -1142,31 +1153,20 @@ class ProblemEvaluateTest : public ::testing::Test {
     parameter_blocks_.push_back(parameters_ + 2);
     parameter_blocks_.push_back(parameters_ + 4);
 
-
     CostFunction* cost_function = new QuadraticCostFunction<2, 2>;
 
     // f(x, y)
-    residual_blocks_.push_back(
-        problem_.AddResidualBlock(cost_function,
-                                  NULL,
-                                  parameters_,
-                                  parameters_ + 2));
+    residual_blocks_.push_back(problem_.AddResidualBlock(
+        cost_function, NULL, parameters_, parameters_ + 2));
     // g(y, z)
-    residual_blocks_.push_back(
-        problem_.AddResidualBlock(cost_function,
-                                  NULL, parameters_ + 2,
-                                  parameters_ + 4));
+    residual_blocks_.push_back(problem_.AddResidualBlock(
+        cost_function, NULL, parameters_ + 2, parameters_ + 4));
     // h(z, x)
-    residual_blocks_.push_back(
-        problem_.AddResidualBlock(cost_function,
-                                  NULL,
-                                  parameters_ + 4,
-                                  parameters_));
+    residual_blocks_.push_back(problem_.AddResidualBlock(
+        cost_function, NULL, parameters_ + 4, parameters_));
   }
 
-  void TearDown() {
-    EXPECT_TRUE(problem_.program().IsValid());
-  }
+  void TearDown() { EXPECT_TRUE(problem_.program().IsValid()); }
 
   void EvaluateAndCompare(const Problem::EvaluateOptions& options,
                           const int expected_num_rows,
@@ -1225,8 +1225,8 @@ class ProblemEvaluateTest : public ::testing::Test {
                          expected.num_cols,
                          expected.cost,
                          (i & 1) ? expected.residuals : NULL,
-                         (i & 2) ? expected.gradient  : NULL,
-                         (i & 4) ? expected.jacobian  : NULL);
+                         (i & 2) ? expected.gradient : NULL,
+                         (i & 4) ? expected.jacobian : NULL);
     }
   }
 
@@ -1236,8 +1236,8 @@ class ProblemEvaluateTest : public ::testing::Test {
   vector<ResidualBlockId> residual_blocks_;
 };
 
-
 TEST_F(ProblemEvaluateTest, MultipleParameterAndResidualBlocks) {
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     6, 6,
@@ -1263,11 +1263,13 @@ TEST_F(ProblemEvaluateTest, MultipleParameterAndResidualBlocks) {
                      0.0, -8.0,   0.0,   0.0,   0.0, -12.0
     }
   };
+  // clang-format on
 
   CheckAllEvaluationCombinations(Problem::EvaluateOptions(), expected);
 }
 
 TEST_F(ProblemEvaluateTest, ParameterAndResidualBlocksPassedInOptions) {
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     6, 6,
@@ -1293,6 +1295,7 @@ TEST_F(ProblemEvaluateTest, ParameterAndResidualBlocksPassedInOptions) {
                      0.0, -8.0,   0.0,   0.0,   0.0, -12.0
     }
   };
+  // clang-format on
 
   Problem::EvaluateOptions evaluate_options;
   evaluate_options.parameter_blocks = parameter_blocks_;
@@ -1301,6 +1304,7 @@ TEST_F(ProblemEvaluateTest, ParameterAndResidualBlocksPassedInOptions) {
 }
 
 TEST_F(ProblemEvaluateTest, ReorderedResidualBlocks) {
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     6, 6,
@@ -1326,6 +1330,7 @@ TEST_F(ProblemEvaluateTest, ReorderedResidualBlocks) {
                      0.0,  0.0,   0.0,  -8.0,   0.0, -24.0
     }
   };
+  // clang-format on
 
   Problem::EvaluateOptions evaluate_options;
   evaluate_options.parameter_blocks = parameter_blocks_;
@@ -1338,7 +1343,9 @@ TEST_F(ProblemEvaluateTest, ReorderedResidualBlocks) {
   CheckAllEvaluationCombinations(evaluate_options, expected);
 }
 
-TEST_F(ProblemEvaluateTest, ReorderedResidualBlocksAndReorderedParameterBlocks) {
+TEST_F(ProblemEvaluateTest,
+       ReorderedResidualBlocksAndReorderedParameterBlocks) {
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     6, 6,
@@ -1364,6 +1371,7 @@ TEST_F(ProblemEvaluateTest, ReorderedResidualBlocksAndReorderedParameterBlocks) 
                       0.0, -24.0,   0.0,  -8.0,   0.0,   0.0
     }
   };
+  // clang-format on
 
   Problem::EvaluateOptions evaluate_options;
   // z, y, x
@@ -1380,6 +1388,7 @@ TEST_F(ProblemEvaluateTest, ReorderedResidualBlocksAndReorderedParameterBlocks) 
 }
 
 TEST_F(ProblemEvaluateTest, ConstantParameterBlock) {
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     6, 6,
@@ -1407,12 +1416,14 @@ TEST_F(ProblemEvaluateTest, ConstantParameterBlock) {
                      0.0, -8.0,   0.0,   0.0,   0.0, -12.0
     }
   };
+  // clang-format on
 
   problem_.SetParameterBlockConstant(parameters_ + 2);
   CheckAllEvaluationCombinations(Problem::EvaluateOptions(), expected);
 }
 
 TEST_F(ProblemEvaluateTest, ExcludedAResidualBlock) {
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     4, 6,
@@ -1435,6 +1446,7 @@ TEST_F(ProblemEvaluateTest, ExcludedAResidualBlock) {
                      0.0, -8.0,   0.0,   0.0,   0.0, -12.0
     }
   };
+  // clang-format on
 
   Problem::EvaluateOptions evaluate_options;
   evaluate_options.residual_blocks.push_back(residual_blocks_[0]);
@@ -1444,6 +1456,7 @@ TEST_F(ProblemEvaluateTest, ExcludedAResidualBlock) {
 }
 
 TEST_F(ProblemEvaluateTest, ExcludedParameterBlock) {
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     6, 4,
@@ -1470,6 +1483,7 @@ TEST_F(ProblemEvaluateTest, ExcludedParameterBlock) {
                      0.0, -8.0,   0.0, -12.0
     }
   };
+  // clang-format on
 
   Problem::EvaluateOptions evaluate_options;
   // x, z
@@ -1480,6 +1494,7 @@ TEST_F(ProblemEvaluateTest, ExcludedParameterBlock) {
 }
 
 TEST_F(ProblemEvaluateTest, ExcludedParameterBlockAndExcludedResidualBlock) {
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     4, 4,
@@ -1503,6 +1518,7 @@ TEST_F(ProblemEvaluateTest, ExcludedParameterBlockAndExcludedResidualBlock) {
                      0.0,  0.0,   0.0, -24.0,
     }
   };
+  // clang-format on
 
   Problem::EvaluateOptions evaluate_options;
   // x, z
@@ -1515,6 +1531,7 @@ TEST_F(ProblemEvaluateTest, ExcludedParameterBlockAndExcludedResidualBlock) {
 }
 
 TEST_F(ProblemEvaluateTest, LocalParameterization) {
+  // clang-format off
   ExpectedEvaluation expected = {
     // Rows/columns
     6, 5,
@@ -1540,12 +1557,12 @@ TEST_F(ProblemEvaluateTest, LocalParameterization) {
                      0.0, -8.0,   0.0,   0.0, -12.0
     }
   };
+  // clang-format on
 
   vector<int> constant_parameters;
   constant_parameters.push_back(0);
-  problem_.SetParameterization(parameters_ + 2,
-                               new SubsetParameterization(2,
-                                                          constant_parameters));
+  problem_.SetParameterization(
+      parameters_ + 2, new SubsetParameterization(2, constant_parameters));
 
   CheckAllEvaluationCombinations(Problem::EvaluateOptions(), expected);
 }

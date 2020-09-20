@@ -34,8 +34,9 @@
 #define CERES_INTERNAL_SPARSE_MATRIX_H_
 
 #include <cstdio>
-#include "ceres/linear_operator.h"
+
 #include "ceres/internal/eigen.h"
+#include "ceres/linear_operator.h"
 #include "ceres/types.h"
 
 namespace ceres {

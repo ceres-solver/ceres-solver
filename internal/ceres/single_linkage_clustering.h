@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_SINGLE_LINKAGE_CLUSTERING_H_
 
 #include <unordered_map>
+
 #include "ceres/graph.h"
 
 namespace ceres {

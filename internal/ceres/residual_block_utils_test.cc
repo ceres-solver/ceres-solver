@@ -28,15 +28,17 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include "ceres/residual_block_utils.h"
+
 #include <cmath>
 #include <limits>
 #include <memory>
-#include "gtest/gtest.h"
+
+#include "ceres/cost_function.h"
 #include "ceres/parameter_block.h"
 #include "ceres/residual_block.h"
-#include "ceres/residual_block_utils.h"
-#include "ceres/cost_function.h"
 #include "ceres/sized_cost_function.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
@@ -49,10 +51,7 @@ static void CheckEvaluation(const CostFunction& cost_function, bool is_good) {
   std::vector<ParameterBlock*> parameter_blocks;
   parameter_blocks.push_back(&parameter_block);
 
-  ResidualBlock residual_block(&cost_function,
-                               NULL,
-                               parameter_blocks,
-                               -1);
+  ResidualBlock residual_block(&cost_function, NULL, parameter_blocks, -1);
 
   std::unique_ptr<double[]> scratch(
       new double[residual_block.NumScratchDoublesForEvaluate()]);
@@ -60,18 +59,16 @@ static void CheckEvaluation(const CostFunction& cost_function, bool is_good) {
   double cost;
   double residuals;
   double jacobian;
-  double* jacobians[] = { &jacobian };
+  double* jacobians[] = {&jacobian};
 
-  EXPECT_EQ(residual_block.Evaluate(true,
-                                    &cost,
-                                    &residuals,
-                                    jacobians,
-                                    scratch.get()), is_good);
+  EXPECT_EQ(residual_block.Evaluate(
+                true, &cost, &residuals, jacobians, scratch.get()),
+            is_good);
 }
 
 // A CostFunction that behaves normaly, i.e., it computes numerically
 // valid residuals and jacobians.
-class GoodCostFunction: public SizedCostFunction<1, 1> {
+class GoodCostFunction : public SizedCostFunction<1, 1> {
  public:
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -86,7 +83,7 @@ class GoodCostFunction: public SizedCostFunction<1, 1> {
 
 // The following four CostFunctions simulate the different ways in
 // which user code can cause ResidualBlock::Evaluate to fail.
-class NoResidualUpdateCostFunction: public SizedCostFunction<1, 1> {
+class NoResidualUpdateCostFunction : public SizedCostFunction<1, 1> {
  public:
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -100,7 +97,7 @@ class NoResidualUpdateCostFunction: public SizedCostFunction<1, 1> {
   }
 };
 
-class NoJacobianUpdateCostFunction: public SizedCostFunction<1, 1> {
+class NoJacobianUpdateCostFunction : public SizedCostFunction<1, 1> {
  public:
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -114,7 +111,7 @@ class NoJacobianUpdateCostFunction: public SizedCostFunction<1, 1> {
   }
 };
 
-class BadResidualCostFunction: public SizedCostFunction<1, 1> {
+class BadResidualCostFunction : public SizedCostFunction<1, 1> {
  public:
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -127,7 +124,7 @@ class BadResidualCostFunction: public SizedCostFunction<1, 1> {
   }
 };
 
-class BadJacobianCostFunction: public SizedCostFunction<1, 1> {
+class BadJacobianCostFunction : public SizedCostFunction<1, 1> {
  public:
   bool Evaluate(double const* const* parameters,
                 double* residuals,

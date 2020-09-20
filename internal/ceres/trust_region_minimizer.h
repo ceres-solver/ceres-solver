@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
 
 #include <memory>
+
 #include "ceres/internal/eigen.h"
 #include "ceres/minimizer.h"
 #include "ceres/solver.h"

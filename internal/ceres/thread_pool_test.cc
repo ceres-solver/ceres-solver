@@ -33,16 +33,15 @@
 
 #ifdef CERES_USE_CXX_THREADS
 
-#include "ceres/thread_pool.h"
-
 #include <chrono>
 #include <condition_variable>
 #include <mutex>
 #include <thread>
 
+#include "ceres/thread_pool.h"
+#include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
@@ -59,14 +58,14 @@ TEST(ThreadPool, AddTask) {
 
     for (int i = 0; i < num_tasks; ++i) {
       thread_pool.AddTask([&]() {
-          std::lock_guard<std::mutex> lock(mutex);
-          ++value;
-          condition.notify_all();
-        });
+        std::lock_guard<std::mutex> lock(mutex);
+        ++value;
+        condition.notify_all();
+      });
     }
 
     std::unique_lock<std::mutex> lock(mutex);
-    condition.wait(lock, [&](){return value == num_tasks;});
+    condition.wait(lock, [&]() { return value == num_tasks; });
   }
 
   EXPECT_EQ(num_tasks, value);
@@ -116,7 +115,7 @@ TEST(ThreadPool, ResizingDuringExecution) {
 
     // Unlock the mutex to unblock all of the threads and wait until all of the
     // tasks are completed.
-    condition.wait(lock, [&](){return value == num_tasks;});
+    condition.wait(lock, [&]() { return value == num_tasks; });
   }
 
   EXPECT_EQ(num_tasks, value);
@@ -197,4 +196,4 @@ TEST(ThreadPool, Resize) {
 }  // namespace internal
 }  // namespace ceres
 
-#endif // CERES_USE_CXX_THREADS
+#endif  // CERES_USE_CXX_THREADS

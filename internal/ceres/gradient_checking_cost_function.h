@@ -60,6 +60,7 @@ class GradientCheckingIterationCallback : public IterationCallback {
   // Retrieve error status (not thread safe).
   bool gradient_error_detected() const { return gradient_error_detected_; }
   const std::string& error_log() const { return error_log_; }
+
  private:
   bool gradient_error_detected_;
   std::string error_log_;

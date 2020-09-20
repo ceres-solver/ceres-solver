@@ -46,8 +46,8 @@
 #include "ceres/types.h"
 
 #ifdef CERES_USE_EIGEN_SPARSE
-#include "Eigen/SparseCholesky"
 #include "Eigen/OrderingMethods"
+#include "Eigen/SparseCholesky"
 #endif
 
 namespace ceres {
@@ -179,8 +179,7 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* solution) final;
   LinearSolver::Summary SolveReducedLinearSystemUsingConjugateGradients(
-      const LinearSolver::PerSolveOptions& per_solve_options,
-      double* solution);
+      const LinearSolver::PerSolveOptions& per_solve_options, double* solution);
 
   // Size of the blocks in the Schur complement.
   std::vector<int> blocks_;

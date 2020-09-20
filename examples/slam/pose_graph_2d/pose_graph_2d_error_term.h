@@ -78,7 +78,7 @@ class PoseGraph2dErrorTerm {
     const Eigen::Matrix<T, 2, 1> p_a(*x_a, *y_a);
     const Eigen::Matrix<T, 2, 1> p_b(*x_b, *y_b);
 
-    Eigen::Map<Eigen::Matrix<T, 3, 1> > residuals_map(residuals_ptr);
+    Eigen::Map<Eigen::Matrix<T, 3, 1>> residuals_map(residuals_ptr);
 
     residuals_map.template head<2>() =
         RotationMatrix2D(*yaw_a).transpose() * (p_b - p_a) - p_ab_.cast<T>();

@@ -32,6 +32,7 @@
 
 #include <memory>
 #include <string>
+
 #include "ceres/casts.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
@@ -43,7 +44,7 @@ namespace ceres {
 namespace internal {
 
 class BlockSparseMatrixTest : public ::testing::Test {
- protected :
+ protected:
   void SetUp() final {
     std::unique_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(2));
@@ -159,12 +160,12 @@ TEST_F(BlockSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
 
     A_->RightMultiply(x.data(), y_a.data());
     B_->RightMultiply(x.data(), y_b.data());
-    EXPECT_LT((y_a.head(B_->num_rows()) - y_b.head(B_->num_rows())).norm(), 1e-12);
+    EXPECT_LT((y_a.head(B_->num_rows()) - y_b.head(B_->num_rows())).norm(),
+              1e-12);
     Vector expected_tail = Vector::Zero(A_->num_cols());
     expected_tail(i) = diagonal(i);
     EXPECT_LT((y_a.tail(A_->num_cols()) - expected_tail).norm(), 1e-12);
   }
-
 
   A_->DeleteRowBlocks(column_blocks.size());
   EXPECT_EQ(A_->num_rows(), B_->num_rows());
@@ -212,7 +213,6 @@ TEST(BlockSparseMatrix, CreateDiagonalMatrix) {
     EXPECT_NEAR(y[i], diagonal[i], std::numeric_limits<double>::epsilon());
   }
 }
-
 
 }  // namespace internal
 }  // namespace ceres
