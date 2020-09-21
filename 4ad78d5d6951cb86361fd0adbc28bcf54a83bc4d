@@ -100,6 +100,24 @@
     },
     {
       "key": {
+        "uuid": "663bf60e_3309fe46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-21T01:30:43Z",
+      "side": 1,
+      "message": "Whatever is tested on travis: https://travis-ci.org/github/NikolausDemmel/ceres-solver/builds/728846616\n\nSo looks like build \u0026 test on macos and Linux, and compile also for IOS and Android.\n\nI didn\u0027t do any manual tests.",
+      "parentUuid": "e5034b2f_bba20a0f",
+      "revId": "4ad78d5d6951cb86361fd0adbc28bcf54a83bc4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f034efad_01e12b2f",
         "filename": "internal/ceres/gmock_main.cc",
         "patchSetId": 1
@@ -132,6 +150,24 @@
       "revId": "4ad78d5d6951cb86361fd0adbc28bcf54a83bc4d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89109f96_5e58a0b5",
+        "filename": "internal/ceres/gmock_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-21T01:30:43Z",
+      "side": 1,
+      "message": "fixed",
+      "parentUuid": "a05ffddd_2fa163dd",
+      "revId": "4ad78d5d6951cb86361fd0adbc28bcf54a83bc4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
