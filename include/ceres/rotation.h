@@ -521,18 +521,18 @@ inline void UnitQuaternionRotatePoint(const T q[4],
   DCHECK_NE(pt, result) << "Inplace rotation is not supported.";
 
   // clang-format off
-  const T t2 =  q[0] * q[1];
-  const T t3 =  q[0] * q[2];
-  const T t4 =  q[0] * q[3];
-  const T t5 = -q[1] * q[1];
-  const T t6 =  q[1] * q[2];
-  const T t7 =  q[1] * q[3];
-  const T t8 = -q[2] * q[2];
-  const T t9 =  q[2] * q[3];
-  const T t1 = -q[3] * q[3];
-  result[0] = T(2) * ((t8 + t1) * pt[0] + (t6 - t4) * pt[1] + (t3 + t7) * pt[2]) + pt[0];  // NOLINT
-  result[1] = T(2) * ((t4 + t6) * pt[0] + (t5 + t1) * pt[1] + (t9 - t2) * pt[2]) + pt[1];  // NOLINT
-  result[2] = T(2) * ((t7 - t3) * pt[0] + (t2 + t9) * pt[1] + (t5 + t8) * pt[2]) + pt[2];  // NOLINT
+  T uv0 = q[2] * pt[2] - q[3] * pt[1];
+  T uv1 = q[3] * pt[0] - q[1] * pt[2];
+  T uv2 = q[1] * pt[1] - q[2] * pt[0];
+  uv0 += uv0;
+  uv1 += uv1;
+  uv2 += uv2;
+  result[0] = pt[0] + q[0] * uv0;
+  result[1] = pt[1] + q[0] * uv1;
+  result[2] = pt[2] + q[0] * uv2;
+  result[0] += q[2] * uv2 - q[3] * uv1;
+  result[1] += q[3] * uv0 - q[1] * uv2;
+  result[2] += q[1] * uv1 - q[2] * uv0;
   // clang-format on
 }
 
