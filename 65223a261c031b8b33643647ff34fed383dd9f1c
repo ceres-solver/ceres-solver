@@ -33,6 +33,312 @@
       "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ea6e787_b58d7baa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Thanks Taylor, in addition to some missing #includes where the macros are used, I had to make the following edits to get this to compile on macOS (fixing symbol visibility errors).\n\ndiff --git a/internal/ceres/schur_eliminator.h b/internal/ceres/schur_eliminator.h\nindex 66fcb4d..42c016e 100644\n--- a/internal/ceres/schur_eliminator.h\n+++ b/internal/ceres/schur_eliminator.h\n@@ -164,7 +164,7 @@ namespace internal {\n // 2008 for an example of such use].\n //\n // Example usage: Please see schur_complement_solver.cc\n-class SchurEliminatorBase {\n+class CERES_EXPORT_INTERNAL SchurEliminatorBase {\n  public:\n   virtual ~SchurEliminatorBase() {}\n\ndiff --git a/internal/ceres/subset_preconditioner.h b/internal/ceres/subset_preconditioner.h\nindex 6f3c9ec..d17a8d2 100644\n--- a/internal/ceres/subset_preconditioner.h\n+++ b/internal/ceres/subset_preconditioner.h\n@@ -32,6 +32,7 @@\n #define CERES_INTERNAL_SUBSET_PRECONDITIONER_H_\n\n #include \u003cmemory\u003e\n+#include \"ceres/internal/port.h\"\n #include \"ceres/preconditioner.h\"\n\n namespace ceres {\n@@ -65,7 +66,7 @@ class InnerProductComputer;\n // computationally expensive this preconditioner will be.\n //\n // See the tests for example usage.\n-class SubsetPreconditioner : public BlockSparseMatrixPreconditioner {\n+class CERES_EXPORT_INTERNAL SubsetPreconditioner : public BlockSparseMatrixPreconditioner {\n  public:\n   SubsetPreconditioner(const Preconditioner::Options\u0026 options,\n                        const BlockSparseMatrix\u0026 A);\ndiff --git a/internal/ceres/trust_region_preprocessor.h b/internal/ceres/trust_region_preprocessor.h\nindex 9597905..2804213 100644\n--- a/internal/ceres/trust_region_preprocessor.h\n+++ b/internal/ceres/trust_region_preprocessor.h\n@@ -32,11 +32,12 @@\n #define CERES_INTERNAL_TRUST_REGION_PREPROCESSOR_H_\n\n #include \"ceres/preprocessor.h\"\n+#include \"ceres/internal/port.h\"\n\n namespace ceres {\n namespace internal {\n\n-class TrustRegionPreprocessor : public Preprocessor {\n+class CERES_EXPORT_INTERNAL TrustRegionPreprocessor : public Preprocessor {\n  public:\n   virtual ~TrustRegionPreprocessor();\n   bool Preprocess(const Solver::Options\u0026 options,\n\n",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53c5e7a2_dcef5e4e",
+        "filename": "internal/ceres/implicit_schur_complement.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing #include ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd3b5ae8_191fe35b",
+        "filename": "internal/ceres/inner_product_computer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ecc2c77_176100a4",
+        "filename": "internal/ceres/iterative_schur_complement_solver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66f27b4_029233f0",
+        "filename": "internal/ceres/levenberg_marquardt_strategy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d33c2ef_65743875",
+        "filename": "internal/ceres/line_search_preprocessor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9632252_ed74682d",
+        "filename": "internal/ceres/linear_operator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7b4138_3213378a",
+        "filename": "internal/ceres/linear_solver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95181650_c57d81c8",
+        "filename": "internal/ceres/numeric_diff_test_utils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a6cf3f_636d4a09",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c74fe6_d7197d0f",
+        "filename": "internal/ceres/parameter_block_ordering.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5625eaa7_d5b001e9",
+        "filename": "internal/ceres/partitioned_matrix_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa5d947_aee3aba4",
+        "filename": "internal/ceres/single_linkage_clustering.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356cbd65_2ba005dc",
+        "filename": "internal/ceres/sparse_matrix.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b346e5f_ba58c31e",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e0b31b_7b35dc07",
+        "filename": "internal/ceres/triplet_sparse_matrix.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab731a7_0e1d2ed9",
+        "filename": "internal/ceres/trust_region_minimizer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1397ce6f_1c9f372c",
+        "filename": "internal/ceres/visibility.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-24T22:18:52Z",
+      "side": 1,
+      "message": "Missing ceres/internal/port.h",
+      "revId": "65223a261c031b8b33643647ff34fed383dd9f1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
