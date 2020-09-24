@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07ecbf80_b8886ac9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6412
+      },
+      "writtenOn": "2020-09-24T18:20:52Z",
+      "side": 1,
+      "message": "It seems that original ceres::UnitQuaternionRotatePoint is based on idea: convert to rotation matrix, then rotate. It seems quite inefficient, since obtained rotation matrix is not cached anywhere and had to be recomputed each time UnitQuaternionRotatePoint is called.\n\nUpdated code uses ideas from here:\nhttps://fgiesen.wordpress.com/2019/02/09/rotating-a-single-vector-using-a-quaternion/\nThe same code also implemented in Eigen v.3.3.7 , under Eigen::Quaternion::_transformVector().\n\nThe code was tested under context of Structure-From-Motion tasks inside bundle adjustment cost functions with COLMAP code base, and behaves quite well.\n\nI did not measure the execution time, but when by counting multiply-adds original ceres::UnitQuaternionRotatePoint has around 24(21 if not counting negations) multiplications and 18 additions, while proposed one has 15 multiplications and 15 additions.",
+      "revId": "aceb52bbccef0b417b41cc7ed26a621071274db4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
