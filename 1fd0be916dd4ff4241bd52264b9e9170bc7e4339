@@ -16,6 +16,23 @@
       "revId": "1fd0be916dd4ff4241bd52264b9e9170bc7e4339",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37425ac6_9716cf18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-28T17:56:51Z",
+      "side": 1,
+      "message": "For shame indeed.",
+      "revId": "1fd0be916dd4ff4241bd52264b9e9170bc7e4339",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
