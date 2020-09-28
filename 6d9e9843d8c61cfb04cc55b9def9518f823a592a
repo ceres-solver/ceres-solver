@@ -51,6 +51,24 @@
       "revId": "6d9e9843d8c61cfb04cc55b9def9518f823a592a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c330a88d_77fe5f7c",
+        "filename": "internal/ceres/partitioned_matrix_view_template.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-28T22:36:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3070a7d_678bec87",
+      "revId": "6d9e9843d8c61cfb04cc55b9def9518f823a592a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
