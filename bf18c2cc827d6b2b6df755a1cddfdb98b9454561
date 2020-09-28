@@ -33,6 +33,24 @@
       "revId": "bf18c2cc827d6b2b6df755a1cddfdb98b9454561",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c6b4e7b_fbcb5f91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-28T14:19:11Z",
+      "side": 1,
+      "message": "Hi Sameer,\n\nsure, whatever works for your workflow. It was just a fun exercise for me. Feel free to reject of course.\n\nThe job can be marked \"allow_failure\", looks like this: https://travis-ci.org/github/NikolausDemmel/ceres-solver/builds/730948829; I hope it also skips email notifications then, but I didn\u0027t test.\n\nTo ensure formatting, you don\u0027t need to wait for travis. Running clang-format manually on all changed files, or using ./script/format_all.sh before committing should ensure everything is up to date. But I can see how it might still be annoying if that is not generally part of your workflow anyway, or if you have to follow-up after a patch from someone who didn\u0027t run clang-format, just because of a minor formatting thing that wasn\u0027t noticed in review.\n\nBest,\nNikolaus",
+      "parentUuid": "6cd88de8_66869155",
+      "revId": "bf18c2cc827d6b2b6df755a1cddfdb98b9454561",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
