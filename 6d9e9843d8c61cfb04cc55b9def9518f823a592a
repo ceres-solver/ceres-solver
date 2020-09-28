@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30d7008b_4e52cf27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-28T22:16:09Z",
+      "side": 1,
+      "message": "Sorry about the regression.\n\nI didn\u0027t check for new warnings or performance regressions, just unit tests via CI jobs.",
+      "revId": "6d9e9843d8c61cfb04cc55b9def9518f823a592a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cad6ee64_1c2c7fcb",
+        "filename": "internal/ceres/partitioned_matrix_view_template.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-28T22:16:09Z",
+      "side": 1,
+      "message": "This include order matters as well, right? Since linear_solver includes ceres/eigen.h indirectly it seems. Should a comment be added to prevent future inadverted changes? Same in schur_eliminator_template.py",
+      "revId": "6d9e9843d8c61cfb04cc55b9def9518f823a592a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
