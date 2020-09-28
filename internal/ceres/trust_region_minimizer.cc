@@ -83,6 +83,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
   while (FinalizeIterationAndCheckIfMinimizerCanContinue()) {
     iteration_start_time_in_secs_ = WallTimeInSeconds();
+    const double old_gradient_norm = iteration_summary_.gradient_norm;
+    const double old_gradient_max_norm = iteration_summary_.gradient_max_norm;
     iteration_summary_ = IterationSummary();
     iteration_summary_.iteration =
         solver_summary->iterations.back().iteration + 1;
@@ -111,12 +113,18 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       return;
     }
 
+
+
     if (IsStepSuccessful()) {
       RETURN_IF_ERROR_AND_LOG(HandleSuccessfulStep());
-      continue;
+    } else {
+      // Declare the step unsuccessful and inform the trust region strategy.
+      iteration_summary_.step_is_successful = false;
+      iteration_summary_.cost = candidate_cost_ + solver_summary_->fixed_cost;
+      iteration_summary_.gradient_norm = old_gradient_norm;
+      iteration_summary_.gradient_max_norm = old_gradient_max_norm;
+      strategy_->StepRejected(iteration_summary_.relative_decrease);
     }
-
-    HandleUnsuccessfulStep();
   }
 }
 
@@ -791,13 +799,6 @@ bool TrustRegionMinimizer::HandleSuccessfulStep() {
   strategy_->StepAccepted(iteration_summary_.relative_decrease);
   step_evaluator_->StepAccepted(candidate_cost_, model_cost_change_);
   return true;
-}
-
-// Declare the step unsuccessful and inform the trust region strategy.
-void TrustRegionMinimizer::HandleUnsuccessfulStep() {
-  iteration_summary_.step_is_successful = false;
-  strategy_->StepRejected(iteration_summary_.relative_decrease);
-  iteration_summary_.cost = candidate_cost_ + solver_summary_->fixed_cost;
 }
 
 }  // namespace internal
