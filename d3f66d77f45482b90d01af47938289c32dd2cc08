@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4888deeb_8d947b86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-28T00:29:31Z",
+      "side": 1,
+      "message": "Last batch of formatting fixes that affect many files.",
+      "revId": "d3f66d77f45482b90d01af47938289c32dd2cc08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
