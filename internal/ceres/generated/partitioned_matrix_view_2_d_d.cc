@@ -44,7 +44,6 @@
 
 #ifndef CERES_RESTRICT_SCHUR_SPECIALIZATION
 
-#include "ceres/internal/eigen.h"
 #include "ceres/partitioned_matrix_view_impl.h"
 
 namespace ceres {
