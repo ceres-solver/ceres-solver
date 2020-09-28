@@ -33,6 +33,24 @@
       "revId": "6d9e9843d8c61cfb04cc55b9def9518f823a592a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3070a7d_678bec87",
+        "filename": "internal/ceres/partitioned_matrix_view_template.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-28T22:30:58Z",
+      "side": 1,
+      "message": "This is the factory header, this does not matter. Its only partitioned_matrix_view_impl.h that has the macro definition.",
+      "parentUuid": "cad6ee64_1c2c7fcb",
+      "revId": "6d9e9843d8c61cfb04cc55b9def9518f823a592a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
