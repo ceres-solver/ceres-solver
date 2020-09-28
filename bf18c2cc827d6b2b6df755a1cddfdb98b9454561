@@ -16,6 +16,23 @@
       "revId": "bf18c2cc827d6b2b6df755a1cddfdb98b9454561",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cd88de8_66869155",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-28T12:33:01Z",
+      "side": 1,
+      "message": "Hi Nikolaus,\nI am in two minds about this. On one hand it is nice to not accumulate formatting crud, on the other its both time consuming to trigger a formatting check via travis and also weird to break the build because of formatting changes -- especially for small fixes.\nSameer\n",
+      "revId": "bf18c2cc827d6b2b6df755a1cddfdb98b9454561",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
