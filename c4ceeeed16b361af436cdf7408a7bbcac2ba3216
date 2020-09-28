@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1213c5a8_9d8a92dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-28T19:17:17Z",
+      "side": 1,
+      "message": "uncorrect -\u003e incorrect, it\u0027s kind of like how 0.9 is not actually 0.0",
+      "revId": "c4ceeeed16b361af436cdf7408a7bbcac2ba3216",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb372b2_aa0e1072",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-09-28T19:17:17Z",
+      "side": 1,
+      "message": "Minor thing, otherwise LGTM",
+      "revId": "c4ceeeed16b361af436cdf7408a7bbcac2ba3216",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
