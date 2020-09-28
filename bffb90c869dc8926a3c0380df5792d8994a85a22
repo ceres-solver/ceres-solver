@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "437e7b6b_2f5b932e",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-28T19:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c3b303f_24aba8d4",
+      "revId": "bffb90c869dc8926a3c0380df5792d8994a85a22",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3c62a98_a180cf8c",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "bffb90c869dc8926a3c0380df5792d8994a85a22",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f401ee31_3e7ce0f6",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-09-28T19:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3c62a98_a180cf8c",
+      "revId": "bffb90c869dc8926a3c0380df5792d8994a85a22",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
