@@ -40,10 +40,12 @@
 namespace ceres {
 namespace internal {
 
-#define CERES_EIGEN_VERSION                                     \
-  CERES_TO_STRING(EIGEN_WORLD_VERSION)                          \
-  "." CERES_TO_STRING(EIGEN_MAJOR_VERSION) "." CERES_TO_STRING( \
-      EIGEN_MINOR_VERSION)
+// clang-format off
+#define CERES_EIGEN_VERSION                 \
+  CERES_TO_STRING(EIGEN_WORLD_VERSION) "."  \
+  CERES_TO_STRING(EIGEN_MAJOR_VERSION) "."  \
+  CERES_TO_STRING(EIGEN_MINOR_VERSION)
+// clang-format on
 
 std::string VersionString() {
   std::string value = std::string(CERES_VERSION_STRING);

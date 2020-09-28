@@ -106,8 +106,11 @@
 #include <vector>
 
 // For appropriate definition of CERES_EXPORT macro.
-#include "ceres/internal/disable_warnings.h"
+// clang-format off
 #include "ceres/internal/port.h"
+// clang-format on
+
+#include "ceres/internal/disable_warnings.h"
 
 // Log severity level constants.
 // clang-format off
