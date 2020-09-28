@@ -39,7 +39,6 @@
 //
 // This file is generated using generate_template_specializations.py.
 
-#include "ceres/internal/eigen.h"
 #include "ceres/schur_eliminator_impl.h"
 
 namespace ceres {

@@ -39,10 +39,8 @@
 //
 // This file is generated using generate_template_specializations.py.
 
-#include "ceres/partitioned_matrix_view.h"
-
-#include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
+#include "ceres/partitioned_matrix_view.h"
 
 namespace ceres {
 namespace internal {

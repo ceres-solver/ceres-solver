@@ -93,7 +93,6 @@ HEADER = """// Ceres Solver - A fast non-linear least squares minimizer
 """
 
 DYNAMIC_FILE = """
-#include "ceres/internal/eigen.h"
 #include "ceres/schur_eliminator_impl.h"
 
 namespace ceres {
@@ -111,7 +110,6 @@ SPECIALIZATION_FILE = """
 
 #ifndef CERES_RESTRICT_SCHUR_SPECIALIZATION
 
-#include "ceres/internal/eigen.h"
 #include "ceres/schur_eliminator_impl.h"
 
 namespace ceres {
@@ -126,10 +124,8 @@ template class SchurEliminator<%s, %s, %s>;
 """
 
 FACTORY_FILE_HEADER = """
-#include "ceres/schur_eliminator.h"
-
-#include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
+#include "ceres/schur_eliminator.h"
 
 namespace ceres {
 namespace internal {

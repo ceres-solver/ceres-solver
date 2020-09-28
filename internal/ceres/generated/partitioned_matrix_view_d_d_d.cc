@@ -39,7 +39,6 @@
 //
 // This file is generated using generate_template_specializations.py.
 
-#include "ceres/internal/eigen.h"
 #include "ceres/partitioned_matrix_view_impl.h"
 
 namespace ceres {
