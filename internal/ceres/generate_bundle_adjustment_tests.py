@@ -130,24 +130,22 @@ namespace internal {
 
 TEST_F(BundleAdjustmentTest,
        %(test_class_name)s) {  // NOLINT
-   BundleAdjustmentProblem bundle_adjustment_problem;
-   Solver::Options* options =
-     bundle_adjustment_problem.mutable_solver_options();
-   options->num_threads = %(num_threads)s;
-   options->linear_solver_type = %(linear_solver)s;
-   options->sparse_linear_algebra_library_type = %(sparse_backend)s;
-   options->preconditioner_type = %(preconditioner)s;
-   if (%(ordering)s) {
-     options->linear_solver_ordering.reset();
-   }
-   Problem* problem = bundle_adjustment_problem.mutable_problem();
-   RunSolverForConfigAndExpectResidualsMatch(*options, problem);
+  BundleAdjustmentProblem bundle_adjustment_problem;
+  Solver::Options* options = bundle_adjustment_problem.mutable_solver_options();
+  options->num_threads = %(num_threads)s;
+  options->linear_solver_type = %(linear_solver)s;
+  options->sparse_linear_algebra_library_type = %(sparse_backend)s;
+  options->preconditioner_type = %(preconditioner)s;
+  if (%(ordering)s) {
+    options->linear_solver_ordering.reset();
+  }
+  Problem* problem = bundle_adjustment_problem.mutable_problem();
+  RunSolverForConfigAndExpectResidualsMatch(*options, problem);
 }
 
 }  // namespace internal
 }  // namespace ceres
-%(preprocessor_conditions_end)s
-""")
+%(preprocessor_conditions_end)s""")
 
 def camelcasify(token):
   """Convert capitalized underscore tokens to camel case"""

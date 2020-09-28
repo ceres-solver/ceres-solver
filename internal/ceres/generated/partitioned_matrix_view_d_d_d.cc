@@ -39,14 +39,15 @@
 //
 // This file is generated using generate_template_specializations.py.
 
-
-#include "ceres/partitioned_matrix_view_impl.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/partitioned_matrix_view_impl.h"
 
 namespace ceres {
 namespace internal {
 
-template class PartitionedMatrixView<Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic>;
+template class PartitionedMatrixView<Eigen::Dynamic,
+                                     Eigen::Dynamic,
+                                     Eigen::Dynamic>;
 
 }  // namespace internal
 }  // namespace ceres

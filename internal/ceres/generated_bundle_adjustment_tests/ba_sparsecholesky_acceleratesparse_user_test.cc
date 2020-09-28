@@ -44,22 +44,20 @@ namespace internal {
 
 TEST_F(BundleAdjustmentTest,
        SparseNormalCholesky_AccelerateSparse_UserOrdering) {  // NOLINT
-   BundleAdjustmentProblem bundle_adjustment_problem;
-   Solver::Options* options =
-     bundle_adjustment_problem.mutable_solver_options();
-   options->num_threads = 1;
-   options->linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-   options->sparse_linear_algebra_library_type = ACCELERATE_SPARSE;
-   options->preconditioner_type = IDENTITY;
-   if (kUserOrdering) {
-     options->linear_solver_ordering.reset();
-   }
-   Problem* problem = bundle_adjustment_problem.mutable_problem();
-   RunSolverForConfigAndExpectResidualsMatch(*options, problem);
+  BundleAdjustmentProblem bundle_adjustment_problem;
+  Solver::Options* options = bundle_adjustment_problem.mutable_solver_options();
+  options->num_threads = 1;
+  options->linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options->sparse_linear_algebra_library_type = ACCELERATE_SPARSE;
+  options->preconditioner_type = IDENTITY;
+  if (kUserOrdering) {
+    options->linear_solver_ordering.reset();
+  }
+  Problem* problem = bundle_adjustment_problem.mutable_problem();
+  RunSolverForConfigAndExpectResidualsMatch(*options, problem);
 }
 
 }  // namespace internal
 }  // namespace ceres
 
 #endif  // CERES_NO_ACCELERATE_SPARSE
-

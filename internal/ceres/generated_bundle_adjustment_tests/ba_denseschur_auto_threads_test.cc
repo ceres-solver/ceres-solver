@@ -44,22 +44,20 @@ namespace internal {
 
 TEST_F(BundleAdjustmentTest,
        DenseSchur_AutomaticOrdering_Threads) {  // NOLINT
-   BundleAdjustmentProblem bundle_adjustment_problem;
-   Solver::Options* options =
-     bundle_adjustment_problem.mutable_solver_options();
-   options->num_threads = 4;
-   options->linear_solver_type = DENSE_SCHUR;
-   options->sparse_linear_algebra_library_type = NO_SPARSE;
-   options->preconditioner_type = IDENTITY;
-   if (kAutomaticOrdering) {
-     options->linear_solver_ordering.reset();
-   }
-   Problem* problem = bundle_adjustment_problem.mutable_problem();
-   RunSolverForConfigAndExpectResidualsMatch(*options, problem);
+  BundleAdjustmentProblem bundle_adjustment_problem;
+  Solver::Options* options = bundle_adjustment_problem.mutable_solver_options();
+  options->num_threads = 4;
+  options->linear_solver_type = DENSE_SCHUR;
+  options->sparse_linear_algebra_library_type = NO_SPARSE;
+  options->preconditioner_type = IDENTITY;
+  if (kAutomaticOrdering) {
+    options->linear_solver_ordering.reset();
+  }
+  Problem* problem = bundle_adjustment_problem.mutable_problem();
+  RunSolverForConfigAndExpectResidualsMatch(*options, problem);
 }
 
 }  // namespace internal
 }  // namespace ceres
 
 #endif  // CERES_NO_THREADS
-

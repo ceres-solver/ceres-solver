@@ -44,22 +44,20 @@ namespace internal {
 
 TEST_F(BundleAdjustmentTest,
        IterativeSchur_SuiteSparse_ClusterJacobi_UserOrdering) {  // NOLINT
-   BundleAdjustmentProblem bundle_adjustment_problem;
-   Solver::Options* options =
-     bundle_adjustment_problem.mutable_solver_options();
-   options->num_threads = 1;
-   options->linear_solver_type = ITERATIVE_SCHUR;
-   options->sparse_linear_algebra_library_type = SUITE_SPARSE;
-   options->preconditioner_type = CLUSTER_JACOBI;
-   if (kUserOrdering) {
-     options->linear_solver_ordering.reset();
-   }
-   Problem* problem = bundle_adjustment_problem.mutable_problem();
-   RunSolverForConfigAndExpectResidualsMatch(*options, problem);
+  BundleAdjustmentProblem bundle_adjustment_problem;
+  Solver::Options* options = bundle_adjustment_problem.mutable_solver_options();
+  options->num_threads = 1;
+  options->linear_solver_type = ITERATIVE_SCHUR;
+  options->sparse_linear_algebra_library_type = SUITE_SPARSE;
+  options->preconditioner_type = CLUSTER_JACOBI;
+  if (kUserOrdering) {
+    options->linear_solver_ordering.reset();
+  }
+  Problem* problem = bundle_adjustment_problem.mutable_problem();
+  RunSolverForConfigAndExpectResidualsMatch(*options, problem);
 }
 
 }  // namespace internal
 }  // namespace ceres
 
 #endif  // CERES_NO_SUITESPARSE
-
