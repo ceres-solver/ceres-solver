@@ -81,7 +81,6 @@ class TrustRegionMinimizer : public Minimizer {
   bool MinTrustRegionRadiusReached();
 
   bool IsStepSuccessful();
-  void HandleUnsuccessfulStep();
   bool HandleSuccessfulStep();
   bool HandleInvalidStep();
 
