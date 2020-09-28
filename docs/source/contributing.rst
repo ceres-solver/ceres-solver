@@ -56,7 +56,7 @@ Setting up your Environment
 
    On Mac and Linux, the ``CMake`` build will download and enable
    the Gerrit pre-commit hook automatically. This pre-submit hook
-   creates `Change-Id: ...` lines in your commits.
+   creates ``Change-Id: ...`` lines in your commits.
 
    If this does not work OR you are on Windows, execute the
    following in the root directory of the local ``git`` repository:
@@ -86,12 +86,26 @@ Setting up your Environment
      a recent `Git for Windows <https://git-scm.com/download/win>`_ install to
      enable automatic lookup in the ``%USERPROFILE%\.gitcookies``.
 
+6. Install ``clang-format``.
+
+   * Mac ``brew install clang-format``.
+   * Linux ``sudo apt-get install clang-format``.
+   * Windows. You can get clang-format with `clang or stand-alone via
+     npm <https://superuser.com/a/1505297/1141693>`_.
+
+   You can ensure all sources files are correctly formatted before
+   committing by manually running ``clang-format -i FILENAME``, by
+   running the script ``./scripts/format_all.sh``, or by configuring
+   your editor to format upon saving.
+
 Submitting a change
 ===================
 
 1. Make your changes against master or whatever branch you
-   like. Commit your changes as one patch. When you commit, the Gerrit
-   hook will add a `Change-Id:` line as the last line of the commit.
+   like. Ensure that the changes are formatted according to
+   ``clang-format``. Commit your changes as one patch. When you
+   commit, the Gerrit hook will add a ``Change-Id:`` line as the last
+   line of the commit.
 
    Make sure that your commit message is formatted in the `50/72 style
    <http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>`_.
