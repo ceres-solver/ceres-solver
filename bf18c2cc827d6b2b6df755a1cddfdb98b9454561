@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6207c89_1453db82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-28T00:31:37Z",
+      "side": 1,
+      "message": "Looks like this on travis: https://travis-ci.org/github/NikolausDemmel/ceres-solver/jobs/730804730\n\nThe new CI job would fail if either running the file generation scripts or ./scripts/format_all.sh results in changed files compared to the committed files.",
+      "revId": "bf18c2cc827d6b2b6df755a1cddfdb98b9454561",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
