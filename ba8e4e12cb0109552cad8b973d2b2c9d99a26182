@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08f449a8_ad335575",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6412
+      },
+      "writtenOn": "2020-09-30T18:58:23Z",
+      "side": 1,
+      "message": "Added benchmark for unit quaternion rotation. It depends on googlebenchmark,\nI have run that on a web: https://quick-bench.com/q/RgVitjKbGLZMszyG9ivMFzvo0CE\n\nAnd it seems that for double proposed function is nearly twice as fast (remember to subtract dummy times used for generating random unit quaternion and vector to multiply).\n\n",
+      "revId": "ba8e4e12cb0109552cad8b973d2b2c9d99a26182",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
