@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "132a64cf_cc880a5f",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-30T05:49:53Z",
+      "side": 1,
+      "message": "I\u0027m a few days off. maybe next week. just wanted to make sure the test passes after rebase.",
+      "parentUuid": "7fb8a70a_7652bc68",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 26
+      },
+      "revId": "7cde7302f5a5b84f3f7fdf84f671b50e1843fee1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03e19a61_07ec952a",
         "filename": "travis/static_checks.sh",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2020-09-29T19:54:28Z",
       "side": 1,
       "message": "why are you running the generation again?",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 40
+      },
+      "revId": "7cde7302f5a5b84f3f7fdf84f671b50e1843fee1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0161f89d_945f6d17",
+        "filename": "travis/static_checks.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-09-30T05:49:53Z",
+      "side": 1,
+      "message": "the idea is to test that the generated files match the ones that are checked in, in case something went wrong last time they were changed.",
+      "parentUuid": "03e19a61_07ec952a",
       "range": {
         "startLine": 14,
         "startChar": 7,
