@@ -16,6 +16,23 @@
       "revId": "ba8e4e12cb0109552cad8b973d2b2c9d99a26182",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7cfaa1b_b629578f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2020-10-01T13:13:00Z",
+      "side": 1,
+      "message": "Thanks Mykyta, I will take a look. Is your plan to contribute the benchmark to Ceres? in which case it should follow the google style guide.\nThe other thing that struck me is that you are generating random numbers inside the profiling loop, which will heavily bias the results, or you have to do subtraction tricks. I suggest generating some large number of random quaternions and points outside the loop and then just looping over them inside the profiling loop. ",
+      "revId": "ba8e4e12cb0109552cad8b973d2b2c9d99a26182",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
