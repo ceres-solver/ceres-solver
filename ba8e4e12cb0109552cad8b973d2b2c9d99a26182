@@ -33,6 +33,24 @@
       "revId": "ba8e4e12cb0109552cad8b973d2b2c9d99a26182",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49c0c7d0_57b1fb3f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6412
+      },
+      "writtenOn": "2020-10-02T19:43:33Z",
+      "side": 1,
+      "message": "For a moment I am generating random numbers inside the profiling loop, but since I have 3 benchmarks: 1)  DummyRNG{Double,Float} - only for random quaternions generation, 2) CeresOrigUnitQRot{Double,Float}- quaternions generation + existent ceres::UnitQuaternionRotatePoint, 3) CeresProposedUnitQRot{Double,Float} -quaternion generation + proposed ceres::UnitQuaternionRotatePoint - then I can subtract the time of benchmark 1) from benchmark 2) and 3) and compare.\n\nThat exactly what I did, when looking visually at the bar chart at quick-bench.com link I provide in a first message.\n\nRandom number generation is taken from Numerical Recipes 3rd edition book, and everywhere random generation is initialized to the same seed value.\n\nI do not know, is it necessary to contribute the benchmark code, but if so - I will work more on it to fulfill your suggestions about benchmark organization and following the style guide.\n\nThat was a quick benchmark attempt. Playing with various compilers and compilation options shows that even this quick benchmark serves the purpose - shows that proposed code executes faster almost in any situation.",
+      "parentUuid": "b7cfaa1b_b629578f",
+      "revId": "ba8e4e12cb0109552cad8b973d2b2c9d99a26182",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
