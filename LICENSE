@@ -229,7 +229,8 @@ POSSIBILITY OF SUCH DAMAGE.
    See the License for the specific language governing permissions and
    limitations under the License.
 
-Some of the code in the examples directory derives from libmv, which is distributed under the MIT license as described below
+Some of the code in the examples directory derives from libmv, which is 
+distributed under the MIT license as described below
 
 
 Copyright (c) 2007-2011 libmv authors.
