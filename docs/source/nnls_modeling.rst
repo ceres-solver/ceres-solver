@@ -380,7 +380,7 @@ the corresponding accessors. This information will be verified by the
       template <typename CostFunctor,
                 NumericDiffMethodType method = CENTRAL,
                 int kNumResiduals,  // Number of residuals, or ceres::DYNAMIC.
-                int... Ns>           // Size of each parameter block.
+                int... Ns>          // Size of each parameter block.
       class NumericDiffCostFunction : public
       SizedCostFunction<kNumResiduals, Ns> {
       };
