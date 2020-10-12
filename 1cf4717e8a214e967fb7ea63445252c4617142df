@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e475fa20_96f5dd53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-10-12T18:32:35Z",
+      "side": 1,
+      "message": "LGTM, although IMO these macros shouldn\u0027t be purged from glog but that\u0027s a different battle and it sounds like it\u0027s already been fought and lost.",
+      "revId": "1cf4717e8a214e967fb7ea63445252c4617142df",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
