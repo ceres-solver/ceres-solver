@@ -685,10 +685,12 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   // type of linear solver being used.
   evaluator_options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
 #ifdef CERES_NO_THREADS
-  LOG_IF(WARNING, evaluate_options.num_threads > 1)
-      << "No threading support is compiled into this binary; "
-      << "only evaluate_options.num_threads = 1 is supported. Switching "
-      << "to single threaded mode.";
+  if (evaluate_options.num_threads > 1) {
+    LOG(WARNING)
+        << "No threading support is compiled into this binary; "
+        << "only evaluate_options.num_threads = 1 is supported. Switching "
+        << "to single threaded mode.";
+  }
   evaluator_options.num_threads = 1;
 #else
   evaluator_options.num_threads = evaluate_options.num_threads;

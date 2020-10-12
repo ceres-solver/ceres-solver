@@ -123,7 +123,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                            nullptr)) {
     summary->termination_type = FAILURE;
     summary->message = "Initial cost and jacobian evaluation failed.";
-    LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
+    if (is_not_silent) {
+      LOG(WARNING) << "Terminating: " << summary->message;
+    }
     return;
   }
 
@@ -132,7 +134,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     summary->message =
         "Initial cost and jacobian evaluation failed. More details: " +
         summary->message;
-    LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
+    if (is_not_silent) {
+      LOG(WARNING) << "Terminating: " << summary->message;
+    }
     return;
   }
 
@@ -147,7 +151,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                      iteration_summary.gradient_max_norm,
                      options.gradient_tolerance);
     summary->termination_type = CONVERGENCE;
-    VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+    if (is_not_silent) {
+      VLOG(1) << "Terminating: " << summary->message;
+    }
     return;
   }
 
@@ -193,7 +199,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       options.line_search_type, line_search_options, &summary->message));
   if (line_search.get() == nullptr) {
     summary->termination_type = FAILURE;
-    LOG_IF(ERROR, is_not_silent) << "Terminating: " << summary->message;
+    if (is_not_silent) {
+      LOG(ERROR) << "Terminating: " << summary->message;
+    }
     return;
   }
 
@@ -209,7 +217,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     if (iteration_summary.iteration >= options.max_num_iterations) {
       summary->message = "Maximum number of iterations reached.";
       summary->termination_type = NO_CONVERGENCE;
-      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+      if (is_not_silent) {
+        VLOG(1) << "Terminating: " << summary->message;
+      }
       break;
     }
 
@@ -218,7 +228,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     if (total_solver_time >= options.max_solver_time_in_seconds) {
       summary->message = "Maximum solver time reached.";
       summary->termination_type = NO_CONVERGENCE;
-      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+      if (is_not_silent) {
+        VLOG(1) << "Terminating: " << summary->message;
+      }
       break;
     }
 
@@ -246,7 +258,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
           "max_num_line_search_direction_restarts: %d reached.",
           options.max_num_line_search_direction_restarts);
       summary->termination_type = FAILURE;
-      LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
+      if (is_not_silent) {
+        LOG(WARNING) << "Terminating: " << summary->message;
+      }
       break;
     } else if (!line_search_status) {
       // Restart line search direction with gradient descent on first iteration
@@ -255,14 +269,17 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                options.max_num_line_search_direction_restarts);
 
       ++num_line_search_direction_restarts;
-      LOG_IF(WARNING, is_not_silent)
-          << "Line search direction algorithm: "
-          << LineSearchDirectionTypeToString(options.line_search_direction_type)
-          << ", failed to produce a valid new direction at "
-          << "iteration: " << iteration_summary.iteration
-          << ". Restarting, number of restarts: "
-          << num_line_search_direction_restarts << " / "
-          << options.max_num_line_search_direction_restarts << " [max].";
+      if (is_not_silent) {
+        LOG(WARNING) << "Line search direction algorithm: "
+                     << LineSearchDirectionTypeToString(
+                            options.line_search_direction_type)
+                     << ", failed to produce a valid new direction at "
+                     << "iteration: " << iteration_summary.iteration
+                     << ". Restarting, number of restarts: "
+                     << num_line_search_direction_restarts << " / "
+                     << options.max_num_line_search_direction_restarts
+                     << " [max].";
+      }
       line_search_direction.reset(
           LineSearchDirection::Create(line_search_direction_options));
       current_state.search_direction = -current_state.gradient;
@@ -296,7 +313,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
           current_state.directional_derivative,
           (current_state.cost - previous_state.cost));
       summary->termination_type = FAILURE;
-      LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
+      if (is_not_silent) {
+        LOG(WARNING) << "Terminating: " << summary->message;
+      }
       break;
     }
 
@@ -313,7 +332,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
           initial_step_size,
           current_state.cost,
           current_state.directional_derivative);
-      LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
+      if (is_not_silent) {
+        LOG(WARNING) << "Terminating: " << summary->message;
+      }
       summary->termination_type = FAILURE;
       break;
     }
@@ -340,7 +361,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                                nullptr)) {
         summary->termination_type = FAILURE;
         summary->message = "Cost and jacobian evaluation failed.";
-        LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
+        if (is_not_silent) {
+          LOG(WARNING) << "Terminating: " << summary->message;
+        }
         return;
       }
     }
@@ -354,7 +377,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
           "Step failed to evaluate. This should not happen as the step was "
           "valid when it was selected by the line search. More details: " +
           summary->message;
-      LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
+      if (is_not_silent) {
+        LOG(WARNING) << "Terminating: " << summary->message;
+      }
       break;
     }
 
@@ -411,7 +436,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
            (x_norm + options.parameter_tolerance)),
           options.parameter_tolerance);
       summary->termination_type = CONVERGENCE;
-      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+      if (is_not_silent) {
+        VLOG(1) << "Terminating: " << summary->message;
+      }
       return;
     }
 
@@ -422,7 +449,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
           iteration_summary.gradient_max_norm,
           options.gradient_tolerance);
       summary->termination_type = CONVERGENCE;
-      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+      if (is_not_silent) {
+        VLOG(1) << "Terminating: " << summary->message;
+      }
       break;
     }
 
@@ -436,7 +465,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
           std::abs(iteration_summary.cost_change) / previous_state.cost,
           options.function_tolerance);
       summary->termination_type = CONVERGENCE;
-      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+      if (is_not_silent) {
+        VLOG(1) << "Terminating: " << summary->message;
+      }
       break;
     }
   }

@@ -267,17 +267,18 @@ bool LineSearchOptionsAreValid(const Solver::Options& options, string* error) {
   // on max/min step size change during line search prevent bisection scaling
   // from occurring. Warn only, as this is likely a user mistake, but one which
   // does not prevent us from continuing.
-  LOG_IF(WARNING,
-         (options.line_search_interpolation_type == ceres::BISECTION &&
-          (options.max_line_search_step_contraction > 0.5 ||
-           options.min_line_search_step_contraction < 0.5)))
-      << "Line search interpolation type is BISECTION, but specified "
-      << "max_line_search_step_contraction: "
-      << options.max_line_search_step_contraction << ", and "
-      << "min_line_search_step_contraction: "
-      << options.min_line_search_step_contraction
-      << ", prevent bisection (0.5) scaling, continuing with solve regardless.";
-
+  if (options.line_search_interpolation_type == ceres::BISECTION &&
+      (options.max_line_search_step_contraction > 0.5 ||
+       options.min_line_search_step_contraction < 0.5)) {
+    LOG(WARNING)
+        << "Line search interpolation type is BISECTION, but specified "
+        << "max_line_search_step_contraction: "
+        << options.max_line_search_step_contraction << ", and "
+        << "min_line_search_step_contraction: "
+        << options.min_line_search_step_contraction
+        << ", prevent bisection (0.5) scaling, continuing with solve "
+           "regardless.";
+  }
   return true;
 }
 
@@ -426,7 +427,9 @@ void Minimize(internal::PreprocessedProblem* pp, Solver::Summary* summary) {
         "Function tolerance reached. "
         "No non-constant parameter blocks found.";
     summary->termination_type = CONVERGENCE;
-    VLOG_IF(1, pp->options.logging_type != SILENT) << summary->message;
+    if (pp->options.logging_type != SILENT) {
+      VLOG(1) << summary->message;
+    }
     summary->initial_cost = summary->fixed_cost;
     summary->final_cost = summary->fixed_cost;
     return;
