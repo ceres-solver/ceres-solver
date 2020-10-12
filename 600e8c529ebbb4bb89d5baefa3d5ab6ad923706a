@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f81e5e36_2b830ba1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-10-12T21:10:22Z",
+      "side": 1,
+      "message": "Minor typos from reading the code.",
+      "revId": "600e8c529ebbb4bb89d5baefa3d5ab6ad923706a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9028a501_b0c72d82",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-10-12T21:10:22Z",
+      "side": 1,
+      "message": "Please double check this.\n\nAll values are initialized to -1, so I assume it is an oversight.\n\nresidual_evaluation_time_in_seconds is set only in one place, in solver.cc, and used only for the report string, so ceres does not rely on this initial value, except for the value reported in certain special cases, e.g. when the preprocessor fails.\n\nUser code could in principle have made use of this initial value in such cases, but I find that unlikely.",
+      "revId": "600e8c529ebbb4bb89d5baefa3d5ab6ad923706a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
