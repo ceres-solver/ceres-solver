@@ -78,7 +78,7 @@ class LevenbergMarquardtStrategy : public TrustRegionStrategy {
   // Scaled copy of diagonal_. Stored here as optimization to prevent
   // allocations in every iteration and reuse when a step fails and
   // ComputeStep is called again.
-  Vector lm_diagonal_;  // lm_diagonal_ = diagonal_ / radius_;
+  Vector lm_diagonal_;  // lm_diagonal_ = sqrt(diagonal_ / radius_);
 };
 
 }  // namespace internal
