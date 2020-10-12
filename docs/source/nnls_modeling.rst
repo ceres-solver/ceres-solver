@@ -380,7 +380,7 @@ the corresponding accessors. This information will be verified by the
       template <typename CostFunctor,
                 NumericDiffMethodType method = CENTRAL,
                 int kNumResiduals,  // Number of residuals, or ceres::DYNAMIC.
-		int.. Ns>           // Size of each parameter block.
+                int... Ns>           // Size of each parameter block.
       class NumericDiffCostFunction : public
       SizedCostFunction<kNumResiduals, Ns> {
       };
@@ -1547,7 +1547,7 @@ quaternion, a local parameterization can be constructed as
    :class:`Problem` holds the robustified bounds constrained
    non-linear least squares problem :eq:`ceresproblem_modeling`. To
    create a least squares problem, use the
-   :func:`Problem::AddResiualBlock` and
+   :func:`Problem::AddResidalBlock` and
    :func:`Problem::AddParameterBlock` methods.
 
    For example a problem containing 3 parameter blocks of sizes 3, 4
@@ -1734,7 +1734,7 @@ quaternion, a local parameterization can be constructed as
 
 .. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, const vector<double*> parameter_blocks)
 
-.. function:: template <typename Ts..> ResidualBlockId
+.. function:: template <typename Ts...> ResidualBlockId
 	      Problem::AddResidualBlock(CostFunction* cost_function,
 	      LossFunction* loss_function, double* x0, Ts... xs)
 
