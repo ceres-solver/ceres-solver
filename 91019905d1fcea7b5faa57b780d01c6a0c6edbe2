@@ -16,6 +16,23 @@
       "message": "Hi Taylor, I tried this again and found whilst testing all permutations (static as well as shared) that we need to update our definition of the export macro and conditionally set the visibility in the Ceres library, this is inline with the GCC docs here: https://gcc.gnu.org/wiki/Visibility, with the following patch I was able to build on both macOS and Linux as both static \u0026 shared:\n\ndiff --git a/include/ceres/internal/port.h b/include/ceres/internal/port.h\nindex b9f4216..040a1ef 100644\n--- a/include/ceres/internal/port.h\n+++ b/include/ceres/internal/port.h\n@@ -70,22 +70,32 @@\n \n // A macro to signal which functions and classes are exported when\n // building a shared library.\n-//\n-// Note that the ordering here is important, CERES_BUILDING_SHARED_LIBRARY\n-// is only defined locally when Ceres is compiled, it is never exported to\n-// users.  However, in order that we do not have to configure config.h\n-// separately for building vs installing, if we are building\n-// a shared library, then both CERES_BUILDING_SHARED_LIBRARY and\n-// CERES_USING_SHARED_LIBRARY will be defined when Ceres is compiled.\n-// Hence it is important that the check for CERES_BUILDING_SHARED_LIBRARY\n-// happens first.\n-#if defined(_MSC_VER) \u0026\u0026 defined(CERES_BUILDING_SHARED_LIBRARY)\n-#define CERES_EXPORT __declspec(dllexport)\n-#elif defined(_MSC_VER) \u0026\u0026 defined(CERES_USING_SHARED_LIBRARY)\n-#define CERES_EXPORT __declspec(dllimport)\n+#if defined(_MSC_VER)\n+#define CERES_API_SHARED_IMPORT __declspec(dllimport)\n+#define CERES_API_SHARED_EXPORT __declspec(dllexport)\n #elif defined(__GNUC__)\n-#define CERES_EXPORT __attribute__((visibility(\"default\")))\n+#define CERES_API_SHARED_IMPORT __attribute__((visibility(\"default\")))\n+#define CERES_API_SHARED_EXPORT __attribute__((visibility(\"default\")))\n+#else\n+#define CERES_API_SHARED_IMPORT\n+#define CERES_API_SHARED_EXPORT\n+#endif\n+\n+// CERES_BUILDING_SHARED_LIBRARY is only defined locally when Ceres itself is\n+// compiled as a shared library, it is never exported to users.  In order that\n+// we do not have to configure config.h separately when building Ceres as either\n+// a static or dynamic library, we define both CERES_USING_SHARED_LIBRARY and\n+// CERES_BUILDING_SHARED_LIBRARY when building as a shared library.\n+#if defined(CERES_USING_SHARED_LIBRARY)\n+#if defined(CERES_BUILDING_SHARED_LIBRARY)\n+// Compiling Ceres itself as a shared library.\n+#define CERES_EXPORT CERES_API_SHARED_EXPORT\n+#else\n+// Using Ceres as a shared library.\n+#define CERES_EXPORT CERES_API_SHARED_IMPORT\n+#endif\n #else\n+// Ceres was compiled as a static library, export everything.\n #define CERES_EXPORT\n #endif\n \ndiff --git a/internal/ceres/CMakeLists.txt b/internal/ceres/CMakeLists.txt\nindex 4542719..6dc7262 100644\n--- a/internal/ceres/CMakeLists.txt\n+++ b/internal/ceres/CMakeLists.txt\n@@ -232,13 +232,14 @@ endif()\n add_library(ceres ${CERES_LIBRARY_SOURCE})\n set_target_properties(ceres PROPERTIES\n   VERSION ${CERES_VERSION}\n-  SOVERSION ${CERES_VERSION_MAJOR}\n-\n-  # Set the default symbol visibility to hidden to unify the behavior among the\n-  # various compilers and to get smaller binaries\n-  C_VISIBILITY_PRESET hidden\n-  CXX_VISIBILITY_PRESET hidden\n-  )\n+  SOVERSION ${CERES_VERSION_MAJOR})\n+if (BUILD_SHARED_LIBS)\n+  set_target_properties(ceres PROPERTIES\n+    # Set the default symbol visibility to hidden to unify the behavior among\n+    # the various compilers and to get smaller binaries\n+    C_VISIBILITY_PRESET hidden\n+    CXX_VISIBILITY_PRESET hidden)\n+endif()\n \n # When building as a shared libarary with testing enabled, we need to export\n # internal symbols needed by the unit tests\n",
       "revId": "91019905d1fcea7b5faa57b780d01c6a0c6edbe2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6dcbd8c_750531ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-10-13T22:07:45Z",
+      "side": 1,
+      "message": "Note that I meant to add that I don\u0027t have a Windows machine, so please can you test that patch there but I think the behaviour should be unchanged as the original export macro should have resolved to nothing on Windows when building statically, it just didn\u0027t on other OSs after this CL.",
+      "revId": "91019905d1fcea7b5faa57b780d01c6a0c6edbe2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
