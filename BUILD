@@ -164,14 +164,13 @@ TEST_COPTS = [
     # trigger incorrectly on parts of rotation_test. For now, disable them,
     # but in the future disable these warnings only for rotation_test.
     # TODO(keir): When the tests are macro-ified, apply these selectively.
-    "-Wno-nonnull-compare",
     "-Wno-address",
 ]
 
 TEST_DEPS = [
     "//:ceres",
     "//:test_util",
-    "@com_github_eigen_eigen//:eigen",
+    "@com_gitlab_libeigen_eigen//:eigen",
     "@com_github_gflags_gflags//:gflags",
 ]
 
@@ -210,7 +209,6 @@ TEST_DEPS = [
     copts = TEST_COPTS,
     deps = TEST_DEPS + ["@com_github_google_benchmark//:benchmark"],
 ) for benchmark_name in [
-    "autodiff_cost_function_benchmark",
     "small_blas_gemm_benchmark",
     "small_blas_gemv_benchmark",
 ]]

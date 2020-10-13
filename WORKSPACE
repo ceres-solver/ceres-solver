@@ -57,11 +57,11 @@ http_archive(
 
 # External dependency: Eigen; has no Bazel build.
 http_archive(
-    name = "com_github_eigen_eigen",
-    sha256 = "dd254beb0bafc695d0f62ae1a222ff85b52dbaa3a16f76e781dce22d0d20a4a6",
-    strip_prefix = "eigen-eigen-5a0156e40feb",
+    name = "com_gitlab_libeigen_eigen",
+    sha256 = "0215c6593c4ee9f1f7f28238c4e8995584ebf3b556e9dbf933d84feb98d5b9ef",
+    strip_prefix = "eigen-3.3.8",
     urls = [
-        "http://bitbucket.org/eigen/eigen/get/3.3.4.tar.bz2",
+        "https://gitlab.com/libeigen/eigen/-/archive/3.3.8/eigen-3.3.8.tar.bz2",
     ],
     build_file_content =
 """
