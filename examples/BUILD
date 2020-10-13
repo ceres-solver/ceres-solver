@@ -35,7 +35,7 @@ EXAMPLE_COPTS = [
 
 EXAMPLE_DEPS = [
     "//:ceres",
-    "@com_github_eigen_eigen//:eigen",
+    "@com_gitlab_libeigen_eigen//:eigen",
     "@com_github_gflags_gflags//:gflags",
 ]
 
