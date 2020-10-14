@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1f287a9_e0c840a6",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-10-14T21:19:53Z",
+      "side": 1,
+      "message": "\u003e I do not think this error message is needed, we should just say that exporting the whole class results in a linker error with MSVC\n\nSounds good, removed.\n\n\u003e also this message should be on the top no?\n\nYep. I wasn\u0027t sure how the documentation system worked and didn\u0027t want it get included in the generated public API docs. Moved.",
+      "parentUuid": "74d410af_229f4471",
+      "range": {
+        "startLine": 343,
+        "startChar": 7,
+        "endLine": 343,
+        "endChar": 17
+      },
+      "revId": "fc4a69158385fa20781ecfa85a572dc5c3d4a011",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a0c46ff_601e6442",
@@ -66,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a2080aab_06ff4927",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-10-14T21:19:53Z",
+      "side": 1,
+      "message": "Not sure. It\u0027s either:\n\n1. A workaround for a MSVC bug.\n2. A solution for a behavior difference between MSVC and gcc/clang.\n\nI updated the comment to call it a MSVC workaround.",
+      "parentUuid": "9a0c46ff_601e6442",
+      "range": {
+        "startLine": 347,
+        "startChar": 5,
+        "endLine": 347,
+        "endChar": 12
+      },
+      "revId": "fc4a69158385fa20781ecfa85a572dc5c3d4a011",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "98f7df11_1affd6f2",
         "filename": "internal/ceres/context_impl.h",
         "patchSetId": 10
@@ -77,6 +125,30 @@
       "writtenOn": "2020-10-14T20:57:29Z",
       "side": 1,
       "message": "why isn\u0027t the class exported, why just this method?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "fc4a69158385fa20781ecfa85a572dc5c3d4a011",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "389b0b3b_6029fdcd",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-10-14T21:19:53Z",
+      "side": 1,
+      "message": "That was probably from my initial pass at exporting internal-only stuff and trying to export the minimum. But now I think that it\u0027s best for simplicity/consistency to just export the class. Done",
+      "parentUuid": "98f7df11_1affd6f2",
       "range": {
         "startLine": 57,
         "startChar": 2,
