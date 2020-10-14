@@ -33,6 +33,24 @@
       "message": "Note that I meant to add that I don\u0027t have a Windows machine, so please can you test that patch there but I think the behaviour should be unchanged as the original export macro should have resolved to nothing on Windows when building statically, it just didn\u0027t on other OSs after this CL.",
       "revId": "91019905d1fcea7b5faa57b780d01c6a0c6edbe2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3594c785_c0aee8c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-10-14T16:17:26Z",
+      "side": 1,
+      "message": "Looks reasonable and works in my Linux dev environment (gcc 7.5). I\u0027ll test with MSVC 2017 this afternoon.",
+      "parentUuid": "7226eb48_e5c893f3",
+      "revId": "91019905d1fcea7b5faa57b780d01c6a0c6edbe2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
