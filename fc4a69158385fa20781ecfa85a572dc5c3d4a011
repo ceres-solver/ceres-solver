@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9efa6a12_b5a9efd2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-10-14T20:57:29Z",
+      "side": 1,
+      "message": "a couple of minor comments/questions. Alex should take a final look of course. Thanks for your patience with this. ",
+      "revId": "fc4a69158385fa20781ecfa85a572dc5c3d4a011",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74d410af_229f4471",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-10-14T20:57:29Z",
+      "side": 1,
+      "message": "I do not think this error message is needed, we should just say that exporting the whole class results in a linker error with MSVC\n\nalso this message should be on the top no?",
+      "range": {
+        "startLine": 343,
+        "startChar": 7,
+        "endLine": 343,
+        "endChar": 17
+      },
+      "revId": "fc4a69158385fa20781ecfa85a572dc5c3d4a011",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a0c46ff_601e6442",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-10-14T20:57:29Z",
+      "side": 1,
+      "message": "is this a hack or is this a real solution?",
+      "range": {
+        "startLine": 347,
+        "startChar": 5,
+        "endLine": 347,
+        "endChar": 12
+      },
+      "revId": "fc4a69158385fa20781ecfa85a572dc5c3d4a011",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98f7df11_1affd6f2",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-10-14T20:57:29Z",
+      "side": 1,
+      "message": "why isn\u0027t the class exported, why just this method?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "fc4a69158385fa20781ecfa85a572dc5c3d4a011",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
