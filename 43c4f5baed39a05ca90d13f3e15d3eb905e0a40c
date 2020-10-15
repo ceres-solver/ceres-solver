@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "072d41c7_322476a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-10-15T08:50:34Z",
+      "side": 1,
+      "message": "The changes to LocalParameterisation have broken the builds for Linux and macOS (or more specifically GCC and Clang) so we need an MSVC-specific workaround for that class.",
+      "revId": "43c4f5baed39a05ca90d13f3e15d3eb905e0a40c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec52d97d_1dedb896",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-10-15T08:50:34Z",
+      "side": 1,
+      "message": "This is not a solution, as it breaks compilation on both Linux and macOS (GCC \u0026 Clang)",
+      "revId": "43c4f5baed39a05ca90d13f3e15d3eb905e0a40c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
