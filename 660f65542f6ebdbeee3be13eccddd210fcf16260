@@ -22,6 +22,30 @@
       },
       "revId": "660f65542f6ebdbeee3be13eccddd210fcf16260",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b92711b9_7959e7f5",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2020-10-15T20:58:02Z",
+      "side": 1,
+      "message": "ProductParameterization was just missing a virtual destructor.",
+      "parentUuid": "1aebc5e6_91d657e8",
+      "range": {
+        "startLine": 311,
+        "startChar": 6,
+        "endLine": 311,
+        "endChar": 18
+      },
+      "revId": "660f65542f6ebdbeee3be13eccddd210fcf16260",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
