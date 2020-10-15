@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1aebc5e6_91d657e8",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-10-15T20:53:36Z",
+      "side": 1,
+      "message": "I thought this breaks on MSVC how is this working now?",
+      "range": {
+        "startLine": 311,
+        "startChar": 6,
+        "endLine": 311,
+        "endChar": 18
+      },
+      "revId": "660f65542f6ebdbeee3be13eccddd210fcf16260",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
