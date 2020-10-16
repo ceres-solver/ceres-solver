@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f902fbe_2d89946d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2020-10-16T17:36:30Z",
+      "side": 1,
+      "message": "LGTM, this works for me on both macOS (Xcode 12) and Ubuntu (GCC 8.4)",
+      "revId": "3f6d2736769044e7c08c873c41a184849eea73ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
