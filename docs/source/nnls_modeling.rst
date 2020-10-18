@@ -372,9 +372,6 @@ the corresponding accessors. This information will be verified by the
     NumericDiffOptions. Update DynamicNumericDiffOptions in a similar
     manner.
 
-    TODO(sameeragarwal): Check that Problem documentation for
-    AddResidualBlock can deal with the variadic impl.
-
   .. code-block:: c++
 
       template <typename CostFunctor,
@@ -1734,9 +1731,7 @@ quaternion, a local parameterization can be constructed as
 
 .. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, const vector<double*> parameter_blocks)
 
-.. function:: template <typename Ts...> ResidualBlockId
-	      Problem::AddResidualBlock(CostFunction* cost_function,
-	      LossFunction* loss_function, double* x0, Ts... xs)
+.. function:: template <typename Ts...> ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, double* x0, Ts... xs)
 
    Add a residual block to the overall cost function. The cost
    function carries with it information about the sizes of the

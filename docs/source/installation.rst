@@ -1111,7 +1111,7 @@ Ceres) to invoke ``find_package(Ceres)`` in ``FooConfig.cmake``, thus
     include(CMakeFindDependencyMacro)
     find_dependency(Ceres)
 
-.. _section-migration
+.. _section-migration:
 
 Migration
 =========

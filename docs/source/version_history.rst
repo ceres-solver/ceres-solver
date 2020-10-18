@@ -55,9 +55,17 @@ Backward Incompatible API Changes
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Use CMAKE_PREFIX_PATH to pass Homebrew install location (Alex Stewart)
+#. Add automatic differentiation support for ``Erf`` and ``Erfc``. (Morten Hennemose)
+#. Add a move constructor to ``AutoDiffCostFunction``, ``NumericDiffCostFunction``, ``DynamicAutoDiffCostFunction`` and ``DynamicNumericDiffCostFunction``. (Julian Kent & Sameer Agarwal)
+#. Fix potential for mismatched release/debug TBB libraries (Alex Stewart)
+#. Trust region minimizer now reports the gradient of the current state, rather than zero when it encounters an unsuccessful step (Sameer Agarwal & Alex Stewart)
+#. Unify symbol visibility configuration for all compilers (Taylor Braun-Jones)
+#. Fix the Bazel build so that it points GitLab instead of the old BitBucket repo for Eigen (Sameer Agarwal)
+#. Reformat source to be clang-format clean and add a script to format the repo using clang-format. (Nikolaus Demmel)
 #. Various documentation improvements (Sameer Agarwal, Carl Dehlin,
    Bayes Nie, Chris Choi, Frank, Kuang Fangjun, Dmitriy Korchemkin,
-   huangqinjin, Patrik Huber)
+   huangqinjin, Patrik Huber, Nikolaus Demmel, Lorenzo Lamia)
 #. Huge number of build system simplification & cleanups (Alex
    Stewart, NeroBurner, Alastair Harrison, Linus Mårtensson, Nikolaus Demmel)
 #. Intel TBB based threading removed (Mike Vitus)
