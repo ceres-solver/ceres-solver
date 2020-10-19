@@ -58,8 +58,8 @@ the step :math:`\Delta x` is controlled, non-linear optimization
 algorithms can be divided into two major categories [NocedalWright]_.
 
 1. **Trust Region** The trust region approach approximates the
-   objective function using using a model function (often a quadratic)
-   over a subset of the search space known as the trust region. If the
+   objective function using a model function (often a quadratic) over
+   a subset of the search space known as the trust region. If the
    model function succeeds in minimizing the true objective function
    the trust region is expanded; conversely, otherwise it is
    contracted and the model optimization problem is solved again.
@@ -1192,7 +1192,7 @@ elimination group [LiSaad]_.
 
 .. member:: double Solver::Options::min_lm_diagonal
 
-   Default: ``1e6``
+   Default: ``1e-6``
 
    The ``LEVENBERG_MARQUARDT`` strategy, uses a diagonal matrix to
    regularize the trust region step. This is the lower bound on
