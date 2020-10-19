@@ -2343,7 +2343,7 @@ numbers.
 
 .. code::
 
-  const double data[] = {1.0, 2.0, 5.0, 6.0};
+  const double x[] = {1.0, 2.0, 5.0, 6.0};
   Grid1D<double, 1> array(x, 0, 4);
   CubicInterpolator interpolator(array);
   double f, dfdx;
