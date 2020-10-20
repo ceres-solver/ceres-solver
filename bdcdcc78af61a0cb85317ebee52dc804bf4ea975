@@ -34,6 +34,24 @@
       "parentUuid": "bea244d5_a843d7bb",
       "revId": "bdcdcc78af61a0cb85317ebee52dc804bf4ea975",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3db80191_8b3de849",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2020-10-20T15:46:23Z",
+      "side": 1,
+      "message": "Ok great. Just wanted to ensure 2.0 isn\u0027t released with the fixme notes in place.\n\nI don\u0027t know about Windows/iOS/Android, so maybe Alex or someone else who is familiar with these (and can maybe even test the instructions) will have to fix it.",
+      "parentUuid": "b8ef36b0_ba2ca819",
+      "revId": "bdcdcc78af61a0cb85317ebee52dc804bf4ea975",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
