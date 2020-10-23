@@ -39,8 +39,7 @@ optional. For details on customizing the build process, see
     library. Please see the documentation for ``EIGENSPARSE`` for
     more details.
 
-- `CMake <http://www.cmake.org>`_ 3.5 or later.
-  **Required on all platforms except for legacy Android.**
+- `CMake <http://www.cmake.org>`_ 3.5 or later **required**.
 
 - `glog <https://github.com/google/glog>`_ 0.3.1 or
   later. **Recommended**
@@ -76,7 +75,7 @@ optional. For details on customizing the build process, see
      <https://code.google.com/p/google-glog/issues/detail?id=194>`_.
 
 - `gflags <https://github.com/gflags/gflags>`_. Needed to build
-  examples and tests.
+  examples and tests and usually a dependency for glog.
 
 - `SuiteSparse
   <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_. Needed for
@@ -299,7 +298,7 @@ We are now ready to build, test, and install Ceres.
 Building with OpenMP on macOS
 -----------------------------
 
-Up to at least Xcode 8, OpenMP support was disabled in Apple's version of
+Up to at least Xcode 12, OpenMP support was disabled in Apple's version of
 Clang.  However, you can install the latest version of the LLVM toolchain
 from Homebrew which does support OpenMP, and thus build Ceres with OpenMP
 support on macOS.  To do this, you must install llvm via Homebrew:
@@ -381,8 +380,9 @@ dependencies.
 #. Get dependencies; unpack them as subdirectories in ``ceres/``
    (``ceres/eigen``, ``ceres/glog``, etc)
 
-   #. ``Eigen`` 3.3 . There is no need to build anything; just unpack
-      the source tarball.
+   #. ``Eigen`` 3.3 . Configure and optionally install Eigen. It should be
+      exported into the CMake package registry by default as part of the
+      configure stage so installation should not be necessary.
 
    #. ``google-glog`` Open up the Visual Studio solution and build it.
    #. ``gflags`` Open up the Visual Studio solution and build it.
@@ -417,14 +417,10 @@ dependencies.
 #. Try running ``Configure``. It won't work. It'll show a bunch of options.
    You'll need to set:
 
-FIXME: since ``EIGEN_INCLUDE_DIR_HINTS``, ``GFLAGS_INCLUDE_DIR_HINTS``
-and ``GFLAGS_LIBRARY_DIR_HINTS`` was removed, these instructions won't
-work to find those dependencies (in particular eigen, for which it
-says just unpack; you need to run build & install to generate the
-cmake configs and then point cmake it that location...)
-
+   #. ``Eigen3_DIR`` (Set to directory containing ``Eigen3Config.cmake``)
    #. ``GLOG_INCLUDE_DIR_HINTS``
    #. ``GLOG_LIBRARY_DIR_HINTS``
+   #. (Optional) ``gflags_DIR`` (Set to directory containing ``gflags-config.cmake``)
    #. (Optional) ``SUITESPARSE_INCLUDE_DIR_HINTS``
    #. (Optional) ``SUITESPARSE_LIBRARY_DIR_HINTS``
    #. (Optional) ``CXSPARSE_INCLUDE_DIR_HINTS``
@@ -477,17 +473,15 @@ To build Ceres for Android, we need to force ``CMake`` to find
 the toolchains from the Android NDK instead of using the standard
 ones. For example, assuming you have specified ``$NDK_DIR``:
 
-FIXME: EIGEN_INCLUDE_DIR was removed
-
 .. code-block:: bash
 
     cmake \
     -DCMAKE_TOOLCHAIN_FILE=\
         $NDK_DIR/build/cmake/android.toolchain.cmake \
-    -DEIGEN_INCLUDE_DIR=/path/to/eigen/header \
-    -DANDROID_ABI=armeabi-v7a \
+    -DEigen3_DIR=/path/to/Eigen3Config.cmake \
+    -DANDROID_ABI=arm64-v8a \
     -DANDROID_STL=c++_shared \
-    -DANDROID_NATIVE_API_LEVEL=android-24 \
+    -DANDROID_NATIVE_API_LEVEL=android-29 \
     -DBUILD_SHARED_LIBS=ON \
     -DMINIGLOG=ON \
     <PATH_TO_CERES_SOURCE>
@@ -537,13 +531,11 @@ To build Ceres for iOS, we need to force ``CMake`` to find the
 toolchains from the iOS SDK instead of using the standard ones. For
 example:
 
-FIXME: EIGEN_INCLUDE_DIR was removed
-
 .. code-block:: bash
 
    cmake \
    -DCMAKE_TOOLCHAIN_FILE=../ceres-solver/cmake/iOS.cmake \
-   -DEIGEN_INCLUDE_DIR=/path/to/eigen/header \
+   -DEigen3_DIR=/path/to/Eigen3Config.cmake \
    -DIOS_PLATFORM=<PLATFORM> \
    <PATH_TO_CERES_SOURCE>
 
