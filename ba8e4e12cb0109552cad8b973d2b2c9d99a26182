@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": false,
       "key": {
         "uuid": "08f449a8_ad335575",
         "filename": "/PATCHSET_LEVEL",
@@ -14,10 +15,10 @@
       "side": 1,
       "message": "Added benchmark for unit quaternion rotation. It depends on googlebenchmark,\nI have run that on a web: https://quick-bench.com/q/RgVitjKbGLZMszyG9ivMFzvo0CE\n\nAnd it seems that for double proposed function is nearly twice as fast (remember to subtract dummy times used for generating random unit quaternion and vector to multiply).\n\n",
       "revId": "ba8e4e12cb0109552cad8b973d2b2c9d99a26182",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": false
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "b7cfaa1b_b629578f",
         "filename": "/PATCHSET_LEVEL",
@@ -31,10 +32,10 @@
       "side": 1,
       "message": "Thanks Mykyta, I will take a look. Is your plan to contribute the benchmark to Ceres? in which case it should follow the google style guide.\nThe other thing that struck me is that you are generating random numbers inside the profiling loop, which will heavily bias the results, or you have to do subtraction tricks. I suggest generating some large number of random quaternions and points outside the loop and then just looping over them inside the profiling loop. ",
       "revId": "ba8e4e12cb0109552cad8b973d2b2c9d99a26182",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": false
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "49c0c7d0_57b1fb3f",
         "filename": "/PATCHSET_LEVEL",
@@ -49,8 +50,24 @@
       "message": "For a moment I am generating random numbers inside the profiling loop, but since I have 3 benchmarks: 1)  DummyRNG{Double,Float} - only for random quaternions generation, 2) CeresOrigUnitQRot{Double,Float}- quaternions generation + existent ceres::UnitQuaternionRotatePoint, 3) CeresProposedUnitQRot{Double,Float} -quaternion generation + proposed ceres::UnitQuaternionRotatePoint - then I can subtract the time of benchmark 1) from benchmark 2) and 3) and compare.\n\nThat exactly what I did, when looking visually at the bar chart at quick-bench.com link I provide in a first message.\n\nRandom number generation is taken from Numerical Recipes 3rd edition book, and everywhere random generation is initialized to the same seed value.\n\nI do not know, is it necessary to contribute the benchmark code, but if so - I will work more on it to fulfill your suggestions about benchmark organization and following the style guide.\n\nThat was a quick benchmark attempt. Playing with various compilers and compilation options shows that even this quick benchmark serves the purpose - shows that proposed code executes faster almost in any situation.",
       "parentUuid": "b7cfaa1b_b629578f",
       "revId": "ba8e4e12cb0109552cad8b973d2b2c9d99a26182",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": false
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b4842a4_ef40e6e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-11-30T00:58:00Z",
+      "side": 1,
+      "message": "Since the main CL is merged, please go ahead and drop this CL.",
+      "revId": "ba8e4e12cb0109552cad8b973d2b2c9d99a26182",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
