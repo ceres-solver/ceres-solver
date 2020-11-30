@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e42f579_53bd423d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2020-11-30T00:54:47Z",
+      "side": 1,
+      "message": "Evan,\n\nSorry for taking so long on this, but I finally had time to go through the references and your derivation. Some thoughts/questions.\n\nAs a minor aside, the papers are exceptionally poorly written and your derivation in the documentation is infinitely easier to read and to the point, so thank you for that.\n\nIf we forget about robust norms for now, then basically what you are doing is the following.\n\nConsider the simplified two variable optimization \n\nmin_x,y sum_i f^2_i(x,y)\n\nand we want to eliminate/marginalize x.\n\nthen given linearization points x_0, y_0 we can replace the nonlinear optimization problem by its linearization\n\nmin_{dx, dy} sum_i (f_i(x_0, y_0) + J_i [dx;dy])^2\n\nwhich we can then write as a two step optimization problem as \n\nmin_{dy} min_{dx} sum_i (f_i(x_0, y_0) + J_i [dx;dy])^2\n\nwhich we can then replace by something of the form\n\nmin_{dy} |A dy + b|^2\n\nwhere A and b are obtained by solving the inner optimization problem w.r.t dx.\n\nwhich we can then re-write in terms of the original variables as:\n\nmin_{y} |A (y-y_0) + b|^2\n \nThis lines up with my understanding of classical marginalization. I think the papers you cite have some sort of sparsification logic (something involving trees) in them, but thats not being done here. \n\nIs this correct? I am going entirely off of your documentation right now, or is there more going on in the code?\n\nAssuming my understanding is correct, a couple more questions/concerns.\n\n1. The tranformation dx \u003d y - y_0 is problematic and points to the gap in the way ceres handles manifolds, and the lack of an ominus operator. Without that its not clear how you are able to do this a meaningful manner?\n\n2. There is an assumption that the minimization w.r.t dx actually results in a value thats less than \\sum_i f_i(x_0, y_0), i.e. it is better than the linearization point. This may or may not be true. I suppose this is not something that is being handled.\n\n3. In your derivation (which is not reflected in the simplified derivation above) you are assuming that the robust loss rho_i is being applied via its derivative, this is not always true -- it depends on how things are implemented. I think the derivation can be done to handle this in a more general manner.\n\n4. What happens if there are bounds constraints on x?\n\nYour CL is starting to make me think that it is time to think seriously about updating the handling of manifolds in Ceres Solver before building more stuff up on top of what is only half of what needs to exist.\n\nSameer\n",
+      "revId": "0d058fbf8975bfe0b1f178858bd792e63bc1aa02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
