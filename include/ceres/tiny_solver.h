@@ -282,7 +282,7 @@ class TinySolver {
         }
 
         Scalar tmp = Scalar(2 * rho - 1);
-        u = u * std::max(1 / 3., 1 - tmp * tmp * tmp);
+        u = u * std::max(Scalar(1 / 3.), 1 - tmp * tmp * tmp);
         v = 2;
         continue;
       }
