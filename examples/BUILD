@@ -31,6 +31,8 @@
 EXAMPLE_COPTS = [
     # Needed to silence GFlags complaints.
     "-Wno-sign-compare",
+    # Needed to put fscanf in a function.
+    "-Wno-format-nonliteral",
 ]
 
 EXAMPLE_DEPS = [
