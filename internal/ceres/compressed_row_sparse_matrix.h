@@ -140,7 +140,7 @@ class CERES_EXPORT_INTERNAL CompressedRowSparseMatrix : public SparseMatrix {
   const int* rows() const { return &rows_[0]; }
   int* mutable_rows() { return &rows_[0]; }
 
-  const StorageType storage_type() const { return storage_type_; }
+  StorageType storage_type() const { return storage_type_; }
   void set_storage_type(const StorageType storage_type) {
     storage_type_ = storage_type;
   }
