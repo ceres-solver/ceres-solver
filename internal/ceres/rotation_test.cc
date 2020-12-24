@@ -71,11 +71,6 @@ static double const kLooseTolerance = 1e-9;
 // double quaternion[4];
 // EXPECT_THAT(quaternion, IsNormalizedQuaternion());
 MATCHER(IsNormalizedQuaternion, "") {
-  if (arg == NULL) {
-    *result_listener << "Null quaternion";
-    return false;
-  }
-
   double norm2 =
       arg[0] * arg[0] + arg[1] * arg[1] + arg[2] * arg[2] + arg[3] * arg[3];
   if (fabs(norm2 - 1.0) > kTolerance) {
@@ -91,11 +86,6 @@ MATCHER(IsNormalizedQuaternion, "") {
 // double actual_quaternion[4];
 // EXPECT_THAT(actual_quaternion, IsNearQuaternion(expected_quaternion));
 MATCHER_P(IsNearQuaternion, expected, "") {
-  if (arg == NULL) {
-    *result_listener << "Null quaternion";
-    return false;
-  }
-
   // Quaternions are equivalent upto a sign change. So we will compare
   // both signs before declaring failure.
   bool near = true;
@@ -142,11 +132,6 @@ MATCHER_P(IsNearQuaternion, expected, "") {
 // double actual_axis_angle[3];
 // EXPECT_THAT(actual_axis_angle, IsNearAngleAxis(expected_axis_angle));
 MATCHER_P(IsNearAngleAxis, expected, "") {
-  if (arg == NULL) {
-    *result_listener << "Null axis/angle";
-    return false;
-  }
-
   Eigen::Vector3d a(arg[0], arg[1], arg[2]);
   Eigen::Vector3d e(expected[0], expected[1], expected[2]);
   const double e_norm = e.norm();
@@ -185,11 +170,6 @@ MATCHER_P(IsNearAngleAxis, expected, "") {
 // double matrix[9];
 // EXPECT_THAT(matrix, IsOrthonormal());
 MATCHER(IsOrthonormal, "") {
-  if (arg == NULL) {
-    *result_listener << "Null matrix";
-    return false;
-  }
-
   for (int c1 = 0; c1 < 3; c1++) {
     for (int c2 = 0; c2 < 3; c2++) {
       double v = 0;
@@ -214,11 +194,6 @@ MATCHER(IsOrthonormal, "") {
 // double matrix2[9];
 // EXPECT_THAT(matrix1, IsNear3x3Matrix(matrix2));
 MATCHER_P(IsNear3x3Matrix, expected, "") {
-  if (arg == NULL) {
-    *result_listener << "Null matrix";
-    return false;
-  }
-
   for (int i = 0; i < 9; i++) {
     if (fabs(arg[i] - expected[i]) > kTolerance) {
       *result_listener << "component " << i << " should be " << expected[i];
