@@ -74,8 +74,6 @@ cc_binary(
     deps = EXAMPLE_DEPS,
 )
 
-SLAM_COPTS = EXAMPLE_COPTS + ["-Iexamples/slam"]
-
 cc_binary(
     name = "pose_graph_2d",
     srcs = [
@@ -86,7 +84,8 @@ cc_binary(
         "slam/pose_graph_2d/pose_graph_2d_error_term.h",
         "slam/pose_graph_2d/types.h",
     ],
-    copts = SLAM_COPTS,
+    copts = EXAMPLE_COPTS,
+    includes = ["slam"],
     deps = EXAMPLE_DEPS,
 )
 
@@ -98,7 +97,8 @@ cc_binary(
         "slam/pose_graph_3d/pose_graph_3d_error_term.h",
         "slam/pose_graph_3d/types.h",
     ],
-    copts = SLAM_COPTS,
+    copts = EXAMPLE_COPTS,
+    includes = ["slam"],
     deps = EXAMPLE_DEPS,
 )
 
