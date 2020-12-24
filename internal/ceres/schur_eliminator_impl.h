@@ -125,10 +125,8 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Init(
       break;
     }
 
-    chunks_.push_back(Chunk());
+    chunks_.push_back(Chunk(r));
     Chunk& chunk = chunks_.back();
-    chunk.size = 0;
-    chunk.start = r;
     int buffer_size = 0;
     const int e_block_size = bs->cols[chunk_block_id].size;
 
