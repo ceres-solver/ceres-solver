@@ -1045,7 +1045,7 @@ TEST_P(DynamicProblem, GetXXXBlocksForYYYBlock) {
     { y, { r_yzw, r_yz, r_yw, r_y, NULL} },
     { z, { r_yzw, r_yz, r_zw, r_z, NULL} },
     { w, { r_yzw, r_yw, r_zw, r_w, NULL} },
-    { NULL }
+    { NULL, { NULL } }
   };
   for (int i = 0; get_residual_blocks_cases[i].parameter_block; ++i) {
     problem->GetResidualBlocksForParameterBlock(
@@ -1069,7 +1069,7 @@ TEST_P(DynamicProblem, GetXXXBlocksForYYYBlock) {
     { r_y  , { y, NULL } },
     { r_z  , { z, NULL } },
     { r_w  , { w, NULL } },
-    { NULL }
+    { NULL, { NULL } }
   };
   for (int i = 0; get_parameter_blocks_cases[i].residual_block; ++i) {
     problem->GetParameterBlocksForResidualBlock(
