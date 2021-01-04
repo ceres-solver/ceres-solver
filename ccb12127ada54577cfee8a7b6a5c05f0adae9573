@@ -16,6 +16,24 @@
       "message": "Austin, I am surprised by this error. where does it show up?",
       "revId": "ccb12127ada54577cfee8a7b6a5c05f0adae9573",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41d6bed8_5ec3c8dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2021-01-04T22:43:38Z",
+      "side": 1,
+      "message": "I pasted the error in the commit message.  Line 74 is one of the examples in rotation_test.cc.\n\nWhat is happening is arg is a double arg[3].  By definition, that can\u0027t exist at the NULL address.  It isn\u0027t a double *arg like the code assumes (which could be NULL)",
+      "parentUuid": "46d56c48_3ce7c2c6",
+      "revId": "ccb12127ada54577cfee8a7b6a5c05f0adae9573",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
