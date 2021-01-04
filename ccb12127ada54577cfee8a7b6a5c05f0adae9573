@@ -52,6 +52,24 @@
       "parentUuid": "41d6bed8_5ec3c8dd",
       "revId": "ccb12127ada54577cfee8a7b6a5c05f0adae9573",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78a90899_9057d410",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2021-01-04T22:56:33Z",
+      "side": 1,
+      "message": "clang 6.0",
+      "parentUuid": "c4406682_ceaeff3d",
+      "revId": "ccb12127ada54577cfee8a7b6a5c05f0adae9573",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
