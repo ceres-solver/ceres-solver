@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3ea34f6_fd3cd40e",
+        "filename": "internal/ceres/callbacks.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-01-04T22:33:26Z",
+      "side": 1,
+      "message": "shouldn\u0027t this line go away? how is this code compiling?",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 32
+      },
+      "revId": "eab28d5df90faddef7a2c360a979c615a0a274cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
