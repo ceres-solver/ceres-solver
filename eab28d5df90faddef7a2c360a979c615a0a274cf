@@ -22,6 +22,30 @@
       },
       "revId": "eab28d5df90faddef7a2c360a979c615a0a274cf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8835eda_7439e9b1",
+        "filename": "internal/ceres/callbacks.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2021-01-04T22:46:36Z",
+      "side": 1,
+      "message": "Unsure, that\u0027s embarrassing.  done!",
+      "parentUuid": "f3ea34f6_fd3cd40e",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 32
+      },
+      "revId": "eab28d5df90faddef7a2c360a979c615a0a274cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
