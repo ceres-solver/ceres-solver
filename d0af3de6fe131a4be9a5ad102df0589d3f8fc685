@@ -22,6 +22,30 @@
       },
       "revId": "d0af3de6fe131a4be9a5ad102df0589d3f8fc685",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5326135_fa0eb475",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2021-01-04T22:46:42Z",
+      "side": 1,
+      "message": "Done.  I never can remember if start would be shadowed or not in this case.",
+      "parentUuid": "8b2d40d5_3731224a",
+      "range": {
+        "startLine": 276,
+        "startChar": 14,
+        "endLine": 276,
+        "endChar": 23
+      },
+      "revId": "d0af3de6fe131a4be9a5ad102df0589d3f8fc685",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
