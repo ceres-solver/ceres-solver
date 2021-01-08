@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b41969b0_7415f756",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-01-08T03:53:07Z",
+      "side": 1,
+      "message": "Hi,\n\nhappy new year.  I\u0027m adding you as reviewer not only to distract you from how this year started, but also because you are both listed in the contributor documentation and on top of the changed file.  This is a trivial change that fixes a small annoyance in miniglog\u0027s interface which is also a deviation from glog (missing const for unused argv parameter).  Please take good care of this patch.\n\nI ran clang-format (which found an unrelated issue in local_parameterization.h) and validated by running the tests on my Mac (100% tests passed, 0 tests failed out of 165).\n\nBest regards,\n- Tobias Schlüter",
+      "revId": "53e0df26ff22b13d099d97b30bd3a1be26bae34c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
