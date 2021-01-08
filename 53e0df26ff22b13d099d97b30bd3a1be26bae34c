@@ -16,6 +16,23 @@
       "message": "Hi,\n\nhappy new year.  I\u0027m adding you as reviewer not only to distract you from how this year started, but also because you are both listed in the contributor documentation and on top of the changed file.  This is a trivial change that fixes a small annoyance in miniglog\u0027s interface which is also a deviation from glog (missing const for unused argv parameter).  Please take good care of this patch.\n\nI ran clang-format (which found an unrelated issue in local_parameterization.h) and validated by running the tests on my Mac (100% tests passed, 0 tests failed out of 165).\n\nBest regards,\n- Tobias Schlüter",
       "revId": "53e0df26ff22b13d099d97b30bd3a1be26bae34c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4141235_1bbe396d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2021-01-08T19:42:54Z",
+      "side": 1,
+      "message": "To go a step further: drop the \"argv\" also:\n\n  inline void InitGoogleLogging(const char* /* argv */) {\n    // Do nothing; this is ignored.\n  }\n\nThanks for this change!",
+      "revId": "53e0df26ff22b13d099d97b30bd3a1be26bae34c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
