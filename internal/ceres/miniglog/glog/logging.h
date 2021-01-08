@@ -152,7 +152,7 @@ class CERES_EXPORT LogSink {
 // Global set of log sinks. The actual object is defined in logging.cc.
 extern CERES_EXPORT std::set<LogSink*> log_sinks_global;
 
-inline void InitGoogleLogging(char* argv) {
+inline void InitGoogleLogging(const char* /* argv */) {
   // Do nothing; this is ignored.
 }
 
