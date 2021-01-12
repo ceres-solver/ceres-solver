@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "049f8733_5e8a8ad4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-01-12T09:42:10Z",
+      "side": 1,
+      "message": "Done.  Thank you.\nI\u0027m not completely sure how this is supposed to work, but I uploaded a new patch set which I\u0027d hoped would appear in here.  Sorry if I did something wrong and this causes additional traffic on your side.\n\nps 3 days later Well, now I realized that I probably didn\u0027t cause any traffic on your side because there\u0027s a button that I need to find and press before this process continues.  Sorry about the delay.\n\nBest regards!",
+      "revId": "53e0df26ff22b13d099d97b30bd3a1be26bae34c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4141235_1bbe396d",
