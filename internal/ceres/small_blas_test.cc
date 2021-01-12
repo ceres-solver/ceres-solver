@@ -38,7 +38,7 @@
 namespace ceres {
 namespace internal {
 
-const double kTolerance = 3.0 * std::numeric_limits<double>::epsilon();
+const double kTolerance = 5.0 * std::numeric_limits<double>::epsilon();
 
 TEST(BLAS, MatrixMatrixMultiply) {
   const int kRowA = 3;
