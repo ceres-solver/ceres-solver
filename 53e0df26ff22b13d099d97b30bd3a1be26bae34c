@@ -53,6 +53,41 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "caa53a45_7b1f0e70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-01-13T06:37:08Z",
+      "side": 1,
+      "message": "Hi,\nI\u0027m terribly sorry, but I still haven\u0027t figured out how this works.  I hope the updated patch (which adds /* */ around argv as you requested finds you or found you.\n\nBest regards,\n- Tobi",
+      "revId": "53e0df26ff22b13d099d97b30bd3a1be26bae34c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e6fb604_fdd41e1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-01-13T06:37:08Z",
+      "side": 1,
+      "message": "Thank you.  I am aware of that page and have tried to follow it to a T.  I\u0027m still utterly confused how this page works.  For instance, why is the mouseover text of  \"DRAFT (i)\" the only place that tells me how to actually proceed without any other visual clues?  Also the mouseover text is not correct: there is no \"Reply\" button \"at the top of the change\" (instead it appears to be at the bottom of the box labelled \"Patchset\").  More importantly, I still have no idea how to deduce whether my updated patch flew along the correct trajectory.",
+      "parentUuid": "ac746d1d_29d7dd68",
+      "revId": "53e0df26ff22b13d099d97b30bd3a1be26bae34c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4141235_1bbe396d",
@@ -66,6 +101,24 @@
       "writtenOn": "2021-01-08T19:42:54Z",
       "side": 1,
       "message": "To go a step further: drop the \"argv\" also:\n\n  inline void InitGoogleLogging(const char* /* argv */) {\n    // Do nothing; this is ignored.\n  }\n\nThanks for this change!",
+      "revId": "53e0df26ff22b13d099d97b30bd3a1be26bae34c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9a1b12c_19daae7a",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-01-13T06:37:08Z",
+      "side": 1,
+      "message": "Done.  Thank you.\nI\u0027m not completely sure how this is supposed to work, but I uploaded a new patch set which I\u0027d hoped would appear in here.  Sorry if I did something wrong and this causes additional traffic on your side.",
+      "parentUuid": "b4141235_1bbe396d",
       "revId": "53e0df26ff22b13d099d97b30bd3a1be26bae34c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
