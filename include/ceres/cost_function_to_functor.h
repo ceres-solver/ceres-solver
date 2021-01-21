@@ -98,6 +98,7 @@
 #include "ceres/internal/parameter_dims.h"
 #include "ceres/internal/port.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 

@@ -39,6 +39,7 @@
 #include "ceres/dynamic_cost_function.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/internal/port.h"
+#include "glog/logging.h"
 
 namespace ceres {
 
