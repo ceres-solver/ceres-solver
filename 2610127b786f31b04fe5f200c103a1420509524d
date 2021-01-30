@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4d8b359_3c0b6cb7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-01-30T11:04:03Z",
+      "side": 1,
+      "message": "Hi Keir,\nHi Morten,\n\nI\u0027m adding you as reviewers because Keir\u0027s listed near the top of jet.h, and Morten is the last person to touch the jet implementations for erf and erfc.\n\nThese functions make use of M_2_SQRTPI which is not advisable for two reasons:\n1) this constant is only defined in a POSIX environment, which may or may not be present.  That\u0027s actually how I ran into this: when compiling with strict standard settings, my code stumbled over this.\n2) if a different floating point type than double is requested, the constant will be of the wrong type.\n\nI went the straightforward route: simply write a constant expression that gives us what we want: atan(1.) \u003d\u003d 45 deg \u003d\u003d pi/4, and thus 2/sqrt(pi) \u003d\u003d 1/sqrt(atan(1.)).  If you are a floating-point guru, you may see this immediately, but a mere mortal like me verifies that this indeed gives the exact same bits.  I actually was a bit bold and replaced the reciprocal with division in the code.  I have played around with this a bit in the Compiler Explorer, link here \u003chttps://godbolt.org/z/rrxf4W\u003e.  Furthermore, gcc immediately folds the constant, so this comes at no runtime cost even with no optimization.  For compilers such as MSVC who are really bad at folding constants, it stands to argue that the cost is marginal next to erf, which will always be evaluated at the same time.",
+      "revId": "2610127b786f31b04fe5f200c103a1420509524d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
