@@ -575,19 +575,28 @@ inline Jet<T, N> fmin(const Jet<T, N>& x, const Jet<T, N>& y) {
   return y < x ? y : x;
 }
 
-// erf is defined as an integral that cannot be expressed analyticaly
+// erf is defined as an integral that cannot be expressed analytically
 // however, the derivative is trivial to compute
 // erf(x + h) = erf(x) + h * 2*exp(-x^2)/sqrt(pi)
 template <typename T, int N>
 inline Jet<T, N> erf(const Jet<T, N>& x) {
-  return Jet<T, N>(erf(x.a), x.v * M_2_SQRTPI * exp(-x.a * x.a));
+  // We evaluate the constant as follows:
+  //   2 / sqrt(pi) = 1 / sqrt(atan(1.))
+  // On POSIX sytems it is defined as M_2_SQRTPI, but this is not
+  // portable and the type may not be T.  The above expression
+  // evaluates to full precision with IEEE arithmetic and, since it's
+  // constant, the compiler can generate exactly the same code.  gcc
+  // does so even at -O0.
+  return Jet<T, N>(erf(x.a), x.v * exp(-x.a * x.a) * (T(1) / sqrt(atan(T(1)))));
 }
 
 // erfc(x) = 1-erf(x)
 // erfc(x + h) = erfc(x) + h * (-2*exp(-x^2)/sqrt(pi))
 template <typename T, int N>
 inline Jet<T, N> erfc(const Jet<T, N>& x) {
-  return Jet<T, N>(erfc(x.a), -x.v * M_2_SQRTPI * exp(-x.a * x.a));
+  // See in erf() above for the evaluation of the constant in the derivative.
+  return Jet<T, N>(erfc(x.a),
+                   -x.v * exp(-x.a * x.a) * (T(1) / sqrt(atan(T(1)))));
 }
 
 // Bessel functions of the first kind with integer order equal to 0, 1, n.
