@@ -51,6 +51,23 @@
       "parentUuid": "d4d8b359_3c0b6cb7",
       "revId": "2610127b786f31b04fe5f200c103a1420509524d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a016db9_b3ad9480",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6402
+      },
+      "writtenOn": "2021-01-30T13:28:48Z",
+      "side": 1,
+      "message": "Thanks for submitting this. I suggest changing \n\"/ sqrt(atan(T(1)))\" to \"* (T(1) / sqrt(atan(T(1))))\".\nThis way the division is replaced with a multiplication. This is a nontrivial optimization that the compiler does not make on its own.",
+      "revId": "2610127b786f31b04fe5f200c103a1420509524d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
