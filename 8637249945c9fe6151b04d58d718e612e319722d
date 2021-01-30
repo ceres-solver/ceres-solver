@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2882428_eec488da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-01-30T14:39:13Z",
+      "side": 1,
+      "message": "Hi Morten,\n\nthanks for the quick review.  I would venture to guess that the 20 or so additional cycles for the division vs multiplication are hard to measure next to the calls to both erf(c) and exp, but I have to admit that I wasn\u0027t aware that this is still a fact in the 2020ies.  Thanks for giving me the chance to educate myself.  I\u0027ve changed the code accordingly.\n\nI failed to mention this before, but I made sure that this passes the testsuite, and in particular I made sure that there actually is a test calling erf and erfc before relying on the tests blindly :)\n\nBest regards,\n- Tobi ",
+      "revId": "8637249945c9fe6151b04d58d718e612e319722d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
