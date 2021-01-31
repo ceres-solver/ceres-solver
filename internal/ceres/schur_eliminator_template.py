@@ -104,7 +104,7 @@ template class SchurEliminator<%s, %s, %s>;
 }  // namespace ceres
 """
 
-SPECIALIZATION_FILE = """
+SPECIALIZATION_FILE_TOP = """
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
@@ -115,13 +115,18 @@ SPECIALIZATION_FILE = """
 namespace ceres {
 namespace internal {
 
-template class SchurEliminator<%s, %s, %s>;
+"""
 
+SPECIALIZATION_FILE_SPECIALIZATION = """
+template class SchurEliminator<%s, %s, %s>;"""
+
+SPECIALIZATION_FILE_BOTTOM = """
 }  // namespace internal
 }  // namespace ceres
 
 #endif  // CERES_RESTRICT_SCHUR_SPECIALIZATION
 """
+
 
 FACTORY_FILE_HEADER = """
 #include "ceres/linear_solver.h"
