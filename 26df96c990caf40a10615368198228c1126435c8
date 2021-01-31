@@ -16,6 +16,23 @@
       "message": "Hi Keir,",
       "revId": "26df96c990caf40a10615368198228c1126435c8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "231528e1_35180284",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-01-31T11:12:46Z",
+      "side": 1,
+      "message": "Hi Keir,\nHi Sameer,\n\nI\u0027m cc\u0027ing you because you are the last two to touch the template specialization generation code which I changed to combine several specializations into a smaller number of files.  I do this because I found that the build time is in large part due to compiling the 21 template specializations which means compiling the same set of large templated classes 21 times.  In a simple experiment where I combined all specialization into a single file, build time for a full rebuild dropped by approx 8 minutes on my underpowered MacBook Air.  Since the comment near the top of generate_template_specializations.py indicates that the increased memory usage would be a problem (I assume in automated builds), I went looking for a sweet spot.\n\nThe code in this patch allows setting a number of specialization files to generate.  There are 20 specializations (+ the all dynamic case).  So n \u003d 1, 2, 4, 5, 10, 20 are the only substantially different ones. I did a coarse benchmark to determine which would be the best one as follows: regenerate with new settings, run cmake to pick up the new files, build (with ninja, if that matters).  This seems to be a sensible test: it recompiles the specializations and relinks all targets, which are the two places where the changes may be felt.  I found the following with clang 12.0.0 on Mac, reading off memory consumption in top, which is a bit coarse, the n\u003d8 column sure appears to be off:\n\nnumber of files    total time    memory usage per process (RES column in top)\n1                  200s          1.5 Gig\n4                  312s          1 Gig\n5                  298s          1 Gig\n8                  326s          700 Meg\n10                 430s          800 Meg\n20                 479s          500 Meg\n\nGiven this, I believe that n \u003d 5 is a sweet spot (the n \u003d 4 number should give you an indication of the measurement error), and I hardcoded this number on line 124 of generate_template_specializations.py.\n\n(Another approach to achieve similar or better improvements would be using CMAKE_BUILD_UNITY\u003dON, but this fails because Ceres overrides some constants in Eigen\u0027s headers which leads to preprocessor errors.  This can also be considered orthogonal, as these files are somewhat special.)\n\nBest regards,\n- Tobi\n\nsorry about the previous, failed attempt at this message.  My broken keyboard + gerrit don\u0027t make for a good combination.",
+      "revId": "26df96c990caf40a10615368198228c1126435c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
