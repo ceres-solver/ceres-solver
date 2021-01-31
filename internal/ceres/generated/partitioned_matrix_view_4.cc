@@ -49,7 +49,11 @@
 namespace ceres {
 namespace internal {
 
-template class PartitionedMatrixView<2, 4, 6>;
+
+template class PartitionedMatrixView<2, 3, 3>;
+template class PartitionedMatrixView<2, 4, 3>;
+template class PartitionedMatrixView<2, 4, Eigen::Dynamic>;
+template class PartitionedMatrixView<4, 4, 4>;
 
 }  // namespace internal
 }  // namespace ceres

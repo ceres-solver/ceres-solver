@@ -78,6 +78,16 @@ import schur_eliminator_template
 import partitioned_matrix_view_template
 import os
 import glob
+from itertools import cycle
+
+def distribute_to_files(specializations, n_files):
+    """Takes the elements of the list specializations and distribute them into
+    n_files lists of specializations so that we can generate n_files files which
+    take approximately the same time to compile"""
+    specialization_files = [[] for _ in range(min(n_files, len(specializations)))]
+    for specialization, file in zip(specializations, cycle(specialization_files)):
+        file.append(specialization)
+    return specialization_files
 
 def SuffixForSize(size):
   if size == "Eigen::Dynamic":
@@ -111,16 +121,15 @@ def Specialize(name, data):
   """
 
   # Specialization files
-  for row_block_size, e_block_size, f_block_size in SPECIALIZATIONS:
-      output = SpecializationFilename("generated/" + name,
-                                      row_block_size,
-                                      e_block_size,
-                                      f_block_size) + ".cc"
-
-      with open(output, "w") as f:
-        f.write(data["HEADER"])
-        f.write(data["SPECIALIZATION_FILE"] %
-                  (row_block_size, e_block_size, f_block_size))
+  for idx, specializations in enumerate(distribute_to_files(SPECIALIZATIONS, 5)):
+    output = "generated/" + name + "_" + str(idx) + ".cc"
+    with open(output, "w") as f:
+      f.write(data["HEADER"])
+      f.write(data["SPECIALIZATION_FILE_TOP"])
+      for row_block_size, e_block_size, f_block_size in specializations:
+        f.write(data["SPECIALIZATION_FILE_SPECIALIZATION"] %
+         (row_block_size, e_block_size, f_block_size))
+      f.write(data["SPECIALIZATION_FILE_BOTTOM"])
 
   # Generate the _d_d_d specialization.
   output = SpecializationFilename("generated/" + name,
