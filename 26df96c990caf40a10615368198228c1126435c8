@@ -33,6 +33,92 @@
       "message": "Hi Keir,\nHi Sameer,\n\nI\u0027m cc\u0027ing you because you are the last two to touch the template specialization generation code which I changed to combine several specializations into a smaller number of files.  I do this because I found that the build time is in large part due to compiling the 21 template specializations which means compiling the same set of large templated classes 21 times.  In a simple experiment where I combined all specialization into a single file, build time for a full rebuild dropped by approx 8 minutes on my underpowered MacBook Air.  Since the comment near the top of generate_template_specializations.py indicates that the increased memory usage would be a problem (I assume in automated builds), I went looking for a sweet spot.\n\nThe code in this patch allows setting a number of specialization files to generate.  There are 20 specializations (+ the all dynamic case).  So n \u003d 1, 2, 4, 5, 10, 20 are the only substantially different ones. I did a coarse benchmark to determine which would be the best one as follows: regenerate with new settings, run cmake to pick up the new files, build (with ninja, if that matters).  This seems to be a sensible test: it recompiles the specializations and relinks all targets, which are the two places where the changes may be felt.  I found the following with clang 12.0.0 on Mac, reading off memory consumption in top, which is a bit coarse, the n\u003d8 column sure appears to be off:\n\nnumber of files    total time    memory usage per process (RES column in top)\n1                  200s          1.5 Gig\n4                  312s          1 Gig\n5                  298s          1 Gig\n8                  326s          700 Meg\n10                 430s          800 Meg\n20                 479s          500 Meg\n\nGiven this, I believe that n \u003d 5 is a sweet spot (the n \u003d 4 number should give you an indication of the measurement error), and I hardcoded this number on line 124 of generate_template_specializations.py.\n\n(Another approach to achieve similar or better improvements would be using CMAKE_BUILD_UNITY\u003dON, but this fails because Ceres overrides some constants in Eigen\u0027s headers which leads to preprocessor errors.  This can also be considered orthogonal, as these files are somewhat special.)\n\nBest regards,\n- Tobi\n\nsorry about the previous, failed attempt at this message.  My broken keyboard + gerrit don\u0027t make for a good combination.",
       "revId": "26df96c990caf40a10615368198228c1126435c8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0197ddd5_76dee4b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-02-08T00:50:55Z",
+      "side": 1,
+      "message": "thanks Tobias, and my apologies for taking so long to review this.",
+      "revId": "26df96c990caf40a10615368198228c1126435c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "067d16e8_293ace7a",
+        "filename": "internal/ceres/generate_template_specializations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-02-08T00:50:55Z",
+      "side": 1,
+      "message": "n_files -\u003e num_files\n\nalso I am wondering if the code would actually be clearer if you inlined this code with the main loop.",
+      "range": {
+        "startLine": 83,
+        "startChar": 41,
+        "endLine": 83,
+        "endChar": 48
+      },
+      "revId": "26df96c990caf40a10615368198228c1126435c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "967f4ca8_c9fe2624",
+        "filename": "internal/ceres/generate_template_specializations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-02-08T00:50:55Z",
+      "side": 1,
+      "message": "make this a named constant.",
+      "range": {
+        "startLine": 124,
+        "startChar": 78,
+        "endLine": 124,
+        "endChar": 79
+      },
+      "revId": "26df96c990caf40a10615368198228c1126435c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "884740a1_1fedc9bd",
+        "filename": "internal/ceres/generate_template_specializations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-02-08T00:50:55Z",
+      "side": 1,
+      "message": "one thought I had was that instead of numbering these without relating them to whats in the file, you could think about a naming scheme and distribution which were more coordinated. I would make this rather simple code more complicated so I am not making a strong argument for it, but its worth thinking through.",
+      "range": {
+        "startLine": 129,
+        "startChar": 10,
+        "endLine": 129,
+        "endChar": 24
+      },
+      "revId": "26df96c990caf40a10615368198228c1126435c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
