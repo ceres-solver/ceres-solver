@@ -16,6 +16,23 @@
       "message": "Dear Sameer,\n\nthank you very much for your review (and also for taking care of my other patches).  I implemented your suggestions, which I think indeed improved the result.\n\nOver to you again.\n\nCheers,\n- Tobi",
       "revId": "4ba244cdbc61a9e36beded2f6cbea0c79dad60d0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "737199d0_fe8c761a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-02-12T15:01:45Z",
+      "side": 1,
+      "message": "Thanks Tobias!",
+      "revId": "4ba244cdbc61a9e36beded2f6cbea0c79dad60d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
