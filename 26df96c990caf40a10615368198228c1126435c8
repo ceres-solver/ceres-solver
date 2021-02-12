@@ -52,6 +52,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64b4aa10_96a2072f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-02-12T11:04:04Z",
+      "side": 1,
+      "message": "thank you.  I just committed an updated patch.",
+      "parentUuid": "0197ddd5_76dee4b1",
+      "revId": "26df96c990caf40a10615368198228c1126435c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "067d16e8_293ace7a",
@@ -65,6 +83,30 @@
       "writtenOn": "2021-02-08T00:50:55Z",
       "side": 1,
       "message": "n_files -\u003e num_files\n\nalso I am wondering if the code would actually be clearer if you inlined this code with the main loop.",
+      "range": {
+        "startLine": 83,
+        "startChar": 41,
+        "endLine": 83,
+        "endChar": 48
+      },
+      "revId": "26df96c990caf40a10615368198228c1126435c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0fcc7ea_a9e79b41",
+        "filename": "internal/ceres/generate_template_specializations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-02-12T11:04:04Z",
+      "side": 1,
+      "message": "It is and I made that change.",
+      "parentUuid": "067d16e8_293ace7a",
       "range": {
         "startLine": 83,
         "startChar": 41,
@@ -98,6 +140,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b17fb58d_93063a3e",
+        "filename": "internal/ceres/generate_template_specializations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-02-12T11:04:04Z",
+      "side": 1,
+      "message": "Sure, added it near the top.  I was thinking to make it configurable by cmake, but that\u0027s probably not a high priority.",
+      "parentUuid": "967f4ca8_c9fe2624",
+      "range": {
+        "startLine": 124,
+        "startChar": 78,
+        "endLine": 124,
+        "endChar": 79
+      },
+      "revId": "26df96c990caf40a10615368198228c1126435c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "884740a1_1fedc9bd",
@@ -111,6 +177,30 @@
       "writtenOn": "2021-02-08T00:50:55Z",
       "side": 1,
       "message": "one thought I had was that instead of numbering these without relating them to whats in the file, you could think about a naming scheme and distribution which were more coordinated. I would make this rather simple code more complicated so I am not making a strong argument for it, but its worth thinking through.",
+      "range": {
+        "startLine": 129,
+        "startChar": 10,
+        "endLine": 129,
+        "endChar": 24
+      },
+      "revId": "26df96c990caf40a10615368198228c1126435c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d30037a7_d10ac65e",
+        "filename": "internal/ceres/generate_template_specializations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-02-12T11:04:04Z",
+      "side": 1,
+      "message": "I was thinking about that a little bit, and decided that the best thing would probably be to give some indication what\u0027s in the files, so I added \"specialization_set\" to their names.  That kinda gets the point across.\n\nI didn\u0027t want to group them by, say, putting all the \"2_x_x\" in to one file etc because in the barely reproducible testing that I can do on my low-power notebook it seemed like the compile-times are roughly correlated between files with similar indices.  Therefore an easy approach to get a good balance of compile times is to group disparate matrix sizes, similar sizes would lead to some sets compiling much slower than others, somewhat undoing the benefit of this patch.",
+      "parentUuid": "884740a1_1fedc9bd",
       "range": {
         "startLine": 129,
         "startChar": 10,
