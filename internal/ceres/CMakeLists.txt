@@ -170,6 +170,21 @@ else (SCHUR_SPECIALIZATIONS)
   file(GLOB CERES_INTERNAL_SCHUR_FILES generated/*_d_d_d.cc)
 endif (SCHUR_SPECIALIZATIONS)
 
+# The generated specializations of the Schur eliminator include
+# schur_eliminator_impl.h which defines EIGEN_CACHEFRIENDLY_PRODUCT_THRESHOLD
+# to a different value than Eigen's default.  Depending on the order of files
+# in the unity build this can lead to clashes.  Additionally, these files are
+# already generated in a way which leads to fairly large compilation units,
+# so the gains from a unity build would be marginal.  Since this property is
+# not available before cmake 3.16, unity build is only available from this
+# version on.
+if (NOT CMAKE_VERSION VERSION_LESS 3.16)
+  set_source_files_properties(${CERES_INTERNAL_SCHUR_FILES} PROPERTIES
+    SKIP_UNITY_BUILD_INCLUSION ON)
+elseif(CMAKE_UNITY_BUILD)
+  message(FATAL_ERROR "Unity build requires cmake 3.16 or newer.  Please unset CMAKE_UNITY_BUILD.")
+endif()
+
 # Build the list of dependencies for Ceres based on the current configuration.
 find_package(Threads QUIET)
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES Threads::Threads)
