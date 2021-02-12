@@ -28,6 +28,9 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#ifndef CERES_INTERNAL_SOLVER_UTILS_H_
+#define CERES_INTERNAL_SOLVER_UTILS_H_
+
 #include <algorithm>
 #include <string>
 
@@ -59,3 +62,5 @@ std::string VersionString();
 
 }  // namespace internal
 }  // namespace ceres
+
+#endif  // CERES_INTERNAL_SOLVER_UTILS_H_
