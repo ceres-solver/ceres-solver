@@ -16,6 +16,74 @@
       "message": "Hi Alex,\n\nI\u0027m adding you as reviewer as Ceres\u0027s build system seems to have your fingerprints all over it.  This little patch allows to use CMAKE_UNITY_BUILD with ceres, which speeds up the build significantly (O(10%)).  (IF you\u0027re not familiar with the term: \"unity build\" means that instead of compiling the source files separately they are grouped together and then compiled in batches by having an automatically generated source file which #includes the individual files in each group and compiling that file instead.  The advantage especially for template-heavy code should be clear.  The standard pattern to enable it is to run cmake with the \u0027-DCMAKE_UNITY_BUILD\u003dON\u0027 flag.)\n\nThe patch does two things, one is the trivial  part in solver_utils.h which was missing an include guard.  The other part is dealing with the fact that the schur implementation uses some custom settings for Eigen, and these are handled via a macro.  Since this is order-dependent, the safe way is to disable the unity build for these files.  This is no loss, because in a previous patch I already took care of speeding up the build of the schur specializations, effectively gaining the effect of a unity build.  There\u0027s one catch though: the unity build can only be disabled on a per-file basis with cmake \u003e\u003d 3.16.  ceres requires cmake \u003e\u003d 3.5.0.  I was tempted to push the required version, but since 3.16 is still fairly recent (released in Nov 2019) I went another route, only allowing the unity build with this newer version.  It\u0027s opt-in anyway, so in this way the change is invisible to users who don\u0027t care about unity builds.\n\nOne fun observation: with the unity build, libceres.a shrinks from 7.5 MB to 7 MB on my system.  This is of course not an indication of more compact or better code, but an expression of the fact that an .a file simply assembles copies of all the .o files -- and each one contains instantiations of all the repeated templates.  Nevertheless, it is indicative of the amount of repeated compilations that were saved, the amount of which seems to line up nicely with the time savings.\n\nCheers,\n- Tobi",
       "revId": "161f4b7a43797126d8f4c9610e8a0ae4a9915e76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c06d8b95_133d18a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-02-14T20:49:11Z",
+      "side": 1,
+      "message": "Thanks Tobias.  Some minor points, but otherwise this looks good to me.  We can\u0027t update the minimum CMake version as we require that we always support at least the previous LTS version of Ubuntu, which limits us to at most 3.10.  We can update it to that version, but we would want a use-case for doing so.",
+      "revId": "161f4b7a43797126d8f4c9610e8a0ae4a9915e76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0bfb66c_8b869d6b",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-02-14T20:49:11Z",
+      "side": 1,
+      "message": "The use of SCHUR_SPECIALIZATIONS here is slightly misleading, as it implies that if that is false, that this would not matter which is not the case as the fully dynamic case also includes schur_eliminator_impl.h so the state of SCHUR_SPECIALIZATIONS is not relevant.\n\nPrefer the \u0027generated implementations of the Schur eliminator\u0027",
+      "revId": "161f4b7a43797126d8f4c9610e8a0ae4a9915e76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eae0c7df_4d041d1f",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-02-14T20:49:11Z",
+      "side": 1,
+      "message": "I think FATAL_ERROR is more appropriate here, there is no real value in continuing with processing when the user will definitely have to change their configuration.",
+      "revId": "161f4b7a43797126d8f4c9610e8a0ae4a9915e76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8641e293_836b89c5",
+        "filename": "internal/ceres/solver_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-02-14T20:49:11Z",
+      "side": 1,
+      "message": "To comply with Google Style, this should be:\n\n#endif  // CERES_INTERNAL_SOLVER_UTILS_H_",
+      "revId": "161f4b7a43797126d8f4c9610e8a0ae4a9915e76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
