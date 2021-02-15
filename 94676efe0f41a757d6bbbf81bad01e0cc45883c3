@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "652e5f14_750bc6b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-02-15T13:44:41Z",
+      "side": 1,
+      "message": "A minor change necessary to support 3.5 that I didn\u0027t spot earlier",
+      "revId": "94676efe0f41a757d6bbbf81bad01e0cc45883c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a362257_ff375b10",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-02-15T13:44:41Z",
+      "side": 1,
+      "message": "I didn\u0027t spot this initially, but VERSION_GREATER_EQUAL is not supported in CMake 3.5, so:\n\nif (CMAKE_VERSION VERSION_EQUAL 3.16 OR\n    CMAKE_VERSION VERSION_GREATER 3.16)\n\nwould be suitable replacement as there were patch releases for 3.15",
+      "revId": "94676efe0f41a757d6bbbf81bad01e0cc45883c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
