@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fabd80f_bdf3cc25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-02-15T23:35:06Z",
+      "side": 1,
+      "message": "Hi Alex,\n\ngood catch, thanks.  The only way to catch this is to scan the cmake 3.5 docs, I assume?\n\nCheers,\n- Tobi",
+      "revId": "313caf1aec1c21c15c5296fef351ea34305b48c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
