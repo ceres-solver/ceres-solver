@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9928817_17866c1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-02-15T12:40:25Z",
+      "side": 1,
+      "message": "Hi Alex,\n\nthanks for the quick review.  I updated the patch according to your comments which all seem very sensible to me.  Thank you for them.\n\nI don\u0027t think there\u0027s any reason to update  the cmake version.  The unity build is esoteric enough, I just had VS Code configured to default to it -- and I like code to build with my default settings :)\n\nOver to you, cheers,\n- Tobi",
+      "revId": "c00dbabb15afce6322e0bfd63f8901cd0606d80f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

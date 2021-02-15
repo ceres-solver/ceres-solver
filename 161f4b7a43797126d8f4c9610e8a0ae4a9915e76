@@ -52,6 +52,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "875965d7_da13776a",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-02-15T12:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0bfb66c_8b869d6b",
+      "revId": "161f4b7a43797126d8f4c9610e8a0ae4a9915e76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eae0c7df_4d041d1f",
@@ -69,6 +87,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6b8ed52_313b1c56",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-02-15T12:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eae0c7df_4d041d1f",
+      "revId": "161f4b7a43797126d8f4c9610e8a0ae4a9915e76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8641e293_836b89c5",
@@ -82,6 +118,24 @@
       "writtenOn": "2021-02-14T20:49:11Z",
       "side": 1,
       "message": "To comply with Google Style, this should be:\n\n#endif  // CERES_INTERNAL_SOLVER_UTILS_H_",
+      "revId": "161f4b7a43797126d8f4c9610e8a0ae4a9915e76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85c470df_088c2538",
+        "filename": "internal/ceres/solver_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-02-15T12:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8641e293_836b89c5",
       "revId": "161f4b7a43797126d8f4c9610e8a0ae4a9915e76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
