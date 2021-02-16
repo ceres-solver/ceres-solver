@@ -16,6 +16,23 @@
       "message": "Hi Alex,\n\ngood catch, thanks.  The only way to catch this is to scan the cmake 3.5 docs, I assume?\n\nCheers,\n- Tobi",
       "revId": "313caf1aec1c21c15c5296fef351ea34305b48c6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "016c099f_4c05677a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-02-16T09:44:16Z",
+      "side": 1,
+      "message": "Thanks Tobias, and no I don\u0027t think there is a robust way to check compliance with cmake_minimum_required(), there are various custom tools that try to do something similar, but nothing that is backwards compatible AFAIK",
+      "revId": "313caf1aec1c21c15c5296fef351ea34305b48c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
