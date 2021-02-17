@@ -102,7 +102,7 @@ template class PartitionedMatrixView<%s,
 }  // namespace ceres
 """
 
-SPECIALIZATION_FILE_TOP = """
+SPECIALIZATION_FILE = """
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
@@ -113,12 +113,7 @@ SPECIALIZATION_FILE_TOP = """
 namespace ceres {
 namespace internal {
 
-"""
-
-SPECIALIZATION_FILE_SPECIALIZATION = """
-template class PartitionedMatrixView<%s, %s, %s>;"""
-
-SPECIALIZATION_FILE_BOTTOM = """
+template class PartitionedMatrixView<%s, %s, %s>;
 
 }  // namespace internal
 }  // namespace ceres
