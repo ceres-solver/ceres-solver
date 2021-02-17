@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01f1a25b_2fc92dcf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-02-17T19:45:52Z",
+      "side": 1,
+      "message": "Tobias I tried various permutations on Travis CI with this change in place, but even extending the wait-time with no output to 20 mins the Linux (GCC) and Android (Clang) builds still failed, they blocked when compiling the schur_eliminator_specializations_set_(X).cc files, see here: https://travis-ci.org/github/alexsmac/ceres-solver/jobs/759312034 for an example.\n\nI\u0027m not sure what exactly is happening here, as the VMs for Linux should have basically the same amount of CPU/RAM capacity as the macOS ones, and they are all passing even with your CL in place.  I did notice that this did result in a noticeable \u0027stall\u0027 in compilation output on my big-core Linux machine, but it did compile.",
+      "revId": "2b32b321242b32f6364108694e0069f87e56326c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
