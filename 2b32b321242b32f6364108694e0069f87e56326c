@@ -16,6 +16,23 @@
       "message": "Tobias I tried various permutations on Travis CI with this change in place, but even extending the wait-time with no output to 20 mins the Linux (GCC) and Android (Clang) builds still failed, they blocked when compiling the schur_eliminator_specializations_set_(X).cc files, see here: https://travis-ci.org/github/alexsmac/ceres-solver/jobs/759312034 for an example.\n\nI\u0027m not sure what exactly is happening here, as the VMs for Linux should have basically the same amount of CPU/RAM capacity as the macOS ones, and they are all passing even with your CL in place.  I did notice that this did result in a noticeable \u0027stall\u0027 in compilation output on my big-core Linux machine, but it did compile.",
       "revId": "2b32b321242b32f6364108694e0069f87e56326c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4d1829e_a38c5494",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-02-18T07:13:48Z",
+      "side": 1,
+      "message": "Hi Alex,\nfirst of all, I\u0027m sorry about this.  I\u0027ll have to see if I can put my hands on a Linux machine to be able to understand it better.\n\nThat said, this seems really odd.  There\u0027s only the last schur specialization file missing in your log (...set_4), and that\u0027s not so different from all the others.  On my machine (Mac, clang 12), as I just verified, sets 1, 2, 3, 4 all compile in roughly the same time, using about 1.1Gig of memory, set 0 takes less.  I can\u0027t think of any reason to expect it to behave wildly different on Linux or Android.  \n\nIt would be possible to create more, smaller specialization files and hope that it solves this, but it would be nice to understand the reason behind this breakage.  It sure seems wrong to just hang compiling that file.\n\nCheers,\n- Tobi",
+      "revId": "2b32b321242b32f6364108694e0069f87e56326c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
