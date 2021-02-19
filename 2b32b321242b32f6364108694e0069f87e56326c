@@ -33,6 +33,24 @@
       "message": "Hi Alex,\nfirst of all, I\u0027m sorry about this.  I\u0027ll have to see if I can put my hands on a Linux machine to be able to understand it better.\n\nThat said, this seems really odd.  There\u0027s only the last schur specialization file missing in your log (...set_4), and that\u0027s not so different from all the others.  On my machine (Mac, clang 12), as I just verified, sets 1, 2, 3, 4 all compile in roughly the same time, using about 1.1Gig of memory, set 0 takes less.  I can\u0027t think of any reason to expect it to behave wildly different on Linux or Android.  \n\nIt would be possible to create more, smaller specialization files and hope that it solves this, but it would be nice to understand the reason behind this breakage.  It sure seems wrong to just hang compiling that file.\n\nCheers,\n- Tobi",
       "revId": "2b32b321242b32f6364108694e0069f87e56326c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d511b718_97e42020",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-02-19T11:28:22Z",
+      "side": 1,
+      "message": "Hi again,\n\nI had the chance to divert some of my work pc\u0027s power into its WSL subsystem today.  With the previous patch (5 sets of specializations) gcc 9.3 on Ubuntu 20.04 takes slightly above 2 Gigabytes of memory for each of the compilations.  set_4 doesn\u0027t stand out in the slightest.  Actually set_0 is the biggest one since it included an additional specialization for a total of 5 and it accordingly uses a bit more memory.  So why it fails in the way it does is a mystery.  Still each of these jobs exceeds the 2 Gig limit that I found mentioned somewhere in the code when I wrote the original patch.\n\nI would suggest going for 7 sets, i.e. 3 specializations in each files, which leads to a measured memory consumption of around 1.4Gig for each job in my Linux environment.  What do you think?\n\nCheers,\n- Tobi",
+      "parentUuid": "01f1a25b_2fc92dcf",
+      "revId": "2b32b321242b32f6364108694e0069f87e56326c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
