@@ -240,13 +240,13 @@ message("-- Building with C++${CMAKE_CXX_STANDARD}")
 # Eigen delivers Eigen3Config.cmake since v3.3.3
 find_package(Eigen3 3.3 REQUIRED)
 if (EIGEN3_FOUND)
-  message("-- Found Eigen version ${EIGEN3_VERSION_STRING}: ${EIGEN3_INCLUDE_DIRS}")
+  message("-- Found Eigen version ${Eigen3_VERSION}: ${EIGEN3_INCLUDE_DIRS}")
   if (CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64.*|AARCH64.*)" AND
-      EIGEN3_VERSION_STRING VERSION_LESS 3.3.4)
+      Eigen3_VERSION VERSION_LESS 3.3.4)
     # As per issue #289: https://github.com/ceres-solver/ceres-solver/issues/289
     # the bundle_adjustment_test will fail for Eigen < 3.3.4 on aarch64.
     message(FATAL_ERROR "-- Ceres requires Eigen version >= 3.3.4 on aarch64. "
-      "Detected version of Eigen is: ${EIGEN3_VERSION_STRING}.")
+      "Detected version of Eigen is: ${Eigen3_VERSION}.")
   endif()
 
   if (EIGENSPARSE)
