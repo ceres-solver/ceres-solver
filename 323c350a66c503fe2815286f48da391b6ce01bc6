@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6a7ca8e_8cf6d75d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6522
+      },
+      "writtenOn": "2021-03-03T18:31:55Z",
+      "side": 1,
+      "message": "https://gitlab.com/libeigen/eigen/-/blob/master/cmake/Eigen3Config.cmake.in mentions the currently used variables deprecated",
+      "revId": "323c350a66c503fe2815286f48da391b6ce01bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
