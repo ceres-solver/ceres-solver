@@ -648,9 +648,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   }
 
   if (rank < cholmod_jacobian.ncol) {
-    LOG(ERROR) << "Jacobian matrix is rank deficient. "
-               << "Number of columns: " << cholmod_jacobian.ncol
-               << " rank: " << rank;
+    LOG(WARNING) << "Jacobian matrix is rank deficient. "
+                 << "Number of columns: " << cholmod_jacobian.ncol
+                 << " rank: " << rank;
     free(permutation);
     cholmod_l_free_sparse(&R, &cc);
     cholmod_l_finish(&cc);
