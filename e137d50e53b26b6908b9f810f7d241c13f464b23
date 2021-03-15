@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec861991_e277084b",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-03-15T17:28:00Z",
+      "side": 1,
+      "message": "I do not think this should be VLOG(1), at best it should be LOG(INFO)",
+      "range": {
+        "startLine": 651,
+        "startChar": 4,
+        "endLine": 651,
+        "endChar": 8
+      },
+      "revId": "e137d50e53b26b6908b9f810f7d241c13f464b23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
