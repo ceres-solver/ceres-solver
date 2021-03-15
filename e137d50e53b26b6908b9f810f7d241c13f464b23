@@ -22,6 +22,30 @@
       },
       "revId": "e137d50e53b26b6908b9f810f7d241c13f464b23",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47e1936c_cd4a0946",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 6532
+      },
+      "writtenOn": "2021-03-15T17:39:19Z",
+      "side": 1,
+      "message": "This happens often for us, so much that it\u0027s causing issues with the log handling. I don\u0027t think reducing the severity would help us here. \n\nWe solve a small BA problem with only one camera and some 2d-3d observations and then we compute the covariance of the camera pose. Whenever the 2d-3d observations is in a configuration that doesn\u0027t constrain the camera pose in all axes this happens. \n\nThe alternative to check for rank deficiency before calling the covariance method would be too costly. \n\nDo you have any suggestion how we could otherwise solve our issue?",
+      "parentUuid": "ec861991_e277084b",
+      "range": {
+        "startLine": 651,
+        "startChar": 4,
+        "endLine": 651,
+        "endChar": 8
+      },
+      "revId": "e137d50e53b26b6908b9f810f7d241c13f464b23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
