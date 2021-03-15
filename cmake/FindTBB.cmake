@@ -429,10 +429,23 @@ findpkg_finish(TBB_MALLOC_PROXY tbbmalloc_proxy)
 #=============================================================================
 #parse all the version numbers from tbb
 if(NOT TBB_VERSION)
+  set(TBB_VERSION_FILE_PRIOR_TO_TBB_2021_1
+    "${TBB_INCLUDE_DIR}/tbb/tbb_stddef.h")
+  set(TBB_VERSION_FILE_AFTER_TBB_2021_1
+    "${TBB_INCLUDE_DIR}/oneapi/tbb/version.h")
+
+  if (EXISTS "${TBB_VERSION_FILE_PRIOR_TO_TBB_2021_1}")
+    set(TBB_VERSION_FILE "${TBB_VERSION_FILE_PRIOR_TO_TBB_2021_1}")
+  elseif (EXISTS "${TBB_VERSION_FILE_AFTER_TBB_2021_1}")
+    set(TBB_VERSION_FILE "${TBB_VERSION_FILE_AFTER_TBB_2021_1}")
+  else()
+    message(FATAL_ERROR "Found TBB installation: ${TBB_INCLUDE_DIR} "
+      "missing version header.")
+  endif()
 
  #only read the start of the file
  file(STRINGS
-      "${TBB_INCLUDE_DIR}/tbb/tbb_stddef.h"
+      "${TBB_VERSION_FILE}"
       TBB_VERSION_CONTENTS
       REGEX "VERSION")
 
