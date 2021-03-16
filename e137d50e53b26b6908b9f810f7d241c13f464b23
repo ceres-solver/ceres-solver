@@ -46,6 +46,30 @@
       },
       "revId": "e137d50e53b26b6908b9f810f7d241c13f464b23",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31435221_c8ae4824",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-03-16T00:46:00Z",
+      "side": 1,
+      "message": "this is tricky. I would like to keep this warning/ but you are solving  a set of problems where this is getting triggered. But your problem appears to be rather small and should not require using SPQR. Perhaps this is worth a 1:1 chat? I am an early riser, how about I set something up in a ZRH friendly time?",
+      "parentUuid": "47e1936c_cd4a0946",
+      "range": {
+        "startLine": 651,
+        "startChar": 4,
+        "endLine": 651,
+        "endChar": 8
+      },
+      "revId": "e137d50e53b26b6908b9f810f7d241c13f464b23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
