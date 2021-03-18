@@ -455,41 +455,48 @@ struct Nelson {
 // clang-format on
 
 static void SetNumericDiffOptions(ceres::NumericDiffOptions* options) {
-  options->max_num_ridders_extrapolations = FLAGS_ridders_extrapolations;
-  options->ridders_relative_initial_step_size = FLAGS_ridders_step_size;
+  options->max_num_ridders_extrapolations =
+      CERES_GET_FLAG(FLAGS_ridders_extrapolations);
+  options->ridders_relative_initial_step_size =
+      CERES_GET_FLAG(FLAGS_ridders_step_size);
 }
 
 void SetMinimizerOptions(ceres::Solver::Options* options) {
-  CHECK(
-      ceres::StringToMinimizerType(FLAGS_minimizer, &options->minimizer_type));
-  CHECK(ceres::StringToLinearSolverType(FLAGS_linear_solver,
+  CHECK(ceres::StringToMinimizerType(CERES_GET_FLAG(FLAGS_minimizer),
+                                     &options->minimizer_type));
+  CHECK(ceres::StringToLinearSolverType(CERES_GET_FLAG(FLAGS_linear_solver),
                                         &options->linear_solver_type));
-  CHECK(ceres::StringToPreconditionerType(FLAGS_preconditioner,
+  CHECK(ceres::StringToPreconditionerType(CERES_GET_FLAG(FLAGS_preconditioner),
                                           &options->preconditioner_type));
   CHECK(ceres::StringToTrustRegionStrategyType(
-      FLAGS_trust_region_strategy, &options->trust_region_strategy_type));
-  CHECK(ceres::StringToDoglegType(FLAGS_dogleg, &options->dogleg_type));
+      CERES_GET_FLAG(FLAGS_trust_region_strategy),
+      &options->trust_region_strategy_type));
+  CHECK(ceres::StringToDoglegType(CERES_GET_FLAG(FLAGS_dogleg),
+                                  &options->dogleg_type));
   CHECK(ceres::StringToLineSearchDirectionType(
-      FLAGS_line_search_direction, &options->line_search_direction_type));
-  CHECK(ceres::StringToLineSearchType(FLAGS_line_search,
+      CERES_GET_FLAG(FLAGS_line_search_direction),
+      &options->line_search_direction_type));
+  CHECK(ceres::StringToLineSearchType(CERES_GET_FLAG(FLAGS_line_search),
                                       &options->line_search_type));
   CHECK(ceres::StringToLineSearchInterpolationType(
-      FLAGS_line_search_interpolation,
+      CERES_GET_FLAG(FLAGS_line_search_interpolation),
       &options->line_search_interpolation_type));
 
-  options->max_num_iterations = FLAGS_num_iterations;
-  options->use_nonmonotonic_steps = FLAGS_nonmonotonic_steps;
-  options->initial_trust_region_radius = FLAGS_initial_trust_region_radius;
-  options->max_lbfgs_rank = FLAGS_lbfgs_rank;
-  options->line_search_sufficient_function_decrease = FLAGS_sufficient_decrease;
+  options->max_num_iterations = CERES_GET_FLAG(FLAGS_num_iterations);
+  options->use_nonmonotonic_steps = CERES_GET_FLAG(FLAGS_nonmonotonic_steps);
+  options->initial_trust_region_radius =
+      CERES_GET_FLAG(FLAGS_initial_trust_region_radius);
+  options->max_lbfgs_rank = CERES_GET_FLAG(FLAGS_lbfgs_rank);
+  options->line_search_sufficient_function_decrease =
+      CERES_GET_FLAG(FLAGS_sufficient_decrease);
   options->line_search_sufficient_curvature_decrease =
-      FLAGS_sufficient_curvature_decrease;
+      CERES_GET_FLAG(FLAGS_sufficient_curvature_decrease);
   options->max_num_line_search_step_size_iterations =
-      FLAGS_max_line_search_iterations;
+      CERES_GET_FLAG(FLAGS_max_line_search_iterations);
   options->max_num_line_search_direction_restarts =
-      FLAGS_max_line_search_restarts;
+      CERES_GET_FLAG(FLAGS_max_line_search_restarts);
   options->use_approximate_eigenvalue_bfgs_scaling =
-      FLAGS_approximate_eigenvalue_bfgs_scaling;
+      CERES_GET_FLAG(FLAGS_approximate_eigenvalue_bfgs_scaling);
   options->function_tolerance = std::numeric_limits<double>::epsilon();
   options->gradient_tolerance = std::numeric_limits<double>::epsilon();
   options->parameter_tolerance = std::numeric_limits<double>::epsilon();
@@ -517,22 +524,22 @@ CostFunction* CreateCostFunction(const Matrix& predictor,
                                  const int num_observations) {
   Model* model = new Model(predictor.data(), response.data(), num_observations);
   ceres::CostFunction* cost_function = NULL;
-  if (FLAGS_use_numeric_diff) {
+  if (CERES_GET_FLAG(FLAGS_use_numeric_diff)) {
     ceres::NumericDiffOptions options;
     SetNumericDiffOptions(&options);
-    if (FLAGS_numeric_diff_method == "central") {
+    if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "central") {
       cost_function = new NumericDiffCostFunction<Model,
                                                   ceres::CENTRAL,
                                                   ceres::DYNAMIC,
                                                   num_parameters>(
           model, ceres::TAKE_OWNERSHIP, num_observations, options);
-    } else if (FLAGS_numeric_diff_method == "forward") {
+    } else if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "forward") {
       cost_function = new NumericDiffCostFunction<Model,
                                                   ceres::FORWARD,
                                                   ceres::DYNAMIC,
                                                   num_parameters>(
           model, ceres::TAKE_OWNERSHIP, num_observations, options);
-    } else if (FLAGS_numeric_diff_method == "ridders") {
+    } else if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "ridders") {
       cost_function = new NumericDiffCostFunction<Model,
                                                   ceres::RIDDERS,
                                                   ceres::DYNAMIC,
@@ -572,7 +579,8 @@ double ComputeLRE(const Matrix& expected, const Matrix& actual) {
 
 template <typename Model, int num_parameters>
 int RegressionDriver(const string& filename) {
-  NISTProblem nist_problem(JoinPath(FLAGS_nist_data_dir, filename));
+  NISTProblem nist_problem(
+      JoinPath(CERES_GET_FLAG(FLAGS_nist_data_dir), filename));
   CHECK_EQ(num_parameters, nist_problem.num_parameters());
 
   Matrix predictor = nist_problem.predictor();
@@ -593,7 +601,7 @@ int RegressionDriver(const string& filename) {
     double initial_cost;
     double final_cost;
 
-    if (!FLAGS_use_tiny_solver) {
+    if (!CERES_GET_FLAG(FLAGS_use_tiny_solver)) {
       ceres::Problem problem;
       problem.AddResidualBlock(cost_function, NULL, initial_parameters.data());
       ceres::Solver::Summary summary;
@@ -609,7 +617,7 @@ int RegressionDriver(const string& filename) {
           ceres::TinySolverCostFunctionAdapter<Eigen::Dynamic, num_parameters>>
           Solver;
       Solver solver;
-      solver.options.max_num_iterations = FLAGS_num_iterations;
+      solver.options.max_num_iterations = CERES_GET_FLAG(FLAGS_num_iterations);
       solver.options.gradient_tolerance =
           std::numeric_limits<double>::epsilon();
       solver.options.parameter_tolerance =
@@ -645,7 +653,7 @@ int RegressionDriver(const string& filename) {
 }
 
 void SolveNISTProblems() {
-  if (FLAGS_nist_data_dir.empty()) {
+  if (CERES_GET_FLAG(FLAGS_nist_data_dir).empty()) {
     LOG(FATAL) << "Must specify the directory containing the NIST problems";
   }
 

@@ -119,10 +119,9 @@ int main(int argc, char** argv) {
       new AutoDiffCostFunction<F4, 1, 1, 1>(new F4), NULL, &x1, &x4);
 
   Solver::Options options;
-  LOG_IF(
-      FATAL,
-      !ceres::StringToMinimizerType(FLAGS_minimizer, &options.minimizer_type))
-      << "Invalid minimizer: " << FLAGS_minimizer
+  LOG_IF(FATAL, !ceres::StringToMinimizerType(CERES_GET_FLAG(FLAGS_minimizer),
+                                              &options.minimizer_type))
+      << "Invalid minimizer: " << CERES_GET_FLAG(FLAGS_minimizer)
       << ", valid options are: trust_region and line_search.";
 
   options.max_num_iterations = 100;
