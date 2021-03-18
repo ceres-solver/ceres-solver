@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2d078662_b945bcd2",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-03-18T23:15:35Z",
+      "side": 1,
+      "message": "But wouldn\u0027t we want to support using Abseil instead outside of Google as well?  In which case I think this would become clearer as a \u0027if (gflags) {} elseif (abseil) {}\u0027 conditional no?\n\nI don\u0027t have particularly strong feelings here, but I would assume if I read this that Ceres depends on gflags, or at least some kind of library, it seems weird that the macro would be in port.h, but would never actually be used by Ceres itself - just some privileged client apps (examples and tests) that happen to be compiled with Ceres, but would not be installed with it.  In that sense, keeping it out of the public API to reduce surface area seems desirable, as the fairly minor cost in extra code/CMake resides only in Ceres.",
+      "parentUuid": "411c3d38_3ccd8a2d",
+      "revId": "883d09ce852f1c48f4768807bf9fca46fa2985ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bcf293c3_b3507ba2",
         "filename": "include/ceres/internal/port.h",
         "patchSetId": 1
