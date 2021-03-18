@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cb4dab6a_83b0fd51",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-03-18T14:47:35Z",
+      "side": 1,
+      "message": "So by adding this to port.h, this becomes part of the Ceres public API even though Ceres (itself) does not actually use gflags directly and so can be compiled without it.\n\nHow about moving this to an internal header (for the tests) which is replicated in the examples directory?  Slightly messy, but it does mean that we don\u0027t have to add another #define to Ceres\u0027 config.h along the lines of CERES_USE_GFLAGS to set this when Ceres doesn\u0027t actually use gflags.  It would look a bit weird if you compiled Ceres without gflags or Abseil, as now the value of that #define would imply you\u0027re using Abseil, but you\u0027re actually not.\n\nOn balance, I think the duplication of a tiny header defining this is probably better.  I would also suggest that we actually add the logic to set this specific implementation only when GFLAGS is enabled in the CMakeLists as part of this CL.\n\nBasically this should just involve adding an add_definitions() call in the root CMakeLists for CERES_USE_GFLAGS which is *not* added to CERES_COMPILE_OPTIONS, which is what we use to build config.h - perhaps the latter should really be renamed to CERES_CONFIGURATION_OPTIONS as well.",
+      "revId": "883d09ce852f1c48f4768807bf9fca46fa2985ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bcf293c3_b3507ba2",
         "filename": "include/ceres/internal/port.h",
         "patchSetId": 1
