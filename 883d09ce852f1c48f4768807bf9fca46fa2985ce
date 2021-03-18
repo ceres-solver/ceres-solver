@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47ff3a33_91d58c9b",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-03-18T18:18:52Z",
+      "side": 1,
+      "message": "maybe, I will take a look.",
+      "parentUuid": "862f2523_d407006e",
+      "revId": "883d09ce852f1c48f4768807bf9fca46fa2985ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb4dab6a_83b0fd51",
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "411c3d38_3ccd8a2d",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-03-18T18:18:52Z",
+      "side": 1,
+      "message": "I am okay moving this to an internal header and replicating. Thats not a problem. But I do not think we need to worry about making this conditional on gflags, since the macro itself is innocuous and these files will only be compiled if gflags is present, I do not see the need to add more cmake hackery for this. wdyt?",
+      "parentUuid": "cb4dab6a_83b0fd51",
+      "revId": "883d09ce852f1c48f4768807bf9fca46fa2985ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bcf293c3_b3507ba2",
         "filename": "include/ceres/internal/port.h",
         "patchSetId": 1
@@ -48,6 +84,24 @@
       "writtenOn": "2021-03-18T14:40:56Z",
       "side": 1,
       "message": "Perhaps this should do the token pasting\n\n  CERES_GET_FLAG(X) FLAGS_ ## X\n\nIt\u0027ll shorten the code and arguably make it more flexible.",
+      "revId": "883d09ce852f1c48f4768807bf9fca46fa2985ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9d6b217_ffa81322",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-03-18T18:18:52Z",
+      "side": 1,
+      "message": "I was hoping to keep this as simple and dumb as possible. Making it smarter does not really get us anything.",
+      "parentUuid": "bcf293c3_b3507ba2",
       "revId": "883d09ce852f1c48f4768807bf9fca46fa2985ce",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
