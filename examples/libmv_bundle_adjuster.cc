@@ -793,7 +793,7 @@ int main(int argc, char** argv) {
   GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
-  if (FLAGS_input.empty()) {
+  if (CERES_GET_FLAG(FLAGS_input).empty()) {
     LOG(ERROR) << "Usage: libmv_bundle_adjuster --input=blender_problem";
     return EXIT_FAILURE;
   }
@@ -804,11 +804,8 @@ int main(int argc, char** argv) {
   bool is_image_space;
   vector<Marker> all_markers;
 
-  if (!ReadProblemFromFile(FLAGS_input,
-                           camera_intrinsics,
-                           &all_cameras,
-                           &all_points,
-                           &is_image_space,
+  if (!ReadProblemFromFile(CERES_GET_FLAG(FLAGS_input), camera_intrinsics,
+                           &all_cameras, &all_points, &is_image_space,
                            &all_markers)) {
     LOG(ERROR) << "Error reading problem file";
     return EXIT_FAILURE;
@@ -828,14 +825,14 @@ int main(int argc, char** argv) {
   // declare which intrinsics need to be refined and in this case
   // refining flags does not depend on problem at all.
   int bundle_intrinsics = BUNDLE_NO_INTRINSICS;
-  if (FLAGS_refine_intrinsics.empty()) {
+  if (CERES_GET_FLAG(FLAGS_refine_intrinsics).empty()) {
     if (is_image_space) {
       bundle_intrinsics = BUNDLE_FOCAL_LENGTH | BUNDLE_RADIAL;
     }
   } else {
-    if (FLAGS_refine_intrinsics == "radial") {
+    if (CERES_GET_FLAG(FLAGS_refine_intrinsics) == "radial") {
       bundle_intrinsics = BUNDLE_FOCAL_LENGTH | BUNDLE_RADIAL;
-    } else if (FLAGS_refine_intrinsics != "none") {
+    } else if (CERES_GET_FLAG(FLAGS_refine_intrinsics) != "none") {
       LOG(ERROR) << "Unsupported value for refine-intrinsics";
       return EXIT_FAILURE;
     }

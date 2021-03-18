@@ -107,4 +107,8 @@
 #define CERES_EXPORT_INTERNAL
 #endif
 
+#ifndef CERES_GET_FLAG
+#define CERES_GET_FLAG(X) X
+#endif
+
 #endif  // CERES_PUBLIC_INTERNAL_PORT_H_

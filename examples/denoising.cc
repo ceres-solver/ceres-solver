@@ -134,8 +134,9 @@ void CreateProblem(const FieldsOfExperts& foe,
                    Problem* problem,
                    PGMImage<double>* solution) {
   // Create the data term
-  CHECK_GT(FLAGS_sigma, 0.0);
-  const double coefficient = 1 / (2.0 * FLAGS_sigma * FLAGS_sigma);
+  CHECK_GT(CERES_GET_FLAG(FLAGS_sigma), 0.0);
+  const double coefficient =
+      1 / (2.0 * CERES_GET_FLAG(FLAGS_sigma) * CERES_GET_FLAG(FLAGS_sigma));
   for (int index = 0; index < image.NumPixels(); ++index) {
     ceres::CostFunction* cost_function = new QuadraticCostFunction(
         coefficient, image.PixelFromLinearIndex(index));
@@ -175,31 +176,35 @@ void CreateProblem(const FieldsOfExperts& foe,
 }
 
 void SetLinearSolver(Solver::Options* options) {
-  CHECK(StringToLinearSolverType(FLAGS_linear_solver,
+  CHECK(StringToLinearSolverType(CERES_GET_FLAG(FLAGS_linear_solver),
                                  &options->linear_solver_type));
-  CHECK(StringToPreconditionerType(FLAGS_preconditioner,
+  CHECK(StringToPreconditionerType(CERES_GET_FLAG(FLAGS_preconditioner),
                                    &options->preconditioner_type));
   CHECK(StringToSparseLinearAlgebraLibraryType(
-      FLAGS_sparse_linear_algebra_library,
+      CERES_GET_FLAG(FLAGS_sparse_linear_algebra_library),
       &options->sparse_linear_algebra_library_type));
-  options->use_mixed_precision_solves = FLAGS_mixed_precision_solves;
-  options->max_num_refinement_iterations = FLAGS_max_num_refinement_iterations;
+  options->use_mixed_precision_solves =
+      CERES_GET_FLAG(FLAGS_mixed_precision_solves);
+  options->max_num_refinement_iterations =
+      CERES_GET_FLAG(FLAGS_max_num_refinement_iterations);
 }
 
 void SetMinimizerOptions(Solver::Options* options) {
-  options->max_num_iterations = FLAGS_num_iterations;
+  options->max_num_iterations = CERES_GET_FLAG(FLAGS_num_iterations);
   options->minimizer_progress_to_stdout = true;
-  options->num_threads = FLAGS_num_threads;
-  options->eta = FLAGS_eta;
-  options->use_nonmonotonic_steps = FLAGS_nonmonotonic_steps;
-  if (FLAGS_line_search) {
+  options->num_threads = CERES_GET_FLAG(FLAGS_num_threads);
+  options->eta = CERES_GET_FLAG(FLAGS_eta);
+  options->use_nonmonotonic_steps = CERES_GET_FLAG(FLAGS_nonmonotonic_steps);
+  if (CERES_GET_FLAG(FLAGS_line_search)) {
     options->minimizer_type = ceres::LINE_SEARCH;
   }
 
-  CHECK(StringToTrustRegionStrategyType(FLAGS_trust_region_strategy,
-                                        &options->trust_region_strategy_type));
-  CHECK(StringToDoglegType(FLAGS_dogleg, &options->dogleg_type));
-  options->use_inner_iterations = FLAGS_inner_iterations;
+  CHECK(StringToTrustRegionStrategyType(
+      CERES_GET_FLAG(FLAGS_trust_region_strategy),
+      &options->trust_region_strategy_type));
+  CHECK(
+      StringToDoglegType(CERES_GET_FLAG(FLAGS_dogleg), &options->dogleg_type));
+  options->use_inner_iterations = CERES_GET_FLAG(FLAGS_inner_iterations);
 }
 
 // Solves the FoE problem using Ceres and post-processes it to make sure the
@@ -226,7 +231,7 @@ void SolveProblem(Problem* problem, PGMImage<double>* solution) {
     std::default_random_engine engine;
     std::uniform_real_distribution<> distribution(0, 1);  // rage 0 - 1
     for (auto residual_block : residual_blocks) {
-      if (distribution(engine) <= FLAGS_subset_fraction) {
+      if (distribution(engine) <= CERES_GET_FLAG(FLAGS_subset_fraction)) {
         options.residual_blocks_for_subset_preconditioner.insert(
             residual_block);
       }
@@ -255,12 +260,12 @@ int main(int argc, char** argv) {
   GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
-  if (FLAGS_input.empty()) {
+  if (CERES_GET_FLAG(FLAGS_input).empty()) {
     std::cerr << "Please provide an image file name using -input.\n";
     return 1;
   }
 
-  if (FLAGS_foe_file.empty()) {
+  if (CERES_GET_FLAG(FLAGS_foe_file).empty()) {
     std::cerr << "Please provide a Fields of Experts file name using -foe_file."
                  "\n";
     return 1;
@@ -268,15 +273,16 @@ int main(int argc, char** argv) {
 
   // Load the Fields of Experts filters from file.
   FieldsOfExperts foe;
-  if (!foe.LoadFromFile(FLAGS_foe_file)) {
-    std::cerr << "Loading \"" << FLAGS_foe_file << "\" failed.\n";
+  if (!foe.LoadFromFile(CERES_GET_FLAG(FLAGS_foe_file))) {
+    std::cerr << "Loading \"" << CERES_GET_FLAG(FLAGS_foe_file)
+              << "\" failed.\n";
     return 2;
   }
 
   // Read the images
-  PGMImage<double> image(FLAGS_input);
+  PGMImage<double> image(CERES_GET_FLAG(FLAGS_input));
   if (image.width() == 0) {
-    std::cerr << "Reading \"" << FLAGS_input << "\" failed.\n";
+    std::cerr << "Reading \"" << CERES_GET_FLAG(FLAGS_input) << "\" failed.\n";
     return 3;
   }
   PGMImage<double> solution(image.width(), image.height());
@@ -287,9 +293,9 @@ int main(int argc, char** argv) {
 
   SolveProblem(&problem, &solution);
 
-  if (!FLAGS_output.empty()) {
-    CHECK(solution.WriteToFile(FLAGS_output))
-        << "Writing \"" << FLAGS_output << "\" failed.";
+  if (!CERES_GET_FLAG(FLAGS_output).empty()) {
+    CHECK(solution.WriteToFile(CERES_GET_FLAG(FLAGS_output)))
+        << "Writing \"" << CERES_GET_FLAG(FLAGS_output) << "\" failed.";
   }
 
   return 0;
