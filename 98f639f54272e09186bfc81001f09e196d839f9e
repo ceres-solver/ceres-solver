@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b27c1a53_c4a6d16d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-03-19T00:00:06Z",
+      "side": 1,
+      "message": "talked with alex offline, this solution is fine for now, more sophisticated solution will wait when absiel becomes more of a problem.",
+      "revId": "98f639f54272e09186bfc81001f09e196d839f9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
