@@ -57,6 +57,9 @@ Preprocessor* Preprocessor::Create(MinimizerType minimizer_type) {
 Preprocessor::~Preprocessor() {}
 
 void ChangeNumThreadsIfNeeded(Solver::Options* options) {
+  if (options->num_threads == 1) {
+    return;
+  }
   const int num_threads_available = MaxNumThreadsAvailable();
   if (options->num_threads > num_threads_available) {
     LOG(WARNING) << "Specified options.num_threads: " << options->num_threads
