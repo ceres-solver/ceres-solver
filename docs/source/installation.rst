@@ -665,6 +665,11 @@ Options controlling Ceres configuration
 #. ``EIGENSPARSE [Default: ON]``: By default, Ceres will not use
    Eigen's sparse Cholesky factorization.
 
+
+   .. NOTE::
+
+      Eigen's sparse Cholesky factorization is licensed under the LGPL.
+
 #. ``GFLAGS [Default: ON]``: Turn this ``OFF`` to build Ceres without
    ``gflags``. This will also prevent some of the example code from
    building.
