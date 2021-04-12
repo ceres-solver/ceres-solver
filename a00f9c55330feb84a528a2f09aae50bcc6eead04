@@ -35,6 +35,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17375470_3f588dce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-04-12T19:10:36Z",
+      "side": 1,
+      "message": "OK, so I had another look at this and the issue persists through the latest release of Eigen (3.3.9) even though that was released in December 2020, and the licensing change happened in master in Feb 2019.  It\u0027s unclear exactly what happened there.\n\nSo in short, from the *next* Eigen release (or if you are using master), it should be MPL and there won\u0027t be a problem.  However, up to and including 3.3.9 we could add a disclaimer in the CMake output about the licensing (we used to do this prior to the previous MPL update) and update the docs, but highlight that this should be fixed in future versions of Eigen.",
+      "revId": "a00f9c55330feb84a528a2f09aae50bcc6eead04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f63c5a2a_04589fef",
