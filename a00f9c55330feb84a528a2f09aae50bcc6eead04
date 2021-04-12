@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4255376d_c2f7eb9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-04-12T18:06:43Z",
+      "side": 1,
+      "message": "Interesting, thanks Tobias I will have a look - but I think it _should_ be fine since 2019, what version of Eigen are you using to test this?",
+      "revId": "a00f9c55330feb84a528a2f09aae50bcc6eead04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f63c5a2a_04589fef",
@@ -31,6 +48,30 @@
       "writtenOn": "2021-04-12T15:56:45Z",
       "side": 1,
       "message": "this is not true anymore.",
+      "range": {
+        "startLine": 671,
+        "startChar": 30,
+        "endLine": 671,
+        "endChar": 43
+      },
+      "revId": "a00f9c55330feb84a528a2f09aae50bcc6eead04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8275382b_b26ceef0",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-04-12T18:06:43Z",
+      "side": 1,
+      "message": "For context, it was changed in 2019 when Google paid Tim Davis to have it licensed under the MPL, see here: https://gitlab.com/libeigen/eigen/-/commit/1dc1677d525b1df3cc32b3df5cd816e150b07185",
+      "parentUuid": "f63c5a2a_04589fef",
       "range": {
         "startLine": 671,
         "startChar": 30,
