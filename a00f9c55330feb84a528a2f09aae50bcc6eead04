@@ -16,6 +16,29 @@
       "message": "\nDear Sameer, dear Alex,\n\nI\u0027m adding you as reviewers because you seem to have written the documentation.  This patch is more of a RFC as I\u0027m not sure I understand the documentation correctly.  First a little background: I was compiling one of our projects with EIGEN_MPL2_ONLY to make sure that we comply with all licenses, and was surprised to find that ceres stopped building.  So this is what I came up with in response.\n\nWith default settings, ceres pulls in Eigen\u0027s sparse matrix library which is LGPL.  (Maybe not in its entirety, but that doesn\u0027t matter once the parts are combined.)  So ceres by default isn\u0027t BSD-3 but LGPL, which I don\u0027t think is what is intended for a library that advertises itself as BSD-3.  Now, I could live with that if it were pointed out clearly in the documentation.  It isn\u0027t in two ways:\n\n1. mention of the LGPL license is missing: I\u0027m adding that in this patch\n2. the documentation appears contradictory (I think I can parse it correctly, but I\u0027d like to confirm before fixing the phrasing): EIGENSPARSE is ON by default but it\u0027s not used.  I take this to mean that the Sparse library can be selected at runtime, but that doesn\u0027t alleviate the license concerns of course.  So if I understand it correctly, a better wording would perhaps be: \"Enable Eigen as an alternative for sparse matrix linear algebra.  See \u003cpointer to relevant docs\u003e for how to select a sparse matrix library at runtime.\"\n\nI\u0027m very interested in having your feedback.\n\nBest regards,\n- Tobi",
       "revId": "a00f9c55330feb84a528a2f09aae50bcc6eead04",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f63c5a2a_04589fef",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-04-12T15:56:45Z",
+      "side": 1,
+      "message": "this is not true anymore.",
+      "range": {
+        "startLine": 671,
+        "startChar": 30,
+        "endLine": 671,
+        "endChar": 43
+      },
+      "revId": "a00f9c55330feb84a528a2f09aae50bcc6eead04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
