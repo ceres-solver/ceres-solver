@@ -70,6 +70,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a1deda6_7e2aab87",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-04-13T04:17:15Z",
+      "side": 1,
+      "message": "ps just to be clear, this same error also obtains with the (L)GPLed Suitesparse and CXSparse disabled.",
+      "parentUuid": "63d457fe_b80a116a",
+      "revId": "a00f9c55330feb84a528a2f09aae50bcc6eead04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f63c5a2a_04589fef",
