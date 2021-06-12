@@ -442,9 +442,13 @@ TEST(Jet, Jet) {
     J b = 1.0 + x;
     J c = x;
     c += 1.0;
+    J d = J{x} + 1.0;
+    J e = 1.0 + J{x};
 
     ExpectJetsClose(a, b);
     ExpectJetsClose(a, c);
+    ExpectJetsClose(a, d);
+    ExpectJetsClose(a, e);
   }
 
   {  // Check that 1 - x == -(x - 1).
@@ -452,9 +456,13 @@ TEST(Jet, Jet) {
     J b = -(x - 1.0);
     J c = x;
     c -= 1.0;
+    J d = -(J{x} - 1.0);
+    J e = 1.0 - J{x};
 
     ExpectJetsClose(a, b);
     ExpectJetsClose(a, -c);
+    ExpectJetsClose(a, d);
+    ExpectJetsClose(a, e);
   }
 
   {  // Check that (x/s)*s == (x*s)/s.
@@ -464,19 +472,29 @@ TEST(Jet, Jet) {
     c /= 5.0;
     J d = x;
     d *= 5.0;
+    J e = J{x} / 5.0;
+    J f = J{x} * 5.0;
+    J g = 1.0 / (5.0 / J{x});
+    J h = 5.0 * J{x};
 
     ExpectJetsClose(5.0 * a, b / 5.0);
     ExpectJetsClose(a, c);
     ExpectJetsClose(b, d);
+    ExpectJetsClose(5.0 * e, f / 5.0);
+    ExpectJetsClose(5.0 * g, h / 5.0);
   }
 
   {  // Check that x / y == 1 / (y / x).
     J a = x / y;
     J b = 1.0 / (y / x);
+    J c = J{x} / y;
+    J d = x / J{y};
     VL << "a = " << a;
     VL << "b = " << b;
 
     ExpectJetsClose(a, b);
+    ExpectJetsClose(a, c);
+    ExpectJetsClose(a, d);
   }
 
   {  // Check that abs(-x * x) == sqrt(x * x).
