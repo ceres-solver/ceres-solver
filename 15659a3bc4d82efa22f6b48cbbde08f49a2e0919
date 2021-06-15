@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ce09cd7_cb391fa3",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-15T18:51:31Z",
+      "side": 1,
+      "message": "if this is a constant, make it a constexpr constant?",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 13
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d4d74bf_57dfbb26",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-15T18:51:31Z",
+      "side": 1,
+      "message": "int instead of size_t.",
+      "range": {
+        "startLine": 49,
+        "startChar": 14,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e6253b9_d362e050",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-15T18:51:31Z",
+      "side": 1,
+      "message": "these values do not really matter, so you can just call setRandom().",
+      "range": {
+        "startLine": 50,
+        "startChar": 19,
+        "endLine": 50,
+        "endChar": 30
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92aed6ce_9a8f510c",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-15T18:51:31Z",
+      "side": 1,
+      "message": "isn\u0027t this a problem where you are accessing a_ in all these methods? I think you meant to access a_, b_, c_, d_ and _e no?",
+      "range": {
+        "startLine": 69,
+        "startChar": 30,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e962769f_69d907e2",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-15T18:51:31Z",
+      "side": 1,
+      "message": "this fixture does nothing, why do you need one at all?",
+      "range": {
+        "startLine": 85,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 16
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bc4eec7_85aa5852",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-15T18:51:31Z",
+      "side": 1,
+      "message": "why this particular choice of addition/expression? Wouldn\u0027t it be better to have more realistic expressions? and on that subject, why aren\u0027t the benchmarks in autodiff_benchmarks.cc enough to capture what you are trying to do here?",
+      "range": {
+        "startLine": 98,
+        "startChar": 50,
+        "endLine": 98,
+        "endChar": 51
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7552253c_026ad187",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-15T18:51:31Z",
+      "side": 1,
+      "message": "why only benchmark addition? why not more operations?",
+      "range": {
+        "startLine": 98,
+        "startChar": 24,
+        "endLine": 98,
+        "endChar": 28
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8018e0e_1d0fd106",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-15T18:51:31Z",
+      "side": 1,
+      "message": "you can move this out of the loop no?",
+      "range": {
+        "startLine": 100,
+        "startChar": 17,
+        "endLine": 100,
+        "endChar": 30
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06ffc27e_dddb5496",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-15T18:51:31Z",
+      "side": 1,
+      "message": "I am surprised by the choice of sizes here. Jets with 1000 elements are likely not a great idea at all. Is this something you are using in practice? what jet sizes do you encounter in your work?\nit would also be good to have more thorough coverage of jet sizes from 1 to 32.",
+      "range": {
+        "startLine": 115,
+        "startChar": 24,
+        "endLine": 115,
+        "endChar": 26
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
