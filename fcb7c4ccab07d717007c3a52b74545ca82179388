@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ede1a8b_21fca010",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-16T00:37:08Z",
+      "side": 1,
+      "message": "Thanks for the swift first round of reviews!",
+      "revId": "fcb7c4ccab07d717007c3a52b74545ca82179388",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

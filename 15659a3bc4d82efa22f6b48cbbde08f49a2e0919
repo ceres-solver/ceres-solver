@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "983a4016_135c469e",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-16T00:37:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ce09cd7_cb391fa3",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 13
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d4d74bf_57dfbb26",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-06-15T18:51:31Z",
       "side": 1,
       "message": "int instead of size_t.",
+      "range": {
+        "startLine": 49,
+        "startChar": 14,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "655c2de4_fba435f0",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-16T00:37:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d4d74bf_57dfbb26",
       "range": {
         "startLine": 49,
         "startChar": 14,
@@ -70,6 +118,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c956040_1060cfaa",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-16T00:37:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e6253b9_d362e050",
+      "range": {
+        "startLine": 50,
+        "startChar": 19,
+        "endLine": 50,
+        "endChar": 30
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92aed6ce_9a8f510c",
@@ -93,6 +165,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e795565_7887b31f",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-16T00:37:08Z",
+      "side": 1,
+      "message": "Ooops. Fixed.",
+      "parentUuid": "92aed6ce_9a8f510c",
+      "range": {
+        "startLine": 69,
+        "startChar": 30,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e962769f_69d907e2",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-06-15T18:51:31Z",
       "side": 1,
       "message": "this fixture does nothing, why do you need one at all?",
+      "range": {
+        "startLine": 85,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 16
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fdeffda_1b902316",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-16T00:37:08Z",
+      "side": 1,
+      "message": "Good point. Removed.",
+      "parentUuid": "e962769f_69d907e2",
       "range": {
         "startLine": 85,
         "startChar": 6,
@@ -164,6 +284,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b4dda6c4_3972b685",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-16T00:37:08Z",
+      "side": 1,
+      "message": "The optimizations I have been trying apply the same way to all binary operations, so I am just testing with `+`. As mentioned in another thread, these are:\n1) Avoiding copies (this PR) and 2) Leveraging eigen\u0027s lazy evaluation of Matrix.\n\n\nNo problem with having benchmarks for all operations. Added one with additions\u0026multiplications (which is the real world usage I mentioned in the other thread) as well as a subtraction\u0026division one.\nIf you want separate benchmarks for each operation let me know.\n\nNote that unary operations (e.g. trigonometry, pow, etc) can also benefit from r-value. Would those need corresponding benchmarks too?",
+      "parentUuid": "7552253c_026ad187",
+      "range": {
+        "startLine": 98,
+        "startChar": 24,
+        "endLine": 98,
+        "endChar": 28
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2d6c0d1_c1c073be",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-16T00:37:08Z",
+      "side": 1,
+      "message": "`a1*v1 + a2*v2 + a3*v3 + a4*v4 + a5*v5` is the original use-case that brought me here. Added that too.\n\nNotably: for Jet a,b,c,d,e, assuming the following two scenarios:\nI) a + b + c + d + e\nII) a.a + b.a + c.a + d.a + e.a\n    a.v + b.v + c.v + d.v + e.v\n\n(II) was much faster than (I).\n\nWhile this yields the desired improvements in my use-case, I think there is value in having the \"natural\" expression behave in a performant way. From what I have found so far, this can be achieved with:\n1) Avoiding copies (this PR) and 2) Leveraging eigen\u0027s lazy evaluation of Matrix.\n\n\n\u003e why aren\u0027t the benchmarks in autodiff_benchmarks.cc enough to capture what you are trying to do here?\n\nBoth of the aforementioned optimizations are for Jet operations, so I created a dedicated benchmark to get a clearer insight, as there are other functions involved in `autodiff_benchmarks.cc`.\nTo clarify: the real-world use-case operates on Jets directly - not via a functor\u0026solver (although the latter is used a lot too).",
+      "parentUuid": "3bc4eec7_85aa5852",
+      "range": {
+        "startLine": 98,
+        "startChar": 50,
+        "endLine": 98,
+        "endChar": 51
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a8018e0e_1d0fd106",
         "filename": "internal/ceres/jet_operator_benchmark.cc",
         "patchSetId": 1
@@ -175,6 +343,30 @@
       "writtenOn": "2021-06-15T18:51:31Z",
       "side": 1,
       "message": "you can move this out of the loop no?",
+      "range": {
+        "startLine": 100,
+        "startChar": 17,
+        "endLine": 100,
+        "endChar": 30
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18b1f850_0173e99e",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-16T00:37:08Z",
+      "side": 1,
+      "message": "That\u0027s right! Done.",
+      "parentUuid": "a8018e0e_1d0fd106",
       "range": {
         "startLine": 100,
         "startChar": 17,
@@ -198,6 +390,30 @@
       "writtenOn": "2021-06-15T18:51:31Z",
       "side": 1,
       "message": "I am surprised by the choice of sizes here. Jets with 1000 elements are likely not a great idea at all. Is this something you are using in practice? what jet sizes do you encounter in your work?\nit would also be good to have more thorough coverage of jet sizes from 1 to 32.",
+      "range": {
+        "startLine": 115,
+        "startChar": 24,
+        "endLine": 115,
+        "endChar": 26
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d8efaab_45c8fa4c",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-16T00:37:08Z",
+      "side": 1,
+      "message": "Yes, you are right! :) 1000 elements was a really big value for testing purposes to give a sense of how latency grows as Jets become bigger.\nIn practice, the optimization-motivating-operations involved Jet\u0027s of size 22-25. Usages go up to size 150 with float or double.\n\nTherefore, I originally had 10 (small), 25 (actual use-case), 32 (alignment) and 1000 (really big value). I have changed the tests in patch set 2.\n\n\u003e more thorough coverage of jet sizes from 1 to 32.\n\nDone, let me know if we want even denser coverage.\n\n\u003e 1000\n\nI have reduced the \"really big value\" to 200.",
+      "parentUuid": "06ffc27e_dddb5496",
       "range": {
         "startLine": 115,
         "startChar": 24,
