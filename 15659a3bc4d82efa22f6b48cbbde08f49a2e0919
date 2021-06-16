@@ -332,6 +332,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ea313eec_ed8f023d",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-16T17:25:31Z",
+      "side": 1,
+      "message": "so in your work you are using Jets directly, and not AutoDiffCostFunction?",
+      "parentUuid": "f2d6c0d1_c1c073be",
+      "range": {
+        "startLine": 98,
+        "startChar": 50,
+        "endLine": 98,
+        "endChar": 51
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56a401e1_c6b58e84",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-16T17:25:31Z",
+      "side": 1,
+      "message": "I\u0027d love if you added more operations. I\u0027d rather not guess the impact and just see numbers.",
+      "parentUuid": "b4dda6c4_3972b685",
+      "range": {
+        "startLine": 98,
+        "startChar": 24,
+        "endLine": 98,
+        "endChar": 28
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a8018e0e_1d0fd106",
         "filename": "internal/ceres/jet_operator_benchmark.cc",
         "patchSetId": 1
@@ -414,6 +462,30 @@
       "side": 1,
       "message": "Yes, you are right! :) 1000 elements was a really big value for testing purposes to give a sense of how latency grows as Jets become bigger.\nIn practice, the optimization-motivating-operations involved Jet\u0027s of size 22-25. Usages go up to size 150 with float or double.\n\nTherefore, I originally had 10 (small), 25 (actual use-case), 32 (alignment) and 1000 (really big value). I have changed the tests in patch set 2.\n\n\u003e more thorough coverage of jet sizes from 1 to 32.\n\nDone, let me know if we want even denser coverage.\n\n\u003e 1000\n\nI have reduced the \"really big value\" to 200.",
       "parentUuid": "06ffc27e_dddb5496",
+      "range": {
+        "startLine": 115,
+        "startChar": 24,
+        "endLine": 115,
+        "endChar": 26
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b581cdcd_2a8521e6",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-16T17:25:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d8efaab_45c8fa4c",
       "range": {
         "startLine": 115,
         "startChar": 24,

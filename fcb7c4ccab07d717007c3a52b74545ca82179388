@@ -16,6 +16,75 @@
       "message": "Thanks for the swift first round of reviews!",
       "revId": "fcb7c4ccab07d717007c3a52b74545ca82179388",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04ceee79_a72f37be",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-16T17:25:31Z",
+      "side": 1,
+      "message": "Addition",
+      "range": {
+        "startLine": 84,
+        "startChar": 12,
+        "endLine": 84,
+        "endChar": 20
+      },
+      "revId": "fcb7c4ccab07d717007c3a52b74545ca82179388",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "710130e3_46b2cc27",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-16T17:25:31Z",
+      "side": 1,
+      "message": "MultiplyAndAdd",
+      "range": {
+        "startLine": 106,
+        "startChar": 12,
+        "endLine": 106,
+        "endChar": 34
+      },
+      "revId": "fcb7c4ccab07d717007c3a52b74545ca82179388",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bafbd34_12fa4364",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-16T17:25:31Z",
+      "side": 1,
+      "message": "why are you accessing a from the Jet? thats never a good idea",
+      "range": {
+        "startLine": 137,
+        "startChar": 24,
+        "endLine": 137,
+        "endChar": 28
+      },
+      "revId": "fcb7c4ccab07d717007c3a52b74545ca82179388",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
