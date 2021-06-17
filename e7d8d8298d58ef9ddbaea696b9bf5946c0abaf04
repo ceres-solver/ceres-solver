@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f2d8fd3_65431264",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-17T05:09:34Z",
+      "side": 1,
+      "message": "I believe you can run the benchmarks  before and after this change (generate json) and compare the two profiles with one of the python scripts that comes with it to report the delta in the commit log. ",
+      "revId": "e7d8d8298d58ef9ddbaea696b9bf5946c0abaf04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "421c8bc4_9057968f",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-17T05:09:34Z",
+      "side": 1,
+      "message": "I am a bit perplexed as to why the compiler is not able to optimize this out.",
+      "range": {
+        "startLine": 206,
+        "startChar": 9,
+        "endLine": 206,
+        "endChar": 10
+      },
+      "revId": "e7d8d8298d58ef9ddbaea696b9bf5946c0abaf04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
