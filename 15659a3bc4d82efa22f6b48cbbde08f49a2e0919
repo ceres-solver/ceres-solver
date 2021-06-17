@@ -380,6 +380,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3734f559_cb2d6ee7",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-17T00:02:34Z",
+      "side": 1,
+      "message": "Ah, sorry, my previous comment on \"direct usage\" is misleading.\nJet is not used outside of `AutoDiffCostFunction`. `AutoDiffCostFunction` is used for the optimization problem and these operations come into play when ceres evaluates the cost functions using Jet\u003c\u003e as the template parameter.",
+      "parentUuid": "ea313eec_ed8f023d",
+      "range": {
+        "startLine": 98,
+        "startChar": 50,
+        "endLine": 98,
+        "endChar": 51
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c88e527_31d1ebcd",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-17T00:02:34Z",
+      "side": 1,
+      "message": "Ok! :) Added all operations.",
+      "parentUuid": "56a401e1_c6b58e84",
+      "range": {
+        "startLine": 98,
+        "startChar": 24,
+        "endLine": 98,
+        "endChar": 28
+      },
+      "revId": "15659a3bc4d82efa22f6b48cbbde08f49a2e0919",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a8018e0e_1d0fd106",
         "filename": "internal/ceres/jet_operator_benchmark.cc",
         "patchSetId": 1

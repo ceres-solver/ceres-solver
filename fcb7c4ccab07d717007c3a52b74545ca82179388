@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ad67280_65a05f3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-17T00:02:34Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "8ede1a8b_21fca010",
+      "revId": "fcb7c4ccab07d717007c3a52b74545ca82179388",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "04ceee79_a72f37be",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-06-16T17:25:31Z",
       "side": 1,
       "message": "Addition",
+      "range": {
+        "startLine": 84,
+        "startChar": 12,
+        "endLine": 84,
+        "endChar": 20
+      },
+      "revId": "fcb7c4ccab07d717007c3a52b74545ca82179388",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6a6f54c_731f170e",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-17T00:02:34Z",
+      "side": 1,
+      "message": "Done. Changed to using CamelCase for all functions.",
+      "parentUuid": "04ceee79_a72f37be",
       "range": {
         "startLine": 84,
         "startChar": 12,
@@ -64,6 +106,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72354b56_97f668ea",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-17T00:02:34Z",
+      "side": 1,
+      "message": "Done. Changed to using CamelCase for all functions.",
+      "parentUuid": "710130e3_46b2cc27",
+      "range": {
+        "startLine": 106,
+        "startChar": 12,
+        "endLine": 106,
+        "endChar": 34
+      },
+      "revId": "fcb7c4ccab07d717007c3a52b74545ca82179388",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0bafbd34_12fa4364",
@@ -77,6 +143,30 @@
       "writtenOn": "2021-06-16T17:25:31Z",
       "side": 1,
       "message": "why are you accessing a from the Jet? thats never a good idea",
+      "range": {
+        "startLine": 137,
+        "startChar": 24,
+        "endLine": 137,
+        "endChar": 28
+      },
+      "revId": "fcb7c4ccab07d717007c3a52b74545ca82179388",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "269c8364_276f3cf1",
+        "filename": "internal/ceres/jet_operator_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-17T00:02:34Z",
+      "side": 1,
+      "message": "Added predefined scalars in `data` to avoid doing this.",
+      "parentUuid": "0bafbd34_12fa4364",
       "range": {
         "startLine": 137,
         "startChar": 24,
