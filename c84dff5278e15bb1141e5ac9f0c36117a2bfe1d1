@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e001e940_6b2d3db2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-18T22:35:46Z",
+      "side": 1,
+      "message": "\u003e 2, 3\n\nI spent some time trying to interpret the subtraction and multiplication discrepancy. It seems there was a spike during my testing that worsened the \"before\" measurement during Subtraction and the start of Multiplication. I have replaced the commit message with fresh measurements for both \"before\" and \"after\".\n\n\u003e So for small jets the improvements are small, most of the benefits are for large jets. Does that line up with your view of these optimizations too?\n\nI\u0027d say for small jets the results are essentially unchanged and subject to noise. While I do see more minuses that pluses, the differences are very small. Importantly, judging from the benchmarks, I think it is safe to say that performance for small jets is *not regressed* compared to before, while large jets get to enjoy some speedups.\n\n\n\u003e Are you done with this CL or are you still exploring further optimizations ?\n\nUnless there are any remaining concerns, the \"avoid copies\" CL is ready. I am exploring other optimizations that are orthogonal to this and plan to submit a CL for consideration if it yield improvements.",
+      "parentUuid": "564eb07c_8eadcb99",
+      "revId": "c84dff5278e15bb1141e5ac9f0c36117a2bfe1d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "611661aa_b62d1082",
