@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "564eb07c_8eadcb99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-18T16:26:38Z",
+      "side": 1,
+      "message": "Hi Alexander, Thanks for the experiments and detailed changes. I am looking at the benchmarks and some observations.\n\n1. Addition and AdditionScalar are not do not seem to be affected much except for large jets.\n2. Subtraction on the other hand shows uniform improvements. I wonder why this is.\n3. Multiplication has a weird dip where small and large are improved but medium sizes remain the same. Any idea what is going on here?\n4. MultiplicationLeft/RightScalar seems to not be affected for small sizes but only show improvements for large.\n5. Division seems to show steady improvement with size or no changes for small and only improvements for large. \n\nSo for small jets the improvements are small, most of the benefits are for large jets. Does that line up with your view of these optimizations too?\n\nAre you done with this CL or are you still exploring further optimizations ?",
+      "revId": "c84dff5278e15bb1141e5ac9f0c36117a2bfe1d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "611661aa_b62d1082",
@@ -14,6 +31,24 @@
       "writtenOn": "2021-06-18T05:28:13Z",
       "side": 1,
       "message": "NOTE: according to the benchmark, eigen\u0027s binary ops perform better than the compound ops.",
+      "revId": "c84dff5278e15bb1141e5ac9f0c36117a2bfe1d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61240fe5_b3093fdf",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-06-18T16:26:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "611661aa_b62d1082",
       "revId": "c84dff5278e15bb1141e5ac9f0c36117a2bfe1d1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
