@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f890883f_9a2176ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-18T05:28:13Z",
+      "side": 1,
+      "message": "I did not know about this, this is very helpful! Done.",
+      "parentUuid": "3f2d8fd3_65431264",
+      "revId": "e7d8d8298d58ef9ddbaea696b9bf5946c0abaf04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "421c8bc4_9057968f",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-06-17T05:09:34Z",
       "side": 1,
       "message": "I am a bit perplexed as to why the compiler is not able to optimize this out.",
+      "range": {
+        "startLine": 206,
+        "startChar": 9,
+        "endLine": 206,
+        "endChar": 10
+      },
+      "revId": "e7d8d8298d58ef9ddbaea696b9bf5946c0abaf04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86819605_a5989e79",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-18T05:28:13Z",
+      "side": 1,
+      "message": "It might have to do with eigen\u0027s binary operators.\neigen::Matrix + eigen::Matrix doesn\u0027t return a Matrix (same for other ops), but EigenCwiseBinaryOp, which so far seems to be a mechanism for lazy evaluation.\n\nhttps://eigen.tuxfamily.org/dox/classEigen_1_1CwiseBinaryOp.html\n\nThis is another aspect I am investigating to try to optimize cost functor operations.",
+      "parentUuid": "421c8bc4_9057968f",
       "range": {
         "startLine": 206,
         "startChar": 9,
