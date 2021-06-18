@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "96cc4878_2fff5319",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-18T05:28:13Z",
+      "side": 1,
+      "message": "This is in the spirit of code reuse, i.e. implement `operator +\u003d` in Jet and then reuse it in external operators.\nHowever, this is just two characters, so no problem.\nBut! It will make it inconsistent with operator `*` and `/`, see corresponding comment.\n\nChanged `+` and `-` to directly modify `jet.a` \n(Let me know if you want me to change it back).",
+      "parentUuid": "54f89e5a_371ce3bf",
+      "range": {
+        "startLine": 358,
+        "startChar": 5,
+        "endLine": 358,
+        "endChar": 6
+      },
+      "revId": "9615beadf3d958dc745c92a20f8fdd5aa3eac263",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b7579026_270d4502",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-06-17T05:09:34Z",
       "side": 1,
       "message": "same as above",
+      "range": {
+        "startLine": 369,
+        "startChar": 6,
+        "endLine": 369,
+        "endChar": 7
+      },
+      "revId": "9615beadf3d958dc745c92a20f8fdd5aa3eac263",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bbcd454_1ca5a47a",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-18T05:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7579026_270d4502",
       "range": {
         "startLine": 369,
         "startChar": 6,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "91b8a1c2_53ed0980",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-18T05:28:13Z",
+      "side": 1,
+      "message": "Not this one, as the multiplication also affects the `v` part of the Jet, not just `a`. Same for division.\n\nI checked the performance of self-inlining:\n\nCall Jet.*\u003d\n```\nMultiplicationLeftScalar\u003c3\u003e/1000         3121 ns         3121 ns       222312\nMultiplicationLeftScalar\u003c10\u003e/1000        4515 ns         4515 ns       153891\nMultiplicationLeftScalar\u003c15\u003e/1000        5888 ns         5887 ns       119837\nMultiplicationLeftScalar\u003c25\u003e/1000       11501 ns        11501 ns        61558\nMultiplicationLeftScalar\u003c32\u003e/1000       14043 ns        14043 ns        50070\nMultiplicationLeftScalar\u003c200\u003e/160       41489 ns        41488 ns        16883\nMultiplicationRightScalar\u003c3\u003e/1000        3112 ns         3112 ns       221709\nMultiplicationRightScalar\u003c10\u003e/1000       4629 ns         4629 ns       150280\nMultiplicationRightScalar\u003c15\u003e/1000       5879 ns         5879 ns       119496\nMultiplicationRightScalar\u003c25\u003e/1000      11505 ns        11504 ns        61055\nMultiplicationRightScalar\u003c32\u003e/1000      14136 ns        14136 ns        49117\nMultiplicationRightScalar\u003c200\u003e/160      41272 ns        41272 ns        16898\n```\n\nSelf inline:\n```\nMultiplicationLeftScalar\u003c3\u003e/1000         3102 ns         3102 ns       223698\nMultiplicationLeftScalar\u003c10\u003e/1000        4541 ns         4541 ns       150160\nMultiplicationLeftScalar\u003c15\u003e/1000        5901 ns         5901 ns       115791\nMultiplicationLeftScalar\u003c25\u003e/1000       11497 ns        11497 ns        60257\nMultiplicationLeftScalar\u003c32\u003e/1000       14053 ns        14053 ns        49861\nMultiplicationLeftScalar\u003c200\u003e/160       41362 ns        41361 ns        16803\nMultiplicationRightScalar\u003c3\u003e/1000        3119 ns         3119 ns       223582\nMultiplicationRightScalar\u003c10\u003e/1000       4633 ns         4633 ns       150273\nMultiplicationRightScalar\u003c15\u003e/1000       5923 ns         5923 ns       119029\nMultiplicationRightScalar\u003c25\u003e/1000      11432 ns        11432 ns        61435\nMultiplicationRightScalar\u003c32\u003e/1000      14158 ns        14157 ns        49463\nMultiplicationRightScalar\u003c200\u003e/160      41684 ns        41684 ns        16877\n```\n\nThere is no clear winner between the two, so I recommend going for the more maintainable version (calling jet.*\u003d), but happy to do either.",
+      "parentUuid": "43c258cf_27564a20",
+      "range": {
+        "startLine": 401,
+        "startChar": 7,
+        "endLine": 401,
+        "endChar": 8
+      },
+      "revId": "9615beadf3d958dc745c92a20f8fdd5aa3eac263",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9bd9e0df_eb8a18ff",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
@@ -83,6 +155,30 @@
       "writtenOn": "2021-06-17T05:09:34Z",
       "side": 1,
       "message": "same as above.",
+      "range": {
+        "startLine": 412,
+        "startChar": 7,
+        "endLine": 412,
+        "endChar": 8
+      },
+      "revId": "9615beadf3d958dc745c92a20f8fdd5aa3eac263",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7c48bfb_1d88391c",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-18T05:28:13Z",
+      "side": 1,
+      "message": "(see above comment)",
+      "parentUuid": "9bd9e0df_eb8a18ff",
       "range": {
         "startLine": 412,
         "startChar": 7,

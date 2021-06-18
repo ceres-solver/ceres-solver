@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "611661aa_b62d1082",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-06-18T05:28:13Z",
+      "side": 1,
+      "message": "NOTE: according to the benchmark, eigen\u0027s binary ops perform better than the compound ops.",
+      "revId": "c84dff5278e15bb1141e5ac9f0c36117a2bfe1d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
