@@ -636,13 +636,40 @@ create_ceres_config("${CERES_COMPILE_OPTIONS}"
 
 add_subdirectory(internal/ceres)
 
+# Requires Python3, Sphinx and sphinx-rtd-theme
 if (BUILD_DOCUMENTATION)
   set(CERES_DOCS_INSTALL_DIR "share/doc/ceres" CACHE STRING
       "Ceres docs install path relative to CMAKE_INSTALL_PREFIX")
+  set(SPHINX_RTD_THEME_FOUND 0)
+
+  find_package(PythonInterp 3)
+
+  if(NOT PYTHONINTERP_FOUND)
+    message("-- Failed to find python3, disabling build of documentation.")
+    update_cache_variable(BUILD_DOCUMENTATION OFF)
+  else()
+
+    # Check for sphinx theme dependency for documentation
+    execute_process(
+      COMMAND ${PYTHON_EXECUTABLE} -m pip show sphinx-rtd-theme
+      RESULT_VARIABLE PY_SPHINX_RTD_THEME
+      OUTPUT_QUIET
+      ERROR_QUIET
+    )
+
+    if (${PY_SPHINX_RTD_THEME} EQUAL 0)
+      set(SPHINX_RTD_THEME_FOUND 1)
+    endif()
+
+  endif()
 
   find_package(Sphinx QUIET)
   if (NOT SPHINX_FOUND)
     message("-- Failed to find Sphinx, disabling build of documentation.")
+    update_cache_variable(BUILD_DOCUMENTATION OFF)
+  elseif (NOT ${SPHINX_RTD_THEME_FOUND})
+    # Build with documentation will fail without sphinx-rtd-theme
+    message("-- Failed to find python3 module sphinx-rtd-theme, disabling build of documentation.")
     update_cache_variable(BUILD_DOCUMENTATION OFF)
   else()
     # Generate the User's Guide (html).
