@@ -636,13 +636,14 @@ create_ceres_config("${CERES_COMPILE_OPTIONS}"
 
 add_subdirectory(internal/ceres)
 
+# Requires Python3, Sphinx and sphinx-rtd-theme
 if (BUILD_DOCUMENTATION)
   set(CERES_DOCS_INSTALL_DIR "share/doc/ceres" CACHE STRING
       "Ceres docs install path relative to CMAKE_INSTALL_PREFIX")
 
   find_package(Sphinx QUIET)
   if (NOT SPHINX_FOUND)
-    message("-- Failed to find Sphinx, disabling build of documentation.")
+    message("-- Failed to find Sphinx and/or its dependencies, disabling build of documentation.")
     update_cache_variable(BUILD_DOCUMENTATION OFF)
   else()
     # Generate the User's Guide (html).
