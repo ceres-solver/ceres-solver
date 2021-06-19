@@ -642,7 +642,7 @@ if (BUILD_DOCUMENTATION)
 
   find_package(Sphinx QUIET)
   if (NOT SPHINX_FOUND)
-    message("-- Failed to find Sphinx, disabling build of documentation.")
+    message("-- Failed to find Sphinx and/or its dependencies, disabling build of documentation.")
     update_cache_variable(BUILD_DOCUMENTATION OFF)
   else()
     # Generate the User's Guide (html).
