@@ -43,24 +43,30 @@ find_program(SPHINX_EXECUTABLE
                /opt/local/bin
              DOC "Sphinx documentation generator")
 
-if (NOT SPHINX_EXECUTABLE)
-  set(_Python_VERSIONS 2.7 2.6 2.5 2.4 2.3 2.2 2.1 2.0 1.6 1.5)
+if (SPHINX_EXECUTABLE)
 
-  foreach (_version ${_Python_VERSIONS})
-    set(_sphinx_NAMES sphinx-build-${_version})
+  find_package(PythonInterp 3)
 
-    find_program(SPHINX_EXECUTABLE
-                 NAMES ${_sphinx_NAMES}
-                 PATHS
-                   /usr/bin
-                   /usr/local/bin
-                   /opt/local/bin
-                 DOC "Sphinx documentation generator")
-  endforeach ()
+  if(PYTHONINTERP_FOUND)
+    # Check for sphinx theme dependency for documentation
+    execute_process(
+      COMMAND ${PYTHON_EXECUTABLE} -m pip show sphinx-rtd-theme
+      RESULT_VARIABLE SPHINX_RTD_THEME
+      OUTPUT_QUIET
+      ERROR_QUIET
+    )
+  endif ()
+
+  if (${SPHINX_RTD_THEME} EQUAL 0)
+    set(SPHINX_RTD_THEME TRUE)
+  else ()
+    set(SPHINX_RTD_THEME FALSE)
+  endif ()
+
 endif ()
 
 include(FindPackageHandleStandardArgs)
 
-find_package_handle_standard_args(Sphinx DEFAULT_MSG SPHINX_EXECUTABLE)
+find_package_handle_standard_args(Sphinx DEFAULT_MSG SPHINX_EXECUTABLE SPHINX_RTD_THEME)
 
 mark_as_advanced(SPHINX_EXECUTABLE)
