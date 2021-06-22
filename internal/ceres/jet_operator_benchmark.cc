@@ -116,7 +116,13 @@ static void Addition(benchmark::State& state) {
   using JetType = Jet<double, JET_SIZE>;
   JetBenchmarkHelper<JET_SIZE>(
       state, [](const JetInputData<JetType>& d, JetType& out) {
-        out += +d.a() + d.b() + d.c() + d.d() + d.e();
+        auto op = +d.a() + d.b() + d.c() + d.d() + d.e();
+        out += op;
+
+        using JetOpT = decltype(op.v);
+        using EigenOpT =
+            decltype(d.a().v + d.b().v + d.c().v + d.d().v + d.e().v);
+        static_assert(std::is_same<JetOpT, EigenOpT>::value, "");
       });
 }
 BENCHMARK_TEMPLATE(Addition, 3)->Arg(1000);
@@ -131,8 +137,13 @@ static void AdditionScalar(benchmark::State& state) {
   using JetType = Jet<double, JET_SIZE>;
   JetBenchmarkHelper<JET_SIZE>(
       state, [](const JetInputData<JetType>& d, JetType& out) {
-        out +=
+        auto op =
             d.scalar_a() + d.scalar_b() + d.c() + d.scalar_d() + d.scalar_e();
+        out += op;
+
+        using JetOpT = decltype(op.v);
+        using EigenOpT = decltype(d.c().v);
+        static_assert(std::is_same<JetOpT, EigenOpT>::value, "");
       });
 }
 BENCHMARK_TEMPLATE(AdditionScalar, 3)->Arg(1000);
@@ -147,7 +158,13 @@ static void Subtraction(benchmark::State& state) {
   using JetType = Jet<double, JET_SIZE>;
   JetBenchmarkHelper<JET_SIZE>(
       state, [](const JetInputData<JetType>& d, JetType& out) {
-        out -= -d.a() - d.b() - d.c() - d.d() - d.e();
+        auto op = -d.a() - d.b() - d.c() - d.d() - d.e();
+        out -= op;
+
+        using JetOpT = decltype(op.v);
+        using EigenOpT =
+            decltype(-d.a().v - d.b().v - d.c().v - d.d().v - d.e().v);
+        static_assert(std::is_same<JetOpT, EigenOpT>::value, "");
       });
 }
 BENCHMARK_TEMPLATE(Subtraction, 3)->Arg(1000);
@@ -162,8 +179,13 @@ static void SubtractionScalar(benchmark::State& state) {
   using JetType = Jet<double, JET_SIZE>;
   JetBenchmarkHelper<JET_SIZE>(
       state, [](const JetInputData<JetType>& d, JetType& out) {
-        out -=
+        auto op =
             -d.scalar_a() - d.scalar_b() - d.c() - d.scalar_d() - d.scalar_e();
+        out -= op;
+
+        using JetOpT = decltype(op.v);
+        using EigenOpT = decltype(-d.c().v);
+        static_assert(std::is_same<JetOpT, EigenOpT>::value, "");
       });
 }
 BENCHMARK_TEMPLATE(SubtractionScalar, 3)->Arg(1000);
@@ -193,8 +215,14 @@ static void MultiplicationLeftScalar(benchmark::State& state) {
   using JetType = Jet<double, JET_SIZE>;
   JetBenchmarkHelper<JET_SIZE>(
       state, [](const JetInputData<JetType>& d, JetType& out) {
-        out += d.scalar_a() *
-               (d.scalar_b() * (d.scalar_c() * (d.scalar_d() * d.e())));
+        auto op = d.scalar_a() *
+                  (d.scalar_b() * (d.scalar_c() * (d.scalar_d() * d.e())));
+        out += op;
+
+        using JetOpT = decltype(((d.scalar_d() * d.e())).v);
+        using EigenOpT = decltype((d.scalar_d() * d.e().v));
+        using EigenOpT2 = decltype(d.e().v * 5.0);
+        static_assert(std::is_same<JetOpT, EigenOpT>::value, "");
       });
 }
 BENCHMARK_TEMPLATE(MultiplicationLeftScalar, 3)->Arg(1000);
