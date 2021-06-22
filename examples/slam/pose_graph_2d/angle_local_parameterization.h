@@ -46,7 +46,7 @@ class AngleLocalParameterization {
                   const T* delta_theta_radians,
                   T* theta_radians_plus_delta) const {
     *theta_radians_plus_delta =
-        NormalizeAngle(*theta_radians + *delta_theta_radians);
+        NormalizeAngle<T>(*theta_radians + *delta_theta_radians);
 
     return true;
   }

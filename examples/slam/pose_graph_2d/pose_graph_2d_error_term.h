@@ -82,7 +82,7 @@ class PoseGraph2dErrorTerm {
 
     residuals_map.template head<2>() =
         RotationMatrix2D(*yaw_a).transpose() * (p_b - p_a) - p_ab_.cast<T>();
-    residuals_map(2) = ceres::examples::NormalizeAngle(
+    residuals_map(2) = ceres::examples::NormalizeAngle<T>(
         (*yaw_b - *yaw_a) - static_cast<T>(yaw_ab_radians_));
 
     // Scale the residuals by the square root information matrix to account for
