@@ -50,6 +50,24 @@
       "message": "This actually highlights an interesting problem that we should address, use of `python` invokes Python2 by default, despite that being deprecated by Python3 on our minimum reference OSs (18.04 \u0026 macOS).\n\nThis matters as obviously the results of `python -m pip show sphinx-rtd-theme` (but also the custom command in CMake we use to drive the generation of the docs) will not be the same for both, and the legacy Python2 usually cannot be replaced despite not being used.\n\nIn CMake 3.12+ find_package(Python) would allow us to do this very easily.  However to support 18.04 (CMake 3.10) we can use find_package(PythonInterp) with a version 3 qualifier to get the same effect.  I think this is more robust/portable (and reflective of any user preferences) than hardcoding `python3` in these spells.\n\nSumit would you be happy/have the time to make these changes?",
       "revId": "a6ee7ca00713d29c88d8f5d96843c6e716b6af24",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a10bb53c_dd66ed5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6552
+      },
+      "writtenOn": "2021-06-22T17:36:47Z",
+      "side": 1,
+      "message": "Hi Alex,\nMoving from Python2 to Python3 is a good initiative. I would be able to do that.\nI would as well prefer not to hardcode `python3`. We will consider building documentation only if PythonInterp v3 is found and use the corresponding python executable.",
+      "parentUuid": "3efbd499_b1e7445f",
+      "revId": "a6ee7ca00713d29c88d8f5d96843c6e716b6af24",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
