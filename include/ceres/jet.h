@@ -167,6 +167,341 @@
 #include "ceres/internal/port.h"
 
 namespace ceres {
+namespace internal {
+template <typename CwiseOp>
+struct CwiseOpTraits {
+  using T = typename Eigen::internal::remove_all<CwiseOp>::type::Scalar;
+  static constexpr int N =
+      Eigen::internal::remove_all<CwiseOp>::type::RowsAtCompileTime;
+};
+
+// Convenience typedef to avoid repeating `typename`
+template <class CwiseOp>
+using CwiseOpT = typename internal::CwiseOpTraits<CwiseOp>::T;
+
+}  // namespace internal
+
+template <typename CwiseOp>
+struct JetCwiseOp {
+  enum { DIMENSION = internal::CwiseOpTraits<CwiseOp>::N };
+  typedef typename internal::CwiseOpTraits<CwiseOp>::T Scalar;
+
+  // The scalar part.
+  Scalar a;
+
+  // The infinitesimal part.
+  CwiseOp v;
+};
+
+namespace internal {
+
+// Used to ease type-deduction.
+template <typename CwiseOp>
+JetCwiseOp<CwiseOp> MakeJetCwiseOp(const internal::CwiseOpT<CwiseOp>& a,
+                                   const CwiseOp& v) {
+  return {a, v};
+}
+template <typename CwiseOp>
+JetCwiseOp<CwiseOp> MakeJetCwiseOp(const internal::CwiseOpT<CwiseOp>& a,
+                                   CwiseOp&& v) {
+  return {a, std::move(v)};
+}
+template <typename CwiseOp>
+JetCwiseOp<CwiseOp> MakeJetCwiseOp(
+    typename internal::CwiseOpTraits<CwiseOp>::T&& a, const CwiseOp& v) {
+  return {std::move(a), v};
+}
+template <typename CwiseOp>
+JetCwiseOp<CwiseOp> MakeJetCwiseOp(
+    typename internal::CwiseOpTraits<CwiseOp>::T&& a, CwiseOp&& v) {
+  return {std::move(a), std::move(v)};
+}
+
+template <typename T, int N>
+Eigen::Matrix<T, N, 1> MakeZeroedJetMatrix() {
+  Eigen::Matrix<T, N, 1> v{};
+  v.setConstant(T());
+  return v;
+}
+
+// NOTE1: Benchmarks showed that Eigen's compound operators (+=, -=, *=, /=)
+// were slower than the corresponding binary operators (+, -, *, /). Therefore,
+// using `t = f * g` even if t === f. (using Eigen 3.3.9)
+//
+// NOTE2: These helpers are used to minimize code duplication. Using unbounded
+// templates here, but the public usages in the `ceres::` namespace use
+// combinations of Jet and JetCwiseOp so users won't have to deal with
+// additional complexity in compiler error messages.
+
+template <typename F, typename G>
+auto JetPlusJet(const F& f, const G& g) {
+  return MakeJetCwiseOp(f.a + g.a, f.v + g.v);
+}
+template <typename F, typename G, typename D>
+D& JetPlusJet(const F& f, const G& g, D& destination) {
+  destination.a = f.a + g.a;
+  destination.v = f.v + g.v;
+  return destination;
+}
+
+template <typename F, typename S>
+F JetPlusScalarLValue(const F& f, const S& s) {
+  return F{f.a + s, f.v};
+}
+template <typename F, typename S>
+F&& JetPlusScalarRValue(F&& f, const S& s) {
+  f.a += s;
+  return std::move(f);
+}
+
+template <typename F, typename G>
+auto JetMinusJet(const F& f, const G& g) {
+  return MakeJetCwiseOp(f.a - g.a, f.v - g.v);
+}
+template <typename F, typename G, typename D>
+D& JetMinusJet(const F& f, const G& g, D& destination) {
+  destination.a = f.a - g.a;
+  destination.v = f.v - g.v;
+  return destination;
+}
+
+template <typename F, typename S>
+F JetMinusScalarLValue(const F& f, const S& s) {
+  return F(f.a - s, f.v);
+}
+template <typename F, typename S>
+F&& JetMinusScalarRValue(F&& f, const S& s) {
+  f.a -= s;
+  return std::move(f);
+}
+
+template <typename F, typename S>
+auto ScalarMinusJet(const S& s, const F& f) {
+  return MakeJetCwiseOp(s - f.a, -f.v);
+}
+
+template <typename F, typename G>
+auto JetTimesJet(const F& f, const G& g) {
+  return MakeJetCwiseOp(f.a * g.a, f.a * g.v + f.v * g.a);
+}
+template <typename F, typename G, typename D>
+D& JetTimesJet(const F& f, const G& g, D& destination) {
+  destination.a = f.a * g.a;
+  destination.v = f.a * g.v + f.v * g.a;
+  return destination;
+}
+
+template <typename F, typename S>
+auto JetTimesScalar(const F& f, const S& s) {
+  return MakeJetCwiseOp(s * f.a, s * f.v);
+}
+
+template <typename F, typename G>
+auto JetOverJet(const F& f, const G& g) {
+  // This uses:
+  //
+  //   a + u   (a + u)(b - v)   (a + u)(b - v)
+  //   ----- = -------------- = --------------
+  //   b + v   (b + v)(b - v)        b^2
+  //
+  // which holds because v*v = 0.
+  using T = typename F::Scalar;
+  const T g_a_inverse = T(1.0) / g.a;
+  const T f_a_by_g_a = f.a * g_a_inverse;
+  return MakeJetCwiseOp(f_a_by_g_a, (f.v - f_a_by_g_a * g.v) * g_a_inverse);
+}
+template <typename F, typename G, typename D>
+D& JetOverJet(const F& f, const G& g, D& destination) {
+  using T = typename F::Scalar;
+  const T g_a_inverse = T(1.0) / g.a;
+  const T f_a_by_g_a = f.a * g_a_inverse;
+  destination.a = f_a_by_g_a;
+  destination.v = (f.v - f_a_by_g_a * g.v) * g_a_inverse;
+  return destination;
+}
+
+template <typename F>
+auto JetOverScalar(const F& f, const typename F::Scalar& s) {
+  using T = typename F::Scalar;
+  return JetTimesScalar(f, T(1.0) / s);
+}
+
+template <typename F>
+auto ScalarOverJet(const typename F::Scalar& s, const F& g) {
+  using T = typename F::Scalar;
+  const T minus_s_g_a_inverse2 = -s / (g.a * g.a);
+  return MakeJetCwiseOp(s / g.a, g.v * minus_s_g_a_inverse2);
+}
+
+template <typename F>
+auto JetLog(const F& f) {
+  using T = typename F::Scalar;
+  const T a_inverse = T(1.0) / f.a;
+  return MakeJetCwiseOp(log(f.a), f.v * a_inverse);
+}
+
+template <typename F>
+auto JetExp(const F& f) {
+  using T = typename F::Scalar;
+  const T tmp = exp(f.a);
+  return MakeJetCwiseOp(tmp, tmp * f.v);
+}
+
+template <typename F>
+auto JetSqrt(const F& f) {
+  using T = typename F::Scalar;
+  const T tmp = sqrt(f.a);
+  const T two_a_inverse = T(1.0) / (T(2.0) * tmp);
+  return MakeJetCwiseOp(tmp, f.v * two_a_inverse);
+}
+
+template <typename F>
+auto JetCos(const F& f) {
+  return MakeJetCwiseOp(cos(f.a), -sin(f.a) * f.v);
+}
+
+template <typename F>
+auto JetAcos(const F& f) {
+  using T = typename F::Scalar;
+  const T tmp = -T(1.0) / sqrt(T(1.0) - f.a * f.a);
+  return MakeJetCwiseOp(acos(f.a), tmp * f.v);
+}
+
+template <typename F>
+auto JetSin(const F& f) {
+  return MakeJetCwiseOp(sin(f.a), cos(f.a) * f.v);
+}
+
+template <typename F>
+auto JetAsin(const F& f) {
+  using T = typename F::Scalar;
+  const T tmp = T(1.0) / sqrt(T(1.0) - f.a * f.a);
+  return MakeJetCwiseOp(asin(f.a), tmp * f.v);
+}
+
+template <typename F>
+auto JetTan(const F& f) {
+  using T = typename F::Scalar;
+  const T tan_a = tan(f.a);
+  const T tmp = T(1.0) + tan_a * tan_a;
+  return MakeJetCwiseOp(tan_a, tmp * f.v);
+}
+
+template <typename F>
+auto JetAtan(const F& f) {
+  using T = typename F::Scalar;
+  const T tmp = T(1.0) / (T(1.0) + f.a * f.a);
+  return MakeJetCwiseOp(atan(f.a), tmp * f.v);
+}
+
+template <typename F>
+auto JetSinh(const F& f) {
+  return MakeJetCwiseOp(sinh(f.a), cosh(f.a) * f.v);
+}
+
+template <typename F>
+auto JetCosh(const F& f) {
+  return MakeJetCwiseOp(cosh(f.a), sinh(f.a) * f.v);
+}
+
+template <typename F>
+auto JetTanh(const F& f) {
+  using T = typename F::Scalar;
+  const T tanh_a = tanh(f.a);
+  const T tmp = T(1.0) - tanh_a * tanh_a;
+  return MakeJetCwiseOp(tanh_a, tmp * f.v);
+}
+
+template <typename F>
+auto JetFloor(const F& f) {
+  using T = typename F::Scalar;
+  return internal::MakeJetCwiseOp(floor(f.a),
+                                  MakeZeroedJetMatrix<T, F::DIMENSION>());
+}
+
+template <typename F>
+auto JetCeil(const F& f) {
+  using T = typename F::Scalar;
+  return internal::MakeJetCwiseOp(ceil(f.a),
+                                  MakeZeroedJetMatrix<T, F::DIMENSION>());
+}
+
+template <typename F>
+auto JetCbrt(const F& f) {
+  using T = typename F::Scalar;
+  const T derivative = T(1.0) / (T(3.0) * cbrt(f.a * f.a));
+  return internal::MakeJetCwiseOp(cbrt(f.a), f.v * derivative);
+}
+
+template <typename F>
+auto JetExp2(const F& f) {
+  using T = typename F::Scalar;
+  const T tmp = exp2(f.a);
+  const T derivative = tmp * log(T(2));
+  return internal::MakeJetCwiseOp(tmp, f.v * derivative);
+}
+
+template <typename F>
+auto JetLog2(const F& f) {
+  using T = typename F::Scalar;
+  const T derivative = T(1.0) / (f.a * log(T(2)));
+  return internal::MakeJetCwiseOp(log2(f.a), f.v * derivative);
+}
+
+template <typename F, typename G>
+auto JetHypot(const F& x, const G& y) {
+  using T = typename F::Scalar;
+  // d/da sqrt(a) = 0.5 / sqrt(a)
+  // d/dx x^2 + y^2 = 2x
+  // So by the chain rule:
+  // d/dx sqrt(x^2 + y^2) = 0.5 / sqrt(x^2 + y^2) * 2x = x / sqrt(x^2 + y^2)
+  // d/dy sqrt(x^2 + y^2) = y / sqrt(x^2 + y^2)
+  const T tmp = hypot(x.a, y.a);
+  return internal::MakeJetCwiseOp(tmp, x.a / tmp * x.v + y.a / tmp * y.v);
+}
+
+template <typename F>
+auto JetErf(const F& x) {
+  using T = typename F::Scalar;
+  // We evaluate the constant as follows:
+  //   2 / sqrt(pi) = 1 / sqrt(atan(1.))
+  // On POSIX sytems it is defined as M_2_SQRTPI, but this is not
+  // portable and the type may not be T.  The above expression
+  // evaluates to full precision with IEEE arithmetic and, since it's
+  // constant, the compiler can generate exactly the same code.  gcc
+  // does so even at -O0.
+  const T tmp = exp(-x.a * x.a) * (T(1) / sqrt(atan(T(1))));
+  return internal::MakeJetCwiseOp(erf(x.a), x.v * tmp);
+}
+
+template <typename F>
+auto JetErfc(const F& x) {
+  using T = typename F::Scalar;
+  // See in erf() above for the evaluation of the constant in the derivative.
+  const T tmp = exp(-x.a * x.a) * (T(1) / sqrt(atan(T(1))));
+  return internal::MakeJetCwiseOp(erfc(x.a), -x.v * tmp);
+}
+
+template <typename F, typename G>
+auto JetAtan2Jet(const G& g, const F& f) {
+  // Note order of arguments:
+  //
+  //   f = a + da
+  //   g = b + db
+
+  using T = typename F::Scalar;
+  T const tmp = T(1.0) / (f.a * f.a + g.a * g.a);
+  return MakeJetCwiseOp(std::atan2(g.a, f.a), tmp * (-g.a * f.v + f.a * g.v));
+}
+
+template <typename F, typename S>
+auto JetPowScalar(const F& f, const S& g) {
+  using T = typename F::Scalar;
+  T const tmp = g * pow(f.a, T(g) - T(1.0));
+  return MakeJetCwiseOp(pow(f.a, T(g)), tmp * f.v);
+}
+
+}  // namespace internal
 
 template <typename T, int N>
 struct Jet {
@@ -178,18 +513,21 @@ struct Jet {
   // (where T is a Jet<T, N>). This usually only happens in opt mode. Note that
   // the C++ standard mandates that e.g. default constructed doubles are
   // initialized to 0.0; see sections 8.5 of the C++03 standard.
-  Jet() : a() { v.setConstant(Scalar()); }
+  Jet() : a{}, v{internal::MakeZeroedJetMatrix<T, N>()} {}
+
+  // Constructor from JetCwiseOp. Intentionally implicit.
+  template <typename CwiseOp>
+  Jet(const JetCwiseOp<CwiseOp>& value) : a{value.a}, v{value.v} {}
+  template <typename CwiseOp>
+  Jet(JetCwiseOp<CwiseOp>&& value) : a{value.a}, v{std::move(value.v)} {}
 
   // Constructor from scalar: a + 0.
-  explicit Jet(const T& value) {
-    a = value;
-    v.setConstant(Scalar());
-  }
+  explicit Jet(const T& value)
+      : a{value}, v{internal::MakeZeroedJetMatrix<T, N>()} {}
 
   // Constructor from scalar plus variable: a + t_i.
-  Jet(const T& value, int k) {
-    a = value;
-    v.setConstant(Scalar());
+  Jet(const T& value, int k)
+      : a{value}, v{internal::MakeZeroedJetMatrix<T, N>()} {
     v[k] = T(1.0);
   }
 
@@ -203,28 +541,35 @@ struct Jet {
 
   // Compound operators
   Jet<T, N>& operator+=(const Jet<T, N>& y) {
-    this->a += y.a;
-    this->v = this->v + y.v;  // Better than +=
-    return *this;
+    return internal::JetPlusJet(*this, y, *this);
+  }
+  template <typename CwiseOp>
+  Jet<T, N>& operator+=(const JetCwiseOp<CwiseOp>& y) {
+    return internal::JetPlusJet(*this, y, *this);
   }
 
   Jet<T, N>& operator-=(const Jet<T, N>& y) {
-    this->a -= y.a;
-    this->v = this->v - y.v;  // Better than -=
-    return *this;
+    return internal::JetMinusJet(*this, y, *this);
+  }
+  template <typename CwiseOp>
+  Jet<T, N>& operator-=(const JetCwiseOp<CwiseOp>& y) {
+    return internal::JetMinusJet(*this, y, *this);
   }
 
   Jet<T, N>& operator*=(const Jet<T, N>& y) {
-    this->v = this->a * y.v + this->v * y.a;
-    this->a *= y.a;
-    return *this;
+    return internal::JetTimesJet(*this, y, *this);
+  }
+  template <typename CwiseOp>
+  Jet<T, N>& operator*=(const JetCwiseOp<CwiseOp>& y) {
+    return internal::JetTimesJet(*this, y, *this);
   }
 
   Jet<T, N>& operator/=(const Jet<T, N>& y) {
-    const T y_a_inverse = T(1.0) / y.a;
-    this->a *= y_a_inverse;
-    this->v = (this->v - this->a * y.v) * y_a_inverse;
-    return *this;
+    return internal::JetOverJet(*this, y, *this);
+  }
+  template <typename CwiseOp>
+  Jet<T, N>& operator/=(const JetCwiseOp<CwiseOp>& y) {
+    return internal::JetOverJet(*this, y, *this);
   }
 
   // Compound with scalar operators.
@@ -261,6 +606,14 @@ struct Jet {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
+namespace internal {
+
+template <typename CwiseOp>
+using JetT =
+    Jet<internal::CwiseOpT<CwiseOp>, internal::CwiseOpTraits<CwiseOp>::N>;
+
+}
+
 // Unary +
 template <typename T, int N>
 inline Jet<T, N> const& operator+(const Jet<T, N>& f) {
@@ -276,213 +629,243 @@ inline Jet<T, N>&& operator+(Jet<T, N>&& f) {
 
 // Unary -
 template <typename T, int N>
-inline Jet<T, N> operator-(const Jet<T, N>& f) {
-  return Jet<T, N>(-f.a, -f.v);
+inline auto operator-(const Jet<T, N>& f) {
+  return internal::MakeJetCwiseOp(-f.a, -f.v);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator-(Jet<T, N>&& f) {
-  f.a = -f.a;
-  f.v = -f.v;
-  return std::move(f);
+template <typename CwiseOp>
+inline auto operator-(const JetCwiseOp<CwiseOp>& f) {
+  return internal::MakeJetCwiseOp(-f.a, -f.v);
 }
 
 // Binary +
 template <typename T, int N>
-inline Jet<T, N> operator+(const Jet<T, N>& f, const Jet<T, N>& g) {
-  return Jet<T, N>(f.a + g.a, f.v + g.v);
+inline auto operator+(const Jet<T, N>& f, const Jet<T, N>& g) {
+  return internal::JetPlusJet(f, g);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator+(Jet<T, N>&& f, const Jet<T, N>& g) {
-  f += g;
-  return std::move(f);
+template <typename T, int N, typename CwiseOp>
+inline auto operator+(const JetCwiseOp<CwiseOp>& f, const Jet<T, N>& g) {
+  return internal::JetPlusJet(f, g);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator+(const Jet<T, N>& f, Jet<T, N>&& g) {
-  g += f;
-  return std::move(g);
+template <typename T, int N, typename CwiseOp>
+inline auto operator+(const Jet<T, N>& f, const JetCwiseOp<CwiseOp>& g) {
+  return internal::JetPlusJet(f, g);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator+(Jet<T, N>&& f, Jet<T, N>&& g) {
-  return std::move(f) + g;
+template <typename CwiseOp1, typename CwiseOp2>
+inline auto operator+(const JetCwiseOp<CwiseOp1>& f,
+                      const JetCwiseOp<CwiseOp2>& g) {
+  return internal::JetPlusJet(f, g);
 }
 
 // Binary + with a scalar: x + s
 template <typename T, int N>
 inline Jet<T, N> operator+(const Jet<T, N>& f, T s) {
-  return Jet<T, N>(f.a + s, f.v);
+  return internal::JetPlusScalarLValue(f, s);
 }
 template <typename T, int N>
 inline Jet<T, N>&& operator+(Jet<T, N>&& f, T s) {
-  f.a += s;
-  return std::move(f);
+  return internal::JetPlusScalarRValue(std::move(f), s);
+}
+template <typename CwiseOp>
+inline JetCwiseOp<CwiseOp> operator+(const JetCwiseOp<CwiseOp>& f,
+                                     const internal::CwiseOpT<CwiseOp> s) {
+  return internal::JetPlusScalarLValue(f, s);
+}
+template <typename CwiseOp>
+inline JetCwiseOp<CwiseOp>&& operator+(JetCwiseOp<CwiseOp>&& f,
+                                       const internal::CwiseOpT<CwiseOp> s) {
+  return internal::JetPlusScalarRValue(std::move(f), s);
 }
 
 // Binary + with a scalar: s + x
 template <typename T, int N>
 inline Jet<T, N> operator+(T s, const Jet<T, N>& f) {
-  return Jet<T, N>(f.a + s, f.v);
+  return internal::JetPlusScalarLValue(f, s);
 }
 template <typename T, int N>
 inline Jet<T, N>&& operator+(T s, Jet<T, N>&& f) {
-  f.a += s;
-  return std::move(f);
+  return internal::JetPlusScalarRValue(std::move(f), s);
+}
+template <typename CwiseOp>
+inline JetCwiseOp<CwiseOp> operator+(const internal::CwiseOpT<CwiseOp> s,
+                                     const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetPlusScalarLValue(f, s);
+}
+template <typename CwiseOp>
+inline JetCwiseOp<CwiseOp>&& operator+(const internal::CwiseOpT<CwiseOp> s,
+                                       JetCwiseOp<CwiseOp>&& f) {
+  return internal::JetPlusScalarRValue(std::move(f), s);
 }
 
 // Binary -
 template <typename T, int N>
-inline Jet<T, N> operator-(const Jet<T, N>& f, const Jet<T, N>& g) {
-  return Jet<T, N>(f.a - g.a, f.v - g.v);
+inline auto operator-(const Jet<T, N>& f, const Jet<T, N>& g) {
+  return internal::JetMinusJet(f, g);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator-(Jet<T, N>&& f, const Jet<T, N>& g) {
-  f -= g;
-  return std::move(f);
+template <typename T, int N, typename CwiseOp>
+inline auto operator-(const JetCwiseOp<CwiseOp>& f, const Jet<T, N>& g) {
+  return internal::JetMinusJet(f, g);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator-(const Jet<T, N>& f, Jet<T, N>&& g) {
-  g -= f;
-  return -std::move(g);
+template <typename T, int N, typename CwiseOp>
+inline auto operator-(const Jet<T, N>& f, const JetCwiseOp<CwiseOp>& g) {
+  return internal::JetMinusJet(f, g);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator-(Jet<T, N>&& f, Jet<T, N>&& g) {
-  return std::move(f) - g;
+template <typename CwiseOp1, typename CwiseOp2>
+inline auto operator-(const JetCwiseOp<CwiseOp1>& f,
+                      const JetCwiseOp<CwiseOp2>& g) {
+  return internal::JetMinusJet(f, g);
 }
 
 // Binary - with a scalar: x - s
 template <typename T, int N>
 inline Jet<T, N> operator-(const Jet<T, N>& f, T s) {
-  return Jet<T, N>(f.a - s, f.v);
+  return internal::JetMinusScalarLValue(f, s);
 }
 template <typename T, int N>
 inline Jet<T, N>&& operator-(Jet<T, N>&& f, T s) {
-  f.a -= s;
-  return std::move(f);
+  return internal::JetMinusScalarRValue(std::move(f), s);
+}
+template <typename CwiseOp>
+inline JetCwiseOp<CwiseOp> operator-(const JetCwiseOp<CwiseOp>& f,
+                                     const internal::CwiseOpT<CwiseOp> s) {
+  return internal::JetMinusScalarLValue(f, s);
+}
+template <typename CwiseOp>
+inline JetCwiseOp<CwiseOp>&& operator-(JetCwiseOp<CwiseOp>&& f,
+                                       const internal::CwiseOpT<CwiseOp> s) {
+  return internal::JetMinusScalarRValue(std::move(f), s);
 }
 
 // Binary - with a scalar: s - x
 template <typename T, int N>
-inline Jet<T, N> operator-(T s, const Jet<T, N>& f) {
-  return Jet<T, N>(s - f.a, -f.v);
+inline auto operator-(T s, const Jet<T, N>& f) {
+  return internal::ScalarMinusJet(s, f);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator-(T s, Jet<T, N>&& f) {
-  f.a -= s;
-  return -std::move(f);
+template <typename CwiseOp>
+inline auto operator-(const internal::CwiseOpT<CwiseOp> s,
+                      const JetCwiseOp<CwiseOp>& f) {
+  return internal::ScalarMinusJet(s, f);
 }
 
 // Binary *
 template <typename T, int N>
-inline Jet<T, N> operator*(const Jet<T, N>& f, const Jet<T, N>& g) {
-  return Jet<T, N>(f.a * g.a, f.a * g.v + f.v * g.a);
+inline auto operator*(const Jet<T, N>& f, const Jet<T, N>& g) {
+  return internal::JetTimesJet(f, g);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator*(Jet<T, N>&& f, const Jet<T, N>& g) {
-  f *= g;
-  return std::move(f);
+template <typename T, int N, typename CwiseOp>
+inline auto operator*(const JetCwiseOp<CwiseOp>& f, const Jet<T, N>& g) {
+  return internal::JetTimesJet(f, g);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator*(const Jet<T, N>& f, Jet<T, N>&& g) {
-  g *= f;
-  return std::move(g);
+template <typename T, int N, typename CwiseOp>
+inline auto operator*(const Jet<T, N>& f, const JetCwiseOp<CwiseOp>& g) {
+  return internal::JetTimesJet(f, g);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator*(Jet<T, N>&& f, Jet<T, N>&& g) {
-  return std::move(f) * g;
+template <typename CwiseOp1, typename CwiseOp2>
+inline auto operator*(const JetCwiseOp<CwiseOp1>& f,
+                      const JetCwiseOp<CwiseOp2>& g) {
+  return internal::JetTimesJet(f, g);
 }
 
 // Binary * with a scalar: x * s
 template <typename T, int N>
-inline Jet<T, N> operator*(const Jet<T, N>& f, T s) {
-  return Jet<T, N>(f.a * s, f.v * s);
+inline auto operator*(const Jet<T, N>& f, T s) {
+  return internal::JetTimesScalar(f, s);
 }
 // Binary * with a scalar: x * s
-template <typename T, int N>
-inline Jet<T, N>&& operator*(Jet<T, N>&& f, T s) {
-  f *= s;
-  return std::move(f);
+template <typename CwiseOp>
+inline auto operator*(const JetCwiseOp<CwiseOp>& f,
+                      const internal::CwiseOpT<CwiseOp> s) {
+  return internal::JetTimesScalar(f, s);
 }
 
 // Binary * with a scalar: s * x
 template <typename T, int N>
-inline Jet<T, N> operator*(T s, const Jet<T, N>& f) {
-  return Jet<T, N>(f.a * s, f.v * s);
+inline auto operator*(T s, const Jet<T, N>& f) {
+  return internal::JetTimesScalar(f, s);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator*(T s, Jet<T, N>&& f) {
-  f *= s;
-  return std::move(f);
+template <typename CwiseOp>
+inline auto operator*(const internal::CwiseOpT<CwiseOp> s,
+                      const JetCwiseOp<CwiseOp> f) {
+  return internal::JetTimesScalar(f, s);
 }
 
 // Binary /
 template <typename T, int N>
-inline Jet<T, N> operator/(const Jet<T, N>& f, const Jet<T, N>& g) {
-  // This uses:
-  //
-  //   a + u   (a + u)(b - v)   (a + u)(b - v)
-  //   ----- = -------------- = --------------
-  //   b + v   (b + v)(b - v)        b^2
-  //
-  // which holds because v*v = 0.
-  const T g_a_inverse = T(1.0) / g.a;
-  const T f_a_by_g_a = f.a * g_a_inverse;
-  return Jet<T, N>(f_a_by_g_a, (f.v - f_a_by_g_a * g.v) * g_a_inverse);
+inline auto operator/(const Jet<T, N>& f, const Jet<T, N>& g) {
+  return internal::JetOverJet(f, g);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator/(Jet<T, N>&& f, const Jet<T, N>& g) {
-  f /= g;
-  return std::move(f);
+template <typename T, int N, typename CwiseOp>
+inline auto operator/(const JetCwiseOp<CwiseOp>& f, const Jet<T, N>& g) {
+  return internal::JetOverJet(f, g);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator/(const Jet<T, N>& f, Jet<T, N>&& g) {
-  const T g_a_inverse = T(1.0) / g.a;
-  g.a = f.a * g_a_inverse;
-  g.v = (f.v - g.a * g.v) * g_a_inverse;
-  return std::move(g);
+template <typename T, int N, typename CwiseOp>
+inline auto operator/(const Jet<T, N>& f, const JetCwiseOp<CwiseOp>& g) {
+  return internal::JetOverJet(f, g);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator/(Jet<T, N>&& f, Jet<T, N>&& g) {
-  return std::move(f) / g;
+template <typename CwiseOp1, typename CwiseOp2>
+inline auto operator/(const JetCwiseOp<CwiseOp1>& f,
+                      const JetCwiseOp<CwiseOp2>& g) {
+  return internal::JetOverJet(f, g);
 }
 
 // Binary / with a scalar: s / x
 template <typename T, int N>
-inline Jet<T, N> operator/(T s, const Jet<T, N>& g) {
-  const T minus_s_g_a_inverse2 = -s / (g.a * g.a);
-  return Jet<T, N>(s / g.a, g.v * minus_s_g_a_inverse2);
+inline auto operator/(T s, const Jet<T, N>& g) {
+  return internal::ScalarOverJet(s, g);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator/(T s, Jet<T, N>&& g) {
-  const T minus_s_g_a_inverse2 = -s / (g.a * g.a);
-  g.a = s / g.a;
-  g.v = g.v * minus_s_g_a_inverse2;  // Better than *=
-  return std::move(g);
+template <typename CwiseOp>
+inline auto operator/(const internal::CwiseOpT<CwiseOp> s,
+                      const JetCwiseOp<CwiseOp>& g) {
+  return internal::ScalarOverJet(s, g);
 }
 
 // Binary / with a scalar: x / s
 template <typename T, int N>
-inline Jet<T, N> operator/(const Jet<T, N>& f, T s) {
-  const T s_inverse = T(1.0) / s;
-  return Jet<T, N>(f.a * s_inverse, f.v * s_inverse);
+inline auto operator/(const Jet<T, N>& f, T s) {
+  return internal::JetOverScalar(f, s);
 }
-template <typename T, int N>
-inline Jet<T, N>&& operator/(Jet<T, N>&& f, T s) {
-  f /= s;
-  return std::move(f);
+template <typename CwiseOp>
+inline auto operator/(const JetCwiseOp<CwiseOp>& f,
+                      const internal::CwiseOpT<CwiseOp> s) {
+  return internal::JetOverScalar(f, s);
 }
 
 // Binary comparison operators for both scalars and jets.
-#define CERES_DEFINE_JET_COMPARISON_OPERATOR(op)                    \
-  template <typename T, int N>                                      \
-  inline bool operator op(const Jet<T, N>& f, const Jet<T, N>& g) { \
-    return f.a op g.a;                                              \
-  }                                                                 \
-  template <typename T, int N>                                      \
-  inline bool operator op(const T& s, const Jet<T, N>& g) {         \
-    return s op g.a;                                                \
-  }                                                                 \
-  template <typename T, int N>                                      \
-  inline bool operator op(const Jet<T, N>& f, const T& s) {         \
-    return f.a op s;                                                \
+#define CERES_DEFINE_JET_COMPARISON_OPERATOR(op)                              \
+  template <typename T, int N>                                                \
+  inline bool operator op(const Jet<T, N>& f, const Jet<T, N>& g) {           \
+    return f.a op g.a;                                                        \
+  }                                                                           \
+  template <typename T, int N, typename CwiseOp>                              \
+  inline bool operator op(const JetCwiseOp<CwiseOp>& f, const Jet<T, N>& g) { \
+    return f.a op g.a;                                                        \
+  }                                                                           \
+                                                                              \
+  template <typename T, int N, typename CwiseOp>                              \
+  inline bool operator op(const Jet<T, N>& f, const JetCwiseOp<CwiseOp>& g) { \
+    return f.a op g.a;                                                        \
+  }                                                                           \
+  template <typename CwiseOp1, typename CwiseOp2>                             \
+  inline bool operator op(const JetCwiseOp<CwiseOp1>& f,                      \
+                          const JetCwiseOp<CwiseOp2>& g) {                    \
+    return f.a op g.a;                                                        \
+  }                                                                           \
+  template <typename T, int N>                                                \
+  inline bool operator op(const T& s, const Jet<T, N>& g) {                   \
+    return s op g.a;                                                          \
+  }                                                                           \
+  template <typename CwiseOp>                                                 \
+  inline bool operator op(const internal::CwiseOpT<CwiseOp>& s,               \
+                          const JetCwiseOp<CwiseOp>& g) {                     \
+    return s op g.a;                                                          \
+  }                                                                           \
+  template <typename T, int N>                                                \
+  inline bool operator op(const Jet<T, N>& f, const T& s) {                   \
+    return f.a op s;                                                          \
+  }                                                                           \
+  template <typename CwiseOp>                                                 \
+  inline bool operator op(const JetCwiseOp<CwiseOp>& f,                       \
+                          const internal::CwiseOpT<CwiseOp>& s) {             \
+    return f.a op s;                                                          \
   }
 CERES_DEFINE_JET_COMPARISON_OPERATOR(<)   // NOLINT
 CERES_DEFINE_JET_COMPARISON_OPERATOR(<=)  // NOLINT
@@ -542,88 +925,139 @@ template <typename T, int N>
 inline Jet<T, N> abs(const Jet<T, N>& f) {
   return (f.a < T(0.0) ? -f : f);
 }
+template <typename T, int N>
+inline Jet<T, N>&& abs(Jet<T, N>&& f) {
+  if (f.a < T(0.0)) {
+    f.a = -f.a;
+    f.v = -f.v;
+  }
+
+  return std::move(f);
+}
+
+template <typename CwiseOp>
+inline internal::JetT<CwiseOp> abs(const JetCwiseOp<CwiseOp>& f) {
+  return abs(internal::JetT<CwiseOp>(f));
+}
 
 // log(a + h) ~= log(a) + h / a
 template <typename T, int N>
-inline Jet<T, N> log(const Jet<T, N>& f) {
-  const T a_inverse = T(1.0) / f.a;
-  return Jet<T, N>(log(f.a), f.v * a_inverse);
+inline auto log(const Jet<T, N>& f) {
+  return internal::JetLog(f);
+}
+template <typename CwiseOp>
+inline auto log(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetLog(f);
 }
 
 // exp(a + h) ~= exp(a) + exp(a) h
 template <typename T, int N>
-inline Jet<T, N> exp(const Jet<T, N>& f) {
-  const T tmp = exp(f.a);
-  return Jet<T, N>(tmp, tmp * f.v);
+inline auto exp(const Jet<T, N>& f) {
+  return internal::JetExp(f);
+}
+template <typename CwiseOp>
+inline auto exp(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetExp(f);
 }
 
 // sqrt(a + h) ~= sqrt(a) + h / (2 sqrt(a))
 template <typename T, int N>
-inline Jet<T, N> sqrt(const Jet<T, N>& f) {
-  const T tmp = sqrt(f.a);
-  const T two_a_inverse = T(1.0) / (T(2.0) * tmp);
-  return Jet<T, N>(tmp, f.v * two_a_inverse);
+inline auto sqrt(const Jet<T, N>& f) {
+  return internal::JetSqrt(f);
+}
+template <typename CwiseOp>
+inline auto sqrt(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetSqrt(f);
 }
 
 // cos(a + h) ~= cos(a) - sin(a) h
 template <typename T, int N>
-inline Jet<T, N> cos(const Jet<T, N>& f) {
-  return Jet<T, N>(cos(f.a), -sin(f.a) * f.v);
+inline auto cos(const Jet<T, N>& f) {
+  return internal::JetCos(f);
+}
+template <typename CwiseOp>
+inline auto cos(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetCos(f);
 }
 
 // acos(a + h) ~= acos(a) - 1 / sqrt(1 - a^2) h
 template <typename T, int N>
-inline Jet<T, N> acos(const Jet<T, N>& f) {
-  const T tmp = -T(1.0) / sqrt(T(1.0) - f.a * f.a);
-  return Jet<T, N>(acos(f.a), tmp * f.v);
+inline auto acos(const Jet<T, N>& f) {
+  return internal::JetAcos(f);
+}
+template <typename CwiseOp>
+inline auto acos(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetAcos(f);
 }
 
 // sin(a + h) ~= sin(a) + cos(a) h
 template <typename T, int N>
-inline Jet<T, N> sin(const Jet<T, N>& f) {
-  return Jet<T, N>(sin(f.a), cos(f.a) * f.v);
+inline auto sin(const Jet<T, N>& f) {
+  return internal::JetSin(f);
+}
+template <typename CwiseOp>
+inline auto sin(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetSin(f);
 }
 
 // asin(a + h) ~= asin(a) + 1 / sqrt(1 - a^2) h
 template <typename T, int N>
-inline Jet<T, N> asin(const Jet<T, N>& f) {
-  const T tmp = T(1.0) / sqrt(T(1.0) - f.a * f.a);
-  return Jet<T, N>(asin(f.a), tmp * f.v);
+inline auto asin(const Jet<T, N>& f) {
+  return internal::JetAsin(f);
+}
+template <typename CwiseOp>
+inline auto asin(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetAsin(f);
 }
 
 // tan(a + h) ~= tan(a) + (1 + tan(a)^2) h
 template <typename T, int N>
-inline Jet<T, N> tan(const Jet<T, N>& f) {
-  const T tan_a = tan(f.a);
-  const T tmp = T(1.0) + tan_a * tan_a;
-  return Jet<T, N>(tan_a, tmp * f.v);
+inline auto tan(const Jet<T, N>& f) {
+  return internal::JetTan(f);
+}
+template <typename CwiseOp>
+inline auto tan(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetTan(f);
 }
 
 // atan(a + h) ~= atan(a) + 1 / (1 + a^2) h
 template <typename T, int N>
-inline Jet<T, N> atan(const Jet<T, N>& f) {
-  const T tmp = T(1.0) / (T(1.0) + f.a * f.a);
-  return Jet<T, N>(atan(f.a), tmp * f.v);
+inline auto atan(const Jet<T, N>& f) {
+  return internal::JetAtan(f);
+}
+template <typename CwiseOp>
+inline auto atan(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetAtan(f);
 }
 
 // sinh(a + h) ~= sinh(a) + cosh(a) h
 template <typename T, int N>
-inline Jet<T, N> sinh(const Jet<T, N>& f) {
-  return Jet<T, N>(sinh(f.a), cosh(f.a) * f.v);
+inline auto sinh(const Jet<T, N>& f) {
+  return internal::JetSinh(f);
+}
+template <typename CwiseOp>
+inline auto sinh(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetSinh(f);
 }
 
 // cosh(a + h) ~= cosh(a) + sinh(a) h
 template <typename T, int N>
-inline Jet<T, N> cosh(const Jet<T, N>& f) {
-  return Jet<T, N>(cosh(f.a), sinh(f.a) * f.v);
+inline auto cosh(const Jet<T, N>& f) {
+  return internal::JetCosh(f);
+}
+template <typename CwiseOp>
+inline auto cosh(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetCosh(f);
 }
 
 // tanh(a + h) ~= tanh(a) + (1 - tanh(a)^2) h
 template <typename T, int N>
-inline Jet<T, N> tanh(const Jet<T, N>& f) {
-  const T tanh_a = tanh(f.a);
-  const T tmp = T(1.0) - tanh_a * tanh_a;
-  return Jet<T, N>(tanh_a, tmp * f.v);
+inline auto tanh(const Jet<T, N>& f) {
+  return internal::JetTanh(f);
+}
+template <typename CwiseOp>
+inline auto tanh(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetTanh(f);
 }
 
 // The floor function should be used with extreme care as this operation will
@@ -631,8 +1065,13 @@ inline Jet<T, N> tanh(const Jet<T, N>& f) {
 //
 // floor(a + h) ~= floor(a) + 0
 template <typename T, int N>
-inline Jet<T, N> floor(const Jet<T, N>& f) {
-  return Jet<T, N>(floor(f.a));
+inline auto floor(const Jet<T, N>& f) {
+  return internal::JetFloor(f);
+}
+
+template <typename CwiseOp>
+inline auto floor(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetFloor(f);
 }
 
 // The ceil function should be used with extreme care as this operation will
@@ -640,32 +1079,44 @@ inline Jet<T, N> floor(const Jet<T, N>& f) {
 //
 // ceil(a + h) ~= ceil(a) + 0
 template <typename T, int N>
-inline Jet<T, N> ceil(const Jet<T, N>& f) {
-  return Jet<T, N>(ceil(f.a));
+inline auto ceil(const Jet<T, N>& f) {
+  return internal::JetCeil(f);
+}
+template <typename CwiseOp>
+inline auto ceil(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetCeil(f);
 }
 
 // Some new additions to C++11:
 
 // cbrt(a + h) ~= cbrt(a) + h / (3 a ^ (2/3))
 template <typename T, int N>
-inline Jet<T, N> cbrt(const Jet<T, N>& f) {
-  const T derivative = T(1.0) / (T(3.0) * cbrt(f.a * f.a));
-  return Jet<T, N>(cbrt(f.a), f.v * derivative);
+inline auto cbrt(const Jet<T, N>& f) {
+  return internal::JetCbrt(f);
+}
+template <typename CwiseOp>
+inline auto cbrt(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetCbrt(f);
 }
 
 // exp2(x + h) = 2^(x+h) ~= 2^x + h*2^x*log(2)
 template <typename T, int N>
-inline Jet<T, N> exp2(const Jet<T, N>& f) {
-  const T tmp = exp2(f.a);
-  const T derivative = tmp * log(T(2));
-  return Jet<T, N>(tmp, f.v * derivative);
+inline auto exp2(const Jet<T, N>& f) {
+  return internal::JetExp2(f);
+}
+template <typename CwiseOp>
+inline auto exp2(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetExp2(f);
 }
 
 // log2(x + h) ~= log2(x) + h / (x * log(2))
 template <typename T, int N>
-inline Jet<T, N> log2(const Jet<T, N>& f) {
-  const T derivative = T(1.0) / (f.a * log(T(2)));
-  return Jet<T, N>(log2(f.a), f.v * derivative);
+inline auto log2(const Jet<T, N>& f) {
+  return internal::JetLog2(f);
+}
+template <typename CwiseOp>
+inline auto log2(const JetCwiseOp<CwiseOp>& f) {
+  return internal::JetLog2(f);
 }
 
 // Like sqrt(x^2 + y^2),
@@ -673,18 +1124,38 @@ inline Jet<T, N> log2(const Jet<T, N>& f) {
 // Note that the function is non-smooth at x=y=0,
 // so the derivative is undefined there.
 template <typename T, int N>
-inline Jet<T, N> hypot(const Jet<T, N>& x, const Jet<T, N>& y) {
-  // d/da sqrt(a) = 0.5 / sqrt(a)
-  // d/dx x^2 + y^2 = 2x
-  // So by the chain rule:
-  // d/dx sqrt(x^2 + y^2) = 0.5 / sqrt(x^2 + y^2) * 2x = x / sqrt(x^2 + y^2)
-  // d/dy sqrt(x^2 + y^2) = y / sqrt(x^2 + y^2)
-  const T tmp = hypot(x.a, y.a);
-  return Jet<T, N>(tmp, x.a / tmp * x.v + y.a / tmp * y.v);
+inline auto hypot(const Jet<T, N>& x, const Jet<T, N>& y) {
+  return internal::JetHypot(x, y);
+}
+template <typename T, int N, typename CwiseOp>
+inline auto hypot(const Jet<T, N>& x, const JetCwiseOp<CwiseOp>& y) {
+  return internal::JetHypot(x, y);
+}
+template <typename T, int N, typename CwiseOp>
+inline auto hypot(const JetCwiseOp<CwiseOp>& x, const Jet<T, N>& y) {
+  return internal::JetHypot(x, y);
+}
+template <typename CwiseOp1, typename CwiseOp2>
+inline auto hypot(const JetCwiseOp<CwiseOp1>& x,
+                  const JetCwiseOp<CwiseOp2>& y) {
+  return internal::JetHypot(x, y);
 }
 
 template <typename T, int N>
 inline Jet<T, N> fmax(const Jet<T, N>& x, const Jet<T, N>& y) {
+  return x < y ? y : x;
+}
+template <typename T, int N, typename CwiseOp>
+inline Jet<T, N> fmax(const Jet<T, N>& x, const JetCwiseOp<CwiseOp>& y) {
+  return x < y ? y : x;
+}
+template <typename T, int N, typename CwiseOp>
+inline Jet<T, N> fmax(const JetCwiseOp<CwiseOp>& x, const Jet<T, N>& y) {
+  return x < y ? y : x;
+}
+template <typename CwiseOp1, typename CwiseOp2>
+inline internal::JetT<CwiseOp1> fmax(const JetCwiseOp<CwiseOp1>& x,
+                                     const JetCwiseOp<CwiseOp2>& y) {
   return x < y ? y : x;
 }
 template <typename T, int N>
@@ -695,9 +1166,32 @@ template <typename T, int N>
 inline Jet<T, N> fmax(const T& x, const Jet<T, N>& y) {
   return x < y ? y : Jet<T, N>{x};
 }
+template <typename CwiseOp>
+inline internal::JetT<CwiseOp> fmax(const JetCwiseOp<CwiseOp>& x,
+                                    const internal::CwiseOpT<CwiseOp>& y) {
+  return x < y ? internal::JetT<CwiseOp>{y} : x;
+}
+template <typename CwiseOp>
+inline internal::JetT<CwiseOp> fmax(const internal::CwiseOpT<CwiseOp>& x,
+                                    const JetCwiseOp<CwiseOp>& y) {
+  return x < y ? y : internal::JetT<CwiseOp>{x};
+}
 
 template <typename T, int N>
 inline Jet<T, N> fmin(const Jet<T, N>& x, const Jet<T, N>& y) {
+  return y < x ? y : x;
+}
+template <typename T, int N, typename CwiseOp>
+inline Jet<T, N> fmin(const Jet<T, N>& x, const JetCwiseOp<CwiseOp>& y) {
+  return y < x ? y : x;
+}
+template <typename T, int N, typename CwiseOp>
+inline Jet<T, N> fmin(const JetCwiseOp<CwiseOp>& x, const Jet<T, N>& y) {
+  return y < x ? y : x;
+}
+template <typename CwiseOp1, typename CwiseOp2>
+inline internal::JetT<CwiseOp1> fmin(const JetCwiseOp<CwiseOp1>& x,
+                                     const JetCwiseOp<CwiseOp2>& y) {
   return y < x ? y : x;
 }
 template <typename T, int N>
@@ -708,29 +1202,38 @@ template <typename T, int N>
 inline Jet<T, N> fmin(const T& x, const Jet<T, N>& y) {
   return y < x ? y : Jet<T, N>{x};
 }
+template <typename CwiseOp>
+inline internal::JetT<CwiseOp> fmin(const JetCwiseOp<CwiseOp>& x,
+                                    const internal::CwiseOpT<CwiseOp>& y) {
+  return y < x ? internal::JetT<CwiseOp>{y} : x;
+}
+template <typename CwiseOp>
+inline internal::JetT<CwiseOp> fmin(const internal::CwiseOpT<CwiseOp>& x,
+                                    const JetCwiseOp<CwiseOp>& y) {
+  return y < x ? y : internal::JetT<CwiseOp>{x};
+}
 
 // erf is defined as an integral that cannot be expressed analytically
 // however, the derivative is trivial to compute
 // erf(x + h) = erf(x) + h * 2*exp(-x^2)/sqrt(pi)
 template <typename T, int N>
-inline Jet<T, N> erf(const Jet<T, N>& x) {
-  // We evaluate the constant as follows:
-  //   2 / sqrt(pi) = 1 / sqrt(atan(1.))
-  // On POSIX sytems it is defined as M_2_SQRTPI, but this is not
-  // portable and the type may not be T.  The above expression
-  // evaluates to full precision with IEEE arithmetic and, since it's
-  // constant, the compiler can generate exactly the same code.  gcc
-  // does so even at -O0.
-  return Jet<T, N>(erf(x.a), x.v * exp(-x.a * x.a) * (T(1) / sqrt(atan(T(1)))));
+inline auto erf(const Jet<T, N>& x) {
+  return internal::JetErf(x);
+}
+template <typename CwiseOp>
+inline auto erf(const JetCwiseOp<CwiseOp>& x) {
+  return internal::JetErf(x);
 }
 
 // erfc(x) = 1-erf(x)
 // erfc(x + h) = erfc(x) + h * (-2*exp(-x^2)/sqrt(pi))
 template <typename T, int N>
-inline Jet<T, N> erfc(const Jet<T, N>& x) {
-  // See in erf() above for the evaluation of the constant in the derivative.
-  return Jet<T, N>(erfc(x.a),
-                   -x.v * exp(-x.a * x.a) * (T(1) / sqrt(atan(T(1)))));
+inline auto erfc(const Jet<T, N>& x) {
+  return internal::JetErfc(x);
+}
+template <typename CwiseOp>
+inline auto erfc(const JetCwiseOp<CwiseOp>& x) {
+  return internal::JetErfc(x);
 }
 
 // Bessel functions of the first kind with integer order equal to 0, 1, n.
@@ -770,23 +1273,40 @@ inline double BesselJn(int n, double x) {
 // See formula http://dlmf.nist.gov/10.6#E3
 // j0(a + h) ~= j0(a) - j1(a) h
 template <typename T, int N>
-inline Jet<T, N> BesselJ0(const Jet<T, N>& f) {
-  return Jet<T, N>(BesselJ0(f.a), -BesselJ1(f.a) * f.v);
+inline auto BesselJ0(const Jet<T, N>& f) {
+  return internal::MakeJetCwiseOp(BesselJ0(f.a), -BesselJ1(f.a) * f.v);
+}
+template <typename CwiseOp>
+inline auto BesselJ0(const JetCwiseOp<CwiseOp>& f) {
+  return internal::MakeJetCwiseOp(BesselJ0(f.a), -BesselJ1(f.a) * f.v);
 }
 
 // See formula http://dlmf.nist.gov/10.6#E1
 // j1(a + h) ~= j1(a) + 0.5 ( j0(a) - j2(a) ) h
 template <typename T, int N>
-inline Jet<T, N> BesselJ1(const Jet<T, N>& f) {
-  return Jet<T, N>(BesselJ1(f.a),
-                   T(0.5) * (BesselJ0(f.a) - BesselJn(2, f.a)) * f.v);
+inline auto BesselJ1(const Jet<T, N>& f) {
+  return internal::MakeJetCwiseOp(
+      BesselJ1(f.a), T(0.5) * (BesselJ0(f.a) - BesselJn(2, f.a)) * f.v);
+}
+template <typename CwiseOp>
+inline auto BesselJ1(const JetCwiseOp<CwiseOp>& f) {
+  using T = internal::CwiseOpT<CwiseOp>;
+  return internal::MakeJetCwiseOp(
+      BesselJ1(f.a), T(0.5) * (BesselJ0(f.a) - BesselJn(2, f.a)) * f.v);
 }
 
 // See formula http://dlmf.nist.gov/10.6#E1
 // j_n(a + h) ~= j_n(a) + 0.5 ( j_{n-1}(a) - j_{n+1}(a) ) h
 template <typename T, int N>
-inline Jet<T, N> BesselJn(int n, const Jet<T, N>& f) {
-  return Jet<T, N>(
+inline auto BesselJn(int n, const Jet<T, N>& f) {
+  return internal::MakeJetCwiseOp(
+      BesselJn(n, f.a),
+      T(0.5) * (BesselJn(n - 1, f.a) - BesselJn(n + 1, f.a)) * f.v);
+}
+template <typename CwiseOp>
+inline auto BesselJn(int n, const JetCwiseOp<CwiseOp>& f) {
+  using T = internal::CwiseOpT<CwiseOp>;
+  return internal::MakeJetCwiseOp(
       BesselJn(n, f.a),
       T(0.5) * (BesselJn(n - 1, f.a) - BesselJn(n + 1, f.a)) * f.v);
 }
@@ -812,6 +1332,10 @@ inline bool isfinite(const Jet<T, N>& f) {
   }
   return result;
 }
+template <typename CwiseOp>
+inline bool isfinite(const JetCwiseOp<CwiseOp>& f) {
+  return isfinite(internal::JetT<CwiseOp>{f});
+}
 
 // The jet is infinite if any part of the Jet is infinite.
 template <typename T, int N>
@@ -821,6 +1345,10 @@ inline bool isinf(const Jet<T, N>& f) {
     result = result | isinf(f.v[i]);
   }
   return result;
+}
+template <typename CwiseOp>
+inline bool isinf(const JetCwiseOp<CwiseOp>& f) {
+  return isinf(internal::JetT<CwiseOp>{f});
 }
 
 // The jet is NaN if any part of the jet is NaN.
@@ -832,6 +1360,10 @@ inline bool isnan(const Jet<T, N>& f) {
   }
   return result;
 }
+template <typename CwiseOp>
+inline bool isnan(const JetCwiseOp<CwiseOp>& f) {
+  return isnan(internal::JetT<CwiseOp>{f});
+}
 
 // The jet is normal if all parts of the jet are normal.
 template <typename T, int N>
@@ -841,6 +1373,10 @@ inline bool isnormal(const Jet<T, N>& f) {
     result = result & isnormal(f.v[i]);
   }
   return result;
+}
+template <typename CwiseOp>
+inline bool isnormal(const JetCwiseOp<CwiseOp>& f) {
+  return isnormal(internal::JetT<CwiseOp>{f});
 }
 
 // Legacy functions from the pre-C++11 days.
@@ -870,22 +1406,37 @@ inline bool IsInfinite(const Jet<T, N>& f) {
 // In words: the rate of change of theta is 1/r times the rate of
 // change of (x, y) in the positive angular direction.
 template <typename T, int N>
-inline Jet<T, N> atan2(const Jet<T, N>& g, const Jet<T, N>& f) {
-  // Note order of arguments:
-  //
-  //   f = a + da
-  //   g = b + db
-
-  T const tmp = T(1.0) / (f.a * f.a + g.a * g.a);
-  return Jet<T, N>(atan2(g.a, f.a), tmp * (-g.a * f.v + f.a * g.v));
+inline auto atan2(const Jet<T, N>& g, const Jet<T, N>& f) {
+  // Note order of arguments
+  return internal::JetAtan2Jet(g, f);
+}
+template <typename T, int N, typename CwiseOp>
+inline auto atan2(const Jet<T, N>& g, const JetCwiseOp<CwiseOp>& f) {
+  // Note order of arguments
+  return internal::JetAtan2Jet(g, f);
+}
+template <typename T, int N, typename CwiseOp>
+inline auto atan2(const JetCwiseOp<CwiseOp>& g, const Jet<T, N>& f) {
+  // Note order of arguments
+  return internal::JetAtan2Jet(g, f);
+}
+template <typename CwiseOp1, typename CwiseOp2>
+inline auto atan2(const JetCwiseOp<CwiseOp2>& g,
+                  const JetCwiseOp<CwiseOp1>& f) {
+  // Note order of arguments
+  return internal::JetAtan2Jet(g, f);
 }
 
 // pow -- base is a differentiable function, exponent is a constant.
 // (a+da)^p ~= a^p + p*a^(p-1) da
 template <typename T, int N>
-inline Jet<T, N> pow(const Jet<T, N>& f, double g) {
-  T const tmp = g * pow(f.a, g - T(1.0));
-  return Jet<T, N>(pow(f.a, g), tmp * f.v);
+inline auto pow(const Jet<T, N>& f, double g) {
+  return internal::JetPowScalar(f, g);
+}
+template <typename CwiseOp>
+inline auto pow(const JetCwiseOp<CwiseOp>& f,
+                const internal::CwiseOpT<CwiseOp> g) {
+  return internal::JetPowScalar(f, g);
 }
 
 // pow -- base is a constant, exponent is a differentiable function.
@@ -923,6 +1474,11 @@ inline Jet<T, N> pow(T f, const Jet<T, N>& g) {
   }
 
   return result;
+}
+template <typename CwiseOp>
+inline internal::JetT<CwiseOp> pow(const internal::CwiseOpT<CwiseOp> f,
+                                   const JetCwiseOp<CwiseOp>& g) {
+  return pow(f, internal::JetT<CwiseOp>(g));
 }
 
 // pow -- both base and exponent are differentiable functions. This has a
@@ -998,8 +1554,21 @@ inline Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
   return result;
 }
 
-// Note: This has to be in the ceres namespace for argument dependent lookup to
-// function correctly. Otherwise statements like CHECK_LE(x, 2.0) fail with
+template <typename T, int N, typename CwiseOp>
+inline Jet<T, N> pow(const Jet<T, N>& f, const JetCwiseOp<CwiseOp>& g) {
+  return pow(f, Jet<T, N>(g));
+}
+template <typename T, int N, typename CwiseOp>
+inline Jet<T, N> pow(const JetCwiseOp<CwiseOp>& f, const Jet<T, N>& g) {
+  return pow(Jet<T, N>(f), g);
+}
+template <typename CwiseOp1, typename CwiseOp2>
+inline internal::JetT<CwiseOp1> pow(const JetCwiseOp<CwiseOp1>& f,
+                                    const JetCwiseOp<CwiseOp2>& g) {
+  return pow(internal::JetT<CwiseOp1>(f), internal::JetT<CwiseOp1>(g));
+}
+// Note: This has to be in the ceres namespace for argument dependent lookup
+// to function correctly. Otherwise statements like CHECK_LE(x, 2.0) fail with
 // strange compile errors.
 template <typename T, int N>
 inline std::ostream& operator<<(std::ostream& s, const Jet<T, N>& z) {
@@ -1013,6 +1582,11 @@ inline std::ostream& operator<<(std::ostream& s, const Jet<T, N>& z) {
   s << "]";
   return s;
 }
+template <typename CwiseOp>
+inline std::ostream& operator<<(std::ostream& s, const JetCwiseOp<CwiseOp>& z) {
+  return ceres::operator<<(s, internal::JetT<CwiseOp>{z});
+}
+
 }  // namespace ceres
 
 namespace std {
