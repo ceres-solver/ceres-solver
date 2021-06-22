@@ -213,7 +213,7 @@ struct Brdf {
   }
 
   template <typename T>
-  inline T Square(const T& x) const {
+  inline auto Square(const T& x) const {
     return x * x;
   }
 };
