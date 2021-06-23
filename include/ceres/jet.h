@@ -687,10 +687,26 @@ template <typename T, int N>
 inline Jet<T, N> fmax(const Jet<T, N>& x, const Jet<T, N>& y) {
   return x < y ? y : x;
 }
+template <typename T, int N>
+inline Jet<T, N> fmax(const Jet<T, N>& x, const T& y) {
+  return x < y ? Jet<T, N>{y} : x;
+}
+template <typename T, int N>
+inline Jet<T, N> fmax(const T& x, const Jet<T, N>& y) {
+  return x < y ? y : Jet<T, N>{x};
+}
 
 template <typename T, int N>
 inline Jet<T, N> fmin(const Jet<T, N>& x, const Jet<T, N>& y) {
   return y < x ? y : x;
+}
+template <typename T, int N>
+inline Jet<T, N> fmin(const Jet<T, N>& x, const T& y) {
+  return y < x ? Jet<T, N>{y} : x;
+}
+template <typename T, int N>
+inline Jet<T, N> fmin(const T& x, const Jet<T, N>& y) {
+  return y < x ? y : Jet<T, N>{x};
 }
 
 // erf is defined as an integral that cannot be expressed analytically

@@ -736,11 +736,61 @@ TEST(Jet, Jet) {
     VL << "z = " << z;
     ExpectJetsClose(x, z);
   }
+  {
+    J z = fmax(y, x);
+    VL << "z = " << z;
+    ExpectJetsClose(x, z);
+  }
+  {
+    J z = fmax(x, y.a);
+    VL << "z = " << z;
+    ExpectJetsClose(x, z);
+  }
+  {
+    J z = fmax(y, x.a);
+    VL << "z = " << z;
+    ExpectJetsClose(J{x.a}, z);
+  }
+  {
+    J z = fmax(x.a, y);
+    VL << "z = " << z;
+    ExpectJetsClose(J{x.a}, z);
+  }
+  {
+    J z = fmax(y.a, x);
+    VL << "z = " << z;
+    ExpectJetsClose(x, z);
+  }
 
   {
     J z = fmin(x, y);
     VL << "z = " << z;
     ExpectJetsClose(y, z);
+  }
+  {
+    J z = fmin(y, x);
+    VL << "z = " << z;
+    ExpectJetsClose(y, z);
+  }
+  {
+    J z = fmin(x, y.a);
+    VL << "z = " << z;
+    ExpectJetsClose(J{y.a}, z);
+  }
+  {
+    J z = fmin(y, x.a);
+    VL << "z = " << z;
+    ExpectJetsClose(y, z);
+  }
+  {
+    J z = fmin(x.a, y);
+    VL << "z = " << z;
+    ExpectJetsClose(y, z);
+  }
+  {
+    J z = fmin(y.a, x);
+    VL << "z = " << z;
+    ExpectJetsClose(J{y.a}, z);
   }
 }
 
