@@ -374,7 +374,8 @@ class CERES_EXPORT ScaledLoss : public LossFunction {
 //    new AutoDiffCostFunction < UW_Camera_Mapper, 2, 9, 3>(
 //      new UW_Camera_Mapper(feature_x, feature_y));
 //
-//  LossFunctionWrapper* loss_function(new HuberLoss(1.0), TAKE_OWNERSHIP);
+//  LossFunctionWrapper* loss_function = new LossFunctionWrapper(
+//    new HuberLoss(1.0), TAKE_OWNERSHIP);
 //
 //  problem.AddResidualBlock(cost_function, loss_function, parameters);
 //
