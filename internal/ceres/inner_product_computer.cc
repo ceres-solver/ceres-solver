@@ -46,7 +46,7 @@ namespace internal {
 // num_nonzeros is the number of non-zeros in the result matrix.
 CompressedRowSparseMatrix* InnerProductComputer::CreateResultMatrix(
     const CompressedRowSparseMatrix::StorageType storage_type,
-    const int num_nonzeros) {
+    const int64_t num_nonzeros) {
   CompressedRowSparseMatrix* matrix =
       new CompressedRowSparseMatrix(m_.num_cols(), m_.num_cols(), num_nonzeros);
   matrix->set_storage_type(storage_type);
@@ -67,7 +67,7 @@ CompressedRowSparseMatrix* InnerProductComputer::CreateResultMatrix(
 // total number of non-zeros in the result and for each row block of
 // the result matrix, compute the number of non-zeros in any one row
 // of the row block.
-int InnerProductComputer::ComputeNonzeros(
+int64_t InnerProductComputer::ComputeNonzeros(
     const std::vector<InnerProductComputer::ProductTerm>& product_terms,
     std::vector<int>* row_nnz) {
   const CompressedRowBlockStructure* bs = m_.block_structure();
@@ -78,8 +78,9 @@ int InnerProductComputer::ComputeNonzeros(
 
   // First product term.
   (*row_nnz)[product_terms[0].row] = blocks[product_terms[0].col].size;
-  int num_nonzeros =
-      blocks[product_terms[0].row].size * blocks[product_terms[0].col].size;
+  int64_t num_nonzeros =
+      static_cast<int64_t>(blocks[product_terms[0].row].size) *
+      static_cast<int64_t>(blocks[product_terms[0].col].size);
 
   // Remaining product terms.
   for (int i = 1; i < product_terms.size(); ++i) {
@@ -90,7 +91,8 @@ int InnerProductComputer::ComputeNonzeros(
     // This check depends on product sorted on (row, col).
     if (current.row != previous.row || current.col != previous.col) {
       (*row_nnz)[current.row] += blocks[current.col].size;
-      num_nonzeros += blocks[current.row].size * blocks[current.col].size;
+      num_nonzeros += static_cast<int64_t>(blocks[current.row].size) *
+                      static_cast<int64_t>(blocks[current.col].size);
     }
   }
 
@@ -181,7 +183,7 @@ void InnerProductComputer::ComputeOffsetsAndCreateResultMatrix(
   const std::vector<Block>& col_blocks = m_.block_structure()->cols;
 
   std::vector<int> row_block_nnz;
-  const int num_nonzeros = ComputeNonzeros(product_terms, &row_block_nnz);
+  const int64_t num_nonzeros = ComputeNonzeros(product_terms, &row_block_nnz);
 
   result_.reset(CreateResultMatrix(product_storage_type, num_nonzeros));
 

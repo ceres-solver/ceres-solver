@@ -82,7 +82,7 @@ class CERES_EXPORT_INTERNAL BlockSparseMatrix : public SparseMatrix {
   // clang-format off
   int num_rows()         const final { return num_rows_;     }
   int num_cols()         const final { return num_cols_;     }
-  int num_nonzeros()     const final { return num_nonzeros_; }
+  int64_t num_nonzeros() const final { return num_nonzeros_; }
   const double* values() const final { return values_.get(); }
   double* mutable_values()     final { return values_.get(); }
   // clang-format on
@@ -130,8 +130,8 @@ class CERES_EXPORT_INTERNAL BlockSparseMatrix : public SparseMatrix {
  private:
   int num_rows_;
   int num_cols_;
-  int num_nonzeros_;
-  int max_num_nonzeros_;
+  int64_t num_nonzeros_;
+  int64_t max_num_nonzeros_;
   std::unique_ptr<double[]> values_;
   std::unique_ptr<CompressedRowBlockStructure> block_structure_;
 };
