@@ -187,6 +187,10 @@ CompressedRowSparseMatrix::FromTripletSparseMatrixTransposed(
 
 CompressedRowSparseMatrix* CompressedRowSparseMatrix::FromTripletSparseMatrix(
     const TripletSparseMatrix& input, bool transpose) {
+  CHECK_LE(input.num_nonzeros(), std::numeric_limits<int>::max())
+      << "CompressedRowSparseMatrix does not yet support nore than INT_MAX "
+      << "non-zeros.";
+
   int num_rows = input.num_rows();
   int num_cols = input.num_cols();
   const int* rows = input.rows();
