@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eeef1953_e9c845d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-06-30T19:29:55Z",
+      "side": 1,
+      "message": "Hello Sameer,\n\nI\u0027m taking a shot at supporting larger problems and ultimately supporting GPU acceleration in SuiteSparse\u0027s Cholmod (https://github.com/ceres-solver/ceres-solver/issues/684) The change here is pretty minimal though and seeks to simply use 64-bit integers not for the cell indices, but for the indices into the arrays of cell indices, so that sparse matrices can contain more than MAX_INT nonzeros.\n\nThank you for taking a look",
+      "revId": "8d2239d377c2bc58cbddfe2b5a05593216329253",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
