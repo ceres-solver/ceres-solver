@@ -66,7 +66,7 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
   // Count the number of scalar non-zero entries and build the layout
   // object for looking into the values array of the
   // TripletSparseMatrix.
-  int num_nonzeros = 0;
+  int64_t num_nonzeros = 0;
   for (const auto& block_pair : block_pairs) {
     const int row_block_size = blocks_[block_pair.first];
     const int col_block_size = blocks_[block_pair.second];
@@ -144,6 +144,8 @@ CellInfo* BlockRandomAccessSparseMatrix::GetCell(int row_block_id,
 // when they are calling SetZero.
 void BlockRandomAccessSparseMatrix::SetZero() {
   if (tsm_->num_nonzeros()) {
+    static_assert(std::numeric_limits<Eigen::Index>::max() >=
+                  std::numeric_limits<int64_t>::max(), "Possible data loss.");
     VectorRef(tsm_->mutable_values(), tsm_->num_nonzeros()).setZero();
   }
 }

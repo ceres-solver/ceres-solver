@@ -440,7 +440,7 @@ Program::CreateJacobianBlockSparsityTranspose(int start_residual_block) const {
 
   std::unique_ptr<TripletSparseMatrix> tsm(
       new TripletSparseMatrix(num_rows, num_cols, 10 * num_cols));
-  int num_nonzeros = 0;
+  int64_t num_nonzeros = 0;
   int* rows = tsm->mutable_rows();
   int* cols = tsm->mutable_cols();
   double* values = tsm->mutable_values();

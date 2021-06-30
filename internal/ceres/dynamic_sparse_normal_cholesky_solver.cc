@@ -123,6 +123,8 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(
 
   EventLogger event_logger("DynamicSparseNormalCholeskySolver::Eigen::Solve");
 
+  static_assert(std::numeric_limits<Eigen::Index>::max() >=
+                std::numeric_limits<int64_t>::max(), "Possible data loss.");
   Eigen::MappedSparseMatrix<double, Eigen::RowMajor> a(A->num_rows(),
                                                        A->num_cols(),
                                                        A->num_nonzeros(),

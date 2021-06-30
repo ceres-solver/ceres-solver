@@ -182,7 +182,7 @@ void BlockSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
       int col_block_pos = block_structure_->cols[col_block_id].position;
-      int jac_pos = cells[j].position;
+      int64_t jac_pos = cells[j].position;
       m.block(row_block_pos, col_block_pos, row_block_size, col_block_size) +=
           MatrixRef(values_.get() + jac_pos, row_block_size, col_block_size);
     }
@@ -205,7 +205,7 @@ void BlockSparseMatrix::ToTripletSparseMatrix(
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
       int col_block_pos = block_structure_->cols[col_block_id].position;
-      int jac_pos = cells[j].position;
+      int64_t jac_pos = cells[j].position;
       for (int r = 0; r < row_block_size; ++r) {
         for (int c = 0; c < col_block_size; ++c, ++jac_pos) {
           matrix->mutable_rows()[jac_pos] = row_block_pos + r;
@@ -234,7 +234,7 @@ void BlockSparseMatrix::ToTextFile(FILE* file) const {
       const int col_block_id = cells[j].block_id;
       const int col_block_size = block_structure_->cols[col_block_id].size;
       const int col_block_pos = block_structure_->cols[col_block_id].position;
-      int jac_pos = cells[j].position;
+      int64_t jac_pos = cells[j].position;
       for (int r = 0; r < row_block_size; ++r) {
         for (int c = 0; c < col_block_size; ++c) {
           fprintf(file,
@@ -253,7 +253,7 @@ BlockSparseMatrix* BlockSparseMatrix::CreateDiagonalMatrix(
   // Create the block structure for the diagonal matrix.
   CompressedRowBlockStructure* bs = new CompressedRowBlockStructure();
   bs->cols = column_blocks;
-  int position = 0;
+  int64_t position = 0;
   bs->rows.resize(column_blocks.size(), CompressedRow(1));
   for (int i = 0; i < column_blocks.size(); ++i) {
     CompressedRow& row = bs->rows[i];
@@ -288,7 +288,7 @@ void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
   const CompressedRowBlockStructure* m_bs = m.block_structure();
   CHECK_EQ(m_bs->cols.size(), block_structure_->cols.size());
 
-  const int old_num_nonzeros = num_nonzeros_;
+  const int64_t old_num_nonzeros = num_nonzeros_;
   const int old_num_row_blocks = block_structure_->rows.size();
   block_structure_->rows.resize(old_num_row_blocks + m_bs->rows.size());
 
@@ -321,7 +321,7 @@ void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
 
 void BlockSparseMatrix::DeleteRowBlocks(const int delta_row_blocks) {
   const int num_row_blocks = block_structure_->rows.size();
-  int delta_num_nonzeros = 0;
+  int64_t delta_num_nonzeros = 0;
   int delta_num_rows = 0;
   const std::vector<Block>& column_blocks = block_structure_->cols;
   for (int i = 0; i < delta_row_blocks; ++i) {
@@ -372,7 +372,7 @@ BlockSparseMatrix* BlockSparseMatrix::CreateRandomMatrix(
     VLOG(1) << "Clearing";
     bs->rows.clear();
     int row_block_position = 0;
-    int value_position = 0;
+    int64_t value_position = 0;
     for (int r = 0; r < options.num_row_blocks; ++r) {
       const int delta_block_size =
           Uniform(options.max_row_block_size - options.min_row_block_size);
@@ -397,7 +397,7 @@ BlockSparseMatrix* BlockSparseMatrix::CreateRandomMatrix(
 
   BlockSparseMatrix* matrix = new BlockSparseMatrix(bs);
   double* values = matrix->mutable_values();
-  for (int i = 0; i < matrix->num_nonzeros(); ++i) {
+  for (int64_t i = 0; i < matrix->num_nonzeros(); ++i) {
     values[i] = RandNormal();
   }
 

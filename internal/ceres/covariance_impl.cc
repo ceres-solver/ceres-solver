@@ -422,7 +422,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   // Compute the number of non-zeros in the covariance matrix.  Along
   // the way flip any covariance blocks which are in the lower
   // triangular part of the matrix.
-  int num_nonzeros = 0;
+  int64_t num_nonzeros = 0;
   CovarianceBlocks covariance_blocks;
   for (int i = 0; i < original_covariance_blocks.size(); ++i) {
     const std::pair<const double*, const double*>& block_pair =
@@ -568,24 +568,24 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   // Construct a compressed column form of the Jacobian.
   const int num_rows = jacobian.num_rows;
   const int num_cols = jacobian.num_cols;
-  const int num_nonzeros = jacobian.values.size();
+  const int64_t num_nonzeros = jacobian.values.size();
 
   std::vector<SuiteSparse_long> transpose_rows(num_cols + 1, 0);
   std::vector<SuiteSparse_long> transpose_cols(num_nonzeros, 0);
   std::vector<double> transpose_values(num_nonzeros, 0);
 
-  for (int idx = 0; idx < num_nonzeros; ++idx) {
+  for (int64_t idx = 0; idx < num_nonzeros; ++idx) {
     transpose_rows[jacobian.cols[idx] + 1] += 1;
   }
 
-  for (int i = 1; i < transpose_rows.size(); ++i) {
+  for (int64_t i = 1; i < transpose_rows.size(); ++i) {
     transpose_rows[i] += transpose_rows[i - 1];
   }
 
   for (int r = 0; r < num_rows; ++r) {
     for (int idx = jacobian.rows[r]; idx < jacobian.rows[r + 1]; ++idx) {
       const int c = jacobian.cols[idx];
-      const int transpose_idx = transpose_rows[c];
+      const SuiteSparse_long transpose_idx = transpose_rows[c];
       transpose_cols[transpose_idx] = r;
       transpose_values[transpose_idx] = jacobian.values[idx];
       ++transpose_rows[c];

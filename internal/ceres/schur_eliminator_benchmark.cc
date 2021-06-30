@@ -90,7 +90,7 @@ class BenchmarkData {
 
     matrix_.reset(new BlockSparseMatrix(bs));
     double* values = matrix_->mutable_values();
-    for (int i = 0; i < matrix_->num_nonzeros(); ++i) {
+    for (int64_t i = 0; i < matrix_->num_nonzeros(); ++i) {
       values[i] = RandNormal();
     }
 
