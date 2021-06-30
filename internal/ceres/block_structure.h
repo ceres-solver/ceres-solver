@@ -64,7 +64,7 @@ struct Cell {
   // Column or row block id as the case maybe.
   int block_id;
   // Where in the values array of the jacobian is this cell located.
-  int position;
+  int64_t position;
 };
 
 // Order cell by their block_id;

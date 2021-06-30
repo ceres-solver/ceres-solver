@@ -123,6 +123,10 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(
 
   EventLogger event_logger("DynamicSparseNormalCholeskySolver::Eigen::Solve");
 
+  static_assert(std::numeric_limits<Eigen::Index>::max() >=
+                std::numeric_limits<int64_t>::max(), "Casts from int64_t to "
+                "Eigen::Index must not overflow. Ensure that "
+                "EIGEN_DEFAULT_DENSE_INDEX_TYPE is defined appropriately.");
   Eigen::MappedSparseMatrix<double, Eigen::RowMajor> a(A->num_rows(),
                                                        A->num_cols(),
                                                        A->num_nonzeros(),

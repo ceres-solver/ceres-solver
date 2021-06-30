@@ -55,12 +55,13 @@ BlockRandomAccessDiagonalMatrix::BlockRandomAccessDiagonalMatrix(
   // Build the row/column layout vector and count the number of scalar
   // rows/columns.
   int num_cols = 0;
-  int num_nonzeros = 0;
+  int64_t num_nonzeros = 0;
   vector<int> block_positions;
   for (int i = 0; i < blocks_.size(); ++i) {
     block_positions.push_back(num_cols);
     num_cols += blocks_[i];
-    num_nonzeros += blocks_[i] * blocks_[i];
+    int64_t block_size = static_cast<int64_t>(blocks_[i]);
+    num_nonzeros += block_size * block_size;
   }
 
   VLOG(1) << "Matrix Size [" << num_cols << "," << num_cols << "] "
@@ -115,6 +116,8 @@ CellInfo* BlockRandomAccessDiagonalMatrix::GetCell(int row_block_id,
 // when they are calling SetZero.
 void BlockRandomAccessDiagonalMatrix::SetZero() {
   if (tsm_->num_nonzeros()) {
+    static_assert(std::numeric_limits<Eigen::Index>::max() >=
+                  std::numeric_limits<int64_t>::max(), "Possible data loss.");
     VectorRef(tsm_->mutable_values(), tsm_->num_nonzeros()).setZero();
   }
 }

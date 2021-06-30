@@ -66,10 +66,10 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
   // Count the number of scalar non-zero entries and build the layout
   // object for looking into the values array of the
   // TripletSparseMatrix.
-  int num_nonzeros = 0;
+  int64_t num_nonzeros = 0;
   for (const auto& block_pair : block_pairs) {
-    const int row_block_size = blocks_[block_pair.first];
-    const int col_block_size = blocks_[block_pair.second];
+    const int64_t row_block_size = blocks_[block_pair.first];
+    const int64_t col_block_size = blocks_[block_pair.second];
     num_nonzeros += row_block_size * col_block_size;
   }
 
@@ -82,14 +82,15 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
   int* cols = tsm_->mutable_cols();
   double* values = tsm_->mutable_values();
 
-  int pos = 0;
+  int64_t pos = 0;
   for (const auto& block_pair : block_pairs) {
     const int row_block_size = blocks_[block_pair.first];
     const int col_block_size = blocks_[block_pair.second];
     cell_values_.push_back(make_pair(block_pair, values + pos));
     layout_[IntPairToLong(block_pair.first, block_pair.second)] =
         new CellInfo(values + pos);
-    pos += row_block_size * col_block_size;
+    pos += static_cast<int64_t>(row_block_size) *
+           static_cast<int64_t>(col_block_size);
   }
 
   // Fill the sparsity pattern of the underlying matrix.
@@ -98,7 +99,7 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
     const int col_block_id = block_pair.second;
     const int row_block_size = blocks_[row_block_id];
     const int col_block_size = blocks_[col_block_id];
-    int pos =
+    int64_t pos =
         layout_[IntPairToLong(row_block_id, col_block_id)]->values - values;
     for (int r = 0; r < row_block_size; ++r) {
       for (int c = 0; c < col_block_size; ++c, ++pos) {
@@ -144,6 +145,8 @@ CellInfo* BlockRandomAccessSparseMatrix::GetCell(int row_block_id,
 // when they are calling SetZero.
 void BlockRandomAccessSparseMatrix::SetZero() {
   if (tsm_->num_nonzeros()) {
+    static_assert(std::numeric_limits<Eigen::Index>::max() >=
+                  std::numeric_limits<int64_t>::max(), "Possible data loss.");
     VectorRef(tsm_->mutable_values(), tsm_->num_nonzeros()).setZero();
   }
 }

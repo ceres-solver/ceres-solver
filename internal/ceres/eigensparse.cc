@@ -117,11 +117,15 @@ class EigenSparseCholeskyTemplate : public SparseCholesky {
       // In the case where the scalar used in this class is not
       // double. In that case, make a copy of the values array in the
       // CompressedRowSparseMatrix and cast it to Scalar along the way.
+      static_assert(std::numeric_limits<Eigen::Index>::max() >=
+              std::numeric_limits<int64_t>::max(), "Possible data loss.");
       values_ = ConstVectorRef(lhs->values(), lhs->num_nonzeros())
                     .cast<typename Solver::Scalar>();
       values_ptr = values_.data();
     }
 
+    static_assert(std::numeric_limits<Eigen::Index>::max() >=
+                  std::numeric_limits<int64_t>::max(), "Possible data loss.");
     Eigen::MappedSparseMatrix<typename Solver::Scalar, Eigen::ColMajor>
         eigen_lhs(lhs->num_rows(),
                   lhs->num_rows(),

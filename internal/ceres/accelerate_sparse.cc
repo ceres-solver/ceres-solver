@@ -129,6 +129,8 @@ AccelerateSparse<Scalar>::CreateSparseMatrixTransposeView(
   if (std::is_same<Scalar, double>::value) {
     At.data = reinterpret_cast<Scalar*>(A->mutable_values());
   } else {
+    static_assert(std::numeric_limits<Eigen::Index>::max() >=
+                  std::numeric_limits<int64_t>::max(), "Possible data loss.");
     values_ =
         ConstVectorRef(A->values(), A->num_nonzeros()).template cast<Scalar>();
     At.data = values_.data();
