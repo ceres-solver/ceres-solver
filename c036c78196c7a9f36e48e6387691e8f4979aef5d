@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5536084_ff9b1a1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-01T22:39:13Z",
+      "side": 1,
+      "message": "Alexander,\n\nThis patch is starting to break code. In particular where structs/objects that template over a Jet type say an Eigen::Matrix\u003cJet\u003cT,N\u003e I am getting breakage in existing code were rvalue references are being created and they cannot bind to a lvalue reference that is expected or something like that (my understanding of rvalue references is weak). \n\nUnless there is a simple fix for this, I will have to revert this patch.",
+      "revId": "c036c78196c7a9f36e48e6387691e8f4979aef5d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
