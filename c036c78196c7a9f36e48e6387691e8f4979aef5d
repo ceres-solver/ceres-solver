@@ -16,6 +16,24 @@
       "message": "Alexander,\n\nThis patch is starting to break code. In particular where structs/objects that template over a Jet type say an Eigen::Matrix\u003cJet\u003cT,N\u003e I am getting breakage in existing code were rvalue references are being created and they cannot bind to a lvalue reference that is expected or something like that (my understanding of rvalue references is weak). \n\nUnless there is a simple fix for this, I will have to revert this patch.",
       "revId": "c036c78196c7a9f36e48e6387691e8f4979aef5d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c2db8bf_94d41341",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-07-02T01:52:54Z",
+      "side": 1,
+      "message": "That is unexpected. r-values can bind to l-values.\nCan you provide more details?\n\nI tried experimenting with Matrix-Jet combination with various levels of nesting per your description and it works as expected.\n\n\n```C++\ntemplate \u003cclass T, int N\u003e\nEigen::Matrix\u003cceres::Jet\u003cT, N\u003e, 3, 3\u003e my_op()\n{\n    Eigen::Matrix\u003cceres::Jet\u003cT, N\u003e, 3, 3\u003e a{};\n    Eigen::Matrix\u003cceres::Jet\u003cT, N\u003e, 3, 3\u003e b{};\n\n    ceres::Jet\u003cT, N\u003e my_jet{};\n\n    a(0, 0) \u003d my_jet;                    // l-value\n    a(0, 0) \u003d ceres::Jet\u003cT, N\u003e{};        // r-value\n    a(0, 0) \u003d my_jet + my_jet + my_jet;  // r-value\n    a(0, 0) \u003d std::move(my_jet);         // r-value\n\n    b \u003d a;                                        // l-value\n    b \u003d Eigen::Matrix\u003cceres::Jet\u003cT, N\u003e, 3, 3\u003e{};  // r-value\n    b \u003d a + a + a + a;                            // r-value\n    b \u003d std::move(a);                             // r-value\n\n    const Eigen::Matrix\u003cceres::Jet\u003cT, N\u003e, 3, 3\u003e\u0026 c \u003d b;          // l-value\n    const Eigen::Matrix\u003cceres::Jet\u003cT, N\u003e, 3, 3\u003e\u0026 d \u003d b + b + b;  // r-value\n\n    return b + b + c + d;\n}\n\nTEST(EigenAndCeres, investigation)\n{\n    my_op\u003cdouble, 5\u003e();\n    my_op\u003cceres::Jet\u003cdouble, 5\u003e, 5\u003e();\n    my_op\u003cEigen::Matrix\u003cceres::Jet\u003cdouble, 5\u003e, 3, 3\u003e, 5\u003e();\n}\n```",
+      "parentUuid": "b5536084_ff9b1a1b",
+      "revId": "c036c78196c7a9f36e48e6387691e8f4979aef5d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
