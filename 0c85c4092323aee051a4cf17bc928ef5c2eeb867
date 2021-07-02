@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a89823d_3fa595cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-07-02T06:01:23Z",
+      "side": 1,
+      "message": "Revert of the \"reduce copies\" patch. Opening this in case it is needed.\nThe first commit is a straight up `git revert`, then reapplying the non-rvalue changes so it\u0027s obvious what we are keeping.\n",
+      "revId": "0c85c4092323aee051a4cf17bc928ef5c2eeb867",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
