@@ -34,6 +34,23 @@
       "parentUuid": "b5536084_ff9b1a1b",
       "revId": "c036c78196c7a9f36e48e6387691e8f4979aef5d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dfed0be_8acffa19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6547
+      },
+      "writtenOn": "2021-07-02T06:37:51Z",
+      "side": 1,
+      "message": "\u003e Patch Set 5:\n\u003e \n\u003e I will try and create a small failure case and share.\n\nI put up a revert of the r-values in case it is needed:\nhttps://ceres-solver-review.googlesource.com/c/ceres-solver/+/18700\n\nWhile I expected the r-values to be free of binary breaking changes, I have good results with a change that makes Jet behave the same way as Eigen::Matrix, i.e. lazy chain evaluation, which does come with minor source breaking changes (like these: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/18703).\n\nGiven breaking changes, would either of those changes (r-value, lazy evaluation) be acceptable guarded behind an opt-in feature macro (similar to other feature macros like CERES_USE_EIGEN_SPARSE)?",
+      "revId": "c036c78196c7a9f36e48e6387691e8f4979aef5d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
