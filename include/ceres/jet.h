@@ -203,43 +203,50 @@ struct Jet {
 
   // Compound operators
   Jet<T, N>& operator+=(const Jet<T, N>& y) {
-    *this = *this + y;
+    this->a += y.a;
+    this->v = this->v + y.v;  // Better than +=
     return *this;
   }
 
   Jet<T, N>& operator-=(const Jet<T, N>& y) {
-    *this = *this - y;
+    this->a -= y.a;
+    this->v = this->v - y.v;  // Better than -=
     return *this;
   }
 
   Jet<T, N>& operator*=(const Jet<T, N>& y) {
-    *this = *this * y;
+    this->v = this->a * y.v + this->v * y.a;
+    this->a *= y.a;
     return *this;
   }
 
   Jet<T, N>& operator/=(const Jet<T, N>& y) {
-    *this = *this / y;
+    const T y_a_inverse = T(1.0) / y.a;
+    this->a *= y_a_inverse;
+    this->v = (this->v - this->a * y.v) * y_a_inverse;
     return *this;
   }
 
   // Compound with scalar operators.
   Jet<T, N>& operator+=(const T& s) {
-    *this = *this + s;
+    this->a += s;
     return *this;
   }
 
   Jet<T, N>& operator-=(const T& s) {
-    *this = *this - s;
+    this->a -= s;
     return *this;
   }
 
   Jet<T, N>& operator*=(const T& s) {
-    *this = *this * s;
+    this->a *= s;
+    this->v = this->v * s;  // Better than *=
     return *this;
   }
 
   Jet<T, N>& operator/=(const T& s) {
-    *this = *this / s;
+    const T s_inverse = T(1.0) / s;
+    *this *= s_inverse;
     return *this;
   }
 
