@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d00f7c9c_919dc186",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:56:38Z",
+      "side": 1,
+      "message": "drop this Cl since we will not be making changes to jet.h?",
+      "revId": "2fc626e4df76167b6dd27554455317274d7d507b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
