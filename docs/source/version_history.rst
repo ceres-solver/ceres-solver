@@ -1532,8 +1532,8 @@ Origins
 =======
 
 Ceres Solver grew out of the need for general least squares solving at
-Google. In early 2010, Sameer Agarwal and Fredrik Schaffalitzky
-started the development of Ceres Solver. Fredrik left Google shortly
+Google. In early 2010, Sameer Agarwal and Frederik Schaffalitzky
+started the development of Ceres Solver. Frederik left Google shortly
 thereafter and Keir Mierle stepped in to take his place. After two
 years of on-and-off development, Ceres Solver was released as open
 source in May of 2012.
