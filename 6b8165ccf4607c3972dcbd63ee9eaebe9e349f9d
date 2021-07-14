@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bcfba59_2faad323",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "Sorry for taking so long Matthias. My comments are mostly minor, do you already have the next change that builds on top of this one ready? are you planning on landing one large change or land it in pieces?",
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3b6e85e_18f00aff",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "see my comment elsewhere about this.",
+      "range": {
+        "startLine": 132,
+        "startChar": 23,
+        "endLine": 132,
+        "endChar": 37
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57862439_066554a7",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "same comment.",
+      "range": {
+        "startLine": 119,
+        "startChar": 23,
+        "endLine": 119,
+        "endChar": 37
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5168aa8a_ea2c17c3",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "these can\u0027t be 64bit. I would cast in the expression using them to compute pos.",
+      "range": {
+        "startLine": 87,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 17
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95dcea60_555bcafc",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "same comment.",
+      "range": {
+        "startLine": 147,
+        "startChar": 4,
+        "endLine": 147,
+        "endChar": 17
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88b91e95_60390aa0",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "I think following the pattern in the other loops, it maybe better to just write values_.get() + cells[j].position in the MatrixRef below.",
+      "range": {
+        "startLine": 185,
+        "startChar": 24,
+        "endLine": 185,
+        "endChar": 29
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52377386_e349c843",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "In practice this expression is safe because we are never going to have more than int32 diagonal block positions, but technically it can overflow no?",
+      "range": {
+        "startLine": 278,
+        "startChar": 17,
+        "endLine": 278,
+        "endChar": 18
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84d6a3a6_af4eb553",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "so for now we are just making sure large objects cannot be constructed. \nThis is the file which is the most troublesome, because the cols array also needs to be int64 ultimately. Do you already have a plan what you are going to do here?",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 190,
+        "endChar": 10
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e686c6ec_f0443c4e",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "these sizes cannot be int64.\n\nI think it is better to cast and multiply in the expression below to make it clear.",
+      "range": {
+        "startLine": 437,
+        "startChar": 18,
+        "endLine": 437,
+        "endChar": 23
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a1bea2f_02f56414",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "NOTE: when we update compressedrowsparsematrix, we will also need to update CRSMatrix.",
+      "range": {
+        "startLine": 820,
+        "startChar": 2,
+        "endLine": 820,
+        "endChar": 11
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2d0adf4_05d8ef1d",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "we should be able to remove this no?",
+      "range": {
+        "startLine": 831,
+        "startChar": 27,
+        "endLine": 831,
+        "endChar": 35
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "023216a8_8d79e02b",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "why would you trigger if the two maxes are equal?\nalso it is worth adding a more detailed/helpful error here, what would trigger this and what is a possible fix.",
+      "range": {
+        "startLine": 127,
+        "startChar": 36,
+        "endLine": 127,
+        "endChar": 43
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "927b4b99_dcd6129d",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "this is a compile time check, why not have it at just one place with a detailed error? why distribute it at multiple places?",
+      "range": {
+        "startLine": 121,
+        "startChar": 34,
+        "endLine": 121,
+        "endChar": 41
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eab2d682_bd394029",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "I think this file needs more work.",
+      "range": {
+        "startLine": 2,
+        "startChar": 25,
+        "endLine": 2,
+        "endChar": 28
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5be53ecd_b2b48113",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "I think index in ProductTerm will also need to be uint64_t",
+      "range": {
+        "startLine": 153,
+        "startChar": 34,
+        "endLine": 153,
+        "endChar": 39
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77c9ed45_94f21f61",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "int64_t?",
+      "range": {
+        "startLine": 246,
+        "startChar": 2,
+        "endLine": 246,
+        "endChar": 5
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a96d6797_925cd298",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "this will need to be int64_t",
+      "range": {
+        "startLine": 293,
+        "startChar": 6,
+        "endLine": 293,
+        "endChar": 12
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5764672_bda71ddc",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-14T16:53:25Z",
+      "side": 1,
+      "message": "this will need to be int64_t",
+      "range": {
+        "startLine": 301,
+        "startChar": 16,
+        "endLine": 301,
+        "endChar": 23
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
