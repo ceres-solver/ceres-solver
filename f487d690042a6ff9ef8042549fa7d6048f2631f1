@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70157add_03cbb4b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "Thank you Sameer for your review!\n\nI made some of the changes, but have some questions regarding some of the comments.\n\nThank you for taking another look",
+      "revId": "f487d690042a6ff9ef8042549fa7d6048f2631f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

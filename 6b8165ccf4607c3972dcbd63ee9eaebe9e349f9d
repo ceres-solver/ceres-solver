@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e87396b9_c66361ca",
+        "filename": "internal/ceres/accelerate_sparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c3b6e85e_18f00aff",
+      "range": {
+        "startLine": 132,
+        "startChar": 23,
+        "endLine": 132,
+        "endChar": 37
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "57862439_066554a7",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-07-14T16:53:25Z",
       "side": 1,
       "message": "same comment.",
+      "range": {
+        "startLine": 119,
+        "startChar": 23,
+        "endLine": 119,
+        "endChar": 37
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e143851_58afe5db",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "57862439_066554a7",
       "range": {
         "startLine": 119,
         "startChar": 23,
@@ -87,6 +135,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad930700_c26ba79e",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5168aa8a_ea2c17c3",
+      "range": {
+        "startLine": 87,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 17
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "95dcea60_555bcafc",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-07-14T16:53:25Z",
       "side": 1,
       "message": "same comment.",
+      "range": {
+        "startLine": 147,
+        "startChar": 4,
+        "endLine": 147,
+        "endChar": 17
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c204bce6_644008e8",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "95dcea60_555bcafc",
       "range": {
         "startLine": 147,
         "startChar": 4,
@@ -133,6 +229,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "101c1217_0243c0c2",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88b91e95_60390aa0",
+      "range": {
+        "startLine": 185,
+        "startChar": 24,
+        "endLine": 185,
+        "endChar": 29
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52377386_e349c843",
@@ -146,6 +266,30 @@
       "writtenOn": "2021-07-14T16:53:25Z",
       "side": 1,
       "message": "In practice this expression is safe because we are never going to have more than int32 diagonal block positions, but technically it can overflow no?",
+      "range": {
+        "startLine": 278,
+        "startChar": 17,
+        "endLine": 278,
+        "endChar": 18
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38de17c4_45a68520",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "I think you\u0027re right",
+      "parentUuid": "52377386_e349c843",
       "range": {
         "startLine": 278,
         "startChar": 17,
@@ -181,6 +325,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b57047a5_ece20dc7",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "I think it\u0027s the rows array that also needs to be int64, but yes. So, since this is my first CL to this project, I wanted to keep it on the lighter side while still providing an advantage but without making changes that require trade-offs.\n\nFor CompressedRowSparseMatrix, there is no useful effect in this CL, but any problem that triggers this CHECK would already make the program fail at another place (and with a less meaningful error) without this CL.\n\nSo yes, the problem is that rows_ array would also need to be int64 but that would adversely affect memory footprint for smaller problems, so I decided to defer the decision on how to go about this to a future CL after I see how it goes with this CL.\n\nI see three approaches:\n\n1. hardcode rows_ to contain int64 indices, which incurs a memory cost for applications which do not require to solve such large problems.\n\n2. introduce some compile-time switches to define these indices, so that one can make this trade-off at compile-time.\n\n3. switch to a templated PIPML implementation that dynamically converts the implementation from int32 to int64 when required. I started such an implementation initially, but it\u0027s got a long rat-tail so I thought I\u0027d go about it in smaller steps.\n\nWhat do you think would make most sense?",
+      "parentUuid": "84d6a3a6_af4eb553",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 190,
+        "endChar": 10
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e686c6ec_f0443c4e",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
@@ -192,6 +360,30 @@
       "writtenOn": "2021-07-14T16:53:25Z",
       "side": 1,
       "message": "these sizes cannot be int64.\n\nI think it is better to cast and multiply in the expression below to make it clear.",
+      "range": {
+        "startLine": 437,
+        "startChar": 18,
+        "endLine": 437,
+        "endChar": 23
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "881a25c5_525af0c5",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e686c6ec_f0443c4e",
       "range": {
         "startLine": 437,
         "startChar": 18,
@@ -250,6 +442,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16709a32_71dc21ee",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "of course, you are right! I cast to Eigen::Index though for clarity, since this is the target type",
+      "parentUuid": "e2d0adf4_05d8ef1d",
+      "range": {
+        "startLine": 831,
+        "startChar": 27,
+        "endLine": 831,
+        "endChar": 35
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "023216a8_8d79e02b",
         "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
         "patchSetId": 2
@@ -261,6 +477,30 @@
       "writtenOn": "2021-07-14T16:53:25Z",
       "side": 1,
       "message": "why would you trigger if the two maxes are equal?\nalso it is worth adding a more detailed/helpful error here, what would trigger this and what is a possible fix.",
+      "range": {
+        "startLine": 127,
+        "startChar": 36,
+        "endLine": 127,
+        "endChar": 43
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7fcb294_c4f97e14",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "not quite sure I understand, the static_assertion triggers if the condition is false. A-\u003enum_nonzeros() is an int64_t while MappedSparseMatrix expects an Eigen::Index, so Eigen::Index should be defined to the same type or larger. This should hold for the default definition on 64-bit builds at least (I guess on 32-bit builds std::ptrdiff_t, which is the default for Eigen::Index might be implemented as int32_t).\nI added some more verbose error, let me know if you think it needs more info.",
+      "parentUuid": "023216a8_8d79e02b",
       "range": {
         "startLine": 127,
         "startChar": 36,
@@ -296,6 +536,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f1f46fc7_10ca6928",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "I wasn\u0027t really sure what\u0027s better here. I decided to put it everywhere where an int64_t to Eigen::Index is implicitly casted so that when someone is reading the code they don\u0027t need to wonder whether that conversion might be overflowing - so rather for code documentation. But I\u0027m also fine putting it only in one place - would types.cc be a proper place for this? if not, can you suggest where this should go?",
+      "parentUuid": "927b4b99_dcd6129d",
+      "range": {
+        "startLine": 121,
+        "startChar": 34,
+        "endLine": 121,
+        "endChar": 41
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eab2d682_bd394029",
         "filename": "internal/ceres/inner_product_computer.cc",
         "patchSetId": 2
@@ -307,6 +571,30 @@
       "writtenOn": "2021-07-14T16:53:25Z",
       "side": 1,
       "message": "I think this file needs more work.",
+      "range": {
+        "startLine": 2,
+        "startChar": 25,
+        "endLine": 2,
+        "endChar": 28
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08b80b34_69cf836f",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "I reverted the changes to inner_product_computer since it depends on CompressedRowSparseMatrix and so long as CRSM doesn\u0027t support large indices it probably doesn\u0027t make sense to add changes here and instead do that in a subsequent CL when deciding on how to go about CRSM (as for example here std::vector\u003cint\u003e result_offsets_; would also need to be int64_t)",
+      "parentUuid": "eab2d682_bd394029",
       "range": {
         "startLine": 2,
         "startChar": 25,
@@ -340,6 +628,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf324af6_f81fb681",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5be53ecd_b2b48113",
+      "range": {
+        "startLine": 153,
+        "startChar": 34,
+        "endLine": 153,
+        "endChar": 39
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77c9ed45_94f21f61",
@@ -353,6 +665,30 @@
       "writtenOn": "2021-07-14T16:53:25Z",
       "side": 1,
       "message": "int64_t?",
+      "range": {
+        "startLine": 246,
+        "startChar": 2,
+        "endLine": 246,
+        "endChar": 5
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b736c60_9d240ca8",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "77c9ed45_94f21f61",
       "range": {
         "startLine": 246,
         "startChar": 2,
@@ -386,6 +722,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2904e36_d5fd833b",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a96d6797_925cd298",
+      "range": {
+        "startLine": 293,
+        "startChar": 6,
+        "endLine": 293,
+        "endChar": 12
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a5764672_bda71ddc",
@@ -399,6 +759,30 @@
       "writtenOn": "2021-07-14T16:53:25Z",
       "side": 1,
       "message": "this will need to be int64_t",
+      "range": {
+        "startLine": 301,
+        "startChar": 16,
+        "endLine": 301,
+        "endChar": 23
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0edd4f98_0d1932e3",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 6557
+      },
+      "writtenOn": "2021-07-15T17:45:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a5764672_bda71ddc",
       "range": {
         "startLine": 301,
         "startChar": 16,
