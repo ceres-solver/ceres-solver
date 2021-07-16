@@ -1377,7 +1377,7 @@ elimination group [LiSaad]_.
 
    An instance of the ordering object informs the solver about the
    desired order in which parameter blocks should be eliminated by the
-   linear solvers. See section~\ref{sec:ordering`` for more details.
+   linear solvers.
 
    If ``NULL``, the solver is free to choose an ordering that it
    thinks is best.
