@@ -103,6 +103,24 @@
       "parentUuid": "03f95496_1500f449",
       "revId": "a6ee7ca00713d29c88d8f5d96843c6e716b6af24",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d959258_ed5abb84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6552
+      },
+      "writtenOn": "2021-07-17T11:03:17Z",
+      "side": 1,
+      "message": "Apologies for the delay.\nAdded python3 check for building docs. Please, check if we also need to update python versions in FindSphinx.cmake#47:\nhttps://ceres-solver.googlesource.com/ceres-solver/+/refs/heads/master/cmake/FindSphinx.cmake#47",
+      "parentUuid": "a10bb53c_dd66ed5a",
+      "revId": "a6ee7ca00713d29c88d8f5d96843c6e716b6af24",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
