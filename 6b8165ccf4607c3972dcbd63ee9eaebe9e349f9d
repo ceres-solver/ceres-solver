@@ -349,6 +349,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "410876b4_79f9c371",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-07-19T17:00:52Z",
+      "side": 1,
+      "message": "I agree these are the three options. I do not think (2) is a great option, because it puts the user at the mercy of the person building and installing the library.\n\nI think only 1 or 3 are the reasonable approaches. I am not sure how (3) will work in practice. By that do you mean that the interface will be int64 but internal storage will be int32/int64 depending upon need? That is an interesting idea that I\u0027d like to see the complexity of.\n\n(1) would require further interface changes no?\n\n\nI suggest that before we land this CL you at least prototype the full solution to see where we are headed, before we start landing pieces.",
+      "parentUuid": "b57047a5_ece20dc7",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 190,
+        "endChar": 10
+      },
+      "revId": "6b8165ccf4607c3972dcbd63ee9eaebe9e349f9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e686c6ec_f0443c4e",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
