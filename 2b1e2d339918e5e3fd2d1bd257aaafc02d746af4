@@ -16,6 +16,24 @@
       "message": "Hi Sumit,\n\nThanks for taking a stab at this.\n\nLooking through this, I think it would be clearer, and also prevent misalignment later, if we update Ceres\u0027 FindSphinx.cmake s/t it returns FOUND iff all the Sphinx components required by Ceres are found.\n\nThis moves this logic out of the main CMakeLists, and ensures that we can reuse FindSphinx.cmake in docs/CMakeLists and ensure that we are using the same versions (currently *not* the case).\n\n- In FindSphinx, we can lose the block that attempts to find Sphinx for Python \u003c\u003d 2\n- We can move the rtd-theme detection to after the detection of Sphinx in FindSphinx, and search for it only if Sphinx itself is found.\n- We can update find_package_handle_standard_args(Sphinx DEFAULT_MSG SPHINX_EXECUTABLE) to include a variable that clearly denotes the rtd-theme, so something like: SPHINX_RTD_THEME, which would be set only if it is found (the name should be printed in the output on failure automatically)\n- We can update the docs/source/CMakeLists to use find_package(PythonInterp 3 REQUIRED) and then use the resulting executable path instead of `python` in the add_custom_target()\n\nAfter all of this, the main CMakeLists should then look much cleaner, as there won\u0027t be multiple potential failure paths so it can actually be left entirely unmodified, as Sphinx_FOUND will now mean \u0027every part of Sphinx required by Ceres is found\u0027.",
       "revId": "2b1e2d339918e5e3fd2d1bd257aaafc02d746af4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "662b1375_8a220c70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6552
+      },
+      "writtenOn": "2021-07-21T02:56:52Z",
+      "side": 1,
+      "message": "Hi Alex,\n\nThanks for detailed explanation.\nAdditionally, I modified the error message in the main cmakelists - as otherwise it would say that Sphinx is not found, even if sphinx is found but the theme is not.",
+      "parentUuid": "b9b8e6e1_99509b3e",
+      "revId": "2b1e2d339918e5e3fd2d1bd257aaafc02d746af4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
