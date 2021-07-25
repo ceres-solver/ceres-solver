@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "882ce1e4_8ac3f55f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-07-25T19:56:12Z",
+      "side": 1,
+      "message": "Looking great, just a couple of minor points but once those are fixed I think this is good to merge.  Thanks, this is definitely an improvement worth having",
+      "revId": "c1f7eed9ea463fc7d0355c97c1e46e1edccd3c28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92afb145_e9ee7a5a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-07-25T19:56:12Z",
+      "side": 1,
+      "message": "If you remove the QUIET from here then if the RTD theme is not found, CMake will automatically generate a sensible error message based on the variable name passed to find_package_handle_standard_args() like so:\n\n-- Could NOT find Sphinx (missing: SPHINX_RTD_THEME)",
+      "revId": "c1f7eed9ea463fc7d0355c97c1e46e1edccd3c28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "580b79a5_def41808",
+        "filename": "cmake/FindSphinx.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-07-25T19:56:12Z",
+      "side": 1,
+      "message": "I think this would be more compact/clearer as this follows:\n\n# Map from UNIX return code success (0) to CMake success (TRUE).\nif (SPHINX_RTD_THEME EQUAL 0)\n  set(SPHINX_RTD_THEME TRUE)\nelse()\n  set(SPHINX_RTD_THEME)\nendif()\n\nnote that you don\u0027t need the message() as find_package_handle_standard_args() will generate a sensible one already provided that QUIET is not passed when invoking find_package(Sphinx) - this won\u0027t stop the build if it isn\u0027t found, only REQUIRED does that",
+      "revId": "c1f7eed9ea463fc7d0355c97c1e46e1edccd3c28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
