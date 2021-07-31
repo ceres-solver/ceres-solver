@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4d2480f2_7b66158e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 6552
+      },
+      "writtenOn": "2021-07-31T10:29:22Z",
+      "side": 1,
+      "message": "way better than manually writing error msgs.",
+      "parentUuid": "92afb145_e9ee7a5a",
+      "revId": "c1f7eed9ea463fc7d0355c97c1e46e1edccd3c28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "580b79a5_def41808",
         "filename": "cmake/FindSphinx.cmake",
         "patchSetId": 5
@@ -48,6 +66,24 @@
       "writtenOn": "2021-07-25T19:56:12Z",
       "side": 1,
       "message": "I think this would be more compact/clearer as this follows:\n\n# Map from UNIX return code success (0) to CMake success (TRUE).\nif (SPHINX_RTD_THEME EQUAL 0)\n  set(SPHINX_RTD_THEME TRUE)\nelse()\n  set(SPHINX_RTD_THEME)\nendif()\n\nnote that you don\u0027t need the message() as find_package_handle_standard_args() will generate a sensible one already provided that QUIET is not passed when invoking find_package(Sphinx) - this won\u0027t stop the build if it isn\u0027t found, only REQUIRED does that",
+      "revId": "c1f7eed9ea463fc7d0355c97c1e46e1edccd3c28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "374f2610_3cc1a963",
+        "filename": "cmake/FindSphinx.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6552
+      },
+      "writtenOn": "2021-07-31T10:29:22Z",
+      "side": 1,
+      "message": "Indeed this makes it clearer. Also, added explicit FALSE when not found.",
+      "parentUuid": "580b79a5_def41808",
       "revId": "c1f7eed9ea463fc7d0355c97c1e46e1edccd3c28",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
