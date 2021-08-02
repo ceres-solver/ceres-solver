@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bcefad1_ed1cdbbd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-08-02T08:31:29Z",
+      "side": 1,
+      "message": "Thanks Sumit, I confirmed this correctly detects whether we can build the docs on macOS",
+      "revId": "7de561e8e822fc56258736e77ae3c91378da2883",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

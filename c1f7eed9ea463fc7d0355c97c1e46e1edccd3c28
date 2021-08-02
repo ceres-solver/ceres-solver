@@ -53,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5d2b009_f8a4a0c6",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-08-02T08:31:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d2480f2_7b66158e",
+      "revId": "c1f7eed9ea463fc7d0355c97c1e46e1edccd3c28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "580b79a5_def41808",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Indeed this makes it clearer. Also, added explicit FALSE when not found.",
       "parentUuid": "580b79a5_def41808",
+      "revId": "c1f7eed9ea463fc7d0355c97c1e46e1edccd3c28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "887cc1d4_fa4cd890",
+        "filename": "cmake/FindSphinx.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-08-02T08:31:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "374f2610_3cc1a963",
       "revId": "c1f7eed9ea463fc7d0355c97c1e46e1edccd3c28",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
