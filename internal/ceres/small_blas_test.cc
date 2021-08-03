@@ -72,15 +72,24 @@ MATRIX_FUN_TY(MatrixTransposeMatrixMultiplyNaive)
 
 #undef MATRIX_FUN_TY
 
+// Initializes matrix entires.
+void initMatrix(Matrix &mat) {
+  for (int i = 0; i < mat.rows(); ++i) {
+    for (int j = 0; j < mat.cols(); ++j) {
+      mat(i, j) = i + j + 1;
+    }
+  }
+}
+
 template <int kRowA, int kColA, int kColB, DimType kDimType,
           template <int, int, int, int, int, DimType> class FunctorTy>
 struct TestMatrixFunctions {
   void operator()() {
     Matrix A(kRowA, kColA);
-    A.setOnes();
+    initMatrix(A);
     const int kRowB = kColA;
     Matrix B(kRowB, kColB);
-    B.setOnes();
+    initMatrix(B);
 
     for (int row_stride_c = kRowA; row_stride_c < 3 * kRowA; ++row_stride_c) {
       for (int col_stride_c = kColB; col_stride_c < 3 * kColB; ++col_stride_c) {
@@ -100,7 +109,7 @@ struct TestMatrixFunctions {
           for (int start_col_c = 0; start_col_c + kColB < col_stride_c;
                ++start_col_c) {
             C_plus_ref.block(start_row_c, start_col_c, kRowA, kColB) += A * B;
-            FunctorTy<kRowA, kColA, kRowB, kColB, 1, kDimType>(
+            FunctorTy<kRowA, kColA, kRowB, kColB, 1, kDimType>()(
                 A.data(), kRowA, kColA, B.data(), kRowB, kColB, C_plus.data(),
                 start_row_c, start_col_c, row_stride_c, col_stride_c);
 
@@ -116,7 +125,7 @@ struct TestMatrixFunctions {
                 << C_plus;
 
             C_minus_ref.block(start_row_c, start_col_c, kRowA, kColB) -= A * B;
-            FunctorTy<kRowA, kColA, kRowB, kColB, -1, kDimType>(
+            FunctorTy<kRowA, kColA, kRowB, kColB, -1, kDimType>()(
                 A.data(), kRowA, kColA, B.data(), kRowB, kColB, C_minus.data(),
                 start_row_c, start_col_c, row_stride_c, col_stride_c);
 
@@ -133,7 +142,7 @@ struct TestMatrixFunctions {
 
             C_assign_ref.block(start_row_c, start_col_c, kRowA, kColB) = A * B;
 
-            FunctorTy<kRowA, kColA, kRowB, kColB, 0, kDimType>(
+            FunctorTy<kRowA, kColA, kRowB, kColB, 0, kDimType>()(
                 A.data(), kRowA, kColA, B.data(), kRowB, kColB, C_assign.data(),
                 start_row_c, start_col_c, row_stride_c, col_stride_c);
 
@@ -159,10 +168,10 @@ template <int kRowA, int kColA, int kColB, DimType kDimType,
 struct TestMatrixTransposeFunctions {
   void operator()() {
     Matrix A(kRowA, kColA);
-    A.setOnes();
+    initMatrix(A);
     const int kRowB = kRowA;
     Matrix B(kRowB, kColB);
-    B.setOnes();
+    initMatrix(B);
 
     for (int row_stride_c = kColA; row_stride_c < 3 * kColA; ++row_stride_c) {
       for (int col_stride_c = kColB; col_stride_c < 3 * kColB; ++col_stride_c) {
@@ -183,7 +192,7 @@ struct TestMatrixTransposeFunctions {
             C_plus_ref.block(start_row_c, start_col_c, kColA, kColB) +=
                 A.transpose() * B;
 
-            FunctorTy<kRowA, kColA, kRowB, kColB, 1, kDimType>(
+            FunctorTy<kRowA, kColA, kRowB, kColB, 1, kDimType>()(
                 A.data(), kRowA, kColA, B.data(), kRowB, kColB, C_plus.data(),
                 start_row_c, start_col_c, row_stride_c, col_stride_c);
 
@@ -201,7 +210,7 @@ struct TestMatrixTransposeFunctions {
             C_minus_ref.block(start_row_c, start_col_c, kColA, kColB) -=
                 A.transpose() * B;
 
-            FunctorTy<kRowA, kColA, kRowB, kColB, -1, kDimType>(
+            FunctorTy<kRowA, kColA, kRowB, kColB, -1, kDimType>()(
                 A.data(), kRowA, kColA, B.data(), kRowB, kColB, C_minus.data(),
                 start_row_c, start_col_c, row_stride_c, col_stride_c);
 
@@ -219,7 +228,7 @@ struct TestMatrixTransposeFunctions {
             C_assign_ref.block(start_row_c, start_col_c, kColA, kColB) =
                 A.transpose() * B;
 
-            FunctorTy<kRowA, kColA, kRowB, kColB, 0, kDimType>(
+            FunctorTy<kRowA, kColA, kRowB, kColB, 0, kDimType>()(
                 A.data(), kRowA, kColA, B.data(), kRowB, kColB, C_assign.data(),
                 start_row_c, start_col_c, row_stride_c, col_stride_c);
 
@@ -241,111 +250,117 @@ struct TestMatrixTransposeFunctions {
 };
 
 TEST(BLAS, MatrixMatrixMultiply_5_3_7) {
-  TestMatrixFunctions<5, 3, 7, DimType::Static, MatrixMatrixMultiplyTy>();
+  TestMatrixFunctions<5, 3, 7, DimType::Static, MatrixMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiply_5_3_7_Dynamic) {
-  TestMatrixFunctions<5, 3, 7, DimType::Dynamic, MatrixMatrixMultiplyTy>();
+  TestMatrixFunctions<5, 3, 7, DimType::Dynamic, MatrixMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiply_1_1_1) {
-  TestMatrixFunctions<1, 1, 1, DimType::Static, MatrixMatrixMultiplyTy>();
+  TestMatrixFunctions<1, 1, 1, DimType::Static, MatrixMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiply_1_1_1_Dynamic) {
-  TestMatrixFunctions<1, 1, 1, DimType::Dynamic, MatrixMatrixMultiplyTy>();
+  TestMatrixFunctions<1, 1, 1, DimType::Dynamic, MatrixMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiply_9_9_9) {
-  TestMatrixFunctions<9, 9, 9, DimType::Static, MatrixMatrixMultiplyTy>();
+  TestMatrixFunctions<9, 9, 9, DimType::Static, MatrixMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiply_9_9_9_Dynamic) {
-  TestMatrixFunctions<9, 9, 9, DimType::Dynamic, MatrixMatrixMultiplyTy>();
+  TestMatrixFunctions<9, 9, 9, DimType::Dynamic, MatrixMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiplyNaive_5_3_7) {
-  TestMatrixFunctions<5, 3, 7, DimType::Static, MatrixMatrixMultiplyNaiveTy>();
+  TestMatrixFunctions<5, 3, 7, DimType::Static,
+                      MatrixMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiplyNaive_5_3_7_Dynamic) {
-  TestMatrixFunctions<5, 3, 7, DimType::Dynamic, MatrixMatrixMultiplyNaiveTy>();
+  TestMatrixFunctions<5, 3, 7, DimType::Dynamic,
+                      MatrixMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiplyNaive_1_1_1) {
-  TestMatrixFunctions<1, 1, 1, DimType::Static, MatrixMatrixMultiplyNaiveTy>();
+  TestMatrixFunctions<1, 1, 1, DimType::Static,
+                      MatrixMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiplyNaive_1_1_1_Dynamic) {
-  TestMatrixFunctions<1, 1, 1, DimType::Dynamic, MatrixMatrixMultiplyNaiveTy>();
+  TestMatrixFunctions<1, 1, 1, DimType::Dynamic,
+                      MatrixMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiplyNaive_9_9_9) {
-  TestMatrixFunctions<9, 9, 9, DimType::Static, MatrixMatrixMultiplyNaiveTy>();
+  TestMatrixFunctions<9, 9, 9, DimType::Static,
+                      MatrixMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiplyNaive_9_9_9_Dynamic) {
-  TestMatrixFunctions<9, 9, 9, DimType::Dynamic, MatrixMatrixMultiplyNaiveTy>();
+  TestMatrixFunctions<9, 9, 9, DimType::Dynamic,
+                      MatrixMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiply_5_3_7) {
   TestMatrixTransposeFunctions<5, 3, 7, DimType::Static,
-                               MatrixTransposeMatrixMultiplyTy>();
+                               MatrixTransposeMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiply_5_3_7_Dynamic) {
   TestMatrixTransposeFunctions<5, 3, 7, DimType::Dynamic,
-                               MatrixTransposeMatrixMultiplyTy>();
+                               MatrixTransposeMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiply_1_1_1) {
   TestMatrixTransposeFunctions<1, 1, 1, DimType::Static,
-                               MatrixTransposeMatrixMultiplyTy>();
+                               MatrixTransposeMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiply_1_1_1_Dynamic) {
   TestMatrixTransposeFunctions<1, 1, 1, DimType::Dynamic,
-                               MatrixTransposeMatrixMultiplyTy>();
+                               MatrixTransposeMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiply_9_9_9) {
   TestMatrixTransposeFunctions<9, 9, 9, DimType::Static,
-                               MatrixTransposeMatrixMultiplyTy>();
+                               MatrixTransposeMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiply_9_9_9_Dynamic) {
   TestMatrixTransposeFunctions<9, 9, 9, DimType::Dynamic,
-                               MatrixTransposeMatrixMultiplyTy>();
+                               MatrixTransposeMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiplyNaive_5_3_7) {
   TestMatrixTransposeFunctions<5, 3, 7, DimType::Static,
-                               MatrixTransposeMatrixMultiplyNaiveTy>();
+                               MatrixTransposeMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiplyNaive_5_3_7_Dynamic) {
   TestMatrixTransposeFunctions<5, 3, 7, DimType::Dynamic,
-                               MatrixTransposeMatrixMultiplyNaiveTy>();
+                               MatrixTransposeMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiplyNaive_1_1_1) {
   TestMatrixTransposeFunctions<1, 1, 1, DimType::Static,
-                               MatrixTransposeMatrixMultiplyNaiveTy>();
+                               MatrixTransposeMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiplyNaive_1_1_1_Dynamic) {
   TestMatrixTransposeFunctions<1, 1, 1, DimType::Dynamic,
-                               MatrixTransposeMatrixMultiplyNaiveTy>();
+                               MatrixTransposeMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiplyNaive_9_9_9) {
   TestMatrixTransposeFunctions<9, 9, 9, DimType::Static,
-                               MatrixTransposeMatrixMultiplyNaiveTy>();
+                               MatrixTransposeMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiplyNaive_9_9_9_Dynamic) {
   TestMatrixTransposeFunctions<9, 9, 9, DimType::Dynamic,
-                               MatrixTransposeMatrixMultiplyNaiveTy>();
+                               MatrixTransposeMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixVectorMultiply) {
