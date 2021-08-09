@@ -1786,7 +1786,7 @@ elimination group [LiSaad]_.
 
    Number of groups with one or more elements.
 
-:class:`IterationCallback`
+:class:`IterationSummary`
 ==========================
 
 .. class:: IterationSummary
@@ -1906,6 +1906,8 @@ elimination group [LiSaad]_.
 
    Time (in seconds) since the user called Solve().
 
+:class:`IterationCallback`
+==========================
 
 .. class:: IterationCallback
 
