@@ -355,14 +355,14 @@ respectively. Using these, the problem can be constructed as follows:
 
   Problem problem;
 
-  // Add residual terms to the problem using the using the autodiff
+  // Add residual terms to the problem using the autodiff
   // wrapper to get the derivatives automatically.
   problem.AddResidualBlock(
     new AutoDiffCostFunction<F1, 1, 1, 1>(new F1), nullptr, &x1, &x2);
   problem.AddResidualBlock(
     new AutoDiffCostFunction<F2, 1, 1, 1>(new F2), nullptr, &x3, &x4);
   problem.AddResidualBlock(
-    new AutoDiffCostFunction<F3, 1, 1, 1>(new F3), nullptr, &x2, &x3)
+    new AutoDiffCostFunction<F3, 1, 1, 1>(new F3), nullptr, &x2, &x3);
   problem.AddResidualBlock(
     new AutoDiffCostFunction<F4, 1, 1, 1>(new F4), nullptr, &x1, &x4);
 
