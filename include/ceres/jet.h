@@ -243,6 +243,109 @@ struct Jet {
     return *this;
   }
 
+  // Unary +
+  friend Jet<T, N> const& operator+(const Jet<T, N>& f) {
+    return f;
+  }
+
+  // TODO(keir): Try adding __attribute__((always_inline)) to these functions to
+  // see if it causes a performance increase.
+
+  // Unary -
+  friend Jet<T, N> operator-(const Jet<T, N>& f) {
+    return Jet<T, N>(-f.a, -f.v);
+  }
+
+  // Binary +
+  friend Jet<T, N> operator+(const Jet<T, N>& f, const Jet<T, N>& g) {
+    return Jet<T, N>(f.a + g.a, f.v + g.v);
+  }
+
+  // Binary + with a scalar: x + s
+  friend Jet<T, N> operator+(const Jet<T, N>& f, T s) {
+    return Jet<T, N>(f.a + s, f.v);
+  }
+
+  // Binary + with a scalar: s + x
+  friend Jet<T, N> operator+(T s, const Jet<T, N>& f) {
+    return Jet<T, N>(f.a + s, f.v);
+  }
+
+  // Binary -
+  friend Jet<T, N> operator-(const Jet<T, N>& f, const Jet<T, N>& g) {
+    return Jet<T, N>(f.a - g.a, f.v - g.v);
+  }
+
+  // Binary - with a scalar: x - s
+  friend Jet<T, N> operator-(const Jet<T, N>& f, T s) {
+    return Jet<T, N>(f.a - s, f.v);
+  }
+
+  // Binary - with a scalar: s - x
+  friend Jet<T, N> operator-(T s, const Jet<T, N>& f) {
+    return Jet<T, N>(s - f.a, -f.v);
+  }
+
+  // Binary *
+  friend Jet<T, N> operator*(const Jet<T, N>& f, const Jet<T, N>& g) {
+    return Jet<T, N>(f.a * g.a, f.a * g.v + f.v * g.a);
+  }
+
+  // Binary * with a scalar: x * s
+  friend Jet<T, N> operator*(const Jet<T, N>& f, T s) {
+    return Jet<T, N>(f.a * s, f.v * s);
+  }
+
+  // Binary * with a scalar: s * x
+  friend Jet<T, N> operator*(T s, const Jet<T, N>& f) {
+    return Jet<T, N>(f.a * s, f.v * s);
+  }
+
+  // Binary /
+  friend Jet<T, N> operator/(const Jet<T, N>& f, const Jet<T, N>& g) {
+    // This uses:
+    //
+    //   a + u   (a + u)(b - v)   (a + u)(b - v)
+    //   ----- = -------------- = --------------
+    //   b + v   (b + v)(b - v)        b^2
+    //
+    // which holds because v*v = 0.
+    const T g_a_inverse = T(1.0) / g.a;
+    const T f_a_by_g_a = f.a * g_a_inverse;
+    return Jet<T, N>(f_a_by_g_a, (f.v - f_a_by_g_a * g.v) * g_a_inverse);
+  }
+
+  // Binary / with a scalar: s / x
+  friend Jet<T, N> operator/(T s, const Jet<T, N>& g) {
+    const T minus_s_g_a_inverse2 = -s / (g.a * g.a);
+    return Jet<T, N>(s / g.a, g.v * minus_s_g_a_inverse2);
+  }
+
+  // Binary / with a scalar: x / s
+  friend Jet<T, N> operator/(const Jet<T, N>& f, T s) {
+    const T s_inverse = T(1.0) / s;
+    return Jet<T, N>(f.a * s_inverse, f.v * s_inverse);
+  }
+
+  // Binary comparison operators for both scalars and jets.
+# define CERES_DEFINE_JET_COMPARISON_OPERATOR(op)                     \
+    friend bool operator op(const Jet<T, N>& f, const Jet<T, N>& g) { \
+      return f.a op g.a;                                              \
+    }                                                                 \
+    friend bool operator op(const T& s, const Jet<T, N>& g) {         \
+      return s op g.a;                                                \
+    }                                                                 \
+    friend bool operator op(const Jet<T, N>& f, const T& s) {         \
+      return f.a op s;                                                \
+    }
+  CERES_DEFINE_JET_COMPARISON_OPERATOR(<)   // NOLINT
+  CERES_DEFINE_JET_COMPARISON_OPERATOR(<=)  // NOLINT
+  CERES_DEFINE_JET_COMPARISON_OPERATOR(>)   // NOLINT
+  CERES_DEFINE_JET_COMPARISON_OPERATOR(>=)  // NOLINT
+  CERES_DEFINE_JET_COMPARISON_OPERATOR(==)  // NOLINT
+  CERES_DEFINE_JET_COMPARISON_OPERATOR(!=)  // NOLINT
+# undef CERES_DEFINE_JET_COMPARISON_OPERATOR
+
   // The scalar part.
   T a;
 
@@ -253,126 +356,6 @@ struct Jet {
   // fixed-size Eigen types.
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
-
-// Unary +
-template <typename T, int N>
-inline Jet<T, N> const& operator+(const Jet<T, N>& f) {
-  return f;
-}
-
-// TODO(keir): Try adding __attribute__((always_inline)) to these functions to
-// see if it causes a performance increase.
-
-// Unary -
-template <typename T, int N>
-inline Jet<T, N> operator-(const Jet<T, N>& f) {
-  return Jet<T, N>(-f.a, -f.v);
-}
-
-// Binary +
-template <typename T, int N>
-inline Jet<T, N> operator+(const Jet<T, N>& f, const Jet<T, N>& g) {
-  return Jet<T, N>(f.a + g.a, f.v + g.v);
-}
-
-// Binary + with a scalar: x + s
-template <typename T, int N>
-inline Jet<T, N> operator+(const Jet<T, N>& f, T s) {
-  return Jet<T, N>(f.a + s, f.v);
-}
-
-// Binary + with a scalar: s + x
-template <typename T, int N>
-inline Jet<T, N> operator+(T s, const Jet<T, N>& f) {
-  return Jet<T, N>(f.a + s, f.v);
-}
-
-// Binary -
-template <typename T, int N>
-inline Jet<T, N> operator-(const Jet<T, N>& f, const Jet<T, N>& g) {
-  return Jet<T, N>(f.a - g.a, f.v - g.v);
-}
-
-// Binary - with a scalar: x - s
-template <typename T, int N>
-inline Jet<T, N> operator-(const Jet<T, N>& f, T s) {
-  return Jet<T, N>(f.a - s, f.v);
-}
-
-// Binary - with a scalar: s - x
-template <typename T, int N>
-inline Jet<T, N> operator-(T s, const Jet<T, N>& f) {
-  return Jet<T, N>(s - f.a, -f.v);
-}
-
-// Binary *
-template <typename T, int N>
-inline Jet<T, N> operator*(const Jet<T, N>& f, const Jet<T, N>& g) {
-  return Jet<T, N>(f.a * g.a, f.a * g.v + f.v * g.a);
-}
-
-// Binary * with a scalar: x * s
-template <typename T, int N>
-inline Jet<T, N> operator*(const Jet<T, N>& f, T s) {
-  return Jet<T, N>(f.a * s, f.v * s);
-}
-
-// Binary * with a scalar: s * x
-template <typename T, int N>
-inline Jet<T, N> operator*(T s, const Jet<T, N>& f) {
-  return Jet<T, N>(f.a * s, f.v * s);
-}
-
-// Binary /
-template <typename T, int N>
-inline Jet<T, N> operator/(const Jet<T, N>& f, const Jet<T, N>& g) {
-  // This uses:
-  //
-  //   a + u   (a + u)(b - v)   (a + u)(b - v)
-  //   ----- = -------------- = --------------
-  //   b + v   (b + v)(b - v)        b^2
-  //
-  // which holds because v*v = 0.
-  const T g_a_inverse = T(1.0) / g.a;
-  const T f_a_by_g_a = f.a * g_a_inverse;
-  return Jet<T, N>(f_a_by_g_a, (f.v - f_a_by_g_a * g.v) * g_a_inverse);
-}
-
-// Binary / with a scalar: s / x
-template <typename T, int N>
-inline Jet<T, N> operator/(T s, const Jet<T, N>& g) {
-  const T minus_s_g_a_inverse2 = -s / (g.a * g.a);
-  return Jet<T, N>(s / g.a, g.v * minus_s_g_a_inverse2);
-}
-
-// Binary / with a scalar: x / s
-template <typename T, int N>
-inline Jet<T, N> operator/(const Jet<T, N>& f, T s) {
-  const T s_inverse = T(1.0) / s;
-  return Jet<T, N>(f.a * s_inverse, f.v * s_inverse);
-}
-
-// Binary comparison operators for both scalars and jets.
-#define CERES_DEFINE_JET_COMPARISON_OPERATOR(op)                    \
-  template <typename T, int N>                                      \
-  inline bool operator op(const Jet<T, N>& f, const Jet<T, N>& g) { \
-    return f.a op g.a;                                              \
-  }                                                                 \
-  template <typename T, int N>                                      \
-  inline bool operator op(const T& s, const Jet<T, N>& g) {         \
-    return s op g.a;                                                \
-  }                                                                 \
-  template <typename T, int N>                                      \
-  inline bool operator op(const Jet<T, N>& f, const T& s) {         \
-    return f.a op s;                                                \
-  }
-CERES_DEFINE_JET_COMPARISON_OPERATOR(<)   // NOLINT
-CERES_DEFINE_JET_COMPARISON_OPERATOR(<=)  // NOLINT
-CERES_DEFINE_JET_COMPARISON_OPERATOR(>)   // NOLINT
-CERES_DEFINE_JET_COMPARISON_OPERATOR(>=)  // NOLINT
-CERES_DEFINE_JET_COMPARISON_OPERATOR(==)  // NOLINT
-CERES_DEFINE_JET_COMPARISON_OPERATOR(!=)  // NOLINT
-#undef CERES_DEFINE_JET_COMPARISON_OPERATOR
 
 // Pull some functions from namespace std.
 //
