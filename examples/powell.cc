@@ -106,7 +106,7 @@ int main(int argc, char** argv) {
   double x4 = 1.0;
 
   Problem problem;
-  // Add residual terms to the problem using the using the autodiff
+  // Add residual terms to the problem using the autodiff
   // wrapper to get the derivatives automatically. The parameters, x1 through
   // x4, are modified in place.
   problem.AddResidualBlock(
