@@ -47,10 +47,10 @@ namespace internal {
 // benchmark.
 class MatrixMatrixMultiplyData {
  public:
-  MatrixMatrixMultiplyData(
-      int a_rows, int a_cols, int b_rows, int b_cols, int c_rows, int c_cols)
+  MatrixMatrixMultiplyData(int a_rows, int a_cols, int b_rows, int b_cols,
+                           int c_rows, int c_cols)
       : num_elements_(1000),
-        a_size_(a_rows * a_cols),
+        a_size_(num_elements_ * a_rows * a_cols),
         b_size_(b_rows * b_cols),
         c_size_(c_rows * c_cols),
         a_(num_elements_ * a_size_, 1.00001),
@@ -72,97 +72,130 @@ class MatrixMatrixMultiplyData {
   std::vector<double> c_;
 };
 
-static void MatrixMatrixMultiplySizeArguments(
-    benchmark::internal::Benchmark* benchmark) {
-  const std::vector<int> b_rows = {1, 2, 3, 4, 6, 8};
-  const std::vector<int> b_cols = {1, 2, 3, 4, 8, 12, 15};
-  const std::vector<int> c_cols = b_cols;
-  for (int i : b_rows) {
-    for (int j : b_cols) {
-      for (int k : c_cols) {
-        benchmark->Args({i, j, k});
-      }
-    }
-  }
-}
+#define GEMM_KIND_EQ 0
+#define GEMM_KIND_ADD 1
+#define GEMM_KIND_SUB -1
 
-void BM_MatrixMatrixMultiplyDynamic(benchmark::State& state) {
-  const int i = state.range(0);
-  const int j = state.range(1);
-  const int k = state.range(2);
+#define BENCHMARK_MM_FN(FN, M, N, K, NAME, MT, NT, KT)                      \
+  void static BM_##FN##_##NAME##_##M##x##N##x##K(benchmark::State& state) { \
+    const int b_rows = M;                                                   \
+    const int b_cols = N;                                                   \
+    const int c_rows = b_cols;                                              \
+    const int c_cols = K;                                                   \
+    const int a_rows = b_rows;                                              \
+    const int a_cols = c_cols;                                              \
+    MatrixMatrixMultiplyData data(a_rows, a_cols, b_rows, b_cols, c_rows,   \
+                                  c_cols);                                  \
+    const int num_elements = data.num_elements();                           \
+    int iter = 0;                                                           \
+    for (auto _ : state) {                                                  \
+      FN<MT, KT, KT, NT, GEMM_KIND_ADD>(                                    \
+          data.GetB(iter), b_rows, b_cols, data.GetC(iter), c_rows, c_cols, \
+          data.GetA(iter), 512, 512, a_rows, a_cols);                       \
+      iter = (iter + 1) % num_elements;                                     \
+    }                                                                       \
+  }                                                                         \
+  BENCHMARK(BM_##FN##_##NAME##_##M##x##N##x##K);
 
-  const int b_rows = i;
-  const int b_cols = j;
-  const int c_rows = b_cols;
-  const int c_cols = k;
-  const int a_rows = b_rows;
-  const int a_cols = c_cols;
+#define BENCHMARK_STATIC_MM_FN(FN, M, N, K) \
+  BENCHMARK_MM_FN(FN, M, N, K, Static, M, N, K)
+#define BENCHMARK_DYNAMIC_MM_FN(FN, M, N, K)                            \
+  BENCHMARK_MM_FN(FN, M, N, K, Dynamic, Eigen::Dynamic, Eigen::Dynamic, \
+                  Eigen::Dynamic)
 
-  MatrixMatrixMultiplyData data(a_rows, a_cols, b_rows, b_cols, c_rows, c_cols);
-  const int num_elements = data.num_elements();
+#define BENCHMARK_MTM_FN(FN, M, N, K, NAME, MT, NT, KT)                     \
+  void static BM_##FN##_##NAME##_##M##x##N##x##K(benchmark::State& state) { \
+    const int b_rows = M;                                                   \
+    const int b_cols = N;                                                   \
+    const int c_rows = b_rows;                                              \
+    const int c_cols = K;                                                   \
+    const int a_rows = b_cols;                                              \
+    const int a_cols = c_cols;                                              \
+    MatrixMatrixMultiplyData data(a_rows, a_cols, b_rows, b_cols, c_rows,   \
+                                  c_cols);                                  \
+    const int num_elements = data.num_elements();                           \
+    int iter = 0;                                                           \
+    for (auto _ : state) {                                                  \
+      FN<KT, MT, KT, NT, GEMM_KIND_ADD>(                                    \
+          data.GetB(iter), b_rows, b_cols, data.GetC(iter), c_rows, c_cols, \
+          data.GetA(iter), 0, 0, a_rows, a_cols);                           \
+      iter = (iter + 1) % num_elements;                                     \
+    }                                                                       \
+  }                                                                         \
+  BENCHMARK(BM_##FN##_##NAME##_##M##x##N##x##K);
 
-  int iter = 0;
-  for (auto _ : state) {
-    // a += b * c
-    // clang-format off
-    MatrixMatrixMultiply
-        <Eigen::Dynamic, Eigen::Dynamic,Eigen::Dynamic,Eigen::Dynamic, 1>
-        (data.GetB(iter), b_rows, b_cols,
-         data.GetC(iter), c_rows, c_cols,
-         data.GetA(iter), 0, 0, a_rows, a_cols);
-    // clang-format on
-    iter = (iter + 1) % num_elements;
-  }
-}
+#define BENCHMARK_STATIC_MMT_FN(FN, M, N, K) \
+  BENCHMARK_MTM_FN(FN, M, N, K, Static, M, N, K)
+#define BENCHMARK_DYNAMIC_MMT_FN(FN, M, N, K)                            \
+  BENCHMARK_MTM_FN(FN, M, N, K, Dynamic, Eigen::Dynamic, Eigen::Dynamic, \
+                   Eigen::Dynamic)
 
-BENCHMARK(BM_MatrixMatrixMultiplyDynamic)
-    ->Apply(MatrixMatrixMultiplySizeArguments);
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyEigen, 2, 3, 4)
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyEigen, 3, 3, 3)
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyEigen, 4, 4, 4)
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyEigen, 8, 8, 8)
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyEigen, 9, 9, 3)
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyEigen, 9, 3, 3)
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyEigen, 3, 9, 9)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyEigen, 2, 3, 4)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyEigen, 3, 3, 3)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyEigen, 4, 4, 4)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyEigen, 8, 8, 8)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyEigen, 9, 9, 3)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyEigen, 9, 3, 3)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyEigen, 3, 9, 9)
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyNaive, 2, 3, 4)
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyNaive, 3, 3, 3)
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyNaive, 4, 4, 4)
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyNaive, 8, 8, 8)
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyNaive, 9, 9, 3)
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyNaive, 9, 3, 3)
+BENCHMARK_STATIC_MM_FN(MatrixMatrixMultiplyNaive, 3, 9, 9)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyNaive, 2, 3, 4)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyNaive, 3, 3, 3)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyNaive, 4, 4, 4)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyNaive, 8, 8, 8)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyNaive, 9, 9, 3)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyNaive, 9, 3, 3)
+BENCHMARK_DYNAMIC_MM_FN(MatrixMatrixMultiplyNaive, 3, 9, 9)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 2, 3, 4)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 3, 3, 3)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 4, 4, 4)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 8, 8, 8)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 9, 9, 3)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 9, 3, 3)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 3, 9, 9)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 2, 3, 4)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 3, 3, 3)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 4, 4, 4)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 8, 8, 8)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 9, 9, 3)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 9, 3, 3)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyEigen, 3, 9, 9)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 2, 3, 4)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 3, 3, 3)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 4, 4, 4)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 8, 8, 8)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 9, 9, 3)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 9, 3, 3)
+BENCHMARK_STATIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 3, 9, 9)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 2, 3, 4)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 3, 3, 3)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 4, 4, 4)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 8, 8, 8)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 9, 9, 3)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 9, 3, 3)
+BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 3, 9, 9)
 
-static void MatrixTransposeMatrixMultiplySizeArguments(
-    benchmark::internal::Benchmark* benchmark) {
-  std::vector<int> b_rows = {1, 2, 3, 4, 6, 8};
-  std::vector<int> b_cols = {1, 2, 3, 4, 8, 12, 15};
-  std::vector<int> c_cols = b_rows;
-  for (int i : b_rows) {
-    for (int j : b_cols) {
-      for (int k : c_cols) {
-        benchmark->Args({i, j, k});
-      }
-    }
-  }
-}
-
-void BM_MatrixTransposeMatrixMultiplyDynamic(benchmark::State& state) {
-  const int i = state.range(0);
-  const int j = state.range(1);
-  const int k = state.range(2);
-
-  const int b_rows = i;
-  const int b_cols = j;
-  const int c_rows = b_rows;
-  const int c_cols = k;
-  const int a_rows = b_cols;
-  const int a_cols = c_cols;
-
-  MatrixMatrixMultiplyData data(a_rows, a_cols, b_rows, b_cols, c_rows, c_cols);
-  const int num_elements = data.num_elements();
-
-  int iter = 0;
-  for (auto _ : state) {
-    // a += b' * c
-    // clang-format off
-    MatrixTransposeMatrixMultiply
-        <Eigen::Dynamic,Eigen::Dynamic,Eigen::Dynamic,Eigen::Dynamic, 1>
-        (data.GetB(iter), b_rows, b_cols,
-         data.GetC(iter), c_rows, c_cols,
-         data.GetA(iter), 0, 0, a_rows, a_cols);
-    // clang-format on
-    iter = (iter + 1) % num_elements;
-  }
-}
-
-BENCHMARK(BM_MatrixTransposeMatrixMultiplyDynamic)
-    ->Apply(MatrixTransposeMatrixMultiplySizeArguments);
+#undef GEMM_KIND_EQ
+#undef GEMM_KIND_ADD
+#undef GEMM_KIND_SUB
+#undef BENCHMARK_MM_FN
+#undef BENCHMARK_STATIC_MM_FN
+#undef BENCHMARK_DYNAMIC_MM_FN
+#undef BENCHMARK_MTM_FN
+#undef BENCHMARK_DYNAMIC_MMT_FN
+#undef BENCHMARK_STATIC_MMT_FN
 
 }  // namespace internal
 }  // namespace ceres
