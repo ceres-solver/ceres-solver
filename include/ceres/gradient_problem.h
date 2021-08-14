@@ -105,6 +105,15 @@ class CERES_EXPORT GradientProblem {
   bool Evaluate(const double* parameters, double* cost, double* gradient) const;
   bool Plus(const double* x, const double* delta, double* x_plus_delta) const;
 
+  const FirstOrderFunction* function() const { return function_.get(); }
+  FirstOrderFunction* mutable_function() { return function_.get(); }
+  const LocalParameterization* parameterization() const {
+    return parameterization_.get();
+  }
+  LocalParameterization* mutable_parameterization() {
+    return parameterization_.get();
+  }
+
  private:
   std::unique_ptr<FirstOrderFunction> function_;
   std::unique_ptr<LocalParameterization> parameterization_;
