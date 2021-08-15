@@ -271,7 +271,7 @@ void QuaternionParameterizationTestHelper(const double* x,
   Parameterization parameterization;
   parameterization.Plus(x, delta, x_plus_delta);
   for (int i = 0; i < kGlobalSize; ++i) {
-    EXPECT_NEAR(x_plus_delta[i], x_plus_delta[i], kTolerance);
+    EXPECT_NEAR(x_plus_delta[i], x_plus_delta_ref[i], kTolerance);
   }
 
   const double x_plus_delta_norm = sqrt(
