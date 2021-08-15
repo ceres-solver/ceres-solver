@@ -217,7 +217,7 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
   const int block2_local_size = block2->LocalSize();
 
   ConstMatrixRef cov(
-      covariance_matrix_->values() + rows[row_begin], block1_size, row_size);
+      covariance_matrix_->values() + rows[row_begin], block1_local_size, row_size);
 
   // Fast path when there are no local parameterizations or if the
   // user does not want it lifted to the ambient space.
