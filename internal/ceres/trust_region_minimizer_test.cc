@@ -141,7 +141,7 @@ class PowellEvaluator2 : public Evaluator {
             1.0,
             0.0,
             0.0,
-            sqrt(10.0) * 2.0 * (x1 - x4) * (1.0 - x4);
+            sqrt(10.0) * 2.0 * (x1 - x4);
         // clang-format on
       }
       if (col2) {
@@ -149,7 +149,7 @@ class PowellEvaluator2 : public Evaluator {
         jacobian_matrix.col(column_index++) <<
             10.0,
             0.0,
-            2.0*(x2 - 2.0*x3)*(1.0 - 2.0*x3),
+            2.0*(x2 - 2.0*x3),
             0.0;
         // clang-format on
       }
@@ -159,7 +159,7 @@ class PowellEvaluator2 : public Evaluator {
         jacobian_matrix.col(column_index++) <<
             0.0,
             sqrt(5.0),
-            2.0*(x2 - 2.0*x3)*(x2 - 2.0),
+            4.0*(2.0*x3 - x2),
             0.0;
         // clang-format on
       }
@@ -170,7 +170,7 @@ class PowellEvaluator2 : public Evaluator {
             0.0,
             -sqrt(5.0),
             0.0,
-            sqrt(10.0) * 2.0 * (x1 - x4) * (x1 - 1.0);
+            sqrt(10.0) * 2.0 * (x4 - x1);
         // clang-format on
       }
       VLOG(1) << "\n" << jacobian_matrix;
@@ -188,7 +188,7 @@ class PowellEvaluator2 : public Evaluator {
 
       if (col3) {
         gradient[column_index++] =
-            f2 * sqrt(5.0) + f3 * (2.0 * 2.0 * (2.0 * x3 - x2));
+            f2 * sqrt(5.0) + f3 * (4.0 * (2.0 * x3 - x2));
       }
 
       if (col4) {
