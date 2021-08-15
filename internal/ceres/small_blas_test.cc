@@ -400,7 +400,7 @@ TEST(BLAS, MatrixVectorMultiply) {
           b.data(),
           c_minus.data());
       EXPECT_NEAR((c_minus_ref - c_minus).norm(), 0.0, kTolerance)
-          << "c += A * b \n"
+          << "c -= A * b \n"
           << "c_ref : \n" << c_minus_ref << "\n"
           << "c: \n" << c_minus;
 
@@ -410,7 +410,7 @@ TEST(BLAS, MatrixVectorMultiply) {
           b.data(),
           c_assign.data());
       EXPECT_NEAR((c_assign_ref - c_assign).norm(), 0.0, kTolerance)
-          << "c += A * b \n"
+          << "c = A * b \n"
           << "c_ref : \n" << c_assign_ref << "\n"
           << "c: \n" << c_assign;
       // clang-format on
@@ -455,7 +455,7 @@ TEST(BLAS, MatrixTransposeVectorMultiply) {
           b.data(),
           c_minus.data());
       EXPECT_NEAR((c_minus_ref - c_minus).norm(), 0.0, kTolerance)
-          << "c += A' * b \n"
+          << "c -= A' * b \n"
           << "c_ref : \n" << c_minus_ref << "\n"
           << "c: \n" << c_minus;
 
@@ -465,7 +465,7 @@ TEST(BLAS, MatrixTransposeVectorMultiply) {
           b.data(),
           c_assign.data());
       EXPECT_NEAR((c_assign_ref - c_assign).norm(), 0.0, kTolerance)
-          << "c += A' * b \n"
+          << "c = A' * b \n"
           << "c_ref : \n" << c_assign_ref << "\n"
           << "c: \n" << c_assign;
       // clang-format on
