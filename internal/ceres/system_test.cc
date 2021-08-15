@@ -97,7 +97,7 @@ class PowellsFunction {
     template <typename T>
     bool operator()(const T* const x1, const T* const x2, T* residual) const {
       // f1 = x1 + 10 * x2;
-      *residual = *x1 + 10.0 * *x2;
+      *residual = x1[0] + 10.0 * x2[0];
       return true;
     }
   };
@@ -107,7 +107,7 @@ class PowellsFunction {
     template <typename T>
     bool operator()(const T* const x3, const T* const x4, T* residual) const {
       // f2 = sqrt(5) (x3 - x4)
-      *residual = sqrt(5.0) * (*x3 - *x4);
+      *residual = sqrt(5.0) * (x3[0] - x4[0]);
       return true;
     }
   };
@@ -115,9 +115,9 @@ class PowellsFunction {
   class F3 {
    public:
     template <typename T>
-    bool operator()(const T* const x2, const T* const x4, T* residual) const {
+    bool operator()(const T* const x2, const T* const x3, T* residual) const {
       // f3 = (x2 - 2 x3)^2
-      residual[0] = (x2[0] - 2.0 * x4[0]) * (x2[0] - 2.0 * x4[0]);
+      residual[0] = (x2[0] - 2.0 * x3[0]) * (x2[0] - 2.0 * x3[0]);
       return true;
     }
   };
