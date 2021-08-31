@@ -58,7 +58,8 @@ class SizedCostFunction : public CostFunction {
 
   SizedCostFunction() {
     set_num_residuals(kNumResiduals);
-    *mutable_parameter_block_sizes() = std::vector<int32_t>{Ns...};
+    constexpr int32_t block_sizes[] = {static_cast<int32_t>(Ns)...};
+    mutable_parameter_block_sizes_init(std::begin(block_sizes), std::end(block_sizes));
   }
 
   virtual ~SizedCostFunction() {}

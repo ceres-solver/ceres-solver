@@ -128,6 +128,10 @@ class CERES_EXPORT CostFunction {
     return &parameter_block_sizes_;
   }
 
+  void mutable_parameter_block_sizes_init(const int32_t* it_begin, const int32_t* it_end) {
+    parameter_block_sizes_.assign(it_begin, it_end);
+  }
+
   void set_num_residuals(int num_residuals) { num_residuals_ = num_residuals; }
 
  private:
