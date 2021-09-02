@@ -88,6 +88,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49c627ca_823a1b56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6472
+      },
+      "writtenOn": "2021-09-02T13:00:16Z",
+      "side": 1,
+      "message": "Hi Sameer,\n\nthanks for keeping an eye on this.  The issue appears to be solved withEigen 3.4.0.  I was able to build my Ceres tree from when I wrote this Pull Request with EIGEN_MPL2_ONLY enabled after updating to Eigen 3.4.0.\n\nso I don’t believe further action is needed from the Ceres side except maybe raising requirements to Eigen 3.4.0.\n\nBest regards,\n- Tobi\n",
+      "revId": "a00f9c55330feb84a528a2f09aae50bcc6eead04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f63c5a2a_04589fef",
