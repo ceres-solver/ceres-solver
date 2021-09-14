@@ -35,6 +35,7 @@
 #define CERES_PUBLIC_CERES_H_
 
 #include "ceres/autodiff_cost_function.h"
+#include "ceres/autodiff_first_order_function.h"
 #include "ceres/autodiff_local_parameterization.h"
 #include "ceres/conditioned_cost_function.h"
 #include "ceres/context.h"
@@ -47,6 +48,7 @@
 #include "ceres/dynamic_cost_function_to_functor.h"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/evaluation_callback.h"
+#include "ceres/first_order_function.h"
 #include "ceres/gradient_checker.h"
 #include "ceres/gradient_problem.h"
 #include "ceres/gradient_problem_solver.h"
@@ -55,6 +57,7 @@
 #include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
 #include "ceres/numeric_diff_cost_function.h"
+#include "ceres/numeric_diff_first_order_function.h"
 #include "ceres/numeric_diff_options.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/problem.h"
