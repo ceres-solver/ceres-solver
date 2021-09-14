@@ -46,6 +46,30 @@
       },
       "revId": "a71277f46fa808af849b6bc3ad3911396ae8bb2a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98bad2ba_32ef6a9d",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T21:04:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ab79fa5_b1a2b9cf",
+      "range": {
+        "startLine": 316,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 0
+      },
+      "revId": "a71277f46fa808af849b6bc3ad3911396ae8bb2a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
