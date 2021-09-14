@@ -180,6 +180,30 @@
       },
       "revId": "6dc9e13f644f6c70ea10c06f715fd102fe6b99c8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "603df090_2d7b9d28",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2021-09-14T19:49:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "06e35748_38443531",
+      "range": {
+        "startLine": 298,
+        "startChar": 10,
+        "endLine": 298,
+        "endChar": 31
+      },
+      "revId": "6dc9e13f644f6c70ea10c06f715fd102fe6b99c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
