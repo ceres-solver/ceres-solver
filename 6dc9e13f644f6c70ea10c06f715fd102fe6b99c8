@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd621cc7_5c0f3035",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-09-14T18:58:56Z",
+      "side": 1,
+      "message": "*Minor* nitpick: bringing -\u003e updating",
+      "revId": "6dc9e13f644f6c70ea10c06f715fd102fe6b99c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c5f654cb_aceba9b0",
