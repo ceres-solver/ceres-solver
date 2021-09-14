@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5f654cb_aceba9b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2021-09-14T17:51:15Z",
+      "side": 1,
+      "message": "Nice! I should have done this awhile ago; thanks for making the change.\n\nAny chance you could cook up a test to hit the new termination criterion and check it? I suspect it won\u0027t be hard since we can set the tolerance such that it\u0027ll trip early.",
+      "revId": "6dc9e13f644f6c70ea10c06f715fd102fe6b99c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
