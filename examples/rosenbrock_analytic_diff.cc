@@ -32,17 +32,25 @@
 #include "glog/logging.h"
 
 // f(x,y) = (1-x)^2 + 100(y - x^2)^2;
-struct Rosenbrock {
-  template <typename T> bool operator()(const T* parameters, T* cost) const {
-    const T x = parameters[0];
-    const T y = parameters[1];
+class Rosenbrock : public ceres::FirstOrderFunction {
+ public:
+  virtual ~Rosenbrock() {}
+
+  virtual bool Evaluate(const double* parameters,
+                        double* cost,
+                        double* gradient) const {
+    const double x = parameters[0];
+    const double y = parameters[1];
+
     cost[0] = (1.0 - x) * (1.0 - x) + 100.0 * (y - x * x) * (y - x * x);
+    if (gradient != NULL) {
+      gradient[0] = -2.0 * (1.0 - x) - 200.0 * (y - x * x) * 2.0 * x;
+      gradient[1] = 200.0 * (y - x * x);
+    }
     return true;
   }
 
-  static ceres::FirstOrderFunction* Create() {
-    return new ceres::AutoDiffFirstOrderFunction<Rosenbrock,2>(new Rosenbrock);
-  }
+  virtual int NumParameters() const { return 2; }
 };
 
 int main(int argc, char** argv) {
@@ -54,7 +62,7 @@ int main(int argc, char** argv) {
   options.minimizer_progress_to_stdout = true;
 
   ceres::GradientProblemSolver::Summary summary;
-  ceres::GradientProblem problem(Rosenbrock::Create());
+  ceres::GradientProblem problem(new Rosenbrock());
   ceres::Solve(options, problem, parameters, &summary);
 
   std::cout << summary.FullReport() << "\n";

@@ -50,6 +50,12 @@ target_link_libraries(curve_fitting Ceres::ceres)
 add_executable(rosenbrock rosenbrock.cc)
 target_link_libraries(rosenbrock Ceres::ceres)
 
+add_executable(rosenbrock_analytic_diff rosenbrock_analytic_diff.cc)
+target_link_libraries(rosenbrock_analytic_diff Ceres::ceres)
+
+add_executable(rosenbrock_numeric_diff rosenbrock_numeric_diff.cc)
+target_link_libraries(rosenbrock_numeric_diff Ceres::ceres)
+
 add_executable(curve_fitting_c curve_fitting.c)
 target_link_libraries(curve_fitting_c Ceres::ceres)
 # Force CMake to link curve_fitting_c using the C linker.

@@ -44,7 +44,7 @@ class QuadraticCostFunctor {
   explicit QuadraticCostFunctor(double a) : a_(a) {}
   template <typename T>
   bool operator()(const T* const x, T* cost) const {
-    cost[0] = x[0] * x[1] + x[2] * x[3] - T(a_);
+    cost[0] = x[0] * x[1] + x[2] * x[3] - a_;
     return true;
   }
 

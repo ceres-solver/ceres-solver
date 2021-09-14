@@ -33,15 +33,17 @@
 
 // f(x,y) = (1-x)^2 + 100(y - x^2)^2;
 struct Rosenbrock {
-  template <typename T> bool operator()(const T* parameters, T* cost) const {
-    const T x = parameters[0];
-    const T y = parameters[1];
+  bool operator()(const double* parameters, double* cost) const {
+    const double x = parameters[0];
+    const double y = parameters[1];
     cost[0] = (1.0 - x) * (1.0 - x) + 100.0 * (y - x * x) * (y - x * x);
     return true;
   }
 
   static ceres::FirstOrderFunction* Create() {
-    return new ceres::AutoDiffFirstOrderFunction<Rosenbrock,2>(new Rosenbrock);
+    return new ceres::NumericDiffFirstOrderFunction<Rosenbrock,
+                                                    ceres::CENTRAL,
+                                                    2>(new Rosenbrock);
   }
 };
 

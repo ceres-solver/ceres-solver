@@ -28,38 +28,52 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/ceres.h"
-#include "glog/logging.h"
+#include "ceres/numeric_diff_first_order_function.h"
 
-// f(x,y) = (1-x)^2 + 100(y - x^2)^2;
-struct Rosenbrock {
-  template <typename T> bool operator()(const T* parameters, T* cost) const {
-    const T x = parameters[0];
-    const T y = parameters[1];
-    cost[0] = (1.0 - x) * (1.0 - x) + 100.0 * (y - x * x) * (y - x * x);
+#include <memory>
+
+#include "ceres/array_utils.h"
+#include "ceres/first_order_function.h"
+#include "gtest/gtest.h"
+
+namespace ceres {
+namespace internal {
+
+class QuadraticCostFunctor {
+ public:
+  explicit QuadraticCostFunctor(double a) : a_(a) {}
+  bool operator()(const double* const x, double* cost) const {
+    cost[0] = x[0] * x[1] + x[2] * x[3] - a_;
     return true;
   }
 
-  static ceres::FirstOrderFunction* Create() {
-    return new ceres::AutoDiffFirstOrderFunction<Rosenbrock,2>(new Rosenbrock);
-  }
+ private:
+  double a_;
 };
 
-int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
+TEST(NumericDiffFirstOrderFunction, BilinearDifferentiationTest) {
+  std::unique_ptr<FirstOrderFunction> function(
+      new NumericDiffFirstOrderFunction<QuadraticCostFunctor, CENTRAL, 4>(
+          new QuadraticCostFunctor(1.0)));
 
-  double parameters[2] = {-1.2, 1.0};
+  double parameters[4] = {1.0, 2.0, 3.0, 4.0};
+  double gradient[4];
+  double cost;
 
-  ceres::GradientProblemSolver::Options options;
-  options.minimizer_progress_to_stdout = true;
+  function->Evaluate(parameters, &cost, nullptr);
+  EXPECT_EQ(cost, 13.0);
 
-  ceres::GradientProblemSolver::Summary summary;
-  ceres::GradientProblem problem(Rosenbrock::Create());
-  ceres::Solve(options, problem, parameters, &summary);
+  cost = -1.0;
+  function->Evaluate(parameters, &cost, gradient);
 
-  std::cout << summary.FullReport() << "\n";
-  std::cout << "Initial x: " << -1.2 << " y: " << 1.0 << "\n";
-  std::cout << "Final   x: " << parameters[0] << " y: " << parameters[1]
-            << "\n";
-  return 0;
+  EXPECT_EQ(cost, 13.0);
+
+  const double kTolerance = 1e-9;
+  EXPECT_NEAR(gradient[0], parameters[1], kTolerance);
+  EXPECT_NEAR(gradient[1], parameters[0], kTolerance);
+  EXPECT_NEAR(gradient[2], parameters[3], kTolerance);
+  EXPECT_NEAR(gradient[3], parameters[2], kTolerance);
 }
+
+}  // namespace internal
+}  // namespace ceres

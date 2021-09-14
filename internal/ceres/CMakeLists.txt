@@ -486,6 +486,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(minimizer)
   ceres_test(normal_prior)
   ceres_test(numeric_diff_cost_function)
+  ceres_test(numeric_diff_first_order_function)
   ceres_test(ordered_groups)
   ceres_test(parallel_for)
   ceres_test(parallel_utils)
@@ -549,4 +550,3 @@ if (BUILD_BENCHMARKS)
 
   add_subdirectory(autodiff_benchmarks)
 endif (BUILD_BENCHMARKS)
-
