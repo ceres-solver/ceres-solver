@@ -16,6 +16,52 @@
       "message": "Nice! I should have done this awhile ago; thanks for making the change.\n\nAny chance you could cook up a test to hit the new termination criterion and check it? I suspect it won\u0027t be hard since we can set the tolerance such that it\u0027ll trip early.",
       "revId": "6dc9e13f644f6c70ea10c06f715fd102fe6b99c8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e0aba87_deb24dfc",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2021-09-14T17:51:29Z",
+      "side": 1,
+      "message": "Optional, but this would read better (to me) if this \"if\" became \"if/else\", without this \"continue\".",
+      "range": {
+        "startLine": 295,
+        "startChar": 8,
+        "endLine": 295,
+        "endChar": 16
+      },
+      "revId": "6dc9e13f644f6c70ea10c06f715fd102fe6b99c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91a9d6c0_325c04d2",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2021-09-14T17:51:29Z",
+      "side": 1,
+      "message": "This will terminate the optimisation if a step is made that has a small negative cost change. Why not just reject the update in this case?",
+      "range": {
+        "startLine": 298,
+        "startChar": 10,
+        "endLine": 298,
+        "endChar": 31
+      },
+      "revId": "6dc9e13f644f6c70ea10c06f715fd102fe6b99c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
