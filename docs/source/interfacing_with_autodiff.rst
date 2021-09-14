@@ -37,7 +37,7 @@ functor is straightforward and will look as follows:
    template <typename T> T TemplatedComputeDistortion(const T r2) {
      const double k1 = 0.0082;
      const double k2 = 0.000023;
-     return 1.0 + k1 * y2 + k2 * r2 * r2;
+     return 1.0 + k1 * r2 + k2 * r2 * r2;
    }
 
    struct Affine2DWithDistortion {
