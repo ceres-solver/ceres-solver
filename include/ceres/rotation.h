@@ -624,16 +624,16 @@ inline void AngleAxisRotatePoint(const T angle_axis[3],
     result[2] = pt[2] * costheta + w_cross_pt[2] * sintheta + w[2] * tmp;
   } else {
     // Near zero, the first order Taylor approximation of the rotation
-    // matrix R corresponding to a vector w and angle w is
+    // matrix R corresponding to a vector w and angle theta is
     //
     //   R = I + hat(w) * sin(theta)
     //
     // But sintheta ~ theta and theta * w = angle_axis, which gives us
     //
-    //  R = I + hat(w)
+    //  R = I + hat(angle_axis)
     //
     // and actually performing multiplication with the point pt, gives us
-    // R * pt = pt + w x pt.
+    // R * pt = pt + angle_axis x pt.
     //
     // Switching to the Taylor expansion near zero provides meaningful
     // derivatives when evaluated using Jets.
