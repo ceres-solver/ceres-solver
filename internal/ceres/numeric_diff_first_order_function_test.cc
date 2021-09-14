@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2019 Google Inc. All rights reserved.
+// Copyright 2021 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/autodiff_first_order_function.h"
+#include "ceres/numeric_diff_first_order_function.h"
 
 #include <memory>
 
@@ -42,8 +42,7 @@ namespace internal {
 class QuadraticCostFunctor {
  public:
   explicit QuadraticCostFunctor(double a) : a_(a) {}
-  template <typename T>
-  bool operator()(const T* const x, T* cost) const {
+  bool operator()(const double* const x, double* cost) const {
     cost[0] = x[0] * x[1] + x[2] * x[3] - a_;
     return true;
   }
@@ -52,9 +51,9 @@ class QuadraticCostFunctor {
   double a_;
 };
 
-TEST(AutoDiffFirstOrderFunction, BilinearDifferentiationTest) {
+TEST(NumericDiffFirstOrderFunction, BilinearDifferentiationTest) {
   std::unique_ptr<FirstOrderFunction> function(
-      new AutoDiffFirstOrderFunction<QuadraticCostFunctor, 4>(
+      new NumericDiffFirstOrderFunction<QuadraticCostFunctor, CENTRAL, 4>(
           new QuadraticCostFunctor(1.0)));
 
   double parameters[4] = {1.0, 2.0, 3.0, 4.0};
@@ -66,11 +65,14 @@ TEST(AutoDiffFirstOrderFunction, BilinearDifferentiationTest) {
 
   cost = -1.0;
   function->Evaluate(parameters, &cost, gradient);
+
   EXPECT_EQ(cost, 13.0);
-  EXPECT_EQ(gradient[0], parameters[1]);
-  EXPECT_EQ(gradient[1], parameters[0]);
-  EXPECT_EQ(gradient[2], parameters[3]);
-  EXPECT_EQ(gradient[3], parameters[2]);
+
+  const double kTolerance = 1e-9;
+  EXPECT_NEAR(gradient[0], parameters[1], kTolerance);
+  EXPECT_NEAR(gradient[1], parameters[0], kTolerance);
+  EXPECT_NEAR(gradient[2], parameters[3], kTolerance);
+  EXPECT_NEAR(gradient[3], parameters[2], kTolerance);
 }
 
 }  // namespace internal

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2019 Google Inc. All rights reserved.
+// Copyright 2021 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,50 +28,48 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/autodiff_first_order_function.h"
+#include "ceres/ceres.h"
+#include "glog/logging.h"
 
-#include <memory>
-
-#include "ceres/array_utils.h"
-#include "ceres/first_order_function.h"
-#include "gtest/gtest.h"
-
-namespace ceres {
-namespace internal {
-
-class QuadraticCostFunctor {
+// f(x,y) = (1-x)^2 + 100(y - x^2)^2;
+class Rosenbrock final : public ceres::FirstOrderFunction {
  public:
-  explicit QuadraticCostFunctor(double a) : a_(a) {}
-  template <typename T>
-  bool operator()(const T* const x, T* cost) const {
-    cost[0] = x[0] * x[1] + x[2] * x[3] - a_;
+  ~Rosenbrock() override {}
+
+  bool Evaluate(const double* parameters,
+                double* cost,
+                double* gradient) const override {
+    const double x = parameters[0];
+    const double y = parameters[1];
+
+    cost[0] = (1.0 - x) * (1.0 - x) + 100.0 * (y - x * x) * (y - x * x);
+
+    if (gradient) {
+      gradient[0] = -2.0 * (1.0 - x) - 200.0 * (y - x * x) * 2.0 * x;
+      gradient[1] = 200.0 * (y - x * x);
+    }
+
     return true;
   }
 
- private:
-  double a_;
+  int NumParameters() const override { return 2; }
 };
 
-TEST(AutoDiffFirstOrderFunction, BilinearDifferentiationTest) {
-  std::unique_ptr<FirstOrderFunction> function(
-      new AutoDiffFirstOrderFunction<QuadraticCostFunctor, 4>(
-          new QuadraticCostFunctor(1.0)));
+int main(int argc, char** argv) {
+  google::InitGoogleLogging(argv[0]);
 
-  double parameters[4] = {1.0, 2.0, 3.0, 4.0};
-  double gradient[4];
-  double cost;
+  double parameters[2] = {-1.2, 1.0};
 
-  function->Evaluate(parameters, &cost, nullptr);
-  EXPECT_EQ(cost, 13.0);
+  ceres::GradientProblemSolver::Options options;
+  options.minimizer_progress_to_stdout = true;
 
-  cost = -1.0;
-  function->Evaluate(parameters, &cost, gradient);
-  EXPECT_EQ(cost, 13.0);
-  EXPECT_EQ(gradient[0], parameters[1]);
-  EXPECT_EQ(gradient[1], parameters[0]);
-  EXPECT_EQ(gradient[2], parameters[3]);
-  EXPECT_EQ(gradient[3], parameters[2]);
+  ceres::GradientProblemSolver::Summary summary;
+  ceres::GradientProblem problem(new Rosenbrock());
+  ceres::Solve(options, problem, parameters, &summary);
+
+  std::cout << summary.FullReport() << "\n";
+  std::cout << "Initial x: " << -1.2 << " y: " << 1.0 << "\n";
+  std::cout << "Final   x: " << parameters[0] << " y: " << parameters[1]
+            << "\n";
+  return 0;
 }
-
-}  // namespace internal
-}  // namespace ceres
