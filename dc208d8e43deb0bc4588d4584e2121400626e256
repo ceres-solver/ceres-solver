@@ -16,6 +16,24 @@
       "message": "Nit: Indentation is incorrect.",
       "revId": "dc208d8e43deb0bc4588d4584e2121400626e256",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03207553_4595f955",
+        "filename": "examples/nist.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T23:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40f25955_ad46b4a5",
+      "revId": "dc208d8e43deb0bc4588d4584e2121400626e256",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
