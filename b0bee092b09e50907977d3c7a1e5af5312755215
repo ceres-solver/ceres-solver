@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dbdb710_f487ef2f",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "I guess, I think I was editing this in textmate.. so that became a problem.",
+      "parentUuid": "8e02ea03_8c5500d9",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "037ee959_e11565f6",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-09-14T18:54:16Z",
       "side": 1,
       "message": "Errant trailing whitespace",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f852162_5f4ac6f8",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "037ee959_e11565f6",
       "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -52,6 +88,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c7bcead_539c36c8",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cb48081_a361a195",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14fe788f_89fe428d",
@@ -65,6 +119,24 @@
       "writtenOn": "2021-09-14T18:54:16Z",
       "side": 1,
       "message": "I think you mean: \u0027if you are *not* willing\u0027 given that the next block is all about auto-diff",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bfae554_eb5470d6",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "actually this whole paragraph needs re-written it is from the old text when we were doing analytic derivatives.",
+      "parentUuid": "14fe788f_89fe428d",
       "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -86,6 +158,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13379047_8c532641",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1df96018_50b1ae62",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e350a8de_d3ebd9fc",
@@ -99,6 +189,24 @@
       "writtenOn": "2021-09-14T18:54:16Z",
       "side": 1,
       "message": "As this is the example, maybe for clarity something like this:\n\n constexpr int kNumParameters \u003d 2;\n return new ceres::AutoDiffFirstOrderFunction\u003cRosenbrock,kNumParameters\u003e(new Rosenbrock);",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aedaa2cc_fc20cdda",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e350a8de_d3ebd9fc",
       "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -120,6 +228,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6264ce99_530f0f00",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f4fafb1_cc30d310",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6964260a_f83bf4b2",
@@ -137,6 +263,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "976b5611_aa0ebc0c",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6964260a_f83bf4b2",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76dbb876_66936c05",
@@ -150,6 +294,24 @@
       "writtenOn": "2021-09-14T18:54:16Z",
       "side": 1,
       "message": "Same nitpick about 80 cols",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdcaeffa_b1d7e582",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76dbb876_66936c05",
       "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -188,6 +350,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bc867ac_a757f00f",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a14886e6_5f735fec",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a87f4af_c4778cfa",
@@ -201,6 +381,24 @@
       "writtenOn": "2021-09-14T18:54:16Z",
       "side": 1,
       "message": "In the spirit of modernisation, this could be nullptr as we have in quite a few places now (but not everywhere)",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c7f8cef_c05ba84c",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "we can just check gradient is non-null.",
+      "parentUuid": "7a87f4af_c4778cfa",
       "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -222,6 +420,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e98de77_c1d50593",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20d9e235_4fd4ba2f",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1e55460_89744693",
@@ -235,6 +451,24 @@
       "writtenOn": "2021-09-14T18:54:16Z",
       "side": 1,
       "message": "These last two should also be ceres/internal/xxx.h no ?  In fact, I\u0027m slightly surprised that that worked, it suggests that we\u0027re adding an errant path somewhere",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57b348c6_b707bbf1",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Good catch. and yes we likely are.",
+      "parentUuid": "e1e55460_89744693",
       "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -256,6 +490,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f93de5d_e641bc78",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5375d019_c7a46647",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "203ff963_3fc2bfdb",
@@ -269,6 +521,24 @@
       "writtenOn": "2021-09-14T18:54:16Z",
       "side": 1,
       "message": "Seems like an errant space ?",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "370ac75b_4ef6fbeb",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "203ff963_3fc2bfdb",
       "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -307,6 +577,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7b3f6f4_5b484c50",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d22edb3_21b7a876",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7e2cc59_780d44cb",
@@ -320,6 +608,24 @@
       "writtenOn": "2021-09-14T18:54:16Z",
       "side": 1,
       "message": "Minor, but I would have found this slightly easier to parse as:\n\n  constexpr int kInputVectorLength \u003d 2;\n  const double* const y \u003d xy + 2;",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6dcb202_54b47aee",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7e2cc59_780d44cb",
       "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -341,6 +647,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "035ed150_7d9536aa",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78feeee8_bea66320",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0763ec99_3f3f06de",
@@ -354,6 +678,24 @@
       "writtenOn": "2021-09-14T18:54:16Z",
       "side": 1,
       "message": "What is the value of specifying CENTRAL here as a default when the user will still have to specify it manually as they will always need to specify kNumParameters?",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94991fb7_5d676cc3",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "you are right.",
+      "parentUuid": "0763ec99_3f3f06de",
       "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -375,6 +717,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "127d720e_e5bf7376",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "That was a mistake.",
+      "parentUuid": "e122b158_fe8c29f7",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c3d70c8_f2f5ee65",
@@ -392,6 +752,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62ff20e4_25aadd73",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "well its larger than the default, and I wanted something nice and large here without going crazy so for small optimization problems we are not paying the cost of a malloc and dealloc every call.",
+      "parentUuid": "5c3d70c8_f2f5ee65",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "816b6e3e_3ab1a7bc",
@@ -405,6 +783,24 @@
       "writtenOn": "2021-09-14T18:54:16Z",
       "side": 1,
       "message": "Might improve readability to have a:\n\n  constexpr int kNumResiduals \u003d 1;\n\nrather than the hard-coded 1 here",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adb10186_5cbfaa0f",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "816b6e3e_3ab1a7bc",
       "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -428,6 +824,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3b8d329b_31c7478d",
+        "filename": "internal/ceres/numeric_diff_first_order_function_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "what docs? its just a quadratic function that I cooked up.",
+      "parentUuid": "d03c6a75_cdaaa6bb",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "102ddecf_bbc8a1f9",
         "filename": "internal/ceres/numeric_diff_first_order_function_test.cc",
         "patchSetId": 2
@@ -439,6 +853,24 @@
       "writtenOn": "2021-09-14T18:54:16Z",
       "side": 1,
       "message": "This should be 11.0 in light of the above no ?",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a999a0ca_f684aee9",
+        "filename": "internal/ceres/numeric_diff_first_order_function_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "I do not think so.",
+      "parentUuid": "102ddecf_bbc8a1f9",
       "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -456,6 +888,24 @@
       "writtenOn": "2021-09-14T18:54:16Z",
       "side": 1,
       "message": "If as above then this should be: parameters[2] etc",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f574903_2f19c984",
+        "filename": "internal/ceres/numeric_diff_first_order_function_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:44:31Z",
+      "side": 1,
+      "message": "see above.",
+      "parentUuid": "53c02ee6_cadd09d3",
       "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
