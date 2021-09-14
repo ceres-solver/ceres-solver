@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2019 Google Inc. All rights reserved.
+// Copyright 2021 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -84,7 +84,8 @@ namespace ceres {
 //   double* parameters -- NUM_PARAMETERS or NumParameters()
 //   double* residuals  -- NUM_RESIDUALS or NumResiduals()
 //   double* jacobian   -- NUM_RESIDUALS * NUM_PARAMETERS in column-major format
-//                         (Eigen's default); or NULL if no jacobian requested.
+//                         (Eigen's default); or nullptr if no jacobian
+//                         requested.
 //
 // An example (fully statically sized):
 //
@@ -126,8 +127,8 @@ namespace ceres {
 //
 template <typename Function,
           typename LinearSolver =
-              Eigen::LDLT<Eigen::Matrix<typename Function::Scalar,
-                                        Function::NUM_PARAMETERS,
+              Eigen::LDLT<Eigen::Matrix<typename Function::Scalar,  //
+                                        Function::NUM_PARAMETERS,   //
                                         Function::NUM_PARAMETERS>>>
 class TinySolver {
  public:
@@ -147,6 +148,7 @@ class TinySolver {
     RELATIVE_STEP_SIZE_TOO_SMALL,  // eps > ||dx|| / (||x|| + eps)
     COST_TOO_SMALL,                // eps > ||f(x)||^2 / 2
     HIT_MAX_ITERATIONS,
+    COST_CHANGE_TOO_SMALL,
 
     // TODO(sameeragarwal): Deal with numerical failures.
   };
@@ -154,8 +156,9 @@ class TinySolver {
   struct Options {
     Scalar gradient_tolerance = 1e-10;  // eps > max(J'*f(x))
     Scalar parameter_tolerance = 1e-8;  // eps > ||dx|| / ||x||
-    Scalar cost_threshold =             // eps > ||f(x)||
-        std::numeric_limits<Scalar>::epsilon();
+    Scalar function_tolerance = 1e-6;
+    Scalar cost_threshold =
+        std::numeric_limits<Scalar>::epsilon();  // eps > ||f(x)||
     Scalar initial_trust_region_radius = 1e4;
     int max_num_iterations = 50;
   };
@@ -169,11 +172,11 @@ class TinySolver {
   };
 
   bool Update(const Function& function, const Parameters& x) {
-    if (!function(x.data(), error_.data(), jacobian_.data())) {
+    if (!function(x.data(), residuals_.data(), jacobian_.data())) {
       return false;
     }
 
-    error_ = -error_;
+    residuals_ = -residuals_;
 
     // On the first iteration, compute a diagonal (Jacobi) scaling
     // matrix, which we store as a vector.
@@ -192,9 +195,9 @@ class TinySolver {
     // factorization.
     jacobian_ = jacobian_ * jacobi_scaling_.asDiagonal();
     jtj_ = jacobian_.transpose() * jacobian_;
-    g_ = jacobian_.transpose() * error_;
+    g_ = jacobian_.transpose() * residuals_;
     summary.gradient_max_norm = g_.array().abs().maxCoeff();
-    cost_ = error_.squaredNorm() / 2;
+    cost_ = residuals_.squaredNorm() / 2;
     return true;
   }
 
@@ -253,10 +256,9 @@ class TinySolver {
 
       // TODO(keir): Add proper handling of errors from user eval of cost
       // functions.
-      function(&x_new_[0], &f_x_new_[0], NULL);
+      function(&x_new_[0], &f_x_new_[0], nullptr);
 
       const Scalar cost_change = (2 * cost_ - f_x_new_.squaredNorm());
-
       // TODO(sameeragarwal): Better more numerically stable evaluation.
       const Scalar model_cost_change = lm_step_.dot(2 * g_ - jtj_ * lm_step_);
 
@@ -268,6 +270,12 @@ class TinySolver {
         // Accept the Levenberg-Marquardt step because the linear
         // model fits well.
         x = x_new_;
+
+        if (std::abs(cost_change) < options.function_tolerance) {
+          cost_ = f_x_new_.squaredNorm() / 2;
+          summary.status = COST_CHANGE_TOO_SMALL;
+          break;
+        }
 
         // TODO(sameeragarwal): Deal with failure.
         Update(function, x);
@@ -285,6 +293,11 @@ class TinySolver {
         u = u * std::max(Scalar(1 / 3.), 1 - tmp * tmp * tmp);
         v = 2;
         continue;
+      }
+
+      if (std::abs(cost_change) < options.function_tolerance) {
+        summary.status = COST_CHANGE_TOO_SMALL;
+        break;
       }
 
       // Reject the update because either the normal equations failed to solve
@@ -307,7 +320,7 @@ class TinySolver {
   LinearSolver linear_solver_;
   Scalar cost_;
   Parameters dx_, x_new_, g_, jacobi_scaling_, lm_diagonal_, lm_step_;
-  Eigen::Matrix<Scalar, NUM_RESIDUALS, 1> error_, f_x_new_;
+  Eigen::Matrix<Scalar, NUM_RESIDUALS, 1> residuals_, f_x_new_;
   Eigen::Matrix<Scalar, NUM_RESIDUALS, NUM_PARAMETERS> jacobian_;
   Eigen::Matrix<Scalar, NUM_PARAMETERS, NUM_PARAMETERS> jtj_, jtj_regularized_;
 
@@ -355,7 +368,7 @@ class TinySolver {
     jacobi_scaling_.resize(num_parameters);
     lm_diagonal_.resize(num_parameters);
     lm_step_.resize(num_parameters);
-    error_.resize(num_residuals);
+    residuals_.resize(num_residuals);
     f_x_new_.resize(num_residuals);
     jacobian_.resize(num_residuals, num_parameters);
     jtj_.resize(num_parameters, num_parameters);
