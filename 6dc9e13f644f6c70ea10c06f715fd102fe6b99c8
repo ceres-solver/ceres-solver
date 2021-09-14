@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0dba719_4a6d4214",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:15:30Z",
+      "side": 1,
+      "message": "building something which triggers this particular termination condition is a PITA. I do not think we have a test for this even for the main compiler, well because it is basically a hack.",
+      "parentUuid": "c5f654cb_aceba9b0",
+      "revId": "6dc9e13f644f6c70ea10c06f715fd102fe6b99c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "adffaf17_d6933ded",
@@ -48,6 +66,24 @@
       "writtenOn": "2021-09-14T18:19:28Z",
       "side": 1,
       "message": "Please add the exit condition comment for this parameter similar to the others. I believe in this case something like:\n\n  // eps \u003e abs(delta ||f(x)||)/||f(x)||",
+      "revId": "6dc9e13f644f6c70ea10c06f715fd102fe6b99c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34320547_5eb9ac6d",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adffaf17_d6933ded",
       "revId": "6dc9e13f644f6c70ea10c06f715fd102fe6b99c8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -75,6 +111,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3fbe198_fa28cbea",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e0aba87_deb24dfc",
+      "range": {
+        "startLine": 295,
+        "startChar": 8,
+        "endLine": 295,
+        "endChar": 16
+      },
+      "revId": "6dc9e13f644f6c70ea10c06f715fd102fe6b99c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91a9d6c0_325c04d2",
@@ -88,6 +148,30 @@
       "writtenOn": "2021-09-14T17:51:29Z",
       "side": 1,
       "message": "This will terminate the optimisation if a step is made that has a small negative cost change. Why not just reject the update in this case?",
+      "range": {
+        "startLine": 298,
+        "startChar": 10,
+        "endLine": 298,
+        "endChar": 31
+      },
+      "revId": "6dc9e13f644f6c70ea10c06f715fd102fe6b99c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06e35748_38443531",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T19:15:30Z",
+      "side": 1,
+      "message": "Two things here.\n\n1. we terminate on successful steps also if the cost change is too small. See line 291.\n\n2. The whole function_tolerance thing is a hack, its not real convergence, but often progress becomes so slow that people want to bail. Just rejecting the step is only going to reduce the size of the trust region and make the update even smaller.",
+      "parentUuid": "91a9d6c0_325c04d2",
       "range": {
         "startLine": 298,
         "startChar": 10,
