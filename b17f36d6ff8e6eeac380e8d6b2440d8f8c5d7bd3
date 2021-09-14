@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "f1f95c10_01e5bb20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T21:38:23Z",
+      "side": 1,
+      "message": "though to be honest, you are not doing double precision arithmetic on an embedded system either..",
+      "revId": "b17f36d6ff8e6eeac380e8d6b2440d8f8c5d7bd3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a1268d2e_e7cd2587",
         "filename": "include/ceres/numeric_diff_first_order_function.h",
         "patchSetId": 3
