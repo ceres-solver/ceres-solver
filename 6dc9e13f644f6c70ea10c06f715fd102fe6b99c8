@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "adffaf17_d6933ded",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2021-09-14T18:19:28Z",
+      "side": 1,
+      "message": "Please add the exit condition comment for this parameter similar to the others. I believe in this case something like:\n\n  // eps \u003e abs(delta ||f(x)||)/||f(x)||",
+      "revId": "6dc9e13f644f6c70ea10c06f715fd102fe6b99c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4e0aba87_deb24dfc",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 1
