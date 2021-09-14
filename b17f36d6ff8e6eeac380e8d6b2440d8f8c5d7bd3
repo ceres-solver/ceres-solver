@@ -16,6 +16,24 @@
       "message": "My recent days of embedded development make me recoil in horror at the prospect of allocating 1KB on the stack. Nothing to change here, just an observation!",
       "revId": "b17f36d6ff8e6eeac380e8d6b2440d8f8c5d7bd3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f1b1255_9b32c6ca",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-14T21:37:34Z",
+      "side": 1,
+      "message": "I can make it 64 doubles if that will make you happier :). \nActually even 32 is likely okay, because after that the finite differencing itself will take more time than a single malloc/dealloc.",
+      "parentUuid": "a1268d2e_e7cd2587",
+      "revId": "b17f36d6ff8e6eeac380e8d6b2440d8f8c5d7bd3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
