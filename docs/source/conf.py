@@ -246,7 +246,7 @@ texinfo_documents = [
 # By default MathJax does not use TeX fonts, which is a tragedy. Also
 # scaling the fonts down a bit makes them fit better with font sizing
 # in the "Read The Docs" theme.
-mathjax_config = {
+mathjax3_config = {
 'HTML-CSS' : {
         'availableFonts' : ["TeX"],
         'scale' : 90
