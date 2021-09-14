@@ -622,6 +622,7 @@ int RegressionDriver(const string& filename) {
           std::numeric_limits<double>::epsilon();
       solver.options.parameter_tolerance =
           std::numeric_limits<double>::epsilon();
+      solver.options.function_tolerance = 0.0;
 
       Eigen::Matrix<double, num_parameters, 1> x;
       x = initial_parameters.transpose();
