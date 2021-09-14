@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1268d2e_e7cd2587",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2021-09-14T20:48:01Z",
+      "side": 1,
+      "message": "My recent days of embedded development make me recoil in horror at the prospect of allocating 1KB on the stack. Nothing to change here, just an observation!",
+      "revId": "b17f36d6ff8e6eeac380e8d6b2440d8f8c5d7bd3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
