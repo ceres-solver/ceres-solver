@@ -333,6 +333,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54c6d206_58db5fa9",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-15T00:06:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "decabae3_fec02759",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a14886e6_5f735fec",
@@ -591,6 +609,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "5d22edb3_21b7a876",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05c1fd7c_7b7458fc",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-15T00:06:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2024466e_26c9df99",
       "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
