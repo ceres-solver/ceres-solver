@@ -16,6 +16,23 @@
       "message": "going to wait for alex to take a final look since he had a lot of comments",
       "revId": "3c2f170481b469821ac6a34f3373276eccea8f2d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e253dd7f_f5bee3a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-09-15T08:33:31Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "3c2f170481b469821ac6a34f3373276eccea8f2d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

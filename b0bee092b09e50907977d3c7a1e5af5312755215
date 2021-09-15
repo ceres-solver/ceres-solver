@@ -878,6 +878,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3b2291c6_d3fb6401",
+        "filename": "internal/ceres/numeric_diff_first_order_function_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-09-15T08:33:31Z",
+      "side": 1,
+      "message": "I mean the inline docs above the declaration/definition of the NumericDiffFirstOrderFunction class itself, there we\u0027re implementing a very similar, but different, function: x\u0027y - a.\n\nYou\u0027re right that it doesn\u0027t matter that they are different, I just wasn\u0027t sure if that was your intention, or if they were meant to be the same for continuity.  That said, I see that this _is_ the same as the auto-diff first-order function test functor",
+      "parentUuid": "3b8d329b_31c7478d",
+      "revId": "b0bee092b09e50907977d3c7a1e5af5312755215",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "102ddecf_bbc8a1f9",
         "filename": "internal/ceres/numeric_diff_first_order_function_test.cc",
         "patchSetId": 2
