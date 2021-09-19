@@ -76,6 +76,12 @@ target_link_libraries(robust_curve_fitting Ceres::ceres)
 add_executable(simple_bundle_adjuster simple_bundle_adjuster.cc)
 target_link_libraries(simple_bundle_adjuster Ceres::ceres)
 
+add_executable(bicubic_interpolation bicubic_interpolation.cc)
+target_link_libraries(bicubic_interpolation Ceres::ceres)
+
+add_executable(bicubic_interpolation_analytic bicubic_interpolation_analytic.cc)
+target_link_libraries(bicubic_interpolation_analytic Ceres::ceres)
+
 if (GFLAGS)
   add_executable(powell powell.cc)
   target_link_libraries(powell Ceres::ceres gflags)
