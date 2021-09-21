@@ -33,6 +33,161 @@
       "message": "Thanks Dmitriy, I will take a look later today or early tomorrow.",
       "revId": "04516d8cf23a571eca287e886296513e883938ff",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "954a4daa_1081c1d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-21T13:11:26Z",
+      "side": 1,
+      "message": "Hi Dmitriy,\nThanks for putting this together, I have some initial comments about splitting the code into two examples. \n\nbicubic_interpolation.cc (this one uses automatic diff)\nbicubic_interpolation_analytic_diff.cc\n",
+      "revId": "04516d8cf23a571eca287e886296513e883938ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82883028_85357b2c",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-21T13:11:26Z",
+      "side": 1,
+      "message": "I have a suggestion. I think this example should be split into two, one for automatic differentiation and one for analytic differentiation and rather than checking convergence against each other, just check convergence against some value.\n\nHere is why.\n\nThe code is a mix of things needed for automatic v/s analytic diff, which makes things more complicated than they need to be. I think the reader, especially one who is unfamiliar with the code should be able to read the code linearly without worrying about whether this will be used for analytic or automatic differentiation.\n\nI am okay with the resulting code duplication across two files, for example code thats perfectly okay.",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "04516d8cf23a571eca287e886296513e883938ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce85d6a8_3710d077",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-21T13:11:26Z",
+      "side": 1,
+      "message": "I recommend using as few of these as possible, adding a layer of indirection in example code sometimes obscures things.",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "04516d8cf23a571eca287e886296513e883938ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2ccc9d9_f0215862",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-21T13:11:26Z",
+      "side": 1,
+      "message": "using generic names for fixedsized vectors when you have Vector2 and Vector2d below doesn\u0027t seem right.",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 15
+      },
+      "revId": "04516d8cf23a571eca287e886296513e883938ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3f9ecb7_fc98157e",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-21T13:11:26Z",
+      "side": 1,
+      "message": "why is this templated?",
+      "range": {
+        "startLine": 141,
+        "startChar": 10,
+        "endLine": 141,
+        "endChar": 11
+      },
+      "revId": "04516d8cf23a571eca287e886296513e883938ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d45dce70_fd26c127",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-21T13:11:26Z",
+      "side": 1,
+      "message": "I am wondering if this abstraction is worth it for example code where it is better to make everything explicit? technically its only three lines of code which could just be in the main function.",
+      "range": {
+        "startLine": 147,
+        "startChar": 6,
+        "endLine": 147,
+        "endChar": 7
+      },
+      "revId": "04516d8cf23a571eca287e886296513e883938ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9157afda_b2a05bef",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-21T13:11:26Z",
+      "side": 1,
+      "message": "in the split version where the two versions of this code are in different files, I recommend folding this code into the main function",
+      "range": {
+        "startLine": 157,
+        "startChar": 14,
+        "endLine": 157,
+        "endChar": 15
+      },
+      "revId": "04516d8cf23a571eca287e886296513e883938ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
