@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ede787ad_e0d26aac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-21T13:15:54Z",
+      "side": 1,
+      "message": "alex I think we can abandon this patch? we now have both autodifffirstorderfunction and numericdifffirstorderfunction.",
+      "revId": "5b64776380b820b92582b74fa9bc00f674169921",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
