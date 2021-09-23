@@ -16,6 +16,24 @@
       "message": "nit: \"will incur a scan of the entire\" --\u003e \"will scan the entire Problem\"",
       "revId": "c083e6439836a10a5bdddb3d07baccdd1f438300",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b823a459_ae664f4d",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1811,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-23T16:32:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e72d2a_1b44971c",
+      "revId": "c083e6439836a10a5bdddb3d07baccdd1f438300",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
