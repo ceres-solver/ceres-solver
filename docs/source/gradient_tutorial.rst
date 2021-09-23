@@ -165,8 +165,8 @@ follows [#f2]_.
 And finally, if you would rather compute the derivatives by hand (say
 because the size of the parameter vector is too large to be
 automatically differentiated). Then you should define an instance of
-``FirstOrderFunction``, which is the analog of :class:`CostFunction`
-for non-linear least squares problems [#f3]_.
+`FirstOrderFunction`, which is the analog of :class:`CostFunction` for
+non-linear least squares problems [#f3]_.
 
 .. code::
 
