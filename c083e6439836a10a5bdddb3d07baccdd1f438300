@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66e72d2a_1b44971c",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1811,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-09-23T00:39:30Z",
+      "side": 1,
+      "message": "nit: \"will incur a scan of the entire\" --\u003e \"will scan the entire Problem\"",
+      "revId": "c083e6439836a10a5bdddb3d07baccdd1f438300",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
