@@ -315,7 +315,7 @@ target_include_directories(ceres BEFORE PUBLIC
 target_include_directories(ceres PRIVATE ${Ceres_SOURCE_DIR}/internal)
 target_include_directories(ceres PUBLIC
   $<BUILD_INTERFACE:${Ceres_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 # Eigen SparseQR generates various compiler warnings related to unused and
 # uninitialised local variables.  To avoid having to individually suppress these
@@ -373,9 +373,9 @@ endforeach()
 
 install(TARGETS ceres
         EXPORT  CeresExport
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION lib${LIB_SUFFIX}
-        ARCHIVE DESTINATION lib${LIB_SUFFIX})
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # Create a local alias target that matches the expected installed target.
 add_library(Ceres::ceres ALIAS ceres)

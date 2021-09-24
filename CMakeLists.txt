@@ -108,6 +108,9 @@ list(APPEND CMAKE_MODULE_PATH "${Ceres_SOURCE_DIR}/cmake")
 include(AddCompileFlagsIfSupported)
 include(UpdateCacheVariable)
 
+# Use standard installation directories.
+include(GNUInstallDirs)
+
 # Xcode 11.0-1 with macOS 10.15 (Catalina) broke alignment.
 include(DetectBrokenStackCheckMacOSXcodePairing)
 detect_broken_stack_check_macos_xcode_pairing()
@@ -720,7 +723,7 @@ write_basic_package_version_file("${Ceres_BINARY_DIR}/CeresConfigVersion.cmake"
 if (WIN32)
   set(RELATIVE_CMAKECONFIG_INSTALL_DIR CMake)
 else ()
-  set(RELATIVE_CMAKECONFIG_INSTALL_DIR lib${LIB_SUFFIX}/cmake/Ceres)
+  set(RELATIVE_CMAKECONFIG_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/Ceres)
 endif ()
 
 # This "exports" for installation all targets which have been put into the
