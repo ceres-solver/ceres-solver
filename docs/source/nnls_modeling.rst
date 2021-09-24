@@ -1154,7 +1154,6 @@ the case, then its possible to re-weight the residual and the Jacobian
 matrix such that the robustified Gauss-Newton step corresponds to an
 ordinary linear least squares problem.
 
-
 Let :math:`\alpha` be a root of
 
 .. math:: \frac{1}{2}\alpha^2 - \alpha - \frac{\rho''}{\rho'}\|f(x)\|^2 = 0.
@@ -1177,6 +1176,11 @@ With this simple rescaling, one can apply any Jacobian based non-linear
 least squares algorithm to robustified non-linear least squares
 problems.
 
+
+While the theory described above is elegant, in practice we observe
+that using the Triggs correction when :math:`\rho'' > 0` leads to poor
+performance, so we upper bound it by zero. For more details see
+`corrector.cc <https://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/corrector.cc#L51>`_
 
 :class:`LocalParameterization`
 ==============================
