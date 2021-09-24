@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d48cc401_414d5dbc",
+        "filename": "docs/source/bibliography.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-09-24T12:40:36Z",
+      "side": 1,
+      "message": "Maybe \u0027Background Reading\u0027 ?",
+      "revId": "338456c8ba1de001360d0ba92025d977bc46520b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
