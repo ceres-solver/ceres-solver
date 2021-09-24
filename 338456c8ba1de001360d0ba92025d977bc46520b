@@ -34,6 +34,24 @@
       "parentUuid": "d48cc401_414d5dbc",
       "revId": "338456c8ba1de001360d0ba92025d977bc46520b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fb7f806_3a243edf",
+        "filename": "docs/source/bibliography.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-24T12:44:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eac2058a_450059ec",
+      "revId": "338456c8ba1de001360d0ba92025d977bc46520b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
