@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ef136ec_7b7e691b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-27T17:37:59Z",
+      "side": 1,
+      "message": "Thanks for the detailed comments William. I am also curious if you found the chapter readable and if the presentation can be improved or things you would like to see covered.",
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7cde3203_87543037",
@@ -14,6 +31,30 @@
       "writtenOn": "2021-09-27T14:26:57Z",
       "side": 1,
       "message": "Remove \"the\".",
+      "range": {
+        "startLine": 30,
+        "startChar": 51,
+        "endLine": 30,
+        "endChar": 54
+      },
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98f3fe5e_85ba2ef5",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-27T17:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cde3203_87543037",
       "range": {
         "startLine": 30,
         "startChar": 51,
@@ -47,6 +88,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0aee8457_df6c200b",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-27T17:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8b54f81_69f65ae2",
+      "range": {
+        "startLine": 60,
+        "startChar": 11,
+        "endLine": 60,
+        "endChar": 17
+      },
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abcb42e1_79949009",
@@ -60,6 +125,30 @@
       "writtenOn": "2021-09-27T14:26:57Z",
       "side": 1,
       "message": "systems",
+      "range": {
+        "startLine": 64,
+        "startChar": 52,
+        "endLine": 64,
+        "endChar": 58
+      },
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f747663f_4a2810e9",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-27T17:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abcb42e1_79949009",
       "range": {
         "startLine": 64,
         "startChar": 52,
@@ -93,6 +182,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12dcf6a3_2d3af886",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-27T17:37:59Z",
+      "side": 1,
+      "message": "good catch, it should be n.",
+      "parentUuid": "09fadbcc_ee7cf833",
+      "range": {
+        "startLine": 108,
+        "startChar": 46,
+        "endLine": 108,
+        "endChar": 47
+      },
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85a02439_5872dafc",
@@ -106,6 +219,30 @@
       "writtenOn": "2021-09-27T14:26:57Z",
       "side": 1,
       "message": "form",
+      "range": {
+        "startLine": 140,
+        "startChar": 33,
+        "endLine": 140,
+        "endChar": 36
+      },
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56e8ec9b_0c869a5e",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-27T17:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85a02439_5872dafc",
       "range": {
         "startLine": 140,
         "startChar": 33,
@@ -139,6 +276,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bd390cf_8618de9d",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-27T17:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9ff0ed1_e85bebea",
+      "range": {
+        "startLine": 180,
+        "startChar": 13,
+        "endLine": 180,
+        "endChar": 21
+      },
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a853b612_3a057b54",
@@ -152,6 +313,30 @@
       "writtenOn": "2021-09-27T14:26:57Z",
       "side": 1,
       "message": "Missing close paren before close square bracket.",
+      "range": {
+        "startLine": 181,
+        "startChar": 23,
+        "endLine": 181,
+        "endChar": 24
+      },
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8733bf57_f14e2c82",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-27T17:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a853b612_3a057b54",
       "range": {
         "startLine": 181,
         "startChar": 23,
@@ -208,6 +393,54 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63d0a430_c56e26c2",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-27T17:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ee949a5_949b0098",
+      "range": {
+        "startLine": 184,
+        "startChar": 30,
+        "endLine": 184,
+        "endChar": 31
+      },
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6be4fa9_8bc8a6c7",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-27T17:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb1e060e_da40f596",
+      "range": {
+        "startLine": 184,
+        "startChar": 57,
+        "endLine": 184,
+        "endChar": 61
+      },
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d4c371b2_e7c3d6d1",
@@ -231,6 +464,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c698cf36_5210aca7",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-27T17:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4c371b2_e7c3d6d1",
+      "range": {
+        "startLine": 198,
+        "startChar": 31,
+        "endLine": 198,
+        "endChar": 35
+      },
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ea2b21c_098dfb87",
@@ -244,6 +501,30 @@
       "writtenOn": "2021-09-27T14:26:57Z",
       "side": 1,
       "message": "theta_i?",
+      "range": {
+        "startLine": 199,
+        "startChar": 41,
+        "endLine": 199,
+        "endChar": 48
+      },
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6f75e3d_69ecd0f9",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-09-27T17:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ea2b21c_098dfb87",
       "range": {
         "startLine": 199,
         "startChar": 41,
