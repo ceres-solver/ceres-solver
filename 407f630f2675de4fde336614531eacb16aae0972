@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37987d1a_aa5ec5b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6587
+      },
+      "writtenOn": "2021-09-28T06:34:34Z",
+      "side": 1,
+      "message": "👍",
+      "revId": "407f630f2675de4fde336614531eacb16aae0972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "651d1ee1_45466a63",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6587
+      },
+      "writtenOn": "2021-09-28T06:34:34Z",
+      "side": 1,
+      "message": "you could add something like `by applying the chain rule to the identity $f^{-1}(f(x)) \u003d 1$, we have $Df^{-1}(f(x))Df(x) \u003d 1$, or ...` to give the reader a little more guidance if they\u0027re trying to understand why this is true.",
+      "range": {
+        "startLine": 37,
+        "startChar": 36,
+        "endLine": 37,
+        "endChar": 40
+      },
+      "revId": "407f630f2675de4fde336614531eacb16aae0972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c88322ba_7663b6ad",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6587
+      },
+      "writtenOn": "2021-09-28T06:34:34Z",
+      "side": 1,
+      "message": "Given that the _goal_ is to compute `Df(x)`, this might be more readable if you flip the order.",
+      "range": {
+        "startLine": 39,
+        "startChar": 30,
+        "endLine": 39,
+        "endChar": 63
+      },
+      "revId": "407f630f2675de4fde336614531eacb16aae0972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8e28033_0533220d",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6587
+      },
+      "writtenOn": "2021-09-28T06:34:34Z",
+      "side": 1,
+      "message": "Silly: starting a sentence with an equation can be disorienting; maybe add `We know ...`?\n\nOr, to combine with a pedantic nit, you could say \"For $x \u003e 0$, we have $f^{-1}(y) \u003d ...`\" :)",
+      "range": {
+        "startLine": 43,
+        "startChar": 18,
+        "endLine": 43,
+        "endChar": 25
+      },
+      "revId": "407f630f2675de4fde336614531eacb16aae0972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d5d7029_8b71383e",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6587
+      },
+      "writtenOn": "2021-09-28T06:34:34Z",
+      "side": 1,
+      "message": "{-1}",
+      "range": {
+        "startLine": 50,
+        "startChar": 63,
+        "endLine": 50,
+        "endChar": 65
+      },
+      "revId": "407f630f2675de4fde336614531eacb16aae0972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f760e5b6_ce8cca15",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6587
+      },
+      "writtenOn": "2021-09-28T06:34:34Z",
+      "side": 1,
+      "message": "drop `the`",
+      "range": {
+        "startLine": 50,
+        "startChar": 40,
+        "endLine": 50,
+        "endChar": 43
+      },
+      "revId": "407f630f2675de4fde336614531eacb16aae0972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf31c2e6_a25bfb6d",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6587
+      },
+      "writtenOn": "2021-09-28T06:34:34Z",
+      "side": 1,
+      "message": "systems",
+      "range": {
+        "startLine": 64,
+        "startChar": 52,
+        "endLine": 64,
+        "endChar": 58
+      },
+      "revId": "407f630f2675de4fde336614531eacb16aae0972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7543de8_2f4709a5",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 6587
+      },
+      "writtenOn": "2021-09-28T06:34:34Z",
+      "side": 1,
+      "message": "nit: drop ,",
+      "range": {
+        "startLine": 107,
+        "startChar": 30,
+        "endLine": 107,
+        "endChar": 31
+      },
+      "revId": "407f630f2675de4fde336614531eacb16aae0972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6b19c17_ee842575",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 6587
+      },
+      "writtenOn": "2021-09-28T06:34:34Z",
+      "side": 1,
+      "message": "`F(x,G(x)) \u003d 0` ?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 17
+      },
+      "revId": "407f630f2675de4fde336614531eacb16aae0972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cc34844_70d1eb2a",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 6587
+      },
+      "writtenOn": "2021-09-28T06:34:34Z",
+      "side": 1,
+      "message": "Optimization",
+      "range": {
+        "startLine": 161,
+        "startChar": 35,
+        "endLine": 161,
+        "endChar": 46
+      },
+      "revId": "407f630f2675de4fde336614531eacb16aae0972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d237c54_4d956be3",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6587
+      },
+      "writtenOn": "2021-09-28T06:34:34Z",
+      "side": 1,
+      "message": "Sometimes",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 8
+      },
+      "revId": "407f630f2675de4fde336614531eacb16aae0972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b4c591a_e334b2fb",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 6587
+      },
+      "writtenOn": "2021-09-28T06:34:34Z",
+      "side": 1,
+      "message": "this",
+      "range": {
+        "startLine": 182,
+        "startChar": 31,
+        "endLine": 182,
+        "endChar": 34
+      },
+      "revId": "407f630f2675de4fde336614531eacb16aae0972",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
