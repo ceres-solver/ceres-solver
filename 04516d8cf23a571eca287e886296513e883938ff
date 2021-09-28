@@ -75,6 +75,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef8b317a_9af97ea9",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-09-28T13:59:15Z",
+      "side": 1,
+      "message": "Hi,\n\nI\u0027ve split the example into two parts, reworked it (supposedly resolving all comments) and rebased onto updated master branch.",
+      "parentUuid": "82883028_85357b2c",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "04516d8cf23a571eca287e886296513e883938ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce85d6a8_3710d077",
@@ -88,6 +112,30 @@
       "writtenOn": "2021-09-21T13:11:26Z",
       "side": 1,
       "message": "I recommend using as few of these as possible, adding a layer of indirection in example code sometimes obscures things.",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "04516d8cf23a571eca287e886296513e883938ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff345679_4f9a6299",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-09-28T13:59:15Z",
+      "side": 1,
+      "message": "Removed type aliases except for 2d vector, grid and interpolator",
+      "parentUuid": "ce85d6a8_3710d077",
       "range": {
         "startLine": 52,
         "startChar": 6,
@@ -121,6 +169,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bbe1156_5f5523b1",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-09-28T13:59:15Z",
+      "side": 1,
+      "message": "These type aliases were removed",
+      "parentUuid": "f2ccc9d9_f0215862",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 15
+      },
+      "revId": "04516d8cf23a571eca287e886296513e883938ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3f9ecb7_fc98157e",
@@ -134,6 +206,30 @@
       "writtenOn": "2021-09-21T13:11:26Z",
       "side": 1,
       "message": "why is this templated?",
+      "range": {
+        "startLine": 141,
+        "startChar": 10,
+        "endLine": 141,
+        "endChar": 11
+      },
+      "revId": "04516d8cf23a571eca287e886296513e883938ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c7ddb5c_c15d1591",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-09-28T13:59:15Z",
+      "side": 1,
+      "message": "This was used for evaluating function on scalars and Eigen::Array; removed in new revision",
+      "parentUuid": "b3f9ecb7_fc98157e",
       "range": {
         "startLine": 141,
         "startChar": 10,
@@ -167,6 +263,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74dab20d_4ec66995",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-09-28T13:59:15Z",
+      "side": 1,
+      "message": "Replaced with 2 nested loops",
+      "parentUuid": "d45dce70_fd26c127",
+      "range": {
+        "startLine": 147,
+        "startChar": 6,
+        "endLine": 147,
+        "endChar": 7
+      },
+      "revId": "04516d8cf23a571eca287e886296513e883938ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9157afda_b2a05bef",
@@ -180,6 +300,30 @@
       "writtenOn": "2021-09-21T13:11:26Z",
       "side": 1,
       "message": "in the split version where the two versions of this code are in different files, I recommend folding this code into the main function",
+      "range": {
+        "startLine": 157,
+        "startChar": 14,
+        "endLine": 157,
+        "endChar": 15
+      },
+      "revId": "04516d8cf23a571eca287e886296513e883938ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fd5d470_e5b74ade",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-09-28T13:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9157afda_b2a05bef",
       "range": {
         "startLine": 157,
         "startChar": 14,

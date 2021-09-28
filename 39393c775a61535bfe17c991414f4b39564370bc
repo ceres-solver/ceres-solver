@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eeb191e7_10a7a26a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-09-28T13:59:15Z",
+      "side": 1,
+      "message": "Hi,\n\nI\u0027ve split the example into two parts, reworked it (supposedly resolving all comments) and rebased onto updated master branch.",
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
