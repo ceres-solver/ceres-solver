@@ -38,6 +38,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "41b7dcf7_98aa2de4",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-10-01T18:43:43Z",
+      "side": 1,
+      "message": "\"Up till\" --\u003e \"Until\"",
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c69fe3c_b1cf7cab",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-10-01T18:43:43Z",
+      "side": 1,
+      "message": "\"what\" --\u003e \"\"",
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f56bf96a_0818d549",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-10-01T18:43:43Z",
+      "side": 1,
+      "message": "\"however, \" --\u003e \"\"",
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7cde3203_87543037",
         "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
         "patchSetId": 3
@@ -79,6 +130,23 @@
         "endLine": 30,
         "endChar": 54
       },
+      "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "107787d7_23f41378",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-10-01T18:43:43Z",
+      "side": 1,
+      "message": "\"the we can\" --\u003e \"we can\"",
       "revId": "1b8d1e0c9ba441c80cd97ca1c524fc6207da753f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
