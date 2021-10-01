@@ -16,6 +16,24 @@
       "message": "Tabs in file",
       "revId": "41f75a06e786a32c679f65e04ed0c0a94060ef30",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a16c4c7_0b066a7b",
+        "filename": "docs/source/inverse_and_implicit_function_theorems.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-10-01T19:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a40b8313_034a09b2",
+      "revId": "41f75a06e786a32c679f65e04ed0c0a94060ef30",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
