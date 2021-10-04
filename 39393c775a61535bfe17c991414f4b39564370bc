@@ -16,6 +16,190 @@
       "message": "Hi,\n\nI\u0027ve split the example into two parts, reworked it (supposedly resolving all comments) and rebased onto updated master branch.",
       "revId": "39393c775a61535bfe17c991414f4b39564370bc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0219e4e2_d2b9701a",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-10-04T21:00:14Z",
+      "side": 1,
+      "message": "I would suggest dropping these two aliases too, they do not buy us much.",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 14
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cc88cb9_02ec1c49",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-10-04T21:00:14Z",
+      "side": 1,
+      "message": "this simple interpolator will always return true, but you should ideally check the return value and return false if it fails.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 53
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "522aef14_5ea61ff7",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-10-04T21:00:14Z",
+      "side": 1,
+      "message": "why not use a std::array of points that way you do not have to carry kPoints as a constant around.",
+      "range": {
+        "startLine": 99,
+        "startChar": 17,
+        "endLine": 99,
+        "endChar": 23
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cf3cf86_1d342aa6",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-10-04T21:00:14Z",
+      "side": 1,
+      "message": "shift_estimate",
+      "range": {
+        "startLine": 122,
+        "startChar": 11,
+        "endLine": 122,
+        "endChar": 24
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d98bcfbd_26433f4f",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-10-04T21:00:14Z",
+      "side": 1,
+      "message": "why have this here? why not above?",
+      "range": {
+        "startLine": 154,
+        "startChar": 45,
+        "endLine": 154,
+        "endChar": 51
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85cca27d_eaf209c9",
+        "filename": "examples/bicubic_interpolation_analytic.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-10-04T21:00:14Z",
+      "side": 1,
+      "message": "same as the other file.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 5
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42743b9a_963cb877",
+        "filename": "examples/bicubic_interpolation_analytic.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-10-04T21:00:14Z",
+      "side": 1,
+      "message": "check return value.",
+      "range": {
+        "startLine": 69,
+        "startChar": 26,
+        "endLine": 69,
+        "endChar": 27
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b294c130_2c5255f7",
+        "filename": "examples/bicubic_interpolation_analytic.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-10-04T21:00:14Z",
+      "side": 1,
+      "message": "same comment as the other file.",
+      "range": {
+        "startLine": 163,
+        "startChar": 7,
+        "endLine": 163,
+        "endChar": 8
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
