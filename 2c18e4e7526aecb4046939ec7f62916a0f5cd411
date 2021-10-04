@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34f38d38_d343c555",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-10-04T21:50:54Z",
+      "side": 1,
+      "message": "Resolved most of the comments; the only unclear thing is what do you expect to be checked after BiCubicIntrpolator::Evaluate(...) calls -- they\u0027re declared void in the current implementation.\n\nAre some explicit checks of interpolation results expected?",
+      "revId": "2c18e4e7526aecb4046939ec7f62916a0f5cd411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

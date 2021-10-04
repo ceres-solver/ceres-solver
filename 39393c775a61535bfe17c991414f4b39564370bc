@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c67944a_cec51a7a",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-10-04T21:50:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0219e4e2_d2b9701a",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 14
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7cc88cb9_02ec1c49",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-10-04T21:00:14Z",
       "side": 1,
       "message": "this simple interpolator will always return true, but you should ideally check the return value and return false if it fails.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 53
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3489128_d70e9acd",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-10-04T21:50:54Z",
+      "side": 1,
+      "message": "Not sure what do you mean by \"check the return value\".\n\nAll overloads of BiCubicInterpolator::Evaluate are declared void.\n\nDo you expect some explicit check of v ?",
+      "parentUuid": "7cc88cb9_02ec1c49",
       "range": {
         "startLine": 63,
         "startChar": 0,
@@ -87,6 +135,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a11d1b2_fca7d5bd",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-10-04T21:50:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "522aef14_5ea61ff7",
+      "range": {
+        "startLine": 99,
+        "startChar": 17,
+        "endLine": 99,
+        "endChar": 23
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cf3cf86_1d342aa6",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-10-04T21:00:14Z",
       "side": 1,
       "message": "shift_estimate",
+      "range": {
+        "startLine": 122,
+        "startChar": 11,
+        "endLine": 122,
+        "endChar": 24
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da4f9f72_e61e2989",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-10-04T21:50:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cf3cf86_1d342aa6",
       "range": {
         "startLine": 122,
         "startChar": 11,
@@ -133,6 +229,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "286bda9d_eeec9b63",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-10-04T21:50:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d98bcfbd_26433f4f",
+      "range": {
+        "startLine": 154,
+        "startChar": 45,
+        "endLine": 154,
+        "endChar": 51
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85cca27d_eaf209c9",
@@ -146,6 +266,30 @@
       "writtenOn": "2021-10-04T21:00:14Z",
       "side": 1,
       "message": "same as the other file.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 5
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64184888_d8e2bd05",
+        "filename": "examples/bicubic_interpolation_analytic.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-10-04T21:50:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85cca27d_eaf209c9",
       "range": {
         "startLine": 49,
         "startChar": 0,
@@ -181,6 +325,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b20eb182_e02aa0e3",
+        "filename": "examples/bicubic_interpolation_analytic.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-10-04T21:50:54Z",
+      "side": 1,
+      "message": "The method we\u0027re using is declared void\n\n void BiCubicInterpolator::Evaluate(double r, double c, double* f, double* dfdr, double* dfdc) const\n \n Could you please elaborate on what exactly you expect to be checked?",
+      "parentUuid": "42743b9a_963cb877",
+      "range": {
+        "startLine": 69,
+        "startChar": 26,
+        "endLine": 69,
+        "endChar": 27
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b294c130_2c5255f7",
         "filename": "examples/bicubic_interpolation_analytic.cc",
         "patchSetId": 3
@@ -192,6 +360,30 @@
       "writtenOn": "2021-10-04T21:00:14Z",
       "side": 1,
       "message": "same comment as the other file.",
+      "range": {
+        "startLine": 163,
+        "startChar": 7,
+        "endLine": 163,
+        "endChar": 8
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e834de0c_afa3d321",
+        "filename": "examples/bicubic_interpolation_analytic.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-10-04T21:50:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b294c130_2c5255f7",
       "range": {
         "startLine": 163,
         "startChar": 7,
