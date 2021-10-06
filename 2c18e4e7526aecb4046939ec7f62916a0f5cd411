@@ -97,6 +97,30 @@
       },
       "revId": "2c18e4e7526aecb4046939ec7f62916a0f5cd411",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4a6ae52_5e581199",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-10-06T12:47:42Z",
+      "side": 1,
+      "message": "thats odd, because we define and use functions like this all the time in this code base. whats different here? is it a C v/s C++ thing?",
+      "parentUuid": "53642d4a_2e8d3142",
+      "range": {
+        "startLine": 84,
+        "startChar": 32,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "2c18e4e7526aecb4046939ec7f62916a0f5cd411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
