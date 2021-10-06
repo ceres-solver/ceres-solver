@@ -395,6 +395,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a63032fa_9e5a5ac1",
+        "filename": "examples/bicubic_interpolation_analytic.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-10-06T00:28:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc86b769_59df3241",
+      "range": {
+        "startLine": 69,
+        "startChar": 26,
+        "endLine": 69,
+        "endChar": 27
+      },
+      "revId": "39393c775a61535bfe17c991414f4b39564370bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b294c130_2c5255f7",
