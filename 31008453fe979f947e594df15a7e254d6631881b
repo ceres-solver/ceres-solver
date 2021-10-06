@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2398e27f_302a6363",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-10-06T17:32:16Z",
+      "side": 1,
+      "message": "Extra declaration that I\u0027ve used in order to avoid warning with g++ is gone, by adding static keyword to f() definition.",
+      "revId": "31008453fe979f947e594df15a7e254d6631881b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

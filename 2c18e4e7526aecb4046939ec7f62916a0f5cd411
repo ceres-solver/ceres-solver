@@ -121,6 +121,30 @@
       },
       "revId": "2c18e4e7526aecb4046939ec7f62916a0f5cd411",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0157087a_7adb8335",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2021-10-06T17:32:16Z",
+      "side": 1,
+      "message": "Via some tinkering around and reading docs about -Wmissing-declarations I\u0027ve found that declaring function static/inline or placing it into anonymous namespace makes gcc happy.\nI\u0027ve decided that \"static\" looks less ugly than anonymous namespace for the sole purpose of avoiding warning.\n\n\nNote that the same warning (\"no previous declaration for ‘...’ [-Wmissing-declarations]\") exists in:\n * small_blas_gemv_benchmark.cc:{81,97}\n * invert_psd_matrix_benchmark.cc:65\n * schur_eliminator_benchmark.cc:{130,153,181,195}\n * small_blas_test.cc:76 (all files in internal/ceres)\n\nIt seems to me that the flag -Wmissing-declarations corresponds to different things in clang++ and g++ (according to documentation); it also seems to be not specific to concrete release of gcc, older versions show this warning too.",
+      "parentUuid": "a4a6ae52_5e581199",
+      "range": {
+        "startLine": 84,
+        "startChar": 32,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "2c18e4e7526aecb4046939ec7f62916a0f5cd411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
