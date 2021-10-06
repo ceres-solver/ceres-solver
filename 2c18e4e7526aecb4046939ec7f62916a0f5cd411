@@ -16,6 +16,46 @@
       "message": "Resolved most of the comments; the only unclear thing is what do you expect to be checked after BiCubicIntrpolator::Evaluate(...) calls -- they\u0027re declared void in the current implementation.\n\nAre some explicit checks of interpolation results expected?",
       "revId": "2c18e4e7526aecb4046939ec7f62916a0f5cd411",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c4f4ea6_6f6d9c2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-10-06T00:18:58Z",
+      "side": 1,
+      "message": "one minor comment, other than it is good to go for me.\nKeir needs to take a look though.",
+      "revId": "2c18e4e7526aecb4046939ec7f62916a0f5cd411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24483dca_b1766707",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-10-06T00:18:58Z",
+      "side": 1,
+      "message": "why do you need separate definition and declaration?",
+      "range": {
+        "startLine": 84,
+        "startChar": 32,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "2c18e4e7526aecb4046939ec7f62916a0f5cd411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
