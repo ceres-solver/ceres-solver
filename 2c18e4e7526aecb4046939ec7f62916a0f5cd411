@@ -169,6 +169,30 @@
       },
       "revId": "2c18e4e7526aecb4046939ec7f62916a0f5cd411",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "102ec44f_602cd9fd",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-10-06T19:15:33Z",
+      "side": 1,
+      "message": "or for that matter static.",
+      "parentUuid": "d8747112_bb498660",
+      "range": {
+        "startLine": 84,
+        "startChar": 32,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "2c18e4e7526aecb4046939ec7f62916a0f5cd411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
