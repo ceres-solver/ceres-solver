@@ -153,6 +153,8 @@ option(CXSPARSE "Enable CXSparse." ON)
 if (APPLE)
   option(ACCELERATESPARSE
     "Enable use of sparse solvers in Apple's Accelerate framework." ON)
+  option(ENABLE_BITCODE
+    "Enable bitcode for iOS builds (disables inline optimizations for Eigen)." OFF)
 endif()
 option(LAPACK "Enable use of LAPACK directly within Ceres." ON)
 # Template specializations for the Schur complement based solvers. If
@@ -605,14 +607,20 @@ if (UNIX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CERES_STRICT_CXX_FLAGS}")
 endif (UNIX)
 
-# Use a larger inlining threshold for Clang, since it hobbles Eigen,
-# resulting in an unreasonably slow version of the blas routines. The
-# -Qunused-arguments is needed because CMake passes the inline
-# threshold to the linker and clang complains about it and dies.
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang") # Matches Clang & AppleClang.
-  set(CMAKE_CXX_FLAGS
-    "${CMAKE_CXX_FLAGS} -Qunused-arguments -mllvm -inline-threshold=600")
-
+  # Optimize for Eigen OR enable bitcode; you cannot do both since bitcode is an
+  # intermediate representation.
+  if (ENABLE_BITCODE)
+    set(CMAKE_CXX_FLAGS
+      "${CMAKE_CXX_FLAGS} -fembed-bitcode")
+  else ()
+    # Use a larger inlining threshold for Clang, since it hobbles Eigen,
+    # resulting in an unreasonably slow version of the blas routines. The
+    # -Qunused-arguments is needed because CMake passes the inline
+    # threshold to the linker and clang complains about it and dies.
+    set(CMAKE_CXX_FLAGS
+      "${CMAKE_CXX_FLAGS} -Qunused-arguments -mllvm -inline-threshold=600")
+  endif ()
   # Older versions of Clang (<= 2.9) do not support the 'return-type-c-linkage'
   # option, so check for its presence before adding it to the default flags set.
   include(CheckCXXCompilerFlag)
