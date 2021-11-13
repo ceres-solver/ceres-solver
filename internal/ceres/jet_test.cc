@@ -782,6 +782,94 @@ TEST(Jet, Jet) {
     VL << "z = " << z;
     ExpectJetsClose(J{y.a}, z);
   }
+  {
+    J z = copysign(x, J{+1});
+    VL << "z = " << z;
+    ExpectJetsClose(x, z);
+  }
+  {
+    J z = copysign(x, J{-1});
+    VL << "z = " << z;
+    ExpectJetsClose(-x, z);
+  }
+  {
+    J z = copysign(-x, J{+1});
+    VL << "z = " << z;
+    ExpectJetsClose(x, z);
+  }
+  {
+    J z = copysign(-x, J{-1});
+    VL << "z = " << z;
+    ExpectJetsClose(-x, z);
+  }
+  {  // copysign(-0, +1)
+    J z = copysign(MakeJet(-0, 1, 2), J{+1});
+    VL << "z = " << z;
+    ExpectJetsClose(MakeJet(+0, 1, 2), z);
+    EXPECT_FALSE(std::signbit(z.a));
+    EXPECT_TRUE(IsFinite(z.v[0]));
+    EXPECT_TRUE(IsFinite(z.v[1]));
+  }
+  {  // copysign(-0, -1)
+    J z = copysign(MakeJet(-0, 1, 2), J{-1});
+    VL << "z = " << z;
+    ExpectJetsClose(MakeJet(-0, -1, -2), z);
+    EXPECT_TRUE(std::signbit(z.a));
+    EXPECT_TRUE(IsFinite(z.v[0]));
+    EXPECT_TRUE(IsFinite(z.v[1]));
+  }
+  {  // copysign(+0, -1)
+    J z = copysign(MakeJet(+0, 1, 2), J{-1});
+    VL << "z = " << z;
+    ExpectJetsClose(MakeJet(-0, -1, -2), z);
+    EXPECT_TRUE(std::signbit(z.a));
+    EXPECT_TRUE(IsFinite(z.v[0]));
+    EXPECT_TRUE(IsFinite(z.v[1]));
+  }
+  {  // copysign(+0, +1)
+    J z = copysign(MakeJet(+0, 1, 2), J{+1});
+    VL << "z = " << z;
+    ExpectJetsClose(MakeJet(+0, 1, 2), z);
+    EXPECT_FALSE(std::signbit(z.a));
+    EXPECT_TRUE(IsFinite(z.v[0]));
+    EXPECT_TRUE(IsFinite(z.v[1]));
+  }
+  {  // copysign(+0, +0)
+    J z = copysign(MakeJet(+0, 1, 2), J{+0});
+    VL << "z = " << z;
+    EXPECT_FALSE(std::signbit(z.a));
+    EXPECT_TRUE(std::signbit(z.v[0]));
+    EXPECT_TRUE(std::signbit(z.v[1]));
+    EXPECT_TRUE(IsNaN(z.v[0]));
+    EXPECT_TRUE(IsNaN(z.v[1]));
+  }
+  {  // copysign(+0, -0)
+    J z = copysign(MakeJet(+0, 1, 2), J{-0});
+    VL << "z = " << z;
+    EXPECT_FALSE(std::signbit(z.a));
+    EXPECT_TRUE(std::signbit(z.v[0]));
+    EXPECT_TRUE(std::signbit(z.v[1]));
+    EXPECT_TRUE(IsNaN(z.v[0]));
+    EXPECT_TRUE(IsNaN(z.v[1]));
+  }
+  {  // copysign(-0, +0)
+    J z = copysign(MakeJet(-0, 1, 2), J{+0});
+    VL << "z = " << z;
+    EXPECT_FALSE(std::signbit(z.a));
+    EXPECT_TRUE(std::signbit(z.v[0]));
+    EXPECT_TRUE(std::signbit(z.v[1]));
+    EXPECT_TRUE(IsNaN(z.v[0]));
+    EXPECT_TRUE(IsNaN(z.v[1]));
+  }
+  {  // copysign(-0, -0)
+    J z = copysign(MakeJet(-0, 1, 2), J{-0});
+    VL << "z = " << z;
+    EXPECT_FALSE(std::signbit(z.a));
+    EXPECT_TRUE(std::signbit(z.v[0]));
+    EXPECT_TRUE(std::signbit(z.v[1]));
+    EXPECT_TRUE(IsNaN(z.v[0]));
+    EXPECT_TRUE(IsNaN(z.v[1]));
+  }
 }
 
 TEST(Jet, JetsInEigenMatrices) {
