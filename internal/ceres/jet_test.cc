@@ -774,6 +774,26 @@ TEST(Jet, Jet) {
     VL << "z = " << z;
     ExpectJetsClose(J{y.a}, z);
   }
+  {
+    J z = copysign(x, J{+1});
+    VL << "z = " << z;
+    ExpectJetsClose(x, z);
+  }
+  {
+    J z = copysign(x, J{-1});
+    VL << "z = " << z;
+    ExpectJetsClose(-x, z);
+  }
+  {
+    J z = copysign(-x, J{+1});
+    VL << "z = " << z;
+    ExpectJetsClose(x, z);
+  }
+  {
+    J z = copysign(-x, J{-1});
+    VL << "z = " << z;
+    ExpectJetsClose(-x, z);
+  }
 }
 
 TEST(Jet, JetsInEigenMatrices) {
