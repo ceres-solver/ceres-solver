@@ -386,6 +386,7 @@ using std::atan;
 using std::atan2;
 using std::cbrt;
 using std::ceil;
+using std::copysign;
 using std::cos;
 using std::cosh;
 using std::erf;
@@ -423,6 +424,18 @@ inline bool IsNormal(double x)   { return std::isnormal(x); }
 template <typename T, int N>
 inline Jet<T, N> abs(const Jet<T, N>& f) {
   return (f.a < T(0.0) ? -f : f);
+}
+
+// copysign(a + da, b + db) ~= sgn(b)|a| + (sgn(a)sgn(b) da + 2|a|δ(b) db)
+template <typename T, int N>
+inline Jet<T, N> copysign(const Jet<T, N>& f, const Jet<T, N> g) {
+  // δ(b)
+  T d = abs(g.a) < std::numeric_limits<T>::epsilon()
+            ? std::numeric_limits<T>::infinity()
+            : T(0);
+  T sa = copysign(T(1), f.a);
+  T sb = copysign(T(1), g.a);
+  return Jet<T, N>(copysign(f.a, g.a), sa * sb * f.v + abs(f.a) * d * g.v);
 }
 
 // log(a + h) ~= log(a) + h / a
