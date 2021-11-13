@@ -426,6 +426,42 @@ inline Jet<T, N> abs(const Jet<T, N>& f) {
   return Jet<T, N>(abs(f.a), copysign(T(1), f.a) * f.v);
 }
 
+// copysign(a, b) composes a float with the magnitude of a and the sign of b.
+// Therefore, the function can be formally defined as
+//
+//   copysign(a, b) = sgn(b)|a|
+//
+// where
+//
+//   d/dx |x| = sgn(x)
+//   d/dx sgn(x) = 2δ(x)
+//
+// sgn(x) being the signum function. Differentiating copysign(a, b) with respect
+// to a and b gives:
+//
+//   d/da sgn(b)|a| = sgn(a) sgn(b)
+//   d/db sgn(b)|a| = 2|a|δ(b)
+//
+// with the dual representation given by
+//
+//   copysign(a + da, b + db) ~= sgn(b)|a| + (sgn(a)sgn(b) da + 2|a|δ(b) db)
+//
+// where δ(b) is the Dirac delta function.
+template <typename T, int N>
+inline Jet<T, N> copysign(const Jet<T, N>& f, const Jet<T, N> g) {
+  // The Dirac delta function  δ(b) is undefined at b=0 (here it's
+  // infinite) and 0 everywhere else.
+  T d = g.a == T(0) ? std::numeric_limits<T>::infinity() : T(0);
+  T sa = copysign(T(1), f.a);  // sgn(a)
+  T sb = copysign(T(1), g.a);  // sgn(b)
+  // The second part of the infinitesimal is 2|a|δ(b) which is either infinity
+  // or 0 unless a or any of the values of the b infinitesimal are 0. In the
+  // latter case, the corresponding values become NaNs (multiplying 0 by
+  // infinity gives NaN). We drop the constant factor 2 since it does not change
+  // the result (its values will still be either 0, infinity or NaN).
+  return Jet<T, N>(copysign(f.a, g.a), sa * sb * f.v + abs(f.a) * d * g.v);
+}
+
 // log(a + h) ~= log(a) + h / a
 template <typename T, int N>
 inline Jet<T, N> log(const Jet<T, N>& f) {
