@@ -425,6 +425,20 @@ inline Jet<T, N> abs(const Jet<T, N>& f) {
   return (f.a < T(0.0) ? -f : f);
 }
 
+// copysign(a + da, b + db) ~= sgn(b)|a| + (a sgn(b)/|a| da + 2|a|δ(b) db)
+template <typename T, int N>
+inline Jet<T, N> copysign(const Jet<T, N>& f, const Jet<T, N> g) {
+  using std::abs;
+  using std::copysign;
+  // δ(b)
+  T d = abs(g.a) < std::numeric_limits<T>::epsilon()
+            ? std::numeric_limits<T>::infinity()
+            : T(0);
+  T s = copysign(T(1), f.a);  // a/|a|
+  return Jet<T, N>(copysign(f.a, g.a),
+                   s * copysign(T(1), g.a) * f.v + abs(f.a) * d * g.v);
+}
+
 // log(a + h) ~= log(a) + h / a
 template <typename T, int N>
 inline Jet<T, N> log(const Jet<T, N>& f) {
