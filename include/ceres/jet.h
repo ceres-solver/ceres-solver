@@ -394,6 +394,7 @@ using std::erf;
 using std::erfc;
 using std::exp;
 using std::exp2;
+using std::expm1;
 using std::floor;
 using std::fmax;
 using std::fmin;
@@ -403,6 +404,7 @@ using std::isinf;
 using std::isnan;
 using std::isnormal;
 using std::log;
+using std::log1p;
 using std::log2;
 using std::norm;
 using std::pow;
@@ -471,11 +473,24 @@ inline Jet<T, N> log(const Jet<T, N>& f) {
   return Jet<T, N>(log(f.a), f.v * a_inverse);
 }
 
+// log1p(a + h) ~= log1p(a) + h / (1 + a)
+template <typename T, int N>
+inline Jet<T, N> log1p(const Jet<T, N>& f) {
+  const T a_inverse = T(1.0) / (T(1.0) + f.a);
+  return Jet<T, N>(log1p(f.a), f.v * a_inverse);
+}
+
 // exp(a + h) ~= exp(a) + exp(a) h
 template <typename T, int N>
 inline Jet<T, N> exp(const Jet<T, N>& f) {
   const T tmp = exp(f.a);
   return Jet<T, N>(tmp, tmp * f.v);
+}
+
+// expm1(a + h) ~= expm1(a) + exp(a) h
+template <typename T, int N>
+inline Jet<T, N> expm1(const Jet<T, N>& f) {
+  return Jet<T, N>(expm1(f.a), exp(f.a) * f.v);
 }
 
 // sqrt(a + h) ~= sqrt(a) + h / (2 sqrt(a))
