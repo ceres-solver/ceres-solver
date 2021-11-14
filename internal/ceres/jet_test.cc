@@ -479,7 +479,9 @@ TEST(Jet, Jet) {
     ExpectJetsClose(a, b);
   }
 
-  {  // Check that abs(-x * x) == sqrt(x * x).
+  {  // Check that abs(-x * x) == x * x.
+    ExpectJetsClose(abs(-x * x), x * x);
+    // Check that abs(-x) == sqrt(x * x).
     ExpectJetsClose(abs(-x), sqrt(x * x));
   }
   {
