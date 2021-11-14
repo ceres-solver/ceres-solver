@@ -419,10 +419,12 @@ inline bool IsNormal(double x)   { return std::isnormal(x); }
 
 // In general, f(a + h) ~= f(a) + f'(a) h, via the chain rule.
 
-// abs(x + h) ~= x + h or -(x + h)
+// abs(x + h) ~= abs(x) + sgn(x)h
 template <typename T, int N>
 inline Jet<T, N> abs(const Jet<T, N>& f) {
-  return (f.a < T(0.0) ? -f : f);
+  using std::abs;
+  using std::copysign;
+  return Jet<T, N>(abs(f.a), copysign(T(1), f.a) * f.v);
 }
 
 // log(a + h) ~= log(a) + h / a
