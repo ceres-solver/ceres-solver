@@ -158,6 +158,7 @@
 #define CERES_PUBLIC_JET_H_
 
 #include <cmath>
+#include <complex>
 #include <iosfwd>
 #include <iostream>  // NOLINT
 #include <limits>
@@ -403,6 +404,7 @@ using std::isnan;
 using std::isnormal;
 using std::log;
 using std::log2;
+using std::norm;
 using std::pow;
 using std::sin;
 using std::sinh;
@@ -797,6 +799,22 @@ inline Jet<T, N> atan2(const Jet<T, N>& g, const Jet<T, N>& f) {
 
   T const tmp = T(1.0) / (f.a * f.a + g.a * g.a);
   return Jet<T, N>(atan2(g.a, f.a), tmp * (-g.a * f.v + f.a * g.v));
+}
+
+// Computes the square x^2 of a real number x (not the Euclidean L^2 norm as
+// the name might suggest).
+//
+// NOTE While std::norm is primarly intended for computing the squared magnitude
+// of a std::complex<> number, the current Jet implementation does not support
+// mixing a scalar T in its real part and std::complex<T> and in the
+// infinitesimal. Mixed Jet support is necessary for the type decay from
+// std::complex<T> to T (the squared magnitude of a complex number is always
+// real) performed by std::norm.
+//
+// norm(x + h) ~= norm(x) + 2x h
+template <typename T, int N>
+inline Jet<T, N> norm(const Jet<T, N>& f) {
+  return Jet<T, N>(norm(f.a), T(2) * f.a * f.v);
 }
 
 // pow -- base is a differentiable function, exponent is a constant.
