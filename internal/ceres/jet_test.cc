@@ -482,6 +482,12 @@ TEST(Jet, Jet) {
   {  // Check that abs(-x * x) == sqrt(x * x).
     ExpectJetsClose(abs(-x), sqrt(x * x));
   }
+  {
+    J a = MakeJet(-std::numeric_limits<double>::quiet_NaN(), 2.0, 4.0);
+    J b = abs(a);
+    EXPECT_TRUE(std::signbit(b.v[0]));
+    EXPECT_TRUE(std::signbit(b.v[1]));
+  }
 
   {  // Check that cos(acos(x)) == x.
     J a = MakeJet(0.1, -2.7, 1e-3);
