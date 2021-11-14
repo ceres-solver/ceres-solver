@@ -386,6 +386,7 @@ using std::atan;
 using std::atan2;
 using std::cbrt;
 using std::ceil;
+using std::copysign;
 using std::cos;
 using std::cosh;
 using std::erf;
@@ -419,10 +420,10 @@ inline bool IsNormal(double x)   { return std::isnormal(x); }
 
 // In general, f(a + h) ~= f(a) + f'(a) h, via the chain rule.
 
-// abs(x + h) ~= x + h or -(x + h)
+// abs(x + h) ~= abs(x) + sgn(x)h
 template <typename T, int N>
 inline Jet<T, N> abs(const Jet<T, N>& f) {
-  return (f.a < T(0.0) ? -f : f);
+  return Jet<T, N>(abs(f.a), copysign(T(1), f.a) * f.v);
 }
 
 // log(a + h) ~= log(a) + h / a
