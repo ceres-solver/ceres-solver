@@ -128,6 +128,22 @@ TEST(Jet, Jet) {
     ExpectJetsClose(w, x);
   }
 
+  {  // Check that expm1(log1p(x)) == x.
+    J z = expm1(x);
+    J w = log1p(z);
+    VL << "z = " << z;
+    VL << "w = " << w;
+    ExpectJetsClose(w, x);
+  }
+
+  {  // Check that log1p(expm1(x)) == x.
+    J z = log1p(x);
+    J w = expm1(z);
+    VL << "z = " << z;
+    VL << "w = " << w;
+    ExpectJetsClose(w, x);
+  }
+
   {  // Check that (x * y) / x == y.
     J z = x * y;
     J w = z / x;
@@ -630,6 +646,40 @@ TEST(Jet, Jet) {
   NumericalTest("cbrt", cbrt<double, 2>, -1e-5);
   NumericalTest("cbrt", cbrt<double, 2>, 1e-5);
   NumericalTest("cbrt", cbrt<double, 2>, 1.0);
+
+  {  // Check that log1p(x) == log(1 + x)
+    J z = log1p(x);
+    J w = log(J{1} + x);
+    VL << "z = " << z;
+    VL << "w = " << w;
+    ExpectJetsClose(z, w);
+  }
+
+  {  // Check that log1p(x) does not loose precision for small x
+    J x = MakeJet(1e-16, 1e-8, 1e-4);
+    J z = log1p(x);
+    J w = MakeJet(9.9999999999999998e-17, 1e-8, 1e-4);
+    VL << "z = " << z;
+    VL << "w = " << w;
+    ExpectJetsClose(z, w);
+  }
+
+  {  // Check that expm1(x) == exp(x) - 1
+    J z = expm1(x);
+    J w = exp(x) - J{1};
+    VL << "z = " << z;
+    VL << "w = " << w;
+    ExpectJetsClose(z, w);
+  }
+
+  {  // Check that expm1(x) does not loose precision for small x
+    J x = MakeJet(9.9999999999999998e-17, 1e-8, 1e-4);
+    J z = expm1(x);
+    J w = MakeJet(1e-16, 1e-8, 1e-4);
+    VL << "z = " << z;
+    VL << "w = " << w;
+    ExpectJetsClose(z, w);
+  }
 
   {  // Check that exp2(x) == exp(x * log(2))
     J z = exp2(x);
