@@ -657,6 +657,22 @@ TEST(Jet, Jet) {
   NumericalTest("log2", log2<double, 2>, 1.0);
   NumericalTest("log2", log2<double, 2>, 100.0);
 
+  {  // Check that norm(x) == x^2
+    J v = norm(x);
+    J w = x * x;
+    VL << "v = " << v;
+    VL << "w = " << w;
+    ExpectJetsClose(v, w);
+  }
+
+  {  // Check that norm(-x) == x^2
+    J v = norm(-x);
+    J w = x * x;
+    VL << "v = " << v;
+    VL << "w = " << w;
+    ExpectJetsClose(v, w);
+  }
+
   {  // Check that hypot(x, y) == sqrt(x^2 + y^2)
     J h = hypot(x, y);
     J s = sqrt(x * x + y * y);
