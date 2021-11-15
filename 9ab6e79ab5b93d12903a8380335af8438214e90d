@@ -113,6 +113,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b5f8987_93913ca6",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-15T22:24:21Z",
+      "side": 1,
+      "message": "I think the only thing remaining is the comparison to zero.\nEpsilon is not the number below which everything is zero. it is the smallest number when added to 1 leads to the next floating point number above 1.\n\nThe smallest normalized float is numeric_limits::min and the smallest subnormal is numeric_limits::lowest. But in either case you should just compare to zero IMO, because except for that one point, the derivative is exactly zero everywhere else.",
+      "parentUuid": "5bc4a0dd_36d16182",
+      "range": {
+        "startLine": 429,
+        "startChar": 67,
+        "endLine": 429,
+        "endChar": 68
+      },
+      "revId": "9ab6e79ab5b93d12903a8380335af8438214e90d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f37d0346_11e1f6fc",
