@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ad52194_b443dc95",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-15T18:39:28Z",
+      "side": 1,
+      "message": "Whats the use case for this when using real numbers?",
+      "range": {
+        "startLine": 768,
+        "startChar": 0,
+        "endLine": 768,
+        "endChar": 8
+      },
+      "revId": "35f558603241313ea61d79028bd3843e22efd2f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
