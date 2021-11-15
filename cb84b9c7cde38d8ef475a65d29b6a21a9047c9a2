@@ -16,6 +16,24 @@
       "message": "abs(f.a) can be probably dropped similar to the factor 2.",
       "revId": "cb84b9c7cde38d8ef475a65d29b6a21a9047c9a2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88b11651_17af7676",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-15T22:12:18Z",
+      "side": 1,
+      "message": "Actually, it cannot be dropped since the value may alter the result (e.g., 0*inf\u003dnan).",
+      "parentUuid": "0f25520f_27e706f0",
+      "revId": "cb84b9c7cde38d8ef475a65d29b6a21a9047c9a2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
