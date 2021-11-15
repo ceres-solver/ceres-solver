@@ -22,6 +22,30 @@
       },
       "revId": "1387ccbe46768948155532713db3f7f6aa17befc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d28985f5_5a7f393d",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-15T18:52:53Z",
+      "side": 1,
+      "message": "Thanks for looking into this. Do you want me to drop this identity test?\n\nAlso, do you have specific test in mind you could suggest? As mentioned in the commit message, log(1+x) considerably deviates from log1p(x) at least for the value of x defined at this point.\n\nThere is a standalone test for expm1 already though.",
+      "parentUuid": "ecfa872c_3dfcf998",
+      "range": {
+        "startLine": 131,
+        "startChar": 14,
+        "endLine": 131,
+        "endChar": 18
+      },
+      "revId": "1387ccbe46768948155532713db3f7f6aa17befc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
