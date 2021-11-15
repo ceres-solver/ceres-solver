@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a0af2e8_6066f544",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-15T22:26:56Z",
+      "side": 1,
+      "message": "the value for x seem very simple and generic, how is it giving you good testing for log1p and expm1?",
+      "range": {
+        "startLine": 650,
+        "startChar": 8,
+        "endLine": 650,
+        "endChar": 13
+      },
+      "revId": "a785764d8caed9c6115424da84585b91cc10a6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
