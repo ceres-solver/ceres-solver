@@ -137,6 +137,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64fc9bbb_35fef241",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-15T22:28:10Z",
+      "side": 1,
+      "message": "Patch updated.",
+      "parentUuid": "8b5f8987_93913ca6",
+      "range": {
+        "startLine": 429,
+        "startChar": 67,
+        "endLine": 429,
+        "endChar": 68
+      },
+      "revId": "9ab6e79ab5b93d12903a8380335af8438214e90d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f37d0346_11e1f6fc",
