@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bad3fc4_b21c0899",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-11-15T22:57:14Z",
+      "side": 1,
+      "message": "We\u0027ve had a bunch of cases where \"fixes\" to numerical precision were sent that didn\u0027t actually fix an issue, or the issue didn\u0027t exist in the first place.\n\nCan you please extend the test to show that cases that don\u0027t work with the current code? And to check - ideally in a loop with lots of sample points - that the new code is better than before?\n\nNumerical precision is fiddly and hard to get right; the best way to protect is to have lots of tests that hit edge cases, like denormals, or small values in the region of interest.",
+      "revId": "a785764d8caed9c6115424da84585b91cc10a6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a0af2e8_6066f544",
@@ -62,6 +79,30 @@
       "side": 1,
       "message": "in that case I would compute a golden value that I believe to be correct and use it.",
       "parentUuid": "af349e60_fcdcd8a2",
+      "range": {
+        "startLine": 650,
+        "startChar": 8,
+        "endLine": 650,
+        "endChar": 13
+      },
+      "revId": "a785764d8caed9c6115424da84585b91cc10a6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37ccd18a_d4f8460e",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-11-15T22:57:14Z",
+      "side": 1,
+      "message": "Agreed; these need to be more thorough. Ideally the tests would show:\n\n(1) The new special functions work as expected, in the target areas that are problematic for the previous versions\n(2) Tests that demonstrate that the old versions don\u0027t work-- in other words, a test that\u0027s verifying that the naive version fails. This way in the future, any change that accidentally fixes the issue will be highlighted in CI.",
+      "parentUuid": "58a635a8_9c020cf8",
       "range": {
         "startLine": 650,
         "startChar": 8,
