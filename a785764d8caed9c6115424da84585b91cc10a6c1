@@ -111,6 +111,30 @@
       },
       "revId": "a785764d8caed9c6115424da84585b91cc10a6c1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c4fafd4_3379fa5d",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-15T23:12:37Z",
+      "side": 1,
+      "message": "I actually cannot follow your reasoning regarding demonstration of superiority of both functions. My primary goal is to provide a Jet overload for both functions which are part of the standard math library in C++11 (and above). The numerical superiority is something a standard library vendor must ensure (and is generally guaranteed). Otherwise the functions are not standard conformant.\n\nNevertheless, I\u0027ve updated the tests with requested checks. PTAL.",
+      "parentUuid": "37ccd18a_d4f8460e",
+      "range": {
+        "startLine": 650,
+        "startChar": 8,
+        "endLine": 650,
+        "endChar": 13
+      },
+      "revId": "a785764d8caed9c6115424da84585b91cc10a6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
