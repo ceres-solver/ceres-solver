@@ -46,6 +46,53 @@
       },
       "revId": "1387ccbe46768948155532713db3f7f6aa17befc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23a05fb5_ea6c6430",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-15T18:57:30Z",
+      "side": 1,
+      "message": "You can keep the identity test, but test log1p and expm1 at values where you need the special impl rather than just doing the addition and subtraction.",
+      "parentUuid": "d28985f5_5a7f393d",
+      "range": {
+        "startLine": 131,
+        "startChar": 14,
+        "endLine": 131,
+        "endChar": 18
+      },
+      "revId": "1387ccbe46768948155532713db3f7f6aa17befc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e116b03_d7666563",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-15T18:57:30Z",
+      "side": 1,
+      "message": "is this a good value of x at which the previously things did not work?",
+      "range": {
+        "startLine": 642,
+        "startChar": 24,
+        "endLine": 642,
+        "endChar": 25
+      },
+      "revId": "1387ccbe46768948155532713db3f7f6aa17befc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
