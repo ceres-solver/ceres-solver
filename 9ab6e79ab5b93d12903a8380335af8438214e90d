@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5d2b64e_f5f65c48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-15T18:31:26Z",
+      "side": 1,
+      "message": "Hi Sergiu,\nthanks for the patch, I think the code is correct, but it needs better documentation and testing.",
+      "revId": "9ab6e79ab5b93d12903a8380335af8438214e90d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5702151_266f4ee1",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-15T18:31:26Z",
+      "side": 1,
+      "message": "can you put the full derivation in here please.\n\nas I understand it\n\ncopysign(a,b) \u003d sgn(b)|a|\n\nso if we compute the derivative we get\n\n   D_b[sgn(b)]|a| + sgn(b)D_a[|a|]\n\u003d D_b[sgn(b)]|a| + sgn(b) sgn(a) da\n\nnow D_b[sgn(b)] is zero everywhere except at b \u003d 0 where it is infinity.\n\nso when evaluating the product D_b[sgn(b)]|a| we need to check if |b| is zero and whether |a| is infinite or not.\n\nif b \u003d 0, then D_b[sgn(b)]|a| \u003d sgn(a) * infinity \u003d a * infinity \nif b !\u003d 0, a finite, then D_b[sgn(b)]|a| \u003d 0 \u003d a * 0\nif b !\u003d 0, a infinite then D_b[sgn(b)]|a| \u003d nan \u003d a * 0\n\nso we need to compute (b \u003d\u003d 0 ? infinity : 0) * a \n\nso d \u003d (b \u003d\u003d 0 ? infinity : 0) your implementation below?\n\ndoes this sound right?\n\nin which case, why are you introducing a threshold of epsilon? this is going to cause surprises. why not check exactly against zero?",
+      "range": {
+        "startLine": 429,
+        "startChar": 67,
+        "endLine": 429,
+        "endChar": 68
+      },
+      "revId": "9ab6e79ab5b93d12903a8380335af8438214e90d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f37d0346_11e1f6fc",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-15T18:31:26Z",
+      "side": 1,
+      "message": "copysign will need better testing since these test cases don\u0027t check the pathological cases. Please check finite, infinite and zero values for both argument.",
+      "range": {
+        "startLine": 778,
+        "startChar": 5,
+        "endLine": 778,
+        "endChar": 6
+      },
+      "revId": "9ab6e79ab5b93d12903a8380335af8438214e90d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
