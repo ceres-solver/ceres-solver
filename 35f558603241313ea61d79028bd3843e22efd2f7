@@ -46,6 +46,30 @@
       },
       "revId": "35f558603241313ea61d79028bd3843e22efd2f7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3eaaa2e0_4a5ed148",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-15T19:00:59Z",
+      "side": 1,
+      "message": "I am in two minds about adding this function, because I think the naming of this function is atrocious (this of course is not your fault, the c++ committee should be ashamed :)) and it is going to lead to confusion.\n\n\nI had to go look up the definition on https://en.cppreference.com/w/cpp/numeric/complex/norm\n\nin any case, I think you should document more thoroughly what this function does rather than depending on the user knowing what std::norm is.",
+      "parentUuid": "ec51a2b4_94362be8",
+      "range": {
+        "startLine": 768,
+        "startChar": 0,
+        "endLine": 768,
+        "endChar": 8
+      },
+      "revId": "35f558603241313ea61d79028bd3843e22efd2f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
