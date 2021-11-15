@@ -89,6 +89,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bc4a0dd_36d16182",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-15T22:01:48Z",
+      "side": 1,
+      "message": "Docs extended.",
+      "parentUuid": "ede8e853_5781974a",
+      "range": {
+        "startLine": 429,
+        "startChar": 67,
+        "endLine": 429,
+        "endChar": 68
+      },
+      "revId": "9ab6e79ab5b93d12903a8380335af8438214e90d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f37d0346_11e1f6fc",
@@ -126,6 +150,30 @@
       "side": 1,
       "message": "Makes sense.",
       "parentUuid": "f37d0346_11e1f6fc",
+      "range": {
+        "startLine": 778,
+        "startChar": 5,
+        "endLine": 778,
+        "endChar": 6
+      },
+      "revId": "9ab6e79ab5b93d12903a8380335af8438214e90d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce4fdd3c_e736d789",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-15T22:01:48Z",
+      "side": 1,
+      "message": "Are these the tests that you had in mind?",
+      "parentUuid": "3f5b1ce2_59278b78",
       "range": {
         "startLine": 778,
         "startChar": 5,
