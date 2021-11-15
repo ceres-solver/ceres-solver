@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "11f3f616_79a86f3a",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-15T19:01:49Z",
+      "side": 1,
+      "message": "Aren\u0027t all values below the machine epsilon considered zero? I might be wrong, but this is what the following article suggests: https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/",
+      "parentUuid": "b5702151_266f4ee1",
+      "range": {
+        "startLine": 429,
+        "startChar": 67,
+        "endLine": 429,
+        "endChar": 68
+      },
+      "revId": "9ab6e79ab5b93d12903a8380335af8438214e90d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f37d0346_11e1f6fc",
         "filename": "internal/ceres/jet_test.cc",
         "patchSetId": 6
