@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ede8e853_5781974a",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-15T19:27:31Z",
+      "side": 1,
+      "message": "d/dx |x| \u003d sgn(x)\nd/dx sgn(x) \u003d 2δ(x)\n\nδ is the Dirac delta function which is undefined at δ(0) (i.e., infinite) and 0 everywhere else. The differential follows by applying the chain rule w.r.t both arguments, a and b.\n\nDo you want me to put this into the function\u0027s description or body?",
+      "parentUuid": "11f3f616_79a86f3a",
+      "range": {
+        "startLine": 429,
+        "startChar": 67,
+        "endLine": 429,
+        "endChar": 68
+      },
+      "revId": "9ab6e79ab5b93d12903a8380335af8438214e90d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f37d0346_11e1f6fc",
         "filename": "internal/ceres/jet_test.cc",
         "patchSetId": 6
