@@ -239,8 +239,8 @@ message("-- Building with C++${CMAKE_CXX_STANDARD}")
 # Eigen.
 # Eigen delivers Eigen3Config.cmake since v3.3.3
 find_package(Eigen3 3.3 REQUIRED)
-if (EIGEN3_FOUND)
-  message("-- Found Eigen version ${Eigen3_VERSION}: ${EIGEN3_INCLUDE_DIRS}")
+if (Eigen3_FOUND)
+  message("-- Found Eigen version ${Eigen3_VERSION}: ${Eigen3_DIR}")
   if (CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64.*|AARCH64.*)" AND
       Eigen3_VERSION VERSION_LESS 3.3.4)
     # As per issue #289: https://github.com/ceres-solver/ceres-solver/issues/289
@@ -258,7 +258,7 @@ if (EIGEN3_FOUND)
     message("   which can still use the EIGEN_SPARSE_QR algorithm.")
     add_definitions(-DEIGEN_MPL2_ONLY)
   endif (EIGENSPARSE)
-endif (EIGEN3_FOUND)
+endif (Eigen3_FOUND)
 
 if (LAPACK)
   find_package(LAPACK QUIET)
