@@ -16,6 +16,91 @@
       "message": "Alex can you take a look a this please?",
       "revId": "9c5e71fc47a2a3db32d73d8a86dc9290e90f31c2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6e290ea_7ada4e5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-11-16T15:20:42Z",
+      "side": 1,
+      "message": "Thanks John, this looks like a useful addition.  Some minor points but then I think we should be able to rebase this and get it merged",
+      "revId": "9c5e71fc47a2a3db32d73d8a86dc9290e90f31c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33cf033b_e895cf56",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-11-16T15:20:42Z",
+      "side": 1,
+      "message": "+1 for this using the same name as the Xcode option",
+      "revId": "9c5e71fc47a2a3db32d73d8a86dc9290e90f31c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bbebff5_2385cb47",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-11-16T15:20:42Z",
+      "side": 1,
+      "message": "\u0027disables -mllvm\u0027 doesn\u0027t really explain the implications of enabling this option.  How about: \"(reduces Schur solver performance)\"",
+      "revId": "9c5e71fc47a2a3db32d73d8a86dc9290e90f31c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e84c1d52_fb91c19b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-11-16T15:20:42Z",
+      "side": 1,
+      "message": "Can you move this documentation block down to above line 621, as this block now includes other Clang-specific options",
+      "revId": "9c5e71fc47a2a3db32d73d8a86dc9290e90f31c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd7f77c0_a4180ae6",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2021-11-16T15:20:42Z",
+      "side": 1,
+      "message": "Please add a brief comment here explaining why these options are mutually exclusive, something like:\n\n\u0027Enabling bitcode for iOS is mutually exclusive with use of -mllvm\u0027",
+      "revId": "9c5e71fc47a2a3db32d73d8a86dc9290e90f31c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
