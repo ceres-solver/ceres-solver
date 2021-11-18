@@ -632,28 +632,34 @@ inline Jet<T, N> hypot(const Jet<T, N>& x, const Jet<T, N>& y) {
 
 template <typename T, int N>
 inline Jet<T, N> fmax(const Jet<T, N>& x, const Jet<T, N>& y) {
-  return x < y ? y : x;
+  using std::isgreater;
+  return isnan(y.a) || isgreater(x.a, y.a) ? x : y;
 }
+
 template <typename T, int N>
 inline Jet<T, N> fmax(const Jet<T, N>& x, const T& y) {
-  return x < y ? Jet<T, N>{y} : x;
+  return fmax(x, Jet<T, N>{y});
 }
+
 template <typename T, int N>
 inline Jet<T, N> fmax(const T& x, const Jet<T, N>& y) {
-  return x < y ? y : Jet<T, N>{x};
+  return fmax(Jet<T, N>{x}, y);
 }
 
 template <typename T, int N>
 inline Jet<T, N> fmin(const Jet<T, N>& x, const Jet<T, N>& y) {
-  return y < x ? y : x;
+  using std::isless;
+  return isnan(x.a) || isless(y.a, x.a) ? y : x;
 }
+
 template <typename T, int N>
 inline Jet<T, N> fmin(const Jet<T, N>& x, const T& y) {
-  return y < x ? Jet<T, N>{y} : x;
+  return fmin(x, Jet<T, N>{y});
 }
+
 template <typename T, int N>
 inline Jet<T, N> fmin(const T& x, const Jet<T, N>& y) {
-  return y < x ? y : Jet<T, N>{x};
+  return fmin(Jet<T, N>{x}, y);
 }
 
 // erf is defined as an integral that cannot be expressed analytically
