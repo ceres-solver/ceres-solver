@@ -823,6 +823,16 @@ TEST(Jet, Jet) {
     VL << "z = " << z;
     ExpectJetsClose(x, z);
   }
+  {
+    J z = fmax(std::numeric_limits<double>::quiet_NaN(), x);
+    VL << "z = " << z;
+    ExpectJetsClose(x, z);
+  }
+  {
+    J z = fmax(x, std::numeric_limits<double>::quiet_NaN());
+    VL << "z = " << z;
+    ExpectJetsClose(x, z);
+  }
 
   {
     J z = fmin(x, y);
@@ -854,6 +864,17 @@ TEST(Jet, Jet) {
     VL << "z = " << z;
     ExpectJetsClose(J{y.a}, z);
   }
+  {
+    J z = fmin(x, std::numeric_limits<double>::quiet_NaN());
+    VL << "z = " << z;
+    ExpectJetsClose(x, z);
+  }
+  {
+    J z = fmin(std::numeric_limits<double>::quiet_NaN(), x);
+    VL << "z = " << z;
+    ExpectJetsClose(x, z);
+  }
+
   {  // copysign(x, +1)
     J z = copysign(x, J{+1});
     VL << "z = " << z;
