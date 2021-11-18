@@ -490,7 +490,9 @@ inline Jet<T, N> exp(const Jet<T, N>& f) {
 // expm1(a + h) ~= expm1(a) + exp(a) h
 template <typename T, int N>
 inline Jet<T, N> expm1(const Jet<T, N>& f) {
-  return Jet<T, N>(expm1(f.a), exp(f.a) * f.v);
+  const T tmp = expm1(f.a);
+  const T expa = tmp + T(1.0);  // exp(a) = expm1(a) + 1
+  return Jet<T, N>(tmp, expa * f.v);
 }
 
 // sqrt(a + h) ~= sqrt(a) + h / (2 sqrt(a))
