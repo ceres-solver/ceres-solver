@@ -404,6 +404,7 @@ using std::isinf;
 using std::isnan;
 using std::isnormal;
 using std::log;
+using std::log10;
 using std::log1p;
 using std::log2;
 using std::norm;
@@ -471,6 +472,14 @@ template <typename T, int N>
 inline Jet<T, N> log(const Jet<T, N>& f) {
   const T a_inverse = T(1.0) / f.a;
   return Jet<T, N>(log(f.a), f.v * a_inverse);
+}
+
+// log10(a + h) ~= log10(a) + h / (a log(10))
+template <typename T, int N>
+inline Jet<T, N> log10(const Jet<T, N>& f) {
+  // Most compilers will expand log(10) to a constant.
+  const T a_inverse = T(1.0) / (f.a * log(T(10.0)));
+  return Jet<T, N>(log10(f.a), f.v * a_inverse);
 }
 
 // log1p(a + h) ~= log1p(a) + h / (1 + a)

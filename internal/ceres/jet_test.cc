@@ -702,6 +702,17 @@ TEST(Jet, Jet) {
   NumericalTest("exp2", exp2<double, 2>, 1e-5);
   NumericalTest("exp2", exp2<double, 2>, 1.0);
 
+  {  // Check that log10(x) == log(x) / log(10)
+    J z = log10(x);
+    J w = log(x) / log(10.0);
+    VL << "z = " << z;
+    VL << "w = " << w;
+    ExpectJetsClose(z, w);
+  }
+  NumericalTest("log10", log10<double, 2>, 1e-5);
+  NumericalTest("log10", log10<double, 2>, 1.0);
+  NumericalTest("log10", log10<double, 2>, 98.76);
+
   {  // Check that log2(x) == log(x) / log(2)
     J z = log2(x);
     J w = log(x) / log(2.0);
