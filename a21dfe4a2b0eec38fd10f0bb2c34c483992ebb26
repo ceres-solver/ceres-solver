@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "152c2fa5_3c6eb4fd",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-18T17:22:55Z",
+      "side": 1,
+      "message": "const T",
+      "range": {
+        "startLine": 493,
+        "startChar": 3,
+        "endLine": 493,
+        "endChar": 4
+      },
+      "revId": "a21dfe4a2b0eec38fd10f0bb2c34c483992ebb26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef7610ce_1e87afff",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-18T17:22:55Z",
+      "side": 1,
+      "message": "const T",
+      "range": {
+        "startLine": 494,
+        "startChar": 3,
+        "endLine": 494,
+        "endChar": 4
+      },
+      "revId": "a21dfe4a2b0eec38fd10f0bb2c34c483992ebb26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
