@@ -701,8 +701,8 @@ Options controlling Ceres configuration
 
 #. ``BUILD_DOCUMENTATION [Default: OFF]``: Use this to enable building
    the documentation, requires `Sphinx <http://sphinx-doc.org/>`_ and
-   the `sphinx-better-theme
-   <https://pypi.python.org/pypi/sphinx-better-theme>`_ package
+   the `sphinx-rtd-theme
+   <https://pypi.org/project/sphinx-rtd-theme/>`_ package
    available from the Python package index. In addition, ``make
    ceres_docs`` can be used to build only the documentation.
 
