@@ -536,8 +536,9 @@ class CERES_EXPORT Solver {
     // max_num_refinement_iterations to 2-3.
     //
     // NOTE2: The following two options are currently only applicable
-    // if sparse_linear_algebra_library_type is EIGEN_SPARSE and
-    // linear_solver_type is SPARSE_NORMAL_CHOLESKY, or SPARSE_SCHUR.
+    // if sparse_linear_algebra_library_type is EIGEN_SPARSE or
+    // ACCELERATE_SPARSE, and linear_solver_type is SPARSE_NORMAL_CHOLESKY
+    // or SPARSE_SCHUR.
     bool use_mixed_precision_solves = false;
 
     // Number steps of the iterative refinement process to run when

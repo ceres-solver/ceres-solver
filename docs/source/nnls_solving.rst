@@ -1408,7 +1408,7 @@ elimination group [LiSaad]_.
    computed Schur complement. This can improve the performance of the
    ``ITERATIVE_SCHUR`` solver significantly.
 
-   .. NOTE:
+   .. NOTE::
 
      This option can only be used with the ``SCHUR_JACOBI``
      preconditioner.
@@ -1452,6 +1452,36 @@ elimination group [LiSaad]_.
    likely lead to worse performance.
 
    This setting only affects the `SPARSE_NORMAL_CHOLESKY` solver.
+
+.. member:: bool Solver::Options::use_mixed_precision_solves
+
+   Default: ``false``
+
+   .. NOTE::
+
+     This feature is EXPERIMENTAL and under development, use at your
+     own risk!
+
+   If true, the Gauss-Newton matrix is computed in *double* precision, but
+   its factorization is computed in **single** precision. This can result in
+   significant time and memory savings at the cost of some accuracy in the
+   Gauss-Newton step. Iterative refinement is used to recover some
+   of this accuracy back.
+
+   If ``use_mixed_precision_solves`` is true, we recommend setting
+   ``max_num_refinement_iterations`` to 2-3.
+
+   This option is currently only available if
+   ``sparse_linear_algebra_library_type`` is ``EIGEN_SPARSE`` or
+   ``ACCELERATE_SPARSE``, and ``linear_solver_type`` is
+   ``SPARSE_NORMAL_CHOLESKY`` or ``SPARSE_SCHUR``.
+
+.. member:: int Solver::Options::max_num_refinement_iterations
+
+   Default: ``0``
+
+   Number steps of the iterative refinement process to run when
+   computing the Gauss-Newton step, see ``use_mixed_precision_solves``.
 
 .. member:: int Solver::Options::min_linear_solver_iterations
 
