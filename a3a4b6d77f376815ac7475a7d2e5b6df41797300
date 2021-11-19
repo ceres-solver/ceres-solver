@@ -33,6 +33,24 @@
       "message": "Sergiu,\n\nthe tests for std::copysign are failing for me.\ncan you take a look please?\n\nhere is what I get on my mac.\n\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:954: Failure\nValue of: std::signbit(z.v[0])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:955: Failure\nValue of: std::signbit(z.v[1])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:963: Failure\nValue of: std::signbit(z.v[0])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:964: Failure\nValue of: std::signbit(z.v[1])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:972: Failure\nValue of: std::signbit(z.v[0])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:973: Failure\nValue of: std::signbit(z.v[1])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:981: Failure\nValue of: std::signbit(z.v[0])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:982: Failure\nValue of: std::signbit(z.v[1])\n  Actual: false\nExpected: true\n\n",
       "revId": "a3a4b6d77f376815ac7475a7d2e5b6df41797300",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50370cf6_04159263",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-19T10:07:00Z",
+      "side": 1,
+      "message": "Hi Sameer,\n\nI can reproduce those failures both with Clang and GCC with an optimization level -O1 or above (I previously ran the tests in debug mode only).\n\nThe failing tests have all in common that both the magnitude and the sign are +/-0. Looking at https://en.cppreference.com/w/cpp/numeric/math/copysign, it seems to be up to the implementation to support propagation of the sign in corresponding arithmetic operations:\n\n\"If sgn is -0, the result is only negative if the implementation supports the signed zero consistently in arithmetic operations.\"\n\nSince this seems to apply here, we can safely remove the signbit tests in above cases. Instead, I can add a copysign(a, -nan) test which makes more sense anyway.",
+      "parentUuid": "25f522f0_c3a2206e",
+      "revId": "a3a4b6d77f376815ac7475a7d2e5b6df41797300",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
