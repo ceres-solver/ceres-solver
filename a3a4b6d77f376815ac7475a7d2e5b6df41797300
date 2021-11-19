@@ -16,6 +16,23 @@
       "message": "Thanks this looks great.",
       "revId": "a3a4b6d77f376815ac7475a7d2e5b6df41797300",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25f522f0_c3a2206e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-19T03:47:27Z",
+      "side": 1,
+      "message": "Sergiu,\n\nthe tests for std::copysign are failing for me.\ncan you take a look please?\n\nhere is what I get on my mac.\n\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:954: Failure\nValue of: std::signbit(z.v[0])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:955: Failure\nValue of: std::signbit(z.v[1])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:963: Failure\nValue of: std::signbit(z.v[0])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:964: Failure\nValue of: std::signbit(z.v[1])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:972: Failure\nValue of: std::signbit(z.v[0])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:973: Failure\nValue of: std::signbit(z.v[1])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:981: Failure\nValue of: std::signbit(z.v[0])\n  Actual: false\nExpected: true\n/Users/sameeragarwal/ceres-solver/internal/ceres/jet_test.cc:982: Failure\nValue of: std::signbit(z.v[1])\n  Actual: false\nExpected: true\n\n",
+      "revId": "a3a4b6d77f376815ac7475a7d2e5b6df41797300",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
