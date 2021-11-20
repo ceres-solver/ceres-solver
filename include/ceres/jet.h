@@ -630,6 +630,29 @@ inline Jet<T, N> hypot(const Jet<T, N>& x, const Jet<T, N>& y) {
   return Jet<T, N>(tmp, x.a / tmp * x.v + y.a / tmp * y.v);
 }
 
+#if __cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >= 201703L)
+// Like sqrt(x^2 + y^2 + z^2),
+// but acts to prevent underflow/overflow for small/large x/y/z.
+// Note that the function is non-smooth at x=y=z=0,
+// so the derivative is undefined there.
+template <typename T, int N>
+inline Jet<T, N> hypot(const Jet<T, N>& x,
+                       const Jet<T, N>& y,
+                       const Jet<T, N>& z) {
+  // d/da sqrt(a) = 0.5 / sqrt(a)
+  // d/dx x^2 + y^2 + z^2 = 2x
+  // So by the chain rule:
+  // d/dx sqrt(x^2 + y^2 + z^2)
+  //    = 0.5 / sqrt(x^2 + y^2 + z^2) * 2x
+  //    = x / sqrt(x^2 + y^2 + z^2)
+  // d/dy sqrt(x^2 + y^2 + z^2) = y / sqrt(x^2 + y^2 + z^2)
+  // d/dz sqrt(x^2 + y^2 + z^2) = z / sqrt(x^2 + y^2 + z^2)
+  const T tmp = hypot(x.a, y.a, z.a);
+  return Jet<T, N>(tmp, x.a / tmp * x.v + y.a / tmp * y.v + z.a / tmp * z.v);
+}
+#endif  // __cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >=
+        // 201703L)
+
 template <typename T, int N>
 inline Jet<T, N> fmax(const Jet<T, N>& x, const Jet<T, N>& y) {
   using std::isgreater;
