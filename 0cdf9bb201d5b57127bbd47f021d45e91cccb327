@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "318f940f_1f2ce3ed",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-21T20:26:51Z",
+      "side": 1,
+      "message": "As explained in the comment, I vectorized the expression to allow Eigen to use packed ops. This may be more efficient than a naive expression.\n\nAt least dividing a single expression a scalar once instead three subexpressions individually can be expected to be more efficient.",
+      "parentUuid": "4ed893de_787e9e1c",
+      "range": {
+        "startLine": 652,
+        "startChar": 42,
+        "endLine": 652,
+        "endChar": 43
+      },
+      "revId": "0cdf9bb201d5b57127bbd47f021d45e91cccb327",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2cd4bfd0_7a3e7c1b",
@@ -47,6 +71,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1e1dbd1_32e390f4",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-21T20:26:51Z",
+      "side": 1,
+      "message": "In order to resolve the ambiguity. There are two variants of the same function (hypot) with a different number of arguments.",
+      "parentUuid": "2cd4bfd0_7a3e7c1b",
+      "range": {
+        "startLine": 798,
+        "startChar": 25,
+        "endLine": 798,
+        "endChar": 36
+      },
+      "revId": "0cdf9bb201d5b57127bbd47f021d45e91cccb327",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ecf83beb_045d2c3a",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-11-21T19:06:59Z",
       "side": 1,
       "message": "do not use c style constants, use std::numeric_limits here and elsewhere.",
+      "range": {
+        "startLine": 876,
+        "startChar": 14,
+        "endLine": 876,
+        "endChar": 21
+      },
+      "revId": "0cdf9bb201d5b57127bbd47f021d45e91cccb327",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc08fa8b_11b3860d",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-21T20:26:51Z",
+      "side": 1,
+      "message": "Agreed. I copied and modified an existing hypot test that already used those C-style constants.",
+      "parentUuid": "ecf83beb_045d2c3a",
       "range": {
         "startLine": 876,
         "startChar": 14,
