@@ -164,9 +164,51 @@
 #include <limits>
 #include <numeric>
 #include <string>
+#include <type_traits>
 
 #include "Eigen/Core"
 #include "ceres/internal/port.h"
+
+namespace ceres {
+// Jet foward declaration necessary for the following partial specialization of
+// std::common_type.
+template <typename T, int N>
+struct Jet;
+}  // namespace ceres
+
+// Here we provide partial specializations of std::common_type for the Jet class
+// to allow determining a Jet type with a common underlying arithmetic type.
+// Such an arithmetic type can be either a scalar or an another Jet. An example
+// for a common type, say, between a float and a Jet<double, N> is a Jet<double,
+// N> (i.e., std::common_type_t<float, ceres::Jet<double, N>> and
+// ceres::Jet<double, N> refer to the same type.)
+//
+// The partial specialization are also used for determining compatible types by
+// means of SFINAE and thus allow such types to be expressed as operands of
+// logical comparison operators. Missing (partial) specialization of
+// std::common_type for a particular (custom) type will therefore disable the
+// use of comparison operators defined by Ceres.
+//
+// Since these partial specializations are used as SFINAE constraints, they
+// enable standard promotion rules between various scalar types and consequently
+// their use in comparison against a Jet without providing implicit
+// conversions from a scalar, such as an int, to a Jet (see the implementation
+// of logical comparison operators below).
+
+template <typename T, int N, typename U>
+struct std::common_type<T, ceres::Jet<U, N>> {
+  using type = ceres::Jet<common_type_t<T, U>, N>;
+};
+
+template <typename T, int N, typename U>
+struct std::common_type<ceres::Jet<T, N>, U> {
+  using type = ceres::Jet<common_type_t<T, U>, N>;
+};
+
+template <typename T, int N, typename U>
+struct std::common_type<ceres::Jet<T, N>, ceres::Jet<U, N>> {
+  using type = ceres::Jet<common_type_t<T, U>, N>;
+};
 
 namespace ceres {
 
@@ -354,19 +396,32 @@ inline Jet<T, N> operator/(const Jet<T, N>& f, T s) {
   return Jet<T, N>(f.a * s_inverse, f.v * s_inverse);
 }
 
-// Binary comparison operators for both scalars and jets.
-#define CERES_DEFINE_JET_COMPARISON_OPERATOR(op)                    \
-  template <typename T, int N>                                      \
-  inline bool operator op(const Jet<T, N>& f, const Jet<T, N>& g) { \
-    return f.a op g.a;                                              \
-  }                                                                 \
-  template <typename T, int N>                                      \
-  inline bool operator op(const T& s, const Jet<T, N>& g) {         \
-    return s op g.a;                                                \
-  }                                                                 \
-  template <typename T, int N>                                      \
-  inline bool operator op(const Jet<T, N>& f, const T& s) {         \
-    return f.a op s;                                                \
+// Binary comparison operators for both scalars and jets. std::common_type_t is
+// used as an SFINAE constraint to selectively enable compatible operand types.
+// This allows comparison, for instance, against int literals without implicit
+// conversion. In case the Jet arithmetic type is a Jet itself, a recursive
+// expansion of Jet value is performed.
+#define CERES_DEFINE_JET_COMPARISON_OPERATOR(op)                               \
+  template <typename T, int N>                                                 \
+  constexpr bool operator op(                                                  \
+      const Jet<T, N>& f, const Jet<T, N>& g) noexcept(noexcept(f.a op g.a)) { \
+    return f.a op g.a;                                                         \
+  }                                                                            \
+  template <typename T,                                                        \
+            int N,                                                             \
+            typename U,                                                        \
+            std::common_type_t<T, U>* = nullptr>                               \
+  constexpr bool operator op(                                                  \
+      const U& s, const Jet<T, N>& g) noexcept(noexcept(s op g.a)) {           \
+    return s op g.a;                                                           \
+  }                                                                            \
+  template <typename T,                                                        \
+            int N,                                                             \
+            typename U,                                                        \
+            std::common_type_t<T, U>* = nullptr>                               \
+  constexpr bool operator op(const Jet<T, N>& f,                               \
+                             const U& s) noexcept(noexcept(f.a op s)) {        \
+    return f.a op s;                                                           \
   }
 CERES_DEFINE_JET_COMPARISON_OPERATOR(<)   // NOLINT
 CERES_DEFINE_JET_COMPARISON_OPERATOR(<=)  // NOLINT

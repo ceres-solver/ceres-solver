@@ -1400,5 +1400,96 @@ TEST(Jet, nested3x) {
   ExpectClose(e.v[0].v[0].v[0], kE, kTolerance);
 }
 
+#if GTEST_HAS_TYPED_TEST
+
+using Types = testing::Types<short,
+                             unsigned short,
+                             int,
+                             unsigned int,
+                             long,
+                             unsigned long,
+                             long long,
+                             unsigned long long,
+                             float,
+                             double,
+                             long double>;
+
+template <typename T>
+class JetTest : public testing::Test {};
+
+TYPED_TEST_SUITE(JetTest, Types);
+
+// Don't care about the dual part for comparison tests
+template <typename T>
+using J0 = Jet<T, 0>;
+using J0d = J0<double>;
+
+TYPED_TEST(JetTest, comparison_jet) {
+  using Scalar = TypeParam;
+
+  EXPECT_EQ(J0<Scalar>{0}, J0<Scalar>{0});
+  EXPECT_GE(J0<Scalar>{3}, J0<Scalar>{3});
+  EXPECT_GT(J0<Scalar>{3}, J0<Scalar>{2});
+  EXPECT_LE(J0<Scalar>{1}, J0<Scalar>{1});
+  EXPECT_LT(J0<Scalar>{1}, J0<Scalar>{2});
+  EXPECT_NE(J0<Scalar>{1}, J0<Scalar>{2});
+}
+
+TYPED_TEST(JetTest, comparison_scalar) {
+  using Scalar = TypeParam;
+
+  EXPECT_EQ(J0d{0.0}, Scalar{0});
+  EXPECT_GE(J0d{3.0}, Scalar{3});
+  EXPECT_GT(J0d{3.0}, Scalar{2});
+  EXPECT_LE(J0d{1.0}, Scalar{1});
+  EXPECT_LT(J0d{1.0}, Scalar{2});
+  EXPECT_NE(J0d{1.0}, Scalar{2});
+
+  EXPECT_EQ(Scalar{0}, J0d{0.0});
+  EXPECT_GE(Scalar{1}, J0d{1.0});
+  EXPECT_GT(Scalar{2}, J0d{1.0});
+  EXPECT_LE(Scalar{3}, J0d{3.0});
+  EXPECT_LT(Scalar{2}, J0d{3.0});
+  EXPECT_NE(Scalar{2}, J0d{1.0});
+}
+
+TYPED_TEST(JetTest, comparison_nested2x) {
+  using Scalar = TypeParam;
+
+  EXPECT_EQ(J0<J0d>{J0d{0.0}}, Scalar{0});
+  EXPECT_GE(J0<J0d>{J0d{3.0}}, Scalar{3});
+  EXPECT_GT(J0<J0d>{J0d{3.0}}, Scalar{2});
+  EXPECT_LE(J0<J0d>{J0d{1.0}}, Scalar{1});
+  EXPECT_LT(J0<J0d>{J0d{1.0}}, Scalar{2});
+  EXPECT_NE(J0<J0d>{J0d{1.0}}, Scalar{2});
+
+  EXPECT_EQ(Scalar{0}, J0<J0d>{J0d{0.0}});
+  EXPECT_GE(Scalar{1}, J0<J0d>{J0d{1.0}});
+  EXPECT_GT(Scalar{2}, J0<J0d>{J0d{1.0}});
+  EXPECT_LE(Scalar{3}, J0<J0d>{J0d{3.0}});
+  EXPECT_LT(Scalar{2}, J0<J0d>{J0d{3.0}});
+  EXPECT_NE(Scalar{2}, J0<J0d>{J0d{1.0}});
+}
+
+TYPED_TEST(JetTest, comparison_nested3x) {
+  using Scalar = TypeParam;
+
+  EXPECT_EQ(J0<J0<J0d>>{J0<J0d>{J0d{0.0}}}, Scalar{0});
+  EXPECT_GE(J0<J0<J0d>>{J0<J0d>{J0d{3.0}}}, Scalar{3});
+  EXPECT_GT(J0<J0<J0d>>{J0<J0d>{J0d{3.0}}}, Scalar{2});
+  EXPECT_LE(J0<J0<J0d>>{J0<J0d>{J0d{1.0}}}, Scalar{1});
+  EXPECT_LT(J0<J0<J0d>>{J0<J0d>{J0d{1.0}}}, Scalar{2});
+  EXPECT_NE(J0<J0<J0d>>{J0<J0d>{J0d{1.0}}}, Scalar{2});
+
+  EXPECT_EQ(Scalar{0}, J0<J0<J0d>>{J0<J0d>{J0d{0.0}}});
+  EXPECT_GE(Scalar{1}, J0<J0<J0d>>{J0<J0d>{J0d{1.0}}});
+  EXPECT_GT(Scalar{2}, J0<J0<J0d>>{J0<J0d>{J0d{1.0}}});
+  EXPECT_LE(Scalar{3}, J0<J0<J0d>>{J0<J0d>{J0d{3.0}}});
+  EXPECT_LT(Scalar{2}, J0<J0<J0d>>{J0<J0d>{J0d{3.0}}});
+  EXPECT_NE(Scalar{2}, J0<J0<J0d>>{J0<J0d>{J0d{1.0}}});
+}
+
+#endif  // GTEST_HAS_TYPED_TEST
+
 }  // namespace internal
 }  // namespace ceres
