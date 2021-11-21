@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c702c26e_34fb21be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-21T23:15:10Z",
+      "side": 1,
+      "message": "There might be a problem with the vectorized version if the number of parameters is not known at compile-time. I changed the function to use the simpler expression. PTAL.",
+      "revId": "fbcb5a6a3e758fc240a467d3b443623505e3b3cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
