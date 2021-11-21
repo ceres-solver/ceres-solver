@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50ca14b8_1479eda5",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-21T19:08:41Z",
+      "side": 1,
+      "message": "please add copious documentation here, both why and how you are doing what you are doing.",
+      "range": {
+        "startLine": 172,
+        "startChar": 8,
+        "endLine": 172,
+        "endChar": 9
+      },
+      "revId": "849ec41ff8823884bf73a915b650ae6b63967910",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
