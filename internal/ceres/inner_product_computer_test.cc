@@ -50,7 +50,7 @@ namespace internal {
     CompressedRowSparseMatrix* actual_product_crsm =                         \
         inner_product_computer->mutable_result();                            \
     Matrix actual_inner_product =                                            \
-        Eigen::MappedSparseMatrix<double, Eigen::ColMajor>(                  \
+        Eigen::Map<Eigen::SparseMatrix<double, Eigen::ColMajor>>(            \
             actual_product_crsm->num_rows(),                                 \
             actual_product_crsm->num_rows(),                                 \
             actual_product_crsm->num_nonzeros(),                             \

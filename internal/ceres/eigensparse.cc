@@ -122,7 +122,7 @@ class EigenSparseCholeskyTemplate : public SparseCholesky {
       values_ptr = values_.data();
     }
 
-    Eigen::MappedSparseMatrix<typename Solver::Scalar, Eigen::ColMajor>
+    Eigen::Map<Eigen::SparseMatrix<typename Solver::Scalar, Eigen::ColMajor>>
         eigen_lhs(lhs->num_rows(),
                   lhs->num_rows(),
                   lhs->num_nonzeros(),

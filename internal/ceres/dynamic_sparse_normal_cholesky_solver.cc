@@ -123,12 +123,13 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(
 
   EventLogger event_logger("DynamicSparseNormalCholeskySolver::Eigen::Solve");
 
-  Eigen::MappedSparseMatrix<double, Eigen::RowMajor> a(A->num_rows(),
-                                                       A->num_cols(),
-                                                       A->num_nonzeros(),
-                                                       A->mutable_rows(),
-                                                       A->mutable_cols(),
-                                                       A->mutable_values());
+  Eigen::Map<Eigen::SparseMatrix<double, Eigen::RowMajor>> a(
+      A->num_rows(),
+      A->num_cols(),
+      A->num_nonzeros(),
+      A->mutable_rows(),
+      A->mutable_cols(),
+      A->mutable_values());
 
   Eigen::SparseMatrix<double> lhs = a.transpose() * a;
   Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>> solver;
