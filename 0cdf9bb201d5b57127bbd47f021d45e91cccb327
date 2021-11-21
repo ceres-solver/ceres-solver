@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ed893de_787e9e1c",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-21T19:06:59Z",
+      "side": 1,
+      "message": "why do we need to construct this matrix? why not just write the derivative as an algebraic expression? I doubt this has any significant efficiency gains, it will make it more explicit. \n\nas in\n\nreturn Jet\u003cT,N\u003e(tmp, (x.a/tmp) * x.v + (y.a/tmp) * y.v + (z.a/tmp) * y.v) ?",
+      "range": {
+        "startLine": 652,
+        "startChar": 42,
+        "endLine": 652,
+        "endChar": 43
+      },
+      "revId": "0cdf9bb201d5b57127bbd47f021d45e91cccb327",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cd4bfd0_7a3e7c1b",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-21T19:06:59Z",
+      "side": 1,
+      "message": "why do this?",
+      "range": {
+        "startLine": 798,
+        "startChar": 25,
+        "endLine": 798,
+        "endChar": 36
+      },
+      "revId": "0cdf9bb201d5b57127bbd47f021d45e91cccb327",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecf83beb_045d2c3a",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-21T19:06:59Z",
+      "side": 1,
+      "message": "do not use c style constants, use std::numeric_limits here and elsewhere.",
+      "range": {
+        "startLine": 876,
+        "startChar": 14,
+        "endLine": 876,
+        "endChar": 21
+      },
+      "revId": "0cdf9bb201d5b57127bbd47f021d45e91cccb327",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
