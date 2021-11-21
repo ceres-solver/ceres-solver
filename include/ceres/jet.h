@@ -163,9 +163,30 @@
 #include <iostream>  // NOLINT
 #include <limits>
 #include <string>
+#include <type_traits>
 
 #include "Eigen/Core"
 #include "ceres/internal/port.h"
+
+namespace ceres {
+template <typename T, int N>
+struct Jet;
+}  // namespace ceres
+
+template <typename T, int N, typename U>
+struct std::common_type<T, ceres::Jet<U, N>> {
+  using type = ceres::Jet<common_type_t<T, U>, N>;
+};
+
+template <typename T, int N, typename U>
+struct std::common_type<ceres::Jet<T, N>, U> {
+  using type = ceres::Jet<common_type_t<T, U>, N>;
+};
+
+template <typename T, int N, typename U>
+struct std::common_type<ceres::Jet<T, N>, ceres::Jet<U, N>> {
+  using type = ceres::Jet<common_type_t<T, U>, N>;
+};
 
 namespace ceres {
 
@@ -354,18 +375,27 @@ inline Jet<T, N> operator/(const Jet<T, N>& f, T s) {
 }
 
 // Binary comparison operators for both scalars and jets.
-#define CERES_DEFINE_JET_COMPARISON_OPERATOR(op)                    \
-  template <typename T, int N>                                      \
-  inline bool operator op(const Jet<T, N>& f, const Jet<T, N>& g) { \
-    return f.a op g.a;                                              \
-  }                                                                 \
-  template <typename T, int N>                                      \
-  inline bool operator op(const T& s, const Jet<T, N>& g) {         \
-    return s op g.a;                                                \
-  }                                                                 \
-  template <typename T, int N>                                      \
-  inline bool operator op(const Jet<T, N>& f, const T& s) {         \
-    return f.a op s;                                                \
+#define CERES_DEFINE_JET_COMPARISON_OPERATOR(op)                               \
+  template <typename T, int N>                                                 \
+  constexpr bool operator op(                                                  \
+      const Jet<T, N>& f, const Jet<T, N>& g) noexcept(noexcept(f.a op g.a)) { \
+    return f.a op g.a;                                                         \
+  }                                                                            \
+  template <typename T,                                                        \
+            int N,                                                             \
+            typename U,                                                        \
+            std::common_type_t<T, U>* = nullptr>                               \
+  constexpr bool operator op(                                                  \
+      const U& s, const Jet<T, N>& g) noexcept(noexcept(s op g.a)) {           \
+    return s op g.a;                                                           \
+  }                                                                            \
+  template <typename T,                                                        \
+            int N,                                                             \
+            typename U,                                                        \
+            std::common_type_t<T, U>* = nullptr>                               \
+  constexpr bool operator op(const Jet<T, N>& f,                               \
+                             const U& s) noexcept(noexcept(f.a op s)) {        \
+    return f.a op s;                                                           \
   }
 CERES_DEFINE_JET_COMPARISON_OPERATOR(<)   // NOLINT
 CERES_DEFINE_JET_COMPARISON_OPERATOR(<=)  // NOLINT
