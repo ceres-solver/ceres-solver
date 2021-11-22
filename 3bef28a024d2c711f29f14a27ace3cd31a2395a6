@@ -63,6 +63,30 @@
       },
       "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "763819b6_b0d9019f",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-22T14:29:07Z",
+      "side": 1,
+      "message": "I did not mean that we should define anything more than what you already have in the std namespace. The only other thing we have is the definition of numeric limits for jets to allow eigen to use them.\n\nI did not know the rules for ADL, thanks for clarifying them. I\u0027d like Keir to take a look at this one too before submitting. I will have him take a look later in the day.",
+      "parentUuid": "273bcdbb_71eb7d4a",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 3
+      },
+      "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
