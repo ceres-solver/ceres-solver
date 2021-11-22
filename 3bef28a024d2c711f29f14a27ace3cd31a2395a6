@@ -176,6 +176,24 @@
       "message": "Please add some no-compile tests that demonstrate that naive mixing of int literals and jets doesn\u0027t compile. Historically, that was the reason we didn\u0027t permit implicit conversions; since it led to costly bugs that are hard to track down.",
       "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a604593_9cd58ff5",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-22T18:32:43Z",
+      "side": 1,
+      "message": "Hi Keir,\n\nThanks for the comments. However, I do not understand what do you mean by no-compile tests. Restrictions disallowing the mixture of Jets with literals (i.e., explicit constructors) are still in place and were not changed. The changes here affect solely the comparison operators.\n\nAlso note that no implicit conversion is performed (as mentioned in the source comments). Rather, the constraints for supported types allowed to be passed to logical comparison operators are slightly relaxed.",
+      "parentUuid": "4daf0714_93eda6cc",
+      "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
