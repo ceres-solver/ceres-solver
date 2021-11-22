@@ -87,6 +87,30 @@
       },
       "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5086cf7e_a2d5e57d",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-22T15:13:16Z",
+      "side": 1,
+      "message": "Oh, sorry. I misread your question.\n\nThe specializations in the std namespace are independent from each other. For better code readability, the std::common_type partial specializations would ideally appear before they used. Therefore, I don\u0027t see a good reason for moving the code.",
+      "parentUuid": "763819b6_b0d9019f",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 3
+      },
+      "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
