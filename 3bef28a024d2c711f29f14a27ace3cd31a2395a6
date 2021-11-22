@@ -135,6 +135,47 @@
       },
       "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a824e4c8_69942170",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-11-22T18:17:39Z",
+      "side": 1,
+      "message": "This is a great enhancement to jets that fixes the long-standing reason we didn\u0027t have implicit conversions.\n\nThe ordering of declarations makes sense to me as-is; Sameer, feel free to re-open if you want.",
+      "parentUuid": "76b2688c_f93c7c65",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 3
+      },
+      "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4daf0714_93eda6cc",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-11-22T18:17:39Z",
+      "side": 1,
+      "message": "Please add some no-compile tests that demonstrate that naive mixing of int literals and jets doesn\u0027t compile. Historically, that was the reason we didn\u0027t permit implicit conversions; since it led to costly bugs that are hard to track down.",
+      "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

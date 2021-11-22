@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66a056a2_2ca230c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-11-22T18:17:39Z",
+      "side": 1,
+      "message": "This is a fantastic change; thanks for making it! I never thought of doing something like this SFINAE approach to prevent mixing ints and jets.\n\nSince we had multiple Ceres users burned by the int/jet mixing problems, please add some no-compile tests to show that comparisons with ints don\u0027t work or don\u0027t behave badly.\n\nI wish I\u0027d recorded the details of the cases we ran into previously so I could paste them here, but it\u0027s been 10 years and the examples are lost to the mists of time.\n\nNit: Please capitalize the commit subject (first line).",
+      "revId": "9be7cdc6a66dd9df3f7c0155cf54f06bf8cd97fe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
