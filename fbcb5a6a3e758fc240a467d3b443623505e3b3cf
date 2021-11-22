@@ -16,6 +16,46 @@
       "message": "There might be a problem with the vectorized version if the number of parameters is not known at compile-time. I changed the function to use the simpler expression. PTAL.",
       "revId": "fbcb5a6a3e758fc240a467d3b443623505e3b3cf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f362fd9_cf590402",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-22T14:11:42Z",
+      "side": 1,
+      "message": "a minor comment about comments and this is good to go.",
+      "revId": "fbcb5a6a3e758fc240a467d3b443623505e3b3cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20d00103_3f366dfb",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-22T14:11:42Z",
+      "side": 1,
+      "message": "please add a comment explaining why we are using these two lines of code, because it is not evident why just by looking at this.",
+      "range": {
+        "startLine": 797,
+        "startChar": 2,
+        "endLine": 797,
+        "endChar": 7
+      },
+      "revId": "fbcb5a6a3e758fc240a467d3b443623505e3b3cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
