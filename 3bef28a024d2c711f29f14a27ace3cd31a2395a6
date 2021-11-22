@@ -111,6 +111,30 @@
       },
       "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76b2688c_f93c7c65",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-22T15:23:08Z",
+      "side": 1,
+      "message": "This of course does not mean consolidating the std definitions will not work. However, I believe it is logically clearer to define the partial specializations prior to their use.",
+      "parentUuid": "5086cf7e_a2d5e57d",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 3
+      },
+      "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
