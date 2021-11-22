@@ -39,6 +39,30 @@
       },
       "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "273bcdbb_71eb7d4a",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-22T14:26:36Z",
+      "side": 1,
+      "message": "Hi Sameer,\n\nDefining functions/classes in std namespace is generally not allowed with few exceptions (std::common_type being one of them).\n\nApart from that, proving operators in a namespace different from the one that originally defined the type will break ADL.",
+      "parentUuid": "c1bf1543_af8730bd",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 3
+      },
+      "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
