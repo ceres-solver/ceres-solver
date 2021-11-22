@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0133d05_12098229",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-22T14:21:26Z",
+      "side": 1,
+      "message": "Keir it would be worth it for you to take a look at this too.",
+      "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1bf1543_af8730bd",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-22T14:21:26Z",
+      "side": 1,
+      "message": "This is a very interesting way of implementing comparisons.\n\nOne question I have is, we already have some stuff being defined in the std namespace below for numeric limits, can we consolidate all the std namespace below?\n\nThe binary operation functions don\u0027t need to be in the ceres namespace no? so they could be moved out and put at the bottom of the file? \n\nI think that will make this chunk more readable and collocated where it is used.",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 3
+      },
+      "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
