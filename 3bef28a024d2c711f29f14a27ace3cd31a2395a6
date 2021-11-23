@@ -194,6 +194,24 @@
       "parentUuid": "4daf0714_93eda6cc",
       "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb6ca5fb_c8998bc9",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-23T10:08:46Z",
+      "side": 1,
+      "message": "Keir, is it possible that we understand different things under \"implicit conversions\"?\n\nAccording to my understanding, an implicit conversion is provided either by a converting constructor (without an explicit modifier, e.g., to construct a Jet from an int) or a user-defined conversion function (e.g., operator double() that converts a Jet to a scalar by extracting the real part of the dual and thus discarding the derivative).\n\nEither way, I would be interested to learn more about the problems you encountered in the past and the specifics of previously employed implicit conversion that caused those problems. At least, converting constructors should be generally safe since the derivative of constants can be generally assumed to be 0. However, a used-defined conversion function that extracts the real part of a Jet is clearly problematic.",
+      "parentUuid": "2a604593_9cd58ff5",
+      "revId": "3bef28a024d2c711f29f14a27ace3cd31a2395a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
