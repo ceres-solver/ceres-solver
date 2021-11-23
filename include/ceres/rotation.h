@@ -136,6 +136,112 @@ template <typename T, int row_stride, int col_stride>
 void EulerAnglesToRotationMatrix(
     const T* euler, const MatrixAdapter<T, row_stride, col_stride>& R);
 
+// Convert a generic Euler Angle sequence (in radians) to a 3x3 rotation matrix.
+//
+// Euler Angle are defined by three rotations around a sequence of axes, applied
+// by the left-multiply convention. Principal rotations may be in a static
+// reference frame (extrinsic), or in rotating reference frames (intrinsic)
+//
+// The sequence of axes is defined by the triplet {a0,a1,a2} taking values in
+// [0-2], e.g. '0' indicates the 0th basis vector (x-axis). Inputs are
+// interpreted in the order of the axis sequence, e.g. if a0 = 1, then euler[0]
+// contains a y-axis rotation
+//
+// To obtain the behavior of the legacy EulerAnglesToRotationMatrix function,
+// leave all optional arguments at default and convert inputs to degrees
+template <typename T>
+void EulerAnglesToRotation(const T* euler,
+                           T* R,
+                           int a0 = 0,
+                           int a1 = 1,
+                           int a2 = 2,
+                           bool extrinsic = true);
+
+template <typename T, int row_stride, int col_stride>
+void EulerAnglesToRotation(const T* euler,
+                           const MatrixAdapter<T, row_stride, col_stride>& R,
+                           int a0,
+                           int a1,
+                           int a2,
+                           bool extrinsic);
+
+// Convert a 3x3 rotation matrix to a generic Euler Angle sequence (in radians)
+//
+// Euler Angle are defined by three rotations around a sequence of axes, applied
+// by the left-multiply convention. Principal rotations may be in a static
+// reference frame (extrinsic), or in rotating reference frames (intrinsic)
+//
+// The sequence of axes is defined by the triplet {a0,a1,a2} taking values in
+// [0-2], e.g. '0' indicates the 0th basis vector (x-axis). Inputs are
+// interpreted in the order of the axis sequence, e.g. if a0 = 1, then euler[0]
+// contains a y-axis rotation
+//
+// When using proper Euler Angles (e.g. ZYZ), the returned angles are in
+//     [-pi, pi]x[0, pi]x[-pi, pi]
+// When using Tait-Bryan Angles (e.g. ZYX), the returned angles are in
+//     [-pi, pi]x[-pi/2, pi/2]x[-pi, pi]
+// For angles in these ranges, EulerAnglesToRotation is the inverse of this
+// function
+template <typename T>
+void RotationMatrixToEulerAngles(const T* R,
+                                 T* euler,
+                                 int a0 = 0,
+                                 int a1 = 1,
+                                 int a2 = 2,
+                                 bool extrinsic = true);
+
+template <typename T, int row_stride, int col_stride>
+void RotationMatrixToEulerAngles(
+    const MatrixAdapter<const T, row_stride, col_stride>& R,
+    T* euler,
+    int a0,
+    int a1,
+    int a2,
+    bool extrinsic);
+
+// Convert a generic Euler Angle sequence (in radians) to a quaternion
+//
+// Euler Angle are defined by three rotations around a sequence of axes, applied
+// by the left-multiply convention. Principal rotations may be in a static
+// reference frame (extrinsic), or in rotating reference frames (intrinsic)
+//
+// The sequence of axes is defined by the triplet {a0,a1,a2} taking values in
+// [0-2], e.g. '0' indicates the 0th basis vector (x-axis). Inputs are
+// interpreted in the order of the axis sequence, e.g. if a0 = 1, then euler[0]
+// contains a y-axis rotation
+template <typename T>
+void EulerAnglesToQuaternion(const T* euler,
+                             T* quaternion,
+                             int a0 = 0,
+                             int a1 = 1,
+                             int a2 = 2,
+                             bool extrinsic = true);
+
+// Convert a quaternion to a generic Euler Angle sequence (in radians)
+//
+// Euler Angle are defined by three rotations around a sequence of axes, applied
+// by the left-multiply convention. Principal rotations may be in a static
+// reference frame (extrinsic), or in rotating reference frames (intrinsic)
+//
+// The sequence of axes is defined by the triplet {a0,a1,a2} taking values in
+// [0-2], e.g. '0' indicates the 0th basis vector (x-axis). Inputs are
+// interpreted in the order of the axis sequence, e.g. if a0 = 1, then euler[0]
+// contains a y-axis rotation
+//
+// When using proper Euler Angles (e.g. ZYZ), the returned angles are in
+//     [-pi, pi]x[0, pi]x[-pi, pi]
+// When using Tait-Bryan Angles (e.g. ZYX), the returned angles are in
+//     [-pi, pi]x[-pi/2, pi/2]x[-pi, pi]
+// For angles in these ranges, EulerAnglesToQuaternion is the inverse of this
+// function
+template <typename T>
+void QuaternionToEulerAngles(const T* quaternion,
+                             T* euler,
+                             int a0 = 0,
+                             int a1 = 1,
+                             int a2 = 2,
+                             bool extrinsic = true);
+
 // Convert a 4-vector to a 3x3 scaled rotation matrix.
 //
 // The choice of rotation is such that the quaternion [1 0 0 0] goes to an
@@ -459,6 +565,288 @@ void EulerAnglesToRotationMatrix(
   R(2, 0) = -s2;
   R(2, 1) = c2 * s3;
   R(2, 2) = c2 * c3;
+}
+
+template <typename T>
+void EulerAnglesToRotation(
+    const T* euler, T* R, int a0, int a1, int a2, bool extrinsic) {
+  EulerAnglesToRotation(euler, RowMajorAdapter3x3(R), a0, a1, a2, extrinsic);
+}
+
+// This algorithm comes from "Euler angle conversion", Ken Shoemake, Graphics
+// gems IV
+template <typename T, int row_stride, int col_stride>
+void EulerAnglesToRotation(const T* euler,
+                           const MatrixAdapter<T, row_stride, col_stride>& R,
+                           int a0,
+                           int a1,
+                           int a2,
+                           bool extrinsic) {
+  T angles[] = {extrinsic ? euler[0] : euler[2],
+                euler[1],
+                extrinsic ? euler[2] : euler[0]};
+
+  const int i = (extrinsic ? a0 : a2) & 3;
+  const bool odd = (i + 1) % 3 != a1;
+  const int j = (i + 1 + odd) % 3;
+  const int k = (i + 2 - odd) % 3;
+
+  if (odd) {
+    angles[0] = -angles[0];
+    angles[1] = -angles[1];
+    angles[2] = -angles[2];
+  }
+
+  const T ci = cos(angles[0]);
+  const T cj = cos(angles[1]);
+  const T ch = cos(angles[2]);
+  const T si = sin(angles[0]);
+  const T sj = sin(angles[1]);
+  const T sh = sin(angles[2]);
+  const T cc = ci * ch;
+  const T cs = ci * sh;
+  const T sc = si * ch;
+  const T ss = si * sh;
+
+  if (a0 == a2) {
+    // Proper Euler Angles
+    R(i, i) = cj;
+    R(i, j) = sj * si;
+    R(i, k) = sj * ci;
+    R(j, i) = sj * sh;
+    R(j, j) = -cj * ss + cc;
+    R(j, k) = -cj * cs - sc;
+    R(k, i) = -sj * ch;
+    R(k, j) = cj * sc + cs;
+    R(k, k) = cj * cc - ss;
+  } else {
+    // Tait-Bryan Angles
+    R(i, i) = cj * ch;
+    R(i, j) = sj * sc - cs;
+    R(i, k) = sj * cc + ss;
+    R(j, i) = cj * sh;
+    R(j, j) = sj * ss + cc;
+    R(j, k) = sj * cs - sc;
+    R(k, i) = -sj;
+    R(k, j) = cj * si;
+    R(k, k) = cj * ci;
+  }
+}
+
+template <typename T>
+void RotationMatrixToEulerAngles(
+    const T* R, T* euler, int a0, int a1, int a2, bool extrinsic) {
+  RotationMatrixToEulerAngles(
+      RowMajorAdapter3x3(R), euler, a0, a1, a2, extrinsic);
+}
+
+// Refer to "Euler angle conversion", Ken Shoemake, Graphics gems IV. Unless R
+// is gimbal locked, the outputs of this function are compliant with scipy's
+// spatial.transform.Rotation.as_euler() which is derived from "General formula
+// for extracting the Euler angles", Shuster & Markley, JGCD
+template <typename T, int row_stride, int col_stride>
+void RotationMatrixToEulerAngles(
+    const MatrixAdapter<const T, row_stride, col_stride>& R,
+    T* euler,
+    int a0,
+    int a1,
+    int a2,
+    bool extrinsic) {
+  const int i = (extrinsic ? a0 : a2) & 3;
+  const bool odd = (i + 1) % 3 != a1;
+  const int j = (i + 1 + odd) % 3;
+  const int k = (i + 2 - odd) % 3;
+
+  bool gimbal_locked = false;
+  if (a0 == a2) {
+    const T sy = sqrt(R(i, j) * R(i, j) + R(i, k) * R(i, k));
+    euler[1] = atan2(sy, R(i, i));
+    if (sy > T(std::numeric_limits<double>::epsilon())) {
+      euler[0] = atan2(R(i, j), R(i, k));
+      euler[2] = atan2(R(j, i), -R(k, i));
+    } else {
+      gimbal_locked = true;
+    }
+
+  } else {
+    const T cy = sqrt(R(i, i) * R(i, i) + R(j, i) * R(j, i));
+    euler[1] = atan2(-R(k, i), cy);
+    if (cy > T(std::numeric_limits<double>::epsilon())) {
+      euler[0] = atan2(R(k, j), R(k, k));
+      euler[2] = atan2(R(j, i), R(i, i));
+    } else {
+      gimbal_locked = true;
+    }
+  }
+
+  // Gimbal lock handling ensures that if R represents a gimbal-locked
+  // configuration, then converting R to euler angles and back produces the same
+  // matrix for all euler axis sequences
+  if (gimbal_locked) {
+    euler[0] = atan2(-R(j, k), R(j, j));
+    euler[2] = T(0);
+  }
+
+  if (odd) {
+    euler[0] = -euler[0];
+    euler[1] = -euler[1];
+    euler[2] = -euler[2];
+  }
+
+  // Unlike scipy.spatial.Rotation, if intrinsic rotations are used then
+  // euler[0] is zeroed, instead of euler[2]
+  if (!extrinsic) {
+    const T tmp = euler[0];
+    euler[0] = euler[2];
+    euler[2] = tmp;
+  }
+
+  if (a0 == a2) {
+    constexpr T kPi(3.14159265358979323846);
+    if (euler[1] < T(0) || euler[1] > kPi) {
+      euler[0] += kPi;
+      euler[1] = -euler[1];
+      euler[2] -= kPi;
+    }
+
+    for (int i = 0; i < 3; ++i) {
+      if (euler[i] < -kPi) {
+        euler[i] += T(2) * kPi;
+      } else if (euler[i] > kPi) {
+        euler[i] -= T(2) * kPi;
+      }
+    }
+  }
+}
+
+template <typename T>
+void EulerAnglesToQuaternion(
+    const T* euler, T* quaternion, int a0, int a1, int a2, bool extrinsic) {
+  const int i = (extrinsic ? a0 : a2) & 3;
+  const bool odd = (i + 1) % 3 != a1;
+  const int j = (i + 1 + odd) % 3;
+  const int k = (i + 2 - odd) % 3;
+
+  const T ti = (extrinsic ? euler[0] : euler[2]) * T(0.5);
+  const T tj = (odd ? -euler[1] : euler[1]) * T(0.5);
+  const T th = (extrinsic ? euler[2] : euler[0]) * T(0.5);
+  const T cj = cos(tj);
+  const T sj = sin(tj);
+
+  if (a0 == a2) {
+    const T tp = ti + th;
+    const T tm = ti - th;
+    quaternion[1 + i] = cj * sin(tp);
+    quaternion[1 + j] = (odd ? -sj : sj) * cos(tm);
+    quaternion[1 + k] = sj * sin(-tm);
+    quaternion[0] = cj * cos(tp);
+  } else {
+    const T ci = cos(ti);
+    const T ch = cos(th);
+    const T si = sin(ti);
+    const T sh = sin(th);
+    const T cc = ci * ch;
+    const T cs = ci * sh;
+    const T sc = si * ch;
+    const T ss = si * sh;
+    quaternion[1 + i] = cj * sc - sj * cs;
+    quaternion[1 + j] = odd ? -(cj * ss + sj * cc) : cj * ss + sj * cc;
+    quaternion[1 + k] = cj * cs - sj * sc;
+    quaternion[0] = cj * cc + sj * ss;
+  }
+}
+
+// This algorithm is derived from composing QuaternionToRotation and
+// RotationMatrixToEulerAngles, but computing only 5 (max 7 if gimbal locked)
+// intermediate rotation matrix elements needed by the 2 (max 3) calls to
+// atan2()
+template <typename T>
+void QuaternionToEulerAngles(
+    const T* quaternion, T* euler, int a0, int a1, int a2, bool extrinsic) {
+  const int i = (extrinsic ? a0 : a2) & 3;
+  const bool odd = (i + 1) % 3 != a1;
+  const int j = (i + 1 + odd) % 3;
+  const int k = (i + 2 - odd) % 3;
+
+  const T& a = quaternion[0];
+  const T& b = quaternion[1 + i];
+  const T& c = quaternion[1 + j];
+  const T& d = quaternion[1 + k];
+
+  const T bb = T(2) * b * b;
+  const T cc = T(2) * c * c;
+  const T dd = T(2) * d * d;
+  const T bc = T(2) * b * c;
+  const T bd = T(2) * b * d;
+  const T cd = T(2) * c * d;
+  const T ba = T(2) * b * (j - k == 1 || k - j == 2 ? a : -a);
+  const T ca = T(2) * c * (i - k == 1 || k - i == 2 ? a : -a);
+  const T da = T(2) * d * (i - j == 1 || j - i == 2 ? a : -a);
+
+  const T Rii = T(1) - cc - dd;
+  const T Rji = bc - da;
+  const T Rki = bd - ca;
+
+  bool gimbal_locked = false;
+  if (a0 == a2) {
+    const T Rij = bc + da;
+    const T Rik = bd + ca;
+    const T sy = sqrt(Rij * Rij + Rik * Rik);
+    euler[1] = atan2(sy, Rii);
+    if (sy > T(std::numeric_limits<double>::epsilon())) {
+      euler[0] = atan2(Rij, Rik);
+      euler[2] = atan2(Rji, -Rki);
+    } else {
+      gimbal_locked = true;
+    }
+  } else {
+    const T cy = sqrt(Rii * Rii + Rji * Rji);
+    euler[1] = atan2(-Rki, cy);
+    if (cy > T(std::numeric_limits<double>::epsilon())) {
+      const T Rkj = cd - ba;
+      const T Rkk = T(1) - cc - bb;
+      euler[0] = atan2(Rkj, Rkk);
+      euler[2] = atan2(Rji, Rii);
+    } else {
+      gimbal_locked = true;
+    }
+  }
+
+  if (gimbal_locked) {
+    const T Rjj = T(1) - bb - dd;
+    const T Rjk = cd + ba;
+    euler[0] = atan2(-Rjk, Rjj);
+    euler[2] = T(0);
+  }
+
+  if (odd) {
+    euler[0] = -euler[0];
+    euler[1] = -euler[1];
+    euler[2] = -euler[2];
+  }
+
+  if (!extrinsic) {
+    const T tmp = euler[0];
+    euler[0] = euler[2];
+    euler[2] = tmp;
+  }
+
+  if (a0 == a2) {
+    constexpr T kPi(3.14159265358979323846);
+    if (euler[1] < T(0) || euler[1] > kPi) {
+      euler[0] += kPi;
+      euler[1] = -euler[1];
+      euler[2] -= kPi;
+    }
+
+    for (int i = 0; i < 3; ++i) {
+      if (euler[i] < -kPi) {
+        euler[i] += T(2) * kPi;
+      } else if (euler[i] > kPi) {
+        euler[i] -= T(2) * kPi;
+      }
+    }
+  }
 }
 
 template <typename T>
