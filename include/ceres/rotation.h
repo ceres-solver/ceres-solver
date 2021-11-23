@@ -49,6 +49,8 @@
 #include <cmath>
 #include <limits>
 
+#include "ceres/constants.h"
+#include "ceres/internal/euler_angles.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -135,6 +137,71 @@ void EulerAnglesToRotationMatrix(const T* euler, int row_stride, T* R);
 template <typename T, int row_stride, int col_stride>
 void EulerAnglesToRotationMatrix(
     const T* euler, const MatrixAdapter<T, row_stride, col_stride>& R);
+
+// Convert a generic Euler Angle sequence (in radians) to a 3x3 rotation matrix.
+//
+// Euler Angles define a sequence of 3 rotations about a sequence of axes,
+// typically taken to be the X, Y, or Z axes. The last axis may be the same as
+// the first axis (e.g. ZYZ) per Euler's original definition of his angles
+// (proper Euler angles) or not (e.g. ZYX / yaw-pitch-roll), per common usage in
+// the nautical and aerospace fields (Tait-Bryan angles). The three rotations
+// may be in a global frame of reference (Extrinsic) or in a body fixed frame of
+// reference (Intrinsic) that moves with the rotating object.
+//
+// Internally, Euler Axis sequences are classified by Ken Shoemake's scheme from
+// "Euler angle conversion", Graphics Gems IV, where a choice of axis for the
+// first rotation and 3 binary choices:
+// 1. Parity of the axis permutation. The axis sequence has Even parity if the
+// second axis of rotation is 'greater-than' the first axis of rotation
+// according to the order X<Y<Z<X, otherwise it has Odd parity.
+// 2. Proper Euler Angles v.s. Tait-Bryan Angles
+// 3. Extrinsic Rotations v.s. Intrinsic Rotations
+// compactly represent all 24 possible Euler Angle Conventions
+//
+// One template parameter: EulerSystem must be explicitly given. This parameter
+// is a tag named by 'Extrinsic' or 'Intrinsic' followed by three characters in
+// the set '[XYZ]', specifying the axis sequence, e.g. ceres::ExtrinsicYZY
+// (robotic arms), ceres::IntrinsicZYX (for aerospace), etc.
+//
+// The order of elements in the input array 'euler' follows the axis sequence
+template <typename EulerSystem, typename T>
+inline void EulerAnglesToRotation(const T* euler, T* R);
+
+template <typename EulerSystem, typename T, int row_stride, int col_stride>
+void EulerAnglesToRotation(const T* euler,
+                           const MatrixAdapter<T, row_stride, col_stride>& R);
+
+// Convert a 3x3 rotation matrix to a generic Euler Angle sequence (in radians)
+//
+// Euler Angles define a sequence of 3 rotations about a sequence of axes,
+// typically taken to be the X, Y, or Z axes. The last axis may be the same as
+// the first axis (e.g. ZYZ) per Euler's original definition of his angles
+// (proper Euler angles) or not (e.g. ZYX / yaw-pitch-roll), per common usage in
+// the nautical and aerospace fields (Tait-Bryan angles). The three rotations
+// may be in a global frame of reference (Extrinsic) or in a body fixed frame of
+// reference (Intrinsic) that moves with the rotating object.
+//
+// Internally, Euler Axis sequences are classified by Ken Shoemake's scheme from
+// "Euler angle conversion", Graphics Gems IV, where a choice of axis for the
+// first rotation and 3 binary choices:
+// 1. Oddness of the axis permutation, that defines whether the second axis is
+// 'greater-than' the first axis according to the order X>Y>Z>X)
+// 2. Proper Euler Angles v.s. Tait-Bryan Angles
+// 3. Extrinsic Rotations v.s. Intrinsic Rotations
+// compactly represent all 24 possible Euler Angle Conventions
+//
+// One template parameter: EulerSystem must be explicitly given. This parameter
+// is a tag named by 'Extrinsic' or 'Intrinsic' followed by three characters in
+// the set '[XYZ]', specifying the axis sequence, e.g. ceres::ExtrinsicYZY
+// (robotic arms), ceres::IntrinsicZYX (for aerospace), etc.
+//
+// The order of elements in the output array 'euler' follows the axis sequence
+template <typename EulerSystem, typename T>
+inline void RotationMatrixToEulerAngles(const T* R, T* euler);
+
+template <typename EulerSystem, typename T, int row_stride, int col_stride>
+void RotationMatrixToEulerAngles(
+    const MatrixAdapter<const T, row_stride, col_stride>& R, T* euler);
 
 // Convert a 4-vector to a 3x3 scaled rotation matrix.
 //
@@ -421,6 +488,141 @@ void AngleAxisToRotationMatrix(
     R(0, 2) = angle_axis[1];
     R(1, 2) = -angle_axis[0];
     R(2, 2) = kOne;
+  }
+}
+
+template <typename EulerSystem, typename T>
+inline void EulerAnglesToRotation(const T* euler, T* R) {
+  EulerAnglesToRotation<EulerSystem>(euler, RowMajorAdapter3x3(R));
+}
+
+template <typename EulerSystem, typename T, int row_stride, int col_stride>
+void EulerAnglesToRotation(const T* euler,
+                           const MatrixAdapter<T, row_stride, col_stride>& R) {
+  using std::cos;
+  using std::sin;
+
+  const auto [i, j, k] = EulerSystem::kAxes;
+
+  T ea[3];
+  ea[1] = euler[1];
+  if constexpr (EulerSystem::kIsIntrinsic) {
+    ea[0] = euler[2];
+    ea[2] = euler[0];
+  } else {
+    ea[0] = euler[0];
+    ea[2] = euler[2];
+  }
+  if constexpr (EulerSystem::kIsParityOdd) {
+    ea[0] = -ea[0];
+    ea[1] = -ea[1];
+    ea[2] = -ea[2];
+  }
+
+  const T ci = cos(ea[0]);
+  const T cj = cos(ea[1]);
+  const T ch = cos(ea[2]);
+  const T si = sin(ea[0]);
+  const T sj = sin(ea[1]);
+  const T sh = sin(ea[2]);
+  const T cc = ci * ch;
+  const T cs = ci * sh;
+  const T sc = si * ch;
+  const T ss = si * sh;
+  if constexpr (EulerSystem::kIsProperEuler) {
+    R(i, i) = cj;
+    R(i, j) = sj * si;
+    R(i, k) = sj * ci;
+    R(j, i) = sj * sh;
+    R(j, j) = -cj * ss + cc;
+    R(j, k) = -cj * cs - sc;
+    R(k, i) = -sj * ch;
+    R(k, j) = cj * sc + cs;
+    R(k, k) = cj * cc - ss;
+  } else {
+    R(i, i) = cj * ch;
+    R(i, j) = sj * sc - cs;
+    R(i, k) = sj * cc + ss;
+    R(j, i) = cj * sh;
+    R(j, j) = sj * ss + cc;
+    R(j, k) = sj * cs - sc;
+    R(k, i) = -sj;
+    R(k, j) = cj * si;
+    R(k, k) = cj * ci;
+  }
+}
+
+template <typename EulerSystem, typename T>
+inline void RotationMatrixToEulerAngles(const T* R, T* euler) {
+  RotationMatrixToEulerAngles<EulerSystem>(RowMajorAdapter3x3(R), euler);
+}
+
+template <typename EulerSystem, typename T, int row_stride, int col_stride>
+void RotationMatrixToEulerAngles(
+    const MatrixAdapter<const T, row_stride, col_stride>& R, T* euler) {
+  using std::atan2;
+  using std::fpclassify;
+  using std::hypot;
+
+  const auto [i, j, k] = EulerSystem::kAxes;
+
+  T ea[3];
+  if constexpr (EulerSystem::kIsProperEuler) {
+    const T sy = hypot(R(i, j), R(i, k));
+    if (fpclassify(sy) != FP_ZERO) {
+      ea[0] = atan2(R(i, j), R(i, k));
+      ea[1] = atan2(sy, R(i, i));
+      ea[2] = atan2(R(j, i), -R(k, i));
+    } else {
+      ea[0] = atan2(-R(j, k), R(j, j));
+      ea[1] = atan2(sy, R(i, i));
+      ea[2] = 0;
+    }
+  } else {
+    const T cy = hypot(R(i, i), R(j, i));
+    if (fpclassify(cy) != FP_ZERO) {
+      ea[0] = atan2(R(k, j), R(k, k));
+      ea[1] = atan2(-R(k, i), cy);
+      ea[2] = atan2(R(j, i), R(i, i));
+    } else {
+      ea[0] = atan2(-R(j, k), R(j, j));
+      ea[1] = atan2(-R(k, i), cy);
+      ea[2] = 0;
+    }
+  }
+  if constexpr (EulerSystem::kIsParityOdd) {
+    ea[0] = -ea[0];
+    ea[1] = -ea[1];
+    ea[2] = -ea[2];
+  }
+  euler[1] = ea[1];
+  if constexpr (EulerSystem::kIsIntrinsic) {
+    euler[0] = ea[2];
+    euler[2] = ea[0];
+  } else {
+    euler[0] = ea[0];
+    euler[2] = ea[2];
+  }
+
+  // Proper euler angles are defined for angles in
+  //   [-pi, pi) x [0, pi / 2) x [-pi, pi)
+  // which is enforced here
+  if constexpr (EulerSystem::kIsProperEuler) {
+    constexpr T kPi = constants::pi_v<T>;
+    constexpr T kTwoPi(2.0 * kPi);
+    if (euler[1] < T(0.0) || ea[1] > kPi) {
+      euler[0] += kPi;
+      euler[1] = -euler[1];
+      euler[2] -= kPi;
+    }
+
+    for (int i = 0; i < 3; ++i) {
+      if (euler[i] < -kPi) {
+        euler[i] += kTwoPi;
+      } else if (euler[i] > kPi) {
+        euler[i] -= kTwoPi;
+      }
+    }
   }
 }
 
