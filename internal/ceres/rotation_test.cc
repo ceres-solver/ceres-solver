@@ -642,6 +642,337 @@ TEST(EulerAnglesToRotationMatrix, OnAxis) {
   CHECK_EQ(7, n_tests);
 }
 
+// 12 Euler Axis Sequences
+static int euler_seqs[12][3] = {{0, 1, 2},
+                                {0, 1, 0},
+                                {0, 2, 1},
+                                {0, 2, 0},
+                                {1, 2, 0},
+                                {1, 2, 1},
+                                {1, 0, 2},
+                                {1, 0, 1},
+                                {2, 0, 1},
+                                {2, 0, 2},
+                                {2, 1, 0},
+                                {2, 1, 2}};
+
+static void MakeRandomEulerAngles(double* euler, const int* seq) {
+  srand(5);
+  euler[0] = -2.0 * kPi * RandDouble() + kPi;
+  euler[2] = -2.0 * kPi * RandDouble() + kPi;
+
+  // Proper Euler Angles must be in
+  //   [-pi, pi] x [0, pi] x [-pi, pi]
+  // and Tait-Bryan Angles must be in
+  //   [-pi, pi] x [-pi/2, pi/2] x [-pi, pi]
+  if (seq[0] == seq[2]) {
+    euler[1] = -kPi * RandDouble() + kPi;
+  } else {
+    euler[1] = -kPi * RandDouble() + 0.5 * kPi;
+  }
+}
+
+TEST(GeneralEulerAngleConverions, CompatWithLegacyEulerAnglesToRotationMatrix) {
+  for (int trials = 0; trials < kNumTrials; ++trials) {
+    double expected[9], result[9];
+    double euler_angles[3];
+    int seq[] = {2, 1, 0};
+    MakeRandomEulerAngles(euler_angles, seq);
+    EulerAnglesToRotation(euler_angles, result);
+    ToDegrees(euler_angles);
+    EulerAnglesToRotationMatrix(euler_angles, 3, expected);
+    ASSERT_THAT(result, IsNear3x3Matrix(expected));
+  }
+}
+
+static double sample_euler[][3] = {{0.5235988, 1.047198, 0.7853982},
+                                   {0.5235988, 1.047198, 0.5235988},
+                                   {0.7853982, 0.5235988, 1.047198}};
+
+// ZXY Intrinsic Euler Angle to rotation matrix conversion test from
+// scipy/spatial/transform/test/test_rotation.py
+TEST(GeneralEulerAngleConverions, IntrinsicEulerSequence312ToRotationMatrix) {
+  // Expected results are also recomputed to higher precision using scipy
+  // clang-format off
+  double expected[][9] =
+      {{0.306186083320088, -0.249999816228639,  0.918558748402491,
+        0.883883627842492,  0.433012359189203, -0.176776777947208,
+       -0.353553128699351,  0.866025628186053,  0.353553102817459},
+      { 0.533493553519713, -0.249999816228639,  0.808012821828067,
+        0.808012821828067,  0.433012359189203, -0.399519181705765,
+       -0.249999816228639,  0.866025628186053,  0.433012359189203},
+      { 0.047366781483451, -0.612372449482883,  0.789149143778432,
+        0.659739427618959,  0.612372404654096,  0.435596057905909,
+       -0.750000183771249,  0.500000021132493,  0.433012359189203}};
+  // clang-format on
+
+  for (int i = 0; i < 3; ++i) {
+    double results[9];
+    EulerAnglesToRotation(sample_euler[i], results, 2, 0, 1, false);
+    ASSERT_THAT(results, IsNear3x3Matrix(expected[i]));
+  }
+}
+
+// ZXY Extrinsic Euler Angle to rotation matrix conversion test from
+// scipy/spatial/transform/test/test_rotation.py
+TEST(GeneralEulerAngleConverions, ExtrinsicEulerSequence312ToRotationMatrix) {
+  // clang-format off
+  double expected[][9] =
+      {{0.918558725988105,  0.176776842651999,  0.353553128699352,
+        0.249999816228639,  0.433012359189203, -0.866025628186053,
+       -0.306186150563275,  0.883883614901527,  0.353553102817459},
+      { 0.966506404215301, -0.058012606358071,  0.249999816228639,
+        0.249999816228639,  0.433012359189203, -0.866025628186053,
+       -0.058012606358071,  0.899519223970752,  0.433012359189203},
+      { 0.659739424151467, -0.047366829779744,  0.750000183771249,
+        0.612372449482883,  0.612372404654096, -0.500000021132493,
+       -0.435596000136163,  0.789149175666285,  0.433012359189203}};
+  // clang-format on
+
+  for (int i = 0; i < 3; ++i) {
+    double results[9];
+    EulerAnglesToRotation(sample_euler[i], results, 2, 0, 1, true);
+    ASSERT_THAT(results, IsNear3x3Matrix(expected[i]));
+  }
+}
+
+// ZXZ Intrinsic Euler Angle to rotation matrix conversion test from
+// scipy/spatial/transform/test/test_rotation.py
+TEST(GeneralEulerAngleConverions, IntrinsicEulerSequence313ToRotationMatrix) {
+  // clang-format off
+  double expected[][9] = 
+      {{0.435595832832961, -0.789149008363071,  0.433012832394307,
+        0.659739379322704, -0.047367454164077, -0.750000183771249,
+        0.612372616786097,  0.612372571957297,  0.499999611324802},
+      { 0.625000065470068, -0.649518902838302,  0.433012832394307,
+        0.649518902838302,  0.124999676794869, -0.750000183771249,
+        0.433012832394307,  0.750000183771249,  0.499999611324802},
+      {-0.176777132429787, -0.918558558684756,  0.353553418477159,
+        0.883883325123719, -0.306186652473014, -0.353553392595246,
+        0.433012832394307,  0.249999816228639,  0.866025391583588}};
+  // clang-format on
+  for (int i = 0; i < 3; ++i) {
+    double results[9];
+    EulerAnglesToRotation(sample_euler[i], results, 2, 0, 2, false);
+    ASSERT_THAT(results, IsNear3x3Matrix(expected[i]));
+  }
+}
+
+// ZXZ Extrinsic Euler Angle to rotation matrix conversion test from
+// scipy/spatial/transform/test/test_rotation.py
+TEST(GeneralEulerAngleConverions, ExtrinsicEulerSequence313ToRotationMatrix) {
+  // clang-format off
+  double expected[][9] = 
+      {{0.435595832832961, -0.659739379322704,  0.612372616786097,
+        0.789149008363071, -0.047367454164077, -0.612372571957297,
+        0.433012832394307,  0.750000183771249,  0.499999611324802},
+      { 0.625000065470068, -0.649518902838302,  0.433012832394307,
+        0.649518902838302,  0.124999676794869, -0.750000183771249,
+        0.433012832394307,  0.750000183771249,  0.499999611324802},
+      {-0.176777132429787, -0.883883325123719,  0.433012832394307,
+        0.918558558684756, -0.306186652473014, -0.249999816228639,
+        0.353553418477159,  0.353553392595246,  0.866025391583588}};
+  // clang-format on
+  for (int i = 0; i < 3; ++i) {
+    double results[9];
+    EulerAnglesToRotation(sample_euler[i], results, 2, 0, 2, true);
+    ASSERT_THAT(results, IsNear3x3Matrix(expected[i]));
+  }
+}
+
+static void PrincipalRotationMatrix(double angle, int axis, double R[9]) {
+  double angle_axis[3];
+  // Construct a principal rotation vector consisting of a basis vector
+  // multiplied to a rotation angle
+  angle_axis[axis] = angle;
+  angle_axis[(axis + 1) % 3] = angle_axis[(axis + 2) % 3] = 0.0;
+  // Then convert the rotation vector into a principal rotation matrix
+  AngleAxisToRotationMatrix(angle_axis, R);
+}
+
+static void CheckPrincipalRotationMatrixProduct(const double* euler,
+                                                int* seq,
+                                                bool extrinsic) {
+  double result[9];
+  EulerAnglesToRotation(euler, result, seq[0], seq[1], seq[2], extrinsic);
+  ASSERT_THAT(result, IsOrthonormal());
+
+  double expected[9];
+  Eigen::Map<Eigen::Matrix<double, 3, 3, Eigen::RowMajor>> prod(expected);
+  for (int i = 0; i < 3; ++i) {
+    double R[9];
+    PrincipalRotationMatrix(extrinsic ? euler[i] : -euler[i], seq[i], R);
+    if (i == 0) {
+      prod = Eigen::Matrix3d::Map(R);
+    } else {
+      // Use Eigen::Map to handle different storage orders and rely on Eigen to
+      // handle self-assignment during matrix multiplicaion
+      prod = Eigen::Matrix3d::Map(R) * prod;  // LEFT-multiply convention
+    }
+  }
+
+  if (!extrinsic) {
+    Transpose3x3(expected);
+  }
+
+  ASSERT_THAT(result, IsNear3x3Matrix(expected));
+}
+
+// Check that the rotation matrix converted from euler angles is equivalent to
+// product of three principal axis rotation matrices
+//     R_euler = R_a2(euler_2) * R_a1(euler_1) * R_a0(euler_0)
+TEST(GeneralEulerAngleConverions, PrincipalRotationMatrixProductEquivalence) {
+  int tested_seqs = 0;
+  for (int i = 0; i < 12; ++i) {
+    for (bool extrinsic : {false, true}) {
+      for (int trials = 0; trials < kNumTrials; ++trials) {
+        double euler_angles[3];
+        int* seq = euler_seqs[i];
+        MakeRandomEulerAngles(euler_angles, seq);
+        CheckPrincipalRotationMatrixProduct(euler_angles, seq, extrinsic);
+      }
+      ++tested_seqs;
+    }
+  }
+  EXPECT_EQ(tested_seqs, 24);
+}
+
+static void CheckPrincipalQuaternionProduct(const double* euler,
+                                            int* seq,
+                                            bool extrinsic) {
+  double result[4];
+  EulerAnglesToQuaternion(euler, result, seq[0], seq[1], seq[2], extrinsic);
+  ASSERT_THAT(result, IsNormalizedQuaternion());
+
+  double expected[4];
+  for (int i = 0; i < 3; ++i) {
+    double q[4];
+    double theta = extrinsic ? euler[i] : -euler[i];
+    int ax = seq[i];
+    q[0] = cos(0.5 * theta);
+    q[1 + ax] = sin(0.5 * theta);
+    q[1 + (ax + 1) % 3] = q[1 + (ax + 2) % 3] = 0.0;
+    if (i == 0) {
+      std::copy(q, q + 4, expected);
+    } else {
+      double prod[4];
+      QuaternionProduct(q, expected, prod);
+      std::copy(prod, prod + 4, expected);
+    }
+  }
+
+  if (!extrinsic) {
+    expected[0] = -expected[0];
+  }
+
+  EXPECT_THAT(result, IsNearQuaternion(expected));
+}
+
+// Checking the quaternion converted from euler angles is equivalent to product
+// of three axial quaternion
+TEST(GeneralEulerAngleConverions, PrincipalQuaternionProductEquivalence) {
+  int tested_seqs = 0;
+  for (int i = 0; i < 12; ++i) {
+    for (bool extrinsic : {false, true}) {
+      for (int trials = 0; trials < kNumTrials; ++trials) {
+        double euler_angles[3];
+        int* seq = euler_seqs[i];
+        MakeRandomEulerAngles(euler_angles, seq);
+        CheckPrincipalQuaternionProduct(euler_angles, seq, extrinsic);
+      }
+      ++tested_seqs;
+    }
+  }
+  EXPECT_EQ(tested_seqs, 24);
+}
+
+// Gimbal lock (euler[1] == +/-pi) handling test. If a rotation matrix
+// represents a gimbal-locked configuration, then converting this rotation
+// matrix to euler angles and back must produce the same rotation matrix.
+//
+// From scipy/spatial/transform/test/test_rotation.py, but additionally covers
+// gimbal lock handling for proper euler angles, which scipy appears to fail to
+// do properly.
+TEST(GeneralEulerAngleConverions, GimbalLocked) {
+  double euler_samples[4][3] = {{0.78539816, kPi / 2, 0.61086524},
+                                {0.61086524, -kPi / 2, 0.34906585},
+                                {0.61086524, kPi / 2, 0.43633231},
+                                {0.43633231, -kPi / 2, 0.26179939}};
+
+  int tested_seqs = 0;
+  double angle_estimates[3];
+  double mat_expected[9], mat_estimated[9];
+  for (int i = 0; i < 12; ++i) {
+    for (bool extrinsic : {false, true}) {
+      for (const auto& it : euler_samples) {
+        int* seq = euler_seqs[i];
+        // Proper Euler Angles are gimbal locked when euler[2] == pi or 0.0
+        double euler_angles[] = {
+            it[0], (seq[0] == seq[2]) ? it[1] + kPi / 2 : it[1], it[2]};
+        EulerAnglesToRotation(
+            euler_angles, mat_expected, seq[0], seq[1], seq[2], extrinsic);
+        RotationMatrixToEulerAngles(
+            mat_expected, angle_estimates, seq[0], seq[1], seq[2], extrinsic);
+        EulerAnglesToRotation(
+            angle_estimates, mat_estimated, seq[0], seq[1], seq[2], extrinsic);
+        ASSERT_THAT(mat_expected, IsNear3x3Matrix(mat_estimated));
+      }
+      ++tested_seqs;
+    }
+  }
+  EXPECT_EQ(tested_seqs, 24);
+}
+
+TEST(Rotation, EulerAnglesToRotationMatrixAndBack) {
+  int tested_seqs = 0;
+  for (int i = 0; i < 12; ++i) {
+    for (bool extrinsic : {false, true}) {
+      for (int trials = 0; trials < kNumTrials; ++trials) {
+        double euler_angles[3];
+        int* seq = euler_seqs[i];
+        MakeRandomEulerAngles(euler_angles, seq);
+
+        double R[9], round_trip[3];
+        EulerAnglesToRotation(
+            euler_angles, R, seq[0], seq[1], seq[2], extrinsic);
+        EXPECT_THAT(R, IsOrthonormal());
+        RotationMatrixToEulerAngles(
+            R, round_trip, seq[0], seq[1], seq[2], extrinsic);
+        for (int i = 0; i < 3; ++i) {
+          EXPECT_FLOAT_EQ(round_trip[i], euler_angles[i]);
+        }
+      }
+      ++tested_seqs;
+    }
+  }
+  EXPECT_EQ(tested_seqs, 24);
+}
+
+TEST(Rotation, EulerAnglesToQuaternionAndBack) {
+  int tested_seqs = 0;
+  for (int i = 0; i < 12; ++i) {
+    for (bool extrinsic : {false, true}) {
+      for (int trials = 0; trials < kNumTrials; ++trials) {
+        double euler_angles[3];
+        int* seq = euler_seqs[i];
+        MakeRandomEulerAngles(euler_angles, seq);
+
+        double q[4], round_trip[3];
+        EulerAnglesToQuaternion(
+            euler_angles, q, seq[0], seq[1], seq[2], extrinsic);
+        EXPECT_THAT(q, IsNormalizedQuaternion());
+        QuaternionToEulerAngles(
+            q, round_trip, seq[0], seq[1], seq[2], extrinsic);
+        for (int i = 0; i < 3; ++i) {
+          EXPECT_FLOAT_EQ(round_trip[i], euler_angles[i]);
+        }
+      }
+      ++tested_seqs;
+    }
+  }
+  EXPECT_EQ(tested_seqs, 24);
+}
+
 // Test that a random rotation produces an orthonormal rotation
 // matrix.
 TEST(EulerAnglesToRotationMatrix, IsOrthonormal) {
