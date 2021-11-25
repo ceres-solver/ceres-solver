@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2da1700_895183f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2021-11-25T18:23:44Z",
+      "side": 1,
+      "message": "This PR adds the Euler Angles to/from Rotation Matrices / Quaternions mentioned in the mailing list a few days ago. ",
+      "revId": "4186829859a6200fb56d86216581c1dd6b1fa174",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
