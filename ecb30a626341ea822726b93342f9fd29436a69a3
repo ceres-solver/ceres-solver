@@ -34,6 +34,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUDcO\u003deQB1-Y\u003dO7\u003dCGDO\u003dNPHHnnsB6o8BJ812aLmPLvuKA@mail.gmail.com\u003e",
       "revId": "ecb30a626341ea822726b93342f9fd29436a69a3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22c4300e_51f75514",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-25T17:19:44Z",
+      "side": 1,
+      "message": "Thanks for the info, Sameer. This was not on my radar. Sorry for the rush.",
+      "parentUuid": "6c303053_baac636a",
+      "revId": "ecb30a626341ea822726b93342f9fd29436a69a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
