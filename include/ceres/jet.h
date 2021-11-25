@@ -162,6 +162,7 @@
 #include <iosfwd>
 #include <iostream>  // NOLINT
 #include <limits>
+#include <numeric>
 #include <string>
 
 #include "Eigen/Core"
@@ -415,6 +416,10 @@ using std::sqrt;
 using std::tan;
 using std::tanh;
 
+#ifdef CERES_HAS_CPP20
+using std::lerp;
+#endif  // defined(CERES_HAS_CPP20)
+
 // Legacy names from pre-C++11 days.
 // clang-format off
 inline bool IsFinite(double x)   { return std::isfinite(x); }
@@ -630,7 +635,7 @@ inline Jet<T, N> hypot(const Jet<T, N>& x, const Jet<T, N>& y) {
   return Jet<T, N>(tmp, x.a / tmp * x.v + y.a / tmp * y.v);
 }
 
-#if __cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >= 201703L)
+#ifdef CERES_HAS_CPP17
 // Like sqrt(x^2 + y^2 + z^2),
 // but acts to prevent underflow/overflow for small/large x/y/z.
 // Note that the function is non-smooth at x=y=z=0,
@@ -650,8 +655,7 @@ inline Jet<T, N> hypot(const Jet<T, N>& x,
   const T tmp = hypot(x.a, y.a, z.a);
   return Jet<T, N>(tmp, x.a / tmp * x.v + y.a / tmp * y.v + z.a / tmp * z.v);
 }
-#endif  // __cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >=
-        // 201703L)
+#endif  // defined(CERES_HAS_CPP17)
 
 template <typename T, int N>
 inline Jet<T, N> fmax(const Jet<T, N>& x, const Jet<T, N>& y) {
@@ -840,6 +844,30 @@ template <typename T, int N>
 inline bool IsInfinite(const Jet<T, N>& f) {
   return isinf(f);
 }
+
+#ifdef CERES_HAS_CPP20
+// Computes the linear interpolation a + t(b - a) between a and b at the value
+// t. For arguments outside of the range 0 <= t <= 1, the values are
+// extrapolated.
+//
+// Differentiating lerp(a, b, t) with respect to a, b, and t gives:
+//
+//   d/da lerp(a, b, t) = 1 - t
+//   d/db lerp(a, b, t) = t
+//   d/dt lerp(a, b, t) = b - a
+//
+// with the dual representation given by
+//
+//   lerp(a + da, b + db, t + dt)
+//      ~= lerp(a, b, t) + (1 - t) da + t db + (b - a) dt .
+template <typename T, int N>
+inline Jet<T, N> lerp(const Jet<T, N>& a,
+                      const Jet<T, N>& b,
+                      const Jet<T, N>& t) {
+  return Jet<T, N>{lerp(a.a, b.a, t.a),
+                   (T(1) - t.a) * a.v + t.a * b.v + (b.a - a.a) * t.v};
+}
+#endif  // defined(CERES_HAS_CPP20)
 
 // atan2(b + db, a + da) ~= atan2(b, a) + (- b da + a db) / (a^2 + b^2)
 //

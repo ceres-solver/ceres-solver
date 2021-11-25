@@ -810,7 +810,7 @@ TEST(Jet, Jet) {
   NumericalTest2("hypot2", hypot2,  1.0,   2.0);
   // clang-format on
 
-#if __cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >= 201703L)
+#ifdef CERES_HAS_CPP17
   {  // Check that hypot(x, y) == sqrt(x^2 + y^2)
     J h = hypot(x, y, z);
     J s = sqrt(x * x + y * y + z * z);
@@ -893,8 +893,57 @@ TEST(Jet, Jet) {
     VL << "h = " << h;
     ExpectJetsClose(h, huge);
   }
-#endif  // __cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >=
-        // 201703L)
+#endif  // defined(CERES_HAS_CPP17)
+
+#ifdef CERES_HAS_CPP20
+  {  // Check lerp(x, y, 0) == x
+    J z = lerp(x, y, J{0});
+    VL << "z = " << z;
+    ExpectJetsClose(z, x);
+  }
+
+  {  // Check lerp(x, y, 1) == y
+    J z = lerp(x, y, J{1});
+    VL << "z = " << z;
+    ExpectJetsClose(z, y);
+  }
+
+  {  // Check lerp(x, x, 1) == x
+    J z = lerp(x, x, J{1});
+    VL << "z = " << z;
+    ExpectJetsClose(z, x);
+  }
+
+  {  // Check lerp(y, y, 0) == y
+    J z = lerp(y, y, J{1});
+    VL << "z = " << z;
+    ExpectJetsClose(z, y);
+  }
+
+  {  // Check lerp(x, y, 0.5) == (x + y) / 2
+    J z = lerp(x, y, J{0.5});
+    J v = (x + y) / J{2};
+    VL << "z = " << z;
+    VL << "v = " << v;
+    ExpectJetsClose(z, v);
+  }
+
+  {  // Check lerp(x, y, 2) == 2y - x
+    J z = lerp(x, y, J{2});
+    J v = J{2} * y - x;
+    VL << "z = " << z;
+    VL << "v = " << v;
+    ExpectJetsClose(z, v);
+  }
+
+  {  // Check lerp(x, y, -2) == 3x - 2y
+    J z = lerp(x, y, -J{2});
+    J v = J{3} * x - J{2} * y;
+    VL << "z = " << z;
+    VL << "v = " << v;
+    ExpectJetsClose(z, v);
+  }
+#endif  // defined(CERES_HAS_CPP20)
 
   {
     J z = fmax(x, y);
