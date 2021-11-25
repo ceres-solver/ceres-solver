@@ -896,6 +896,57 @@ TEST(Jet, Jet) {
 #endif  // __cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >=
         // 201703L)
 
+#if __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >= 202002L)
+  {  // Check lerp(x, y, 0) == x
+    J z = lerp(x, y, J{0});
+    VL << "z = " << z;
+    ExpectJetsClose(z, x);
+  }
+
+  {  // Check lerp(x, y, 1) == y
+    J z = lerp(x, y, J{1});
+    VL << "z = " << z;
+    ExpectJetsClose(z, y);
+  }
+
+  {  // Check lerp(x, x, 1) == x
+    J z = lerp(x, x, J{1});
+    VL << "z = " << z;
+    ExpectJetsClose(z, x);
+  }
+
+  {  // Check lerp(y, y, 0) == y
+    J z = lerp(y, y, J{1});
+    VL << "z = " << z;
+    ExpectJetsClose(z, y);
+  }
+
+  {  // Check lerp(x, y, 0.5) == (x + y) / 2
+    J z = lerp(x, y, J{0.5});
+    J v = (x + y) / J{2};
+    VL << "z = " << z;
+    VL << "v = " << v;
+    ExpectJetsClose(z, v);
+  }
+
+  {  // Check lerp(x, y, 2) == 2y - x
+    J z = lerp(x, y, J{2});
+    J v = J{2} * y - x;
+    VL << "z = " << z;
+    VL << "v = " << v;
+    ExpectJetsClose(z, v);
+  }
+
+  {  // Check lerp(x, y, -2) == 3x - 2y
+    J z = lerp(x, y, -J{2});
+    J v = J{3} * x - J{2} * y;
+    VL << "z = " << z;
+    VL << "v = " << v;
+    ExpectJetsClose(z, v);
+  }
+#endif  // __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >=
+        // 202002L)
+
   {
     J z = fmax(x, y);
     VL << "z = " << z;
