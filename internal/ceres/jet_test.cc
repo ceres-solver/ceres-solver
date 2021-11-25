@@ -943,6 +943,30 @@ TEST(Jet, Jet) {
     VL << "v = " << v;
     ExpectJetsClose(z, v);
   }
+
+  {  // Check that midpoint(x, y) = (x + y) / 2
+    J z = midpoint(x, y);
+    J v = (x + y) / J{2};
+    VL << "z = " << z;
+    VL << "v = " << v;
+    ExpectJetsClose(z, v);
+  }
+
+  {  // Check that midpoint(x, x) = x
+    J z = midpoint(x, x);
+    VL << "z = " << z;
+    ExpectJetsClose(z, x);
+  }
+
+  {  // Check that midpoint(x, x) = x while avoiding overflow
+    J x = MakeJet(std::numeric_limits<double>::min(), 1, 2);
+    J y = MakeJet(std::numeric_limits<double>::max(), 3, 4);
+    J z = midpoint(x, y);
+    J v = x + (y - x) / J{2};
+    VL << "z = " << z;
+    VL << "v = " << v;
+    ExpectJetsClose(z, v);
+  }
 #endif  // defined(CERES_HAS_CPP20)
 
   {

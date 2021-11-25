@@ -418,6 +418,7 @@ using std::tanh;
 
 #ifdef CERES_HAS_CPP20
 using std::lerp;
+using std::midpoint;
 #endif  // defined(CERES_HAS_CPP20)
 
 // Legacy names from pre-C++11 days.
@@ -866,6 +867,21 @@ inline Jet<T, N> lerp(const Jet<T, N>& a,
                       const Jet<T, N>& t) {
   return Jet<T, N>{lerp(a.a, b.a, t.a),
                    (T(1) - t.a) * a.v + t.a * b.v + (b.a - a.a) * t.v};
+}
+
+// Computes the midpoint a + (b - a) / 2.
+//
+// Differentiating midpoint(a, b) with respect to a and b gives:
+//
+//   d/da midpoint(a, b) = 1/2
+//   d/db midpoint(a, b) = 1/2
+//
+// with the dual representation given by
+//
+//   midpoint(a + da, b + db) ~= midpoint(a, b) + (da + db) / 2 .
+template <typename T, int N>
+inline Jet<T, N> midpoint(const Jet<T, N>& a, const Jet<T, N>& b) {
+  return Jet<T, N>{midpoint(a.a, b.a), T(0.5) * (a.v + b.v)};
 }
 #endif  // defined(CERES_HAS_CPP20)
 
