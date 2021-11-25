@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d2c947c_117445d0",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-25T19:57:17Z",
+      "side": 1,
+      "message": "Before I review the CL further, I\u0027d like to settle on the API.\n\nTwo things stand out to me.\n\n1. I have no idea what the extrinsic parameter does, this needs a lot more documentation.\n\n2. Why pass a0, a1, a2 as integers, is there a better way to do this? this is not a dynamic parameter that people are going to be flipping back and forth, so why not make these template parameters? maybe the same for extrinsic also?",
+      "range": {
+        "startLine": 153,
+        "startChar": 5,
+        "endLine": 153,
+        "endChar": 26
+      },
+      "revId": "c5e033d4fe42645c1eb5f5260a9c9f7fe3006f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62c618a6_e8d4b2d9",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-25T19:57:17Z",
+      "side": 1,
+      "message": "for the tests that follow, what is the rationale for picking these values?\nhow do we handle the various branches and corner cases for these conversion routines?",
+      "range": {
+        "startLine": 688,
+        "startChar": 7,
+        "endLine": 688,
+        "endChar": 13
+      },
+      "revId": "c5e033d4fe42645c1eb5f5260a9c9f7fe3006f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
