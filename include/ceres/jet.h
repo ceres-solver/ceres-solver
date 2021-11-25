@@ -415,6 +415,11 @@ using std::sqrt;
 using std::tan;
 using std::tanh;
 
+#if __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >= 202002L)
+using std::lerp;
+#endif  // __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >=
+        // 202002L)
+
 // Legacy names from pre-C++11 days.
 // clang-format off
 inline bool IsFinite(double x)   { return std::isfinite(x); }
@@ -840,6 +845,31 @@ template <typename T, int N>
 inline bool IsInfinite(const Jet<T, N>& f) {
   return isinf(f);
 }
+
+#if __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >= 202002L)
+// Computes the linear interpolation a + t(b - a) between a and b at the value
+// t. For arguments outside of the range 0 <= t <= 1, the values are
+// extrapolated.
+//
+// Differentiating lerp(a, b, t) with respect to a, b, and t gives:
+//
+//   d/da lerp(a, b, t) = 1 - t
+//   d/db lerp(a, b, t) = t
+//   d/dt lerp(a, b, t) = b - a
+//
+// with the dual representation given by
+//
+//   lerp(a + da, b + db, t + dt)
+//      ~= lerp(a, b, t) + (1 - t) da + t db + (b - a) dt .
+template <typename T, int N>
+inline Jet<T, N> lerp(const Jet<T, N>& a,
+                      const Jet<T, N>& b,
+                      const Jet<T, N>& t) {
+  return Jet<T, N>{lerp(a.a, b.a, t.a),
+                   (T(1) - t.a) * a.v + t.a * b.v + (b.a - a.a) * t.v};
+}
+#endif  // __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >=
+        // 202002L)
 
 // atan2(b + db, a + da) ~= atan2(b, a) + (- b da + a db) / (a^2 + b^2)
 //
