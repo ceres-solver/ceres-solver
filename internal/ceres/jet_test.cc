@@ -896,6 +896,33 @@ TEST(Jet, Jet) {
 #endif  // __cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >=
         // 201703L)
 
+#if __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >= 202002L)
+  {  // Check that midpoint(x, y) = (x + y) / 2
+    J z = midpoint(x, y);
+    J v = (x + y) / J{2};
+    VL << "z = " << z;
+    VL << "v = " << v;
+    ExpectJetsClose(z, v);
+  }
+
+  {  // Check that midpoint(x, x) = x
+    J z = midpoint(x, x);
+    VL << "z = " << z;
+    ExpectJetsClose(z, x);
+  }
+
+  {  // Check that midpoint(x, x) = x while avoiding overflow
+    J x = MakeJet(std::numeric_limits<double>::min(), 1, 2);
+    J y = MakeJet(std::numeric_limits<double>::max(), 3, 4);
+    J z = midpoint(x, y);
+    J v = x + (y - x) / J{2};
+    VL << "z = " << z;
+    VL << "v = " << v;
+    ExpectJetsClose(z, v);
+  }
+#endif  // __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >=
+        // 202002L)
+
   {
     J z = fmax(x, y);
     VL << "z = " << z;

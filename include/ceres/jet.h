@@ -164,6 +164,11 @@
 #include <limits>
 #include <string>
 
+#if __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >= 202002L)
+#include <numeric>
+#endif  // __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >=
+        // 202002L)
+
 #include "Eigen/Core"
 #include "ceres/internal/port.h"
 
@@ -414,6 +419,11 @@ using std::sinh;
 using std::sqrt;
 using std::tan;
 using std::tanh;
+
+#if __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >= 202002L)
+using std::midpoint;
+#endif  // __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >=
+        // 202002L)
 
 // Legacy names from pre-C++11 days.
 // clang-format off
@@ -840,6 +850,24 @@ template <typename T, int N>
 inline bool IsInfinite(const Jet<T, N>& f) {
   return isinf(f);
 }
+
+#if __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >= 202002L)
+// Computes the midpoint a + (b - a) / 2.
+//
+// Differentiating midpoint(a, b) with respect to a and b gives:
+//
+//   d/da midpoint(a, b) = 1/2
+//   d/db midpoint(a, b) = 1/2
+//
+// with the dual representation given by
+//
+//   midpoint(a + da, b + db) ~= midpoint(a, b) + (da + db) / 2 .
+template <typename T, int N>
+inline Jet<T, N> midpoint(const Jet<T, N>& a, const Jet<T, N>& b) {
+  return Jet<T, N>{midpoint(a.a, b.a), T(0.5) * (a.v + b.v)};
+}
+#endif  // __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >=
+        // 202002L)
 
 // atan2(b + db, a + da) ~= atan2(b, a) + (- b da + a db) / (a^2 + b^2)
 //
