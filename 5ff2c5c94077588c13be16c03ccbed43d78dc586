@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c145bd9_991fbc73",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-25T19:53:25Z",
+      "side": 1,
+      "message": "see comment about constant in lerp cl.",
+      "range": {
+        "startLine": 423,
+        "startChar": 15,
+        "endLine": 423,
+        "endChar": 16
+      },
+      "revId": "5ff2c5c94077588c13be16c03ccbed43d78dc586",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a85f8ea6_a072c9e0",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-25T19:53:25Z",
+      "side": 1,
+      "message": "you do not need to convert to T for 0.5",
+      "range": {
+        "startLine": 867,
+        "startChar": 40,
+        "endLine": 867,
+        "endChar": 41
+      },
+      "revId": "5ff2c5c94077588c13be16c03ccbed43d78dc586",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
