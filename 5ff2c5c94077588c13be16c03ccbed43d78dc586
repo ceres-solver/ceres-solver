@@ -48,6 +48,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a974c77d_fb445eaa",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-25T20:17:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc3121f8_e2244550",
+      "range": {
+        "startLine": 423,
+        "startChar": 15,
+        "endLine": 423,
+        "endChar": 16
+      },
+      "revId": "5ff2c5c94077588c13be16c03ccbed43d78dc586",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a85f8ea6_a072c9e0",
@@ -109,6 +133,30 @@
       "side": 1,
       "message": "yes nested stuff will break.",
       "parentUuid": "3abc6f2e_dbcf1cfa",
+      "range": {
+        "startLine": 867,
+        "startChar": 40,
+        "endLine": 867,
+        "endChar": 41
+      },
+      "revId": "5ff2c5c94077588c13be16c03ccbed43d78dc586",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a529ed4d_690f8de9",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-25T20:17:05Z",
+      "side": 1,
+      "message": "Left it as is.",
+      "parentUuid": "1d5ce8dc_bdbaea30",
       "range": {
         "startLine": 867,
         "startChar": 40,
