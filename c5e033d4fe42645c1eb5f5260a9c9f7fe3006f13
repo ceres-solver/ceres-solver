@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "de59c7f8_2c33fc5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-25T22:05:31Z",
+      "side": 1,
+      "message": "This looks interesting.\n\nCan you elaborate on the differences between your implementation and \n1. generating rotations by chaining Eigen::AngleAxis instances\n2. the Eigen EulerAngles module?",
+      "revId": "c5e033d4fe42645c1eb5f5260a9c9f7fe3006f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d2c947c_117445d0",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 2
