@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff4b6100_e547c432",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-25T20:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74b250eb_b5674e11",
+      "range": {
+        "startLine": 169,
+        "startChar": 11,
+        "endLine": 169,
+        "endChar": 22
+      },
+      "revId": "a20cef6fb20a9f3837c31d3b6f373de593d43cc7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d69c0a3_51938a0b",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-11-25T19:51:52Z",
       "side": 1,
       "message": "it maybe worth defining a single constant \nCERES_HAS_CPP21 in internal/port.h this complicated macro which is not terribly readable.",
+      "range": {
+        "startLine": 423,
+        "startChar": 4,
+        "endLine": 423,
+        "endChar": 15
+      },
+      "revId": "a20cef6fb20a9f3837c31d3b6f373de593d43cc7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c240a976_2d03c724",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-25T20:03:46Z",
+      "side": 1,
+      "message": "Fully agree.",
+      "parentUuid": "0d69c0a3_51938a0b",
       "range": {
         "startLine": 423,
         "startChar": 4,
