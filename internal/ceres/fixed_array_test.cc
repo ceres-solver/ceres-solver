@@ -655,7 +655,6 @@ template <typename T>
 class CountingAllocator : public std::allocator<T> {
  public:
   using Alloc = std::allocator<T>;
-  using pointer = typename Alloc::pointer;
   using size_type = typename Alloc::size_type;
 
   CountingAllocator() : bytes_used_(nullptr), instance_count_(nullptr) {}
@@ -670,38 +669,17 @@ class CountingAllocator : public std::allocator<T> {
         bytes_used_(x.bytes_used_),
         instance_count_(x.instance_count_) {}
 
-  pointer allocate(size_type n, const void* const hint = nullptr) {
+  T* allocate(size_type n) {
     assert(bytes_used_ != nullptr);
     *bytes_used_ += n * sizeof(T);
-    return Alloc::allocate(n, hint);
+    return Alloc::allocate(n);
   }
 
-  void deallocate(pointer p, size_type n) {
+  void deallocate(T* p, size_type n) {
     Alloc::deallocate(p, n);
     assert(bytes_used_ != nullptr);
     *bytes_used_ -= n * sizeof(T);
   }
-
-  template <typename... Args>
-  void construct(pointer p, Args&&... args) {
-    Alloc::construct(p, std::forward<Args>(args)...);
-    if (instance_count_) {
-      *instance_count_ += 1;
-    }
-  }
-
-  void destroy(pointer p) {
-    Alloc::destroy(p);
-    if (instance_count_) {
-      *instance_count_ -= 1;
-    }
-  }
-
-  template <typename U>
-  class rebind {
-   public:
-    using other = CountingAllocator<U>;
-  };
 
   int64_t* bytes_used_;
   int64_t* instance_count_;
