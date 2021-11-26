@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "04f913c1_62e06d55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-26T09:25:28Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it make sense to build on Eigen::AngleAxis then instead of implementing the functionality from scratch? Eigen is a public dependency of Ceres anyway.",
+      "parentUuid": "368be91d_4e0b932a",
+      "revId": "c5e033d4fe42645c1eb5f5260a9c9f7fe3006f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d2c947c_117445d0",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 2
