@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "368be91d_4e0b932a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2021-11-26T04:04:32Z",
+      "side": 1,
+      "message": "1. EulerAnglesToRotation() has equivalent outputs as chaining Eigen::AngleAxis instances by left multiplication: https://godbolt.org/z/9xzKsqcPY\n\n2. I never realized Eigen has an EulerAngles module. I just read its source and found that its euler-to-quaternion is defined in terms of AngleAxis chaining, and euler-to-matrix is a composition of the former and toRotationmatrix(). They should be equivalent to mine but conceivably slower from the extra constructor calls. I\u0027m still studying its matrix-to-euler implementation with some difficulty due to a total lack of comments.",
+      "parentUuid": "de59c7f8_2c33fc5b",
+      "revId": "c5e033d4fe42645c1eb5f5260a9c9f7fe3006f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d2c947c_117445d0",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 2
@@ -31,6 +49,30 @@
       "writtenOn": "2021-11-25T19:57:17Z",
       "side": 1,
       "message": "Before I review the CL further, I\u0027d like to settle on the API.\n\nTwo things stand out to me.\n\n1. I have no idea what the extrinsic parameter does, this needs a lot more documentation.\n\n2. Why pass a0, a1, a2 as integers, is there a better way to do this? this is not a dynamic parameter that people are going to be flipping back and forth, so why not make these template parameters? maybe the same for extrinsic also?",
+      "range": {
+        "startLine": 153,
+        "startChar": 5,
+        "endLine": 153,
+        "endChar": 26
+      },
+      "revId": "c5e033d4fe42645c1eb5f5260a9c9f7fe3006f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a92bbbdc_17b2b084",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2021-11-26T04:04:32Z",
+      "side": 1,
+      "message": "1. I totally agree. Just restructured the comments to describe the extrinsic parameter\n\n2. I agree too. But templatizing these parameters complicates testing, since tests need to cover all 24 valid combinations of {a0,a1,a2,extrinsic}. If we don\u0027t want to hardcode 24 test steps, then the only alternative is some form of template recursion through the 24 combinations, or possibly using macros. \n\nI also ran a rough benchmark of templatized versus original EulerAngleToRotation on quick-bench.com, and the difference is not substantial. It might be that on high optimization levels the compiler can optimize away the runtime variables and comparions when the user inputs literal integers and bools into {a0,a1,a2,extrinsic}",
+      "parentUuid": "2d2c947c_117445d0",
       "range": {
         "startLine": 153,
         "startChar": 5,
