@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b84a4dbe_c4268b17",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2021-11-26T19:30:12Z",
+      "side": 1,
+      "message": "It does make sense. EulerAnglesToRotation can be changed as you suggested. That said, the remainder of rotation.h avoided Eigen, and I am not keen to make rotation.h depend on Eigen just for this one function.\n\nPerformance wise, EulerAnglesToRotation is as fast as an Eigen-based implementation on -O3 and when both functions are inlined\n\nThe Quaternion conversions can\u0027t benefit from Eigen since ceres uses real-component-first convention",
+      "parentUuid": "04f913c1_62e06d55",
+      "revId": "c5e033d4fe42645c1eb5f5260a9c9f7fe3006f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d2c947c_117445d0",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 2
