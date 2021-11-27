@@ -22,6 +22,30 @@
       },
       "revId": "520d3dad00a8c3a787ccf1d0e12f637a51d50d40",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdcc7827_a3b8e0e6",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-27T23:00:36Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right. However, a sophisticated scheme is not necessary. We can use midpoint instead.",
+      "parentUuid": "79edc18e_ca7f194a",
+      "range": {
+        "startLine": 886,
+        "startChar": 60,
+        "endLine": 886,
+        "endChar": 61
+      },
+      "revId": "520d3dad00a8c3a787ccf1d0e12f637a51d50d40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
