@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e053a44c_b407853d",
+        "filename": "internal/ceres/fixed_array_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-27T00:51:23Z",
+      "side": 1,
+      "message": "are these functions and class optional? if we are not using them we may as well get rid of them no?",
+      "range": {
+        "startLine": 685,
+        "startChar": 8,
+        "endLine": 685,
+        "endChar": 23
+      },
+      "revId": "34a82c7efaf4de7ff36daeb162f05c3d5dc34d7b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
