@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1369d04a_6c92735b",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-27T23:55:25Z",
+      "side": 1,
+      "message": "here is a better jet to try.\n\na \u003d max * 3/4\n\nx \u003d makejet(a, a, -a);\ny \u003d makejet(a, a, a);\n\nhere if you are doing the naive thing of (a+b)/2 or the a/2 + (b-a)/2 both of these things will get checked.",
+      "range": {
+        "startLine": 979,
+        "startChar": 35,
+        "endLine": 979,
+        "endChar": 36
+      },
+      "revId": "0c3e0ab89e8c5f0a829942c315f47b083841e6fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
