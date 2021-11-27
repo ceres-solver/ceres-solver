@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "63cff076_e9e2cd3a",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-27T01:17:17Z",
+      "side": 1,
+      "message": "GoogleTest/gtest has support for templated tests, you should be able to use that to construct tests for this. I am not particularly worried about performance, I\u0027d much rather have clarity of code and correctness over some small amount of performance.\n\nFrom a naming perspective, I think extrinsic v/s intrinsic should be reflected in the name rather than it being a template parameter or a function argument. \n\nThe actual implementation can call a unified function which takes that as a template parameter.\n\nAre all values of a0, a1, a2 valid? or are there invalid values too?\nalso are all of them actually used or is it worth thinking about what is actually useful?\n\nI think it maybe better to choose names which reflect the axis choice rather than having the user specify integers, which are less readable.\n\nEulerAnglesXYZToRotation\n\nis better than either \n\nEulerAngleToRotation\u003c0,1,2, true\u003e\n\nor\n\nEulerAngleToRotation(.., 0 ,1, 2, true);\n\n\nagain we can call a single implementation function, but the API this way is clearer.",
+      "parentUuid": "a92bbbdc_17b2b084",
+      "range": {
+        "startLine": 153,
+        "startChar": 5,
+        "endLine": 153,
+        "endChar": 26
+      },
+      "revId": "c5e033d4fe42645c1eb5f5260a9c9f7fe3006f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "62c618a6_e8d4b2d9",
         "filename": "internal/ceres/rotation_test.cc",
         "patchSetId": 2
