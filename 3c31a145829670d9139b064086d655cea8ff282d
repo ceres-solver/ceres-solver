@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69ab8991_18c363b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-27T01:05:00Z",
+      "side": 1,
+      "message": "can you also update the commit log please, it does not reflect the changes anymore.",
+      "revId": "3c31a145829670d9139b064086d655cea8ff282d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
