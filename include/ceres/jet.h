@@ -881,7 +881,13 @@ inline Jet<T, N> lerp(const Jet<T, N>& a,
 //   midpoint(a + da, b + db) ~= midpoint(a, b) + (da + db) / 2 .
 template <typename T, int N>
 inline Jet<T, N> midpoint(const Jet<T, N>& a, const Jet<T, N>& b) {
-  return Jet<T, N>{midpoint(a.a, b.a), T(0.5) * (a.v + b.v)};
+  Jet<T, N> result{midpoint(a.a, b.a)};
+  // To avoid overflow in the differential, compute
+  // (da + db) / 2 using midpoint.
+  for (int i = 0; i < N; ++i) {
+    result.v[i] = midpoint(a.v[i], b.v[i]);
+  }
+  return result;
 }
 #endif  // defined(CERES_HAS_CPP20)
 

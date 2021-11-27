@@ -958,7 +958,7 @@ TEST(Jet, Jet) {
     ExpectJetsClose(z, x);
   }
 
-  {  // Check that midpoint(x, x) = x while avoiding overflow
+  {  // Check that midpoint(x, y) = (x + y) / 2 while avoiding overflow
     J x = MakeJet(std::numeric_limits<double>::min(), 1, 2);
     J y = MakeJet(std::numeric_limits<double>::max(), 3, 4);
     J z = midpoint(x, y);
@@ -966,6 +966,26 @@ TEST(Jet, Jet) {
     VL << "z = " << z;
     VL << "v = " << v;
     ExpectJetsClose(z, v);
+  }
+
+  {  // Check that midpoint(x, x) = x while avoiding overflow
+    constexpr double a = std::numeric_limits<double>::max();
+    J x = MakeJet(a, a, a);
+    J z = midpoint(x, x);
+    VL << "z = " << z;
+    ExpectJetsClose(z, x);
+  }
+
+  {  // Check that midpoint(min / 2, max) = (max/2 - min)/2 while avoiding
+     // overflow
+    constexpr double a = std::numeric_limits<double>::min() / 2;
+    constexpr double b = std::numeric_limits<double>::max();
+    J x = MakeJet(a, b, a);
+    J y = MakeJet(b, a, b);
+    J z = midpoint(x, y);
+    VL << "z = " << z;
+    constexpr double c = std::midpoint(a, b);
+    ExpectJetsClose(z, MakeJet(c, c, c));
   }
 #endif  // defined(CERES_HAS_CPP20)
 
