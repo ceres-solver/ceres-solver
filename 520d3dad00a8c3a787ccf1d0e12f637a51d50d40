@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79edc18e_ca7f194a",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-27T20:26:45Z",
+      "side": 1,
+      "message": "This is not going to prevent overflow, this assumes that b.v and a.v are of the same sign elementwise. what if b.v \u003d max and a.v is -max/2 ?\n\nthen b.v - a.v \u003d 1.5 * max and you will have over flow.\n\nyou will need a more sophisticated scheme there.",
+      "range": {
+        "startLine": 886,
+        "startChar": 60,
+        "endLine": 886,
+        "endChar": 61
+      },
+      "revId": "520d3dad00a8c3a787ccf1d0e12f637a51d50d40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
