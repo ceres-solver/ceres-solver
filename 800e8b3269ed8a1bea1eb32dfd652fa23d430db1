@@ -63,6 +63,30 @@
       },
       "revId": "800e8b3269ed8a1bea1eb32dfd652fa23d430db1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d795fd83_89c7134d",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-27T23:44:58Z",
+      "side": 1,
+      "message": "sorry I meant to say that this test case is not particularly useful, since it is implementation dependent. It would test your earlier implementation, but a naive implementation will actually pass it. \n\nSo my suggestion is to construct jets that are not all of the same sign, and exercise the overflow logic regardless of the implementation details.",
+      "parentUuid": "89564389_74f59b57",
+      "range": {
+        "startLine": 980,
+        "startChar": 30,
+        "endLine": 980,
+        "endChar": 44
+      },
+      "revId": "800e8b3269ed8a1bea1eb32dfd652fa23d430db1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
