@@ -16,6 +16,29 @@
       "message": "PTA",
       "revId": "800e8b3269ed8a1bea1eb32dfd652fa23d430db1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6716911_a417a763",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-27T23:08:49Z",
+      "side": 1,
+      "message": "the native impl will not cause an overflow here.",
+      "range": {
+        "startLine": 980,
+        "startChar": 30,
+        "endLine": 980,
+        "endChar": 44
+      },
+      "revId": "800e8b3269ed8a1bea1eb32dfd652fa23d430db1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
