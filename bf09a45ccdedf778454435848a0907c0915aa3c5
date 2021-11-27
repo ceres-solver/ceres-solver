@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fcef4f5_d9301b4c",
+        "filename": "internal/ceres/fixed_array_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-27T00:03:37Z",
+      "side": 1,
+      "message": "why do conditional compilation and now just use the c++20 code here since you are not using any c++ library stuff at all.",
+      "range": {
+        "startLine": 673,
+        "startChar": 7,
+        "endLine": 673,
+        "endChar": 22
+      },
+      "revId": "bf09a45ccdedf778454435848a0907c0915aa3c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
