@@ -169,6 +169,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d002b725_9d7799f9",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-29T20:42:32Z",
+      "side": 1,
+      "message": "I think EulerXYZIntrinsicToRotation sounds good to me. \nOne downside of using this named API is that you won\u0027t be able to test the named API via the templated tests.\n\nSo for testing I suggest a two fold strategy.\n\nhave very thorough tests for the implementation function via its templated API.\n\nand then basic test for each public function which verifies that you are calling the right templated version of the implementation function.",
+      "parentUuid": "7bbe604e_24c99821",
+      "range": {
+        "startLine": 153,
+        "startChar": 5,
+        "endLine": 153,
+        "endChar": 26
+      },
+      "revId": "c5e033d4fe42645c1eb5f5260a9c9f7fe3006f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "62c618a6_e8d4b2d9",
         "filename": "internal/ceres/rotation_test.cc",
         "patchSetId": 2
