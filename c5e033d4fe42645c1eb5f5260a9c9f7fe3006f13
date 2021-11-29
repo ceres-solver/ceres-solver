@@ -145,6 +145,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7bbe604e_24c99821",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2021-11-29T19:24:08Z",
+      "side": 1,
+      "message": "Certainly, thanks for the concrete suggestions. If we are using explicit names on the public API and calling an impl function, then I\u0027ll drop the {a0,a1,a2,explicit} classification, since you are correct that some combinations of a0,a1,a2 are invalid. \n\nI\u0027ll revert to the convention in Shoemake\u0027s paper, using\n    /* There are 24 possible conventions, designated by:    */\n    /*\t  o EulAxI \u003d axis used initially: [0, 3)\t\t    */\n    /*\t  o EulPar \u003d parity of axis permutation: bool\t\t    */\n    /*\t  o EulRep \u003d repetition of initial axis as last: bool\t    */\n    /*\t  o EulFrm \u003d frame from which axes are taken: bool\t    */\n(see github.com/erich666/GraphicsGems/blob/master/gemsiv/euler_angle/EulerAngles.h) so all combinations of the params are valid. Then on the public API I\u0027ll define forwarding functions that map the 24 combinations of XYZ to the correct template to pass to the impl. \n\nThe remaining issue is how should (Explicit/Intrinsic) be embedded into the public API function names. Maybe EulerXYZIntrinsicToRotation?\n\nI still haven\u0027t addressed your concerns in rotation_test.cc, and I still need to read up on templated tests. Shall we resolve the API / implementation issues first?",
+      "parentUuid": "63cff076_e9e2cd3a",
+      "range": {
+        "startLine": 153,
+        "startChar": 5,
+        "endLine": 153,
+        "endChar": 26
+      },
+      "revId": "c5e033d4fe42645c1eb5f5260a9c9f7fe3006f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "62c618a6_e8d4b2d9",
         "filename": "internal/ceres/rotation_test.cc",
         "patchSetId": 2
