@@ -1402,14 +1402,12 @@ TEST(Jet, nested3x) {
 
 #if GTEST_HAS_TYPED_TEST
 
-using Types = testing::Types<short,
-                             unsigned short,
-                             int,
-                             unsigned int,
-                             long,
-                             unsigned long,
-                             long long,
-                             unsigned long long,
+using Types = testing::Types<std::int16_t,
+                             std::uint16_t,
+                             std::int32_t,
+                             std::uint32_t,
+                             std::int64_t,
+                             std::uint64_t,
                              float,
                              double,
                              long double>;
