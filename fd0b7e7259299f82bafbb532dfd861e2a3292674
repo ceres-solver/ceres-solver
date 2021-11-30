@@ -34,6 +34,24 @@
       "parentUuid": "4d43b2e9_45213de2",
       "revId": "fd0b7e7259299f82bafbb532dfd861e2a3292674",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5605a6db_2cf186e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-30T19:24:40Z",
+      "side": 1,
+      "message": "I see, thanks! There is now something wrong with formatting (tabs instead of spaces). Otherwise, LGTM.",
+      "parentUuid": "cba83216_9ee05317",
+      "revId": "fd0b7e7259299f82bafbb532dfd861e2a3292674",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
