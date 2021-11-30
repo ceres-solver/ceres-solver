@@ -35,6 +35,24 @@
       "parentUuid": "0070d1b8_22fb81f6",
       "revId": "543dbd42c8e3ebdf327d004f8af64c8f5e3b4df4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afd580ee_02198b8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-11-30T19:28:41Z",
+      "side": 1,
+      "message": "sorry what do you mean? which type should I drop then?",
+      "parentUuid": "28d00dd7_894a1660",
+      "revId": "543dbd42c8e3ebdf327d004f8af64c8f5e3b4df4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
