@@ -53,6 +53,24 @@
       "parentUuid": "28d00dd7_894a1660",
       "revId": "543dbd42c8e3ebdf327d004f8af64c8f5e3b4df4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd8c7341_f916e41f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2021-11-30T19:35:45Z",
+      "side": 1,
+      "message": "Sorry, I meant to say that \u0027long\u0027 and \u0027unsigned long\u0027 types are now gone. The types, however, are distinct from \u0027int\u0027/\u0027unsigned int\u0027 and I believe not necessarily 32-bit. But I guess, your intention is to consolidate \u0027long\u0027/\u0027unsigned long\u0027 replace them by corresponding 32-bit and 64-bit typedefs.",
+      "parentUuid": "afd580ee_02198b8b",
+      "revId": "543dbd42c8e3ebdf327d004f8af64c8f5e3b4df4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
