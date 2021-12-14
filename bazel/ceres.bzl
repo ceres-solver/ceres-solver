@@ -116,7 +116,6 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "sparse_cholesky.cc",
     "sparse_matrix.cc",
     "sparse_normal_cholesky_solver.cc",
-    "split.cc",
     "stringprintf.cc",
     "subset_preconditioner.cc",
     "suitesparse.cc",
