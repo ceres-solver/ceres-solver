@@ -127,7 +127,7 @@ class BenchmarkData {
   Vector y_;
 };
 
-void BM_SchurEliminatorEliminate(benchmark::State& state) {
+static void BM_SchurEliminatorEliminate(benchmark::State& state) {
   const int num_e_blocks = state.range(0);
   BenchmarkData data(num_e_blocks);
 
@@ -150,7 +150,7 @@ void BM_SchurEliminatorEliminate(benchmark::State& state) {
   }
 }
 
-void BM_SchurEliminatorBackSubstitute(benchmark::State& state) {
+static void BM_SchurEliminatorBackSubstitute(benchmark::State& state) {
   const int num_e_blocks = state.range(0);
   BenchmarkData data(num_e_blocks);
 
@@ -178,7 +178,7 @@ void BM_SchurEliminatorBackSubstitute(benchmark::State& state) {
   }
 }
 
-void BM_SchurEliminatorForOneFBlockEliminate(benchmark::State& state) {
+static void BM_SchurEliminatorForOneFBlockEliminate(benchmark::State& state) {
   const int num_e_blocks = state.range(0);
   BenchmarkData data(num_e_blocks);
   SchurEliminatorForOneFBlock<2, 3, 6> eliminator;
@@ -192,7 +192,7 @@ void BM_SchurEliminatorForOneFBlockEliminate(benchmark::State& state) {
   }
 }
 
-void BM_SchurEliminatorForOneFBlockBackSubstitute(benchmark::State& state) {
+static void BM_SchurEliminatorForOneFBlockBackSubstitute(benchmark::State& state) {
   const int num_e_blocks = state.range(0);
   BenchmarkData data(num_e_blocks);
   SchurEliminatorForOneFBlock<2, 3, 6> eliminator;

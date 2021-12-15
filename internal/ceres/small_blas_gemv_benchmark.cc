@@ -78,7 +78,7 @@ static void MatrixSizeArguments(benchmark::internal::Benchmark* benchmark) {
   }
 }
 
-void BM_MatrixVectorMultiply(benchmark::State& state) {
+static void BM_MatrixVectorMultiply(benchmark::State& state) {
   const int rows = state.range(0);
   const int cols = state.range(1);
   MatrixVectorMultiplyData data(rows, cols);
@@ -94,7 +94,7 @@ void BM_MatrixVectorMultiply(benchmark::State& state) {
 
 BENCHMARK(BM_MatrixVectorMultiply)->Apply(MatrixSizeArguments);
 
-void BM_MatrixTransposeVectorMultiply(benchmark::State& state) {
+static void BM_MatrixTransposeVectorMultiply(benchmark::State& state) {
   const int rows = state.range(0);
   const int cols = state.range(1);
   MatrixVectorMultiplyData data(cols, rows);
