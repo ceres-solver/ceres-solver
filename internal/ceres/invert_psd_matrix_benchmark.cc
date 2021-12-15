@@ -62,7 +62,7 @@ BENCHMARK_TEMPLATE(BenchmarkFixedSizedInvertPSDMatrix, 10);
 BENCHMARK_TEMPLATE(BenchmarkFixedSizedInvertPSDMatrix, 11);
 BENCHMARK_TEMPLATE(BenchmarkFixedSizedInvertPSDMatrix, 12);
 
-void BenchmarkDynamicallyInvertPSDMatrix(benchmark::State& state) {
+static void BenchmarkDynamicallyInvertPSDMatrix(benchmark::State& state) {
   using MatrixType =
       typename EigenTypes<Eigen::Dynamic, Eigen::Dynamic>::Matrix;
   const int size = state.range(0);
