@@ -43,6 +43,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/local_parameterization.h"
+#include "ceres/manifold.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -78,6 +79,20 @@ class CERES_EXPORT GradientChecker {
       const std::vector<const LocalParameterization*>* local_parameterizations,
       const NumericDiffOptions& options);
 
+  // This will not take ownership of the cost function or manifolds.
+  //
+  // function: The cost function to probe.
+  //
+  // manifolds: A vector of manifolds for each parameter. May be nullptr or
+  // contain nullptrs to indicate that the respective parameter blocks are
+  // Euclidean.
+  //
+  // options: Options to use for numerical differentiation.
+  GradientChecker(const CostFunction* function,
+                  const std::vector<const Manifold*>* manifolds,
+                  const NumericDiffOptions& options);
+  ~GradientChecker();
+
   // Contains results from a call to Probe for later inspection.
   struct CERES_EXPORT ProbeResults {
     // The return value of the cost function.
@@ -87,11 +102,10 @@ class CERES_EXPORT GradientChecker {
     Vector residuals;
 
     // The sizes of the Jacobians below are dictated by the cost function's
-    // parameter block size and residual block sizes. If a parameter block
-    // has a local parameterization associated with it, the size of the "local"
-    // Jacobian will be determined by the local parameterization dimension and
-    // residual block size, otherwise it will be identical to the regular
-    // Jacobian.
+    // parameter block size and residual block sizes. If a parameter block has a
+    // manifold associated with it, the size of the "local" Jacobian will be
+    // determined by the manifold dimension and residual block size, otherwise
+    // it will be identical to the regular Jacobian.
 
     // Derivatives as computed by the cost function.
     std::vector<Matrix> jacobians;
@@ -114,13 +128,13 @@ class CERES_EXPORT GradientChecker {
   };
 
   // Call the cost function, compute alternative Jacobians using finite
-  // differencing and compare results. If local parameterizations are given,
-  // the Jacobians will be multiplied by the local parameterization Jacobians
-  // before performing the check, which effectively means that all errors along
-  // the null space of the local parameterization will be ignored.
-  // Returns false if the Jacobians don't match, the cost function return false,
-  // or if the cost function returns different residual when called with a
-  // Jacobian output argument vs. calling it without. Otherwise returns true.
+  // differencing and compare results. If manifolds are given, the Jacobians
+  // will be multiplied by the manifold Jacobians before performing the check,
+  // which effectively means that all errors along the null space of the
+  // manifold will be ignored.  Returns false if the Jacobians don't match, the
+  // cost function return false, or if the cost function returns different
+  // residual when called with a Jacobian output argument vs. calling it
+  // without. Otherwise returns true.
   //
   // parameters: The parameter values at which to probe.
   // relative_precision: A threshold for the relative difference between the
@@ -140,7 +154,8 @@ class CERES_EXPORT GradientChecker {
   GradientChecker(const GradientChecker&) = delete;
   void operator=(const GradientChecker&) = delete;
 
-  std::vector<const LocalParameterization*> local_parameterizations_;
+  const bool delete_manifolds_ = false;
+  std::vector<const Manifold*> manifolds_;
   const CostFunction* function_;
   std::unique_ptr<CostFunction> finite_diff_cost_function_;
 };

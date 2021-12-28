@@ -250,7 +250,7 @@ class ProgramEvaluator : public Evaluator {
               MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
                   block_jacobians[j],
                   num_residuals,
-                  parameter_block->LocalSize(),
+                  parameter_block->TangentSize(),
                   block_residuals,
                   scratch->gradient.get() + parameter_block->delta_offset());
             }
@@ -320,7 +320,7 @@ class ProgramEvaluator : public Evaluator {
 
     double cost;
     std::unique_ptr<double[]> residual_block_evaluate_scratch;
-    // The gradient in the local parameterization.
+    // The gradient on the manifold.
     std::unique_ptr<double[]> gradient;
     // Enough space to store the residual for the largest residual block.
     std::unique_ptr<double[]> residual_block_residuals;
