@@ -42,6 +42,7 @@
 #include "ceres/cost_function.h"
 #include "ceres/covariance_impl.h"
 #include "ceres/local_parameterization.h"
+#include "ceres/manifold.h"
 #include "ceres/map_util.h"
 #include "ceres/problem_impl.h"
 #include "gtest/gtest.h"
@@ -127,29 +128,6 @@ class BinaryCostFunction : public CostFunction {
  private:
   vector<double> jacobian1_;
   vector<double> jacobian2_;
-};
-
-// x_plus_delta = delta * x;
-class PolynomialParameterization : public LocalParameterization {
- public:
-  virtual ~PolynomialParameterization() {}
-
-  bool Plus(const double* x,
-            const double* delta,
-            double* x_plus_delta) const final {
-    x_plus_delta[0] = delta[0] * x[0];
-    x_plus_delta[1] = delta[0] * x[1];
-    return true;
-  }
-
-  bool ComputeJacobian(const double* x, double* jacobian) const final {
-    jacobian[0] = x[0];
-    jacobian[1] = x[1];
-    return true;
-  }
-
-  int GlobalSize() const final { return 2; }
-  int LocalSize() const final { return 1; }
 };
 
 TEST(CovarianceImpl, ComputeCovarianceSparsity) {
@@ -397,6 +375,62 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
         << c << " " << cols[c] << " " << expected_cols[c];
   }
 }
+
+// x_plus_delta = delta * x;
+class PolynomialParameterization : public LocalParameterization {
+ public:
+  virtual ~PolynomialParameterization() {}
+
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const final {
+    x_plus_delta[0] = delta[0] * x[0];
+    x_plus_delta[1] = delta[0] * x[1];
+    return true;
+  }
+
+  bool ComputeJacobian(const double* x, double* jacobian) const final {
+    jacobian[0] = x[0];
+    jacobian[1] = x[1];
+    return true;
+  }
+
+  int GlobalSize() const final { return 2; }
+  int LocalSize() const final { return 1; }
+};
+
+// x_plus_delta = delta * x;
+class PolynomialManifold : public Manifold {
+ public:
+  virtual ~PolynomialManifold() {}
+
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const final {
+    x_plus_delta[0] = delta[0] * x[0];
+    x_plus_delta[1] = delta[0] * x[1];
+    return true;
+  }
+
+  bool Minus(const double* y, const double* x, double* y_minus_x) const {
+    LOG(FATAL) << "Should not be called";
+    return true;
+  }
+
+  bool PlusJacobian(const double* x, double* jacobian) const final {
+    jacobian[0] = x[0];
+    jacobian[1] = x[1];
+    return true;
+  }
+
+  bool MinusJacobian(const double* x, double* jacobian) const final {
+    LOG(FATAL) << "Should not be called";
+    return true;
+  }
+
+  int AmbientSize() const final { return 2; }
+  int TangentSize() const final { return 1; }
+};
 
 class CovarianceTest : public ::testing::Test {
  protected:
@@ -920,6 +954,193 @@ TEST_F(CovarianceTest, LocalParameterizationInTangentSpaceWithConstantBlocks) {
   ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
 }
 
+TEST_F(CovarianceTest, Manifold) {
+  double* x = parameters_;
+  double* y = x + 2;
+
+  problem_.SetManifold(x, new PolynomialManifold);
+
+  vector<int> subset;
+  subset.push_back(2);
+  problem_.SetManifold(y, new SubsetManifold(3, subset));
+
+  // Raw Jacobian: J
+  //
+  //   1   0  0  0  0  0
+  //   0   1  0  0  0  0
+  //   0   0  2  0  0  0
+  //   0   0  0  2  0  0
+  //   0   0  0  0  2  0
+  //   0   0  0  0  0  5
+  //  -5  -6  1  2  3  0
+  //   3  -2  0  0  0  2
+
+  // Local to global jacobian: A
+  //
+  //  1   0   0   0
+  //  1   0   0   0
+  //  0   1   0   0
+  //  0   0   1   0
+  //  0   0   0   0
+  //  0   0   0   1
+
+  // A * inv((J*A)'*(J*A)) * A'
+  // Computed using octave.
+  // clang-format off
+  double expected_covariance[] = {
+    0.01766,   0.01766,   0.02158,   0.04316,   0.00000,  -0.00122,
+    0.01766,   0.01766,   0.02158,   0.04316,   0.00000,  -0.00122,
+    0.02158,   0.02158,   0.24860,  -0.00281,   0.00000,  -0.00149,
+    0.04316,   0.04316,  -0.00281,   0.24439,   0.00000,  -0.00298,
+    0.00000,   0.00000,   0.00000,   0.00000,   0.00000,   0.00000,
+   -0.00122,  -0.00122,  -0.00149,  -0.00298,   0.00000,   0.03457
+  };
+  // clang-format on
+
+  Covariance::Options options;
+
+#ifndef CERES_NO_SUITESPARSE
+  options.algorithm_type = SPARSE_QR;
+  options.sparse_linear_algebra_library_type = SUITE_SPARSE;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+#endif
+
+  options.algorithm_type = DENSE_SVD;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+  options.algorithm_type = SPARSE_QR;
+  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+}
+
+TEST_F(CovarianceTest, ManifoldInTangentSpace) {
+  double* x = parameters_;
+  double* y = x + 2;
+  double* z = y + 3;
+
+  problem_.SetManifold(x, new PolynomialManifold);
+
+  vector<int> subset;
+  subset.push_back(2);
+  problem_.SetManifold(y, new SubsetManifold(3, subset));
+
+  local_column_bounds_[x] = make_pair(0, 1);
+  local_column_bounds_[y] = make_pair(1, 3);
+  local_column_bounds_[z] = make_pair(3, 4);
+
+  // Raw Jacobian: J
+  //
+  //   1   0  0  0  0  0
+  //   0   1  0  0  0  0
+  //   0   0  2  0  0  0
+  //   0   0  0  2  0  0
+  //   0   0  0  0  2  0
+  //   0   0  0  0  0  5
+  //  -5  -6  1  2  3  0
+  //   3  -2  0  0  0  2
+
+  // Local to global jacobian: A
+  //
+  //  1   0   0   0
+  //  1   0   0   0
+  //  0   1   0   0
+  //  0   0   1   0
+  //  0   0   0   0
+  //  0   0   0   1
+
+  // inv((J*A)'*(J*A))
+  // Computed using octave.
+  // clang-format off
+  double expected_covariance[] = {
+    0.01766,   0.02158,   0.04316,   -0.00122,
+    0.02158,   0.24860,  -0.00281,   -0.00149,
+    0.04316,  -0.00281,   0.24439,   -0.00298,
+   -0.00122,  -0.00149,  -0.00298,    0.03457  // NOLINT
+  };
+  // clang-format on
+
+  Covariance::Options options;
+
+#ifndef CERES_NO_SUITESPARSE
+  options.algorithm_type = SPARSE_QR;
+  options.sparse_linear_algebra_library_type = SUITE_SPARSE;
+
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+#endif
+
+  options.algorithm_type = DENSE_SVD;
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+
+  options.algorithm_type = SPARSE_QR;
+  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+}
+
+TEST_F(CovarianceTest, ManifoldInTangentSpaceWithConstantBlocks) {
+  double* x = parameters_;
+  double* y = x + 2;
+  double* z = y + 3;
+
+  problem_.SetManifold(x, new PolynomialManifold);
+  problem_.SetParameterBlockConstant(x);
+
+  vector<int> subset;
+  subset.push_back(2);
+  problem_.SetManifold(y, new SubsetManifold(3, subset));
+  problem_.SetParameterBlockConstant(y);
+
+  local_column_bounds_[x] = make_pair(0, 1);
+  local_column_bounds_[y] = make_pair(1, 3);
+  local_column_bounds_[z] = make_pair(3, 4);
+
+  // Raw Jacobian: J
+  //
+  //   1   0  0  0  0  0
+  //   0   1  0  0  0  0
+  //   0   0  2  0  0  0
+  //   0   0  0  2  0  0
+  //   0   0  0  0  2  0
+  //   0   0  0  0  0  5
+  //  -5  -6  1  2  3  0
+  //   3  -2  0  0  0  2
+
+  // Local to global jacobian: A
+  //
+  //  0   0   0   0
+  //  0   0   0   0
+  //  0   0   0   0
+  //  0   0   0   0
+  //  0   0   0   0
+  //  0   0   0   1
+
+  // pinv((J*A)'*(J*A))
+  // Computed using octave.
+  // clang-format off
+  double expected_covariance[] = {
+    0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.034482 // NOLINT
+  };
+  // clang-format on
+
+  Covariance::Options options;
+
+#ifndef CERES_NO_SUITESPARSE
+  options.algorithm_type = SPARSE_QR;
+  options.sparse_linear_algebra_library_type = SUITE_SPARSE;
+
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+#endif
+
+  options.algorithm_type = DENSE_SVD;
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+
+  options.algorithm_type = SPARSE_QR;
+  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+}
+
 TEST_F(CovarianceTest, TruncatedRank) {
   // J
   //
@@ -1031,7 +1252,9 @@ TEST_F(CovarianceTest, DenseCovarianceMatrixFromSetOfParametersThreaded) {
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
 
-TEST_F(CovarianceTest, DenseCovarianceMatrixFromSetOfParametersInTangentSpace) {
+TEST_F(
+    CovarianceTest,
+    DenseCovarianceMatrixFromSetOfParametersInTangentSpaceUsingLocalParameterizations) {
   Covariance::Options options;
   Covariance covariance(options);
   double* x = parameters_;
@@ -1043,6 +1266,47 @@ TEST_F(CovarianceTest, DenseCovarianceMatrixFromSetOfParametersInTangentSpace) {
   vector<int> subset;
   subset.push_back(2);
   problem_.SetParameterization(y, new SubsetParameterization(3, subset));
+
+  local_column_bounds_[x] = make_pair(0, 1);
+  local_column_bounds_[y] = make_pair(1, 3);
+  local_column_bounds_[z] = make_pair(3, 4);
+
+  vector<const double*> parameter_blocks;
+  parameter_blocks.push_back(x);
+  parameter_blocks.push_back(y);
+  parameter_blocks.push_back(z);
+  covariance.Compute(parameter_blocks, &problem_);
+  double expected_covariance[16];
+  covariance.GetCovarianceMatrixInTangentSpace(parameter_blocks,
+                                               expected_covariance);
+
+#ifndef CERES_NO_SUITESPARSE
+  options.algorithm_type = SPARSE_QR;
+  options.sparse_linear_algebra_library_type = SUITE_SPARSE;
+
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+#endif
+
+  options.algorithm_type = DENSE_SVD;
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+
+  options.algorithm_type = SPARSE_QR;
+  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+}
+
+TEST_F(CovarianceTest, DenseCovarianceMatrixFromSetOfParametersInTangentSpace) {
+  Covariance::Options options;
+  Covariance covariance(options);
+  double* x = parameters_;
+  double* y = x + 2;
+  double* z = y + 3;
+
+  problem_.SetManifold(x, new PolynomialManifold);
+
+  vector<int> subset;
+  subset.push_back(2);
+  problem_.SetManifold(y, new SubsetManifold(3, subset));
 
   local_column_bounds_[x] = make_pair(0, 1);
   local_column_bounds_[y] = make_pair(1, 3);
@@ -1238,6 +1502,74 @@ TEST(Covariance, ZeroSizedLocalParameterizationGetCovarianceInTangentSpace) {
   Problem problem;
   problem.AddResidualBlock(LinearCostFunction::Create(), nullptr, &x, &y);
   problem.SetParameterization(&y, new SubsetParameterization(1, {0}));
+  // J = [-1 0]
+  //     [ 0 0]
+  Covariance::Options options;
+  options.algorithm_type = DENSE_SVD;
+  Covariance covariance(options);
+  vector<pair<const double*, const double*>> covariance_blocks;
+  covariance_blocks.push_back(std::make_pair(&x, &x));
+  covariance_blocks.push_back(std::make_pair(&x, &y));
+  covariance_blocks.push_back(std::make_pair(&y, &x));
+  covariance_blocks.push_back(std::make_pair(&y, &y));
+  EXPECT_TRUE(covariance.Compute(covariance_blocks, &problem));
+
+  double value = -1;
+  covariance.GetCovarianceBlockInTangentSpace(&x, &x, &value);
+  EXPECT_NEAR(value, 1.0, std::numeric_limits<double>::epsilon());
+
+  value = -1;
+  // The following three calls, should not touch this value, since the
+  // tangent space is of size zero
+  covariance.GetCovarianceBlockInTangentSpace(&x, &y, &value);
+  EXPECT_EQ(value, -1);
+  covariance.GetCovarianceBlockInTangentSpace(&y, &x, &value);
+  EXPECT_EQ(value, -1);
+  covariance.GetCovarianceBlockInTangentSpace(&y, &y, &value);
+  EXPECT_EQ(value, -1);
+}
+
+TEST(Covariance, ZeroSizedManifoldGetCovariance) {
+  double x = 0.0;
+  double y = 1.0;
+  Problem problem;
+  problem.AddResidualBlock(LinearCostFunction::Create(), nullptr, &x, &y);
+  problem.SetManifold(&y, new SubsetManifold(1, {0}));
+  // J = [-1 0]
+  //     [ 0 0]
+  Covariance::Options options;
+  options.algorithm_type = DENSE_SVD;
+  Covariance covariance(options);
+  vector<pair<const double*, const double*>> covariance_blocks;
+  covariance_blocks.push_back(std::make_pair(&x, &x));
+  covariance_blocks.push_back(std::make_pair(&x, &y));
+  covariance_blocks.push_back(std::make_pair(&y, &x));
+  covariance_blocks.push_back(std::make_pair(&y, &y));
+  EXPECT_TRUE(covariance.Compute(covariance_blocks, &problem));
+
+  double value = -1;
+  covariance.GetCovarianceBlock(&x, &x, &value);
+  EXPECT_NEAR(value, 1.0, std::numeric_limits<double>::epsilon());
+
+  value = -1;
+  covariance.GetCovarianceBlock(&x, &y, &value);
+  EXPECT_NEAR(value, 0.0, std::numeric_limits<double>::epsilon());
+
+  value = -1;
+  covariance.GetCovarianceBlock(&y, &x, &value);
+  EXPECT_NEAR(value, 0.0, std::numeric_limits<double>::epsilon());
+
+  value = -1;
+  covariance.GetCovarianceBlock(&y, &y, &value);
+  EXPECT_NEAR(value, 0.0, std::numeric_limits<double>::epsilon());
+}
+
+TEST(Covariance, ZeroSizedManifoldGetCovarianceInTangentSpace) {
+  double x = 0.0;
+  double y = 1.0;
+  Problem problem;
+  problem.AddResidualBlock(LinearCostFunction::Create(), nullptr, &x, &y);
+  problem.SetManifold(&y, new SubsetManifold(1, {0}));
   // J = [-1 0]
   //     [ 0 0]
   Covariance::Options options;

@@ -41,6 +41,7 @@
 #include "ceres/evaluator_test_utils.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/local_parameterization.h"
+#include "ceres/manifold.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/sized_cost_function.h"
@@ -75,9 +76,9 @@ class ParameterIgnoringCostFunction
       for (int k = 0; k < Base::parameter_block_sizes().size(); ++k) {
         // The jacobians here are full sized, but they are transformed in the
         // evaluator into the "local" jacobian. In the tests, the "subset
-        // constant" parameterization is used, which should pick out columns
-        // from these jacobians. Put values in the jacobian that make this
-        // obvious; in particular, make the jacobians like this:
+        // constant" manifold is used, which should pick out columns from these
+        // jacobians. Put values in the jacobian that make this obvious; in
+        // particular, make the jacobians like this:
         //
         //   1 2 3 4 ...
         //   1 2 3 4 ...   .*  kFactor
@@ -407,6 +408,68 @@ TEST_P(EvaluatorTest, MultipleResidualsWithLocalParameterizations) {
   vector<int> z_fixed;
   z_fixed.push_back(1);
   problem.AddParameterBlock(z, 4, new SubsetParameterization(4, z_fixed));
+
+  // f(x, y) in R^2
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<1, 2, 2, 3>, nullptr, x, y);
+
+  // g(x, z) in R^3
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<2, 3, 2, 4>, nullptr, x, z);
+
+  // h(y, z) in R^4
+  problem.AddResidualBlock(
+      new ParameterIgnoringCostFunction<3, 4, 3, 4>, nullptr, y, z);
+
+  // clang-format off
+  ExpectedEvaluation expected = {
+    // Rows/columns
+    9, 7,
+    // Cost
+    // f       g           h
+    (  1 + 4 + 1 + 4 + 9 + 1 + 4 + 9 + 16) / 2.0,
+    // Residuals
+    { 1.0, 2.0,           // f
+      1.0, 2.0, 3.0,      // g
+      1.0, 2.0, 3.0, 4.0  // h
+    },
+    // Gradient
+    { 15.0, 30.0,         // x
+      66.0, 99.0,         // y
+      42.0, 126.0, 168.0  // z
+    },
+    // Jacobian
+    //                x        y           z
+    {   /* f(x, y) */ 1, 2,    2, 3,    0, 0, 0,
+                      1, 2,    2, 3,    0, 0, 0,
+
+        /* g(x, z) */ 2, 4,    0, 0,    2, 6, 8,
+                      2, 4,    0, 0,    2, 6, 8,
+                      2, 4,    0, 0,    2, 6, 8,
+
+        /* h(y, z) */ 0, 0,    6, 9,    3, 9, 12,
+                      0, 0,    6, 9,    3, 9, 12,
+                      0, 0,    6, 9,    3, 9, 12,
+                      0, 0,    6, 9,    3, 9, 12
+    }
+  };
+  // clang-format on
+  CheckAllEvaluationCombinations(expected);
+}
+
+TEST_P(EvaluatorTest, MultipleResidualsWithManifolds) {
+  // Add the parameters in explicit order to force the ordering in the program.
+  problem.AddParameterBlock(x, 2);
+
+  // Fix y's first dimension.
+  vector<int> y_fixed;
+  y_fixed.push_back(0);
+  problem.AddParameterBlock(y, 3, new SubsetManifold(3, y_fixed));
+
+  // Fix z's second dimension.
+  vector<int> z_fixed;
+  z_fixed.push_back(1);
+  problem.AddParameterBlock(z, 4, new SubsetManifold(4, z_fixed));
 
   // f(x, y) in R^2
   problem.AddResidualBlock(

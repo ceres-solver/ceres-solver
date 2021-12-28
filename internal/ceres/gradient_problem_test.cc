@@ -105,5 +105,33 @@ TEST(GradientProblem, EvaluationWithParameterizationAndWithGradient) {
   EXPECT_EQ(2.0 * x, gradient);
 }
 
+TEST(GradientProblem, EvalutaionWithManifoldAndNoGradient) {
+  ceres::GradientProblem problem(new QuadraticTestFunction(),
+                                 new EuclideanManifold(1));
+  double x = 7.0;
+  double cost = 0;
+  problem.Evaluate(&x, &cost, NULL);
+  EXPECT_EQ(x * x, cost);
+}
+
+TEST(GradientProblem, EvaluationWithoutManifoldAndWithGradient) {
+  ceres::GradientProblem problem(new QuadraticTestFunction());
+  double x = 7.0;
+  double cost = 0;
+  double gradient = 0;
+  problem.Evaluate(&x, &cost, &gradient);
+  EXPECT_EQ(2.0 * x, gradient);
+}
+
+TEST(GradientProblem, EvaluationWithManifoldAndWithGradient) {
+  ceres::GradientProblem problem(new QuadraticTestFunction(),
+                                 new EuclideanManifold(1));
+  double x = 7.0;
+  double cost = 0;
+  double gradient = 0;
+  problem.Evaluate(&x, &cost, &gradient);
+  EXPECT_EQ(2.0 * x, gradient);
+}
+
 }  // namespace internal
 }  // namespace ceres
