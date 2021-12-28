@@ -36,6 +36,7 @@
 #include "ceres/first_order_function.h"
 #include "ceres/internal/port.h"
 #include "ceres/local_parameterization.h"
+#include "ceres/manifold.h"
 
 namespace ceres {
 
@@ -49,17 +50,15 @@ class FirstOrderFunction;
 // objective function.
 //
 // Structurally GradientProblem is a composition of a
-// FirstOrderFunction and optionally a LocalParameterization.
+// FirstOrderFunction and optionally a Manifold.
 //
 // The FirstOrderFunction is responsible for evaluating the cost and
 // gradient of the objective function.
 //
-// The LocalParameterization is responsible for going back and forth
-// between the ambient space and the local tangent space. (See
-// local_parameterization.h for more details). When a
-// LocalParameterization is not provided, then the tangent space is
-// assumed to coincide with the ambient Euclidean space that the
-// gradient vector lives in.
+// The Manifold is responsible for going back and forth between the ambient
+// space and the local tangent space. (See manifold.h for more details). When a
+// Manifold is not provided, then the tangent space is assumed to coincide with
+// the ambient Euclidean space that the gradient vector lives in.
 //
 // Example usage:
 //
@@ -98,8 +97,12 @@ class CERES_EXPORT GradientProblem {
   GradientProblem(FirstOrderFunction* function,
                   LocalParameterization* parameterization);
 
+  // Takes ownership of the function and the manifold.
+  GradientProblem(FirstOrderFunction* function, Manifold* manifold);
+
   int NumParameters() const;
   int NumLocalParameters() const;
+  int NumTangentParameters() const;
 
   // This call is not thread safe.
   bool Evaluate(const double* parameters, double* cost, double* gradient) const;
@@ -114,9 +117,13 @@ class CERES_EXPORT GradientProblem {
     return parameterization_.get();
   }
 
+  const Manifold* manifold() const { return manifold_.get(); }
+  Manifold* mutable_manifold() { return manifold_.get(); }
+
  private:
   std::unique_ptr<FirstOrderFunction> function_;
   std::unique_ptr<LocalParameterization> parameterization_;
+  std::unique_ptr<Manifold> manifold_;
   std::unique_ptr<double[]> scratch_;
 };
 

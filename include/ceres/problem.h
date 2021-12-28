@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2021 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -53,6 +53,7 @@ class CostFunction;
 class EvaluationCallback;
 class LossFunction;
 class LocalParameterization;
+class Manifold;
 class Solver;
 struct CRSMatrix;
 
@@ -122,16 +123,17 @@ typedef internal::ResidualBlock* ResidualBlockId;
 class CERES_EXPORT Problem {
  public:
   struct CERES_EXPORT Options {
-    // These flags control whether the Problem object owns the cost
-    // functions, loss functions, and parameterizations passed into
-    // the Problem. If set to TAKE_OWNERSHIP, then the problem object
-    // will delete the corresponding cost or loss functions on
-    // destruction. The destructor is careful to delete the pointers
-    // only once, since sharing cost/loss/parameterizations is
-    // allowed.
+    // These flags control whether the Problem object owns the CostFunctions,
+    // LossFunctions, LocalParameterizations, and Manifolds passed into the
+    // Problem.
+    //
+    // If set to TAKE_OWNERSHIP, then the problem object will delete the
+    // corresponding object on destruction. The destructor is careful to delete
+    // the pointers only once, since sharing objects is allowed.
     Ownership cost_function_ownership = TAKE_OWNERSHIP;
     Ownership loss_function_ownership = TAKE_OWNERSHIP;
     Ownership local_parameterization_ownership = TAKE_OWNERSHIP;
+    Ownership manifold_ownership = TAKE_OWNERSHIP;
 
     // If true, trades memory for faster RemoveResidualBlock() and
     // RemoveParameterBlock() operations.
@@ -261,29 +263,34 @@ class CERES_EXPORT Problem {
                                    double* const* const parameter_blocks,
                                    int num_parameter_blocks);
 
-  // Add a parameter block with appropriate size to the problem.
-  // Repeated calls with the same arguments are ignored. Repeated
-  // calls with the same double pointer but a different size results
-  // in undefined behaviour.
+  // Add a parameter block with appropriate size to the problem.  Repeated calls
+  // with the same arguments are ignored. Repeated calls with the same double
+  // pointer but a different size results in undefined behaviour.
   void AddParameterBlock(double* values, int size);
 
-  // Add a parameter block with appropriate size and parameterization
-  // to the problem. Repeated calls with the same arguments are
-  // ignored. Repeated calls with the same double pointer but a
-  // different size results in undefined behaviour.
+  // Add a parameter block with appropriate size and parameterization to the
+  // problem. Repeated calls with the same arguments are ignored. Repeated calls
+  // with the same double pointer but a different size results in undefined
+  // behaviour.
   void AddParameterBlock(double* values,
                          int size,
                          LocalParameterization* local_parameterization);
 
-  // Remove a parameter block from the problem. The parameterization of the
-  // parameter block, if it exists, will persist until the deletion of the
-  // problem (similar to cost/loss functions in residual block removal). Any
-  // residual blocks that depend on the parameter are also removed, as
-  // described above in RemoveResidualBlock().
+  // Add a parameter block with appropriate size and Manifold to the
+  // problem. Repeated calls with the same arguments are ignored. Repeated calls
+  // with the same double pointer but a different size results in undefined
+  // behaviour.
+  void AddParameterBlock(double* values, int size, Manifold* manifold);
+
+  // Remove a parameter block from the problem. The LocalParameterization or
+  // Manifold of the parameter block, if it exists, will persist until the
+  // deletion of the problem (similar to cost/loss functions in residual block
+  // removal). Any residual blocks that depend on the parameter are also
+  // removed, as described above in RemoveResidualBlock().
   //
-  // If Problem::Options::enable_fast_removal is true, then the
-  // removal is fast (almost constant time). Otherwise, removing a parameter
-  // block will incur a scan of the entire Problem object.
+  // If Problem::Options::enable_fast_removal is true, then the removal is fast
+  // (almost constant time). Otherwise, removing a parameter block will incur a
+  // scan of the entire Problem object.
   //
   // WARNING: Removing a residual or parameter block will destroy the implicit
   // ordering, rendering the jacobian or residuals returned from the solver
@@ -308,30 +315,44 @@ class CERES_EXPORT Problem {
   // Allow the indicated parameter block to vary during optimization.
   void SetParameterBlockVariable(double* values);
 
-  // Returns true if a parameter block is set constant, and false
-  // otherwise. A parameter block may be set constant in two ways:
-  // either by calling SetParameterBlockConstant or by associating a
-  // LocalParameterization with a zero dimensional tangent space with
-  // it.
+  // Returns true if a parameter block is set constant, and false otherwise. A
+  // parameter block may be set constant in two ways: either by calling
+  // SetParameterBlockConstant or by associating a LocalParameterization or
+  // Manifold with a zero dimensional tangent space with it.
   bool IsParameterBlockConstant(const double* values) const;
 
-  // Set the local parameterization for one of the parameter blocks.
-  // The local_parameterization is owned by the Problem by default. It
-  // is acceptable to set the same parameterization for multiple
-  // parameters; the destructor is careful to delete local
-  // parameterizations only once. Calling SetParameterization with
-  // nullptr will clear any previously set parameterization.
+  // Set the LocalParameterization for the parameter block.  The
+  // local_parameterization is owned by the Problem by default. It is acceptable
+  // to set the same LocalParameterization for multiple parameter blocks; the
+  // destructor is careful to delete LocalParamaterizations only once. Calling
+  // SetParameterization with nullptr will clear any previously set
+  // LocalParameterization.
   void SetParameterization(double* values,
                            LocalParameterization* local_parameterization);
 
-  // Get the local parameterization object associated with this
-  // parameter block. If there is no parameterization object
-  // associated then nullptr is returned.
+  // Get the LocalParameterization object associated with this parameter block.
+  // If there is no LocalParameterization associated then nullptr is returned.
   const LocalParameterization* GetParameterization(const double* values) const;
 
-  // Returns true if a parameterization is associated with this parameter block,
-  // false otherwise.
+  // Returns true if a LocalParameterization or Manifold is associated with this
+  // parameter block, false otherwise.
   bool HasParameterization(const double* values) const;
+
+  // Set the manifold for the parameter block.  The manifold is owned by
+  // the Problem by default. It is acceptable to set the same manifold for
+  // multiple parameters; the destructor is careful to delete the manifolds only
+  // once.  Calling SetManifold with nullptr will clear any previously set
+  // manifold.
+  void SetManifold(double* values, Manifold* manifold);
+
+  // Get the manifold object associated with this parameter block. If there is
+  // no Manifold Or LocalParameterization object associated then nullptr is
+  // returned.
+  const Manifold* GetManifold(const double* values) const;
+
+  // Returns true if a Manifold or a LocalParameterization is associated with
+  // this parameter block, false otherwise.
+  bool HasManifold(const double* values) const;
 
   // Set the lower/upper bound for the parameter at position "index".
   void SetParameterLowerBound(double* values, int index, double lower_bound);
@@ -363,10 +384,17 @@ class CERES_EXPORT Problem {
   // The size of the parameter block.
   int ParameterBlockSize(const double* values) const;
 
-  // The size of local parameterization for the parameter block. If
-  // there is no local parameterization associated with this parameter
-  // block, then ParameterBlockLocalSize = ParameterBlockSize.
+  // The size of tangent space of the LocalParameterization or Manifold for the
+  // parameter block. If there is no LocalParameterization or Manifold
+  // associated with this parameter block, then ParameterBlockLocalSize =
+  // ParameterBlockSize.
   int ParameterBlockLocalSize(const double* values) const;
+
+  // The size of tangent space of the LocalParameterization or Manifold for the
+  // parameter block. If there is no LocalParameterization or Manifold
+  // associated with this parameter block, then ParameterBlockLocalSize =
+  // ParameterBlockSize.
+  int ParameterBlockTangentSize(const double* values) const;
 
   // Is the given parameter block present in this problem or not?
   bool HasParameterBlock(const double* values) const;
@@ -444,13 +472,13 @@ class CERES_EXPORT Problem {
     int num_threads = 1;
   };
 
-  // Evaluate Problem. Any of the output pointers can be nullptr. Which
-  // residual blocks and parameter blocks are used is controlled by
-  // the EvaluateOptions struct above.
+  // Evaluate Problem. Any of the output pointers can be nullptr. Which residual
+  // blocks and parameter blocks are used is controlled by the EvaluateOptions
+  // struct above.
   //
-  // Note 1: The evaluation will use the values stored in the memory
-  // locations pointed to by the parameter block pointers used at the
-  // time of the construction of the problem. i.e.,
+  // Note 1: The evaluation will use the values stored in the memory locations
+  // pointed to by the parameter block pointers used at the time of the
+  // construction of the problem. i.e.,
   //
   //   Problem problem;
   //   double x = 1;
@@ -460,8 +488,8 @@ class CERES_EXPORT Problem {
   //   problem.Evaluate(Problem::EvaluateOptions(), &cost,
   //                    nullptr, nullptr, nullptr);
   //
-  // The cost is evaluated at x = 1. If you wish to evaluate the
-  // problem at x = 2, then
+  // The cost is evaluated at x = 1. If you wish to evaluate the problem at x =
+  // 2, then
   //
   //   x = 2;
   //   problem.Evaluate(Problem::EvaluateOptions(), &cost,
@@ -469,51 +497,49 @@ class CERES_EXPORT Problem {
   //
   // is the way to do so.
   //
-  // Note 2: If no local parameterizations are used, then the size of
-  // the gradient vector (and the number of columns in the jacobian)
-  // is the sum of the sizes of all the parameter blocks. If a
-  // parameter block has a local parameterization, then it contributes
-  // "LocalSize" entries to the gradient vector (and the number of
-  // columns in the jacobian).
+  // Note 2: If no LocalParameterizations or Manifolds are used, then the size
+  // of the gradient vector (and the number of columns in the jacobian) is the
+  // sum of the sizes of all the parameter blocks. If a parameter block has a
+  // LocalParameterization or Manifold, then it contributes "TangentSize"
+  // entries to the gradient vector (and the number of columns in the jacobian).
   //
-  // Note 3: This function cannot be called while the problem is being
-  // solved, for example it cannot be called from an IterationCallback
-  // at the end of an iteration during a solve.
+  // Note 3: This function cannot be called while the problem is being solved,
+  // for example it cannot be called from an IterationCallback at the end of an
+  // iteration during a solve.
   //
-  // Note 4: If an EvaluationCallback is associated with the problem,
-  // then its PrepareForEvaluation method will be called every time
-  // this method is called with new_point = true.
+  // Note 4: If an EvaluationCallback is associated with the problem, then its
+  // PrepareForEvaluation method will be called every time this method is called
+  // with new_point = true.
   bool Evaluate(const EvaluateOptions& options,
                 double* cost,
                 std::vector<double>* residuals,
                 std::vector<double>* gradient,
                 CRSMatrix* jacobian);
 
-  // Evaluates the residual block, storing the scalar cost in *cost,
-  // the residual components in *residuals, and the jacobians between
-  // the parameters and residuals in jacobians[i], in row-major order.
+  // Evaluates the residual block, storing the scalar cost in *cost, the
+  // residual components in *residuals, and the jacobians between the parameters
+  // and residuals in jacobians[i], in row-major order.
   //
   // If residuals is nullptr, the residuals are not computed.
   //
-  // If jacobians is nullptr, no Jacobians are computed. If
-  // jacobians[i] is nullptr, then the Jacobian for that parameter
-  // block is not computed.
+  // If jacobians is nullptr, no Jacobians are computed. If jacobians[i] is
+  // nullptr, then the Jacobian for that parameter block is not computed.
   //
-  // It is not okay to request the Jacobian w.r.t a parameter block
-  // that is constant.
+  // It is not okay to request the Jacobian w.r.t a parameter block that is
+  // constant.
   //
-  // The return value indicates the success or failure. Even if the
-  // function returns false, the caller should expect the output
-  // memory locations to have been modified.
+  // The return value indicates the success or failure. Even if the function
+  // returns false, the caller should expect the output memory locations to have
+  // been modified.
   //
   // The returned cost and jacobians have had robustification and
-  // local parameterizations applied already; for example, the
-  // jacobian for a 4-dimensional quaternion parameter using the
-  // "QuaternionParameterization" is num_residuals by 3 instead of
-  // num_residuals by 4.
+  // LocalParameterization/Manifold applied already; for example, the jacobian
+  // for a 4-dimensional quaternion parameter using the
+  // "QuaternionParameterization" is num_residuals by 3 instead of num_residuals
+  // by 4.
   //
-  // apply_loss_function as the name implies allows the user to switch
-  // the application of the loss function on and off.
+  // apply_loss_function as the name implies allows the user to switch the
+  // application of the loss function on and off.
   //
   // If an EvaluationCallback is associated with the problem, then its
   // PrepareForEvaluation method will be called every time this method
