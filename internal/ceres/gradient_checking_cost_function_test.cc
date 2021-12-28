@@ -324,7 +324,7 @@ class TernaryCostFunction : public CostFunction {
 };
 
 // Verify that the two ParameterBlocks are formed from the same user
-// array and have the same LocalParameterization object.
+// array and have the same Manifold objects.
 static void ParameterBlocksAreEquivalent(const ParameterBlock* left,
                                          const ParameterBlock* right) {
   CHECK(left != nullptr);
@@ -332,8 +332,8 @@ static void ParameterBlocksAreEquivalent(const ParameterBlock* left,
   EXPECT_EQ(left->user_state(), right->user_state());
   EXPECT_EQ(left->Size(), right->Size());
   EXPECT_EQ(left->Size(), right->Size());
-  EXPECT_EQ(left->LocalSize(), right->LocalSize());
-  EXPECT_EQ(left->local_parameterization(), right->local_parameterization());
+  EXPECT_EQ(left->TangentSize(), right->TangentSize());
+  EXPECT_EQ(left->manifold(), right->manifold());
   EXPECT_EQ(left->IsConstant(), right->IsConstant());
 }
 

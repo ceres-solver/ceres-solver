@@ -41,8 +41,8 @@
 #include "ceres/cost_function.h"
 #include "ceres/evaluator.h"
 #include "ceres/internal/port.h"
-#include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
+#include "ceres/manifold.h"
 #include "ceres/map_util.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem.h"
@@ -53,11 +53,6 @@
 namespace ceres {
 namespace internal {
 
-using std::max;
-using std::set;
-using std::string;
-using std::vector;
-
 Program::Program() {}
 
 Program::Program(const Program& program)
@@ -65,19 +60,19 @@ Program::Program(const Program& program)
       residual_blocks_(program.residual_blocks_),
       evaluation_callback_(program.evaluation_callback_) {}
 
-const vector<ParameterBlock*>& Program::parameter_blocks() const {
+const std::vector<ParameterBlock*>& Program::parameter_blocks() const {
   return parameter_blocks_;
 }
 
-const vector<ResidualBlock*>& Program::residual_blocks() const {
+const std::vector<ResidualBlock*>& Program::residual_blocks() const {
   return residual_blocks_;
 }
 
-vector<ParameterBlock*>* Program::mutable_parameter_blocks() {
+std::vector<ParameterBlock*>* Program::mutable_parameter_blocks() {
   return &parameter_blocks_;
 }
 
-vector<ResidualBlock*>* Program::mutable_residual_blocks() {
+std::vector<ResidualBlock*>* Program::mutable_residual_blocks() {
   return &residual_blocks_;
 }
 
@@ -127,7 +122,7 @@ bool Program::Plus(const double* state,
       return false;
     }
     state += parameter_blocks_[i]->Size();
-    delta += parameter_blocks_[i]->LocalSize();
+    delta += parameter_blocks_[i]->TangentSize();
     state_plus_delta += parameter_blocks_[i]->Size();
   }
   return true;
@@ -150,7 +145,7 @@ void Program::SetParameterOffsetsAndIndex() {
     parameter_blocks_[i]->set_state_offset(state_offset);
     parameter_blocks_[i]->set_delta_offset(delta_offset);
     state_offset += parameter_blocks_[i]->Size();
-    delta_offset += parameter_blocks_[i]->LocalSize();
+    delta_offset += parameter_blocks_[i]->TangentSize();
   }
 }
 
@@ -178,13 +173,13 @@ bool Program::IsValid() const {
     }
 
     state_offset += parameter_blocks_[i]->Size();
-    delta_offset += parameter_blocks_[i]->LocalSize();
+    delta_offset += parameter_blocks_[i]->TangentSize();
   }
 
   return true;
 }
 
-bool Program::ParameterBlocksAreFinite(string* message) const {
+bool Program::ParameterBlocksAreFinite(std::string* message) const {
   CHECK(message != nullptr);
   for (int i = 0; i < parameter_blocks_.size(); ++i) {
     const ParameterBlock* parameter_block = parameter_blocks_[i];
@@ -225,7 +220,7 @@ bool Program::IsBoundsConstrained() const {
   return false;
 }
 
-bool Program::IsFeasible(string* message) const {
+bool Program::IsFeasible(std::string* message) const {
   CHECK(message != nullptr);
   for (int i = 0; i < parameter_blocks_.size(); ++i) {
     const ParameterBlock* parameter_block = parameter_blocks_[i];
@@ -285,9 +280,9 @@ bool Program::IsFeasible(string* message) const {
 }
 
 Program* Program::CreateReducedProgram(
-    vector<double*>* removed_parameter_blocks,
+    std::vector<double*>* removed_parameter_blocks,
     double* fixed_cost,
-    string* error) const {
+    std::string* error) const {
   CHECK(removed_parameter_blocks != nullptr);
   CHECK(fixed_cost != nullptr);
   CHECK(error != nullptr);
@@ -302,9 +297,9 @@ Program* Program::CreateReducedProgram(
   return reduced_program.release();
 }
 
-bool Program::RemoveFixedBlocks(vector<double*>* removed_parameter_blocks,
+bool Program::RemoveFixedBlocks(std::vector<double*>* removed_parameter_blocks,
                                 double* fixed_cost,
-                                string* error) {
+                                std::string* error) {
   CHECK(removed_parameter_blocks != nullptr);
   CHECK(fixed_cost != nullptr);
   CHECK(error != nullptr);
@@ -412,7 +407,7 @@ bool Program::RemoveFixedBlocks(vector<double*>* removed_parameter_blocks,
 }
 
 bool Program::IsParameterBlockSetIndependent(
-    const set<double*>& independent_set) const {
+    const std::set<double*>& independent_set) const {
   // Loop over each residual block and ensure that no two parameter
   // blocks in the same residual block are part of
   // parameter_block_ptrs as that would violate the assumption that it
@@ -500,7 +495,7 @@ int Program::NumParameters() const {
 int Program::NumEffectiveParameters() const {
   int num_parameters = 0;
   for (int i = 0; i < parameter_blocks_.size(); ++i) {
-    num_parameters += parameter_blocks_[i]->LocalSize();
+    num_parameters += parameter_blocks_[i]->TangentSize();
   }
   return num_parameters;
 }
@@ -513,8 +508,8 @@ int Program::MaxScratchDoublesNeededForEvaluate() const {
   int max_scratch_bytes_for_evaluate = 0;
   for (int i = 0; i < residual_blocks_.size(); ++i) {
     max_scratch_bytes_for_evaluate =
-        max(max_scratch_bytes_for_evaluate,
-            residual_blocks_[i]->NumScratchDoublesForEvaluate());
+        std::max(max_scratch_bytes_for_evaluate,
+                 residual_blocks_[i]->NumScratchDoublesForEvaluate());
   }
   return max_scratch_bytes_for_evaluate;
 }
@@ -527,9 +522,9 @@ int Program::MaxDerivativesPerResidualBlock() const {
     int num_parameters = residual_block->NumParameterBlocks();
     for (int j = 0; j < num_parameters; ++j) {
       derivatives += residual_block->NumResiduals() *
-                     residual_block->parameter_blocks()[j]->LocalSize();
+                     residual_block->parameter_blocks()[j]->TangentSize();
     }
-    max_derivatives = max(max_derivatives, derivatives);
+    max_derivatives = std::max(max_derivatives, derivatives);
   }
   return max_derivatives;
 }
@@ -538,7 +533,7 @@ int Program::MaxParametersPerResidualBlock() const {
   int max_parameters = 0;
   for (int i = 0; i < residual_blocks_.size(); ++i) {
     max_parameters =
-        max(max_parameters, residual_blocks_[i]->NumParameterBlocks());
+        std::max(max_parameters, residual_blocks_[i]->NumParameterBlocks());
   }
   return max_parameters;
 }
@@ -546,13 +541,14 @@ int Program::MaxParametersPerResidualBlock() const {
 int Program::MaxResidualsPerResidualBlock() const {
   int max_residuals = 0;
   for (int i = 0; i < residual_blocks_.size(); ++i) {
-    max_residuals = max(max_residuals, residual_blocks_[i]->NumResiduals());
+    max_residuals =
+        std::max(max_residuals, residual_blocks_[i]->NumResiduals());
   }
   return max_residuals;
 }
 
-string Program::ToString() const {
-  string ret = "Program dump\n";
+std::string Program::ToString() const {
+  std::string ret = "Program dump\n";
   ret += StringPrintf("Number of parameter blocks: %d\n", NumParameterBlocks());
   ret += StringPrintf("Number of parameters: %d\n", NumParameters());
   ret += "Parameters:\n";
