@@ -92,10 +92,10 @@ class CERES_EXPORT_INTERNAL ResidualBlock {
   // false, the caller should expect the output memory locations to have
   // been modified.
   //
-  // The returned cost and jacobians have had robustification and local
-  // parameterizations applied already; for example, the jacobian for a
-  // 4-dimensional quaternion parameter using the "QuaternionParameterization"
-  // is num_residuals by 3 instead of num_residuals by 4.
+  // The returned cost and jacobians have had robustification and manifold
+  // projection applied already; for example, the jacobian for a 4-dimensional
+  // quaternion parameter using the "Quaternion" manifold is num_residuals by 3
+  // instead of num_residuals by 4.
   //
   // apply_loss_function as the name implies allows the user to switch
   // the application of the loss function on and off.

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2016 Google Inc. All rights reserved.
+// Copyright 2021 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -217,8 +217,11 @@ TEST(GradientChecker, SmokeTest) {
 
   // Test that Probe returns true for correct Jacobians.
   GoodTestTerm good_term(num_parameters, parameter_sizes.data());
-  GradientChecker good_gradient_checker(&good_term, NULL, numeric_diff_options);
-  EXPECT_TRUE(good_gradient_checker.Probe(parameters.data(), kTolerance, NULL));
+  std::vector<const Manifold*>* manifolds = nullptr;
+  GradientChecker good_gradient_checker(
+      &good_term, manifolds, numeric_diff_options);
+  EXPECT_TRUE(
+      good_gradient_checker.Probe(parameters.data(), kTolerance, nullptr));
   EXPECT_TRUE(
       good_gradient_checker.Probe(parameters.data(), kTolerance, &results))
       << results.error_log;
@@ -233,7 +236,7 @@ TEST(GradientChecker, SmokeTest) {
   // Test that if the cost function return false, Probe should return false.
   good_term.SetReturnValue(false);
   EXPECT_FALSE(
-      good_gradient_checker.Probe(parameters.data(), kTolerance, NULL));
+      good_gradient_checker.Probe(parameters.data(), kTolerance, nullptr));
   EXPECT_FALSE(
       good_gradient_checker.Probe(parameters.data(), kTolerance, &results))
       << results.error_log;
@@ -251,8 +254,10 @@ TEST(GradientChecker, SmokeTest) {
 
   // Test that Probe returns false for incorrect Jacobians.
   BadTestTerm bad_term(num_parameters, parameter_sizes.data());
-  GradientChecker bad_gradient_checker(&bad_term, NULL, numeric_diff_options);
-  EXPECT_FALSE(bad_gradient_checker.Probe(parameters.data(), kTolerance, NULL));
+  GradientChecker bad_gradient_checker(
+      &bad_term, manifolds, numeric_diff_options);
+  EXPECT_FALSE(
+      bad_gradient_checker.Probe(parameters.data(), kTolerance, nullptr));
   EXPECT_FALSE(
       bad_gradient_checker.Probe(parameters.data(), kTolerance, &results));
 
@@ -305,7 +310,7 @@ class LinearCostFunction : public CostFunction {
       residuals += residual_J_param * param;
 
       // Return Jacobian.
-      if (residual_J_params != NULL && residual_J_params[i] != NULL) {
+      if (residual_J_params != nullptr && residual_J_params[i] != nullptr) {
         Eigen::Map<Matrix> residual_J_param_out(residual_J_params[i],
                                                 residual_J_param.rows(),
                                                 residual_J_param.cols());
@@ -417,7 +422,7 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   ExpectMatricesClose(j2_out, j1, std::numeric_limits<double>::epsilon());
   ExpectMatricesClose(residual, residual_expected, kTolerance);
 
-  // Create local parameterization.
+  // Create parameterization.
   Eigen::Matrix<double, 3, 2, Eigen::RowMajor> global_J_local;
   global_J_local.row(0) << 1.5, 2.5;
   global_J_local.row(1) << 3.5, 4.5;
@@ -444,7 +449,7 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   // Now test GradientChecker.
   std::vector<const LocalParameterization*> parameterizations(2);
   parameterizations[0] = &parameterization;
-  parameterizations[1] = NULL;
+  parameterizations[1] = nullptr;
   NumericDiffOptions numeric_diff_options;
   GradientChecker::ProbeResults results;
   GradientChecker gradient_checker(
@@ -459,15 +464,10 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   problem.AddParameterBlock(param0_solver.data(), 3, &parameterization);
   problem.AddParameterBlock(param1_solver.data(), 2);
   problem.AddResidualBlock(
-      &cost_function, NULL, param0_solver.data(), param1_solver.data());
-  Solver::Options solver_options;
-  solver_options.check_gradients = true;
-  solver_options.initial_trust_region_radius = 1e10;
-  Solver solver;
-  Solver::Summary summary;
+      &cost_function, nullptr, param0_solver.data(), param1_solver.data());
 
   // First test case: everything is correct.
-  EXPECT_TRUE(gradient_checker.Probe(parameters.data(), kTolerance, NULL));
+  EXPECT_TRUE(gradient_checker.Probe(parameters.data(), kTolerance, nullptr));
   EXPECT_TRUE(gradient_checker.Probe(parameters.data(), kTolerance, &results))
       << results.error_log;
 
@@ -494,6 +494,13 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   EXPECT_TRUE(results.error_log.empty());
 
   // Test interaction with the 'check_gradients' option in Solver.
+  Solver::Options solver_options;
+  solver_options.linear_solver_type = DENSE_QR;
+  solver_options.check_gradients = true;
+  solver_options.initial_trust_region_radius = 1e10;
+  Solver solver;
+  Solver::Summary summary;
+
   param0_solver = param0;
   param1_solver = param1;
   solver.Solve(solver_options, &problem, &summary);
@@ -506,7 +513,7 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   j0_offset.setZero();
   j0_offset.col(2).setConstant(0.001);
   cost_function.SetJacobianOffset(0, j0_offset);
-  EXPECT_FALSE(gradient_checker.Probe(parameters.data(), kTolerance, NULL));
+  EXPECT_FALSE(gradient_checker.Probe(parameters.data(), kTolerance, nullptr));
   EXPECT_FALSE(gradient_checker.Probe(parameters.data(), kTolerance, &results))
       << results.error_log;
 
@@ -540,9 +547,9 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   solver.Solve(solver_options, &problem, &summary);
   EXPECT_EQ(FAILURE, summary.termination_type);
 
-  // Now, zero out the local parameterization Jacobian of the 1st parameter
-  // with respect to the 3rd component. This makes the combination of
-  // cost function and local parameterization return correct values again.
+  // Now, zero out the local parameterization Jacobian with respect to the 3rd
+  // component of the 1st parameter. This makes the combination of cost function
+  // and local parameterization return correct values again.
   parameterization.global_J_local.row(2).setZero();
 
   // Verify that the gradient checker does not treat this as an error.
