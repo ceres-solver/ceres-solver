@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2021 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -53,6 +53,7 @@ class CostFunction;
 class EvaluationCallback;
 class LossFunction;
 class LocalParameterization;
+class Manifold;
 class Solver;
 struct CRSMatrix;
 
@@ -132,6 +133,7 @@ class CERES_EXPORT Problem {
     Ownership cost_function_ownership = TAKE_OWNERSHIP;
     Ownership loss_function_ownership = TAKE_OWNERSHIP;
     Ownership local_parameterization_ownership = TAKE_OWNERSHIP;
+    Ownership manifold_ownership = TAKE_OWNERSHIP;
 
     // If true, trades memory for faster RemoveResidualBlock() and
     // RemoveParameterBlock() operations.
@@ -275,6 +277,8 @@ class CERES_EXPORT Problem {
                          int size,
                          LocalParameterization* local_parameterization);
 
+  void AddParameterBlock(double* values, int size, Manifold* manifold);
+
   // Remove a parameter block from the problem. The parameterization of the
   // parameter block, if it exists, will persist until the deletion of the
   // problem (similar to cost/loss functions in residual block removal). Any
@@ -324,14 +328,28 @@ class CERES_EXPORT Problem {
   void SetParameterization(double* values,
                            LocalParameterization* local_parameterization);
 
-  // Get the local parameterization object associated with this
-  // parameter block. If there is no parameterization object
-  // associated then nullptr is returned.
+  // Get the local parameterization object associated with this parameter block.
+  // If there is no local parameterization associated then nullptr is returned.
   const LocalParameterization* GetParameterization(const double* values) const;
 
-  // Returns true if a parameterization is associated with this parameter block,
-  // false otherwise.
+  // Returns true if a local parameterization is associated with this parameter
+  // block, false otherwise.
   bool HasParameterization(const double* values) const;
+
+  // Set the manifold for one of the parameter blocks.  The manifold is owned by
+  // the Problem by default. It is acceptable to set the same manifold for
+  // multiple parameters; the destructor is careful to delete the manifolds only
+  // once.  Calling SetManifold with nullptr will clear any previously set
+  // manifold.
+  void SetManifold(double* values, Manifold* manifold);
+
+  // Get the manifold object associated with this parameter block. If there is
+  // no manifold object associated then nullptr is returned.
+  const Manifold* GetManifold(const double* values) const;
+
+  // Returns true if a manifold is associated with this parameter block,
+  // false otherwise.
+  bool HasManifold(const double* values) const;
 
   // Set the lower/upper bound for the parameter at position "index".
   void SetParameterLowerBound(double* values, int index, double lower_bound);
@@ -367,6 +385,8 @@ class CERES_EXPORT Problem {
   // there is no local parameterization associated with this parameter
   // block, then ParameterBlockLocalSize = ParameterBlockSize.
   int ParameterBlockLocalSize(const double* values) const;
+
+  int ParameterBlockTangentSize(const double* values) const;
 
   // Is the given parameter block present in this problem or not?
   bool HasParameterBlock(const double* values) const;
