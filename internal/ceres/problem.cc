@@ -101,13 +101,16 @@ void Problem::SetParameterization(
   impl_->SetParameterization(values, local_parameterization);
 }
 
-const LocalParameterization* Problem::GetParameterization(
-    const double* values) const {
-  return impl_->GetParameterization(values);
-}
-
 bool Problem::HasParameterization(const double* values) const {
   return impl_->HasParameterization(values);
+}
+
+const Manifold* Problem::GetManifold(const double* values) const {
+  return impl_->GetManifold(values);
+}
+
+bool Problem::HasManifold(const double* values) const {
+  return impl_->HasManifold(values);
 }
 
 void Problem::SetParameterLowerBound(double* values,

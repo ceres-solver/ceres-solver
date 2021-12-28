@@ -53,6 +53,7 @@ class CostFunction;
 class EvaluationCallback;
 class LossFunction;
 class LocalParameterization;
+class Manifold;
 class Solver;
 struct CRSMatrix;
 
@@ -324,14 +325,17 @@ class CERES_EXPORT Problem {
   void SetParameterization(double* values,
                            LocalParameterization* local_parameterization);
 
-  // Get the local parameterization object associated with this
-  // parameter block. If there is no parameterization object
-  // associated then nullptr is returned.
-  const LocalParameterization* GetParameterization(const double* values) const;
-
   // Returns true if a parameterization is associated with this parameter block,
   // false otherwise.
   bool HasParameterization(const double* values) const;
+
+  // Get the manifold object associated with this parameter block. If there is
+  // no manifold object associated then nullptr is returned.
+  const Manifold* GetManifold(const double* values) const;
+
+  // Returns true if a manifold is associated with this parameter block,
+  // false otherwise.
+  bool HasManifold(const double* values) const;
 
   // Set the lower/upper bound for the parameter at position "index".
   void SetParameterLowerBound(double* values, int index, double lower_bound);
