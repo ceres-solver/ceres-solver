@@ -33,7 +33,7 @@
 #include <cstdint>
 
 #include "ceres/internal/eigen.h"
-#include "ceres/local_parameterization.h"
+#include "ceres/manifold.h"
 #include "ceres/parameter_block.h"
 #include "ceres/sized_cost_function.h"
 #include "gtest/gtest.h"
@@ -75,7 +75,7 @@ class TernaryCostFunction : public CostFunction {
   }
 };
 
-TEST(ResidualBlock, EvaluteWithNoLossFunctionOrLocalParameterizations) {
+TEST(ResidualBlock, EvaluteWithNoLossFunctionOrManifolds) {
   double scratch[64];
 
   // Prepare the parameter blocks.
@@ -178,10 +178,10 @@ class LocallyParameterizedCostFunction : public SizedCostFunction<3, 2, 3, 4> {
     if (jacobians) {
       for (int k = 0; k < 3; ++k) {
         // The jacobians here are full sized, but they are transformed in the
-        // evaluator into the "local" jacobian. In the tests, the "subset
-        // constant" parameterization is used, which should pick out columns
-        // from these jacobians. Put values in the jacobian that make this
-        // obvious; in particular, make the jacobians like this:
+        // evaluator into the "local" jacobian. In the tests, the
+        // "SubsetManifold" is used, which should pick out columns from these
+        // jacobians. Put values in the jacobian that make this obvious; in
+        // particular, make the jacobians like this:
         //
         //   0 1 2 3 4 ...
         //   0 1 2 3 4 ...
@@ -200,7 +200,7 @@ class LocallyParameterizedCostFunction : public SizedCostFunction<3, 2, 3, 4> {
   }
 };
 
-TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
+TEST(ResidualBlock, EvaluteWithManifolds) {
   double scratch[64];
 
   // Prepare the parameter blocks.
@@ -221,14 +221,14 @@ TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
   // Make x have the first component fixed.
   vector<int> x_fixed;
   x_fixed.push_back(0);
-  SubsetParameterization x_parameterization(2, x_fixed);
-  x.SetParameterization(&x_parameterization);
+  SubsetManifold x_manifold(2, x_fixed);
+  x.SetManifold(&x_manifold);
 
   // Make z have the last and last component fixed.
   vector<int> z_fixed;
   z_fixed.push_back(2);
-  SubsetParameterization z_parameterization(4, z_fixed);
-  z.SetParameterization(&z_parameterization);
+  SubsetManifold z_manifold(4, z_fixed);
+  z.SetManifold(&z_manifold);
 
   LocallyParameterizedCostFunction cost_function;
 

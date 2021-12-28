@@ -598,7 +598,9 @@ TEST(Problem, RemoveParameterBlockWithUnknownPtrDies) {
                             "Parameter block not found:");
 }
 
-TEST(Problem, GetParameterization) {
+// TODO(sameeragarwal): Renable this once we have Manifolds in the API.
+/*
+TEST(Problem, GetManifold) {
   double x[3];
   double y[2];
 
@@ -608,9 +610,10 @@ TEST(Problem, GetParameterization) {
 
   LocalParameterization* parameterization = new IdentityParameterization(3);
   problem.SetParameterization(x, parameterization);
-  EXPECT_EQ(problem.GetParameterization(x), parameterization);
-  EXPECT_TRUE(problem.GetParameterization(y) == NULL);
+  EXPECT_EQ(problem.GetManifold(x), parameterization);
+  EXPECT_TRUE(problem.GetManifold(y) == NULL);
 }
+*/
 
 TEST(Problem, HasParameterization) {
   double x[3];
@@ -2158,12 +2161,12 @@ TEST(Problem, SetParameterizationTwice) {
   double x[] = {1.0, 2.0, 3.0};
   problem.AddParameterBlock(x, 3);
   problem.SetParameterization(x, new SubsetParameterization(3, {1}));
-  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 3);
-  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 2);
+  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 3);
+  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 2);
 
   problem.SetParameterization(x, new SubsetParameterization(3, {0, 1}));
-  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 3);
-  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 1);
+  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 3);
+  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 1);
 }
 
 TEST(Problem, SetParameterizationAndThenClearItWithNull) {
@@ -2171,11 +2174,11 @@ TEST(Problem, SetParameterizationAndThenClearItWithNull) {
   double x[] = {1.0, 2.0, 3.0};
   problem.AddParameterBlock(x, 3);
   problem.SetParameterization(x, new SubsetParameterization(3, {1}));
-  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 3);
-  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 2);
+  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 3);
+  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 2);
 
   problem.SetParameterization(x, nullptr);
-  EXPECT_EQ(problem.GetParameterization(x), nullptr);
+  EXPECT_EQ(problem.GetManifold(x), nullptr);
   EXPECT_EQ(problem.ParameterBlockLocalSize(x), 3);
   EXPECT_EQ(problem.ParameterBlockSize(x), 3);
 }
