@@ -82,7 +82,7 @@ class DenseJacobianWriter {
         continue;
       }
 
-      const int parameter_block_size = parameter_block->LocalSize();
+      const int parameter_block_size = parameter_block->TangentSize();
       ConstMatrixRef parameter_jacobian(
           jacobians[j], num_residuals, parameter_block_size);
 
