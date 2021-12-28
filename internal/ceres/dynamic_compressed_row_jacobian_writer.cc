@@ -82,7 +82,7 @@ void DynamicCompressedRowJacobianWriter::Write(int residual_id,
         program_->parameter_blocks()[evaluated_jacobian_blocks[i].first];
     const int parameter_block_jacobian_index =
         evaluated_jacobian_blocks[i].second;
-    const int parameter_block_size = parameter_block->LocalSize();
+    const int parameter_block_size = parameter_block->TangentSize();
     const double* parameter_jacobian =
         jacobians[parameter_block_jacobian_index];
 

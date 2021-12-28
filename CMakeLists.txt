@@ -37,7 +37,7 @@ if (POLICY CMP0074)
   cmake_policy(SET CMP0074 NEW)
 endif()
 
-# Set the C++ version (must be >= C++14) when compiling Ceres.
+# Set the C++ version when compiling Ceres.
 #
 # Reflect a user-specified (via -D) CMAKE_CXX_STANDARD if present, otherwise
 # default to C++14.
