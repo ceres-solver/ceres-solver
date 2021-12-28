@@ -72,9 +72,9 @@ class CERES_EXPORT_INTERNAL Program {
   // Serialize to/from the program and update states.
   //
   // NOTE: Setting the state of a parameter block can trigger the
-  // computation of the Jacobian of its local parameterization. If
-  // this computation fails for some reason, then this method returns
-  // false and the state of the parameter blocks cannot be trusted.
+  // computation of the Jacobian of its manifold. If this computation fails for
+  // some reason, then this method returns false and the state of the parameter
+  // blocks cannot be trusted.
   bool StateVectorToParameterBlocks(const double* state);
   void ParameterBlocksToStateVector(double* state) const;
 
@@ -82,8 +82,8 @@ class CERES_EXPORT_INTERNAL Program {
   void CopyParameterBlockStateToUserState();
 
   // Set the parameter block pointers to the user pointers. Since this
-  // runs parameter block set state internally, which may call local
-  // parameterizations, this can fail. False is returned on failure.
+  // runs parameter block set state internally, which may call manifold, this
+  // can fail. False is returned on failure.
   bool SetParameterBlockStatePtrsToUserStatePtrs();
 
   // Update a state vector for the program given a delta.
