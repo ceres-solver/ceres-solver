@@ -55,7 +55,7 @@ namespace internal {
 // Templated Evaluator for Powell's function. The template parameters
 // indicate which of the four variables/columns of the jacobian are
 // active. This is equivalent to constructing a problem and using the
-// SubsetLocalParameterization. This allows us to test the support for
+// SubsetManifold. This allows us to test the support for
 // the Evaluator::Plus operation besides checking for the basic
 // performance of the trust region algorithm.
 template <bool col1, bool col2, bool col3, bool col4>

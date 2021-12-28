@@ -38,6 +38,7 @@
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/evaluation_callback.h"
 #include "ceres/local_parameterization.h"
+#include "ceres/manifold.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/sized_cost_function.h"
@@ -518,6 +519,26 @@ TEST(Solver, ZeroSizedLocalParameterizationHoldsParameterBlockConstant) {
   Problem problem;
   problem.AddResidualBlock(LinearCostFunction::Create(), nullptr, &x, &y);
   problem.SetParameterization(&y, new SubsetParameterization(1, {0}));
+  EXPECT_TRUE(problem.IsParameterBlockConstant(&y));
+
+  Solver::Options options;
+  options.function_tolerance = 0.0;
+  options.gradient_tolerance = 0.0;
+  options.parameter_tolerance = 0.0;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+
+  EXPECT_EQ(summary.termination_type, CONVERGENCE);
+  EXPECT_NEAR(x, 10.0, 1e-7);
+  EXPECT_EQ(y, 1.0);
+}
+
+TEST(Solver, ZeroSizedManifoldHoldsParameterBlockConstant) {
+  double x = 0.0;
+  double y = 1.0;
+  Problem problem;
+  problem.AddResidualBlock(LinearCostFunction::Create(), nullptr, &x, &y);
+  problem.SetManifold(&y, new SubsetManifold(1, {0}));
   EXPECT_TRUE(problem.IsParameterBlockConstant(&y));
 
   Solver::Options options;

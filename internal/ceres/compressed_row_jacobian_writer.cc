@@ -55,7 +55,7 @@ void CompressedRowJacobianWriter::PopulateJacobianRowAndColumnBlockVectors(
   vector<int>& col_blocks = *(jacobian->mutable_col_blocks());
   col_blocks.resize(parameter_blocks.size());
   for (int i = 0; i < parameter_blocks.size(); ++i) {
-    col_blocks[i] = parameter_blocks[i]->LocalSize();
+    col_blocks[i] = parameter_blocks[i]->TangentSize();
   }
 
   const vector<ResidualBlock*>& residual_blocks = program->residual_blocks();
@@ -99,7 +99,7 @@ SparseMatrix* CompressedRowJacobianWriter::CreateJacobian() const {
     for (int j = 0; j < num_parameter_blocks; ++j) {
       ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
       if (!parameter_block->IsConstant()) {
-        num_jacobian_nonzeros += num_residuals * parameter_block->LocalSize();
+        num_jacobian_nonzeros += num_residuals * parameter_block->TangentSize();
       }
     }
   }
@@ -132,7 +132,7 @@ SparseMatrix* CompressedRowJacobianWriter::CreateJacobian() const {
       ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
       if (!parameter_block->IsConstant()) {
         parameter_indices.push_back(parameter_block->index());
-        num_derivatives += parameter_block->LocalSize();
+        num_derivatives += parameter_block->TangentSize();
       }
     }
 
@@ -166,7 +166,7 @@ SparseMatrix* CompressedRowJacobianWriter::CreateJacobian() const {
     for (int j = 0; j < parameter_indices.size(); ++j) {
       ParameterBlock* parameter_block =
           program_->parameter_blocks()[parameter_indices[j]];
-      const int parameter_block_size = parameter_block->LocalSize();
+      const int parameter_block_size = parameter_block->TangentSize();
 
       for (int r = 0; r < num_residuals; ++r) {
         // This is the position in the values array of the jacobian where this
@@ -214,7 +214,7 @@ void CompressedRowJacobianWriter::Write(int residual_id,
     const ParameterBlock* parameter_block =
         program_->parameter_blocks()[evaluated_jacobian_blocks[i].first];
     const int argument = evaluated_jacobian_blocks[i].second;
-    const int parameter_block_size = parameter_block->LocalSize();
+    const int parameter_block_size = parameter_block->TangentSize();
 
     // Copy one row of the jacobian block at a time.
     for (int r = 0; r < num_residuals; ++r) {
