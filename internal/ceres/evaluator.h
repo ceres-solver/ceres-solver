@@ -54,7 +54,7 @@ class SparseMatrix;
 // The Evaluator interface offers a way to interact with a least squares cost
 // function that is useful for an optimizer that wants to minimize the least
 // squares objective. This insulates the optimizer from issues like Jacobian
-// storage, parameterization, etc.
+// storage, manifolds, etc.
 class CERES_EXPORT_INTERNAL Evaluator {
  public:
   virtual ~Evaluator();
@@ -131,13 +131,13 @@ class CERES_EXPORT_INTERNAL Evaluator {
   // Make a change delta (of size NumEffectiveParameters()) to state (of size
   // NumParameters()) and store the result in state_plus_delta.
   //
-  // In the case that there are no parameterizations used, this is equivalent to
+  // In the case that there are no manifolds used, this is equivalent to
   //
   //   state_plus_delta[i] = state[i] + delta[i] ;
   //
-  // however, the mapping is more complicated in the case of parameterizations
+  // however, the mapping is more complicated in the case of manifolds
   // like quaternions. This is the same as the "Plus()" operation in
-  // local_parameterization.h, but operating over the entire state vector for a
+  // manifold.h, but operating over the entire state vector for a
   // problem.
   virtual bool Plus(const double* state,
                     const double* delta,
@@ -147,7 +147,7 @@ class CERES_EXPORT_INTERNAL Evaluator {
   virtual int NumParameters() const = 0;
 
   // This is the effective number of parameters that the optimizer may adjust.
-  // This applies when there are parameterizations on some of the parameters.
+  // This applies when there are manifolds on some of the parameters.
   virtual int NumEffectiveParameters() const = 0;
 
   // The number of residuals in the optimization problem.

@@ -38,6 +38,7 @@
 #include "ceres/cost_function.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
+#include "ceres/manifold.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
@@ -324,7 +325,7 @@ class TernaryCostFunction : public CostFunction {
 };
 
 // Verify that the two ParameterBlocks are formed from the same user
-// array and have the same LocalParameterization object.
+// array and have the same Manifold objects.
 static void ParameterBlocksAreEquivalent(const ParameterBlock* left,
                                          const ParameterBlock* right) {
   CHECK(left != nullptr);
@@ -332,9 +333,88 @@ static void ParameterBlocksAreEquivalent(const ParameterBlock* left,
   EXPECT_EQ(left->user_state(), right->user_state());
   EXPECT_EQ(left->Size(), right->Size());
   EXPECT_EQ(left->Size(), right->Size());
-  EXPECT_EQ(left->LocalSize(), right->LocalSize());
-  EXPECT_EQ(left->local_parameterization(), right->local_parameterization());
+  EXPECT_EQ(left->TangentSize(), right->TangentSize());
+  EXPECT_EQ(left->manifold(), right->manifold());
   EXPECT_EQ(left->IsConstant(), right->IsConstant());
+}
+
+TEST(GradientCheckingProblemImpl,
+     ProblemDimensionsMatchUsingLocalParameterization) {
+  // Parameter blocks with arbitrarily chosen initial values.
+  double x[] = {1.0, 2.0, 3.0};
+  double y[] = {4.0, 5.0, 6.0, 7.0};
+  double z[] = {8.0, 9.0, 10.0, 11.0, 12.0};
+  double w[] = {13.0, 14.0, 15.0, 16.0};
+
+  ProblemImpl problem_impl;
+  problem_impl.AddParameterBlock(x, 3);
+  problem_impl.AddParameterBlock(y, 4);
+  problem_impl.SetParameterBlockConstant(y);
+  problem_impl.AddParameterBlock(z, 5);
+  problem_impl.AddParameterBlock(w, 4, new QuaternionParameterization);
+  // clang-format off
+  problem_impl.AddResidualBlock(new UnaryCostFunction(2, 3),
+                                NULL, x);
+  problem_impl.AddResidualBlock(new BinaryCostFunction(6, 5, 4),
+                                NULL, z, y);
+  problem_impl.AddResidualBlock(new BinaryCostFunction(3, 3, 5),
+                                new TrivialLoss, x, z);
+  problem_impl.AddResidualBlock(new BinaryCostFunction(7, 5, 3),
+                                NULL, z, x);
+  problem_impl.AddResidualBlock(new TernaryCostFunction(1, 5, 3, 4),
+                                NULL, z, x, y);
+  // clang-format on
+
+  GradientCheckingIterationCallback callback;
+  std::unique_ptr<ProblemImpl> gradient_checking_problem_impl(
+      CreateGradientCheckingProblemImpl(&problem_impl, 1.0, 1.0, &callback));
+
+  // The dimensions of the two problems match.
+  EXPECT_EQ(problem_impl.NumParameterBlocks(),
+            gradient_checking_problem_impl->NumParameterBlocks());
+  EXPECT_EQ(problem_impl.NumResidualBlocks(),
+            gradient_checking_problem_impl->NumResidualBlocks());
+
+  EXPECT_EQ(problem_impl.NumParameters(),
+            gradient_checking_problem_impl->NumParameters());
+  EXPECT_EQ(problem_impl.NumResiduals(),
+            gradient_checking_problem_impl->NumResiduals());
+
+  const Program& program = problem_impl.program();
+  const Program& gradient_checking_program =
+      gradient_checking_problem_impl->program();
+
+  // Since we added the ParameterBlocks and ResidualBlocks explicitly,
+  // they should be in the same order in the two programs. It is
+  // possible that may change due to implementation changes to
+  // Program. This is not expected to be the case and writing code to
+  // anticipate that possibility not worth the extra complexity in
+  // this test.
+  for (int i = 0; i < program.parameter_blocks().size(); ++i) {
+    ParameterBlocksAreEquivalent(
+        program.parameter_blocks()[i],
+        gradient_checking_program.parameter_blocks()[i]);
+  }
+
+  for (int i = 0; i < program.residual_blocks().size(); ++i) {
+    // Compare the sizes of the two ResidualBlocks.
+    const ResidualBlock* original_residual_block = program.residual_blocks()[i];
+    const ResidualBlock* new_residual_block =
+        gradient_checking_program.residual_blocks()[i];
+    EXPECT_EQ(original_residual_block->NumParameterBlocks(),
+              new_residual_block->NumParameterBlocks());
+    EXPECT_EQ(original_residual_block->NumResiduals(),
+              new_residual_block->NumResiduals());
+    EXPECT_EQ(original_residual_block->NumScratchDoublesForEvaluate(),
+              new_residual_block->NumScratchDoublesForEvaluate());
+
+    // Verify that the ParameterBlocks for the two residuals are equivalent.
+    for (int j = 0; j < original_residual_block->NumParameterBlocks(); ++j) {
+      ParameterBlocksAreEquivalent(
+          original_residual_block->parameter_blocks()[j],
+          new_residual_block->parameter_blocks()[j]);
+    }
+  }
 }
 
 TEST(GradientCheckingProblemImpl, ProblemDimensionsMatch) {
@@ -349,7 +429,7 @@ TEST(GradientCheckingProblemImpl, ProblemDimensionsMatch) {
   problem_impl.AddParameterBlock(y, 4);
   problem_impl.SetParameterBlockConstant(y);
   problem_impl.AddParameterBlock(z, 5);
-  problem_impl.AddParameterBlock(w, 4, new QuaternionParameterization);
+  problem_impl.AddParameterBlock(w, 4, new Quaternion);
   // clang-format off
   problem_impl.AddResidualBlock(new UnaryCostFunction(2, 3),
                                 NULL, x);
