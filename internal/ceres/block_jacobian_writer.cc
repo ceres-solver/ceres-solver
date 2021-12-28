@@ -78,7 +78,7 @@ void BuildJacobianLayout(const Program& program,
         // Only count blocks for active parameters.
         num_jacobian_blocks++;
         if (parameter_block->index() < num_eliminate_blocks) {
-          f_block_pos += num_residuals * parameter_block->LocalSize();
+          f_block_pos += num_residuals * parameter_block->TangentSize();
         }
       }
     }
@@ -107,7 +107,7 @@ void BuildJacobianLayout(const Program& program,
         continue;
       }
       const int jacobian_block_size =
-          num_residuals * parameter_block->LocalSize();
+          num_residuals * parameter_block->TangentSize();
       if (parameter_block_index < num_eliminate_blocks) {
         *jacobian_pos = e_block_pos;
         e_block_pos += jacobian_block_size;
@@ -159,7 +159,7 @@ SparseMatrix* BlockJacobianWriter::CreateJacobian() const {
   for (int i = 0, cursor = 0; i < parameter_blocks.size(); ++i) {
     CHECK_NE(parameter_blocks[i]->index(), -1);
     CHECK(!parameter_blocks[i]->IsConstant());
-    bs->cols[i].size = parameter_blocks[i]->LocalSize();
+    bs->cols[i].size = parameter_blocks[i]->TangentSize();
     bs->cols[i].position = cursor;
     cursor += bs->cols[i].size;
   }

@@ -67,7 +67,7 @@ void ScratchEvaluatePreparer::Prepare(const ResidualBlock* residual_block,
       jacobians[j] = NULL;
     } else {
       jacobians[j] = jacobian_block_cursor;
-      jacobian_block_cursor += num_residuals * parameter_block->LocalSize();
+      jacobian_block_cursor += num_residuals * parameter_block->TangentSize();
     }
   }
 }
