@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "94fdc77f_e5b7fa25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T02:18:25Z",
+      "side": 1,
+      "message": "Since you had thoughts about the interface, just replying to them without any code changes. ",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "037bb7b3_dd31bf81",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 1
@@ -31,6 +48,24 @@
       "writtenOn": "2021-12-29T01:59:03Z",
       "side": 1,
       "message": "Somewhere, please include a reference to the old LocalParameterization class; and some explanation for what the differences between that approach and the manifold one is.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31f280b5_a0565dba",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T02:18:25Z",
+      "side": 1,
+      "message": "I will add a TODO for now and come back to it as part of the transition.",
+      "parentUuid": "037bb7b3_dd31bf81",
       "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -71,6 +106,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cb22d4f9_e640c017",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T02:18:25Z",
+      "side": 1,
+      "message": "isn\u0027t that evident from the comments that follow?\nI am happy to add more, but I think it is covered.\n\nalso I explicitly did not cover the sphere and did the SO(3) group because it is non-trivial and the user can see what the plus and minus operations are like.",
+      "parentUuid": "c407d3b5_0a58b9a3",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "833b49e7_85e30662",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 1
@@ -82,6 +135,24 @@
       "writtenOn": "2021-12-29T01:59:03Z",
       "side": 1,
       "message": "Is this requirement necessary? Or just in the local neighborhood? Local tangents on the sphere can\u0027t e.g. reach the back side of the sphere, which is also on the manifold; but this is a valid parameterization.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a0d4058_6d938134",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T02:18:25Z",
+      "side": 1,
+      "message": "what do you mean local tangents can\u0027t reach the backside? there is only one point that can\u0027t be reached no? I think that is covered in the limit. I am following the paper referenced below closely.",
+      "parentUuid": "833b49e7_85e30662",
       "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -105,6 +176,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aeb6e3b0_9e2e4458",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T02:18:25Z",
+      "side": 1,
+      "message": "I am loathe to do that here, since the comments above are fairly detailed. Also this is not a class that is usually implemented by non-expert users. They just use it. Note that we have all of six manifolds that we ship with ceres even today.",
+      "parentUuid": "587f83c6_1dff1948",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "60a2637d_9a8d95c8",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 1
@@ -116,6 +205,24 @@
       "writtenOn": "2021-12-29T01:59:03Z",
       "side": 1,
       "message": "I suggest adding the canonical example of a plane tangent to a sphere. Perhaps:\n\n  // Dimension of the manifold/tangent space. For example, given a 3D sphere \n  // manifold, the manifold dimension is 2 dimensional.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ab2bc98_ebe9d24c",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T02:18:25Z",
+      "side": 1,
+      "message": "see above.",
+      "parentUuid": "60a2637d_9a8d95c8",
       "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -139,6 +246,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dd250fc7_2992419e",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T02:18:25Z",
+      "side": 1,
+      "message": "see above.",
+      "parentUuid": "48577a17_cc5fe619",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65ac72d8_4eb8404b",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 1
@@ -150,6 +275,24 @@
       "writtenOn": "2021-12-29T01:59:03Z",
       "side": 1,
       "message": "I don\u0027t feel strongly about this, but consider making Plus() optionally take a jacobian output, instead of having the separate PlusJacobian() method.\n\nI imagine in many cases PlusJacobian() can share computation with Plus(); seems like this would be a better way to enable that.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee18659d_a93fdcad",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T02:18:25Z",
+      "side": 1,
+      "message": "They don\u0027t really share much compute in the examples I can think about. Also the documentation becomes complex observe that while plus is computed at (x, delta) the derivative is actually computed at (x,0).",
+      "parentUuid": "65ac72d8_4eb8404b",
       "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -188,6 +331,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4f6805b_d65dfe54",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T02:18:25Z",
+      "side": 1,
+      "message": "see above. again the derivative is at (x,x) while the minus compute is at (y,x)",
+      "parentUuid": "68853d5d_fda858ac",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "5ba31c21_a348d4a7",
@@ -201,6 +362,24 @@
       "writtenOn": "2021-12-29T01:59:03Z",
       "side": 1,
       "message": "Consider breaking these out into a separate file so that others can use these matchers for testing their own manifolds. This can come later though, once the details are worked out on manifold.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5ea1879_b263dff0",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T02:18:25Z",
+      "side": 1,
+      "message": "Thats a good idea. not sure where they should go though. maybe we should just have a testing folder at top level with utils that help with testing. Like checking your analytical derivatives using numerical derivatives for example.. \n\nlet me add add a todo for this and come back to it once I am done porting other manifolds, since I suspect these will evolve a bit as we do more complicated manifolds (the ones up till now are basically linear).",
+      "parentUuid": "5ba31c21_a348d4a7",
       "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
