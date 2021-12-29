@@ -70,6 +70,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a43c96fa_ad5d0dfc",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T03:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31f280b5_a0565dba",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33742d39_958c20bd",
@@ -83,6 +101,24 @@
       "writtenOn": "2021-12-29T01:59:03Z",
       "side": 1,
       "message": "Nit: drop ,",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6053de4d_5da4d0fa",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T03:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33742d39_958c20bd",
       "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -118,6 +154,24 @@
       "side": 1,
       "message": "isn\u0027t that evident from the comments that follow?\nI am happy to add more, but I think it is covered.\n\nalso I explicitly did not cover the sphere and did the SO(3) group because it is non-trivial and the user can see what the plus and minus operations are like.",
       "parentUuid": "c407d3b5_0a58b9a3",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73867721_80fc9464",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T03:53:52Z",
+      "side": 1,
+      "message": "I added some more stuff below about dimensions when discussing the SO(3) example.",
+      "parentUuid": "cb22d4f9_e640c017",
       "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -188,6 +242,24 @@
       "side": 1,
       "message": "I am loathe to do that here, since the comments above are fairly detailed. Also this is not a class that is usually implemented by non-expert users. They just use it. Note that we have all of six manifolds that we ship with ceres even today.",
       "parentUuid": "587f83c6_1dff1948",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca08571d_95818c31",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T03:53:52Z",
+      "side": 1,
+      "message": "I added dimension information to make this stuff more explicit in the methods below.",
+      "parentUuid": "aeb6e3b0_9e2e4458",
       "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -310,6 +382,24 @@
       "writtenOn": "2021-12-29T01:59:03Z",
       "side": 1,
       "message": "Please include a bit of verbiage about why this method is useful.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40bb43d1_f479ed5e",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-29T03:53:52Z",
+      "side": 1,
+      "message": "done.",
+      "parentUuid": "605bfa99_71920519",
       "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
