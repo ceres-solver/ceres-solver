@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "285096fc_2efd32f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-29T01:59:03Z",
+      "side": 1,
+      "message": "This is a great cleanup of the LocalParameterization interface.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "037bb7b3_dd31bf81",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-29T01:59:03Z",
+      "side": 1,
+      "message": "Somewhere, please include a reference to the old LocalParameterization class; and some explanation for what the differences between that approach and the manifold one is.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33742d39_958c20bd",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-29T01:59:03Z",
+      "side": 1,
+      "message": "Nit: drop ,",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c407d3b5_0a58b9a3",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-29T01:59:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure exactly where to work this in, but it would be helpful to explicitly mention the Plus and Minus dimensions. Relating to the example above, x would be 3D, delta would be 2D, and x_plus_delta would be 3D.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "833b49e7_85e30662",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-29T01:59:03Z",
+      "side": 1,
+      "message": "Is this requirement necessary? Or just in the local neighborhood? Local tangents on the sphere can\u0027t e.g. reach the back side of the sphere, which is also on the manifold; but this is a valid parameterization.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "587f83c6_1dff1948",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-29T01:59:03Z",
+      "side": 1,
+      "message": "I suggest adding the canonical example of a plane tangent to a sphere. Perhaps:\n\n  // Dimension of the ambient space in which the manifold is embedded.\n  // For example, given a 3D sphere manifold, the ambient space is 3 dimensional.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60a2637d_9a8d95c8",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-29T01:59:03Z",
+      "side": 1,
+      "message": "I suggest adding the canonical example of a plane tangent to a sphere. Perhaps:\n\n  // Dimension of the manifold/tangent space. For example, given a 3D sphere \n  // manifold, the manifold dimension is 2 dimensional.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48577a17_cc5fe619",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-29T01:59:03Z",
+      "side": 1,
+      "message": "Consider giving the sphere example somewhere here also. Document the expected sizes for x, delta, x_plus_delta.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65ac72d8_4eb8404b",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-29T01:59:03Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly about this, but consider making Plus() optionally take a jacobian output, instead of having the separate PlusJacobian() method.\n\nI imagine in many cases PlusJacobian() can share computation with Plus(); seems like this would be a better way to enable that.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "605bfa99_71920519",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-29T01:59:03Z",
+      "side": 1,
+      "message": "Please include a bit of verbiage about why this method is useful.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68853d5d_fda858ac",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-29T01:59:03Z",
+      "side": 1,
+      "message": "Consider merging this with Minus(), if it could share compute.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ba31c21_a348d4a7",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-29T01:59:03Z",
+      "side": 1,
+      "message": "Consider breaking these out into a separate file so that others can use these matchers for testing their own manifolds. This can come later though, once the details are worked out on manifold.",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
