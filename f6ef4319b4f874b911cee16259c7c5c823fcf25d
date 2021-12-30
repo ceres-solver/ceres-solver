@@ -211,6 +211,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccc6be46_dc976204",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-30T01:07:12Z",
+      "side": 1,
+      "message": "After thinking about this more, you are right.",
+      "parentUuid": "9a0d4058_6d938134",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "587f83c6_1dff1948",
@@ -365,6 +383,24 @@
       "side": 1,
       "message": "They don\u0027t really share much compute in the examples I can think about. Also the documentation becomes complex observe that while plus is computed at (x, delta) the derivative is actually computed at (x,0).",
       "parentUuid": "65ac72d8_4eb8404b",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dc1d2ad_7e7b88d5",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2021-12-30T01:07:12Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "ee18659d_a93fdcad",
       "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
