@@ -33,6 +33,24 @@
       "message": "Drop this comment blank to be consistent with the other similar comment below.",
       "revId": "22edb908b3b76998f06c516ed92754e9b9285624",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e52e8f22_59ad257c",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-30T01:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e90ebd7_13912262",
+      "revId": "22edb908b3b76998f06c516ed92754e9b9285624",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

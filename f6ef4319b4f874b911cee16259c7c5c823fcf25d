@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66df9320_a1e4fa06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-30T01:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94fdc77f_e5b7fa25",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "037bb7b3_dd31bf81",
@@ -282,6 +300,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "254ff7cd_e0f8b6f4",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-30T01:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca08571d_95818c31",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60a2637d_9a8d95c8",
@@ -317,6 +353,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e748fcd_f9332099",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-30T01:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab2bc98_ebe9d24c",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48577a17_cc5fe619",
@@ -348,6 +402,24 @@
       "side": 1,
       "message": "see above.",
       "parentUuid": "48577a17_cc5fe619",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb85f55c_1a9150fb",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-30T01:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd250fc7_2992419e",
       "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -440,6 +512,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83224bed_47ed003f",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-30T01:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40bb43d1_f479ed5e",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68853d5d_fda858ac",
@@ -477,6 +567,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c7e7cd08_10a3fcf9",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-30T01:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4f6805b_d65dfe54",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "5ba31c21_a348d4a7",
         "filename": "internal/ceres/manifold_test.cc",
         "patchSetId": 1
@@ -506,6 +614,24 @@
       "side": 1,
       "message": "Thats a good idea. not sure where they should go though. maybe we should just have a testing folder at top level with utils that help with testing. Like checking your analytical derivatives using numerical derivatives for example.. \n\nlet me add add a todo for this and come back to it once I am done porting other manifolds, since I suspect these will evolve a bit as we do more complicated manifolds (the ones up till now are basically linear).",
       "parentUuid": "5ba31c21_a348d4a7",
+      "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a83dea1f_11c15249",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2021-12-30T01:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5ea1879_b263dff0",
       "revId": "f6ef4319b4f874b911cee16259c7c5c823fcf25d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
