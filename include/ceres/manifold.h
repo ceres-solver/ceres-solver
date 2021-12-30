@@ -31,6 +31,8 @@
 #ifndef CERES_PUBLIC_MANIFOLD_H_
 #define CERES_PUBLIC_MANIFOLD_H_
 
+#include <array>
+#include <memory>
 #include <vector>
 
 #include "ceres/internal/disable_warnings.h"
