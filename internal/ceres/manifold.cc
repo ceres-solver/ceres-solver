@@ -2,6 +2,7 @@
 
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
+#include "ceres/rotation.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -269,6 +270,68 @@ bool ProductManifold::MinusJacobian(const double* x,
     tangent_cursor += tangent_size;
   }
 
+  return true;
+}
+
+bool Quaternion::Plus(const double* x,
+                      const double* delta,
+                      double* x_plus_delta) const {
+  const double norm_delta =
+      sqrt(delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2]);
+  if (norm_delta > 0.0) {
+    const double sin_delta_by_delta = (sin(norm_delta) / norm_delta);
+    double q_delta[4];
+    q_delta[0] = cos(norm_delta);
+    q_delta[1] = sin_delta_by_delta * delta[0];
+    q_delta[2] = sin_delta_by_delta * delta[1];
+    q_delta[3] = sin_delta_by_delta * delta[2];
+    QuaternionProduct(q_delta, x, x_plus_delta);
+  } else {
+    for (int i = 0; i < 4; ++i) {
+      x_plus_delta[i] = x[i];
+    }
+  }
+  return true;
+}
+
+bool Quaternion::PlusJacobian(const double* x, double* jacobian) const {
+  // clang-format off
+  jacobian[0] = -x[1];  jacobian[1]  = -x[2];   jacobian[2]  = -x[3];
+  jacobian[3] =  x[0];  jacobian[4]  =  x[3];   jacobian[5]  = -x[2];
+  jacobian[6] = -x[3];  jacobian[7]  =  x[0];   jacobian[8]  =  x[1];
+  jacobian[9] =  x[2];  jacobian[10] = -x[1];   jacobian[11] =  x[0];
+  // clang-format on
+  return true;
+}
+
+bool Quaternion::Minus(const double* y,
+                       const double* x,
+                       double* y_minus_x) const {
+  const double minus_x[4] = {x[0], -x[1], -x[2], -x[3]};
+  double ambient_y_minus_x[4];
+  QuaternionProduct(y, minus_x, ambient_y_minus_x);
+  const double u_norm = std::sqrt(ambient_y_minus_x[1] * ambient_y_minus_x[1] +
+                                  ambient_y_minus_x[2] * ambient_y_minus_x[2] +
+                                  ambient_y_minus_x[3] * ambient_y_minus_x[3]);
+  if (u_norm > 0.0) {
+    const double theta = std::atan2(u_norm, ambient_y_minus_x[0]);
+    y_minus_x[0] = theta * ambient_y_minus_x[1] / u_norm;
+    y_minus_x[1] = theta * ambient_y_minus_x[2] / u_norm;
+    y_minus_x[2] = theta * ambient_y_minus_x[3] / u_norm;
+  } else {
+    y_minus_x[0] = ambient_y_minus_x[1];
+    y_minus_x[1] = ambient_y_minus_x[2];
+    y_minus_x[2] = ambient_y_minus_x[3];
+  }
+  return true;
+}
+
+bool Quaternion::MinusJacobian(const double* x, double* jacobian) const {
+  // clang-format off
+  jacobian[0] = - x[1]; jacobian[1]=  x[0]; jacobian[2]  = -x[3]; jacobian[3]  =   x[2];
+  jacobian[4] = - x[2]; jacobian[5]=  x[3]; jacobian[6]  =  x[0]; jacobian[7]  =  -x[1];
+  jacobian[8] = - x[3]; jacobian[9]= -x[2]; jacobian[10] =  x[1]; jacobian[11] =   x[0];
+  // clang-format on
   return true;
 }
 
