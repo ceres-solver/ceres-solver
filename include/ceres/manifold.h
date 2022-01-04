@@ -339,6 +339,36 @@ class CERES_EXPORT ProductManifold : public Manifold {
   int buffer_size_ = 0;
 };
 
+// Implements the manifold for a Hamilton quaternion as defined in
+// https://en.wikipedia.org/wiki/Quaternion. Specifically, the quaternion
+// q = [q0; q1; q2; q3], |q| = 1 is the ambient space. The tangent space is
+// delta in R^3, which relates to the ambient space through the Plus and Minus
+// operations defined as:
+//
+//
+// Plus(x, delta) = [cos(|delta|); sin(|delta|) / |delta| * delta] * x
+//    Minus(y, x) = to_delta(y * x^{-1})
+//
+// where "*" is the quaternion product and where q^-1 = [q0; -q1; -q2; -q3]
+//
+// and to_delta( [q0; u_{3x1}] ) = u / |u| * atan2(|u|, q0)
+class CERES_EXPORT Quaternion : public Manifold {
+ public:
+  Quaternion() = default;
+  virtual ~Quaternion() = default;
+  int AmbientSize() const override { return 4; }
+  int TangentSize() const override { return 3; }
+
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
+  bool PlusJacobian(const double* x, double* jacobian) const override;
+  bool Minus(const double* y,
+             const double* x,
+             double* y_minus_x) const override;
+  bool MinusJacobian(const double* x, double* jacobian) const override;
+};
+
 }  // namespace ceres
 
 // clang-format off
