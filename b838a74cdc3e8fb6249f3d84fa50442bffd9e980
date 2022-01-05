@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "def1cd60_9b60c387",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-05T19:50:10Z",
+      "side": 1,
+      "message": "Minor, but why not just have the following to avoid two returns:\n\nif (!result) {\n ... // Logging.\n}\nreturn result;",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d314e683_c7b5baf8",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-05T19:50:10Z",
+      "side": 1,
+      "message": "Minor, but it seems odd to have the expected value in this matcher, but not the first, consider harmonising on having them or not",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4ccd7b5_9b377af5",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-05T19:50:10Z",
+      "side": 1,
+      "message": "Same comment as above.",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fce944f_00450c27",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-05T19:50:10Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be D_1 ?",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bb4bbf5_8c9d0548",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-05T19:50:10Z",
+      "side": 1,
+      "message": "I\u0027m not clear on the last part: \u0027norm: n/d\u0027, what about the case above where d ~\u003d 0?  Perhaps this could be better as \u0027norm ratio\u0027 or something clearer that this is not just the norm?",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e403597_79c4fb9b",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-05T19:50:10Z",
+      "side": 1,
+      "message": "As above, I think this could just be a single \u0027return result\u0027 statement",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "feb77572_40f475a4",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-05T19:50:10Z",
+      "side": 1,
+      "message": "Interesting use of \u0027curry\u0027",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c7af976_ddc75161",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-05T19:50:10Z",
+      "side": 1,
+      "message": "Same comment as above for the norm",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0cd441a_078ff96e",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-05T19:50:10Z",
+      "side": 1,
+      "message": "Same comment as above for combining into a single return statement",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77986d5b_dbf3b63e",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-05T19:50:10Z",
+      "side": 1,
+      "message": "This took me a while to parse given the index variables, perhaps a couple of comments to highlight would be helpful here, or perhaps manifold -\u003e manifold_with_ith_constant ?",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "272c8585_44bb8382",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-05T19:50:10Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these be unique_ptrs s/t the memory is not leaked?  This also seems to be the case for some of the other test cases as well.",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
