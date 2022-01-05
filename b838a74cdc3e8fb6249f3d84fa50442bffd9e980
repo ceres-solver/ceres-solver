@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62554b76_8500fad2",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-05T21:06:44Z",
+      "side": 1,
+      "message": "I got rid of the result thing entirely, because I wanted report the norm of the difference.",
+      "parentUuid": "def1cd60_9b60c387",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d314e683_c7b5baf8",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-01-05T19:50:10Z",
       "side": 1,
       "message": "Minor, but it seems odd to have the expected value in this matcher, but not the first, consider harmonising on having them or not",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d69517f_ac736bff",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-05T21:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d314e683_c7b5baf8",
       "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -52,6 +88,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c129bdbb_3b65cdef",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-05T21:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4ccd7b5_9b377af5",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fce944f_00450c27",
@@ -65,6 +119,24 @@
       "writtenOn": "2022-01-05T19:50:10Z",
       "side": 1,
       "message": "Shouldn\u0027t this be D_1 ?",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f53478c4_5b2e9828",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-05T21:06:44Z",
+      "side": 1,
+      "message": "well x IS the expected value, but I will change.",
+      "parentUuid": "4fce944f_00450c27",
       "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -88,6 +160,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d334faa9_7618bff8",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-05T21:06:44Z",
+      "side": 1,
+      "message": "so if d is not equal to zero we want to measure the relative error, but in the case where the actual value is zero, the relative error is undefined, so we all we can do is measure the absolute error.",
+      "parentUuid": "1bb4bbf5_8c9d0548",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2e403597_79c4fb9b",
         "filename": "internal/ceres/manifold_test.cc",
         "patchSetId": 2
@@ -99,6 +189,24 @@
       "writtenOn": "2022-01-05T19:50:10Z",
       "side": 1,
       "message": "As above, I think this could just be a single \u0027return result\u0027 statement",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e81f4cf_dc69e1c0",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-05T21:06:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2e403597_79c4fb9b",
       "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -116,6 +224,24 @@
       "writtenOn": "2022-01-05T19:50:10Z",
       "side": 1,
       "message": "Interesting use of \u0027curry\u0027",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b83ab39c_5e6c16ea",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-05T21:06:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "feb77572_40f475a4",
       "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -139,6 +265,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6e172230_92ee00e0",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-05T21:06:44Z",
+      "side": 1,
+      "message": "changed this.",
+      "parentUuid": "4c7af976_ddc75161",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e0cd441a_078ff96e",
         "filename": "internal/ceres/manifold_test.cc",
         "patchSetId": 2
@@ -150,6 +294,24 @@
       "writtenOn": "2022-01-05T19:50:10Z",
       "side": 1,
       "message": "Same comment as above for combining into a single return statement",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95f02469_44c95bb3",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-05T21:06:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0cd441a_078ff96e",
       "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -171,6 +333,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee201198_74a6cf1a",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-05T21:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77986d5b_dbf3b63e",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "272c8585_44bb8382",
@@ -184,6 +364,24 @@
       "writtenOn": "2022-01-05T19:50:10Z",
       "side": 1,
       "message": "Shouldn\u0027t these be unique_ptrs s/t the memory is not leaked?  This also seems to be the case for some of the other test cases as well.",
+      "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e99a4a1_3dc191ae",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-05T21:06:44Z",
+      "side": 1,
+      "message": "ProductManifold takes ownership.",
+      "parentUuid": "272c8585_44bb8382",
       "revId": "b838a74cdc3e8fb6249f3d84fa50442bffd9e980",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
