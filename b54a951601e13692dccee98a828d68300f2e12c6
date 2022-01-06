@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67b272e1_0012ba7d",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 6627
+      },
+      "writtenOn": "2022-01-06T19:30:47Z",
+      "side": 1,
+      "message": "why this std::sqrt, while in Plus() you use sqrt?",
+      "range": {
+        "startLine": 328,
+        "startChar": 24,
+        "endLine": 328,
+        "endChar": 33
+      },
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
