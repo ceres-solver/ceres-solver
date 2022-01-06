@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "103a2623_c0211d4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-06T17:41:11Z",
+      "side": 1,
+      "message": "documentation",
+      "revId": "5bc1d7435c4aca423d7beb160960521be0b08e67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3e92b09_8c416f6d",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-06T17:41:11Z",
+      "side": 1,
+      "message": "Should this (and others below) be ASSERT_TRUE()?  In that there is no reason to continue with the remaining tests if they do not pass - this is minor TBH, they will be failures regardless and there are not any invalid accesses that would occur if they do not",
+      "revId": "5bc1d7435c4aca423d7beb160960521be0b08e67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e236167e_9e11b388",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-06T17:41:11Z",
+      "side": 1,
+      "message": "nitpick, but these could both be declared const",
+      "revId": "5bc1d7435c4aca423d7beb160960521be0b08e67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
