@@ -16,6 +16,24 @@
       "message": "Wouldn\u0027t it be better to use the QuaternionProduct() function here, and then move this manual repetition of that code to the test?  That seems better in that it makes the implementation of the test the independent reference rather than duplicating the implementation of the algorithm in Ceres",
       "revId": "85d2089d6db763bbf7fded684ecb222c768e22ce",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ccf8ea6_e60faf83",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T12:59:21Z",
+      "side": 1,
+      "message": "Two things.\n\n1. I am thinking of this as the optimized impl and the test using a reference impl using existing component to compare it. \n2. You could argue that this code fragment is from rotation.h to begin with so you are not testing much.. and you would be right so this test really is keeping the two files in sync.\n\nI do not know of a better way of doing this test, I am open to ideas.",
+      "parentUuid": "d1436553_b6ee6430",
+      "revId": "85d2089d6db763bbf7fded684ecb222c768e22ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
