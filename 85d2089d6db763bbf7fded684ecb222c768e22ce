@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1436553_b6ee6430",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-07T10:47:31Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be better to use the QuaternionProduct() function here, and then move this manual repetition of that code to the test?  That seems better in that it makes the implementation of the test the independent reference rather than duplicating the implementation of the algorithm in Ceres",
+      "revId": "85d2089d6db763bbf7fded684ecb222c768e22ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

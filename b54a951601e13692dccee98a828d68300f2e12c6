@@ -160,6 +160,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cf1abae1_fbe7d45a",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-07T10:47:31Z",
+      "side": 1,
+      "message": "The formula listed for the inverse is only true if |q| \u003d 1, otherwise it needs to be rescaled by the squared sum of the components.  I was suggesting that you extend the sentence after the formula to reiterate why it is correct in this case",
+      "parentUuid": "cfa53fbb_a83af9f4",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a76a9d7_935071f5",
         "filename": "internal/ceres/manifold.cc",
         "patchSetId": 3
