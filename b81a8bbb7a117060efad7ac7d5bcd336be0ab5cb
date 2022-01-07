@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e77b38e1_a428b7ca",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 6627
+      },
+      "writtenOn": "2022-01-07T23:42:09Z",
+      "side": 1,
+      "message": "nit: consider std::copy",
+      "range": {
+        "startLine": 299,
+        "startChar": 4,
+        "endLine": 301,
+        "endChar": 5
+      },
+      "revId": "b81a8bbb7a117060efad7ac7d5bcd336be0ab5cb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
