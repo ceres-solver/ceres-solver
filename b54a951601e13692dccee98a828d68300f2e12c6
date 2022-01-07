@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "08f583b2_ff423916",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abe73630_34383bf4",
@@ -14,6 +31,24 @@
       "writtenOn": "2022-01-06T19:35:11Z",
       "side": 1,
       "message": "I would be tempted to copy this section of docs from the rotation.h header here as well: https://github.com/ceres-solver/ceres-solver/blob/master/include/ceres/rotation.h#L36\n\nIn addition, perhaps a brief note that this is consistent with the Quaternion definition in rotation.h, which is NOT the same storage order as that used by Eigen: [x, y, z, w].  We keep getting emails about it, so I think it\u0027s common enough to be worth being very explicit about.",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19abd7b7_3ba6a053",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abe73630_34383bf4",
       "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -35,6 +70,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d0ce88c_88ed35c8",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "771b006a_250c2644",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2505fba4_7a79996c",
@@ -48,6 +101,24 @@
       "writtenOn": "2022-01-06T19:35:11Z",
       "side": 1,
       "message": "Minor, but I would write the vector component as:\n\nsin(|delta|) * delta / |delta|\n\nIMO, I find it slightly easier to immediately parse that you are scaling the normalised vector in this form.",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77b20057_e73a24b9",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2505fba4_7a79996c",
       "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -71,6 +142,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cfa53fbb_a83af9f4",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "I did not understand this comment.",
+      "parentUuid": "b78a59b2_a149a1f7",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a76a9d7_935071f5",
         "filename": "internal/ceres/manifold.cc",
         "patchSetId": 3
@@ -82,6 +171,24 @@
       "writtenOn": "2022-01-06T19:35:11Z",
       "side": 1,
       "message": "I think you\u0027re missing an explicit \u003ccmath\u003e include here, also prefer std::sqrt() for consistency with later use in this file",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c39d821_f34fb451",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a76a9d7_935071f5",
       "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -103,6 +210,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "647c5cb6_260bec62",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21a94c06_8a26c0c3",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "95f52908_0ba498f2",
@@ -120,6 +245,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d25d575_5780d93d",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "I explicitly did not want to because I wanted to use that for testing.",
+      "parentUuid": "95f52908_0ba498f2",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55f00803_4b1ee995",
@@ -133,6 +276,24 @@
       "writtenOn": "2022-01-06T19:35:11Z",
       "side": 1,
       "message": "A question here, we are always assuming that x is a normalised quaternion, but even if that was initially true, numerical errors might break that assumption after repeated iterations of Plus().  Not by much, but for a large number of iterations it would introduce some extra error, should we re-normalise the result here to bound that irrespective of the iteration?  Although this would be more expensive, it would bound the error.",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fe4ae0f_4bfd3160",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "This is an interesting point. For now I am just trying to preserve compatibility with the existing impl, if we are going to change this, we should do this after this stuff stabilizes and the transition to the Manifold is complete, otherwise I am worried this will become a mess.",
+      "parentUuid": "55f00803_4b1ee995",
       "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -160,6 +321,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "667c88d9_5d3854b3",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "made it uniform everywhere.",
+      "parentUuid": "67b272e1_0012ba7d",
+      "range": {
+        "startLine": 328,
+        "startChar": 24,
+        "endLine": 328,
+        "endChar": 33
+      },
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "235b2622_bff0cb49",
@@ -177,6 +362,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0289e47f_96f34cc9",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "yes, good catch, this was an artifact of copying code from rotation.h",
+      "parentUuid": "235b2622_bff0cb49",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9dad8c18_98baca2f",
@@ -190,6 +393,24 @@
       "writtenOn": "2022-01-06T19:35:11Z",
       "side": 1,
       "message": "Should we use kEpsilon here instead given its use elsewhere in this test?",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8b392e1_9f679f6c",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "Here a stricter tolerance is better since we know the exact answer we do not have to depend on the conditioning of numeric differentiation etc. I suspect that in other tests if we are willing to vary is, the tests that test plus/minus can be run more strictly than the ones which are using numeric differentiation.",
+      "parentUuid": "9dad8c18_98baca2f",
       "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -213,6 +434,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "04e48100_cc6bc46a",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "No I do not think so, this is just a scaling convention IMO.",
+      "parentUuid": "93aa4f48_5b1baff8",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "919835f9_f1bcc84e",
         "filename": "internal/ceres/manifold_test.cc",
         "patchSetId": 3
@@ -224,6 +463,24 @@
       "writtenOn": "2022-01-06T19:35:11Z",
       "side": 1,
       "message": "I think you mean M_PI + 1e-6 here",
+      "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5fc5611_01de4797",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-07T01:04:35Z",
+      "side": 1,
+      "message": "thanks for catching this and actually this test is broken because the roundtrip for when delta is greater than PI doesn\u0027t actually work because we get an ambiguity..",
+      "parentUuid": "919835f9_f1bcc84e",
       "revId": "b54a951601e13692dccee98a828d68300f2e12c6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
