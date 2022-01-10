@@ -2143,7 +2143,7 @@ quaternion, a local parameterization can be constructed as
    every time, and once before it computes the residuals and/or the
    Jacobians.
 
-   User parameters (the double* values provided by the us) are fixed
+   User parameters (the double* values provided by the user) are fixed
    until the next call to
    :func:`EvaluationCallback::PrepareForEvaluation`. If
    ``new_evaluation_point == true``, then this is a new point that is
