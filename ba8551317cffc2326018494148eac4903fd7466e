@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e748944_d8906213",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-11T17:36:30Z",
+      "side": 1,
+      "message": "Nitpick, consider: \u0027real\u0027 -\u003e \u0027real (scalar)\u0027 as that is another fairly widely used description for it I\u0027ve seen.\n\nAlso: \u0027last whereas\u0027 -\u003e \u0027last, whereas\u0027",
+      "revId": "ba8551317cffc2326018494148eac4903fd7466e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "550c578a_d7cddff1",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-11T17:36:30Z",
+      "side": 1,
+      "message": "I\u0027m not wild about this duplication with minor modification.  What about defining templated functions for each of these operations in this .cc that took a trait with constexpr members that defined the indices of the respective elements within the array?  Something like the following (the k(WXYZ)Index names are just too long, but between GSG and being explicit they are a start):\n\nstruct CeresQuaternionOrdering {\n  static constexpr int kWIndex \u003d 0;\n  static constexpr int kXIndex \u003d 1;\n  static constexpr int kYIndex \u003d 2;\n  static constexpr int kZIndex \u003d 3;\n};\n\nstruct EigenQuaternionOrdering {\n  static constexpr int kWIndex \u003d 3;\n  static constexpr int kXIndex \u003d 0;\n  static constexpr int kYIndex \u003d 1;\n  static constexpr int kZIndex \u003d 2;\n};\n\ntemplate\u003ctypename Ordering\u003e\nbool Plus(const double* x,\n          const double* delta,\n          double* x_plus_delta) {\n  x[Ordering::kWIndex] \u003d ... etc\n}\n\nThe respective implementations just invoke the private function with the relevant trait, I *think* this should all be compiled away to nothing anyway (godbolt certainly suggests that it should)",
+      "revId": "ba8551317cffc2326018494148eac4903fd7466e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "019118ff_cbea53c5",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-11T17:36:30Z",
+      "side": 1,
+      "message": "Copy-pasta",
+      "revId": "ba8551317cffc2326018494148eac4903fd7466e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
