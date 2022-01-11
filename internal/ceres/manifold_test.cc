@@ -654,5 +654,76 @@ TEST(Quaternion, DeltaJustBelowPi) {
   }
 }
 
+// Compute the expected value of EigenQuaternion::Plus using Eigen and compares
+// it to the one computed by Quaternion::Plus.
+MATCHER_P2(EigenQuaternionPlusIsCorrectAt, x, delta, "") {
+  // This multiplication by 2 is needed because AngleAxisToQuaternion uses
+  // |delta|/2 as the angle of rotation where as in the implementation of
+  // Quaternion for historical reasons we use |delta|.
+  const Vector two_delta = delta * 2;
+  Vector delta_q(4);
+  AngleAxisToQuaternion(two_delta.data(), delta_q.data());
+  Eigen::Quaterniond delta_eigen_q(
+      delta_q[0], delta_q[1], delta_q[2], delta_q[3]);
+
+  Eigen::Map<const Eigen::Quaterniond> x_eigen_q(x.data());
+
+  Eigen::Quaterniond expected = delta_eigen_q * x_eigen_q;
+  double actual[4];
+  EXPECT_TRUE(arg.Plus(x.data(), delta.data(), actual));
+  Eigen::Map<Eigen::Quaterniond> actual_eigen_q(actual);
+
+  const double n = (actual_eigen_q.coeffs() - expected.coeffs()).norm();
+  const double d = expected.norm();
+  const double diffnorm = n / d;
+  if (diffnorm > kEpsilon) {
+    *result_listener
+        << "\nx: " << x.transpose() << "\ndelta: " << delta.transpose()
+        << "\nexpected: " << expected.coeffs().transpose()
+        << "\nactual: " << actual_eigen_q.coeffs().transpose() << "\ndiff: "
+        << (expected.coeffs() - actual_eigen_q.coeffs()).transpose()
+        << "\ndiffnorm : " << diffnorm;
+    return false;
+  }
+  return true;
+}
+
+TEST(EigenQuaternion, GenericDelta) {
+  EigenQuaternion manifold;
+  for (int trial = 0; trial < kNumTrials; ++trial) {
+    const Vector x = RandomQuaternion();
+    const Vector y = RandomQuaternion();
+    Vector delta = Vector::Random(3);
+    EXPECT_THAT(manifold, EigenQuaternionPlusIsCorrectAt(x, delta));
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y);
+  }
+}
+
+TEST(EigenQuaternion, SmallDelta) {
+  EigenQuaternion manifold;
+  for (int trial = 0; trial < kNumTrials; ++trial) {
+    const Vector x = RandomQuaternion();
+    const Vector y = RandomQuaternion();
+    Vector delta = Vector::Random(3);
+    delta.normalize();
+    delta *= 1e-6;
+    EXPECT_THAT(manifold, EigenQuaternionPlusIsCorrectAt(x, delta));
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y);
+  }
+}
+
+TEST(EigenQuaternion, DeltaJustBelowPi) {
+  EigenQuaternion manifold;
+  for (int trial = 0; trial < kNumTrials; ++trial) {
+    const Vector x = RandomQuaternion();
+    const Vector y = RandomQuaternion();
+    Vector delta = Vector::Random(3);
+    delta.normalize();
+    delta *= (M_PI - 1e-6);
+    EXPECT_THAT(manifold, EigenQuaternionPlusIsCorrectAt(x, delta));
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y);
+  }
+}
+
 }  // namespace internal
 }  // namespace ceres

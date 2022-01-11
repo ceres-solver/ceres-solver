@@ -381,6 +381,35 @@ class CERES_EXPORT Quaternion : public Manifold {
   bool MinusJacobian(const double* x, double* jacobian) const override;
 };
 
+// Implements the quaternion manifold for Eigen's representation of the Hamilton
+// quaternion. So geometrically it is exactly the same as the Quaternion
+// manifold defined above. However, Eigen uses a different internal memory
+// layout for the elements of the quaternion than what is commonly used.
+//
+// Eigen stores the elements in memory as [q1, q2, q3, q0] or [x, y, z, w] where
+// the real part is last whereas it is typically stored first, even though when
+// creating an Eigen Quaternion through the constructor the elements are
+// accepted in w, x, y, z order.
+//
+// Since Ceres operates on parameter blocks which are raw double pointers this
+// difference is important and requires a different manifold.
+class CERES_EXPORT EigenQuaternion : public Manifold {
+ public:
+  EigenQuaternion() = default;
+  virtual ~EigenQuaternion() = default;
+  int AmbientSize() const override { return 4; }
+  int TangentSize() const override { return 3; }
+
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
+  bool PlusJacobian(const double* x, double* jacobian) const override;
+  bool Minus(const double* y,
+             const double* x,
+             double* y_minus_x) const override;
+  bool MinusJacobian(const double* x, double* jacobian) const override;
+};
+
 }  // namespace ceres
 
 // clang-format off
