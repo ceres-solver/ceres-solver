@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d906f12b_ee890fd6",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-11T22:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b1388b_23262f7c",
+      "revId": "2ef87b50dd06aaede8aa00aa8ac4d08ac6f8ac46",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ddc09e1_a227fa70",
@@ -35,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d456c80f_b9e8aca0",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-11T22:40:43Z",
+      "side": 1,
+      "message": "The reason I had it here was it is closer to use. This file is really multi-topic, so moving it to the top isn\u0027t all that, but sure I can move it up.",
+      "parentUuid": "6ddc09e1_a227fa70",
+      "revId": "2ef87b50dd06aaede8aa00aa8ac4d08ac6f8ac46",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35e71c33_14bdbf89",
@@ -48,6 +84,24 @@
       "writtenOn": "2022-01-11T22:32:17Z",
       "side": 1,
       "message": "Consider \u0027CeresQuaternionOrder\u0027 just because both of these are technically quaternion ordering types so that alone doesn\u0027t technically define the *values* (IMO)",
+      "revId": "2ef87b50dd06aaede8aa00aa8ac4d08ac6f8ac46",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cba2050_acb80c44",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-11T22:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35e71c33_14bdbf89",
       "revId": "2ef87b50dd06aaede8aa00aa8ac4d08ac6f8ac46",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
