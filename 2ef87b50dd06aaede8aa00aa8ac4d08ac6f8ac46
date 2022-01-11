@@ -121,6 +121,24 @@
       "message": "This has an interesting (and not I think bad) side-effect that if delta contains NAN, then x_plus_delta will now also be NAN.  Whereas before, with the if (! \u003e 0.0) check we would have set x_plus_delta :\u003d x, which might mask an error in weird ways.",
       "revId": "2ef87b50dd06aaede8aa00aa8ac4d08ac6f8ac46",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c2ccd16_e3b0b254",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-11T22:41:42Z",
+      "side": 1,
+      "message": "we are pretty careful about nans, if they sneak in.. I guess this is better.",
+      "parentUuid": "2f6266a8_97d060e7",
+      "revId": "2ef87b50dd06aaede8aa00aa8ac4d08ac6f8ac46",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
