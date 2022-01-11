@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "747c16c2_41c0e431",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 6627
+      },
+      "writtenOn": "2022-01-11T18:12:31Z",
+      "side": 1,
+      "message": "G",
+      "range": {
+        "startLine": 385,
+        "startChar": 15,
+        "endLine": 385,
+        "endChar": 19
+      },
+      "revId": "ba8551317cffc2326018494148eac4903fd7466e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9e748944_d8906213",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 2
