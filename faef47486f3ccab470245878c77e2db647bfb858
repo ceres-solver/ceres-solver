@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e208e62_1f037862",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 6627
+      },
+      "writtenOn": "2022-01-11T20:09:16Z",
+      "side": 1,
+      "message": "nit: these clauses seem unnecessary, especially the constructor bit.",
+      "range": {
+        "startLine": 390,
+        "startChar": 32,
+        "endLine": 392,
+        "endChar": 35
+      },
+      "revId": "faef47486f3ccab470245878c77e2db647bfb858",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36468505_443d0556",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 6627
+      },
+      "writtenOn": "2022-01-11T20:09:16Z",
+      "side": 1,
+      "message": "I love this template. Nit for brevity: consider Order instead of Ordering",
+      "range": {
+        "startLine": 292,
+        "startChar": 19,
+        "endLine": 292,
+        "endChar": 27
+      },
+      "revId": "faef47486f3ccab470245878c77e2db647bfb858",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
