@@ -274,81 +274,183 @@ bool ProductManifold::MinusJacobian(const double* x,
   return true;
 }
 
-bool Quaternion::Plus(const double* x,
-                      const double* delta,
-                      double* x_plus_delta) const {
+namespace {
+struct QuaternionOrdering {
+  static constexpr int kW = 0;
+  static constexpr int kX = 1;
+  static constexpr int kY = 2;
+  static constexpr int kZ = 3;
+};
+
+struct EigenQuaternionOrdering {
+  static constexpr int kW = 3;
+  static constexpr int kX = 0;
+  static constexpr int kY = 1;
+  static constexpr int kZ = 2;
+};
+
+template <typename Ordering>
+inline void QuaternionPlusImpl(const double* x,
+                               const double* delta,
+                               double* x_plus_delta) {
   // x_plus_delta = QuaternionProduct(q_delta, x), where q_delta is the
   // quaternion constructed from delta.
   const double norm_delta = std::sqrt(
       delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2]);
-  if (norm_delta > 0.0) {
-    const double sin_delta_by_delta = (std::sin(norm_delta) / norm_delta);
-    double q_delta[4];
-    q_delta[0] = std::cos(norm_delta);
-    q_delta[1] = sin_delta_by_delta * delta[0];
-    q_delta[2] = sin_delta_by_delta * delta[1];
-    q_delta[3] = sin_delta_by_delta * delta[2];
 
-    // clang-format off
-    x_plus_delta[0] = q_delta[0] * x[0] - q_delta[1] * x[1] - q_delta[2] * x[2] - q_delta[3] * x[3];
-    x_plus_delta[1] = q_delta[0] * x[1] + q_delta[1] * x[0] + q_delta[2] * x[3] - q_delta[3] * x[2];
-    x_plus_delta[2] = q_delta[0] * x[2] - q_delta[1] * x[3] + q_delta[2] * x[0] + q_delta[3] * x[1];
-    x_plus_delta[3] = q_delta[0] * x[3] + q_delta[1] * x[2] - q_delta[2] * x[1] + q_delta[3] * x[0];
-    // clang-format on
-  } else {
+  if (norm_delta == 0.0) {
     for (int i = 0; i < 4; ++i) {
       x_plus_delta[i] = x[i];
     }
+    return;
   }
+
+  const double sin_delta_by_delta = (std::sin(norm_delta) / norm_delta);
+  double q_delta[4];
+  q_delta[Ordering::kW] = std::cos(norm_delta);
+  q_delta[Ordering::kX] = sin_delta_by_delta * delta[0];
+  q_delta[Ordering::kY] = sin_delta_by_delta * delta[1];
+  q_delta[Ordering::kZ] = sin_delta_by_delta * delta[2];
+
+  x_plus_delta[Ordering::kW] = q_delta[Ordering::kW] * x[Ordering::kW] -
+                               q_delta[Ordering::kX] * x[Ordering::kX] -
+                               q_delta[Ordering::kY] * x[Ordering::kY] -
+                               q_delta[Ordering::kZ] * x[Ordering::kZ];
+  x_plus_delta[Ordering::kX] = q_delta[Ordering::kW] * x[Ordering::kX] +
+                               q_delta[Ordering::kX] * x[Ordering::kW] +
+                               q_delta[Ordering::kY] * x[Ordering::kZ] -
+                               q_delta[Ordering::kZ] * x[Ordering::kY];
+  x_plus_delta[Ordering::kY] = q_delta[Ordering::kW] * x[Ordering::kY] -
+                               q_delta[Ordering::kX] * x[Ordering::kZ] +
+                               q_delta[Ordering::kY] * x[Ordering::kW] +
+                               q_delta[Ordering::kZ] * x[Ordering::kX];
+  x_plus_delta[Ordering::kZ] = q_delta[Ordering::kW] * x[Ordering::kZ] +
+                               q_delta[Ordering::kX] * x[Ordering::kY] -
+                               q_delta[Ordering::kY] * x[Ordering::kX] +
+                               q_delta[Ordering::kZ] * x[Ordering::kW];
+}
+
+template <typename Ordering>
+inline void QuaternionPlusJacobianImpl(const double* x, double* jacobian_ptr) {
+  Eigen::Map<Eigen::Matrix<double, 4, 3, Eigen::RowMajor>> jacobian(
+      jacobian_ptr);
+
+  jacobian(Ordering::kW, 0) = -x[Ordering::kX];
+  jacobian(Ordering::kW, 1) = -x[Ordering::kY];
+  jacobian(Ordering::kW, 2) = -x[Ordering::kZ];
+  jacobian(Ordering::kX, 0) = x[Ordering::kW];
+  jacobian(Ordering::kX, 1) = x[Ordering::kZ];
+  jacobian(Ordering::kX, 2) = -x[Ordering::kY];
+  jacobian(Ordering::kY, 0) = -x[Ordering::kZ];
+  jacobian(Ordering::kY, 1) = x[Ordering::kW];
+  jacobian(Ordering::kY, 2) = x[Ordering::kX];
+  jacobian(Ordering::kZ, 0) = x[Ordering::kY];
+  jacobian(Ordering::kZ, 1) = -x[Ordering::kX];
+  jacobian(Ordering::kZ, 2) = x[Ordering::kW];
+}
+
+template <typename Ordering>
+inline void QuaternionMinusImpl(const double* y,
+                                const double* x,
+                                double* y_minus_x) {
+  // ambient_y_minus_x = QuaternionProduct(y, -x) where -x is the conjugate of
+  // x.
+  double ambient_y_minus_x[4];
+  ambient_y_minus_x[Ordering::kW] =
+      y[Ordering::kW] * x[Ordering::kW] + y[Ordering::kX] * x[Ordering::kX] +
+      y[Ordering::kY] * x[Ordering::kY] + y[Ordering::kZ] * x[Ordering::kZ];
+  ambient_y_minus_x[Ordering::kX] =
+      -y[Ordering::kW] * x[Ordering::kX] + y[Ordering::kX] * x[Ordering::kW] -
+      y[Ordering::kY] * x[Ordering::kZ] + y[Ordering::kZ] * x[Ordering::kY];
+  ambient_y_minus_x[Ordering::kY] =
+      -y[Ordering::kW] * x[Ordering::kY] + y[Ordering::kX] * x[Ordering::kZ] +
+      y[Ordering::kY] * x[Ordering::kW] - y[Ordering::kZ] * x[Ordering::kX];
+  ambient_y_minus_x[Ordering::kZ] =
+      -y[Ordering::kW] * x[Ordering::kZ] - y[Ordering::kX] * x[Ordering::kY] +
+      y[Ordering::kY] * x[Ordering::kX] + y[Ordering::kZ] * x[Ordering::kW];
+
+  const double u_norm = std::sqrt(
+      ambient_y_minus_x[Ordering::kX] * ambient_y_minus_x[Ordering::kX] +
+      ambient_y_minus_x[Ordering::kY] * ambient_y_minus_x[Ordering::kY] +
+      ambient_y_minus_x[Ordering::kZ] * ambient_y_minus_x[Ordering::kZ]);
+  if (u_norm > 0.0) {
+    const double theta = std::atan2(u_norm, ambient_y_minus_x[Ordering::kW]);
+    y_minus_x[0] = theta * ambient_y_minus_x[Ordering::kX] / u_norm;
+    y_minus_x[1] = theta * ambient_y_minus_x[Ordering::kY] / u_norm;
+    y_minus_x[2] = theta * ambient_y_minus_x[Ordering::kZ] / u_norm;
+  } else {
+    y_minus_x[0] = 0.0;
+    y_minus_x[1] = 0.0;
+    y_minus_x[2] = 0.0;
+  }
+}
+
+template <typename Ordering>
+inline void QuaternionMinusJacobianImpl(const double* x, double* jacobian_ptr) {
+  Eigen::Map<Eigen::Matrix<double, 3, 4, Eigen::RowMajor>> jacobian(
+      jacobian_ptr);
+
+  jacobian(0, Ordering::kW) = -x[Ordering::kX];
+  jacobian(0, Ordering::kX) = x[Ordering::kW];
+  jacobian(0, Ordering::kY) = -x[Ordering::kZ];
+  jacobian(0, Ordering::kZ) = x[Ordering::kY];
+  jacobian(1, Ordering::kW) = -x[Ordering::kY];
+  jacobian(1, Ordering::kX) = x[Ordering::kZ];
+  jacobian(1, Ordering::kY) = x[Ordering::kW];
+  jacobian(1, Ordering::kZ) = -x[Ordering::kX];
+  jacobian(2, Ordering::kW) = -x[Ordering::kZ];
+  jacobian(2, Ordering::kX) = -x[Ordering::kY];
+  jacobian(2, Ordering::kY) = x[Ordering::kX];
+  jacobian(2, Ordering::kZ) = x[Ordering::kW];
+}
+
+}  // namespace
+
+bool Quaternion::Plus(const double* x,
+                      const double* delta,
+                      double* x_plus_delta) const {
+  QuaternionPlusImpl<QuaternionOrdering>(x, delta, x_plus_delta);
   return true;
 }
 
 bool Quaternion::PlusJacobian(const double* x, double* jacobian) const {
-  // clang-format off
-  jacobian[0] = -x[1];  jacobian[1]  = -x[2];   jacobian[2]  = -x[3];
-  jacobian[3] =  x[0];  jacobian[4]  =  x[3];   jacobian[5]  = -x[2];
-  jacobian[6] = -x[3];  jacobian[7]  =  x[0];   jacobian[8]  =  x[1];
-  jacobian[9] =  x[2];  jacobian[10] = -x[1];   jacobian[11] =  x[0];
-  // clang-format on
+  QuaternionPlusJacobianImpl<QuaternionOrdering>(x, jacobian);
   return true;
 }
 
 bool Quaternion::Minus(const double* y,
                        const double* x,
                        double* y_minus_x) const {
-  // ambient_y_minus_x = QuaternionProduct(y, -x) where -x is the conjugate of
-  // x.
-  double ambient_y_minus_x[4];
-
-  // clang-format off
-  ambient_y_minus_x[0] =  y[0] * x[0] + y[1] * x[1] + y[2] * x[2] + y[3] * x[3];
-  ambient_y_minus_x[1] = -y[0] * x[1] + y[1] * x[0] - y[2] * x[3] + y[3] * x[2];
-  ambient_y_minus_x[2] = -y[0] * x[2] + y[1] * x[3] + y[2] * x[0] - y[3] * x[1];
-  ambient_y_minus_x[3] = -y[0] * x[3] - y[1] * x[2] + y[2] * x[1] + y[3] * x[0];
-  // clang-format on
-
-  const double u_norm = std::sqrt(ambient_y_minus_x[1] * ambient_y_minus_x[1] +
-                                  ambient_y_minus_x[2] * ambient_y_minus_x[2] +
-                                  ambient_y_minus_x[3] * ambient_y_minus_x[3]);
-  if (u_norm > 0.0) {
-    const double theta = std::atan2(u_norm, ambient_y_minus_x[0]);
-    y_minus_x[0] = theta * ambient_y_minus_x[1] / u_norm;
-    y_minus_x[1] = theta * ambient_y_minus_x[2] / u_norm;
-    y_minus_x[2] = theta * ambient_y_minus_x[3] / u_norm;
-  } else {
-    y_minus_x[0] = 0.0;
-    y_minus_x[1] = 0.0;
-    y_minus_x[2] = 0.0;
-  }
+  QuaternionMinusImpl<QuaternionOrdering>(y, x, y_minus_x);
   return true;
 }
 
 bool Quaternion::MinusJacobian(const double* x, double* jacobian) const {
-  // clang-format off
-  jacobian[0] = - x[1]; jacobian[1]=  x[0]; jacobian[2]  = -x[3]; jacobian[3]  =   x[2];
-  jacobian[4] = - x[2]; jacobian[5]=  x[3]; jacobian[6]  =  x[0]; jacobian[7]  =  -x[1];
-  jacobian[8] = - x[3]; jacobian[9]= -x[2]; jacobian[10] =  x[1]; jacobian[11] =   x[0];
-  // clang-format on
+  QuaternionMinusJacobianImpl<QuaternionOrdering>(x, jacobian);
+  return true;
+}
+
+bool EigenQuaternion::Plus(const double* x,
+                           const double* delta,
+                           double* x_plus_delta) const {
+  QuaternionPlusImpl<EigenQuaternionOrdering>(x, delta, x_plus_delta);
+  return true;
+}
+
+bool EigenQuaternion::PlusJacobian(const double* x, double* jacobian) const {
+  QuaternionPlusJacobianImpl<EigenQuaternionOrdering>(x, jacobian);
+  return true;
+}
+
+bool EigenQuaternion::Minus(const double* y,
+                            const double* x,
+                            double* y_minus_x) const {
+  QuaternionMinusImpl<EigenQuaternionOrdering>(y, x, y_minus_x);
+  return true;
+}
+
+bool EigenQuaternion::MinusJacobian(const double* x, double* jacobian) const {
+  QuaternionMinusJacobianImpl<EigenQuaternionOrdering>(x, jacobian);
   return true;
 }
 
