@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0b1388b_23262f7c",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-11T22:32:17Z",
+      "side": 1,
+      "message": "nitpick, but: \u0027real (scalar)\u0027 (space)",
+      "revId": "2ef87b50dd06aaede8aa00aa8ac4d08ac6f8ac46",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ddc09e1_a227fa70",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-11T22:32:17Z",
+      "side": 1,
+      "message": "More of a question, but shouldn\u0027t this definition and anonymous namespace be at the top of the file before all other definitions?  That would seem to be in keeping with the rest of our codebase (IMO it\u0027s my personal preference too, but I don\u0027t feel that strongly about it)",
+      "revId": "2ef87b50dd06aaede8aa00aa8ac4d08ac6f8ac46",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35e71c33_14bdbf89",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-11T22:32:17Z",
+      "side": 1,
+      "message": "Consider \u0027CeresQuaternionOrder\u0027 just because both of these are technically quaternion ordering types so that alone doesn\u0027t technically define the *values* (IMO)",
+      "revId": "2ef87b50dd06aaede8aa00aa8ac4d08ac6f8ac46",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f6266a8_97d060e7",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-11T22:32:17Z",
+      "side": 1,
+      "message": "This has an interesting (and not I think bad) side-effect that if delta contains NAN, then x_plus_delta will now also be NAN.  Whereas before, with the if (! \u003e 0.0) check we would have set x_plus_delta :\u003d x, which might mask an error in weird ways.",
+      "revId": "2ef87b50dd06aaede8aa00aa8ac4d08ac6f8ac46",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
