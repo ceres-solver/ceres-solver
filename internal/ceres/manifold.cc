@@ -352,4 +352,91 @@ bool Quaternion::MinusJacobian(const double* x, double* jacobian) const {
   return true;
 }
 
+bool EigenQuaternion::Plus(const double* x,
+                           const double* delta,
+                           double* x_plus_delta) const {
+  // x_plus_delta = QuaternionProduct(q_delta, x), where q_delta is the
+  // quaternion constructed from delta.
+  const double norm_delta = std::sqrt(
+      delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2]);
+
+  if (norm_delta > 0.0) {
+    const double sin_delta_by_delta = (std::sin(norm_delta) / norm_delta);
+    double q_delta[4];
+    q_delta[0] = std::cos(norm_delta);
+    q_delta[1] = sin_delta_by_delta * delta[0];
+    q_delta[2] = sin_delta_by_delta * delta[1];
+    q_delta[3] = sin_delta_by_delta * delta[2];
+
+    // clang-format off
+    x_plus_delta[0] = q_delta[0] * x[0] + q_delta[1] * x[3] + q_delta[2] * x[2] - q_delta[3] * x[1];
+    x_plus_delta[1] = q_delta[0] * x[1] - q_delta[1] * x[2] + q_delta[2] * x[3] + q_delta[3] * x[0];
+    x_plus_delta[2] = q_delta[0] * x[2] + q_delta[1] * x[1] - q_delta[2] * x[0] + q_delta[3] * x[3];
+    x_plus_delta[3] = q_delta[0] * x[3] - q_delta[1] * x[0] - q_delta[2] * x[1] - q_delta[3] * x[2];
+    // clang-format on
+  } else {
+    for (int i = 0; i < 4; ++i) {
+      x_plus_delta[i] = x[i];
+    }
+  }
+
+  return true;
+}
+
+bool EigenQuaternion::PlusJacobian(const double* x, double* jacobian) const {
+  // clang-format off
+  jacobian[0] =  x[3];  jacobian[1]  =  x[2];   jacobian[2]  = -x[1];
+  jacobian[3] = -x[2];  jacobian[4]  =  x[3];   jacobian[5]  =  x[0];
+  jacobian[6] =  x[1];  jacobian[7]  = -x[0];   jacobian[8]  =  x[3];
+  jacobian[9] = -x[0];  jacobian[10] = -x[1];   jacobian[11] = -x[2];
+  // clang-format on
+  return true;
+}
+
+bool EigenQuaternion::Minus(const double* y,
+                            const double* x,
+                            double* y_minus_x) const {
+  // ambient_y_minus_x = QuaternionProduct(y, -x) where -x is the conjugate of
+  // x.
+  double ambient_y_minus_x[4];
+
+  // clang-format off
+  //ambient_y_minus_x[0] =  y[0] * x[0] + y[1] * x[1] + y[2] * x[2] + y[3] * x[3];
+  //ambient_y_minus_x[1] = -y[0] * x[1] + y[1] * x[0] - y[2] * x[3] + y[3] * x[2];
+  //ambient_y_minus_x[2] = -y[0] * x[2] + y[1] * x[3] + y[2] * x[0] - y[3] * x[1];
+  //ambient_y_minus_x[3] = -y[0] * x[3] - y[1] * x[2] + y[2] * x[1] + y[3] * x[0];
+  //  clang-format on
+
+  // clang-format off
+  ambient_y_minus_x[0] = -y[3] * x[0] + y[0] * x[3] - y[1] * x[2] + y[2] * x[1];
+  ambient_y_minus_x[1] = -y[3] * x[1] + y[0] * x[2] + y[1] * x[3] - y[2] * x[0];
+  ambient_y_minus_x[2] = -y[3] * x[2] - y[0] * x[1] + y[1] * x[0] + y[2] * x[3];
+  ambient_y_minus_x[3] =  y[3] * x[3] + y[0] * x[0] + y[1] * x[1] + y[2] * x[2];
+  // clang-format on
+
+  const double u_norm = std::sqrt(ambient_y_minus_x[0] * ambient_y_minus_x[0] +
+                                  ambient_y_minus_x[1] * ambient_y_minus_x[1] +
+                                  ambient_y_minus_x[2] * ambient_y_minus_x[2]);
+  if (u_norm > 0.0) {
+    const double theta = std::atan2(u_norm, ambient_y_minus_x[3]);
+    y_minus_x[0] = theta * ambient_y_minus_x[0] / u_norm;
+    y_minus_x[1] = theta * ambient_y_minus_x[1] / u_norm;
+    y_minus_x[2] = theta * ambient_y_minus_x[2] / u_norm;
+  } else {
+    y_minus_x[0] = 0.0;
+    y_minus_x[1] = 0.0;
+    y_minus_x[2] = 0.0;
+  }
+  return true;
+}
+
+bool EigenQuaternion::MinusJacobian(const double* x, double* jacobian) const {
+  // clang-format off
+  jacobian[3] = - x[0]; jacobian[0]=  x[3]; jacobian[1]  = -x[2]; jacobian[2]  =   x[1];
+  jacobian[7] = - x[1]; jacobian[4]=  x[2]; jacobian[5]  =  x[3]; jacobian[6]  =  -x[0];
+  jacobian[11] = - x[2]; jacobian[8]= -x[1]; jacobian[9] =  x[0]; jacobian[10] =   x[3];
+  // clang-format on
+  return true;
+}
+
 }  // namespace ceres
