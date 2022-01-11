@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bf155b6_85fc1443",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-11T19:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "747c16c2_41c0e431",
+      "range": {
+        "startLine": 385,
+        "startChar": 15,
+        "endLine": 385,
+        "endChar": 19
+      },
+      "revId": "ba8551317cffc2326018494148eac4903fd7466e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e748944_d8906213",
@@ -37,6 +61,24 @@
       "writtenOn": "2022-01-11T17:36:30Z",
       "side": 1,
       "message": "Nitpick, consider: \u0027real\u0027 -\u003e \u0027real (scalar)\u0027 as that is another fairly widely used description for it I\u0027ve seen.\n\nAlso: \u0027last whereas\u0027 -\u003e \u0027last, whereas\u0027",
+      "revId": "ba8551317cffc2326018494148eac4903fd7466e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dd22ddd_9f13b1b2",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-11T19:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e748944_d8906213",
       "revId": "ba8551317cffc2326018494148eac4903fd7466e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -58,6 +100,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6709304b_fd8ec35d",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-11T19:25:56Z",
+      "side": 1,
+      "message": "Thanks, this made the things way way simpler.",
+      "parentUuid": "550c578a_d7cddff1",
+      "revId": "ba8551317cffc2326018494148eac4903fd7466e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "019118ff_cbea53c5",
@@ -71,6 +131,24 @@
       "writtenOn": "2022-01-11T17:36:30Z",
       "side": 1,
       "message": "Copy-pasta",
+      "revId": "ba8551317cffc2326018494148eac4903fd7466e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8ad34d5_e930830c",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-11T19:25:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "019118ff_cbea53c5",
       "revId": "ba8551317cffc2326018494148eac4903fd7466e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -98,6 +176,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "091ce6e2_e538f988",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-11T19:25:56Z",
+      "side": 1,
+      "message": "yes I use it to compute the quaternion product below.",
+      "parentUuid": "d2d415d5_c4f9a23d",
+      "range": {
+        "startLine": 669,
+        "startChar": 2,
+        "endLine": 669,
+        "endChar": 12
+      },
+      "revId": "ba8551317cffc2326018494148eac4903fd7466e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "712d74f2_7d5d2436",
@@ -111,6 +213,30 @@
       "writtenOn": "2022-01-11T18:17:13Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 674,
+        "startChar": 2,
+        "endLine": 674,
+        "endChar": 12
+      },
+      "revId": "ba8551317cffc2326018494148eac4903fd7466e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11f2eef4_00bbbb89",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-11T19:25:56Z",
+      "side": 1,
+      "message": "it makes using vector versions of stuff here easier.",
+      "parentUuid": "712d74f2_7d5d2436",
       "range": {
         "startLine": 674,
         "startChar": 2,
