@@ -73,6 +73,52 @@
       "message": "Copy-pasta",
       "revId": "ba8551317cffc2326018494148eac4903fd7466e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2d415d5_c4f9a23d",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 6627
+      },
+      "writtenOn": "2022-01-11T18:17:13Z",
+      "side": 1,
+      "message": "do you need this map?",
+      "range": {
+        "startLine": 669,
+        "startChar": 2,
+        "endLine": 669,
+        "endChar": 12
+      },
+      "revId": "ba8551317cffc2326018494148eac4903fd7466e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "712d74f2_7d5d2436",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 6627
+      },
+      "writtenOn": "2022-01-11T18:17:13Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 674,
+        "startChar": 2,
+        "endLine": 674,
+        "endChar": 12
+      },
+      "revId": "ba8551317cffc2326018494148eac4903fd7466e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
