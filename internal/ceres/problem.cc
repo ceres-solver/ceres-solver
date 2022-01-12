@@ -106,6 +106,10 @@ const LocalParameterization* Problem::GetParameterization(
   return impl_->GetParameterization(values);
 }
 
+bool Problem::HasParameterization(const double* values) const {
+  return impl_->HasParameterization(values);
+}
+
 void Problem::SetParameterLowerBound(double* values,
                                      int index,
                                      double lower_bound) {

@@ -329,6 +329,10 @@ class CERES_EXPORT Problem {
   // associated then nullptr is returned.
   const LocalParameterization* GetParameterization(const double* values) const;
 
+  // Returns true if a parameterization is associated with this parameter block,
+  // false otherwise.
+  bool HasParameterization(const double* values) const;
+
   // Set the lower/upper bound for the parameter at position "index".
   void SetParameterLowerBound(double* values, int index, double lower_bound);
   void SetParameterUpperBound(double* values, int index, double upper_bound);

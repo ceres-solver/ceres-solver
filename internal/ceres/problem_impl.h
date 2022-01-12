@@ -110,6 +110,7 @@ class CERES_EXPORT_INTERNAL ProblemImpl {
   void SetParameterization(double* values,
                            LocalParameterization* local_parameterization);
   const LocalParameterization* GetParameterization(const double* values) const;
+  bool HasParameterization(const double* values) const;
 
   void SetParameterLowerBound(double* values, int index, double lower_bound);
   void SetParameterUpperBound(double* values, int index, double upper_bound);
