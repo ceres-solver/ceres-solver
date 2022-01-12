@@ -85,7 +85,6 @@ MATCHER_P(XPlusZeroIsXAt, x, "") {
 
 // Checks that the invariant Minus(x, x) == 0 holds.
 MATCHER_P(XMinusXIsZeroAt, x, "") {
-  const int ambient_size = arg.AmbientSize();
   const int tangent_size = arg.TangentSize();
   Vector actual = Vector::Zero(tangent_size);
   EXPECT_TRUE(arg.Minus(x.data(), x.data(), actual.data()));
