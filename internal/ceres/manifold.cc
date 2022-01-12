@@ -299,7 +299,6 @@ bool SubsetManifold::Minus(const double* y,
 bool SubsetManifold::MinusJacobian(const double* x,
                                    double* minus_jacobian) const {
   const int ambient_size = AmbientSize();
-  const int tangent_size = TangentSize();
   MatrixRef m(minus_jacobian, tangent_size_, ambient_size);
   m.setZero();
   for (int c = 0, r = 0; c < ambient_size; ++c) {
