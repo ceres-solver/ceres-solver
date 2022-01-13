@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8accde34_8a8e3f1e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-13T00:54:44Z",
+      "side": 1,
+      "message": "Alright folks, this is phase 1 of the local parameterization to manifold transition. Please take a careful look.",
+      "revId": "567107260026b701ac332ac43e4ad10d970a56ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
