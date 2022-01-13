@@ -1,5 +1,6 @@
 #include "ceres/manifold.h"
 
+#include <algorithm>
 #include <cmath>
 
 #include "ceres/internal/eigen.h"
