@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be6e79f1_8714fd24",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-15T00:55:33Z",
+      "side": 1,
+      "message": "nit: Please remove extra space after period. I bet it\u0027s an editor setting to avoid this.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "943706d9_67df6586",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-15T00:55:33Z",
+      "side": 1,
+      "message": "Nit: double space.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "995e8177_7f8c5ce9",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-15T00:55:33Z",
+      "side": 1,
+      "message": "Please add block comments to each of the 3 parts of this function; something to the effect of wrapping the legacy local params with manifolds.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a3bc999_b4c44bc5",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-15T00:55:33Z",
+      "side": 1,
+      "message": "I believe Ceres is now all-in on C++ 17. You can now do:\n\n  if (const LocalParameterization* local_param \u003d local_parameterizations-\u003eat(i);\n      local_param !\u003d nullptr) {\n    manifolds_[i] \u003d new internal::ManifoldAdapter(local_param);\n  }",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de16eb1a_a0c86338",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-15T00:55:33Z",
+      "side": 1,
+      "message": "I suggest instead:\n\n  for (int32_t parameter_block_size : function-\u003eparameter_block_sizes()) {\n    finite_diff_cost_function-\u003eAddParameterBlock(parameter_block_size);\n  }\n  \nand dropping the local vector reference.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac855337_2411116c",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-15T00:55:33Z",
+      "side": 1,
+      "message": "No need to check; you can delete nullptr safely.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "deb9b5c3_61ebe1b5",
+        "filename": "internal/ceres/manifold_adapter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-15T00:55:33Z",
+      "side": 1,
+      "message": "Perhaps put a comment that this must be implemented before the manifold transition is complete.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6e70386_6483951a",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-15T00:55:33Z",
+      "side": 1,
+      "message": "Please add comments here or in this function about the transitionary phase and how this logic will go away",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "599361c8_2c52483c",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-15T00:55:33Z",
+      "side": 1,
+      "message": "local parameterization --\u003e manifold.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e93af1f1_caaac9e2",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-15T00:55:33Z",
+      "side": 1,
+      "message": "() wrapper around expression unnecessary.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "075e27f1_f5e7cc13",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-15T00:55:33Z",
+      "side": 1,
+      "message": "Is ordered traversal necessary? I suggest an unordered_map instead since maps are space inefficient.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
