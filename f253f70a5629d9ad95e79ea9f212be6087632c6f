@@ -3,6 +3,142 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "987323de_0f84a377",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "We can probably remove the mention of a specific version here",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ed5005f_c4315892",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "This strikes me as quite a big deal as a change, as I *think* this might be the breaking change for the default compiler/libraries on 18.04 which I think only fully supported C++14.  What features are we using that are explicitly C++17?  IMO we should also really call this out in the commit message and/or probably make it a separate commit to require C++17 s/t it is front and centre in the changelog when it happens",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34e46cb7_8eac2ea2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "I would update this comment to provide user feedback in the CMake GUI when configuring if they try to set it to something else",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "989ab609_bf9ff31b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "Remove 14 from this list if it is no longer an option",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1a7f7a3_f13a1b81",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "manifold tangent space dimension",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d9b7caf_be6851e1",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "\u0027returns a different residual\u0027 or \u0027if a cost function returns a different\u0027",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59d03431_a48cd85f",
+        "filename": "include/ceres/gradient_problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "Nit, but perhaps inlining this to return NumTangentParameters() would save the need for a comment about why both exist (when they are the same)?",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c15d404_16b6e346",
+        "filename": "include/ceres/gradient_problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "This duplication of unique_ptrs makes me slightly twitchy, it\u0027s correct as the ManifoldAdaptor never owns its wrapped parameterisation, so they are separate objects but it still seems like a bit of an abuse of semantics here.\n\nThat said, the only alternative I can think of would involve a dynamic_cast() in the implementations of (mutable_)parameterisation() and then updating ManifoldAdaptor to support the same own/don\u0027t own semantics of the other wrappers.  That is less performant, although this should never be used in a situation where that should actually matter.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be6e79f1_8714fd24",
         "filename": "include/ceres/problem.h",
         "patchSetId": 12
@@ -20,6 +156,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ff5d27b6_dc2eb173",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "I think these docs are out of date, it won\u0027t be UB, it will be a CHECK() fail, and you will not be going to space today.  Unless you have set disable_all_safety_checks \u003d true, in which case you deserve whatever befalls you.  This comment applies throughout this file for these methods",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "943706d9_67df6586",
         "filename": "include/ceres/problem.h",
         "patchSetId": 12
@@ -31,6 +184,108 @@
       "writtenOn": "2022-01-15T00:55:33Z",
       "side": 1,
       "message": "Nit: double space.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f5e21f3_e8812901",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "Perhaps \u0027by default\u0027 here should be replaced with a ref to the Options::\u003c\u003e_ownership option?  I.e. something like: \u0027Options::\u003c\u003e_ownership defines whether the Problem takes ownership of the local_parameterisation\u0027",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c8d1619_a47ae38f",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "What happens if I invoke this when a manifold already exists?",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35ff86d3_952ad257",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "Same comment as above re: \u0027by default\u0027 -\u003e ref to the value of Options::\u003c\u003e_ownership",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f1736cf_313e2926",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "What happens if I invoke this when a local parameterisation already exists?",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e40d979_f9b8014d",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "IMO, maybe weird that this is manifold *or* a local parameterisation given the API docs above, and I think means we definitely need to explain what happens if you try to set one when the other already exists",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98212de7_f52212d3",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "local -\u003e tangent ?",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -105,6 +360,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d438a5b5_fdd4c590",
+        "filename": "internal/ceres/gradient_problem.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "Should we not CHECK_NOTNULL() the function as well ?",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b80362a_73c38829",
+        "filename": "internal/ceres/gradient_problem.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "I think you mean manifold_(manifold) here, but I think it should probably also be CHECK_NOTNULL() as per the local parameterisation case too",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e488cb2c_da868920",
+        "filename": "internal/ceres/manifold_adapter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "Consider an explicit comment that this *never* owns the parameterisation, unlike the other objects with similar relations which use the OWNERSHIP enum",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "deb9b5c3_61ebe1b5",
         "filename": "internal/ceres/manifold_adapter.h",
         "patchSetId": 12
@@ -122,6 +428,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a29f2a5c_3110ac43",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "I think you mean, returns nullptr if there is *no* manifold for this parameter block",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f4e190a_febe903f",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we reset plus_jacobian_ here to nullptr as well?",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9b408930_c7560d56",
         "filename": "internal/ceres/parameter_block.h",
         "patchSetId": 12
@@ -133,6 +473,40 @@
       "writtenOn": "2022-01-15T01:23:57Z",
       "side": 1,
       "message": "\"DOODOO\"",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "441fe11e_c3c1874c",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "This isn\u0027t true in the public API though is it?  I thought we said that you could set a parameter block constant by using a manifold that had a tangent space of dimensionality zero, as SubsetManifold implies ?",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec5fe9c1_00a457e9",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-17T20:32:10Z",
+      "side": 1,
+      "message": "Intended ?",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
