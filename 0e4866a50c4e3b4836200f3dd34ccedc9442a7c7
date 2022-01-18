@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a6dee6db_12de9143",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T23:58:19Z",
+      "side": 1,
+      "message": "I am unsure about mentioning CHECK here, since I\u0027d rather not document the mechanism of crashing in the API.",
+      "parentUuid": "63a19812_d9398f66",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7a9b0a3e_fb0c09f3",
         "filename": "include/ceres/problem.h",
         "patchSetId": 13
@@ -48,6 +66,24 @@
       "writtenOn": "2022-01-18T23:25:15Z",
       "side": 1,
       "message": "Same point about use of \u0027crash\u0027 as above",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cc4903a_78d72e83",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T23:58:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7a9b0a3e_fb0c09f3",
       "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -69,6 +105,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ddde9ba_776f857d",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T23:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f978099_36e24306",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0303287f_66bf40e3",
@@ -82,6 +136,24 @@
       "writtenOn": "2022-01-18T23:25:15Z",
       "side": 1,
       "message": "\u0027will cause any\u0027 or change second line to \u0027object being replaced with the manifold\u0027",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ab88053_dec605d3",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T23:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0303287f_66bf40e3",
       "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -103,6 +175,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a68b76e4_27ea674a",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T23:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cef52325_f0a13d75",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1299b794_a1015390",
@@ -116,6 +206,24 @@
       "writtenOn": "2022-01-18T23:25:15Z",
       "side": 1,
       "message": "\u0027of the tangent space\u0027",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a3b420a_022e10f8",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T23:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1299b794_a1015390",
       "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -137,6 +245,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0369496_963e6cc2",
+        "filename": "internal/ceres/gradient_problem.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T23:58:19Z",
+      "side": 1,
+      "message": "because it is a bug.",
+      "parentUuid": "a8b4660b_a3cfd547",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99847187_a08495cd",
@@ -150,6 +276,24 @@
       "writtenOn": "2022-01-18T23:25:15Z",
       "side": 1,
       "message": "Why is this TangentSize() and not AmbientSize() as it was before with GlobalSize()?",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48277b12_9e517fdd",
+        "filename": "internal/ceres/gradient_problem.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T23:58:19Z",
+      "side": 1,
+      "message": "Done\n\nI need to add better tests for this part of the solver :/",
+      "parentUuid": "99847187_a08495cd",
       "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -173,6 +317,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e27f93c9_0ef43182",
+        "filename": "internal/ceres/gradient_problem_test.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T23:58:19Z",
+      "side": 1,
+      "message": "I agree, I will work on adding better tests here.",
+      "parentUuid": "8277cb30_fc81c05e",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0e568b7e_477ed2e9",
         "filename": "internal/ceres/manifold_adapter.h",
         "patchSetId": 13
@@ -184,6 +346,24 @@
       "writtenOn": "2022-01-18T23:25:15Z",
       "side": 1,
       "message": "Perhaps a CHECK_NOTNULL(local_parameterisation) here ?",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4559b603_6b949977",
+        "filename": "internal/ceres/manifold_adapter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T23:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e568b7e_477ed2e9",
       "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
