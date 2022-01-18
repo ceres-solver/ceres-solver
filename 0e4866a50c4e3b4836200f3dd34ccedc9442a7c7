@@ -16,6 +16,176 @@
       "message": "I have updated the comments in problem_impl and clarified the semantics during the transition. I have added more tests to line up with the semantics that are claimed. PTAL",
       "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63a19812_d9398f66",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-18T23:25:15Z",
+      "side": 1,
+      "message": "Maybe \u0027CHECK() failure\u0027 would be better than \u0027crash\u0027 here?  Just to emphasise that this is intentional rather than as a result of some UB",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a9b0a3e_fb0c09f3",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-18T23:25:15Z",
+      "side": 1,
+      "message": "Same point about use of \u0027crash\u0027 as above",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f978099_36e24306",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-18T23:25:15Z",
+      "side": 1,
+      "message": "Double // prefix",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0303287f_66bf40e3",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-18T23:25:15Z",
+      "side": 1,
+      "message": "\u0027will cause any\u0027 or change second line to \u0027object being replaced with the manifold\u0027",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cef52325_f0a13d75",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-18T23:25:15Z",
+      "side": 1,
+      "message": "\u0027of the tangent space\u0027",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1299b794_a1015390",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-18T23:25:15Z",
+      "side": 1,
+      "message": "\u0027of the tangent space\u0027",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8b4660b_a3cfd547",
+        "filename": "internal/ceres/gradient_problem.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-18T23:25:15Z",
+      "side": 1,
+      "message": "Why is this TangentSize() and not AmbientSize() as it was before with GlobalSize()?",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99847187_a08495cd",
+        "filename": "internal/ceres/gradient_problem.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-18T23:25:15Z",
+      "side": 1,
+      "message": "Why is this TangentSize() and not AmbientSize() as it was before with GlobalSize()?",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8277cb30_fc81c05e",
+        "filename": "internal/ceres/gradient_problem_test.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-18T23:25:15Z",
+      "side": 1,
+      "message": "I *think* these tests didn\u0027t catch the issue with Global -\u003e Tangent as they are all of size 1 here, perhaps we should have a manifold where that is not the case as well",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e568b7e_477ed2e9",
+        "filename": "internal/ceres/manifold_adapter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-18T23:25:15Z",
+      "side": 1,
+      "message": "Perhaps a CHECK_NOTNULL(local_parameterisation) here ?",
+      "revId": "0e4866a50c4e3b4836200f3dd34ccedc9442a7c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
