@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "094ddcf9_4671ee54",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "oops this was a testing snafu, I did not mean to make this change. I was debugging a c++17 issue with jets.",
+      "parentUuid": "4ed5005f_c4315892",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "34e46cb7_8eac2ea2",
@@ -48,6 +66,24 @@
       "writtenOn": "2022-01-17T20:32:10Z",
       "side": 1,
       "message": "I would update this comment to provide user feedback in the CMake GUI when configuring if they try to set it to something else",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22962d93_522c2184",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "ignore this file, this was a mistake.",
+      "parentUuid": "34e46cb7_8eac2ea2",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -86,6 +122,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fb3be73_683c9dc6",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "The dimension of the manifold is the same as the dimension of the tangent space.",
+      "parentUuid": "b1a7f7a3_f13a1b81",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d9b7caf_be6851e1",
@@ -103,6 +157,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc4af57e_fd0831d0",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d9b7caf_be6851e1",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59d03431_a48cd85f",
@@ -116,6 +188,24 @@
       "writtenOn": "2022-01-17T20:32:10Z",
       "side": 1,
       "message": "Nit, but perhaps inlining this to return NumTangentParameters() would save the need for a comment about why both exist (when they are the same)?",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f929f81_0b9fb7f9",
+        "filename": "include/ceres/gradient_problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d03431_a48cd85f",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -139,6 +229,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a892034_8c79cd12",
+        "filename": "include/ceres/gradient_problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "IMO we should keep it this way rather than doing more gymnastics. I had not updated the comments in this header, I am adding copious documentation now.\n\nWill add more documentation once I start adding the deprecated tag in the next round.",
+      "parentUuid": "8c15d404_16b6e346",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be6e79f1_8714fd24",
         "filename": "include/ceres/problem.h",
         "patchSetId": 12
@@ -150,6 +258,42 @@
       "writtenOn": "2022-01-15T00:55:33Z",
       "side": 1,
       "message": "nit: Please remove extra space after period. I bet it\u0027s an editor setting to avoid this.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "799f8d89_3bca6900",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be6e79f1_8714fd24",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b481a01_cc4bd18c",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be6e79f1_8714fd24",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -173,6 +317,42 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "64ac848b_b09b96de",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "updated. ptal",
+      "parentUuid": "ff5d27b6_dc2eb173",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a46a47a1_1c35ef89",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff5d27b6_dc2eb173",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "943706d9_67df6586",
         "filename": "include/ceres/problem.h",
         "patchSetId": 12
@@ -184,6 +364,42 @@
       "writtenOn": "2022-01-15T00:55:33Z",
       "side": 1,
       "message": "Nit: double space.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1397618_9de267a3",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "943706d9_67df6586",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a60200ad_127311aa",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "943706d9_67df6586",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -207,6 +423,42 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ec62979a_fdf14154",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "I think we should keep this language since this is the most common case. People who use Problem::Options are few and far between. I added an extra sentence.",
+      "parentUuid": "2f5e21f3_e8812901",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21299be7_8fafa714",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "updated docs/comment ptal.",
+      "parentUuid": "2f5e21f3_e8812901",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c8d1619_a47ae38f",
         "filename": "include/ceres/problem.h",
         "patchSetId": 12
@@ -218,6 +470,24 @@
       "writtenOn": "2022-01-17T20:32:10Z",
       "side": 1,
       "message": "What happens if I invoke this when a manifold already exists?",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcc70666_db33e92e",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "I have updated comment, ptal.",
+      "parentUuid": "5c8d1619_a47ae38f",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -241,6 +511,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "91616747_8796ef64",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "updated comment.",
+      "parentUuid": "35ff86d3_952ad257",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1f1736cf_313e2926",
         "filename": "include/ceres/problem.h",
         "patchSetId": 12
@@ -252,6 +540,24 @@
       "writtenOn": "2022-01-17T20:32:10Z",
       "side": 1,
       "message": "What happens if I invoke this when a local parameterisation already exists?",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcc2fd1d_eaf51d24",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "I have updated docs here and elsewhere, Please take a look.",
+      "parentUuid": "1f1736cf_313e2926",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -275,6 +581,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "feeda36b_c5d1d202",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "I have added copious comments above, please take a look.",
+      "parentUuid": "6e40d979_f9b8014d",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "98212de7_f52212d3",
         "filename": "internal/ceres/gradient_checker.cc",
         "patchSetId": 12
@@ -292,6 +616,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8001a2d1_cdbbd23c",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "so GradientChecker::ProbeResult contains the objects local_jacobians.. \nquestion is should I change that to tangent_jacobians or plus_jacobians too?",
+      "parentUuid": "98212de7_f52212d3",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "995e8177_7f8c5ce9",
         "filename": "internal/ceres/gradient_checker.cc",
         "patchSetId": 12
@@ -303,6 +645,24 @@
       "writtenOn": "2022-01-15T00:55:33Z",
       "side": 1,
       "message": "Please add block comments to each of the 3 parts of this function; something to the effect of wrapping the legacy local params with manifolds.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bea91a66_65fb3674",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "995e8177_7f8c5ce9",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -326,6 +686,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bb83a0b5_b44af445",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "sorry that was a snafu in the cmake file, still c++14.. we should make the c++17 decision independent of this CL and then take a pass over the code one file at a time.",
+      "parentUuid": "6a3bc999_b4c44bc5",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "de16eb1a_a0c86338",
         "filename": "internal/ceres/gradient_checker.cc",
         "patchSetId": 12
@@ -337,6 +715,24 @@
       "writtenOn": "2022-01-15T00:55:33Z",
       "side": 1,
       "message": "I suggest instead:\n\n  for (int32_t parameter_block_size : function-\u003eparameter_block_sizes()) {\n    finite_diff_cost_function-\u003eAddParameterBlock(parameter_block_size);\n  }\n  \nand dropping the local vector reference.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cca4ea93_1357f25d",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de16eb1a_a0c86338",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -358,6 +754,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81acc679_7951174b",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac855337_2411116c",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d438a5b5_fdd4c590",
@@ -371,6 +785,24 @@
       "writtenOn": "2022-01-17T20:32:10Z",
       "side": 1,
       "message": "Should we not CHECK_NOTNULL() the function as well ?",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "965c044a_6fc9036f",
+        "filename": "internal/ceres/gradient_problem.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d438a5b5_fdd4c590",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -392,6 +824,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fff101c4_717184a0",
+        "filename": "internal/ceres/gradient_problem.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b80362a_73c38829",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e488cb2c_da868920",
@@ -405,6 +855,24 @@
       "writtenOn": "2022-01-17T20:32:10Z",
       "side": 1,
       "message": "Consider an explicit comment that this *never* owns the parameterisation, unlike the other objects with similar relations which use the OWNERSHIP enum",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2084a995_1b732941",
+        "filename": "internal/ceres/manifold_adapter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e488cb2c_da868920",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -426,6 +894,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fba4667c_924ae96c",
+        "filename": "internal/ceres/manifold_adapter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deb9b5c3_61ebe1b5",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a29f2a5c_3110ac43",
@@ -443,6 +929,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd1a9140_414d3f16",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a29f2a5c_3110ac43",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f4e190a_febe903f",
@@ -456,6 +960,24 @@
       "writtenOn": "2022-01-17T20:32:10Z",
       "side": 1,
       "message": "Shouldn\u0027t we reset plus_jacobian_ here to nullptr as well?",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d820fb3_719e43b5",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f4e190a_febe903f",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -496,6 +1018,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "52e21d39_9cad042f",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "It is. Notice it is GE not GT. so zero is allowed.",
+      "parentUuid": "441fe11e_c3c1874c",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ec5fe9c1_00a457e9",
         "filename": "internal/ceres/parameter_block_test.cc",
         "patchSetId": 12
@@ -507,6 +1047,24 @@
       "writtenOn": "2022-01-17T20:32:10Z",
       "side": 1,
       "message": "Intended ?",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6037991_f1417205",
+        "filename": "internal/ceres/parameter_block_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec5fe9c1_00a457e9",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -530,6 +1088,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e3ccd702_35c8df41",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Technically the whole function will go away not just this line. But I have completely re-worked this function so PTAL.",
+      "parentUuid": "e6e70386_6483951a",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "599361c8_2c52483c",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 12
@@ -541,6 +1117,24 @@
       "writtenOn": "2022-01-15T00:55:33Z",
       "side": 1,
       "message": "local parameterization --\u003e manifold.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4e22039_99ae5344",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "599361c8_2c52483c",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -562,6 +1156,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65c74c23_da80bf7c",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e93af1f1_caaac9e2",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "075e27f1_f5e7cc13",
@@ -575,6 +1187,24 @@
       "writtenOn": "2022-01-15T00:55:33Z",
       "side": 1,
       "message": "Is ordered traversal necessary? I suggest an unordered_map instead since maps are space inefficient.",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "077ad208_41182ebb",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "075e27f1_f5e7cc13",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
