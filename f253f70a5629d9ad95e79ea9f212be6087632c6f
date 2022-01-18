@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b6b8083_597184c9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "987323de_0f84a377",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ed5005f_c4315892",
@@ -101,6 +119,24 @@
       "writtenOn": "2022-01-17T20:32:10Z",
       "side": 1,
       "message": "Remove 14 from this list if it is no longer an option",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "533fb42e_2c4bb707",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:11:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "989ab609_bf9ff31b",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -241,6 +277,24 @@
       "side": 1,
       "message": "IMO we should keep it this way rather than doing more gymnastics. I had not updated the comments in this header, I am adding copious documentation now.\n\nWill add more documentation once I start adding the deprecated tag in the next round.",
       "parentUuid": "8c15d404_16b6e346",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0c22777_fc6d9f67",
+        "filename": "include/ceres/gradient_problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a892034_8c79cd12",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -457,6 +511,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4071184e_e13303f0",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec62979a_fdf14154",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c8d1619_a47ae38f",
@@ -488,6 +560,24 @@
       "side": 1,
       "message": "I have updated comment, ptal.",
       "parentUuid": "5c8d1619_a47ae38f",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "205db928_6d534f15",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcc70666_db33e92e",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -527,6 +617,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53c0edd5_f7be2390",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91616747_8796ef64",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f1736cf_313e2926",
@@ -558,6 +666,24 @@
       "side": 1,
       "message": "I have updated docs here and elsewhere, Please take a look.",
       "parentUuid": "1f1736cf_313e2926",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a0033d6_2fae4779",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcc2fd1d_eaf51d24",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -597,6 +723,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "663912c7_6e607a08",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feeda36b_c5d1d202",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98212de7_f52212d3",
@@ -628,6 +772,24 @@
       "side": 1,
       "message": "so GradientChecker::ProbeResult contains the objects local_jacobians.. \nquestion is should I change that to tangent_jacobians or plus_jacobians too?",
       "parentUuid": "98212de7_f52212d3",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01f9f9cc_48f1550e",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8001a2d1_cdbbd23c",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -698,6 +860,24 @@
       "side": 1,
       "message": "sorry that was a snafu in the cmake file, still c++14.. we should make the c++17 decision independent of this CL and then take a pass over the code one file at a time.",
       "parentUuid": "6a3bc999_b4c44bc5",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f91e35d9_e458e7f1",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb83a0b5_b44af445",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -999,6 +1179,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98e2724c_806d71dc",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b408930_c7560d56",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "441fe11e_c3c1874c",
@@ -1030,6 +1228,24 @@
       "side": 1,
       "message": "It is. Notice it is GE not GT. so zero is allowed.",
       "parentUuid": "441fe11e_c3c1874c",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0af26459_b6f90270",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52e21d39_9cad042f",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -1100,6 +1316,24 @@
       "side": 1,
       "message": "Technically the whole function will go away not just this line. But I have completely re-worked this function so PTAL.",
       "parentUuid": "e6e70386_6483951a",
+      "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d5dcd9e_dfbbc00e",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-18T00:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ccd702_35c8df41",
       "revId": "f253f70a5629d9ad95e79ea9f212be6087632c6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
