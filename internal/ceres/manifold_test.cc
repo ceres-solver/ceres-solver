@@ -37,6 +37,7 @@
 #include "Eigen/Geometry"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/manifold_test_utils.h"
 #include "ceres/numeric_diff_options.h"
 #include "ceres/rotation.h"
 #include "ceres/types.h"
@@ -46,286 +47,8 @@
 namespace ceres {
 namespace internal {
 
-// TODO(sameeragarwal): Once these helpers and matchers converge, it would be
-// helpful to expose them as testing utilities which can be used by the user
-// when implementing their own manifold objects.
-
-// The tests in this file are in two parts.
-//
-//  1. Manifold::Plus is doing what is expected. This requires per manifold
-//     logic.
-//  2. The other methods of the manifold have mathematical properties that
-//     make it compatible with Plus, as described in
-//     https://arxiv.org/pdf/1107.1119.pdf. These tests are implemented using
-//     generic matchers defined below which can all be called by the macro
-//     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y)
-
 constexpr int kNumTrials = 1000;
-constexpr double kEpsilon = 1e-9;
-
-// Checks that the invariant Plus(x, 0) == x holds.
-MATCHER_P(XPlusZeroIsXAt, x, "") {
-  const int ambient_size = arg.AmbientSize();
-  const int tangent_size = arg.TangentSize();
-
-  Vector actual = Vector::Zero(ambient_size);
-  Vector zero = Vector::Zero(tangent_size);
-  EXPECT_TRUE(arg.Plus(x.data(), zero.data(), actual.data()));
-  const double n = (actual - x).norm();
-  const double d = x.norm();
-  const double diffnorm = (d == 0.0) ? n : (n / d);
-  if (diffnorm > kEpsilon) {
-    *result_listener << "\nexpected (x): " << x.transpose()
-                     << "\nactual: " << actual.transpose()
-                     << "\ndiffnorm: " << diffnorm;
-    return false;
-  }
-  return true;
-}
-
-// Checks that the invariant Minus(x, x) == 0 holds.
-MATCHER_P(XMinusXIsZeroAt, x, "") {
-  const int tangent_size = arg.TangentSize();
-  Vector actual = Vector::Zero(tangent_size);
-  EXPECT_TRUE(arg.Minus(x.data(), x.data(), actual.data()));
-  const double diffnorm = actual.norm();
-  if (diffnorm > kEpsilon) {
-    *result_listener << "\nx: " << x.transpose()  //
-                     << "\nexpected: 0 0 0"
-                     << "\nactual: " << actual.transpose()
-                     << "\ndiffnorm: " << diffnorm;
-    return false;
-  }
-  return true;
-}
-
-// Helper struct to curry Plus(x, .) so that it can be numerically
-// differentiated.
-struct PlusFunctor {
-  PlusFunctor(const Manifold& manifold, const double* x)
-      : manifold(manifold), x(x) {}
-  bool operator()(double const* const* parameters, double* x_plus_delta) const {
-    return manifold.Plus(x, parameters[0], x_plus_delta);
-  }
-
-  const Manifold& manifold;
-  const double* x;
-};
-
-// Checks that the output of PlusJacobian matches the one obtained by
-// numerically evaluating D_2 Plus(x,0).
-MATCHER_P(HasCorrectPlusJacobianAt, x, "") {
-  const int ambient_size = arg.AmbientSize();
-  const int tangent_size = arg.TangentSize();
-
-  NumericDiffOptions options;
-  options.ridders_relative_initial_step_size = 1e-4;
-
-  DynamicNumericDiffCostFunction<PlusFunctor, RIDDERS> cost_function(
-      new PlusFunctor(arg, x.data()), TAKE_OWNERSHIP, options);
-  cost_function.AddParameterBlock(tangent_size);
-  cost_function.SetNumResiduals(ambient_size);
-
-  Vector zero = Vector::Zero(tangent_size);
-  double* parameters[1] = {zero.data()};
-
-  Vector x_plus_zero = Vector::Zero(ambient_size);
-  Matrix expected = Matrix::Zero(ambient_size, tangent_size);
-  double* jacobians[1] = {expected.data()};
-
-  EXPECT_TRUE(
-      cost_function.Evaluate(parameters, x_plus_zero.data(), jacobians));
-
-  Matrix actual = Matrix::Random(ambient_size, tangent_size);
-  EXPECT_TRUE(arg.PlusJacobian(x.data(), actual.data()));
-
-  const double n = (actual - expected).norm();
-  const double d = expected.norm();
-  const double diffnorm = (d == 0.0) ? n : n / d;
-  if (diffnorm > kEpsilon) {
-    *result_listener << "\nx: " << x.transpose() << "\nexpected: \n"
-                     << expected << "\nactual:\n"
-                     << actual << "\ndiff:\n"
-                     << expected - actual << "\ndiffnorm : " << diffnorm;
-    return false;
-  }
-  return true;
-}
-
-// Checks that the invariant Minus(Plus(x, delta), x) == delta holds.
-MATCHER_P2(MinusPlusIsIdentityAt, x, delta, "") {
-  const int ambient_size = arg.AmbientSize();
-  const int tangent_size = arg.TangentSize();
-  Vector x_plus_delta = Vector::Zero(ambient_size);
-  EXPECT_TRUE(arg.Plus(x.data(), delta.data(), x_plus_delta.data()));
-  Vector actual = Vector::Zero(tangent_size);
-  EXPECT_TRUE(arg.Minus(x_plus_delta.data(), x.data(), actual.data()));
-
-  const double n = (actual - delta).norm();
-  const double d = delta.norm();
-  const double diffnorm = (d == 0.0) ? n : (n / d);
-  if (diffnorm > kEpsilon) {
-    *result_listener << "\nx: " << x.transpose()
-                     << "\nexpected: " << delta.transpose()
-                     << "\nactual:" << actual.transpose()
-                     << "\ndiff:" << (delta - actual).transpose()
-                     << "\ndiffnorm: " << diffnorm;
-    return false;
-  }
-  return true;
-}
-
-// Checks that the invariant Plus(Minus(y, x), x) == y holds.
-MATCHER_P2(PlusMinusIsIdentityAt, x, y, "") {
-  const int ambient_size = arg.AmbientSize();
-  const int tangent_size = arg.TangentSize();
-
-  Vector y_minus_x = Vector::Zero(tangent_size);
-  EXPECT_TRUE(arg.Minus(y.data(), x.data(), y_minus_x.data()));
-
-  Vector actual = Vector::Zero(ambient_size);
-  EXPECT_TRUE(arg.Plus(x.data(), y_minus_x.data(), actual.data()));
-
-  const double n = (actual - y).norm();
-  const double d = y.norm();
-  const double diffnorm = (d == 0.0) ? n : (n / d);
-  if (diffnorm > kEpsilon) {
-    *result_listener << "\nx: " << x.transpose()
-                     << "\nexpected: " << y.transpose()
-                     << "\nactual:" << actual.transpose()
-                     << "\ndiff:" << (y - actual).transpose()
-                     << "\ndiffnorm: " << diffnorm;
-    return false;
-  }
-  return true;
-}
-
-// Helper struct to curry Minus(., x) so that it can be numerically
-// differentiated.
-struct MinusFunctor {
-  MinusFunctor(const Manifold& manifold, const double* x)
-      : manifold(manifold), x(x) {}
-  bool operator()(double const* const* parameters, double* y_minus_x) const {
-    return manifold.Minus(parameters[0], x, y_minus_x);
-  }
-
-  const Manifold& manifold;
-  const double* x;
-};
-
-// Checks that the output of MinusJacobian matches the one obtained by
-// numerically evaluating D_1 Minus(x,x).
-MATCHER_P(HasCorrectMinusJacobianAt, x, "") {
-  const int ambient_size = arg.AmbientSize();
-  const int tangent_size = arg.TangentSize();
-
-  Vector y = x;
-  Vector y_minus_x = Vector::Zero(tangent_size);
-
-  NumericDiffOptions options;
-  options.ridders_relative_initial_step_size = 1e-4;
-  DynamicNumericDiffCostFunction<MinusFunctor, RIDDERS> cost_function(
-      new MinusFunctor(arg, x.data()), TAKE_OWNERSHIP, options);
-  cost_function.AddParameterBlock(ambient_size);
-  cost_function.SetNumResiduals(tangent_size);
-
-  double* parameters[1] = {y.data()};
-
-  Matrix expected = Matrix::Zero(tangent_size, ambient_size);
-  double* jacobians[1] = {expected.data()};
-
-  EXPECT_TRUE(cost_function.Evaluate(parameters, y_minus_x.data(), jacobians));
-
-  Matrix actual = Matrix::Random(tangent_size, ambient_size);
-  EXPECT_TRUE(arg.MinusJacobian(x.data(), actual.data()));
-
-  const double n = (actual - expected).norm();
-  const double d = expected.norm();
-  const double diffnorm = (d == 0.0) ? n : (n / d);
-  if (diffnorm > kEpsilon) {
-    *result_listener << "\nx: " << x.transpose() << "\nexpected: \n"
-                     << expected << "\nactual:\n"
-                     << actual << "\ndiff:\n"
-                     << expected - actual << "\ndiffnorm: " << diffnorm;
-    return false;
-  }
-  return true;
-}
-
-// Checks that D_delta Minus(Plus(x, delta), x) at delta = 0 is an identity
-// matrix.
-MATCHER_P(MinusPlusJacobianIsIdentityAt, x, "") {
-  const int ambient_size = arg.AmbientSize();
-  const int tangent_size = arg.TangentSize();
-
-  Matrix plus_jacobian(ambient_size, tangent_size);
-  EXPECT_TRUE(arg.PlusJacobian(x.data(), plus_jacobian.data()));
-  Matrix minus_jacobian(tangent_size, ambient_size);
-  EXPECT_TRUE(arg.MinusJacobian(x.data(), minus_jacobian.data()));
-
-  const Matrix actual = minus_jacobian * plus_jacobian;
-  const Matrix expected = Matrix::Identity(tangent_size, tangent_size);
-
-  const double n = (actual - expected).norm();
-  const double d = expected.norm();
-  const double diffnorm = n / d;
-  if (diffnorm > kEpsilon) {
-    *result_listener << "\nx: " << x.transpose() << "\nexpected: \n"
-                     << expected << "\nactual:\n"
-                     << actual << "\ndiff:\n"
-                     << expected - actual << "\ndiffnorm: " << diffnorm;
-
-    return false;
-  }
-  return true;
-}
-
-// Verify that the output of RightMultiplyByPlusJacobian is ambient_matrix *
-// plus_jacobian.
-MATCHER_P(HasCorrectRightMultiplyByPlusJacobianAt, x, "") {
-  const int ambient_size = arg.AmbientSize();
-  const int tangent_size = arg.TangentSize();
-
-  constexpr int kMinNumRows = 0;
-  constexpr int kMaxNumRows = 3;
-  for (int num_rows = kMinNumRows; num_rows <= kMaxNumRows; ++num_rows) {
-    Matrix plus_jacobian = Matrix::Random(ambient_size, tangent_size);
-    EXPECT_TRUE(arg.PlusJacobian(x.data(), plus_jacobian.data()));
-
-    Matrix ambient_matrix = Matrix::Random(num_rows, ambient_size);
-    Matrix expected = ambient_matrix * plus_jacobian;
-
-    Matrix actual = Matrix::Random(num_rows, tangent_size);
-    EXPECT_TRUE(arg.RightMultiplyByPlusJacobian(
-        x.data(), num_rows, ambient_matrix.data(), actual.data()));
-    const double n = (actual - expected).norm();
-    const double d = expected.norm();
-    const double diffnorm = (d == 0.0) ? n : (n / d);
-    if (diffnorm > kEpsilon) {
-      *result_listener << "\nx: " << x.transpose() << "\nambient_matrix : \n"
-                       << ambient_matrix << "\nplus_jacobian : \n"
-                       << plus_jacobian << "\nexpected: \n"
-                       << expected << "\nactual:\n"
-                       << actual << "\ndiff:\n"
-                       << expected - actual << "\ndiffnorm : " << diffnorm;
-      return false;
-    }
-  }
-  return true;
-}
-
-#define EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y) \
-  Vector zero_tangent = Vector::Zero(manifold.TangentSize());       \
-  EXPECT_THAT(manifold, XPlusZeroIsXAt(x));                         \
-  EXPECT_THAT(manifold, XMinusXIsZeroAt(x));                        \
-  EXPECT_THAT(manifold, MinusPlusIsIdentityAt(x, delta));           \
-  EXPECT_THAT(manifold, MinusPlusIsIdentityAt(x, zero_tangent));    \
-  EXPECT_THAT(manifold, PlusMinusIsIdentityAt(x, x));               \
-  EXPECT_THAT(manifold, PlusMinusIsIdentityAt(x, y));               \
-  EXPECT_THAT(manifold, HasCorrectPlusJacobianAt(x));               \
-  EXPECT_THAT(manifold, HasCorrectMinusJacobianAt(x));              \
-  EXPECT_THAT(manifold, MinusPlusJacobianIsIdentityAt(x));          \
-  EXPECT_THAT(manifold, HasCorrectRightMultiplyByPlusJacobianAt(x));
+constexpr double kTolerance = 1e-9;
 
 TEST(EuclideanManifold, NormalFunctionTest) {
   EuclideanManifold manifold(3);
@@ -340,10 +63,11 @@ TEST(EuclideanManifold, NormalFunctionTest) {
     Vector x_plus_delta = Vector::Zero(manifold.AmbientSize());
 
     manifold.Plus(x.data(), delta.data(), x_plus_delta.data());
-    EXPECT_NEAR(
-        (x_plus_delta - x - delta).norm() / (x + delta).norm(), 0.0, kEpsilon);
+    EXPECT_NEAR((x_plus_delta - x - delta).norm() / (x + delta).norm(),
+                0.0,
+                kTolerance);
 
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y);
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
@@ -356,9 +80,10 @@ TEST(SubsetManifold, EmptyConstantParameters) {
     Vector x_plus_delta = Vector::Zero(3);
 
     manifold.Plus(x.data(), delta.data(), x_plus_delta.data());
-    EXPECT_NEAR(
-        (x_plus_delta - x - delta).norm() / (x + delta).norm(), 0.0, kEpsilon);
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y);
+    EXPECT_NEAR((x_plus_delta - x - delta).norm() / (x + delta).norm(),
+                0.0,
+                kTolerance);
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
@@ -403,7 +128,7 @@ TEST(SubsetManifold, NormalFunctionTest) {
       }
 
       EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(
-          manifold_with_ith_parameter_constant, x, delta, y);
+          manifold_with_ith_parameter_constant, x, delta, y, kTolerance);
     }
   }
 }
@@ -497,7 +222,8 @@ TEST(ProductManifold, NormalFunctionTest) {
       EXPECT_EQ(x_plus_delta[i], x_plus_delta_expected[i]);
     }
 
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, x_plus_delta);
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(
+        manifold, x, delta, x_plus_delta, kTolerance);
   }
 }
 
@@ -521,7 +247,7 @@ TEST(ProductManifold, ZeroTangentSizeAndEuclidean) {
     EXPECT_EQ(x_plus_delta[1], x[1] + delta[0]);
     EXPECT_EQ(x_plus_delta[2], x[2] + delta[1]);
 
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y);
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
@@ -543,7 +269,7 @@ TEST(ProductManifold, EuclideanAndZeroTangentSize) {
     EXPECT_EQ(x_plus_delta[0], x[0] + delta[0]);
     EXPECT_EQ(x_plus_delta[1], x[1] + delta[1]);
     EXPECT_EQ(x_plus_delta[2], x[2]);
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y);
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
@@ -576,7 +302,8 @@ TEST(Quaternion, PlusPiBy2) {
             << "\n expected the " << j << "th element of x_plus_delta to be 0.";
       }
     }
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, x_plus_delta);
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(
+        manifold, x, delta, x_plus_delta, kTolerance);
   }
 }
 
@@ -598,7 +325,7 @@ MATCHER_P2(QuaternionPlusIsCorrectAt, x, delta, "") {
   const double n = (actual - expected).norm();
   const double d = expected.norm();
   const double diffnorm = n / d;
-  if (diffnorm > kEpsilon) {
+  if (diffnorm > kTolerance) {
     *result_listener << "\nx: " << x.transpose()
                      << "\ndelta: " << delta.transpose()
                      << "\nexpected: " << expected.transpose()
@@ -623,7 +350,7 @@ TEST(Quaternion, GenericDelta) {
     const Vector y = RandomQuaternion();
     Vector delta = Vector::Random(3);
     EXPECT_THAT(manifold, QuaternionPlusIsCorrectAt(x, delta));
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y);
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
@@ -636,7 +363,7 @@ TEST(Quaternion, SmallDelta) {
     delta.normalize();
     delta *= 1e-6;
     EXPECT_THAT(manifold, QuaternionPlusIsCorrectAt(x, delta));
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y);
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
@@ -649,7 +376,7 @@ TEST(Quaternion, DeltaJustBelowPi) {
     delta.normalize();
     delta *= (M_PI - 1e-6);
     EXPECT_THAT(manifold, QuaternionPlusIsCorrectAt(x, delta));
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y);
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
@@ -675,7 +402,7 @@ MATCHER_P2(EigenQuaternionPlusIsCorrectAt, x, delta, "") {
   const double n = (actual_eigen_q.coeffs() - expected.coeffs()).norm();
   const double d = expected.norm();
   const double diffnorm = n / d;
-  if (diffnorm > kEpsilon) {
+  if (diffnorm > kTolerance) {
     *result_listener
         << "\nx: " << x.transpose() << "\ndelta: " << delta.transpose()
         << "\nexpected: " << expected.coeffs().transpose()
@@ -694,7 +421,7 @@ TEST(EigenQuaternion, GenericDelta) {
     const Vector y = RandomQuaternion();
     Vector delta = Vector::Random(3);
     EXPECT_THAT(manifold, EigenQuaternionPlusIsCorrectAt(x, delta));
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y);
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
@@ -707,7 +434,7 @@ TEST(EigenQuaternion, SmallDelta) {
     delta.normalize();
     delta *= 1e-6;
     EXPECT_THAT(manifold, EigenQuaternionPlusIsCorrectAt(x, delta));
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y);
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
@@ -720,7 +447,7 @@ TEST(EigenQuaternion, DeltaJustBelowPi) {
     delta.normalize();
     delta *= (M_PI - 1e-6);
     EXPECT_THAT(manifold, EigenQuaternionPlusIsCorrectAt(x, delta));
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y);
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
