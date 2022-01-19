@@ -66,7 +66,7 @@ class BALProblem {
 
   bool LoadFile(const char* filename) {
     FILE* fptr = fopen(filename, "r");
-    if (fptr == NULL) {
+    if (fptr == nullptr) {
       return false;
     };
 
@@ -198,7 +198,7 @@ int main(int argc, char** argv) {
     ceres::CostFunction* cost_function = SnavelyReprojectionError::Create(
         observations[2 * i + 0], observations[2 * i + 1]);
     problem.AddResidualBlock(cost_function,
-                             NULL /* squared loss */,
+                             nullptr /* squared loss */,
                              bal_problem.mutable_camera_for_observation(i),
                              bal_problem.mutable_point_for_observation(i));
   }

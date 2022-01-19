@@ -73,7 +73,7 @@ double Median(std::vector<double>* data) {
 BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
   FILE* fptr = fopen(filename.c_str(), "r");
 
-  if (fptr == NULL) {
+  if (fptr == nullptr) {
     LOG(FATAL) << "Error: unable to open file " << filename;
     return;
   };
@@ -137,7 +137,7 @@ BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
 void BALProblem::WriteToFile(const std::string& filename) const {
   FILE* fptr = fopen(filename.c_str(), "w");
 
-  if (fptr == NULL) {
+  if (fptr == nullptr) {
     LOG(FATAL) << "Error: unable to open file " << filename;
     return;
   };

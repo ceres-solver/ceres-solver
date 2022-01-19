@@ -145,7 +145,7 @@ int main(int argc, char** argv) {
     problem.AddResidualBlock(
         new AutoDiffCostFunction<ExponentialResidual, 1, 1, 1>(
             new ExponentialResidual(data[2 * i], data[2 * i + 1])),
-        NULL,
+        nullptr,
         &m,
         &c);
   }

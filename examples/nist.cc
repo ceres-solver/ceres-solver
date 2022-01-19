@@ -523,7 +523,7 @@ CostFunction* CreateCostFunction(const Matrix& predictor,
                                  const Matrix& response,
                                  const int num_observations) {
   Model* model = new Model(predictor.data(), response.data(), num_observations);
-  ceres::CostFunction* cost_function = NULL;
+  ceres::CostFunction* cost_function = nullptr;
   if (CERES_GET_FLAG(FLAGS_use_numeric_diff)) {
     ceres::NumericDiffOptions options;
     SetNumericDiffOptions(&options);
@@ -603,7 +603,8 @@ int RegressionDriver(const string& filename) {
 
     if (!CERES_GET_FLAG(FLAGS_use_tiny_solver)) {
       ceres::Problem problem;
-      problem.AddResidualBlock(cost_function, NULL, initial_parameters.data());
+      problem.AddResidualBlock(
+          cost_function, nullptr, initial_parameters.data());
       ceres::Solver::Summary summary;
       ceres::Solver::Options options;
       SetMinimizerOptions(&options);
