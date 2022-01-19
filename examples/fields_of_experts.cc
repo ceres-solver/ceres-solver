@@ -60,9 +60,9 @@ bool FieldsOfExpertsCost::Evaluate(double const* const* parameters,
     residuals[0] += filter_[i] * parameters[i][0];
   }
 
-  if (jacobians != NULL) {
+  if (jacobians != nullptr) {
     for (int i = 0; i < num_variables; ++i) {
-      if (jacobians[i] != NULL) {
+      if (jacobians[i] != nullptr) {
         jacobians[i][0] = filter_[i];
       }
     }

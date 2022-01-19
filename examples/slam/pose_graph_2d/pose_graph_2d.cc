@@ -39,7 +39,7 @@
 #include <string>
 #include <vector>
 
-#include "angle_local_parameterization.h"
+#include "angle_manifold.h"
 #include "ceres/ceres.h"
 #include "common/read_g2o.h"
 #include "gflags/gflags.h"
@@ -58,16 +58,15 @@ namespace {
 void BuildOptimizationProblem(const std::vector<Constraint2d>& constraints,
                               std::map<int, Pose2d>* poses,
                               ceres::Problem* problem) {
-  CHECK(poses != NULL);
-  CHECK(problem != NULL);
+  CHECK(poses != nullptr);
+  CHECK(problem != nullptr);
   if (constraints.empty()) {
     LOG(INFO) << "No constraints, no problem to optimize.";
     return;
   }
 
-  ceres::LossFunction* loss_function = NULL;
-  ceres::LocalParameterization* angle_local_parameterization =
-      AngleLocalParameterization::Create();
+  ceres::LossFunction* loss_function = nullptr;
+  ceres::Manifold* angle_manifold = AngleManifold::Create();
 
   for (std::vector<Constraint2d>::const_iterator constraints_iter =
            constraints.begin();
@@ -98,10 +97,8 @@ void BuildOptimizationProblem(const std::vector<Constraint2d>& constraints,
                               &pose_end_iter->second.y,
                               &pose_end_iter->second.yaw_radians);
 
-    problem->SetParameterization(&pose_begin_iter->second.yaw_radians,
-                                 angle_local_parameterization);
-    problem->SetParameterization(&pose_end_iter->second.yaw_radians,
-                                 angle_local_parameterization);
+    problem->SetManifold(&pose_begin_iter->second.yaw_radians, angle_manifold);
+    problem->SetManifold(&pose_end_iter->second.yaw_radians, angle_manifold);
   }
 
   // The pose graph optimization problem has three DOFs that are not fully
@@ -120,7 +117,7 @@ void BuildOptimizationProblem(const std::vector<Constraint2d>& constraints,
 
 // Returns true if the solve was successful.
 bool SolveOptimizationProblem(ceres::Problem* problem) {
-  CHECK(problem != NULL);
+  CHECK(problem != nullptr);
 
   ceres::Solver::Options options;
   options.max_num_iterations = 100;

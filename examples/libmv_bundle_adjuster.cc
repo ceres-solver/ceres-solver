@@ -206,11 +206,11 @@ enum {
 EuclideanCamera* CameraForImage(vector<EuclideanCamera>* all_cameras,
                                 const int image) {
   if (image < 0 || image >= all_cameras->size()) {
-    return NULL;
+    return nullptr;
   }
   EuclideanCamera* camera = &(*all_cameras)[image];
   if (camera->image == -1) {
-    return NULL;
+    return nullptr;
   }
   return camera;
 }
@@ -218,11 +218,11 @@ EuclideanCamera* CameraForImage(vector<EuclideanCamera>* all_cameras,
 const EuclideanCamera* CameraForImage(
     const vector<EuclideanCamera>& all_cameras, const int image) {
   if (image < 0 || image >= all_cameras.size()) {
-    return NULL;
+    return nullptr;
   }
   const EuclideanCamera* camera = &all_cameras[image];
   if (camera->image == -1) {
-    return NULL;
+    return nullptr;
   }
   return camera;
 }
@@ -244,11 +244,11 @@ int MaxImage(const vector<Marker>& all_markers) {
 EuclideanPoint* PointForTrack(vector<EuclideanPoint>* all_points,
                               const int track) {
   if (track < 0 || track >= all_points->size()) {
-    return NULL;
+    return nullptr;
   }
   EuclideanPoint* point = &(*all_points)[track];
   if (point->track == -1) {
-    return NULL;
+    return nullptr;
   }
   return point;
 }
@@ -670,8 +670,8 @@ void EuclideanBundleCommonIntrinsics(const vector<Marker>& all_markers,
   vector<Vec6> all_cameras_R_t =
       PackCamerasRotationAndTranslation(all_markers, *all_cameras);
 
-  // Parameterization used to restrict camera motion for modal solvers.
-  ceres::SubsetParameterization* constant_transform_parameterization = NULL;
+  // Manifold used to restrict camera motion for modal solvers.
+  ceres::SubsetManifold* constant_transform_manifold = nullptr;
   if (bundle_constraints & BUNDLE_NO_TRANSLATION) {
     std::vector<int> constant_translation;
 
@@ -680,8 +680,8 @@ void EuclideanBundleCommonIntrinsics(const vector<Marker>& all_markers,
     constant_translation.push_back(4);
     constant_translation.push_back(5);
 
-    constant_transform_parameterization =
-        new ceres::SubsetParameterization(6, constant_translation);
+    constant_transform_manifold =
+        new ceres::SubsetManifold(6, constant_translation);
   }
 
   std::vector<OpenCVReprojectionError> errors;
@@ -696,7 +696,7 @@ void EuclideanBundleCommonIntrinsics(const vector<Marker>& all_markers,
     const Marker& marker = all_markers[i];
     EuclideanCamera* camera = CameraForImage(all_cameras, marker.image);
     EuclideanPoint* point = PointForTrack(all_points, marker.track);
-    if (camera == NULL || point == NULL) {
+    if (camera == nullptr || point == nullptr) {
       continue;
     }
 
@@ -708,7 +708,7 @@ void EuclideanBundleCommonIntrinsics(const vector<Marker>& all_markers,
     costFunctions.emplace_back(&errors.back(), ceres::DO_NOT_TAKE_OWNERSHIP);
 
     problem.AddResidualBlock(&costFunctions.back(),
-                             NULL,
+                             nullptr,
                              camera_intrinsics,
                              current_camera_R_t,
                              &point->X(0));
@@ -720,8 +720,7 @@ void EuclideanBundleCommonIntrinsics(const vector<Marker>& all_markers,
     }
 
     if (bundle_constraints & BUNDLE_NO_TRANSLATION) {
-      problem.SetParameterization(current_camera_R_t,
-                                  constant_transform_parameterization);
+      problem.SetManifold(current_camera_R_t, constant_transform_manifold);
     }
 
     num_residuals++;
@@ -760,10 +759,9 @@ void EuclideanBundleCommonIntrinsics(const vector<Marker>& all_markers,
     // Always set K3 constant, it's not used at the moment.
     constant_intrinsics.push_back(OFFSET_K3);
 
-    ceres::SubsetParameterization* subset_parameterization =
-        new ceres::SubsetParameterization(8, constant_intrinsics);
-
-    problem.SetParameterization(camera_intrinsics, subset_parameterization);
+    ceres::SubsetManifold* subset_manifold =
+        new ceres::SubsetManifold(8, constant_intrinsics);
+    problem.SetManifold(camera_intrinsics, subset_manifold);
   }
 
   // Configure the solver.
@@ -804,8 +802,11 @@ int main(int argc, char** argv) {
   bool is_image_space;
   vector<Marker> all_markers;
 
-  if (!ReadProblemFromFile(CERES_GET_FLAG(FLAGS_input), camera_intrinsics,
-                           &all_cameras, &all_points, &is_image_space,
+  if (!ReadProblemFromFile(CERES_GET_FLAG(FLAGS_input),
+                           camera_intrinsics,
+                           &all_cameras,
+                           &all_points,
+                           &is_image_space,
                            &all_markers)) {
     LOG(ERROR) << "Error reading problem file";
     return EXIT_FAILURE;
