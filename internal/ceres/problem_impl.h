@@ -143,10 +143,10 @@ class CERES_EXPORT_INTERNAL ProblemImpl {
   int NumResidualBlocks() const;
   int NumResiduals() const;
 
-  int ParameterBlockSize(const double* parameter_block) const;
-  int ParameterBlockTangentSize(const double* parameter_block) const;
+  int ParameterBlockSize(const double* values) const;
+  int ParameterBlockTangentSize(const double* values) const;
 
-  bool HasParameterBlock(const double* parameter_block) const;
+  bool HasParameterBlock(const double* values) const;
 
   void GetParameterBlocks(std::vector<double*>* parameter_blocks) const;
   void GetResidualBlocks(std::vector<ResidualBlockId>* residual_blocks) const;

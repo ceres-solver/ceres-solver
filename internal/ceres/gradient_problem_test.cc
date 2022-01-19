@@ -37,7 +37,7 @@ namespace internal {
 
 class QuadraticTestFunction : public ceres::FirstOrderFunction {
  public:
-  explicit QuadraticTestFunction(bool* flag_to_set_on_destruction = NULL)
+  explicit QuadraticTestFunction(bool* flag_to_set_on_destruction = nullptr)
       : flag_to_set_on_destruction_(flag_to_set_on_destruction) {}
 
   virtual ~QuadraticTestFunction() {
@@ -51,7 +51,7 @@ class QuadraticTestFunction : public ceres::FirstOrderFunction {
                 double* gradient) const final {
     const double x = parameters[0];
     cost[0] = x * x;
-    if (gradient != NULL) {
+    if (gradient != nullptr) {
       gradient[0] = 2.0 * x;
     }
     return true;
@@ -73,7 +73,7 @@ TEST(GradientProblem, EvaluationWithoutParameterizationOrGradient) {
   ceres::GradientProblem problem(new QuadraticTestFunction());
   double x = 7.0;
   double cost = 0;
-  problem.Evaluate(&x, &cost, NULL);
+  problem.Evaluate(&x, &cost, nullptr);
   EXPECT_EQ(x * x, cost);
 }
 
@@ -82,7 +82,7 @@ TEST(GradientProblem, EvalutaionWithParameterizationAndNoGradient) {
                                  new IdentityParameterization(1));
   double x = 7.0;
   double cost = 0;
-  problem.Evaluate(&x, &cost, NULL);
+  problem.Evaluate(&x, &cost, nullptr);
   EXPECT_EQ(x * x, cost);
 }
 
@@ -110,7 +110,7 @@ TEST(GradientProblem, EvalutaionWithManifoldAndNoGradient) {
                                  new EuclideanManifold(1));
   double x = 7.0;
   double cost = 0;
-  problem.Evaluate(&x, &cost, NULL);
+  problem.Evaluate(&x, &cost, nullptr);
   EXPECT_EQ(x * x, cost);
 }
 

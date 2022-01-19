@@ -166,7 +166,7 @@ TEST(GradientCheckingCostFunction, ResidualsAndJacobiansArePreservedTest) {
   GradientCheckingIterationCallback callback;
   std::unique_ptr<CostFunction> gradient_checking_cost_function(
       CreateGradientCheckingCostFunction(&term,
-                                         NULL,
+                                         nullptr,
                                          kRelativeStepSize,
                                          kRelativePrecision,
                                          "Ignored.",
@@ -222,7 +222,7 @@ TEST(GradientCheckingCostFunction, SmokeTest) {
     GradientCheckingIterationCallback callback;
     std::unique_ptr<CostFunction> gradient_checking_cost_function(
         CreateGradientCheckingCostFunction(&term,
-                                           NULL,
+                                           nullptr,
                                            kRelativeStepSize,
                                            kRelativePrecision,
                                            "Fuzzy banana",
@@ -242,7 +242,7 @@ TEST(GradientCheckingCostFunction, SmokeTest) {
     GradientCheckingIterationCallback callback;
     std::unique_ptr<CostFunction> gradient_checking_cost_function(
         CreateGradientCheckingCostFunction(&term,
-                                           NULL,
+                                           nullptr,
                                            kRelativeStepSize,
                                            kRelativePrecision,
                                            "Fuzzy banana",
@@ -354,15 +354,15 @@ TEST(GradientCheckingProblemImpl,
   problem_impl.AddParameterBlock(w, 4, new QuaternionParameterization);
   // clang-format off
   problem_impl.AddResidualBlock(new UnaryCostFunction(2, 3),
-                                NULL, x);
+                                nullptr, x);
   problem_impl.AddResidualBlock(new BinaryCostFunction(6, 5, 4),
-                                NULL, z, y);
+                                nullptr, z, y);
   problem_impl.AddResidualBlock(new BinaryCostFunction(3, 3, 5),
                                 new TrivialLoss, x, z);
   problem_impl.AddResidualBlock(new BinaryCostFunction(7, 5, 3),
-                                NULL, z, x);
+                                nullptr, z, x);
   problem_impl.AddResidualBlock(new TernaryCostFunction(1, 5, 3, 4),
-                                NULL, z, x, y);
+                                nullptr, z, x, y);
   // clang-format on
 
   GradientCheckingIterationCallback callback;
@@ -432,15 +432,15 @@ TEST(GradientCheckingProblemImpl, ProblemDimensionsMatch) {
   problem_impl.AddParameterBlock(w, 4, new Quaternion);
   // clang-format off
   problem_impl.AddResidualBlock(new UnaryCostFunction(2, 3),
-                                NULL, x);
+                                nullptr, x);
   problem_impl.AddResidualBlock(new BinaryCostFunction(6, 5, 4),
-                                NULL, z, y);
+                                nullptr, z, y);
   problem_impl.AddResidualBlock(new BinaryCostFunction(3, 3, 5),
                                 new TrivialLoss, x, z);
   problem_impl.AddResidualBlock(new BinaryCostFunction(7, 5, 3),
-                                NULL, z, x);
+                                nullptr, z, x);
   problem_impl.AddResidualBlock(new TernaryCostFunction(1, 5, 3, 4),
-                                NULL, z, x, y);
+                                nullptr, z, x, y);
   // clang-format on
 
   GradientCheckingIterationCallback callback;
@@ -500,7 +500,7 @@ TEST(GradientCheckingProblemImpl, ConstrainedProblemBoundsArePropagated) {
   double x[] = {1.0, 2.0, 3.0};
   ProblemImpl problem_impl;
   problem_impl.AddParameterBlock(x, 3);
-  problem_impl.AddResidualBlock(new UnaryCostFunction(2, 3), NULL, x);
+  problem_impl.AddResidualBlock(new UnaryCostFunction(2, 3), nullptr, x);
   problem_impl.SetParameterLowerBound(x, 0, 0.9);
   problem_impl.SetParameterUpperBound(x, 1, 2.5);
 

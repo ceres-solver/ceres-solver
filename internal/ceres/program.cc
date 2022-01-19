@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <map>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "ceres/array_utils.h"

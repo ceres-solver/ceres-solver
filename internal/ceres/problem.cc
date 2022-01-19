@@ -189,12 +189,12 @@ int Problem::NumResidualBlocks() const { return impl_->NumResidualBlocks(); }
 
 int Problem::NumResiduals() const { return impl_->NumResiduals(); }
 
-int Problem::ParameterBlockSize(const double* parameter_block) const {
-  return impl_->ParameterBlockSize(parameter_block);
+int Problem::ParameterBlockSize(const double* values) const {
+  return impl_->ParameterBlockSize(values);
 }
 
-int Problem::ParameterBlockLocalSize(const double* parameter_block) const {
-  return impl_->ParameterBlockTangentSize(parameter_block);
+int Problem::ParameterBlockLocalSize(const double* values) const {
+  return impl_->ParameterBlockTangentSize(values);
 }
 
 int Problem::ParameterBlockTangentSize(const double* parameter_block) const {

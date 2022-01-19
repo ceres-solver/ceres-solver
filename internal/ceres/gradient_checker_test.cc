@@ -361,19 +361,19 @@ class MatrixParameterization : public LocalParameterization {
             double* x_plus_delta) const final {
     VectorRef(x_plus_delta, GlobalSize()) =
         ConstVectorRef(x, GlobalSize()) +
-        (global_J_local * ConstVectorRef(delta, LocalSize()));
+        (global_to_local_ * ConstVectorRef(delta, LocalSize()));
     return true;
   }
 
   bool ComputeJacobian(const double* /*x*/, double* jacobian) const final {
-    MatrixRef(jacobian, GlobalSize(), LocalSize()) = global_J_local;
+    MatrixRef(jacobian, GlobalSize(), LocalSize()) = global_to_local_;
     return true;
   }
 
-  int GlobalSize() const final { return global_J_local.rows(); }
-  int LocalSize() const final { return global_J_local.cols(); }
+  int GlobalSize() const final { return global_to_local_.rows(); }
+  int LocalSize() const final { return global_to_local_.cols(); }
 
-  Matrix global_J_local;
+  Matrix global_to_local_;
 };
 
 TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
@@ -421,27 +421,27 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   ExpectMatricesClose(residual, residual_expected, kTolerance);
 
   // Create parameterization.
-  Eigen::Matrix<double, 3, 2, Eigen::RowMajor> global_J_local;
-  global_J_local.row(0) << 1.5, 2.5;
-  global_J_local.row(1) << 3.5, 4.5;
-  global_J_local.row(2) << 5.5, 6.5;
+  Eigen::Matrix<double, 3, 2, Eigen::RowMajor> global_to_local;
+  global_to_local.row(0) << 1.5, 2.5;
+  global_to_local.row(1) << 3.5, 4.5;
+  global_to_local.row(2) << 5.5, 6.5;
 
   MatrixParameterization parameterization;
-  parameterization.global_J_local = global_J_local;
+  parameterization.global_to_local_ = global_to_local;
 
   // Test local parameterization for correctness.
   Eigen::Vector3d x(7.0, 8.0, 9.0);
   Eigen::Vector2d delta(10.0, 11.0);
 
-  Eigen::Matrix<double, 3, 2, Eigen::RowMajor> global_J_local_out;
-  parameterization.ComputeJacobian(x.data(), global_J_local_out.data());
-  ExpectMatricesClose(global_J_local_out,
-                      global_J_local,
+  Eigen::Matrix<double, 3, 2, Eigen::RowMajor> global_to_local_out;
+  parameterization.ComputeJacobian(x.data(), global_to_local_out.data());
+  ExpectMatricesClose(global_to_local_out,
+                      global_to_local,
                       std::numeric_limits<double>::epsilon());
 
   Eigen::Vector3d x_plus_delta;
   parameterization.Plus(x.data(), delta.data(), x_plus_delta.data());
-  Eigen::Vector3d x_plus_delta_expected = x + (global_J_local * delta);
+  Eigen::Vector3d x_plus_delta_expected = x + (global_to_local * delta);
   ExpectMatricesClose(x_plus_delta, x_plus_delta_expected, kTolerance);
 
   // Now test GradientChecker.
@@ -475,12 +475,12 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
       results.residuals, residual, std::numeric_limits<double>::epsilon());
   CheckDimensions(results, parameter_sizes, local_parameter_sizes, 3);
   ExpectMatricesClose(
-      results.local_jacobians.at(0), j0 * global_J_local, kTolerance);
+      results.local_jacobians.at(0), j0 * global_to_local, kTolerance);
   ExpectMatricesClose(results.local_jacobians.at(1),
                       j1,
                       std::numeric_limits<double>::epsilon());
   ExpectMatricesClose(
-      results.local_numeric_jacobians.at(0), j0 * global_J_local, kTolerance);
+      results.local_numeric_jacobians.at(0), j0 * global_to_local, kTolerance);
   ExpectMatricesClose(results.local_numeric_jacobians.at(1), j1, kTolerance);
   ExpectMatricesClose(
       results.jacobians.at(0), j0, std::numeric_limits<double>::epsilon());
@@ -523,13 +523,13 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   ASSERT_EQ(results.local_jacobians.size(), 2);
   ASSERT_EQ(results.local_numeric_jacobians.size(), 2);
   ExpectMatricesClose(results.local_jacobians.at(0),
-                      (j0 + j0_offset) * global_J_local,
+                      (j0 + j0_offset) * global_to_local,
                       kTolerance);
   ExpectMatricesClose(results.local_jacobians.at(1),
                       j1,
                       std::numeric_limits<double>::epsilon());
   ExpectMatricesClose(
-      results.local_numeric_jacobians.at(0), j0 * global_J_local, kTolerance);
+      results.local_numeric_jacobians.at(0), j0 * global_to_local, kTolerance);
   ExpectMatricesClose(results.local_numeric_jacobians.at(1), j1, kTolerance);
   ExpectMatricesClose(results.jacobians.at(0), j0 + j0_offset, kTolerance);
   ExpectMatricesClose(
@@ -548,7 +548,7 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   // Now, zero out the local parameterization Jacobian with respect to the 3rd
   // component of the 1st parameter. This makes the combination of cost function
   // and local parameterization return correct values again.
-  parameterization.global_J_local.row(2).setZero();
+  parameterization.global_to_local_.row(2).setZero();
 
   // Verify that the gradient checker does not treat this as an error.
   EXPECT_TRUE(gradient_checker.Probe(parameters.data(), kTolerance, &results))
@@ -562,13 +562,13 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   ASSERT_EQ(results.local_jacobians.size(), 2);
   ASSERT_EQ(results.local_numeric_jacobians.size(), 2);
   ExpectMatricesClose(results.local_jacobians.at(0),
-                      (j0 + j0_offset) * parameterization.global_J_local,
+                      (j0 + j0_offset) * parameterization.global_to_local_,
                       kTolerance);
   ExpectMatricesClose(results.local_jacobians.at(1),
                       j1,
                       std::numeric_limits<double>::epsilon());
   ExpectMatricesClose(results.local_numeric_jacobians.at(0),
-                      j0 * parameterization.global_J_local,
+                      j0 * parameterization.global_to_local_,
                       kTolerance);
   ExpectMatricesClose(results.local_numeric_jacobians.at(1), j1, kTolerance);
   ExpectMatricesClose(results.jacobians.at(0), j0 + j0_offset, kTolerance);
@@ -596,16 +596,16 @@ class MatrixManifold : public Manifold {
             double* x_plus_delta) const final {
     VectorRef(x_plus_delta, AmbientSize()) =
         ConstVectorRef(x, AmbientSize()) +
-        (global_J_local * ConstVectorRef(delta, TangentSize()));
+        (global_to_local_ * ConstVectorRef(delta, TangentSize()));
     return true;
   }
 
   bool PlusJacobian(const double* /*x*/, double* jacobian) const final {
-    MatrixRef(jacobian, AmbientSize(), TangentSize()) = global_J_local;
+    MatrixRef(jacobian, AmbientSize(), TangentSize()) = global_to_local_;
     return true;
   }
 
-  bool Minus(const double* y, const double* x, double* y_minus_x) const {
+  bool Minus(const double* y, const double* x, double* y_minus_x) const final {
     LOG(FATAL) << "Should not be called";
     return true;
   }
@@ -615,10 +615,10 @@ class MatrixManifold : public Manifold {
     return true;
   }
 
-  int AmbientSize() const final { return global_J_local.rows(); }
-  int TangentSize() const final { return global_J_local.cols(); }
+  int AmbientSize() const final { return global_to_local_.rows(); }
+  int TangentSize() const final { return global_to_local_.cols(); }
 
-  Matrix global_J_local;
+  Matrix global_to_local_;
 };
 
 TEST(GradientChecker, TestCorrectnessWithManifolds) {
@@ -666,27 +666,27 @@ TEST(GradientChecker, TestCorrectnessWithManifolds) {
   ExpectMatricesClose(residual, residual_expected, kTolerance);
 
   // Create manifold.
-  Eigen::Matrix<double, 3, 2, Eigen::RowMajor> global_J_local;
-  global_J_local.row(0) << 1.5, 2.5;
-  global_J_local.row(1) << 3.5, 4.5;
-  global_J_local.row(2) << 5.5, 6.5;
+  Eigen::Matrix<double, 3, 2, Eigen::RowMajor> global_to_local;
+  global_to_local.row(0) << 1.5, 2.5;
+  global_to_local.row(1) << 3.5, 4.5;
+  global_to_local.row(2) << 5.5, 6.5;
 
   MatrixManifold manifold;
-  manifold.global_J_local = global_J_local;
+  manifold.global_to_local_ = global_to_local;
 
   // Test manifold for correctness.
   Eigen::Vector3d x(7.0, 8.0, 9.0);
   Eigen::Vector2d delta(10.0, 11.0);
 
-  Eigen::Matrix<double, 3, 2, Eigen::RowMajor> global_J_local_out;
-  manifold.PlusJacobian(x.data(), global_J_local_out.data());
-  ExpectMatricesClose(global_J_local_out,
-                      global_J_local,
+  Eigen::Matrix<double, 3, 2, Eigen::RowMajor> global_to_local_out;
+  manifold.PlusJacobian(x.data(), global_to_local_out.data());
+  ExpectMatricesClose(global_to_local_out,
+                      global_to_local,
                       std::numeric_limits<double>::epsilon());
 
   Eigen::Vector3d x_plus_delta;
   manifold.Plus(x.data(), delta.data(), x_plus_delta.data());
-  Eigen::Vector3d x_plus_delta_expected = x + (global_J_local * delta);
+  Eigen::Vector3d x_plus_delta_expected = x + (global_to_local * delta);
   ExpectMatricesClose(x_plus_delta, x_plus_delta_expected, kTolerance);
 
   // Now test GradientChecker.
@@ -720,12 +720,12 @@ TEST(GradientChecker, TestCorrectnessWithManifolds) {
       results.residuals, residual, std::numeric_limits<double>::epsilon());
   CheckDimensions(results, parameter_sizes, tangent_sizes, 3);
   ExpectMatricesClose(
-      results.local_jacobians.at(0), j0 * global_J_local, kTolerance);
+      results.local_jacobians.at(0), j0 * global_to_local, kTolerance);
   ExpectMatricesClose(results.local_jacobians.at(1),
                       j1,
                       std::numeric_limits<double>::epsilon());
   ExpectMatricesClose(
-      results.local_numeric_jacobians.at(0), j0 * global_J_local, kTolerance);
+      results.local_numeric_jacobians.at(0), j0 * global_to_local, kTolerance);
   ExpectMatricesClose(results.local_numeric_jacobians.at(1), j1, kTolerance);
   ExpectMatricesClose(
       results.jacobians.at(0), j0, std::numeric_limits<double>::epsilon());
@@ -768,13 +768,13 @@ TEST(GradientChecker, TestCorrectnessWithManifolds) {
   ASSERT_EQ(results.local_jacobians.size(), 2);
   ASSERT_EQ(results.local_numeric_jacobians.size(), 2);
   ExpectMatricesClose(results.local_jacobians.at(0),
-                      (j0 + j0_offset) * global_J_local,
+                      (j0 + j0_offset) * global_to_local,
                       kTolerance);
   ExpectMatricesClose(results.local_jacobians.at(1),
                       j1,
                       std::numeric_limits<double>::epsilon());
   ExpectMatricesClose(
-      results.local_numeric_jacobians.at(0), j0 * global_J_local, kTolerance);
+      results.local_numeric_jacobians.at(0), j0 * global_to_local, kTolerance);
   ExpectMatricesClose(results.local_numeric_jacobians.at(1), j1, kTolerance);
   ExpectMatricesClose(results.jacobians.at(0), j0 + j0_offset, kTolerance);
   ExpectMatricesClose(
@@ -793,7 +793,7 @@ TEST(GradientChecker, TestCorrectnessWithManifolds) {
   // Now, zero out the manifold Jacobian with respect to the 3rd component of
   // the 1st parameter. This makes the combination of cost function and manifold
   // return correct values again.
-  manifold.global_J_local.row(2).setZero();
+  manifold.global_to_local_.row(2).setZero();
 
   // Verify that the gradient checker does not treat this as an error.
   EXPECT_TRUE(gradient_checker.Probe(parameters.data(), kTolerance, &results))
@@ -807,13 +807,13 @@ TEST(GradientChecker, TestCorrectnessWithManifolds) {
   ASSERT_EQ(results.local_jacobians.size(), 2);
   ASSERT_EQ(results.local_numeric_jacobians.size(), 2);
   ExpectMatricesClose(results.local_jacobians.at(0),
-                      (j0 + j0_offset) * manifold.global_J_local,
+                      (j0 + j0_offset) * manifold.global_to_local_,
                       kTolerance);
   ExpectMatricesClose(results.local_jacobians.at(1),
                       j1,
                       std::numeric_limits<double>::epsilon());
   ExpectMatricesClose(results.local_numeric_jacobians.at(0),
-                      j0 * manifold.global_J_local,
+                      j0 * manifold.global_to_local_,
                       kTolerance);
   ExpectMatricesClose(results.local_numeric_jacobians.at(1), j1, kTolerance);
   ExpectMatricesClose(results.jacobians.at(0), j0 + j0_offset, kTolerance);

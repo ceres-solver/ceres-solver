@@ -888,8 +888,8 @@ int ProblemImpl::ParameterBlockTangentSize(const double* values) const {
   return parameter_block->TangentSize();
 }
 
-bool ProblemImpl::HasParameterBlock(const double* parameter_block) const {
-  return (parameter_block_map_.find(const_cast<double*>(parameter_block)) !=
+bool ProblemImpl::HasParameterBlock(const double* values) const {
+  return (parameter_block_map_.find(const_cast<double*>(values)) !=
           parameter_block_map_.end());
 }
 

@@ -117,7 +117,7 @@ bool CovarianceImpl::Compute(const CovarianceBlocks& covariance_blocks,
       covariance_blocks);
   problem_ = problem;
   parameter_block_to_row_index_.clear();
-  covariance_matrix_.reset(NULL);
+  covariance_matrix_.reset(nullptr);
   is_valid_ = (ComputeCovarianceSparsity(covariance_blocks, problem) &&
                ComputeCovarianceValues());
   is_computed_ = true;
@@ -222,7 +222,7 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
 
   // Fast path when there are no manifolds or if the user does not want it
   // lifted to the ambient space.
-  if ((manifold1 == NULL && manifold2 == NULL) ||
+  if ((manifold1 == nullptr && manifold2 == nullptr) ||
       !lift_covariance_to_ambient_space) {
     if (transpose) {
       MatrixRef(covariance_block, block2_tangent_size, block1_tangent_size) =
@@ -252,7 +252,7 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
   // TODO(sameeragarwal): Add caching the manifold plus_jacobian, so that they
   // are computed just once per parameter block.
   Matrix block1_jacobian(block1_size, block1_tangent_size);
-  if (manifold1 == NULL) {
+  if (manifold1 == nullptr) {
     block1_jacobian.setIdentity();
   } else {
     manifold1->PlusJacobian(parameter_block1, block1_jacobian.data());
@@ -263,7 +263,7 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
   if (parameter_block1 == parameter_block2) {
     block2_jacobian = block1_jacobian;
   } else {
-    if (manifold2 == NULL) {
+    if (manifold2 == nullptr) {
       block2_jacobian.setIdentity();
     } else {
       manifold2->PlusJacobian(parameter_block2, block2_jacobian.data());
@@ -450,7 +450,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
 
   if (covariance_blocks.size() == 0) {
     VLOG(2) << "No non-zero covariance blocks found";
-    covariance_matrix_.reset(NULL);
+    covariance_matrix_.reset(nullptr);
     return true;
   }
 
@@ -558,13 +558,13 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
       "CovarianceImpl::ComputeCovarianceValuesUsingSparseQR");
 
 #ifndef CERES_NO_SUITESPARSE
-  if (covariance_matrix_.get() == NULL) {
+  if (covariance_matrix_.get() == nullptr) {
     // Nothing to do, all zeros covariance matrix.
     return true;
   }
 
   CRSMatrix jacobian;
-  problem_->Evaluate(evaluate_options_, NULL, NULL, NULL, &jacobian);
+  problem_->Evaluate(evaluate_options_, nullptr, nullptr, nullptr, &jacobian);
   event_logger.AddEvent("Evaluate");
 
   // Construct a compressed column form of the Jacobian.
@@ -603,11 +603,11 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   cholmod_jacobian.nrow = num_rows;
   cholmod_jacobian.ncol = num_cols;
   cholmod_jacobian.nzmax = num_nonzeros;
-  cholmod_jacobian.nz = NULL;
+  cholmod_jacobian.nz = nullptr;
   cholmod_jacobian.p = reinterpret_cast<void*>(&transpose_rows[0]);
   cholmod_jacobian.i = reinterpret_cast<void*>(&transpose_cols[0]);
   cholmod_jacobian.x = reinterpret_cast<void*>(&transpose_values[0]);
-  cholmod_jacobian.z = NULL;
+  cholmod_jacobian.z = nullptr;
   cholmod_jacobian.stype = 0;  // Matrix is not symmetric.
   cholmod_jacobian.itype = CHOLMOD_LONG;
   cholmod_jacobian.xtype = CHOLMOD_REAL;
@@ -618,8 +618,8 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   cholmod_common cc;
   cholmod_l_start(&cc);
 
-  cholmod_sparse* R = NULL;
-  SuiteSparse_long* permutation = NULL;
+  cholmod_sparse* R = nullptr;
+  SuiteSparse_long* permutation = nullptr;
 
   // Compute a Q-less QR factorization of the Jacobian. Since we are
   // only interested in inverting J'J = R'R, we do not need Q. This
@@ -723,13 +723,13 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
 bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
   EventLogger event_logger(
       "CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD");
-  if (covariance_matrix_.get() == NULL) {
+  if (covariance_matrix_.get() == nullptr) {
     // Nothing to do, all zeros covariance matrix.
     return true;
   }
 
   CRSMatrix jacobian;
-  problem_->Evaluate(evaluate_options_, NULL, NULL, NULL, &jacobian);
+  problem_->Evaluate(evaluate_options_, nullptr, nullptr, nullptr, &jacobian);
   event_logger.AddEvent("Evaluate");
 
   Matrix dense_jacobian(jacobian.num_rows, jacobian.num_cols);
@@ -814,13 +814,13 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
 bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
   EventLogger event_logger(
       "CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR");
-  if (covariance_matrix_.get() == NULL) {
+  if (covariance_matrix_.get() == nullptr) {
     // Nothing to do, all zeros covariance matrix.
     return true;
   }
 
   CRSMatrix jacobian;
-  problem_->Evaluate(evaluate_options_, NULL, NULL, NULL, &jacobian);
+  problem_->Evaluate(evaluate_options_, nullptr, nullptr, nullptr, &jacobian);
   event_logger.AddEvent("Evaluate");
 
   typedef Eigen::SparseMatrix<double, Eigen::ColMajor> EigenSparseMatrix;

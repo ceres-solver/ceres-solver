@@ -1581,8 +1581,8 @@ class ProblemEvaluateTest : public ::testing::Test {
                        expected_gradient,
                        expected_jacobian,
                        cost,
-                       residuals.size() > 0 ? &residuals[0] : nullptr,
-                       gradient.size() > 0 ? &gradient[0] : nullptr,
+                       !residuals.empty() ? &residuals[0] : nullptr,
+                       !gradient.empty() ? &gradient[0] : nullptr,
                        dense_jacobian.data());
   }
 

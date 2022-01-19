@@ -412,7 +412,7 @@ class PolynomialManifold : public Manifold {
     return true;
   }
 
-  bool Minus(const double* y, const double* x, double* y_minus_x) const {
+  bool Minus(const double* y, const double* x, double* y_minus_x) const final {
     LOG(FATAL) << "Should not be called";
     return true;
   }
