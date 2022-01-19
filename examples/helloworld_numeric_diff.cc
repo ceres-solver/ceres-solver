@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
   // numeric differentiation to obtain the derivative (jacobian).
   CostFunction* cost_function =
       new NumericDiffCostFunction<CostFunctor, CENTRAL, 1, 1>(new CostFunctor);
-  problem.AddResidualBlock(cost_function, NULL, &x);
+  problem.AddResidualBlock(cost_function, nullptr, &x);
 
   // Run the solver!
   Solver::Options options;

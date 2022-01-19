@@ -123,7 +123,7 @@ struct SnavelyReprojectionErrorWithQuaternions {
     // We use QuaternionRotatePoint as it does not assume that the
     // quaternion is normalized, since one of the ways to run the
     // bundle adjuster is to let Ceres optimize all 4 quaternion
-    // parameters without a local parameterization.
+    // parameters without using a Quaternion manifold.
     T p[3];
     QuaternionRotatePoint(camera, point, p);
 

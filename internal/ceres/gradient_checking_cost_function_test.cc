@@ -429,7 +429,7 @@ TEST(GradientCheckingProblemImpl, ProblemDimensionsMatch) {
   problem_impl.AddParameterBlock(y, 4);
   problem_impl.SetParameterBlockConstant(y);
   problem_impl.AddParameterBlock(z, 5);
-  problem_impl.AddParameterBlock(w, 4, new Quaternion);
+  problem_impl.AddParameterBlock(w, 4, new QuaternionManifold);
   // clang-format off
   problem_impl.AddResidualBlock(new UnaryCostFunction(2, 3),
                                 nullptr, x);

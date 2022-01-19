@@ -131,7 +131,7 @@ int main(int argc, char** argv) {
   Problem problem;
 
   // Configure the loss function.
-  LossFunction* loss = NULL;
+  LossFunction* loss = nullptr;
   if (CERES_GET_FLAG(FLAGS_robust_threshold)) {
     loss = new CauchyLoss(CERES_GET_FLAG(FLAGS_robust_threshold));
   }

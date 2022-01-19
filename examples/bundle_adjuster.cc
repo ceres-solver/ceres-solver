@@ -98,8 +98,7 @@ DEFINE_string(ordering, "automatic", "Options are: automatic, user.");
 
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
             "rotations. If false, angle axis is used.");
-DEFINE_bool(use_local_parameterization, false, "For quaternions, use a local "
-            "parameterization.");
+DEFINE_bool(use_manifolds, false, "For quaternions, use a manifold.");
 DEFINE_bool(robustify, false, "Use a robust loss function.");
 
 DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
@@ -293,7 +292,7 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
 
     // If enabled use Huber's loss function.
     LossFunction* loss_function =
-        CERES_GET_FLAG(FLAGS_robustify) ? new HuberLoss(1.0) : NULL;
+        CERES_GET_FLAG(FLAGS_robustify) ? new HuberLoss(1.0) : nullptr;
 
     // Each observation correponds to a pair of a camera and a point
     // which are identified by camera_index()[i] and point_index()[i]
@@ -305,13 +304,11 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
   }
 
   if (CERES_GET_FLAG(FLAGS_use_quaternions) &&
-      CERES_GET_FLAG(FLAGS_use_local_parameterization)) {
-    LocalParameterization* camera_parameterization =
-        new ProductParameterization(new QuaternionParameterization(),
-                                    new IdentityParameterization(6));
+      CERES_GET_FLAG(FLAGS_use_manifolds)) {
+    Manifold* camera_manifold =
+        new ProductManifold(new QuaternionManifold(), new EuclideanManifold(6));
     for (int i = 0; i < bal_problem->num_cameras(); ++i) {
-      problem->SetParameterization(cameras + camera_block_size * i,
-                                   camera_parameterization);
+      problem->SetManifold(cameras + camera_block_size * i, camera_manifold);
     }
   }
 }
@@ -358,9 +355,8 @@ int main(int argc, char** argv) {
   }
 
   CHECK(CERES_GET_FLAG(FLAGS_use_quaternions) ||
-        !CERES_GET_FLAG(FLAGS_use_local_parameterization))
-      << "--use_local_parameterization can only be used with "
-      << "--use_quaternions.";
+        !CERES_GET_FLAG(FLAGS_use_manifolds))
+      << "--use_manifolds can only be used with --use_quaternions.";
   ceres::examples::SolveProblem(CERES_GET_FLAG(FLAGS_input).c_str());
   return 0;
 }

@@ -50,16 +50,15 @@ namespace {
 void BuildOptimizationProblem(const VectorOfConstraints& constraints,
                               MapOfPoses* poses,
                               ceres::Problem* problem) {
-  CHECK(poses != NULL);
-  CHECK(problem != NULL);
+  CHECK(poses != nullptr);
+  CHECK(problem != nullptr);
   if (constraints.empty()) {
     LOG(INFO) << "No constraints, no problem to optimize.";
     return;
   }
 
-  ceres::LossFunction* loss_function = NULL;
-  ceres::LocalParameterization* quaternion_local_parameterization =
-      new EigenQuaternionParameterization;
+  ceres::LossFunction* loss_function = nullptr;
+  ceres::Manifold* quaternion_manifold = new EigenQuaternionManifold;
 
   for (VectorOfConstraints::const_iterator constraints_iter =
            constraints.begin();
@@ -87,10 +86,10 @@ void BuildOptimizationProblem(const VectorOfConstraints& constraints,
                               pose_end_iter->second.p.data(),
                               pose_end_iter->second.q.coeffs().data());
 
-    problem->SetParameterization(pose_begin_iter->second.q.coeffs().data(),
-                                 quaternion_local_parameterization);
-    problem->SetParameterization(pose_end_iter->second.q.coeffs().data(),
-                                 quaternion_local_parameterization);
+    problem->SetManifold(pose_begin_iter->second.q.coeffs().data(),
+                         quaternion_manifold);
+    problem->SetManifold(pose_end_iter->second.q.coeffs().data(),
+                         quaternion_manifold);
   }
 
   // The pose graph optimization problem has six DOFs that are not fully
@@ -108,7 +107,7 @@ void BuildOptimizationProblem(const VectorOfConstraints& constraints,
 
 // Returns true if the solve was successful.
 bool SolveOptimizationProblem(ceres::Problem* problem) {
-  CHECK(problem != NULL);
+  CHECK(problem != nullptr);
 
   ceres::Solver::Options options;
   options.max_num_iterations = 200;

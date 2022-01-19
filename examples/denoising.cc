@@ -118,7 +118,7 @@ class QuadraticCostFunction : public ceres::SizedCostFunction<1, 1> {
                         double** jacobians) const {
     const double x = parameters[0][0];
     residuals[0] = sqrta_ * (x - b_);
-    if (jacobians != NULL && jacobians[0] != NULL) {
+    if (jacobians != nullptr && jacobians[0] != nullptr) {
       jacobians[0][0] = sqrta_;
     }
     return true;
@@ -141,7 +141,7 @@ void CreateProblem(const FieldsOfExperts& foe,
     ceres::CostFunction* cost_function = new QuadraticCostFunction(
         coefficient, image.PixelFromLinearIndex(index));
     problem->AddResidualBlock(
-        cost_function, NULL, solution->MutablePixelFromLinearIndex(index));
+        cost_function, nullptr, solution->MutablePixelFromLinearIndex(index));
   }
 
   // Create Ceres cost and loss functions for regularization. One is needed for

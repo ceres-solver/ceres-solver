@@ -95,20 +95,26 @@ static void SetNumericDiffOptions(ceres::NumericDiffOptions* options) {
         ceres::NumericDiffOptions options;                                    \
         SetNumericDiffOptions(&options);                                      \
         if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "central") {         \
-          return new NumericDiffCostFunction<name, ceres::CENTRAL,            \
-                                             num_residuals, num_parameters>(  \
+          return new NumericDiffCostFunction<name,                            \
+                                             ceres::CENTRAL,                  \
+                                             num_residuals,                   \
+                                             num_parameters>(                 \
               new name, ceres::TAKE_OWNERSHIP, num_residuals, options);       \
         } else if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "forward") {  \
-          return new NumericDiffCostFunction<name, ceres::FORWARD,            \
-                                             num_residuals, num_parameters>(  \
+          return new NumericDiffCostFunction<name,                            \
+                                             ceres::FORWARD,                  \
+                                             num_residuals,                   \
+                                             num_parameters>(                 \
               new name, ceres::TAKE_OWNERSHIP, num_residuals, options);       \
         } else if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "ridders") {  \
-          return new NumericDiffCostFunction<name, ceres::RIDDERS,            \
-                                             num_residuals, num_parameters>(  \
+          return new NumericDiffCostFunction<name,                            \
+                                             ceres::RIDDERS,                  \
+                                             num_residuals,                   \
+                                             num_parameters>(                 \
               new name, ceres::TAKE_OWNERSHIP, num_residuals, options);       \
         } else {                                                              \
           LOG(ERROR) << "Invalid numeric diff method specified";              \
-          return NULL;                                                        \
+          return nullptr;                                                     \
         }                                                                     \
       } else {                                                                \
         return new AutoDiffCostFunction<name, num_residuals, num_parameters>( \
@@ -543,7 +549,7 @@ bool Solve(bool is_constrained, int trial) {
   }
 
   Problem problem;
-  problem.AddResidualBlock(TestProblem::Create(), NULL, x);
+  problem.AddResidualBlock(TestProblem::Create(), nullptr, x);
   double optimal_cost = TestProblem::unconstrained_optimal_cost;
 
   if (is_constrained) {

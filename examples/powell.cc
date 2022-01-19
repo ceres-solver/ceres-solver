@@ -110,17 +110,18 @@ int main(int argc, char** argv) {
   // wrapper to get the derivatives automatically. The parameters, x1 through
   // x4, are modified in place.
   problem.AddResidualBlock(
-      new AutoDiffCostFunction<F1, 1, 1, 1>(new F1), NULL, &x1, &x2);
+      new AutoDiffCostFunction<F1, 1, 1, 1>(new F1), nullptr, &x1, &x2);
   problem.AddResidualBlock(
-      new AutoDiffCostFunction<F2, 1, 1, 1>(new F2), NULL, &x3, &x4);
+      new AutoDiffCostFunction<F2, 1, 1, 1>(new F2), nullptr, &x3, &x4);
   problem.AddResidualBlock(
-      new AutoDiffCostFunction<F3, 1, 1, 1>(new F3), NULL, &x2, &x3);
+      new AutoDiffCostFunction<F3, 1, 1, 1>(new F3), nullptr, &x2, &x3);
   problem.AddResidualBlock(
-      new AutoDiffCostFunction<F4, 1, 1, 1>(new F4), NULL, &x1, &x4);
+      new AutoDiffCostFunction<F4, 1, 1, 1>(new F4), nullptr, &x1, &x4);
 
   Solver::Options options;
-  LOG_IF(FATAL, !ceres::StringToMinimizerType(CERES_GET_FLAG(FLAGS_minimizer),
-                                              &options.minimizer_type))
+  LOG_IF(FATAL,
+         !ceres::StringToMinimizerType(CERES_GET_FLAG(FLAGS_minimizer),
+                                       &options.minimizer_type))
       << "Invalid minimizer: " << CERES_GET_FLAG(FLAGS_minimizer)
       << ", valid options are: trust_region and line_search.";
 

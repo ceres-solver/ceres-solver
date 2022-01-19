@@ -315,12 +315,12 @@ int main(int argc, char** argv) {
     RangeConstraint::RangeCostFunction* range_cost_function =
         RangeConstraint::Create(
             i, range_readings[i], &odometry_values, &parameter_blocks);
-    problem.AddResidualBlock(range_cost_function, NULL, parameter_blocks);
+    problem.AddResidualBlock(range_cost_function, nullptr, parameter_blocks);
 
     // Create and add an AutoDiffCostFunction for the OdometryConstraint for
     // pose i.
     problem.AddResidualBlock(OdometryConstraint::Create(odometry_values[i]),
-                             NULL,
+                             nullptr,
                              &(odometry_values[i]));
   }
 

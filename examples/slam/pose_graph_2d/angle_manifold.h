@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2016 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,38 +27,44 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: vitus@google.com (Michael Vitus)
+//         sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_EXAMPLES_POSE_GRAPH_2D_ANGLE_LOCAL_PARAMETERIZATION_H_
-#define CERES_EXAMPLES_POSE_GRAPH_2D_ANGLE_LOCAL_PARAMETERIZATION_H_
+#ifndef CERES_EXAMPLES_POSE_GRAPH_2D_ANGLE_MANIFOLD_H_
+#define CERES_EXAMPLES_POSE_GRAPH_2D_ANGLE_MANIFOLD_H_
 
-#include "ceres/local_parameterization.h"
+#include "ceres/autodiff_manifold.h"
 #include "normalize_angle.h"
 
 namespace ceres {
 namespace examples {
 
-// Defines a local parameterization for updating the angle to be constrained in
-// [-pi to pi).
-class AngleLocalParameterization {
+// Defines a manifold for updating the angle to be constrained in [-pi to pi).
+class AngleManifold {
  public:
   template <typename T>
-  bool operator()(const T* theta_radians,
-                  const T* delta_theta_radians,
-                  T* theta_radians_plus_delta) const {
-    *theta_radians_plus_delta =
-        NormalizeAngle(*theta_radians + *delta_theta_radians);
+  bool Plus(const T* x_radians,
+            const T* delta_radians,
+            T* x_plus_delta_radians) const {
+    *x_plus_delta_radians = NormalizeAngle(*x_radians + *delta_radians);
+    return true;
+  }
+
+  template <typename T>
+  bool Minus(const T* y_radians,
+             const T* x_radians,
+             T* y_minus_x_radians) const {
+    *y_minus_x_radians =
+        NormalizeAngle(*y_radians) - NormalizeAngle(*x_radians);
 
     return true;
   }
 
-  static ceres::LocalParameterization* Create() {
-    return (new ceres::AutoDiffLocalParameterization<AngleLocalParameterization,
-                                                     1,
-                                                     1>);
+  static ceres::Manifold* Create() {
+    return new ceres::AutoDiffManifold<AngleManifold, 1, 1>;
   }
 };
 
 }  // namespace examples
 }  // namespace ceres
 
-#endif  // CERES_EXAMPLES_POSE_GRAPH_2D_ANGLE_LOCAL_PARAMETERIZATION_H_
+#endif  // CERES_EXAMPLES_POSE_GRAPH_2D_ANGLE_MANIFOLD_H_
