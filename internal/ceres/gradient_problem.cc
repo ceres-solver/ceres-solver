@@ -30,6 +30,8 @@
 
 #include "ceres/gradient_problem.h"
 
+#include <memory>
+
 #include "ceres/local_parameterization.h"
 #include "ceres/manifold_adapter.h"
 #include "glog/logging.h"
@@ -38,7 +40,8 @@ namespace ceres {
 
 GradientProblem::GradientProblem(FirstOrderFunction* function)
     : function_(function),
-      manifold_(new EuclideanManifold(function_->NumParameters())),
+      manifold_(
+          std::make_unique<EuclideanManifold>(function_->NumParameters())),
       scratch_(new double[function_->NumParameters()]) {
   CHECK(function != nullptr);
 }
@@ -59,13 +62,11 @@ GradientProblem::GradientProblem(FirstOrderFunction* function,
 
 GradientProblem::GradientProblem(FirstOrderFunction* function,
                                  Manifold* manifold)
-    : function_(function),
-      manifold_(manifold),
-      scratch_(new double[function_->NumParameters()]) {
+    : function_(function), scratch_(new double[function_->NumParameters()]) {
   CHECK(function != nullptr);
-  if (manifold == nullptr) {
-    manifold_.reset(new EuclideanManifold(function_->NumParameters()));
-  }
+  manifold_.reset(manifold != nullptr
+                      ? manifold
+                      : new EuclideanManifold(function_->NumParameters()));
   CHECK_EQ(function_->NumParameters(), manifold_->AmbientSize());
 }
 

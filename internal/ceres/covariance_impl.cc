@@ -558,7 +558,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
       "CovarianceImpl::ComputeCovarianceValuesUsingSparseQR");
 
 #ifndef CERES_NO_SUITESPARSE
-  if (covariance_matrix_.get() == nullptr) {
+  if (covariance_matrix_ == nullptr) {
     // Nothing to do, all zeros covariance matrix.
     return true;
   }
@@ -723,7 +723,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
 bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
   EventLogger event_logger(
       "CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD");
-  if (covariance_matrix_.get() == nullptr) {
+  if (covariance_matrix_ == nullptr) {
     // Nothing to do, all zeros covariance matrix.
     return true;
   }
@@ -814,7 +814,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
 bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
   EventLogger event_logger(
       "CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR");
-  if (covariance_matrix_.get() == nullptr) {
+  if (covariance_matrix_ == nullptr) {
     // Nothing to do, all zeros covariance matrix.
     return true;
   }

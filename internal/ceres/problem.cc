@@ -197,8 +197,8 @@ int Problem::ParameterBlockLocalSize(const double* values) const {
   return impl_->ParameterBlockTangentSize(values);
 }
 
-int Problem::ParameterBlockTangentSize(const double* parameter_block) const {
-  return impl_->ParameterBlockTangentSize(parameter_block);
+int Problem::ParameterBlockTangentSize(const double* values) const {
+  return impl_->ParameterBlockTangentSize(values);
 }
 
 bool Problem::HasParameterBlock(const double* values) const {
