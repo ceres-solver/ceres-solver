@@ -37,24 +37,35 @@
 namespace ceres {
 
 GradientProblem::GradientProblem(FirstOrderFunction* function)
-    : function_(CHECK_NOTNULL(function)),
+    : function_(function),
       manifold_(new EuclideanManifold(function_->NumParameters())),
-      scratch_(new double[function_->NumParameters()]) {}
+      scratch_(new double[function_->NumParameters()]) {
+  CHECK(function != nullptr);
+}
 
 GradientProblem::GradientProblem(FirstOrderFunction* function,
                                  LocalParameterization* parameterization)
-    : function_(CHECK_NOTNULL(function)),
-      parameterization_(CHECK_NOTNULL(parameterization)),
-      manifold_(new internal::ManifoldAdapter(parameterization_.get())),
+    : function_(function),
+      parameterization_(parameterization),
       scratch_(new double[function_->NumParameters()]) {
+  CHECK(function != nullptr);
+  if (parameterization != nullptr) {
+    manifold_.reset(new internal::ManifoldAdapter(parameterization_.get()));
+  } else {
+    manifold_.reset(new EuclideanManifold(function_->NumParameters()));
+  }
   CHECK_EQ(function_->NumParameters(), manifold_->AmbientSize());
 }
 
 GradientProblem::GradientProblem(FirstOrderFunction* function,
                                  Manifold* manifold)
-    : function_(CHECK_NOTNULL(function)),
-      manifold_(CHECK_NOTNULL(manifold)),
+    : function_(function),
+      manifold_(manifold),
       scratch_(new double[function_->NumParameters()]) {
+  CHECK(function != nullptr);
+  if (manifold == nullptr) {
+    manifold_.reset(new EuclideanManifold(function_->NumParameters()));
+  }
   CHECK_EQ(function_->NumParameters(), manifold_->AmbientSize());
 }
 

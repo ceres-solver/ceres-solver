@@ -11,7 +11,10 @@ namespace internal {
 class ManifoldAdapter : public Manifold {
  public:
   ManifoldAdapter(const LocalParameterization* local_parameterization)
-      : local_parameterization_(CHECK_NOTNULL(local_parameterization)) {}
+      : local_parameterization_(local_parameterization) {
+    CHECK(local_parameterization != nullptr);
+  }
+
   virtual ~ManifoldAdapter() {}
 
   bool Plus(const double* x,
