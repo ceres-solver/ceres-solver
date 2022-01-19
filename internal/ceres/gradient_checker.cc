@@ -142,7 +142,6 @@ GradientChecker::GradientChecker(
 
   const vector<int32_t>& parameter_block_sizes =
       function->parameter_block_sizes();
-  const int num_parameter_blocks = parameter_block_sizes.size();
   for (int32_t parameter_block_size : parameter_block_sizes) {
     finite_diff_cost_function->AddParameterBlock(parameter_block_size);
   }
