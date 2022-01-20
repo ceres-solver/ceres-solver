@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df8d5aab_03696cf4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-20T17:47:46Z",
+      "side": 1,
+      "message": "Two points about renaming existing manifolds rather than the content of this CL specifically, so they could be handled subsequently but this CL really highlights that I think we need to rename them for clarity",
+      "revId": "3f9e8f4406381743775394a6e46f39bceed66df6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75876516_7daf184a",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-20T17:47:46Z",
+      "side": 1,
+      "message": "This makes me think that we should rename the Quaternion manifold to QuaternionManifold, as it is not *a* quaternion, it\u0027s the definition of the manifold for (all) quaternions, and it would make this look more symmetric.  It\u0027s also likely to avoid name clashes with clients that would be nice",
+      "revId": "3f9e8f4406381743775394a6e46f39bceed66df6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f2db7c3_a1f84d0f",
+        "filename": "examples/slam/pose_graph_3d/pose_graph_3d.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-20T17:47:46Z",
+      "side": 1,
+      "message": "Same point as before here, IMO this is super confusing as EigenQuaternion sounds like an actual quaternion, EigenQuaternionManifold would be much clearer",
+      "revId": "3f9e8f4406381743775394a6e46f39bceed66df6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
