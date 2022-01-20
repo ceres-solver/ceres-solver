@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b29e648c_4b18e42c",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-20T01:20:52Z",
+      "side": 1,
+      "message": "\"the template parameter T.\" feels like a fragment. Perhaps instead:\n\n\"in terms of the template parameter T.\"",
+      "revId": "8052390c6f78baae9952617e7a3f926c0652f956",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d6e33df_e6ab2f19",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-20T01:20:52Z",
+      "side": 1,
+      "message": "This paragraph feels lonely. Is it intended to combine with the next paragraph?",
+      "revId": "8052390c6f78baae9952617e7a3f926c0652f956",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbf3830f_9bd02f37",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-01-20T01:20:52Z",
+      "side": 1,
+      "message": "Please comment that only the derivative of delta is needed; hence the nullptr.",
+      "revId": "8052390c6f78baae9952617e7a3f926c0652f956",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
