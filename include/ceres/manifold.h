@@ -354,8 +354,8 @@ class CERES_EXPORT ProductManifold : public Manifold {
 //
 // where: i*i = j*j = k*k = -1 and i*j = k, j*k = i, k*i = j.
 //
-// The tangent space is R^3, which relates to the ambient space through
-// the Plus and Minus operations defined as:
+// The tangent space is R^3, which relates to the ambient space through the Plus
+// and Minus operations defined as:
 //
 // Plus(x, delta) = [cos(|delta|); sin(|delta|) * delta / |delta|] * x
 //    Minus(y, x) = to_delta(y * x^{-1})
@@ -364,10 +364,10 @@ class CERES_EXPORT ProductManifold : public Manifold {
 // (|q|=1), q^-1 = [q0; -q1; -q2; -q3]
 //
 // and to_delta( [q0; u_{3x1}] ) = u / |u| * atan2(|u|, q0)
-class CERES_EXPORT Quaternion : public Manifold {
+class CERES_EXPORT QuaternionManifold : public Manifold {
  public:
-  Quaternion() = default;
-  virtual ~Quaternion() = default;
+  QuaternionManifold() = default;
+  virtual ~QuaternionManifold() = default;
   int AmbientSize() const override { return 4; }
   int TangentSize() const override { return 3; }
 
@@ -382,18 +382,18 @@ class CERES_EXPORT Quaternion : public Manifold {
 };
 
 // Implements the quaternion manifold for Eigen's representation of the Hamilton
-// quaternion. Geometrically it is exactly the same as the Quaternion manifold
+// quaternion. Geometrically it is exactly the same as the QuaternionManifold
 // defined above. However, Eigen uses a different internal memory layout for the
 // elements of the quaternion than what is commonly used. It stores the
-// quaternion in memory as [q1, q2, q3, q0] or [x, y, z, w] where the
-// real (scalar) part is last.
+// quaternion in memory as [q1, q2, q3, q0] or [x, y, z, w] where the real
+// (scalar) part is last.
 //
-// Since Ceres operates on parameter blocks which are raw double pointers
-// this difference is important and requires a different manifold.
-class CERES_EXPORT EigenQuaternion : public Manifold {
+// Since Ceres operates on parameter blocks which are raw double pointers this
+// difference is important and requires a different manifold.
+class CERES_EXPORT EigenQuaternionManifold : public Manifold {
  public:
-  EigenQuaternion() = default;
-  virtual ~EigenQuaternion() = default;
+  EigenQuaternionManifold() = default;
+  virtual ~EigenQuaternionManifold() = default;
   int AmbientSize() const override { return 4; }
   int TangentSize() const override { return 3; }
 

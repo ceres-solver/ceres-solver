@@ -273,8 +273,8 @@ TEST(ProductManifold, EuclideanAndZeroTangentSize) {
   }
 }
 
-TEST(Quaternion, PlusPiBy2) {
-  Quaternion manifold;
+TEST(QuaternionManifold, PlusPiBy2) {
+  QuaternionManifold manifold;
   Vector x = Vector::Zero(4);
   x[0] = 1.0;
 
@@ -307,12 +307,12 @@ TEST(Quaternion, PlusPiBy2) {
   }
 }
 
-// Compute the expected value of Quaternion::Plus via functions in rotation.h
-// and compares it to the one computed by Quaternion::Plus.
-MATCHER_P2(QuaternionPlusIsCorrectAt, x, delta, "") {
+// Compute the expected value of QuaternionManifold::Plus via functions in
+// rotation.h and compares it to the one computed by QuaternionManifold::Plus.
+MATCHER_P2(QuaternionManifoldPlusIsCorrectAt, x, delta, "") {
   // This multiplication by 2 is needed because AngleAxisToQuaternion uses
   // |delta|/2 as the angle of rotation where as in the implementation of
-  // Quaternion for historical reasons we use |delta|.
+  // QuaternionManifold for historical reasons we use |delta|.
   const Vector two_delta = delta * 2;
   Vector delta_q(4);
   AngleAxisToQuaternion(two_delta.data(), delta_q.data());
@@ -343,46 +343,46 @@ Vector RandomQuaternion() {
   return x;
 }
 
-TEST(Quaternion, GenericDelta) {
-  Quaternion manifold;
+TEST(QuaternionManifold, GenericDelta) {
+  QuaternionManifold manifold;
   for (int trial = 0; trial < kNumTrials; ++trial) {
     const Vector x = RandomQuaternion();
     const Vector y = RandomQuaternion();
     Vector delta = Vector::Random(3);
-    EXPECT_THAT(manifold, QuaternionPlusIsCorrectAt(x, delta));
+    EXPECT_THAT(manifold, QuaternionManifoldPlusIsCorrectAt(x, delta));
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
-TEST(Quaternion, SmallDelta) {
-  Quaternion manifold;
+TEST(QuaternionManifold, SmallDelta) {
+  QuaternionManifold manifold;
   for (int trial = 0; trial < kNumTrials; ++trial) {
     const Vector x = RandomQuaternion();
     const Vector y = RandomQuaternion();
     Vector delta = Vector::Random(3);
     delta.normalize();
     delta *= 1e-6;
-    EXPECT_THAT(manifold, QuaternionPlusIsCorrectAt(x, delta));
+    EXPECT_THAT(manifold, QuaternionManifoldPlusIsCorrectAt(x, delta));
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
-TEST(Quaternion, DeltaJustBelowPi) {
-  Quaternion manifold;
+TEST(QuaternionManifold, DeltaJustBelowPi) {
+  QuaternionManifold manifold;
   for (int trial = 0; trial < kNumTrials; ++trial) {
     const Vector x = RandomQuaternion();
     const Vector y = RandomQuaternion();
     Vector delta = Vector::Random(3);
     delta.normalize();
     delta *= (M_PI - 1e-6);
-    EXPECT_THAT(manifold, QuaternionPlusIsCorrectAt(x, delta));
+    EXPECT_THAT(manifold, QuaternionManifoldPlusIsCorrectAt(x, delta));
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
-// Compute the expected value of EigenQuaternion::Plus using Eigen and compares
-// it to the one computed by Quaternion::Plus.
-MATCHER_P2(EigenQuaternionPlusIsCorrectAt, x, delta, "") {
+// Compute the expected value of EigenQuaternionManifold::Plus using Eigen and
+// compares it to the one computed by QuaternionManifold::Plus.
+MATCHER_P2(EigenQuaternionManifoldPlusIsCorrectAt, x, delta, "") {
   // This multiplication by 2 is needed because AngleAxisToQuaternion uses
   // |delta|/2 as the angle of rotation where as in the implementation of
   // Quaternion for historical reasons we use |delta|.
@@ -414,39 +414,39 @@ MATCHER_P2(EigenQuaternionPlusIsCorrectAt, x, delta, "") {
   return true;
 }
 
-TEST(EigenQuaternion, GenericDelta) {
-  EigenQuaternion manifold;
+TEST(EigenQuaternionManifold, GenericDelta) {
+  EigenQuaternionManifold manifold;
   for (int trial = 0; trial < kNumTrials; ++trial) {
     const Vector x = RandomQuaternion();
     const Vector y = RandomQuaternion();
     Vector delta = Vector::Random(3);
-    EXPECT_THAT(manifold, EigenQuaternionPlusIsCorrectAt(x, delta));
+    EXPECT_THAT(manifold, EigenQuaternionManifoldPlusIsCorrectAt(x, delta));
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
-TEST(EigenQuaternion, SmallDelta) {
-  EigenQuaternion manifold;
+TEST(EigenQuaternionManifold, SmallDelta) {
+  EigenQuaternionManifold manifold;
   for (int trial = 0; trial < kNumTrials; ++trial) {
     const Vector x = RandomQuaternion();
     const Vector y = RandomQuaternion();
     Vector delta = Vector::Random(3);
     delta.normalize();
     delta *= 1e-6;
-    EXPECT_THAT(manifold, EigenQuaternionPlusIsCorrectAt(x, delta));
+    EXPECT_THAT(manifold, EigenQuaternionManifoldPlusIsCorrectAt(x, delta));
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
 
-TEST(EigenQuaternion, DeltaJustBelowPi) {
-  EigenQuaternion manifold;
+TEST(EigenQuaternionManifold, DeltaJustBelowPi) {
+  EigenQuaternionManifold manifold;
   for (int trial = 0; trial < kNumTrials; ++trial) {
     const Vector x = RandomQuaternion();
     const Vector y = RandomQuaternion();
     Vector delta = Vector::Random(3);
     delta.normalize();
     delta *= (M_PI - 1e-6);
-    EXPECT_THAT(manifold, EigenQuaternionPlusIsCorrectAt(x, delta));
+    EXPECT_THAT(manifold, EigenQuaternionManifoldPlusIsCorrectAt(x, delta));
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
