@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bab0533d_2d536e8a",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-20T01:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b29e648c_4b18e42c",
+      "revId": "8052390c6f78baae9952617e7a3f926c0652f956",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d6e33df_e6ab2f19",
@@ -35,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a26d045b_9b003e85",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-20T01:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d6e33df_e6ab2f19",
+      "revId": "8052390c6f78baae9952617e7a3f926c0652f956",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbf3830f_9bd02f37",
@@ -48,6 +84,24 @@
       "writtenOn": "2022-01-20T01:20:52Z",
       "side": 1,
       "message": "Please comment that only the derivative of delta is needed; hence the nullptr.",
+      "revId": "8052390c6f78baae9952617e7a3f926c0652f956",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf8cf9fb_cdaf3b6d",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-20T01:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbf3830f_9bd02f37",
       "revId": "8052390c6f78baae9952617e7a3f926c0652f956",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
