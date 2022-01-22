@@ -35,18 +35,6 @@
 #include "glog/logging.h"
 
 #ifndef CERES_NO_LAPACK
-// C interface to the LAPACK Cholesky factorization and triangular solve.
-extern "C" void dpotrf_(char* uplo, int* n, double* a, int* lda, int* info);
-
-extern "C" void dpotrs_(char* uplo,
-                        int* n,
-                        int* nrhs,
-                        double* a,
-                        int* lda,
-                        double* b,
-                        int* ldb,
-                        int* info);
-
 extern "C" void dgels_(char* uplo,
                        int* m,
                        int* n,
@@ -62,52 +50,6 @@ extern "C" void dgels_(char* uplo,
 
 namespace ceres {
 namespace internal {
-
-LinearSolverTerminationType LAPACK::SolveInPlaceUsingCholesky(
-    int num_rows,
-    const double* in_lhs,
-    double* rhs_and_solution,
-    std::string* message) {
-#ifdef CERES_NO_LAPACK
-  LOG(FATAL) << "Ceres was built without a BLAS library.";
-  return LINEAR_SOLVER_FATAL_ERROR;
-#else
-  char uplo = 'L';
-  int n = num_rows;
-  int info = 0;
-  int nrhs = 1;
-  double* lhs = const_cast<double*>(in_lhs);
-
-  dpotrf_(&uplo, &n, lhs, &n, &info);
-  if (info < 0) {
-    LOG(FATAL) << "Congratulations, you found a bug in Ceres."
-               << "Please report it."
-               << "LAPACK::dpotrf fatal error."
-               << "Argument: " << -info << " is invalid.";
-    return LINEAR_SOLVER_FATAL_ERROR;
-  }
-
-  if (info > 0) {
-    *message = StringPrintf(
-        "LAPACK::dpotrf numerical failure. "
-        "The leading minor of order %d is not positive definite.",
-        info);
-    return LINEAR_SOLVER_FAILURE;
-  }
-
-  dpotrs_(&uplo, &n, &nrhs, lhs, &n, rhs_and_solution, &n, &info);
-  if (info < 0) {
-    LOG(FATAL) << "Congratulations, you found a bug in Ceres."
-               << "Please report it."
-               << "LAPACK::dpotrs fatal error."
-               << "Argument: " << -info << " is invalid.";
-    return LINEAR_SOLVER_FATAL_ERROR;
-  }
-
-  *message = "Success";
-  return LINEAR_SOLVER_SUCCESS;
-#endif
-}
 
 int LAPACK::EstimateWorkSizeForQR(int num_rows, int num_cols) {
 #ifdef CERES_NO_LAPACK
