@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e715872b_7554d0c9",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:55:19Z",
+      "side": 1,
+      "message": "fair point, I will work on updating it.",
+      "parentUuid": "75876516_7daf184a",
+      "revId": "3f9e8f4406381743775394a6e46f39bceed66df6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f2db7c3_a1f84d0f",
         "filename": "examples/slam/pose_graph_3d/pose_graph_3d.cc",
         "patchSetId": 2
