@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51e11b75_10a81db5",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "Add \u003calgorithm\u003e for std::copy",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "087d097d_f515b86a",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "Duplicated from ceres/dense_cholesky.h",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7566083_638e0d02",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "I think you can use `\u003d default` in the declaration for this given that the class is already abstract due to its pure virtual methods no?",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66a10314_2e62ef7b",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "Could be const no?  Or even constexpr",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d589465a_31086d40",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "Could be const, or constexpr",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a11985f_dee70fa2",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "Could be const (or constexpr)",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc7d000c_1e8ee2f2",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3422cb49_7d54b8c8",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "\u0027whether\u0027 -\u003e \u0027irrespective of whether\u0027",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4fff502_aec1f3e0",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "\u0027is alive\u0027?  I think you mean \u0027valid\u0027 here, i.e. based on the returned termination type and with a lifetime that survives until the corresponding call to Solve() completes",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d701ce8c_5b6bc8a5",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "\u0027lhs is alive\u0027 -\u003e \u0027lhs passed to Factorize() has not been freed\u0027",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d2f51bf_12596fb5",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "\u0027whether\u0027 -\u003e \u0027irrespective of whether\u0027",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95beb815_37a6b400",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "Same comment as above about \u0027alive\u0027",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17c241c2_e9e3bdd6",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "I wonder if this *should* be virtual, given that it is performing checking that we would not want someone to bypass accidentally, and it is literally calling one method and then the other.  The point that we make here about \u0027Solve is only called if Factorize succeeds\u0027 is only true for *our* implementation.",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "488059b5_9f305214",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "Why 20 ?",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7672df7_87a5c129",
+        "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "Duplicated from dense_normal_cholesky_solver.h",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fc592ad_c3c2451b",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T18:33:25Z",
+      "side": 1,
+      "message": "Why would this now need to be mutable ?",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
