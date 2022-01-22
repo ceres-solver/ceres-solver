@@ -105,7 +105,9 @@ TEST_P(DenseLinearSolverTest, _) {
   const double residual = (expected_normal_rhs - actual_normal_rhs).norm() /
                           expected_normal_rhs.norm();
 
-  EXPECT_NEAR(residual, 0.0, 10 * std::numeric_limits<double>::epsilon());
+  EXPECT_NEAR(residual, 0.0, 10 * std::numeric_limits<double>::epsilon())
+      << "\nexpected: " << expected_normal_rhs.transpose()
+      << "\nactual: " << actual_normal_rhs.transpose();
 }
 
 namespace {

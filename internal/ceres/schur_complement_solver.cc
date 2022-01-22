@@ -46,7 +46,6 @@
 #include "ceres/conjugate_gradients_solver.h"
 #include "ceres/detect_structure.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/lapack.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -212,26 +211,12 @@ LinearSolver::Summary DenseSchurComplementSolver::SolveReducedLinearSystem(
   }
 
   summary.num_iterations = 1;
-
-  if (options().dense_linear_algebra_library_type == EIGEN) {
-    Eigen::LLT<Matrix, Eigen::Upper> llt =
-        ConstMatrixRef(m->values(), num_rows, num_rows)
-            .selfadjointView<Eigen::Upper>()
-            .llt();
-    if (llt.info() != Eigen::Success) {
-      summary.termination_type = LINEAR_SOLVER_FAILURE;
-      summary.message =
-          "Eigen failure. Unable to perform dense Cholesky factorization.";
-      return summary;
-    }
-
-    VectorRef(solution, num_rows) = llt.solve(ConstVectorRef(rhs(), num_rows));
-  } else {
-    VectorRef(solution, num_rows) = ConstVectorRef(rhs(), num_rows);
-    summary.termination_type = LAPACK::SolveInPlaceUsingCholesky(
-        num_rows, m->values(), solution, &summary.message);
-  }
-
+  summary.termination_type =
+      cholesky_->FactorAndSolve(num_rows,
+                                const_cast<double*>(m->values()),
+                                rhs(),
+                                solution,
+                                &summary.message);
   return summary;
 }
 

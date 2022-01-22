@@ -72,6 +72,7 @@ set(CERES_INTERNAL_SRC
     covariance.cc
     covariance_impl.cc
     cxsparse.cc
+    dense_cholesky.cc
     dense_normal_cholesky_solver.cc
     dense_qr_solver.cc
     dense_sparse_matrix.cc
