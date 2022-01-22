@@ -34,6 +34,7 @@
 #ifndef CERES_INTERNAL_DENSE_NORMAL_CHOLESKY_SOLVER_H_
 #define CERES_INTERNAL_DENSE_NORMAL_CHOLESKY_SOLVER_H_
 
+#include "ceres/dense_cholesky.h"
 #include "ceres/linear_solver.h"
 
 namespace ceres {
@@ -84,19 +85,8 @@ class DenseNormalCholeskySolver : public DenseSparseMatrixSolver {
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* x) final;
 
-  LinearSolver::Summary SolveUsingLAPACK(
-      DenseSparseMatrix* A,
-      const double* b,
-      const LinearSolver::PerSolveOptions& per_solve_options,
-      double* x);
-
-  LinearSolver::Summary SolveUsingEigen(
-      DenseSparseMatrix* A,
-      const double* b,
-      const LinearSolver::PerSolveOptions& per_solve_options,
-      double* x);
-
   const LinearSolver::Options options_;
+  std::unique_ptr<DenseCholesky> cholesky_;
 };
 
 }  // namespace internal

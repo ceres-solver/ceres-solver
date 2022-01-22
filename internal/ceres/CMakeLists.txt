@@ -72,6 +72,7 @@ set(CERES_INTERNAL_SRC
     covariance.cc
     covariance_impl.cc
     cxsparse.cc
+    dense_cholesky.cc
     dense_normal_cholesky_solver.cc
     dense_qr_solver.cc
     dense_sparse_matrix.cc
@@ -452,6 +453,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(covariance)
   ceres_test(cubic_interpolation)
   ceres_test(dense_linear_solver)
+  ceres_test(dense_cholesky)
   ceres_test(dense_sparse_matrix)
   ceres_test(detect_structure)
   ceres_test(dogleg_strategy)
