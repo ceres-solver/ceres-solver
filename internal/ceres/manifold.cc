@@ -402,50 +402,53 @@ bool ProductManifold::MinusJacobian(const double* x,
   return true;
 }
 
-bool Quaternion::Plus(const double* x,
-                      const double* delta,
-                      double* x_plus_delta) const {
+bool QuaternionManifold::Plus(const double* x,
+                              const double* delta,
+                              double* x_plus_delta) const {
   QuaternionPlusImpl<CeresQuaternionOrder>(x, delta, x_plus_delta);
   return true;
 }
 
-bool Quaternion::PlusJacobian(const double* x, double* jacobian) const {
+bool QuaternionManifold::PlusJacobian(const double* x, double* jacobian) const {
   QuaternionPlusJacobianImpl<CeresQuaternionOrder>(x, jacobian);
   return true;
 }
 
-bool Quaternion::Minus(const double* y,
-                       const double* x,
-                       double* y_minus_x) const {
+bool QuaternionManifold::Minus(const double* y,
+                               const double* x,
+                               double* y_minus_x) const {
   QuaternionMinusImpl<CeresQuaternionOrder>(y, x, y_minus_x);
   return true;
 }
 
-bool Quaternion::MinusJacobian(const double* x, double* jacobian) const {
+bool QuaternionManifold::MinusJacobian(const double* x,
+                                       double* jacobian) const {
   QuaternionMinusJacobianImpl<CeresQuaternionOrder>(x, jacobian);
   return true;
 }
 
-bool EigenQuaternion::Plus(const double* x,
-                           const double* delta,
-                           double* x_plus_delta) const {
+bool EigenQuaternionManifold::Plus(const double* x,
+                                   const double* delta,
+                                   double* x_plus_delta) const {
   QuaternionPlusImpl<EigenQuaternionOrder>(x, delta, x_plus_delta);
   return true;
 }
 
-bool EigenQuaternion::PlusJacobian(const double* x, double* jacobian) const {
+bool EigenQuaternionManifold::PlusJacobian(const double* x,
+                                           double* jacobian) const {
   QuaternionPlusJacobianImpl<EigenQuaternionOrder>(x, jacobian);
   return true;
 }
 
-bool EigenQuaternion::Minus(const double* y,
-                            const double* x,
-                            double* y_minus_x) const {
+bool EigenQuaternionManifold::Minus(const double* y,
+                                    const double* x,
+                                    double* y_minus_x) const {
   QuaternionMinusImpl<EigenQuaternionOrder>(y, x, y_minus_x);
   return true;
 }
 
-bool EigenQuaternion::MinusJacobian(const double* x, double* jacobian) const {
+bool EigenQuaternionManifold::MinusJacobian(const double* x,
+                                            double* jacobian) const {
   QuaternionMinusJacobianImpl<EigenQuaternionOrder>(x, jacobian);
   return true;
 }
