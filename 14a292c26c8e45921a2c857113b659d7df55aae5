@@ -456,6 +456,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e97ba255_dc1c5799",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T22:29:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a57cbc1_b66029be",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "488059b5_9f305214",
@@ -487,6 +505,24 @@
       "side": 1,
       "message": "this is copied over from sparse_cholesky. I can likely reduce it.\nit gives us room with the condition number.",
       "parentUuid": "488059b5_9f305214",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bd7af24_f8628f2b",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T22:29:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd0a39d9_21143342",
       "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -557,6 +593,24 @@
       "side": 1,
       "message": "because the cholesky factorization can modify the underlying matrix.\nwe were doing the const cast thing earlier, so this just makes it explicit.",
       "parentUuid": "5fc592ad_c3c2451b",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30946be1_653ab795",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T22:29:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45ee57a3_c984fe0b",
       "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
