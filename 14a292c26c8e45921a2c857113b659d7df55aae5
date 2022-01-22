@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "08398e62_65fc07ee",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51e11b75_10a81db5",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "087d097d_f515b86a",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-01-22T18:33:25Z",
       "side": 1,
       "message": "Duplicated from ceres/dense_cholesky.h",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28898e1b_6380157c",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "087d097d_f515b86a",
       "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -52,6 +88,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca867e52_cef9b114",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7566083_638e0d02",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66a10314_2e62ef7b",
@@ -65,6 +119,24 @@
       "writtenOn": "2022-01-22T18:33:25Z",
       "side": 1,
       "message": "Could be const no?  Or even constexpr",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c854b5d7_ca2fdaed",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "no .. we are passing these as pointers to fortan code.. :/",
+      "parentUuid": "66a10314_2e62ef7b",
       "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -86,6 +158,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a434d492_1351470e",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d589465a_31086d40",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a11985f_dee70fa2",
@@ -99,6 +189,24 @@
       "writtenOn": "2022-01-22T18:33:25Z",
       "side": 1,
       "message": "Could be const (or constexpr)",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "180c4622_3ec8c712",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8a11985f_dee70fa2",
       "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -120,6 +228,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fca799a_5cddc1ec",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc7d000c_1e8ee2f2",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3422cb49_7d54b8c8",
@@ -133,6 +259,24 @@
       "writtenOn": "2022-01-22T18:33:25Z",
       "side": 1,
       "message": "\u0027whether\u0027 -\u003e \u0027irrespective of whether\u0027",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f29719c_cba0bb59",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3422cb49_7d54b8c8",
       "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -154,6 +298,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba82e596_ab735b8a",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4fff502_aec1f3e0",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d701ce8c_5b6bc8a5",
@@ -167,6 +329,24 @@
       "writtenOn": "2022-01-22T18:33:25Z",
       "side": 1,
       "message": "\u0027lhs is alive\u0027 -\u003e \u0027lhs passed to Factorize() has not been freed\u0027",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efe97a25_13e8037a",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d701ce8c_5b6bc8a5",
       "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -188,6 +368,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a11047b_9ef0ab42",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d2f51bf_12596fb5",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "95beb815_37a6b400",
@@ -201,6 +399,24 @@
       "writtenOn": "2022-01-22T18:33:25Z",
       "side": 1,
       "message": "Same comment as above about \u0027alive\u0027",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85c6c79c_1a4307ac",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95beb815_37a6b400",
       "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -224,6 +440,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a57cbc1_b66029be",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "its an internal class, and if someone is going to do something stupid here..",
+      "parentUuid": "17c241c2_e9e3bdd6",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "488059b5_9f305214",
         "filename": "internal/ceres/dense_cholesky_test.cc",
         "patchSetId": 2
@@ -235,6 +469,24 @@
       "writtenOn": "2022-01-22T18:33:25Z",
       "side": 1,
       "message": "Why 20 ?",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd0a39d9_21143342",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "this is copied over from sparse_cholesky. I can likely reduce it.\nit gives us room with the condition number.",
+      "parentUuid": "488059b5_9f305214",
       "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -256,6 +508,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "045c6fe2_e48eddcb",
+        "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7672df7_87a5c129",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5fc592ad_c3c2451b",
@@ -269,6 +539,24 @@
       "writtenOn": "2022-01-22T18:33:25Z",
       "side": 1,
       "message": "Why would this now need to be mutable ?",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45ee57a3_c984fe0b",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:21:08Z",
+      "side": 1,
+      "message": "because the cholesky factorization can modify the underlying matrix.\nwe were doing the const cast thing earlier, so this just makes it explicit.",
+      "parentUuid": "5fc592ad_c3c2451b",
       "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
