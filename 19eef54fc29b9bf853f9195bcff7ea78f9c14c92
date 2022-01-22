@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96d0ddf6_31c4ea13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T19:10:13Z",
+      "side": 1,
+      "message": "I screwed up my git repo, so this is a replica of that other branch.",
+      "revId": "19eef54fc29b9bf853f9195bcff7ea78f9c14c92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
