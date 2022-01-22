@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "833e039f_e4705a46",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T17:52:35Z",
+      "side": 1,
+      "message": "\u0027with a\u0027 -\u003e \u0027with\u0027",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "527171ff_aac95a01",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T17:52:35Z",
+      "side": 1,
+      "message": "Nitpick, but capitalisation of Functor here seems slightly weird.  Same point when it appears below, I think Manifold is different as that is the name of the base class, whereas here functor is really a placeholder for some arbitrary type which has (at least) these method signatures.",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c868491_60f6ec2c",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T17:52:35Z",
+      "side": 1,
+      "message": "Maybe consider structure -\u003e signatures",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10aa745b_001fc874",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T17:52:35Z",
+      "side": 1,
+      "message": "Add sentence prior to start of this one:\n\nWhere x, y and x_plus_delta are kAmbientSize vectors, and delta and y_minus_x are kTangentSize vectors.",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c863cf81_7514b9b8",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T17:52:35Z",
+      "side": 1,
+      "message": "otherwise, in which case the results will not be used.",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da2e1e5c_93f7b3d3",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T17:52:35Z",
+      "side": 1,
+      "message": "Add comma after \u0027functor\u0027",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7087386f_c0d0e741",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T17:52:35Z",
+      "side": 1,
+      "message": "\u0027The Quaternions form\u0027 -\u003e \u0027Quaternions form\u0027",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6db1cb2_019fdff7",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T17:52:35Z",
+      "side": 1,
+      "message": "\u0027consider Quaternions\u0027, or \u0027consider the case of Quaternions\u0027.  \u0027The Quaternions\u0027 sounds like a particularly twisted villain (nice), or a niche-interest band.",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88c5247c_9fcaeff4",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T17:52:35Z",
+      "side": 1,
+      "message": "\u0027has a dimension 3\u0027 -\u003e \u0027has dimension 3\u0027",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b9d0444_a23722ec",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T17:52:35Z",
+      "side": 1,
+      "message": "Should we reference the test origin here?  I\u0027m just thinking this could go stale and I\u0027m not sure it\u0027s adding much value for a user?",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a4727c0_872b41e0",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T17:52:35Z",
+      "side": 1,
+      "message": "Consider adding a note here that we do not recommend users copy this themselves, if they are using Quaternions there are ready-made analytic manifolds available directly.",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83b6a642_7fabb27f",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T17:52:35Z",
+      "side": 1,
+      "message": "Consider adding a note here about the assumed Quaternion ordering",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54335451_3d44697d",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-22T17:52:35Z",
+      "side": 1,
+      "message": "Extra vspace here ?",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
