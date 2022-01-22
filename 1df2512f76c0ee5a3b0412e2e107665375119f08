@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e73ddb60_43b0714f",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "833e039f_e4705a46",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "527171ff_aac95a01",
@@ -69,6 +87,60 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18b9d6b7_371d3284",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10aa745b_001fc874",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2cac8be_b4e3bcbf",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c868491_60f6ec2c",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74aef75f_366de27b",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:54:35Z",
+      "side": 1,
+      "message": "when the templated type is a Class/Struct we always capitalize, it also allows us to use the instance as the lower case version.",
+      "parentUuid": "527171ff_aac95a01",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c863cf81_7514b9b8",
@@ -86,6 +158,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b92e2a4d_1d025e3c",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c863cf81_7514b9b8",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da2e1e5c_93f7b3d3",
@@ -99,6 +189,24 @@
       "writtenOn": "2022-01-22T17:52:35Z",
       "side": 1,
       "message": "Add comma after \u0027functor\u0027",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a98ea3e_baf0f8a9",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da2e1e5c_93f7b3d3",
       "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -137,6 +245,42 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc80551f_dd9cfa42",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6db1cb2_019fdff7",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb0901fe_0e9a76e0",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7087386f_c0d0e741",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88c5247c_9fcaeff4",
@@ -150,6 +294,24 @@
       "writtenOn": "2022-01-22T17:52:35Z",
       "side": 1,
       "message": "\u0027has a dimension 3\u0027 -\u003e \u0027has dimension 3\u0027",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e575c57_cecc6850",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c5247c_9fcaeff4",
       "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -171,6 +333,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0837c329_fccee307",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:54:35Z",
+      "side": 1,
+      "message": "I doubt it will go stale.. I think we are going to be okay.",
+      "parentUuid": "1b9d0444_a23722ec",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a4727c0_872b41e0",
@@ -184,6 +364,24 @@
       "writtenOn": "2022-01-22T17:52:35Z",
       "side": 1,
       "message": "Consider adding a note here that we do not recommend users copy this themselves, if they are using Quaternions there are ready-made analytic manifolds available directly.",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adab361a_3789fa31",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a4727c0_872b41e0",
       "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -205,6 +403,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "33334e3e_cf49722a",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83b6a642_7fabb27f",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54335451_3d44697d",
@@ -218,6 +434,24 @@
       "writtenOn": "2022-01-22T17:52:35Z",
       "side": 1,
       "message": "Extra vspace here ?",
+      "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "777c3b5e_52eff272",
+        "filename": "include/ceres/autodiff_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-22T18:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54335451_3d44697d",
       "revId": "1df2512f76c0ee5a3b0412e2e107665375119f08",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
