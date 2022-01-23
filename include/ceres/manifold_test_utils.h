@@ -28,9 +28,11 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <algorithm>
 #include <cmath>
 #include <limits>
 #include <memory>
+#include <type_traits>
 
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/internal/eigen.h"
@@ -41,6 +43,31 @@
 #include "gtest/gtest.h"
 
 namespace ceres {
+namespace internal {
+// Manifold projector used in numeric differentiation MinusFunctor.
+//
+// As numeric differentiation is not aware of manifolds, the generated
+// points are likely not on the manifold. The projector is called to project these
+// points back onto the manifold.
+//
+// The class needs to implement a static project function with the following
+// signature:
+//  static void project(int ambient_size,
+//                      const double* y,
+//                      const double* x,
+//                      double* projected_y);
+template <typename T>
+struct ManifoldProjector {
+  // Default implementation of the manifold projection. It assumes that every
+  // point y is a valid point and just copies the values to the output variable.
+  static void project(int ambient_size,
+                      const double* y,
+                      const double* /*x*/,
+                      double* projected_y) {
+    std::copy_n(y, ambient_size, projected_y);
+  }
+};
+}  // namespace internal
 
 // Matchers and macros for help with testing Manifold objects.
 //
@@ -200,11 +227,18 @@ MATCHER_P3(PlusMinusIsIdentityAt, x, y, tolerance, "") {
 
 // Helper struct to curry Minus(., x) so that it can be numerically
 // differentiated.
+template <typename ManifoldType>
 struct MinusFunctor {
   MinusFunctor(const Manifold& manifold, const double* x)
       : manifold(manifold), x(x) {}
   bool operator()(double const* const* parameters, double* y_minus_x) const {
-    return manifold.Minus(parameters[0], x, y_minus_x);
+    // As numeric differentiation can produce points which are not on the
+    // manifold, allow to project them back.
+    const int ambient_size = manifold.AmbientSize();
+    Vector y(ambient_size);
+    internal::ManifoldProjector<ManifoldType>::project(
+        ambient_size, parameters[0], x, y.data());
+    return manifold.Minus(y.data(), x, y_minus_x);
   }
 
   const Manifold& manifold;
@@ -220,10 +254,14 @@ MATCHER_P2(HasCorrectMinusJacobianAt, x, tolerance, "") {
   Vector y = x;
   Vector y_minus_x = Vector::Zero(tangent_size);
 
+  using ManifoldType = std::decay_t<decltype(arg)>;
+
   NumericDiffOptions options;
   options.ridders_relative_initial_step_size = 1e-4;
-  DynamicNumericDiffCostFunction<MinusFunctor, RIDDERS> cost_function(
-      new MinusFunctor(arg, x.data()), TAKE_OWNERSHIP, options);
+  DynamicNumericDiffCostFunction<MinusFunctor<ManifoldType>, RIDDERS>
+      cost_function(new MinusFunctor<ManifoldType>(arg, x.data()),
+                    TAKE_OWNERSHIP,
+                    options);
   cost_function.AddParameterBlock(ambient_size);
   cost_function.SetNumResiduals(tangent_size);
 
