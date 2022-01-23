@@ -492,6 +492,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4a3c2ef_2b256256",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T17:00:47Z",
+      "side": 1,
+      "message": "fair point, I will make it non-virtual here and in sparse cholesky.",
+      "parentUuid": "e6fae346_fc95ed54",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "488059b5_9f305214",
