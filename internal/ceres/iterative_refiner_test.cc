@@ -109,12 +109,6 @@ class FakeSparseCholesky : public SparseCholesky {
                                         std::string* message) final
       DO_NOT_CALL_WITH_RETURN(LINEAR_SOLVER_FAILURE);
 
-  LinearSolverTerminationType FactorAndSolve(CompressedRowSparseMatrix* lhs,
-                                             const double* rhs,
-                                             double* solution,
-                                             std::string* message) final
-      DO_NOT_CALL_WITH_RETURN(LINEAR_SOLVER_FAILURE);
-
  private:
   Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic> lhs_;
 };
