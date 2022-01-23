@@ -35,6 +35,7 @@
 #include <memory>
 
 #include "Eigen/Geometry"
+#include "ceres/autodiff_local_parameterization.h"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/manifold_test_utils.h"
@@ -48,7 +49,7 @@ namespace ceres {
 namespace internal {
 
 constexpr int kNumTrials = 1000;
-constexpr double kTolerance = 1e-9;
+constexpr double kTolerance = 1e-8;
 
 TEST(EuclideanManifold, NormalFunctionTest) {
   EuclideanManifold manifold(3);
@@ -337,7 +338,7 @@ MATCHER_P2(QuaternionManifoldPlusIsCorrectAt, x, delta, "") {
   return true;
 }
 
-Vector RandomQuaternion() {
+static Vector RandomQuaternion() {
   Vector x = Vector::Random(4);
   x.normalize();
   return x;
@@ -447,6 +448,127 @@ TEST(EigenQuaternionManifold, DeltaJustBelowPi) {
     delta.normalize();
     delta *= (M_PI - 1e-6);
     EXPECT_THAT(manifold, EigenQuaternionManifoldPlusIsCorrectAt(x, delta));
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+  }
+}
+
+template <int AmbientSpaceDimension>
+struct ManifoldProjector<SphereManifold<AmbientSpaceDimension>> {
+  static void project(int ambient_size,
+                      const double* y_ptr,
+                      const double* x_ptr,
+                      double* projected_y_ptr) {
+    using Vector = Eigen::Matrix<double, AmbientSpaceDimension, 1>;
+    Eigen::Map<const Vector> x(x_ptr, ambient_size);
+    Eigen::Map<const Vector> y(y_ptr, ambient_size);
+    Eigen::Map<Vector> projected_y(projected_y_ptr, ambient_size);
+    projected_y = y * x.norm() / y.norm();
+  }
+};
+
+TEST(SphereManifold, ZeroTest) {
+  Eigen::Vector4d x{0.0, 0.0, 0.0, 1.0};
+  Eigen::Vector3d delta = Eigen::Vector3d::Zero();
+  Eigen::Vector4d y = Eigen::Vector4d::Zero();
+
+  SphereManifold<4> manifold;
+  manifold.Plus(x.data(), delta.data(), y.data());
+  EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+}
+
+TEST(SphereManifold, NearZeroTest1) {
+  Eigen::Vector4d x{1e-5, 1e-5, 1e-5, 1.0};
+  x.normalize();
+  Eigen::Vector3d delta{0.0, 1.0, 0.0};
+  Eigen::Vector4d y = Eigen::Vector4d::Zero();
+
+  SphereManifold<4> manifold;
+  manifold.Plus(x.data(), delta.data(), y.data());
+  EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+}
+
+TEST(SphereManifold, NearZeroTest2) {
+  Eigen::Vector4d x{0.001, 0.0, 0.0, 0.0};
+  Eigen::Vector3d delta{0.0, 1.0, 0.0};
+  Eigen::Vector4d y = Eigen::Vector4d::Zero();
+  SphereManifold<4> manifold;
+  manifold.Plus(x.data(), delta.data(), y.data());
+  EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+}
+
+TEST(SphereManifold, Plus) {
+  Eigen::Vector3d x{0.0, 0.0, 1.0};
+  SphereManifold<3> manifold;
+
+  {
+    Eigen::Vector2d delta{M_PI, 0.0};
+    Eigen::Vector3d y = Eigen::Vector3d::Zero();
+    EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
+    const Eigen::Vector3d gtY = Eigen::Vector3d::UnitX();
+    EXPECT_LT((y - gtY).norm(), kTolerance);
+  }
+
+  {
+    Eigen::Vector2d delta{0.0, M_PI};
+    Eigen::Vector3d y = Eigen::Vector3d::Zero();
+    EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
+    const Eigen::Vector3d gtY = Eigen::Vector3d::UnitY();
+    EXPECT_LT((y - gtY).norm(), kTolerance);
+  }
+
+  {
+    Eigen::Vector2d delta = Eigen::Vector2d(1, 1).normalized() * M_PI;
+    Eigen::Vector3d y = Eigen::Vector3d::Zero();
+    EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
+    const Eigen::Vector3d gtY(std::sqrt(2.0) / 2.0, std::sqrt(2.0) / 2.0, 0.0);
+    EXPECT_LT((y - gtY).norm(), kTolerance);
+  }
+}
+
+TEST(SphereManifold, DeathTests) {
+  EXPECT_DEATH_IF_SUPPORTED(SphereManifold<Eigen::Dynamic> x(1), "size");
+}
+
+TEST(SphereManifold, NormalFunctionTest) {
+  SphereManifold<4> manifold;
+  EXPECT_EQ(manifold.AmbientSize(), 4);
+  EXPECT_EQ(manifold.TangentSize(), 3);
+
+  Vector zero_tangent = Vector::Zero(manifold.TangentSize());
+  for (int trial = 0; trial < kNumTrials; ++trial) {
+    const Vector x = Vector::Random(manifold.AmbientSize());
+    Vector y = Vector::Random(manifold.AmbientSize());
+    Vector delta = Vector::Random(manifold.TangentSize());
+
+    if (x.norm() == 0.0 || y.norm() == 0.0) {
+      continue;
+    }
+
+    // X and y need to have the same length.
+    y *= x.norm() / y.norm();
+
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+  }
+}
+
+TEST(SphereManifold, NormalFunctionTestDynamic) {
+  SphereManifold<Eigen::Dynamic> manifold(5);
+  EXPECT_EQ(manifold.AmbientSize(), 5);
+  EXPECT_EQ(manifold.TangentSize(), 4);
+
+  Vector zero_tangent = Vector::Zero(manifold.TangentSize());
+  for (int trial = 0; trial < kNumTrials; ++trial) {
+    const Vector x = Vector::Random(manifold.AmbientSize());
+    Vector y = Vector::Random(manifold.AmbientSize());
+    Vector delta = Vector::Random(manifold.TangentSize());
+
+    if (x.norm() == 0.0 || y.norm() == 0.0) {
+      continue;
+    }
+
+    // X and y need to have the same length.
+    y *= x.norm() / y.norm();
+
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
