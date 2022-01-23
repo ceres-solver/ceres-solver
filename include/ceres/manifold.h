@@ -31,6 +31,7 @@
 #ifndef CERES_PUBLIC_MANIFOLD_H_
 #define CERES_PUBLIC_MANIFOLD_H_
 
+#include <Eigen/Core>
 #include <array>
 #include <memory>
 #include <vector>
@@ -407,7 +408,73 @@ class CERES_EXPORT EigenQuaternionManifold : public Manifold {
   bool MinusJacobian(const double* x, double* jacobian) const override;
 };
 
+// This provides a manifold on a sphere meaning that the norm of the vector
+// stays the same. Such cases often arises in Structure for Motion
+// problems. One example where they are used is in representing points whose
+// triangulation is ill-conditioned. Here it is advantageous to use an
+// over-parameterization since homogeneous vectors can represent points at
+// infinity.
+//
+// The plus operator is defined as
+//  Plus(x, delta) =
+//    [sin(0.5 * |delta|) * delta / |delta|, cos(0.5 * |delta|)] * x
+//
+// The minus operator is defined as
+//  Minus(x, y) = 2 acos(y[-1]) / sqrt(1 - y[-1]^2) * hy[0 : size_ - 1]
+//
+// with * defined as an operator which applies the update orthogonal to x to
+// remain on the sphere. The ambient space dimension is required to be greater
+// than 1.
+//
+// See  section B.2 (p.25) in "Integrating Generic Sensor Fusion Algorithms with
+// Sound State Representations through Encapsulation of Manifolds" by C.
+// Hertzberg, R. Wagner, U. Frese and L. Schroder for more details
+// (https://arxiv.org/pdf/1107.1119.pdf)
+template <int AmbientSpaceDimension>
+class SphereManifold : public Manifold {
+ public:
+  static_assert(
+      AmbientSpaceDimension == Eigen::Dynamic || AmbientSpaceDimension > 1,
+      "The size of the homogeneous vector needs to be greater than 1.");
+
+  SphereManifold();
+  SphereManifold(int size);
+
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
+  bool PlusJacobian(const double* x, double* jacobian) const override;
+  int AmbientSize() const override {
+    return AmbientSpaceDimension == Eigen::Dynamic ? size_
+                                                   : AmbientSpaceDimension;
+  }
+  int TangentSize() const override { return AmbientSize() - 1; }
+  bool Minus(const double* y,
+             const double* x,
+             double* y_minus_x) const override;
+  bool MinusJacobian(const double* x, double* jacobian) const override;
+
+ private:
+  static constexpr int TangentSpaceDimension =
+      AmbientSpaceDimension > 0 ? AmbientSpaceDimension - 1 : Eigen::Dynamic;
+
+  using AmbientVector = Eigen::Matrix<double, AmbientSpaceDimension, 1>;
+  using TangentVector = Eigen::Matrix<double, TangentSpaceDimension, 1>;
+  using MatrixPlusJacobian = Eigen::Matrix<double,
+                                           AmbientSpaceDimension,
+                                           TangentSpaceDimension,
+                                           Eigen::RowMajor>;
+  using MatrixMinusJacobian = Eigen::Matrix<double,
+                                            TangentSpaceDimension,
+                                            AmbientSpaceDimension,
+                                            Eigen::RowMajor>;
+
+  const int size_{};
+};
+
 }  // namespace ceres
+
+#include "internal/sphere_manifold.h"
 
 // clang-format off
 #include "ceres/internal/reenable_warnings.h"
