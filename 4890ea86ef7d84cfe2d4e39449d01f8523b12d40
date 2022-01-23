@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62ff86de_9bb50ad7",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-23T16:28:52Z",
+      "side": 1,
+      "message": "Nitpick, but IMO this should be a comment line to join these blocks as they both refer to the method directly below",
+      "revId": "4890ea86ef7d84cfe2d4e39449d01f8523b12d40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

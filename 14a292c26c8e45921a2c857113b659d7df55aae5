@@ -474,6 +474,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6fae346_fc95ed54",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-23T16:28:52Z",
+      "side": 1,
+      "message": "It\u0027s an internal class, but IMO this method isn\u0027t one that I would want derived implementations of this interface to be able to change the implementation of, or rather I don\u0027t see a sensible reason why they would need to",
+      "parentUuid": "e97ba255_dc1c5799",
+      "revId": "14a292c26c8e45921a2c857113b659d7df55aae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "488059b5_9f305214",
