@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f456023_b6655e35",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "1. Update documentation to say manifold instead of parameterization.\n2. Mention that Plus preserves norm.\n3.  Mention that the user can also think of this as parameterizing the Sphere. I am curious if this is better named to be the SphereManifold rather than HomogeneousVectorManifold?",
+      "range": {
+        "startLine": 410,
+        "startChar": 36,
+        "endLine": 410,
+        "endChar": 39
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8047b3e8_680a6114",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "define both plus and minus in the comments.",
+      "range": {
+        "startLine": 417,
+        "startChar": 8,
+        "endLine": 417,
+        "endChar": 9
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d61a575_d2352690",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "blank line between equations and text.",
+      "range": {
+        "startLine": 419,
+        "startChar": 2,
+        "endLine": 419,
+        "endChar": 3
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "332f6396_59d7b4b4",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "size of the manifold",
+      "range": {
+        "startLine": 458,
+        "startChar": 53,
+        "endLine": 458,
+        "endChar": 59
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9a8d154_84dcc620",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "I think since hartley does not define minus, it is better to refer to say the manifold paper for both the plus and the minus operations.",
+      "range": {
+        "startLine": 476,
+        "startChar": 36,
+        "endLine": 476,
+        "endChar": 50
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d12d6df_6dbac89e",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "I think you can likely a couple of FixedArray objects here for y and for v h to save heap allocations since these vectors are likely going to be fairly small.",
+      "range": {
+        "startLine": 488,
+        "startChar": 8,
+        "endLine": 488,
+        "endChar": 9
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bf280b2_84637ca3",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "see comment about FixedArray",
+      "range": {
+        "startLine": 510,
+        "startChar": 10,
+        "endLine": 510,
+        "endChar": 11
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80eed5cc_67879476",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "FixedArray.",
+      "range": {
+        "startLine": 537,
+        "startChar": 2,
+        "endLine": 537,
+        "endChar": 8
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14f4ce0c_2f0162c2",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "use FixedArray.",
+      "range": {
+        "startLine": 546,
+        "startChar": 8,
+        "endLine": 546,
+        "endChar": 14
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84a3e9f1_219df180",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "do you need to worry about the case that y_last * y_last may become just larger than 1?",
+      "range": {
+        "startLine": 551,
+        "startChar": 43,
+        "endLine": 551,
+        "endChar": 44
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f84fa21f_cb301a30",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "I do not understand the comment here, could you expand on it please.",
+      "range": {
+        "startLine": 566,
+        "startChar": 17,
+        "endLine": 566,
+        "endChar": 24
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f6f0a97_8a19ed39",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "you will need an implementation of plus which is independent of the actual implementation or check some other invariant. you do not need a templated functor to check the jacobian since the other matchers invoked by EXPECT_THAT_MANIFOLD_INVARIANTS hold verify that already.",
+      "range": {
+        "startLine": 458,
+        "startChar": 7,
+        "endLine": 458,
+        "endChar": 36
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4e2e51c_9868e18e",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "turn this into a matcher please, so that it is consistent with the rest of the code in this file.",
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa35a19b_d5ef6ecc",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "why not use matrices here?",
+      "range": {
+        "startLine": 528,
+        "startChar": 9,
+        "endLine": 528,
+        "endChar": 26
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d9d187b_465b3dc3",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "you don\u0027t need to check the jacobian in this matcher, just make it check the plus operation, the other matchers will take care of verifying the jacobian.",
+      "range": {
+        "startLine": 531,
+        "startChar": 37,
+        "endLine": 531,
+        "endChar": 38
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f11d2a07_6f9aadf9",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-23T20:41:00Z",
+      "side": 1,
+      "message": "I think in these cases it maybe better to just calculate what the actual value of the result of plus should be and verify that Plus computes it.",
+      "range": {
+        "startLine": 542,
+        "startChar": 5,
+        "endLine": 542,
+        "endChar": 30
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
