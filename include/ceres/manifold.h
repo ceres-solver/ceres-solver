@@ -407,6 +407,38 @@ class CERES_EXPORT EigenQuaternionManifold : public Manifold {
   bool MinusJacobian(const double* x, double* jacobian) const override;
 };
 
+// This provides a parameterization for homogeneous vectors which are commonly
+// used in Structure for Motion problems.  One example where they are used is
+// in representing points whose triangulation is ill-conditioned. Here
+// it is advantageous to use an over-parameterization since homogeneous vectors
+// can represent points at infinity.
+//
+// The plus operator is defined as
+// Plus(x, delta) =
+//    [sin(0.5 * |delta|) * delta / |delta|, cos(0.5 * |delta|)] * x
+// with * defined as an operator which applies the update orthogonal to x to
+// remain on the sphere. We assume that the last element of x is the scalar
+// component. The size of the homogeneous vector is required to be greater than
+// 1.
+class CERES_EXPORT HomogeneousVectorManifold : public Manifold {
+ public:
+  explicit HomogeneousVectorManifold(int size);
+  virtual ~HomogeneousVectorManifold() = default;
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
+  bool PlusJacobian(const double* x, double* jacobian) const override;
+  int AmbientSize() const override { return size_; }
+  int TangentSize() const override { return size_ - 1; }
+  bool Minus(const double* y,
+             const double* x,
+             double* y_minus_x) const override;
+  bool MinusJacobian(const double* x, double* jacobian) const override;
+
+ private:
+  const int size_;
+};
+
 }  // namespace ceres
 
 // clang-format off

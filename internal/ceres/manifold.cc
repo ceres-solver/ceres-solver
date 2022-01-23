@@ -5,6 +5,7 @@
 
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
+#include "ceres/internal/householder_vector.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -450,6 +451,138 @@ bool EigenQuaternionManifold::Minus(const double* y,
 bool EigenQuaternionManifold::MinusJacobian(const double* x,
                                             double* jacobian) const {
   QuaternionMinusJacobianImpl<EigenQuaternionOrder>(x, jacobian);
+  return true;
+}
+
+HomogeneousVectorManifold::HomogeneousVectorManifold(int size) : size_(size) {
+  CHECK_GT(size_, 1) << "The size of the homogeneous vector needs to be "
+                     << "greater than 1.";
+}
+
+bool HomogeneousVectorManifold::Plus(const double* x_ptr,
+                                     const double* delta_ptr,
+                                     double* x_plus_delta_ptr) const {
+  ConstVectorRef x(x_ptr, size_);
+  ConstVectorRef delta(delta_ptr, size_ - 1);
+  VectorRef x_plus_delta(x_plus_delta_ptr, size_);
+
+  const double norm_delta = delta.norm();
+
+  if (norm_delta == 0.0) {
+    x_plus_delta = x;
+    return true;
+  }
+
+  // Map the delta from the minimum representation to the over parameterized
+  // homogeneous vector. See section A6.9.2 on page 624 of Hartley & Zisserman
+  // (2nd Edition) for a detailed description.  Note there is a typo on Page
+  // 625, line 4 so check the book errata.
+  const double norm_delta_div_2 = 0.5 * norm_delta;
+  const double sin_delta_by_delta =
+      std::sin(norm_delta_div_2) / norm_delta_div_2;
+
+  Vector y(size_);
+  y.head(size_ - 1) = 0.5 * sin_delta_by_delta * delta;
+  y(size_ - 1) = std::cos(norm_delta_div_2);
+
+  Vector v(size_);
+  double beta;
+
+  // NOTE: The explicit template arguments are needed here because
+  // ComputeHouseholderVector is templated and some versions of MSVC
+  // have trouble deducing the type of v automatically.
+  internal::ComputeHouseholderVector<ConstVectorRef, double, Eigen::Dynamic>(
+      x, &v, &beta);
+
+  // Apply the delta update to remain on the unit sphere. See section A6.9.3
+  // on page 625 of Hartley & Zisserman (2nd Edition) for a detailed
+  // description.
+  x_plus_delta = x.norm() * (y - v * (beta * (v.transpose() * y)));
+
+  return true;
+}
+
+bool HomogeneousVectorManifold::PlusJacobian(const double* x_ptr,
+                                             double* jacobian_ptr) const {
+  ConstVectorRef x(x_ptr, size_);
+  MatrixRef jacobian(jacobian_ptr, size_, size_ - 1);
+
+  Vector v(size_);
+  double beta;
+
+  // NOTE: The explicit template arguments are needed here because
+  // ComputeHouseholderVector is templated and some versions of MSVC
+  // have trouble deducing the type of v automatically.
+  internal::ComputeHouseholderVector<ConstVectorRef, double, Eigen::Dynamic>(
+      x, &v, &beta);
+
+  // The Jacobian is equal to J = 0.5 * H.leftCols(size_ - 1) where H is the
+  // Householder matrix (H = I - beta * v * v').
+  for (int i = 0; i < size_ - 1; ++i) {
+    jacobian.col(i) = -0.5 * beta * v(i) * v;
+    jacobian.col(i)(i) += 0.5;
+  }
+  jacobian *= x.norm();
+
+  return true;
+}
+
+bool HomogeneousVectorManifold::Minus(const double* y_ptr,
+                                      const double* x_ptr,
+                                      double* y_minus_x_ptr) const {
+  ConstVectorRef y(y_ptr, size_);
+  ConstVectorRef x(x_ptr, size_);
+  VectorRef y_minus_x(y_minus_x_ptr, size_ - 1);
+
+  Vector v(size_);
+  double beta;
+
+  // NOTE: The explicit template arguments are needed here because
+  // ComputeHouseholderVector is templated and some versions of MSVC
+  // have trouble deducing the type of v automatically.
+  internal::ComputeHouseholderVector<ConstVectorRef, double, Eigen::Dynamic>(
+      x, &v, &beta);
+
+  const Vector hy = (y - v * (beta * (v.transpose() * y))) / x.norm();
+
+  // Calculate y_minus_x = 2.0 * std::acos(hy[-1]) / sqrt(1 - hy[-1] * hy[-1]) * hy[0 : size_ - 1]
+  // For hy[-1] -> 0, y_minus_x -> zero.
+  const double y_last = hy[size_ - 1];
+  const double denom = std::sqrt(1 - y_last * y_last);
+  if (denom == 0.0) {
+    y_minus_x.setZero();
+  } else {
+    y_minus_x = 2.0 * std::acos(y_last) / denom * hy.head(size_ - 1);
+  }
+
+  return true;
+}
+
+bool HomogeneousVectorManifold::MinusJacobian(const double* x_ptr,
+                                              double* jacobian_ptr) const {
+  ConstVectorRef x(x_ptr, size_);
+
+  // The covariance matrix need to be stored transpose. This can be achieved by
+  // mapping the pointer to a col major matrix.
+  Eigen::Map<ColMajorMatrix> jacobian(jacobian_ptr, size_, size_ - 1);
+
+  Vector v(size_);
+  double beta;
+
+  // NOTE: The explicit template arguments are needed here because
+  // ComputeHouseholderVector is templated and some versions of MSVC
+  // have trouble deducing the type of v automatically.
+  internal::ComputeHouseholderVector<ConstVectorRef, double, Eigen::Dynamic>(
+      x, &v, &beta);
+
+  // The Jacobian is equal to J = 2.0 * H.leftCols(size_ - 1) where H is the
+  // Householder matrix (H = I - beta * v * v').
+  for (int i = 0; i < size_ - 1; ++i) {
+    jacobian.col(i) = -2.0 * beta * v(i) * v;
+    jacobian.col(i)(i) += 2.0;
+  }
+  jacobian /= x.norm();
+
   return true;
 }
 

@@ -35,6 +35,7 @@
 #include <memory>
 
 #include "Eigen/Geometry"
+#include "ceres/autodiff_local_parameterization.h"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/manifold_test_utils.h"
@@ -337,7 +338,7 @@ MATCHER_P2(QuaternionManifoldPlusIsCorrectAt, x, delta, "") {
   return true;
 }
 
-Vector RandomQuaternion() {
+static Vector RandomQuaternion() {
   Vector x = Vector::Random(4);
   x.normalize();
   return x;
@@ -451,5 +452,177 @@ TEST(EigenQuaternionManifold, DeltaJustBelowPi) {
   }
 }
 
+// Functor needed to implement automatically differentiated Plus for
+// homogeneous vectors.
+template <int Dim>
+struct HomogeneousVectorManifoldPlus {
+  template <typename Scalar>
+  bool operator()(const Scalar* p_x,
+                  const Scalar* p_delta,
+                  Scalar* p_x_plus_delta) const {
+    Eigen::Map<const Eigen::Matrix<Scalar, Dim, 1>> x(p_x);
+    Eigen::Map<const Eigen::Matrix<Scalar, Dim - 1, 1>> delta(p_delta);
+    Eigen::Map<Eigen::Matrix<Scalar, Dim, 1>> x_plus_delta(p_x_plus_delta);
+
+    const Scalar squared_norm_delta = delta.squaredNorm();
+
+    Eigen::Matrix<Scalar, Dim, 1> y;
+    Scalar one_half(0.5);
+    if (squared_norm_delta > Scalar(0.0)) {
+      Scalar norm_delta = sqrt(squared_norm_delta);
+      Scalar norm_delta_div_2 = 0.5 * norm_delta;
+      const Scalar sin_delta_by_delta =
+          sin(norm_delta_div_2) / norm_delta_div_2;
+      y.template head<Dim - 1>() = sin_delta_by_delta * one_half * delta;
+      y[Dim - 1] = cos(norm_delta_div_2);
+
+    } else {
+      // We do not just use y = [0,0,0,1] here because that is a
+      // constant and when used for automatic differentiation will
+      // lead to a zero derivative. Instead we take a first order
+      // approximation and evaluate it at zero.
+      y.template head<Dim - 1>() = delta * one_half;
+      y[Dim - 1] = Scalar(1.0);
+    }
+
+    Eigen::Matrix<Scalar, Dim, 1> v;
+    Scalar beta;
+
+    // NOTE: The explicit template arguments are needed here because
+    // ComputeHouseholderVector is templated and some versions of MSVC
+    // have trouble deducing the type of v automatically.
+    internal::ComputeHouseholderVector<
+        Eigen::Map<const Eigen::Matrix<Scalar, Dim, 1>>,
+        Scalar,
+        Dim>(x, &v, &beta);
+
+    x_plus_delta = x.norm() * (y - v * (beta * v.dot(y)));
+
+    return true;
+  }
+};
+
+static void HomogeneousVectorManifoldHelper(const double* x,
+                                            const double* delta) {
+  const double kTolerance = 1e-14;
+
+  HomogeneousVectorManifold homogeneous_vector_parameterization(4);
+
+  // Ensure the update maintains the norm.
+  double x_plus_delta[4] = {0.0, 0.0, 0.0, 0.0};
+  homogeneous_vector_parameterization.Plus(x, delta, x_plus_delta);
+
+  const double x_plus_delta_norm = sqrt(
+      x_plus_delta[0] * x_plus_delta[0] + x_plus_delta[1] * x_plus_delta[1] +
+      x_plus_delta[2] * x_plus_delta[2] + x_plus_delta[3] * x_plus_delta[3]);
+
+  const double x_norm =
+      sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2] + x[3] * x[3]);
+
+  EXPECT_NEAR(x_plus_delta_norm, x_norm, kTolerance);
+
+  // Autodiff jacobian at delta_x = 0.
+  AutoDiffLocalParameterization<HomogeneousVectorManifoldPlus<4>, 4, 3>
+      autodiff_jacobian;
+
+  double jacobian_autodiff[12];
+  double jacobian_analytic[12];
+
+  homogeneous_vector_parameterization.PlusJacobian(x, jacobian_analytic);
+  autodiff_jacobian.ComputeJacobian(x, jacobian_autodiff);
+
+  for (int i = 0; i < 12; ++i) {
+    EXPECT_TRUE(ceres::IsFinite(jacobian_analytic[i]));
+    EXPECT_NEAR(jacobian_analytic[i], jacobian_autodiff[i], kTolerance)
+        << "Jacobian mismatch: i = " << i << ", " << jacobian_analytic[i] << " "
+        << jacobian_autodiff[i];
+  }
+}
+
+TEST(HomogeneousVectorManifold, ZeroTest) {
+  Eigen::Vector4d x{0.0, 0.0, 0.0, 1.0};
+  x.normalize();
+  Eigen::Vector3d delta = Eigen::Vector3d::Zero();
+
+  HomogeneousVectorManifoldHelper(x.data(), delta.data());
+}
+
+TEST(HomogeneousVectorManifold, NearZeroTest1) {
+  Eigen::Vector4d x{1e-5, 1e-5, 1e-5, 1.0};
+  x.normalize();
+  Eigen::Vector3d delta{0.0, 1.0, 0.0};
+
+  HomogeneousVectorManifoldHelper(x.data(), delta.data());
+}
+
+TEST(HomogeneousVectorManifold, NearZeroTest2) {
+  Eigen::Vector4d x{0.001, 0.0, 0.0, 0.0};
+  Eigen::Vector3d delta{0.0, 1.0, 0.0};
+
+  HomogeneousVectorManifoldHelper(x.data(), delta.data());
+}
+
+TEST(HomogeneousVectorManifold, AwayFromZeroTest1) {
+  Eigen::Vector4d x{0.52, 0.25, 0.15, 0.45};
+  x.normalize();
+  Eigen::Vector3d delta{0.0, 1.0, -0.5};
+
+  HomogeneousVectorManifoldHelper(x.data(), delta.data());
+}
+
+TEST(HomogeneousVectorManifold, AwayFromZeroTest2) {
+  Eigen::Vector4d x{0.87, -0.25, -0.34, 0.45};
+  x.normalize();
+  Eigen::Vector3d delta{0.0, 0.0, -0.5};
+
+  HomogeneousVectorManifoldHelper(x.data(), delta.data());
+}
+
+TEST(HomogeneousVectorManifold, AwayFromZeroTest3) {
+  Eigen::Vector4d x{0.0, 0.0, 0.0, 2.0};
+  Eigen::Vector3d delta{0.0, 0.0, 0};
+
+  HomogeneousVectorManifoldHelper(x.data(), delta.data());
+}
+
+TEST(HomogeneousVectorManifold, AwayFromZeroTest4) {
+  Eigen::Vector4d x{0.2, -1.0, 0.0, 2.0};
+  Eigen::Vector3d delta{1.4, 0.0, -0.5};
+
+  HomogeneousVectorManifoldHelper(x.data(), delta.data());
+}
+
+TEST(HomogeneousVectorManifold, AwayFromZeroTest5) {
+  Eigen::Vector4d x{2.0, 0.0, 0.0, 0.0};
+  Eigen::Vector3d delta{1.4, 0.0, -0.5};
+
+  HomogeneousVectorManifoldHelper(x.data(), delta.data());
+}
+
+TEST(HomogeneousVectorManifold, DeathTests) {
+  EXPECT_DEATH_IF_SUPPORTED(HomogeneousVectorManifold x(1), "size");
+}
+
+TEST(HomogeneousVectorManifold, NormalFunctionTest) {
+  HomogeneousVectorManifold manifold(4);
+  EXPECT_EQ(manifold.AmbientSize(), 4);
+  EXPECT_EQ(manifold.TangentSize(), 3);
+
+  Vector zero_tangent = Vector::Zero(manifold.TangentSize());
+  for (int trial = 0; trial < kNumTrials; ++trial) {
+    const Vector x = Vector::Random(manifold.AmbientSize());
+    Vector y = Vector::Random(manifold.AmbientSize());
+    Vector delta = Vector::Random(manifold.TangentSize());
+
+    if (x.norm() == 0.0 || y.norm() == 0.0) {
+      continue;
+    }
+
+    // X and y need to have the same length.
+    y *= x.norm() / y.norm();
+
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+  }
+}
 }  // namespace internal
 }  // namespace ceres
