@@ -28,9 +28,11 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <algorithm>
 #include <cmath>
 #include <limits>
 #include <memory>
+#include <type_traits>
 
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/internal/eigen.h"
@@ -41,7 +43,6 @@
 #include "gtest/gtest.h"
 
 namespace ceres {
-
 // Matchers and macros for help with testing Manifold objects.
 //
 // Testing a Manifold has two parts.
@@ -200,6 +201,7 @@ MATCHER_P3(PlusMinusIsIdentityAt, x, y, tolerance, "") {
 
 // Helper struct to curry Minus(., x) so that it can be numerically
 // differentiated.
+template <typename ManifoldType>
 struct MinusFunctor {
   MinusFunctor(const Manifold& manifold, const double* x)
       : manifold(manifold), x(x) {}
@@ -220,10 +222,14 @@ MATCHER_P2(HasCorrectMinusJacobianAt, x, tolerance, "") {
   Vector y = x;
   Vector y_minus_x = Vector::Zero(tangent_size);
 
+  using ManifoldType = std::decay_t<decltype(arg)>;
+
   NumericDiffOptions options;
   options.ridders_relative_initial_step_size = 1e-4;
-  DynamicNumericDiffCostFunction<MinusFunctor, RIDDERS> cost_function(
-      new MinusFunctor(arg, x.data()), TAKE_OWNERSHIP, options);
+  DynamicNumericDiffCostFunction<MinusFunctor<ManifoldType>, RIDDERS>
+      cost_function(new MinusFunctor<ManifoldType>(arg, x.data()),
+                    TAKE_OWNERSHIP,
+                    options);
   cost_function.AddParameterBlock(ambient_size);
   cost_function.SetNumResiduals(tangent_size);
 
