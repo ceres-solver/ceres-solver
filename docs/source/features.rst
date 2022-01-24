@@ -1,3 +1,7 @@
+.. default-domain:: cpp
+
+.. cpp:namespace:: ceres
+
 ====
 Why?
 ====
