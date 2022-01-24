@@ -167,6 +167,10 @@ TEST_COPTS = [
     # but in the future disable these warnings only for rotation_test.
     # TODO(keir): When the tests are macro-ified, apply these selectively.
     "-Wno-address",
+
+    # Disable warnings about deprecated interfraces while we are
+    # transitioning from LocalParameterization to Manifolds.
+    "-Wno-deprecated-declarations",
 ]
 
 TEST_DEPS = [
