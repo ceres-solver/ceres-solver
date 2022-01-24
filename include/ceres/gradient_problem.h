@@ -105,8 +105,11 @@ class CERES_EXPORT GradientProblem {
   // NOTE: This constructor is deprecated and will be removed in the next public
   // release of Ceres Solver. Please move to using the Manifold based
   // constructor.
-  GradientProblem(FirstOrderFunction* function,
-                  LocalParameterization* parameterization);
+  [[deprecated(
+      "LocalParameterizations are deprecated. Please use the constructor that "
+      "uses Manifold instead.")]] GradientProblem(FirstOrderFunction* function,
+                                                  LocalParameterization*
+                                                      parameterization);
 
   // Takes ownership of the function and the manifold.
   GradientProblem(FirstOrderFunction* function, Manifold* manifold);
