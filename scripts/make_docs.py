@@ -60,7 +60,7 @@ elif N == 4:
   sphinx_exe = sys.argv[3]
 
 # Run Sphinx to build the documentation.
-os.system('%s -b html -d %s %s %s' %(sphinx_exe, cache_dir, src_dir, html_dir))
+os.system('%s -n -b html -d %s %s %s' %(sphinx_exe, cache_dir, src_dir, html_dir))
 
 replacements = [
   # The title for the homepage is not ideal, so change it.

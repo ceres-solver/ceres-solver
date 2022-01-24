@@ -1,6 +1,8 @@
+.. default-domain:: cpp
+
 .. highlight:: c++
 
-.. default-domain:: cpp
+.. cpp:namespace:: ceres
 
 .. _chapter-gradient_problem_solver:
 
@@ -46,6 +48,12 @@ Modeling
 :class:`GradientProblem`
 ------------------------
 
+.. NOTE::
+
+   The :class:`LocalParameterization` interface and associated classes
+   are deprecated. They will be removed in the version 2.2.0. Please use
+   :class:`Manifold` based constructor instead.
+
 .. class:: GradientProblem
 
 .. code-block:: c++
@@ -55,8 +63,11 @@ Modeling
     explicit GradientProblem(FirstOrderFunction* function);
     GradientProblem(FirstOrderFunction* function,
                     LocalParameterization* parameterization);
+    GradientProblem(FirstOrderFunction* function,
+                    Manifold* manifold);
     int NumParameters() const;
-    int NumLocalParameters() const;
+    int NumLocalParameters() const { return NumTangentParameters(); }
+    int NumTangentParameters() const;
     bool Evaluate(const double* parameters, double* cost, double* gradient) const;
     bool Plus(const double* x, const double* delta, double* x_plus_delta) const;
   };
@@ -70,19 +81,21 @@ form of the objective function.
 
 Structurally :class:`GradientProblem` is a composition of a
 :class:`FirstOrderFunction` and optionally a
-:class:`LocalParameterization`.
+:class:`LocalParameterization` or a :class:`Manifold`.
 
 The :class:`FirstOrderFunction` is responsible for evaluating the cost
 and gradient of the objective function.
 
-The :class:`LocalParameterization` is responsible for going back and
-forth between the ambient space and the local tangent space. When a
-:class:`LocalParameterization` is not provided, then the tangent space
-is assumed to coincide with the ambient Euclidean space that the
-gradient vector lives in.
+The :class:`LocalParameterization`/:class:`Manifold` is responsible
+for going back and forth between the ambient space and the local
+tangent space. When a :class:`LocalParameterization` or a
+:class:`Manifold` is not provided, then the tangent space is assumed
+to coincide with the ambient Euclidean space that the gradient vector
+lives in.
 
 The constructor takes ownership of the :class:`FirstOrderFunction` and
-:class:`LocalParamterization` objects passed to it.
+:class:`LocalParameterization` or :class:`Manifold` objects passed to
+it.
 
 
 .. function:: void Solve(const GradientProblemSolver::Options& options, const GradientProblem& problem, double* parameters, GradientProblemSolver::Summary* summary)
@@ -342,8 +355,8 @@ Solving
 
    where :math:`\|\cdot\|_\infty` refers to the max norm, :math:`\Pi`
    is projection onto the bounds constraints and :math:`\boxplus` is
-   Plus operation for the overall local parameterization associated
-   with the parameter vector.
+   Plus operation for the manifold associated with the parameter
+   vector.
 
 .. member:: double GradientProblemSolver::Options::parameter_tolerance
 
@@ -490,7 +503,19 @@ Solving
 
    Dimension of the tangent space of the problem. This is different
    from :member:`GradientProblemSolver::Summary::num_parameters` if a
-   :class:`LocalParameterization` object is used.
+   :class:`LocalParameterization`/:class:`Manifold` object is used.
+
+   .. NOTE::
+
+      ``num_local_parameters`` is deprecated and will be removed in
+      Ceres Solver version 2.2.0. Please use ``num_tangent_parameters``
+      instead.
+
+.. member:: int GradientProblemSolver::Summary::num_tangent_parameters
+
+   Dimension of the tangent space of the problem. This is different
+   from :member:`GradientProblemSolver::Summary::num_parameters` if a
+   :class:`LocalParameterization`/:class:`Manifold` object is used.
 
 .. member:: LineSearchDirectionType GradientProblemSolver::Summary::line_search_direction_type
 
