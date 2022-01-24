@@ -224,7 +224,7 @@ bool AutoDiffManifold<Functor, kAmbientSize, kTangentSize>::PlusJacobian(
   return internal::AutoDifferentiate<
       kAmbientSize,
       internal::StaticParameterDims<kAmbientSize, kTangentSize>>(
-      internal::PlusWrapper(*functor_),
+      internal::PlusWrapper<Functor>(*functor_),
       parameter_ptrs,
       kAmbientSize,
       x_plus_delta,
@@ -247,7 +247,7 @@ bool AutoDiffManifold<Functor, kAmbientSize, kTangentSize>::MinusJacobian(
   return internal::AutoDifferentiate<
       kTangentSize,
       internal::StaticParameterDims<kAmbientSize, kAmbientSize>>(
-      internal::MinusWrapper(*functor_),
+      internal::MinusWrapper<Functor>(*functor_),
       parameter_ptrs,
       kAmbientSize,
       y_minus_x,
