@@ -136,7 +136,10 @@ class CERES_EXPORT Problem {
     // the pointers only once, since sharing objects is allowed.
     Ownership cost_function_ownership = TAKE_OWNERSHIP;
     Ownership loss_function_ownership = TAKE_OWNERSHIP;
-    Ownership local_parameterization_ownership = TAKE_OWNERSHIP;
+    [[deprecated(
+        "Local Parameterizations are deprecated. Use Manifold and "
+        "manifold_ownership instead.")]] Ownership
+        local_parameterization_ownership = TAKE_OWNERSHIP;
     Ownership manifold_ownership = TAKE_OWNERSHIP;
 
     // If true, trades memory for faster RemoveResidualBlock() and
@@ -292,9 +295,12 @@ class CERES_EXPORT Problem {
   // ManifoldAdapter object. So HasManifold() will return true, GetManifold()
   // will return the wrapped object and ParameterBlockTangentSize() will return
   // the LocalSize of the LocalParameterization.
-  void AddParameterBlock(double* values,
-                         int size,
-                         LocalParameterization* local_parameterization);
+  [[deprecated(
+      "LocalParameterizations are deprecated. Use the version with Manifolds "
+      "instead.")]] void
+  AddParameterBlock(double* values,
+                    int size,
+                    LocalParameterization* local_parameterization);
 
   // Add a parameter block with appropriate size and Manifold to the
   // problem. It is okay for manifold to be nullptr.
@@ -381,9 +387,12 @@ class CERES_EXPORT Problem {
   // During the transition from LocalParameterization to Manifold, internally
   // the LocalParameterization is treated as a Manifold by wrapping it using a
   // ManifoldAdapter object. So HasManifold() will return true, GetManifold()
-  // will return the wrapped object and ParameterBlockTangent.
-  void SetParameterization(double* values,
-                           LocalParameterization* local_parameterization);
+  // will return the wrapped object and ParameterBlockTangentSize will return
+  // the same value of ParameterBlockLocalSize.
+  [[deprecated(
+      "LocalParameterizations are deprecated. Use SetManifold instead.")]] void
+  SetParameterization(double* values,
+                      LocalParameterization* local_parameterization);
 
   // Get the LocalParameterization object associated with this parameter block.
   // If there is no LocalParameterization associated then nullptr is returned.
@@ -393,19 +402,27 @@ class CERES_EXPORT Problem {
   //
   // Note also that if a LocalParameterization is associated with a parameter
   // block, HasManifold will return true and GetManifold will return the
-  // LocalParameterization wrapped in a ManifoldAdapeter.
+  // LocalParameterization wrapped in a ManifoldAdapter.
   //
-  // The converse is not true, i.e., if a Manifold is associated with a
+  // The converse is NOT true, i.e., if a Manifold is associated with a
   // parameter block, HasParameterization will return false and
   // GetParameterization will return a nullptr.
-  const LocalParameterization* GetParameterization(const double* values) const;
+  [[deprecated(
+      "LocalParameterizations are deprecated. Use GetManifold "
+      "instead.")]] const LocalParameterization*
+  GetParameterization(const double* values) const;
 
-  // Returns true if a LocalParameterization or a Manifold is associated with
-  // this parameter block, false otherwise.
+  // Returns true if a LocalParameterization is associated with this parameter
+  // block, false otherwise.
   //
   // NOTE: This method is deprecated and will be removed in the next public
   // release of Ceres Solver. Use HasManifold instead.
-  bool HasParameterization(const double* values) const;
+  //
+  // Note also that if a Manifold is associated with the parameter block, this
+  // method will return false.
+  [[deprecated(
+      "LocalParameterizations are deprecated. Use HasManifold instead.")]] bool
+  HasParameterization(const double* values) const;
 
   // Set the Manifold for the parameter block. Calling SetManifold with nullptr
   // will clear any previously set LocalParameterization or Manifold for the
@@ -417,11 +434,10 @@ class CERES_EXPORT Problem {
   // The manifold is owned by the Problem by default (See Problem::Options to
   // override this behaviour).
   //
-  // It is acceptable to set the same Manifold for multiple parameter blocks;
-  // the destructor is careful to delete Manifolds only once.
+  // It is acceptable to set the same Manifold for multiple parameter blocks.
   void SetManifold(double* values, Manifold* manifold);
 
-  // Get the manifold object associated with this parameter block.
+  // Get the Manifold object associated with this parameter block.
   //
   // If there is no Manifold Or LocalParameterization object associated then
   // nullptr is returned.
@@ -430,7 +446,7 @@ class CERES_EXPORT Problem {
   // internally the LocalParameterization is treated as a Manifold by wrapping
   // it using a ManifoldAdapter object. So calling GetManifold on a parameter
   // block with a LocalParameterization associated with it will return the
-  // LocalParameterization wrapped in a Manifold adapter.
+  // LocalParameterization wrapped in a ManifoldAdapter
   const Manifold* GetManifold(const double* values) const;
 
   // Returns true if a Manifold or a LocalParameterization is associated with
@@ -471,7 +487,10 @@ class CERES_EXPORT Problem {
   // for the parameter block. If there is no LocalParameterization or Manifold
   // associated with this parameter block, then ParameterBlockLocalSize =
   // ParameterBlockSize.
-  int ParameterBlockLocalSize(const double* values) const;
+  [[deprecated(
+      "LocalParameterizations are deprecated. Use ParameterBlockTangentSize "
+      "instead.")]] int
+  ParameterBlockLocalSize(const double* values) const;
 
   // The dimenion of the tangent space of the LocalParameterization or Manifold
   // for the parameter block. If there is no LocalParameterization or Manifold

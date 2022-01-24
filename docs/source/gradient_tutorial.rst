@@ -160,7 +160,7 @@ follows [#f2]_.
                                                       kNumParameters>(
           new Rosenbrock);
     }
-};
+  };
 
 And finally, if you would rather compute the derivatives by hand (say
 because the size of the parameter vector is too large to be
