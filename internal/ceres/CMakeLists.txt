@@ -249,6 +249,14 @@ add_library(ceres ${CERES_LIBRARY_SOURCE})
 set_target_properties(ceres PROPERTIES
   VERSION ${CERES_VERSION}
   SOVERSION ${CERES_VERSION_MAJOR})
+
+# Disable warnings about deprecated interfraces while we are
+# transitioning from LocalParameterization to Manifolds.
+target_compile_options(ceres PRIVATE
+  $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:
+  -Wno-deprecated-declarations>
+  $<$<CXX_COMPILER_ID:MSVC>: /wd4996>)
+
 if (BUILD_SHARED_LIBS)
   set_target_properties(ceres PROPERTIES
     # Set the default symbol visibility to hidden to unify the behavior among
@@ -417,6 +425,14 @@ if (BUILD_TESTING AND GFLAGS)
       PUBLIC ${CMAKE_CURRENT_LIST_DIR}
              ${Ceres_SOURCE_DIR}/internal/ceres
              ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
+
+
+    # Disable warnings about deprecated interfraces while we are
+    # transitioning from LocalParameterization to Manifolds.
+    target_compile_options(${NAME}_test PRIVATE
+      $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:
+      -Wno-deprecated-declarations>
+      $<$<CXX_COMPILER_ID:MSVC>: /wd4996>)
 
     target_link_libraries(${NAME}_test PUBLIC test_util Ceres::ceres gtest)
     if (BUILD_SHARED_LIBS)

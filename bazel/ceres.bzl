@@ -183,6 +183,10 @@ def ceres_library(name,
         copts = [
             "-I" + internal,
             "-Wno-sign-compare",
+
+            # Disable warnings about deprecated interfraces while we are
+            # transitioning from LocalParameterization to Manifolds.
+            "-Wno-deprecated-declarations",
         ] + schur_eliminator_copts,
 
         # These include directories and defines are propagated to other targets
