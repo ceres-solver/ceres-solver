@@ -92,7 +92,7 @@ namespace ceres {
 // A more interesting case is SO(3), the special orthogonal group in three
 // dimensions - the space of 3x3 rotation matrices. SO(3) is a three dimensional
 // manifold embedded in R^9 or R^(3x3). So points on SO(3) are represented using
-// 9 dimensional vectors or 3x3 matrices, and point in its tangent spaces are
+// 9 dimensional vectors or 3x3 matrices, and points in its tangent spaces are
 // represented by 3 dimensional vectors.
 //
 // Defining Plus and Minus are defined in terms of the matrix Exp and Log
@@ -140,10 +140,6 @@ namespace ceres {
 // Representations through Encapsulation of Manifolds"
 // By C. Hertzberg, R. Wagner, U. Frese and L. Schroder
 // https://arxiv.org/pdf/1107.1119.pdf
-//
-// TODO(sameeragarwal): Add documentation about how this class replaces
-// LocalParameterization once the transition starts happening.
-
 class CERES_EXPORT Manifold {
  public:
   virtual ~Manifold() = default;
@@ -156,10 +152,9 @@ class CERES_EXPORT Manifold {
 
   //   x_plus_delta = Plus(x, delta),
   //
-  // Plus computes the result of moving along delta in the tangent space at x,
-  // and then projecting back onto the manifold that x belongs to. In
-  // Differential Geometry this is known as a "Retraction". It is a
-  // generalization of vector addition in Euclidean spaces.
+  // A generalization of vector addition in Euclidean space, Plus computes the
+  // result of moving along delta in the tangent space at x, and then projecting
+  // back onto the manifold that x belongs to.
   //
   // x and x_plus_delta are AmbientSize() vectors.
   // delta is a TangentSize() vector.
@@ -282,11 +277,10 @@ class CERES_EXPORT SubsetManifold : public Manifold {
 //
 // Example usage:
 //
-// ProductParameterization product_manifold(new Quaternion(),
-//                                          new EuclideanManifold(3));
+// ProductParameterization se3(new Quaternion(), new EuclideanManifold(3));
 //
-// is the manifold for a rigid transformation, where the
-// rotation is represented using a quaternion.
+// is the manifold for a rigid transformation, where the rotation is represented
+// using a quaternion.
 class CERES_EXPORT ProductManifold : public Manifold {
  public:
   ProductManifold(const ProductManifold&) = delete;
