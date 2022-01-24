@@ -118,6 +118,7 @@ LinearSolverTerminationType EigenDenseCholesky::Solve(const double* rhs,
   return LINEAR_SOLVER_SUCCESS;
 }
 
+#ifndef CERES_NO_LAPACK
 LinearSolverTerminationType LAPACKDenseCholesky::Factorize(
     int num_cols, double* lhs, std::string* message) {
   lhs_ = lhs;
@@ -170,6 +171,8 @@ LinearSolverTerminationType LAPACKDenseCholesky::Solve(const double* rhs,
 
   return termination_type_;
 }
+
+#endif  // CERES_NO_LAPACK
 
 }  // namespace internal
 }  // namespace ceres

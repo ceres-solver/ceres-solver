@@ -110,6 +110,7 @@ class CERES_EXPORT_INTERNAL EigenDenseCholesky : public DenseCholesky {
   std::unique_ptr<LLTType> llt_;
 };
 
+#ifndef CERES_NO_LAPACK
 class CERES_EXPORT_INTERNAL LAPACKDenseCholesky : public DenseCholesky {
  public:
   ~LAPACKDenseCholesky() override = default;
@@ -126,6 +127,7 @@ class CERES_EXPORT_INTERNAL LAPACKDenseCholesky : public DenseCholesky {
   int num_cols_ = -1;
   LinearSolverTerminationType termination_type_ = LINEAR_SOLVER_FATAL_ERROR;
 };
+#endif  // CERES_NO_LAPACK
 
 }  // namespace internal
 }  // namespace ceres
