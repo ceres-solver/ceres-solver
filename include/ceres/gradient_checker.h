@@ -80,10 +80,14 @@ class CERES_EXPORT GradientChecker {
   // NOTE: This constructor is deprecated and will be removed in the next public
   // release of Ceres Solver. Please transition to using the Manifold based
   // version.
-  GradientChecker(
-      const CostFunction* function,
-      const std::vector<const LocalParameterization*>* local_parameterizations,
-      const NumericDiffOptions& options);
+  [[deprecated(
+      "Local Parameterizations are deprecated. Use the constructor that uses "
+      "Manifolds instead.")]] GradientChecker(const CostFunction* function,
+                                              const std::vector<
+                                                  const LocalParameterization*>*
+                                                  local_parameterizations,
+                                              const NumericDiffOptions&
+                                                  options);
 
   // This will not take ownership of the cost function or manifolds.
   //
