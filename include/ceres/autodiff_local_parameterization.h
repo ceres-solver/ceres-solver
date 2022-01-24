@@ -40,6 +40,10 @@
 
 namespace ceres {
 
+// WARNING: LocalParameterizations are deprecated, so is
+// AutoDiffLocalParameterization. They will be removed from Ceres Solver in
+// version 2.2.0. Please use Manifolds and AutoDiffManifold instead.
+
 // Create local parameterization with Jacobians computed via automatic
 // differentiation. For more information on local parameterizations,
 // see include/ceres/local_parameterization.h
@@ -106,18 +110,19 @@ namespace ceres {
 // seen where instead of using k_ directly, k_ is wrapped with T(k_).
 
 template <typename Functor, int kGlobalSize, int kLocalSize>
-class AutoDiffLocalParameterization : public LocalParameterization {
+class [[deprecated(
+    "Use AutoDiffManifold instead.")]] AutoDiffLocalParameterization
+    : public LocalParameterization {
  public:
   AutoDiffLocalParameterization() : functor_(new Functor()) {}
 
   // Takes ownership of functor.
-  explicit AutoDiffLocalParameterization(Functor* functor)
+  explicit AutoDiffLocalParameterization(Functor * functor)
       : functor_(functor) {}
 
-  ~AutoDiffLocalParameterization() override {}
-  bool Plus(const double* x,
-            const double* delta,
-            double* x_plus_delta) const override {
+  ~AutoDiffLocalParameterization() override = default;
+  bool Plus(const double* x, const double* delta, double* x_plus_delta)
+      const override {
     return (*functor_)(x, delta, x_plus_delta);
   }
 
@@ -143,7 +148,7 @@ class AutoDiffLocalParameterization : public LocalParameterization {
   int GlobalSize() const override { return kGlobalSize; }
   int LocalSize() const override { return kLocalSize; }
 
-  const Functor & functor() const { return *functor_; }
+  const Functor& functor() const { return *functor_; }
 
  private:
   std::unique_ptr<Functor> functor_;
