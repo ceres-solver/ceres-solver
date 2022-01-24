@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c18f746_406c9d31",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-01-24T23:19:12Z",
+      "side": 1,
+      "message": "+1 to changing the name to SphereManifold.\n\nI would also add a comment that this can be used with homogeneous vectors in structure from motion since that is a common use case.",
+      "parentUuid": "8f456023_b6655e35",
+      "range": {
+        "startLine": 410,
+        "startChar": 36,
+        "endLine": 410,
+        "endChar": 39
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8047b3e8_680a6114",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 1
