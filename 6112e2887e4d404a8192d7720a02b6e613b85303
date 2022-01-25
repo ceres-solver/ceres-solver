@@ -115,6 +115,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bfadcd83_875ecb74",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-01-25T20:00:17Z",
+      "side": 1,
+      "message": "Yes, but I think the case where the dimension is not known at compile time is rare. If performance is really a bottleneck the user could do the following (pseudo code):\n   switch (dim) {\n   case 2: return SphereManifold\u003c2\u003e();\n   case 3: return SphereManifold\u003c3\u003e();\n   case 4: return SphereManifold\u003c4\u003e();\n   case 5: return SphereManifold\u003c5\u003e();\n   default: return SphereManifold\u003cEigen::Dynamic\u003e();\n   }",
+      "parentUuid": "2727f871_255085e1",
+      "range": {
+        "startLine": 410,
+        "startChar": 36,
+        "endLine": 410,
+        "endChar": 39
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8047b3e8_680a6114",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 1
