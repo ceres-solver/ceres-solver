@@ -89,6 +89,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2727f871_255085e1",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-25T19:39:58Z",
+      "side": 1,
+      "message": "That sounds fine to me, but won\u0027t that lead to a heap based version if Eigen::Dynamic is used?",
+      "parentUuid": "e23475ce_880f6141",
+      "range": {
+        "startLine": 410,
+        "startChar": 36,
+        "endLine": 410,
+        "endChar": 39
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8047b3e8_680a6114",
@@ -379,6 +403,30 @@
       "side": 1,
       "message": "How is the Jacobian checked in EXPECT_THAT_MANIFOLD_INVARIANTS? Based on numeric differentiation or only by multiplying the PlusJacobian and MinusJacobian and checking for identity?",
       "parentUuid": "4f6f0a97_8a19ed39",
+      "range": {
+        "startLine": 458,
+        "startChar": 7,
+        "endLine": 458,
+        "endChar": 36
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c22ab78a_4b1b686f",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-25T19:39:58Z",
+      "side": 1,
+      "message": "EXPECT_THAT_MANIFOLD_INVARIANTS is a macro, which calls a bunch of matchers.\n\nhttps://github.com/ceres-solver/ceres-solver/blob/master/include/ceres/manifold_test_utils.h#L315\n\n#define EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, tolerance) \\\n  Vector zero_tangent \u003d Vector::Zero(manifold.TangentSize());                  \\\n  EXPECT_THAT(manifold, XPlusZeroIsXAt(x, tolerance));                         \\\n  EXPECT_THAT(manifold, XMinusXIsZeroAt(x, tolerance));                        \\\n  EXPECT_THAT(manifold, MinusPlusIsIdentityAt(x, delta, tolerance));           \\\n  EXPECT_THAT(manifold, MinusPlusIsIdentityAt(x, zero_tangent, tolerance));    \\\n  EXPECT_THAT(manifold, PlusMinusIsIdentityAt(x, x, tolerance));               \\\n  EXPECT_THAT(manifold, PlusMinusIsIdentityAt(x, y, tolerance));               \\\n  EXPECT_THAT(manifold, HasCorrectPlusJacobianAt(x, tolerance));               \\\n  EXPECT_THAT(manifold, HasCorrectMinusJacobianAt(x, tolerance));              \\\n  EXPECT_THAT(manifold, MinusPlusJacobianIsIdentityAt(x, tolerance));          \\\n  EXPECT_THAT(manifold, HasCorrectRightMultiplyByPlusJacobianAt(x, tolerance));\n  \n \nThe last four matchers check the Jacobians.\n\nThe first two use numeric differentiation.\n \nThe third one evaluates the two jacobians returned by the manifold and checks that the product is identity.",
+      "parentUuid": "6eca5f6a_c0a592b0",
       "range": {
         "startLine": 458,
         "startChar": 7,
