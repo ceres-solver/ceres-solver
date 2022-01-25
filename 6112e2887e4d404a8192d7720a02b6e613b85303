@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e23475ce_880f6141",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-01-25T19:13:10Z",
+      "side": 1,
+      "message": "SphereManifold sounds good. When changing the name should we also change it in a way so that SphereManifold takes the size as a template parameter (same as in LineParameterization)? Then all can be done with fixed Eigen types:\n\n   template \u003cint AmbientSpaceDimension\u003e\n   class SphereManifold : public Manifold {\n      // ...\n   };\n\nIf a dynamic ambient space is needed, we can add that later by allowing AmbientSpaceDimension \u003d Eigen::Dynamic. WDYT?",
+      "parentUuid": "7c18f746_406c9d31",
+      "range": {
+        "startLine": 410,
+        "startChar": 36,
+        "endLine": 410,
+        "endChar": 39
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8047b3e8_680a6114",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 1
@@ -331,6 +355,30 @@
       "writtenOn": "2022-01-23T20:41:00Z",
       "side": 1,
       "message": "you will need an implementation of plus which is independent of the actual implementation or check some other invariant. you do not need a templated functor to check the jacobian since the other matchers invoked by EXPECT_THAT_MANIFOLD_INVARIANTS hold verify that already.",
+      "range": {
+        "startLine": 458,
+        "startChar": 7,
+        "endLine": 458,
+        "endChar": 36
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6eca5f6a_c0a592b0",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-01-25T19:13:10Z",
+      "side": 1,
+      "message": "How is the Jacobian checked in EXPECT_THAT_MANIFOLD_INVARIANTS? Based on numeric differentiation or only by multiplying the PlusJacobian and MinusJacobian and checking for identity?",
+      "parentUuid": "4f6f0a97_8a19ed39",
       "range": {
         "startLine": 458,
         "startChar": 7,
