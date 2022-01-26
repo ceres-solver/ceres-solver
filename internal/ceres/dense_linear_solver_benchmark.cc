@@ -43,10 +43,8 @@ template <ceres::DenseLinearAlgebraLibraryType kLibraryType,
 static void BM_DenseSolver(benchmark::State& state) {
   const int num_rows = state.range(0);
   const int num_cols = state.range(1);
-  constexpr bool kReserveDiagonal = true;
-
-  DenseSparseMatrix jacobian(num_rows, num_cols, kReserveDiagonal);
-  jacobian.mutable_matrix() = Eigen::MatrixXd::Random(num_rows, num_cols);
+  DenseSparseMatrix jacobian(num_rows, num_cols);
+  *jacobian.mutable_matrix() = Eigen::MatrixXd::Random(num_rows, num_cols);
   Eigen::VectorXd rhs = Eigen::VectorXd::Random(num_rows, 1);
 
   Eigen::VectorXd solution(num_cols);
