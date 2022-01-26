@@ -99,6 +99,9 @@ DEFINE_string(linear_solver,
               "dense_qr",
               "Options are: sparse_cholesky, dense_qr, dense_normal_cholesky "
               "and cgnr");
+DEFINE_string(dense_linear_algebra_library,
+              "eigen",
+              "Options are: eigen and lapack.");
 DEFINE_string(preconditioner, "jacobi", "Options are: identity, jacobi");
 DEFINE_string(line_search,
               "wolfe",
@@ -466,6 +469,9 @@ void SetMinimizerOptions(ceres::Solver::Options* options) {
                                      &options->minimizer_type));
   CHECK(ceres::StringToLinearSolverType(CERES_GET_FLAG(FLAGS_linear_solver),
                                         &options->linear_solver_type));
+  CHECK(StringToDenseLinearAlgebraLibraryType(
+      CERES_GET_FLAG(FLAGS_dense_linear_algebra_library),
+      &options->dense_linear_algebra_library_type));
   CHECK(ceres::StringToPreconditionerType(CERES_GET_FLAG(FLAGS_preconditioner),
                                           &options->preconditioner_type));
   CHECK(ceres::StringToTrustRegionStrategyType(

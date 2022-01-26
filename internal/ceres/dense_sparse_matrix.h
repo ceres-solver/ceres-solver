@@ -48,12 +48,10 @@ class CERES_EXPORT_INTERNAL DenseSparseMatrix : public SparseMatrix {
   // Build a matrix with the same content as the TripletSparseMatrix
   // m. This assumes that m does not have any repeated entries.
   explicit DenseSparseMatrix(const TripletSparseMatrix& m);
-  explicit DenseSparseMatrix(const ColMajorMatrix& m);
-
+  explicit DenseSparseMatrix(const Matrix& m);
   DenseSparseMatrix(int num_rows, int num_cols);
-  DenseSparseMatrix(int num_rows, int num_cols, bool reserve_diagonal);
 
-  virtual ~DenseSparseMatrix() {}
+  virtual ~DenseSparseMatrix() = default;
 
   // SparseMatrix interface.
   void SetZero() final;
@@ -69,37 +67,11 @@ class CERES_EXPORT_INTERNAL DenseSparseMatrix : public SparseMatrix {
   const double* values() const final { return m_.data(); }
   double* mutable_values() final { return m_.data(); }
 
-  ConstColMajorMatrixRef matrix() const;
-  ColMajorMatrixRef mutable_matrix();
-
-  // Only one diagonal can be appended at a time. The diagonal is appended to
-  // as a new set of rows, e.g.
-  //
-  // Original matrix:
-  //
-  //   x x x
-  //   x x x
-  //   x x x
-  //
-  // After append diagonal (1, 2, 3):
-  //
-  //   x x x
-  //   x x x
-  //   x x x
-  //   1 0 0
-  //   0 2 0
-  //   0 0 3
-  //
-  // Calling RemoveDiagonal removes the block. It is a fatal error to append a
-  // diagonal to a matrix that already has an appended diagonal, and it is also
-  // a fatal error to remove a diagonal from a matrix that has none.
-  void AppendDiagonal(double* d);
-  void RemoveDiagonal();
+  const Matrix& matrix() const;
+  Matrix* mutable_matrix();
 
  private:
-  ColMajorMatrix m_;
-  bool has_diagonal_appended_;
-  bool has_diagonal_reserved_;
+  Matrix m_;
 };
 
 }  // namespace internal
