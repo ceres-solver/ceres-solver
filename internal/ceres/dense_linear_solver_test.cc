@@ -89,24 +89,22 @@ TEST_P(DenseLinearSolverTest, _) {
       solver->Solve(&lhs, rhs.data(), per_solve_options, solution.data());
   EXPECT_EQ(summary.termination_type, LINEAR_SOLVER_SUCCESS);
 
-  // If solving for the regularized solution, add the diagonal to the
-  // matrix. This makes subsequent computations simpler.
-  if (testing::get<2>(param)) {
-    lhs.AppendDiagonal(problem->D.get());
-  };
+  Vector normal_rhs = lhs.matrix().transpose() * rhs.head(num_rows);
+  Matrix normal_lhs = lhs.matrix().transpose() * lhs.matrix();
 
-  Vector tmp = Vector::Zero(num_rows + num_cols);
-  lhs.RightMultiply(solution.data(), tmp.data());
-  Vector actual_normal_rhs = Vector::Zero(num_cols);
-  lhs.LeftMultiply(tmp.data(), actual_normal_rhs.data());
+  if (regularized) {
+    ConstVectorRef diagonal(problem->D.get(), num_cols);
+    normal_lhs += diagonal.array().square().matrix().asDiagonal();
+  }
 
-  Vector expected_normal_rhs = Vector::Zero(num_cols);
-  lhs.LeftMultiply(rhs.data(), expected_normal_rhs.data());
-  const double residual = (expected_normal_rhs - actual_normal_rhs).norm() /
-                          expected_normal_rhs.norm();
+  Vector actual_normal_rhs = normal_lhs * solution;
 
-  EXPECT_NEAR(residual, 0.0, 10 * std::numeric_limits<double>::epsilon())
-      << "\nexpected: " << expected_normal_rhs.transpose()
+  const double normalized_residual =
+      (normal_rhs - actual_normal_rhs).norm() / normal_rhs.norm();
+
+  EXPECT_NEAR(
+      normalized_residual, 0.0, 10 * std::numeric_limits<double>::epsilon())
+      << "\nexpected: " << normal_rhs.transpose()
       << "\nactual: " << actual_normal_rhs.transpose();
 }
 
