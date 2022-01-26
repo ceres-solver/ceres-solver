@@ -82,12 +82,12 @@ TEST(AutoDiffLManifoldTest, EuclideanManifold) {
 }
 
 struct ScaledFunctor {
-  explicit ScaledFunctor(const double s) : s_(s) {}
+  explicit ScaledFunctor(const double s) : s(s) {}
 
   template <typename T>
   bool Plus(const T* x, const T* delta, T* x_plus_delta) const {
     for (int i = 0; i < 3; ++i) {
-      x_plus_delta[i] = x[i] + s_ * delta[i];
+      x_plus_delta[i] = x[i] + s * delta[i];
     }
     return true;
   }
@@ -95,12 +95,12 @@ struct ScaledFunctor {
   template <typename T>
   bool Minus(const T* y, const T* x, T* y_minus_x) const {
     for (int i = 0; i < 3; ++i) {
-      y_minus_x[i] = (y[i] - x[i]) / s_;
+      y_minus_x[i] = (y[i] - x[i]) / s;
     }
     return true;
   }
 
-  double s_;
+  const double s;
 };
 
 TEST(AutoDiffManifoldTest, ScaledManifold) {
