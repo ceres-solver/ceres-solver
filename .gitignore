@@ -23,3 +23,6 @@ jni/libs/
 .buildinfo
 bazel-*
 *.pyc
+
+cmake-build
+small-blas-benchmarks
