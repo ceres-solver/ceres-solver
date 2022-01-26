@@ -59,8 +59,8 @@ class DenseJacobianWriter {
   }
 
   SparseMatrix* CreateJacobian() const {
-    return new DenseSparseMatrix(
-        program_->NumResiduals(), program_->NumEffectiveParameters(), true);
+    return new DenseSparseMatrix(program_->NumResiduals(),
+                                 program_->NumEffectiveParameters());
   }
 
   void Write(int residual_id,
@@ -86,10 +86,10 @@ class DenseJacobianWriter {
       ConstMatrixRef parameter_jacobian(
           jacobians[j], num_residuals, parameter_block_size);
 
-      dense_jacobian->mutable_matrix().block(residual_offset,
-                                             parameter_block->delta_offset(),
-                                             num_residuals,
-                                             parameter_block_size) =
+      dense_jacobian->mutable_matrix()->block(residual_offset,
+                                              parameter_block->delta_offset(),
+                                              num_residuals,
+                                              parameter_block_size) =
           parameter_jacobian;
     }
   }
