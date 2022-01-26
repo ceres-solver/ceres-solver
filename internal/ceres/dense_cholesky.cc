@@ -32,6 +32,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <string>
 
 #ifndef CERES_NO_LAPACK
 
@@ -94,7 +95,7 @@ LinearSolverTerminationType DenseCholesky::FactorAndSolve(
 LinearSolverTerminationType EigenDenseCholesky::Factorize(
     int num_cols, double* lhs, std::string* message) {
   Eigen::Map<Eigen::MatrixXd> m(lhs, num_cols, num_cols);
-  llt_.reset(new LLTType(m));
+  llt_ = std::make_unique<LLTType>(m);
   if (llt_->info() != Eigen::Success) {
     *message = "Eigen failure. Unable to perform dense Cholesky factorization.";
     return LINEAR_SOLVER_FAILURE;

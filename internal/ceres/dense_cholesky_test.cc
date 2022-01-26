@@ -32,6 +32,7 @@
 
 #include <memory>
 #include <numeric>
+#include <string>
 #include <vector>
 
 #include "Eigen/Dense"
