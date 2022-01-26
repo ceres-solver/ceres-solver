@@ -57,7 +57,6 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveImpl(
   const int num_rows = A->num_rows();
   const int num_cols = A->num_cols();
 
-  ConstColMajorMatrixRef Aref = A->matrix();
   Matrix lhs(num_cols, num_cols);
   lhs.setZero();
 
@@ -68,10 +67,10 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveImpl(
   // Using rankUpdate instead of GEMM, exposes the fact that its the
   // same matrix being multiplied with itself and that the product is
   // symmetric.
-  lhs.selfadjointView<Eigen::Upper>().rankUpdate(Aref.transpose());
+  lhs.selfadjointView<Eigen::Upper>().rankUpdate(A->matrix().transpose());
 
   //   rhs = A'b
-  Vector rhs = Aref.transpose() * ConstVectorRef(b, num_rows);
+  Vector rhs = A->matrix().transpose() * ConstVectorRef(b, num_rows);
 
   if (per_solve_options.D != NULL) {
     ConstVectorRef D(per_solve_options.D, num_cols);
