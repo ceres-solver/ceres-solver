@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f9732e4f_ea0f4530",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-01-29T19:52:36Z",
+      "side": 1,
+      "message": "After implementing a the fix to\n\n   const double denom \u003d std::sqrt(1.0 - y_last * y_last);\n\nby clamping y_last to [-1, 1], I got some unit test failures. I found out that the numeric differentiation of the minus operator produces norm(y) !\u003d norm(x) which is an invalid input to the SphereManifold::Minus operator (the plus operator is length preserving). Is there a way to teach numeric differentiation that norm(x) needs to be the same as norm(y)?",
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8f456023_b6655e35",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 1
@@ -230,6 +247,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e09bad6c_05b25dc2",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-01-29T19:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "332f6396_59d7b4b4",
+      "range": {
+        "startLine": 458,
+        "startChar": 53,
+        "endLine": 458,
+        "endChar": 59
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9a8d154_84dcc620",
@@ -276,6 +317,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "560f3bae_8ac0e05c",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-01-29T19:52:36Z",
+      "side": 1,
+      "message": "SphereManifold is now templated and I used fixed size Eigen types here and below.",
+      "parentUuid": "2d12d6df_6dbac89e",
+      "range": {
+        "startLine": 488,
+        "startChar": 8,
+        "endLine": 488,
+        "endChar": 9
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bf280b2_84637ca3",
@@ -289,6 +354,30 @@
       "writtenOn": "2022-01-23T20:41:00Z",
       "side": 1,
       "message": "see comment about FixedArray",
+      "range": {
+        "startLine": 510,
+        "startChar": 10,
+        "endLine": 510,
+        "endChar": 11
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e446d6be_085ead63",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-01-29T19:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bf280b2_84637ca3",
       "range": {
         "startLine": 510,
         "startChar": 10,
@@ -322,6 +411,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38ae9ff4_acaa54fd",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-01-29T19:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80eed5cc_67879476",
+      "range": {
+        "startLine": 537,
+        "startChar": 2,
+        "endLine": 537,
+        "endChar": 8
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14f4ce0c_2f0162c2",
@@ -335,6 +448,30 @@
       "writtenOn": "2022-01-23T20:41:00Z",
       "side": 1,
       "message": "use FixedArray.",
+      "range": {
+        "startLine": 546,
+        "startChar": 8,
+        "endLine": 546,
+        "endChar": 14
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "527333d0_7d851b00",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-01-29T19:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14f4ce0c_2f0162c2",
       "range": {
         "startLine": 546,
         "startChar": 8,
@@ -368,6 +505,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8512e25d_f438e023",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-01-29T19:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a8ccaa7_ff84ad85",
+      "range": {
+        "startLine": 548,
+        "startChar": 2,
+        "endLine": 549,
+        "endChar": 40
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84a3e9f1_219df180",
@@ -381,6 +542,30 @@
       "writtenOn": "2022-01-23T20:41:00Z",
       "side": 1,
       "message": "do you need to worry about the case that y_last * y_last may become just larger than 1?",
+      "range": {
+        "startLine": 551,
+        "startChar": 43,
+        "endLine": 551,
+        "endChar": 44
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27ede896_804f6026",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-01-29T19:52:36Z",
+      "side": 1,
+      "message": "I added a clamp of y_last because of std::acos. This should also account for this statement.",
+      "parentUuid": "84a3e9f1_219df180",
       "range": {
         "startLine": 551,
         "startChar": 43,
@@ -410,6 +595,23 @@
         "endLine": 566,
         "endChar": 24
       },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37d3a2e1_2bfb25e6",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-01-29T19:52:36Z",
+      "side": 1,
+      "message": "Do you know what MSVC version was affected here? Due to a change to C++14 and only supporting newer MSVC version do we still need the template arguments here?",
       "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
