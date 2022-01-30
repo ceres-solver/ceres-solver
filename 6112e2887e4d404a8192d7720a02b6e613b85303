@@ -35,6 +35,41 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b04adc01_f924b3eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-30T17:24:03Z",
+      "side": 1,
+      "message": "Johannes, I am not sure if you did not upload a patch by design or forgot to upload it.",
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "034de5ab_b1cd0180",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-30T17:24:03Z",
+      "side": 1,
+      "message": "This is an interesting problem and one we have encountered before. Its not just about keeping the norm the same/constant, it is more generally about the poor interaction between manifold valued variables and numeric differentiation where if x is sitting on the boundary then a euclidean perturbation (which is what numeric differentiation does, since it does not know about the manifold structure) will take you off the manifold.\n\nwe even talk about this in the documentation\n\nhttp://ceres-solver.org/nnls_modeling.html#numeric-differentiation-localparameterization\n\n\nFor unit norm vectors this is a particularly bad problem because all you have is the boundary.\n\nall this of course does not help you. \n\nIdeally what should happen is that we construct a perturbation in the tangent space at x and y and use that to perform the differentiation. I do not have an immediate solution but I need to think about this some more as to what the best way to do this is.",
+      "parentUuid": "f9732e4f_ea0f4530",
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f456023_b6655e35",
@@ -612,6 +647,24 @@
       "writtenOn": "2022-01-29T19:52:36Z",
       "side": 1,
       "message": "Do you know what MSVC version was affected here? Due to a change to C++14 and only supporting newer MSVC version do we still need the template arguments here?",
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "336ce1da_7a7a58ce",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-01-30T17:24:03Z",
+      "side": 1,
+      "message": "I have no memory.. I suspect this is outdated, but just recently I had a similar problem with autodiffmanifold using clang somewhere.",
+      "parentUuid": "37d3a2e1_2bfb25e6",
       "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
