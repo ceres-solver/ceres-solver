@@ -1,0 +1,616 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e24def5e_6a7ff2e7",
+        "filename": "docs/source/gradient_solver.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Might be worth updating this as per the implementation that makes this an inline call to NumTangentParameters() for clarity ?",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dacb575_26178352",
+        "filename": "docs/source/gradient_solver.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "I think we should have a NOTE block above this that says LocalParameterization is deprecated and has been replaced by Manifold.  As it is, it\u0027s not clear why there would be these two interfaces for very similar sounding things",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de67d246_f286da49",
+        "filename": "docs/source/gradient_solver.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "num_tangent_parameters",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd9bb39d_9b6447ea",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "I don\u0027t think (by the user) is adding much here",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e1ed24f_da401e18",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Remove extra newline (relative to other sections)",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5217cd97_65009c83",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "often we -\u003e we often",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9aabc8ff_04ac872d",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Movement -\u003e Movements",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a16a00e_13cf266f",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "\u0027.. start from. However, moving ...\u0027 (same comment as I made about this in the LocalParameterization section)",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "219d330d_555b6738",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "\u0027through out\u0027 -\u003e throughout",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb090d4e_1bf33592",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "I have mixed feelings about this as an example, as IMO we should be re-normalising as our functions expect normalised quaternions, so it\u0027s true that the user is freed from having to worry about this, but using a manifold doesn\u0027t mean that no one has to",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16d6d456_2743c667",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "\u0027optimization. Freeing\u0027 -\u003e \u0027optimization, freeing\u0027",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc81d663_69bb880a",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Perhaps natural -\u003e tangent would be more consistent here, and avoids introducing an extra term we don\u0027t then subsequently use",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "472ce3df_da775ea4",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "\u0027of the optimization algorithm, but also improves its numerical behaviour.\u0027",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e0d916f_497852d8",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "\u0027Defining\u0027 -\u003e \u0027In :math:`SO(3)`, \u0027",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e19503e_3032a836",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "I\u0027m ambivalent about including this TBH, is it adding much to go into this detail here, it seems like a nerd-snipe vs stopping at log() and exp() and then continuing later to the set of requirements that box-plus/minus should have.  Perhaps that section could come first instead?",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3347e8ed_d9f5355b",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1534,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "I think we should have a NOTE block at the top here that states that this is NOT the ordering used by Eigen, and directing users to EigenQuaternionManifold",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3844e2ea_994e1110",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1542,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": ":math:`q_2` is the coefficient of :math:`j`",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81c57fed_339715a6",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1638,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "\u0027that compute:\u0027 (add colon at end)",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd5dd7f2_b4cecdf7",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1682,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "with an",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d337591_321be805",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1682,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "optimized, production grade",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3389d7e_e6df2db0",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1796,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "started from. However, moving along ...\n\nI think that\u0027s clearer, as it more clearly delineates that you are giving an example for each point above.",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "701daca7_27f3381b",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 2269,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Remove \u0027these objects\u0027, ie. -\u003e \u0027ownership of: ...\u0027",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d4b2c1c_f34db933",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 2476,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Erroneous extra newline ?",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b173267_4bda354b",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Remove \u0027which is normalized between\u0027",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8fd06d0_3ac04d1c",
+        "filename": "include/ceres/autodiff_local_parameterization.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Indenting looks weird here, is this a clang-tidy \u0027correction\u0027?  It looks like one, but the original (left) is IMO far more legible",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e93721d_85519c92",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "As before, this looks like a clang-tidy screw-up",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fabbd1cb_035f09a5",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Previous indenting was better",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e64238f2_d0f06b27",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Previous indenting was better",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2da5e9f7_6d7c5906",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Previous indenting was better",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "faef08c6_da6342e2",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Previous indenting was better",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d8f3611_cc1a27ec",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Structure *from* Motion",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "772c9071_e7f4a119",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Previous indenting was better",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d320ab43_77656adb",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Previous indenting was better",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "437a07e3_3b5f1425",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "Previous indenting was better",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e81607d_2e46ded3",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "interfaces",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aeb51084_c4cfff2d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-01-31T20:31:07Z",
+      "side": 1,
+      "message": "interfaces",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
