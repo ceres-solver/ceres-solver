@@ -48,6 +48,11 @@ namespace {
 constexpr double kE = 2.71828182845904523536;
 
 using J = Jet<double, 2>;
+// Don't care about the dual part for scalar part categorization and comparison
+// tests
+template <typename T>
+using J0 = Jet<T, 0>;
+using J0d = J0<double>;
 
 // Convenient shorthand for making a jet.
 J MakeJet(double a, double v0, double v1) {
@@ -839,6 +844,25 @@ TEST(JetTraitsTest, ClassificationFinite) {
   EXPECT_FALSE(IsNaN(a));
 }
 
+TEST(JetTraitsTest, ClassificationScalar) {
+  EXPECT_EQ(fpclassify(J0d{+0.0}), FP_ZERO);
+  EXPECT_EQ(fpclassify(J0d{-0.0}), FP_ZERO);
+  EXPECT_EQ(fpclassify(J0d{1.234}), FP_NORMAL);
+  EXPECT_EQ(fpclassify(J0d{std::numeric_limits<double>::min() / 2}),
+            FP_SUBNORMAL);
+  EXPECT_EQ(fpclassify(J0d{std::numeric_limits<double>::quiet_NaN()}), FP_NAN);
+}
+
+TEST(JetTraitsTest, Nested2XClassificationScalar) {
+  EXPECT_EQ(fpclassify(J0<J0d>{J0d{+0.0}}), FP_ZERO);
+  EXPECT_EQ(fpclassify(J0<J0d>{J0d{-0.0}}), FP_ZERO);
+  EXPECT_EQ(fpclassify(J0<J0d>{J0d{1.234}}), FP_NORMAL);
+  EXPECT_EQ(fpclassify(J0<J0d>{J0d{std::numeric_limits<double>::min() / 2}}),
+            FP_SUBNORMAL);
+  EXPECT_EQ(fpclassify(J0<J0d>{J0d{std::numeric_limits<double>::quiet_NaN()}}),
+            FP_NAN);
+}
+
 // The following test ensures that Jets have all the appropriate Eigen
 // related traits so that they can be used as part of matrix
 // decompositions.
@@ -1012,11 +1036,6 @@ template <typename T>
 class JetTest : public testing::Test {};
 
 TYPED_TEST_SUITE(JetTest, Types);
-
-// Don't care about the dual part for comparison tests
-template <typename T>
-using J0 = Jet<T, 0>;
-using J0d = J0<double>;
 
 TYPED_TEST(JetTest, Comparison) {
   using Scalar = TypeParam;

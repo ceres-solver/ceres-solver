@@ -455,6 +455,7 @@ using std::floor;
 using std::fma;
 using std::fmax;
 using std::fmin;
+using std::fpclassify;
 using std::hypot;
 using std::isfinite;
 using std::isinf;
@@ -755,6 +756,13 @@ inline Jet<T, N> fmin(const Jet<T, N>& x, const T& y) {
 template <typename T, int N>
 inline Jet<T, N> fmin(const T& x, const Jet<T, N>& y) {
   return fmin(Jet<T, N>{x}, y);
+}
+
+// Categorize scalar part as zero, subnormal, normal, infinite, NAN, or
+// implementation-defined.
+template <typename T, int N>
+inline int fpclassify(const Jet<T, N>& f) {
+  return fpclassify(f.a);
 }
 
 // erf is defined as an integral that cannot be expressed analytically
