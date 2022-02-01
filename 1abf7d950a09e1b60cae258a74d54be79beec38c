@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdbd88a9_1311f72a",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-01T22:51:29Z",
+      "side": 1,
+      "message": "std::",
+      "range": {
+        "startLine": 522,
+        "startChar": 8,
+        "endLine": 522,
+        "endChar": 18
+      },
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee008b69_58aca914",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-01T22:51:29Z",
+      "side": 1,
+      "message": "I do not think this is a good idea.\n\nbecause no one is going to be using this for doing automatic differentiation, but rather to check if object is finite or not, and then its not clear to me calling fpclassify on a jet object but ignoring the derivative makes much sense.\n\nsee our implementations of isinf etc, where we check both the scalar and the vector part.",
+      "range": {
+        "startLine": 763,
+        "startChar": 10,
+        "endLine": 763,
+        "endChar": 18
+      },
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76f5ace4_f32021d5",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-01T22:51:29Z",
+      "side": 1,
+      "message": "std::",
+      "range": {
+        "startLine": 1023,
+        "startChar": 6,
+        "endLine": 1023,
+        "endChar": 16
+      },
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc69fe27_510bc275",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-01T22:51:29Z",
+      "side": 1,
+      "message": "std:: here and elsewhere.",
+      "range": {
+        "startLine": 1030,
+        "startChar": 12,
+        "endLine": 1030,
+        "endChar": 22
+      },
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
