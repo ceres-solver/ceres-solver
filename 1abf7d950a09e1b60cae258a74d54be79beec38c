@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64902c46_f9d43265",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-01T22:57:50Z",
+      "side": 1,
+      "message": "I would refrain from adding std:: for the stated reasons.",
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bdbd88a9_1311f72a",
@@ -26,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "25f00aac_0764f672",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-01T22:57:50Z",
+      "side": 1,
+      "message": "std:: inhibits ADL and is therefore a bad idea. Nested Jets (possibly of custom types) etc. would not work.",
+      "parentUuid": "bdbd88a9_1311f72a",
+      "range": {
+        "startLine": 522,
+        "startChar": 8,
+        "endLine": 522,
+        "endChar": 18
+      },
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ee008b69_58aca914",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
@@ -37,6 +78,30 @@
       "writtenOn": "2022-02-01T22:51:29Z",
       "side": 1,
       "message": "I do not think this is a good idea.\n\nbecause no one is going to be using this for doing automatic differentiation, but rather to check if object is finite or not, and then its not clear to me calling fpclassify on a jet object but ignoring the derivative makes much sense.\n\nsee our implementations of isinf etc, where we check both the scalar and the vector part.",
+      "range": {
+        "startLine": 763,
+        "startChar": 10,
+        "endLine": 763,
+        "endChar": 18
+      },
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce0297d1_5c6e27a4",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-01T22:57:50Z",
+      "side": 1,
+      "message": "How would do suggest to support code that relies on std::fpclassify?\n\nI believe providing the overload is perfectly fine and inline with how the comparison works.",
+      "parentUuid": "ee008b69_58aca914",
       "range": {
         "startLine": 763,
         "startChar": 10,
