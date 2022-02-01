@@ -162,6 +162,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3ebad96f_74723a6d",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-01T23:49:36Z",
+      "side": 1,
+      "message": "One could reason that a Jet acts as scalar substitute (which it is) additionally carrying derivative (secondary) information. The general use case is therefore to implement a template function or a method which works both with a Jet and a double in the same, transparent way, without the need to know what type is being passed. Hence, users will generally not care about the derivative.\n\nHowever, if one is explicitly interested in the derivative it would be more reasonable to let the user reference this part explicitly instead of trying to combine the information. For instance, why is the semantic of combining isnan results a logical OR and not a logical AND and isnormal uses exactly the opposite logic? These problems could be avoided.",
+      "parentUuid": "9b30d7bf_c32db256",
+      "range": {
+        "startLine": 763,
+        "startChar": 10,
+        "endLine": 763,
+        "endChar": 18
+      },
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "76f5ace4_f32021d5",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
