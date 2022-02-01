@@ -293,7 +293,7 @@ void QuaternionParameterizationTestHelper(const double* x,
   double jacobian[12];
   parameterization.ComputeJacobian(x, jacobian);
   for (int i = 0; i < 12; ++i) {
-    EXPECT_TRUE(IsFinite(jacobian[i]));
+    EXPECT_TRUE(isfinite(jacobian[i]));
     EXPECT_NEAR(jacobian[i], jacobian_ref[i], kTolerance)
         << "Jacobian mismatch: i = " << i << "\n Expected \n"
         << ConstMatrixRef(jacobian_ref, kGlobalSize, kLocalSize)
@@ -524,7 +524,7 @@ static void HomogeneousVectorParameterizationHelper(const double* x,
   autodiff_jacobian.ComputeJacobian(x, jacobian_autodiff);
 
   for (int i = 0; i < 12; ++i) {
-    EXPECT_TRUE(ceres::IsFinite(jacobian_analytic[i]));
+    EXPECT_TRUE(ceres::isfinite(jacobian_analytic[i]));
     EXPECT_NEAR(jacobian_analytic[i], jacobian_autodiff[i], kTolerance)
         << "Jacobian mismatch: i = " << i << ", " << jacobian_analytic[i] << " "
         << jacobian_autodiff[i];
