@@ -452,6 +452,7 @@ using std::exp;
 using std::exp2;
 using std::expm1;
 using std::floor;
+using std::fma;
 using std::fmax;
 using std::fmin;
 using std::hypot;
@@ -712,6 +713,17 @@ inline Jet<T, N> hypot(const Jet<T, N>& x,
   return Jet<T, N>(tmp, x.a / tmp * x.v + y.a / tmp * y.v + z.a / tmp * z.v);
 }
 #endif  // defined(CERES_HAS_CPP17)
+
+// Like x * y + z but rounded only once.
+template <typename T, int N>
+inline Jet<T, N> fma(const Jet<T, N>& x,
+                     const Jet<T, N>& y,
+                     const Jet<T, N>& z) {
+  // d/dx fma(x, y, z) = y
+  // d/dy fma(x, y, z) = x
+  // d/dz fma(x, y, z) = 1
+  return Jet<T, N>(fma(x.a, y.a, z.a), y.a * x.v + x.a * y.v + z.v);
+}
 
 template <typename T, int N>
 inline Jet<T, N> fmax(const Jet<T, N>& x, const Jet<T, N>& y) {

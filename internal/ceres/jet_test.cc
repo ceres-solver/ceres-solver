@@ -645,6 +645,12 @@ TEST(Jet, Midpoint) {
 
 #endif  // defined(CERES_HAS_CPP20)
 
+TEST(Jet, Fma) {
+  J v = fma(x, y, z);
+  J w = x * y + z;
+  EXPECT_THAT(v, IsAlmostEqualTo(w));
+}
+
 TEST(Jet, Fmax) {
   EXPECT_THAT(fmax(x, y), IsAlmostEqualTo(x));
   EXPECT_THAT(fmax(y, x), IsAlmostEqualTo(x));
