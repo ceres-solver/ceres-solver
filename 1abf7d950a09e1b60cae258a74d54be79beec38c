@@ -138,6 +138,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9b30d7bf_c32db256",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-01T23:27:44Z",
+      "side": 1,
+      "message": "I believe the current implementation of std::isnan/std::isinf etc. overloads is not practical and actually inconsistent w.r.t. comparison operators. Besides that, it is not clear to me what the purpose of classifying the dual part of a Jet actually is outside of unit testing?\n\nSince fpclassify returns an integer, classifying multiple values raises the question how can these results be combined. I don\u0027t think this is possible considering fpclassify should provide consistent results when swapping Jet\u003c\u003e against a double or vice versa.",
+      "parentUuid": "ce2b8bcc_83514ff4",
+      "range": {
+        "startLine": 763,
+        "startChar": 10,
+        "endLine": 763,
+        "endChar": 18
+      },
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "76f5ace4_f32021d5",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
