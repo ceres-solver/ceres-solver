@@ -455,6 +455,7 @@ using std::floor;
 using std::fma;
 using std::fmax;
 using std::fmin;
+using std::fpclassify;
 using std::hypot;
 using std::isfinite;
 using std::isinf;
@@ -518,7 +519,7 @@ template <typename T, int N>
 inline Jet<T, N> copysign(const Jet<T, N>& f, const Jet<T, N> g) {
   // The Dirac delta function  δ(b) is undefined at b=0 (here it's
   // infinite) and 0 everywhere else.
-  T d = g.a == T(0) ? std::numeric_limits<T>::infinity() : T(0);
+  T d = fpclassify(g) == FP_ZERO ? std::numeric_limits<T>::infinity() : T(0);
   T sa = copysign(T(1), f.a);  // sgn(a)
   T sb = copysign(T(1), g.a);  // sgn(b)
   // The second part of the infinitesimal is 2|a|δ(b) which is either infinity
@@ -755,6 +756,13 @@ inline Jet<T, N> fmin(const Jet<T, N>& x, const T& y) {
 template <typename T, int N>
 inline Jet<T, N> fmin(const T& x, const Jet<T, N>& y) {
   return fmin(Jet<T, N>{x}, y);
+}
+
+// Categorize scalar part as zero, subnormal, normal, infinite, NAN, or
+// implementation-defined.
+template <typename T, int N>
+inline int fpclassify(const Jet<T, N>& f) {
+  return fpclassify(f.a);
 }
 
 // erf is defined as an integral that cannot be expressed analytically
@@ -1012,14 +1020,14 @@ template <typename T, int N>
 inline Jet<T, N> pow(T f, const Jet<T, N>& g) {
   Jet<T, N> result;
 
-  if (f == T(0) && g.a > T(0)) {
+  if (fpclassify(f) == FP_ZERO && g > 0) {
     // Handle case 2.
     result = Jet<T, N>(T(0.0));
   } else {
-    if (f < 0 && g.a == floor(g.a)) {  // Handle case 3.
+    if (f < 0 && g == floor(g.a)) {  // Handle case 3.
       result = Jet<T, N>(pow(f, g.a));
       for (int i = 0; i < N; i++) {
-        if (g.v[i] != T(0.0)) {
+        if (fpclassify(g.v[i]) != FP_ZERO) {
           // Return a NaN when g.v != 0.
           result.v[i] = std::numeric_limits<T>::quiet_NaN();
         }
@@ -1074,21 +1082,21 @@ template <typename T, int N>
 inline Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
   Jet<T, N> result;
 
-  if (f.a == T(0) && g.a >= T(1)) {
+  if (fpclassify(f) == FP_ZERO && g >= 1) {
     // Handle cases 2 and 3.
-    if (g.a > T(1)) {
+    if (g > 1) {
       result = Jet<T, N>(T(0.0));
     } else {
       result = f;
     }
 
   } else {
-    if (f.a < T(0) && g.a == floor(g.a)) {
+    if (f < 0 && g == floor(g.a)) {
       // Handle cases 7 and 8.
       T const tmp = g.a * pow(f.a, g.a - T(1.0));
       result = Jet<T, N>(pow(f.a, g.a), tmp * f.v);
       for (int i = 0; i < N; i++) {
-        if (g.v[i] != T(0.0)) {
+        if (fpclassify(g.v[i]) != FP_ZERO) {
           // Return a NaN when g.v != 0.
           result.v[i] = T(std::numeric_limits<double>::quiet_NaN());
         }
