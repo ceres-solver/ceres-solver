@@ -73,12 +73,15 @@
 #if defined(_MSC_VER)
 #define CERES_API_SHARED_IMPORT __declspec(dllimport)
 #define CERES_API_SHARED_EXPORT __declspec(dllexport)
+#define CERES_API_DEPRECATED __declspec(deprecated)
 #elif defined(__GNUC__)
 #define CERES_API_SHARED_IMPORT __attribute__((visibility("default")))
 #define CERES_API_SHARED_EXPORT __attribute__((visibility("default")))
+#define CERES_API_DEPRECATED __attribute__((deprecated))
 #else
 #define CERES_API_SHARED_IMPORT
 #define CERES_API_SHARED_EXPORT
+#define CERES_API_DEPRECATED
 #endif
 
 // CERES_BUILDING_SHARED_LIBRARY is only defined locally when Ceres itself is
