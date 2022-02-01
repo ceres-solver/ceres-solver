@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,10 +28,15 @@
 //
 // Author: keir@google.com (Keir Mierle)
 
+// The floating-point environment access and modification is only meaningful
+// with the following pragma.
+#pragma STDC FENV_ACCESS ON
+
 #include "ceres/jet.h"
 
 #include <Eigen/Dense>
 #include <algorithm>
+#include <cfenv>
 #include <cmath>
 
 #include "ceres/stringprintf.h"
@@ -48,6 +53,11 @@ namespace {
 constexpr double kE = 2.71828182845904523536;
 
 using J = Jet<double, 2>;
+// Don't care about the dual part for scalar part categorization and comparison
+// tests
+template <typename T>
+using J0 = Jet<T, 0>;
+using J0d = J0<double>;
 
 // Convenient shorthand for making a jet.
 J MakeJet(double a, double v0, double v1) {
@@ -60,6 +70,22 @@ J MakeJet(double a, double v0, double v1) {
 
 double const kTolerance = 1e-13;
 
+// Stores the floating-point environment containing active floating-point
+// exceptions, rounding mode, etc., and restores it upon destruction.
+//
+// Useful for avoiding side-effects.
+class Fenv {
+ public:
+  Fenv() { std::fegetenv(&e); }
+  ~Fenv() { std::fesetenv(&e); }
+
+  Fenv(const Fenv&) = delete;
+  Fenv& operator=(const Fenv&) = delete;
+
+ private:
+  std::fenv_t e;
+};
+
 bool AreAlmostEqual(double x, double y, double max_abs_relative_difference) {
   if (std::isnan(x) && std::isnan(y)) {
     return true;
@@ -69,16 +95,17 @@ bool AreAlmostEqual(double x, double y, double max_abs_relative_difference) {
     return (std::signbit(x) == std::signbit(y));
   }
 
+  Fenv env;  // Do not leak floating-point exceptions to the caller
   double absolute_difference = std::abs(x - y);
   double relative_difference =
       absolute_difference / std::max(std::abs(x), std::abs(y));
 
-  if (x == 0 || y == 0) {
+  if (std::fpclassify(x) == FP_ZERO || std::fpclassify(y) == FP_ZERO) {
     // If x or y is exactly zero, then relative difference doesn't have any
     // meaning. Take the absolute difference instead.
     relative_difference = absolute_difference;
   }
-  return relative_difference <= max_abs_relative_difference;
+  return std::islessequal(relative_difference, max_abs_relative_difference);
 }
 
 MATCHER_P(IsAlmostEqualTo, y, "") {
@@ -420,9 +447,9 @@ TEST(Jet, Pow) {
       J b = MakeJet(i * 0.1, 3, 4);  // b = 0.1 ... 0.9
       J c = pow(a, b);
       EXPECT_EQ(c.a, 0.0) << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(IsFinite(c.v[0]))
+      EXPECT_FALSE(isfinite(c.v[0]))
           << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(IsFinite(c.v[1]))
+      EXPECT_FALSE(isfinite(c.v[1]))
           << "\na: " << a << "\nb: " << b << "\na^b: " << c;
     }
 
@@ -430,11 +457,11 @@ TEST(Jet, Pow) {
       J a = MakeJet(0, 1, 2);
       J b = MakeJet(i * 0.1, 3, 4);  // b = -1,-0.9 ... -0.1
       J c = pow(a, b);
-      EXPECT_FALSE(IsFinite(c.a))
+      EXPECT_FALSE(isfinite(c.a))
           << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(IsFinite(c.v[0]))
+      EXPECT_FALSE(isfinite(c.v[0]))
           << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(IsFinite(c.v[1]))
+      EXPECT_FALSE(isfinite(c.v[1]))
           << "\na: " << a << "\nb: " << b << "\na^b: " << c;
     }
 
@@ -444,9 +471,9 @@ TEST(Jet, Pow) {
       J b = MakeJet(0, 3, 4);
       J c = pow(a, b);
       EXPECT_EQ(c.a, 1.0) << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(IsFinite(c.v[0]))
+      EXPECT_FALSE(isfinite(c.v[0]))
           << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(IsFinite(c.v[1]))
+      EXPECT_FALSE(isfinite(c.v[1]))
           << "\na: " << a << "\nb: " << b << "\na^b: " << c;
     }
   }
@@ -462,9 +489,9 @@ TEST(Jet, Pow) {
 
       EXPECT_TRUE(AreAlmostEqual(c.a, pow(-1.5, i), kTolerance))
           << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_TRUE(IsFinite(c.v[0]))
+      EXPECT_TRUE(isfinite(c.v[0]))
           << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(IsFinite(c.v[1]))
+      EXPECT_FALSE(isfinite(c.v[1]))
           << "\na: " << a << "\nb: " << b << "\na^b: " << c;
       EXPECT_TRUE(
           AreAlmostEqual(c.v[0], i * pow(-1.5, i - 1) * 3.0, kTolerance))
@@ -477,11 +504,11 @@ TEST(Jet, Pow) {
     J a = MakeJet(-1.5, 3, 4);
     J b = MakeJet(-2.5, 0, 5);
     J c = pow(a, b);
-    EXPECT_FALSE(IsFinite(c.a))
+    EXPECT_FALSE(isfinite(c.a))
         << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-    EXPECT_FALSE(IsFinite(c.v[0]))
+    EXPECT_FALSE(isfinite(c.v[0]))
         << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-    EXPECT_FALSE(IsFinite(c.v[1]))
+    EXPECT_FALSE(isfinite(c.v[1]))
         << "\na: " << a << "\nb: " << b << "\na^b: " << c;
   }
 
@@ -495,9 +522,9 @@ TEST(Jet, Pow) {
       J b = MakeJet(i, 3, 0);
       J c = pow(a, b);
       ExpectClose(c.a, pow(-1.5, i), kTolerance);
-      EXPECT_FALSE(IsFinite(c.v[0]))
+      EXPECT_FALSE(isfinite(c.v[0]))
           << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_TRUE(IsFinite(c.v[1]))
+      EXPECT_TRUE(isfinite(c.v[1]))
           << "\na: " << a << "\nb: " << b << "\na^b: " << c;
       ExpectClose(c.v[1], 0, kTolerance);
     }
@@ -508,11 +535,11 @@ TEST(Jet, Pow) {
     double a = -1.5;
     J b = MakeJet(-3.14, 3, 0);
     J c = pow(a, b);
-    EXPECT_FALSE(IsFinite(c.a))
+    EXPECT_FALSE(isfinite(c.a))
         << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-    EXPECT_FALSE(IsFinite(c.v[0]))
+    EXPECT_FALSE(isfinite(c.v[0]))
         << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-    EXPECT_FALSE(IsFinite(c.v[1]))
+    EXPECT_FALSE(isfinite(c.v[1]))
         << "\na: " << a << "\nb: " << b << "\na^b: " << c;
   }
 }
@@ -652,6 +679,11 @@ TEST(Jet, Fma) {
 }
 
 TEST(Jet, Fmax) {
+  Fenv env;
+  // Clear all exceptions to ensure none are set by the following function
+  // calls.
+  std::feclearexcept(FE_ALL_EXCEPT);
+
   EXPECT_THAT(fmax(x, y), IsAlmostEqualTo(x));
   EXPECT_THAT(fmax(y, x), IsAlmostEqualTo(x));
   EXPECT_THAT(fmax(x, y.a), IsAlmostEqualTo(x));
@@ -662,9 +694,16 @@ TEST(Jet, Fmax) {
               IsAlmostEqualTo(x));
   EXPECT_THAT(fmax(std::numeric_limits<double>::quiet_NaN(), x),
               IsAlmostEqualTo(x));
+
+  EXPECT_EQ(std::fetestexcept(FE_ALL_EXCEPT & ~FE_INEXACT), 0);
 }
 
 TEST(Jet, Fmin) {
+  Fenv env;
+  // Clear all exceptions to ensure none are set by the following function
+  // calls.
+  std::feclearexcept(FE_ALL_EXCEPT);
+
   EXPECT_THAT(fmin(x, y), IsAlmostEqualTo(y));
   EXPECT_THAT(fmin(y, x), IsAlmostEqualTo(y));
   EXPECT_THAT(fmin(x, y.a), IsAlmostEqualTo(J{y.a}));
@@ -675,85 +714,112 @@ TEST(Jet, Fmin) {
               IsAlmostEqualTo(x));
   EXPECT_THAT(fmin(std::numeric_limits<double>::quiet_NaN(), x),
               IsAlmostEqualTo(x));
+
+  EXPECT_EQ(std::fetestexcept(FE_ALL_EXCEPT & ~FE_INEXACT), 0);
+}
+
+TEST(Jet, Fdim) {
+  Fenv env;
+  // Clear all exceptions to ensure none are set by the following function
+  // calls.
+  std::feclearexcept(FE_ALL_EXCEPT);
+
+  const J zero{};
+  const J diff = x - y;
+  const J diffx = x - J{y.a};
+  const J diffy = J{x.a} - y;
+
+  EXPECT_THAT(fdim(x, y), IsAlmostEqualTo(diff));
+  EXPECT_THAT(fdim(y, x), IsAlmostEqualTo(zero));
+  EXPECT_THAT(fdim(x, y.a), IsAlmostEqualTo(diffx));
+  EXPECT_THAT(fdim(y.a, x), IsAlmostEqualTo(J{zero.a}));
+  EXPECT_THAT(fdim(x.a, y), IsAlmostEqualTo(diffy));
+  EXPECT_THAT(fdim(y, x.a), IsAlmostEqualTo(zero));
+  EXPECT_TRUE(isnan(fdim(x, std::numeric_limits<J>::quiet_NaN())));
+  EXPECT_TRUE(isnan(fdim(std::numeric_limits<J>::quiet_NaN(), x)));
+  EXPECT_TRUE(isnan(fdim(x, std::numeric_limits<double>::quiet_NaN())));
+  EXPECT_TRUE(isnan(fdim(std::numeric_limits<double>::quiet_NaN(), x)));
+
+  EXPECT_EQ(std::fetestexcept(FE_ALL_EXCEPT & ~FE_INEXACT), 0);
 }
 
 TEST(Jet, CopySign) {
   {  // copysign(x, +1)
     J z = copysign(x, J{+1});
     EXPECT_THAT(z, IsAlmostEqualTo(x));
-    EXPECT_TRUE(IsFinite(z.v[0])) << z;
-    EXPECT_TRUE(IsFinite(z.v[1])) << z;
+    EXPECT_TRUE(isfinite(z.v[0])) << z;
+    EXPECT_TRUE(isfinite(z.v[1])) << z;
   }
   {  // copysign(x, -1)
     J z = copysign(x, J{-1});
     EXPECT_THAT(z, IsAlmostEqualTo(-x));
-    EXPECT_TRUE(IsFinite(z.v[0])) << z;
-    EXPECT_TRUE(IsFinite(z.v[1])) << z;
+    EXPECT_TRUE(isfinite(z.v[0])) << z;
+    EXPECT_TRUE(isfinite(z.v[1])) << z;
   }
   {  // copysign(-x, +1)
 
     J z = copysign(-x, J{+1});
     EXPECT_THAT(z, IsAlmostEqualTo(x));
-    EXPECT_TRUE(IsFinite(z.v[0])) << z;
-    EXPECT_TRUE(IsFinite(z.v[1])) << z;
+    EXPECT_TRUE(isfinite(z.v[0])) << z;
+    EXPECT_TRUE(isfinite(z.v[1])) << z;
   }
   {  // copysign(-x, -1)
     J z = copysign(-x, J{-1});
     EXPECT_THAT(z, IsAlmostEqualTo(-x));
-    EXPECT_TRUE(IsFinite(z.v[0])) << z;
-    EXPECT_TRUE(IsFinite(z.v[1])) << z;
+    EXPECT_TRUE(isfinite(z.v[0])) << z;
+    EXPECT_TRUE(isfinite(z.v[1])) << z;
   }
   {  // copysign(-0, +1)
     J z = copysign(MakeJet(-0, 1, 2), J{+1});
     EXPECT_THAT(z, IsAlmostEqualTo(MakeJet(+0, 1, 2)));
     EXPECT_FALSE(std::signbit(z.a)) << z;
-    EXPECT_TRUE(IsFinite(z.v[0])) << z;
-    EXPECT_TRUE(IsFinite(z.v[1])) << z;
+    EXPECT_TRUE(isfinite(z.v[0])) << z;
+    EXPECT_TRUE(isfinite(z.v[1])) << z;
   }
   {  // copysign(-0, -1)
     J z = copysign(MakeJet(-0, 1, 2), J{-1});
     EXPECT_THAT(z, IsAlmostEqualTo(MakeJet(-0, -1, -2)));
     EXPECT_TRUE(std::signbit(z.a)) << z;
-    EXPECT_TRUE(IsFinite(z.v[0])) << z;
-    EXPECT_TRUE(IsFinite(z.v[1])) << z;
+    EXPECT_TRUE(isfinite(z.v[0])) << z;
+    EXPECT_TRUE(isfinite(z.v[1])) << z;
   }
   {  // copysign(+0, -1)
     J z = copysign(MakeJet(+0, 1, 2), J{-1});
     EXPECT_THAT(z, IsAlmostEqualTo(MakeJet(-0, -1, -2)));
     EXPECT_TRUE(std::signbit(z.a)) << z;
-    EXPECT_TRUE(IsFinite(z.v[0])) << z;
-    EXPECT_TRUE(IsFinite(z.v[1])) << z;
+    EXPECT_TRUE(isfinite(z.v[0])) << z;
+    EXPECT_TRUE(isfinite(z.v[1])) << z;
   }
   {  // copysign(+0, +1)
     J z = copysign(MakeJet(+0, 1, 2), J{+1});
     EXPECT_THAT(z, IsAlmostEqualTo(MakeJet(+0, 1, 2)));
     EXPECT_FALSE(std::signbit(z.a)) << z;
-    EXPECT_TRUE(IsFinite(z.v[0])) << z;
-    EXPECT_TRUE(IsFinite(z.v[1])) << z;
+    EXPECT_TRUE(isfinite(z.v[0])) << z;
+    EXPECT_TRUE(isfinite(z.v[1])) << z;
   }
   {  // copysign(+0, +0)
     J z = copysign(MakeJet(+0, 1, 2), J{+0});
     EXPECT_FALSE(std::signbit(z.a)) << z;
-    EXPECT_TRUE(IsNaN(z.v[0])) << z;
-    EXPECT_TRUE(IsNaN(z.v[1])) << z;
+    EXPECT_TRUE(isnan(z.v[0])) << z;
+    EXPECT_TRUE(isnan(z.v[1])) << z;
   }
   {  // copysign(+0, -0)
     J z = copysign(MakeJet(+0, 1, 2), J{-0});
     EXPECT_FALSE(std::signbit(z.a)) << z;
-    EXPECT_TRUE(IsNaN(z.v[0])) << z;
-    EXPECT_TRUE(IsNaN(z.v[1])) << z;
+    EXPECT_TRUE(isnan(z.v[0])) << z;
+    EXPECT_TRUE(isnan(z.v[1])) << z;
   }
   {  // copysign(-0, +0)
     J z = copysign(MakeJet(-0, 1, 2), J{+0});
     EXPECT_FALSE(std::signbit(z.a)) << z;
-    EXPECT_TRUE(IsNaN(z.v[0])) << z;
-    EXPECT_TRUE(IsNaN(z.v[1])) << z;
+    EXPECT_TRUE(isnan(z.v[0])) << z;
+    EXPECT_TRUE(isnan(z.v[1])) << z;
   }
   {  // copysign(-0, -0)
     J z = copysign(MakeJet(-0, 1, 2), J{-0});
     EXPECT_FALSE(std::signbit(z.a)) << z;
-    EXPECT_TRUE(IsNaN(z.v[0])) << z;
-    EXPECT_TRUE(IsNaN(z.v[1])) << z;
+    EXPECT_TRUE(isnan(z.v[0])) << z;
+    EXPECT_TRUE(isnan(z.v[1])) << z;
   }
   {  // copysign(1, -nan)
     J z = copysign(MakeJet(1, 2, 3),
@@ -761,8 +827,8 @@ TEST(Jet, CopySign) {
     EXPECT_TRUE(std::signbit(z.a)) << z;
     EXPECT_TRUE(std::signbit(z.v[0])) << z;
     EXPECT_TRUE(std::signbit(z.v[1])) << z;
-    EXPECT_FALSE(IsNaN(z.v[0])) << z;
-    EXPECT_FALSE(IsNaN(z.v[1])) << z;
+    EXPECT_FALSE(isnan(z.v[0])) << z;
+    EXPECT_FALSE(isnan(z.v[1])) << z;
   }
   {  // copysign(1, +nan)
     J z = copysign(MakeJet(1, 2, 3),
@@ -770,8 +836,8 @@ TEST(Jet, CopySign) {
     EXPECT_FALSE(std::signbit(z.a)) << z;
     EXPECT_FALSE(std::signbit(z.v[0])) << z;
     EXPECT_FALSE(std::signbit(z.v[1])) << z;
-    EXPECT_FALSE(IsNaN(z.v[0])) << z;
-    EXPECT_FALSE(IsNaN(z.v[1])) << z;
+    EXPECT_FALSE(isnan(z.v[0])) << z;
+    EXPECT_FALSE(isnan(z.v[1])) << z;
   }
 }
 
@@ -795,48 +861,180 @@ TEST(Jet, JetsInEigenMatrices) {
   EXPECT_THAT(r1(1), IsAlmostEqualTo(r2(1)));
 }
 
-TEST(JetTraitsTest, ClassificationMixed) {
-  Jet<double, 3> a(5.5, 0);
-  a.v[0] = std::numeric_limits<double>::quiet_NaN();
-  a.v[1] = std::numeric_limits<double>::infinity();
-  a.v[2] = -std::numeric_limits<double>::infinity();
-  EXPECT_FALSE(IsFinite(a));
-  EXPECT_FALSE(IsNormal(a));
-  EXPECT_TRUE(IsInfinite(a));
-  EXPECT_TRUE(IsNaN(a));
+TEST(Jet, ScalarComparison) {
+  Jet<double, 1> zero{0.0};
+  zero.v << std::numeric_limits<double>::infinity();
+
+  Jet<double, 1> one{1.0};
+  one.v << std::numeric_limits<double>::quiet_NaN();
+
+  Jet<double, 1> two{2.0};
+  two.v << std::numeric_limits<double>::min() / 2;
+
+  Jet<double, 1> three{3.0};
+
+  auto inf = std::numeric_limits<Jet<double, 1>>::infinity();
+  auto nan = std::numeric_limits<Jet<double, 1>>::quiet_NaN();
+  inf.v << 1.2;
+  nan.v << 3.4;
+
+  std::feclearexcept(FE_ALL_EXCEPT);
+
+  EXPECT_FALSE(islessgreater(zero, zero));
+  EXPECT_FALSE(islessgreater(zero, zero.a));
+  EXPECT_FALSE(islessgreater(zero.a, zero));
+
+  EXPECT_TRUE(isgreaterequal(three, three));
+  EXPECT_TRUE(isgreaterequal(three, three.a));
+  EXPECT_TRUE(isgreaterequal(three.a, three));
+
+  EXPECT_TRUE(isgreater(three, two));
+  EXPECT_TRUE(isgreater(three, two.a));
+  EXPECT_TRUE(isgreater(three.a, two));
+
+  EXPECT_TRUE(islessequal(one, one));
+  EXPECT_TRUE(islessequal(one, one.a));
+  EXPECT_TRUE(islessequal(one.a, one));
+
+  EXPECT_TRUE(isless(one, two));
+  EXPECT_TRUE(isless(one, two.a));
+  EXPECT_TRUE(isless(one.a, two));
+
+  EXPECT_FALSE(isunordered(inf, one));
+  EXPECT_FALSE(isunordered(inf, one.a));
+  EXPECT_FALSE(isunordered(inf.a, one));
+
+  EXPECT_TRUE(isunordered(nan, two));
+  EXPECT_TRUE(isunordered(nan, two.a));
+  EXPECT_TRUE(isunordered(nan.a, two));
+
+  EXPECT_TRUE(isunordered(inf, nan));
+  EXPECT_TRUE(isunordered(inf, nan.a));
+  EXPECT_TRUE(isunordered(inf.a, nan.a));
+
+  EXPECT_EQ(std::fetestexcept(FE_ALL_EXCEPT & ~FE_INEXACT), 0);
+}
+
+TEST(Jet, Nested2XScalarComparison) {
+  Jet<J0d, 1> zero{J0d{0.0}};
+  zero.v << std::numeric_limits<J0d>::infinity();
+
+  Jet<J0d, 1> one{J0d{1.0}};
+  one.v << std::numeric_limits<J0d>::quiet_NaN();
+
+  Jet<J0d, 1> two{J0d{2.0}};
+  two.v << std::numeric_limits<J0d>::min() / J0d{2};
+
+  Jet<J0d, 1> three{J0d{3.0}};
+
+  auto inf = std::numeric_limits<Jet<J0d, 1>>::infinity();
+  auto nan = std::numeric_limits<Jet<J0d, 1>>::quiet_NaN();
+  inf.v << J0d{1.2};
+  nan.v << J0d{3.4};
+
+  std::feclearexcept(FE_ALL_EXCEPT);
+
+  EXPECT_FALSE(islessgreater(zero, zero));
+  EXPECT_FALSE(islessgreater(zero, zero.a));
+  EXPECT_FALSE(islessgreater(zero.a, zero));
+  EXPECT_FALSE(islessgreater(zero, zero.a.a));
+  EXPECT_FALSE(islessgreater(zero.a.a, zero));
+
+  EXPECT_TRUE(isgreaterequal(three, three));
+  EXPECT_TRUE(isgreaterequal(three, three.a));
+  EXPECT_TRUE(isgreaterequal(three.a, three));
+  EXPECT_TRUE(isgreaterequal(three, three.a.a));
+  EXPECT_TRUE(isgreaterequal(three.a.a, three));
+
+  EXPECT_TRUE(isgreater(three, two));
+  EXPECT_TRUE(isgreater(three, two.a));
+  EXPECT_TRUE(isgreater(three.a, two));
+  EXPECT_TRUE(isgreater(three, two.a.a));
+  EXPECT_TRUE(isgreater(three.a.a, two));
+
+  EXPECT_TRUE(islessequal(one, one));
+  EXPECT_TRUE(islessequal(one, one.a));
+  EXPECT_TRUE(islessequal(one.a, one));
+  EXPECT_TRUE(islessequal(one, one.a.a));
+  EXPECT_TRUE(islessequal(one.a.a, one));
+
+  EXPECT_TRUE(isless(one, two));
+  EXPECT_TRUE(isless(one, two.a));
+  EXPECT_TRUE(isless(one.a, two));
+  EXPECT_TRUE(isless(one, two.a.a));
+  EXPECT_TRUE(isless(one.a.a, two));
+
+  EXPECT_FALSE(isunordered(inf, one));
+  EXPECT_FALSE(isunordered(inf, one.a));
+  EXPECT_FALSE(isunordered(inf.a, one));
+  EXPECT_FALSE(isunordered(inf, one.a.a));
+  EXPECT_FALSE(isunordered(inf.a.a, one));
+
+  EXPECT_TRUE(isunordered(nan, two));
+  EXPECT_TRUE(isunordered(nan, two.a));
+  EXPECT_TRUE(isunordered(nan.a, two));
+  EXPECT_TRUE(isunordered(nan, two.a.a));
+  EXPECT_TRUE(isunordered(nan.a.a, two));
+
+  EXPECT_TRUE(isunordered(inf, nan));
+  EXPECT_TRUE(isunordered(inf, nan.a));
+  EXPECT_TRUE(isunordered(inf.a, nan));
+  EXPECT_TRUE(isunordered(inf, nan.a.a));
+  EXPECT_TRUE(isunordered(inf.a.a, nan));
+
+  EXPECT_EQ(std::fetestexcept(FE_ALL_EXCEPT & ~FE_INEXACT), 0);
 }
 
 TEST(JetTraitsTest, ClassificationNaN) {
-  Jet<double, 3> a(5.5, 0);
-  a.v[0] = std::numeric_limits<double>::quiet_NaN();
-  a.v[1] = 0.0;
-  a.v[2] = 0.0;
-  EXPECT_FALSE(IsFinite(a));
-  EXPECT_FALSE(IsNormal(a));
-  EXPECT_FALSE(IsInfinite(a));
-  EXPECT_TRUE(IsNaN(a));
+  Jet<double, 1> a(std::numeric_limits<double>::quiet_NaN());
+  a.v << std::numeric_limits<double>::infinity();
+  EXPECT_EQ(fpclassify(a), FP_NAN);
+  EXPECT_FALSE(isfinite(a));
+  EXPECT_FALSE(isinf(a));
+  EXPECT_FALSE(isnormal(a));
+  EXPECT_FALSE(signbit(a));
+  EXPECT_TRUE(isnan(a));
 }
 
 TEST(JetTraitsTest, ClassificationInf) {
-  Jet<double, 3> a(5.5, 0);
-  a.v[0] = std::numeric_limits<double>::infinity();
-  a.v[1] = 0.0;
-  a.v[2] = 0.0;
-  EXPECT_FALSE(IsFinite(a));
-  EXPECT_FALSE(IsNormal(a));
-  EXPECT_TRUE(IsInfinite(a));
-  EXPECT_FALSE(IsNaN(a));
+  Jet<double, 1> a(-std::numeric_limits<double>::infinity());
+  a.v << std::numeric_limits<double>::quiet_NaN();
+  EXPECT_EQ(fpclassify(a), FP_INFINITE);
+  EXPECT_FALSE(isfinite(a));
+  EXPECT_FALSE(isnan(a));
+  EXPECT_FALSE(isnormal(a));
+  EXPECT_TRUE(signbit(a));
+  EXPECT_TRUE(isinf(a));
 }
 
 TEST(JetTraitsTest, ClassificationFinite) {
-  Jet<double, 3> a(5.5, 0);
-  a.v[0] = 100.0;
-  a.v[1] = 1.0;
-  a.v[2] = 3.14159;
-  EXPECT_TRUE(IsFinite(a));
-  EXPECT_TRUE(IsNormal(a));
-  EXPECT_FALSE(IsInfinite(a));
-  EXPECT_FALSE(IsNaN(a));
+  Jet<double, 1> a(-5.5);
+  a.v << std::numeric_limits<double>::quiet_NaN();
+  EXPECT_EQ(fpclassify(a), FP_NORMAL);
+  EXPECT_FALSE(isinf(a));
+  EXPECT_FALSE(isnan(a));
+  EXPECT_TRUE(signbit(a));
+  EXPECT_TRUE(isfinite(a));
+  EXPECT_TRUE(isnormal(a));
+}
+
+TEST(JetTraitsTest, ClassificationScalar) {
+  EXPECT_EQ(fpclassify(J0d{+0.0}), FP_ZERO);
+  EXPECT_EQ(fpclassify(J0d{-0.0}), FP_ZERO);
+  EXPECT_EQ(fpclassify(J0d{1.234}), FP_NORMAL);
+  EXPECT_EQ(fpclassify(J0d{std::numeric_limits<double>::min() / 2}),
+            FP_SUBNORMAL);
+  EXPECT_EQ(fpclassify(J0d{std::numeric_limits<double>::quiet_NaN()}), FP_NAN);
+}
+
+TEST(JetTraitsTest, Nested2XClassificationScalar) {
+  EXPECT_EQ(fpclassify(J0<J0d>{J0d{+0.0}}), FP_ZERO);
+  EXPECT_EQ(fpclassify(J0<J0d>{J0d{-0.0}}), FP_ZERO);
+  EXPECT_EQ(fpclassify(J0<J0d>{J0d{1.234}}), FP_NORMAL);
+  EXPECT_EQ(fpclassify(J0<J0d>{J0d{std::numeric_limits<double>::min() / 2}}),
+            FP_SUBNORMAL);
+  EXPECT_EQ(fpclassify(J0<J0d>{J0d{std::numeric_limits<double>::quiet_NaN()}}),
+            FP_NAN);
 }
 
 // The following test ensures that Jets have all the appropriate Eigen
@@ -1012,11 +1210,6 @@ template <typename T>
 class JetTest : public testing::Test {};
 
 TYPED_TEST_SUITE(JetTest, Types);
-
-// Don't care about the dual part for comparison tests
-template <typename T>
-using J0 = Jet<T, 0>;
-using J0d = J0<double>;
 
 TYPED_TEST(JetTest, Comparison) {
   using Scalar = TypeParam;
