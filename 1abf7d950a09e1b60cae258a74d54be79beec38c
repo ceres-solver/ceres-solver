@@ -114,6 +114,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ce2b8bcc_83514ff4",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-01T23:09:18Z",
+      "side": 1,
+      "message": "I understand the desire to add fpclassify, but the question remains, what should the semantics of fpclassify be. \n\nif we follow comparisons -- which make sense in terms of comparisons then I buy your argument that it should just be done on the scalar part.\n\nbut if I follow our current implementations of isinf/isnan then we should also be paying attention to the vector part. \n\nI am confused and need to figure out a consistent way to think about this. maybe our definition of isnan/isinf is wrong.",
+      "parentUuid": "ce0297d1_5c6e27a4",
+      "range": {
+        "startLine": 763,
+        "startChar": 10,
+        "endLine": 763,
+        "endChar": 18
+      },
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "76f5ace4_f32021d5",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
