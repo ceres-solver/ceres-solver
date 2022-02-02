@@ -146,7 +146,7 @@ TEST_P(SubsetPreconditionerTest, foo) {
   }
 
   EXPECT_TRUE(
-      preconditioner_->Update(*m_, with_diagonal ? diagonal_.data() : NULL));
+      preconditioner_->Update(*m_, with_diagonal ? diagonal_.data() : nullptr));
 
   // Repeatedly apply the preconditioner to random vectors and check
   // that the preconditioned value is the same as one obtained by

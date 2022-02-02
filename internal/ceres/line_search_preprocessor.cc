@@ -65,7 +65,7 @@ bool SetupEvaluator(PreprocessedProblem* pp) {
       pp->reduced_program->mutable_evaluation_callback();
   pp->evaluator.reset(Evaluator::Create(
       pp->evaluator_options, pp->reduced_program.get(), &pp->error));
-  return (pp->evaluator.get() != NULL);
+  return (pp->evaluator.get() != nullptr);
 }
 
 }  // namespace
@@ -88,7 +88,7 @@ bool LineSearchPreprocessor::Preprocess(const Solver::Options& options,
   pp->reduced_program.reset(program->CreateReducedProgram(
       &pp->removed_parameter_blocks, &pp->fixed_cost, &pp->error));
 
-  if (pp->reduced_program.get() == NULL) {
+  if (pp->reduced_program.get() == nullptr) {
     return false;
   }
 

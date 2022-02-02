@@ -119,14 +119,14 @@ class PowellEvaluator2 : public Evaluator {
 
     VLOG(1) << "Cost: " << *cost;
 
-    if (residuals != NULL) {
+    if (residuals != nullptr) {
       residuals[0] = f1;
       residuals[1] = f2;
       residuals[2] = f3;
       residuals[3] = f4;
     }
 
-    if (jacobian != NULL) {
+    if (jacobian != nullptr) {
       DenseSparseMatrix* dense_jacobian;
       dense_jacobian = down_cast<DenseSparseMatrix*>(jacobian);
       dense_jacobian->SetZero();
@@ -176,7 +176,7 @@ class PowellEvaluator2 : public Evaluator {
       VLOG(1) << "\n" << jacobian_matrix;
     }
 
-    if (gradient != NULL) {
+    if (gradient != nullptr) {
       int column_index = 0;
       if (col1) {
         gradient[column_index++] = f1 + f4 * sqrt(10.0) * 2.0 * (x1 - x4);
@@ -343,12 +343,12 @@ class CurveCostFunction : public CostFunction {
       residuals[0] -= sqrt(length);
     }
 
-    if (jacobians == NULL) {
+    if (jacobians == nullptr) {
       return true;
     }
 
     for (int i = 0; i < num_vertices_; ++i) {
-      if (jacobians[i] != NULL) {
+      if (jacobians[i] != nullptr) {
         int prev = (num_vertices_ + i - 1) % num_vertices_;
         int next = (i + 1) % num_vertices_;
 
@@ -398,7 +398,7 @@ TEST(TrustRegionMinimizer, JacobiScalingTest) {
   }
 
   Problem problem;
-  problem.AddResidualBlock(new CurveCostFunction(N, 10.), NULL, y);
+  problem.AddResidualBlock(new CurveCostFunction(N, 10.), nullptr, y);
   Solver::Options options;
   options.linear_solver_type = ceres::DENSE_QR;
   Solver::Summary summary;
@@ -425,7 +425,7 @@ struct ExpCostFunctor {
 TEST(TrustRegionMinimizer, GradientToleranceConvergenceUpdatesStep) {
   double x = 5;
   Problem problem;
-  problem.AddResidualBlock(ExpCostFunctor::Create(), NULL, &x);
+  problem.AddResidualBlock(ExpCostFunctor::Create(), nullptr, &x);
   problem.SetParameterLowerBound(&x, 0, 3.0);
   Solver::Options options;
   Solver::Summary summary;

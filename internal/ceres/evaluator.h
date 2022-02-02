@@ -102,9 +102,9 @@ class CERES_EXPORT_INTERNAL Evaluator {
 
   // Evaluate the cost function for the given state. Returns the cost,
   // residuals, and jacobian in the corresponding arguments. Both residuals and
-  // jacobian are optional; to avoid computing them, pass NULL.
+  // jacobian are optional; to avoid computing them, pass nullptr.
   //
-  // If non-NULL, the Jacobian must have a suitable sparsity pattern; only the
+  // If non-nullptr, the Jacobian must have a suitable sparsity pattern; only the
   // values array of the jacobian is modified.
   //
   // state is an array of size NumParameters(), cost is a pointer to a single

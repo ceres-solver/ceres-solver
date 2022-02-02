@@ -191,7 +191,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Eliminate(
   const int num_col_blocks = bs->cols.size();
 
   // Add the diagonal to the schur complement.
-  if (D != NULL) {
+  if (D != nullptr) {
     ParallelFor(context_,
                 num_eliminate_blocks_,
                 num_col_blocks,
@@ -201,7 +201,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Eliminate(
                   int r, c, row_stride, col_stride;
                   CellInfo* cell_info = lhs->GetCell(
                       block_id, block_id, &r, &c, &row_stride, &col_stride);
-                  if (cell_info != NULL) {
+                  if (cell_info != nullptr) {
                     const int block_size = bs->cols[i].size;
                     typename EigenTypes<Eigen::Dynamic>::ConstVectorRef diag(
                         D + bs->cols[i].position, block_size);
@@ -243,7 +243,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Eliminate(
         typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix ete(e_block_size,
                                                                   e_block_size);
 
-        if (D != NULL) {
+        if (D != nullptr) {
           const typename EigenTypes<kEBlockSize>::ConstVectorRef diag(
               D + bs->cols[e_block_id].position, e_block_size);
           ete = diag.array().square().matrix().asDiagonal();
@@ -325,7 +325,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::BackSubstitute(
 
     typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix ete(e_block_size,
                                                               e_block_size);
-    if (D != NULL) {
+    if (D != nullptr) {
       const typename EigenTypes<kEBlockSize>::ConstVectorRef diag(
           D + bs->cols[e_block_id].position, e_block_size);
       ete = diag.array().square().matrix().asDiagonal();
@@ -547,7 +547,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
       int r, c, row_stride, col_stride;
       CellInfo* cell_info =
           lhs->GetCell(block1, block2, &r, &c, &row_stride, &col_stride);
-      if (cell_info != NULL) {
+      if (cell_info != nullptr) {
         const int block2_size = bs->cols[it2->first].size;
         std::lock_guard<std::mutex> l(cell_info->m);
         // clang-format off
@@ -625,7 +625,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
     int r, c, row_stride, col_stride;
     CellInfo* cell_info =
         lhs->GetCell(block1, block1, &r, &c, &row_stride, &col_stride);
-    if (cell_info != NULL) {
+    if (cell_info != nullptr) {
       std::lock_guard<std::mutex> l(cell_info->m);
       // This multiply currently ignores the fact that this is a
       // symmetric outer product.
@@ -645,7 +645,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
       int r, c, row_stride, col_stride;
       CellInfo* cell_info =
           lhs->GetCell(block1, block2, &r, &c, &row_stride, &col_stride);
-      if (cell_info != NULL) {
+      if (cell_info != nullptr) {
         const int block2_size = bs->cols[row.cells[j].block_id].size;
         std::lock_guard<std::mutex> l(cell_info->m);
         // clang-format off
@@ -680,7 +680,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
     int r, c, row_stride, col_stride;
     CellInfo* cell_info =
         lhs->GetCell(block1, block1, &r, &c, &row_stride, &col_stride);
-    if (cell_info != NULL) {
+    if (cell_info != nullptr) {
       std::lock_guard<std::mutex> l(cell_info->m);
       // block += b1.transpose() * b1;
       // clang-format off
@@ -700,7 +700,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
       int r, c, row_stride, col_stride;
       CellInfo* cell_info =
           lhs->GetCell(block1, block2, &r, &c, &row_stride, &col_stride);
-      if (cell_info != NULL) {
+      if (cell_info != nullptr) {
         // block += b1.transpose() * b2;
         std::lock_guard<std::mutex> l(cell_info->m);
         // clang-format off

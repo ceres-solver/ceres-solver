@@ -371,7 +371,7 @@ TEST(NumericDiffCostFunction, PartiallyFilledResidualShouldFailEvaluation) {
   EXPECT_TRUE(cost_function->Evaluate(parameters, residuals, jacobians));
   EXPECT_FALSE(IsArrayValid(2, residuals));
   InvalidateArray(2, residuals);
-  EXPECT_TRUE(cost_function->Evaluate(parameters, residuals, NULL));
+  EXPECT_TRUE(cost_function->Evaluate(parameters, residuals, nullptr));
   // We are only testing residuals here, because the Jacobians are
   // computed using finite differencing from the residuals, so unless
   // we introduce a validation step after every evaluation of

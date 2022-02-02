@@ -58,7 +58,7 @@ double WallTimeInSeconds() {
          static_cast<double>(frequency.QuadPart);
 #else
   timeval time_val;
-  gettimeofday(&time_val, NULL);
+  gettimeofday(&time_val, nullptr);
   return (time_val.tv_sec + time_val.tv_usec * 1e-6);
 #endif
 #endif

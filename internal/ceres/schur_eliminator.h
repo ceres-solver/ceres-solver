@@ -483,7 +483,7 @@ class SchurEliminatorForOneFBlock : public SchurEliminatorBase {
       Eigen::Matrix<double, kFBlockSize, 1> f_t_b;
 
       // Add the square of the diagonal to e_t_e.
-      if (D != NULL) {
+      if (D != nullptr) {
         const typename EigenTypes<kEBlockSize>::ConstVectorRef diag(
             D + bs->cols[e_block_id].position, kEBlockSize);
         e_t_e = diag.array().square().matrix().asDiagonal();

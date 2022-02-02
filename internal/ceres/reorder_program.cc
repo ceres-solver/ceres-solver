@@ -291,7 +291,7 @@ bool LexicographicallyOrderResidualBlocks(
   // filling is finished, the offset pointerts should have shifted down one
   // entry (this is verified below).
   vector<ResidualBlock*> reordered_residual_blocks(
-      (*residual_blocks).size(), static_cast<ResidualBlock*>(NULL));
+      (*residual_blocks).size(), static_cast<ResidualBlock*>(nullptr));
   for (int i = 0; i < residual_blocks->size(); ++i) {
     int bucket = min_position_per_residual[i];
 
@@ -299,7 +299,7 @@ bool LexicographicallyOrderResidualBlocks(
     offsets[bucket]--;
 
     // Sanity.
-    CHECK(reordered_residual_blocks[offsets[bucket]] == NULL)
+    CHECK(reordered_residual_blocks[offsets[bucket]] == nullptr)
         << "Congratulations, you found a Ceres bug! Please report this error "
         << "to the developers.";
 
@@ -313,9 +313,9 @@ bool LexicographicallyOrderResidualBlocks(
         << "Congratulations, you found a Ceres bug! Please report this error "
         << "to the developers.";
   }
-  // Sanity check #2: No NULL's left behind.
+  // Sanity check #2: No nullptr's left behind.
   for (int i = 0; i < reordered_residual_blocks.size(); ++i) {
-    CHECK(reordered_residual_blocks[i] != NULL)
+    CHECK(reordered_residual_blocks[i] != nullptr)
         << "Congratulations, you found a Ceres bug! Please report this error "
         << "to the developers.";
   }
@@ -441,7 +441,7 @@ bool ReorderProgramForSchurTypeLinearSolver(
 
   if (parameter_block_ordering->NumGroups() == 1) {
     // If the user supplied an parameter_block_ordering with just one
-    // group, it is equivalent to the user supplying NULL as an
+    // group, it is equivalent to the user supplying nullptr as an
     // parameter_block_ordering. Ceres is completely free to choose the
     // parameter block ordering as it sees fit. For Schur type solvers,
     // this means that the user wishes for Ceres to identify the

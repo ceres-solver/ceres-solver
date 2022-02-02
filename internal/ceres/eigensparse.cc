@@ -109,7 +109,7 @@ class EigenSparseCholeskyTemplate : public SparseCholesky {
                                         std::string* message) final {
     CHECK_EQ(lhs->storage_type(), StorageType());
 
-    typename Solver::Scalar* values_ptr = NULL;
+    typename Solver::Scalar* values_ptr = nullptr;
     if (std::is_same<typename Solver::Scalar, double>::value) {
       values_ptr =
           reinterpret_cast<typename Solver::Scalar*>(lhs->mutable_values());

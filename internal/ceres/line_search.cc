@@ -71,7 +71,7 @@ LineSearch::LineSearch(const LineSearch::Options& options)
 LineSearch* LineSearch::Create(const LineSearchType line_search_type,
                                const LineSearch::Options& options,
                                string* error) {
-  LineSearch* line_search = NULL;
+  LineSearch* line_search = nullptr;
   switch (line_search_type) {
     case ceres::ARMIJO:
       line_search = new ArmijoLineSearch(options);
@@ -83,7 +83,7 @@ LineSearch* LineSearch::Create(const LineSearchType line_search_type,
       *error = string("Invalid line search algorithm type: ") +
                LineSearchTypeToString(line_search_type) +
                string(", unable to create line search.");
-      return NULL;
+      return nullptr;
   }
   return line_search;
 }
@@ -119,13 +119,13 @@ void LineSearchFunction::Evaluate(const double x,
   }
   output->vector_x_is_valid = true;
 
-  double* gradient = NULL;
+  double* gradient = nullptr;
   if (evaluate_gradient) {
     output->vector_gradient.resize(direction_.rows(), 1);
     gradient = output->vector_gradient.data();
   }
   const bool eval_status = evaluator_->Evaluate(
-      output->vector_x.data(), &(output->value), NULL, gradient, NULL);
+      output->vector_x.data(), &(output->value), nullptr, gradient, nullptr);
 
   if (!eval_status || !std::isfinite(output->value)) {
     return;

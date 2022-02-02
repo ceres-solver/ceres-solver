@@ -85,8 +85,8 @@ void TestHelper() {
   double* parameters[1] = {xyz};
 
   // Check that residual only evaluation works.
-  cost_function->Evaluate(parameters, expected_residuals.data(), NULL);
-  cfa(xyz, actual_residuals.data(), NULL);
+  cost_function->Evaluate(parameters, expected_residuals.data(), nullptr);
+  cfa(xyz, actual_residuals.data(), nullptr);
   EXPECT_NEAR(
       (expected_residuals - actual_residuals).norm() / actual_residuals.norm(),
       0.0,

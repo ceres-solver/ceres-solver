@@ -30,6 +30,8 @@
 
 #include "ceres/block_jacobian_writer.h"
 
+#include <algorithm>
+
 #include "ceres/block_evaluate_preparer.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
@@ -201,7 +203,7 @@ SparseMatrix* BlockJacobianWriter::CreateJacobian() const {
       }
     }
 
-    sort(row->cells.begin(), row->cells.end(), CellLessThan);
+    std::sort(row->cells.begin(), row->cells.end(), CellLessThan);
   }
 
   BlockSparseMatrix* jacobian = new BlockSparseMatrix(bs);

@@ -53,7 +53,7 @@ Evaluator::~Evaluator() {}
 Evaluator* Evaluator::Create(const Evaluator::Options& options,
                              Program* program,
                              std::string* error) {
-  CHECK(options.context != NULL);
+  CHECK(options.context != nullptr);
 
   switch (options.linear_solver_type) {
     case DENSE_QR:
@@ -79,7 +79,7 @@ Evaluator* Evaluator::Create(const Evaluator::Options& options,
 
     default:
       *error = "Invalid Linear Solver Type. Unable to create evaluator.";
-      return NULL;
+      return nullptr;
   }
 }
 

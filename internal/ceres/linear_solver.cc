@@ -70,7 +70,7 @@ LinearSolverType LinearSolver::LinearSolverForZeroEBlocks(
 }
 
 LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
-  CHECK(options.context != NULL);
+  CHECK(options.context != nullptr);
 
   switch (options.type) {
     case CGNR:
@@ -78,7 +78,7 @@ LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
 
     case SPARSE_NORMAL_CHOLESKY:
 #if defined(CERES_NO_SPARSE)
-      return NULL;
+      return nullptr;
 #else
       if (options.dynamic_sparsity) {
         return new DynamicSparseNormalCholeskySolver(options);
@@ -89,7 +89,7 @@ LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
 
     case SPARSE_SCHUR:
 #if defined(CERES_NO_SPARSE)
-      return NULL;
+      return nullptr;
 #else
       return new SparseSchurComplementSolver(options);
 #endif
@@ -112,7 +112,7 @@ LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
 
     default:
       LOG(FATAL) << "Unknown linear solver type :" << options.type;
-      return NULL;  // MSVC doesn't understand that LOG(FATAL) never returns.
+      return nullptr;  // MSVC doesn't understand that LOG(FATAL) never returns.
   }
 }
 
