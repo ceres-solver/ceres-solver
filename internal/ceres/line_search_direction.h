@@ -57,7 +57,7 @@ class LineSearchDirection {
     bool use_approximate_eigenvalue_bfgs_scaling;
   };
 
-  static LineSearchDirection* Create(const Options& options);
+  static std::unique_ptr<LineSearchDirection> Create(const Options& options);
 
   virtual ~LineSearchDirection() {}
   virtual bool NextDirection(const LineSearchMinimizer::State& previous,

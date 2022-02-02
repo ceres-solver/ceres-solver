@@ -75,7 +75,7 @@ class CERES_EXPORT_INTERNAL TrustRegionStrategy {
   };
 
   // Factory.
-  static TrustRegionStrategy* Create(const Options& options);
+  static std::unique_ptr<TrustRegionStrategy> Create(const Options& options);
 
   virtual ~TrustRegionStrategy();
 

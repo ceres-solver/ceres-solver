@@ -49,7 +49,7 @@ void CompareEvaluations(int expected_num_rows,
                         const double* actual_jacobian) {
   EXPECT_EQ(expected_cost, actual_cost);
 
-  if (expected_residuals != NULL) {
+  if (expected_residuals != nullptr) {
     ConstVectorRef expected_residuals_vector(expected_residuals,
                                              expected_num_rows);
     ConstVectorRef actual_residuals_vector(actual_residuals, expected_num_rows);
@@ -61,7 +61,7 @@ void CompareEvaluations(int expected_num_rows,
         << expected_residuals_vector;
   }
 
-  if (expected_gradient != NULL) {
+  if (expected_gradient != nullptr) {
     ConstVectorRef expected_gradient_vector(expected_gradient,
                                             expected_num_cols);
     ConstVectorRef actual_gradient_vector(actual_gradient, expected_num_cols);
@@ -74,7 +74,7 @@ void CompareEvaluations(int expected_num_rows,
         << expected_gradient_vector.transpose();
   }
 
-  if (expected_jacobian != NULL) {
+  if (expected_jacobian != nullptr) {
     ConstMatrixRef expected_jacobian_matrix(
         expected_jacobian, expected_num_rows, expected_num_cols);
     ConstMatrixRef actual_jacobian_matrix(

@@ -58,9 +58,9 @@ class DenseJacobianWriter {
     return ScratchEvaluatePreparer::Create(*program_, num_threads);
   }
 
-  SparseMatrix* CreateJacobian() const {
-    return new DenseSparseMatrix(program_->NumResiduals(),
-                                 program_->NumEffectiveParameters());
+  std::unique_ptr<SparseMatrix> CreateJacobian() const {
+    return std::make_unique<DenseSparseMatrix>(
+        program_->NumResiduals(), program_->NumEffectiveParameters());
   }
 
   void Write(int residual_id,

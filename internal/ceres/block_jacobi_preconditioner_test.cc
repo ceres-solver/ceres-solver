@@ -45,12 +45,12 @@ namespace internal {
 class BlockJacobiPreconditionerTest : public ::testing::Test {
  protected:
   void SetUpFromProblemId(int problem_id) {
-    std::unique_ptr<LinearLeastSquaresProblem> problem(
-        CreateLinearLeastSquaresProblemFromId(problem_id));
+    std::unique_ptr<LinearLeastSquaresProblem> problem =
+        CreateLinearLeastSquaresProblemFromId(problem_id);
 
     CHECK(problem != nullptr);
     A.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
-    D.reset(problem->D.release());
+    D = std::move(problem->D);
 
     Matrix dense_a;
     A->ToDenseMatrix(&dense_a);

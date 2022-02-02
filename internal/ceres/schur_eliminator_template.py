@@ -130,19 +130,19 @@ FACTORY_FILE_HEADER = """
 namespace ceres {
 namespace internal {
 
-SchurEliminatorBase* SchurEliminatorBase::Create(
+std::unique_ptr<SchurEliminatorBase> SchurEliminatorBase::Create(
     const LinearSolver::Options& options) {
 #ifndef CERES_RESTRICT_SCHUR_SPECIALIZATION
 """
 
-FACTORY = """  return new SchurEliminator<%s, %s, %s>(options);"""
+FACTORY = """  return std::make_unique<SchurEliminator<%s, %s, %s>>(options);"""
 
 FACTORY_FOOTER = """
 #endif
   VLOG(1) << "Template specializations not found for <"
           << options.row_block_size << "," << options.e_block_size << ","
           << options.f_block_size << ">";
-  return new SchurEliminator<Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic>(
+  return std::make_unique<SchurEliminator<Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic>>(
       options);
 }
 

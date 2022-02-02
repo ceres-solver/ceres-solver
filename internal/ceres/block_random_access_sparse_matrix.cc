@@ -76,7 +76,8 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
   VLOG(1) << "Matrix Size [" << num_cols << "," << num_cols << "] "
           << num_nonzeros;
 
-  tsm_.reset(new TripletSparseMatrix(num_cols, num_cols, num_nonzeros));
+  tsm_ =
+      std::make_unique<TripletSparseMatrix>(num_cols, num_cols, num_nonzeros);
   tsm_->set_num_nonzeros(num_nonzeros);
   int* rows = tsm_->mutable_rows();
   int* cols = tsm_->mutable_cols();
@@ -129,7 +130,7 @@ CellInfo* BlockRandomAccessSparseMatrix::GetCell(int row_block_id,
   const LayoutType::iterator it =
       layout_.find(IntPairToLong(row_block_id, col_block_id));
   if (it == layout_.end()) {
-    return NULL;
+    return nullptr;
   }
 
   // Each cell is stored contiguously as its own little dense matrix.

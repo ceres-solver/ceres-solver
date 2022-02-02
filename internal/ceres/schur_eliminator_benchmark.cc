@@ -88,7 +88,7 @@ class BenchmarkData {
       }
     }
 
-    matrix_.reset(new BlockSparseMatrix(bs));
+    matrix_ = std::make_unique<BlockSparseMatrix>(bs);
     double* values = matrix_->mutable_values();
     for (int i = 0; i < matrix_->num_nonzeros(); ++i) {
       values[i] = RandNormal();
@@ -98,7 +98,7 @@ class BenchmarkData {
     b_.setRandom();
 
     std::vector<int> blocks(1, kFBlockSize);
-    lhs_.reset(new BlockRandomAccessDenseMatrix(blocks));
+    lhs_ = std::make_unique<BlockRandomAccessDenseMatrix>(blocks);
     diagonal_.resize(matrix_->num_cols());
     diagonal_.setOnes();
     rhs_.resize(kFBlockSize);
@@ -192,7 +192,8 @@ static void BM_SchurEliminatorForOneFBlockEliminate(benchmark::State& state) {
   }
 }
 
-static void BM_SchurEliminatorForOneFBlockBackSubstitute(benchmark::State& state) {
+static void BM_SchurEliminatorForOneFBlockBackSubstitute(
+    benchmark::State& state) {
   const int num_e_blocks = state.range(0);
   BenchmarkData data(num_e_blocks);
   SchurEliminatorForOneFBlock<2, 3, 6> eliminator;

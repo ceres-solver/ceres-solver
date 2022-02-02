@@ -53,9 +53,10 @@ GradientProblem::GradientProblem(FirstOrderFunction* function,
       scratch_(new double[function_->NumParameters()]) {
   CHECK(function != nullptr);
   if (parameterization != nullptr) {
-    manifold_.reset(new internal::ManifoldAdapter(parameterization_.get()));
+    manifold_ =
+        std::make_unique<internal::ManifoldAdapter>(parameterization_.get());
   } else {
-    manifold_.reset(new EuclideanManifold(function_->NumParameters()));
+    manifold_ = std::make_unique<EuclideanManifold>(function_->NumParameters());
   }
   CHECK_EQ(function_->NumParameters(), manifold_->AmbientSize());
 }

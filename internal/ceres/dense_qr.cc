@@ -32,6 +32,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <string>
 
 #ifndef CERES_NO_LAPACK
 
