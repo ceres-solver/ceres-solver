@@ -64,7 +64,7 @@ class TernaryCostFunction : public CostFunction {
     }
     if (jacobians) {
       for (int k = 0; k < 3; ++k) {
-        if (jacobians[k] != NULL) {
+        if (jacobians[k] != nullptr) {
           MatrixRef jacobian(
               jacobians[k], num_residuals(), parameter_block_sizes()[k]);
           jacobian.setConstant(k);
@@ -96,11 +96,11 @@ TEST(ResidualBlock, EvaluteWithNoLossFunctionOrManifolds) {
   TernaryCostFunction cost_function(3, 2, 3, 4);
 
   // Create the object under tests.
-  ResidualBlock residual_block(&cost_function, NULL, parameters, -1);
+  ResidualBlock residual_block(&cost_function, nullptr, parameters, -1);
 
   // Verify getters.
   EXPECT_EQ(&cost_function, residual_block.cost_function());
-  EXPECT_EQ(NULL, residual_block.loss_function());
+  EXPECT_EQ(nullptr, residual_block.loss_function());
   EXPECT_EQ(parameters[0], residual_block.parameter_blocks()[0]);
   EXPECT_EQ(parameters[1], residual_block.parameter_blocks()[1]);
   EXPECT_EQ(parameters[2], residual_block.parameter_blocks()[2]);
@@ -108,12 +108,12 @@ TEST(ResidualBlock, EvaluteWithNoLossFunctionOrManifolds) {
 
   // Verify cost-only evaluation.
   double cost;
-  residual_block.Evaluate(true, &cost, NULL, NULL, scratch);
+  residual_block.Evaluate(true, &cost, nullptr, nullptr, scratch);
   EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
 
   // Verify cost and residual evaluation.
   double residuals[3];
-  residual_block.Evaluate(true, &cost, residuals, NULL, scratch);
+  residual_block.Evaluate(true, &cost, residuals, nullptr, scratch);
   EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
@@ -151,7 +151,7 @@ TEST(ResidualBlock, EvaluteWithNoLossFunctionOrManifolds) {
   jacobian_ry.setConstant(-1.0);
   jacobian_rz.setConstant(-1.0);
 
-  jacobian_ptrs[1] = NULL;  // Don't compute the jacobian for y.
+  jacobian_ptrs[1] = nullptr;  // Don't compute the jacobian for y.
 
   residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
   EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
@@ -187,7 +187,7 @@ class LocallyParameterizedCostFunction : public SizedCostFunction<3, 2, 3, 4> {
         //   0 1 2 3 4 ...
         //   0 1 2 3 4 ...
         //
-        if (jacobians[k] != NULL) {
+        if (jacobians[k] != nullptr) {
           MatrixRef jacobian(
               jacobians[k], num_residuals(), parameter_block_sizes()[k]);
           for (int j = 0; j < k + 2; ++j) {
@@ -233,11 +233,11 @@ TEST(ResidualBlock, EvaluteWithManifolds) {
   LocallyParameterizedCostFunction cost_function;
 
   // Create the object under tests.
-  ResidualBlock residual_block(&cost_function, NULL, parameters, -1);
+  ResidualBlock residual_block(&cost_function, nullptr, parameters, -1);
 
   // Verify getters.
   EXPECT_EQ(&cost_function, residual_block.cost_function());
-  EXPECT_EQ(NULL, residual_block.loss_function());
+  EXPECT_EQ(nullptr, residual_block.loss_function());
   EXPECT_EQ(parameters[0], residual_block.parameter_blocks()[0]);
   EXPECT_EQ(parameters[1], residual_block.parameter_blocks()[1]);
   EXPECT_EQ(parameters[2], residual_block.parameter_blocks()[2]);
@@ -245,12 +245,12 @@ TEST(ResidualBlock, EvaluteWithManifolds) {
 
   // Verify cost-only evaluation.
   double cost;
-  residual_block.Evaluate(true, &cost, NULL, NULL, scratch);
+  residual_block.Evaluate(true, &cost, nullptr, nullptr, scratch);
   EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
 
   // Verify cost and residual evaluation.
   double residuals[3];
-  residual_block.Evaluate(true, &cost, residuals, NULL, scratch);
+  residual_block.Evaluate(true, &cost, residuals, nullptr, scratch);
   EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
@@ -311,7 +311,7 @@ TEST(ResidualBlock, EvaluteWithManifolds) {
   jacobian_ry.setConstant(-1.0);
   jacobian_rz.setConstant(-1.0);
 
-  jacobian_ptrs[1] = NULL;  // Don't compute the jacobian for y.
+  jacobian_ptrs[1] = nullptr;  // Don't compute the jacobian for y.
 
   residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
   EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);

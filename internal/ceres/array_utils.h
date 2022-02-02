@@ -64,7 +64,7 @@ CERES_EXPORT_INTERNAL bool IsArrayValid(int size, const double* x);
 CERES_EXPORT_INTERNAL int FindInvalidValue(const int size, const double* x);
 
 // Utility routine to print an array of doubles to a string. If the
-// array pointer is NULL, it is treated as an array of zeros.
+// array pointer is nullptr, it is treated as an array of zeros.
 CERES_EXPORT_INTERNAL void AppendArrayToString(const int size,
                                                const double* x,
                                                std::string* result);

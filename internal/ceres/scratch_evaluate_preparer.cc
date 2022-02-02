@@ -49,7 +49,8 @@ ScratchEvaluatePreparer* ScratchEvaluatePreparer::Create(const Program& program,
 }
 
 void ScratchEvaluatePreparer::Init(int max_derivatives_per_residual_block) {
-  jacobian_scratch_.reset(new double[max_derivatives_per_residual_block]);
+  jacobian_scratch_ =
+      std::make_unique<double[]>(max_derivatives_per_residual_block);
 }
 
 // Point the jacobian blocks into the scratch area of this evaluate preparer.
@@ -64,7 +65,7 @@ void ScratchEvaluatePreparer::Prepare(const ResidualBlock* residual_block,
     const ParameterBlock* parameter_block =
         residual_block->parameter_blocks()[j];
     if (parameter_block->IsConstant()) {
-      jacobians[j] = NULL;
+      jacobians[j] = nullptr;
     } else {
       jacobians[j] = jacobian_block_cursor;
       jacobian_block_cursor += num_residuals * parameter_block->TangentSize();

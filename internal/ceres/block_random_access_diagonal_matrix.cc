@@ -31,6 +31,7 @@
 #include "ceres/block_random_access_diagonal_matrix.h"
 
 #include <algorithm>
+#include <memory>
 #include <set>
 #include <utility>
 #include <vector>
@@ -66,7 +67,8 @@ BlockRandomAccessDiagonalMatrix::BlockRandomAccessDiagonalMatrix(
   VLOG(1) << "Matrix Size [" << num_cols << "," << num_cols << "] "
           << num_nonzeros;
 
-  tsm_.reset(new TripletSparseMatrix(num_cols, num_cols, num_nonzeros));
+  tsm_ =
+      std::make_unique<TripletSparseMatrix>(num_cols, num_cols, num_nonzeros);
   tsm_->set_num_nonzeros(num_nonzeros);
   int* rows = tsm_->mutable_rows();
   int* cols = tsm_->mutable_cols();
@@ -99,7 +101,7 @@ CellInfo* BlockRandomAccessDiagonalMatrix::GetCell(int row_block_id,
                                                    int* row_stride,
                                                    int* col_stride) {
   if (row_block_id != col_block_id) {
-    return NULL;
+    return nullptr;
   }
   const int stride = blocks_[row_block_id];
 

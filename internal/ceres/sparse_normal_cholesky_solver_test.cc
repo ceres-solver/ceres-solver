@@ -54,20 +54,20 @@ namespace internal {
 class SparseNormalCholeskySolverTest : public ::testing::Test {
  protected:
   void SetUp() final {
-    std::unique_ptr<LinearLeastSquaresProblem> problem(
-        CreateLinearLeastSquaresProblemFromId(2));
+    std::unique_ptr<LinearLeastSquaresProblem> problem =
+        CreateLinearLeastSquaresProblemFromId(2);
 
     CHECK(problem != nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
-    b_.reset(problem->b.release());
-    D_.reset(problem->D.release());
+    b_ = std::move(problem->b);
+    D_ = std::move(problem->D);
   }
 
   void TestSolver(const LinearSolver::Options& options, double* D) {
     Matrix dense_A;
     A_->ToDenseMatrix(&dense_A);
     Matrix lhs = dense_A.transpose() * dense_A;
-    if (D != NULL) {
+    if (D != nullptr) {
       lhs += (ConstVectorRef(D, A_->num_cols()).array() *
               ConstVectorRef(D, A_->num_cols()).array())
                  .matrix()
@@ -97,7 +97,7 @@ class SparseNormalCholeskySolverTest : public ::testing::Test {
   }
 
   void TestSolver(const LinearSolver::Options& options) {
-    TestSolver(options, NULL);
+    TestSolver(options, nullptr);
     TestSolver(options, D_.get());
   }
 

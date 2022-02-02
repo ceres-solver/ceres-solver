@@ -92,8 +92,6 @@ CERES_EXPORT_INTERNAL CostFunction* CreateGradientCheckingCostFunction(
 // iteration, the respective cost function will notify the
 // GradientCheckingIterationCallback.
 //
-// The caller owns the returned ProblemImpl object.
-//
 // Note: This is quite inefficient and is intended only for debugging.
 //
 // relative_step_size and relative_precision are parameters to control
@@ -102,11 +100,11 @@ CERES_EXPORT_INTERNAL CostFunction* CreateGradientCheckingCostFunction(
 // jacobians obtained by numerically differentiating them. See the
 // documentation of 'numeric_derivative_relative_step_size' in solver.h for a
 // better explanation.
-CERES_EXPORT_INTERNAL ProblemImpl* CreateGradientCheckingProblemImpl(
-    ProblemImpl* problem_impl,
-    double relative_step_size,
-    double relative_precision,
-    GradientCheckingIterationCallback* callback);
+CERES_EXPORT_INTERNAL std::unique_ptr<ProblemImpl>
+CreateGradientCheckingProblemImpl(ProblemImpl* problem_impl,
+                                  double relative_step_size,
+                                  double relative_precision,
+                                  GradientCheckingIterationCallback* callback);
 
 }  // namespace internal
 }  // namespace ceres

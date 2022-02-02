@@ -51,18 +51,18 @@ class PartitionedMatrixViewTest : public ::testing::Test {
  protected:
   void SetUp() final {
     srand(5);
-    std::unique_ptr<LinearLeastSquaresProblem> problem(
-        CreateLinearLeastSquaresProblemFromId(2));
+    std::unique_ptr<LinearLeastSquaresProblem> problem =
+        CreateLinearLeastSquaresProblemFromId(2);
     CHECK(problem != nullptr);
-    A_.reset(problem->A.release());
+    A_ = std::move(problem->A);
 
     num_cols_ = A_->num_cols();
     num_rows_ = A_->num_rows();
     num_eliminate_blocks_ = problem->num_eliminate_blocks;
     LinearSolver::Options options;
     options.elimination_groups.push_back(num_eliminate_blocks_);
-    pmv_.reset(PartitionedMatrixViewBase::Create(
-        options, *down_cast<BlockSparseMatrix*>(A_.get())));
+    pmv_ = PartitionedMatrixViewBase::Create(
+        options, *down_cast<BlockSparseMatrix*>(A_.get()));
   }
 
   int num_rows_;

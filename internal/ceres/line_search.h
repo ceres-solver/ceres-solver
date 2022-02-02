@@ -163,9 +163,10 @@ class LineSearch {
   explicit LineSearch(const LineSearch::Options& options);
   virtual ~LineSearch() {}
 
-  static LineSearch* Create(const LineSearchType line_search_type,
-                            const LineSearch::Options& options,
-                            std::string* error);
+  static std::unique_ptr<LineSearch> Create(
+      const LineSearchType line_search_type,
+      const LineSearch::Options& options,
+      std::string* error);
 
   // Perform the line search.
   //

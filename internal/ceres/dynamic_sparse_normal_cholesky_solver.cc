@@ -71,11 +71,11 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
     // it before returning the matrix to the user.
     std::unique_ptr<CompressedRowSparseMatrix> regularizer;
     if (!A->col_blocks().empty()) {
-      regularizer.reset(CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
-          per_solve_options.D, A->col_blocks()));
+      regularizer = CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
+          per_solve_options.D, A->col_blocks());
     } else {
-      regularizer.reset(
-          new CompressedRowSparseMatrix(per_solve_options.D, num_cols));
+      regularizer = std::make_unique<CompressedRowSparseMatrix>(
+          per_solve_options.D, num_cols);
     }
     A->AppendRows(*regularizer);
   }
