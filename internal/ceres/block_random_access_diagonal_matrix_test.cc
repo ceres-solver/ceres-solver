@@ -44,7 +44,7 @@ namespace internal {
 
 class BlockRandomAccessDiagonalMatrixTest : public ::testing::Test {
  public:
-  void SetUp() {
+  void SetUp() override {
     std::vector<int> blocks;
     blocks.push_back(3);
     blocks.push_back(4);
@@ -52,7 +52,7 @@ class BlockRandomAccessDiagonalMatrixTest : public ::testing::Test {
     const int num_rows = 3 + 4 + 5;
     num_nonzeros_ = 3 * 3 + 4 * 4 + 5 * 5;
 
-    m_.reset(new BlockRandomAccessDiagonalMatrix(blocks));
+    m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(blocks);
 
     EXPECT_EQ(m_->num_rows(), num_rows);
     EXPECT_EQ(m_->num_cols(), num_rows);
@@ -71,11 +71,11 @@ class BlockRandomAccessDiagonalMatrixTest : public ::testing::Test {
             row_block_id, col_block_id, &row, &col, &row_stride, &col_stride);
         // Off diagonal entries are not present.
         if (i != j) {
-          EXPECT_TRUE(cell == NULL);
+          EXPECT_TRUE(cell == nullptr);
           continue;
         }
 
-        EXPECT_TRUE(cell != NULL);
+        EXPECT_TRUE(cell != nullptr);
         EXPECT_EQ(row, 0);
         EXPECT_EQ(col, 0);
         EXPECT_EQ(row_stride, blocks[row_block_id]);

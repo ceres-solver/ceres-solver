@@ -72,12 +72,12 @@ class UnaryCostFunction : public CostFunction {
       residuals[i] = 1;
     }
 
-    if (jacobians == NULL) {
+    if (jacobians == nullptr) {
       return true;
     }
 
-    if (jacobians[0] != NULL) {
-      copy(jacobian_.begin(), jacobian_.end(), jacobians[0]);
+    if (jacobians[0] != nullptr) {
+      std::copy(jacobian_.begin(), jacobian_.end(), jacobians[0]);
     }
 
     return true;
@@ -110,16 +110,16 @@ class BinaryCostFunction : public CostFunction {
       residuals[i] = 2;
     }
 
-    if (jacobians == NULL) {
+    if (jacobians == nullptr) {
       return true;
     }
 
-    if (jacobians[0] != NULL) {
-      copy(jacobian1_.begin(), jacobian1_.end(), jacobians[0]);
+    if (jacobians[0] != nullptr) {
+      std::copy(jacobian1_.begin(), jacobian1_.end(), jacobians[0]);
     }
 
-    if (jacobians[1] != NULL) {
-      copy(jacobian2_.begin(), jacobian2_.end(), jacobians[1]);
+    if (jacobians[1] != nullptr) {
+      std::copy(jacobian2_.begin(), jacobian2_.end(), jacobians[1]);
     }
 
     return true;
@@ -143,13 +143,13 @@ TEST(CovarianceImpl, ComputeCovarianceSparsity) {
   // Add in random order
   Vector junk_jacobian = Vector::Zero(10);
   problem.AddResidualBlock(
-      new UnaryCostFunction(1, 1, junk_jacobian.data()), NULL, block1);
+      new UnaryCostFunction(1, 1, junk_jacobian.data()), nullptr, block1);
   problem.AddResidualBlock(
-      new UnaryCostFunction(1, 4, junk_jacobian.data()), NULL, block4);
+      new UnaryCostFunction(1, 4, junk_jacobian.data()), nullptr, block4);
   problem.AddResidualBlock(
-      new UnaryCostFunction(1, 3, junk_jacobian.data()), NULL, block3);
+      new UnaryCostFunction(1, 3, junk_jacobian.data()), nullptr, block3);
   problem.AddResidualBlock(
-      new UnaryCostFunction(1, 2, junk_jacobian.data()), NULL, block2);
+      new UnaryCostFunction(1, 2, junk_jacobian.data()), nullptr, block2);
 
   // Sparsity pattern
   //
@@ -229,13 +229,13 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithConstantParameterBlock) {
   // Add in random order
   Vector junk_jacobian = Vector::Zero(10);
   problem.AddResidualBlock(
-      new UnaryCostFunction(1, 1, junk_jacobian.data()), NULL, block1);
+      new UnaryCostFunction(1, 1, junk_jacobian.data()), nullptr, block1);
   problem.AddResidualBlock(
-      new UnaryCostFunction(1, 4, junk_jacobian.data()), NULL, block4);
+      new UnaryCostFunction(1, 4, junk_jacobian.data()), nullptr, block4);
   problem.AddResidualBlock(
-      new UnaryCostFunction(1, 3, junk_jacobian.data()), NULL, block3);
+      new UnaryCostFunction(1, 3, junk_jacobian.data()), nullptr, block3);
   problem.AddResidualBlock(
-      new UnaryCostFunction(1, 2, junk_jacobian.data()), NULL, block2);
+      new UnaryCostFunction(1, 2, junk_jacobian.data()), nullptr, block2);
   problem.SetParameterBlockConstant(block3);
 
   // Sparsity pattern
@@ -310,12 +310,12 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
   // Add in random order
   Vector junk_jacobian = Vector::Zero(10);
   problem.AddResidualBlock(
-      new UnaryCostFunction(1, 1, junk_jacobian.data()), NULL, block1);
+      new UnaryCostFunction(1, 1, junk_jacobian.data()), nullptr, block1);
   problem.AddResidualBlock(
-      new UnaryCostFunction(1, 4, junk_jacobian.data()), NULL, block4);
+      new UnaryCostFunction(1, 4, junk_jacobian.data()), nullptr, block4);
   problem.AddParameterBlock(block3, 3);
   problem.AddResidualBlock(
-      new UnaryCostFunction(1, 2, junk_jacobian.data()), NULL, block2);
+      new UnaryCostFunction(1, 2, junk_jacobian.data()), nullptr, block2);
 
   // Sparsity pattern
   //
@@ -450,32 +450,34 @@ class CovarianceTest : public ::testing::Test {
 
     {
       double jacobian[] = {1.0, 0.0, 0.0, 1.0};
-      problem_.AddResidualBlock(new UnaryCostFunction(2, 2, jacobian), NULL, x);
+      problem_.AddResidualBlock(
+          new UnaryCostFunction(2, 2, jacobian), nullptr, x);
     }
 
     {
       double jacobian[] = {2.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 2.0};
-      problem_.AddResidualBlock(new UnaryCostFunction(3, 3, jacobian), NULL, y);
+      problem_.AddResidualBlock(
+          new UnaryCostFunction(3, 3, jacobian), nullptr, y);
     }
 
     {
       double jacobian = 5.0;
       problem_.AddResidualBlock(
-          new UnaryCostFunction(1, 1, &jacobian), NULL, z);
+          new UnaryCostFunction(1, 1, &jacobian), nullptr, z);
     }
 
     {
       double jacobian1[] = {1.0, 2.0, 3.0};
       double jacobian2[] = {-5.0, -6.0};
       problem_.AddResidualBlock(
-          new BinaryCostFunction(1, 3, 2, jacobian1, jacobian2), NULL, y, x);
+          new BinaryCostFunction(1, 3, 2, jacobian1, jacobian2), nullptr, y, x);
     }
 
     {
       double jacobian1[] = {2.0};
       double jacobian2[] = {3.0, -2.0};
       problem_.AddResidualBlock(
-          new BinaryCostFunction(1, 1, 2, jacobian1, jacobian2), NULL, z, x);
+          new BinaryCostFunction(1, 1, 2, jacobian1, jacobian2), nullptr, z, x);
     }
 
     all_covariance_blocks_.push_back(make_pair(x, x));
@@ -1368,32 +1370,34 @@ class RankDeficientCovarianceTest : public CovarianceTest {
 
     {
       double jacobian[] = {1.0, 0.0, 0.0, 1.0};
-      problem_.AddResidualBlock(new UnaryCostFunction(2, 2, jacobian), NULL, x);
+      problem_.AddResidualBlock(
+          new UnaryCostFunction(2, 2, jacobian), nullptr, x);
     }
 
     {
       double jacobian[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-      problem_.AddResidualBlock(new UnaryCostFunction(3, 3, jacobian), NULL, y);
+      problem_.AddResidualBlock(
+          new UnaryCostFunction(3, 3, jacobian), nullptr, y);
     }
 
     {
       double jacobian = 5.0;
       problem_.AddResidualBlock(
-          new UnaryCostFunction(1, 1, &jacobian), NULL, z);
+          new UnaryCostFunction(1, 1, &jacobian), nullptr, z);
     }
 
     {
       double jacobian1[] = {0.0, 0.0, 0.0};
       double jacobian2[] = {-5.0, -6.0};
       problem_.AddResidualBlock(
-          new BinaryCostFunction(1, 3, 2, jacobian1, jacobian2), NULL, y, x);
+          new BinaryCostFunction(1, 3, 2, jacobian1, jacobian2), nullptr, y, x);
     }
 
     {
       double jacobian1[] = {2.0};
       double jacobian2[] = {3.0, -2.0};
       problem_.AddResidualBlock(
-          new BinaryCostFunction(1, 1, 2, jacobian1, jacobian2), NULL, z, x);
+          new BinaryCostFunction(1, 1, 2, jacobian1, jacobian2), nullptr, z, x);
     }
 
     all_covariance_blocks_.push_back(make_pair(x, x));
@@ -1614,7 +1618,7 @@ class LargeScaleCovarianceTest : public ::testing::Test {
       problem_.AddResidualBlock(
           new UnaryCostFunction(
               parameter_block_size_, parameter_block_size_, jacobian.data()),
-          NULL,
+          nullptr,
           block_i);
       for (int j = i; j < num_parameter_blocks_; ++j) {
         double* block_j = parameters_.get() + j * parameter_block_size_;

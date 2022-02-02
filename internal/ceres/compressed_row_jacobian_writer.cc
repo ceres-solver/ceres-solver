@@ -30,7 +30,9 @@
 
 #include "ceres/compressed_row_jacobian_writer.h"
 
+#include <algorithm>
 #include <iterator>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -81,7 +83,8 @@ void CompressedRowJacobianWriter::GetOrderedParameterBlocks(
           make_pair(parameter_block->index(), j));
     }
   }
-  sort(evaluated_jacobian_blocks->begin(), evaluated_jacobian_blocks->end());
+  std::sort(evaluated_jacobian_blocks->begin(),
+            evaluated_jacobian_blocks->end());
 }
 
 SparseMatrix* CompressedRowJacobianWriter::CreateJacobian() const {

@@ -104,7 +104,7 @@ void TransposeForCompressedRowSparseStructure(const int num_rows,
       const int c = cols[idx];
       const int transpose_idx = transpose_rows[c]++;
       transpose_cols[transpose_idx] = r;
-      if (values != NULL && transpose_values != NULL) {
+      if (values != nullptr && transpose_values != nullptr) {
         transpose_values[transpose_idx] = values[idx];
       }
     }

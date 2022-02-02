@@ -58,7 +58,7 @@ TEST(BlockRandomAccessDenseMatrix, GetCell) {
       int col_stride;
       CellInfo* cell = m.GetCell(i, j, &row, &col, &row_stride, &col_stride);
 
-      EXPECT_TRUE(cell != NULL);
+      EXPECT_TRUE(cell != nullptr);
       EXPECT_EQ(row, row_idx);
       EXPECT_EQ(col, col_idx);
       EXPECT_EQ(row_stride, 3 + 4 + 5);
