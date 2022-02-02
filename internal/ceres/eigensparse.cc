@@ -109,7 +109,7 @@ class EigenSparseCholeskyTemplate : public SparseCholesky {
                                         std::string* message) final {
     CHECK_EQ(lhs->storage_type(), StorageType());
 
-    typename Solver::Scalar* values_ptr = NULL;
+    typename Solver::Scalar* values_ptr = nullptr;
     if (std::is_same<typename Solver::Scalar, double>::value) {
       values_ptr =
           reinterpret_cast<typename Solver::Scalar*>(lhs->mutable_values());
@@ -141,8 +141,6 @@ class EigenSparseCholeskyTemplate : public SparseCholesky {
 
 std::unique_ptr<SparseCholesky> EigenSparseCholesky::Create(
     const OrderingType ordering_type) {
-  std::unique_ptr<SparseCholesky> sparse_cholesky;
-
   typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
                                 Eigen::Upper,
                                 Eigen::AMDOrdering<int>>
@@ -151,20 +149,18 @@ std::unique_ptr<SparseCholesky> EigenSparseCholesky::Create(
                                 Eigen::Upper,
                                 Eigen::NaturalOrdering<int>>
       WithNaturalOrdering;
+
   if (ordering_type == AMD) {
-    sparse_cholesky.reset(new EigenSparseCholeskyTemplate<WithAMDOrdering>());
+    return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
   } else {
-    sparse_cholesky.reset(
-        new EigenSparseCholeskyTemplate<WithNaturalOrdering>());
+    return std::make_unique<EigenSparseCholeskyTemplate<WithNaturalOrdering>>();
   }
-  return sparse_cholesky;
 }
 
 EigenSparseCholesky::~EigenSparseCholesky() = default;
 
 std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
     const OrderingType ordering_type) {
-  std::unique_ptr<SparseCholesky> sparse_cholesky;
   typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
                                 Eigen::Upper,
                                 Eigen::AMDOrdering<int>>
@@ -174,12 +170,10 @@ std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
                                 Eigen::NaturalOrdering<int>>
       WithNaturalOrdering;
   if (ordering_type == AMD) {
-    sparse_cholesky.reset(new EigenSparseCholeskyTemplate<WithAMDOrdering>());
+    return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
   } else {
-    sparse_cholesky.reset(
-        new EigenSparseCholeskyTemplate<WithNaturalOrdering>());
+    return std::make_unique<EigenSparseCholeskyTemplate<WithNaturalOrdering>>();
   }
-  return sparse_cholesky;
 }
 
 FloatEigenSparseCholesky::~FloatEigenSparseCholesky() = default;

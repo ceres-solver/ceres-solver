@@ -50,36 +50,40 @@ namespace internal {
 
 Evaluator::~Evaluator() = default;
 
-Evaluator* Evaluator::Create(const Evaluator::Options& options,
-                             Program* program,
-                             std::string* error) {
-  CHECK(options.context != NULL);
+std::unique_ptr<Evaluator> Evaluator::Create(const Evaluator::Options& options,
+                                             Program* program,
+                                             std::string* error) {
+  CHECK(options.context != nullptr);
 
   switch (options.linear_solver_type) {
     case DENSE_QR:
     case DENSE_NORMAL_CHOLESKY:
-      return new ProgramEvaluator<ScratchEvaluatePreparer, DenseJacobianWriter>(
+      return std::make_unique<
+          ProgramEvaluator<ScratchEvaluatePreparer, DenseJacobianWriter>>(
           options, program);
     case DENSE_SCHUR:
     case SPARSE_SCHUR:
     case ITERATIVE_SCHUR:
     case CGNR:
-      return new ProgramEvaluator<BlockEvaluatePreparer, BlockJacobianWriter>(
+      return std::make_unique<
+          ProgramEvaluator<BlockEvaluatePreparer, BlockJacobianWriter>>(
           options, program);
     case SPARSE_NORMAL_CHOLESKY:
       if (options.dynamic_sparsity) {
-        return new ProgramEvaluator<ScratchEvaluatePreparer,
-                                    DynamicCompressedRowJacobianWriter,
-                                    DynamicCompressedRowJacobianFinalizer>(
-            options, program);
+        return std::make_unique<
+            ProgramEvaluator<ScratchEvaluatePreparer,
+                             DynamicCompressedRowJacobianWriter,
+                             DynamicCompressedRowJacobianFinalizer>>(options,
+                                                                     program);
       } else {
-        return new ProgramEvaluator<BlockEvaluatePreparer, BlockJacobianWriter>(
+        return std::make_unique<
+            ProgramEvaluator<BlockEvaluatePreparer, BlockJacobianWriter>>(
             options, program);
       }
 
     default:
       *error = "Invalid Linear Solver Type. Unable to create evaluator.";
-      return NULL;
+      return nullptr;
   }
 }
 

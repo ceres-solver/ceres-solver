@@ -47,7 +47,7 @@ void ParallelFor(ContextImpl* context,
                  int num_threads,
                  const std::function<void(int)>& function) {
   CHECK_GT(num_threads, 0);
-  CHECK(context != NULL);
+  CHECK(context != nullptr);
   if (end <= start) {
     return;
   }
@@ -62,7 +62,7 @@ void ParallelFor(ContextImpl* context,
                  int num_threads,
                  const std::function<void(int thread_id, int i)>& function) {
   CHECK_GT(num_threads, 0);
-  CHECK(context != NULL);
+  CHECK(context != nullptr);
   if (end <= start) {
     return;
   }

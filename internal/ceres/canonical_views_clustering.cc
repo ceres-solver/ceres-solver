@@ -85,11 +85,11 @@ void ComputeCanonicalViewsClustering(
     const WeightedGraph<int>& graph,
     vector<int>* centers,
     IntMap* membership) {
-  time_t start_time = time(NULL);
+  time_t start_time = time(nullptr);
   CanonicalViewsClustering cv;
   cv.ComputeClustering(options, graph, centers, membership);
   VLOG(2) << "Canonical views clustering time (secs): "
-          << time(NULL) - start_time;
+          << time(nullptr) - start_time;
 }
 
 // Implementation of CanonicalViewsClustering
@@ -107,7 +107,7 @@ void CanonicalViewsClustering::ComputeClustering(
 
   IntSet valid_views;
   FindValidViews(&valid_views);
-  while (valid_views.size() > 0) {
+  while (!valid_views.empty()) {
     // Find the next best canonical view.
     double best_difference = -std::numeric_limits<double>::max();
     int best_view = 0;

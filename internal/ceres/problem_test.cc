@@ -429,7 +429,7 @@ struct DynamicProblem : public ::testing::TestWithParam<bool> {
   DynamicProblem() {
     Problem::Options options;
     options.enable_fast_removal = GetParam();
-    problem.reset(new ProblemImpl(options));
+    problem = std::make_unique<ProblemImpl>(options);
   }
 
   ParameterBlock* GetParameterBlock(int block) {

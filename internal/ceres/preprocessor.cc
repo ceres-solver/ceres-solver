@@ -51,7 +51,7 @@ Preprocessor* Preprocessor::Create(MinimizerType minimizer_type) {
   }
 
   LOG(FATAL) << "Unknown minimizer_type: " << minimizer_type;
-  return NULL;
+  return nullptr;
 }
 
 Preprocessor::~Preprocessor() = default;
@@ -85,15 +85,15 @@ void SetupCommonMinimizerOptions(PreprocessedProblem* pp) {
   minimizer_options.evaluator = pp->evaluator;
 
   if (options.logging_type != SILENT) {
-    pp->logging_callback.reset(new LoggingCallback(
-        options.minimizer_type, options.minimizer_progress_to_stdout));
+    pp->logging_callback = std::make_unique<LoggingCallback>(
+        options.minimizer_type, options.minimizer_progress_to_stdout);
     minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
                                        pp->logging_callback.get());
   }
 
   if (options.update_state_every_iteration) {
-    pp->state_updating_callback.reset(
-        new StateUpdatingCallback(program, reduced_parameters));
+    pp->state_updating_callback =
+        std::make_unique<StateUpdatingCallback>(program, reduced_parameters);
     // This must get pushed to the front of the callbacks so that it
     // is run before any of the user callbacks.
     minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),

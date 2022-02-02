@@ -30,6 +30,7 @@
 
 #include "ceres/callbacks.h"
 
+#include <algorithm>
 #include <iostream>  // NO LINT
 
 #include "ceres/program.h"
@@ -69,9 +70,7 @@ GradientProblemSolverStateUpdatingCallback::
 CallbackReturnType GradientProblemSolverStateUpdatingCallback::operator()(
     const IterationSummary& summary) {
   if (summary.step_is_successful) {
-    std::copy(internal_parameters_,
-              internal_parameters_ + num_parameters_,
-              user_parameters_);
+    std::copy_n(internal_parameters_, num_parameters_, user_parameters_);
   }
   return SOLVER_CONTINUE;
 }

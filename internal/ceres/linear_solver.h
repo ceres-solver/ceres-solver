@@ -288,7 +288,7 @@ class CERES_EXPORT_INTERNAL LinearSolver {
   }
 
   // Factory
-  static LinearSolver* Create(const Options& options);
+  static std::unique_ptr<LinearSolver> Create(const Options& options);
 };
 
 // This templated subclass of LinearSolver serves as a base class for

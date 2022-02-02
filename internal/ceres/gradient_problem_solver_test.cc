@@ -48,7 +48,7 @@ class Rosenbrock : public ceres::FirstOrderFunction {
     const double y = parameters[1];
 
     cost[0] = (1.0 - x) * (1.0 - x) + 100.0 * (y - x * x) * (y - x * x);
-    if (gradient != NULL) {
+    if (gradient != nullptr) {
       gradient[0] = -2.0 * (1.0 - x) - 200.0 * (y - x * x) * 2.0 * x;
       gradient[1] = 200.0 * (y - x * x);
     }
@@ -79,7 +79,7 @@ class QuadraticFunction : public ceres::FirstOrderFunction {
                 double* gradient) const final {
     const double x = parameters[0];
     *cost = 0.5 * (5.0 - x) * (5.0 - x);
-    if (gradient != NULL) {
+    if (gradient != nullptr) {
       gradient[0] = x - 5.0;
     }
 

@@ -70,13 +70,13 @@ class PowellsFunction {
     x_[3] = 1.0;
 
     problem_.AddResidualBlock(
-        new AutoDiffCostFunction<F1, 1, 1, 1>(new F1), NULL, &x_[0], &x_[1]);
+        new AutoDiffCostFunction<F1, 1, 1, 1>(new F1), nullptr, &x_[0], &x_[1]);
     problem_.AddResidualBlock(
-        new AutoDiffCostFunction<F2, 1, 1, 1>(new F2), NULL, &x_[2], &x_[3]);
+        new AutoDiffCostFunction<F2, 1, 1, 1>(new F2), nullptr, &x_[2], &x_[3]);
     problem_.AddResidualBlock(
-        new AutoDiffCostFunction<F3, 1, 1, 1>(new F3), NULL, &x_[1], &x_[2]);
+        new AutoDiffCostFunction<F3, 1, 1, 1>(new F3), nullptr, &x_[1], &x_[2]);
     problem_.AddResidualBlock(
-        new AutoDiffCostFunction<F4, 1, 1, 1>(new F4), NULL, &x_[0], &x_[3]);
+        new AutoDiffCostFunction<F4, 1, 1, 1>(new F4), nullptr, &x_[0], &x_[3]);
 
     // Settings for the reference solution.
     options_.linear_solver_type = ceres::DENSE_QR;

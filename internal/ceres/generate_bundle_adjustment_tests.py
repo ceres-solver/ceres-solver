@@ -137,7 +137,7 @@ TEST_F(BundleAdjustmentTest,
   options->sparse_linear_algebra_library_type = %(sparse_backend)s;
   options->preconditioner_type = %(preconditioner)s;
   if (%(ordering)s) {
-    options->linear_solver_ordering.reset();
+    options->linear_solver_ordering = nullptr;
   }
   Problem* problem = bundle_adjustment_problem.mutable_problem();
   RunSolverForConfigAndExpectResidualsMatch(*options, problem);

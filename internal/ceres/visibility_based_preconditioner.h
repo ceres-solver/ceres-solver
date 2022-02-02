@@ -122,7 +122,7 @@ class SchurEliminatorBase;
 //   options.elimination_groups.push_back(num_cameras);
 //   VisibilityBasedPreconditioner preconditioner(
 //      *A.block_structure(), options);
-//   preconditioner.Update(A, NULL);
+//   preconditioner.Update(A, nullptr);
 //   preconditioner.RightMultiply(x, y);
 class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
  public:

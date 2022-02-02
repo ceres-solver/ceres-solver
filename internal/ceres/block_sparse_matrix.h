@@ -97,7 +97,7 @@ class CERES_EXPORT_INTERNAL BlockSparseMatrix : public SparseMatrix {
   // Delete the bottom delta_rows_blocks.
   void DeleteRowBlocks(int delta_row_blocks);
 
-  static BlockSparseMatrix* CreateDiagonalMatrix(
+  static std::unique_ptr<BlockSparseMatrix> CreateDiagonalMatrix(
       const double* diagonal, const std::vector<Block>& column_blocks);
 
   struct RandomMatrixOptions {
@@ -122,9 +122,7 @@ class CERES_EXPORT_INTERNAL BlockSparseMatrix : public SparseMatrix {
   // Create a random BlockSparseMatrix whose entries are normally
   // distributed and whose structure is determined by
   // RandomMatrixOptions.
-  //
-  // Caller owns the result.
-  static BlockSparseMatrix* CreateRandomMatrix(
+  static std::unique_ptr<BlockSparseMatrix> CreateRandomMatrix(
       const RandomMatrixOptions& options);
 
  private:

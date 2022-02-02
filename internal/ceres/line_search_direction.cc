@@ -338,32 +338,32 @@ class BFGS : public LineSearchDirection {
   bool is_positive_definite_;
 };
 
-LineSearchDirection* LineSearchDirection::Create(
+std::unique_ptr<LineSearchDirection> LineSearchDirection::Create(
     const LineSearchDirection::Options& options) {
   if (options.type == STEEPEST_DESCENT) {
-    return new SteepestDescent;
+    return std::make_unique<SteepestDescent>();
   }
 
   if (options.type == NONLINEAR_CONJUGATE_GRADIENT) {
-    return new NonlinearConjugateGradient(
+    return std::make_unique<NonlinearConjugateGradient>(
         options.nonlinear_conjugate_gradient_type, options.function_tolerance);
   }
 
   if (options.type == ceres::LBFGS) {
-    return new ceres::internal::LBFGS(
+    return std::make_unique<ceres::internal::LBFGS>(
         options.num_parameters,
         options.max_lbfgs_rank,
         options.use_approximate_eigenvalue_bfgs_scaling);
   }
 
   if (options.type == ceres::BFGS) {
-    return new ceres::internal::BFGS(
+    return std::make_unique<ceres::internal::BFGS>(
         options.num_parameters,
         options.use_approximate_eigenvalue_bfgs_scaling);
   }
 
   LOG(ERROR) << "Unknown line search direction type: " << options.type;
-  return NULL;
+  return nullptr;
 }
 
 }  // namespace internal

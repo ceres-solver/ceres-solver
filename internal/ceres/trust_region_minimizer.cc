@@ -75,11 +75,11 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   // Create the TrustRegionStepEvaluator. The construction needs to be
   // delayed to this point because we need the cost for the starting
   // point to initialize the step evaluator.
-  step_evaluator_.reset(new TrustRegionStepEvaluator(
+  step_evaluator_ = std::make_unique<TrustRegionStepEvaluator>(
       x_cost_,
       options_.use_nonmonotonic_steps
           ? options_.max_consecutive_nonmonotonic_steps
-          : 0));
+          : 0);
 
   while (FinalizeIterationAndCheckIfMinimizerCanContinue()) {
     iteration_start_time_in_secs_ = WallTimeInSeconds();

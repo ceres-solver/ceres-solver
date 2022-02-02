@@ -80,7 +80,7 @@ BlockSparseMatrix::BlockSparseMatrix(
   CHECK_GE(num_nonzeros_, 0);
   VLOG(2) << "Allocating values array with " << num_nonzeros_ * sizeof(double)
           << " bytes.";  // NOLINT
-  values_.reset(new double[num_nonzeros_]);
+  values_ = std::make_unique<double[]>(num_nonzeros_);
   max_num_nonzeros_ = num_nonzeros_;
   CHECK(values_ != nullptr);
 }
@@ -248,7 +248,7 @@ void BlockSparseMatrix::ToTextFile(FILE* file) const {
   }
 }
 
-BlockSparseMatrix* BlockSparseMatrix::CreateDiagonalMatrix(
+std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateDiagonalMatrix(
     const double* diagonal, const std::vector<Block>& column_blocks) {
   // Create the block structure for the diagonal matrix.
   CompressedRowBlockStructure* bs = new CompressedRowBlockStructure();
@@ -265,7 +265,7 @@ BlockSparseMatrix* BlockSparseMatrix::CreateDiagonalMatrix(
   }
 
   // Create the BlockSparseMatrix with the given block structure.
-  BlockSparseMatrix* matrix = new BlockSparseMatrix(bs);
+  auto matrix = std::make_unique<BlockSparseMatrix>(bs);
   matrix->SetZero();
 
   // Fill the values array of the block sparse matrix.
@@ -308,9 +308,10 @@ void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
   }
 
   if (num_nonzeros_ > max_num_nonzeros_) {
-    double* new_values = new double[num_nonzeros_];
-    std::copy(values_.get(), values_.get() + old_num_nonzeros, new_values);
-    values_.reset(new_values);
+    std::unique_ptr<double[]> new_values =
+        std::make_unique<double[]>(num_nonzeros_);
+    std::copy_n(values_.get(), old_num_nonzeros, new_values.get());
+    values_ = std::move(new_values);
     max_num_nonzeros_ = num_nonzeros_;
   }
 
@@ -337,7 +338,7 @@ void BlockSparseMatrix::DeleteRowBlocks(const int delta_row_blocks) {
   block_structure_->rows.resize(num_row_blocks - delta_row_blocks);
 }
 
-BlockSparseMatrix* BlockSparseMatrix::CreateRandomMatrix(
+std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
     const BlockSparseMatrix::RandomMatrixOptions& options) {
   CHECK_GT(options.num_row_blocks, 0);
   CHECK_GT(options.min_row_block_size, 0);
@@ -395,7 +396,7 @@ BlockSparseMatrix* BlockSparseMatrix::CreateRandomMatrix(
     }
   }
 
-  BlockSparseMatrix* matrix = new BlockSparseMatrix(bs);
+  auto matrix = std::make_unique<BlockSparseMatrix>(bs);
   double* values = matrix->mutable_values();
   for (int i = 0; i < matrix->num_nonzeros(); ++i) {
     values[i] = RandNormal();

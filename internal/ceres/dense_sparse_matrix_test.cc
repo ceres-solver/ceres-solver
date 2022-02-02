@@ -70,13 +70,13 @@ static void CompareMatrices(const SparseMatrix* a, const SparseMatrix* b) {
 class DenseSparseMatrixTest : public ::testing::Test {
  protected:
   void SetUp() final {
-    std::unique_ptr<LinearLeastSquaresProblem> problem(
-        CreateLinearLeastSquaresProblemFromId(1));
+    std::unique_ptr<LinearLeastSquaresProblem> problem =
+        CreateLinearLeastSquaresProblemFromId(1);
 
     CHECK(problem != nullptr);
 
     tsm.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
-    dsm.reset(new DenseSparseMatrix(*tsm));
+    dsm = std::make_unique<DenseSparseMatrix>(*tsm);
 
     num_rows = tsm->num_rows();
     num_cols = tsm->num_cols();

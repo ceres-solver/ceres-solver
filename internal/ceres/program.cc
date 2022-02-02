@@ -279,7 +279,7 @@ bool Program::IsFeasible(std::string* message) const {
   return true;
 }
 
-Program* Program::CreateReducedProgram(
+std::unique_ptr<Program> Program::CreateReducedProgram(
     std::vector<double*>* removed_parameter_blocks,
     double* fixed_cost,
     std::string* error) const {
@@ -287,14 +287,14 @@ Program* Program::CreateReducedProgram(
   CHECK(fixed_cost != nullptr);
   CHECK(error != nullptr);
 
-  std::unique_ptr<Program> reduced_program(new Program(*this));
+  std::unique_ptr<Program> reduced_program = std::make_unique<Program>(*this);
   if (!reduced_program->RemoveFixedBlocks(
           removed_parameter_blocks, fixed_cost, error)) {
     return nullptr;
   }
 
   reduced_program->SetParameterOffsetsAndIndex();
-  return reduced_program.release();
+  return reduced_program;
 }
 
 bool Program::RemoveFixedBlocks(std::vector<double*>* removed_parameter_blocks,
@@ -305,8 +305,8 @@ bool Program::RemoveFixedBlocks(std::vector<double*>* removed_parameter_blocks,
   CHECK(error != nullptr);
 
   std::unique_ptr<double[]> residual_block_evaluate_scratch;
-  residual_block_evaluate_scratch.reset(
-      new double[MaxScratchDoublesNeededForEvaluate()]);
+  residual_block_evaluate_scratch =
+      std::make_unique<double[]>(MaxScratchDoublesNeededForEvaluate());
   *fixed_cost = 0.0;
 
   bool need_to_call_prepare_for_evaluation = evaluation_callback_ != nullptr;

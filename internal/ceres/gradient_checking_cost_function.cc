@@ -87,7 +87,7 @@ class GradientCheckingCostFunction : public CostFunction {
                 double** jacobians) const final {
     if (!jacobians) {
       // Nothing to check in this case; just forward.
-      return function_->Evaluate(parameters, residuals, NULL);
+      return function_->Evaluate(parameters, residuals, nullptr);
     }
 
     GradientChecker::ProbeResults results;
@@ -107,7 +107,7 @@ class GradientCheckingCostFunction : public CostFunction {
     // Copy the original jacobian blocks into the jacobians array.
     const vector<int32_t>& block_sizes = function_->parameter_block_sizes();
     for (int k = 0; k < block_sizes.size(); k++) {
-      if (jacobians[k] != NULL) {
+      if (jacobians[k] != nullptr) {
         MatrixRef(jacobians[k],
                   results.jacobians[k].rows(),
                   results.jacobians[k].cols()) = results.jacobians[k];
@@ -169,7 +169,7 @@ CostFunction* CreateGradientCheckingCostFunction(
                                           callback);
 }
 
-ProblemImpl* CreateGradientCheckingProblemImpl(
+std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(
     ProblemImpl* problem_impl,
     double relative_step_size,
     double relative_precision,
@@ -190,8 +190,8 @@ ProblemImpl* CreateGradientCheckingProblemImpl(
   NumericDiffOptions numeric_diff_options;
   numeric_diff_options.relative_step_size = relative_step_size;
 
-  ProblemImpl* gradient_checking_problem_impl =
-      new ProblemImpl(gradient_checking_problem_options);
+  auto gradient_checking_problem_impl =
+      std::make_unique<ProblemImpl>(gradient_checking_problem_options);
 
   Program* program = problem_impl->mutable_program();
 

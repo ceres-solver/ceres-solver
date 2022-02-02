@@ -46,7 +46,7 @@ namespace internal {
 // num_rows x num_cols.
 //
 // This class is NOT thread safe. Since all n^2 cells are stored,
-// GetCell never returns NULL for any (row_block_id, col_block_id)
+// GetCell never returns nullptr for any (row_block_id, col_block_id)
 // pair.
 //
 // ReturnCell is a nop.

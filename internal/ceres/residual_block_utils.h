@@ -52,7 +52,7 @@ namespace internal {
 
 class ResidualBlock;
 
-// Invalidate cost, resdual and jacobian arrays (if not NULL).
+// Invalidate cost, resdual and jacobian arrays (if not nullptr).
 void InvalidateEvaluation(const ResidualBlock& block,
                           double* cost,
                           double* residuals,

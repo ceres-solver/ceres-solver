@@ -57,13 +57,13 @@ const double kEpsilon = 1e-14;
 class ImplicitSchurComplementTest : public ::testing::Test {
  protected:
   void SetUp() final {
-    std::unique_ptr<LinearLeastSquaresProblem> problem(
-        CreateLinearLeastSquaresProblemFromId(2));
+    std::unique_ptr<LinearLeastSquaresProblem> problem =
+        CreateLinearLeastSquaresProblemFromId(2);
 
     CHECK(problem != nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
-    b_.reset(problem->b.release());
-    D_.reset(problem->D.release());
+    b_ = std::move(problem->b);
+    D_ = std::move(problem->D);
 
     num_cols_ = A_->num_cols();
     num_rows_ = A_->num_rows();
@@ -90,8 +90,8 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     ContextImpl context;
     options.context = &context;
 
-    std::unique_ptr<SchurEliminatorBase> eliminator(
-        SchurEliminatorBase::Create(options));
+    std::unique_ptr<SchurEliminatorBase> eliminator =
+        SchurEliminatorBase::Create(options);
     CHECK(eliminator != nullptr);
     const bool kFullRankETE = true;
     eliminator->Init(num_eliminate_blocks_, kFullRankETE, bs);
@@ -202,7 +202,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
 // We do this with and without regularization to check that the
 // support for the LM diagonal is correct.
 TEST_F(ImplicitSchurComplementTest, SchurMatrixValuesTest) {
-  EXPECT_TRUE(TestImplicitSchurComplement(NULL));
+  EXPECT_TRUE(TestImplicitSchurComplement(nullptr));
   EXPECT_TRUE(TestImplicitSchurComplement(D_.get()));
 }
 
