@@ -74,7 +74,7 @@ class CERES_EXPORT_INTERNAL InnerProductComputer {
   //
   // The user must ensure that the matrix m is valid for the life time
   // of this object.
-  static InnerProductComputer* Create(
+  static std::unique_ptr<InnerProductComputer> Create(
       const BlockSparseMatrix& m,
       CompressedRowSparseMatrix::StorageType storage_type);
 
@@ -83,7 +83,7 @@ class CERES_EXPORT_INTERNAL InnerProductComputer {
   //
   // a = m(start_row_block : end_row_block, :);
   // result = a' * a;
-  static InnerProductComputer* Create(
+  static std::unique_ptr<InnerProductComputer> Create(
       const BlockSparseMatrix& m,
       int start_row_block,
       int end_row_block,
@@ -127,7 +127,7 @@ class CERES_EXPORT_INTERNAL InnerProductComputer {
 
   void Init(CompressedRowSparseMatrix::StorageType storage_type);
 
-  CompressedRowSparseMatrix* CreateResultMatrix(
+  std::unique_ptr<CompressedRowSparseMatrix> CreateResultMatrix(
       const CompressedRowSparseMatrix::StorageType storage_type,
       int num_nonzeros);
 

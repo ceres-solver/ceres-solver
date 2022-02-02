@@ -32,7 +32,7 @@
 #define CERES_INTERNAL_CASTS_H_
 
 #include <cassert>
-#include <cstddef>  // For NULL.
+#include <cstddef>  // For nullptr.
 
 namespace ceres {
 
@@ -95,11 +95,11 @@ inline To down_cast(From* f) {         // so we only accept pointers
 
   // TODO(csilvers): This should use COMPILE_ASSERT.
   if (false) {
-    implicit_cast<From*, To>(NULL);
+    implicit_cast<From*, To>(nullptr);
   }
 
   // uses RTTI in dbg and fastbuild. asserts are disabled in opt builds.
-  assert(f == NULL || dynamic_cast<To>(f) != NULL);  // NOLINT
+  assert(f == nullptr || dynamic_cast<To>(f) != nullptr);  // NOLINT
   return static_cast<To>(f);
 }
 

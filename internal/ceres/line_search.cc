@@ -68,24 +68,21 @@ ostream& operator<<(ostream& os, const FunctionSample& sample) {
 LineSearch::LineSearch(const LineSearch::Options& options)
     : options_(options) {}
 
-LineSearch* LineSearch::Create(const LineSearchType line_search_type,
-                               const LineSearch::Options& options,
-                               string* error) {
-  LineSearch* line_search = NULL;
+std::unique_ptr<LineSearch> LineSearch::Create(
+    const LineSearchType line_search_type,
+    const LineSearch::Options& options,
+    string* error) {
   switch (line_search_type) {
     case ceres::ARMIJO:
-      line_search = new ArmijoLineSearch(options);
-      break;
+      return std::make_unique<ArmijoLineSearch>(options);
     case ceres::WOLFE:
-      line_search = new WolfeLineSearch(options);
-      break;
+      return std::make_unique<WolfeLineSearch>(options);
     default:
       *error = string("Invalid line search algorithm type: ") +
                LineSearchTypeToString(line_search_type) +
                string(", unable to create line search.");
-      return NULL;
   }
-  return line_search;
+  return nullptr;
 }
 
 LineSearchFunction::LineSearchFunction(Evaluator* evaluator)
@@ -119,13 +116,13 @@ void LineSearchFunction::Evaluate(const double x,
   }
   output->vector_x_is_valid = true;
 
-  double* gradient = NULL;
+  double* gradient = nullptr;
   if (evaluate_gradient) {
     output->vector_gradient.resize(direction_.rows(), 1);
     gradient = output->vector_gradient.data();
   }
   const bool eval_status = evaluator_->Evaluate(
-      output->vector_x.data(), &(output->value), NULL, gradient, NULL);
+      output->vector_x.data(), &(output->value), nullptr, gradient, nullptr);
 
   if (!eval_status || !std::isfinite(output->value)) {
     return;

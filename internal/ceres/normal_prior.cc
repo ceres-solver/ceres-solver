@@ -56,7 +56,7 @@ bool NormalPrior::Evaluate(double const* const* parameters,
   // r = A_ * (p - b_);
   // The extra eval is to get around a bug in the eigen library.
   r = A_ * (p - b_).eval();
-  if ((jacobians != NULL) && (jacobians[0] != NULL)) {
+  if ((jacobians != nullptr) && (jacobians[0] != nullptr)) {
     MatrixRef(jacobians[0], num_residuals(), parameter_block_sizes()[0]) = A_;
   }
   return true;

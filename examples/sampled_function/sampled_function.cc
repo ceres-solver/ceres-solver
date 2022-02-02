@@ -82,7 +82,7 @@ int main(int argc, char** argv) {
   double x = 1.0;
   Problem problem;
   CostFunction* cost_function = InterpolatedCostFunctor::Create(interpolator);
-  problem.AddResidualBlock(cost_function, NULL, &x);
+  problem.AddResidualBlock(cost_function, nullptr, &x);
 
   Solver::Options options;
   options.minimizer_progress_to_stdout = true;

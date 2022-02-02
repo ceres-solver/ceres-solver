@@ -134,18 +134,17 @@ GradientChecker::GradientChecker(
     manifolds_[i] = new internal::ManifoldAdapter(local_param);
   }
 
-  DynamicNumericDiffCostFunction<CostFunction, RIDDERS>*
-      finite_diff_cost_function =
-          new DynamicNumericDiffCostFunction<CostFunction, RIDDERS>(
-              function, DO_NOT_TAKE_OWNERSHIP, options);
-  finite_diff_cost_function_.reset(finite_diff_cost_function);
-
+  auto finite_diff_cost_function =
+      std::make_unique<DynamicNumericDiffCostFunction<CostFunction, RIDDERS>>(
+          function, DO_NOT_TAKE_OWNERSHIP, options);
   const vector<int32_t>& parameter_block_sizes =
       function->parameter_block_sizes();
   for (int32_t parameter_block_size : parameter_block_sizes) {
     finite_diff_cost_function->AddParameterBlock(parameter_block_size);
   }
   finite_diff_cost_function->SetNumResiduals(function->num_residuals());
+
+  finite_diff_cost_function_ = std::move(finite_diff_cost_function);
 }
 
 GradientChecker::GradientChecker(const CostFunction* function,
@@ -158,12 +157,10 @@ GradientChecker::GradientChecker(const CostFunction* function,
   } else {
     manifolds_.resize(function->parameter_block_sizes().size(), nullptr);
   }
-  DynamicNumericDiffCostFunction<CostFunction, RIDDERS>*
-      finite_diff_cost_function =
-          new DynamicNumericDiffCostFunction<CostFunction, RIDDERS>(
-              function, DO_NOT_TAKE_OWNERSHIP, options);
-  finite_diff_cost_function_.reset(finite_diff_cost_function);
 
+  auto finite_diff_cost_function =
+      std::make_unique<DynamicNumericDiffCostFunction<CostFunction, RIDDERS>>(
+          function, DO_NOT_TAKE_OWNERSHIP, options);
   const vector<int32_t>& parameter_block_sizes =
       function->parameter_block_sizes();
   const int num_parameter_blocks = parameter_block_sizes.size();
@@ -171,6 +168,8 @@ GradientChecker::GradientChecker(const CostFunction* function,
     finite_diff_cost_function->AddParameterBlock(parameter_block_sizes[i]);
   }
   finite_diff_cost_function->SetNumResiduals(function->num_residuals());
+
+  finite_diff_cost_function_ = std::move(finite_diff_cost_function);
 }
 
 GradientChecker::~GradientChecker() {
