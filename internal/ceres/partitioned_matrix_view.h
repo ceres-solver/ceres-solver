@@ -77,11 +77,11 @@ class CERES_EXPORT_INTERNAL PartitionedMatrixViewBase {
   virtual void RightMultiplyF(const double* x, double* y) const = 0;
 
   // Create and return the block diagonal of the matrix E'E.
-  virtual BlockSparseMatrix* CreateBlockDiagonalEtE() const = 0;
+  virtual std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const = 0;
 
   // Create and return the block diagonal of the matrix F'F. Caller
   // owns the result.
-  virtual BlockSparseMatrix* CreateBlockDiagonalFtF() const = 0;
+  virtual std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalFtF() const = 0;
 
   // Compute the block diagonal of the matrix E'E and store it in
   // block_diagonal. The matrix block_diagonal is expected to have a
@@ -108,8 +108,8 @@ class CERES_EXPORT_INTERNAL PartitionedMatrixViewBase {
   virtual int num_cols()         const = 0;
   // clang-format on
 
-  static PartitionedMatrixViewBase* Create(const LinearSolver::Options& options,
-                                           const BlockSparseMatrix& matrix);
+  static std::unique_ptr<PartitionedMatrixViewBase> Create(
+      const LinearSolver::Options& options, const BlockSparseMatrix& matrix);
 };
 
 template <int kRowBlockSize = Eigen::Dynamic,
@@ -126,8 +126,8 @@ class PartitionedMatrixView : public PartitionedMatrixViewBase {
   void LeftMultiplyF(const double* x, double* y) const final;
   void RightMultiplyE(const double* x, double* y) const final;
   void RightMultiplyF(const double* x, double* y) const final;
-  BlockSparseMatrix* CreateBlockDiagonalEtE() const final;
-  BlockSparseMatrix* CreateBlockDiagonalFtF() const final;
+  std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const final;
+  std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalFtF() const final;
   void UpdateBlockDiagonalEtE(BlockSparseMatrix* block_diagonal) const final;
   void UpdateBlockDiagonalFtF(BlockSparseMatrix* block_diagonal) const final;
   // clang-format off
@@ -140,8 +140,8 @@ class PartitionedMatrixView : public PartitionedMatrixViewBase {
   // clang-format on
 
  private:
-  BlockSparseMatrix* CreateBlockDiagonalMatrixLayout(int start_col_block,
-                                                     int end_col_block) const;
+  std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalMatrixLayout(
+      int start_col_block, int end_col_block) const;
 
   const BlockSparseMatrix& matrix_;
   int num_row_blocks_e_;

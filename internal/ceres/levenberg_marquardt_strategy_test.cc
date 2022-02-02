@@ -87,7 +87,7 @@ TEST(LevenbergMarquardtStrategy, AcceptRejectStepRadiusScaling) {
 
   // We need a non-null pointer here, so anything should do.
   std::unique_ptr<LinearSolver> linear_solver(
-      new RegularizationCheckingLinearSolver(0, NULL));
+      new RegularizationCheckingLinearSolver(0, nullptr));
   options.linear_solver = linear_solver.get();
 
   LevenbergMarquardtStrategy lms(options);

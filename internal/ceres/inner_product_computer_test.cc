@@ -128,11 +128,11 @@ TEST(InnerProductComputer, NormalOperation) {
 
         std::unique_ptr<InnerProductComputer> inner_product_computer;
 
-        inner_product_computer.reset(InnerProductComputer::Create(
-            *random_matrix, CompressedRowSparseMatrix::LOWER_TRIANGULAR));
+        inner_product_computer = InnerProductComputer::Create(
+            *random_matrix, CompressedRowSparseMatrix::LOWER_TRIANGULAR);
         COMPUTE_AND_COMPARE;
-        inner_product_computer.reset(InnerProductComputer::Create(
-            *random_matrix, CompressedRowSparseMatrix::UPPER_TRIANGULAR));
+        inner_product_computer = InnerProductComputer::Create(
+            *random_matrix, CompressedRowSparseMatrix::UPPER_TRIANGULAR);
         COMPUTE_AND_COMPARE;
       }
     }
@@ -202,17 +202,17 @@ TEST(InnerProductComputer, SubMatrix) {
             eigen_random_matrix.transpose() * eigen_random_matrix;
 
         std::unique_ptr<InnerProductComputer> inner_product_computer;
-        inner_product_computer.reset(InnerProductComputer::Create(
+        inner_product_computer = InnerProductComputer::Create(
             *random_matrix,
             start_row_block,
             end_row_block,
-            CompressedRowSparseMatrix::LOWER_TRIANGULAR));
+            CompressedRowSparseMatrix::LOWER_TRIANGULAR);
         COMPUTE_AND_COMPARE;
-        inner_product_computer.reset(InnerProductComputer::Create(
+        inner_product_computer = InnerProductComputer::Create(
             *random_matrix,
             start_row_block,
             end_row_block,
-            CompressedRowSparseMatrix::UPPER_TRIANGULAR));
+            CompressedRowSparseMatrix::UPPER_TRIANGULAR);
         COMPUTE_AND_COMPARE;
       }
     }

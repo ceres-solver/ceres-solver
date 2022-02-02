@@ -366,8 +366,8 @@ TEST(GradientCheckingProblemImpl,
   // clang-format on
 
   GradientCheckingIterationCallback callback;
-  std::unique_ptr<ProblemImpl> gradient_checking_problem_impl(
-      CreateGradientCheckingProblemImpl(&problem_impl, 1.0, 1.0, &callback));
+  std::unique_ptr<ProblemImpl> gradient_checking_problem_impl =
+      CreateGradientCheckingProblemImpl(&problem_impl, 1.0, 1.0, &callback);
 
   // The dimensions of the two problems match.
   EXPECT_EQ(problem_impl.NumParameterBlocks(),
@@ -444,8 +444,8 @@ TEST(GradientCheckingProblemImpl, ProblemDimensionsMatch) {
   // clang-format on
 
   GradientCheckingIterationCallback callback;
-  std::unique_ptr<ProblemImpl> gradient_checking_problem_impl(
-      CreateGradientCheckingProblemImpl(&problem_impl, 1.0, 1.0, &callback));
+  std::unique_ptr<ProblemImpl> gradient_checking_problem_impl =
+      CreateGradientCheckingProblemImpl(&problem_impl, 1.0, 1.0, &callback);
 
   // The dimensions of the two problems match.
   EXPECT_EQ(problem_impl.NumParameterBlocks(),
@@ -505,8 +505,8 @@ TEST(GradientCheckingProblemImpl, ConstrainedProblemBoundsArePropagated) {
   problem_impl.SetParameterUpperBound(x, 1, 2.5);
 
   GradientCheckingIterationCallback callback;
-  std::unique_ptr<ProblemImpl> gradient_checking_problem_impl(
-      CreateGradientCheckingProblemImpl(&problem_impl, 1.0, 1.0, &callback));
+  std::unique_ptr<ProblemImpl> gradient_checking_problem_impl =
+      CreateGradientCheckingProblemImpl(&problem_impl, 1.0, 1.0, &callback);
 
   // The dimensions of the two problems match.
   EXPECT_EQ(problem_impl.NumParameterBlocks(),

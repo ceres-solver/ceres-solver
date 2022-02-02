@@ -59,7 +59,7 @@
 //   class JacobianWriter {
 //     // Create a jacobian that this writer can write. Same as
 //     // Evaluator::CreateJacobian.
-//     SparseMatrix* CreateJacobian() const;
+//     std::unique_ptr<SparseMatrix> CreateJacobian() const;
 //
 //     // Create num_threads evaluate preparers. Caller owns result which must
 //     // be freed with delete[]. Resulting preparers are valid while *this is.
@@ -127,12 +127,12 @@ class ProgramEvaluator : public Evaluator {
 #endif  // CERES_NO_THREADS
 
     BuildResidualLayout(*program, &residual_layout_);
-    evaluate_scratch_.reset(
-        CreateEvaluatorScratch(*program, options.num_threads));
+    evaluate_scratch_ =
+        std::move(CreateEvaluatorScratch(*program, options.num_threads));
   }
 
   // Implementation of Evaluator interface.
-  SparseMatrix* CreateJacobian() const final {
+  std::unique_ptr<SparseMatrix> CreateJacobian() const final {
     return jacobian_writer_.CreateJacobian();
   }
 
@@ -309,13 +309,14 @@ class ProgramEvaluator : public Evaluator {
               int max_scratch_doubles_needed_for_evaluate,
               int max_residuals_per_residual_block,
               int num_parameters) {
-      residual_block_evaluate_scratch.reset(
-          new double[max_scratch_doubles_needed_for_evaluate]);
-      gradient.reset(new double[num_parameters]);
+      residual_block_evaluate_scratch =
+          std::make_unique<double[]>(max_scratch_doubles_needed_for_evaluate);
+      gradient = std::make_unique<double[]>(num_parameters);
       VectorRef(gradient.get(), num_parameters).setZero();
-      residual_block_residuals.reset(
-          new double[max_residuals_per_residual_block]);
-      jacobian_block_ptrs.reset(new double*[max_parameters_per_residual_block]);
+      residual_block_residuals =
+          std::make_unique<double[]>(max_residuals_per_residual_block);
+      jacobian_block_ptrs =
+          std::make_unique<double*[]>(max_parameters_per_residual_block);
     }
 
     double cost;
@@ -341,8 +342,8 @@ class ProgramEvaluator : public Evaluator {
   }
 
   // Create scratch space for each thread evaluating the program.
-  static EvaluateScratch* CreateEvaluatorScratch(const Program& program,
-                                                 int num_threads) {
+  static std::unique_ptr<EvaluateScratch[]> CreateEvaluatorScratch(
+      const Program& program, int num_threads) {
     int max_parameters_per_residual_block =
         program.MaxParametersPerResidualBlock();
     int max_scratch_doubles_needed_for_evaluate =
@@ -351,7 +352,7 @@ class ProgramEvaluator : public Evaluator {
         program.MaxResidualsPerResidualBlock();
     int num_parameters = program.NumEffectiveParameters();
 
-    EvaluateScratch* evaluate_scratch = new EvaluateScratch[num_threads];
+    auto evaluate_scratch = std::make_unique<EvaluateScratch[]>(num_threads);
     for (int i = 0; i < num_threads; i++) {
       evaluate_scratch[i].Init(max_parameters_per_residual_block,
                                max_scratch_doubles_needed_for_evaluate,

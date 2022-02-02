@@ -687,7 +687,7 @@ J4 MakeJ4(double a, double v0, double v1, double v2, double v3) {
 bool IsClose(double x, double y) {
   EXPECT_FALSE(isnan(x));
   EXPECT_FALSE(isnan(y));
-  return internal::IsClose(x, y, kTolerance, NULL, NULL);
+  return internal::IsClose(x, y, kTolerance, nullptr, nullptr);
 }
 
 }  // namespace

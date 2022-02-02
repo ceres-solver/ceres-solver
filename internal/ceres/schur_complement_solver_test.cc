@@ -51,13 +51,13 @@ namespace internal {
 class SchurComplementSolverTest : public ::testing::Test {
  protected:
   void SetUpFromProblemId(int problem_id) {
-    std::unique_ptr<LinearLeastSquaresProblem> problem(
-        CreateLinearLeastSquaresProblemFromId(problem_id));
+    std::unique_ptr<LinearLeastSquaresProblem> problem =
+        CreateLinearLeastSquaresProblemFromId(problem_id);
 
     CHECK(problem != nullptr);
     A.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
-    b.reset(problem->b.release());
-    D.reset(problem->D.release());
+    b = std::move(problem->b);
+    D = std::move(problem->D);
 
     num_cols = A->num_cols();
     num_rows = A->num_rows();

@@ -117,7 +117,7 @@ struct EvaluatorTestOptions {
 };
 
 struct EvaluatorTest : public ::testing::TestWithParam<EvaluatorTestOptions> {
-  Evaluator* CreateEvaluator(Program* program) {
+  std::unique_ptr<Evaluator> CreateEvaluator(Program* program) {
     // This program is straight from the ProblemImpl, and so has no index/offset
     // yet; compute it here as required by the evaluator implementations.
     program->SetParameterOffsetsAndIndex();
@@ -152,8 +152,8 @@ struct EvaluatorTest : public ::testing::TestWithParam<EvaluatorTestOptions> {
                           const double* expected_residuals,
                           const double* expected_gradient,
                           const double* expected_jacobian) {
-    std::unique_ptr<Evaluator> evaluator(
-        CreateEvaluator(problem->mutable_program()));
+    std::unique_ptr<Evaluator> evaluator =
+        CreateEvaluator(problem->mutable_program());
     int num_residuals = expected_num_rows;
     int num_parameters = expected_num_cols;
 
@@ -608,8 +608,8 @@ TEST_P(EvaluatorTest, EvaluatorAbortsForResidualsThatFailToEvaluate) {
   // The values are ignored.
   double state[9];
 
-  std::unique_ptr<Evaluator> evaluator(
-      CreateEvaluator(problem.mutable_program()));
+  std::unique_ptr<Evaluator> evaluator =
+      CreateEvaluator(problem.mutable_program());
   std::unique_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
   double cost;
   EXPECT_FALSE(evaluator->Evaluate(state, &cost, nullptr, nullptr, nullptr));

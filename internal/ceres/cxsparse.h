@@ -80,7 +80,7 @@ class CXSparse {
   cs_di CreateSparseMatrixTransposeView(CompressedRowSparseMatrix* A);
 
   // Creates a new matrix from a triplet form. Deallocate the returned matrix
-  // with Free. May return NULL if the compression or allocation fails.
+  // with Free. May return nullptr if the compression or allocation fails.
   cs_di* CreateSparseMatrix(TripletSparseMatrix* A);
 
   // B = A'
@@ -122,7 +122,7 @@ class CXSparse {
                                const std::vector<int>& col_blocks);
 
   // Compute an fill-reducing approximate minimum degree ordering of
-  // the matrix A. ordering should be non-NULL and should point to
+  // the matrix A. ordering should be non-nullptr and should point to
   // enough memory to hold the ordering for the rows of A.
   void ApproximateMinimumDegreeOrdering(cs_di* A, int* ordering);
 
