@@ -553,7 +553,7 @@ CostFunction* CreateCostFunction(const Matrix& predictor,
           model, ceres::TAKE_OWNERSHIP, num_observations, options);
     } else {
       LOG(ERROR) << "Invalid numeric diff method specified";
-      return 0;
+      return nullptr;
     }
   } else {
     cost_function =

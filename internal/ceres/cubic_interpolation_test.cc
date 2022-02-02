@@ -226,7 +226,7 @@ class CubicInterpolatorTest : public ::testing::Test {
                                       const double b,
                                       const double c,
                                       const double d) {
-    values_.reset(new double[kDataDimension * kNumSamples]);
+    values_ = std::make_unique<double[]>(kDataDimension * kNumSamples);
 
     for (int x = 0; x < kNumSamples; ++x) {
       for (int dim = 0; dim < kDataDimension; ++dim) {
@@ -335,7 +335,7 @@ class BiCubicInterpolatorTest : public ::testing::Test {
 
   template <int kDataDimension>
   void RunPolynomialInterpolationTest(const Eigen::Matrix3d& coeff) {
-    values_.reset(new double[kNumRows * kNumCols * kDataDimension]);
+    values_ = std::make_unique<double[]>(kNumRows * kNumCols * kDataDimension);
     coeff_ = coeff;
     double* v = values_.get();
     for (int r = 0; r < kNumRows; ++r) {

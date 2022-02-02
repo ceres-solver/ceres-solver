@@ -49,100 +49,102 @@ namespace ceres {
 namespace internal {
 
 TEST(NumericDiffCostFunction, EasyCaseFunctorCentralDifferences) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(new NumericDiffCostFunction<EasyFunctor,
-                                                  CENTRAL,
-                                                  3,  // number of residuals
-                                                  5,  // size of x1
-                                                  5   // size of x2
-                                                  >(new EasyFunctor));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<EasyFunctor,
+                                               CENTRAL,
+                                               3,  // number of residuals
+                                               5,  // size of x1
+                                               5   // size of x2
+                                               >>(new EasyFunctor);
   EasyFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, CENTRAL);
 }
 
 TEST(NumericDiffCostFunction, EasyCaseFunctorForwardDifferences) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(new NumericDiffCostFunction<EasyFunctor,
-                                                  FORWARD,
-                                                  3,  // number of residuals
-                                                  5,  // size of x1
-                                                  5   // size of x2
-                                                  >(new EasyFunctor));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<EasyFunctor,
+                                               FORWARD,
+                                               3,  // number of residuals
+                                               5,  // size of x1
+                                               5   // size of x2
+                                               >>(new EasyFunctor);
   EasyFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, FORWARD);
 }
 
 TEST(NumericDiffCostFunction, EasyCaseFunctorRidders) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(new NumericDiffCostFunction<EasyFunctor,
-                                                  RIDDERS,
-                                                  3,  // number of residuals
-                                                  5,  // size of x1
-                                                  5   // size of x2
-                                                  >(new EasyFunctor));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<EasyFunctor,
+                                               RIDDERS,
+                                               3,  // number of residuals
+                                               5,  // size of x1
+                                               5   // size of x2
+                                               >>(new EasyFunctor);
   EasyFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, RIDDERS);
 }
 
 TEST(NumericDiffCostFunction, EasyCaseCostFunctionCentralDifferences) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(
-      new NumericDiffCostFunction<EasyCostFunction,
-                                  CENTRAL,
-                                  3,  // number of residuals
-                                  5,  // size of x1
-                                  5   // size of x2
-                                  >(new EasyCostFunction, TAKE_OWNERSHIP));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<EasyCostFunction,
+                                               CENTRAL,
+                                               3,  // number of residuals
+                                               5,  // size of x1
+                                               5   // size of x2
+                                               >>(new EasyCostFunction,
+                                                  TAKE_OWNERSHIP);
   EasyFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, CENTRAL);
 }
 
 TEST(NumericDiffCostFunction, EasyCaseCostFunctionForwardDifferences) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(
-      new NumericDiffCostFunction<EasyCostFunction,
-                                  FORWARD,
-                                  3,  // number of residuals
-                                  5,  // size of x1
-                                  5   // size of x2
-                                  >(new EasyCostFunction, TAKE_OWNERSHIP));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<EasyCostFunction,
+                                               FORWARD,
+                                               3,  // number of residuals
+                                               5,  // size of x1
+                                               5   // size of x2
+                                               >>(new EasyCostFunction,
+                                                  TAKE_OWNERSHIP);
   EasyFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, FORWARD);
 }
 
 TEST(NumericDiffCostFunction, EasyCaseCostFunctionRidders) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(
-      new NumericDiffCostFunction<EasyCostFunction,
-                                  RIDDERS,
-                                  3,  // number of residuals
-                                  5,  // size of x1
-                                  5   // size of x2
-                                  >(new EasyCostFunction, TAKE_OWNERSHIP));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<EasyCostFunction,
+                                               RIDDERS,
+                                               3,  // number of residuals
+                                               5,  // size of x1
+                                               5   // size of x2
+                                               >>(new EasyCostFunction,
+                                                  TAKE_OWNERSHIP);
+
   EasyFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, RIDDERS);
 }
 
 TEST(NumericDiffCostFunction, TranscendentalCaseFunctorCentralDifferences) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(new NumericDiffCostFunction<TranscendentalFunctor,
-                                                  CENTRAL,
-                                                  2,  // number of residuals
-                                                  5,  // size of x1
-                                                  5   // size of x2
-                                                  >(new TranscendentalFunctor));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<TranscendentalFunctor,
+                                               CENTRAL,
+                                               2,  // number of residuals
+                                               5,  // size of x1
+                                               5   // size of x2
+                                               >>(new TranscendentalFunctor);
   TranscendentalFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, CENTRAL);
 }
 
 TEST(NumericDiffCostFunction, TranscendentalCaseFunctorForwardDifferences) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(new NumericDiffCostFunction<TranscendentalFunctor,
-                                                  FORWARD,
-                                                  2,  // number of residuals
-                                                  5,  // size of x1
-                                                  5   // size of x2
-                                                  >(new TranscendentalFunctor));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<TranscendentalFunctor,
+                                               FORWARD,
+                                               2,  // number of residuals
+                                               5,  // size of x1
+                                               5   // size of x2
+                                               >>(new TranscendentalFunctor);
+
   TranscendentalFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, FORWARD);
 }
@@ -153,43 +155,43 @@ TEST(NumericDiffCostFunction, TranscendentalCaseFunctorRidders) {
   // Using a smaller initial step size to overcome oscillatory function
   // behavior.
   options.ridders_relative_initial_step_size = 1e-3;
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<TranscendentalFunctor,
+                                               RIDDERS,
+                                               2,  // number of residuals
+                                               5,  // size of x1
+                                               5   // size of x2
+                                               >>(
+          new TranscendentalFunctor, TAKE_OWNERSHIP, 2, options);
 
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(new NumericDiffCostFunction<TranscendentalFunctor,
-                                                  RIDDERS,
-                                                  2,  // number of residuals
-                                                  5,  // size of x1
-                                                  5   // size of x2
-                                                  >(
-      new TranscendentalFunctor, TAKE_OWNERSHIP, 2, options));
   TranscendentalFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, RIDDERS);
 }
 
 TEST(NumericDiffCostFunction,
      TranscendentalCaseCostFunctionCentralDifferences) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(new NumericDiffCostFunction<TranscendentalCostFunction,
-                                                  CENTRAL,
-                                                  2,  // number of residuals
-                                                  5,  // size of x1
-                                                  5   // size of x2
-                                                  >(
-      new TranscendentalCostFunction, TAKE_OWNERSHIP));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<TranscendentalCostFunction,
+                                               CENTRAL,
+                                               2,  // number of residuals
+                                               5,  // size of x1
+                                               5   // size of x2
+                                               >>(
+          new TranscendentalCostFunction, TAKE_OWNERSHIP);
   TranscendentalFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, CENTRAL);
 }
 
 TEST(NumericDiffCostFunction,
      TranscendentalCaseCostFunctionForwardDifferences) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(new NumericDiffCostFunction<TranscendentalCostFunction,
-                                                  FORWARD,
-                                                  2,  // number of residuals
-                                                  5,  // size of x1
-                                                  5   // size of x2
-                                                  >(
-      new TranscendentalCostFunction, TAKE_OWNERSHIP));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<TranscendentalCostFunction,
+                                               FORWARD,
+                                               2,  // number of residuals
+                                               5,  // size of x1
+                                               5   // size of x2
+                                               >>(
+          new TranscendentalCostFunction, TAKE_OWNERSHIP);
   TranscendentalFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, FORWARD);
 }
@@ -201,14 +203,14 @@ TEST(NumericDiffCostFunction, TranscendentalCaseCostFunctionRidders) {
   // behavior.
   options.ridders_relative_initial_step_size = 1e-3;
 
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(new NumericDiffCostFunction<TranscendentalCostFunction,
-                                                  RIDDERS,
-                                                  2,  // number of residuals
-                                                  5,  // size of x1
-                                                  5   // size of x2
-                                                  >(
-      new TranscendentalCostFunction, TAKE_OWNERSHIP, 2, options));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<TranscendentalCostFunction,
+                                               RIDDERS,
+                                               2,  // number of residuals
+                                               5,  // size of x1
+                                               5   // size of x2
+                                               >>(
+          new TranscendentalCostFunction, TAKE_OWNERSHIP, 2, options);
   TranscendentalFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, RIDDERS);
 }
@@ -230,121 +232,120 @@ class SizeTestingCostFunction : public SizedCostFunction<num_rows, num_cols> {
 // templates are instantiated for various shapes of the Jacobian
 // matrix.
 TEST(NumericDiffCostFunction, EigenRowMajorColMajorTest) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(
-      new NumericDiffCostFunction<SizeTestingCostFunction<1, 1>, CENTRAL, 1, 1>(
-          new SizeTestingCostFunction<1, 1>, ceres::TAKE_OWNERSHIP));
+  std::unique_ptr<CostFunction> cost_function = std::make_unique<
+      NumericDiffCostFunction<SizeTestingCostFunction<1, 1>, CENTRAL, 1, 1>>(
+      new SizeTestingCostFunction<1, 1>, ceres::TAKE_OWNERSHIP);
 
-  cost_function.reset(
-      new NumericDiffCostFunction<SizeTestingCostFunction<2, 1>, CENTRAL, 2, 1>(
-          new SizeTestingCostFunction<2, 1>, ceres::TAKE_OWNERSHIP));
+  cost_function = std::make_unique<
+      NumericDiffCostFunction<SizeTestingCostFunction<2, 1>, CENTRAL, 2, 1>>(
+      new SizeTestingCostFunction<2, 1>, ceres::TAKE_OWNERSHIP);
 
-  cost_function.reset(
-      new NumericDiffCostFunction<SizeTestingCostFunction<1, 2>, CENTRAL, 1, 2>(
-          new SizeTestingCostFunction<1, 2>, ceres::TAKE_OWNERSHIP));
+  cost_function = std::make_unique<
+      NumericDiffCostFunction<SizeTestingCostFunction<1, 2>, CENTRAL, 1, 2>>(
+      new SizeTestingCostFunction<1, 2>, ceres::TAKE_OWNERSHIP);
 
-  cost_function.reset(
-      new NumericDiffCostFunction<SizeTestingCostFunction<2, 2>, CENTRAL, 2, 2>(
-          new SizeTestingCostFunction<2, 2>, ceres::TAKE_OWNERSHIP));
+  cost_function = std::make_unique<
+      NumericDiffCostFunction<SizeTestingCostFunction<2, 2>, CENTRAL, 2, 2>>(
+      new SizeTestingCostFunction<2, 2>, ceres::TAKE_OWNERSHIP);
 
-  cost_function.reset(
-      new NumericDiffCostFunction<EasyFunctor, CENTRAL, ceres::DYNAMIC, 1, 1>(
-          new EasyFunctor, TAKE_OWNERSHIP, 1));
+  cost_function = std::make_unique<
+      NumericDiffCostFunction<EasyFunctor, CENTRAL, ceres::DYNAMIC, 1, 1>>(
+      new EasyFunctor, TAKE_OWNERSHIP, 1);
 
-  cost_function.reset(
-      new NumericDiffCostFunction<EasyFunctor, CENTRAL, ceres::DYNAMIC, 1, 1>(
-          new EasyFunctor, TAKE_OWNERSHIP, 2));
+  cost_function = std::make_unique<
+      NumericDiffCostFunction<EasyFunctor, CENTRAL, ceres::DYNAMIC, 1, 1>>(
+      new EasyFunctor, TAKE_OWNERSHIP, 2);
 
-  cost_function.reset(
-      new NumericDiffCostFunction<EasyFunctor, CENTRAL, ceres::DYNAMIC, 1, 2>(
-          new EasyFunctor, TAKE_OWNERSHIP, 1));
+  cost_function = std::make_unique<
+      NumericDiffCostFunction<EasyFunctor, CENTRAL, ceres::DYNAMIC, 1, 2>>(
+      new EasyFunctor, TAKE_OWNERSHIP, 1);
 
-  cost_function.reset(
-      new NumericDiffCostFunction<EasyFunctor, CENTRAL, ceres::DYNAMIC, 1, 2>(
-          new EasyFunctor, TAKE_OWNERSHIP, 2));
+  cost_function = std::make_unique<
+      NumericDiffCostFunction<EasyFunctor, CENTRAL, ceres::DYNAMIC, 1, 2>>(
+      new EasyFunctor, TAKE_OWNERSHIP, 2);
 
-  cost_function.reset(
-      new NumericDiffCostFunction<EasyFunctor, CENTRAL, ceres::DYNAMIC, 2, 1>(
-          new EasyFunctor, TAKE_OWNERSHIP, 1));
+  cost_function = std::make_unique<
+      NumericDiffCostFunction<EasyFunctor, CENTRAL, ceres::DYNAMIC, 2, 1>>(
+      new EasyFunctor, TAKE_OWNERSHIP, 1);
 
-  cost_function.reset(
-      new NumericDiffCostFunction<EasyFunctor, CENTRAL, ceres::DYNAMIC, 2, 1>(
-          new EasyFunctor, TAKE_OWNERSHIP, 2));
+  cost_function = std::make_unique<
+      NumericDiffCostFunction<EasyFunctor, CENTRAL, ceres::DYNAMIC, 2, 1>>(
+      new EasyFunctor, TAKE_OWNERSHIP, 2);
 }
 
 TEST(NumericDiffCostFunction,
      EasyCaseFunctorCentralDifferencesAndDynamicNumResiduals) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(
-      new NumericDiffCostFunction<EasyFunctor,
-                                  CENTRAL,
-                                  ceres::DYNAMIC,
-                                  5,  // size of x1
-                                  5   // size of x2
-                                  >(new EasyFunctor, TAKE_OWNERSHIP, 3));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<EasyFunctor,
+                                               CENTRAL,
+                                               ceres::DYNAMIC,
+                                               5,  // size of x1
+                                               5   // size of x2
+                                               >>(
+          new EasyFunctor, TAKE_OWNERSHIP, 3);
   EasyFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, CENTRAL);
 }
 
 TEST(NumericDiffCostFunction, ExponentialFunctorRidders) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(new NumericDiffCostFunction<ExponentialFunctor,
-                                                  RIDDERS,
-                                                  1,  // number of residuals
-                                                  1   // size of x1
-                                                  >(new ExponentialFunctor));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<ExponentialFunctor,
+                                               RIDDERS,
+                                               1,  // number of residuals
+                                               1   // size of x1
+                                               >>(new ExponentialFunctor);
   ExponentialFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function);
 }
 
 TEST(NumericDiffCostFunction, ExponentialCostFunctionRidders) {
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(
-      new NumericDiffCostFunction<ExponentialCostFunction,
-                                  RIDDERS,
-                                  1,  // number of residuals
-                                  1   // size of x1
-                                  >(new ExponentialCostFunction));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<ExponentialCostFunction,
+                                               RIDDERS,
+                                               1,  // number of residuals
+                                               1   // size of x1
+                                               >>(new ExponentialCostFunction);
   ExponentialFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function);
 }
 
 TEST(NumericDiffCostFunction, RandomizedFunctorRidders) {
-  std::unique_ptr<CostFunction> cost_function;
   NumericDiffOptions options;
   // Larger initial step size is chosen to produce robust results in the
   // presence of random noise.
   options.ridders_relative_initial_step_size = 10.0;
 
-  cost_function.reset(new NumericDiffCostFunction<RandomizedFunctor,
-                                                  RIDDERS,
-                                                  1,  // number of residuals
-                                                  1   // size of x1
-                                                  >(
-      new RandomizedFunctor(kNoiseFactor, kRandomSeed),
-      TAKE_OWNERSHIP,
-      1,
-      options));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<RandomizedFunctor,
+                                               RIDDERS,
+                                               1,  // number of residuals
+                                               1   // size of x1
+                                               >>(
+          new RandomizedFunctor(kNoiseFactor, kRandomSeed),
+          TAKE_OWNERSHIP,
+          1,
+          options);
   RandomizedFunctor functor(kNoiseFactor, kRandomSeed);
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function);
 }
 
 TEST(NumericDiffCostFunction, RandomizedCostFunctionRidders) {
-  std::unique_ptr<CostFunction> cost_function;
   NumericDiffOptions options;
   // Larger initial step size is chosen to produce robust results in the
   // presence of random noise.
   options.ridders_relative_initial_step_size = 10.0;
 
-  cost_function.reset(new NumericDiffCostFunction<RandomizedCostFunction,
-                                                  RIDDERS,
-                                                  1,  // number of residuals
-                                                  1   // size of x1
-                                                  >(
-      new RandomizedCostFunction(kNoiseFactor, kRandomSeed),
-      TAKE_OWNERSHIP,
-      1,
-      options));
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<RandomizedCostFunction,
+                                               RIDDERS,
+                                               1,  // number of residuals
+                                               1   // size of x1
+                                               >>(
+          new RandomizedCostFunction(kNoiseFactor, kRandomSeed),
+          TAKE_OWNERSHIP,
+          1,
+          options);
+
   RandomizedFunctor functor(kNoiseFactor, kRandomSeed);
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function);
 }
@@ -363,15 +364,15 @@ TEST(NumericDiffCostFunction, PartiallyFilledResidualShouldFailEvaluation) {
   double* parameters[] = {&parameter};
   double* jacobians[] = {jacobian};
 
-  std::unique_ptr<CostFunction> cost_function(
-      new NumericDiffCostFunction<OnlyFillsOneOutputFunctor, CENTRAL, 2, 1>(
-          new OnlyFillsOneOutputFunctor));
+  auto cost_function = std::make_unique<
+      NumericDiffCostFunction<OnlyFillsOneOutputFunctor, CENTRAL, 2, 1>>(
+      new OnlyFillsOneOutputFunctor);
   InvalidateArray(2, jacobian);
   InvalidateArray(2, residuals);
   EXPECT_TRUE(cost_function->Evaluate(parameters, residuals, jacobians));
   EXPECT_FALSE(IsArrayValid(2, residuals));
   InvalidateArray(2, residuals);
-  EXPECT_TRUE(cost_function->Evaluate(parameters, residuals, NULL));
+  EXPECT_TRUE(cost_function->Evaluate(parameters, residuals, nullptr));
   // We are only testing residuals here, because the Jacobians are
   // computed using finite differencing from the residuals, so unless
   // we introduce a validation step after every evaluation of
@@ -385,12 +386,9 @@ TEST(NumericDiffCostFunction, ParameterBlockConstant) {
   constexpr int kX1 = 5;
   constexpr int kX2 = 5;
 
-  std::unique_ptr<CostFunction> cost_function;
-  cost_function.reset(new NumericDiffCostFunction<EasyFunctor,
-                                                  CENTRAL,
-                                                  kNumResiduals,
-                                                  kX1,
-                                                  kX2>(new EasyFunctor));
+  auto cost_function = std::make_unique<
+      NumericDiffCostFunction<EasyFunctor, CENTRAL, kNumResiduals, kX1, kX2>>(
+      new EasyFunctor);
 
   // Prepare the parameters and residuals.
   std::array<double, kX1> x1{1e-64, 2.0, 3.0, 4.0, 5.0};

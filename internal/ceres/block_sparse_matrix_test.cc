@@ -46,12 +46,12 @@ namespace internal {
 class BlockSparseMatrixTest : public ::testing::Test {
  protected:
   void SetUp() final {
-    std::unique_ptr<LinearLeastSquaresProblem> problem(
-        CreateLinearLeastSquaresProblemFromId(2));
+    std::unique_ptr<LinearLeastSquaresProblem> problem =
+        CreateLinearLeastSquaresProblemFromId(2);
     CHECK(problem != nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
 
-    problem.reset(CreateLinearLeastSquaresProblemFromId(1));
+    problem = CreateLinearLeastSquaresProblemFromId(1);
     CHECK(problem != nullptr);
     B_.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
 
@@ -110,15 +110,15 @@ TEST_F(BlockSparseMatrixTest, ToDenseMatrixTest) {
 }
 
 TEST_F(BlockSparseMatrixTest, AppendRows) {
-  std::unique_ptr<LinearLeastSquaresProblem> problem(
-      CreateLinearLeastSquaresProblemFromId(2));
+  std::unique_ptr<LinearLeastSquaresProblem> problem =
+      CreateLinearLeastSquaresProblemFromId(2);
   std::unique_ptr<BlockSparseMatrix> m(
       down_cast<BlockSparseMatrix*>(problem->A.release()));
   A_->AppendRows(*m);
   EXPECT_EQ(A_->num_rows(), 2 * m->num_rows());
   EXPECT_EQ(A_->num_cols(), m->num_cols());
 
-  problem.reset(CreateLinearLeastSquaresProblemFromId(1));
+  problem = CreateLinearLeastSquaresProblemFromId(1);
   std::unique_ptr<TripletSparseMatrix> m2(
       down_cast<TripletSparseMatrix*>(problem->A.release()));
   B_->AppendRows(*m2);

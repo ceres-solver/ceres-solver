@@ -115,7 +115,7 @@ template <typename Function, typename Vector>
 void TestHelper(const Function& f, const Vector& x0) {
   Vector x = x0;
   Vec2 residuals;
-  f(x.data(), residuals.data(), NULL);
+  f(x.data(), residuals.data(), nullptr);
   EXPECT_GT(residuals.squaredNorm() / 2.0, 1e-10);
 
   TinySolver<Function> solver;

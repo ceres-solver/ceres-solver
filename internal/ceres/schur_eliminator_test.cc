@@ -57,16 +57,16 @@ namespace internal {
 class SchurEliminatorTest : public ::testing::Test {
  protected:
   void SetUpFromId(int id) {
-    std::unique_ptr<LinearLeastSquaresProblem> problem(
-        CreateLinearLeastSquaresProblemFromId(id));
+    std::unique_ptr<LinearLeastSquaresProblem> problem =
+        CreateLinearLeastSquaresProblemFromId(id);
     CHECK(problem != nullptr);
     SetupHelper(problem.get());
   }
 
   void SetupHelper(LinearLeastSquaresProblem* problem) {
     A.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
-    b.reset(problem->b.release());
-    D.reset(problem->D.release());
+    b = std::move(problem->b);
+    D = std::move(problem->D);
 
     num_eliminate_blocks = problem->num_eliminate_blocks;
     num_eliminate_cols = 0;
@@ -150,8 +150,8 @@ class SchurEliminatorTest : public ::testing::Test {
                       &options.f_block_size);
     }
 
-    std::unique_ptr<SchurEliminatorBase> eliminator;
-    eliminator.reset(SchurEliminatorBase::Create(options));
+    std::unique_ptr<SchurEliminatorBase> eliminator =
+        SchurEliminatorBase::Create(options);
     const bool kFullRankETE = true;
     eliminator->Init(num_eliminate_blocks, kFullRankETE, A->block_structure());
     eliminator->Eliminate(

@@ -47,7 +47,7 @@ BlockJacobiPreconditioner::BlockJacobiPreconditioner(
     blocks[i] = bs->cols[i].size;
   }
 
-  m_.reset(new BlockRandomAccessDiagonalMatrix(blocks));
+  m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(blocks);
 }
 
 BlockJacobiPreconditioner::~BlockJacobiPreconditioner() {}
@@ -74,7 +74,7 @@ bool BlockJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
     }
   }
 
-  if (D != NULL) {
+  if (D != nullptr) {
     // Add the diagonal.
     int position = 0;
     for (int i = 0; i < bs->cols.size(); ++i) {

@@ -78,7 +78,7 @@ class CallbackCostFunction : public ceres::CostFunction {
     }
   }
 
-  virtual ~CallbackCostFunction() {}
+  ~CallbackCostFunction() final {}
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -155,8 +155,8 @@ ceres_residual_block_id_t* ceres_problem_add_residual_block(
                                num_parameter_blocks,
                                parameter_block_sizes);
 
-  ceres::LossFunction* callback_loss_function = NULL;
-  if (loss_function != NULL) {
+  ceres::LossFunction* callback_loss_function = nullptr;
+  if (loss_function != nullptr) {
     callback_loss_function =
         new CallbackLossFunction(loss_function, loss_function_data);
   }

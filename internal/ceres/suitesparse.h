@@ -106,7 +106,7 @@ class SuiteSparse {
   cholmod_dense CreateDenseVectorView(const double* x, int size);
 
   // Given a vector x, build a cholmod_dense vector of size out_size
-  // with the first in_size entries copied from x. If x is NULL, then
+  // with the first in_size entries copied from x. If x is nullptr, then
   // an all zeros vector is returned. Caller owns the result.
   cholmod_dense* CreateDenseVector(const double* x, int in_size, int out_size);
 
@@ -123,7 +123,7 @@ class SuiteSparse {
   // Create and return a matrix m = A * A'. Caller owns the
   // result. The matrix A is not modified.
   cholmod_sparse* AATranspose(cholmod_sparse* A) {
-    cholmod_sparse* m = cholmod_aat(A, NULL, A->nrow, 1, &cc_);
+    cholmod_sparse* m = cholmod_aat(A, nullptr, A->nrow, 1, &cc_);
     m->stype = 1;  // Pay attention to the upper triangular part.
     return m;
   }
@@ -196,7 +196,7 @@ class SuiteSparse {
 
   // Given a Cholesky factorization of a matrix A = LL^T, solve the
   // linear system Ax = b, and return the result. If the Solve fails
-  // NULL is returned. Caller owns the result.
+  // nullptr is returned. Caller owns the result.
   //
   // message contains an explanation of the failures if any.
   cholmod_dense* Solve(cholmod_factor* L,

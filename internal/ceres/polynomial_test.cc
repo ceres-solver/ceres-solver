@@ -88,8 +88,8 @@ Vector SortVector(const Vector& in) {
 }
 
 // Run a test with the polynomial defined by the N real roots in roots_real.
-// If use_real is false, NULL is passed as the real argument to
-// FindPolynomialRoots. If use_imaginary is false, NULL is passed as the
+// If use_real is false, nullptr is passed as the real argument to
+// FindPolynomialRoots. If use_imaginary is false, nullptr is passed as the
 // imaginary argument to FindPolynomialRoots.
 template <int N>
 void RunPolynomialTestRealRoots(const double (&real_roots)[N],
@@ -102,8 +102,8 @@ void RunPolynomialTestRealRoots(const double (&real_roots)[N],
   for (int i = 0; i < N; ++i) {
     poly = AddRealRoot(poly, real_roots[i]);
   }
-  Vector* const real_ptr = use_real ? &real : NULL;
-  Vector* const imaginary_ptr = use_imaginary ? &imaginary : NULL;
+  Vector* const real_ptr = use_real ? &real : nullptr;
+  Vector* const imaginary_ptr = use_imaginary ? &imaginary : nullptr;
   bool success = FindPolynomialRoots(poly, real_ptr, imaginary_ptr);
 
   EXPECT_EQ(success, true);

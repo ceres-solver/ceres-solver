@@ -60,7 +60,7 @@ class DynamicCompressedRowJacobianWriter {
   // Return a `DynamicCompressedRowSparseMatrix` which is filled by
   // `Write`. Note that `Finalize` must be called to make the
   // `CompressedRowSparseMatrix` interface valid.
-  SparseMatrix* CreateJacobian() const;
+  std::unique_ptr<SparseMatrix> CreateJacobian() const;
 
   // Write only the non-zero jacobian entries for a residual block
   // (specified by `residual_id`) into `base_jacobian`, starting at the row
