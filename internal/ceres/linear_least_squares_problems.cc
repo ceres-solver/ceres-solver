@@ -64,7 +64,7 @@ LinearLeastSquaresProblem* CreateLinearLeastSquaresProblemFromId(int id) {
     default:
       LOG(FATAL) << "Unknown problem id requested " << id;
   }
-  return NULL;
+  return nullptr;
 }
 
 /*
@@ -616,15 +616,15 @@ bool DumpLinearLeastSquaresProblemToConsole(const SparseMatrix* A,
   A->ToDenseMatrix(&AA);
   LOG(INFO) << "A^T: \n" << AA.transpose();
 
-  if (D != NULL) {
+  if (D != nullptr) {
     LOG(INFO) << "A's appended diagonal:\n" << ConstVectorRef(D, A->num_cols());
   }
 
-  if (b != NULL) {
+  if (b != nullptr) {
     LOG(INFO) << "b: \n" << ConstVectorRef(b, A->num_rows());
   }
 
-  if (x != NULL) {
+  if (x != nullptr) {
     LOG(INFO) << "x: \n" << ConstVectorRef(x, A->num_cols());
   }
   return true;
@@ -673,21 +673,21 @@ bool DumpLinearLeastSquaresProblemToTextFile(const string& filename_base,
         A->num_cols());
   }
 
-  if (D != NULL) {
+  if (D != nullptr) {
     string filename = filename_base + "_D.txt";
     WriteArrayToFileOrDie(filename, D, A->num_cols());
     StringAppendF(
         &matlab_script, "lsqp.D = load('%s', '-ascii');\n", filename.c_str());
   }
 
-  if (b != NULL) {
+  if (b != nullptr) {
     string filename = filename_base + "_b.txt";
     WriteArrayToFileOrDie(filename, b, A->num_rows());
     StringAppendF(
         &matlab_script, "lsqp.b = load('%s', '-ascii');\n", filename.c_str());
   }
 
-  if (x != NULL) {
+  if (x != nullptr) {
     string filename = filename_base + "_x.txt";
     WriteArrayToFileOrDie(filename, x, A->num_cols());
     StringAppendF(

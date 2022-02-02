@@ -43,7 +43,7 @@ namespace internal {
 
 ImplicitSchurComplement::ImplicitSchurComplement(
     const LinearSolver::Options& options)
-    : options_(options), D_(NULL), b_(NULL) {}
+    : options_(options), D_(nullptr), b_(nullptr) {}
 
 ImplicitSchurComplement::~ImplicitSchurComplement() {}
 
@@ -52,7 +52,7 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
                                    const double* b) {
   // Since initialization is reasonably heavy, perhaps we can save on
   // constructing a new object everytime.
-  if (A_ == NULL) {
+  if (A_ == nullptr) {
     A_.reset(PartitionedMatrixViewBase::Create(options_, A));
   }
 
@@ -61,7 +61,7 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
 
   // Initialize temporary storage and compute the block diagonals of
   // E'E and F'E.
-  if (block_diagonal_EtE_inverse_ == NULL) {
+  if (block_diagonal_EtE_inverse_ == nullptr) {
     block_diagonal_EtE_inverse_.reset(A_->CreateBlockDiagonalEtE());
     if (options_.preconditioner_type == JACOBI) {
       block_diagonal_FtF_inverse_.reset(A_->CreateBlockDiagonalFtF());
@@ -84,7 +84,7 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
   // the block diagonals and invert them.
   AddDiagonalAndInvert(D_, block_diagonal_EtE_inverse_.get());
   if (options_.preconditioner_type == JACOBI) {
-    AddDiagonalAndInvert((D_ == NULL) ? NULL : D_ + A_->num_cols_e(),
+    AddDiagonalAndInvert((D_ == nullptr) ? nullptr : D_ + A_->num_cols_e(),
                          block_diagonal_FtF_inverse_.get());
   }
 
@@ -118,7 +118,7 @@ void ImplicitSchurComplement::RightMultiply(const double* x, double* y) const {
   A_->RightMultiplyE(tmp_e_cols_2_.data(), tmp_rows_.data());
 
   // y5 = D * x
-  if (D_ != NULL) {
+  if (D_ != nullptr) {
     ConstVectorRef Dref(D_ + A_->num_cols_e(), num_cols());
     VectorRef(y, num_cols()) =
         (Dref.array().square() * ConstVectorRef(x, num_cols()).array())
@@ -146,7 +146,7 @@ void ImplicitSchurComplement::AddDiagonalAndInvert(
                 row_block_size,
                 row_block_size);
 
-    if (D != NULL) {
+    if (D != nullptr) {
       ConstVectorRef d(D + row_block_pos, row_block_size);
       m += d.array().square().matrix().asDiagonal();
     }

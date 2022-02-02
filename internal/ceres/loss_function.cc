@@ -161,7 +161,7 @@ void ComposedLoss::Evaluate(double s, double rho[3]) const {
 }
 
 void ScaledLoss::Evaluate(double s, double rho[3]) const {
-  if (rho_.get() == NULL) {
+  if (rho_.get() == nullptr) {
     rho[0] = a_ * s;
     rho[1] = a_;
     rho[2] = 0.0;

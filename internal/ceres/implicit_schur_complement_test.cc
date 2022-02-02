@@ -202,7 +202,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
 // We do this with and without regularization to check that the
 // support for the LM diagonal is correct.
 TEST_F(ImplicitSchurComplementTest, SchurMatrixValuesTest) {
-  EXPECT_TRUE(TestImplicitSchurComplement(NULL));
+  EXPECT_TRUE(TestImplicitSchurComplement(nullptr));
   EXPECT_TRUE(TestImplicitSchurComplement(D_.get()));
 }
 

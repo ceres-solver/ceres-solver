@@ -106,7 +106,7 @@ TEST(NormalPriorTest, ResidualAtRandomPositionNullJacobians) {
       for (int i = 0; i < num_cols; ++i) x[i] = 2 * RandDouble() - 1;
 
       double* jacobians[1];
-      jacobians[0] = NULL;
+      jacobians[0] = nullptr;
 
       Vector residuals(num_rows);
 
@@ -118,7 +118,7 @@ TEST(NormalPriorTest, ResidualAtRandomPositionNullJacobians) {
           (residuals - A * (VectorRef(x, num_cols) - b)).squaredNorm();
       EXPECT_NEAR(residual_diff_norm, 0, 1e-10);
 
-      prior.Evaluate(&x, residuals.data(), NULL);
+      prior.Evaluate(&x, residuals.data(), nullptr);
       // Compare the norm of the residual
       residual_diff_norm =
           (residuals - A * (VectorRef(x, num_cols) - b)).squaredNorm();

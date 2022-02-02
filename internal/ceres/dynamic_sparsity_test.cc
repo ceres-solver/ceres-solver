@@ -307,16 +307,16 @@ class PointToLineSegmentContourCostFunction : public CostFunction {
     residuals[0] = y_[0] - ((1.0 - u) * x[1 + i0][0] + u * x[1 + i1][0]);
     residuals[1] = y_[1] - ((1.0 - u) * x[1 + i0][1] + u * x[1 + i1][1]);
 
-    if (jacobians == NULL) {
+    if (jacobians == nullptr) {
       return true;
     }
 
-    if (jacobians[0] != NULL) {
+    if (jacobians[0] != nullptr) {
       jacobians[0][0] = x[1 + i0][0] - x[1 + i1][0];
       jacobians[0][1] = x[1 + i0][1] - x[1 + i1][1];
     }
     for (int i = 0; i < num_segments_; ++i) {
-      if (jacobians[i + 1] != NULL) {
+      if (jacobians[i + 1] != nullptr) {
         MatrixRef(jacobians[i + 1], 2, 2).setZero();
         if (i == i0) {
           jacobians[i + 1][0] = -(1.0 - u);
@@ -403,7 +403,7 @@ TEST(DynamicSparsity, StaticAndDynamicSparsityProduceSameSolution) {
   // For each data point add a residual which measures its distance to its
   // corresponding position on the line segment contour.
   std::vector<double*> parameter_blocks(1 + num_segments);
-  parameter_blocks[0] = NULL;
+  parameter_blocks[0] = nullptr;
   for (int i = 0; i < num_segments; ++i) {
     parameter_blocks[i + 1] = X.data() + 2 * i;
   }
@@ -411,7 +411,7 @@ TEST(DynamicSparsity, StaticAndDynamicSparsityProduceSameSolution) {
     parameter_blocks[0] = &t[i];
     problem.AddResidualBlock(
         PointToLineSegmentContourCostFunction::Create(num_segments, kY.row(i)),
-        NULL,
+        nullptr,
         parameter_blocks);
   }
 
@@ -419,7 +419,7 @@ TEST(DynamicSparsity, StaticAndDynamicSparsityProduceSameSolution) {
   for (int i = 0; i < num_segments; ++i) {
     problem.AddResidualBlock(
         EuclideanDistanceFunctor::Create(sqrt(regularization_weight)),
-        NULL,
+        nullptr,
         X.data() + 2 * i,
         X.data() + 2 * ((i + 1) % num_segments));
   }

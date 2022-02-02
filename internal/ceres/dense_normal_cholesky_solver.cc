@@ -73,7 +73,7 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveImpl(
   //   rhs = A'b
   Vector rhs = Aref.transpose() * ConstVectorRef(b, num_rows);
 
-  if (per_solve_options.D != NULL) {
+  if (per_solve_options.D != nullptr) {
     ConstVectorRef D(per_solve_options.D, num_cols);
     lhs += D.array().square().matrix().asDiagonal();
   }

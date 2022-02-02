@@ -112,7 +112,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
 
   for (summary.num_iterations = 1;; ++summary.num_iterations) {
     // Apply preconditioner
-    if (per_solve_options.preconditioner != NULL) {
+    if (per_solve_options.preconditioner != nullptr) {
       z.setZero();
       per_solve_options.preconditioner->RightMultiply(r.data(), z.data());
     } else {

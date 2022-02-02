@@ -363,7 +363,7 @@ LineSearchDirection* LineSearchDirection::Create(
   }
 
   LOG(ERROR) << "Unknown line search direction type: " << options.type;
-  return NULL;
+  return nullptr;
 }
 
 }  // namespace internal

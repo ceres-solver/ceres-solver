@@ -55,7 +55,7 @@ class GradientProblemEvaluator : public Evaluator {
                 double* residuals,
                 double* gradient,
                 SparseMatrix* jacobian) final {
-    CHECK(jacobian == NULL);
+    CHECK(jacobian == nullptr);
     ScopedExecutionTimer total_timer("Evaluator::Total", &execution_summary_);
     // The reason we use Residual and Jacobian here even when we are
     // only computing the cost and gradient has to do with the fact
@@ -65,7 +65,7 @@ class GradientProblemEvaluator : public Evaluator {
     // to be consistent across the code base for the time accounting
     // to work.
     ScopedExecutionTimer call_type_timer(
-        gradient == NULL ? "Evaluator::Residual" : "Evaluator::Jacobian",
+        gradient == nullptr ? "Evaluator::Residual" : "Evaluator::Jacobian",
         &execution_summary_);
     return problem_.Evaluate(state, cost, gradient);
   }

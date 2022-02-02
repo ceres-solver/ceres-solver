@@ -196,8 +196,8 @@ template <typename Scalar>
 LinearSolverTerminationType AppleAccelerateCholesky<Scalar>::Factorize(
     CompressedRowSparseMatrix* lhs, std::string* message) {
   CHECK_EQ(lhs->storage_type(), StorageType());
-  if (lhs == NULL) {
-    *message = "Failure: Input lhs is NULL.";
+  if (lhs == nullptr) {
+    *message = "Failure: Input lhs is nullptr.";
     return LINEAR_SOLVER_FATAL_ERROR;
   }
   typename SparseTypesTrait<Scalar>::SparseMatrix as_lhs =

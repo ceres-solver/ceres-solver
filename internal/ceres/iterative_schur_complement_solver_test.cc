@@ -121,13 +121,13 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
 
 TEST_F(IterativeSchurComplementSolverTest, NormalProblem) {
   SetUpProblem(2);
-  EXPECT_TRUE(TestSolver(NULL));
+  EXPECT_TRUE(TestSolver(nullptr));
   EXPECT_TRUE(TestSolver(D_.get()));
 }
 
 TEST_F(IterativeSchurComplementSolverTest, ProblemWithNoFBlocks) {
   SetUpProblem(3);
-  EXPECT_TRUE(TestSolver(NULL));
+  EXPECT_TRUE(TestSolver(nullptr));
   EXPECT_TRUE(TestSolver(D_.get()));
 }
 

@@ -30,8 +30,10 @@
 
 #include "ceres/compressed_row_sparse_matrix.h"
 
+#include <algorithm>
 #include <memory>
 #include <numeric>
+#include <string>
 
 #include "Eigen/SparseCore"
 #include "ceres/casts.h"

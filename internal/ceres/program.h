@@ -146,7 +146,7 @@ class CERES_EXPORT_INTERNAL Program {
   // fixed_cost will be equal to the sum of the costs of the residual
   // blocks that were removed.
   //
-  // If there was a problem, then the function will return a NULL
+  // If there was a problem, then the function will return a nullptr
   // pointer and error will contain a human readable description of
   // the problem.
   Program* CreateReducedProgram(std::vector<double*>* removed_parameter_blocks,

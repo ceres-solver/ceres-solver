@@ -51,7 +51,7 @@ SchurJacobiPreconditioner::SchurJacobiPreconditioner(
   const int num_blocks = bs.cols.size() - options_.elimination_groups[0];
   CHECK_GT(num_blocks, 0) << "Jacobian should have at least 1 f_block for "
                           << "SCHUR_JACOBI preconditioner.";
-  CHECK(options_.context != NULL);
+  CHECK(options_.context != nullptr);
 
   std::vector<int> blocks(num_blocks);
   for (int i = 0; i < num_blocks; ++i) {

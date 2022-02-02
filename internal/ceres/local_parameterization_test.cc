@@ -283,7 +283,7 @@ void QuaternionParameterizationTestHelper(const double* x,
   double jacobian_ref[12];
   double zero_delta[kLocalSize] = {0.0, 0.0, 0.0};
   const double* parameters[2] = {x, zero_delta};
-  double* jacobian_array[2] = {NULL, jacobian_ref};
+  double* jacobian_array[2] = {nullptr, jacobian_ref};
 
   // Autodiff jacobian at delta_x = 0.
   internal::AutoDifferentiate<kGlobalSize,

@@ -69,7 +69,7 @@
 // The following CHECK macros are defined:
 //
 //   CHECK(condition)        - fails if condition is false and logs condition.
-//   CHECK_NOTNULL(variable) - fails if the variable is NULL.
+//   CHECK_NOTnullptr(variable) - fails if the variable is nullptr.
 //
 // The following binary check macros are also defined :
 //
@@ -401,13 +401,13 @@ void LogMessageFatal(const char* file, int line, const T& message) {
 
 // clang-format on
 
-// ---------------------------CHECK_NOTNULL macros ---------------------------
+// ---------------------------CHECK_NOTnullptr macros ---------------------------
 
-// Helpers for CHECK_NOTNULL(). Two are necessary to support both raw pointers
+// Helpers for CHECK_NOTnullptr(). Two are necessary to support both raw pointers
 // and smart pointers.
 template <typename T>
 T& CheckNotNullCommon(const char* file, int line, const char* names, T& t) {
-  if (t == NULL) {
+  if (t == nullptr) {
     LogMessageFatal(file, line, std::string(names));
   }
   return t;
@@ -424,18 +424,18 @@ T& CheckNotNull(const char* file, int line, const char* names, T& t) {
 }
 
 // Check that a pointer is not null.
-#define CHECK_NOTNULL(val) \
-  CheckNotNull(__FILE__, __LINE__, "'" #val "' Must be non NULL", (val))
+#define CHECK_NOTnullptr(val) \
+  CheckNotNull(__FILE__, __LINE__, "'" #val "' Must be non nullptr", (val))
 
 #ifndef NDEBUG
-// Debug only version of CHECK_NOTNULL
-#define DCHECK_NOTNULL(val) \
-  CheckNotNull(__FILE__, __LINE__, "'" #val "' Must be non NULL", (val))
+// Debug only version of CHECK_NOTnullptr
+#define DCHECK_NOTnullptr(val) \
+  CheckNotNull(__FILE__, __LINE__, "'" #val "' Must be non nullptr", (val))
 #else
 // Optimized version - generates no code.
-#define DCHECK_NOTNULL(val) \
+#define DCHECK_NOTnullptr(val) \
   if (false)                \
-  CheckNotNull(__FILE__, __LINE__, "'" #val "' Must be non NULL", (val))
+  CheckNotNull(__FILE__, __LINE__, "'" #val "' Must be non nullptr", (val))
 #endif  // NDEBUG
 
 #include "ceres/internal/reenable_warnings.h"

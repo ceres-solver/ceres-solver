@@ -50,7 +50,7 @@ class BlockJacobiPreconditionerTest : public ::testing::Test {
 
     CHECK(problem != nullptr);
     A.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
-    D.reset(problem->D.release());
+    D = std::move(problem->D);
 
     Matrix dense_a;
     A->ToDenseMatrix(&dense_a);

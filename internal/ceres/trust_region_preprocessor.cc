@@ -373,7 +373,7 @@ bool TrustRegionPreprocessor::Preprocess(const Solver::Options& options,
   pp->reduced_program.reset(program->CreateReducedProgram(
       &pp->removed_parameter_blocks, &pp->fixed_cost, &pp->error));
 
-  if (pp->reduced_program.get() == NULL) {
+  if (pp->reduced_program.get() == nullptr) {
     return false;
   }
 

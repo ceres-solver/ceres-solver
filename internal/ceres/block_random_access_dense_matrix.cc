@@ -50,7 +50,7 @@ BlockRandomAccessDenseMatrix::BlockRandomAccessDenseMatrix(
 
   values_.reset(new double[num_rows_ * num_rows_]);
 
-  cell_infos_.reset(new CellInfo[num_blocks * num_blocks]);
+  cell_infos_ = std::make_unique<CellInfo[]>(num_blocks * num_blocks);
   for (int i = 0; i < num_blocks * num_blocks; ++i) {
     cell_infos_[i].values = values_.get();
   }
