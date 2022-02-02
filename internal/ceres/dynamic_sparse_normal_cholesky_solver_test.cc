@@ -50,19 +50,19 @@ namespace internal {
 class DynamicSparseNormalCholeskySolverTest : public ::testing::Test {
  protected:
   void SetUp() final {
-    std::unique_ptr<LinearLeastSquaresProblem> problem(
-        CreateLinearLeastSquaresProblemFromId(1));
-    A_.reset(CompressedRowSparseMatrix::FromTripletSparseMatrix(
-        *down_cast<TripletSparseMatrix*>(problem->A.get())));
-    b_.reset(problem->b.release());
-    D_.reset(problem->D.release());
+    std::unique_ptr<LinearLeastSquaresProblem> problem =
+        CreateLinearLeastSquaresProblemFromId(1);
+    A_ = CompressedRowSparseMatrix::FromTripletSparseMatrix(
+        *down_cast<TripletSparseMatrix*>(problem->A.get()));
+    b_ = std::move(problem->b);
+    D_ = std::move(problem->D);
   }
 
   void TestSolver(const LinearSolver::Options& options, double* D) {
     Matrix dense_A;
     A_->ToDenseMatrix(&dense_A);
     Matrix lhs = dense_A.transpose() * dense_A;
-    if (D != NULL) {
+    if (D != nullptr) {
       lhs += (ConstVectorRef(D, A_->num_cols()).array() *
               ConstVectorRef(D, A_->num_cols()).array())
                  .matrix()
@@ -100,7 +100,7 @@ class DynamicSparseNormalCholeskySolverTest : public ::testing::Test {
         sparse_linear_algebra_library_type;
     ContextImpl context;
     options.context = &context;
-    TestSolver(options, NULL);
+    TestSolver(options, nullptr);
     TestSolver(options, D_.get());
   }
 

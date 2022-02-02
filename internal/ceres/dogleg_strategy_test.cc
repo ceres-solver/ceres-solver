@@ -79,7 +79,7 @@ class DoglegStrategyFixtureEllipse : public Fixture {
 
     Matrix sqrtD = Ddiag.array().sqrt().matrix().asDiagonal();
     Matrix jacobian = sqrtD * basis;
-    jacobian_.reset(new DenseSparseMatrix(jacobian));
+    jacobian_ = std::make_unique<DenseSparseMatrix>(jacobian);
 
     Vector minimum(6);
     minimum << 1.0, 1.0, 1.0, 1.0, 1.0, 1.0;
@@ -107,7 +107,7 @@ class DoglegStrategyFixtureValley : public Fixture {
     Ddiag << 1.0, 2.0, 4.0, 8.0, 16.0, 32.0;
 
     Matrix jacobian = Ddiag.asDiagonal();
-    jacobian_.reset(new DenseSparseMatrix(jacobian));
+    jacobian_ = std::make_unique<DenseSparseMatrix>(jacobian);
 
     Vector minimum(6);
     minimum << 0.0, 0.0, 1.0, 0.0, 0.0, 0.0;

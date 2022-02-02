@@ -149,10 +149,11 @@ class BundleAdjustmentProblem {
       // point_index()[i] respectively.
       double* camera = cameras + 9 * camera_index_[i];
       double* point = points + 3 * point_index()[i];
-      problem_.AddResidualBlock(cost_function, NULL, camera, point);
+      problem_.AddResidualBlock(cost_function, nullptr, camera, point);
     }
 
-    options_.linear_solver_ordering.reset(new ParameterBlockOrdering);
+    options_.linear_solver_ordering =
+        std::make_shared<ParameterBlockOrdering>();
 
     // The points come before the cameras.
     for (int i = 0; i < num_points_; ++i) {

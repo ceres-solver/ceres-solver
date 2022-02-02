@@ -367,7 +367,7 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
                                  &(summary->inner_iteration_ordering_used));
 
   // clang-format off
-  summary->inner_iterations_used          = pp.inner_iteration_minimizer.get() != NULL;     // NOLINT
+  summary->inner_iterations_used          = pp.inner_iteration_minimizer.get() != nullptr;     // NOLINT
   summary->linear_solver_type_used        = pp.linear_solver_options.type;
   summary->num_threads_used               = pp.options.num_threads;
   summary->preconditioner_type_used       = pp.options.preconditioner_type;
@@ -375,7 +375,7 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
 
   internal::SetSummaryFinalCost(summary);
 
-  if (pp.reduced_program.get() != NULL) {
+  if (pp.reduced_program.get() != nullptr) {
     SummarizeReducedProgram(*pp.reduced_program, summary);
   }
 
@@ -385,7 +385,7 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
   // case if the preprocessor failed, or if the reduced problem did
   // not contain any parameter blocks. Thus, only extract the
   // evaluator statistics if one exists.
-  if (pp.evaluator.get() != NULL) {
+  if (pp.evaluator.get() != nullptr) {
     const map<string, CallStatistics>& evaluator_statistics =
         pp.evaluator->Statistics();
     {
@@ -407,7 +407,7 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
   // Again, like the evaluator, there may or may not be a linear
   // solver from which we can extract run time statistics. In
   // particular the line search solver does not use a linear solver.
-  if (pp.linear_solver.get() != NULL) {
+  if (pp.linear_solver.get() != nullptr) {
     const map<string, CallStatistics>& linear_solver_statistics =
         pp.linear_solver->Statistics();
     const CallStatistics& call_stats = FindWithDefault(
@@ -518,11 +518,11 @@ void Solver::Solve(const Solver::Options& options,
   Solver::Options modified_options = options;
   if (options.check_gradients) {
     modified_options.callbacks.push_back(&gradient_checking_callback);
-    gradient_checking_problem.reset(CreateGradientCheckingProblemImpl(
+    gradient_checking_problem = CreateGradientCheckingProblemImpl(
         problem_impl,
         options.gradient_check_numeric_derivative_relative_step_size,
         options.gradient_check_relative_precision,
-        &gradient_checking_callback));
+        &gradient_checking_callback);
     problem_impl = gradient_checking_problem.get();
     program = problem_impl->mutable_program();
   }

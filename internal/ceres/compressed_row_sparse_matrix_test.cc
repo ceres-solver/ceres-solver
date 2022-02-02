@@ -30,8 +30,10 @@
 
 #include "ceres/compressed_row_sparse_matrix.h"
 
+#include <algorithm>
 #include <memory>
 #include <numeric>
+#include <string>
 
 #include "Eigen/SparseCore"
 #include "ceres/casts.h"
@@ -72,13 +74,13 @@ static void CompareMatrices(const SparseMatrix* a, const SparseMatrix* b) {
 class CompressedRowSparseMatrixTest : public ::testing::Test {
  protected:
   void SetUp() final {
-    std::unique_ptr<LinearLeastSquaresProblem> problem(
-        CreateLinearLeastSquaresProblemFromId(1));
+    std::unique_ptr<LinearLeastSquaresProblem> problem =
+        CreateLinearLeastSquaresProblemFromId(1);
 
     CHECK(problem != nullptr);
 
     tsm.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
-    crsm.reset(CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm));
+    crsm = CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm);
 
     num_rows = tsm->num_rows();
     num_cols = tsm->num_cols();
@@ -132,8 +134,8 @@ TEST_F(CompressedRowSparseMatrixTest, AppendRows) {
     tsm_appendage.Resize(i, num_cols);
 
     tsm->AppendRows(tsm_appendage);
-    std::unique_ptr<CompressedRowSparseMatrix> crsm_appendage(
-        CompressedRowSparseMatrix::FromTripletSparseMatrix(tsm_appendage));
+    std::unique_ptr<CompressedRowSparseMatrix> crsm_appendage =
+        CompressedRowSparseMatrix::FromTripletSparseMatrix(tsm_appendage);
 
     crsm->AppendRows(*crsm_appendage);
     CompareMatrices(tsm.get(), crsm.get());
@@ -143,7 +145,8 @@ TEST_F(CompressedRowSparseMatrixTest, AppendRows) {
 TEST_F(CompressedRowSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
   int num_diagonal_rows = crsm->num_cols();
 
-  std::unique_ptr<double[]> diagonal(new double[num_diagonal_rows]);
+  std::unique_ptr<double[]> diagonal =
+      std::make_unique<double[]>(num_diagonal_rows);
   for (int i = 0; i < num_diagonal_rows; ++i) {
     diagonal[i] = i;
   }
@@ -156,9 +159,9 @@ TEST_F(CompressedRowSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
   const vector<int> pre_row_blocks = crsm->row_blocks();
   const vector<int> pre_col_blocks = crsm->col_blocks();
 
-  std::unique_ptr<CompressedRowSparseMatrix> appendage(
+  std::unique_ptr<CompressedRowSparseMatrix> appendage =
       CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
-          diagonal.get(), row_and_column_blocks));
+          diagonal.get(), row_and_column_blocks);
 
   crsm->AppendRows(*appendage);
 
@@ -220,9 +223,9 @@ TEST(CompressedRowSparseMatrix, CreateBlockDiagonalMatrix) {
     diagonal(i) = i + 1;
   }
 
-  std::unique_ptr<CompressedRowSparseMatrix> matrix(
+  std::unique_ptr<CompressedRowSparseMatrix> matrix =
       CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(diagonal.data(),
-                                                           blocks));
+                                                           blocks);
 
   EXPECT_EQ(matrix->num_rows(), 5);
   EXPECT_EQ(matrix->num_cols(), 5);
@@ -305,7 +308,7 @@ TEST(CompressedRowSparseMatrix, Transpose) {
 
   std::copy(values, values + 17, cols);
 
-  std::unique_ptr<CompressedRowSparseMatrix> transpose(matrix.Transpose());
+  std::unique_ptr<CompressedRowSparseMatrix> transpose = matrix.Transpose();
 
   ASSERT_EQ(transpose->row_blocks().size(), matrix.col_blocks().size());
   for (int i = 0; i < transpose->row_blocks().size(); ++i) {
@@ -333,10 +336,10 @@ TEST(CompressedRowSparseMatrix, FromTripletSparseMatrix) {
 
   const int kNumTrials = 10;
   for (int i = 0; i < kNumTrials; ++i) {
-    std::unique_ptr<TripletSparseMatrix> tsm(
-        TripletSparseMatrix::CreateRandomMatrix(options));
-    std::unique_ptr<CompressedRowSparseMatrix> crsm(
-        CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm));
+    std::unique_ptr<TripletSparseMatrix> tsm =
+        TripletSparseMatrix::CreateRandomMatrix(options);
+    std::unique_ptr<CompressedRowSparseMatrix> crsm =
+        CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm);
 
     Matrix expected;
     tsm->ToDenseMatrix(&expected);
@@ -359,10 +362,10 @@ TEST(CompressedRowSparseMatrix, FromTripletSparseMatrixTransposed) {
 
   const int kNumTrials = 10;
   for (int i = 0; i < kNumTrials; ++i) {
-    std::unique_ptr<TripletSparseMatrix> tsm(
-        TripletSparseMatrix::CreateRandomMatrix(options));
-    std::unique_ptr<CompressedRowSparseMatrix> crsm(
-        CompressedRowSparseMatrix::FromTripletSparseMatrixTransposed(*tsm));
+    std::unique_ptr<TripletSparseMatrix> tsm =
+        TripletSparseMatrix::CreateRandomMatrix(options);
+    std::unique_ptr<CompressedRowSparseMatrix> crsm =
+        CompressedRowSparseMatrix::FromTripletSparseMatrixTransposed(*tsm);
 
     Matrix tmp;
     tsm->ToDenseMatrix(&tmp);
@@ -416,8 +419,8 @@ TEST_P(RightMultiplyTest, _) {
       options.max_row_block_size = kMaxBlockSize;
       options.block_density = std::max(0.5, RandDouble());
       options.storage_type = ::testing::get<0>(param);
-      std::unique_ptr<CompressedRowSparseMatrix> matrix(
-          CompressedRowSparseMatrix::CreateRandomMatrix(options));
+      std::unique_ptr<CompressedRowSparseMatrix> matrix =
+          CompressedRowSparseMatrix::CreateRandomMatrix(options);
       const int num_rows = matrix->num_rows();
       const int num_cols = matrix->num_cols();
 
@@ -485,8 +488,8 @@ TEST_P(LeftMultiplyTest, _) {
       options.max_row_block_size = kMaxBlockSize;
       options.block_density = std::max(0.5, RandDouble());
       options.storage_type = ::testing::get<0>(param);
-      std::unique_ptr<CompressedRowSparseMatrix> matrix(
-          CompressedRowSparseMatrix::CreateRandomMatrix(options));
+      std::unique_ptr<CompressedRowSparseMatrix> matrix =
+          CompressedRowSparseMatrix::CreateRandomMatrix(options);
       const int num_rows = matrix->num_rows();
       const int num_cols = matrix->num_cols();
 
@@ -554,8 +557,8 @@ TEST_P(SquaredColumnNormTest, _) {
       options.max_row_block_size = kMaxBlockSize;
       options.block_density = std::max(0.5, RandDouble());
       options.storage_type = ::testing::get<0>(param);
-      std::unique_ptr<CompressedRowSparseMatrix> matrix(
-          CompressedRowSparseMatrix::CreateRandomMatrix(options));
+      std::unique_ptr<CompressedRowSparseMatrix> matrix =
+          CompressedRowSparseMatrix::CreateRandomMatrix(options);
       const int num_cols = matrix->num_cols();
 
       Vector actual(num_cols);

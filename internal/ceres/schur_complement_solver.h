@@ -125,11 +125,13 @@ class CERES_EXPORT_INTERNAL SchurComplementSolver
  protected:
   const LinearSolver::Options& options() const { return options_; }
 
-  void set_lhs(BlockRandomAccessMatrix* lhs) { lhs_.reset(lhs); }
+  void set_lhs(std::unique_ptr<BlockRandomAccessMatrix> lhs) {
+    lhs_ = std::move(lhs);
+  }
   const BlockRandomAccessMatrix* lhs() const { return lhs_.get(); }
   BlockRandomAccessMatrix* mutable_lhs() { return lhs_.get(); }
 
-  void set_rhs(double* rhs) { rhs_.reset(rhs); }
+  void set_rhs(std::unique_ptr<double[]> rhs) { rhs_ = std::move(rhs); }
   const double* rhs() const { return rhs_.get(); }
 
  private:

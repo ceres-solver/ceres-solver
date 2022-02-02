@@ -763,8 +763,8 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
 
   std::unique_ptr<CompressedRowSparseMatrix> tmp_jacobian;
   if (jacobian != nullptr) {
-    tmp_jacobian.reset(
-        down_cast<CompressedRowSparseMatrix*>(evaluator->CreateJacobian()));
+    tmp_jacobian.reset(down_cast<CompressedRowSparseMatrix*>(
+        evaluator->CreateJacobian().release()));
   }
 
   // Point the state pointers to the user state pointers. This is

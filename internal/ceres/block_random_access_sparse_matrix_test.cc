@@ -80,7 +80,7 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
     int col_stride;
     CellInfo* cell = m.GetCell(
         row_block_id, col_block_id, &row, &col, &row_stride, &col_stride);
-    EXPECT_TRUE(cell != NULL);
+    EXPECT_TRUE(cell != nullptr);
     EXPECT_EQ(row, 0);
     EXPECT_EQ(col, 0);
     EXPECT_EQ(row_stride, blocks[row_block_id]);
@@ -142,7 +142,7 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
     blocks.push_back(1);
     set<pair<int, int>> block_pairs;
     block_pairs.insert(make_pair(0, 0));
-    m_.reset(new BlockRandomAccessSparseMatrix(blocks, block_pairs));
+    m_ = std::make_unique<BlockRandomAccessSparseMatrix>(blocks, block_pairs);
   }
 
   void CheckIntPairToLong(int a, int b) {

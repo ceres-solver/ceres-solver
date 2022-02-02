@@ -81,7 +81,8 @@ class CoordinateDescentMinimizer : public Minimizer {
   // of independent sets of decreasing size and invert it. This
   // seems to work better in practice, i.e., Cameras before
   // points.
-  static ParameterBlockOrdering* CreateOrdering(const Program& program);
+  static std::shared_ptr<ParameterBlockOrdering> CreateOrdering(
+      const Program& program);
 
  private:
   void Solve(Program* program,

@@ -48,7 +48,7 @@ Minimizer* Minimizer::Create(MinimizerType minimizer_type) {
   }
 
   LOG(FATAL) << "Unknown minimizer_type: " << minimizer_type;
-  return NULL;
+  return nullptr;
 }
 
 Minimizer::~Minimizer() {}
