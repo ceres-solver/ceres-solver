@@ -30,7 +30,9 @@
 
 #include "ceres/compressed_row_jacobian_writer.h"
 
+#include <algorithm>
 #include <iterator>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -81,10 +83,12 @@ void CompressedRowJacobianWriter::GetOrderedParameterBlocks(
           make_pair(parameter_block->index(), j));
     }
   }
-  sort(evaluated_jacobian_blocks->begin(), evaluated_jacobian_blocks->end());
+  std::sort(evaluated_jacobian_blocks->begin(),
+            evaluated_jacobian_blocks->end());
 }
 
-SparseMatrix* CompressedRowJacobianWriter::CreateJacobian() const {
+std::unique_ptr<SparseMatrix> CompressedRowJacobianWriter::CreateJacobian()
+    const {
   const vector<ResidualBlock*>& residual_blocks = program_->residual_blocks();
 
   int total_num_residuals = program_->NumResiduals();
@@ -108,10 +112,11 @@ SparseMatrix* CompressedRowJacobianWriter::CreateJacobian() const {
   // Allocate more space than needed to store the jacobian so that when the LM
   // algorithm adds the diagonal, no reallocation is necessary. This reduces
   // peak memory usage significantly.
-  CompressedRowSparseMatrix* jacobian = new CompressedRowSparseMatrix(
-      total_num_residuals,
-      total_num_effective_parameters,
-      num_jacobian_nonzeros + total_num_effective_parameters);
+  std::unique_ptr<CompressedRowSparseMatrix> jacobian =
+      std::make_unique<CompressedRowSparseMatrix>(
+          total_num_residuals,
+          total_num_effective_parameters,
+          num_jacobian_nonzeros + total_num_effective_parameters);
 
   // At this stage, the CompressedRowSparseMatrix is an invalid state. But this
   // seems to be the only way to construct it without doing a memory copy.
@@ -183,7 +188,7 @@ SparseMatrix* CompressedRowJacobianWriter::CreateJacobian() const {
   }
   CHECK_EQ(num_jacobian_nonzeros, rows[total_num_residuals]);
 
-  PopulateJacobianRowAndColumnBlockVectors(program_, jacobian);
+  PopulateJacobianRowAndColumnBlockVectors(program_, jacobian.get());
 
   return jacobian;
 }

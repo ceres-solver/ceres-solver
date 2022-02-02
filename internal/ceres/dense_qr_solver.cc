@@ -70,7 +70,7 @@ LinearSolver::Summary DenseQRSolver::SolveUsingLAPACK(
   const int num_rows = A->num_rows();
   const int num_cols = A->num_cols();
 
-  if (per_solve_options.D != NULL) {
+  if (per_solve_options.D != nullptr) {
     // Temporarily append a diagonal block to the A matrix, but undo
     // it before returning the matrix to the user.
     A->AppendDiagonal(per_solve_options.D);
@@ -80,7 +80,7 @@ LinearSolver::Summary DenseQRSolver::SolveUsingLAPACK(
   // can be appended to the matrix instead of doing it on A.
   lhs_ = A->matrix();
 
-  if (per_solve_options.D != NULL) {
+  if (per_solve_options.D != nullptr) {
     // Undo the modifications to the matrix A.
     A->RemoveDiagonal();
   }
@@ -128,7 +128,7 @@ LinearSolver::Summary DenseQRSolver::SolveUsingEigen(
   const int num_rows = A->num_rows();
   const int num_cols = A->num_cols();
 
-  if (per_solve_options.D != NULL) {
+  if (per_solve_options.D != nullptr) {
     // Temporarily append a diagonal block to the A matrix, but undo
     // it before returning the matrix to the user.
     A->AppendDiagonal(per_solve_options.D);
@@ -136,7 +136,7 @@ LinearSolver::Summary DenseQRSolver::SolveUsingEigen(
 
   // rhs = [b;0] to account for the additional rows in the lhs.
   const int augmented_num_rows =
-      num_rows + ((per_solve_options.D != NULL) ? num_cols : 0);
+      num_rows + ((per_solve_options.D != nullptr) ? num_cols : 0);
   if (rhs_.rows() != augmented_num_rows) {
     rhs_.resize(augmented_num_rows);
     rhs_.setZero();
@@ -148,7 +148,7 @@ LinearSolver::Summary DenseQRSolver::SolveUsingEigen(
   VectorRef(x, num_cols) = A->matrix().householderQr().solve(rhs_);
   event_logger.AddEvent("Solve");
 
-  if (per_solve_options.D != NULL) {
+  if (per_solve_options.D != nullptr) {
     // Undo the modifications to the matrix A.
     A->RemoveDiagonal();
   }

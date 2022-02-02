@@ -195,7 +195,7 @@ TEST(LossFunction, ScaledLoss) {
   // construction with the call to AssertLossFunctionIsValid() because Apple's
   // GCC is unable to eliminate the copy of ScaledLoss, which is not copyable.
   {
-    ScaledLoss scaled_loss(NULL, 6, TAKE_OWNERSHIP);
+    ScaledLoss scaled_loss(nullptr, 6, TAKE_OWNERSHIP);
     AssertLossFunctionIsValid(scaled_loss, 0.323);
   }
   {
@@ -265,17 +265,17 @@ TEST(LossFunction, LossFunctionWrapper) {
     EXPECT_NEAR(rho[i], rho_gold[i], 1e-12);
   }
 
-  // Set to NULL
+  // Set to nullptr
   TrivialLoss loss_function4;
-  loss_function_wrapper.Reset(NULL, TAKE_OWNERSHIP);
+  loss_function_wrapper.Reset(nullptr, TAKE_OWNERSHIP);
   loss_function_wrapper.Evaluate(s, rho);
   loss_function4.Evaluate(s, rho_gold);
   for (int i = 0; i < 3; ++i) {
     EXPECT_NEAR(rho[i], rho_gold[i], 1e-12);
   }
 
-  // Set to NULL, not taking ownership
-  loss_function_wrapper.Reset(NULL, DO_NOT_TAKE_OWNERSHIP);
+  // Set to nullptr, not taking ownership
+  loss_function_wrapper.Reset(nullptr, DO_NOT_TAKE_OWNERSHIP);
   loss_function_wrapper.Evaluate(s, rho);
   loss_function4.Evaluate(s, rho_gold);
   for (int i = 0; i < 3; ++i) {

@@ -69,7 +69,7 @@ class SchurEliminatorBase;
 //   options.elimination_groups.push_back(num_cameras);
 //   SchurJacobiPreconditioner preconditioner(
 //      *A.block_structure(), options);
-//   preconditioner.Update(A, NULL);
+//   preconditioner.Update(A, nullptr);
 //   preconditioner.RightMultiply(x, y);
 //
 class SchurJacobiPreconditioner : public BlockSparseMatrixPreconditioner {

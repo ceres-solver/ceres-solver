@@ -93,7 +93,7 @@ class CompressedRowJacobianWriter {
     return ScratchEvaluatePreparer::Create(*program_, num_threads);
   }
 
-  SparseMatrix* CreateJacobian() const;
+  std::unique_ptr<SparseMatrix> CreateJacobian() const;
 
   void Write(int residual_id,
              int residual_offset,

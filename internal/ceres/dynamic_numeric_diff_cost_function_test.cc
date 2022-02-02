@@ -89,7 +89,7 @@ TEST(DynamicNumericdiffCostFunctionTest, TestResiduals) {
   parameter_blocks[0] = &param_block_0[0];
   parameter_blocks[1] = &param_block_1[0];
   EXPECT_TRUE(
-      cost_function.Evaluate(&parameter_blocks[0], residuals.data(), NULL));
+      cost_function.Evaluate(&parameter_blocks[0], residuals.data(), nullptr));
   for (int r = 0; r < 10; ++r) {
     EXPECT_EQ(1.0 * r, residuals.at(r * 2));
     EXPECT_EQ(-1.0 * r, residuals.at(r * 2 + 1));
@@ -190,7 +190,7 @@ TEST(DynamicNumericdiffCostFunctionTest,
   jacobian_vect[0].resize(21 * 10, -100000);
   jacobian_vect[1].resize(21 * 5, -100000);
   vector<double*> jacobian;
-  jacobian.push_back(NULL);
+  jacobian.push_back(nullptr);
   jacobian.push_back(jacobian_vect[1].data());
 
   // Test jacobian computation.
@@ -241,7 +241,7 @@ TEST(DynamicNumericdiffCostFunctionTest,
   jacobian_vect[1].resize(21 * 5, -100000);
   vector<double*> jacobian;
   jacobian.push_back(jacobian_vect[0].data());
-  jacobian.push_back(NULL);
+  jacobian.push_back(nullptr);
 
   // Test jacobian computation.
   EXPECT_TRUE(cost_function.Evaluate(
@@ -330,15 +330,14 @@ class ThreeParameterCostFunctorTest : public ::testing::Test {
     // Prepare the cost function.
     typedef DynamicNumericDiffCostFunction<MyThreeParameterCostFunctor>
         DynamicMyThreeParameterCostFunction;
-    DynamicMyThreeParameterCostFunction* cost_function =
-        new DynamicMyThreeParameterCostFunction(
-            new MyThreeParameterCostFunctor());
+    auto cost_function = std::make_unique<DynamicMyThreeParameterCostFunction>(
+        new MyThreeParameterCostFunctor());
     cost_function->AddParameterBlock(1);
     cost_function->AddParameterBlock(2);
     cost_function->AddParameterBlock(3);
     cost_function->SetNumResiduals(7);
 
-    cost_function_.reset(cost_function);
+    cost_function_ = std::move(cost_function);
 
     // Setup jacobian data.
     jacobian_vect_.resize(3);
@@ -431,7 +430,7 @@ class ThreeParameterCostFunctorTest : public ::testing::Test {
 TEST_F(ThreeParameterCostFunctorTest, TestThreeParameterResiduals) {
   vector<double> residuals(7, -100000);
   EXPECT_TRUE(cost_function_->Evaluate(
-      parameter_blocks_.data(), residuals.data(), NULL));
+      parameter_blocks_.data(), residuals.data(), nullptr));
   for (int i = 0; i < 7; ++i) {
     EXPECT_EQ(expected_residuals_[i], residuals[i]);
   }
@@ -470,9 +469,9 @@ TEST_F(ThreeParameterCostFunctorTest,
   vector<double> residuals(7, -100000);
 
   vector<double*> jacobian;
-  jacobian.push_back(NULL);
+  jacobian.push_back(nullptr);
   jacobian.push_back(jacobian_vect_[1].data());
-  jacobian.push_back(NULL);
+  jacobian.push_back(nullptr);
 
   EXPECT_TRUE(cost_function_->Evaluate(
       parameter_blocks_.data(), residuals.data(), jacobian.data()));
@@ -492,7 +491,7 @@ TEST_F(ThreeParameterCostFunctorTest,
 
   vector<double*> jacobian;
   jacobian.push_back(jacobian_vect_[0].data());
-  jacobian.push_back(NULL);
+  jacobian.push_back(nullptr);
   jacobian.push_back(jacobian_vect_[2].data());
 
   EXPECT_TRUE(cost_function_->Evaluate(
