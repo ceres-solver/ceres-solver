@@ -39,7 +39,7 @@ namespace ceres {
 namespace internal {
 // Returns true if x and y have a relative (unsigned) difference less than
 // relative_precision and false otherwise. Stores the relative and absolute
-// difference in relative/absolute_error if non-NULL. If one of the two values
+// difference in relative/absolute_error if non-nullptr. If one of the two values
 // is exactly zero, the absolute difference will be compared, and relative_error
 // will be set to the absolute difference.
 CERES_EXPORT_INTERNAL bool IsClose(double x,

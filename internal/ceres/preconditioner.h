@@ -126,7 +126,7 @@ class CERES_EXPORT_INTERNAL Preconditioner : public LinearOperator {
   // for some vector b. It is important that the matrix A have the
   // same block structure as the one used to construct this object.
   //
-  // D can be NULL, in which case its interpreted as a diagonal matrix
+  // D can be nullptr, in which case its interpreted as a diagonal matrix
   // of size zero.
   virtual bool Update(const LinearOperator& A, const double* D) = 0;
 

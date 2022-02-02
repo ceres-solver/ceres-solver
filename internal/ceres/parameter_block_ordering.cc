@@ -163,7 +163,7 @@ void OrderingToGroupSizes(const ParameterBlockOrdering* ordering,
                           vector<int>* group_sizes) {
   CHECK(group_sizes != nullptr);
   group_sizes->clear();
-  if (ordering == NULL) {
+  if (ordering == nullptr) {
     return;
   }
 

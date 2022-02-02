@@ -135,21 +135,22 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
   // now.
   Minimizer::Options minimizer_options =
       Minimizer::Options(GradientProblemSolverOptionsToSolverOptions(options));
-  minimizer_options.evaluator.reset(new GradientProblemEvaluator(problem));
+  minimizer_options.evaluator =
+      std::make_unique<GradientProblemEvaluator>(problem);
 
   std::unique_ptr<IterationCallback> logging_callback;
   if (options.logging_type != SILENT) {
-    logging_callback.reset(
-        new LoggingCallback(LINE_SEARCH, options.minimizer_progress_to_stdout));
+    logging_callback = std::make_unique<LoggingCallback>(
+        LINE_SEARCH, options.minimizer_progress_to_stdout);
     minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
                                        logging_callback.get());
   }
 
   std::unique_ptr<IterationCallback> state_updating_callback;
   if (options.update_state_every_iteration) {
-    state_updating_callback.reset(
-        new GradientProblemSolverStateUpdatingCallback(
-            problem.NumParameters(), solution.data(), parameters_ptr));
+    state_updating_callback =
+        std::make_unique<GradientProblemSolverStateUpdatingCallback>(
+            problem.NumParameters(), solution.data(), parameters_ptr);
     minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
                                        state_updating_callback.get());
   }

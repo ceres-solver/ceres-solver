@@ -132,7 +132,7 @@ struct WigglyBowlCostFunctionAndEvaluationCallback : SizedCostFunction<2, 2>,
     double y = (*parameters)[1];
     residuals[0] = y - a * sin(x);
     residuals[1] = x;
-    if (jacobians != NULL) {
+    if (jacobians != nullptr) {
       (*jacobians)[2 * 0 + 0] = -a * cos(x);  // df1/dx
       (*jacobians)[2 * 0 + 1] = 1.0;          // df1/dy
       (*jacobians)[2 * 1 + 0] = 1.0;          // df2/dx
@@ -157,7 +157,7 @@ struct WigglyBowlCostFunctionAndEvaluationCallback : SizedCostFunction<2, 2>,
     EXPECT_EQ(prepare_parameter_hash, incoming_parameter_hash);
 
     // Check: jacobians are requested if they were in PrepareForEvaluation().
-    EXPECT_EQ(prepare_requested_jacobians, jacobians != NULL);
+    EXPECT_EQ(prepare_requested_jacobians, jacobians != nullptr);
 
     evaluate_num_calls++;
     evaluate_last_parameter_hash = incoming_parameter_hash;
@@ -196,7 +196,7 @@ TEST(EvaluationCallback, WithTrustRegionMinimizer) {
   problem_options.evaluation_callback = &cost_function;
   problem_options.cost_function_ownership = DO_NOT_TAKE_OWNERSHIP;
   Problem problem(problem_options);
-  problem.AddResidualBlock(&cost_function, NULL, parameters);
+  problem.AddResidualBlock(&cost_function, nullptr, parameters);
 
   Solver::Options options;
   options.linear_solver_type = DENSE_QR;
@@ -322,7 +322,7 @@ static void WithLineSearchMinimizerImpl(
   problem_options.evaluation_callback = &cost_function;
   problem_options.cost_function_ownership = DO_NOT_TAKE_OWNERSHIP;
   Problem problem(problem_options);
-  problem.AddResidualBlock(&cost_function, NULL, parameters);
+  problem.AddResidualBlock(&cost_function, nullptr, parameters);
 
   Solver::Options options;
   options.linear_solver_type = DENSE_QR;

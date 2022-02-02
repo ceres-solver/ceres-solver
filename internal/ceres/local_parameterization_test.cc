@@ -283,7 +283,7 @@ void QuaternionParameterizationTestHelper(const double* x,
   double jacobian_ref[12];
   double zero_delta[kLocalSize] = {0.0, 0.0, 0.0};
   const double* parameters[2] = {x, zero_delta};
-  double* jacobian_array[2] = {NULL, jacobian_ref};
+  double* jacobian_array[2] = {nullptr, jacobian_ref};
 
   // Autodiff jacobian at delta_x = 0.
   internal::AutoDifferentiate<kGlobalSize,
@@ -779,27 +779,27 @@ class ProductParameterizationTest : public ::testing::Test {
     const int global_size1 = 5;
     std::vector<int> constant_parameters1;
     constant_parameters1.push_back(2);
-    param1_.reset(
-        new SubsetParameterization(global_size1, constant_parameters1));
+    param1_ = std::make_unique<SubsetParameterization>(global_size1,
+                                                       constant_parameters1);
 
     const int global_size2 = 3;
     std::vector<int> constant_parameters2;
     constant_parameters2.push_back(0);
     constant_parameters2.push_back(1);
-    param2_.reset(
-        new SubsetParameterization(global_size2, constant_parameters2));
+    param2_ = std::make_unique<SubsetParameterization>(global_size2,
+                                                       constant_parameters2);
 
     const int global_size3 = 4;
     std::vector<int> constant_parameters3;
     constant_parameters3.push_back(1);
-    param3_.reset(
-        new SubsetParameterization(global_size3, constant_parameters3));
+    param3_ = std::make_unique<SubsetParameterization>(global_size3,
+                                                       constant_parameters3);
 
     const int global_size4 = 2;
     std::vector<int> constant_parameters4;
     constant_parameters4.push_back(1);
-    param4_.reset(
-        new SubsetParameterization(global_size4, constant_parameters4));
+    param4_ = std::make_unique<SubsetParameterization>(global_size4,
+                                                       constant_parameters4);
   }
 
   std::unique_ptr<LocalParameterization> param1_;

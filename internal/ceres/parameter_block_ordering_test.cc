@@ -71,12 +71,12 @@ class SchurOrderingTest : public ::testing::Test {
     problem_.AddParameterBlock(z_, 5);
     problem_.AddParameterBlock(w_, 6);
 
-    problem_.AddResidualBlock(new DummyCostFunction<2, 3>, NULL, x_);
-    problem_.AddResidualBlock(new DummyCostFunction<6, 5, 4>, NULL, z_, y_);
-    problem_.AddResidualBlock(new DummyCostFunction<3, 3, 5>, NULL, x_, z_);
-    problem_.AddResidualBlock(new DummyCostFunction<7, 5, 3>, NULL, z_, x_);
+    problem_.AddResidualBlock(new DummyCostFunction<2, 3>, nullptr, x_);
+    problem_.AddResidualBlock(new DummyCostFunction<6, 5, 4>, nullptr, z_, y_);
+    problem_.AddResidualBlock(new DummyCostFunction<3, 3, 5>, nullptr, x_, z_);
+    problem_.AddResidualBlock(new DummyCostFunction<7, 5, 3>, nullptr, z_, x_);
     problem_.AddResidualBlock(
-        new DummyCostFunction<1, 5, 3, 6>, NULL, z_, x_, w_);
+        new DummyCostFunction<1, 5, 3, 6>, nullptr, z_, x_, w_);
   }
 
   ProblemImpl problem_;

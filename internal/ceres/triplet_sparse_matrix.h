@@ -115,8 +115,8 @@ class CERES_EXPORT_INTERNAL TripletSparseMatrix : public SparseMatrix {
   // Build a sparse diagonal matrix of size num_rows x num_rows from
   // the array values. Entries of the values array are copied into the
   // sparse matrix.
-  static TripletSparseMatrix* CreateSparseDiagonalMatrix(const double* values,
-                                                         int num_rows);
+  static std::unique_ptr<TripletSparseMatrix> CreateSparseDiagonalMatrix(
+      const double* values, int num_rows);
 
   // Options struct to control the generation of random
   // TripletSparseMatrix objects.
@@ -132,9 +132,7 @@ class CERES_EXPORT_INTERNAL TripletSparseMatrix : public SparseMatrix {
   // Create a random CompressedRowSparseMatrix whose entries are
   // normally distributed and whose structure is determined by
   // RandomMatrixOptions.
-  //
-  // Caller owns the result.
-  static TripletSparseMatrix* CreateRandomMatrix(
+  static std::unique_ptr<TripletSparseMatrix> CreateRandomMatrix(
       const TripletSparseMatrix::RandomMatrixOptions& options);
 
  private:

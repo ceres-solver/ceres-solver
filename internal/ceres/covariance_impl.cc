@@ -83,7 +83,7 @@ CovarianceImpl::~CovarianceImpl() {}
 
 template <typename T>
 void CheckForDuplicates(std::vector<T> blocks) {
-  sort(blocks.begin(), blocks.end());
+  std::sort(blocks.begin(), blocks.end());
   typename std::vector<T>::iterator it =
       std::adjacent_find(blocks.begin(), blocks.end());
   if (it != blocks.end()) {
@@ -117,7 +117,7 @@ bool CovarianceImpl::Compute(const CovarianceBlocks& covariance_blocks,
       covariance_blocks);
   problem_ = problem;
   parameter_block_to_row_index_.clear();
-  covariance_matrix_.reset(nullptr);
+  covariance_matrix_ = nullptr;
   is_valid_ = (ComputeCovarianceSparsity(covariance_blocks, problem) &&
                ComputeCovarianceValues());
   is_computed_ = true;
@@ -448,9 +448,9 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
     }
   }
 
-  if (covariance_blocks.size() == 0) {
+  if (covariance_blocks.empty()) {
     VLOG(2) << "No non-zero covariance blocks found";
-    covariance_matrix_.reset(nullptr);
+    covariance_matrix_ = nullptr;
     return true;
   }
 
@@ -460,8 +460,8 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   std::sort(covariance_blocks.begin(), covariance_blocks.end());
 
   // Fill the sparsity pattern of the covariance matrix.
-  covariance_matrix_.reset(
-      new CompressedRowSparseMatrix(num_rows, num_rows, num_nonzeros));
+  covariance_matrix_ = std::make_unique<CompressedRowSparseMatrix>(
+      num_rows, num_rows, num_nonzeros);
 
   int* rows = covariance_matrix_->mutable_rows();
   int* cols = covariance_matrix_->mutable_cols();

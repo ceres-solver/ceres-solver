@@ -121,13 +121,13 @@ static int exponential_residual(void* user_data,
   double c = parameters[1][0];
 
   residuals[0] = y - exp(m * x + c);
-  if (jacobians == NULL) {
+  if (jacobians == nullptr) {
     return 1;
   }
-  if (jacobians[0] != NULL) {
+  if (jacobians[0] != nullptr) {
     jacobians[0][0] = -x * exp(m * x + c);  // dr/dm
   }
-  if (jacobians[1] != NULL) {
+  if (jacobians[1] != nullptr) {
     jacobians[1][0] = -exp(m * x + c);  // dr/dc
   }
   return 1;
@@ -148,8 +148,8 @@ TEST(C_API, SimpleEndToEndTest) {
         problem,
         exponential_residual,  // Cost function
         &data[2 * i],          // Points to the (x,y) measurement
-        NULL,                  // Loss function
-        NULL,                  // Loss function user data
+        nullptr,               // Loss function
+        nullptr,               // Loss function user data
         1,                     // Number of residuals
         2,                     // Number of parameter blocks
         parameter_sizes,

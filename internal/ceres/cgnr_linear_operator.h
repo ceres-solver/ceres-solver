@@ -94,7 +94,7 @@ class CgnrLinearOperator : public LinearOperator {
     A_.LeftMultiply(z_.get(), y);
 
     // y = y + DtDx
-    if (D_ != NULL) {
+    if (D_ != nullptr) {
       int n = A_.num_cols();
       VectorRef(y, n).array() +=
           ConstVectorRef(D_, n).array().square() * ConstVectorRef(x, n).array();

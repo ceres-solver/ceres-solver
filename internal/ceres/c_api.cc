@@ -78,7 +78,7 @@ class CallbackCostFunction : public ceres::CostFunction {
     }
   }
 
-  ~CallbackCostFunction() override {}
+  ~CallbackCostFunction() override = default;
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -148,24 +148,25 @@ ceres_residual_block_id_t* ceres_problem_add_residual_block(
     double** parameters) {
   Problem* ceres_problem = reinterpret_cast<Problem*>(problem);
 
-  ceres::CostFunction* callback_cost_function =
-      new CallbackCostFunction(cost_function,
-                               cost_function_data,
-                               num_residuals,
-                               num_parameter_blocks,
-                               parameter_block_sizes);
+  auto callback_cost_function =
+      std::make_unique<CallbackCostFunction>(cost_function,
+                                             cost_function_data,
+                                             num_residuals,
+                                             num_parameter_blocks,
+                                             parameter_block_sizes);
 
-  ceres::LossFunction* callback_loss_function = NULL;
-  if (loss_function != NULL) {
-    callback_loss_function =
-        new CallbackLossFunction(loss_function, loss_function_data);
+  std::unique_ptr<ceres::LossFunction> callback_loss_function;
+  if (loss_function != nullptr) {
+    callback_loss_function = std::make_unique<CallbackLossFunction>(
+        loss_function, loss_function_data);
   }
 
   std::vector<double*> parameter_blocks(parameters,
                                         parameters + num_parameter_blocks);
   return reinterpret_cast<ceres_residual_block_id_t*>(
-      ceres_problem->AddResidualBlock(
-          callback_cost_function, callback_loss_function, parameter_blocks));
+      ceres_problem->AddResidualBlock(callback_cost_function.release(),
+                                      callback_loss_function.release(),
+                                      parameter_blocks));
 }
 
 void ceres_solve(ceres_problem_t* c_problem) {

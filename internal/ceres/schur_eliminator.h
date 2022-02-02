@@ -209,7 +209,8 @@ class CERES_EXPORT_INTERNAL SchurEliminatorBase {
                               const double* z,
                               double* y) = 0;
   // Factory
-  static SchurEliminatorBase* Create(const LinearSolver::Options& options);
+  static std::unique_ptr<SchurEliminatorBase> Create(
+      const LinearSolver::Options& options);
 };
 
 // Templated implementation of the SchurEliminatorBase interface. The
@@ -483,7 +484,7 @@ class SchurEliminatorForOneFBlock : public SchurEliminatorBase {
       Eigen::Matrix<double, kFBlockSize, 1> f_t_b;
 
       // Add the square of the diagonal to e_t_e.
-      if (D != NULL) {
+      if (D != nullptr) {
         const typename EigenTypes<kEBlockSize>::ConstVectorRef diag(
             D + bs->cols[e_block_id].position, kEBlockSize);
         e_t_e = diag.array().square().matrix().asDiagonal();

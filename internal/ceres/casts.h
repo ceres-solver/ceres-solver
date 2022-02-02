@@ -32,7 +32,6 @@
 #define CERES_INTERNAL_CASTS_H_
 
 #include <cassert>
-#include <cstddef>  // For NULL.
 
 namespace ceres {
 
@@ -86,6 +85,7 @@ inline To implicit_cast(typename identity_<From>::type const& f) {
 //    if (dynamic_cast<Subclass2>(foo)) HandleASubclass2Object(foo);
 // You should design the code some other way not to need this.
 
+// TODO(sameeragarwal): Modernize this.
 template <typename To, typename From>  // use like this: down_cast<T*>(foo);
 inline To down_cast(From* f) {         // so we only accept pointers
   // Ensures that To is a sub-type of From *.  This test is here only
@@ -95,11 +95,11 @@ inline To down_cast(From* f) {         // so we only accept pointers
 
   // TODO(csilvers): This should use COMPILE_ASSERT.
   if (false) {
-    implicit_cast<From*, To>(NULL);
+    implicit_cast<From*, To>(nullptr);
   }
 
   // uses RTTI in dbg and fastbuild. asserts are disabled in opt builds.
-  assert(f == NULL || dynamic_cast<To>(f) != NULL);  // NOLINT
+  assert(f == nullptr || dynamic_cast<To>(f) != nullptr);  // NOLINT
   return static_cast<To>(f);
 }
 

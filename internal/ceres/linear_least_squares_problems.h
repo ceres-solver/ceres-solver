@@ -60,14 +60,14 @@ struct CERES_EXPORT_INTERNAL LinearLeastSquaresProblem {
 };
 
 // Factories for linear least squares problem.
-CERES_EXPORT_INTERNAL LinearLeastSquaresProblem*
+CERES_EXPORT_INTERNAL std::unique_ptr<LinearLeastSquaresProblem>
 CreateLinearLeastSquaresProblemFromId(int id);
 
-LinearLeastSquaresProblem* LinearLeastSquaresProblem0();
-LinearLeastSquaresProblem* LinearLeastSquaresProblem1();
-LinearLeastSquaresProblem* LinearLeastSquaresProblem2();
-LinearLeastSquaresProblem* LinearLeastSquaresProblem3();
-LinearLeastSquaresProblem* LinearLeastSquaresProblem4();
+std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem0();
+std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem1();
+std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem2();
+std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem3();
+std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem4();
 
 // Write the linear least squares problem to disk. The exact format
 // depends on dump_format_type.
