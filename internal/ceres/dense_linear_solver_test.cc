@@ -62,8 +62,8 @@ TEST_P(DenseLinearSolverTest, _) {
   Param param = GetParam();
   const bool regularized = testing::get<2>(param);
 
-  std::unique_ptr<LinearLeastSquaresProblem> problem(
-      CreateLinearLeastSquaresProblemFromId(testing::get<3>(param)));
+  std::unique_ptr<LinearLeastSquaresProblem> problem =
+      CreateLinearLeastSquaresProblemFromId(testing::get<3>(param));
   DenseSparseMatrix lhs(*down_cast<TripletSparseMatrix*>(problem->A.get()));
 
   const int num_cols = lhs.num_cols();

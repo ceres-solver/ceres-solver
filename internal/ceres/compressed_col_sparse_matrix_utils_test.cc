@@ -168,7 +168,7 @@ TEST(_, ScalarMatrixToBlockMatrix) {
 
 class SolveUpperTriangularTest : public ::testing::Test {
  protected:
-  void SetUp() {
+  void SetUp() override {
     cols.resize(5);
     rows.resize(7);
     values.resize(7);

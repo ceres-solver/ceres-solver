@@ -81,7 +81,7 @@ void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
 
 WeightedGraph<int>* CreateSchurComplementGraph(
     const vector<set<int>>& visibility) {
-  const time_t start_time = time(NULL);
+  const time_t start_time = time(nullptr);
   // Compute the number of e_blocks/point blocks. Since the visibility
   // set for each e_block/camera contains the set of e_blocks/points
   // visible to it, we find the maximum across all visibility sets.
@@ -146,7 +146,7 @@ WeightedGraph<int>* CreateSchurComplementGraph(
     graph->AddEdge(camera1, camera2, weight);
   }
 
-  VLOG(2) << "Schur complement graph time: " << (time(NULL) - start_time);
+  VLOG(2) << "Schur complement graph time: " << (time(nullptr) - start_time);
   return graph;
 }
 

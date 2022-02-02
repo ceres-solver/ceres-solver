@@ -51,7 +51,7 @@ static void CheckEvaluation(const CostFunction& cost_function, bool is_good) {
   std::vector<ParameterBlock*> parameter_blocks;
   parameter_blocks.push_back(&parameter_block);
 
-  ResidualBlock residual_block(&cost_function, NULL, parameter_blocks, -1);
+  ResidualBlock residual_block(&cost_function, nullptr, parameter_blocks, -1);
 
   std::unique_ptr<double[]> scratch(
       new double[residual_block.NumScratchDoublesForEvaluate()]);
@@ -74,7 +74,7 @@ class GoodCostFunction : public SizedCostFunction<1, 1> {
                 double* residuals,
                 double** jacobians) const final {
     residuals[0] = 1;
-    if (jacobians != NULL && jacobians[0] != NULL) {
+    if (jacobians != nullptr && jacobians[0] != nullptr) {
       jacobians[0][0] = 0.0;
     }
     return true;
@@ -90,7 +90,7 @@ class NoResidualUpdateCostFunction : public SizedCostFunction<1, 1> {
                 double** jacobians) const final {
     // Forget to update the residuals.
     // residuals[0] = 1;
-    if (jacobians != NULL && jacobians[0] != NULL) {
+    if (jacobians != nullptr && jacobians[0] != nullptr) {
       jacobians[0][0] = 0.0;
     }
     return true;
@@ -103,7 +103,7 @@ class NoJacobianUpdateCostFunction : public SizedCostFunction<1, 1> {
                 double* residuals,
                 double** jacobians) const final {
     residuals[0] = 1;
-    if (jacobians != NULL && jacobians[0] != NULL) {
+    if (jacobians != nullptr && jacobians[0] != nullptr) {
       // Forget to update the jacobians.
       // jacobians[0][0] = 0.0;
     }
@@ -117,7 +117,7 @@ class BadResidualCostFunction : public SizedCostFunction<1, 1> {
                 double* residuals,
                 double** jacobians) const final {
     residuals[0] = std::numeric_limits<double>::infinity();
-    if (jacobians != NULL && jacobians[0] != NULL) {
+    if (jacobians != nullptr && jacobians[0] != nullptr) {
       jacobians[0][0] = 0.0;
     }
     return true;
@@ -130,7 +130,7 @@ class BadJacobianCostFunction : public SizedCostFunction<1, 1> {
                 double* residuals,
                 double** jacobians) const final {
     residuals[0] = 1.0;
-    if (jacobians != NULL && jacobians[0] != NULL) {
+    if (jacobians != nullptr && jacobians[0] != nullptr) {
       jacobians[0][0] = std::numeric_limits<double>::quiet_NaN();
     }
     return true;

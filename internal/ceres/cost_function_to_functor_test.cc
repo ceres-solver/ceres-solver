@@ -92,9 +92,9 @@ static void ExpectCostFunctionsAreEqual(
   }
 
   EXPECT_TRUE(
-      cost_function.Evaluate(parameter_blocks.get(), residuals.get(), NULL));
+      cost_function.Evaluate(parameter_blocks.get(), residuals.get(), nullptr));
   EXPECT_TRUE(actual_cost_function.Evaluate(
-      parameter_blocks.get(), actual_residuals.get(), NULL));
+      parameter_blocks.get(), actual_residuals.get(), nullptr));
   for (int i = 0; i < num_residuals; ++i) {
     EXPECT_NEAR(residuals[i], actual_residuals[i], kTolerance)
         << "residual id: " << i;

@@ -99,28 +99,28 @@ class SubsetPreconditionerTest : public ::testing::TestWithParam<Param> {
     options.max_row_block_size = 4;
     options.block_density = 0.9;
 
-    m_.reset(BlockSparseMatrix::CreateRandomMatrix(options));
+    m_ = BlockSparseMatrix::CreateRandomMatrix(options);
     start_row_block_ = m_->block_structure()->rows.size();
 
     // Ensure that the bottom part of the matrix has the same column
     // block structure.
     options.col_blocks = m_->block_structure()->cols;
-    b_.reset(BlockSparseMatrix::CreateRandomMatrix(options));
+    b_ = BlockSparseMatrix::CreateRandomMatrix(options);
     m_->AppendRows(*b_);
 
     // Create a Identity block diagonal matrix with the same column
     // block structure.
     diagonal_ = Vector::Ones(m_->num_cols());
-    block_diagonal_.reset(BlockSparseMatrix::CreateDiagonalMatrix(
-        diagonal_.data(), b_->block_structure()->cols));
+    block_diagonal_ = BlockSparseMatrix::CreateDiagonalMatrix(
+        diagonal_.data(), b_->block_structure()->cols);
 
     // Unconditionally add the block diagonal to the matrix b_,
     // because either it is either part of b_ to make it full rank, or
     // we pass the same diagonal matrix later as the parameter D. In
     // either case the preconditioner matrix is b_' b + D'D.
     b_->AppendRows(*block_diagonal_);
-    inner_product_computer_.reset(InnerProductComputer::Create(
-        *b_, CompressedRowSparseMatrix::UPPER_TRIANGULAR));
+    inner_product_computer_ = InnerProductComputer::Create(
+        *b_, CompressedRowSparseMatrix::UPPER_TRIANGULAR);
     inner_product_computer_->Compute();
   }
 
@@ -138,7 +138,7 @@ TEST_P(SubsetPreconditionerTest, foo) {
   Preconditioner::Options options;
   options.subset_preconditioner_start_row_block = start_row_block_;
   options.sparse_linear_algebra_library_type = ::testing::get<0>(param);
-  preconditioner_.reset(new SubsetPreconditioner(options, *m_));
+  preconditioner_ = std::make_unique<SubsetPreconditioner>(options, *m_);
 
   const bool with_diagonal = ::testing::get<1>(param);
   if (!with_diagonal) {
@@ -146,7 +146,7 @@ TEST_P(SubsetPreconditionerTest, foo) {
   }
 
   EXPECT_TRUE(
-      preconditioner_->Update(*m_, with_diagonal ? diagonal_.data() : NULL));
+      preconditioner_->Update(*m_, with_diagonal ? diagonal_.data() : nullptr));
 
   // Repeatedly apply the preconditioner to random vectors and check
   // that the preconditioned value is the same as one obtained by

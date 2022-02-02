@@ -368,7 +368,7 @@ SuiteSparseCholesky::~SuiteSparseCholesky() {
 LinearSolverTerminationType SuiteSparseCholesky::Factorize(
     CompressedRowSparseMatrix* lhs, string* message) {
   if (lhs == nullptr) {
-    *message = "Failure: Input lhs is NULL.";
+    *message = "Failure: Input lhs is nullptr.";
     return LINEAR_SOLVER_FATAL_ERROR;
   }
 
