@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4677f3d0_3efb1f4b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-02T18:01:36Z",
+      "side": 1,
+      "message": "Evan,\nIf you are still following along you will notice that Ceres has gained support manifolds and is on track to deprecate localparameterizations very shortly. version 2.1 which should go into alpha sometime in february I hope, has support for both local param and manifolds and right after we cut a public release I plan to remove the support for local param from the api.\n\nI suspect there is enough in the API which allows you to update this CL and make it work in general.",
+      "revId": "5de3d8d83bd0759ccbada250b4ec5071f56fd5a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
