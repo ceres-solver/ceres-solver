@@ -37,6 +37,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "257ca8ae_030aa708",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:22:35Z",
+      "side": 1,
+      "message": "CERES_CUDA_VERSION_LT_11_1 maybe?",
+      "range": {
+        "startLine": 274,
+        "startChar": 23,
+        "endLine": 274,
+        "endChar": 37
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06d6cfe1_9ade16e3",
         "filename": "include/ceres/types.h",
         "patchSetId": 1
@@ -185,6 +208,29 @@
         "startChar": 10,
         "endLine": 45,
         "endChar": 15
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c704e6a_8b884e77",
+        "filename": "internal/ceres/dense_cuda_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:22:35Z",
+      "side": 1,
+      "message": "this ifdef should have CERES_ prefix.\nalso given the heavy ifdefing here instead of interleaving this have two completely independent implementations?  because otherwise keeping track of what objects apply to which ifdef gets crazy quickly.",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 20
       },
       "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
