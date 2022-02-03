@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "041a981d_17ffc155",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T17:11:40Z",
+      "side": 1,
+      "message": "is it possible to test both versions of the API with the same cuda sdk?",
+      "revId": "7f834724cf907e0fbceb327c9d6392e11aa51478",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
