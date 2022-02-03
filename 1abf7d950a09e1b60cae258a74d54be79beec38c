@@ -118,6 +118,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c01e1813_c0d91708",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:33:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "25f00aac_0764f672",
+      "range": {
+        "startLine": 522,
+        "startChar": 8,
+        "endLine": 522,
+        "endChar": 18
+      },
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee008b69_58aca914",
@@ -251,6 +275,30 @@
       "side": 1,
       "message": "Yes I get that since fpclassify returns an integer, there is no reasonable way to combine the results of multiple fpclassify operations.",
       "parentUuid": "9b30d7bf_c32db256",
+      "range": {
+        "startLine": 763,
+        "startChar": 10,
+        "endLine": 763,
+        "endChar": 18
+      },
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4138eb18_15280608",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:33:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7cc0ec9e_961ae3ba",
       "range": {
         "startLine": 763,
         "startChar": 10,

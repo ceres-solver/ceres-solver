@@ -16,6 +16,161 @@
       "message": "PTAL",
       "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30e7e5db_015c2faa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:33:34Z",
+      "side": 1,
+      "message": "Very nice comprehensive work Sergiu. A few comments.",
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b187685_581a909a",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:33:34Z",
+      "side": 1,
+      "message": "I do not think you need to do this. since msvc and gcc and clang all support [[deprecated]] \n\nhttps://en.cppreference.com/w/cpp/language/attributes/deprecated",
+      "range": {
+        "startLine": 80,
+        "startChar": 28,
+        "endLine": 80,
+        "endChar": 29
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcbd7eb1_e3df446e",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:33:34Z",
+      "side": 1,
+      "message": "(isnan(y) || isgreater(x,y)) ? for greater clarity.",
+      "range": {
+        "startLine": 745,
+        "startChar": 19,
+        "endLine": 745,
+        "endChar": 20
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b051bef_d2d8840b",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:33:34Z",
+      "side": 1,
+      "message": "same as above.",
+      "range": {
+        "startLine": 769,
+        "startChar": 18,
+        "endLine": 769,
+        "endChar": 19
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e180d479_75f9a035",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:33:34Z",
+      "side": 1,
+      "message": "this comment reads almost the same as the ones where you say the function is not subject to error handling. very easy to skip over.\n\nI suggest only adding the comment for functions which do not satisfy the error handling, and also having it after a line break and with a prefix \"NOTE:\" before it.\n\nso e.g.\n\nNOTE: This function is NOT subject to any of the error conditions ...",
+      "range": {
+        "startLine": 790,
+        "startChar": 17,
+        "endLine": 790,
+        "endChar": 19
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35b89c9d_0068c57e",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:33:34Z",
+      "side": 1,
+      "message": "this is very hard to read, please use explicit if statements.",
+      "range": {
+        "startLine": 793,
+        "startChar": 37,
+        "endLine": 793,
+        "endChar": 51
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6853f8e2_fce3afdb",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:33:34Z",
+      "side": 1,
+      "message": "shouldn\u0027t you use the same logic as CERES_DEFINE_JET_COMPARISON_OPERATOR to do all three versions of these functions?\n\nalso a and b are argument names are not great f and g are better since .a is a member of the Jet struct.",
+      "range": {
+        "startLine": 938,
+        "startChar": 14,
+        "endLine": 938,
+        "endChar": 21
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
