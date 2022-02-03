@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22f54aee_1b81e9fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-03T21:44:16Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "30e7e5db_015c2faa",
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b187685_581a909a",
@@ -48,6 +66,30 @@
       "writtenOn": "2022-02-03T16:33:34Z",
       "side": 1,
       "message": "I do not think you need to do this. since msvc and gcc and clang all support [[deprecated]] \n\nhttps://en.cppreference.com/w/cpp/language/attributes/deprecated",
+      "range": {
+        "startLine": 80,
+        "startChar": 28,
+        "endLine": 80,
+        "endChar": 29
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba768f3f_fd6b2de9",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-03T21:44:16Z",
+      "side": 1,
+      "message": "You\u0027re completely right. I overlooked that Ceres targets C++14 instead of C++11.",
+      "parentUuid": "7b187685_581a909a",
       "range": {
         "startLine": 80,
         "startChar": 28,
@@ -81,6 +123,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff2e2a4e_21addf7d",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-03T21:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcbd7eb1_e3df446e",
+      "range": {
+        "startLine": 745,
+        "startChar": 19,
+        "endLine": 745,
+        "endChar": 20
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b051bef_d2d8840b",
@@ -94,6 +160,30 @@
       "writtenOn": "2022-02-03T16:33:34Z",
       "side": 1,
       "message": "same as above.",
+      "range": {
+        "startLine": 769,
+        "startChar": 18,
+        "endLine": 769,
+        "endChar": 19
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0475d48_d5db4a05",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-03T21:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b051bef_d2d8840b",
       "range": {
         "startLine": 769,
         "startChar": 18,
@@ -127,6 +217,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dccaf7ac_e1f649a0",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-03T21:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e180d479_75f9a035",
+      "range": {
+        "startLine": 790,
+        "startChar": 17,
+        "endLine": 790,
+        "endChar": 19
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35b89c9d_0068c57e",
@@ -150,6 +264,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e34a219_0a2380ce",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-03T21:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35b89c9d_0068c57e",
+      "range": {
+        "startLine": 793,
+        "startChar": 37,
+        "endLine": 793,
+        "endChar": 51
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6853f8e2_fce3afdb",
@@ -163,6 +301,30 @@
       "writtenOn": "2022-02-03T16:33:34Z",
       "side": 1,
       "message": "shouldn\u0027t you use the same logic as CERES_DEFINE_JET_COMPARISON_OPERATOR to do all three versions of these functions?\n\nalso a and b are argument names are not great f and g are better since .a is a member of the Jet struct.",
+      "range": {
+        "startLine": 938,
+        "startChar": 14,
+        "endLine": 938,
+        "endChar": 21
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d5a1c47_f15447b3",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-03T21:44:16Z",
+      "side": 1,
+      "message": "These comparison functions are defined exclusively for floating-point types which must match by definition (i.e., function signature). With comparison operators this is different since the operators ideally should be usable with non floating-point literals (e.g., 1 instead of 1.0) and therefore need to follow the same promotion rules allowed by the language between various scalar types. The comparison functions are limited to floating-point values, the operators are more permissive to allow an intuitive use.\n\nGood point about a, b as argument names particularly because they do not match the comments. Fixed.",
+      "parentUuid": "6853f8e2_fce3afdb",
       "range": {
         "startLine": 938,
         "startChar": 14,
