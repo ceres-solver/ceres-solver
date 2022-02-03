@@ -332,6 +332,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0c1a509_544570f2",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T23:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76f5ace4_f32021d5",
+      "range": {
+        "startLine": 1023,
+        "startChar": 6,
+        "endLine": 1023,
+        "endChar": 16
+      },
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc69fe27_510bc275",
@@ -345,6 +369,30 @@
       "writtenOn": "2022-02-01T22:51:29Z",
       "side": 1,
       "message": "std:: here and elsewhere.",
+      "range": {
+        "startLine": 1030,
+        "startChar": 12,
+        "endLine": 1030,
+        "endChar": 22
+      },
+      "revId": "1abf7d950a09e1b60cae258a74d54be79beec38c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba434889_47b7edfc",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T23:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc69fe27_510bc275",
       "range": {
         "startLine": 1030,
         "startChar": 12,

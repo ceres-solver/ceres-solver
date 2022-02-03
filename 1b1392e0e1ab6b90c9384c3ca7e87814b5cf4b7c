@@ -333,6 +333,30 @@
       },
       "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e984328a_3c29ac8a",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T23:25:46Z",
+      "side": 1,
+      "message": "if I understand you currently, this means we should not expect isless(Jet, double) ? if though Jet \u003c double is a thing? that seems a bit odd no?",
+      "parentUuid": "5d5a1c47_f15447b3",
+      "range": {
+        "startLine": 938,
+        "startChar": 14,
+        "endLine": 938,
+        "endChar": 21
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
