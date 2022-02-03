@@ -35,6 +35,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f293458c_0516c6b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T16:47:56Z",
+      "side": 1,
+      "message": "Thanks, Sameer. \nI addressed all except the abstraction for DenseCudaSolver (rationale included inline) - let\u0027s discuss.",
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "257ca8ae_030aa708",
@@ -48,6 +65,30 @@
       "writtenOn": "2022-02-03T16:22:35Z",
       "side": 1,
       "message": "CERES_CUDA_VERSION_LT_11_1 maybe?",
+      "range": {
+        "startLine": 274,
+        "startChar": 23,
+        "endLine": 274,
+        "endChar": 37
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6847cb8_ba048f1d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T16:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "257ca8ae_030aa708",
       "range": {
         "startLine": 274,
         "startChar": 23,
@@ -81,6 +122,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68db7fe0_6fe9ed44",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T16:47:56Z",
+      "side": 1,
+      "message": "Yes, that is correct.",
+      "parentUuid": "06d6cfe1_9ade16e3",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 6
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33ad0067_c304b6ca",
@@ -98,6 +163,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5e55485_87d7f674",
+        "filename": "internal/ceres/cuda_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T16:47:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "33ad0067_c304b6ca",
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "372dfd09_d534c985",
@@ -111,6 +194,30 @@
       "writtenOn": "2022-02-03T16:14:25Z",
       "side": 1,
       "message": "why not use default initializers for this?",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a4f31c9_18a92d72",
+        "filename": "internal/ceres/cuda_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T16:47:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "372dfd09_d534c985",
       "range": {
         "startLine": 46,
         "startChar": 17,
@@ -146,6 +253,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5a27e2a4_d28374cc",
+        "filename": "internal/ceres/cuda_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T16:47:56Z",
+      "side": 1,
+      "message": "Will do, but just to understand - why does Ceres not use the CHECK_NOTNULL macro?",
+      "parentUuid": "6cdff866_12a639d9",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3aa0bed3_9b4fc173",
         "filename": "internal/ceres/cuda_helpers.h",
         "patchSetId": 1
@@ -157,6 +288,30 @@
       "writtenOn": "2022-02-03T16:14:25Z",
       "side": 1,
       "message": "data_ \u003d nullptr;\nsize_ \u003d 0;",
+      "range": {
+        "startLine": 92,
+        "startChar": 5,
+        "endLine": 92,
+        "endChar": 10
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a267e72a_66eabbb6",
+        "filename": "internal/ceres/cuda_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T16:47:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3aa0bed3_9b4fc173",
       "range": {
         "startLine": 92,
         "startChar": 5,
@@ -190,6 +345,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22d71ddc_52e122b3",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T16:47:56Z",
+      "side": 1,
+      "message": "My mistake - left over from some dev profiling instrumentation. I\u0027ll remove it.",
+      "parentUuid": "4807ad93_a4cefa0b",
+      "range": {
+        "startLine": 43,
+        "startChar": 16,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65dd6f5b_83deeba1",
@@ -203,6 +382,30 @@
       "writtenOn": "2022-02-03T16:14:25Z",
       "side": 1,
       "message": "why do you need map_util.h here?",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 15
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0694c307_5a884a5d",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T16:47:56Z",
+      "side": 1,
+      "message": "My mistake - left over from some dev profiling instrumentation. I\u0027ll remove it.",
+      "parentUuid": "65dd6f5b_83deeba1",
       "range": {
         "startLine": 45,
         "startChar": 10,
@@ -238,6 +441,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2dd3b034_d1d580b6",
+        "filename": "internal/ceres/dense_cuda_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T16:47:56Z",
+      "side": 1,
+      "message": "Hmm. Good point. This can be done at the level of the DenseCudaSolver abstraction then. I\u0027m going to keep this open to revisit as we work through the rest of the changes, and until the DenseCudaSolver abstraction is resolved.",
+      "parentUuid": "7c704e6a_8b884e77",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5db9a857_17ddd303",
         "filename": "internal/ceres/dense_cuda_solver.h",
         "patchSetId": 1
@@ -249,6 +476,30 @@
       "writtenOn": "2022-02-03T16:14:25Z",
       "side": 1,
       "message": "I think you have one abstraction too many.\nThis is the class that should implement DenseCholesky, rather than having CUDADenseCholesky being one more wrapper around this class.",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 21
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec7156a7_7aec6827",
+        "filename": "internal/ceres/dense_cuda_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T16:47:56Z",
+      "side": 1,
+      "message": "The goal is to us the same class to expose other dense solver functionality in the future as well, such as QR (I already have work on this in a branch). There is a fair bit of common overhead such as handling the buffers, cusholver handles, etc. Hence this class would reduce duplicated code between them.",
+      "parentUuid": "5db9a857_17ddd303",
       "range": {
         "startLine": 54,
         "startChar": 6,
