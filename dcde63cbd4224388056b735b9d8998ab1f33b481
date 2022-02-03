@@ -16,6 +16,201 @@
       "message": "CuSolver Dense Cholesky is up for review - thanks!",
       "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4325c9f_aaf3cbae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:14:25Z",
+      "side": 1,
+      "message": "Joydeep,\nFirst round of comments, I have not taken a deep look at dense_cuda_solver.h/cc because I think you should move that class into cuda_dense_cholesky. This will reduce one level of indirection and code.",
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06d6cfe1_9ade16e3",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:14:25Z",
+      "side": 1,
+      "message": "is the plan that when we add sparse cuda support it will be called CUDA_SPARSE ?",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 6
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33ad0067_c304b6ca",
+        "filename": "internal/ceres/cuda_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:14:25Z",
+      "side": 1,
+      "message": "I do not think cuda_helpers.h is a good name, it is better to just call this cuda_buffer.h",
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "372dfd09_d534c985",
+        "filename": "internal/ceres/cuda_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:14:25Z",
+      "side": 1,
+      "message": "why not use default initializers for this?",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cdff866_12a639d9",
+        "filename": "internal/ceres/cuda_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:14:25Z",
+      "side": 1,
+      "message": "use CHECK(data_ !\u003d nullptr) instead. same below.",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3aa0bed3_9b4fc173",
+        "filename": "internal/ceres/cuda_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:14:25Z",
+      "side": 1,
+      "message": "data_ \u003d nullptr;\nsize_ \u003d 0;",
+      "range": {
+        "startLine": 92,
+        "startChar": 5,
+        "endLine": 92,
+        "endChar": 10
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4807ad93_a4cefa0b",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:14:25Z",
+      "side": 1,
+      "message": "why do you need execution_summary.h?",
+      "range": {
+        "startLine": 43,
+        "startChar": 16,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65dd6f5b_83deeba1",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:14:25Z",
+      "side": 1,
+      "message": "why do you need map_util.h here?",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 15
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5db9a857_17ddd303",
+        "filename": "internal/ceres/dense_cuda_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:14:25Z",
+      "side": 1,
+      "message": "I think you have one abstraction too many.\nThis is the class that should implement DenseCholesky, rather than having CUDADenseCholesky being one more wrapper around this class.",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 21
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
