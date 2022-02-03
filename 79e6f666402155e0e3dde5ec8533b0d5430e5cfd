@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b2b82f9_02a0f30a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T22:22:20Z",
+      "side": 1,
+      "message": "Updated patch ready for review. This creates two separate classes for the old and new interfaces, and adds a typedef appropriately. The simple cuda test explicitly tests both the old and new interfaces now.",
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
