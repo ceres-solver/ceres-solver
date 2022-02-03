@@ -559,6 +559,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb561b1a_15ecfac7",
+        "filename": "internal/ceres/dense_cuda_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T17:11:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "75196be1_111ba6d2",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5db9a857_17ddd303",
