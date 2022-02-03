@@ -154,6 +154,7 @@ if (APPLE)
   option(ACCELERATESPARSE
     "Enable use of sparse solvers in Apple's Accelerate framework." ON)
 endif()
+option(CUDA "Enable use of CUDA linear algebra solvers." ON)
 option(LAPACK "Enable use of LAPACK directly within Ceres." ON)
 # Template specializations for the Schur complement based solvers. If
 # compile time, binary size or compiler performance is an issue, you
@@ -259,6 +260,29 @@ if (Eigen3_FOUND)
     add_definitions(-DEIGEN_MPL2_ONLY)
   endif (EIGENSPARSE)
 endif (Eigen3_FOUND)
+
+if (CUDA)
+  find_package(CUDA QUIET)
+  if (CUDA_FOUND)
+    message("-- Found CUDA version ${CUDA_VERSION}: "
+        "${CUDA_LIBRARIES};"
+        "${CUDA_cusolver_LIBRARY};"
+        "${CUDA_cusparse_LIBRARY}")
+    if (CUDA_VERSION VERSION_LESS 11.1)
+      message("-- CUDA version ${CUDA_VERSION} is older than 11.1, "
+          "switching to legacy mode.")
+      add_definitions(-DCUDA_PRE_11_1)
+    endif()
+    include_directories(${CUDA_INCLUDE_DIRS})
+  else (CUDA_FOUND)
+    message("-- Did not find CUDA library, disabling CUDA support.")
+    update_cache_variable(CUDA OFF)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CUDA)
+  endif (CUDA_FOUND)
+else (CUDA)
+  message("-- Building without CUDA.")
+  list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CUDA)
+endif (CUDA)
 
 if (LAPACK)
   find_package(LAPACK QUIET)

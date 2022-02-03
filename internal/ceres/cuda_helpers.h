@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,76 +26,73 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
 
-#include "ceres/solver_utils.h"
+#ifndef CERES_INTERNAL_CUDA_HELPERS_H_
+#define CERES_INTERNAL_CUDA_HELPERS_H_
 
-#include <string>
-
-#include "Eigen/Core"
 #include "ceres/internal/config.h"
-#include "ceres/internal/port.h"
-#include "ceres/version.h"
+
 #ifndef CERES_NO_CUDA
+
+#include <vector>
+
 #include "cuda_runtime.h"
+#include "glog/logging.h"
+
+template <typename T>
+class CudaBuffer {
+ public:
+  CudaBuffer() : data_(nullptr), size_(0) {}
+  CudaBuffer(const CudaBuffer&) = delete;
+  CudaBuffer& operator=(const CudaBuffer&) = delete;
+
+  ~CudaBuffer() {
+    if (data_ != nullptr) {
+      CHECK_EQ(cudaFree(data_), cudaSuccess);
+    }
+  }
+
+  void Reserve(const size_t size) {
+    if (size > size_) {
+      if (data_ != nullptr) {
+        CHECK_EQ(cudaFree(data_), cudaSuccess);
+      }
+      CHECK_EQ(cudaMalloc(&data_, size * sizeof(T)), cudaSuccess);
+      CHECK_NOTNULL(data_);
+      size_ = size;
+    }
+  }
+
+  void CopyToGpu(const T* data, const size_t size) {
+    Reserve(size);
+    CHECK_EQ(cudaMemcpy(data_, data, size * sizeof(T), cudaMemcpyHostToDevice),
+             cudaSuccess);
+  }
+
+  void CopyToHost(T* data, const size_t size) {
+    CHECK_NOTNULL(data_);
+    CHECK_EQ(cudaMemcpy(data, data_, size * sizeof(T), cudaMemcpyDeviceToHost),
+             cudaSuccess);
+  }
+
+  void CopyToGpu(const std::vector<T>& data) {
+    Reserve(data.size());
+    CHECK_EQ(cudaMemcpy(data_,
+                        data.data(),
+                        data.size() * sizeof(T),
+                        cudaMemcpyHostToDevice),
+             cudaSuccess);
+  }
+
+  T* data() { return data_; }
+  size_t size() const { return size_; }
+
+ private:
+  T* data_;
+  size_t size_;
+};
+
 #endif  // CERES_NO_CUDA
 
-namespace ceres {
-namespace internal {
-
-// clang-format off
-#define CERES_EIGEN_VERSION                 \
-  CERES_TO_STRING(EIGEN_WORLD_VERSION) "."  \
-  CERES_TO_STRING(EIGEN_MAJOR_VERSION) "."  \
-  CERES_TO_STRING(EIGEN_MINOR_VERSION)
-// clang-format on
-
-std::string VersionString() {
-  std::string value = std::string(CERES_VERSION_STRING);
-  value += "-eigen-(" + std::string(CERES_EIGEN_VERSION) + ")";
-
-#ifdef CERES_NO_LAPACK
-  value += "-no_lapack";
-#else
-  value += "-lapack";
-#endif
-
-#ifndef CERES_NO_SUITESPARSE
-  value += "-suitesparse-(" + std::string(CERES_SUITESPARSE_VERSION) + ")";
-#endif
-
-#ifndef CERES_NO_CXSPARSE
-  value += "-cxsparse-(" + std::string(CERES_CXSPARSE_VERSION) + ")";
-#endif
-
-#ifndef CERES_NO_ACCELERATE_SPARSE
-  value += "-acceleratesparse";
-#endif
-
-#ifdef CERES_USE_EIGEN_SPARSE
-  value += "-eigensparse";
-#endif
-
-#ifdef CERES_RESTRUCT_SCHUR_SPECIALIZATIONS
-  value += "-no_schur_specializations";
-#endif
-
-#ifdef CERES_USE_OPENMP
-  value += "-openmp";
-#else
-  value += "-no_openmp";
-#endif
-
-#ifdef CERES_NO_CUSTOM_BLAS
-  value += "-no_custom_blas";
-#endif
-
-#ifndef CERES_NO_CUDA
-  value += "-cuda-(" + std::to_string(CUDART_VERSION) + ")";
-#endif
-
-  return value;
-}
-
-}  // namespace internal
-}  // namespace ceres
+#endif  // CERES_INTERNAL_CUDA_HELPERS_H_

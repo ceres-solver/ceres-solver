@@ -70,6 +70,14 @@ std::unique_ptr<DenseCholesky> DenseCholesky::Create(
       LOG(FATAL) << "Ceres was compiled without support for LAPACK.";
 #endif
 
+    case CUDA:
+#ifndef CERES_NO_CUDA
+    dense_cholesky = std::make_unique<CUDADenseCholesky>();
+    break;
+#else
+    LOG(FATAL) << "Ceres was compiled without support for CUDA.";
+#endif
+
     default:
       LOG(FATAL) << "Unknown dense linear algebra library type : "
                  << DenseLinearAlgebraLibraryTypeToString(
@@ -174,6 +182,20 @@ LinearSolverTerminationType LAPACKDenseCholesky::Solve(const double* rhs,
 }
 
 #endif  // CERES_NO_LAPACK
+
+#ifndef CERES_NO_CUDA
+LinearSolverTerminationType CUDADenseCholesky::Factorize(int num_cols,
+                                                    double* lhs,
+                                                    std::string* message) {
+  return dense_cuda_solver_.CholeskyFactorize(num_cols, lhs, message);
+}
+
+LinearSolverTerminationType CUDADenseCholesky::Solve(const double* rhs,
+                                  double* solution,
+                                  std::string* message) {
+  return dense_cuda_solver_.CholeskySolve(rhs, solution, message);
+}
+#endif  // CERES_NO_CUDA
 
 }  // namespace internal
 }  // namespace ceres

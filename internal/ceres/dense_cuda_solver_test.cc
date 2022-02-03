@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,76 +26,48 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
 
-#include "ceres/solver_utils.h"
-
+#include <iostream>
 #include <string>
 
-#include "Eigen/Core"
-#include "ceres/internal/config.h"
-#include "ceres/internal/port.h"
-#include "ceres/version.h"
-#ifndef CERES_NO_CUDA
-#include "cuda_runtime.h"
-#endif  // CERES_NO_CUDA
+#include "ceres/dense_cuda_solver.h"
+#include "ceres/internal/eigen.h"
+
+#include "glog/logging.h"
+#include "gtest/gtest.h"
+
+using std::cout;
+using std::endl;
+using std::string;
 
 namespace ceres {
 namespace internal {
 
-// clang-format off
-#define CERES_EIGEN_VERSION                 \
-  CERES_TO_STRING(EIGEN_WORLD_VERSION) "."  \
-  CERES_TO_STRING(EIGEN_MAJOR_VERSION) "."  \
-  CERES_TO_STRING(EIGEN_MINOR_VERSION)
-// clang-format on
-
-std::string VersionString() {
-  std::string value = std::string(CERES_VERSION_STRING);
-  value += "-eigen-(" + std::string(CERES_EIGEN_VERSION) + ")";
-
-#ifdef CERES_NO_LAPACK
-  value += "-no_lapack";
-#else
-  value += "-lapack";
-#endif
-
-#ifndef CERES_NO_SUITESPARSE
-  value += "-suitesparse-(" + std::string(CERES_SUITESPARSE_VERSION) + ")";
-#endif
-
-#ifndef CERES_NO_CXSPARSE
-  value += "-cxsparse-(" + std::string(CERES_CXSPARSE_VERSION) + ")";
-#endif
-
-#ifndef CERES_NO_ACCELERATE_SPARSE
-  value += "-acceleratesparse";
-#endif
-
-#ifdef CERES_USE_EIGEN_SPARSE
-  value += "-eigensparse";
-#endif
-
-#ifdef CERES_RESTRUCT_SCHUR_SPECIALIZATIONS
-  value += "-no_schur_specializations";
-#endif
-
-#ifdef CERES_USE_OPENMP
-  value += "-openmp";
-#else
-  value += "-no_openmp";
-#endif
-
-#ifdef CERES_NO_CUSTOM_BLAS
-  value += "-no_custom_blas";
-#endif
-
 #ifndef CERES_NO_CUDA
-  value += "-cuda-(" + std::to_string(CUDART_VERSION) + ")";
-#endif
-
-  return value;
+// Tests the CUDA Cholesky solver with a simple 4x4 matrix.
+TEST(DenseCholeskyCudaSolver, Cholesky4x4Matrix) {
+  Eigen::Matrix4d A;
+  A <<  4,  12, -16, 0,
+       12,  37, -43, 0,
+      -16, -43,  98, 0,
+        0,   0,   0, 1;
+  const Eigen::Vector4d b = Eigen::Vector4d::Ones();
+  string error_string;
+  DenseCudaSolver dense_cuda_solver;
+  ASSERT_EQ(dense_cuda_solver.CholeskyFactorize(A.cols(),
+                                                A.data(),
+                                                &error_string),
+            LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
+  Eigen::Vector4d x = Eigen::Vector4d::Zero();
+  ASSERT_EQ(dense_cuda_solver.CholeskySolve(b.data(), x.data(), &error_string),
+            LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
+  EXPECT_DOUBLE_EQ(x(0), 113.75 / 3.0);
+  EXPECT_DOUBLE_EQ(x(1), -31.0 / 3.0);
+  EXPECT_DOUBLE_EQ(x(2), 5.0 / 3.0);
+  EXPECT_DOUBLE_EQ(x(3), 1.0000);
 }
+#endif  // CERES_NO_CUDA
 
 }  // namespace internal
 }  // namespace ceres

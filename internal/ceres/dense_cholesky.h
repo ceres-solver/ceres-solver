@@ -39,7 +39,10 @@
 #include <memory>
 
 #include "Eigen/Dense"
+#include "ceres/dense_cuda_solver.h"
+#include "ceres/execution_summary.h"
 #include "ceres/linear_solver.h"
+#include "ceres/map_util.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -128,6 +131,23 @@ class CERES_EXPORT_INTERNAL LAPACKDenseCholesky : public DenseCholesky {
   LinearSolverTerminationType termination_type_ = LINEAR_SOLVER_FATAL_ERROR;
 };
 #endif  // CERES_NO_LAPACK
+
+#ifndef CERES_NO_CUDA
+class CERES_EXPORT_INTERNAL CUDADenseCholesky : public DenseCholesky {
+ public:
+  ~CUDADenseCholesky() override = default;
+
+  LinearSolverTerminationType Factorize(int num_cols,
+                                        double* lhs,
+                                        std::string* message) override;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override;
+
+ private:
+  DenseCudaSolver dense_cuda_solver_;
+};
+#endif  // CERES_NO_CUDA
 
 }  // namespace internal
 }  // namespace ceres
