@@ -186,6 +186,7 @@ enum SparseLinearAlgebraLibraryType {
 enum DenseLinearAlgebraLibraryType {
   EIGEN,
   LAPACK,
+  CUDA,
 };
 
 // Logging options

@@ -95,7 +95,12 @@ BENCHMARK(BM_DenseSolver<ceres::EIGEN, ceres::DENSE_NORMAL_CHOLESKY>)
 BENCHMARK(BM_DenseSolver<ceres::LAPACK, ceres::DENSE_QR>)->Apply(MatrixSizes);
 BENCHMARK(BM_DenseSolver<ceres::LAPACK, ceres::DENSE_NORMAL_CHOLESKY>)
     ->Apply(MatrixSizes);
-#endif
+#endif  // CERES_NO_LAPACK
+
+#ifndef CERES_NO_CUDA
+BENCHMARK(BM_DenseSolver<ceres::CUDA, ceres::DENSE_NORMAL_CHOLESKY>)
+    ->Apply(MatrixSizes);
+#endif  // CERES_NO_CUDA
 
 }  // namespace internal
 }  // namespace ceres
