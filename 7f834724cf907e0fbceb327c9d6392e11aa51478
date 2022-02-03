@@ -16,6 +16,24 @@
       "message": "is it possible to test both versions of the API with the same cuda sdk?",
       "revId": "7f834724cf907e0fbceb327c9d6392e11aa51478",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b149f6ee_f53e2312",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T17:25:10Z",
+      "side": 1,
+      "message": "Yes, at the moment Cuda 11.6 (latest version) still supports the legacy and new APIs, so we can test both on a desktop by manually defining the flag.",
+      "parentUuid": "041a981d_17ffc155",
+      "revId": "7f834724cf907e0fbceb327c9d6392e11aa51478",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
