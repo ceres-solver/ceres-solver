@@ -277,6 +277,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6b1078e5_59582680",
+        "filename": "internal/ceres/cuda_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:53:23Z",
+      "side": 1,
+      "message": "because the google internal version of glog does not have this macro anymore.",
+      "parentUuid": "5a27e2a4_d28374cc",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3aa0bed3_9b4fc173",
         "filename": "internal/ceres/cuda_helpers.h",
         "patchSetId": 1
@@ -465,6 +489,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ad5227a_cf3cfa45",
+        "filename": "internal/ceres/dense_cuda_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:53:23Z",
+      "side": 1,
+      "message": "I will make an even more radical suggestion.\nhave two different CudaDenseCholesky classes, one for pre11 api and one for post11.1 api. \nthere is also the question of what minimum cuda version we should support.. and is 11.1 too new to just support it?",
+      "parentUuid": "2dd3b034_d1d580b6",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5db9a857_17ddd303",
         "filename": "internal/ceres/dense_cuda_solver.h",
         "patchSetId": 1
@@ -500,6 +548,30 @@
       "side": 1,
       "message": "The goal is to us the same class to expose other dense solver functionality in the future as well, such as QR (I already have work on this in a branch). There is a fair bit of common overhead such as handling the buffers, cusholver handles, etc. Hence this class would reduce duplicated code between them.",
       "parentUuid": "5db9a857_17ddd303",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 21
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f9cd852_7a42c36e",
+        "filename": "internal/ceres/dense_cuda_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T16:53:23Z",
+      "side": 1,
+      "message": "I think you are better off making those common functions along the lines of suitesparse.h/suitesparse.cc cxsparse.h/cxsparse.cc which are stateless functions doing utility things. \n\nBut other than that the logic of densecudasolver as it exists is simple enough that its not worth sharing too much.\n\nalso it leads to weirdo semantics if you have qr and cholesky in the same class, you will have to carefully document and check all sorts of error handling.",
+      "parentUuid": "ec7156a7_7aec6827",
       "range": {
         "startLine": 54,
         "startChar": 6,
