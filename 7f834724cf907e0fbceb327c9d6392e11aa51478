@@ -88,6 +88,24 @@
       "parentUuid": "668746f6_d847f889",
       "revId": "7f834724cf907e0fbceb327c9d6392e11aa51478",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdc7f4d2_bfe7fc12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T19:44:23Z",
+      "side": 1,
+      "message": "I\u0027m on it. \nQuestion regarding the desired behavior of the testing interface: On a legacy system, which of the following should happen?\n- The tests for the new interface should not run (#ifdef)\n- The tests for the new interface fail with a LOG(FATAL)\n- The tests for the new interface fail with an EXPECT(false)",
+      "parentUuid": "9bba888e_e92314c1",
+      "revId": "7f834724cf907e0fbceb327c9d6392e11aa51478",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
