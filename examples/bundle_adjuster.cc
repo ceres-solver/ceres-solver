@@ -93,7 +93,7 @@ DEFINE_string(visibility_clustering, "canonical_views",
 DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
               "Options are: suite_sparse and cx_sparse.");
 DEFINE_string(dense_linear_algebra_library, "eigen",
-              "Options are: eigen and lapack.");
+              "Options are: eigen, lapack, and cuda");
 DEFINE_string(ordering, "automatic", "Options are: automatic, user.");
 
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "

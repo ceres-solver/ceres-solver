@@ -39,6 +39,7 @@
 #include <memory>
 
 #include "Eigen/Dense"
+#include "ceres/dense_cuda_solver.h"
 #include "ceres/linear_solver.h"
 #include "glog/logging.h"
 
@@ -128,6 +129,85 @@ class CERES_EXPORT_INTERNAL LAPACKDenseCholesky : public DenseCholesky {
   LinearSolverTerminationType termination_type_ = LINEAR_SOLVER_FATAL_ERROR;
 };
 #endif  // CERES_NO_LAPACK
+
+#ifndef CERES_NO_CUDA
+class CERES_EXPORT_INTERNAL CUDADenseCholeskyOld : public DenseCholesky {
+ public:
+  CUDADenseCholeskyOld();
+  ~CUDADenseCholeskyOld();
+  CUDADenseCholeskyOld(const CUDADenseCholeskyOld&) = delete;
+  CUDADenseCholeskyOld& operator=(const CUDADenseCholeskyOld&) = delete;
+  LinearSolverTerminationType Factorize(int num_cols,
+                                        double* lhs,
+                                        std::string* message) override;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override;
+
+ private:
+  // Handle to the cuSOLVER context.
+  cusolverDnHandle_t cusolver_handle_;
+  // CUDA device stream.
+  cudaStream_t stream_;
+  // Number of columns in the A matrix, to be cached between calls to *Factorize
+  // and *Solve.
+  size_t num_cols_;
+  // GPU memory allocated for the A matrix (lhs matrix).
+  CudaBuffer<double> gpu_a_;
+  // GPU memory allocated for the B matrix (rhs vector).
+  CudaBuffer<double> gpu_b_;
+  // GPU memory allocated for the X matrix (solution vector).
+  CudaBuffer<double> gpu_tau_;
+  // Scratch space for cuSOLVER on the GPU.
+  CudaBuffer<uint8_t> gpu_scratch_;
+  // Required for error handling with cuSOLVER.
+  int* gpu_error_;
+};
+
+class CERES_EXPORT_INTERNAL CUDADenseCholeskyNew : public DenseCholesky {
+ public:
+  CUDADenseCholeskyNew();
+  ~CUDADenseCholeskyNew();
+  CUDADenseCholeskyNew(const CUDADenseCholeskyNew&) = delete;
+  CUDADenseCholeskyNew& operator=(const CUDADenseCholeskyNew&) = delete;
+  LinearSolverTerminationType Factorize(int num_cols,
+                                        double* lhs,
+                                        std::string* message) override;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override;
+
+ private:
+  // Handle to the cuSOLVER context.
+  cusolverDnHandle_t cusolver_handle_;
+  // CUDA device stream.
+  cudaStream_t stream_;
+  // Number of columns in the A matrix, to be cached between calls to Factorize
+  // and Solve.
+  size_t num_cols_;
+  // GPU memory allocated for the A matrix (lhs matrix).
+  CudaBuffer<double> gpu_a_;
+  // GPU memory allocated for the B matrix (rhs vector).
+  CudaBuffer<double> gpu_b_;
+  // GPU memory allocated for the X matrix (solution vector).
+  CudaBuffer<double> gpu_tau_;
+  // Scratch space for cuSOLVER on the GPU.
+  CudaBuffer<uint8_t> gpu_scratch_;
+  // Scratch space for cuSOLVER on the host.
+  double* host_scratch_;
+  // Size of the host scratch space.
+  size_t host_scratch_size_;
+  // Required for error handling with cuSOLVER.
+  int* gpu_error_;
+};
+
+#ifdef CERES_CUDA_VERSION_LT_11_1
+typedef CUDADenseCholeskyOld CUDADenseCholesky;
+#else
+typedef CUDADenseCholeskyNew CUDADenseCholesky;
+#endif
+
+#endif  // CERES_NO_CUDA
 
 }  // namespace internal
 }  // namespace ceres

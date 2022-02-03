@@ -70,6 +70,14 @@ std::unique_ptr<DenseCholesky> DenseCholesky::Create(
       LOG(FATAL) << "Ceres was compiled without support for LAPACK.";
 #endif
 
+    case CUDA:
+#ifndef CERES_NO_CUDA
+    dense_cholesky = std::make_unique<CUDADenseCholesky>();
+    break;
+#else
+    LOG(FATAL) << "Ceres was compiled without support for CUDA.";
+#endif
+
     default:
       LOG(FATAL) << "Unknown dense linear algebra library type : "
                  << DenseLinearAlgebraLibraryTypeToString(
@@ -174,6 +182,278 @@ LinearSolverTerminationType LAPACKDenseCholesky::Solve(const double* rhs,
 }
 
 #endif  // CERES_NO_LAPACK
+
+#ifndef CERES_NO_CUDA
+
+CUDADenseCholeskyOld::CUDADenseCholeskyOld() :
+    cusolver_handle_(nullptr),
+    stream_(nullptr),
+    num_cols_(0),
+    gpu_error_(nullptr) {
+  CHECK_EQ(cusolverDnCreate(&cusolver_handle_), CUSOLVER_STATUS_SUCCESS);
+  CHECK_EQ(cudaStreamCreate(&stream_), cudaSuccess);
+  CHECK_EQ(cusolverDnSetStream(cusolver_handle_, stream_),
+      CUSOLVER_STATUS_SUCCESS);
+  CHECK_EQ(cudaMalloc(&gpu_error_, sizeof(int)), cudaSuccess);
+}
+
+CUDADenseCholeskyOld::~CUDADenseCholeskyOld() {
+  CHECK_EQ(cudaFree(gpu_error_), cudaSuccess);
+  CHECK_EQ(cusolverDnDestroy(cusolver_handle_), CUSOLVER_STATUS_SUCCESS);
+  CHECK_EQ(cudaStreamDestroy(stream_), cudaSuccess);
+}
+
+LinearSolverTerminationType CUDADenseCholeskyOld::Factorize(
+    int num_cols,
+    double* lhs,
+    std::string* message) {
+  // Allocate GPU memory if necessary.
+  gpu_a_.Reserve(num_cols * num_cols);
+  num_cols_ = num_cols;
+  // Copy A to GPU.
+  gpu_a_.CopyToGpu(lhs, num_cols * num_cols);
+  // Allocate scratch space on GPU.
+  int device_scratch_size = 0;
+  CHECK_EQ(cusolverDnDpotrf_bufferSize(cusolver_handle_,
+                                      CUBLAS_FILL_MODE_LOWER,
+                                      num_cols,
+                                      gpu_a_.data(),
+                                      num_cols,
+                                      &device_scratch_size),
+          CUSOLVER_STATUS_SUCCESS);
+  // ALlocate GPU scratch memory.
+  gpu_scratch_.Reserve(device_scratch_size);
+  // Run the actual factorization (potrf)
+  CHECK_EQ(cusolverDnDpotrf(cusolver_handle_,
+                            CUBLAS_FILL_MODE_LOWER,
+                            num_cols,
+                            gpu_a_.data(),
+                            num_cols,
+                            reinterpret_cast<double*>(gpu_scratch_.data()),
+                            gpu_scratch_.size(),
+                            gpu_error_),
+          CUSOLVER_STATUS_SUCCESS);
+  CHECK_EQ(cudaDeviceSynchronize(), cudaSuccess);
+  CHECK_EQ(cudaStreamSynchronize(stream_), cudaSuccess);
+  int error = 0;
+  // Check for errors.
+  CHECK_EQ(cudaMemcpy(&error,
+                      gpu_error_,
+                      sizeof(int),
+                      cudaMemcpyDeviceToHost),
+          cudaSuccess);
+  if (error != 0) {
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres."
+               << "Please report it."
+               << "cuSolverDN::cusolverDnDpotrf fatal error."
+               << "Argument: " << -error << " is invalid.";
+  }
+  *message = "Success";
+  return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+}
+
+LinearSolverTerminationType CUDADenseCholeskyOld::Solve(
+    const double* rhs,
+    double* solution,
+    std::string* message) {
+  // Copy RHS to GPU.
+  gpu_b_.CopyToGpu(rhs, num_cols_);
+  // Solve the system.
+  CHECK_EQ(cusolverDnDpotrs(cusolver_handle_,
+                            CUBLAS_FILL_MODE_LOWER,
+                            num_cols_,
+                            1,
+                            gpu_a_.data(),
+                            num_cols_,
+                            gpu_b_.data(),
+                            num_cols_,
+                            gpu_error_),
+          CUSOLVER_STATUS_SUCCESS);
+  CHECK_EQ(cudaDeviceSynchronize(), cudaSuccess);
+  CHECK_EQ(cudaStreamSynchronize(stream_), cudaSuccess);
+  // Check for errors.
+  int error = 0;
+  // Copy error variable from GPU to host.
+  CHECK_EQ(cudaMemcpy(&error,
+                      gpu_error_,
+                      sizeof(int),
+                      cudaMemcpyDeviceToHost),
+          cudaSuccess);
+  // Copy X from GPU to host.
+  gpu_b_.CopyToHost(solution, num_cols_);
+  if (error != 0) {
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres."
+               << "Please report it."
+               << "cuSolverDN::cusolverDnDpotrs fatal error."
+               << "Argument: " << -error << " is invalid.";
+  }
+  *message = "Success";
+  return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+}
+
+#ifdef CERES_CUDA_VERSION_LT_11_1
+// CUDA < 11.1 did not have the 64-bit APIs, so the implementation of the new
+// interface will just generate a fatal error.
+
+CUDADenseCholeskyNew::CUDADenseCholeskyNew() {
+  LOG(FATAL) << "Cannot use CUDADenseCholeskyNew with CUDA < 11.1.";
+}
+
+CUDADenseCholeskyNew::~CUDADenseCholeskyNew() {}
+
+LinearSolverTerminationType CUDADenseCholeskyNew::Factorize(
+    int,
+    double*,
+    std::string*) {
+  // This will never run, since the constructor will always generate a fatal
+  // error. Just including a return statement to avoid strict compiler errors.
+  return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+}
+
+LinearSolverTerminationType CUDADenseCholeskyNew::Solve(
+    const double*,
+    double*,
+    std::string*) {
+  // This will never run, since the constructor will always generate a fatal
+  // error. Just including a return statement to avoid strict compiler errors.
+  return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+}
+
+#else  // CERES_CUDA_VERSION_LT_11_1
+
+CUDADenseCholeskyNew::CUDADenseCholeskyNew() :
+    cusolver_handle_(nullptr),
+    stream_(nullptr),
+    num_cols_(0),
+    host_scratch_(nullptr),
+    host_scratch_size_(0),
+    gpu_error_(nullptr) {
+  CHECK_EQ(cusolverDnCreate(&cusolver_handle_), CUSOLVER_STATUS_SUCCESS);
+  CHECK_EQ(cudaStreamCreate(&stream_), cudaSuccess);
+  CHECK_EQ(cusolverDnSetStream(cusolver_handle_, stream_),
+      CUSOLVER_STATUS_SUCCESS);
+  CHECK_EQ(cudaMalloc(&gpu_error_, sizeof(int)), cudaSuccess);
+}
+
+CUDADenseCholeskyNew::~CUDADenseCholeskyNew() {
+  CHECK_EQ(cudaFree(gpu_error_), cudaSuccess);
+  if (host_scratch_) {
+    free(host_scratch_);
+  }
+  CHECK_EQ(cusolverDnDestroy(cusolver_handle_), CUSOLVER_STATUS_SUCCESS);
+  CHECK_EQ(cudaStreamDestroy(stream_), cudaSuccess);
+}
+
+LinearSolverTerminationType CUDADenseCholeskyNew::Factorize(
+    int num_cols,
+    double* lhs,
+    std::string* message) {
+  // Allocate GPU memory if necessary.
+  gpu_a_.Reserve(num_cols * num_cols);
+  num_cols_ = num_cols;
+  // Copy A to GPU.
+  gpu_a_.CopyToGpu(lhs, num_cols * num_cols);
+  // Allocate scratch space on GPU.
+  size_t host_scratch_size = 0;
+  size_t device_scratch_size = 0;
+  CHECK_EQ(cusolverDnXpotrf_bufferSize(cusolver_handle_,
+                                      nullptr,
+                                      CUBLAS_FILL_MODE_LOWER,
+                                      num_cols,
+                                      CUDA_R_64F,
+                                      gpu_a_.data(),
+                                      num_cols,
+                                      CUDA_R_64F,
+                                      &device_scratch_size,
+                                      &host_scratch_size),
+          CUSOLVER_STATUS_SUCCESS);
+  // Allocate host scratch memory.
+  if (host_scratch_size > host_scratch_size_) {
+    CHECK(realloc(reinterpret_cast<void**>(&host_scratch_),
+                  host_scratch_size) != nullptr);
+    host_scratch_size_ = host_scratch_size;
+  }
+  // ALlocate GPU scratch memory.
+  gpu_scratch_.Reserve(device_scratch_size);
+  // Run the actual factorization (potrf)
+  CHECK_EQ(cusolverDnXpotrf(cusolver_handle_,
+                            nullptr,
+                            CUBLAS_FILL_MODE_LOWER,
+                            num_cols,
+                            CUDA_R_64F,
+                            gpu_a_.data(),
+                            num_cols,
+                            CUDA_R_64F,
+                            gpu_scratch_.data(),
+                            gpu_scratch_.size(),
+                            host_scratch_,
+                            host_scratch_size_,
+                            gpu_error_),
+          CUSOLVER_STATUS_SUCCESS);
+  CHECK_EQ(cudaDeviceSynchronize(), cudaSuccess);
+  CHECK_EQ(cudaStreamSynchronize(stream_), cudaSuccess);
+  int error = 0;
+  // Check for errors.
+  CHECK_EQ(cudaMemcpy(&error,
+                      gpu_error_,
+                      sizeof(int),
+                      cudaMemcpyDeviceToHost),
+          cudaSuccess);
+  if (error != 0) {
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres."
+               << "Please report it."
+               << "cuSolverDN::cusolverDnXpotrf fatal error."
+               << "Argument: " << -error << " is invalid.";
+  }
+  *message = "Success";
+  return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+}
+
+LinearSolverTerminationType CUDADenseCholeskyNew::Solve(
+    const double* rhs,
+    double* solution,
+    std::string* message) {
+  // Copy RHS to GPU.
+  gpu_b_.CopyToGpu(rhs, num_cols_);
+  // Solve the system.
+  CHECK_EQ(cusolverDnXpotrs(cusolver_handle_,
+                            nullptr,
+                            CUBLAS_FILL_MODE_LOWER,
+                            num_cols_,
+                            1,
+                            CUDA_R_64F,
+                            gpu_a_.data(),
+                            num_cols_,
+                            CUDA_R_64F,
+                            gpu_b_.data(),
+                            num_cols_,
+                            gpu_error_),
+          CUSOLVER_STATUS_SUCCESS);
+  CHECK_EQ(cudaDeviceSynchronize(), cudaSuccess);
+  CHECK_EQ(cudaStreamSynchronize(stream_), cudaSuccess);
+  // Check for errors.
+  int error = 0;
+  // Copy error variable from GPU to host.
+  CHECK_EQ(cudaMemcpy(&error,
+                      gpu_error_,
+                      sizeof(int),
+                      cudaMemcpyDeviceToHost),
+          cudaSuccess);
+  // Copy X from GPU to host.
+  gpu_b_.CopyToHost(solution, num_cols_);
+  if (error != 0) {
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres."
+               << "Please report it."
+               << "cuSolverDN::cusolverDnXpotrs fatal error."
+               << "Argument: " << -error << " is invalid.";
+  }
+  *message = "Success";
+  return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+}
+
+#endif // CERES_CUDA_VERSION_LT_11_1
+
+#endif  // CERES_NO_CUDA
 
 }  // namespace internal
 }  // namespace ceres

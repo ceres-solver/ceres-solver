@@ -218,6 +218,14 @@ if (ACCELERATESPARSE AND AccelerateSparse_FOUND)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${AccelerateSparse_LIBRARIES})
 endif()
 
+if (CUDA_FOUND)
+  list(APPEND
+       CERES_LIBRARY_PUBLIC_DEPENDENCIES
+       ${CUDA_LIBRARIES}
+       ${CUDA_cusolver_LIBRARY}
+       ${CUDA_cusparse_LIBRARY})
+endif (CUDA_FOUND)
+
 if (LAPACK_FOUND)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${LAPACK_LIBRARIES})
 endif ()
@@ -455,6 +463,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(cubic_interpolation)
   ceres_test(dense_linear_solver)
   ceres_test(dense_cholesky)
+  ceres_test(dense_cuda_solver)
   ceres_test(dense_sparse_matrix)
   ceres_test(detect_structure)
   ceres_test(dogleg_strategy)
