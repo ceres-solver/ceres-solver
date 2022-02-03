@@ -299,6 +299,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9ed842c_7ab03177",
+        "filename": "internal/ceres/cuda_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T17:10:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6b1078e5_59582680",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3aa0bed3_9b4fc173",
@@ -513,6 +537,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "75196be1_111ba6d2",
+        "filename": "internal/ceres/dense_cuda_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T17:10:01Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to define two classes, only the implementations will differ. \nI propose an alternative: a single #ifdef block that wraps all subroutine implementations that will change. Within the #ifdef block each subroutine is self-contained.\n\nAn important use case for CUDA dense solvers with Ceres is on Nvidia Jetson devices, and their latest toolkit and library version is 10.2. Hence I believe it is quite important to support this.",
+      "parentUuid": "2ad5227a_cf3cfa45",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5db9a857_17ddd303",
         "filename": "internal/ceres/dense_cuda_solver.h",
         "patchSetId": 1
@@ -572,6 +620,30 @@
       "side": 1,
       "message": "I think you are better off making those common functions along the lines of suitesparse.h/suitesparse.cc cxsparse.h/cxsparse.cc which are stateless functions doing utility things. \n\nBut other than that the logic of densecudasolver as it exists is simple enough that its not worth sharing too much.\n\nalso it leads to weirdo semantics if you have qr and cholesky in the same class, you will have to carefully document and check all sorts of error handling.",
       "parentUuid": "ec7156a7_7aec6827",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 21
+      },
+      "revId": "dcde63cbd4224388056b735b9d8998ab1f33b481",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "919459c9_31d072dd",
+        "filename": "internal/ceres/dense_cuda_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T17:10:01Z",
+      "side": 1,
+      "message": "Okay, I\u0027ll move the cuda book-keeping to CudaDenseCholesky and eliminate DenseCudaSolver.",
+      "parentUuid": "9f9cd852_7a42c36e",
       "range": {
         "startLine": 54,
         "startChar": 6,
