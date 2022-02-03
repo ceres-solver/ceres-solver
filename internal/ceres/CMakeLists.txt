@@ -218,6 +218,14 @@ if (ACCELERATESPARSE AND AccelerateSparse_FOUND)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${AccelerateSparse_LIBRARIES})
 endif()
 
+if (CUDA_FOUND)
+  list(APPEND
+       CERES_LIBRARY_PRIVATE_DEPENDENCIES
+       ${CUDA_LIBRARIES}
+       ${CUDA_cusolver_LIBRARY}
+       ${CUDA_cusparse_LIBRARY})
+endif (CUDA_FOUND)
+
 if (LAPACK_FOUND)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${LAPACK_LIBRARIES})
 endif ()
@@ -362,6 +370,10 @@ if (ACCELERATESPARSE)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
     ${AccelerateSparse_INCLUDE_DIRS})
 endif()
+if (CUDA)
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
+    ${CUDA_INCLUDE_DIRS})
+endif()
 # Add include locations for optional dependencies to the Ceres target without
 # duplication.
 list(REMOVE_DUPLICATES CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS)
@@ -453,6 +465,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(cost_function_to_functor)
   ceres_test(covariance)
   ceres_test(cubic_interpolation)
+  ceres_test(cuda_dense_cholesky)
   ceres_test(dense_linear_solver)
   ceres_test(dense_cholesky)
   ceres_test(dense_sparse_matrix)
