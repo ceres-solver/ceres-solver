@@ -34,6 +34,24 @@
       "parentUuid": "041a981d_17ffc155",
       "revId": "7f834724cf907e0fbceb327c9d6392e11aa51478",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a57c6ac1_6787e919",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T17:57:59Z",
+      "side": 1,
+      "message": "it would be good to do that then in the tests, and when that api gets deprecated we will deal with it, thats one reason to actually have two different versions of the class which can be compiled and instantiated simultaneously.. and tested, otherwise testing would require build time config.",
+      "parentUuid": "b149f6ee_f53e2312",
+      "revId": "7f834724cf907e0fbceb327c9d6392e11aa51478",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
