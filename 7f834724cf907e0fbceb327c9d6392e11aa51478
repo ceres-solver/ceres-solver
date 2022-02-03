@@ -52,6 +52,24 @@
       "parentUuid": "b149f6ee_f53e2312",
       "revId": "7f834724cf907e0fbceb327c9d6392e11aa51478",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "668746f6_d847f889",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-03T18:42:06Z",
+      "side": 1,
+      "message": "Good point - I can make the appropriate changes to expose both of them. \nDo you have a preference for structure? \nOne way to do this is to have two classes: CudaDenseCholeskyPre11.1 and CUDADenseCholeskyPost11.1, and a \n#ifdef block in dense_cholesky.h to typedef the correct one as CUDADenseCholesky .",
+      "parentUuid": "a57c6ac1_6787e919",
+      "revId": "7f834724cf907e0fbceb327c9d6392e11aa51478",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
