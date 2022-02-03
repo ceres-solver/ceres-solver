@@ -70,6 +70,24 @@
       "parentUuid": "a57c6ac1_6787e919",
       "revId": "7f834724cf907e0fbceb327c9d6392e11aa51478",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bba888e_e92314c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-03T19:04:23Z",
+      "side": 1,
+      "message": "I think CudaDenseCholeskyOld and CudaDenseCholeskyNew maybe simpler\nand the ifdef controls based on version",
+      "parentUuid": "668746f6_d847f889",
+      "revId": "7f834724cf907e0fbceb327c9d6392e11aa51478",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
