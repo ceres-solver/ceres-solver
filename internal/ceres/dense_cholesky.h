@@ -39,8 +39,13 @@
 #include <memory>
 
 #include "Eigen/Dense"
+#include "ceres/cuda_buffer.h"
 #include "ceres/linear_solver.h"
 #include "glog/logging.h"
+#ifndef CERES_NO_CUDA
+#include "cuda_runtime.h"
+#include "cusolverDn.h"
+#endif  // CERES_NO_CUDA
 
 namespace ceres {
 namespace internal {
@@ -128,6 +133,103 @@ class CERES_EXPORT_INTERNAL LAPACKDenseCholesky : public DenseCholesky {
   LinearSolverTerminationType termination_type_ = LINEAR_SOLVER_FATAL_ERROR;
 };
 #endif  // CERES_NO_LAPACK
+
+#ifndef CERES_NO_CUDA
+// Implementation of DenseCholesky using the cuSolver library v.11.0 or older,
+// using the legacy cuSolverDn interface.
+class CERES_EXPORT_INTERNAL CUDADenseCholeskyOld : public DenseCholesky {
+ public:
+  CUDADenseCholeskyOld():
+      cusolver_handle_(nullptr),
+      stream_(nullptr),
+      num_cols_(0) {}
+  ~CUDADenseCholeskyOld() override;
+  CUDADenseCholeskyOld(const CUDADenseCholeskyOld&) = delete;
+  CUDADenseCholeskyOld& operator=(const CUDADenseCholeskyOld&) = delete;
+  LinearSolverTerminationType Factorize(int num_cols,
+                                        double* lhs,
+                                        std::string* message) override;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override;
+  // Initializes the cuSolverDN context, creates an asynchronous stream, and
+  // associates the stream with cuSolverDN. Returns true iff initialization was
+  // successful, else it returns false and a human-readable error message is
+  // returned.
+  bool Initialize(std::string* message);
+
+ private:
+  // Handle to the cuSOLVER context.
+  cusolverDnHandle_t cusolver_handle_;
+  // CUDA device stream.
+  cudaStream_t stream_;
+  // Number of columns in the A matrix, to be cached between calls to *Factorize
+  // and *Solve.
+  size_t num_cols_;
+  // GPU memory allocated for the A matrix (lhs matrix).
+  CudaBuffer<double> lhs_;
+  // GPU memory allocated for the B matrix (rhs vector).
+  CudaBuffer<double> rhs_;
+  // Scratch space for cuSOLVER on the GPU.
+  CudaBuffer<uint8_t> device_workspace_;
+  // Required for error handling with cuSOLVER.
+  CudaBuffer<int> error_;
+};
+
+// Implementation of DenseCholesky using the cuSolver library v.11.1 or newer,
+// using the 64-bit cuSolverDn interface.
+class CERES_EXPORT_INTERNAL CUDADenseCholeskyNew : public DenseCholesky {
+ public:
+  CUDADenseCholeskyNew():
+      cusolver_handle_(nullptr),
+      stream_(nullptr),
+      host_workspace_(nullptr),
+      host_workspace_size_(0),
+      num_cols_(0) {}
+  ~CUDADenseCholeskyNew() override;
+  CUDADenseCholeskyNew(const CUDADenseCholeskyNew&) = delete;
+  CUDADenseCholeskyNew& operator=(const CUDADenseCholeskyNew&) = delete;
+  LinearSolverTerminationType Factorize(int num_cols,
+                                        double* lhs,
+                                        std::string* message) override;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override;
+  // Initializes the cuSolverDN context, creates an asynchronous stream, and
+  // associates the stream with cuSolverDN. Returns true iff initialization was
+  // successful, else it returns false and a human-readable error message is
+  // returned.
+  bool Initialize(std::string* message);
+
+ private:
+  // Handle to the cuSOLVER context.
+  cusolverDnHandle_t cusolver_handle_;
+  // CUDA device stream.
+  cudaStream_t stream_;
+  // Number of columns in the A matrix, to be cached between calls to Factorize
+  // and Solve.
+  size_t num_cols_;
+  // GPU memory allocated for the A matrix (lhs matrix).
+  CudaBuffer<double> lhs_;
+  // GPU memory allocated for the B matrix (rhs vector).
+  CudaBuffer<double> rhs_;
+  // Workspace for cuSOLVER on the GPU.
+  CudaBuffer<uint8_t> device_workspace_;
+  // Workspace for cuSOLVER on the host.
+  double* host_workspace_;
+  // Size of the host workspace.
+  size_t host_workspace_size_;
+  // Required for error handling with cuSOLVER.
+  CudaBuffer<int> error_;
+};
+
+#ifdef CERES_CUDA_VERSION_LT_11_1
+typedef CUDADenseCholeskyOld CUDADenseCholesky;
+#else
+typedef CUDADenseCholeskyNew CUDADenseCholesky;
+#endif
+
+#endif  // CERES_NO_CUDA
 
 }  // namespace internal
 }  // namespace ceres

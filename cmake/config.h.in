@@ -53,6 +53,9 @@
 // If defined, Ceres was compiled without CXSparse.
 @CERES_NO_CXSPARSE@
 
+// If defined, Ceres was compiled without CUDA.
+@CERES_NO_CUDA@
+
 // If defined, Ceres was compiled without Apple's Accelerate framework solvers.
 @CERES_NO_ACCELERATE_SPARSE@
 
