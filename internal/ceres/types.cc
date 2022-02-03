@@ -128,6 +128,7 @@ const char* DenseLinearAlgebraLibraryTypeToString(
   switch (type) {
     CASESTR(EIGEN);
     CASESTR(LAPACK);
+    CASESTR(CUDA);
     default:
       return "UNKNOWN";
   }
@@ -138,6 +139,7 @@ bool StringToDenseLinearAlgebraLibraryType(
   UpperCase(&value);
   STRENUM(EIGEN);
   STRENUM(LAPACK);
+  STRENUM(CUDA);
   return false;
 }
 
