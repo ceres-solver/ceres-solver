@@ -357,6 +357,30 @@
       },
       "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be24f6c3_35d39d71",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-04T00:04:01Z",
+      "side": 1,
+      "message": "Sorry, I misunderstood. isless(Jet\u003cT,N\u003e, T) would be perfectly fine but isless(Jet\u003cT,N\u003e, int) would be not.\n\nProviding isless(Jet\u003cT,N\u003e, T) and isless(T, Jet\u003cT,N\u003e) etc. is certainly reasonable. Updated.",
+      "parentUuid": "e984328a_3c29ac8a",
+      "range": {
+        "startLine": 938,
+        "startChar": 14,
+        "endLine": 938,
+        "endChar": 21
+      },
+      "revId": "1b1392e0e1ab6b90c9384c3ca7e87814b5cf4b7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
