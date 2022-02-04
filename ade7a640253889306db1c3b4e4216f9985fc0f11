@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39d855cc_26ce4ede",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T00:21:16Z",
+      "side": 1,
+      "message": "At the risk of creating more work for you, but reducing the amount of code. I think you could define a macro that will allow us to maintain these three variants of each function easily.\n\nthe same thing would work for the functions above like fdim. \n\nWhat do you think?",
+      "revId": "ade7a640253889306db1c3b4e4216f9985fc0f11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
