@@ -108,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "697ef061_82f85718",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T17:58:34Z",
+      "side": 1,
+      "message": "Do you have a suggestion for how to propagate this failure? In my opinion a failure to release GPU memory should be considered fatal, since there is no \"innocent\" cause for it, and it is unclear what state the device will be left in.",
+      "parentUuid": "a51f32da_1915b061",
+      "range": {
+        "startLine": 52,
+        "startChar": 15,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f4f130c6_1a96c72d",
         "filename": "internal/ceres/cuda_buffer.h",
         "patchSetId": 3
@@ -520,6 +544,30 @@
       "side": 1,
       "message": "I agree it makes sense to deal with this later on, however you may want to think about what the Factory method for this looks like, and I think the factor method should take LinearSolver::Options as an argument since that object is the one that carries the context object and for now you do not need to use it. This will save code churn later on.",
       "parentUuid": "797a0839_cadcfd80",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 20
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb74c85b_69ca7bfb",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T17:58:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "acf7cac0_62dab5f5",
       "range": {
         "startLine": 149,
         "startChar": 2,

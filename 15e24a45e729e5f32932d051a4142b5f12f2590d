@@ -35,6 +35,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b4c6948_c9ad0935",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T17:58:34Z",
+      "side": 1,
+      "message": "New factory method created. There are some open questions with the error handling, please see below.",
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "49cf855e_528b05b8",
@@ -48,6 +65,30 @@
       "writtenOn": "2022-02-04T16:14:46Z",
       "side": 1,
       "message": "btw copying and moving data from the gpu and back does not require some sort of gpu context?",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1e8feac_89b67893",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T17:58:34Z",
+      "side": 1,
+      "message": "Unless the non-default device is used, it does not. These calls assume that we will operate with the first GPU available. If we want to specify which device to use, there is a bit of overhead in activating a device, and for each CPU thread, we will need to manually set the device ID. As a first implementation, I propose we don\u0027t support multi-GPU setups. We can add support for it later - in fact that would be a great QOL addition with the user-managed handles.",
+      "parentUuid": "49cf855e_528b05b8",
       "range": {
         "startLine": 44,
         "startChar": 6,
@@ -81,6 +122,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25014d53_31b0940f",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T17:58:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9d40b9b7_efed912b",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "782a945c_bdab8c2a",
@@ -94,6 +159,30 @@
       "writtenOn": "2022-02-04T16:14:46Z",
       "side": 1,
       "message": "see comments below.",
+      "range": {
+        "startLine": 294,
+        "startChar": 11,
+        "endLine": 294,
+        "endChar": 27
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "129afe02_378908ce",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T17:58:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "782a945c_bdab8c2a",
       "range": {
         "startLine": 294,
         "startChar": 11,
@@ -129,6 +218,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "81af0d0b_c6739acf",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T17:58:34Z",
+      "side": 1,
+      "message": "This does not take any noticable time to execute, and there is no documentation that I am aware of on the relation between the workspace size and the matrix size. The fact that the workspace query takes in the actual matrix itself makes me disinclined to want to do such caching.",
+      "parentUuid": "1af77aca_71c52ea8",
+      "range": {
+        "startLine": 392,
+        "startChar": 11,
+        "endLine": 392,
+        "endChar": 38
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8fda4cc4_3a04ec1a",
         "filename": "internal/ceres/dense_cholesky.cc",
         "patchSetId": 4
@@ -140,6 +253,30 @@
       "writtenOn": "2022-02-04T16:14:46Z",
       "side": 1,
       "message": "why check fail here if you area doing error handling below? isn\u0027t it the case that error !\u003d0 is the same as this not being equal to CUSOLVER_STATUS_SUCCESS ?",
+      "range": {
+        "startLine": 412,
+        "startChar": 11,
+        "endLine": 412,
+        "endChar": 27
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c00db1c_03522bbe",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T17:58:34Z",
+      "side": 1,
+      "message": "The return code from this function is intended to capture Cuda errors:\n```\nCUSOLVER_STATUS_NOT_INITIALIZED\tthe library was not initialized.\nCUSOLVER_STATUS_INVALID_VALUE\tinvalid parameters were passed (n\u003c0 or lda\u003cmax(1,n)).\nCUSOLVER_STATUS_INTERNAL_ERROR\tan internal operation failed.\n```\n\nA quick test shows that when CUSOLVER_STATUS_NOT_INITIALIZED is returned, error \u003d 0. It is unclear whether this will be true for CUSOLVER_STATUS_INTERNAL_ERROR as well, but it\u0027s safer to assume that it may catch errors not captured by the error variable.",
+      "parentUuid": "8fda4cc4_3a04ec1a",
       "range": {
         "startLine": 412,
         "startChar": 11,
@@ -175,6 +312,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e094c9c9_7daddc8d",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T17:58:34Z",
+      "side": 1,
+      "message": "Yes, the only case when error is non-zero is API usage error:\n```\nif info \u003d 0, the Cholesky factorization is successful. if info \u003d -i, the i-th parameter is wrong (not counting handle).\n```",
+      "parentUuid": "b709a93b_88893262",
+      "range": {
+        "startLine": 479,
+        "startChar": 12,
+        "endLine": 480,
+        "endChar": 4
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "78846e77_33a82b50",
         "filename": "internal/ceres/dense_cholesky.h",
         "patchSetId": 4
@@ -186,6 +347,30 @@
       "writtenOn": "2022-02-04T16:14:46Z",
       "side": 1,
       "message": "I recommend making this private and adding a factory to this object, this is the pattern we use for other RAII style objects.\n\nso static unique_ptr\u003cCudaDenseCholeskyOld\u003e Create() {.. }\nand hiding the constructor and the Init method so that it is clear to the user that Create is the only way to created well formed objects.",
+      "range": {
+        "startLine": 159,
+        "startChar": 7,
+        "endLine": 159,
+        "endChar": 17
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c094ae1_c75095cf",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T17:58:34Z",
+      "side": 1,
+      "message": "Oh, clever!\nWill do.",
+      "parentUuid": "78846e77_33a82b50",
       "range": {
         "startLine": 159,
         "startChar": 7,
@@ -209,6 +394,30 @@
       "writtenOn": "2022-02-04T16:14:46Z",
       "side": 1,
       "message": "I think the more modern thing to do is to use \"using Foo \u003d Bar\".",
+      "range": {
+        "startLine": 227,
+        "startChar": 8,
+        "endLine": 227,
+        "endChar": 28
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97548293_38979acf",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T17:58:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "839f623e_e895c362",
       "range": {
         "startLine": 227,
         "startChar": 8,
