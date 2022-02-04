@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c06247b_f01a396d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-04T22:56:07Z",
+      "side": 1,
+      "message": "This is already included in https://ceres-solver-review.googlesource.com/c/ceres-solver/+/20041 now right Sameer ?",
+      "revId": "9367ec9cc9914d7ab9048bbcb88a08305c43326e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
