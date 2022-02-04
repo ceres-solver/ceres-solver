@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f26e1b7d_7677dfff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T23:33:37Z",
+      "side": 1,
+      "message": "I am going to wait to submit this till the line and sphere parameterizations go in, since it would be odd to deprecate those to parameterizations without adding the new ones.",
+      "revId": "d32045abb3d72d1b55371f3bd885860e69b6adde",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
