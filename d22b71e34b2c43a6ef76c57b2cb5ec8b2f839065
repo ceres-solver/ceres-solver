@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6b45625_f3895586",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T19:54:28Z",
+      "side": 1,
+      "message": "oh wow this is a complete refactor. This is going to take me some time to review. Keir should look at this too.",
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be93d2f3_35c15f87",
