@@ -123,6 +123,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42a9d650_3d2af0b6",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T23:10:04Z",
+      "side": 1,
+      "message": "I\u0027ll add some documentation of the assumptions.\nActually cuda just allows you to copy data to the GPU, no questions asked. :-)\nAnyone can indeed copy data into the default device GPU, as long as there is still room for it.",
+      "parentUuid": "ee87c87e_1b446681",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d40b9b7_efed912b",
@@ -349,6 +373,30 @@
       "side": 1,
       "message": "thanks this is good to know. I think though for all these errors, instead of crashing here it is better to return a LINEAR_SOLVER_FATAL_ERROR, which is meant for exactly this sort of thing.",
       "parentUuid": "0c00db1c_03522bbe",
+      "range": {
+        "startLine": 412,
+        "startChar": 11,
+        "endLine": 412,
+        "endChar": 27
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98e9f6e6_53cfde07",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T23:10:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e2e21140_dc5ef5fb",
       "range": {
         "startLine": 412,
         "startChar": 11,

@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b28f5ce_706c4b78",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T23:10:04Z",
+      "side": 1,
+      "message": "All done, I think!",
+      "revId": "85da1aa1701b3b7d54d096da561e66739a0bccca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9c51a9e_9506f6a3",
@@ -31,6 +48,24 @@
       "writtenOn": "2022-02-04T20:08:56Z",
       "side": 1,
       "message": "just call the other CopyToGPU function with data.data(), data.size() ?",
+      "revId": "85da1aa1701b3b7d54d096da561e66739a0bccca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bc6b420_e4128aab",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T23:10:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b9c51a9e_9506f6a3",
       "revId": "85da1aa1701b3b7d54d096da561e66739a0bccca",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -52,6 +87,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "816d9c4a_4690418f",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T23:10:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd6834f8_762a6aa2",
+      "revId": "85da1aa1701b3b7d54d096da561e66739a0bccca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac29aed1_a7e58aab",
@@ -65,6 +118,30 @@
       "writtenOn": "2022-02-04T20:08:56Z",
       "side": 1,
       "message": "Initialize -\u003e Init thats the pattern we have in other code.\nalso it should be a private method, no reason for it to be public.",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 40
+      },
+      "revId": "85da1aa1701b3b7d54d096da561e66739a0bccca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c847d859_9e78d148",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T23:10:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ac29aed1_a7e58aab",
       "range": {
         "startLine": 157,
         "startChar": 0,
@@ -98,6 +175,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f854ce9_8ec4e4cd",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T23:10:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "30ba068a_f174f09f",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 20
+      },
+      "revId": "85da1aa1701b3b7d54d096da561e66739a0bccca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0d2a61d_ffe8f01e",
@@ -111,6 +212,30 @@
       "writtenOn": "2022-02-04T20:08:56Z",
       "side": 1,
       "message": "default initialize all the members.",
+      "range": {
+        "startLine": 209,
+        "startChar": 18,
+        "endLine": 209,
+        "endChar": 19
+      },
+      "revId": "85da1aa1701b3b7d54d096da561e66739a0bccca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "621a742a_6a82c919",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T23:10:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d0d2a61d_ffe8f01e",
       "range": {
         "startLine": 209,
         "startChar": 18,
