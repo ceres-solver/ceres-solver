@@ -16,6 +16,24 @@
       "message": "At the risk of creating more work for you, but reducing the amount of code. I think you could define a macro that will allow us to maintain these three variants of each function easily.\n\nthe same thing would work for the functions above like fdim. \n\nWhat do you think?",
       "revId": "ade7a640253889306db1c3b4e4216f9985fc0f11",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "848a29e0_7fb948c3",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-04T18:00:22Z",
+      "side": 1,
+      "message": "This is a very good point which together with your previous comment got me thinking that the scalar part of comparison functions should be recursively expanded similar to comparison operators. By using template parameters, SFINAE and template metaprogramming we do not actually need to provide three overloads but instead can introduce some constraints ensuring that at least one of the argument types is a Jet. Then, the scalar can appear on either side of the operator call provided by a single implementation.",
+      "parentUuid": "39d855cc_26ce4ede",
+      "revId": "ade7a640253889306db1c3b4e4216f9985fc0f11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
