@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a51f32da_1915b061",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T16:14:46Z",
+      "side": 1,
+      "message": "no this is a half assed comment which got truncated about the use of checks in this code. I was going to say that we should be careful about what we are crashing on and what should be piped up as an error.",
+      "parentUuid": "135f8910_9385106d",
+      "range": {
+        "startLine": 52,
+        "startChar": 15,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f4f130c6_1a96c72d",
         "filename": "internal/ceres/cuda_buffer.h",
         "patchSetId": 3
@@ -317,6 +341,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb10286d_853c327f",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T16:14:46Z",
+      "side": 1,
+      "message": "I should add a test which verifies this functionality for all linear solvers by feeding them rank deficient matrices.",
+      "parentUuid": "7e118c64_35d78f54",
+      "range": {
+        "startLine": 245,
+        "startChar": 13,
+        "endLine": 245,
+        "endChar": 14
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b58f775d_fc13f7c4",
@@ -448,6 +496,30 @@
       "side": 1,
       "message": "Yes, that\u0027s right. It is currently initialized in `Initialize()`, and it is slow - it takes about 0.5s on a desktop, and even longer (~ a few seconds) on servers with multiple GPUs. While subsequent initializations in the same process are faster, I think it would be better to allocate GPU resources once for the lifetime of a process. Ideally I\u0027d like to pass in an optional user-managed cuSolverDN context via `ceres::Solver::Options`.",
       "parentUuid": "5af618f5_4021985c",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 20
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acf7cac0_62dab5f5",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T16:14:46Z",
+      "side": 1,
+      "message": "I agree it makes sense to deal with this later on, however you may want to think about what the Factory method for this looks like, and I think the factor method should take LinearSolver::Options as an argument since that object is the one that carries the context object and for now you do not need to use it. This will save code churn later on.",
+      "parentUuid": "797a0839_cadcfd80",
       "range": {
         "startLine": 149,
         "startChar": 2,

@@ -16,6 +16,207 @@
       "message": "Thanks for the review, Sameer. I uploaded a patch that exposes initialization failures. Some thoughts on user-provided cuSolver handle below. Maybe we could wait to expose that interface for later - the Cuda Dense QR solver will need an additional handle to cuBlas, and the sparse Cuda solver has another handle to cuSolverSP. We could defer adding the functionality of user-managed Cuda handles until we have all three in place.",
       "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11b4b50f_96c5485f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T16:14:46Z",
+      "side": 1,
+      "message": "more api and error handling comments 😊",
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49cf855e_528b05b8",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T16:14:46Z",
+      "side": 1,
+      "message": "btw copying and moving data from the gpu and back does not require some sort of gpu context?",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d40b9b7_efed912b",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T16:14:46Z",
+      "side": 1,
+      "message": "see my comment about the factory, which will encapsulate this stuff in the cudadensecholesky object and you can just check whether this object is null or not here.",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "782a945c_bdab8c2a",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T16:14:46Z",
+      "side": 1,
+      "message": "see comments below.",
+      "range": {
+        "startLine": 294,
+        "startChar": 11,
+        "endLine": 294,
+        "endChar": 27
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1af77aca_71c52ea8",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T16:14:46Z",
+      "side": 1,
+      "message": "This is a workspace query, you don\u0027t need to do this everytime factorize is called no? if the linear system size is the same why query this every time? same logic as reserve right?",
+      "range": {
+        "startLine": 392,
+        "startChar": 11,
+        "endLine": 392,
+        "endChar": 38
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fda4cc4_3a04ec1a",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T16:14:46Z",
+      "side": 1,
+      "message": "why check fail here if you area doing error handling below? isn\u0027t it the case that error !\u003d0 is the same as this not being equal to CUSOLVER_STATUS_SUCCESS ?",
+      "range": {
+        "startLine": 412,
+        "startChar": 11,
+        "endLine": 412,
+        "endChar": 27
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b709a93b_88893262",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T16:14:46Z",
+      "side": 1,
+      "message": "should this always be log(fatal) ?",
+      "range": {
+        "startLine": 479,
+        "startChar": 12,
+        "endLine": 480,
+        "endChar": 4
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78846e77_33a82b50",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T16:14:46Z",
+      "side": 1,
+      "message": "I recommend making this private and adding a factory to this object, this is the pattern we use for other RAII style objects.\n\nso static unique_ptr\u003cCudaDenseCholeskyOld\u003e Create() {.. }\nand hiding the constructor and the Init method so that it is clear to the user that Create is the only way to created well formed objects.",
+      "range": {
+        "startLine": 159,
+        "startChar": 7,
+        "endLine": 159,
+        "endChar": 17
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "839f623e_e895c362",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T16:14:46Z",
+      "side": 1,
+      "message": "I think the more modern thing to do is to use \"using Foo \u003d Bar\".",
+      "range": {
+        "startLine": 227,
+        "startChar": 8,
+        "endLine": 227,
+        "endChar": 28
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
