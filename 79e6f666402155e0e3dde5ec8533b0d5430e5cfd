@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "135f8910_9385106d",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "(Assuming you\u0027re referring to the capitalization) `cudaFree` is a library function.",
+      "parentUuid": "91870a8c_84ad58fd",
+      "range": {
+        "startLine": 52,
+        "startChar": 15,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f4f130c6_1a96c72d",
         "filename": "internal/ceres/cuda_buffer.h",
         "patchSetId": 3
@@ -71,6 +95,30 @@
       "writtenOn": "2022-02-03T23:21:37Z",
       "side": 1,
       "message": "if the previous call suceeds, do you still need to check that data is not null?",
+      "range": {
+        "startLine": 62,
+        "startChar": 11,
+        "endLine": 62,
+        "endChar": 12
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7dbeec1_333f1082",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4f130c6_1a96c72d",
       "range": {
         "startLine": 62,
         "startChar": 11,
@@ -94,6 +142,30 @@
       "writtenOn": "2022-02-03T23:21:37Z",
       "side": 1,
       "message": "I think this constructor is rather heavy duty and failures are hard to handle. \nI think it maybe better to have a Init method which can report success instead. since we are using a factory we do not have to worry about the user seeing the initialization.",
+      "range": {
+        "startLine": 193,
+        "startChar": 11,
+        "endLine": 193,
+        "endChar": 27
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eba6e9a_64b4f314",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "db27234b_f6ebdb62",
       "range": {
         "startLine": 193,
         "startChar": 11,
@@ -129,6 +201,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "77119959_4ed57704",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "It\u0027s not clear what a reasonable course of action should be if cleanup fails in the destructor. The implementation here follows the pattern used in the cuda documentation that does the same (exit with a failure code).",
+      "parentUuid": "9b328e89_83566c9f",
+      "range": {
+        "startLine": 201,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 10
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d49e78b3_2fc6220a",
         "filename": "internal/ceres/dense_cholesky.cc",
         "patchSetId": 3
@@ -140,6 +236,30 @@
       "writtenOn": "2022-02-03T23:21:37Z",
       "side": 1,
       "message": "Allocate",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 9
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "021f3cd0_28b53321",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d49e78b3_2fc6220a",
       "range": {
         "startLine": 224,
         "startChar": 0,
@@ -173,6 +293,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e118c64_35d78f54",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Oops, yes that\u0027s true, thanks for catching that.",
+      "parentUuid": "219ac61b_628923a9",
+      "range": {
+        "startLine": 245,
+        "startChar": 13,
+        "endLine": 245,
+        "endChar": 14
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b58f775d_fc13f7c4",
@@ -196,6 +340,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54500a2b_5e881d9a",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b58f775d_fc13f7c4",
+      "range": {
+        "startLine": 134,
+        "startChar": 6,
+        "endLine": 134,
+        "endChar": 27
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cffdc5c5_87381c5d",
@@ -209,6 +377,30 @@
       "writtenOn": "2022-02-03T23:21:37Z",
       "side": 1,
       "message": "override",
+      "range": {
+        "startLine": 137,
+        "startChar": 3,
+        "endLine": 137,
+        "endChar": 23
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "371b5908_0322fa7b",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cffdc5c5_87381c5d",
       "range": {
         "startLine": 137,
         "startChar": 3,
@@ -244,6 +436,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "797a0839_cadcfd80",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Yes, that\u0027s right. It is currently initialized in `Initialize()`, and it is slow - it takes about 0.5s on a desktop, and even longer (~ a few seconds) on servers with multiple GPUs. While subsequent initializations in the same process are faster, I think it would be better to allocate GPU resources once for the lifetime of a process. Ideally I\u0027d like to pass in an optional user-managed cuSolverDN context via `ceres::Solver::Options`.",
+      "parentUuid": "5af618f5_4021985c",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 20
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1e92a6f9_0a00b796",
         "filename": "internal/ceres/dense_cholesky.h",
         "patchSetId": 3
@@ -255,6 +471,30 @@
       "writtenOn": "2022-02-03T23:21:37Z",
       "side": 1,
       "message": "I do not think the gpu prefix adds much here.",
+      "range": {
+        "startLine": 155,
+        "startChar": 16,
+        "endLine": 155,
+        "endChar": 25
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2ce3d67_4ebdfa8e",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1e92a6f9_0a00b796",
       "range": {
         "startLine": 155,
         "startChar": 16,
@@ -288,6 +528,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b5a81a2_2cd348fb",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "de738a4b_c8610197",
+      "range": {
+        "startLine": 156,
+        "startChar": 21,
+        "endLine": 156,
+        "endChar": 27
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1221073_3ca258b9",
@@ -301,6 +565,24 @@
       "writtenOn": "2022-02-03T23:21:37Z",
       "side": 1,
       "message": "rhs_ ? instead of b_ ?",
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b6c7256_abd84f56",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f1221073_3ca258b9",
       "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -322,6 +604,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6348645_10865e51",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a2ae9510_3306333b",
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ec5676c_a5bb0270",
@@ -335,6 +635,30 @@
       "writtenOn": "2022-02-03T23:21:37Z",
       "side": 1,
       "message": "work_ ?",
+      "range": {
+        "startLine": 162,
+        "startChar": 22,
+        "endLine": 162,
+        "endChar": 34
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9c2b046_1432f49a",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3ec5676c_a5bb0270",
       "range": {
         "startLine": 162,
         "startChar": 22,
@@ -368,6 +692,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "967bb8e9_6301470d",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "260ba74c_95610224",
+      "range": {
+        "startLine": 170,
+        "startChar": 3,
+        "endLine": 170,
+        "endChar": 23
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0a005a6_b0482166",
@@ -381,6 +729,30 @@
       "writtenOn": "2022-02-03T23:21:37Z",
       "side": 1,
       "message": "cuda_dense_cholesky_test.cc",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 1
+      },
+      "revId": "79e6f666402155e0e3dde5ec8533b0d5430e5cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a65f5910_97ebb3c3",
+        "filename": "internal/ceres/dense_cuda_solver_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f0a005a6_b0482166",
       "range": {
         "startLine": 2,
         "startChar": 0,

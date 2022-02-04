@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e6f86b3_20b15a8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-04T14:56:45Z",
+      "side": 1,
+      "message": "Thanks for the review, Sameer. I uploaded a patch that exposes initialization failures. Some thoughts on user-provided cuSolver handle below. Maybe we could wait to expose that interface for later - the Cuda Dense QR solver will need an additional handle to cuBlas, and the sparse Cuda solver has another handle to cuSolverSP. We could defer adding the functionality of user-managed Cuda handles until we have all three in place.",
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
