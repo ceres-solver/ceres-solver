@@ -51,6 +51,41 @@
       "message": "This is great! Thanks for adding it. I was thinking of adding something similar, too.\nQuestion: any interest in including an XLATMR equivalent suite? It includes a couple more parameters to vary, including band width for band diagonal, number of non-zeros, etc.\nhttps://math.nist.gov/MatrixMarket/data/misc/xlatmr/xlatmr.html",
       "revId": "9367ec9cc9914d7ab9048bbcb88a08305c43326e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53f5135d_a0865738",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T23:38:04Z",
+      "side": 1,
+      "message": "since there are no major comments on this in the other CL.\nI will go ahead and submit this.",
+      "revId": "9367ec9cc9914d7ab9048bbcb88a08305c43326e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "629be6ab_9f342d7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T23:38:04Z",
+      "side": 1,
+      "message": "we don\u0027t really pay attention to any other structure in terms of sparsity etc, but if they affect runtime I am happy to add more matrices. this was primarily a test of how the solvers scale with size.",
+      "parentUuid": "129a6c4d_2aa9f5b0",
+      "revId": "9367ec9cc9914d7ab9048bbcb88a08305c43326e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
