@@ -101,6 +101,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ee87c87e_1b446681",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T20:08:56Z",
+      "side": 1,
+      "message": "sounds good. I think it is worth documenting the current implementation though about the assumptions you are making.\n\nalso what are the preconditions for using this class. does it assume that the GPU has been initialized by this process? because otherwise anyone could copy data into the gpu no?",
+      "parentUuid": "e1e8feac_89b67893",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9d40b9b7_efed912b",
         "filename": "internal/ceres/dense_cholesky.cc",
         "patchSetId": 4
@@ -240,6 +264,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b1e0c6c_85ffd59f",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T20:08:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "81af0d0b_c6739acf",
+      "range": {
+        "startLine": 392,
+        "startChar": 11,
+        "endLine": 392,
+        "endChar": 38
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8fda4cc4_3a04ec1a",
@@ -289,6 +337,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e2e21140_dc5ef5fb",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T20:08:56Z",
+      "side": 1,
+      "message": "thanks this is good to know. I think though for all these errors, instead of crashing here it is better to return a LINEAR_SOLVER_FATAL_ERROR, which is meant for exactly this sort of thing.",
+      "parentUuid": "0c00db1c_03522bbe",
+      "range": {
+        "startLine": 412,
+        "startChar": 11,
+        "endLine": 412,
+        "endChar": 27
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b709a93b_88893262",
         "filename": "internal/ceres/dense_cholesky.cc",
         "patchSetId": 4
@@ -324,6 +396,30 @@
       "side": 1,
       "message": "Yes, the only case when error is non-zero is API usage error:\n```\nif info \u003d 0, the Cholesky factorization is successful. if info \u003d -i, the i-th parameter is wrong (not counting handle).\n```",
       "parentUuid": "b709a93b_88893262",
+      "range": {
+        "startLine": 479,
+        "startChar": 12,
+        "endLine": 480,
+        "endChar": 4
+      },
+      "revId": "15e24a45e729e5f32932d051a4142b5f12f2590d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba4c3749_6d34dc9b",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T20:08:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e094c9c9_7daddc8d",
       "range": {
         "startLine": 479,
         "startChar": 12,

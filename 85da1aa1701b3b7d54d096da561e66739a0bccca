@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64066ef2_ecd93b68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T20:08:56Z",
+      "side": 1,
+      "message": "okay getting close. I think where possible instead of crashing you should return a LINEAR_SOLVER_FATAL_ERROR, which is what that enum is for and let the higher level of the library deal with it but keep track of it so that we know that other methods should also fail if that happens.\n\nthis is the pattern we have in the other solvers.\n\nthe only ones for which I would crash are the ones where the i^th argument is wrong.",
+      "revId": "85da1aa1701b3b7d54d096da561e66739a0bccca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9c51a9e_9506f6a3",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T20:08:56Z",
+      "side": 1,
+      "message": "just call the other CopyToGPU function with data.data(), data.size() ?",
+      "revId": "85da1aa1701b3b7d54d096da561e66739a0bccca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd6834f8_762a6aa2",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T20:08:56Z",
+      "side": 1,
+      "message": "this does not need to crash you can return LINEAR_SOLVER_FATAL_ERROR and and same for the other checks no?",
+      "revId": "85da1aa1701b3b7d54d096da561e66739a0bccca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac29aed1_a7e58aab",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T20:08:56Z",
+      "side": 1,
+      "message": "Initialize -\u003e Init thats the pattern we have in other code.\nalso it should be a private method, no reason for it to be public.",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 40
+      },
+      "revId": "85da1aa1701b3b7d54d096da561e66739a0bccca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30ba068a_f174f09f",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T20:08:56Z",
+      "side": 1,
+      "message": "default initialize all the members like num_cols, and cusolver_handle etc.",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 20
+      },
+      "revId": "85da1aa1701b3b7d54d096da561e66739a0bccca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0d2a61d_ffe8f01e",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-04T20:08:56Z",
+      "side": 1,
+      "message": "default initialize all the members.",
+      "range": {
+        "startLine": 209,
+        "startChar": 18,
+        "endLine": 209,
+        "endChar": 19
+      },
+      "revId": "85da1aa1701b3b7d54d096da561e66739a0bccca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
