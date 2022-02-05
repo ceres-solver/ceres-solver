@@ -70,6 +70,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e17e75f1_5f00a8f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-05T20:19:18Z",
+      "side": 1,
+      "message": "Sameer, some of your suggestions need further clarification.",
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f5e908f8_e2b92d28",
@@ -118,6 +135,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "55247c9f_4141c4ba",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-05T20:19:18Z",
+      "side": 1,
+      "message": "::value is defined by the standard library. A different name is not possible without duplicating the corresponding functionality. ::type is similar.\n\nThe _v suffix makes clear that it\u0027s a variable template (as in the standard library) and does not require accessing ::value. Impl vs. without the suffix seems to be ambiguous (particularly given there are also ::type Impl), no? Please see also my comment below regarding this issue.",
+      "parentUuid": "f2cf0aa8_47a2c8fb",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5dff42c3_6ec00cff",
         "filename": "include/ceres/internal/jet_traits.h",
         "patchSetId": 7
@@ -129,6 +170,30 @@
       "writtenOn": "2022-02-05T16:43:31Z",
       "side": 1,
       "message": "so this is the base case where once the recursion ends this will catch it?",
+      "range": {
+        "startLine": 56,
+        "startChar": 10,
+        "endLine": 56,
+        "endChar": 18
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da6bc7c5_945b0066",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-05T20:19:18Z",
+      "side": 1,
+      "message": "Correct.",
+      "parentUuid": "5dff42c3_6ec00cff",
       "range": {
         "startLine": 56,
         "startChar": 10,
@@ -175,6 +240,30 @@
       "writtenOn": "2022-02-05T16:43:31Z",
       "side": 1,
       "message": "I am trying to understand this.\n\nyou are trying to detect whether T is itself a Jet or not and recursing as a result.\n\nbut I am wondering why  do you need to use enable_if, isn\u0027t recursing on the type T enough? \nas in\n\n```\ntemplate \u003ctypename T, typename E \u003d void\u003e\nstruct UnderlyingScalar {\n  using type \u003d T;\n};\n\n\ntemplate \u003ctypename T, int N\u003e\nstruct UnderlyingScalar\u003cceres::Jet\u003cT, N\u003e\u003e\n    : UnderlyingScalar\u003cT\u003e {};\n\n```",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 75,
+        "endChar": 18
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "483f5e76_db721942",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-05T20:19:18Z",
+      "side": 1,
+      "message": "Good point, fixed.",
+      "parentUuid": "15e3520d_66150ab6",
       "range": {
         "startLine": 75,
         "startChar": 10,
@@ -233,6 +322,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b3827ffd_6b536ef9",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-05T20:19:18Z",
+      "side": 1,
+      "message": "A Jet with N\u003d0 is a scalar, isn\u0027t it? The scalar is only wrapped in a Jet with the dual part being empty.",
+      "parentUuid": "2118cc2f_d4e3ef77",
+      "range": {
+        "startLine": 90,
+        "startChar": 21,
+        "endLine": 90,
+        "endChar": 22
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15d52f16_0a4651ad",
         "filename": "include/ceres/internal/jet_traits.h",
         "patchSetId": 7
@@ -267,6 +380,30 @@
       "writtenOn": "2022-02-05T16:43:31Z",
       "side": 1,
       "message": "I am surprised there isn\u0027t an existing meta template mechanism to and a standard template like std::is_same.",
+      "range": {
+        "startLine": 104,
+        "startChar": 10,
+        "endLine": 104,
+        "endChar": 18
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "703707bd_a0438e9c",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-05T20:19:18Z",
+      "side": 1,
+      "message": "That\u0027s because there a different semantics (any vs. all) and providing all combinations given C++17 offers fold expressions has become unnecessary.",
+      "parentUuid": "e20a20db_683a6f3c",
       "range": {
         "startLine": 104,
         "startChar": 10,
@@ -371,6 +508,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ee63359d_cd38ad38",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-05T20:19:18Z",
+      "side": 1,
+      "message": "What do you mean by example of the behavior?",
+      "parentUuid": "aaab607a_0d10925c",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 9
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6ce75220_7a56a6a1",
         "filename": "include/ceres/internal/jet_traits.h",
         "patchSetId": 7
@@ -405,6 +566,30 @@
       "writtenOn": "2022-02-05T16:43:31Z",
       "side": 1,
       "message": "same naming suggestion\n\nRemove -\u003e RemoveValueImpl \nRemove_t -\u003e RemoveValue",
+      "range": {
+        "startLine": 172,
+        "startChar": 32,
+        "endLine": 172,
+        "endChar": 33
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8209f5ce_9578caf0",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-05T20:19:18Z",
+      "side": 1,
+      "message": "This is similar to _v suffix where _t makes the distinction that ::type does not need to be referenced. Your suggestion mixes conventions both for variable templates (::value) and template aliases (::type).\n\nPersonally, I do not think this is a good idea as your suggestion introduces an ambiguity. Are you sure you want this single convention applied to both types and values?",
+      "parentUuid": "cd4c6366_2c87057e",
       "range": {
         "startLine": 172,
         "startChar": 32,
@@ -484,6 +669,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00b11235_bed23161",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-05T20:19:18Z",
+      "side": 1,
+      "message": "Actually, I do not like the name in the first place and changed it to AsScalar now.",
+      "parentUuid": "2b00b9fd_449d5baf",
+      "range": {
+        "startLine": 202,
+        "startChar": 25,
+        "endLine": 202,
+        "endChar": 31
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc340051_e5707c04",
@@ -497,6 +706,24 @@
       "writtenOn": "2022-02-05T16:43:31Z",
       "side": 1,
       "message": "as a style thing, move the commas and the \u0026\u0026 on the previous line instead of starting with them.",
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2238955e_caf7a512",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-05T20:19:18Z",
+      "side": 1,
+      "message": "I have no problem adapting to Ceres preferences. However, the binary operator almost always belongs to the expression following it. Removing a line, for instance, with your suggestion will require touching the previous line as well (e.g. with a comma). Modifications are therefore somewhat inconvenient.",
+      "parentUuid": "cc340051_e5707c04",
       "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
