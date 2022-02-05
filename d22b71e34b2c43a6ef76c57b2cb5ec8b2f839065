@@ -547,6 +547,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39703ab6_53c46511",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:52:47Z",
+      "side": 1,
+      "message": "obsolete in light of other comments.",
+      "parentUuid": "1f2163ac_7e9be387",
+      "range": {
+        "startLine": 256,
+        "startChar": 15,
+        "endLine": 256,
+        "endChar": 38
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be93d2f3_35c15f87",
