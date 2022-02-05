@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e852bf69_3058b7ff",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-05T16:06:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79b6e3c4_88a7ed20",
+      "range": {
+        "startLine": 180,
+        "startChar": 49,
+        "endLine": 180,
+        "endChar": 51
+      },
+      "revId": "e64afca2bff9055c7382512f3d73211709d7dd80",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f0ef1de_59e395d5",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-02-05T15:56:42Z",
       "side": 1,
       "message": "same here.",
+      "range": {
+        "startLine": 227,
+        "startChar": 49,
+        "endLine": 227,
+        "endChar": 51
+      },
+      "revId": "e64afca2bff9055c7382512f3d73211709d7dd80",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51456c24_64ef3e8f",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-05T16:06:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f0ef1de_59e395d5",
       "range": {
         "startLine": 227,
         "startChar": 49,
