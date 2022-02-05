@@ -53,6 +53,500 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "380ea86b_fe834e18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "Okay first round focused on jet_traits.h.\n\nI have some naming suggestions. Also some stuff can be moved into an existing header and please add tests for jet traits.\n\nif you wanted to split jet traits into its own Cl since it is large enough and iterate on that and then come back to this Cl once that is merged in, I would be okay with that too (if it reduces work and churn for you). I am also happy to continue iterating on this CL.",
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5e908f8_e2b92d28",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "please add tests for these predicates.",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2cf0aa8_47a2c8fb",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "a bit odd naming style where _v is lower case. \nHere is a thought.\n\nthe constexpr bool you are defining here is what subsequent code uses, so it is the one which should have a nice name. The struct itself can have an uglier name.\n\nSo how about\n\n```\nIsJet -\u003e IsJetImpl\n\nIsJetImpl::value -\u003e IsJetImpl::Value\n\nIsJet_v -\u003e IsJet\n```\n\nand similarly for the definitions below.",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5dff42c3_6ec00cff",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "so this is the base case where once the recursion ends this will catch it?",
+      "range": {
+        "startLine": 56,
+        "startChar": 10,
+        "endLine": 56,
+        "endChar": 18
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b8b1c98_3555ef12",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "To be consistent in naming, I think IsAnyJet should be AreAnyJet\nand then the same suggestion as IsJet_v on the constexpr bool",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 15
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15e3520d_66150ab6",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "I am trying to understand this.\n\nyou are trying to detect whether T is itself a Jet or not and recursing as a result.\n\nbut I am wondering why  do you need to use enable_if, isn\u0027t recursing on the type T enough? \nas in\n\n```\ntemplate \u003ctypename T, typename E \u003d void\u003e\nstruct UnderlyingScalar {\n  using type \u003d T;\n};\n\n\ntemplate \u003ctypename T, int N\u003e\nstruct UnderlyingScalar\u003cceres::Jet\u003cT, N\u003e\u003e\n    : UnderlyingScalar\u003cT\u003e {};\n\n```",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 75,
+        "endChar": 18
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a7a155d_b34964ea",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "Same naming suggestion as IsJet_v",
+      "range": {
+        "startLine": 85,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 24
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2118cc2f_d4e3ef77",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "I do not think we are careful to disallow a jet with N \u003d 0, that would lead to problems no? I think we should disallow that in the jet code maybe.",
+      "range": {
+        "startLine": 90,
+        "startChar": 21,
+        "endLine": 90,
+        "endChar": 22
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15d52f16_0a4651ad",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "same naming suggestion as IsJet_v",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 27
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e20a20db_683a6f3c",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "I am surprised there isn\u0027t an existing meta template mechanism to and a standard template like std::is_same.",
+      "range": {
+        "startLine": 104,
+        "startChar": 10,
+        "endLine": 104,
+        "endChar": 18
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1fa8cd6_e5a6e037",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "AreAllSame",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 14
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f11c200_fa7d7ae9",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "same naming suggestion as IsJet_v",
+      "range": {
+        "startLine": 123,
+        "startChar": 15,
+        "endLine": 123,
+        "endChar": 24
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e306730_817f95b2",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "Move this next to Rank. Also just so I understand Rank_v\u003cTypes\u003e... expands Types... and applies Rank_v to each of them?",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 126,
+        "endChar": 19
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaab607a_0d10925c",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "it would be good to have more documentation here and an example of the behaviour.\nthis is the template i am having a lot of trouble parsing.\n\nThe other is that instead of using Value and Values perhaps use\n\nValueToRemove and Values for better readability.",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 9
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ce75220_7a56a6a1",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "These integer sequence manipulation templates should go into include/internal/integer_sequence_algorithm.h where we already have two algorithms.\n\nthere is some style delta here, your definitions are a mix of std library and google style (e.g. _v suffix).",
+      "range": {
+        "startLine": 132,
+        "startChar": 3,
+        "endLine": 132,
+        "endChar": 8
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd4c6366_2c87057e",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "same naming suggestion\n\nRemove -\u003e RemoveValueImpl \nRemove_t -\u003e RemoveValue",
+      "range": {
+        "startLine": 172,
+        "startChar": 32,
+        "endLine": 172,
+        "endChar": 33
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bff54189_03a1847e",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "same comment as above about integer_sequence_algorithms.h",
+      "range": {
+        "startLine": 174,
+        "startChar": 14,
+        "endLine": 174,
+        "endChar": 21
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a95788c_d5434441",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "AreAllEqual",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 7
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b00b9fd_449d5baf",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "why lowercase?",
+      "range": {
+        "startLine": 202,
+        "startChar": 25,
+        "endLine": 202,
+        "endChar": 31
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc340051_e5707c04",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "as a style thing, move the commas and the \u0026\u0026 on the previous line instead of starting with them.",
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07ea87f0_5bf9a292",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "move this next to other definitions of CompatibleJetOperands",
+      "range": {
+        "startLine": 250,
+        "startChar": 3,
+        "endLine": 250,
+        "endChar": 14
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f2163ac_7e9be387",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T16:43:31Z",
+      "side": 1,
+      "message": "I think for bools a better naming convention is IsFoo or AreFoo for multiargument bool values rather than Foo_v, I think it will lead to better readability.",
+      "range": {
+        "startLine": 256,
+        "startChar": 15,
+        "endLine": 256,
+        "endChar": 38
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be93d2f3_35c15f87",
