@@ -69,6 +69,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7534b26_fe94536f",
+        "filename": "internal/ceres/dense_linear_solver_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "ah its an artifact of the previous version of this. I will remove it in this version.",
+      "parentUuid": "b8d0bec9_08887ed4",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d251af0a_a7aebe37",
@@ -86,6 +104,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2094df4a_d7c602fb",
+        "filename": "internal/ceres/dense_linear_solver_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "you mean the diagonal? because this is how we do it in practice, we are testing the whole linear solver where adding diagonal is part of its work load.",
+      "parentUuid": "d251af0a_a7aebe37",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a05c1b8_b7f406ab",
@@ -99,6 +135,24 @@
       "writtenOn": "2022-02-04T22:49:28Z",
       "side": 1,
       "message": "Prefer: \u0027they are chosen to be representative of \u003cREDACTED\u003e\u0027 for added mystery",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a44083b_6bef22fd",
+        "filename": "internal/ceres/dense_linear_solver_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9a05c1b8_b7f406ab",
       "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -122,6 +176,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "51f5ca8b_2bb14064",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "yes, I figured the reader is smart enough to figure out the source of this discrepency. I could make everything upper case in the function declaration and then clang and google\u0027s style guide will complain ..",
+      "parentUuid": "77a56ab7_ee9a3c21",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a23a1d64_2758f1ab",
         "filename": "internal/ceres/dense_qr.cc",
         "patchSetId": 2
@@ -133,6 +205,24 @@
       "writtenOn": "2022-02-04T22:49:28Z",
       "side": 1,
       "message": "is an",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d067303_f2678897",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a23a1d64_2758f1ab",
       "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -156,6 +246,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bd228085_c21cb5c4",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "in the context of this function c is just a column major matrix. let me take another whack at it.",
+      "parentUuid": "601b0129_b7db8976",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "77264ca7_d5d5a064",
         "filename": "internal/ceres/dense_qr.cc",
         "patchSetId": 2
@@ -167,6 +275,24 @@
       "writtenOn": "2022-02-04T22:49:28Z",
       "side": 1,
       "message": "I would use ceres::ColMajorMatrix instead of Eigen::MatrixXd for clarity here",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93eeb7ae_70469558",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "I was trying to avoid the additional layer of ambiguity between eigen defaults and ceres redefinition of those things... do you think ceres::ColMajorMatrix is clearer?",
+      "parentUuid": "77264ca7_d5d5a064",
       "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -188,6 +314,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4fe55ab_1360839f",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c49eeeb1_21e3c617",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b55c9f6c_b9e73310",
@@ -205,6 +349,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a473b300_0d4aa306",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b55c9f6c_b9e73310",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "40a687a1_5f8751e8",
@@ -218,6 +380,24 @@
       "writtenOn": "2022-02-04T22:49:28Z",
       "side": 1,
       "message": "As above, something like: \u0027Factorize lhs using the optimal workspace size.\u0027",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0407253_3295c4f3",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40a687a1_5f8751e8",
       "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -241,6 +421,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ca57687_9369443b",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "thats because I am a dodo, solve was supposed to check this before doing anything, since dtrtrs can tell us about a zero diagonal, so solve should not be called again using it.",
+      "parentUuid": "be03bc75_516ecd5f",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1e88867_0b953321",
         "filename": "internal/ceres/dense_qr.h",
         "patchSetId": 2
@@ -252,6 +450,24 @@
       "writtenOn": "2022-02-04T22:49:28Z",
       "side": 1,
       "message": "I think num_rows/cols could be const here no ?",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14b926e8_4003fc3e",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "for things passed by value marking them const in the interface is not useful.",
+      "parentUuid": "d1e88867_0b953321",
       "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -269,6 +485,24 @@
       "writtenOn": "2022-02-04T22:49:28Z",
       "side": 1,
       "message": "As above, I think num_rows/cols can be const here",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4e208a1_cc385760",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "same as above.",
+      "parentUuid": "78e99f83_33bf7d51",
       "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -292,6 +526,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "04214c29_4dcf0c23",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "we have not done that with anything else in the class hierarchy, if I we decide to do that we would want to do that more uniformly in another pass.\n\nI am curious does it have any implications for efficiency, say in the way the vtable is constructed etc?",
+      "parentUuid": "9e5f8ff8_3035c979",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6c74f9a1_9f434736",
         "filename": "internal/ceres/dense_qr.h",
         "patchSetId": 2
@@ -303,6 +555,24 @@
       "writtenOn": "2022-02-04T22:49:28Z",
       "side": 1,
       "message": "Could also declare this as final I think, given that it is a private declaration",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a2df715_bfe37acd",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "same as above.",
+      "parentUuid": "6c74f9a1_9f434736",
       "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -326,6 +596,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "99772441_9a385c52",
+        "filename": "internal/ceres/dense_qr_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "I plan to templatize these tests, so while it can be ColMajorMatrix right now, we would have to come back to this once I make these tests multiprecision.",
+      "parentUuid": "1980722d_eefa4857",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e942b077_d7965c32",
         "filename": "internal/ceres/dense_sparse_matrix.cc",
         "patchSetId": 2
@@ -337,6 +625,24 @@
       "writtenOn": "2022-02-04T22:49:28Z",
       "side": 1,
       "message": "Prefer ceres::Matrix::Zero here for consistency",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "090e038a_d97a5eff",
+        "filename": "internal/ceres/dense_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T00:00:05Z",
+      "side": 1,
+      "message": "m is not row major, and ceres::Matrix is.",
+      "parentUuid": "e942b077_d7965c32",
       "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
