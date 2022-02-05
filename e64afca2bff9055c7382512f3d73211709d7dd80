@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e86fed72_50a11e82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T15:56:42Z",
+      "side": 1,
+      "message": "Looks good to me.\nI think you need to rebase, and Alex should look at the cmake stuff and if he is good with it, we are good to merge.\nthank you for your patience!",
+      "revId": "e64afca2bff9055c7382512f3d73211709d7dd80",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79b6e3c4_88a7ed20",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T15:56:42Z",
+      "side": 1,
+      "message": "errant blank at end of line.",
+      "range": {
+        "startLine": 180,
+        "startChar": 49,
+        "endLine": 180,
+        "endChar": 51
+      },
+      "revId": "e64afca2bff9055c7382512f3d73211709d7dd80",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f0ef1de_59e395d5",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-05T15:56:42Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 227,
+        "startChar": 49,
+        "endLine": 227,
+        "endChar": 51
+      },
+      "revId": "e64afca2bff9055c7382512f3d73211709d7dd80",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
