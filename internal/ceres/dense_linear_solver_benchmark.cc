@@ -87,13 +87,15 @@ static void MatrixSizes(benchmark::internal::Benchmark* b) {
   b->Args({800, 25});
 }
 
-BENCHMARK(BM_DenseSolver<ceres::EIGEN, ceres::DENSE_QR>)->Apply(MatrixSizes);
-BENCHMARK(BM_DenseSolver<ceres::EIGEN, ceres::DENSE_NORMAL_CHOLESKY>)
+BENCHMARK_TEMPLATE2(BM_DenseSolver, ceres::EIGEN, ceres::DENSE_QR)
+    ->Apply(MatrixSizes);
+BENCHMARK_TEMPLATE2(BM_DenseSolver, ceres::EIGEN, ceres::DENSE_NORMAL_CHOLESKY)
     ->Apply(MatrixSizes);
 
 #ifndef CERES_NO_LAPACK
-BENCHMARK(BM_DenseSolver<ceres::LAPACK, ceres::DENSE_QR>)->Apply(MatrixSizes);
-BENCHMARK(BM_DenseSolver<ceres::LAPACK, ceres::DENSE_NORMAL_CHOLESKY>)
+BENCHMARK_TEMPLATE2(BM_DenseSolver, ceres::LAPACK, ceres::DENSE_QR)
+    ->Apply(MatrixSizes);
+BENCHMARK_TEMPLATE2(BM_DenseSolver, ceres::LAPACK, ceres::DENSE_NORMAL_CHOLESKY)
     ->Apply(MatrixSizes);
 #endif
 
