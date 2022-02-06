@@ -70,6 +70,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ec8a301_3e48bc9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-06T14:01:24Z",
+      "side": 1,
+      "message": "For now I implemented an (maybe old style) class specialization scheme to deal with that case. For that I introduced a ManifoldProjector which is called in the MinusFunctor. I have then overloaded that class for SphereManifold, which projects the point on the sphere. I think this works for now until numeric differentiation learns how to sample on manifolds.",
+      "parentUuid": "034de5ab_b1cd0180",
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f456023_b6655e35",
@@ -213,6 +231,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfbc2848_71245377",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-06T14:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7770502_aea325fd",
+      "range": {
+        "startLine": 410,
+        "startChar": 36,
+        "endLine": 410,
+        "endChar": 39
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8047b3e8_680a6114",
@@ -236,6 +278,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ed8648b_65241725",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-06T14:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8047b3e8_680a6114",
+      "range": {
+        "startLine": 417,
+        "startChar": 8,
+        "endLine": 417,
+        "endChar": 9
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d61a575_d2352690",
@@ -249,6 +315,30 @@
       "writtenOn": "2022-01-23T20:41:00Z",
       "side": 1,
       "message": "blank line between equations and text.",
+      "range": {
+        "startLine": 419,
+        "startChar": 2,
+        "endLine": 419,
+        "endChar": 3
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a81c2e92_119e9102",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-06T14:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d61a575_d2352690",
       "range": {
         "startLine": 419,
         "startChar": 2,
@@ -319,6 +409,30 @@
       "writtenOn": "2022-01-23T20:41:00Z",
       "side": 1,
       "message": "I think since hartley does not define minus, it is better to refer to say the manifold paper for both the plus and the minus operations.",
+      "range": {
+        "startLine": 476,
+        "startChar": 36,
+        "endLine": 476,
+        "endChar": 50
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77598ddc_3f08a1f6",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-06T14:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9a8d154_84dcc620",
       "range": {
         "startLine": 476,
         "startChar": 36,
@@ -634,6 +748,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "105b2939_d14150ba",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-06T14:01:24Z",
+      "side": 1,
+      "message": "I refactored the code to that a row major matrix is used. This makes the code easier to read.",
+      "parentUuid": "f84fa21f_cb301a30",
+      "range": {
+        "startLine": 566,
+        "startChar": 17,
+        "endLine": 566,
+        "endChar": 24
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37d3a2e1_2bfb25e6",
@@ -665,6 +803,24 @@
       "side": 1,
       "message": "I have no memory.. I suspect this is outdated, but just recently I had a similar problem with autodiffmanifold using clang somewhere.",
       "parentUuid": "37d3a2e1_2bfb25e6",
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70653bab_1424ba99",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-06T14:01:24Z",
+      "side": 1,
+      "message": "I will leave it like it is.",
+      "parentUuid": "336ce1da_7a7a58ce",
       "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -740,6 +896,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e713ae77_1c01e182",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-06T14:01:24Z",
+      "side": 1,
+      "message": "I removed this class completely.",
+      "parentUuid": "c22ab78a_4b1b686f",
+      "range": {
+        "startLine": 458,
+        "startChar": 7,
+        "endLine": 458,
+        "endChar": 36
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4e2e51c_9868e18e",
@@ -757,6 +937,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6c15bfe_263722e7",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-06T14:01:24Z",
+      "side": 1,
+      "message": "I removed this part completely.",
+      "parentUuid": "e4e2e51c_9868e18e",
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa35a19b_d5ef6ecc",
@@ -770,6 +968,30 @@
       "writtenOn": "2022-01-23T20:41:00Z",
       "side": 1,
       "message": "why not use matrices here?",
+      "range": {
+        "startLine": 528,
+        "startChar": 9,
+        "endLine": 528,
+        "endChar": 26
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ba89144_58dc0e18",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-06T14:01:24Z",
+      "side": 1,
+      "message": "I removed this part completely.",
+      "parentUuid": "aa35a19b_d5ef6ecc",
       "range": {
         "startLine": 528,
         "startChar": 9,
@@ -803,6 +1025,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10225656_015a69e5",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-06T14:01:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8d9d187b_465b3dc3",
+      "range": {
+        "startLine": 531,
+        "startChar": 37,
+        "endLine": 531,
+        "endChar": 38
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f11d2a07_6f9aadf9",
@@ -816,6 +1062,30 @@
       "writtenOn": "2022-01-23T20:41:00Z",
       "side": 1,
       "message": "I think in these cases it maybe better to just calculate what the actual value of the result of plus should be and verify that Plus computes it.",
+      "range": {
+        "startLine": 542,
+        "startChar": 5,
+        "endLine": 542,
+        "endChar": 30
+      },
+      "revId": "6112e2887e4d404a8192d7720a02b6e613b85303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5afc121_54058ea8",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-06T14:01:24Z",
+      "side": 1,
+      "message": "I am using EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD for these tests and removed all away from zero tests as they should be covered by the NormalFunctionTest.",
+      "parentUuid": "f11d2a07_6f9aadf9",
       "range": {
         "startLine": 542,
         "startChar": 5,
