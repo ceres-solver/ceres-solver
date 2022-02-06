@@ -866,6 +866,54 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c6a69c5_69c701bf",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-06T16:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0621f03_5716fc62",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 9
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "061d54b0_4a022d77",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-06T16:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "361cd472_54da022a",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 9
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ce75220_7a56a6a1",
@@ -879,6 +927,30 @@
       "writtenOn": "2022-02-05T16:43:31Z",
       "side": 1,
       "message": "These integer sequence manipulation templates should go into include/internal/integer_sequence_algorithm.h where we already have two algorithms.\n\nthere is some style delta here, your definitions are a mix of std library and google style (e.g. _v suffix).",
+      "range": {
+        "startLine": 132,
+        "startChar": 3,
+        "endLine": 132,
+        "endChar": 8
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50f537b0_d15e57a9",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-06T16:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ce75220_7a56a6a1",
       "range": {
         "startLine": 132,
         "startChar": 3,
@@ -997,6 +1069,30 @@
       "writtenOn": "2022-02-05T16:43:31Z",
       "side": 1,
       "message": "same comment as above about integer_sequence_algorithms.h",
+      "range": {
+        "startLine": 174,
+        "startChar": 14,
+        "endLine": 174,
+        "endChar": 21
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef33af07_6103722e",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-06T16:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bff54189_03a1847e",
       "range": {
         "startLine": 174,
         "startChar": 14,
@@ -1136,6 +1232,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79a9722a_a7ba599e",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-06T16:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2238955e_caf7a512",
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07ea87f0_5bf9a292",
@@ -1243,6 +1357,24 @@
       "writtenOn": "2022-02-04T19:12:13Z",
       "side": 1,
       "message": "This include can be removed.",
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "980e0520_c20b804f",
+        "filename": "include/ceres/jet_fwd.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-06T16:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be93d2f3_35c15f87",
       "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
