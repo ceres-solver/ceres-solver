@@ -257,40 +257,35 @@ else (LAPACK)
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_LAPACK)
 endif (LAPACK)
 
+# Set the install path for the installed CeresConfig.cmake configuration file
+# relative to CMAKE_INSTALL_PREFIX.
+set(RELATIVE_CMAKECONFIG_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/Ceres)
+
 if (SUITESPARSE)
   # By default, if SuiteSparse and all dependencies are found, Ceres is
   # built with SuiteSparse support.
 
   # Check for SuiteSparse and dependencies.
-  find_package(SuiteSparse)
-  if (SUITESPARSE_FOUND)
-    # On Ubuntu the system install of SuiteSparse (v3.4.0) up to at least
-    # Ubuntu 13.10 cannot be used to link shared libraries.
-    if (BUILD_SHARED_LIBS AND
-        SUITESPARSE_IS_BROKEN_SHARED_LINKING_UBUNTU_SYSTEM_VERSION)
-      message(FATAL_ERROR "You are attempting to build Ceres as a shared "
-        "library on Ubuntu using a system package install of SuiteSparse "
-        "3.4.0. This package is broken and does not support the "
-        "construction of shared libraries (you can still build Ceres as "
-        "a static library).  If you wish to build a shared version of Ceres "
-        "you should uninstall the system install of SuiteSparse "
-        "(libsuitesparse-dev) and perform a source install of SuiteSparse "
-        "(we recommend that you use the latest version), "
-        "see http://ceres-solver.org/building.html for more information.")
-    endif (BUILD_SHARED_LIBS AND
-      SUITESPARSE_IS_BROKEN_SHARED_LINKING_UBUNTU_SYSTEM_VERSION)
-
+  find_package(SuiteSparse 4.0 COMPONENTS CHOLMOD SPQR)
+  if (SuiteSparse_FOUND)
+    set(SuiteSparse_DEPENDENCY "find_dependency(SuiteSparse ${SuiteSparse_VERSION})")
     # By default, if all of SuiteSparse's dependencies are found, Ceres is
     # built with SuiteSparse support.
-    message("-- Found SuiteSparse ${SUITESPARSE_VERSION}, "
+    message("-- Found SuiteSparse ${SuiteSparse_VERSION}, "
             "building with SuiteSparse.")
-  else (SUITESPARSE_FOUND)
+
+    if (SuiteSparse_NO_CMAKE OR NOT SuiteSparse_DIR)
+      install(FILES ${Ceres_SOURCE_DIR}/cmake/FindSuiteSparse.cmake
+                    ${Ceres_SOURCE_DIR}/cmake/FindMETIS.cmake
+              DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
+    endif (SuiteSparse_NO_CMAKE OR NOT SuiteSparse_DIR)
+  else (SuiteSparse_FOUND)
     # Disable use of SuiteSparse if it cannot be found and continue.
     message("-- Did not find all SuiteSparse dependencies, disabling "
       "SuiteSparse support.")
     update_cache_variable(SUITESPARSE OFF)
     list(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE)
-  endif (SUITESPARSE_FOUND)
+  endif (SuiteSparse_FOUND)
 else (SUITESPARSE)
   message("-- Building without SuiteSparse.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE)
@@ -300,26 +295,26 @@ endif (SUITESPARSE)
 if (CXSPARSE)
   # Don't search with REQUIRED as we can continue without CXSparse.
   find_package(CXSparse)
-  if (CXSPARSE_FOUND)
+  if (CXSparse_FOUND)
+    set(CXSparse_DEPENDENCY "find_dependency(CXSparse ${CXSparse_VERSION})")
     # By default, if CXSparse and all dependencies are found, Ceres is
     # built with CXSparse support.
-    message("-- Found CXSparse version: ${CXSPARSE_VERSION}, "
+    message("-- Found CXSparse version: ${CXSparse_VERSION}, "
       "building with CXSparse.")
-  else (CXSPARSE_FOUND)
+
+    if (CXSparse_NO_CMAKE OR NOT CXSparse_DIR)
+      install(FILES ${Ceres_SOURCE_DIR}/cmake/FindCXSparse.cmake
+              DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
+    endif (CXSparse_NO_CMAKE OR NOT CXSparse_DIR)
+  else (CXSparse_FOUND)
     # Disable use of CXSparse if it cannot be found and continue.
     message("-- Did not find CXSparse, Building without CXSparse.")
     update_cache_variable(CXSPARSE OFF)
     list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CXSPARSE)
-  endif (CXSPARSE_FOUND)
+  endif (CXSparse_FOUND)
 else (CXSPARSE)
   message("-- Building without CXSparse.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CXSPARSE)
-  # Mark as advanced (remove from default GUI view) the CXSparse search
-  # variables in case user enabled CXSPARSE, FindCXSparse did not find it, so
-  # made search variables visible in GUI for user to set, but then user disables
-  # CXSPARSE instead of setting them.
-  mark_as_advanced(FORCE CXSPARSE_INCLUDE_DIR
-                         CXSPARSE_LIBRARY)
 endif (CXSPARSE)
 
 if (ACCELERATESPARSE)
@@ -711,10 +706,6 @@ write_basic_package_version_file("${Ceres_BINARY_DIR}/CeresConfigVersion.cmake"
   COMPATIBILITY SameMajorVersion)
 
 # Install method #1: Put Ceres in CMAKE_INSTALL_PREFIX: /usr/local or equivalent.
-
-# Set the install path for the installed CeresConfig.cmake configuration file
-# relative to CMAKE_INSTALL_PREFIX.
-set(RELATIVE_CMAKECONFIG_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/Ceres)
 
 # This "exports" for installation all targets which have been put into the
 # export set "CeresExport". This generates a CeresTargets.cmake file which,

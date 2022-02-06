@@ -78,9 +78,9 @@ optional. For details on customizing the build process, see
   examples and tests and usually a dependency for glog.
 
 - `SuiteSparse
-  <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_. Needed for
-  solving large sparse linear systems. **Optional; strongly recomended
-  for large scale bundle adjustment**
+  <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_ 4.0 or later. Needed
+  for solving large sparse linear systems. **Optional; strongly recomended for
+  large scale bundle adjustment**
 
   .. NOTE ::
 
@@ -90,10 +90,21 @@ optional. For details on customizing the build process, see
      found TBB version. You can customize the searched TBB location
      with the ``TBB_ROOT`` variable.
 
+  A CMake native version of SuiteSparse that can be compiled on a variety of
+  platforms (e.g., using Visual Studio, Xcode, MinGW, etc.) is maintained by the
+  `CMake support for SuiteSparse <https://github.com/sergiud/SuiteSparse>`_
+  project.
+
 - `CXSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_.
   Similar to ``SuiteSparse`` but simpler and slower. CXSparse has
   no dependencies on ``LAPACK`` and ``BLAS``. This makes for a simpler
   build process and a smaller binary. **Optional**
+
+  A CMake native version of CXSparse that can be compiled on a variety of
+  platforms (e.g., using Visual Studio, Xcode, MinGW, etc.) is also maintained
+  by the `CMake support for SuiteSparse
+  <https://github.com/sergiud/SuiteSparse>`_ project and is part of the
+  SuiteSparse package.
 
 - `Apple's Accelerate sparse solvers <https://developer.apple.com/documentation/accelerate/sparse_solvers>`_.
   As of Xcode 9.0, Apple's Accelerate framework includes support for
@@ -426,10 +437,6 @@ dependencies.
    #. ``GLOG_INCLUDE_DIR_HINTS``
    #. ``GLOG_LIBRARY_DIR_HINTS``
    #. (Optional) ``gflags_DIR`` (Set to directory containing ``gflags-config.cmake``)
-   #. (Optional) ``SUITESPARSE_INCLUDE_DIR_HINTS``
-   #. (Optional) ``SUITESPARSE_LIBRARY_DIR_HINTS``
-   #. (Optional) ``CXSPARSE_INCLUDE_DIR_HINTS``
-   #. (Optional) ``CXSPARSE_LIBRARY_DIR_HINTS``
 
    to the appropriate directories where you unpacked/built them. If
    any of the variables are not visible in the ``CMake`` GUI, create a
