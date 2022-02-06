@@ -69,6 +69,23 @@
       "message": "This include should be removed.",
       "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be0985d5_f7d2f075",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-06T16:46:13Z",
+      "side": 1,
+      "message": "I believe the use of (non-quiet) comparisons such as this one needs to reevaluated because the sole source of FP exceptions should probably be fundamental arithmetic operations.",
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
