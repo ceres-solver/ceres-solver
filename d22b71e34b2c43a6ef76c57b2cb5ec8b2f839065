@@ -723,6 +723,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "805aa2db_30bd2f54",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T15:04:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "332b3c19_7528cbb0",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 126,
+        "endChar": 19
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aaab607a_0d10925c",
@@ -808,6 +832,30 @@
       "side": 1,
       "message": "To make sure I understand it correctly. Are you suggesting to name Sequence Values? This would be incorrect because Sequence must be currently std::integer_sequence. Also, Sequence is a template parameter pack only to enable partial specialization.",
       "parentUuid": "124c7832_d277d2a5",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 9
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0621f03_5716fc62",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T15:04:59Z",
+      "side": 1,
+      "message": "no I am suggesting to rename the one value you want to remove from Value to ValueToRemove",
+      "parentUuid": "361cd472_54da022a",
       "range": {
         "startLine": 129,
         "startChar": 8,
