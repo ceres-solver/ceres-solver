@@ -157,6 +157,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ae9eb6f_2d4d285f",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:18:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "55247c9f_4141c4ba",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5dff42c3_6ec00cff",
@@ -194,6 +218,30 @@
       "side": 1,
       "message": "Correct.",
       "parentUuid": "5dff42c3_6ec00cff",
+      "range": {
+        "startLine": 56,
+        "startChar": 10,
+        "endLine": 56,
+        "endChar": 18
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4200788_70a868ba",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:18:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6bc7c5_945b0066",
       "range": {
         "startLine": 56,
         "startChar": 10,
@@ -334,6 +382,30 @@
       "side": 1,
       "message": "A Jet with N\u003d0 is a scalar, isn\u0027t it? The scalar is only wrapped in a Jet with the dual part being empty.",
       "parentUuid": "2118cc2f_d4e3ef77",
+      "range": {
+        "startLine": 90,
+        "startChar": 21,
+        "endLine": 90,
+        "endChar": 22
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab3f0445_3038d392",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:18:43Z",
+      "side": 1,
+      "message": "Now that you mention it, yes you are right. The semantics do work out.",
+      "parentUuid": "b3827ffd_6b536ef9",
       "range": {
         "startLine": 90,
         "startChar": 21,
@@ -532,6 +604,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "124c7832_d277d2a5",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:18:43Z",
+      "side": 1,
+      "message": "example usage of how this template is used. for example the examples in integer_sequence_algorithms.h",
+      "parentUuid": "ee63359d_cd38ad38",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 9
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6ce75220_7a56a6a1",
         "filename": "include/ceres/internal/jet_traits.h",
         "patchSetId": 7
@@ -590,6 +686,30 @@
       "side": 1,
       "message": "This is similar to _v suffix where _t makes the distinction that ::type does not need to be referenced. Your suggestion mixes conventions both for variable templates (::value) and template aliases (::type).\n\nPersonally, I do not think this is a good idea as your suggestion introduces an ambiguity. Are you sure you want this single convention applied to both types and values?",
       "parentUuid": "cd4c6366_2c87057e",
+      "range": {
+        "startLine": 172,
+        "startChar": 32,
+        "endLine": 172,
+        "endChar": 33
+      },
+      "revId": "d22b71e34b2c43a6ef76c57b2cb5ec8b2f839065",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "123945f1_21b454d7",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:18:43Z",
+      "side": 1,
+      "message": "Okay lets keep the current convention. The google upper case convention with the standard library lower case _v and _t together make for an ugly combination. But I guess we will live with it.",
+      "parentUuid": "8209f5ce_9578caf0",
       "range": {
         "startLine": 172,
         "startChar": 32,
