@@ -202,11 +202,12 @@ if (NOT MINIGLOG AND GLOG_FOUND)
   endif()
 endif (NOT MINIGLOG AND GLOG_FOUND)
 
-if (SUITESPARSE AND SUITESPARSE_FOUND)
+if (SUITESPARSE AND SuiteSparse_FOUND)
   # Define version information for use in Solver::FullReport.
-  add_definitions(-DCERES_SUITESPARSE_VERSION="${SUITESPARSE_VERSION}")
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${SUITESPARSE_LIBRARIES})
-endif (SUITESPARSE AND SUITESPARSE_FOUND)
+  add_definitions(-DCERES_SUITESPARSE_VERSION="${SuiteSparse_VERSION}")
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES SuiteSparse::CHOLMOD
+    SuiteSparse::SPQR)
+endif (SUITESPARSE AND SuiteSparse_FOUND)
 
 if (CXSPARSE AND CXSPARSE_FOUND)
   # Define version information for use in Solver::FullReport.
