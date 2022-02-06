@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a3f352d_7be6123a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-06T14:05:27Z",
+      "side": 1,
+      "message": "Can we maybe get rid of the factor two in SphereManifold? I think there is no benefit of using it and it is just more work to do (need to multiple or divide by two in plus and minus operator as well as in the jacobian caliculation in several places). This factor just scales the delta vector.\n\nAlso in the newly linked paper for the sphere manifold there is also no factor two.",
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
