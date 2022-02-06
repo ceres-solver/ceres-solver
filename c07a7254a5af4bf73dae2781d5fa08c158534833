@@ -16,6 +16,108 @@
       "message": "Thanks, I rebased and also added Cuda to the dense benchmark suite.",
       "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a539e10_31c1c6e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-06T23:12:52Z",
+      "side": 1,
+      "message": "Looks great, some points about the buildsystem integration that should be easy to update and a question about naming of new vs old.\n\nWhen we update to CMake \u003e\u003d 3.17 (not for a while given our desire to maintain support for the previous LTS version, and 18.04 uses 3.10, and 20.04 uses 3.16) we can update this to use find_package(CUDAToolkit).  However, if we add and .cu code in future we should update the min CMake version to 3.10 to avoid having to use the special macros/functions imported by FindCUDA.cmake as those are now deprecated (from 3.10) in favour of native CUDA language support (not the same thing as the CUDA toolkit libraries).",
+      "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2373d7ba_b3f0ee71",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-06T23:12:52Z",
+      "side": 1,
+      "message": "As per below, I would flip this to a *has 64-bit solver API* then update this message to something like:\n\n\u0027Enabling use of 64-bit cuSolver API (${CUDA_VERSION} \u003e\u003d 11.1)\u0027",
+      "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51fd1ac1_22474ede",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-06T23:12:52Z",
+      "side": 1,
+      "message": "I think it would be clearer to have this definition be written in terms of what it enables semantically rather than the condition for it being present, e.g something like: CERES_CUDA_HAS_64BIT_SOLVER_API - note the negation, although CERES_CUDA_NO_64BIT_SOLVER_API would also work",
+      "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce9ccac3_85b19c98",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-06T23:12:52Z",
+      "side": 1,
+      "message": "This should be replaced with a target_include_directories() call block after here: https://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/CMakeLists.txt#L364",
+      "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff942d9a_27b1550d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-06T23:12:52Z",
+      "side": 1,
+      "message": "As CUDA is only used internally by Ceres, I think you can add these to CERES_LIBRARY_PRIVATE_DEPENDENCIES instead of the public ones, as any client dependency would be transitive (if dynamic, and CMake will make all PRIVATE dependencies PUBLIC for the static case)",
+      "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6194b5d6_ef104a96",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-06T23:12:52Z",
+      "side": 1,
+      "message": "IMO, rather than new/old prefer 32Bit and 64Bit to communicate what \u0027new\u0027 and \u0027old\u0027 here means specifically, and the CUDA docs refer to this as the \u002764-bit API\u0027 so it would make sense to stick to their terminology where possible for clarity",
+      "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
