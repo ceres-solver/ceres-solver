@@ -16,6 +16,305 @@
       "message": "Can we maybe get rid of the factor two in SphereManifold? I think there is no benefit of using it and it is just more work to do (need to multiple or divide by two in plus and minus operator as well as in the jacobian caliculation in several places). This factor just scales the delta vector.\n\nAlso in the newly linked paper for the sphere manifold there is also no factor two.",
       "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8225f57_89d889c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "Thanks Johannes, the code looks good. My comments are minor mostly around comments and some code structure.",
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c57d0819_bc2fb679",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "so we have a similar problem with quaternion (well you can call it a problem or a consistency..), but I suggest not doing that right now. The reason is because I would like people to be able to make the change to manifolds without worrying about any other changes.\n\nWe can come back to it once the manifold transition is complete. Feel free to leave a todo here as a reminder.",
+      "parentUuid": "9a3f352d_7be6123a",
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "965e2474_8ad99bd7",
+        "filename": "include/ceres/internal/sphere_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "ceres/internal/householder_vector.h",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1044a351_c29da6e8",
+        "filename": "include/ceres/internal/sphere_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "it would make sense to make AmbientSpaceDimension to be ceres::DYNAMIC by default then.",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 27
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26826b99_2f0afef2",
+        "filename": "include/ceres/internal/sphere_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "cite the equations ?",
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7526bf9e_c05fa8b6",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "it is worth documenting that this class can use both dynamic and static sizing and give example usage.",
+      "range": {
+        "startLine": 430,
+        "startChar": 56,
+        "endLine": 430,
+        "endChar": 65
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7105c503_a3ddcc38",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "by default this should be ceres::DYNAMIC no? that way you can always use the constructor with one argument.",
+      "range": {
+        "startLine": 433,
+        "startChar": 14,
+        "endLine": 433,
+        "endChar": 35
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bedf8935_51062ab1",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "mark one argument constructors as explicit.",
+      "range": {
+        "startLine": 441,
+        "startChar": 2,
+        "endLine": 441,
+        "endChar": 16
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9928646_cccd222f",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "move AmbientSize and TangentSize above Plus.",
+      "range": {
+        "startLine": 447,
+        "startChar": 6,
+        "endLine": 447,
+        "endChar": 17
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28bab86c_90d4b1c0",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "I think in our public api we use ceres::DYNAMIC rather than Eigen::Dynamic (they have the same value).",
+      "range": {
+        "startLine": 448,
+        "startChar": 42,
+        "endLine": 448,
+        "endChar": 43
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae5b3f70_8a8f7533",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "The actual implementation of this for sphere assumes that x is actually on the manifold. This is worth making explicit.",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba3572c0_edfd3f6a",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "I also think you should move the definition of ManifoldProjector next to MinusFunctor because its a bit hard to make sense of what it is doing without looking at MinusFunctor.",
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfcc1b2a_3de81c1c",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "why do you need this include here?",
+      "range": {
+        "startLine": 8,
+        "startChar": 16,
+        "endLine": 8,
+        "endChar": 24
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61141d6b_92d1b79d",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-06T14:54:57Z",
+      "side": 1,
+      "message": "I would not do a function like this, it makes reading the logs much harder. i would go ahead and duplicate this code into the individual tests, that way when test failures happen we can read them as located inside the test.",
+      "range": {
+        "startLine": 533,
+        "startChar": 5,
+        "endLine": 533,
+        "endChar": 37
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
