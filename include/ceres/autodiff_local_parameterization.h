@@ -143,6 +143,8 @@ class AutoDiffLocalParameterization : public LocalParameterization {
   int GlobalSize() const override { return kGlobalSize; }
   int LocalSize() const override { return kLocalSize; }
 
+  const Functor & functor() const { return *functor_; }
+
  private:
   std::unique_ptr<Functor> functor_;
 };

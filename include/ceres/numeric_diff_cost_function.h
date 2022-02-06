@@ -246,6 +246,8 @@ class NumericDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
     return true;
   }
 
+  const CostFunctor & functor() const { return *functor_; }
+
  private:
   std::unique_ptr<CostFunctor> functor_;
   Ownership ownership_;

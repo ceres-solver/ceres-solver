@@ -173,6 +173,8 @@ class AutoDiffManifold : public Manifold {
 
   bool MinusJacobian(const double* x, double* jacobian) const override;
 
+  const Functor & functor() const { return *functor_; }
+
  private:
   std::unique_ptr<Functor> functor_;
 };

@@ -142,6 +142,8 @@ class AutoDiffFirstOrderFunction : public FirstOrderFunction {
 
   int NumParameters() const override { return kNumParameters; }
 
+  const FirstOrderFunctor & functor() const { return *functor_; }
+
  private:
   std::unique_ptr<FirstOrderFunctor> functor_;
 };

@@ -151,6 +151,8 @@ class NumericDiffFirstOrderFunction : public FirstOrderFunction {
 
   int NumParameters() const override { return kNumParameters; }
 
+  const FirstOrderFunctor & functor() const { return *functor_; }
+
  private:
   std::unique_ptr<FirstOrderFunctor> functor_;
   Ownership ownership_;
