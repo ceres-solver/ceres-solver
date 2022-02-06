@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4764e09c_0cf53bb8",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-06T18:27:46Z",
+      "side": 1,
+      "message": "This is an instance where I failed to remove the legacy SuiteSparse_LIBRARIES CMake variable.",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
