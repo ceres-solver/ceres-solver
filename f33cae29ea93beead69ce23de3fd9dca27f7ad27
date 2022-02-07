@@ -298,6 +298,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e6e6db1_e059593a",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T19:49:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd228085_c21cb5c4",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77264ca7_d5d5a064",
@@ -347,6 +365,24 @@
       "side": 1,
       "message": "I think it\u0027s clearer to use ceres::ColMajorMatrix (vs ceres::Matrix) for every matrix we expect to be ColMajor rather than relying on Eigen\u0027s defaults.  Ideally (unrealistic) never using Eigen types explicitly",
       "parentUuid": "93eeb7ae_70469558",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83cf7469_0d054839",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T19:49:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba62d437_ce569eb7",
       "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -632,6 +668,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "85b7a8cf_9d986d9c",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T19:49:22Z",
+      "side": 1,
+      "message": "okay let me come back to it as a whole thing then. Resolving for now.",
+      "parentUuid": "bbd5c224_732d6262",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c74f9a1_9f434736",
@@ -667,6 +721,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9aea5e7_42a7096b",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T19:49:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a2df715_bfe37acd",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1980722d_eefa4857",
@@ -698,6 +770,24 @@
       "side": 1,
       "message": "I plan to templatize these tests, so while it can be ColMajorMatrix right now, we would have to come back to this once I make these tests multiprecision.",
       "parentUuid": "1980722d_eefa4857",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6d7fe4c_c37cc467",
+        "filename": "internal/ceres/dense_qr_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T19:49:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "99772441_9a385c52",
       "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -751,6 +841,24 @@
       "side": 1,
       "message": "Sorry, I meant ceres::ColMajorMatrix",
       "parentUuid": "090e038a_d97a5eff",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f86d65f_8e7408b8",
+        "filename": "internal/ceres/dense_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T19:49:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeced7c7_e6395467",
       "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
