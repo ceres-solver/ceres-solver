@@ -37,8 +37,9 @@
 #include <memory>
 
 #include "ceres/block_structure.h"
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/sparse_matrix.h"
 
 namespace ceres {
@@ -54,7 +55,7 @@ class TripletSparseMatrix;
 //
 //   internal/ceres/block_structure.h
 //
-class CERES_EXPORT_INTERNAL BlockSparseMatrix : public SparseMatrix {
+class CERES_NO_EXPORT BlockSparseMatrix : public SparseMatrix {
  public:
   // Construct a block sparse matrix with a fully initialized
   // CompressedRowBlockStructure objected. The matrix takes over
@@ -138,7 +139,7 @@ class CERES_EXPORT_INTERNAL BlockSparseMatrix : public SparseMatrix {
 //
 // BlockSparseDataMatrix a struct that carries these two bits of
 // information
-class BlockSparseMatrixData {
+class CERES_NO_EXPORT BlockSparseMatrixData {
  public:
   BlockSparseMatrixData(const BlockSparseMatrix& m)
       : block_structure_(m.block_structure()), values_(m.values()){};
@@ -159,5 +160,7 @@ class BlockSparseMatrixData {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_BLOCK_SPARSE_MATRIX_H_

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -31,43 +31,6 @@
 #ifndef CERES_PUBLIC_INTERNAL_PORT_H_
 #define CERES_PUBLIC_INTERNAL_PORT_H_
 
-// This file needs to compile as c code.
-#include "ceres/internal/config.h"
-
-#if defined(CERES_USE_OPENMP)
-#if defined(CERES_USE_CXX_THREADS) || defined(CERES_NO_THREADS)
-#error CERES_USE_OPENMP is mutually exclusive to CERES_USE_CXX_THREADS and CERES_NO_THREADS
-#endif
-#elif defined(CERES_USE_CXX_THREADS)
-#if defined(CERES_USE_OPENMP) || defined(CERES_NO_THREADS)
-#error CERES_USE_CXX_THREADS is mutually exclusive to CERES_USE_OPENMP, CERES_USE_CXX_THREADS and CERES_NO_THREADS
-#endif
-#elif defined(CERES_NO_THREADS)
-#if defined(CERES_USE_OPENMP) || defined(CERES_USE_CXX_THREADS)
-#error CERES_NO_THREADS is mutually exclusive to CERES_USE_OPENMP and CERES_USE_CXX_THREADS
-#endif
-#else
-#  error One of CERES_USE_OPENMP, CERES_USE_CXX_THREADS or CERES_NO_THREADS must be defined.
-#endif
-
-// CERES_NO_SPARSE should be automatically defined by config.h if Ceres was
-// compiled without any sparse back-end.  Verify that it has not subsequently
-// been inconsistently redefined.
-#if defined(CERES_NO_SPARSE)
-#if !defined(CERES_NO_SUITESPARSE)
-#error CERES_NO_SPARSE requires CERES_NO_SUITESPARSE.
-#endif
-#if !defined(CERES_NO_CXSPARSE)
-#error CERES_NO_SPARSE requires CERES_NO_CXSPARSE
-#endif
-#if !defined(CERES_NO_ACCELERATE_SPARSE)
-#error CERES_NO_SPARSE requires CERES_NO_ACCELERATE_SPARSE
-#endif
-#if defined(CERES_USE_EIGEN_SPARSE)
-#error CERES_NO_SPARSE requires !CERES_USE_EIGEN_SPARSE
-#endif
-#endif
-
 // A macro to mark a function/variable/class as deprecated.
 // We use compiler specific attributes rather than the c++
 // attribute because they do not mix well with each other.
@@ -77,46 +40,7 @@
 #define CERES_DEPRECATED_WITH_MSG(message) __attribute__((deprecated(message)))
 #else
 // In the worst case fall back to c++ attribute.
-#define CERES_DEPRECATED(message) [[deprecated(message)]]
-#endif
-
-// A macro to signal which functions and classes are exported when
-// building a shared library.
-#if defined(_MSC_VER)
-#define CERES_API_SHARED_IMPORT __declspec(dllimport)
-#define CERES_API_SHARED_EXPORT __declspec(dllexport)
-#elif defined(__GNUC__)
-#define CERES_API_SHARED_IMPORT __attribute__((visibility("default")))
-#define CERES_API_SHARED_EXPORT __attribute__((visibility("default")))
-#else
-#define CERES_API_SHARED_IMPORT
-#define CERES_API_SHARED_EXPORT
-#endif
-
-// CERES_BUILDING_SHARED_LIBRARY is only defined locally when Ceres itself is
-// compiled as a shared library, it is never exported to users.  In order that
-// we do not have to configure config.h separately when building Ceres as either
-// a static or dynamic library, we define both CERES_USING_SHARED_LIBRARY and
-// CERES_BUILDING_SHARED_LIBRARY when building as a shared library.
-#if defined(CERES_USING_SHARED_LIBRARY)
-#if defined(CERES_BUILDING_SHARED_LIBRARY)
-// Compiling Ceres itself as a shared library.
-#define CERES_EXPORT CERES_API_SHARED_EXPORT
-#else
-// Using Ceres as a shared library.
-#define CERES_EXPORT CERES_API_SHARED_IMPORT
-#endif
-#else
-// Ceres was compiled as a static library, export everything.
-#define CERES_EXPORT
-#endif
-
-// Unit tests reach in and test internal functionality so we need a way to make
-// those symbols visible
-#ifdef CERES_EXPORT_INTERNAL_SYMBOLS
-#define CERES_EXPORT_INTERNAL CERES_EXPORT
-#else
-#define CERES_EXPORT_INTERNAL
+#define CERES_DEPRECATED_WITH_MSG(message) [[deprecated(message)]]
 #endif
 
 #ifndef CERES_GET_FLAG

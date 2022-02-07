@@ -37,6 +37,8 @@
 #include <memory>
 
 #include "ceres/dense_cholesky.h"
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 
 namespace ceres {
@@ -76,7 +78,8 @@ class DenseSparseMatrix;
 // library. This solver always returns a solution, it is the user's
 // responsibility to judge if the solution is good enough for their
 // purposes.
-class DenseNormalCholeskySolver : public DenseSparseMatrixSolver {
+class CERES_NO_EXPORT DenseNormalCholeskySolver
+    : public DenseSparseMatrixSolver {
  public:
   explicit DenseNormalCholeskySolver(const LinearSolver::Options& options);
 
@@ -93,5 +96,7 @@ class DenseNormalCholeskySolver : public DenseSparseMatrixSolver {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_DENSE_NORMAL_CHOLESKY_SOLVER_H_

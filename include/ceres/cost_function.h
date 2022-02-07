@@ -48,7 +48,7 @@
 #include <vector>
 
 #include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 
 namespace ceres {
 

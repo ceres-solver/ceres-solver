@@ -1,3 +1,4 @@
+#include "ceres/internal/export.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/manifold.h"
 #include "glog/logging.h"
@@ -8,7 +9,7 @@ namespace internal {
 // Adapter to wrap LocalParameterization and make them look like Manifolds.
 //
 // ManifoldAdapter NEVER takes ownership of local_parameterization.
-class ManifoldAdapter : public Manifold {
+class CERES_NO_EXPORT ManifoldAdapter : public Manifold {
  public:
   ManifoldAdapter(const LocalParameterization* local_parameterization)
       : local_parameterization_(local_parameterization) {

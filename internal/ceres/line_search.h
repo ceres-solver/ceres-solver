@@ -39,7 +39,7 @@
 
 #include "ceres/function_sample.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/types.h"
 
 namespace ceres {
@@ -58,11 +58,11 @@ class LineSearchFunction;
 // sufficient decrease condition. Depending on the particular
 // condition used, we get a variety of different line search
 // algorithms, e.g., Armijo, Wolfe etc.
-class LineSearch {
+class CERES_NO_EXPORT LineSearch {
  public:
   struct Summary;
 
-  struct Options {
+  struct CERES_NO_EXPORT Options {
     // Degree of the polynomial used to approximate the objective
     // function.
     LineSearchInterpolationType interpolation_type = CUBIC;
@@ -210,7 +210,7 @@ class LineSearch {
 // In practice, this object provides access to the objective
 // function value and the directional derivative of the underlying
 // optimization problem along a specific search direction.
-class LineSearchFunction {
+class CERES_NO_EXPORT LineSearchFunction {
  public:
   explicit LineSearchFunction(Evaluator* evaluator);
   void Init(const Vector& position, const Vector& direction);
@@ -259,7 +259,7 @@ class LineSearchFunction {
 // minFunc package by Mark Schmidt.
 //
 // For more details: http://www.di.ens.fr/~mschmidt/Software/minFunc.html
-class ArmijoLineSearch : public LineSearch {
+class CERES_NO_EXPORT ArmijoLineSearch : public LineSearch {
  public:
   explicit ArmijoLineSearch(const LineSearch::Options& options);
 
@@ -277,7 +277,7 @@ class ArmijoLineSearch : public LineSearch {
 //
 // [1] Nocedal J., Wright S., Numerical Optimization, 2nd Ed., Springer, 1999.
 // [2] http://www.di.ens.fr/~mschmidt/Software/minFunc.html.
-class WolfeLineSearch : public LineSearch {
+class CERES_NO_EXPORT WolfeLineSearch : public LineSearch {
  public:
   explicit WolfeLineSearch(const LineSearch::Options& options);
 

@@ -32,7 +32,7 @@
 #define CERES_INTERNAL_CXSPARSE_H_
 
 // This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/port.h"
+#include "ceres/internal/config.h"
 
 #ifndef CERES_NO_CXSPARSE
 
@@ -40,6 +40,7 @@
 #include <string>
 #include <vector>
 
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 #include "cs.h"
@@ -54,7 +55,7 @@ class TripletSparseMatrix;
 // factorization with a known symbolic factorization. This features does not
 // explicitly exist in CXSparse. The methods in the class are nonstatic because
 // the class manages internal scratch space.
-class CXSparse {
+class CERES_NO_EXPORT CXSparse {
  public:
   CXSparse();
   ~CXSparse();
@@ -138,7 +139,7 @@ class CXSparse {
 
 // An implementation of SparseCholesky interface using the CXSparse
 // library.
-class CXSparseCholesky : public SparseCholesky {
+class CERES_NO_EXPORT CXSparseCholesky : public SparseCholesky {
  public:
   // Factory
   static std::unique_ptr<SparseCholesky> Create(OrderingType ordering_type);
@@ -165,6 +166,8 @@ class CXSparseCholesky : public SparseCholesky {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #else
 

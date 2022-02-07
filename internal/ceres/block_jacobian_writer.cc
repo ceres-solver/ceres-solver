@@ -36,7 +36,7 @@
 #include "ceres/block_evaluate_preparer.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"

@@ -35,7 +35,7 @@
 #include <mutex>
 #include <string>
 
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/wall_time.h"
 
 namespace ceres {

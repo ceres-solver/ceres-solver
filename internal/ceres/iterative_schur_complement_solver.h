@@ -33,8 +33,9 @@
 
 #include <memory>
 
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 #include "ceres/types.h"
 
@@ -69,7 +70,7 @@ class Preconditioner;
 // a proof of this fact and others related to this solver please see
 // the section on Domain Decomposition Methods in Saad's book
 // "Iterative Methods for Sparse Linear Systems".
-class CERES_EXPORT_INTERNAL IterativeSchurComplementSolver
+class CERES_NO_EXPORT IterativeSchurComplementSolver
     : public BlockSparseMatrixSolver {
  public:
   explicit IterativeSchurComplementSolver(const LinearSolver::Options& options);
@@ -95,5 +96,7 @@ class CERES_EXPORT_INTERNAL IterativeSchurComplementSolver
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_ITERATIVE_SCHUR_COMPLEMENT_SOLVER_H_

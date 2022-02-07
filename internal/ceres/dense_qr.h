@@ -33,14 +33,16 @@
 
 // This include must come before any #ifndef check on Ceres compile options.
 // clang-format off
-#include "ceres/internal/port.h"
+#include "ceres/internal/config.h"
 // clang-format on
 
 #include <memory>
 #include <vector>
 
 #include "Eigen/Dense"
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 #include "glog/logging.h"
 
@@ -50,7 +52,7 @@ namespace internal {
 // An interface that abstracts away the internal details of various dense linear
 // algebra libraries and offers a simple API for solving dense linear systems
 // using a QR factorization.
-class CERES_EXPORT_INTERNAL DenseQR {
+class CERES_NO_EXPORT DenseQR {
  public:
   static std::unique_ptr<DenseQR> Create(const LinearSolver::Options& options);
 
@@ -96,7 +98,7 @@ class CERES_EXPORT_INTERNAL DenseQR {
                                              std::string* message);
 };
 
-class CERES_EXPORT_INTERNAL EigenDenseQR : public DenseQR {
+class CERES_NO_EXPORT EigenDenseQR : public DenseQR {
  public:
 
   LinearSolverTerminationType Factorize(int num_rows,
@@ -113,7 +115,7 @@ class CERES_EXPORT_INTERNAL EigenDenseQR : public DenseQR {
 };
 
 #ifndef CERES_NO_LAPACK
-class CERES_EXPORT_INTERNAL LAPACKDenseQR : public DenseQR {
+class CERES_NO_EXPORT LAPACKDenseQR : public DenseQR {
  public:
 
   LinearSolverTerminationType Factorize(int num_rows,
@@ -137,5 +139,7 @@ class CERES_EXPORT_INTERNAL LAPACKDenseQR : public DenseQR {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_DENSE_QR_H_

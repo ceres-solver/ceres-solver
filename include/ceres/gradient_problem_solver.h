@@ -36,6 +36,7 @@
 #include <vector>
 
 #include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/types.h"

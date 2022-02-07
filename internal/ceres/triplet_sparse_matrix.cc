@@ -34,7 +34,7 @@
 #include <memory>
 
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/random.h"
 #include "ceres/types.h"
 #include "glog/logging.h"

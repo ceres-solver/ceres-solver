@@ -36,7 +36,8 @@
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/context_impl.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/linear_operator.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
@@ -47,7 +48,7 @@ namespace internal {
 class BlockSparseMatrix;
 class SparseMatrix;
 
-class CERES_EXPORT_INTERNAL Preconditioner : public LinearOperator {
+class CERES_NO_EXPORT Preconditioner : public LinearOperator {
  public:
   struct Options {
     PreconditionerType type = JACOBI;
@@ -147,7 +148,7 @@ class CERES_EXPORT_INTERNAL Preconditioner : public LinearOperator {
 // other preconditioners that depend on the particular matrix layout of
 // the underlying linear operator.
 template <typename MatrixType>
-class TypedPreconditioner : public Preconditioner {
+class CERES_NO_EXPORT TypedPreconditioner : public Preconditioner {
  public:
   bool Update(const LinearOperator& A, const double* D) final {
     return UpdateImpl(*down_cast<const MatrixType*>(&A), D);
@@ -166,7 +167,8 @@ typedef TypedPreconditioner<CompressedRowSparseMatrix> CompressedRowSparseMatrix
 // clang-format on
 
 // Wrap a SparseMatrix object as a preconditioner.
-class SparseMatrixPreconditionerWrapper : public SparseMatrixPreconditioner {
+class CERES_NO_EXPORT SparseMatrixPreconditionerWrapper
+    : public SparseMatrixPreconditioner {
  public:
   // Wrapper does NOT take ownership of the matrix pointer.
   explicit SparseMatrixPreconditionerWrapper(const SparseMatrix* matrix);
@@ -183,5 +185,7 @@ class SparseMatrixPreconditionerWrapper : public SparseMatrixPreconditioner {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_PRECONDITIONER_H_

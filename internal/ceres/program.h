@@ -37,7 +37,8 @@
 #include <vector>
 
 #include "ceres/evaluation_callback.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 
 namespace ceres {
 namespace internal {
@@ -57,7 +58,7 @@ class TripletSparseMatrix;
 // another; for example, the first stage of solving involves stripping all
 // constant parameters and residuals. This is in contrast with Problem, which is
 // not built for transformation.
-class CERES_EXPORT_INTERNAL Program {
+class CERES_NO_EXPORT Program {
  public:
   // The ordered parameter and residual blocks for the program.
   const std::vector<ParameterBlock*>& parameter_blocks() const;
@@ -193,5 +194,7 @@ class CERES_EXPORT_INTERNAL Program {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_PROGRAM_H_

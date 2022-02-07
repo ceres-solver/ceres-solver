@@ -36,7 +36,7 @@
 #include "ceres/gradient_problem.h"
 #include "ceres/gradient_problem_evaluator.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/map_util.h"
 #include "ceres/minimizer.h"
 #include "ceres/solver.h"

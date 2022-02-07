@@ -36,7 +36,7 @@
 #include <string>
 #include <vector>
 
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 
 namespace ceres {
 namespace internal {

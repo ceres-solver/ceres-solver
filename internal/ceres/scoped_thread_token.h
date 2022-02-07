@@ -31,6 +31,7 @@
 #ifndef CERES_INTERNAL_SCOPED_THREAD_TOKEN_H_
 #define CERES_INTERNAL_SCOPED_THREAD_TOKEN_H_
 
+#include "ceres/internal/export.h"
 #include "ceres/thread_token_provider.h"
 
 namespace ceres {
@@ -38,7 +39,7 @@ namespace internal {
 
 // Helper class for ThreadTokenProvider. This object acquires a token in its
 // constructor and puts that token back with destruction.
-class ScopedThreadToken {
+class CERES_NO_EXPORT ScopedThreadToken {
  public:
   ScopedThreadToken(ThreadTokenProvider* provider)
       : provider_(provider), token_(provider->Acquire()) {}

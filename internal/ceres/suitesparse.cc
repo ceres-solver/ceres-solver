@@ -29,7 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 // This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/port.h"
+#include "ceres/internal/config.h"
 
 #ifndef CERES_NO_SUITESPARSE
 #include <memory>

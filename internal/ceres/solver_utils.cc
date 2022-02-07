@@ -34,7 +34,7 @@
 
 #include "Eigen/Core"
 #include "ceres/internal/config.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/version.h"
 #ifndef CERES_NO_CUDA
 #include "cuda_runtime.h"

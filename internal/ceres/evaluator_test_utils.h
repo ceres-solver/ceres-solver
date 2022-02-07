@@ -31,13 +31,13 @@
 //
 // Test utils used for evaluation testing.
 
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 
 namespace ceres {
 namespace internal {
 
 // Fixed sized struct for storing an evaluation.
-struct ExpectedEvaluation {
+struct CERES_NO_EXPORT ExpectedEvaluation {
   int num_rows;
   int num_cols;
   double cost;
@@ -47,16 +47,16 @@ struct ExpectedEvaluation {
 };
 
 // Compare two evaluations.
-CERES_EXPORT_INTERNAL void CompareEvaluations(int expected_num_rows,
-                                              int expected_num_cols,
-                                              double expected_cost,
-                                              const double* expected_residuals,
-                                              const double* expected_gradient,
-                                              const double* expected_jacobian,
-                                              const double actual_cost,
-                                              const double* actual_residuals,
-                                              const double* actual_gradient,
-                                              const double* actual_jacobian);
+CERES_NO_EXPORT void CompareEvaluations(int expected_num_rows,
+                                        int expected_num_cols,
+                                        double expected_cost,
+                                        const double* expected_residuals,
+                                        const double* expected_gradient,
+                                        const double* expected_jacobian,
+                                        const double actual_cost,
+                                        const double* actual_residuals,
+                                        const double* actual_gradient,
+                                        const double* actual_jacobian);
 
 }  // namespace internal
 }  // namespace ceres

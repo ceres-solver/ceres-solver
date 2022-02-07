@@ -36,6 +36,7 @@
 #include <cmath>
 
 #include "ceres/file.h"
+#include "ceres/internal/port.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
 #include "gflags/gflags.h"

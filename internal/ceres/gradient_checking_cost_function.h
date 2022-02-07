@@ -37,7 +37,8 @@
 #include <string>
 
 #include "ceres/cost_function.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/manifold.h"
 
@@ -48,7 +49,7 @@ class ProblemImpl;
 
 // Callback that collects information about gradient checking errors, and
 // will abort the solve as soon as an error occurs.
-class CERES_EXPORT_INTERNAL GradientCheckingIterationCallback
+class CERES_NO_EXPORT GradientCheckingIterationCallback
     : public IterationCallback {
  public:
   GradientCheckingIterationCallback();
@@ -74,7 +75,7 @@ class CERES_EXPORT_INTERNAL GradientCheckingIterationCallback
 // with finite differences. This API is only intended for unit tests that intend
 // to  check the functionality of the GradientCheckingCostFunction
 // implementation directly.
-CERES_EXPORT_INTERNAL std::unique_ptr<CostFunction>
+CERES_NO_EXPORT std::unique_ptr<CostFunction>
 CreateGradientCheckingCostFunction(
     const CostFunction* cost_function,
     const std::vector<const Manifold*>* manifolds,
@@ -102,13 +103,15 @@ CreateGradientCheckingCostFunction(
 // jacobians obtained by numerically differentiating them. See the
 // documentation of 'numeric_derivative_relative_step_size' in solver.h for a
 // better explanation.
-CERES_EXPORT_INTERNAL std::unique_ptr<ProblemImpl>
-CreateGradientCheckingProblemImpl(ProblemImpl* problem_impl,
-                                  double relative_step_size,
-                                  double relative_precision,
-                                  GradientCheckingIterationCallback* callback);
+CERES_NO_EXPORT std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(
+    ProblemImpl* problem_impl,
+    double relative_step_size,
+    double relative_precision,
+    GradientCheckingIterationCallback* callback);
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_GRADIENT_CHECKING_COST_FUNCTION_H_

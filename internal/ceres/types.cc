@@ -34,6 +34,7 @@
 #include <cctype>
 #include <string>
 
+#include "ceres/internal/config.h"
 #include "glog/logging.h"
 
 namespace ceres {
