@@ -35,7 +35,7 @@
 
 #include <utility>
 
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "glog/logging.h"
 
 namespace ceres {

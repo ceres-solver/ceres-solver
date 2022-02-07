@@ -40,7 +40,8 @@
 #include <vector>
 
 #include "ceres/cost_function.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
 
@@ -65,7 +66,7 @@ class ParameterBlock;
 //
 // The residual block stores pointers to but does not own the cost functions,
 // loss functions, and parameter blocks.
-class CERES_EXPORT_INTERNAL ResidualBlock {
+class CERES_NO_EXPORT ResidualBlock {
  public:
   // Construct the residual block with the given cost/loss functions. Loss may
   // be null. The index is the index of the residual block in the Program's
@@ -146,5 +147,7 @@ class CERES_EXPORT_INTERNAL ResidualBlock {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_RESIDUAL_BLOCK_H_

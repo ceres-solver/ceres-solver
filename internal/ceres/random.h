@@ -35,7 +35,7 @@
 #include <cmath>
 #include <cstdlib>
 
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 
 namespace ceres {
 

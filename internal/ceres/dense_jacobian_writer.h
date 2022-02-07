@@ -37,7 +37,9 @@
 
 #include "ceres/casts.h"
 #include "ceres/dense_sparse_matrix.h"
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/export.h"
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
@@ -46,7 +48,7 @@
 namespace ceres {
 namespace internal {
 
-class DenseJacobianWriter {
+class CERES_NO_EXPORT DenseJacobianWriter {
  public:
   DenseJacobianWriter(Evaluator::Options /* ignored */, Program* program)
       : program_(program) {}
@@ -103,5 +105,7 @@ class DenseJacobianWriter {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_DENSE_JACOBIAN_WRITER_H_

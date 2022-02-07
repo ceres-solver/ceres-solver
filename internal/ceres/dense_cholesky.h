@@ -33,7 +33,7 @@
 
 // This include must come before any #ifndef check on Ceres compile options.
 // clang-format off
-#include "ceres/internal/port.h"
+#include "ceres/internal/config.h"
 // clang-format on
 
 #include <memory>
@@ -54,7 +54,7 @@ namespace internal {
 // An interface that abstracts away the internal details of various dense linear
 // algebra libraries and offers a simple API for solving dense symmetric
 // positive definite linear systems using a Cholesky factorization.
-class CERES_EXPORT_INTERNAL DenseCholesky {
+class CERES_NO_EXPORT DenseCholesky {
  public:
   static std::unique_ptr<DenseCholesky> Create(
       const LinearSolver::Options& options);
@@ -100,7 +100,7 @@ class CERES_EXPORT_INTERNAL DenseCholesky {
                                              std::string* message);
 };
 
-class CERES_EXPORT_INTERNAL EigenDenseCholesky : public DenseCholesky {
+class CERES_NO_EXPORT EigenDenseCholesky : public DenseCholesky {
  public:
 
   LinearSolverTerminationType Factorize(int num_cols,
@@ -116,7 +116,7 @@ class CERES_EXPORT_INTERNAL EigenDenseCholesky : public DenseCholesky {
 };
 
 #ifndef CERES_NO_LAPACK
-class CERES_EXPORT_INTERNAL LAPACKDenseCholesky : public DenseCholesky {
+class CERES_NO_EXPORT LAPACKDenseCholesky : public DenseCholesky {
  public:
 
   LinearSolverTerminationType Factorize(int num_cols,
@@ -136,7 +136,7 @@ class CERES_EXPORT_INTERNAL LAPACKDenseCholesky : public DenseCholesky {
 #ifndef CERES_NO_CUDA
 // Implementation of DenseCholesky using the cuSolver library v.11.0 or older,
 // using the legacy cuSolverDn interface.
-class CERES_EXPORT_INTERNAL CUDADenseCholesky32Bit : public DenseCholesky {
+class CERES_NO_EXPORT CUDADenseCholesky32Bit : public DenseCholesky {
  public:
   static std::unique_ptr<CUDADenseCholesky32Bit> Create(
       const LinearSolver::Options& options);
@@ -181,7 +181,7 @@ class CERES_EXPORT_INTERNAL CUDADenseCholesky32Bit : public DenseCholesky {
 
 // Implementation of DenseCholesky using the cuSolver library v.11.1 or newer,
 // using the 64-bit cuSolverDn interface.
-class CERES_EXPORT_INTERNAL CUDADenseCholesky64Bit : public DenseCholesky {
+class CERES_NO_EXPORT CUDADenseCholesky64Bit : public DenseCholesky {
  public:
   static std::unique_ptr<CUDADenseCholesky64Bit> Create(
       const LinearSolver::Options& options);

@@ -41,7 +41,7 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/cost_function.h"
 #include "ceres/evaluator.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/loss_function.h"
 #include "ceres/manifold.h"
 #include "ceres/map_util.h"

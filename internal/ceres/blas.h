@@ -33,10 +33,12 @@
 #ifndef CERES_INTERNAL_BLAS_H_
 #define CERES_INTERNAL_BLAS_H_
 
+#include "ceres/internal/export.h"
+
 namespace ceres {
 namespace internal {
 
-class BLAS {
+class CERES_NO_EXPORT BLAS {
  public:
   // transpose = true  : c = alpha * a'a + beta * c;
   // transpose = false : c = alpha * aa' + beta * c;

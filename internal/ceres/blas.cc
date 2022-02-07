@@ -30,7 +30,8 @@
 
 #include "ceres/blas.h"
 
-#include "ceres/internal/port.h"
+#include "ceres/internal/config.h"
+#include "ceres/internal/export.h"
 #include "glog/logging.h"
 
 #ifndef CERES_NO_LAPACK

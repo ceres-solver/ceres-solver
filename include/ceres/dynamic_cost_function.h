@@ -32,6 +32,7 @@
 #define CERES_PUBLIC_DYNAMIC_COST_FUNCTION_H_
 
 #include "ceres/cost_function.h"
+#include "ceres/internal/disable_warnings.h"
 
 namespace ceres {
 
@@ -51,5 +52,7 @@ class CERES_EXPORT DynamicCostFunction : public CostFunction {
 };
 
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_PUBLIC_DYNAMIC_COST_FUNCTION_H_

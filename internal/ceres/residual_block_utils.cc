@@ -36,7 +36,7 @@
 
 #include "ceres/array_utils.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/parameter_block.h"
 #include "ceres/residual_block.h"
 #include "ceres/stringprintf.h"

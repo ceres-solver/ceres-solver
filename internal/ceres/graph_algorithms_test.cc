@@ -35,7 +35,7 @@
 #include <unordered_set>
 
 #include "ceres/graph.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "gtest/gtest.h"
 
 namespace ceres {

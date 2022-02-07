@@ -37,8 +37,9 @@
 #include <vector>
 
 #include "ceres/dynamic_cost_function.h"
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/fixed_array.h"
-#include "ceres/internal/port.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -101,7 +102,7 @@ namespace ceres {
 //  private:
 //   DynamicCostFunctionToFunctor intrinsic_projection_;
 // };
-class DynamicCostFunctionToFunctor {
+class CERES_EXPORT DynamicCostFunctionToFunctor {
  public:
   // Takes ownership of cost_function.
   explicit DynamicCostFunctionToFunctor(CostFunction* cost_function)
@@ -187,5 +188,7 @@ class DynamicCostFunctionToFunctor {
 };
 
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_PUBLIC_DYNAMIC_COST_FUNCTION_TO_FUNCTOR_H_

@@ -35,7 +35,7 @@
 #include <string>
 
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/is_close.h"
 #include "ceres/jet.h"
 #include "ceres/stringprintf.h"

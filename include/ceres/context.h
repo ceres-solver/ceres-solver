@@ -31,7 +31,7 @@
 #ifndef CERES_PUBLIC_CONTEXT_H_
 #define CERES_PUBLIC_CONTEXT_H_
 
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 
 namespace ceres {
 
@@ -41,7 +41,7 @@ namespace ceres {
 // Problems, either serially or in parallel. When using it with multiple
 // Problems at the same time, they may end up contending for resources
 // (e.g. threads) managed by the Context.
-class CERES_EXPORT_INTERNAL Context {
+class CERES_NO_EXPORT Context {
  public:
   Context();
   Context(const Context&) = delete;

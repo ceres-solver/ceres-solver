@@ -140,9 +140,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_AUTODIFF_H_
 #define CERES_PUBLIC_INTERNAL_AUTODIFF_H_
 
-#include <stddef.h>
-
 #include <array>
+#include <cstddef>
 #include <utility>
 
 #include "ceres/internal/array_selector.h"

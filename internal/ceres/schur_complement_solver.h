@@ -41,7 +41,7 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/dense_cholesky.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
 #include "ceres/types.h"
@@ -50,6 +50,8 @@
 #include "Eigen/OrderingMethods"
 #include "Eigen/SparseCholesky"
 #endif
+
+#include "ceres/internal/disable_warnings.h"
 
 namespace ceres {
 namespace internal {
@@ -108,8 +110,7 @@ class SparseCholesky;
 // set to DENSE_SCHUR and SPARSE_SCHUR
 // respectively. LinearSolver::Options::elimination_groups[0] should
 // be at least 1.
-class CERES_EXPORT_INTERNAL SchurComplementSolver
-    : public BlockSparseMatrixSolver {
+class CERES_NO_EXPORT SchurComplementSolver : public BlockSparseMatrixSolver {
  public:
   explicit SchurComplementSolver(const LinearSolver::Options& options);
   SchurComplementSolver(const SchurComplementSolver&) = delete;
@@ -147,7 +148,8 @@ class CERES_EXPORT_INTERNAL SchurComplementSolver
 };
 
 // Dense Cholesky factorization based solver.
-class DenseSchurComplementSolver : public SchurComplementSolver {
+class CERES_NO_EXPORT DenseSchurComplementSolver
+    : public SchurComplementSolver {
  public:
   explicit DenseSchurComplementSolver(const LinearSolver::Options& options);
   DenseSchurComplementSolver(const DenseSchurComplementSolver&) = delete;
@@ -165,7 +167,8 @@ class DenseSchurComplementSolver : public SchurComplementSolver {
 };
 
 // Sparse Cholesky factorization based solver.
-class SparseSchurComplementSolver : public SchurComplementSolver {
+class CERES_NO_EXPORT SparseSchurComplementSolver
+    : public SchurComplementSolver {
  public:
   explicit SparseSchurComplementSolver(const LinearSolver::Options& options);
   SparseSchurComplementSolver(const SparseSchurComplementSolver&) = delete;
@@ -189,5 +192,7 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_SCHUR_COMPLEMENT_SOLVER_H_

@@ -41,7 +41,7 @@
 #include "ceres/dense_jacobian_writer.h"
 #include "ceres/dynamic_compressed_row_finalizer.h"
 #include "ceres/dynamic_compressed_row_jacobian_writer.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/program_evaluator.h"
 #include "ceres/scratch_evaluate_preparer.h"
 #include "glog/logging.h"

@@ -43,7 +43,7 @@
 #include "ceres/dense_qr_solver.h"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/evaluator.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
 #include "ceres/problem.h"

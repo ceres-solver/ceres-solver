@@ -29,7 +29,7 @@
 // Author: vitus@google.com (Michael Vitus)
 
 // This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/port.h"
+#include "ceres/internal/config.h"
 
 #ifdef CERES_USE_CXX_THREADS
 

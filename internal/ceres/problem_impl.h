@@ -47,6 +47,8 @@
 #include <vector>
 
 #include "ceres/context_impl.h"
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 #include "ceres/manifold.h"
 #include "ceres/problem.h"
@@ -65,7 +67,7 @@ namespace internal {
 class Program;
 class ResidualBlock;
 
-class CERES_EXPORT_INTERNAL ProblemImpl {
+class CERES_NO_EXPORT ProblemImpl {
  public:
   typedef std::map<double*, ParameterBlock*> ParameterMap;
   typedef std::unordered_set<ResidualBlock*> ResidualBlockSet;
@@ -249,5 +251,7 @@ class CERES_EXPORT_INTERNAL ProblemImpl {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_PUBLIC_PROBLEM_IMPL_H_

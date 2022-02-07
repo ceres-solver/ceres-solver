@@ -34,7 +34,7 @@
 #include <numeric>
 
 #include "Eigen/SparseCore"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"

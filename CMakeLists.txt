@@ -501,12 +501,6 @@ endif()
 
 if (BUILD_SHARED_LIBS)
   message("-- Building Ceres as a shared library.")
-  # The CERES_BUILDING_SHARED_LIBRARY compile definition is NOT stored in
-  # CERES_COMPILE_OPTIONS as it must only be defined when Ceres is compiled
-  # not when it is used as it controls the CERES_EXPORT macro which provides
-  # symbol import/export support.
-  add_definitions(-DCERES_BUILDING_SHARED_LIBRARY)
-  list(APPEND CERES_COMPILE_OPTIONS CERES_USING_SHARED_LIBRARY)
 else (BUILD_SHARED_LIBS)
   message("-- Building Ceres as a static library.")
 endif (BUILD_SHARED_LIBS)
@@ -672,7 +666,7 @@ add_compile_options(
 list(REMOVE_DUPLICATES CERES_COMPILE_OPTIONS)
 include(CreateCeresConfig)
 create_ceres_config("${CERES_COMPILE_OPTIONS}"
-  ${Ceres_BINARY_DIR}/config/ceres/internal)
+  ${Ceres_BINARY_DIR}/include/ceres/internal)
 
 add_subdirectory(internal/ceres)
 
@@ -707,9 +701,9 @@ file(GLOB CERES_PUBLIC_INTERNAL_HDRS ${Ceres_SOURCE_DIR}/include/ceres/internal/
 install(FILES ${CERES_PUBLIC_INTERNAL_HDRS} DESTINATION include/ceres/internal)
 
 # Also setup installation of Ceres config.h configured with the current
-# build options into the installed headers directory.
-install(FILES ${Ceres_BINARY_DIR}/config/ceres/internal/config.h
-        DESTINATION include/ceres/internal)
+# build options and export.h into the installed headers directory.
+install(DIRECTORY ${Ceres_BINARY_DIR}/include/
+        DESTINATION include)
 
 if (MINIGLOG)
   # Install miniglog header if being used as logging #includes appear in
