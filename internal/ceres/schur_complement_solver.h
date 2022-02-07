@@ -111,16 +111,10 @@ class SparseCholesky;
 class CERES_EXPORT_INTERNAL SchurComplementSolver
     : public BlockSparseMatrixSolver {
  public:
-  explicit SchurComplementSolver(const LinearSolver::Options& options)
-      : options_(options) {
-    CHECK_GT(options.elimination_groups.size(), 1);
-    CHECK_GT(options.elimination_groups[0], 0);
-    CHECK(options.context != NULL);
-  }
+  explicit SchurComplementSolver(const LinearSolver::Options& options);
   SchurComplementSolver(const SchurComplementSolver&) = delete;
   void operator=(const SchurComplementSolver&) = delete;
 
-  // LinearSolver methods
   ~SchurComplementSolver() override;
   LinearSolver::Summary SolveImpl(
       BlockSparseMatrix* A,

@@ -114,6 +114,16 @@ class BlockRandomAccessDiagonalMatrixAdapter : public LinearOperator {
 
 }  // namespace
 
+SchurComplementSolver::SchurComplementSolver(
+    const LinearSolver::Options& options)
+    : options_(options) {
+  CHECK_GT(options.elimination_groups.size(), 1);
+  CHECK_GT(options.elimination_groups[0], 0);
+  CHECK(options.context != NULL);
+}
+
+SchurComplementSolver::~SchurComplementSolver() {}
+
 LinearSolver::Summary SchurComplementSolver::SolveImpl(
     BlockSparseMatrix* A,
     const double* b,
