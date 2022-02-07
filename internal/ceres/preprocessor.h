@@ -38,6 +38,7 @@
 #include "ceres/coordinate_descent_minimizer.h"
 #include "ceres/evaluator.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/linear_solver.h"
@@ -67,7 +68,7 @@ struct PreprocessedProblem;
 //
 // The output of the Preprocessor is stored in a PreprocessedProblem
 // object.
-class CERES_EXPORT_INTERNAL Preprocessor {
+class CERES_NO_EXPORT Preprocessor {
  public:
   // Factory.
   static Preprocessor* Create(MinimizerType minimizer_type);
@@ -79,7 +80,7 @@ class CERES_EXPORT_INTERNAL Preprocessor {
 
 // A PreprocessedProblem is the result of running the Preprocessor on
 // a Problem and Solver::Options object.
-struct PreprocessedProblem {
+struct CERES_NO_EXPORT PreprocessedProblem {
   PreprocessedProblem() : fixed_cost(0.0) {}
 
   std::string error;
@@ -108,11 +109,13 @@ struct PreprocessedProblem {
 // If the user has specified a num_threads > the maximum number of threads
 // available from the compiled threading model, bound the number of threads
 // to the maximum.
+CERES_NO_EXPORT
 void ChangeNumThreadsIfNeeded(Solver::Options* options);
 
 // Extract the effective parameter vector from the preprocessed
 // problem and setup bits of the Minimizer::Options object that are
 // common to all Preprocessors.
+CERES_NO_EXPORT
 void SetupCommonMinimizerOptions(PreprocessedProblem* pp);
 
 }  // namespace internal

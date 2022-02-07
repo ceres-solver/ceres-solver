@@ -57,6 +57,8 @@ DenseSparseMatrix::DenseSparseMatrix(const TripletSparseMatrix& m)
 
 DenseSparseMatrix::DenseSparseMatrix(const Matrix& m) : m_(m) {}
 
+DenseSparseMatrix::~DenseSparseMatrix() = default;
+
 void DenseSparseMatrix::SetZero() { m_.setZero(); }
 
 void DenseSparseMatrix::RightMultiply(const double* x, double* y) const {

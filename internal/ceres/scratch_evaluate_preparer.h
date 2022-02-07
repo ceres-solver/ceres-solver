@@ -37,6 +37,8 @@
 
 #include <memory>
 
+#include "ceres/internal/export.h"
+
 namespace ceres {
 namespace internal {
 
@@ -44,7 +46,7 @@ class Program;
 class ResidualBlock;
 class SparseMatrix;
 
-class ScratchEvaluatePreparer {
+class CERES_NO_EXPORT ScratchEvaluatePreparer {
  public:
   // Create num_threads ScratchEvaluatePreparers.
   static ScratchEvaluatePreparer* Create(const Program& program,

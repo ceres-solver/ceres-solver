@@ -43,6 +43,7 @@
 #include <utility>
 #include <vector>
 
+#include "ceres/internal/export.h"
 #include "ceres/preconditioner.h"
 
 namespace ceres {
@@ -72,7 +73,8 @@ class SchurEliminatorBase;
 //   preconditioner.Update(A, NULL);
 //   preconditioner.RightMultiply(x, y);
 //
-class SchurJacobiPreconditioner : public BlockSparseMatrixPreconditioner {
+class CERES_NO_EXPORT SchurJacobiPreconditioner
+    : public BlockSparseMatrixPreconditioner {
  public:
   // Initialize the symbolic structure of the preconditioner. bs is
   // the block structure of the linear system to be solved. It is used

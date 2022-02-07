@@ -34,6 +34,8 @@
 #include <memory>
 
 #include "ceres/block_random_access_diagonal_matrix.h"
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 #include "ceres/preconditioner.h"
 
@@ -53,7 +55,7 @@ struct CompressedRowBlockStructure;
 // update the matrix by running Update(A, D). The values of the matrix A are
 // inspected to construct the preconditioner. The vector D is applied as the
 // D^TD diagonal term.
-class CERES_EXPORT_INTERNAL BlockJacobiPreconditioner
+class CERES_NO_EXPORT BlockJacobiPreconditioner
     : public BlockSparseMatrixPreconditioner {
  public:
   // A must remain valid while the BlockJacobiPreconditioner is.
@@ -77,5 +79,7 @@ class CERES_EXPORT_INTERNAL BlockJacobiPreconditioner
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_BLOCK_JACOBI_PRECONDITIONER_H_

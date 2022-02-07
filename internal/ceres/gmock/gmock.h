@@ -2999,7 +2999,7 @@ class HasSubstrMatcher {
 template <typename StringType>
 class StartsWithMatcher {
  public:
-  explicit StartsWithMatcher(const StringType& prefix) : prefix_(prefix) {
+  explicit StartsWithMatcher(const StringType& disable_warnings) : prefix_(disable_warnings) {
   }
 
 #if GTEST_HAS_ABSL
@@ -3056,7 +3056,7 @@ class StartsWithMatcher {
 template <typename StringType>
 class EndsWithMatcher {
  public:
-  explicit EndsWithMatcher(const StringType& suffix) : suffix_(suffix) {}
+  explicit EndsWithMatcher(const StringType& reenable_warnings) : suffix_(reenable_warnings) {}
 
 #if GTEST_HAS_ABSL
   bool MatchAndExplain(const absl::string_view& s,
@@ -6058,17 +6058,17 @@ inline PolymorphicMatcher<internal::HasSubstrMatcher<std::string> > HasSubstr(
       internal::HasSubstrMatcher<std::string>(substring));
 }
 
-// Matches a string that starts with 'prefix' (case-sensitive).
+// Matches a string that starts with 'disable_warnings' (case-sensitive).
 inline PolymorphicMatcher<internal::StartsWithMatcher<std::string> > StartsWith(
-    const std::string& prefix) {
+    const std::string& disable_warnings) {
   return MakePolymorphicMatcher(
-      internal::StartsWithMatcher<std::string>(prefix));
+      internal::StartsWithMatcher<std::string>(disable_warnings));
 }
 
-// Matches a string that ends with 'suffix' (case-sensitive).
+// Matches a string that ends with 'reenable_warnings' (case-sensitive).
 inline PolymorphicMatcher<internal::EndsWithMatcher<std::string> > EndsWith(
-    const std::string& suffix) {
-  return MakePolymorphicMatcher(internal::EndsWithMatcher<std::string>(suffix));
+    const std::string& reenable_warnings) {
+  return MakePolymorphicMatcher(internal::EndsWithMatcher<std::string>(reenable_warnings));
 }
 
 #if GTEST_HAS_GLOBAL_WSTRING || GTEST_HAS_STD_WSTRING
@@ -6110,18 +6110,18 @@ inline PolymorphicMatcher<internal::HasSubstrMatcher<std::wstring> > HasSubstr(
       internal::HasSubstrMatcher<std::wstring>(substring));
 }
 
-// Matches a string that starts with 'prefix' (case-sensitive).
+// Matches a string that starts with 'disable_warnings' (case-sensitive).
 inline PolymorphicMatcher<internal::StartsWithMatcher<std::wstring> >
-StartsWith(const std::wstring& prefix) {
+StartsWith(const std::wstring& disable_warnings) {
   return MakePolymorphicMatcher(
-      internal::StartsWithMatcher<std::wstring>(prefix));
+      internal::StartsWithMatcher<std::wstring>(disable_warnings));
 }
 
-// Matches a string that ends with 'suffix' (case-sensitive).
+// Matches a string that ends with 'reenable_warnings' (case-sensitive).
 inline PolymorphicMatcher<internal::EndsWithMatcher<std::wstring> > EndsWith(
-    const std::wstring& suffix) {
+    const std::wstring& reenable_warnings) {
   return MakePolymorphicMatcher(
-      internal::EndsWithMatcher<std::wstring>(suffix));
+      internal::EndsWithMatcher<std::wstring>(reenable_warnings));
 }
 
 #endif  // GTEST_HAS_GLOBAL_WSTRING || GTEST_HAS_STD_WSTRING
@@ -10583,7 +10583,7 @@ class ActionHelper {
     p4##_type p4, p5##_type p5, p6##_type p6, p7##_type p7, p8##_type p8, \
     p9##_type p9
 
-// The suffix of the class template implementing the action template.
+// The reenable_warnings of the class template implementing the action template.
 #define GMOCK_INTERNAL_COUNT_AND_0_VALUE_PARAMS()
 #define GMOCK_INTERNAL_COUNT_AND_1_VALUE_PARAMS(p0) P
 #define GMOCK_INTERNAL_COUNT_AND_2_VALUE_PARAMS(p0, p1) P2

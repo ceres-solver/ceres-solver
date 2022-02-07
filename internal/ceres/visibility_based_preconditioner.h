@@ -124,7 +124,8 @@ class SchurEliminatorBase;
 //      *A.block_structure(), options);
 //   preconditioner.Update(A, NULL);
 //   preconditioner.RightMultiply(x, y);
-class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
+class CERES_NO_EXPORT VisibilityBasedPreconditioner
+    : public BlockSparseMatrixPreconditioner {
  public:
   // Initialize the symbolic structure of the preconditioner. bs is
   // the block structure of the linear system to be solved. It is used

@@ -710,5 +710,7 @@ bool DoglegStrategy::ComputeSubspaceModel(SparseMatrix* jacobian) {
   return true;
 }
 
+DoglegStrategy::~DoglegStrategy() {}
+
 }  // namespace internal
 }  // namespace ceres

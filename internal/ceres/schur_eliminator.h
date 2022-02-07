@@ -40,7 +40,9 @@
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 #include "ceres/linear_solver.h"
 
@@ -163,9 +165,9 @@ namespace internal {
 // 2008 for an example of such use].
 //
 // Example usage: Please see schur_complement_solver.cc
-class CERES_EXPORT_INTERNAL SchurEliminatorBase {
+class CERES_NO_EXPORT SchurEliminatorBase {
  public:
-  virtual ~SchurEliminatorBase() {}
+  virtual ~SchurEliminatorBase();
 
   // Initialize the eliminator. It is the user's responsibilty to call
   // this function before calling Eliminate or BackSubstitute. It is
@@ -222,7 +224,7 @@ class CERES_EXPORT_INTERNAL SchurEliminatorBase {
 template <int kRowBlockSize = Eigen::Dynamic,
           int kEBlockSize = Eigen::Dynamic,
           int kFBlockSize = Eigen::Dynamic>
-class SchurEliminator : public SchurEliminatorBase {
+class CERES_NO_EXPORT SchurEliminator : public SchurEliminatorBase {
  public:
   explicit SchurEliminator(const LinearSolver::Options& options)
       : num_threads_(options.num_threads), context_(options.context) {
@@ -377,7 +379,7 @@ class SchurEliminator : public SchurEliminatorBase {
 template <int kRowBlockSize = Eigen::Dynamic,
           int kEBlockSize = Eigen::Dynamic,
           int kFBlockSize = Eigen::Dynamic>
-class SchurEliminatorForOneFBlock : public SchurEliminatorBase {
+class CERES_NO_EXPORT SchurEliminatorForOneFBlock : public SchurEliminatorBase {
  public:
   virtual ~SchurEliminatorForOneFBlock() {}
   void Init(int num_eliminate_blocks,
@@ -622,5 +624,7 @@ class SchurEliminatorForOneFBlock : public SchurEliminatorBase {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_SCHUR_ELIMINATOR_H_

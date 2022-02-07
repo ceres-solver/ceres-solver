@@ -37,6 +37,7 @@
 #include <vector>
 
 #include "ceres/evaluator.h"
+#include "ceres/internal/export.h"
 #include "ceres/scratch_evaluate_preparer.h"
 
 namespace ceres {
@@ -46,7 +47,7 @@ class CompressedRowSparseMatrix;
 class Program;
 class SparseMatrix;
 
-class CompressedRowJacobianWriter {
+class CERES_NO_EXPORT CompressedRowJacobianWriter {
  public:
   CompressedRowJacobianWriter(Evaluator::Options /* ignored */,
                               Program* program)

@@ -35,7 +35,7 @@
 
 #include <mutex>
 
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 
 namespace ceres {
 namespace internal {
@@ -85,7 +85,7 @@ namespace internal {
 
 // Structure to carry a pointer to the array containing a cell and the
 // mutex guarding it.
-struct CellInfo {
+struct CERES_NO_EXPORT CellInfo {
   CellInfo() : values(nullptr) {}
   explicit CellInfo(double* values) : values(values) {}
 
@@ -93,7 +93,7 @@ struct CellInfo {
   std::mutex m;
 };
 
-class CERES_EXPORT_INTERNAL BlockRandomAccessMatrix {
+class CERES_NO_EXPORT BlockRandomAccessMatrix {
  public:
   virtual ~BlockRandomAccessMatrix();
 

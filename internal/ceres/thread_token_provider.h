@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_THREAD_TOKEN_PROVIDER_H_
 
 #include "ceres/internal/config.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 
 #ifdef CERES_USE_CXX_THREADS
@@ -66,7 +67,7 @@ namespace internal {
 //    ttp.Release(token); // return token to the pool
 //  }
 //
-class ThreadTokenProvider {
+class CERES_NO_EXPORT ThreadTokenProvider {
  public:
   ThreadTokenProvider(int num_threads);
 

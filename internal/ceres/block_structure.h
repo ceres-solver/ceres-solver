@@ -41,6 +41,7 @@
 #include <cstdint>
 #include <vector>
 
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 
 namespace ceres {
@@ -48,7 +49,7 @@ namespace internal {
 
 typedef int32_t BlockSize;
 
-struct Block {
+struct CERES_NO_EXPORT Block {
   Block() : size(-1), position(-1) {}
   Block(int size_, int position_) : size(size_), position(position_) {}
 
@@ -56,7 +57,7 @@ struct Block {
   int position;  // Position along the row/column.
 };
 
-struct Cell {
+struct CERES_NO_EXPORT Cell {
   Cell() : block_id(-1), position(-1) {}
   Cell(int block_id_, int position_)
       : block_id(block_id_), position(position_) {}
@@ -68,9 +69,9 @@ struct Cell {
 };
 
 // Order cell by their block_id;
-bool CellLessThan(const Cell& lhs, const Cell& rhs);
+bool CERES_NO_EXPORT CellLessThan(const Cell& lhs, const Cell& rhs);
 
-struct CompressedList {
+struct CERES_NO_EXPORT CompressedList {
   CompressedList() {}
 
   // Construct a CompressedList with the cells containing num_cells
@@ -83,12 +84,12 @@ struct CompressedList {
 typedef CompressedList CompressedRow;
 typedef CompressedList CompressedColumn;
 
-struct CompressedRowBlockStructure {
+struct CERES_NO_EXPORT CompressedRowBlockStructure {
   std::vector<Block> cols;
   std::vector<CompressedRow> rows;
 };
 
-struct CompressedColumnBlockStructure {
+struct CERES_NO_EXPORT CompressedColumnBlockStructure {
   std::vector<Block> rows;
   std::vector<CompressedColumn> cols;
 };

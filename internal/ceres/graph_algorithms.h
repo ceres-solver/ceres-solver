@@ -40,6 +40,7 @@
 #include <vector>
 
 #include "ceres/graph.h"
+#include "ceres/internal/export.h"
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
 
@@ -49,7 +50,7 @@ namespace internal {
 // Compare two vertices of a graph by their degrees, if the degrees
 // are equal then order them by their ids.
 template <typename Vertex>
-class VertexTotalOrdering {
+class CERES_NO_EXPORT VertexTotalOrdering {
  public:
   explicit VertexTotalOrdering(const Graph<Vertex>& graph) : graph_(graph) {}
 

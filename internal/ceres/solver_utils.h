@@ -34,6 +34,7 @@
 #include <algorithm>
 #include <string>
 
+#include "ceres/internal/export.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/types.h"
 
@@ -58,6 +59,7 @@ void SetSummaryFinalCost(SummaryType* summary) {
   }
 }
 
+CERES_NO_EXPORT
 std::string VersionString();
 
 }  // namespace internal

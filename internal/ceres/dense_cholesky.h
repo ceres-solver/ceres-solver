@@ -48,7 +48,7 @@ namespace internal {
 // An interface that abstracts away the internal details of various dense linear
 // algebra libraries and offers a simple API for solving dense symmetric
 // positive definite linear systems using a Cholesky factorization.
-class CERES_EXPORT_INTERNAL DenseCholesky {
+class CERES_NO_EXPORT DenseCholesky {
  public:
   static std::unique_ptr<DenseCholesky> Create(
       const LinearSolver::Options& options);
@@ -94,7 +94,7 @@ class CERES_EXPORT_INTERNAL DenseCholesky {
                                              std::string* message);
 };
 
-class CERES_EXPORT_INTERNAL EigenDenseCholesky : public DenseCholesky {
+class CERES_NO_EXPORT EigenDenseCholesky : public DenseCholesky {
  public:
   ~EigenDenseCholesky() override = default;
 
@@ -111,7 +111,7 @@ class CERES_EXPORT_INTERNAL EigenDenseCholesky : public DenseCholesky {
 };
 
 #ifndef CERES_NO_LAPACK
-class CERES_EXPORT_INTERNAL LAPACKDenseCholesky : public DenseCholesky {
+class CERES_NO_EXPORT LAPACKDenseCholesky : public DenseCholesky {
  public:
   ~LAPACKDenseCholesky() override = default;
 

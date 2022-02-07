@@ -45,6 +45,7 @@
 
 #include <string>
 
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 
 namespace ceres {
@@ -53,6 +54,7 @@ namespace internal {
 class ResidualBlock;
 
 // Invalidate cost, resdual and jacobian arrays (if not NULL).
+CERES_NO_EXPORT
 void InvalidateEvaluation(const ResidualBlock& block,
                           double* cost,
                           double* residuals,
@@ -60,6 +62,7 @@ void InvalidateEvaluation(const ResidualBlock& block,
 
 // Check if any of the arrays cost, residuals or jacobians contains an
 // NaN, return true if it does.
+CERES_NO_EXPORT
 bool IsEvaluationValid(const ResidualBlock& block,
                        double const* const* parameters,
                        double* cost,
@@ -69,6 +72,7 @@ bool IsEvaluationValid(const ResidualBlock& block,
 // Create a string representation of the Residual block containing the
 // value of the parameters, residuals and jacobians if present.
 // Useful for debugging output.
+CERES_NO_EXPORT
 std::string EvaluationToString(const ResidualBlock& block,
                                double const* const* parameters,
                                double* cost,

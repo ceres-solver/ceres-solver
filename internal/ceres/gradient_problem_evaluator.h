@@ -37,13 +37,15 @@
 #include "ceres/evaluator.h"
 #include "ceres/execution_summary.h"
 #include "ceres/gradient_problem.h"
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 #include "ceres/wall_time.h"
 
 namespace ceres {
 namespace internal {
 
-class GradientProblemEvaluator : public Evaluator {
+class CERES_NO_EXPORT GradientProblemEvaluator : public Evaluator {
  public:
   explicit GradientProblemEvaluator(const GradientProblem& problem)
       : problem_(problem) {}
@@ -95,5 +97,7 @@ class GradientProblemEvaluator : public Evaluator {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_GRADIENT_PROBLEM_EVALUATOR_H_

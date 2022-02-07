@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,16 @@
 // Disable the warning C4251 which is triggered by stl classes in
 // Ceres' public interface. To quote MSDN: "C4251 can be ignored "
 // "if you are deriving from a type in the Standard C++ Library"
-#pragma warning(disable : 4251)
-#endif
+#pragma warning(disable : 4275 4251 4231)
+#elif defined(__clang__)
+#pragma clang diagnostic push
+#elif defined(__GNUC__)
+#if (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 6)
+#pragma GCC diagnostic push
+#if (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 8)
+#pragma GCC diagnostic ignored "-Wpedantic"
+#endif  // (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 8)
+#endif  // (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 6)
+#endif  // defined(_MSC_VER)
 
 #endif  // CERES_WARNINGS_DISABLED

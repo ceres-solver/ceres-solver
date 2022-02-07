@@ -48,7 +48,7 @@ static constexpr unsigned int kRandomSeed = 1234;
 // y1 = x1'x2      -> dy1/dx1 = x2,               dy1/dx2 = x1
 // y2 = (x1'x2)^2  -> dy2/dx1 = 2 * x2 * (x1'x2), dy2/dx2 = 2 * x1 * (x1'x2)
 // y3 = x2'x2      -> dy3/dx1 = 0,                dy3/dx2 = 2 * x2
-class CERES_EXPORT_INTERNAL EasyFunctor {
+class CERES_EXPORT EasyFunctor {
  public:
   bool operator()(const double* x1, const double* x2, double* residuals) const;
   void ExpectCostFunctionEvaluationIsNearlyCorrect(
@@ -79,7 +79,7 @@ class CERES_EXPORT TranscendentalFunctor {
       const CostFunction& cost_function, NumericDiffMethodType method) const;
 };
 
-class CERES_EXPORT_INTERNAL TranscendentalCostFunction
+class CERES_EXPORT TranscendentalCostFunction
     : public SizedCostFunction<2, 5, 5> {
  public:
   bool Evaluate(double const* const* parameters,
@@ -93,7 +93,7 @@ class CERES_EXPORT_INTERNAL TranscendentalCostFunction
 };
 
 // y = exp(x), dy/dx = exp(x)
-class CERES_EXPORT_INTERNAL ExponentialFunctor {
+class CERES_EXPORT ExponentialFunctor {
  public:
   bool operator()(const double* x1, double* residuals) const;
   void ExpectCostFunctionEvaluationIsNearlyCorrect(
@@ -115,7 +115,7 @@ class ExponentialCostFunction : public SizedCostFunction<1, 1> {
 // Test adaptive numeric differentiation by synthetically adding random noise
 // to a functor.
 // y = x^2 + [random noise], dy/dx ~ 2x
-class CERES_EXPORT_INTERNAL RandomizedFunctor {
+class CERES_EXPORT RandomizedFunctor {
  public:
   RandomizedFunctor(double noise_factor, unsigned int random_seed)
       : noise_factor_(noise_factor), random_seed_(random_seed) {}
@@ -129,8 +129,7 @@ class CERES_EXPORT_INTERNAL RandomizedFunctor {
   unsigned int random_seed_;
 };
 
-class CERES_EXPORT_INTERNAL RandomizedCostFunction
-    : public SizedCostFunction<1, 1> {
+class CERES_EXPORT RandomizedCostFunction : public SizedCostFunction<1, 1> {
  public:
   RandomizedCostFunction(double noise_factor, unsigned int random_seed)
       : functor_(noise_factor, random_seed) {}

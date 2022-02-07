@@ -31,7 +31,9 @@
 #ifndef CERES_INTERNAL_LEVENBERG_MARQUARDT_STRATEGY_H_
 #define CERES_INTERNAL_LEVENBERG_MARQUARDT_STRATEGY_H_
 
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 #include "ceres/trust_region_strategy.h"
 
@@ -43,8 +45,7 @@ namespace internal {
 // K. Madsen, H.B. Nielsen and O. Tingleff. Available to download from
 //
 // http://www2.imm.dtu.dk/pubdb/views/edoc_download.php/3215/pdf/imm3215.pdf
-class CERES_EXPORT_INTERNAL LevenbergMarquardtStrategy
-    : public TrustRegionStrategy {
+class CERES_NO_EXPORT LevenbergMarquardtStrategy : public TrustRegionStrategy {
  public:
   explicit LevenbergMarquardtStrategy(
       const TrustRegionStrategy::Options& options);
@@ -85,5 +86,7 @@ class CERES_EXPORT_INTERNAL LevenbergMarquardtStrategy
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_LEVENBERG_MARQUARDT_STRATEGY_H_

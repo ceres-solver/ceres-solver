@@ -32,11 +32,10 @@
 #define CERES_INTERNAL_CONTEXT_IMPL_H_
 
 // This include must come before any #ifndef check on Ceres compile options.
-// clang-format off
-#include "ceres/internal/port.h"
-// clanf-format on
-
 #include "ceres/context.h"
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
+#include "ceres/internal/port.h"
 
 #ifdef CERES_USE_CXX_THREADS
 #include "ceres/thread_pool.h"
@@ -45,13 +44,13 @@
 namespace ceres {
 namespace internal {
 
-class CERES_EXPORT_INTERNAL ContextImpl : public Context {
+class CERES_NO_EXPORT ContextImpl : public Context {
  public:
   ContextImpl() {}
   ContextImpl(const ContextImpl&) = delete;
   void operator=(const ContextImpl&) = delete;
 
-  virtual ~ContextImpl() {}
+  virtual ~ContextImpl();
 
   // When compiled with C++ threading support, resize the thread pool to have
   // at min(num_thread, num_hardware_threads) where num_hardware_threads is
@@ -65,5 +64,7 @@ class CERES_EXPORT_INTERNAL ContextImpl : public Context {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_CONTEXT_IMPL_H_

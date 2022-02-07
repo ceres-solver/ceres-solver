@@ -28,6 +28,17 @@
 #
 # Author: keir@google.com (Keir Mierle)
 
+# Always build position-independent code (PIC), even when building Ceres as a
+# static library so that shared libraries can link against it, not just
+# executables (PIC does not apply on Windows). Can be overriden by the user
+# whereas target properties cannot.
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+# Set the default symbol visibility to hidden to unify the behavior among
+# the various compilers and to get smaller binaries
+set(CMAKE_C_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
+
 # Avoid 'xxx.cc has no symbols' warnings from source files which are 'empty'
 # when their enclosing #ifdefs are disabled.
 if (CERES_THREADING_MODEL STREQUAL "CXX_THREADS")
@@ -43,110 +54,18 @@ elseif (CERES_THREADING_MODEL STREQUAL "NO_THREADS")
 endif()
 
 set(CERES_INTERNAL_SRC
-    ${CERES_PARALLEL_FOR_SRC}
-    accelerate_sparse.cc
-    array_utils.cc
-    blas.cc
-    block_evaluate_preparer.cc
-    block_jacobi_preconditioner.cc
-    block_jacobian_writer.cc
-    block_random_access_dense_matrix.cc
-    block_random_access_diagonal_matrix.cc
-    block_random_access_matrix.cc
-    block_random_access_sparse_matrix.cc
-    block_sparse_matrix.cc
-    block_structure.cc
     c_api.cc
-    canonical_views_clustering.cc
-    cgnr_solver.cc
-    callbacks.cc
-    compressed_col_sparse_matrix_utils.cc
-    compressed_row_jacobian_writer.cc
-    compressed_row_sparse_matrix.cc
-    conditioned_cost_function.cc
-    conjugate_gradients_solver.cc
-    context.cc
-    context_impl.cc
-    coordinate_descent_minimizer.cc
-    corrector.cc
-    covariance.cc
-    covariance_impl.cc
-    cxsparse.cc
     dense_cholesky.cc
-    dense_normal_cholesky_solver.cc
     dense_qr.cc
-    dense_qr_solver.cc
-    dense_sparse_matrix.cc
-    detect_structure.cc
-    dogleg_strategy.cc
-    dynamic_compressed_row_jacobian_writer.cc
-    dynamic_compressed_row_sparse_matrix.cc
-    dynamic_sparse_normal_cholesky_solver.cc
-    evaluator.cc
-    eigensparse.cc
-    file.cc
-    float_suitesparse.cc
-    float_cxsparse.cc
-    function_sample.cc
     gradient_checker.cc
-    gradient_checking_cost_function.cc
     gradient_problem.cc
-    gradient_problem_solver.cc
-    implicit_schur_complement.cc
-    inner_product_computer.cc
-    is_close.cc
-    iterative_refiner.cc
-    iterative_schur_complement_solver.cc
-    levenberg_marquardt_strategy.cc
-    line_search.cc
-    line_search_direction.cc
-    line_search_minimizer.cc
-    line_search_preprocessor.cc
-    linear_least_squares_problems.cc
-    linear_operator.cc
-    linear_solver.cc
     local_parameterization.cc
     loss_function.cc
-    low_rank_inverse_hessian.cc
     manifold.cc
-    minimizer.cc
     normal_prior.cc
-    parallel_utils.cc
-    parameter_block_ordering.cc
-    partitioned_matrix_view.cc
-    polynomial.cc
-    preconditioner.cc
-    preprocessor.cc
     problem.cc
-    problem_impl.cc
-    program.cc
-    reorder_program.cc
-    residual_block.cc
-    residual_block_utils.cc
-    schur_complement_solver.cc
-    schur_eliminator.cc
-    schur_jacobi_preconditioner.cc
-    schur_templates.cc
-    scratch_evaluate_preparer.cc
-    single_linkage_clustering.cc
     solver.cc
-    solver_utils.cc
-    sparse_matrix.cc
-    sparse_cholesky.cc
-    sparse_normal_cholesky_solver.cc
-    subset_preconditioner.cc
-    stringprintf.cc
-    suitesparse.cc
-    thread_token_provider.cc
-    triplet_sparse_matrix.cc
-    trust_region_preprocessor.cc
-    trust_region_minimizer.cc
-    trust_region_step_evaluator.cc
-    trust_region_strategy.cc
     types.cc
-    visibility.cc
-    visibility_based_preconditioner.cc
-    wall_time.cc
 )
 
 # Also depend on the header files so that they appear in IDEs.
@@ -222,12 +141,114 @@ if (LAPACK_FOUND)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${LAPACK_LIBRARIES})
 endif ()
 
+add_library(ceresbase OBJECT
+    ${CERES_INTERNAL_SCHUR_FILES}
+    ${CERES_PARALLEL_FOR_SRC}
+    accelerate_sparse.cc
+    array_utils.cc
+    blas.cc
+    block_evaluate_preparer.cc
+    block_jacobi_preconditioner.cc
+    block_jacobian_writer.cc
+    block_random_access_dense_matrix.cc
+    block_random_access_diagonal_matrix.cc
+    block_random_access_matrix.cc
+    block_random_access_sparse_matrix.cc
+    block_sparse_matrix.cc
+    block_structure.cc
+    callbacks.cc
+    canonical_views_clustering.cc
+    cgnr_solver.cc
+    compressed_col_sparse_matrix_utils.cc
+    compressed_row_jacobian_writer.cc
+    compressed_row_sparse_matrix.cc
+    conditioned_cost_function.cc
+    conjugate_gradients_solver.cc
+    context.cc
+    context_impl.cc
+    coordinate_descent_minimizer.cc
+    corrector.cc
+    cost_function.cc
+    covariance.cc
+    covariance_impl.cc
+    cxsparse.cc
+    dense_normal_cholesky_solver.cc
+    dense_qr_solver.cc
+    dense_sparse_matrix.cc
+    detect_structure.cc
+    dogleg_strategy.cc
+    dynamic_compressed_row_jacobian_writer.cc
+    dynamic_compressed_row_sparse_matrix.cc
+    dynamic_sparse_normal_cholesky_solver.cc
+    eigensparse.cc
+    evaluator.cc
+    file.cc
+    float_cxsparse.cc
+    float_suitesparse.cc
+    function_sample.cc
+    gradient_checking_cost_function.cc
+    gradient_problem_solver.cc
+    implicit_schur_complement.cc
+    inner_product_computer.cc
+    is_close.cc
+    iterative_refiner.cc
+    iterative_schur_complement_solver.cc
+    levenberg_marquardt_strategy.cc
+    line_search.cc
+    line_search_direction.cc
+    line_search_minimizer.cc
+    line_search_preprocessor.cc
+    linear_least_squares_problems.cc
+    linear_operator.cc
+    linear_solver.cc
+    low_rank_inverse_hessian.cc
+    minimizer.cc
+    parallel_utils.cc
+    parameter_block_ordering.cc
+    partitioned_matrix_view.cc
+    polynomial.cc
+    preconditioner.cc
+    preprocessor.cc
+    problem_impl.cc
+    program.cc
+    reorder_program.cc
+    residual_block.cc
+    residual_block_utils.cc
+    schur_complement_solver.cc
+    schur_eliminator.cc
+    schur_jacobi_preconditioner.cc
+    schur_templates.cc
+    scratch_evaluate_preparer.cc
+    single_linkage_clustering.cc
+    solver_utils.cc
+    sparse_cholesky.cc
+    sparse_matrix.cc
+    sparse_normal_cholesky_solver.cc
+    stringprintf.cc
+    subset_preconditioner.cc
+    suitesparse.cc
+    thread_pool.cc
+    thread_token_provider.cc
+    triplet_sparse_matrix.cc
+    trust_region_minimizer.cc
+    trust_region_preprocessor.cc
+    trust_region_step_evaluator.cc
+    trust_region_strategy.cc
+    visibility.cc
+    visibility_based_preconditioner.cc
+    wall_time.cc
+)
+
+target_include_directories (ceresbase PUBLIC
+  $<TARGET_PROPERTY:ceres,INCLUDE_DIRECTORIES>)
+target_compile_definitions (ceresbase PUBLIC
+  $<TARGET_PROPERTY:ceres,COMPILE_DEFINITIONS>)
+
 set(CERES_LIBRARY_SOURCE
     ${CERES_INTERNAL_SRC}
     ${CERES_INTERNAL_HDRS}
     ${CERES_PUBLIC_HDRS}
-    ${CERES_PUBLIC_INTERNAL_HDRS}
-    ${CERES_INTERNAL_SCHUR_FILES})
+    ${CERES_PUBLIC_INTERNAL_HDRS})
 
 # Primarily for Android, but optionally for others, compile the minimal
 # glog implementation into Ceres.
@@ -245,27 +266,9 @@ if (CHECK_CXX_FLAG_Wno_missing_declarations)
                APPEND_STRING PROPERTY COMPILE_FLAGS "-Wno-missing-declarations")
 endif()
 
-add_library(ceres ${CERES_LIBRARY_SOURCE})
-set_target_properties(ceres PROPERTIES
-  VERSION ${CERES_VERSION}
-  SOVERSION ${CERES_VERSION_MAJOR})
-if (BUILD_SHARED_LIBS)
-  set_target_properties(ceres PROPERTIES
-    # Set the default symbol visibility to hidden to unify the behavior among
-    # the various compilers and to get smaller binaries
-    C_VISIBILITY_PRESET hidden
-    CXX_VISIBILITY_PRESET hidden)
-endif()
-
-# When building as a shared libarary with testing enabled, we need to export
-# internal symbols needed by the unit tests
-if (BUILD_TESTING)
-  target_compile_definitions(ceres
-    PUBLIC
-      CERES_EXPORT_INTERNAL_SYMBOLS
-    )
-endif()
-
+add_library(ceres $<TARGET_OBJECTS:ceresbase> ${CERES_LIBRARY_SOURCE})
+# Create a local alias target that matches the expected installed target.
+add_library(Ceres::ceres ALIAS ceres)
 
 # The ability to specify a minimum language version via cxx_std_[11,14,17]
 # requires CMake >= 3.8.  Prior to that we have to specify the compiler features
@@ -279,31 +282,32 @@ else()
 endif()
 target_compile_features(ceres PUBLIC ${REQUIRED_PUBLIC_CXX_FEATURES})
 
-include(AppendTargetProperty)
-# Always build position-independent code (PIC), even when building Ceres as a
-# static library so that shared libraries can link against it, not just
-# executables (PIC does not apply on Windows).
-if (NOT WIN32 AND NOT BUILD_SHARED_LIBS)
-  # Use set_target_properties() not append_target_property() here as
-  # POSITION_INDEPENDENT_CODE is a binary ON/OFF switch.
-  set_target_properties(ceres PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_link_libraries(ceres PUBLIC Eigen3::Eigen)
+
+target_include_directories(ceres PUBLIC
+  $<BUILD_INTERFACE:${Ceres_BINARY_DIR}/include>
+  $<BUILD_INTERFACE:${Ceres_SOURCE_DIR}/include>
+  $<BUILD_INTERFACE:${Ceres_SOURCE_DIR}/internal>
+  $<BUILD_INTERFACE:${Ceres_SOURCE_DIR}/internal/ceres>
+  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
+set_target_properties(ceres PROPERTIES
+  VERSION ${CERES_VERSION}
+  SOVERSION 3)
+if (BUILD_SHARED_LIBS)
+  set_target_properties(ceres PROPERTIES
+    # Set the default symbol visibility to hidden to unify the behavior among
+    # the various compilers and to get smaller binaries
+    C_VISIBILITY_PRESET hidden
+    CXX_VISIBILITY_PRESET hidden)
 endif()
 
-if (BUILD_SHARED_LIBS)
-  # When building a shared library, mark all external libraries as
-  # PRIVATE so they don't show up as a dependency.
-  target_link_libraries(ceres
-        PUBLIC ${CERES_LIBRARY_PUBLIC_DEPENDENCIES}
-        PRIVATE ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
-else (BUILD_SHARED_LIBS)
-  # When building a static library, all external libraries are
-  # PUBLIC(default) since the user needs to link to them.
-  # They will be listed in CeresTargets.cmake.
-  set(CERES_LIBRARY_DEPENDENCIES
-        ${CERES_LIBRARY_PUBLIC_DEPENDENCIES}
-        ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
-  target_link_libraries(ceres PUBLIC ${CERES_LIBRARY_DEPENDENCIES})
-endif (BUILD_SHARED_LIBS)
+include(AppendTargetProperty)
+
+target_link_libraries(ceres
+  PUBLIC ${CERES_LIBRARY_PUBLIC_DEPENDENCIES}
+  PRIVATE ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
 
 # Add the Ceres headers to its target.
 #
@@ -379,33 +383,35 @@ install(TARGETS ceres
         LIBRARY DESTINATION lib${LIB_SUFFIX}
         ARCHIVE DESTINATION lib${LIB_SUFFIX})
 
-# Create a local alias target that matches the expected installed target.
-add_library(Ceres::ceres ALIAS ceres)
+if (BUILD_TESTING OR benchmark_FOUND)
+  add_library(test_util STATIC
+              evaluator_test_utils.cc
+              numeric_diff_test_utils.cc
+              test_util.cc
+              $<TARGET_OBJECTS:ceresbase>
+              ${CERES_LIBRARY_SOURCE})
+
+  target_include_directories (test_util PUBLIC
+    $<TARGET_PROPERTY:ceres,INCLUDE_DIRECTORIES>)
+  target_compile_definitions (test_util PUBLIC
+    $<TARGET_PROPERTY:ceres,COMPILE_DEFINITIONS>)
+  target_link_libraries (test_util
+    PUBLIC ${CERES_LIBRARY_PUBLIC_DEPENDENCIES}
+    PRIVATE ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
+endif (BUILD_TESTING OR benchmark_FOUND)
 
 if (BUILD_TESTING AND GFLAGS)
   add_library(gtest gmock_gtest_all.cc gmock_main.cc)
-  target_include_directories(gtest PUBLIC ${Ceres_SOURCE_DIR}/internal/ceres)
   if (BUILD_SHARED_LIBS)
     # Define gtest-specific shared library flags for compilation.
     append_target_property(gtest COMPILE_DEFINITIONS
       GTEST_CREATE_SHARED_LIBRARY)
   endif()
+  set_target_properties (gtest PROPERTIES CXX_VISIBILITY_PRESET default)
 
-  add_library(test_util
-              evaluator_test_utils.cc
-              numeric_diff_test_utils.cc
-              test_util.cc)
-  target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
+  target_include_directories(gtest PRIVATE
+    $<TARGET_PROPERTY:ceres,INCLUDE_DIRECTORIES>)
 
-  if (MINIGLOG)
-    # When using miniglog, it is compiled into Ceres, thus Ceres becomes
-    # the library against which other libraries should link for logging.
-    target_link_libraries(gtest PUBLIC gflags Ceres::ceres)
-    target_link_libraries(test_util PUBLIC Ceres::ceres gtest)
-  else (MINIGLOG)
-    target_link_libraries(gtest PUBLIC gflags ${GLOG_LIBRARIES})
-    target_link_libraries(test_util PUBLIC Ceres::ceres gtest ${GLOG_LIBRARIES})
-  endif (MINIGLOG)
 
   macro (CERES_TEST NAME)
     add_executable(${NAME}_test ${NAME}_test.cc)
@@ -415,10 +421,9 @@ if (BUILD_TESTING AND GFLAGS)
     # dependencies that may be directly referenced.
     target_include_directories(${NAME}_test
       PUBLIC ${CMAKE_CURRENT_LIST_DIR}
-             ${Ceres_SOURCE_DIR}/internal/ceres
-             ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
+             ${Ceres_SOURCE_DIR}/internal/ceres)
 
-    target_link_libraries(${NAME}_test PUBLIC test_util Ceres::ceres gtest)
+    target_link_libraries(${NAME}_test PRIVATE test_util gtest)
     if (BUILD_SHARED_LIBS)
       # Define gtest-specific shared library flags for linking.
       append_target_property(${NAME}_test COMPILE_DEFINITIONS
@@ -531,11 +536,14 @@ if (BUILD_TESTING AND GFLAGS)
 endif (BUILD_TESTING AND GFLAGS)
 
 macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
-  target_link_libraries(${BENCHMARK_TARGET} PUBLIC Ceres::ceres benchmark::benchmark)
-  target_include_directories(${BENCHMARK_TARGET} PUBLIC
-                             ${Ceres_SOURCE_DIR}/internal
-                             ${Ceres_SOURCE_DIR}/internal/ceres
-                             ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
+  target_link_libraries(${BENCHMARK_TARGET} PRIVATE
+    benchmark::benchmark
+    Eigen3::Eigen
+    test_util
+  )
+  target_include_directories(${BENCHMARK_TARGET} PRIVATE
+    $<TARGET_PROPERTY:ceres,INCLUDE_DIRECTORIES>
+  )
 endmacro()
 
 if (BUILD_BENCHMARKS)

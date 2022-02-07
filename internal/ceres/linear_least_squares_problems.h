@@ -35,6 +35,8 @@
 #include <string>
 #include <vector>
 
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 #include "ceres/sparse_matrix.h"
 
@@ -43,7 +45,7 @@ namespace internal {
 
 // Structure defining a linear least squares problem and if possible
 // ground truth solutions. To be used by various LinearSolver tests.
-struct CERES_EXPORT_INTERNAL LinearLeastSquaresProblem {
+struct CERES_NO_EXPORT LinearLeastSquaresProblem {
   LinearLeastSquaresProblem() : num_eliminate_blocks(0) {}
 
   std::unique_ptr<SparseMatrix> A;
@@ -60,17 +62,23 @@ struct CERES_EXPORT_INTERNAL LinearLeastSquaresProblem {
 };
 
 // Factories for linear least squares problem.
-CERES_EXPORT_INTERNAL LinearLeastSquaresProblem*
+CERES_NO_EXPORT LinearLeastSquaresProblem*
 CreateLinearLeastSquaresProblemFromId(int id);
 
+CERES_NO_EXPORT
 LinearLeastSquaresProblem* LinearLeastSquaresProblem0();
+CERES_NO_EXPORT
 LinearLeastSquaresProblem* LinearLeastSquaresProblem1();
+CERES_NO_EXPORT
 LinearLeastSquaresProblem* LinearLeastSquaresProblem2();
+CERES_NO_EXPORT
 LinearLeastSquaresProblem* LinearLeastSquaresProblem3();
+CERES_NO_EXPORT
 LinearLeastSquaresProblem* LinearLeastSquaresProblem4();
 
 // Write the linear least squares problem to disk. The exact format
 // depends on dump_format_type.
+CERES_NO_EXPORT
 bool DumpLinearLeastSquaresProblem(const std::string& filename_base,
                                    DumpFormatType dump_format_type,
                                    const SparseMatrix* A,
@@ -80,5 +88,7 @@ bool DumpLinearLeastSquaresProblem(const std::string& filename_base,
                                    int num_eliminate_blocks);
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_LINEAR_LEAST_SQUARES_PROBLEMS_H_

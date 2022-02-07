@@ -39,8 +39,9 @@
 //
 // This file is generated using generate_template_specializations.py.
 
-#include "ceres/internal/eigen.h"
 #include "ceres/schur_templates.h"
+
+#include "ceres/internal/eigen.h"
 
 namespace ceres {
 namespace internal {

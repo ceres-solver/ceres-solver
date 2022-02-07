@@ -636,6 +636,10 @@ create_ceres_config("${CERES_COMPILE_OPTIONS}"
 
 add_subdirectory(internal/ceres)
 
+include(GenerateExportHeader)
+generate_export_header(ceres EXPORT_FILE_NAME
+    ${CMAKE_CURRENT_BINARY_DIR}/include/ceres/internal/export.h)
+
 if (BUILD_DOCUMENTATION)
   set(CERES_DOCS_INSTALL_DIR "share/doc/ceres" CACHE STRING
       "Ceres docs install path relative to CMAKE_INSTALL_PREFIX")

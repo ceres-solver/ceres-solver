@@ -31,6 +31,7 @@
 #include "ceres/line_search_direction.h"
 
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/export.h"
 #include "ceres/line_search_minimizer.h"
 #include "ceres/low_rank_inverse_hessian.h"
 #include "glog/logging.h"
@@ -38,7 +39,7 @@
 namespace ceres {
 namespace internal {
 
-class SteepestDescent : public LineSearchDirection {
+class CERES_NO_EXPORT SteepestDescent : public LineSearchDirection {
  public:
   virtual ~SteepestDescent() {}
   bool NextDirection(const LineSearchMinimizer::State& previous,
@@ -49,7 +50,7 @@ class SteepestDescent : public LineSearchDirection {
   }
 };
 
-class NonlinearConjugateGradient : public LineSearchDirection {
+class CERES_NO_EXPORT NonlinearConjugateGradient : public LineSearchDirection {
  public:
   NonlinearConjugateGradient(const NonlinearConjugateGradientType type,
                              const double function_tolerance)
@@ -95,7 +96,7 @@ class NonlinearConjugateGradient : public LineSearchDirection {
   const double function_tolerance_;
 };
 
-class LBFGS : public LineSearchDirection {
+class CERES_NO_EXPORT LBFGS : public LineSearchDirection {
  public:
   LBFGS(const int num_parameters,
         const int max_lbfgs_rank,
@@ -141,7 +142,7 @@ class LBFGS : public LineSearchDirection {
   bool is_positive_definite_;
 };
 
-class BFGS : public LineSearchDirection {
+class CERES_NO_EXPORT BFGS : public LineSearchDirection {
  public:
   BFGS(const int num_parameters, const bool use_approximate_eigenvalue_scaling)
       : num_parameters_(num_parameters),

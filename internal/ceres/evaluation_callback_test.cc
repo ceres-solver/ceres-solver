@@ -172,7 +172,8 @@ struct WigglyBowlCostFunctionAndEvaluationCallback : SizedCostFunction<2, 2>,
   // Track state: PrepareForEvaluation().
   //
   // These track details from the PrepareForEvaluation() call (hence the
-  // "prepare_" prefix), which are checked for consistency in Evaluate().
+  // "prepare_" disable_warnings), which are checked for consistency in
+  // Evaluate().
   int prepare_num_calls;
   bool prepare_requested_jacobians;
   bool prepare_new_evaluation_point;
@@ -181,7 +182,7 @@ struct WigglyBowlCostFunctionAndEvaluationCallback : SizedCostFunction<2, 2>,
   // Track state: Evaluate().
   //
   // These track details from the Evaluate() call (hence the "evaluate_"
-  // prefix), which are then checked for consistency in the calls to
+  // disable_warnings), which are then checked for consistency in the calls to
   // PrepareForEvaluation(). Mutable is reasonable for this case.
   mutable int evaluate_num_calls;
   mutable uint64_t evaluate_last_parameter_hash;

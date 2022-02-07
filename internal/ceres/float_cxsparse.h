@@ -38,6 +38,7 @@
 
 #include <memory>
 
+#include "ceres/internal/export.h"
 #include "ceres/sparse_cholesky.h"
 
 namespace ceres {
@@ -45,7 +46,7 @@ namespace internal {
 
 // Fake implementation of a single precision Sparse Cholesky using
 // CXSparse.
-class FloatCXSparseCholesky : public SparseCholesky {
+class CERES_NO_EXPORT FloatCXSparseCholesky : public SparseCholesky {
  public:
   static std::unique_ptr<SparseCholesky> Create(OrderingType ordering_type);
 };

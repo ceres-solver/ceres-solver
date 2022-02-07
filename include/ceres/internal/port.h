@@ -31,6 +31,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_PORT_H_
 #define CERES_PUBLIC_INTERNAL_PORT_H_
 
+#include <ceres/internal/export.h>
+
 // This file needs to compile as c code.
 #include "ceres/internal/config.h"
 
@@ -66,45 +68,6 @@
 #if defined(CERES_USE_EIGEN_SPARSE)
 #error CERES_NO_SPARSE requires !CERES_USE_EIGEN_SPARSE
 #endif
-#endif
-
-// A macro to signal which functions and classes are exported when
-// building a shared library.
-#if defined(_MSC_VER)
-#define CERES_API_SHARED_IMPORT __declspec(dllimport)
-#define CERES_API_SHARED_EXPORT __declspec(dllexport)
-#elif defined(__GNUC__)
-#define CERES_API_SHARED_IMPORT __attribute__((visibility("default")))
-#define CERES_API_SHARED_EXPORT __attribute__((visibility("default")))
-#else
-#define CERES_API_SHARED_IMPORT
-#define CERES_API_SHARED_EXPORT
-#endif
-
-// CERES_BUILDING_SHARED_LIBRARY is only defined locally when Ceres itself is
-// compiled as a shared library, it is never exported to users.  In order that
-// we do not have to configure config.h separately when building Ceres as either
-// a static or dynamic library, we define both CERES_USING_SHARED_LIBRARY and
-// CERES_BUILDING_SHARED_LIBRARY when building as a shared library.
-#if defined(CERES_USING_SHARED_LIBRARY)
-#if defined(CERES_BUILDING_SHARED_LIBRARY)
-// Compiling Ceres itself as a shared library.
-#define CERES_EXPORT CERES_API_SHARED_EXPORT
-#else
-// Using Ceres as a shared library.
-#define CERES_EXPORT CERES_API_SHARED_IMPORT
-#endif
-#else
-// Ceres was compiled as a static library, export everything.
-#define CERES_EXPORT
-#endif
-
-// Unit tests reach in and test internal functionality so we need a way to make
-// those symbols visible
-#ifdef CERES_EXPORT_INTERNAL_SYMBOLS
-#define CERES_EXPORT_INTERNAL CERES_EXPORT
-#else
-#define CERES_EXPORT_INTERNAL
 #endif
 
 #ifndef CERES_GET_FLAG

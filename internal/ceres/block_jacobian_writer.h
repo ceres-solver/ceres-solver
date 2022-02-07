@@ -41,6 +41,7 @@
 #include <vector>
 
 #include "ceres/evaluator.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 
 namespace ceres {
@@ -51,7 +52,7 @@ class Program;
 class SparseMatrix;
 
 // TODO(sameeragarwal): This class needs documemtation.
-class BlockJacobianWriter {
+class CERES_NO_EXPORT BlockJacobianWriter {
  public:
   BlockJacobianWriter(const Evaluator::Options& options, Program* program);
 

@@ -41,6 +41,7 @@
 
 #include "ceres/array_utils.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 #include "ceres/manifold.h"
 #include "ceres/stringprintf.h"
@@ -61,7 +62,7 @@ class ResidualBlock;
 // parameter block may also hold a pointer to a manifold; the parameter block
 // does not take ownership of this pointer, so the user is responsible for the
 // proper disposal of the manifold.
-class ParameterBlock {
+class CERES_NO_EXPORT ParameterBlock {
  public:
   typedef std::unordered_set<ResidualBlock*> ResidualBlockSet;
 

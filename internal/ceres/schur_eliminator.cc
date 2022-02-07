@@ -39,11 +39,14 @@
 //
 // This file is generated using generate_template_specializations.py.
 
-#include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
+
+#include "ceres/linear_solver.h"
 
 namespace ceres {
 namespace internal {
+
+SchurEliminatorBase::~SchurEliminatorBase() = default;
 
 SchurEliminatorBase* SchurEliminatorBase::Create(
     const LinearSolver::Options& options) {

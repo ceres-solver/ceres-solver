@@ -56,7 +56,7 @@ class LinearSolver;
 //
 // The minimizer assumes that none of the parameter blocks in the
 // program are constant.
-class CoordinateDescentMinimizer : public Minimizer {
+class CERES_NO_EXPORT CoordinateDescentMinimizer : public Minimizer {
  public:
   explicit CoordinateDescentMinimizer(ContextImpl* context);
 

@@ -42,13 +42,14 @@
 #include <string>
 
 #include "Eigen/SparseCore"
+#include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 
 namespace ceres {
 namespace internal {
 
-class EigenSparseCholesky : public SparseCholesky {
+class CERES_NO_EXPORT EigenSparseCholesky : public SparseCholesky {
  public:
   // Factory
   static std::unique_ptr<SparseCholesky> Create(
@@ -66,7 +67,7 @@ class EigenSparseCholesky : public SparseCholesky {
 
 // Even though the input is double precision linear system, this class
 // solves it by computing a single precision Cholesky factorization.
-class FloatEigenSparseCholesky : public SparseCholesky {
+class CERES_NO_EXPORT FloatEigenSparseCholesky : public SparseCholesky {
  public:
   // Factory
   static std::unique_ptr<SparseCholesky> Create(

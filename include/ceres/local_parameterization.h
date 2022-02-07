@@ -155,7 +155,7 @@ class CERES_EXPORT LocalParameterization {
 class CERES_EXPORT IdentityParameterization : public LocalParameterization {
  public:
   explicit IdentityParameterization(int size);
-  virtual ~IdentityParameterization() {}
+  virtual ~IdentityParameterization();
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
@@ -176,7 +176,7 @@ class CERES_EXPORT SubsetParameterization : public LocalParameterization {
  public:
   explicit SubsetParameterization(int size,
                                   const std::vector<int>& constant_parameters);
-  virtual ~SubsetParameterization() {}
+  virtual ~SubsetParameterization();
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
@@ -201,7 +201,7 @@ class CERES_EXPORT SubsetParameterization : public LocalParameterization {
 // theta) part.
 class CERES_EXPORT QuaternionParameterization : public LocalParameterization {
  public:
-  virtual ~QuaternionParameterization() {}
+  virtual ~QuaternionParameterization();
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
@@ -224,7 +224,7 @@ class CERES_EXPORT QuaternionParameterization : public LocalParameterization {
 class CERES_EXPORT EigenQuaternionParameterization
     : public ceres::LocalParameterization {
  public:
-  virtual ~EigenQuaternionParameterization() {}
+  virtual ~EigenQuaternionParameterization();
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
@@ -250,7 +250,7 @@ class CERES_EXPORT HomogeneousVectorParameterization
     : public LocalParameterization {
  public:
   explicit HomogeneousVectorParameterization(int size);
-  virtual ~HomogeneousVectorParameterization() {}
+  virtual ~HomogeneousVectorParameterization();
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
@@ -356,8 +356,7 @@ class CERES_EXPORT ProductParameterization : public LocalParameterization {
 
 }  // namespace ceres
 
-// clang-format off
-#include "ceres/internal/reenable_warnings.h"
 #include "ceres/internal/line_parameterization.h"
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_PUBLIC_LOCAL_PARAMETERIZATION_H_

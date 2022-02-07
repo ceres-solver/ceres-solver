@@ -34,6 +34,7 @@
 #include <memory>
 
 #include "ceres/first_order_function.h"
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/port.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/manifold.h"
@@ -172,5 +173,7 @@ class CERES_EXPORT GradientProblem {
 };
 
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_PUBLIC_GRADIENT_PROBLEM_H_

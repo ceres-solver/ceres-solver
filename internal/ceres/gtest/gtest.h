@@ -2993,10 +2993,10 @@ class GTEST_API_ String {
   static bool CaseInsensitiveWideCStringEquals(const wchar_t* lhs,
                                                const wchar_t* rhs);
 
-  // Returns true iff the given string ends with the given suffix, ignoring
-  // case. Any string is considered to end with an empty suffix.
+  // Returns true iff the given string ends with the given reenable_warnings, ignoring
+  // case. Any string is considered to end with an empty reenable_warnings.
   static bool EndsWithCaseInsensitive(
-      const std::string& str, const std::string& suffix);
+      const std::string& str, const std::string& reenable_warnings);
 
   // Formats an int value as "%02d".
   static std::string FormatIntWidth2(int value);  // "%02d" for width == 2
@@ -3250,9 +3250,9 @@ namespace internal {
 // used by various standard libraries (e.g., `std::__1`).  Names outside
 // of namespace std are returned unmodified.
 inline std::string CanonicalizeForStdLibVersioning(std::string s) {
-  static const char prefix[] = "std::__";
-  if (s.compare(0, strlen(prefix), prefix) == 0) {
-    std::string::size_type end = s.find("::", strlen(prefix));
+  static const char disable_warnings[] = "std::__";
+  if (s.compare(0, strlen(disable_warnings), disable_warnings) == 0) {
+    std::string::size_type end = s.find("::", strlen(disable_warnings));
     if (end != s.npos) {
       // Erase everything between the initial `std` and the second `::`.
       s.erase(strlen("std"), end - strlen("std"));
@@ -7057,10 +7057,10 @@ GTEST_API_ TestInfo* MakeAndRegisterTestInfo(
     TypeId fixture_class_id, SetUpTestSuiteFunc set_up_tc,
     TearDownTestSuiteFunc tear_down_tc, TestFactoryBase* factory);
 
-// If *pstr starts with the given prefix, modifies *pstr to be right
-// past the prefix and returns true; otherwise leaves *pstr unchanged
-// and returns false.  None of pstr, *pstr, and prefix can be NULL.
-GTEST_API_ bool SkipPrefix(const char* prefix, const char** pstr);
+// If *pstr starts with the given disable_warnings, modifies *pstr to be right
+// past the disable_warnings and returns true; otherwise leaves *pstr unchanged
+// and returns false.  None of pstr, *pstr, and disable_warnings can be NULL.
+GTEST_API_ bool SkipPrefix(const char* disable_warnings, const char** pstr);
 
 #if GTEST_HAS_TYPED_TEST || GTEST_HAS_TYPED_TEST_P
 
@@ -7131,7 +7131,7 @@ inline const char* SkipComma(const char* str) {
   return comma;
 }
 
-// Returns the prefix of 'str' before the first comma in it; returns
+// Returns the disable_warnings of 'str' before the first comma in it; returns
 // the entire string if it contains no comma.
 inline std::string GetPrefixUntilComma(const char* str) {
   const char* comma = strchr(str, ',');
@@ -7188,7 +7188,7 @@ class TypeParameterizedTest {
   // specified in INSTANTIATE_TYPED_TEST_SUITE_P(Prefix, TestSuite,
   // Types).  Valid values for 'index' are [0, N - 1] where N is the
   // length of Types.
-  static bool Register(const char* prefix, const CodeLocation& code_location,
+  static bool Register(const char* disable_warnings, const CodeLocation& code_location,
                        const char* case_name, const char* test_names, int index,
                        const std::vector<std::string>& type_names =
                            GenerateNames<DefaultNameGenerator, Types>()) {
@@ -7199,7 +7199,7 @@ class TypeParameterizedTest {
     // First, registers the first type-parameterized test in the type
     // list.
     MakeAndRegisterTestInfo(
-        (std::string(prefix) + (prefix[0] == '\0' ? "" : "/") + case_name +
+        (std::string(disable_warnings) + (disable_warnings[0] == '\0' ? "" : "/") + case_name +
          "/" + type_names[index])
             .c_str(),
         StripTrailingSpaces(GetPrefixUntilComma(test_names)).c_str(),
@@ -7212,7 +7212,7 @@ class TypeParameterizedTest {
 
     // Next, recurses (at compile time) with the tail of the type list.
     return TypeParameterizedTest<Fixture, TestSel,
-                                 typename Types::Tail>::Register(prefix,
+                                 typename Types::Tail>::Register(disable_warnings,
                                                                  code_location,
                                                                  case_name,
                                                                  test_names,
@@ -7225,7 +7225,7 @@ class TypeParameterizedTest {
 template <GTEST_TEMPLATE_ Fixture, class TestSel>
 class TypeParameterizedTest<Fixture, TestSel, Types0> {
  public:
-  static bool Register(const char* /*prefix*/, const CodeLocation&,
+  static bool Register(const char* /*disable_warnings*/, const CodeLocation&,
                        const char* /*case_name*/, const char* /*test_names*/,
                        int /*index*/,
                        const std::vector<std::string>& =
@@ -7241,7 +7241,7 @@ class TypeParameterizedTest<Fixture, TestSel, Types0> {
 template <GTEST_TEMPLATE_ Fixture, typename Tests, typename Types>
 class TypeParameterizedTestSuite {
  public:
-  static bool Register(const char* prefix, CodeLocation code_location,
+  static bool Register(const char* disable_warnings, CodeLocation code_location,
                        const TypedTestSuitePState* state, const char* case_name,
                        const char* test_names,
                        const std::vector<std::string>& type_names =
@@ -7262,11 +7262,11 @@ class TypeParameterizedTestSuite {
 
     // First, register the first test in 'Test' for each type in 'Types'.
     TypeParameterizedTest<Fixture, Head, Types>::Register(
-        prefix, test_location, case_name, test_names, 0, type_names);
+        disable_warnings, test_location, case_name, test_names, 0, type_names);
 
     // Next, recurses (at compile time) with the tail of the test list.
     return TypeParameterizedTestSuite<Fixture, typename Tests::Tail,
-                                      Types>::Register(prefix, code_location,
+                                      Types>::Register(disable_warnings, code_location,
                                                        state, case_name,
                                                        SkipComma(test_names),
                                                        type_names);
@@ -7277,7 +7277,7 @@ class TypeParameterizedTestSuite {
 template <GTEST_TEMPLATE_ Fixture, typename Types>
 class TypeParameterizedTestSuite<Fixture, Templates0, Types> {
  public:
-  static bool Register(const char* /*prefix*/, const CodeLocation&,
+  static bool Register(const char* /*disable_warnings*/, const CodeLocation&,
                        const TypedTestSuitePState* /*state*/,
                        const char* /*case_name*/, const char* /*test_names*/,
                        const std::vector<std::string>& =
@@ -10432,7 +10432,7 @@ class FooTest : public ::testing::TestWithParam<const char*> {
 };
 
 // Then, use the TEST_P macro to define as many parameterized tests
-// for this fixture as you want. The _P suffix is for "parameterized"
+// for this fixture as you want. The _P reenable_warnings is for "parameterized"
 // or "pattern", whichever you prefer to think.
 
 TEST_P(FooTest, DoesBlah) {
@@ -10476,7 +10476,7 @@ INSTANTIATE_TEST_SUITE_P(InstantiationName,
 
 // To distinguish different instances of the pattern, (yes, you
 // can instantiate it more then once) the first argument to the
-// INSTANTIATE_TEST_SUITE_P macro is a prefix that will be added to the
+// INSTANTIATE_TEST_SUITE_P macro is a disable_warnings that will be added to the
 // actual test suite name. Remember to pick unique prefixes for different
 // instantiations. The tests from the instantiation above will have
 // these names:
@@ -11053,7 +11053,7 @@ class ParameterizedTestSuiteInfo : public ParameterizedTestSuiteInfoBase {
   // TEST_P macro uses AddTestPattern() to record information
   // about a single test in a LocalTestInfo structure.
   // test_suite_name is the base name of the test suite (without invocation
-  // prefix). test_base_name is the name of an individual test without
+  // disable_warnings). test_base_name is the name of an individual test without
   // parameter index. For the test SequenceA/FooTest.DoBar/1 FooTest is
   // test suite base name and DoBar is test base name.
   void AddTestPattern(const char* test_suite_name, const char* test_base_name,
@@ -11695,7 +11695,7 @@ internal::CartesianProductHolder<Generator...> Combine(const Generator&... g) {
 // accept one argument of type testing::TestParamInfo<class ParamType>, and
 // return std::string.
 //
-// testing::PrintToStringParamName is a builtin test suffix generator that
+// testing::PrintToStringParamName is a builtin test reenable_warnings generator that
 // returns the value of testing::PrintToString(GetParam()).
 //
 // Note: test names must be non-empty, unique, and may only contain ASCII
@@ -11706,12 +11706,12 @@ internal::CartesianProductHolder<Generator...> Combine(const Generator&... g) {
 #define GTEST_GET_FIRST_(first, ...) first
 #define GTEST_GET_SECOND_(first, second, ...) second
 
-#define INSTANTIATE_TEST_SUITE_P(prefix, test_suite_name, ...)                \
+#define INSTANTIATE_TEST_SUITE_P(disable_warnings, test_suite_name, ...)                \
   static ::testing::internal::ParamGenerator<test_suite_name::ParamType>      \
-      gtest_##prefix##test_suite_name##_EvalGenerator_() {                    \
+      gtest_##disable_warnings##test_suite_name##_EvalGenerator_() {                    \
     return GTEST_EXPAND_(GTEST_GET_FIRST_(__VA_ARGS__, DUMMY_PARAM_));        \
   }                                                                           \
-  static ::std::string gtest_##prefix##test_suite_name##_EvalGenerateName_(   \
+  static ::std::string gtest_##disable_warnings##test_suite_name##_EvalGenerateName_(   \
       const ::testing::TestParamInfo<test_suite_name::ParamType>& info) {     \
     if (::testing::internal::AlwaysFalse()) {                                 \
       ::testing::internal::TestNotEmpty(GTEST_EXPAND_(GTEST_GET_SECOND_(      \
@@ -11727,7 +11727,7 @@ internal::CartesianProductHolder<Generator...> Combine(const Generator&... g) {
         ::testing::internal::DefaultParamName<test_suite_name::ParamType>,    \
         DUMMY_PARAM_))))(info);                                               \
   }                                                                           \
-  static int gtest_##prefix##test_suite_name##_dummy_                         \
+  static int gtest_##disable_warnings##test_suite_name##_dummy_                         \
       GTEST_ATTRIBUTE_UNUSED_ =                                               \
           ::testing::UnitTest::GetInstance()                                  \
               ->parameterized_test_registry()                                 \
@@ -11735,8 +11735,8 @@ internal::CartesianProductHolder<Generator...> Combine(const Generator&... g) {
                   #test_suite_name,                                           \
                   ::testing::internal::CodeLocation(__FILE__, __LINE__))      \
               ->AddTestSuiteInstantiation(                                    \
-                  #prefix, &gtest_##prefix##test_suite_name##_EvalGenerator_, \
-                  &gtest_##prefix##test_suite_name##_EvalGenerateName_,       \
+                  #disable_warnings, &gtest_##disable_warnings##test_suite_name##_EvalGenerator_, \
+                  &gtest_##disable_warnings##test_suite_name##_EvalGenerateName_,       \
                   __FILE__, __LINE__)
 
 // Legacy API is deprecated but still available
@@ -12066,11 +12066,11 @@ TYPED_TEST(FooTest, DoesBlah) {
   TypeParam n = this->value_;
 
   // To visit static members of the fixture, add the TestFixture::
-  // prefix.
+  // disable_warnings.
   n += TestFixture::shared_;
 
   // To refer to typedefs in the fixture, add the "typename
-  // TestFixture::" prefix.
+  // TestFixture::" disable_warnings.
   typename TestFixture::List values;
   values.push_back(n);
   ...
@@ -12122,7 +12122,7 @@ class FooTest : public testing::Test {
 };
 
 // Next, declare that you will define a type-parameterized test suite
-// (the _P suffix is for "parameterized" or "pattern", whichever you
+// (the _P reenable_warnings is for "parameterized" or "pattern", whichever you
 // prefer):
 TYPED_TEST_SUITE_P(FooTest);
 
@@ -12148,7 +12148,7 @@ REGISTER_TYPED_TEST_SUITE_P(FooTest,
 // it in multiple C++ source files and instantiate it multiple times.
 //
 // To distinguish different instances of the pattern, the first
-// argument to the INSTANTIATE_* macro is a prefix that will be added
+// argument to the INSTANTIATE_* macro is a disable_warnings that will be added
 // to the actual test suite name.  Remember to pick unique prefixes for
 // different instances.
 typedef testing::Types<char, int, unsigned int> MyTypes;

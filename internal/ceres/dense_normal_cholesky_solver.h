@@ -74,7 +74,8 @@ class DenseSparseMatrix;
 // library. This solver always returns a solution, it is the user's
 // responsibility to judge if the solution is good enough for their
 // purposes.
-class DenseNormalCholeskySolver : public DenseSparseMatrixSolver {
+class CERES_NO_EXPORT DenseNormalCholeskySolver
+    : public DenseSparseMatrixSolver {
  public:
   explicit DenseNormalCholeskySolver(const LinearSolver::Options& options);
 

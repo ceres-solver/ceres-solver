@@ -45,6 +45,8 @@
 #include "ceres/context_impl.h"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/execution_summary.h"
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
@@ -101,7 +103,7 @@ class LinearOperator;
 // The Options struct configures the LinearSolver object for its
 // lifetime. The PerSolveOptions struct is used to specify options for
 // a particular Solve call.
-class CERES_EXPORT_INTERNAL LinearSolver {
+class CERES_NO_EXPORT LinearSolver {
  public:
   struct Options {
     LinearSolverType type = SPARSE_NORMAL_CHOLESKY;
@@ -339,5 +341,7 @@ typedef TypedLinearSolver<TripletSparseMatrix>       TripletSparseMatrixSolver; 
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_LINEAR_SOLVER_H_

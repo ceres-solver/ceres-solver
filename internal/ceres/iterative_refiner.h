@@ -37,6 +37,7 @@
 // clang-format on
 
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/export.h"
 
 namespace ceres {
 namespace internal {
@@ -57,7 +58,7 @@ class SparseMatrix;
 // Definite linear systems.
 //
 // The above iterative loop is run until max_num_iterations is reached.
-class CERES_EXPORT_INTERNAL IterativeRefiner {
+class CERES_NO_EXPORT IterativeRefiner {
  public:
   // max_num_iterations is the number of refinement iterations to
   // perform.

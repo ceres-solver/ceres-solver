@@ -35,6 +35,7 @@
 #include <unordered_set>
 
 #include "ceres/graph.h"
+#include "ceres/internal/export.h"
 #include "ceres/map_util.h"
 #include "glog/logging.h"
 
@@ -46,7 +47,7 @@ using std::vector;
 typedef std::unordered_map<int, int> IntMap;
 typedef std::unordered_set<int> IntSet;
 
-class CanonicalViewsClustering {
+class CERES_NO_EXPORT CanonicalViewsClustering {
  public:
   CanonicalViewsClustering() {}
 

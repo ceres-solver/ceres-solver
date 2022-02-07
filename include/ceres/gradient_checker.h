@@ -40,7 +40,9 @@
 
 #include "ceres/cost_function.h"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/manifold.h"
@@ -178,5 +180,7 @@ class CERES_EXPORT GradientChecker {
 };
 
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_PUBLIC_GRADIENT_CHECKER_H_

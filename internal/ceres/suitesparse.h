@@ -34,6 +34,7 @@
 #define CERES_INTERNAL_SUITESPARSE_H_
 
 // This include must come before any #ifndef check on Ceres compile options.
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 
 #ifndef CERES_NO_SUITESPARSE
@@ -70,6 +71,8 @@
 #define SuiteSparse_long UF_long
 #endif
 
+#include "ceres/internal/disable_warnings.h"
+
 namespace ceres {
 namespace internal {
 
@@ -81,7 +84,7 @@ class TripletSparseMatrix;
 // provides the user with a simpler interface. The methods here cannot
 // be static as a cholmod_common object serves as a global variable
 // for all cholmod function calls.
-class SuiteSparse {
+class CERES_NO_EXPORT SuiteSparse {
  public:
   SuiteSparse();
   ~SuiteSparse();
@@ -288,7 +291,7 @@ class SuiteSparse {
   cholmod_common cc_;
 };
 
-class SuiteSparseCholesky : public SparseCholesky {
+class CERES_NO_EXPORT SuiteSparseCholesky : public SparseCholesky {
  public:
   static std::unique_ptr<SparseCholesky> Create(OrderingType ordering_type);
 
@@ -312,14 +315,18 @@ class SuiteSparseCholesky : public SparseCholesky {
 }  // namespace internal
 }  // namespace ceres
 
+#include "ceres/internal/reenable_warnings.h"
+
 #else  // CERES_NO_SUITESPARSE
 
 typedef void cholmod_factor;
 
+#include "ceres/internal/disable_warnings.h"
+
 namespace ceres {
 namespace internal {
 
-class SuiteSparse {
+class CERES_NO_EXPORT SuiteSparse {
  public:
   // Defining this static function even when SuiteSparse is not
   // available, allows client code to check for the presence of CAMD
@@ -337,6 +344,8 @@ class SuiteSparse {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_NO_SUITESPARSE
 
