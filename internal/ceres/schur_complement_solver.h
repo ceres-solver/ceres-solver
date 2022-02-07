@@ -121,7 +121,7 @@ class CERES_EXPORT_INTERNAL SchurComplementSolver
   void operator=(const SchurComplementSolver&) = delete;
 
   // LinearSolver methods
-  virtual ~SchurComplementSolver() {}
+  ~SchurComplementSolver() override;
   LinearSolver::Summary SolveImpl(
       BlockSparseMatrix* A,
       const double* b,
@@ -154,13 +154,11 @@ class CERES_EXPORT_INTERNAL SchurComplementSolver
 // Dense Cholesky factorization based solver.
 class DenseSchurComplementSolver : public SchurComplementSolver {
  public:
-  explicit DenseSchurComplementSolver(const LinearSolver::Options& options)
-      : SchurComplementSolver(options),
-        cholesky_(DenseCholesky::Create(options)) {}
+  explicit DenseSchurComplementSolver(const LinearSolver::Options& options);
   DenseSchurComplementSolver(const DenseSchurComplementSolver&) = delete;
   void operator=(const DenseSchurComplementSolver&) = delete;
 
-  virtual ~DenseSchurComplementSolver() {}
+  ~DenseSchurComplementSolver() override;
 
  private:
   void InitStorage(const CompressedRowBlockStructure* bs) final;
