@@ -125,6 +125,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "719f7ebd_ea22d910",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "I noticed the term Element is not used anywhere else. Therefore, I changed it to MiddleValue to be consistent.",
+      "parentUuid": "7fc17765_21701db6",
+      "range": {
+        "startLine": 198,
+        "startChar": 52,
+        "endLine": 198,
+        "endChar": 54
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f90ae54_3c04a0aa",
@@ -198,6 +222,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c92afda7_a7d61093",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "This does not seem to be a good idea given the last two sentences are both examples. Maybe the rephrase makes sense?",
+      "parentUuid": "5e0c128f_60b66e9e",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 53
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "48a5bd00_6b3f0d4f",
         "filename": "include/ceres/internal/integer_sequence_algorithm.h",
         "patchSetId": 8
@@ -209,6 +257,24 @@
       "writtenOn": "2022-02-07T09:24:56Z",
       "side": 1,
       "message": "The comment is incorrect. Should be RemoveValueImpl.",
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f1f05e1_e5e9db5b",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48a5bd00_6b3f0d4f",
       "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -274,6 +340,30 @@
       "side": 1,
       "message": "sorry I screwed up. Since the classes moved (and I had not looked at jet_tests yet) I was expecting to see the tests in integer_sequence_algorithm_test.cc. Could you please move them there.",
       "parentUuid": "a39e3874_97424180",
+      "range": {
+        "startLine": 234,
+        "startChar": 6,
+        "endLine": 234,
+        "endChar": 19
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7898d46_1d193420",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8c469d8_63b8cebc",
       "range": {
         "startLine": 234,
         "startChar": 6,
@@ -426,6 +516,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa0fecbc_b16aa898",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7b4f836_c6396c25",
+      "range": {
+        "startLine": 281,
+        "startChar": 26,
+        "endLine": 281,
+        "endChar": 27
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa077f98_26962280",
@@ -486,6 +600,30 @@
       "writtenOn": "2022-02-07T15:02:48Z",
       "side": 1,
       "message": "do we need to say ceres::Jet here? won\u0027t just Jet do?",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 18
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e27901b4_d179ba55",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "Good catch.",
+      "parentUuid": "9a22259b_b9ced985",
       "range": {
         "startLine": 50,
         "startChar": 13,
@@ -702,6 +840,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6af9189d_198f65b2",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a134e3b1_29b35bb2",
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be0985d5_f7d2f075",
@@ -739,6 +895,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "981b2ce4_9cb96a33",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "The question I\u0027m asking is whether you agree? I would prefer fixing the issue right away.",
+      "parentUuid": "db476ec6_300c6592",
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c930c9c9_e5e28940",
         "filename": "internal/ceres/jet_test.cc",
         "patchSetId": 8
@@ -750,6 +924,30 @@
       "writtenOn": "2022-02-07T15:02:48Z",
       "side": 1,
       "message": "Could you add a comment as to why this is needed and what would happen if you do not use it?",
+      "range": {
+        "startLine": 73,
+        "startChar": 14,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b912148_260ed486",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c930c9c9_e5e28940",
       "range": {
         "startLine": 73,
         "startChar": 14,
@@ -783,6 +981,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4255ff2_dd8d663d",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0ff43c1_92def46c",
+      "range": {
+        "startLine": 679,
+        "startChar": 7,
+        "endLine": 679,
+        "endChar": 20
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b012c70c_dee3fa9e",
@@ -796,6 +1018,30 @@
       "writtenOn": "2022-02-07T16:57:45Z",
       "side": 1,
       "message": "same as above.",
+      "range": {
+        "startLine": 696,
+        "startChar": 7,
+        "endLine": 696,
+        "endChar": 20
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b789d6c_3491fad1",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b012c70c_dee3fa9e",
       "range": {
         "startLine": 696,
         "startChar": 7,
@@ -829,6 +1075,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af1d4087_b644f23f",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f05995e0_f87918b7",
+      "range": {
+        "startLine": 713,
+        "startChar": 7,
+        "endLine": 713,
+        "endChar": 20
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97921ccf_98cf231c",
@@ -842,6 +1112,30 @@
       "writtenOn": "2022-02-07T16:57:45Z",
       "side": 1,
       "message": "Split and move the tests to either jet_traits_test.cc or to integer_sequence_algorithms_test.cc",
+      "range": {
+        "startLine": 904,
+        "startChar": 20,
+        "endLine": 904,
+        "endChar": 30
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99171d81_d379765e",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97921ccf_98cf231c",
       "range": {
         "startLine": 904,
         "startChar": 20,
@@ -875,6 +1169,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fa1e470_f4e9383a",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d4be9cb_d73ce012",
+      "range": {
+        "startLine": 1046,
+        "startChar": 5,
+        "endLine": 1046,
+        "endChar": 18
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4bc42ed6_c9e4a4a4",
@@ -888,6 +1206,30 @@
       "writtenOn": "2022-02-07T16:57:45Z",
       "side": 1,
       "message": "same as above.",
+      "range": {
+        "startLine": 1100,
+        "startChar": 20,
+        "endLine": 1100,
+        "endChar": 44
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f60a5ecb_e8948a0c",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bc42ed6_c9e4a4a4",
       "range": {
         "startLine": 1100,
         "startChar": 20,
