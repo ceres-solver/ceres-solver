@@ -40,8 +40,18 @@
 namespace ceres {
 namespace internal {
 
+namespace {
+
 constexpr int kNumTrials = 1000;
 constexpr double kTolerance = 1e-9;
+
+Vector RandomQuaternion() {
+  Vector x = Vector::Random(4);
+  x.normalize();
+  return x;
+}
+
+}  // namespace
 
 struct EuclideanFunctor {
   template <typename T>
@@ -243,12 +253,6 @@ MATCHER_P2(QuaternionPlusIsCorrectAt, x, delta, "") {
     return false;
   }
   return true;
-}
-
-Vector RandomQuaternion() {
-  Vector x = Vector::Random(4);
-  x.normalize();
-  return x;
 }
 
 TEST(AutoDiffManifoldTest, QuaternionGenericDelta) {
