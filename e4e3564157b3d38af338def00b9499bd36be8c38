@@ -52,6 +52,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cdd23d7_68e27956",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cc92d45_be919b8a",
+      "revId": "e4e3564157b3d38af338def00b9499bd36be8c38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c874f485_c501ef26",
@@ -65,6 +83,24 @@
       "writtenOn": "2022-02-07T20:49:39Z",
       "side": 1,
       "message": "typo",
+      "revId": "e4e3564157b3d38af338def00b9499bd36be8c38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daeb1400_4837975c",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T20:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c874f485_c501ef26",
       "revId": "e4e3564157b3d38af338def00b9499bd36be8c38",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
