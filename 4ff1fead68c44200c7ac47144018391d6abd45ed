@@ -246,6 +246,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "315e326f_b13ee2dd",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T20:41:42Z",
+      "side": 1,
+      "message": "rephrase sounds good to me.",
+      "parentUuid": "c92afda7_a7d61093",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 53
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "48a5bd00_6b3f0d4f",
         "filename": "include/ceres/internal/integer_sequence_algorithm.h",
         "patchSetId": 8
@@ -907,6 +931,24 @@
       "side": 1,
       "message": "The question I\u0027m asking is whether you agree? I would prefer fixing the issue right away.",
       "parentUuid": "db476ec6_300c6592",
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c90ddca_39f65848",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T20:41:42Z",
+      "side": 1,
+      "message": "so as I understand it, you would like to replace \u003e with isgreater ? because that handles the nan case correctly and you think that the only way the nan case is triggered is if the underlying code here has an issue?\n\nwhy would you want that to be quiet though?",
+      "parentUuid": "981b2ce4_9cb96a33",
       "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
