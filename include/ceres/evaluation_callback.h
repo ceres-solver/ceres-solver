@@ -31,7 +31,7 @@
 #ifndef CERES_PUBLIC_EVALUATION_CALLBACK_H_
 #define CERES_PUBLIC_EVALUATION_CALLBACK_H_
 
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 
 namespace ceres {
 

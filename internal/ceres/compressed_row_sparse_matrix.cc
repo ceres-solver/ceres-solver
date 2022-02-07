@@ -36,7 +36,7 @@
 #include <vector>
 
 #include "ceres/crs_matrix.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/random.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"

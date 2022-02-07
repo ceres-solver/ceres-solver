@@ -32,7 +32,7 @@
 #define CERES_INTERNAL_ACCELERATE_SPARSE_H_
 
 // This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/port.h"
+#include "ceres/internal/config.h"
 
 #ifndef CERES_NO_ACCELERATE_SPARSE
 

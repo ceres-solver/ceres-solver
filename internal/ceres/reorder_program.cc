@@ -37,7 +37,7 @@
 
 #include "Eigen/SparseCore"
 #include "ceres/cxsparse.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
 #include "ceres/parameter_block_ordering.h"

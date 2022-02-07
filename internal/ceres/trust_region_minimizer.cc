@@ -62,8 +62,6 @@
 namespace ceres {
 namespace internal {
 
-TrustRegionMinimizer::~TrustRegionMinimizer() = default;
-
 void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                                     double* parameters,
                                     Solver::Summary* solver_summary) {

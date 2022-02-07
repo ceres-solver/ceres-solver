@@ -29,7 +29,7 @@
 // Author: vitus@google.com (Michael Vitus)
 
 // This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/port.h"
+#include "ceres/internal/config.h"
 
 #if defined(CERES_USE_OPENMP)
 

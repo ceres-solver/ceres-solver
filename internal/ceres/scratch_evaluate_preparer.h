@@ -37,6 +37,9 @@
 
 #include <memory>
 
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
+
 namespace ceres {
 namespace internal {
 
@@ -44,7 +47,7 @@ class Program;
 class ResidualBlock;
 class SparseMatrix;
 
-class ScratchEvaluatePreparer {
+class CERES_NO_EXPORT ScratchEvaluatePreparer {
  public:
   // Create num_threads ScratchEvaluatePreparers.
   static std::unique_ptr<ScratchEvaluatePreparer[]> Create(
@@ -65,5 +68,7 @@ class ScratchEvaluatePreparer {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_SCRATCH_EVALUATE_PREPARER_H_

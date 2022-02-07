@@ -104,7 +104,7 @@ template class PartitionedMatrixView<%s,
 
 SPECIALIZATION_FILE = """
 // This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/port.h"
+#include "ceres/internal/config.h"
 
 #ifndef CERES_RESTRICT_SCHUR_SPECIALIZATION
 

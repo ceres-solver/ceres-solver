@@ -34,13 +34,14 @@
 #include <memory>
 
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/export.h"
 #include "ceres/line_search_minimizer.h"
 #include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
 
-class LineSearchDirection {
+class CERES_NO_EXPORT LineSearchDirection {
  public:
   struct Options {
     Options()

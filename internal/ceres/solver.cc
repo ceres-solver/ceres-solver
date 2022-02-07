@@ -41,7 +41,7 @@
 #include "ceres/context_impl.h"
 #include "ceres/detect_structure.h"
 #include "ceres/gradient_checking_cost_function.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/parameter_block_ordering.h"
 #include "ceres/preprocessor.h"
 #include "ceres/problem.h"

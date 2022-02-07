@@ -43,6 +43,7 @@
 
 #include "ceres/context.h"
 #include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 #include "ceres/types.h"
 #include "glog/logging.h"

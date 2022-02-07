@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -65,7 +65,7 @@ void ceres_free_problem(ceres_problem_t* problem) {
 
 // This cost function wraps a C-level function pointer from the user, to bridge
 // between C and C++.
-class CallbackCostFunction : public ceres::CostFunction {
+class CERES_NO_EXPORT CallbackCostFunction : public ceres::CostFunction {
  public:
   CallbackCostFunction(ceres_cost_function_t cost_function,
                        void* user_data,
@@ -78,8 +78,6 @@ class CallbackCostFunction : public ceres::CostFunction {
       mutable_parameter_block_sizes()->push_back(parameter_block_sizes[i]);
     }
   }
-
-  ~CallbackCostFunction() override = default;
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,

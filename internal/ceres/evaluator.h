@@ -39,7 +39,8 @@
 
 #include "ceres/context_impl.h"
 #include "ceres/execution_summary.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/types.h"
 
 namespace ceres {
@@ -56,7 +57,7 @@ class SparseMatrix;
 // function that is useful for an optimizer that wants to minimize the least
 // squares objective. This insulates the optimizer from issues like Jacobian
 // storage, manifolds, etc.
-class CERES_EXPORT_INTERNAL Evaluator {
+class CERES_NO_EXPORT Evaluator {
  public:
   virtual ~Evaluator();
 
@@ -165,5 +166,7 @@ class CERES_EXPORT_INTERNAL Evaluator {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_EVALUATOR_H_

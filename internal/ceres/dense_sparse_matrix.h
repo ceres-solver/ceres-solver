@@ -33,8 +33,9 @@
 #ifndef CERES_INTERNAL_DENSE_SPARSE_MATRIX_H_
 #define CERES_INTERNAL_DENSE_SPARSE_MATRIX_H_
 
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
 
@@ -43,7 +44,7 @@ namespace internal {
 
 class TripletSparseMatrix;
 
-class CERES_EXPORT_INTERNAL DenseSparseMatrix : public SparseMatrix {
+class CERES_NO_EXPORT DenseSparseMatrix : public SparseMatrix {
  public:
   // Build a matrix with the same content as the TripletSparseMatrix
   // m. This assumes that m does not have any repeated entries.
@@ -75,5 +76,7 @@ class CERES_EXPORT_INTERNAL DenseSparseMatrix : public SparseMatrix {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_DENSE_SPARSE_MATRIX_H_

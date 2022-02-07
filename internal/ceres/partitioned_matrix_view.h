@@ -42,8 +42,9 @@
 #include <vector>
 
 #include "ceres/block_structure.h"
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 #include "ceres/small_blas.h"
 #include "glog/logging.h"
@@ -61,7 +62,7 @@ namespace internal {
 // block structure of the matrix does not satisfy the requirements of
 // the Schur complement solver it will result in unpredictable and
 // wrong output.
-class CERES_EXPORT_INTERNAL PartitionedMatrixViewBase {
+class CERES_NO_EXPORT PartitionedMatrixViewBase {
  public:
   virtual ~PartitionedMatrixViewBase();
 
@@ -116,7 +117,7 @@ class CERES_EXPORT_INTERNAL PartitionedMatrixViewBase {
 template <int kRowBlockSize = Eigen::Dynamic,
           int kEBlockSize = Eigen::Dynamic,
           int kFBlockSize = Eigen::Dynamic>
-class PartitionedMatrixView : public PartitionedMatrixViewBase {
+class CERES_NO_EXPORT PartitionedMatrixView : public PartitionedMatrixViewBase {
  public:
   // matrix = [E F], where the matrix E contains the first
   // num_col_blocks_a column blocks.
@@ -153,5 +154,7 @@ class PartitionedMatrixView : public PartitionedMatrixViewBase {
 
 }  // namespace internal
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_PARTITIONED_MATRIX_VIEW_H_

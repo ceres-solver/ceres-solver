@@ -38,7 +38,7 @@
 #include <string>
 
 #include "ceres/autodiff_cost_function.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/problem.h"
 #include "ceres/rotation.h"

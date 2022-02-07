@@ -36,12 +36,13 @@
 
 // This include must come before any #ifndef check on Ceres compile options.
 // clang-format off
-#include "ceres/internal/port.h"
+#include "ceres/internal/config.h"
 // clang-format on
 
 #include <memory>
 #include <vector>
 
+#include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 
 namespace ceres {
@@ -53,7 +54,8 @@ class SparseCholesky;
 
 // Solves the normal equations (A'A + D'D) x = A'b, using the sparse
 // linear algebra library of the user's choice.
-class SparseNormalCholeskySolver : public BlockSparseMatrixSolver {
+class CERES_NO_EXPORT SparseNormalCholeskySolver
+    : public BlockSparseMatrixSolver {
  public:
   explicit SparseNormalCholeskySolver(const LinearSolver::Options& options);
   SparseNormalCholeskySolver(const SparseNormalCholeskySolver&) = delete;

@@ -37,6 +37,7 @@
 #include <vector>
 
 #include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
 
 namespace ceres {
@@ -366,6 +367,8 @@ class CERES_DEPRECATED_WITH_MSG("Use ProductManifold instead.")
 
 // clang-format off
 #include "ceres/internal/reenable_warnings.h"
+// clang-format on
+
 #include "ceres/internal/line_parameterization.h"
 
 #endif  // CERES_PUBLIC_LOCAL_PARAMETERIZATION_H_

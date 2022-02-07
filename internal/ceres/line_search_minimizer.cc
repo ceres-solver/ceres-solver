@@ -51,7 +51,7 @@
 #include "ceres/array_utils.h"
 #include "ceres/evaluator.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/port.h"
+#include "ceres/internal/export.h"
 #include "ceres/line_search.h"
 #include "ceres/line_search_direction.h"
 #include "ceres/stringprintf.h"
