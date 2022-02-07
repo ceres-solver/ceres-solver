@@ -123,6 +123,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6aab3157_0f3d325e",
+        "filename": "include/ceres/internal/sphere_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T14:48:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1044a351_c29da6e8",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 27
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26826b99_2f0afef2",
@@ -154,6 +178,24 @@
       "side": 1,
       "message": "I derived these equations on my own and they are not the same as in the paper (but maybe equivalent?). That was the reason why I have not cited them. Shall I just cite them?",
       "parentUuid": "26826b99_2f0afef2",
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4641525f_8981f485",
+        "filename": "include/ceres/internal/sphere_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T14:48:40Z",
+      "side": 1,
+      "message": "In that case I think it is worth checking them against the equations in the paper.  I say this because we do that for the plus operator, it would be odd to not do this for the minus operator.",
+      "parentUuid": "9025821b_879bada7",
       "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -242,6 +284,30 @@
       "side": 1,
       "message": "I am not sure what\u0027s best here. Usually the dimension is known at compile time so I think it would be better to let the user explicitly set the AmbientSpaceDimension. Otherwise the default would lead to lower performance. The constructor with one argument can always be called even if AmbientSpaceDimension \u003e 0 but the argument must then match AmbientSpaceDimension. It is the same scheme as e.g. in AutoDiffCostFunction for the number of residuals.",
       "parentUuid": "7105c503_a3ddcc38",
+      "range": {
+        "startLine": 433,
+        "startChar": 14,
+        "endLine": 433,
+        "endChar": 35
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb46084d_1eba4c53",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T14:48:40Z",
+      "side": 1,
+      "message": "Okay, lets see what it looks like when I start transitioning people to this class and I can come back to it.",
+      "parentUuid": "e8690989_6125a542",
       "range": {
         "startLine": 433,
         "startChar": 14,
@@ -430,6 +496,30 @@
       "side": 1,
       "message": "What do you mean by this? Shall I add more documentation to the specialization for SphereManifold in manifold_test.cc or add a comment to the minus operator?",
       "parentUuid": "ae5b3f70_8a8f7533",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f2c512a_ff75756d",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T14:48:40Z",
+      "side": 1,
+      "message": "I think it is worth adding a comment to the specialization for the SphereManifold.",
+      "parentUuid": "79b0dd96_3c933e53",
       "range": {
         "startLine": 60,
         "startChar": 7,
