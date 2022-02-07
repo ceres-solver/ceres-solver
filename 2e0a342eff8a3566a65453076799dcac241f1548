@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7653726_69844f2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T21:18:50Z",
+      "side": 1,
+      "message": "I updated the formula to the one in the paper. It gave the same result if norm(x) \u003d\u003d norm(y) but the formula from the paper works even if norm(x) !\u003d norm(y). I reverted the changes to manifold_test_utils.",
+      "revId": "2e0a342eff8a3566a65453076799dcac241f1548",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

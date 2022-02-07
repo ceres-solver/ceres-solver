@@ -71,6 +71,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2ef0f56_deb39bf1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T21:18:50Z",
+      "side": 1,
+      "message": "As Sameer mentioned it should not affect the covariance.",
+      "parentUuid": "22004f2f_5c1c1cfc",
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "965e2474_8ad99bd7",
@@ -214,6 +232,24 @@
       "side": 1,
       "message": "In that case I think it is worth checking them against the equations in the paper.  I say this because we do that for the plus operator, it would be odd to not do this for the minus operator.",
       "parentUuid": "9025821b_879bada7",
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46d2d909_9712f3a8",
+        "filename": "include/ceres/internal/sphere_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T21:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4641525f_8981f485",
       "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -538,6 +574,30 @@
       "side": 1,
       "message": "I think it is worth adding a comment to the specialization for the SphereManifold.",
       "parentUuid": "79b0dd96_3c933e53",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5675042e_99fb0605",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T21:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f2c512a_ff75756d",
       "range": {
         "startLine": 60,
         "startChar": 7,
