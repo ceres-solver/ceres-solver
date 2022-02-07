@@ -76,6 +76,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01ba8dd8_e7df2a79",
+        "filename": "include/ceres/internal/sphere_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T05:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "965e2474_8ad99bd7",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1044a351_c29da6e8",
@@ -118,6 +142,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9025821b_879bada7",
+        "filename": "include/ceres/internal/sphere_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T05:25:39Z",
+      "side": 1,
+      "message": "I derived these equations on my own and they are not the same as in the paper (but maybe equivalent?). That was the reason why I have not cited them. Shall I just cite them?",
+      "parentUuid": "26826b99_2f0afef2",
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7526bf9e_c05fa8b6",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 3
@@ -129,6 +171,30 @@
       "writtenOn": "2022-02-06T14:54:57Z",
       "side": 1,
       "message": "it is worth documenting that this class can use both dynamic and static sizing and give example usage.",
+      "range": {
+        "startLine": 430,
+        "startChar": 56,
+        "endLine": 430,
+        "endChar": 65
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d48dcae0_dbebfefa",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T05:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7526bf9e_c05fa8b6",
       "range": {
         "startLine": 430,
         "startChar": 56,
@@ -164,6 +230,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e8690989_6125a542",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T05:25:39Z",
+      "side": 1,
+      "message": "I am not sure what\u0027s best here. Usually the dimension is known at compile time so I think it would be better to let the user explicitly set the AmbientSpaceDimension. Otherwise the default would lead to lower performance. The constructor with one argument can always be called even if AmbientSpaceDimension \u003e 0 but the argument must then match AmbientSpaceDimension. It is the same scheme as e.g. in AutoDiffCostFunction for the number of residuals.",
+      "parentUuid": "7105c503_a3ddcc38",
+      "range": {
+        "startLine": 433,
+        "startChar": 14,
+        "endLine": 433,
+        "endChar": 35
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bedf8935_51062ab1",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 3
@@ -175,6 +265,30 @@
       "writtenOn": "2022-02-06T14:54:57Z",
       "side": 1,
       "message": "mark one argument constructors as explicit.",
+      "range": {
+        "startLine": 441,
+        "startChar": 2,
+        "endLine": 441,
+        "endChar": 16
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9baae7b_aab4e77c",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T05:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bedf8935_51062ab1",
       "range": {
         "startLine": 441,
         "startChar": 2,
@@ -208,6 +322,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e21ddc9c_b758bf20",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T05:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9928646_cccd222f",
+      "range": {
+        "startLine": 447,
+        "startChar": 6,
+        "endLine": 447,
+        "endChar": 17
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28bab86c_90d4b1c0",
@@ -221,6 +359,30 @@
       "writtenOn": "2022-02-06T14:54:57Z",
       "side": 1,
       "message": "I think in our public api we use ceres::DYNAMIC rather than Eigen::Dynamic (they have the same value).",
+      "range": {
+        "startLine": 448,
+        "startChar": 42,
+        "endLine": 448,
+        "endChar": 43
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbf308c3_3cf8c798",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T05:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28bab86c_90d4b1c0",
       "range": {
         "startLine": 448,
         "startChar": 42,
@@ -256,6 +418,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79b0dd96_3c933e53",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T05:25:39Z",
+      "side": 1,
+      "message": "What do you mean by this? Shall I add more documentation to the specialization for SphereManifold in manifold_test.cc or add a comment to the minus operator?",
+      "parentUuid": "ae5b3f70_8a8f7533",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ba3572c0_edfd3f6a",
         "filename": "include/ceres/manifold_test_utils.h",
         "patchSetId": 3
@@ -267,6 +453,24 @@
       "writtenOn": "2022-02-06T14:54:57Z",
       "side": 1,
       "message": "I also think you should move the definition of ManifoldProjector next to MinusFunctor because its a bit hard to make sense of what it is doing without looking at MinusFunctor.",
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8500b9e6_f1ad4802",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T05:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3572c0_edfd3f6a",
       "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -294,6 +498,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bca4c8e4_798a67c5",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T05:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfcc1b2a_3de81c1c",
+      "range": {
+        "startLine": 8,
+        "startChar": 16,
+        "endLine": 8,
+        "endChar": 24
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61141d6b_92d1b79d",
@@ -307,6 +535,30 @@
       "writtenOn": "2022-02-06T14:54:57Z",
       "side": 1,
       "message": "I would not do a function like this, it makes reading the logs much harder. i would go ahead and duplicate this code into the individual tests, that way when test failures happen we can read them as located inside the test.",
+      "range": {
+        "startLine": 533,
+        "startChar": 5,
+        "endLine": 533,
+        "endChar": 37
+      },
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac69603c_7be1d580",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-07T05:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61141d6b_92d1b79d",
       "range": {
         "startLine": 533,
         "startChar": 5,
