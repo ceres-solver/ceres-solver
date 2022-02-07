@@ -90,7 +90,7 @@ TEST_P(DenseQRTest, FactorAndSolve) {
         EXPECT_EQ(summary.termination_type, LINEAR_SOLVER_SUCCESS);
         EXPECT_NEAR((x - actual).norm() / x.norm(),
                     0.0,
-                    std::numeric_limits<double>::epsilon() * 100)
+                    std::numeric_limits<double>::epsilon() * 400)
             << "\nexpected: " << x.transpose()
             << "\nactual  : " << actual.transpose();
       }
