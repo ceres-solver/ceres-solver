@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93af7f97_d1dbde63",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T17:06:24Z",
+      "side": 1,
+      "message": "it shouldn\u0027t but it may affect some numerical tests and I do not want to deal with that during the localparameterization to manifold transition.",
+      "tag": "mailMessageId\u003d\u003cCABqdRUDvOYJmsVojm\u003d9MmZHKhhMayVOZJz0eW3XuF\u003dtJzz8zkQ@mail.gmail.com\u003e",
+      "revId": "3070c97872b74a54ff894c3445db870a2e44af24",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
