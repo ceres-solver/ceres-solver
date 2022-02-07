@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -173,6 +173,12 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
 
   return summary;
 }
+DenseSchurComplementSolver::DenseSchurComplementSolver(
+    const LinearSolver::Options& options)
+    : SchurComplementSolver(options),
+      cholesky_(DenseCholesky::Create(options)) {}
+
+DenseSchurComplementSolver::~DenseSchurComplementSolver() {}
 
 // Initialize a BlockRandomAccessDenseMatrix to store the Schur
 // complement.
