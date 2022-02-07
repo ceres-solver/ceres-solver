@@ -52,6 +52,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bba0a3bd_28305261",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-07T19:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d39ecf19_255753d4",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8d0bec9_08887ed4",
@@ -192,6 +210,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "835a6642_706082af",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-07T19:32:11Z",
+      "side": 1,
+      "message": "OK, I don\u0027t see an obviously better option then",
+      "parentUuid": "51f5ca8b_2bb14064",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a23a1d64_2758f1ab",
@@ -293,6 +329,24 @@
       "side": 1,
       "message": "I was trying to avoid the additional layer of ambiguity between eigen defaults and ceres redefinition of those things... do you think ceres::ColMajorMatrix is clearer?",
       "parentUuid": "77264ca7_d5d5a064",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba62d437_ce569eb7",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-07T19:32:11Z",
+      "side": 1,
+      "message": "I think it\u0027s clearer to use ceres::ColMajorMatrix (vs ceres::Matrix) for every matrix we expect to be ColMajor rather than relying on Eigen\u0027s defaults.  Ideally (unrealistic) never using Eigen types explicitly",
+      "parentUuid": "93eeb7ae_70469558",
       "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -437,6 +491,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ffef9d8_f6af0de9",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-07T19:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ca57687_9369443b",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1e88867_0b953321",
@@ -544,6 +616,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bbd5c224_732d6262",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-07T19:32:11Z",
+      "side": 1,
+      "message": "Yes it should see [1], devirtualisation compiler optimisations are a thing.  As to how big a difference it would make here I think that\u0027s hard to say but I think it\u0027s worth trying.\n\n[1]: https://devblogs.microsoft.com/cppblog/the-performance-benefits-of-final-classes/",
+      "parentUuid": "04214c29_4dcf0c23",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6c74f9a1_9f434736",
         "filename": "internal/ceres/dense_qr.h",
         "patchSetId": 2
@@ -643,6 +733,24 @@
       "side": 1,
       "message": "m is not row major, and ceres::Matrix is.",
       "parentUuid": "e942b077_d7965c32",
+      "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eeced7c7_e6395467",
+        "filename": "internal/ceres/dense_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-07T19:32:11Z",
+      "side": 1,
+      "message": "Sorry, I meant ceres::ColMajorMatrix",
+      "parentUuid": "090e038a_d97a5eff",
       "revId": "f33cae29ea93beead69ce23de3fd9dca27f7ad27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
