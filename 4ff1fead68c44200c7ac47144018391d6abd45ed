@@ -56,6 +56,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "454d83ea_08c6a11f",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T15:02:48Z",
+      "side": 1,
+      "message": "T1 is not a great name, how about Element or something which does not say yet another type.",
+      "range": {
+        "startLine": 198,
+        "startChar": 52,
+        "endLine": 198,
+        "endChar": 54
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f90ae54_3c04a0aa",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T15:02:48Z",
+      "side": 1,
+      "message": "This whole comment is very cryptic. The second sentence seems to be the description and it should be combined with the fourth sentence. But I have no idea what the first and third sentences are trying to say.",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 53
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "48a5bd00_6b3f0d4f",
         "filename": "include/ceres/internal/integer_sequence_algorithm.h",
         "patchSetId": 8
@@ -67,6 +113,190 @@
       "writtenOn": "2022-02-07T09:24:56Z",
       "side": 1,
       "message": "The comment is incorrect. Should be RemoveValueImpl.",
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e42f6147_b1fd2530",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T15:02:48Z",
+      "side": 1,
+      "message": "please also add tests for RemoveValue.",
+      "range": {
+        "startLine": 234,
+        "startChar": 6,
+        "endLine": 234,
+        "endChar": 19
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69cf0216_5842dbcb",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T15:02:48Z",
+      "side": 1,
+      "message": "please add tests.",
+      "range": {
+        "startLine": 269,
+        "startChar": 31,
+        "endLine": 269,
+        "endChar": 42
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "933ad602_51febef2",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T15:02:48Z",
+      "side": 1,
+      "message": "better name for V1?",
+      "range": {
+        "startLine": 281,
+        "startChar": 26,
+        "endLine": 281,
+        "endChar": 27
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa077f98_26962280",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T15:02:48Z",
+      "side": 1,
+      "message": "please add tests.",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 9
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a22259b_b9ced985",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T15:02:48Z",
+      "side": 1,
+      "message": "do we need to say ceres::Jet here? won\u0027t just Jet do?",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 18
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cfc5ca9_c90c9409",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T15:02:48Z",
+      "side": 1,
+      "message": "add tests.",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 16
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdd87948_d8b15f04",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T15:02:48Z",
+      "side": 1,
+      "message": "add tests.",
+      "range": {
+        "startLine": 107,
+        "startChar": 15,
+        "endLine": 107,
+        "endChar": 27
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19970348_d89b0fd5",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T15:02:48Z",
+      "side": 1,
+      "message": "One question I had in my mind as I was reading all this code was, do we expect to be doing anything more than pairs of operands? if not then why do we need so much recursion? couldn\u0027t we simplify things without using variadic templates and just focus on the two parameter case?",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 158,
+        "endChar": 28
+      },
       "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -101,6 +331,29 @@
       "writtenOn": "2022-02-06T16:46:13Z",
       "side": 1,
       "message": "I believe the use of (non-quiet) comparisons such as this one needs to reevaluated because the sole source of FP exceptions should probably be fundamental arithmetic operations.",
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c930c9c9_e5e28940",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-07T15:02:48Z",
+      "side": 1,
+      "message": "Could you add a comment as to why this is needed and what would happen if you do not use it?",
+      "range": {
+        "startLine": 73,
+        "startChar": 14,
+        "endLine": 73,
+        "endChar": 22
+      },
       "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
