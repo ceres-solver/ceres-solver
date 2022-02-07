@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "22004f2f_5c1c1cfc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-02-07T17:04:01Z",
+      "side": 1,
+      "message": "Will eliminating the factor of two affect the covariance?",
+      "parentUuid": "c57d0819_bc2fb679",
+      "revId": "bc025d3b076997ce21c3e2f8a72bcb4f46cc8e21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "965e2474_8ad99bd7",
         "filename": "include/ceres/internal/sphere_manifold.h",
         "patchSetId": 3
