@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74d1b417_9d039d98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T09:19:07Z",
+      "side": 1,
+      "message": "As a general note, this is only a WIP to gather comments. In a second step, I will update the CXSparse integration as well.",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4764e09c_0cf53bb8",
