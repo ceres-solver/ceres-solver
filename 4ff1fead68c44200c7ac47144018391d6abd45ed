@@ -79,6 +79,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5e54ec93_2be766be",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T15:50:29Z",
+      "side": 1,
+      "message": "Middle(Element)?",
+      "parentUuid": "454d83ea_08c6a11f",
+      "range": {
+        "startLine": 198,
+        "startChar": 52,
+        "endLine": 198,
+        "endChar": 54
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f90ae54_3c04a0aa",
         "filename": "include/ceres/internal/integer_sequence_algorithm.h",
         "patchSetId": 8
@@ -90,6 +114,30 @@
       "writtenOn": "2022-02-07T15:02:48Z",
       "side": 1,
       "message": "This whole comment is very cryptic. The second sentence seems to be the description and it should be combined with the fourth sentence. But I have no idea what the first and third sentences are trying to say.",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 53
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90e8ac41_d4749363",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T15:50:29Z",
+      "side": 1,
+      "message": "3rd and 4th sentences are examples. 1st sentence says that RemoveValue is a variant of RemoveValueImpl that does not require specifying the integer type.",
+      "parentUuid": "3f90ae54_3c04a0aa",
       "range": {
         "startLine": 216,
         "startChar": 0,
@@ -142,6 +190,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a39e3874_97424180",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T15:50:29Z",
+      "side": 1,
+      "message": "You mean more tests?",
+      "parentUuid": "e42f6147_b1fd2530",
+      "range": {
+        "startLine": 234,
+        "startChar": 6,
+        "endLine": 234,
+        "endChar": 19
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "69cf0216_5842dbcb",
         "filename": "include/ceres/internal/integer_sequence_algorithm.h",
         "patchSetId": 8
@@ -165,6 +237,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "45ee4d35_dcd7f620",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T15:50:29Z",
+      "side": 1,
+      "message": "You mean more tests?",
+      "parentUuid": "69cf0216_5842dbcb",
+      "range": {
+        "startLine": 269,
+        "startChar": 31,
+        "endLine": 269,
+        "endChar": 42
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "933ad602_51febef2",
         "filename": "include/ceres/internal/integer_sequence_algorithm.h",
         "patchSetId": 8
@@ -176,6 +272,30 @@
       "writtenOn": "2022-02-07T15:02:48Z",
       "side": 1,
       "message": "better name for V1?",
+      "range": {
+        "startLine": 281,
+        "startChar": 26,
+        "endLine": 281,
+        "endChar": 27
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7790a2e_4483f516",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T15:50:29Z",
+      "side": 1,
+      "message": "FirstValue? HeadValue? ValueAtHead?",
+      "parentUuid": "933ad602_51febef2",
       "range": {
         "startLine": 281,
         "startChar": 26,
@@ -280,6 +400,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0bc3db26_608f53b7",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T15:50:29Z",
+      "side": 1,
+      "message": "Several tests exist already. What kind of tests would you like to additionally see?",
+      "parentUuid": "fdd87948_d8b15f04",
+      "range": {
+        "startLine": 107,
+        "startChar": 15,
+        "endLine": 107,
+        "endChar": 27
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "19970348_d89b0fd5",
         "filename": "include/ceres/internal/jet_traits.h",
         "patchSetId": 8
@@ -291,6 +435,30 @@
       "writtenOn": "2022-02-07T15:02:48Z",
       "side": 1,
       "message": "One question I had in my mind as I was reading all this code was, do we expect to be doing anything more than pairs of operands? if not then why do we need so much recursion? couldn\u0027t we simplify things without using variadic templates and just focus on the two parameter case?",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 158,
+        "endChar": 28
+      },
+      "revId": "4ff1fead68c44200c7ac47144018391d6abd45ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97e93e1b_40213b38",
+        "filename": "include/ceres/internal/jet_traits.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-07T15:50:29Z",
+      "side": 1,
+      "message": "Currently not more than two operands are expected, correct. However, a solution tailored for two arguments would probably be much uglier and less maintainable as the operands need to permute (one of them being not like the other).",
+      "parentUuid": "19970348_d89b0fd5",
       "range": {
         "startLine": 158,
         "startChar": 7,
