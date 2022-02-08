@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d79a659_bdcd2fc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-08T23:52:54Z",
+      "side": 1,
+      "message": "do you want to send me a rebased version of this CL to approve since it overlaps with the override one.",
+      "revId": "ab3c6bad345c529249cfce1a248395396336f9cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
