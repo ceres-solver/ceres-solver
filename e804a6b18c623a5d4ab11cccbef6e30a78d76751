@@ -213,6 +213,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d2bf1f2_23b82661",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T22:12:15Z",
+      "side": 1,
+      "message": "RelWithDebInfo fails here:\n```\n[----------] 3 tests from EigenQuaternionManifold\n[ RUN      ] EigenQuaternionManifold.GenericDelta\n[       OK ] EigenQuaternionManifold.GenericDelta (5 ms)\n[ RUN      ] EigenQuaternionManifold.SmallDelta\n[       OK ] EigenQuaternionManifold.SmallDelta (5 ms)\n[ RUN      ] EigenQuaternionManifold.DeltaJustBelowPi\n[       OK ] EigenQuaternionManifold.DeltaJustBelowPi (5 ms)\n[----------] 3 tests from EigenQuaternionManifold (15 ms total)\n\n[----------] 7 tests from SphereManifold\n[ RUN      ] SphereManifold.ZeroTest\n\nProgram received signal SIGSEGV, Segmentation fault.\nceres::XPlusZeroIsXAtMatcherP2\u003cEigen::Matrix\u003cdouble, 4, 1, 0, 4, 1\u003e, double\u003e::gmock_Impl\u003cceres::SphereManifold\u003c4\u003e const\u0026\u003e::MatchAndExplain (this\u003d0x555555924930, arg\u003d..., result_listener\u003d0x7fffffffd560) at /home/sergiu/Projects/ceres-solver/include/ceres/manifold_test_utils.h:73\n73\t  const double d \u003d x.norm();\n(gdb) p d\n$1 \u003d \u003coptimized out\u003e\n(gdb) p x\n$2 \u003d Eigen::Matrix\u003cdouble,4,1,ColMajor\u003e (data ptr: 0x555555924950) \u003d {\n  [0] \u003d 0,\n  [1] \u003d 0,\n  [2] \u003d 0,\n  [3] \u003d 1\n}\n(gdb) \n```\nNot sure what\u0027s happening.",
+      "parentUuid": "3afa591c_7f967206",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f227dd4_33701434",
