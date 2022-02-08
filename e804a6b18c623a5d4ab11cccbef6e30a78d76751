@@ -72,6 +72,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c8fa7d31_002ca44f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T18:33:10Z",
+      "side": 1,
+      "message": "What is the purpose of the include/ceres/internal/port.h header? It seems to be doing multiple jobs at once. Particularly, all those plausibility checks seem to be misplaced and would be a much better fit for config.h (which is included by port.h anyway).\n\nI\u0027m asking because in many instances the reason for including port.h is not clear. Is it because of the compile options, export annotations, or those helper definitions? I would prefer making port.h independent from any other header by leaving only standalone macro definitions that do not depend on anything else. This way, the concerns will be well separated and the use of corresponding headers better manageable.",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6f227dd4_33701434",
         "filename": "include/ceres/internal/disable_warnings.h",
         "patchSetId": 1
@@ -106,6 +123,30 @@
       "writtenOn": "2022-02-08T01:58:24Z",
       "side": 1,
       "message": "\"ceres/internal/export.h\"",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcd3b323_e6361e7d",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T18:33:10Z",
+      "side": 1,
+      "message": "Obsolete since removed.",
+      "parentUuid": "5d97fb27_45989085",
       "range": {
         "startLine": 34,
         "startChar": 10,
@@ -159,6 +200,23 @@
         "endLine": 56,
         "endChar": 22
       },
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8e9b6fb_4090b844",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T18:33:10Z",
+      "side": 1,
+      "message": "Maybe call it ceres_internal to be more clear?",
       "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -227,6 +285,23 @@
       "writtenOn": "2022-02-08T01:02:54Z",
       "side": 1,
       "message": "Previous logic seems to be incorrect. Shared libraries do not change the transitive relation of dependencies.",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e5ad9f7_d11a7572",
+        "filename": "internal/ceres/cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T18:33:10Z",
+      "side": 1,
+      "message": "\"ceres/cost_function.h\"",
       "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
