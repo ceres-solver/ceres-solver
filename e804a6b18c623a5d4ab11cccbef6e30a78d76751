@@ -35,6 +35,92 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88629774_6a3bd2cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-08T01:58:24Z",
+      "side": 1,
+      "message": "some minor comments. I\u0027d like us to wait to land this CL for a few days, since there is a bunch of stuff in flight right now and I\u0027d like it to land before we make this change.",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f227dd4_33701434",
+        "filename": "include/ceres/internal/disable_warnings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-08T01:58:24Z",
+      "side": 1,
+      "message": "add comment about what warnings are being ignored.",
+      "range": {
+        "startLine": 39,
+        "startChar": 31,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d97fb27_45989085",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-08T01:58:24Z",
+      "side": 1,
+      "message": "\"ceres/internal/export.h\"",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29b49259_1de557b1",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-08T01:58:24Z",
+      "side": 1,
+      "message": "this is an odd set of sources ?",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 22
+      },
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3e2eddc_fd80261e",
