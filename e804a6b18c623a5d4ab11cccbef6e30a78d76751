@@ -123,6 +123,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69f82b9c_2643540d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T20:19:59Z",
+      "side": 1,
+      "message": "I\u0027m on Linux with GCC 11.1. The failure seems to occur only in release mode:\n\n```\n[0/1] Re-running CMake...\n-- Detected Ceres version: 2.1.0 from /home/sergiu/Projects/ceres-solver/include/ceres/version.h\n-- Detected available Ceres threading models: [CXX_THREADS, OPENMP, NO_THREADS]\n-- Building with C++14\n-- Found Eigen version 3.4.0: /usr/share/eigen3/cmake\n-- Enabling use of Eigen as a sparse linear algebra library.\n-- Found CUDA version 11.6: /opt/cuda/lib64/libcudart_static.a;Threads::Threads;dl;/usr/lib/librt.so;/opt/cuda/lib64/libcusolver.so;/opt/cuda/lib64/libcusparse.so\n-- CUDA version 11.6 is at least 11.1, using 64-bit API.\n-- Found LAPACK library: /opt/intel/mkl/lib/intel64_lin/libmkl_intel_lp64.so;/opt/intel/mkl/lib/intel64_lin/libmkl_intel_thread.so;/opt/intel/mkl/lib/intel64_lin/libmkl_core.so;/opt/intel/mkl/lib/intel64_lin/libiomp5.so;-lpthread;-lm;-ldl;-lpthread;-lm;-ldl\n-- Found AMD headers in: /usr/include\n-- Found AMD library: /usr/lib/libamd.so\n-- Found CAMD headers in: /usr/include\n-- Found CAMD library: /usr/lib/libcamd.so\n-- Found COLAMD headers in: /usr/include\n-- Found COLAMD library: /usr/lib/libcolamd.so\n-- Found CCOLAMD headers in: /usr/include\n-- Found CCOLAMD library: /usr/lib/libccolamd.so\n-- Found CHOLMOD headers in: /usr/include\n-- Found CHOLMOD library: /usr/lib/libcholmod.so\n-- Found SUITESPARSEQR headers in: /usr/include\n-- Found SUITESPARSEQR library: /usr/lib/libspqr.so\n-- Found Intel Thread Building Blocks (TBB) library (2021.5 / 12050) include location: /usr/include. Assuming SuiteSparseQR was compiled with TBB.\n-- Found SUITESPARSE_CONFIG headers in: /usr/include\n-- Found SUITESPARSE_CONFIG library: /usr/lib/libsuitesparseconfig.so\n-- Found LIBRT library: /usr/lib/librt.so\n-- Adding librt: /usr/lib/librt.so to SuiteSparse_config libraries (required on Linux \u0026 Unix [not OSX] if SuiteSparse is compiled with timing).\n-- Found METIS library: /usr/lib/libmetis.so\n-- Found SuiteSparse 5.10.1, building with SuiteSparse.\n-- Found CXSparse version: 3.2.0, building with CXSparse.\n-- Building without Apple\u0027s Accelerate sparse support.\n-- Found Google Flags (gflags) version 2.2.2: /home/sergiu/Projects/gflags/build\n-- No preference for use of exported glog CMake configuration set, and no hints for include/library directories provided. Defaulting to preferring an installed/exported glog CMake configuration if available.\n-- Found installed version of glog: /home/sergiu/Projects/glog/build\n-- Detected glog version: 0.5.0\n-- Found Google Log (glog). Assuming glog was built with gflags support as gflags was found. This will make gflags a public dependency of Ceres.\n-- Using Ceres threading model: CXX_THREADS\n-- Found Google benchmark library. Building Ceres benchmarks.\n-- Building Ceres as a shared library.\n-- Enabling CERES_USE_EIGEN_SPARSE in Ceres config.h\n-- Enabling CERES_NO_ACCELERATE_SPARSE in Ceres config.h\n-- Enabling CERES_USE_CXX_THREADS in Ceres config.h\n-- Enabling CERES_USING_SHARED_LIBRARY in Ceres config.h\n-- Build the examples.\n-- Configuring done\n-- Generating done\n-- Build files have been written to: /home/sergiu/Projects/ceres-solver/build-simple-release\n```",
+      "parentUuid": "5f61b21b_993236a4",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f227dd4_33701434",
