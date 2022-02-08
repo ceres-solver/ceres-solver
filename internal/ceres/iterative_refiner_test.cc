@@ -54,7 +54,7 @@ namespace internal {
 class FakeSparseMatrix : public SparseMatrix {
  public:
   FakeSparseMatrix(const Matrix& m) : m_(m) {}
-  ~FakeSparseMatrix() override {}
+  ~FakeSparseMatrix() override = default;
 
   // y += Ax
   void RightMultiply(const double* x, double* y) const final {
@@ -90,7 +90,7 @@ template <typename Scalar>
 class FakeSparseCholesky : public SparseCholesky {
  public:
   FakeSparseCholesky(const Matrix& lhs) { lhs_ = lhs.cast<Scalar>(); }
-  ~FakeSparseCholesky() override {}
+  ~FakeSparseCholesky() override = default;
 
   LinearSolverTerminationType Solve(const double* rhs_ptr,
                                     double* solution_ptr,

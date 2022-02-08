@@ -92,7 +92,7 @@ bool GradientProblemSolver::Options::IsValid(std::string* error) const {
   return solver_options.IsValid(error);
 }
 
-GradientProblemSolver::~GradientProblemSolver() {}
+GradientProblemSolver::~GradientProblemSolver() = default;
 
 void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
                                   const GradientProblem& problem,

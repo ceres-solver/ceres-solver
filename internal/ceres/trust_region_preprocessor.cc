@@ -355,7 +355,7 @@ void SetupMinimizerOptions(PreprocessedProblem* pp) {
 
 }  // namespace
 
-TrustRegionPreprocessor::~TrustRegionPreprocessor() {}
+TrustRegionPreprocessor::~TrustRegionPreprocessor() = default;
 
 bool TrustRegionPreprocessor::Preprocess(const Solver::Options& options,
                                          ProblemImpl* problem,

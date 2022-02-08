@@ -114,7 +114,7 @@ class AutoDiffLocalParameterization : public LocalParameterization {
   explicit AutoDiffLocalParameterization(Functor* functor)
       : functor_(functor) {}
 
-  ~AutoDiffLocalParameterization() override {}
+  ~AutoDiffLocalParameterization() override = default;
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override {

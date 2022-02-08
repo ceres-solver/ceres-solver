@@ -72,7 +72,7 @@ struct WigglyBowlCostFunctionAndEvaluationCallback : SizedCostFunction<2, 2>,
         evaluate_num_calls(0),
         evaluate_last_parameter_hash(kUninitialized) {}
 
-  ~WigglyBowlCostFunctionAndEvaluationCallback() override {}
+  ~WigglyBowlCostFunctionAndEvaluationCallback() override = default;
 
   // Evaluation callback interface. This checks that all the preconditions are
   // met at the point that Ceres calls into it.

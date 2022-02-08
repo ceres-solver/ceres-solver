@@ -71,7 +71,7 @@ struct Cell {
 bool CellLessThan(const Cell& lhs, const Cell& rhs);
 
 struct CompressedList {
-  CompressedList() {}
+  CompressedList() = default;
 
   // Construct a CompressedList with the cells containing num_cells
   // entries.

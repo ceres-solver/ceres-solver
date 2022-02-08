@@ -82,7 +82,7 @@ PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
-    ~PartitionedMatrixView() {}
+    ~PartitionedMatrixView() = default;
 
 // The next four methods don't seem to be particularly cache
 // friendly. This is an artifact of how the BlockStructure of the

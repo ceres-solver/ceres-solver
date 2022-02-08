@@ -194,7 +194,7 @@ struct CERES_EXPORT IterationSummary {
 //
 class CERES_EXPORT IterationCallback {
  public:
-  virtual ~IterationCallback() {}
+  virtual ~IterationCallback() = default;
   virtual CallbackReturnType operator()(const IterationSummary& summary) = 0;
 };
 

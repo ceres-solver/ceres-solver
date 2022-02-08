@@ -55,7 +55,7 @@ SubsetPreconditioner::SubsetPreconditioner(
   sparse_cholesky_ = SparseCholesky::Create(sparse_cholesky_options);
 }
 
-SubsetPreconditioner::~SubsetPreconditioner() {}
+SubsetPreconditioner::~SubsetPreconditioner() = default;
 
 void SubsetPreconditioner::RightMultiply(const double* x, double* y) const {
   CHECK(x != nullptr);

@@ -125,7 +125,7 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
           << " eliminator time: " << eliminator_time - storage_time;
 }
 
-VisibilityBasedPreconditioner::~VisibilityBasedPreconditioner() {}
+VisibilityBasedPreconditioner::~VisibilityBasedPreconditioner() = default;
 
 // Determine the sparsity structure of the CLUSTER_JACOBI
 // preconditioner. It clusters cameras using their scene

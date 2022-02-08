@@ -47,11 +47,11 @@ namespace internal {
 
 class CERES_EXPORT_INTERNAL ContextImpl : public Context {
  public:
-  ContextImpl() {}
+  ContextImpl() = default;
   ContextImpl(const ContextImpl&) = delete;
   void operator=(const ContextImpl&) = delete;
 
-  ~ContextImpl() override {}
+  ~ContextImpl() override = default;
 
   // When compiled with C++ threading support, resize the thread pool to have
   // at min(num_thread, num_hardware_threads) where num_hardware_threads is

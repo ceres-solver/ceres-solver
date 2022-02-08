@@ -50,7 +50,7 @@ BlockJacobiPreconditioner::BlockJacobiPreconditioner(
   m_.reset(new BlockRandomAccessDiagonalMatrix(blocks));
 }
 
-BlockJacobiPreconditioner::~BlockJacobiPreconditioner() {}
+BlockJacobiPreconditioner::~BlockJacobiPreconditioner() = default;
 
 bool BlockJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
                                            const double* D) {

@@ -40,7 +40,7 @@ namespace ceres {
 // parameter blocks and set the number of residuals at run time.
 class CERES_EXPORT DynamicCostFunction : public CostFunction {
  public:
-  ~DynamicCostFunction() override {}
+  ~DynamicCostFunction() override = default;
 
   virtual void AddParameterBlock(int size) {
     mutable_parameter_block_sizes()->push_back(size);
