@@ -331,7 +331,7 @@ class NumParameterBlocksCostFunction : public CostFunction {
     }
   }
 
-  ~NumParameterBlocksCostFunction() override {}
+  ~NumParameterBlocksCostFunction() override = default;
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,

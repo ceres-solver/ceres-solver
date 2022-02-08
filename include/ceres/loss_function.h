@@ -85,7 +85,7 @@ namespace ceres {
 
 class CERES_EXPORT LossFunction {
  public:
-  virtual ~LossFunction() {}
+  virtual ~LossFunction() = default;
 
   // For a residual vector with squared 2-norm 'sq_norm', this method
   // is required to fill in the value and derivatives of the loss

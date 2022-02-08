@@ -138,7 +138,7 @@ const int FATAL   = ::FATAL;
 // This implementation is not thread safe.
 class CERES_EXPORT LogSink {
  public:
-  virtual ~LogSink() {}
+  virtual ~LogSink() = default;
   virtual void send(LogSeverity severity,
                     const char* full_filename,
                     const char* base_filename,
@@ -294,7 +294,7 @@ class CERES_EXPORT MessageLogger {
 // is not used" and "statement has no effect".
 class CERES_EXPORT LoggerVoidify {
  public:
-  LoggerVoidify() {}
+  LoggerVoidify() = default;
   // This has to be an operator with a precedence lower than << but
   // higher than ?:
   void operator&(const std::ostream& s) {}

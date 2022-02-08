@@ -498,7 +498,7 @@ class FailureReporterInterface {
     kNonfatal, kFatal
   };
 
-  virtual ~FailureReporterInterface() {}
+  virtual ~FailureReporterInterface() = default;
 
   // Reports a failure that occurred at the given source file location.
   virtual void ReportFailure(FailureType type, const char* file, int line,
@@ -574,7 +574,7 @@ GTEST_API_ void Log(LogSeverity severity, const std::string& message,
 //
 class WithoutMatchers {
  private:
-  WithoutMatchers() {}
+  WithoutMatchers() = default;
   friend GTEST_API_ WithoutMatchers GetWithoutMatchers();
 };
 
@@ -981,7 +981,7 @@ class DefaultValue {
  private:
   class ValueProducer {
    public:
-    virtual ~ValueProducer() {}
+    virtual ~ValueProducer() = default;
     virtual T Produce() = 0;
   };
 
@@ -1067,8 +1067,8 @@ class ActionInterface {
   typedef typename internal::Function<F>::Result Result;
   typedef typename internal::Function<F>::ArgumentTuple ArgumentTuple;
 
-  ActionInterface() {}
-  virtual ~ActionInterface() {}
+  ActionInterface() = default;
+  virtual ~ActionInterface() = default;
 
   // Performs the action.  This method is not const, as in general an
   // action can have side effects and be stateful.  For example, a
@@ -1108,7 +1108,7 @@ class Action {
 
   // Constructs a null Action.  Needed for storing Action objects in
   // STL containers.
-  Action() {}
+  Action() = default;
 
   // Construct an Action from a specified callable.
   // This cannot take std::function directly, because then Action would not be
@@ -2013,7 +2013,7 @@ namespace testing {
 // The implementation of a cardinality.
 class CardinalityInterface {
  public:
-  virtual ~CardinalityInterface() {}
+  virtual ~CardinalityInterface() = default;
 
   // Conservative estimate on the lower/upper bound of the number of
   // calls allowed.
@@ -2038,7 +2038,7 @@ class GTEST_API_ Cardinality {
  public:
   // Constructs a null cardinality.  Needed for storing Cardinality
   // objects in STL containers.
-  Cardinality() {}
+  Cardinality() = default;
 
   // Constructs a Cardinality from its implementation.
   explicit Cardinality(const CardinalityInterface* impl) : impl_(impl) {}
@@ -7318,7 +7318,7 @@ class ExpectationSet {
   typedef Expectation::Set::value_type value_type;
 
   // Constructs an empty set.
-  ExpectationSet() {}
+  ExpectationSet() = default;
 
   // This single-argument ctor must not be explicit, in order to support the
   //   ExpectationSet es = EXPECT_CALL(...);
@@ -8103,7 +8103,7 @@ GTEST_DISABLE_MSC_WARNINGS_PUSH_(4355)
 // Untyped base class for ActionResultHolder<T>.
 class UntypedActionResultHolderBase {
  public:
-  virtual ~UntypedActionResultHolderBase() {}
+  virtual ~UntypedActionResultHolderBase() = default;
 
   // Prints the held value as an action's result to os.
   virtual void PrintAsActionResult(::std::ostream* os) const = 0;
@@ -8186,7 +8186,7 @@ class ActionResultHolder<void> : public UntypedActionResultHolderBase {
   }
 
  private:
-  ActionResultHolder() {}
+  ActionResultHolder() = default;
   GTEST_DISALLOW_COPY_AND_ASSIGN_(ActionResultHolder);
 };
 
@@ -8202,7 +8202,7 @@ class FunctionMocker<R(Args...)> final : public UntypedFunctionMockerBase {
   using ArgumentTuple = std::tuple<Args...>;
   using ArgumentMatcherTuple = std::tuple<Matcher<Args>...>;
 
-  FunctionMocker() {}
+  FunctionMocker() = default;
 
   // There is no generally useful and implementable semantics of
   // copying a mock object, so copying a mock is usually a user error.
@@ -8583,7 +8583,7 @@ class MockFunction;
 template <typename R, typename... Args>
 class MockFunction<R(Args...)> {
  public:
-  MockFunction() {}
+  MockFunction() = default;
   MockFunction(const MockFunction&) = delete;
   MockFunction& operator=(const MockFunction&) = delete;
 

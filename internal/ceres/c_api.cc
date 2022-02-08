@@ -78,7 +78,7 @@ class CallbackCostFunction : public ceres::CostFunction {
     }
   }
 
-  ~CallbackCostFunction() override {}
+  ~CallbackCostFunction() override = default;
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,

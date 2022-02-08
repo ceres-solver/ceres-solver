@@ -67,7 +67,7 @@ class UnaryCostFunction : public CostFunction {
     mutable_parameter_block_sizes()->push_back(parameter_block_size);
   }
 
-  ~UnaryCostFunction() override {}
+  ~UnaryCostFunction() override = default;
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,

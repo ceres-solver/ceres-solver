@@ -266,7 +266,7 @@ CompressedRowSparseMatrix::CompressedRowSparseMatrix(const double* diagonal,
   CHECK_EQ(num_nonzeros(), num_rows);
 }
 
-CompressedRowSparseMatrix::~CompressedRowSparseMatrix() {}
+CompressedRowSparseMatrix::~CompressedRowSparseMatrix() = default;
 
 void CompressedRowSparseMatrix::SetZero() {
   std::fill(values_.begin(), values_.end(), 0);

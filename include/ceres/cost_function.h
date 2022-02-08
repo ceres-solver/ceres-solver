@@ -67,7 +67,7 @@ class CERES_EXPORT CostFunction {
   CostFunction(const CostFunction&) = delete;
   void operator=(const CostFunction&) = delete;
 
-  virtual ~CostFunction() {}
+  virtual ~CostFunction() = default;
 
   // Inputs:
   //

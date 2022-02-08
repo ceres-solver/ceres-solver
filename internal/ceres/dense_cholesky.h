@@ -153,7 +153,7 @@ class CERES_EXPORT_INTERNAL CUDADenseCholesky32Bit : public DenseCholesky {
                                     std::string* message) override;
 
  private:
-  CUDADenseCholesky32Bit() {}
+  CUDADenseCholesky32Bit() = default;
   // Initializes the cuSolverDN context, creates an asynchronous stream, and
   // associates the stream with cuSolverDN. Returns true iff initialization was
   // successful, else it returns false and a human-readable error message is
@@ -198,7 +198,7 @@ class CERES_EXPORT_INTERNAL CUDADenseCholesky64Bit : public DenseCholesky {
                                     std::string* message) override;
 
  private:
-  CUDADenseCholesky64Bit() {}
+  CUDADenseCholesky64Bit() = default;
   // Initializes the cuSolverDN context, creates an asynchronous stream, and
   // associates the stream with cuSolverDN. Returns true iff initialization was
   // successful, else it returns false and a human-readable error message is

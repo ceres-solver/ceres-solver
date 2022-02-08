@@ -165,7 +165,7 @@ namespace internal {
 // Example usage: Please see schur_complement_solver.cc
 class CERES_EXPORT_INTERNAL SchurEliminatorBase {
  public:
-  virtual ~SchurEliminatorBase() {}
+  virtual ~SchurEliminatorBase() = default;
 
   // Initialize the eliminator. It is the user's responsibilty to call
   // this function before calling Eliminate or BackSubstitute. It is
@@ -379,7 +379,7 @@ template <int kRowBlockSize = Eigen::Dynamic,
           int kFBlockSize = Eigen::Dynamic>
 class SchurEliminatorForOneFBlock : public SchurEliminatorBase {
  public:
-  ~SchurEliminatorForOneFBlock() override {}
+  ~SchurEliminatorForOneFBlock() override = default;
   void Init(int num_eliminate_blocks,
             bool assume_full_rank_ete,
             const CompressedRowBlockStructure* bs) override {

@@ -113,7 +113,7 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
   return sparse_cholesky;
 }
 
-SparseCholesky::~SparseCholesky() {}
+SparseCholesky::~SparseCholesky() = default;
 
 LinearSolverTerminationType SparseCholesky::FactorAndSolve(
     CompressedRowSparseMatrix* lhs,
@@ -133,7 +133,7 @@ RefinedSparseCholesky::RefinedSparseCholesky(
     : sparse_cholesky_(std::move(sparse_cholesky)),
       iterative_refiner_(std::move(iterative_refiner)) {}
 
-RefinedSparseCholesky::~RefinedSparseCholesky() {}
+RefinedSparseCholesky::~RefinedSparseCholesky() = default;
 
 CompressedRowSparseMatrix::StorageType RefinedSparseCholesky::StorageType()
     const {

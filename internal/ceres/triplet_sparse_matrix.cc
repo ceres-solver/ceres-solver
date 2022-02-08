@@ -45,7 +45,7 @@ namespace internal {
 TripletSparseMatrix::TripletSparseMatrix()
     : num_rows_(0), num_cols_(0), max_num_nonzeros_(0), num_nonzeros_(0) {}
 
-TripletSparseMatrix::~TripletSparseMatrix() {}
+TripletSparseMatrix::~TripletSparseMatrix() = default;
 
 TripletSparseMatrix::TripletSparseMatrix(int num_rows,
                                          int num_cols,
