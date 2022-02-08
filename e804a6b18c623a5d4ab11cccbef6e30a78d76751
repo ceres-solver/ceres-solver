@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3e2eddc_fd80261e",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T01:02:54Z",
+      "side": 1,
+      "message": "I intended to introduce the GNUInstallDirs module in a different CL. ${CMAKE_INSTALL_INCLUDEDIR} should be replaced here by \"include\".",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72930654_a0f29eeb",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T01:02:54Z",
+      "side": 1,
+      "message": "As a side note: SOVERSION is currently tied to the major version of Ceres. However, it should be bumped on ABI incompatible changes.",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05a2c2fc_13e34356",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T01:02:54Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb9a92f7_36ef3241",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T01:02:54Z",
+      "side": 1,
+      "message": "Previous logic seems to be incorrect. Shared libraries do not change the transitive relation of dependencies.",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
