@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b08aef20_8a5ce1b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-08T23:53:21Z",
+      "side": 1,
+      "message": "Sergiu, I am happy to have you review this one and merge it in along with your other cleanups too.",
+      "revId": "e7c9960b845b9d24406c9998609321352d43e44d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
