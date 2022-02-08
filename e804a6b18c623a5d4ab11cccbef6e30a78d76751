@@ -231,6 +231,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d730414c_e565f2b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T22:15:07Z",
+      "side": 1,
+      "message": "Seems to be related to `-march\u003dnative` as removing the switch lets the tests pass. Is this maybe a memory alignment issue?",
+      "parentUuid": "8d2bf1f2_23b82661",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f227dd4_33701434",
