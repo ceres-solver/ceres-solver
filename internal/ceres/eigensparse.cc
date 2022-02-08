@@ -48,7 +48,7 @@ template <typename Solver>
 class EigenSparseCholeskyTemplate : public SparseCholesky {
  public:
   EigenSparseCholeskyTemplate() : analyzed_(false) {}
-  virtual ~EigenSparseCholeskyTemplate() {}
+  virtual ~EigenSparseCholeskyTemplate() = default;
   CompressedRowSparseMatrix::StorageType StorageType() const final {
     return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
   }
@@ -160,7 +160,7 @@ std::unique_ptr<SparseCholesky> EigenSparseCholesky::Create(
   return sparse_cholesky;
 }
 
-EigenSparseCholesky::~EigenSparseCholesky() {}
+EigenSparseCholesky::~EigenSparseCholesky() = default;
 
 std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
     const OrderingType ordering_type) {
@@ -182,7 +182,7 @@ std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
   return sparse_cholesky;
 }
 
-FloatEigenSparseCholesky::~FloatEigenSparseCholesky() {}
+FloatEigenSparseCholesky::~FloatEigenSparseCholesky() = default;
 
 }  // namespace internal
 }  // namespace ceres

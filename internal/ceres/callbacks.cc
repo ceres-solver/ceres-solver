@@ -45,7 +45,7 @@ StateUpdatingCallback::StateUpdatingCallback(Program* program,
                                              double* parameters)
     : program_(program), parameters_(parameters) {}
 
-StateUpdatingCallback::~StateUpdatingCallback() {}
+StateUpdatingCallback::~StateUpdatingCallback() = default;
 
 CallbackReturnType StateUpdatingCallback::operator()(
     const IterationSummary& summary) {
@@ -64,7 +64,7 @@ GradientProblemSolverStateUpdatingCallback::
       user_parameters_(user_parameters) {}
 
 GradientProblemSolverStateUpdatingCallback::
-    ~GradientProblemSolverStateUpdatingCallback() {}
+    ~GradientProblemSolverStateUpdatingCallback() = default;
 
 CallbackReturnType GradientProblemSolverStateUpdatingCallback::operator()(
     const IterationSummary& summary) {
@@ -80,7 +80,7 @@ LoggingCallback::LoggingCallback(const MinimizerType minimizer_type,
                                  const bool log_to_stdout)
     : minimizer_type(minimizer_type), log_to_stdout_(log_to_stdout) {}
 
-LoggingCallback::~LoggingCallback() {}
+LoggingCallback::~LoggingCallback() = default;
 
 CallbackReturnType LoggingCallback::operator()(
     const IterationSummary& summary) {

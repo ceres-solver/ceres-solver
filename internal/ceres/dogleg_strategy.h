@@ -56,7 +56,7 @@ namespace internal {
 class CERES_EXPORT_INTERNAL DoglegStrategy : public TrustRegionStrategy {
  public:
   explicit DoglegStrategy(const TrustRegionStrategy::Options& options);
-  virtual ~DoglegStrategy() {}
+  virtual ~DoglegStrategy() = default;
 
   // TrustRegionStrategy interface
   Summary ComputeStep(const PerSolveOptions& per_solve_options,

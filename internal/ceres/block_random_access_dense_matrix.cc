@@ -60,7 +60,7 @@ BlockRandomAccessDenseMatrix::BlockRandomAccessDenseMatrix(
 
 // Assume that the user does not hold any locks on any cell blocks
 // when they are calling SetZero.
-BlockRandomAccessDenseMatrix::~BlockRandomAccessDenseMatrix() {}
+BlockRandomAccessDenseMatrix::~BlockRandomAccessDenseMatrix() = default;
 
 CellInfo* BlockRandomAccessDenseMatrix::GetCell(const int row_block_id,
                                                 const int col_block_id,

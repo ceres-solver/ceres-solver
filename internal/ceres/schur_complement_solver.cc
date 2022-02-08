@@ -68,7 +68,7 @@ class BlockRandomAccessSparseMatrixAdapter : public LinearOperator {
       const BlockRandomAccessSparseMatrix& m)
       : m_(m) {}
 
-  virtual ~BlockRandomAccessSparseMatrixAdapter() {}
+  virtual ~BlockRandomAccessSparseMatrixAdapter() = default;
 
   // y = y + Ax;
   void RightMultiply(const double* x, double* y) const final {
@@ -93,7 +93,7 @@ class BlockRandomAccessDiagonalMatrixAdapter : public LinearOperator {
       const BlockRandomAccessDiagonalMatrix& m)
       : m_(m) {}
 
-  virtual ~BlockRandomAccessDiagonalMatrixAdapter() {}
+  virtual ~BlockRandomAccessDiagonalMatrixAdapter() = default;
 
   // y = y + Ax;
   void RightMultiply(const double* x, double* y) const final {
@@ -122,7 +122,7 @@ SchurComplementSolver::SchurComplementSolver(
   CHECK(options.context != nullptr);
 }
 
-SchurComplementSolver::~SchurComplementSolver() {}
+SchurComplementSolver::~SchurComplementSolver() = default;
 
 LinearSolver::Summary SchurComplementSolver::SolveImpl(
     BlockSparseMatrix* A,
@@ -188,7 +188,7 @@ DenseSchurComplementSolver::DenseSchurComplementSolver(
     : SchurComplementSolver(options),
       cholesky_(DenseCholesky::Create(options)) {}
 
-DenseSchurComplementSolver::~DenseSchurComplementSolver() {}
+DenseSchurComplementSolver::~DenseSchurComplementSolver() = default;
 
 // Initialize a BlockRandomAccessDenseMatrix to store the Schur
 // complement.
@@ -240,7 +240,7 @@ SparseSchurComplementSolver::SparseSchurComplementSolver(
   }
 }
 
-SparseSchurComplementSolver::~SparseSchurComplementSolver() {}
+SparseSchurComplementSolver::~SparseSchurComplementSolver() = default;
 
 // Determine the non-zero blocks in the Schur Complement matrix, and
 // initialize a BlockRandomAccessSparseMatrix object.

@@ -161,7 +161,7 @@ class LineSearch {
   };
 
   explicit LineSearch(const LineSearch::Options& options);
-  virtual ~LineSearch() {}
+  virtual ~LineSearch() = default;
 
   static LineSearch* Create(const LineSearchType line_search_type,
                             const LineSearch::Options& options,
@@ -260,7 +260,7 @@ class LineSearchFunction {
 class ArmijoLineSearch : public LineSearch {
  public:
   explicit ArmijoLineSearch(const LineSearch::Options& options);
-  virtual ~ArmijoLineSearch() {}
+  virtual ~ArmijoLineSearch() = default;
 
  private:
   void DoSearch(double step_size_estimate,
@@ -279,7 +279,7 @@ class ArmijoLineSearch : public LineSearch {
 class WolfeLineSearch : public LineSearch {
  public:
   explicit WolfeLineSearch(const LineSearch::Options& options);
-  virtual ~WolfeLineSearch() {}
+  virtual ~WolfeLineSearch() = default;
 
   // Returns true iff either a valid point, or valid bracket are found.
   bool BracketingPhase(const FunctionSample& initial_position,

@@ -54,7 +54,7 @@ SparseNormalCholeskySolver::SparseNormalCholeskySolver(
   sparse_cholesky_ = SparseCholesky::Create(options);
 }
 
-SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {}
+SparseNormalCholeskySolver::~SparseNormalCholeskySolver() = default;
 
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
     BlockSparseMatrix* A,

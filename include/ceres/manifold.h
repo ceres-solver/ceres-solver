@@ -293,7 +293,7 @@ class CERES_EXPORT ProductManifold : public Manifold {
  public:
   ProductManifold(const ProductManifold&) = delete;
   ProductManifold& operator=(const ProductManifold&) = delete;
-  virtual ~ProductManifold() {}
+  virtual ~ProductManifold() = default;
 
   // NOTE: The constructor takes ownership of the input
   // manifolds.

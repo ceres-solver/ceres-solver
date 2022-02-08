@@ -40,7 +40,7 @@ namespace internal {
 
 class SteepestDescent : public LineSearchDirection {
  public:
-  virtual ~SteepestDescent() {}
+  virtual ~SteepestDescent() = default;
   bool NextDirection(const LineSearchMinimizer::State& previous,
                      const LineSearchMinimizer::State& current,
                      Vector* search_direction) {
@@ -105,7 +105,7 @@ class LBFGS : public LineSearchDirection {
                                   use_approximate_eigenvalue_bfgs_scaling),
         is_positive_definite_(true) {}
 
-  virtual ~LBFGS() {}
+  virtual ~LBFGS() = default;
 
   bool NextDirection(const LineSearchMinimizer::State& previous,
                      const LineSearchMinimizer::State& current,
@@ -161,7 +161,7 @@ class BFGS : public LineSearchDirection {
     inverse_hessian_ = Matrix::Identity(num_parameters, num_parameters);
   }
 
-  virtual ~BFGS() {}
+  virtual ~BFGS() = default;
 
   bool NextDirection(const LineSearchMinimizer::State& previous,
                      const LineSearchMinimizer::State& current,

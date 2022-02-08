@@ -49,7 +49,7 @@
 template <typename T>
 class CudaBuffer {
  public:
-  CudaBuffer() {}
+  CudaBuffer() = default;
   CudaBuffer(const CudaBuffer&) = delete;
   CudaBuffer& operator=(const CudaBuffer&) = delete;
 

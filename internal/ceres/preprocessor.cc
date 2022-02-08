@@ -54,7 +54,7 @@ Preprocessor* Preprocessor::Create(MinimizerType minimizer_type) {
   return NULL;
 }
 
-Preprocessor::~Preprocessor() {}
+Preprocessor::~Preprocessor() = default;
 
 void ChangeNumThreadsIfNeeded(Solver::Options* options) {
   if (options->num_threads == 1) {

@@ -41,11 +41,11 @@ namespace ceres {
 // (e.g. threads) managed by the Context.
 class Context {
  public:
-  Context() {}
+  Context() = default;
   Context(const Context&) = delete;
   void operator=(const Context&) = delete;
 
-  virtual ~Context() {}
+  virtual ~Context() = default;
 
   // Creates a context object and the caller takes ownership.
   static Context* Create();

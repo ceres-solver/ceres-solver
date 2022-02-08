@@ -111,7 +111,7 @@ TEST(ParameterBlock, SetManifoldAndNormalOperation) {
 
 struct TestManifold : public Manifold {
  public:
-  ~TestManifold() final {}
+  ~TestManifold() final = default;
 
   bool Plus(const double* x,
             const double* delta,
@@ -166,7 +166,7 @@ TEST(ParameterBlock, PlusWithNoManifold) {
 class BadManifold : public Manifold {
  public:
   BadManifold() : calls_(0) {}
-  ~BadManifold() final {}
+  ~BadManifold() final = default;
 
   bool Plus(const double* x,
             const double* delta,

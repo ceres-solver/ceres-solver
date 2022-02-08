@@ -110,7 +110,7 @@ class AutoDiffFirstOrderFunction : public FirstOrderFunction {
     static_assert(kNumParameters > 0, "kNumParameters must be positive");
   }
 
-  virtual ~AutoDiffFirstOrderFunction() {}
+  virtual ~AutoDiffFirstOrderFunction() = default;
 
   bool Evaluate(const double* const parameters,
                 double* cost,

@@ -152,7 +152,7 @@ class AutoDiffManifold : public Manifold {
   // Takes ownership of functor.
   explicit AutoDiffManifold(Functor* functor) : functor_(functor) {}
 
-  ~AutoDiffManifold() override {}
+  ~AutoDiffManifold() override = default;
 
   int AmbientSize() const override { return kAmbientSize; }
   int TangentSize() const override { return kTangentSize; }

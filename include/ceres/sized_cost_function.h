@@ -61,7 +61,7 @@ class SizedCostFunction : public CostFunction {
     *mutable_parameter_block_sizes() = std::vector<int32_t>{Ns...};
   }
 
-  virtual ~SizedCostFunction() {}
+  virtual ~SizedCostFunction() = default;
 
   // Subclasses must implement Evaluate().
 };

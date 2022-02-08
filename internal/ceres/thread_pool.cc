@@ -57,7 +57,7 @@ int ThreadPool::MaxNumThreadsAvailable() {
                                    : num_hardware_threads;
 }
 
-ThreadPool::ThreadPool() {}
+ThreadPool::ThreadPool() = default;
 
 ThreadPool::ThreadPool(int num_threads) { Resize(num_threads); }
 

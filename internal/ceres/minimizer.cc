@@ -51,7 +51,7 @@ Minimizer* Minimizer::Create(MinimizerType minimizer_type) {
   return NULL;
 }
 
-Minimizer::~Minimizer() {}
+Minimizer::~Minimizer() = default;
 
 bool Minimizer::RunCallbacks(const Minimizer::Options& options,
                              const IterationSummary& iteration_summary,

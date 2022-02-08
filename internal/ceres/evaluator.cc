@@ -48,7 +48,7 @@
 namespace ceres {
 namespace internal {
 
-Evaluator::~Evaluator() {}
+Evaluator::~Evaluator() = default;
 
 Evaluator* Evaluator::Create(const Evaluator::Options& options,
                              Program* program,

@@ -1578,7 +1578,7 @@ class GTEST_API_ Notification {
 // problem.
 class ThreadWithParamBase {
  public:
-  virtual ~ThreadWithParamBase() {}
+  virtual ~ThreadWithParamBase() = default;
   virtual void Run() = 0;
 };
 
@@ -2033,7 +2033,7 @@ typedef GTestMutexLock MutexLock;
 // ThreadLocalValueHolderBase.
 class ThreadLocalValueHolderBase {
  public:
-  virtual ~ThreadLocalValueHolderBase() {}
+  virtual ~ThreadLocalValueHolderBase() = default;
 };
 
 // Called by pthread to delete thread-local data stored by
@@ -2104,8 +2104,8 @@ class GTEST_API_ ThreadLocal {
 
   class ValueHolderFactory {
    public:
-    ValueHolderFactory() {}
-    virtual ~ValueHolderFactory() {}
+    ValueHolderFactory() = default;
+    virtual ~ValueHolderFactory() = default;
     virtual ValueHolder* MakeNewHolder() const = 0;
 
    private:
@@ -2114,7 +2114,7 @@ class GTEST_API_ ThreadLocal {
 
   class DefaultValueHolderFactory : public ValueHolderFactory {
    public:
-    DefaultValueHolderFactory() {}
+    DefaultValueHolderFactory() = default;
     virtual ValueHolder* MakeNewHolder() const { return new ValueHolder(); }
 
    private:
@@ -3040,7 +3040,7 @@ namespace internal {
 class GTEST_API_ FilePath {
  public:
   FilePath() : pathname_("") { }
-  FilePath(const FilePath& rhs) : pathname_(rhs.pathname_) { }
+  FilePath(const FilePath& rhs)  = default;
 
   explicit FilePath(const std::string& pathname) : pathname_(pathname) {
     Normalize();
@@ -6939,14 +6939,14 @@ GTEST_API_ TypeId GetTestTypeId();
 // of a Test object.
 class TestFactoryBase {
  public:
-  virtual ~TestFactoryBase() {}
+  virtual ~TestFactoryBase() = default;
 
   // Creates a test instance to run. The instance is both created and destroyed
   // within TestInfoImpl::Run()
   virtual Test* CreateTest() = 0;
 
  protected:
-  TestFactoryBase() {}
+  TestFactoryBase() = default;
 
  private:
   GTEST_DISALLOW_COPY_AND_ASSIGN_(TestFactoryBase);
@@ -9089,14 +9089,13 @@ class MatchResultListener {
   GTEST_DISALLOW_COPY_AND_ASSIGN_(MatchResultListener);
 };
 
-inline MatchResultListener::~MatchResultListener() {
-}
+inline MatchResultListener::~MatchResultListener() = default;
 
 // An instance of a subclass of this knows how to describe itself as a
 // matcher.
 class MatcherDescriberInterface {
  public:
-  virtual ~MatcherDescriberInterface() {}
+  virtual ~MatcherDescriberInterface() = default;
 
   // Describes this matcher to an ostream.  The function should print
   // a verb phrase that describes the property a value matching this
@@ -9273,7 +9272,7 @@ class MatcherBase {
   }
 
  protected:
-  MatcherBase() {}
+  MatcherBase() = default;
 
   // Constructs a matcher from its implementation.
   explicit MatcherBase(const MatcherInterface<const T&>* impl) : impl_(impl) {}
@@ -9290,7 +9289,7 @@ class MatcherBase {
   MatcherBase(MatcherBase&&) = default;
   MatcherBase& operator=(MatcherBase&&) = default;
 
-  virtual ~MatcherBase() {}
+  virtual ~MatcherBase() = default;
 
  private:
   std::shared_ptr<const MatcherInterface<const T&>> impl_;
@@ -9332,7 +9331,7 @@ template <>
 class GTEST_API_ Matcher<const std::string&>
     : public internal::MatcherBase<const std::string&> {
  public:
-  Matcher() {}
+  Matcher() = default;
 
   explicit Matcher(const MatcherInterface<const std::string&>* impl)
       : internal::MatcherBase<const std::string&>(impl) {}
@@ -9355,7 +9354,7 @@ template <>
 class GTEST_API_ Matcher<std::string>
     : public internal::MatcherBase<std::string> {
  public:
-  Matcher() {}
+  Matcher() = default;
 
   explicit Matcher(const MatcherInterface<const std::string&>* impl)
       : internal::MatcherBase<std::string>(impl) {}
@@ -9846,7 +9845,7 @@ class GTEST_API_ DeathTest {
   static bool Create(const char* statement, Matcher<const std::string&> matcher,
                      const char* file, int line, DeathTest** test);
   DeathTest();
-  virtual ~DeathTest() { }
+  virtual ~DeathTest() = default;
 
   // A helper class that aborts a death test when it's deleted.
   class ReturnSentinel {
@@ -9908,7 +9907,7 @@ GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 // Factory interface for death tests.  May be mocked out for testing.
 class DeathTestFactory {
  public:
-  virtual ~DeathTestFactory() { }
+  virtual ~DeathTestFactory() = default;
   virtual bool Create(const char* statement,
                       Matcher<const std::string&> matcher, const char* file,
                       int line, DeathTest** test) = 0;
@@ -10640,7 +10639,7 @@ template <typename> class ParamGenerator;
 template <typename T>
 class ParamIteratorInterface {
  public:
-  virtual ~ParamIteratorInterface() {}
+  virtual ~ParamIteratorInterface() = default;
   // A pointer to the base generator instance.
   // Used only for the purposes of iterator comparison
   // to make sure that two iterators belong to the same generator.
@@ -10715,7 +10714,7 @@ class ParamGeneratorInterface {
  public:
   typedef T ParamType;
 
-  virtual ~ParamGeneratorInterface() {}
+  virtual ~ParamGeneratorInterface() = default;
 
   // Generator interface definition
   virtual ParamIteratorInterface<T>* Begin() const = 0;
@@ -10757,7 +10756,7 @@ class RangeGenerator : public ParamGeneratorInterface<T> {
   RangeGenerator(T begin, T end, IncrementT step)
       : begin_(begin), end_(end),
         step_(step), end_index_(CalculateEndIndex(begin, end, step)) {}
-  ~RangeGenerator() override {}
+  ~RangeGenerator() override = default;
 
   ParamIteratorInterface<T>* Begin() const override {
     return new Iterator(this, begin_, 0, step_);
@@ -10772,7 +10771,7 @@ class RangeGenerator : public ParamGeneratorInterface<T> {
     Iterator(const ParamGeneratorInterface<T>* base, T value, int index,
              IncrementT step)
         : base_(base), value_(value), index_(index), step_(step) {}
-    ~Iterator() override {}
+    ~Iterator() override = default;
 
     const ParamGeneratorInterface<T>* BaseGenerator() const override {
       return base_;
@@ -10842,7 +10841,7 @@ class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface<T> {
   template <typename ForwardIterator>
   ValuesInIteratorRangeGenerator(ForwardIterator begin, ForwardIterator end)
       : container_(begin, end) {}
-  ~ValuesInIteratorRangeGenerator() override {}
+  ~ValuesInIteratorRangeGenerator() override = default;
 
   ParamIteratorInterface<T>* Begin() const override {
     return new Iterator(this, container_.begin());
@@ -10859,7 +10858,7 @@ class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface<T> {
     Iterator(const ParamGeneratorInterface<T>* base,
              typename ContainerType::const_iterator iterator)
         : base_(base), iterator_(iterator) {}
-    ~Iterator() override {}
+    ~Iterator() override = default;
 
     const ParamGeneratorInterface<T>* BaseGenerator() const override {
       return base_;
@@ -10962,7 +10961,7 @@ class ParameterizedTestFactory : public TestFactoryBase {
 template <class ParamType>
 class TestMetaFactoryBase {
  public:
-  virtual ~TestMetaFactoryBase() {}
+  virtual ~TestMetaFactoryBase() = default;
 
   virtual TestFactoryBase* CreateTestFactory(ParamType parameter) = 0;
 };
@@ -10981,7 +10980,7 @@ class TestMetaFactory
  public:
   using ParamType = typename TestSuite::ParamType;
 
-  TestMetaFactory() {}
+  TestMetaFactory() = default;
 
   TestFactoryBase* CreateTestFactory(ParamType parameter) override {
     return new ParameterizedTestFactory<TestSuite>(parameter);
@@ -11003,7 +11002,7 @@ class TestMetaFactory
 // and calls RegisterTests() on each of them when asked.
 class ParameterizedTestSuiteInfoBase {
  public:
-  virtual ~ParameterizedTestSuiteInfoBase() {}
+  virtual ~ParameterizedTestSuiteInfoBase() = default;
 
   // Base part of test suite name for display purposes.
   virtual const std::string& GetTestSuiteName() const = 0;
@@ -11016,7 +11015,7 @@ class ParameterizedTestSuiteInfoBase {
   virtual void RegisterTests() = 0;
 
  protected:
-  ParameterizedTestSuiteInfoBase() {}
+  ParameterizedTestSuiteInfoBase() = default;
 
  private:
   GTEST_DISALLOW_COPY_AND_ASSIGN_(ParameterizedTestSuiteInfoBase);
@@ -11203,7 +11202,7 @@ using ParameterizedTestCaseInfo = ParameterizedTestSuiteInfo<TestCase>;
 // ParameterizedTestSuiteInfo descriptors.
 class ParameterizedTestSuiteRegistry {
  public:
-  ParameterizedTestSuiteRegistry() {}
+  ParameterizedTestSuiteRegistry() = default;
   ~ParameterizedTestSuiteRegistry() {
     for (auto& test_suite_info : test_suite_infos_) {
       delete test_suite_info;
@@ -11302,7 +11301,7 @@ class CartesianProductGenerator
 
   CartesianProductGenerator(const std::tuple<ParamGenerator<T>...>& g)
       : generators_(g) {}
-  ~CartesianProductGenerator() override {}
+  ~CartesianProductGenerator() override = default;
 
   ParamIteratorInterface<ParamType>* Begin() const override {
     return new Iterator(this, generators_, false);
@@ -11326,7 +11325,7 @@ class CartesianProductGenerator
           current_(is_end ? end_ : begin_) {
       ComputeCurrentValue();
     }
-    ~IteratorImpl() override {}
+    ~IteratorImpl() override = default;
 
     const ParamGeneratorInterface<ParamType>* BaseGenerator() const override {
       return base_;
@@ -11939,7 +11938,7 @@ std::ostream& operator<<(std::ostream& os, const TestPartResult& result);
 // virtual.
 class GTEST_API_ TestPartResultArray {
  public:
-  TestPartResultArray() {}
+  TestPartResultArray() = default;
 
   // Appends the given TestPartResult to the array.
   void Append(const TestPartResult& result);
@@ -11959,7 +11958,7 @@ class GTEST_API_ TestPartResultArray {
 // This interface knows how to report a test part result.
 class GTEST_API_ TestPartResultReporterInterface {
  public:
-  virtual ~TestPartResultReporterInterface() {}
+  virtual ~TestPartResultReporterInterface() = default;
 
   virtual void ReportTestPartResult(const TestPartResult& result) = 0;
 };
@@ -13656,7 +13655,7 @@ class GTEST_API_ TestSuite {
 class Environment {
  public:
   // The d'tor is virtual as we need to subclass Environment.
-  virtual ~Environment() {}
+  virtual ~Environment() = default;
 
   // Override this to define how to set up the environment.
   virtual void SetUp() {}
@@ -13686,7 +13685,7 @@ class GTEST_API_ AssertionException
 // the order the corresponding events are fired.
 class TestEventListener {
  public:
-  virtual ~TestEventListener() {}
+  virtual ~TestEventListener() = default;
 
   // Fired before any test activity starts.
   virtual void OnTestProgramStart(const UnitTest& unit_test) = 0;
@@ -14492,7 +14491,7 @@ template <typename T>
 class WithParamInterface {
  public:
   typedef T ParamType;
-  virtual ~WithParamInterface() {}
+  virtual ~WithParamInterface() = default;
 
   // The current parameter value. Is also available in the test fixture's
   // constructor.

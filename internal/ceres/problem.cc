@@ -46,7 +46,7 @@ Problem::Problem(const Problem::Options& options)
 // Not inline defaulted in declaration due to use of std::unique_ptr.
 Problem::Problem(Problem&&) = default;
 Problem& Problem::operator=(Problem&&) = default;
-Problem::~Problem() {}
+Problem::~Problem() = default;
 
 ResidualBlockId Problem::AddResidualBlock(
     CostFunction* cost_function,

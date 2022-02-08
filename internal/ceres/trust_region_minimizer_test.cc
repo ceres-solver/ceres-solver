@@ -76,7 +76,7 @@ class PowellEvaluator2 : public Evaluator {
   }
   // clang-format on
 
-  virtual ~PowellEvaluator2() {}
+  virtual ~PowellEvaluator2() = default;
 
   // Implementation of Evaluator interface.
   SparseMatrix* CreateJacobian() const final {

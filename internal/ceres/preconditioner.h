@@ -149,7 +149,7 @@ class CERES_EXPORT_INTERNAL Preconditioner : public LinearOperator {
 template <typename MatrixType>
 class TypedPreconditioner : public Preconditioner {
  public:
-  virtual ~TypedPreconditioner() {}
+  virtual ~TypedPreconditioner() = default;
   bool Update(const LinearOperator& A, const double* D) final {
     return UpdateImpl(*down_cast<const MatrixType*>(&A), D);
   }
