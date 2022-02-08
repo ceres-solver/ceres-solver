@@ -101,6 +101,23 @@
       "message": "Previous logic seems to be incorrect. Shared libraries do not change the transitive relation of dependencies.",
       "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08b5cd54_9df07e9c",
+        "filename": "internal/ceres/gmock_gtest_all.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2697,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T01:53:21Z",
+      "side": 1,
+      "message": "These changes will be reverted.",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
