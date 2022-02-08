@@ -177,6 +177,42 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da3e4f53_90005376",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T21:57:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "59f5cc72_86cd286a",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3afa591c_7f967206",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T21:57:54Z",
+      "side": 1,
+      "message": "I set up a clean build with `-fsanitize\u003daddress,undefined` additionally to `-march\u003dnative` and weirdly enough, the tests passed. However, after removing `-fsanitize`, the segmentation fault occurred again:\n\n```\n[       OK ] SubsetManifold.DuplicateParametersDeathTest (708 ms)\n[ RUN      ] SubsetManifold.NormalFunctionTest\n[       OK ] SubsetManifold.NormalFunctionTest (1092 ms)\n[----------] 5 tests from SubsetManifold (3586 ms total)\n\n[----------] 6 tests from ProductManifold\n[ RUN      ] ProductManifold.Size2\n[       OK ] ProductManifold.Size2 (2 ms)\n[ RUN      ] ProductManifold.Size3\n[       OK ] ProductManifold.Size3 (3 ms)\n[ RUN      ] ProductManifold.Size4\n[       OK ] ProductManifold.Size4 (2 ms)\n[ RUN      ] ProductManifold.NormalFunctionTest\n[       OK ] ProductManifold.NormalFunctionTest (881 ms)\n[ RUN      ] ProductManifold.ZeroTangentSizeAndEuclidean\n[       OK ] ProductManifold.ZeroTangentSizeAndEuclidean (301 ms)\n[ RUN      ] ProductManifold.EuclideanAndZeroTangentSize\n[       OK ] ProductManifold.EuclideanAndZeroTangentSize (290 ms)\n[----------] 6 tests from ProductManifold (1480 ms total)\n\n[----------] 4 tests from QuaternionManifold\n[ RUN      ] QuaternionManifold.PlusPiBy2\n[       OK ] QuaternionManifold.PlusPiBy2 (29 ms)\n[ RUN      ] QuaternionManifold.GenericDelta\n[       OK ] QuaternionManifold.GenericDelta (413 ms)\n[ RUN      ] QuaternionManifold.SmallDelta\n[       OK ] QuaternionManifold.SmallDelta (400 ms)\n[ RUN      ] QuaternionManifold.DeltaJustBelowPi\n[       OK ] QuaternionManifold.DeltaJustBelowPi (404 ms)\n[----------] 4 tests from QuaternionManifold (1246 ms total)\n\n[----------] 3 tests from EigenQuaternionManifold\n[ RUN      ] EigenQuaternionManifold.GenericDelta\n[       OK ] EigenQuaternionManifold.GenericDelta (427 ms)\n[ RUN      ] EigenQuaternionManifold.SmallDelta\n[       OK ] EigenQuaternionManifold.SmallDelta (418 ms)\n[ RUN      ] EigenQuaternionManifold.DeltaJustBelowPi\n[       OK ] EigenQuaternionManifold.DeltaJustBelowPi (423 ms)\n[----------] 3 tests from EigenQuaternionManifold (1268 ms total)\n\n[----------] 7 tests from SphereManifold\n[ RUN      ] SphereManifold.ZeroTest\n\u003d\u003d71144\u003d\u003d \n\u003d\u003d71144\u003d\u003d Process terminating with default action of signal 11 (SIGSEGV): dumping core\n\u003d\u003d71144\u003d\u003d  General Protection Fault\n\u003d\u003d71144\u003d\u003d    at 0x18A238: ceres::XPlusZeroIsXAtMatcherP2\u003cEigen::Matrix\u003cdouble, 4, 1, 0, 4, 1\u003e, double\u003e::gmock_Impl\u003cceres::SphereManifold\u003c4\u003e const\u0026\u003e::MatchAndExplain(ceres::SphereManifold\u003c4\u003e const\u0026, testing::MatchResultListener*) const (in /home/sergiu/Projects/ceres-solver/build-test-release/bin/manifold_test)\n\u003d\u003d71144\u003d\u003d    by 0x16A765: testing::AssertionResult testing::internal::PredicateFormatterFromMatcher\u003cceres::XPlusZeroIsXAtMatcherP2\u003cEigen::Matrix\u003cdouble, 4, 1, 0, 4, 1\u003e, double\u003e \u003e::operator()\u003cceres::SphereManifold\u003c4\u003e \u003e(char const*, ceres::SphereManifold\u003c4\u003e const\u0026) const (in /home/sergiu/Projects/ceres-solver/build-test-release/bin/manifold_test)\n\u003d\u003d71144\u003d\u003d    by 0x14DBAB: ceres::internal::SphereManifold_ZeroTest_Test::TestBody() (in /home/sergiu/Projects/ceres-solver/build-test-release/bin/manifold_test)\n\u003d\u003d71144\u003d\u003d    by 0x4D7BECC: void testing::internal::HandleExceptionsInMethodIfSupported\u003ctesting::Test, void\u003e(testing::Test*, void (testing::Test::*)(), char const*) (in /home/sergiu/Projects/ceres-solver/build-test-release/lib/libgtest.so)\n\u003d\u003d71144\u003d\u003d    by 0x4D6CE65: testing::Test::Run() (in /home/sergiu/Projects/ceres-solver/build-test-release/lib/libgtest.so)\n\u003d\u003d71144\u003d\u003d    by 0x4D6CFC0: testing::TestInfo::Run() (in /home/sergiu/Projects/ceres-solver/build-test-release/lib/libgtest.so)\n\u003d\u003d71144\u003d\u003d    by 0x4D6D0B3: testing::TestSuite::Run() (in /home/sergiu/Projects/ceres-solver/build-test-release/lib/libgtest.so)\n\u003d\u003d71144\u003d\u003d    by 0x4D6D683: testing::internal::UnitTestImpl::RunAllTests() (in /home/sergiu/Projects/ceres-solver/build-test-release/lib/libgtest.so)\n\u003d\u003d71144\u003d\u003d    by 0x4D6D78A: testing::UnitTest::Run() (in /home/sergiu/Projects/ceres-solver/build-test-release/lib/libgtest.so)\n\u003d\u003d71144\u003d\u003d    by 0x4D3F7AE: main (in /home/sergiu/Projects/ceres-solver/build-test-release/lib/libgtest.so)\n\u003d\u003d71144\u003d\u003d \n\u003d\u003d71144\u003d\u003d HEAP SUMMARY:\n\u003d\u003d71144\u003d\u003d     in use at exit: 2,993,836 bytes in 31,550 blocks\n\u003d\u003d71144\u003d\u003d   total heap usage: 2,566,504 allocs, 2,534,954 frees, 261,259,264 bytes allocated\n\u003d\u003d71144\u003d\u003d \n\u003d\u003d71144\u003d\u003d LEAK SUMMARY:\n\u003d\u003d71144\u003d\u003d    definitely lost: 0 bytes in 0 blocks\n\u003d\u003d71144\u003d\u003d    indirectly lost: 0 bytes in 0 blocks\n\u003d\u003d71144\u003d\u003d      possibly lost: 34,129 bytes in 1,077 blocks\n\u003d\u003d71144\u003d\u003d    still reachable: 2,959,707 bytes in 30,473 blocks\n\u003d\u003d71144\u003d\u003d                       of which reachable via heuristic:\n\u003d\u003d71144\u003d\u003d                         stdstring          : 27,262 bytes in 606 blocks\n\u003d\u003d71144\u003d\u003d         suppressed: 0 bytes in 0 blocks\n\u003d\u003d71144\u003d\u003d Rerun with --leak-check\u003dfull to see details of leaked memory\n\u003d\u003d71144\u003d\u003d \n\u003d\u003d71144\u003d\u003d For lists of detected and suppressed errors, rerun with: -s\n\u003d\u003d71144\u003d\u003d ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 4 from 4)\nSegmentation fault (core dumped)\n```",
+      "parentUuid": "5d0a7df0_935975ce",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f227dd4_33701434",
@@ -362,6 +398,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2c9ab2f_b8efcbed",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T21:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05a2c2fc_13e34356",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb9a92f7_36ef3241",
@@ -396,6 +450,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dffe3b5e_a3779072",
+        "filename": "internal/ceres/cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T21:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e5ad9f7_d11a7572",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08b5cd54_9df07e9c",
@@ -409,6 +481,24 @@
       "writtenOn": "2022-02-08T01:53:21Z",
       "side": 1,
       "message": "These changes will be reverted.",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f39b07d_c47efe6d",
+        "filename": "internal/ceres/gmock_gtest_all.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2697,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T21:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08b5cd54_9df07e9c",
       "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
