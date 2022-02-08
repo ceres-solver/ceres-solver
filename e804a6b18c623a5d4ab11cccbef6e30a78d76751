@@ -52,6 +52,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "084831fa_8f83426e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T02:05:31Z",
+      "side": 1,
+      "message": "Sure thing. Meanwhile, I made a few mistakes while cherry-picking the changes which I need to revert now.",
+      "parentUuid": "88629774_6a3bd2cc",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f227dd4_33701434",
