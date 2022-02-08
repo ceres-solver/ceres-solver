@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bf22d42_5bfd85a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-08T23:50:50Z",
+      "side": 1,
+      "message": "Thanks Sergiu, I have some modernization in flight too. \nAlex was reminding me that a bunch of these overrides can be converted into finals, which may improve performance in some cases as the compiler can devirtualize.. but we are not going to worry sometime in the future.",
+      "revId": "484d3414e4c434090f956262203052894aa14a29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
