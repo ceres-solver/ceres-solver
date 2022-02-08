@@ -35,6 +35,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cbd456a_894cdefd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-08T01:15:13Z",
+      "side": 1,
+      "message": "Done!\n\nAgreed re. using cmake native language support for Cuda once we start compiling kernels. Let\u0027s take that discussion offline, I have further questions about integrating cuda compilation with the build system.",
+      "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2373d7ba_b3f0ee71",
@@ -48,6 +65,24 @@
       "writtenOn": "2022-02-06T23:12:52Z",
       "side": 1,
       "message": "As per below, I would flip this to a *has 64-bit solver API* then update this message to something like:\n\n\u0027Enabling use of 64-bit cuSolver API (${CUDA_VERSION} \u003e\u003d 11.1)\u0027",
+      "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b2b568a_528766ca",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-08T01:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2373d7ba_b3f0ee71",
       "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -69,6 +104,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f8ce5e1_519e2534",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-08T01:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51fd1ac1_22474ede",
+      "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce9ccac3_85b19c98",
@@ -82,6 +135,24 @@
       "writtenOn": "2022-02-06T23:12:52Z",
       "side": 1,
       "message": "This should be replaced with a target_include_directories() call block after here: https://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/CMakeLists.txt#L364",
+      "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8ff2922_8aa33e5f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-08T01:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce9ccac3_85b19c98",
       "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -103,6 +174,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac1ee8a3_2679310e",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-08T01:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff942d9a_27b1550d",
+      "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6194b5d6_ef104a96",
@@ -116,6 +205,24 @@
       "writtenOn": "2022-02-06T23:12:52Z",
       "side": 1,
       "message": "IMO, rather than new/old prefer 32Bit and 64Bit to communicate what \u0027new\u0027 and \u0027old\u0027 here means specifically, and the CUDA docs refer to this as the \u002764-bit API\u0027 so it would make sense to stick to their terminology where possible for clarity",
+      "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44b8b25b_bb607aa9",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-08T01:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6194b5d6_ef104a96",
       "revId": "c07a7254a5af4bf73dae2781d5fa08c158534833",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
