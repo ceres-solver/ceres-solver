@@ -119,7 +119,7 @@ SchurComplementSolver::SchurComplementSolver(
     : options_(options) {
   CHECK_GT(options.elimination_groups.size(), 1);
   CHECK_GT(options.elimination_groups[0], 0);
-  CHECK(options.context != NULL);
+  CHECK(options.context != nullptr);
 }
 
 SchurComplementSolver::~SchurComplementSolver() {}
@@ -132,7 +132,7 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
   EventLogger event_logger("SchurComplementSolver::Solve");
 
   const CompressedRowBlockStructure* bs = A->block_structure();
-  if (eliminator_.get() == NULL) {
+  if (eliminator_.get() == nullptr) {
     const int num_eliminate_blocks = options_.elimination_groups[0];
     const int num_f_blocks = bs->cols.size() - num_eliminate_blocks;
 
@@ -370,7 +370,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingConjugateGradients(
   // Only SCHUR_JACOBI is supported over here right now.
   CHECK_EQ(options().preconditioner_type, SCHUR_JACOBI);
 
-  if (preconditioner_.get() == NULL) {
+  if (preconditioner_.get() == nullptr) {
     preconditioner_.reset(new BlockRandomAccessDiagonalMatrix(blocks_));
   }
 

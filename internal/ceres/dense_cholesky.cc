@@ -145,9 +145,9 @@ LinearSolverTerminationType LAPACKDenseCholesky::Factorize(
 
   if (info < 0) {
     termination_type_ = LINEAR_SOLVER_FATAL_ERROR;
-    LOG(FATAL) << "Congratulations, you found a bug in Ceres."
-               << "Please report it."
-               << "LAPACK::dpotrf fatal error."
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
+               << "Please report it. "
+               << "LAPACK::dpotrf fatal error. "
                << "Argument: " << -info << " is invalid.";
   } else if (info > 0) {
     termination_type_ = LINEAR_SOLVER_FAILURE;
@@ -175,9 +175,9 @@ LinearSolverTerminationType LAPACKDenseCholesky::Solve(const double* rhs,
 
   if (info < 0) {
     termination_type_ = LINEAR_SOLVER_FATAL_ERROR;
-    LOG(FATAL) << "Congratulations, you found a bug in Ceres."
-               << "Please report it."
-               << "LAPACK::dpotrs fatal error."
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
+               << "Please report it. "
+               << "LAPACK::dpotrs fatal error. "
                << "Argument: " << -info << " is invalid.";
   }
 
@@ -201,7 +201,8 @@ bool CUDADenseCholesky32Bit::Init(std::string* message) {
     cusolverDnDestroy(cusolver_handle_);
     return false;
   }
-  if (cusolverDnSetStream(cusolver_handle_, stream_) != CUSOLVER_STATUS_SUCCESS) {
+  if (cusolverDnSetStream(cusolver_handle_, stream_) !=
+      CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnSetStream failed.";
     cudaStreamDestroy(stream_);
     cusolverDnDestroy(cusolver_handle_);
@@ -220,9 +221,7 @@ CUDADenseCholesky32Bit::~CUDADenseCholesky32Bit() {
 }
 
 LinearSolverTerminationType CUDADenseCholesky32Bit::Factorize(
-    int num_cols,
-    double* lhs,
-    std::string* message) {
+    int num_cols, double* lhs, std::string* message) {
   factorize_result_ = LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
   // Allocate GPU memory if necessary.
   lhs_.Reserve(num_cols * num_cols);
@@ -232,11 +231,11 @@ LinearSolverTerminationType CUDADenseCholesky32Bit::Factorize(
   // Allocate scratch space on GPU.
   int device_workspace_size = 0;
   if (cusolverDnDpotrf_bufferSize(cusolver_handle_,
-                                      CUBLAS_FILL_MODE_LOWER,
-                                      num_cols,
-                                      lhs_.data(),
-                                      num_cols,
-                                      &device_workspace_size) !=
+                                  CUBLAS_FILL_MODE_LOWER,
+                                  num_cols,
+                                  lhs_.data(),
+                                  num_cols,
+                                  &device_workspace_size) !=
       CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnDpotrf_bufferSize failed.";
     return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
@@ -245,18 +244,18 @@ LinearSolverTerminationType CUDADenseCholesky32Bit::Factorize(
   device_workspace_.Reserve(device_workspace_size);
   // Run the actual factorization (potrf)
   if (cusolverDnDpotrf(cusolver_handle_,
-                            CUBLAS_FILL_MODE_LOWER,
-                            num_cols,
-                            lhs_.data(),
-                            num_cols,
-                            reinterpret_cast<double*>(device_workspace_.data()),
-                            device_workspace_.size(),
-                            error_.data()) != CUSOLVER_STATUS_SUCCESS) {
+                       CUBLAS_FILL_MODE_LOWER,
+                       num_cols,
+                       lhs_.data(),
+                       num_cols,
+                       reinterpret_cast<double*>(device_workspace_.data()),
+                       device_workspace_.size(),
+                       error_.data()) != CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnDpotrf failed.";
     return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
   }
-  if (cudaDeviceSynchronize() != cudaSuccess ||
-      cudaStreamSynchronize(stream_), cudaSuccess) {
+  if (cudaDeviceSynchronize() != cudaSuccess || cudaStreamSynchronize(stream_),
+      cudaSuccess) {
     *message = "Cuda device synchronization failed.";
     return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
   }
@@ -266,7 +265,7 @@ LinearSolverTerminationType CUDADenseCholesky32Bit::Factorize(
   if (error < 0) {
     LOG(FATAL) << "Congratulations, you found a bug in Ceres - "
                << "please report it. "
-               << "cuSolverDN::cusolverDnXpotrf fatal error."
+               << "cuSolverDN::cusolverDnXpotrf fatal error. "
                << "Argument: " << -error << " is invalid.";
     // The following line is unreachable, but return failure just to be
     // pedantic, since the compiler does not know that.
@@ -285,9 +284,7 @@ LinearSolverTerminationType CUDADenseCholesky32Bit::Factorize(
 }
 
 LinearSolverTerminationType CUDADenseCholesky32Bit::Solve(
-    const double* rhs,
-    double* solution,
-    std::string* message) {
+    const double* rhs, double* solution, std::string* message) {
   if (factorize_result_ != LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS) {
     *message = "Factorize did not complete succesfully previously.";
     return factorize_result_;
@@ -296,19 +293,19 @@ LinearSolverTerminationType CUDADenseCholesky32Bit::Solve(
   rhs_.CopyToGpu(rhs, num_cols_);
   // Solve the system.
   if (cusolverDnDpotrs(cusolver_handle_,
-                            CUBLAS_FILL_MODE_LOWER,
-                            num_cols_,
-                            1,
-                            lhs_.data(),
-                            num_cols_,
-                            rhs_.data(),
-                            num_cols_,
-                            error_.data()) != CUSOLVER_STATUS_SUCCESS) {
+                       CUBLAS_FILL_MODE_LOWER,
+                       num_cols_,
+                       1,
+                       lhs_.data(),
+                       num_cols_,
+                       rhs_.data(),
+                       num_cols_,
+                       error_.data()) != CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnDpotrs failed.";
     return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
   }
-  if (cudaDeviceSynchronize() != cudaSuccess ||
-      cudaStreamSynchronize(stream_), cudaSuccess) {
+  if (cudaDeviceSynchronize() != cudaSuccess || cudaStreamSynchronize(stream_),
+      cudaSuccess) {
     *message = "Cuda device synchronization failed.";
     return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
   }
@@ -317,9 +314,9 @@ LinearSolverTerminationType CUDADenseCholesky32Bit::Solve(
   // Copy X from GPU to host.
   rhs_.CopyToHost(solution, num_cols_);
   if (error != 0) {
-    LOG(FATAL) << "Congratulations, you found a bug in Ceres."
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
                << "Please report it."
-               << "cuSolverDN::cusolverDnDpotrs fatal error."
+               << "cuSolverDN::cusolverDnDpotrs fatal error. "
                << "Argument: " << -error << " is invalid.";
   }
   // Copy error variable from GPU to host.
@@ -329,7 +326,7 @@ LinearSolverTerminationType CUDADenseCholesky32Bit::Solve(
 }
 
 std::unique_ptr<CUDADenseCholesky32Bit> CUDADenseCholesky32Bit::Create(
-  const LinearSolver::Options& options) {
+    const LinearSolver::Options& options) {
   if (options.dense_linear_algebra_library_type != CUDA) {
     // The user called the wrong factory method.
     return nullptr;
@@ -346,7 +343,7 @@ std::unique_ptr<CUDADenseCholesky32Bit> CUDADenseCholesky32Bit::Create(
 }
 
 std::unique_ptr<CUDADenseCholesky64Bit> CUDADenseCholesky64Bit::Create(
-  const LinearSolver::Options& options) {
+    const LinearSolver::Options& options) {
   if (options.dense_linear_algebra_library_type != CUDA) {
     // The user called the wrong factory method.
     return nullptr;
@@ -373,17 +370,15 @@ bool CUDADenseCholesky64Bit::Init(std::string* message) {
   return false;
 }
 
-LinearSolverTerminationType CUDADenseCholesky64Bit::Factorize(
-    int,
-    double*,
-    std::string*) {
+LinearSolverTerminationType CUDADenseCholesky64Bit::Factorize(int,
+                                                              double*,
+                                                              std::string*) {
   return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
 }
 
-LinearSolverTerminationType CUDADenseCholesky64Bit::Solve(
-    const double*,
-    double*,
-    std::string*) {
+LinearSolverTerminationType CUDADenseCholesky64Bit::Solve(const double*,
+                                                          double*,
+                                                          std::string*) {
   return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
 }
 
@@ -399,7 +394,8 @@ bool CUDADenseCholesky64Bit::Init(std::string* message) {
     cusolverDnDestroy(cusolver_handle_);
     return false;
   }
-  if (cusolverDnSetStream(cusolver_handle_, stream_) != CUSOLVER_STATUS_SUCCESS) {
+  if (cusolverDnSetStream(cusolver_handle_, stream_) !=
+      CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnSetStream failed.";
     cudaStreamDestroy(stream_);
     cusolverDnDestroy(cusolver_handle_);
@@ -418,9 +414,7 @@ CUDADenseCholesky64Bit::~CUDADenseCholesky64Bit() {
 }
 
 LinearSolverTerminationType CUDADenseCholesky64Bit::Factorize(
-    int num_cols,
-    double* lhs,
-    std::string* message) {
+    int num_cols, double* lhs, std::string* message) {
   factorize_result_ = LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
   // Allocate GPU memory if necessary.
   lhs_.Reserve(num_cols * num_cols);
@@ -431,15 +425,15 @@ LinearSolverTerminationType CUDADenseCholesky64Bit::Factorize(
   size_t host_workspace_size = 0;
   size_t device_workspace_size = 0;
   if (cusolverDnXpotrf_bufferSize(cusolver_handle_,
-                                      nullptr,
-                                      CUBLAS_FILL_MODE_LOWER,
-                                      num_cols,
-                                      CUDA_R_64F,
-                                      lhs_.data(),
-                                      num_cols,
-                                      CUDA_R_64F,
-                                      &device_workspace_size,
-                                      &host_workspace_size) !=
+                                  nullptr,
+                                  CUBLAS_FILL_MODE_LOWER,
+                                  num_cols,
+                                  CUDA_R_64F,
+                                  lhs_.data(),
+                                  num_cols,
+                                  CUDA_R_64F,
+                                  &device_workspace_size,
+                                  &host_workspace_size) !=
       CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnXpotrf_bufferSize failed.";
     return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
@@ -450,18 +444,18 @@ LinearSolverTerminationType CUDADenseCholesky64Bit::Factorize(
   device_workspace_.Reserve(device_workspace_size);
   // Run the actual factorization (potrf)
   if (cusolverDnXpotrf(cusolver_handle_,
-                            nullptr,
-                            CUBLAS_FILL_MODE_LOWER,
-                            num_cols,
-                            CUDA_R_64F,
-                            lhs_.data(),
-                            num_cols,
-                            CUDA_R_64F,
-                            device_workspace_.data(),
-                            device_workspace_.size(),
-                            host_workspace_.data(),
-                            host_workspace_.size(),
-                            error_.data()) != CUSOLVER_STATUS_SUCCESS) {
+                       nullptr,
+                       CUBLAS_FILL_MODE_LOWER,
+                       num_cols,
+                       CUDA_R_64F,
+                       lhs_.data(),
+                       num_cols,
+                       CUDA_R_64F,
+                       device_workspace_.data(),
+                       device_workspace_.size(),
+                       host_workspace_.data(),
+                       host_workspace_.size(),
+                       error_.data()) != CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnXpotrf failed.";
     return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
   }
@@ -476,7 +470,7 @@ LinearSolverTerminationType CUDADenseCholesky64Bit::Factorize(
   if (error < 0) {
     LOG(FATAL) << "Congratulations, you found a bug in Ceres - "
                << "please report it. "
-               << "cuSolverDN::cusolverDnXpotrf fatal error."
+               << "cuSolverDN::cusolverDnXpotrf fatal error. "
                << "Argument: " << -error << " is invalid.";
     // The following line is unreachable, but return failure just to be
     // pedantic, since the compiler does not know that.
@@ -496,9 +490,7 @@ LinearSolverTerminationType CUDADenseCholesky64Bit::Factorize(
 }
 
 LinearSolverTerminationType CUDADenseCholesky64Bit::Solve(
-    const double* rhs,
-    double* solution,
-    std::string* message) {
+    const double* rhs, double* solution, std::string* message) {
   if (factorize_result_ != LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS) {
     *message = "Factorize did not complete succesfully previously.";
     return factorize_result_;
@@ -507,17 +499,17 @@ LinearSolverTerminationType CUDADenseCholesky64Bit::Solve(
   rhs_.CopyToGpu(rhs, num_cols_);
   // Solve the system.
   if (cusolverDnXpotrs(cusolver_handle_,
-                            nullptr,
-                            CUBLAS_FILL_MODE_LOWER,
-                            num_cols_,
-                            1,
-                            CUDA_R_64F,
-                            lhs_.data(),
-                            num_cols_,
-                            CUDA_R_64F,
-                            rhs_.data(),
-                            num_cols_,
-                            error_.data()) != CUSOLVER_STATUS_SUCCESS) {
+                       nullptr,
+                       CUBLAS_FILL_MODE_LOWER,
+                       num_cols_,
+                       1,
+                       CUDA_R_64F,
+                       lhs_.data(),
+                       num_cols_,
+                       CUDA_R_64F,
+                       rhs_.data(),
+                       num_cols_,
+                       error_.data()) != CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnXpotrs failed.";
     return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
   }
@@ -531,9 +523,9 @@ LinearSolverTerminationType CUDADenseCholesky64Bit::Solve(
   // Copy error variable from GPU to host.
   error_.CopyToHost(&error, 1);
   if (error != 0) {
-    LOG(FATAL) << "Congratulations, you found a bug in Ceres."
-               << "Please report it."
-               << "cuSolverDN::cusolverDnXpotrs fatal error."
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
+               << "Please report it. "
+               << "cuSolverDN::cusolverDnXpotrs fatal error. "
                << "Argument: " << -error << " is invalid.";
   }
   // Copy X from GPU to host.
@@ -542,7 +534,7 @@ LinearSolverTerminationType CUDADenseCholesky64Bit::Solve(
   return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
 }
 
-#endif // CERES_CUDA_NO_64BIT_SOLVER_API
+#endif  // CERES_CUDA_NO_64BIT_SOLVER_API
 
 #endif  // CERES_NO_CUDA
 
