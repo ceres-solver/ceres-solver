@@ -123,6 +123,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6596ed3a_e8763593",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-08T02:03:34Z",
+      "side": 1,
+      "message": "These are supposed to be the sources containing public symbols. I think the variable\u0027s name is incorrect.",
+      "parentUuid": "29b49259_1de557b1",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 22
+      },
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b3e2eddc_fd80261e",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 1
