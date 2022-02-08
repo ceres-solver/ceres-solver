@@ -57,7 +57,7 @@ IterativeSchurComplementSolver::IterativeSchurComplementSolver(
     const LinearSolver::Options& options)
     : options_(options) {}
 
-IterativeSchurComplementSolver::~IterativeSchurComplementSolver() {}
+IterativeSchurComplementSolver::~IterativeSchurComplementSolver() = default;
 
 LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
     BlockSparseMatrix* A,

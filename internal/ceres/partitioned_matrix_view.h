@@ -62,7 +62,7 @@ namespace internal {
 // wrong output.
 class CERES_EXPORT_INTERNAL PartitionedMatrixViewBase {
  public:
-  virtual ~PartitionedMatrixViewBase() {}
+  virtual ~PartitionedMatrixViewBase() = default;
 
   // y += E'x
   virtual void LeftMultiplyE(const double* x, double* y) const = 0;

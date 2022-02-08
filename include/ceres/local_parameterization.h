@@ -155,7 +155,7 @@ class CERES_EXPORT LocalParameterization {
 class CERES_EXPORT IdentityParameterization : public LocalParameterization {
  public:
   explicit IdentityParameterization(int size);
-  ~IdentityParameterization() override {}
+  ~IdentityParameterization() override = default;
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
@@ -176,7 +176,7 @@ class CERES_EXPORT SubsetParameterization : public LocalParameterization {
  public:
   explicit SubsetParameterization(int size,
                                   const std::vector<int>& constant_parameters);
-  ~SubsetParameterization() override {}
+  ~SubsetParameterization() override = default;
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
@@ -201,7 +201,7 @@ class CERES_EXPORT SubsetParameterization : public LocalParameterization {
 // theta) part.
 class CERES_EXPORT QuaternionParameterization : public LocalParameterization {
  public:
-  ~QuaternionParameterization() override {}
+  ~QuaternionParameterization() override = default;
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
@@ -224,7 +224,7 @@ class CERES_EXPORT QuaternionParameterization : public LocalParameterization {
 class CERES_EXPORT EigenQuaternionParameterization
     : public ceres::LocalParameterization {
  public:
-  ~EigenQuaternionParameterization() override {}
+  ~EigenQuaternionParameterization() override = default;
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
@@ -250,7 +250,7 @@ class CERES_EXPORT HomogeneousVectorParameterization
     : public LocalParameterization {
  public:
   explicit HomogeneousVectorParameterization(int size);
-  ~HomogeneousVectorParameterization() override {}
+  ~HomogeneousVectorParameterization() override = default;
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
@@ -306,7 +306,7 @@ class CERES_EXPORT ProductParameterization : public LocalParameterization {
  public:
   ProductParameterization(const ProductParameterization&) = delete;
   ProductParameterization& operator=(const ProductParameterization&) = delete;
-  ~ProductParameterization() override {}
+  ~ProductParameterization() override = default;
   //
   // NOTE: The constructor takes ownership of the input local
   // parameterizations.

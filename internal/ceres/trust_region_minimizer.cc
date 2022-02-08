@@ -62,7 +62,7 @@
 namespace ceres {
 namespace internal {
 
-TrustRegionMinimizer::~TrustRegionMinimizer() {}
+TrustRegionMinimizer::~TrustRegionMinimizer() = default;
 
 void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                                     double* parameters,

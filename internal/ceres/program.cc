@@ -54,12 +54,11 @@
 namespace ceres {
 namespace internal {
 
-Program::Program() {}
+Program::Program() = default;
 
 Program::Program(const Program& program)
-    : parameter_blocks_(program.parameter_blocks_),
-      residual_blocks_(program.residual_blocks_),
-      evaluation_callback_(program.evaluation_callback_) {}
+
+    = default;
 
 const std::vector<ParameterBlock*>& Program::parameter_blocks() const {
   return parameter_blocks_;

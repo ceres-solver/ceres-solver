@@ -59,7 +59,7 @@ class LineSearchDirection {
 
   static LineSearchDirection* Create(const Options& options);
 
-  virtual ~LineSearchDirection() {}
+  virtual ~LineSearchDirection() = default;
   virtual bool NextDirection(const LineSearchMinimizer::State& previous,
                              const LineSearchMinimizer::State& current,
                              Vector* search_direction) = 0;

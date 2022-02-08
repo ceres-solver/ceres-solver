@@ -62,7 +62,7 @@ namespace ceres {
 // execute faster.
 class CERES_EXPORT EvaluationCallback {
  public:
-  virtual ~EvaluationCallback() {}
+  virtual ~EvaluationCallback() = default;
 
   // Called before Ceres requests residuals or jacobians for a given setting of
   // the parameters. User parameters (the double* values provided to the cost

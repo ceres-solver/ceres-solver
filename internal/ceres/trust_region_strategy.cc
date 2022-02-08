@@ -38,7 +38,7 @@
 namespace ceres {
 namespace internal {
 
-TrustRegionStrategy::~TrustRegionStrategy() {}
+TrustRegionStrategy::~TrustRegionStrategy() = default;
 
 TrustRegionStrategy* TrustRegionStrategy::Create(const Options& options) {
   switch (options.trust_region_strategy_type) {

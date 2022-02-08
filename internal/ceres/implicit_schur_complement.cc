@@ -45,7 +45,7 @@ ImplicitSchurComplement::ImplicitSchurComplement(
     const LinearSolver::Options& options)
     : options_(options), D_(NULL), b_(NULL) {}
 
-ImplicitSchurComplement::~ImplicitSchurComplement() {}
+ImplicitSchurComplement::~ImplicitSchurComplement() = default;
 
 void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
                                    const double* D,

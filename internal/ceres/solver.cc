@@ -485,7 +485,7 @@ bool Solver::Options::IsValid(string* error) const {
   return LineSearchOptionsAreValid(*this, error);
 }
 
-Solver::~Solver() {}
+Solver::~Solver() = default;
 
 void Solver::Solve(const Solver::Options& options,
                    Problem* problem,

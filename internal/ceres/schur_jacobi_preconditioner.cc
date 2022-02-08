@@ -62,7 +62,7 @@ SchurJacobiPreconditioner::SchurJacobiPreconditioner(
   InitEliminator(bs);
 }
 
-SchurJacobiPreconditioner::~SchurJacobiPreconditioner() {}
+SchurJacobiPreconditioner::~SchurJacobiPreconditioner() = default;
 
 // Initialize the SchurEliminator.
 void SchurJacobiPreconditioner::InitEliminator(

@@ -64,7 +64,7 @@ CoordinateDescentMinimizer::CoordinateDescentMinimizer(ContextImpl* context)
   CHECK(context_ != nullptr);
 }
 
-CoordinateDescentMinimizer::~CoordinateDescentMinimizer() {}
+CoordinateDescentMinimizer::~CoordinateDescentMinimizer() = default;
 
 bool CoordinateDescentMinimizer::Init(
     const Program& program,

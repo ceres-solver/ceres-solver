@@ -43,7 +43,7 @@
 namespace ceres {
 namespace internal {
 
-LinearSolver::~LinearSolver() {}
+LinearSolver::~LinearSolver() = default;
 
 LinearSolverType LinearSolver::LinearSolverForZeroEBlocks(
     LinearSolverType linear_solver_type) {

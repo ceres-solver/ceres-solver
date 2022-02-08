@@ -79,7 +79,7 @@ CovarianceImpl::CovarianceImpl(const Covariance::Options& options)
   evaluate_options_.apply_loss_function = options_.apply_loss_function;
 }
 
-CovarianceImpl::~CovarianceImpl() {}
+CovarianceImpl::~CovarianceImpl() = default;
 
 template <typename T>
 void CheckForDuplicates(std::vector<T> blocks) {
