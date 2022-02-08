@@ -54,7 +54,7 @@ class CgnrSolver : public BlockSparseMatrixSolver {
   explicit CgnrSolver(const LinearSolver::Options& options);
   CgnrSolver(const CgnrSolver&) = delete;
   void operator=(const CgnrSolver&) = delete;
-  virtual ~CgnrSolver();
+  ~CgnrSolver() override;
 
   Summary SolveImpl(BlockSparseMatrix* A,
                     const double* b,

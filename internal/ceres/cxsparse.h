@@ -144,7 +144,7 @@ class CXSparseCholesky : public SparseCholesky {
   static std::unique_ptr<SparseCholesky> Create(OrderingType ordering_type);
 
   // SparseCholesky interface.
-  virtual ~CXSparseCholesky();
+  ~CXSparseCholesky() override;
   CompressedRowSparseMatrix::StorageType StorageType() const final;
   LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
                                         std::string* message) final;

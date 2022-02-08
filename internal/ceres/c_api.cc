@@ -78,7 +78,7 @@ class CallbackCostFunction : public ceres::CostFunction {
     }
   }
 
-  virtual ~CallbackCostFunction() {}
+  ~CallbackCostFunction() override {}
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,

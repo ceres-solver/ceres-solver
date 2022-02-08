@@ -56,7 +56,7 @@ namespace internal {
 class CERES_EXPORT_INTERNAL DoglegStrategy : public TrustRegionStrategy {
  public:
   explicit DoglegStrategy(const TrustRegionStrategy::Options& options);
-  virtual ~DoglegStrategy() {}
+  ~DoglegStrategy() override {}
 
   // TrustRegionStrategy interface
   Summary ComputeStep(const PerSolveOptions& per_solve_options,
@@ -65,7 +65,7 @@ class CERES_EXPORT_INTERNAL DoglegStrategy : public TrustRegionStrategy {
                       double* step) final;
   void StepAccepted(double step_quality) final;
   void StepRejected(double step_quality) final;
-  void StepIsInvalid();
+  void StepIsInvalid() override;
   double Radius() const final;
 
   // These functions are predominantly for testing.

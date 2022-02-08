@@ -60,7 +60,7 @@ class CERES_EXPORT_INTERNAL TripletSparseMatrix : public SparseMatrix {
 
   TripletSparseMatrix& operator=(const TripletSparseMatrix& rhs);
 
-  virtual ~TripletSparseMatrix();
+  ~TripletSparseMatrix() override;
 
   // Implementation of the SparseMatrix interface.
   void SetZero() final;

@@ -85,7 +85,7 @@ class SchurJacobiPreconditioner : public BlockSparseMatrixPreconditioner {
   SchurJacobiPreconditioner(const SchurJacobiPreconditioner&) = delete;
   void operator=(const SchurJacobiPreconditioner&) = delete;
 
-  virtual ~SchurJacobiPreconditioner();
+  ~SchurJacobiPreconditioner() override;
 
   // Preconditioner interface.
   void RightMultiply(const double* x, double* y) const final;

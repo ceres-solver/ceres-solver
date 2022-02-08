@@ -47,7 +47,7 @@ class GradientProblemEvaluator : public Evaluator {
  public:
   explicit GradientProblemEvaluator(const GradientProblem& problem)
       : problem_(problem) {}
-  virtual ~GradientProblemEvaluator() {}
+  ~GradientProblemEvaluator() override {}
   SparseMatrix* CreateJacobian() const final { return nullptr; }
   bool Evaluate(const EvaluateOptions& evaluate_options,
                 const double* state,

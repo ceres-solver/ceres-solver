@@ -121,7 +121,7 @@ class PartitionedMatrixView : public PartitionedMatrixViewBase {
   // num_col_blocks_a column blocks.
   PartitionedMatrixView(const BlockSparseMatrix& matrix, int num_col_blocks_e);
 
-  virtual ~PartitionedMatrixView();
+  ~PartitionedMatrixView() override;
   void LeftMultiplyE(const double* x, double* y) const final;
   void LeftMultiplyF(const double* x, double* y) const final;
   void RightMultiplyE(const double* x, double* y) const final;

@@ -82,7 +82,7 @@ class CgnrLinearOperator : public LinearOperator {
  public:
   CgnrLinearOperator(const LinearOperator& A, const double* D)
       : A_(A), D_(D), z_(new double[A.num_rows()]) {}
-  virtual ~CgnrLinearOperator() {}
+  ~CgnrLinearOperator() override {}
 
   void RightMultiply(const double* x, double* y) const final {
     std::fill(z_.get(), z_.get() + A_.num_rows(), 0.0);

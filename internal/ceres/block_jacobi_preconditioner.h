@@ -61,7 +61,7 @@ class CERES_EXPORT_INTERNAL BlockJacobiPreconditioner
   BlockJacobiPreconditioner(const BlockJacobiPreconditioner&) = delete;
   void operator=(const BlockJacobiPreconditioner&) = delete;
 
-  virtual ~BlockJacobiPreconditioner();
+  ~BlockJacobiPreconditioner() override;
 
   // Preconditioner interface
   void RightMultiply(const double* x, double* y) const final;

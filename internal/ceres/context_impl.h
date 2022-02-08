@@ -51,7 +51,7 @@ class CERES_EXPORT_INTERNAL ContextImpl : public Context {
   ContextImpl(const ContextImpl&) = delete;
   void operator=(const ContextImpl&) = delete;
 
-  virtual ~ContextImpl() {}
+  ~ContextImpl() override {}
 
   // When compiled with C++ threading support, resize the thread pool to have
   // at min(num_thread, num_hardware_threads) where num_hardware_threads is

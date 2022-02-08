@@ -137,7 +137,7 @@ class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
   VisibilityBasedPreconditioner(const VisibilityBasedPreconditioner&) = delete;
   void operator=(const VisibilityBasedPreconditioner&) = delete;
 
-  virtual ~VisibilityBasedPreconditioner();
+  ~VisibilityBasedPreconditioner() override;
 
   // Preconditioner interface
   void RightMultiply(const double* x, double* y) const final;

@@ -67,7 +67,7 @@ class UnaryCostFunction : public CostFunction {
     mutable_parameter_block_sizes()->push_back(parameter_block_size);
   }
 
-  virtual ~UnaryCostFunction() {}
+  ~UnaryCostFunction() override {}
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -334,7 +334,7 @@ class DestructorCountingCostFunction : public SizedCostFunction<3, 4, 5> {
   explicit DestructorCountingCostFunction(int* num_destructions)
       : num_destructions_(num_destructions) {}
 
-  virtual ~DestructorCountingCostFunction() { *num_destructions_ += 1; }
+  ~DestructorCountingCostFunction() override { *num_destructions_ += 1; }
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -1513,7 +1513,7 @@ static void CRSToDenseMatrix(const CRSMatrix& input, Matrix* output) {
 
 class ProblemEvaluateTest : public ::testing::Test {
  protected:
-  void SetUp() {
+  void SetUp() override {
     for (int i = 0; i < 6; ++i) {
       parameters_[i] = static_cast<double>(i + 1);
     }
@@ -1535,7 +1535,7 @@ class ProblemEvaluateTest : public ::testing::Test {
         cost_function, nullptr, parameters_ + 4, parameters_));
   }
 
-  void TearDown() { EXPECT_TRUE(problem_.program().IsValid()); }
+  void TearDown() override { EXPECT_TRUE(problem_.program().IsValid()); }
 
   void EvaluateAndCompare(const Problem::EvaluateOptions& options,
                           const int expected_num_rows,

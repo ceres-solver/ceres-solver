@@ -66,7 +66,7 @@ class CoordinateDescentMinimizer : public Minimizer {
             std::string* error);
 
   // Minimizer interface.
-  virtual ~CoordinateDescentMinimizer();
+  ~CoordinateDescentMinimizer() override;
 
   void Minimize(const Minimizer::Options& options,
                 double* parameters,

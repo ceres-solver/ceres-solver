@@ -89,7 +89,7 @@ class FailingCostFunction : public SizedCostFunction<1, 1> {
  public:
   bool Evaluate(double const* const* parameters,
                 double* residuals,
-                double** jacobians) const {
+                double** jacobians) const override {
     return false;
   }
 };
@@ -120,7 +120,7 @@ class DummyCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
   bool Evaluate(double const* const* parameters,
                 double* residuals,
-                double** jacobians) const {
+                double** jacobians) const override {
     for (int i = 0; i < kNumResiduals; ++i) {
       residuals[i] = kNumResiduals * kNumResiduals + i;
     }

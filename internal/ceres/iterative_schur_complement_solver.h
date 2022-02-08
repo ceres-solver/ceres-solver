@@ -77,7 +77,7 @@ class CERES_EXPORT_INTERNAL IterativeSchurComplementSolver
       delete;
   void operator=(const IterativeSchurComplementSolver&) = delete;
 
-  virtual ~IterativeSchurComplementSolver();
+  ~IterativeSchurComplementSolver() override;
 
  private:
   LinearSolver::Summary SolveImpl(BlockSparseMatrix* A,

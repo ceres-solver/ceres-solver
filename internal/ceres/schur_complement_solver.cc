@@ -68,7 +68,7 @@ class BlockRandomAccessSparseMatrixAdapter : public LinearOperator {
       const BlockRandomAccessSparseMatrix& m)
       : m_(m) {}
 
-  virtual ~BlockRandomAccessSparseMatrixAdapter() {}
+  ~BlockRandomAccessSparseMatrixAdapter() override {}
 
   // y = y + Ax;
   void RightMultiply(const double* x, double* y) const final {
@@ -93,7 +93,7 @@ class BlockRandomAccessDiagonalMatrixAdapter : public LinearOperator {
       const BlockRandomAccessDiagonalMatrix& m)
       : m_(m) {}
 
-  virtual ~BlockRandomAccessDiagonalMatrixAdapter() {}
+  ~BlockRandomAccessDiagonalMatrixAdapter() override {}
 
   // y = y + Ax;
   void RightMultiply(const double* x, double* y) const final {

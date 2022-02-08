@@ -167,7 +167,7 @@ TEST(_, ApplyOrderingNormal) {
 class ReorderProgramFoSparseCholeskyUsingSuiteSparseTest
     : public ::testing::Test {
  protected:
-  void SetUp() {
+  void SetUp() override {
     problem_.AddResidualBlock(new UnaryCostFunction(), nullptr, &x_);
     problem_.AddResidualBlock(new BinaryCostFunction(), nullptr, &z_, &x_);
     problem_.AddResidualBlock(new BinaryCostFunction(), nullptr, &z_, &y_);

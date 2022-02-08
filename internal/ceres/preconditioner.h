@@ -115,7 +115,7 @@ class CERES_EXPORT_INTERNAL Preconditioner : public LinearOperator {
   static PreconditionerType PreconditionerForZeroEBlocks(
       PreconditionerType preconditioner_type);
 
-  virtual ~Preconditioner();
+  ~Preconditioner() override;
 
   // Update the numerical value of the preconditioner for the linear
   // system:
@@ -149,7 +149,7 @@ class CERES_EXPORT_INTERNAL Preconditioner : public LinearOperator {
 template <typename MatrixType>
 class TypedPreconditioner : public Preconditioner {
  public:
-  virtual ~TypedPreconditioner() {}
+  ~TypedPreconditioner() override {}
   bool Update(const LinearOperator& A, const double* D) final {
     return UpdateImpl(*down_cast<const MatrixType*>(&A), D);
   }
@@ -171,14 +171,14 @@ class SparseMatrixPreconditionerWrapper : public SparseMatrixPreconditioner {
  public:
   // Wrapper does NOT take ownership of the matrix pointer.
   explicit SparseMatrixPreconditionerWrapper(const SparseMatrix* matrix);
-  virtual ~SparseMatrixPreconditionerWrapper();
+  ~SparseMatrixPreconditionerWrapper() override;
 
   // Preconditioner interface
-  virtual void RightMultiply(const double* x, double* y) const;
-  virtual int num_rows() const;
+  void RightMultiply(const double* x, double* y) const override;
+  int num_rows() const override;
 
  private:
-  virtual bool UpdateImpl(const SparseMatrix& A, const double* D);
+  bool UpdateImpl(const SparseMatrix& A, const double* D) override;
   const SparseMatrix* matrix_;
 };
 

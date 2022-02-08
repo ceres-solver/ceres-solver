@@ -40,10 +40,10 @@ namespace internal {
 
 class SteepestDescent : public LineSearchDirection {
  public:
-  virtual ~SteepestDescent() {}
+  ~SteepestDescent() override {}
   bool NextDirection(const LineSearchMinimizer::State& previous,
                      const LineSearchMinimizer::State& current,
-                     Vector* search_direction) {
+                     Vector* search_direction) override {
     *search_direction = -current.gradient;
     return true;
   }
@@ -57,7 +57,7 @@ class NonlinearConjugateGradient : public LineSearchDirection {
 
   bool NextDirection(const LineSearchMinimizer::State& previous,
                      const LineSearchMinimizer::State& current,
-                     Vector* search_direction) {
+                     Vector* search_direction) override {
     double beta = 0.0;
     Vector gradient_change;
     switch (type_) {
@@ -105,11 +105,11 @@ class LBFGS : public LineSearchDirection {
                                   use_approximate_eigenvalue_bfgs_scaling),
         is_positive_definite_(true) {}
 
-  virtual ~LBFGS() {}
+  ~LBFGS() override {}
 
   bool NextDirection(const LineSearchMinimizer::State& previous,
                      const LineSearchMinimizer::State& current,
-                     Vector* search_direction) {
+                     Vector* search_direction) override {
     CHECK(is_positive_definite_)
         << "Ceres bug: NextDirection() called on L-BFGS after inverse Hessian "
         << "approximation has become indefinite, please contact the "
@@ -161,11 +161,11 @@ class BFGS : public LineSearchDirection {
     inverse_hessian_ = Matrix::Identity(num_parameters, num_parameters);
   }
 
-  virtual ~BFGS() {}
+  ~BFGS() override {}
 
   bool NextDirection(const LineSearchMinimizer::State& previous,
                      const LineSearchMinimizer::State& current,
-                     Vector* search_direction) {
+                     Vector* search_direction) override {
     CHECK(is_positive_definite_)
         << "Ceres bug: NextDirection() called on BFGS after inverse Hessian "
         << "approximation has become indefinite, please contact the "

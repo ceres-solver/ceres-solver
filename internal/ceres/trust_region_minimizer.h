@@ -50,7 +50,7 @@ namespace internal {
 // For example usage, see SolverImpl::Minimize.
 class CERES_EXPORT_INTERNAL TrustRegionMinimizer : public Minimizer {
  public:
-  ~TrustRegionMinimizer();
+  ~TrustRegionMinimizer() override;
 
   // This method is not thread safe.
   void Minimize(const Minimizer::Options& options,

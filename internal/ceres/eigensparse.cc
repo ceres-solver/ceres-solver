@@ -48,7 +48,7 @@ template <typename Solver>
 class EigenSparseCholeskyTemplate : public SparseCholesky {
  public:
   EigenSparseCholeskyTemplate() : analyzed_(false) {}
-  virtual ~EigenSparseCholeskyTemplate() {}
+  ~EigenSparseCholeskyTemplate() override {}
   CompressedRowSparseMatrix::StorageType StorageType() const final {
     return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
   }
@@ -83,7 +83,7 @@ class EigenSparseCholeskyTemplate : public SparseCholesky {
 
   LinearSolverTerminationType Solve(const double* rhs_ptr,
                                     double* solution_ptr,
-                                    std::string* message) {
+                                    std::string* message) override {
     CHECK(analyzed_) << "Solve called without a call to Factorize first.";
 
     scalar_rhs_ = ConstVectorRef(rhs_ptr, solver_.cols())

@@ -230,7 +230,7 @@ class SchurEliminator : public SchurEliminatorBase {
   }
 
   // SchurEliminatorBase Interface
-  virtual ~SchurEliminator();
+  ~SchurEliminator() override;
   void Init(int num_eliminate_blocks,
             bool assume_full_rank_ete,
             const CompressedRowBlockStructure* bs) final;
@@ -379,7 +379,7 @@ template <int kRowBlockSize = Eigen::Dynamic,
           int kFBlockSize = Eigen::Dynamic>
 class SchurEliminatorForOneFBlock : public SchurEliminatorBase {
  public:
-  virtual ~SchurEliminatorForOneFBlock() {}
+  ~SchurEliminatorForOneFBlock() override {}
   void Init(int num_eliminate_blocks,
             bool assume_full_rank_ete,
             const CompressedRowBlockStructure* bs) override {

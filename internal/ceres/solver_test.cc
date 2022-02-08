@@ -78,7 +78,7 @@ struct QuadraticCostFunctor {
 
 struct RememberingCallback : public IterationCallback {
   explicit RememberingCallback(double* x) : calls(0), x(x) {}
-  virtual ~RememberingCallback() {}
+  ~RememberingCallback() override {}
   CallbackReturnType operator()(const IterationSummary& summary) final {
     x_values.push_back(*x);
     return SOLVER_CONTINUE;
@@ -89,7 +89,7 @@ struct RememberingCallback : public IterationCallback {
 };
 
 struct NoOpEvaluationCallback : EvaluationCallback {
-  virtual ~NoOpEvaluationCallback() {}
+  ~NoOpEvaluationCallback() override {}
   void PrepareForEvaluation(bool evaluate_jacobians,
                             bool new_evaluation_point) final {
     (void)evaluate_jacobians;
@@ -475,7 +475,7 @@ class DummyCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
   bool Evaluate(double const* const* parameters,
                 double* residuals,
-                double** jacobians) const {
+                double** jacobians) const override {
     for (int i = 0; i < kNumResiduals; ++i) {
       residuals[i] = kNumResiduals * kNumResiduals + i;
     }

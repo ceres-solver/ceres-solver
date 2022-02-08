@@ -63,7 +63,7 @@ class LineSearchMinimizer : public Minimizer {
     double step_size;
   };
 
-  ~LineSearchMinimizer() {}
+  ~LineSearchMinimizer() override {}
   void Minimize(const Minimizer::Options& options,
                 double* parameters,
                 Solver::Summary* summary) final;

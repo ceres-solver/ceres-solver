@@ -89,7 +89,7 @@ class TestTerm : public CostFunction {
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,
-                double** jacobians) const {
+                double** jacobians) const override {
     // Compute a . x.
     double ax = 0;
     for (int j = 0; j < arity_; ++j) {
@@ -268,7 +268,7 @@ class UnaryCostFunction : public CostFunction {
     set_num_residuals(num_residuals);
     mutable_parameter_block_sizes()->push_back(parameter_block_size);
   }
-  virtual ~UnaryCostFunction() {}
+  ~UnaryCostFunction() override {}
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,

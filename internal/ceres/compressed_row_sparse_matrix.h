@@ -100,7 +100,7 @@ class CERES_EXPORT_INTERNAL CompressedRowSparseMatrix : public SparseMatrix {
   CompressedRowSparseMatrix(const double* diagonal, int num_rows);
 
   // SparseMatrix interface.
-  virtual ~CompressedRowSparseMatrix();
+  ~CompressedRowSparseMatrix() override;
   void SetZero() final;
   void RightMultiply(const double* x, double* y) const final;
   void LeftMultiply(const double* x, double* y) const final;

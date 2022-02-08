@@ -82,7 +82,7 @@ class CERES_EXPORT ConditionedCostFunction : public CostFunction {
   ConditionedCostFunction(CostFunction* wrapped_cost_function,
                           const std::vector<CostFunction*>& conditioners,
                           Ownership ownership);
-  virtual ~ConditionedCostFunction();
+  ~ConditionedCostFunction() override;
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,

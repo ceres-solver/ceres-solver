@@ -51,7 +51,7 @@ class CERES_EXPORT_INTERNAL DenseSparseMatrix : public SparseMatrix {
   explicit DenseSparseMatrix(const Matrix& m);
   DenseSparseMatrix(int num_rows, int num_cols);
 
-  virtual ~DenseSparseMatrix() = default;
+  ~DenseSparseMatrix() override = default;
 
   // SparseMatrix interface.
   void SetZero() final;

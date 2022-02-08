@@ -87,7 +87,7 @@ class DynamicAutoDiffCostFunction : public DynamicCostFunction {
   explicit DynamicAutoDiffCostFunction(DynamicAutoDiffCostFunction&& other)
       : functor_(std::move(other.functor_)), ownership_(other.ownership_) {}
 
-  virtual ~DynamicAutoDiffCostFunction() {
+  ~DynamicAutoDiffCostFunction() override {
     // Manually release pointer if configured to not take ownership
     // rather than deleting only if ownership is taken.  This is to
     // stay maximally compatible to old user code which may have

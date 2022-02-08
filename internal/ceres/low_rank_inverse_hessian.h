@@ -73,7 +73,7 @@ class LowRankInverseHessian : public LinearOperator {
   LowRankInverseHessian(int num_parameters,
                         int max_num_corrections,
                         bool use_approximate_eigenvalue_scaling);
-  virtual ~LowRankInverseHessian() {}
+  ~LowRankInverseHessian() override {}
 
   // Update the low rank approximation. delta_x is the change in the
   // domain of Hessian, and delta_gradient is the change in the

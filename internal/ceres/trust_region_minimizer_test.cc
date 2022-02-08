@@ -76,7 +76,7 @@ class PowellEvaluator2 : public Evaluator {
   }
   // clang-format on
 
-  virtual ~PowellEvaluator2() {}
+  ~PowellEvaluator2() override {}
 
   // Implementation of Evaluator interface.
   SparseMatrix* CreateJacobian() const final {
@@ -330,7 +330,7 @@ class CurveCostFunction : public CostFunction {
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,
-                double** jacobians) const {
+                double** jacobians) const override {
     residuals[0] = target_length_;
 
     for (int i = 0; i < num_vertices_; ++i) {

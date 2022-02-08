@@ -58,7 +58,7 @@ class SparseNormalCholeskySolver : public BlockSparseMatrixSolver {
   SparseNormalCholeskySolver(const SparseNormalCholeskySolver&) = delete;
   void operator=(const SparseNormalCholeskySolver&) = delete;
 
-  virtual ~SparseNormalCholeskySolver();
+  ~SparseNormalCholeskySolver() override;
 
  private:
   LinearSolver::Summary SolveImpl(BlockSparseMatrix* A,

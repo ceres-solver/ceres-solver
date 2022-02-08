@@ -301,12 +301,12 @@ class CERES_EXPORT_INTERNAL LinearSolver {
 template <typename MatrixType>
 class TypedLinearSolver : public LinearSolver {
  public:
-  virtual ~TypedLinearSolver() {}
-  virtual LinearSolver::Summary Solve(
+  ~TypedLinearSolver() override {}
+  LinearSolver::Summary Solve(
       LinearOperator* A,
       const double* b,
       const LinearSolver::PerSolveOptions& per_solve_options,
-      double* x) {
+      double* x) override {
     ScopedExecutionTimer total_time("LinearSolver::Solve", &execution_summary_);
     CHECK(A != nullptr);
     CHECK(b != nullptr);
@@ -314,7 +314,7 @@ class TypedLinearSolver : public LinearSolver {
     return SolveImpl(down_cast<MatrixType*>(A), b, per_solve_options, x);
   }
 
-  virtual std::map<std::string, CallStatistics> Statistics() const {
+  std::map<std::string, CallStatistics> Statistics() const override {
     return execution_summary_.statistics();
   }
 

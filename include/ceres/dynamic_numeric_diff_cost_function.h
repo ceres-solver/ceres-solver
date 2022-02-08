@@ -89,7 +89,7 @@ class DynamicNumericDiffCostFunction : public DynamicCostFunction {
       DynamicNumericDiffCostFunction&& other)
       : functor_(std::move(other.functor_)), ownership_(other.ownership_) {}
 
-  virtual ~DynamicNumericDiffCostFunction() {
+  ~DynamicNumericDiffCostFunction() override {
     if (ownership_ != TAKE_OWNERSHIP) {
       functor_.release();
     }

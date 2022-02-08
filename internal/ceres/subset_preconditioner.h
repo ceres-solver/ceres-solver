@@ -72,7 +72,7 @@ class CERES_EXPORT_INTERNAL SubsetPreconditioner
  public:
   SubsetPreconditioner(const Preconditioner::Options& options,
                        const BlockSparseMatrix& A);
-  virtual ~SubsetPreconditioner();
+  ~SubsetPreconditioner() override;
 
   // Preconditioner interface
   void RightMultiply(const double* x, double* y) const final;

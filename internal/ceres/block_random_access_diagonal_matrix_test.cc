@@ -44,7 +44,7 @@ namespace internal {
 
 class BlockRandomAccessDiagonalMatrixTest : public ::testing::Test {
  public:
-  void SetUp() {
+  void SetUp() override {
     std::vector<int> blocks;
     blocks.push_back(3);
     blocks.push_back(4);

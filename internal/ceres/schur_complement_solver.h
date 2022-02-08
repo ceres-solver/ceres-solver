@@ -170,7 +170,7 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
   SparseSchurComplementSolver(const SparseSchurComplementSolver&) = delete;
   void operator=(const SparseSchurComplementSolver&) = delete;
 
-  virtual ~SparseSchurComplementSolver();
+  ~SparseSchurComplementSolver() override;
 
  private:
   void InitStorage(const CompressedRowBlockStructure* bs) final;

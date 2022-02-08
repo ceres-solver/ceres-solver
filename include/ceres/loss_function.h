@@ -301,7 +301,7 @@ class CERES_EXPORT ComposedLoss : public LossFunction {
                         Ownership ownership_f,
                         const LossFunction* g,
                         Ownership ownership_g);
-  virtual ~ComposedLoss();
+  ~ComposedLoss() override;
   void Evaluate(double, double*) const override;
 
  private:
@@ -336,7 +336,7 @@ class CERES_EXPORT ScaledLoss : public LossFunction {
   ScaledLoss(const ScaledLoss&) = delete;
   void operator=(const ScaledLoss&) = delete;
 
-  virtual ~ScaledLoss() {
+  ~ScaledLoss() override {
     if (ownership_ == DO_NOT_TAKE_OWNERSHIP) {
       rho_.release();
     }
@@ -396,7 +396,7 @@ class CERES_EXPORT LossFunctionWrapper : public LossFunction {
   LossFunctionWrapper(const LossFunctionWrapper&) = delete;
   void operator=(const LossFunctionWrapper&) = delete;
 
-  virtual ~LossFunctionWrapper() {
+  ~LossFunctionWrapper() override {
     if (ownership_ == DO_NOT_TAKE_OWNERSHIP) {
       rho_.release();
     }

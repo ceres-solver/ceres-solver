@@ -46,7 +46,7 @@ class Program;
 class StateUpdatingCallback : public IterationCallback {
  public:
   StateUpdatingCallback(Program* program, double* parameters);
-  virtual ~StateUpdatingCallback();
+  ~StateUpdatingCallback() override;
   CallbackReturnType operator()(const IterationSummary& summary) final;
 
  private:
@@ -61,7 +61,7 @@ class GradientProblemSolverStateUpdatingCallback : public IterationCallback {
   GradientProblemSolverStateUpdatingCallback(int num_parameters,
                                              const double* internal_parameters,
                                              double* user_parameters);
-  virtual ~GradientProblemSolverStateUpdatingCallback();
+  ~GradientProblemSolverStateUpdatingCallback() override;
   CallbackReturnType operator()(const IterationSummary& summary) final;
 
  private:
@@ -75,7 +75,7 @@ class GradientProblemSolverStateUpdatingCallback : public IterationCallback {
 class LoggingCallback : public IterationCallback {
  public:
   LoggingCallback(MinimizerType minimizer_type, bool log_to_stdout);
-  virtual ~LoggingCallback();
+  ~LoggingCallback() override;
   CallbackReturnType operator()(const IterationSummary& summary) final;
 
  private:

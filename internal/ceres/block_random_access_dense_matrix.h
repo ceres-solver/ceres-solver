@@ -61,7 +61,7 @@ class CERES_EXPORT_INTERNAL BlockRandomAccessDenseMatrix
 
   // The destructor is not thread safe. It assumes that no one is
   // modifying any cells when the matrix is being destroyed.
-  virtual ~BlockRandomAccessDenseMatrix();
+  ~BlockRandomAccessDenseMatrix() override;
 
   // BlockRandomAccessMatrix interface.
   CellInfo* GetCell(int row_block_id,

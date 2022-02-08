@@ -15,7 +15,7 @@ class ManifoldAdapter : public Manifold {
     CHECK(local_parameterization != nullptr);
   }
 
-  virtual ~ManifoldAdapter() {}
+  ~ManifoldAdapter() override {}
 
   bool Plus(const double* x,
             const double* delta,

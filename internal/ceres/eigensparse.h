@@ -55,13 +55,13 @@ class EigenSparseCholesky : public SparseCholesky {
       const OrderingType ordering_type);
 
   // SparseCholesky interface.
-  virtual ~EigenSparseCholesky();
-  virtual LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
-                                                std::string* message) = 0;
-  virtual CompressedRowSparseMatrix::StorageType StorageType() const = 0;
-  virtual LinearSolverTerminationType Solve(const double* rhs,
-                                            double* solution,
-                                            std::string* message) = 0;
+  ~EigenSparseCholesky() override;
+  LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
+                                        std::string* message) override = 0;
+  CompressedRowSparseMatrix::StorageType StorageType() const override = 0;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override = 0;
 };
 
 // Even though the input is double precision linear system, this class
@@ -73,13 +73,13 @@ class FloatEigenSparseCholesky : public SparseCholesky {
       const OrderingType ordering_type);
 
   // SparseCholesky interface.
-  virtual ~FloatEigenSparseCholesky();
-  virtual LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
-                                                std::string* message) = 0;
-  virtual CompressedRowSparseMatrix::StorageType StorageType() const = 0;
-  virtual LinearSolverTerminationType Solve(const double* rhs,
-                                            double* solution,
-                                            std::string* message) = 0;
+  ~FloatEigenSparseCholesky() override;
+  LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
+                                        std::string* message) override = 0;
+  CompressedRowSparseMatrix::StorageType StorageType() const override = 0;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override = 0;
 };
 
 }  // namespace internal

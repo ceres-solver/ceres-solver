@@ -77,7 +77,7 @@ class GoodTestTerm : public CostFunction {
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,
-                double** jacobians) const {
+                double** jacobians) const override {
     if (!return_value_) {
       return false;
     }
@@ -136,7 +136,7 @@ class BadTestTerm : public CostFunction {
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,
-                double** jacobians) const {
+                double** jacobians) const override {
     // Compute a . x.
     double ax = 0;
     for (int j = 0; j < arity_; ++j) {

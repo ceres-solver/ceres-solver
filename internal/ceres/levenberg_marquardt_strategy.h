@@ -48,7 +48,7 @@ class CERES_EXPORT_INTERNAL LevenbergMarquardtStrategy
  public:
   explicit LevenbergMarquardtStrategy(
       const TrustRegionStrategy::Options& options);
-  virtual ~LevenbergMarquardtStrategy();
+  ~LevenbergMarquardtStrategy() override;
 
   // TrustRegionStrategy interface
   TrustRegionStrategy::Summary ComputeStep(

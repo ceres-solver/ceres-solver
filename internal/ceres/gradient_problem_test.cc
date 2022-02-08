@@ -40,7 +40,7 @@ class QuadraticTestFunction : public ceres::FirstOrderFunction {
   explicit QuadraticTestFunction(bool* flag_to_set_on_destruction = nullptr)
       : flag_to_set_on_destruction_(flag_to_set_on_destruction) {}
 
-  virtual ~QuadraticTestFunction() {
+  ~QuadraticTestFunction() override {
     if (flag_to_set_on_destruction_) {
       *flag_to_set_on_destruction_ = true;
     }
