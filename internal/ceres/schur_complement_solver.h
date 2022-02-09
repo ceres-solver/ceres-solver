@@ -115,7 +115,6 @@ class CERES_EXPORT_INTERNAL SchurComplementSolver
   SchurComplementSolver(const SchurComplementSolver&) = delete;
   void operator=(const SchurComplementSolver&) = delete;
 
-  ~SchurComplementSolver() override;
   LinearSolver::Summary SolveImpl(
       BlockSparseMatrix* A,
       const double* b,

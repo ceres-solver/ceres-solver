@@ -68,7 +68,6 @@ class BlockRandomAccessSparseMatrixAdapter : public LinearOperator {
       const BlockRandomAccessSparseMatrix& m)
       : m_(m) {}
 
-  ~BlockRandomAccessSparseMatrixAdapter() override = default;
 
   // y = y + Ax;
   void RightMultiply(const double* x, double* y) const final {
@@ -93,7 +92,6 @@ class BlockRandomAccessDiagonalMatrixAdapter : public LinearOperator {
       const BlockRandomAccessDiagonalMatrix& m)
       : m_(m) {}
 
-  ~BlockRandomAccessDiagonalMatrixAdapter() override = default;
 
   // y = y + Ax;
   void RightMultiply(const double* x, double* y) const final {
@@ -121,8 +119,6 @@ SchurComplementSolver::SchurComplementSolver(
   CHECK_GT(options.elimination_groups[0], 0);
   CHECK(options.context != nullptr);
 }
-
-SchurComplementSolver::~SchurComplementSolver() = default;
 
 LinearSolver::Summary SchurComplementSolver::SolveImpl(
     BlockSparseMatrix* A,

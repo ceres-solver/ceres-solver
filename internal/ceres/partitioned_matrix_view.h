@@ -62,7 +62,7 @@ namespace internal {
 // wrong output.
 class CERES_EXPORT_INTERNAL PartitionedMatrixViewBase {
  public:
-  virtual ~PartitionedMatrixViewBase() = default;
+  virtual ~PartitionedMatrixViewBase();
 
   // y += E'x
   virtual void LeftMultiplyE(const double* x, double* y) const = 0;
@@ -121,7 +121,6 @@ class PartitionedMatrixView : public PartitionedMatrixViewBase {
   // num_col_blocks_a column blocks.
   PartitionedMatrixView(const BlockSparseMatrix& matrix, int num_col_blocks_e);
 
-  ~PartitionedMatrixView() override;
   void LeftMultiplyE(const double* x, double* y) const final;
   void LeftMultiplyF(const double* x, double* y) const final;
   void RightMultiplyE(const double* x, double* y) const final;

@@ -80,10 +80,6 @@ PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
   CHECK_EQ(num_cols_e_ + num_cols_f_, matrix_.num_cols());
 }
 
-template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
-PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
-    ~PartitionedMatrixView() = default;
-
 // The next four methods don't seem to be particularly cache
 // friendly. This is an artifact of how the BlockStructure of the
 // input matrix is constructed. These methods will benefit from

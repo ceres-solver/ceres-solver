@@ -39,7 +39,6 @@ namespace internal {
 // Rosenbrock function; see http://en.wikipedia.org/wiki/Rosenbrock_function .
 class Rosenbrock : public ceres::FirstOrderFunction {
  public:
-  ~Rosenbrock() override = default;
 
   bool Evaluate(const double* parameters,
                 double* cost,
@@ -73,7 +72,6 @@ TEST(GradientProblemSolver, SolvesRosenbrockWithDefaultOptions) {
 }
 
 class QuadraticFunction : public ceres::FirstOrderFunction {
-  ~QuadraticFunction() override = default;
   bool Evaluate(const double* parameters,
                 double* cost,
                 double* gradient) const final {
@@ -90,7 +88,6 @@ class QuadraticFunction : public ceres::FirstOrderFunction {
 
 struct RememberingCallback : public IterationCallback {
   explicit RememberingCallback(double* x) : calls(0), x(x) {}
-  ~RememberingCallback() override = default;
   CallbackReturnType operator()(const IterationSummary& summary) final {
     x_values.push_back(*x);
     return SOLVER_CONTINUE;

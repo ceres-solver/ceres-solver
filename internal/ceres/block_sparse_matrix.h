@@ -68,8 +68,6 @@ class CERES_EXPORT_INTERNAL BlockSparseMatrix : public SparseMatrix {
   BlockSparseMatrix(const BlockSparseMatrix&) = delete;
   void operator=(const BlockSparseMatrix&) = delete;
 
-  ~BlockSparseMatrix() override;
-
   // Implementation of SparseMatrix interface.
   void SetZero() final;
   void RightMultiply(const double* x, double* y) const final;

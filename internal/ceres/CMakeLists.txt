@@ -57,9 +57,9 @@ set(CERES_INTERNAL_SRC
     block_sparse_matrix.cc
     block_structure.cc
     c_api.cc
+    callbacks.cc
     canonical_views_clustering.cc
     cgnr_solver.cc
-    callbacks.cc
     compressed_col_sparse_matrix_utils.cc
     compressed_row_jacobian_writer.cc
     compressed_row_sparse_matrix.cc
@@ -69,6 +69,7 @@ set(CERES_INTERNAL_SRC
     context_impl.cc
     coordinate_descent_minimizer.cc
     corrector.cc
+    cost_function.cc
     covariance.cc
     covariance_impl.cc
     cxsparse.cc
@@ -82,11 +83,13 @@ set(CERES_INTERNAL_SRC
     dynamic_compressed_row_jacobian_writer.cc
     dynamic_compressed_row_sparse_matrix.cc
     dynamic_sparse_normal_cholesky_solver.cc
-    evaluator.cc
     eigensparse.cc
+    evaluation_callback.cc
+    evaluator.cc
     file.cc
-    float_suitesparse.cc
+    first_order_function.cc
     float_cxsparse.cc
+    float_suitesparse.cc
     function_sample.cc
     gradient_checker.cc
     gradient_checking_cost_function.cc
@@ -95,6 +98,7 @@ set(CERES_INTERNAL_SRC
     implicit_schur_complement.cc
     inner_product_computer.cc
     is_close.cc
+    iteration_callback.cc
     iterative_refiner.cc
     iterative_schur_complement_solver.cc
     levenberg_marquardt_strategy.cc
@@ -131,16 +135,16 @@ set(CERES_INTERNAL_SRC
     single_linkage_clustering.cc
     solver.cc
     solver_utils.cc
-    sparse_matrix.cc
     sparse_cholesky.cc
+    sparse_matrix.cc
     sparse_normal_cholesky_solver.cc
-    subset_preconditioner.cc
     stringprintf.cc
+    subset_preconditioner.cc
     suitesparse.cc
     thread_token_provider.cc
     triplet_sparse_matrix.cc
-    trust_region_preprocessor.cc
     trust_region_minimizer.cc
+    trust_region_preprocessor.cc
     trust_region_step_evaluator.cc
     trust_region_strategy.cc
     types.cc

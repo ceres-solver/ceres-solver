@@ -58,7 +58,6 @@ class DynamicSparseNormalCholeskySolver
  public:
   explicit DynamicSparseNormalCholeskySolver(
       const LinearSolver::Options& options);
-  ~DynamicSparseNormalCholeskySolver() override = default;
 
  private:
   LinearSolver::Summary SolveImpl(CompressedRowSparseMatrix* A,

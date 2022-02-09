@@ -54,7 +54,7 @@ class CERES_EXPORT_INTERNAL DenseQR {
  public:
   static std::unique_ptr<DenseQR> Create(const LinearSolver::Options& options);
 
-  virtual ~DenseQR() = default;
+  virtual ~DenseQR();
 
   // Computes the QR factorization of the given matrix.
   //
@@ -98,7 +98,6 @@ class CERES_EXPORT_INTERNAL DenseQR {
 
 class CERES_EXPORT_INTERNAL EigenDenseQR : public DenseQR {
  public:
-  ~EigenDenseQR() override = default;
 
   LinearSolverTerminationType Factorize(int num_rows,
                                         int num_cols,
@@ -116,7 +115,6 @@ class CERES_EXPORT_INTERNAL EigenDenseQR : public DenseQR {
 #ifndef CERES_NO_LAPACK
 class CERES_EXPORT_INTERNAL LAPACKDenseQR : public DenseQR {
  public:
-  ~LAPACKDenseQR() override = default;
 
   LinearSolverTerminationType Factorize(int num_rows,
                                         int num_cols,

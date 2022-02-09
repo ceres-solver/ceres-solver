@@ -48,7 +48,6 @@ template <typename Solver>
 class EigenSparseCholeskyTemplate : public SparseCholesky {
  public:
   EigenSparseCholeskyTemplate() : analyzed_(false) {}
-  ~EigenSparseCholeskyTemplate() override = default;
   CompressedRowSparseMatrix::StorageType StorageType() const final {
     return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
   }

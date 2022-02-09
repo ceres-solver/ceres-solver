@@ -50,7 +50,6 @@ class GradientProblemEvaluator : public Evaluator {
   explicit GradientProblemEvaluator(const GradientProblem& problem)
       : problem_(problem) {}
 
-  ~GradientProblemEvaluator() override = default;
 
   std::unique_ptr<SparseMatrix> CreateJacobian() const final { return nullptr; }
 
