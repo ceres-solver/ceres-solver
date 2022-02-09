@@ -537,7 +537,7 @@ TEST(SphereManifold, NormalFunctionTest) {
 }
 
 TEST(SphereManifold, NormalFunctionTestDynamic) {
-  SphereManifold<Eigen::Dynamic> manifold(5);
+  SphereManifold<ceres::DYNAMIC> manifold(5);
   EXPECT_EQ(manifold.AmbientSize(), 5);
   EXPECT_EQ(manifold.TangentSize(), 4);
 
@@ -553,6 +553,171 @@ TEST(SphereManifold, NormalFunctionTestDynamic) {
 
     // X and y need to have the same length.
     y *= x.norm() / y.norm();
+
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+  }
+}
+
+TEST(LineManifold, ZeroTest3D) {
+  using Vec4 = Eigen::Matrix<double, 4, 1>;
+  using Vec6 = Eigen::Matrix<double, 6, 1>;
+
+  const Vec6 x = Vec6::Unit(5);
+  const Vec4 delta = Vec4::Zero();
+  Vec6 y = Vec6::Zero();
+
+  LineManifold<3> manifold;
+  EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
+  EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+}
+
+TEST(LineManifold, ZeroTest4D) {
+  using Vec6 = Eigen::Matrix<double, 6, 1>;
+  using Vec8 = Eigen::Matrix<double, 8, 1>;
+
+  const Vec8 x = Vec8::Unit(7);
+  const Vec6 delta = Vec6::Zero();
+  Vec8 y = Vec8::Zero();
+
+  LineManifold<4> manifold;
+  EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
+  EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+}
+
+TEST(LineManifold, ZeroOriginPointTest3D) {
+  using Vec4 = Eigen::Matrix<double, 4, 1>;
+  using Vec6 = Eigen::Matrix<double, 6, 1>;
+
+  const Vec6 x = Vec6::Unit(5);
+  Vec4 delta;
+  delta << 0.0, 0.0, 1.0, 2.0;
+  Vec6 y = Vec6::Zero();
+
+  LineManifold<3> manifold;
+  EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
+  EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+}
+
+TEST(LineManifold, ZeroOriginPointTest4D) {
+  using Vec6 = Eigen::Matrix<double, 6, 1>;
+  using Vec8 = Eigen::Matrix<double, 8, 1>;
+
+  const Vec8 x = Vec8::Unit(7);
+  Vec6 delta;
+  delta << 0.0, 0.0, 0.0, 1.0, 2.0, 3.0;
+  Vec8 y = Vec8::Zero();
+
+  LineManifold<4> manifold;
+  EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
+  EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+}
+
+TEST(LineManifold, ZeroDirTest3D) {
+  using Vec4 = Eigen::Matrix<double, 4, 1>;
+  using Vec6 = Eigen::Matrix<double, 6, 1>;
+
+  Vec6 x = Vec6::Unit(5);
+  Vec4 delta;
+  delta << 3.0, 2.0, 0.0, 0.0;
+  Vec6 y = Vec6::Zero();
+
+  LineManifold<3> manifold;
+  EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
+  EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+}
+
+TEST(LineManifold, ZeroDirTest4D) {
+  using Vec6 = Eigen::Matrix<double, 6, 1>;
+  using Vec8 = Eigen::Matrix<double, 8, 1>;
+
+  Vec8 x = Vec8::Unit(7);
+  Vec6 delta;
+  delta << 3.0, 2.0, 1.0, 0.0, 0.0, 0.0;
+  Vec8 y = Vec8::Zero();
+
+  LineManifold<4> manifold;
+  EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
+  EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+}
+
+TEST(LineManifold, Plus) {
+  using Vec2 = Eigen::Matrix<double, 2, 1>;
+  using Vec3 = Eigen::Matrix<double, 3, 1>;
+  using Vec4 = Eigen::Matrix<double, 4, 1>;
+  using Vec6 = Eigen::Matrix<double, 6, 1>;
+
+  Vec6 x = Vec6::Unit(5);
+  LineManifold<3> manifold;
+
+  {
+    Vec4 delta{0.0, 4.0, M_PI, 0.0};
+    Vec6 y = Vec6::Random();
+    EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
+    Vec6 gtY;
+    gtY << 2.0 * Vec3::UnitY(), Vec3::UnitX();
+    EXPECT_LT((y - gtY).norm(), kTolerance);
+  }
+
+  {
+    Vec4 delta{6.0, 0.0, 0.0, M_PI};
+    Vec6 y = Vec6::Zero();
+    EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
+    Vec6 gtY;
+    gtY << 3.0 * Vec3::UnitX(), Vec3::UnitY();
+    EXPECT_LT((y - gtY).norm(), kTolerance);
+  }
+
+  {
+    Vec4 delta;
+    delta << Vec2(2.0, 4.0), Vec2(1, 1).normalized() * M_PI;
+    Vec6 y = Vec6::Zero();
+    EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
+    Vec6 gtY;
+    gtY << Vec3(1.0, 2.0, 0.0),
+        Vec3(std::sqrt(2.0) / 2.0, std::sqrt(2.0) / 2.0, 0.0);
+    EXPECT_LT((y - gtY).norm(), kTolerance);
+  }
+}
+
+TEST(LineManifold, NormalFunctionTest) {
+  LineManifold<3> manifold;
+  EXPECT_EQ(manifold.AmbientSize(), 6);
+  EXPECT_EQ(manifold.TangentSize(), 4);
+
+  Vector zero_tangent = Vector::Zero(manifold.TangentSize());
+  for (int trial = 0; trial < kNumTrials; ++trial) {
+    Vector x = Vector::Random(manifold.AmbientSize());
+    Vector y = Vector::Random(manifold.AmbientSize());
+    Vector delta = Vector::Random(manifold.TangentSize());
+
+    if (x.tail<3>().norm() == 0.0) {
+      continue;
+    }
+
+    x.tail<3>().normalize();
+    manifold.Plus(x.data(), delta.data(), y.data());
+
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+  }
+}
+
+TEST(LineManifold, NormalFunctionTestDynamic) {
+  LineManifold<ceres::DYNAMIC> manifold(3);
+  EXPECT_EQ(manifold.AmbientSize(), 6);
+  EXPECT_EQ(manifold.TangentSize(), 4);
+
+  Vector zero_tangent = Vector::Zero(manifold.TangentSize());
+  for (int trial = 0; trial < kNumTrials; ++trial) {
+    Vector x = Vector::Random(manifold.AmbientSize());
+    Vector y = Vector::Random(manifold.AmbientSize());
+    Vector delta = Vector::Random(manifold.TangentSize());
+
+    if (x.tail<3>().norm() == 0.0) {
+      continue;
+    }
+
+    x.tail<3>().normalize();
+    manifold.Plus(x.data(), delta.data(), y.data());
 
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
