@@ -92,20 +92,19 @@ TEST_P(DenseCholeskyTest, FactorAndSolve) {
   }
 }
 
-INSTANTIATE_TEST_SUITE_P(
-    _,
-    DenseCholeskyTest,
-    ::testing::Values(
-        EIGEN,
+INSTANTIATE_TEST_SUITE_P(_,
+                         DenseCholeskyTest,
+                         ::testing::Values(EIGEN
 #ifndef CERES_NO_LAPACK
-        LAPACK,
+                                           ,
+                                           LAPACK
 #endif
 #ifndef CERES_NO_CUDA
-        CUDA
+                                           ,
+                                           CUDA
 #endif
-    ),
-    ParamInfoToString);
-
+                                           ),
+                         ParamInfoToString);
 
 }  // namespace internal
 }  // namespace ceres
