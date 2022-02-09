@@ -110,7 +110,6 @@ class AutoDiffFirstOrderFunction : public FirstOrderFunction {
     static_assert(kNumParameters > 0, "kNumParameters must be positive");
   }
 
-  ~AutoDiffFirstOrderFunction() override = default;
 
   bool Evaluate(const double* const parameters,
                 double* cost,

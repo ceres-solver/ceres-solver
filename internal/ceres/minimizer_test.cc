@@ -39,7 +39,6 @@ namespace internal {
 
 class FakeIterationCallback : public IterationCallback {
  public:
-  ~FakeIterationCallback() override = default;
   CallbackReturnType operator()(const IterationSummary& summary) final {
     return SOLVER_CONTINUE;
   }
@@ -62,7 +61,6 @@ TEST(Minimizer, InitializationCopiesCallbacks) {
 
 class AbortingIterationCallback : public IterationCallback {
  public:
-  ~AbortingIterationCallback() override = default;
   CallbackReturnType operator()(const IterationSummary& summary) final {
     return SOLVER_ABORT;
   }
@@ -80,7 +78,6 @@ TEST(Minimizer, UserAbortUpdatesSummaryMessage) {
 
 class SucceedingIterationCallback : public IterationCallback {
  public:
-  ~SucceedingIterationCallback() override = default;
   CallbackReturnType operator()(const IterationSummary& summary) final {
     return SOLVER_TERMINATE_SUCCESSFULLY;
   }

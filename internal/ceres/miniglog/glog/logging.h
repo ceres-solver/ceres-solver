@@ -294,7 +294,6 @@ class CERES_EXPORT MessageLogger {
 // is not used" and "statement has no effect".
 class CERES_EXPORT LoggerVoidify {
  public:
-  LoggerVoidify() = default;
   // This has to be an operator with a precedence lower than << but
   // higher than ?:
   void operator&(const std::ostream& s) {}

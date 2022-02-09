@@ -148,7 +148,7 @@ namespace ceres {
 
 class CERES_EXPORT Manifold {
  public:
-  virtual ~Manifold() = default;
+  virtual ~Manifold();
 
   // Dimension of the ambient space in which the manifold is embedded.
   virtual int AmbientSize() const = 0;
@@ -231,7 +231,6 @@ class CERES_EXPORT Manifold {
 class CERES_EXPORT EuclideanManifold : public Manifold {
  public:
   EuclideanManifold(int size);
-  ~EuclideanManifold() override = default;
   int AmbientSize() const override;
   int TangentSize() const override;
   bool Plus(const double* x,
@@ -255,7 +254,6 @@ class CERES_EXPORT EuclideanManifold : public Manifold {
 class CERES_EXPORT SubsetManifold : public Manifold {
  public:
   SubsetManifold(int size, const std::vector<int>& constant_parameters);
-  ~SubsetManifold() override = default;
   int AmbientSize() const override;
   int TangentSize() const override;
 
@@ -293,7 +291,6 @@ class CERES_EXPORT ProductManifold : public Manifold {
  public:
   ProductManifold(const ProductManifold&) = delete;
   ProductManifold& operator=(const ProductManifold&) = delete;
-  ~ProductManifold() override = default;
 
   // NOTE: The constructor takes ownership of the input
   // manifolds.
@@ -368,8 +365,6 @@ class CERES_EXPORT ProductManifold : public Manifold {
 // and to_delta( [q0; u_{3x1}] ) = u / |u| * atan2(|u|, q0)
 class CERES_EXPORT QuaternionManifold : public Manifold {
  public:
-  QuaternionManifold() = default;
-  ~QuaternionManifold() override = default;
   int AmbientSize() const override { return 4; }
   int TangentSize() const override { return 3; }
 
@@ -394,8 +389,6 @@ class CERES_EXPORT QuaternionManifold : public Manifold {
 // difference is important and requires a different manifold.
 class CERES_EXPORT EigenQuaternionManifold : public Manifold {
  public:
-  EigenQuaternionManifold() = default;
-  ~EigenQuaternionManifold() override = default;
   int AmbientSize() const override { return 4; }
   int TangentSize() const override { return 3; }
 

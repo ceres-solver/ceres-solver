@@ -31,6 +31,8 @@
 #ifndef CERES_PUBLIC_CONTEXT_H_
 #define CERES_PUBLIC_CONTEXT_H_
 
+#include "ceres/internal/port.h"
+
 namespace ceres {
 
 // A global context for processing data in Ceres.  This provides a mechanism to
@@ -39,13 +41,13 @@ namespace ceres {
 // Problems, either serially or in parallel. When using it with multiple
 // Problems at the same time, they may end up contending for resources
 // (e.g. threads) managed by the Context.
-class Context {
+class CERES_EXPORT_INTERNAL Context {
  public:
-  Context() = default;
+  Context();
   Context(const Context&) = delete;
   void operator=(const Context&) = delete;
 
-  virtual ~Context() = default;
+  virtual ~Context();
 
   // Creates a context object and the caller takes ownership.
   static Context* Create();

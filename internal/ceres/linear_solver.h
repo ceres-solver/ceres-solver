@@ -301,7 +301,6 @@ class CERES_EXPORT_INTERNAL LinearSolver {
 template <typename MatrixType>
 class TypedLinearSolver : public LinearSolver {
  public:
-  ~TypedLinearSolver() override = default;
   LinearSolver::Summary Solve(
       LinearOperator* A,
       const double* b,

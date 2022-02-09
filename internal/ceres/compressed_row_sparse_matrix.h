@@ -31,6 +31,7 @@
 #ifndef CERES_INTERNAL_COMPRESSED_ROW_SPARSE_MATRIX_H_
 #define CERES_INTERNAL_COMPRESSED_ROW_SPARSE_MATRIX_H_
 
+#include <memory>
 #include <vector>
 
 #include "ceres/internal/port.h"
