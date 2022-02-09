@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b78dc49_fda9985a",
+        "filename": "include/ceres/internal/line_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T21:22:11Z",
+      "side": 1,
+      "message": "same as the SphereManifold",
+      "range": {
+        "startLine": 76,
+        "startChar": 65,
+        "endLine": 76,
+        "endChar": 76
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7061169b_dcca6ba4",
+        "filename": "include/ceres/internal/line_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T21:22:11Z",
+      "side": 1,
+      "message": "the two jacobians are the same?",
+      "range": {
+        "startLine": 159,
+        "startChar": 15,
+        "endLine": 159,
+        "endChar": 25
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae0f0b67_d0f7cbb5",
+        "filename": "include/ceres/internal/line_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T21:22:11Z",
+      "side": 1,
+      "message": "same comment as above.",
+      "range": {
+        "startLine": 213,
+        "startChar": 15,
+        "endLine": 213,
+        "endChar": 25
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "409c635f_1d1c37bc",
+        "filename": "include/ceres/internal/sphere_manifold_functions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T21:22:11Z",
+      "side": 1,
+      "message": "add documentation about the expected types and preconditions here and below.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aef90ce5_280e8c27",
+        "filename": "include/ceres/internal/sphere_manifold_functions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T21:22:11Z",
+      "side": 1,
+      "message": "drop internal here and elsewhere since this function is in the internal namespace already.",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 58,
+        "endChar": 37
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "877e1951_ca4ea9af",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T21:22:11Z",
+      "side": 1,
+      "message": "blank before and after",
+      "range": {
+        "startLine": 494,
+        "startChar": 6,
+        "endLine": 494,
+        "endChar": 18
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91fc120b_99ac8109",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T21:22:11Z",
+      "side": 1,
+      "message": "blank before",
+      "range": {
+        "startLine": 498,
+        "startChar": 26,
+        "endLine": 498,
+        "endChar": 33
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b278fd9_5f03cbe7",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T21:22:11Z",
+      "side": 1,
+      "message": "move this before the comment about static and dynamic size.",
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
