@@ -486,8 +486,56 @@ class SphereManifold : public Manifold {
   const int size_{};
 };
 
+// This provides a manifold for lines, where the line is
+// over-parameterized by an origin point and a direction vector. So the
+// parameter vector size needs to be two times the ambient space dimension,
+// where the first half is interpreted as the origin point and the second half
+// as the direction.
+//
+// The plus operator for the line direction is the same as for the
+// SphereManifold. The update of the origin point is
+// perpendicular to the line direction before the update.
+//
+// Currently, the ambient space dimension must be known at compile time.
+//
+// This manifold is a special case of the affine Grassmannian
+// manifold (see https://en.wikipedia.org/wiki/Affine_Grassmannian_(manifold))
+// for the case Graff_1(R^n).
+template <int AmbientSpaceDimension>
+class LineManifold : public Manifold {
+ public:
+  static_assert(AmbientSpaceDimension >= 2,
+                "The ambient space must be at least 2");
+
+  int AmbientSize() const override { return 2 * AmbientSpaceDimension; }
+  int TangentSize() const override { return 2 * (AmbientSpaceDimension - 1); }
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
+  bool PlusJacobian(const double* x, double* jacobian) const override;
+  bool Minus(const double* y,
+             const double* x,
+             double* y_minus_x) const override;
+  bool MinusJacobian(const double* x, double* jacobian) const override;
+
+ private:
+  static constexpr int TangentSpaceDimension = AmbientSpaceDimension - 1;
+
+  using AmbientVector = Eigen::Matrix<double, AmbientSpaceDimension, 1>;
+  using TangentVector = Eigen::Matrix<double, TangentSpaceDimension, 1>;
+  using MatrixPlusJacobian = Eigen::Matrix<double,
+                                           2 * AmbientSpaceDimension,
+                                           2 * TangentSpaceDimension,
+                                           Eigen::RowMajor>;
+  using MatrixMinusJacobian = Eigen::Matrix<double,
+                                            2 * TangentSpaceDimension,
+                                            2 * AmbientSpaceDimension,
+                                            Eigen::RowMajor>;
+};
+
 }  // namespace ceres
 
+#include "internal/line_manifold.h"
 #include "internal/sphere_manifold.h"
 
 // clang-format off

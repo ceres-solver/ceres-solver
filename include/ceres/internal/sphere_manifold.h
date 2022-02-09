@@ -115,7 +115,7 @@ bool SphereManifold<AmbientSpaceDimension>::PlusJacobian(
   // Householder matrix (H = I - beta * v * v').
   for (int i = 0; i < size_ - 1; ++i) {
     jacobian.col(i) = -0.5 * beta * v(i) * v;
-    jacobian.col(i)(i) += 0.5;
+    jacobian(i, i) += 0.5;
   }
   jacobian *= x.norm();
 
@@ -177,7 +177,7 @@ bool SphereManifold<AmbientSpaceDimension>::MinusJacobian(
   // Householder matrix (H = I - beta * v * v').
   for (int i = 0; i < size_ - 1; ++i) {
     jacobian.row(i) = -2.0 * beta * v(i) * v;
-    jacobian.row(i)(i) += 2.0;
+    jacobian(i, i) += 2.0;
   }
   jacobian /= x.norm();
 
