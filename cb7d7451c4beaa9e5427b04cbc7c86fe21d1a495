@@ -231,6 +231,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6f5e37de_bb2e5031",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-09T10:33:01Z",
+      "side": 1,
+      "message": "Sorry, should be inverted:\n```\nif (!pp-\u003ereduced_program)\n```",
+      "parentUuid": "fd3f5144_a3757142",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9df24c40_24e9fdfe",
         "filename": "internal/ceres/visibility_based_preconditioner_test.cc",
         "patchSetId": 11
