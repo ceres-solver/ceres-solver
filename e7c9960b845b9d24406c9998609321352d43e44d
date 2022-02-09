@@ -34,6 +34,24 @@
       "parentUuid": "b08aef20_8a5ce1b1",
       "revId": "e7c9960b845b9d24406c9998609321352d43e44d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f599acea_d94c2953",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T00:32:39Z",
+      "side": 1,
+      "message": "thanks tomorrow is totally fine, we have not had a clang-tidy config before .. because we did not have clang-tidy integrated into the build system in cmake. But I would be very glad to have it.",
+      "parentUuid": "7916aa56_aa1dbf4a",
+      "revId": "e7c9960b845b9d24406c9998609321352d43e44d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
