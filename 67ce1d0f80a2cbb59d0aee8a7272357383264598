@@ -70,6 +70,30 @@
       },
       "revId": "67ce1d0f80a2cbb59d0aee8a7272357383264598",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "382dab7f_ecac6844",
+        "filename": "include/ceres/internal/line_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-09T18:42:01Z",
+      "side": 1,
+      "message": "Sure, this can also be done for the minus operator (sorry for not mentioning it).",
+      "parentUuid": "2dcbad8e_b8d87525",
+      "range": {
+        "startLine": 99,
+        "startChar": 12,
+        "endLine": 99,
+        "endChar": 36
+      },
+      "revId": "67ce1d0f80a2cbb59d0aee8a7272357383264598",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
