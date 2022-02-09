@@ -16,6 +16,24 @@
       "message": "Sergiu, I am happy to have you review this one and merge it in along with your other cleanups too.",
       "revId": "e7c9960b845b9d24406c9998609321352d43e44d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7916aa56_aa1dbf4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-09T00:15:15Z",
+      "side": 1,
+      "message": "Thanks! I out for today, but will review the CL in the morning.\n\nWhile not necessary for this CL, it would be nice to have a clang-tidy config with predefined checks to be consistent also in the future (similar to .clang-format).",
+      "parentUuid": "b08aef20_8a5ce1b1",
+      "revId": "e7c9960b845b9d24406c9998609321352d43e44d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
