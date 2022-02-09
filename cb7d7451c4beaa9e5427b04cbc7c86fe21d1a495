@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "546b40b4_3e86cbb7",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "No real reason except history. This is one of the oldest classes in the codebase and it even predates the use of unique_ptr at google. I think it would be a good idea to come back and go over all these unique_ptr\u003cdouble[]\u003e instances in the code base and replace them with std::vector. For this already large CL I wanted to keep the changes mechanical.",
+      "parentUuid": "66e02a13_de9f46ab",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 3
+      },
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b7e81ed3_ded51e06",
@@ -54,6 +78,24 @@
       "writtenOn": "2022-02-09T10:08:51Z",
       "side": 1,
       "message": "Isn\u0027t it better to mark the class as final? Then, the trivial destructor can be dropped as the compiler can generate one. In general, it is a good idea to follow rule of zero/three/five (https://en.cppreference.com/w/cpp/language/rule_of_three).",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5471b306_f5d7f2ed",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "good point, I changed it back to override \u003d default for now. And then lets come back and look at using final for methods and classes as a whole in a separate pass.",
+      "parentUuid": "b7e81ed3_ded51e06",
       "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -77,6 +119,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "10715fd1_2a377297",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "how about now?",
+      "parentUuid": "084d2374_0e9a18af",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "108def3f_77023143",
         "filename": "internal/ceres/casts.h",
         "patchSetId": 11
@@ -88,6 +148,24 @@
       "writtenOn": "2022-02-09T04:14:17Z",
       "side": 1,
       "message": "Include no longer needed unless you want to use \"std::nullptr\", which we aren\u0027t.",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40db394b_ae62d7ea",
+        "filename": "internal/ceres/casts.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "108def3f_77023143",
       "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -146,6 +224,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d1462432_3e147031",
+        "filename": "internal/ceres/partitioned_matrix_view_template.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34591b2c_f7259969",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "808a2e9f_de21330e",
         "filename": "internal/ceres/reorder_program.cc",
         "patchSetId": 11
@@ -178,6 +274,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffdf2688_1ab32937",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b3f4339_9a24e5cf",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "674bed61_2710856b",
@@ -191,6 +305,24 @@
       "writtenOn": "2022-02-09T10:08:51Z",
       "side": 1,
       "message": "`std::unique_ptr` pointer validity checks can be simplified as\n```\nif (pp.reduced_program) { /*...*/ }\n```",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98ba21ad_21b97482",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "I think currently we are checking explicitly against nullptr everywhere in the codebase.",
+      "parentUuid": "674bed61_2710856b",
       "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -212,6 +344,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42af4928_2e889a77",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3ea3ff5e_c2c6604b",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13b8dced_c91b0033",
@@ -225,6 +375,24 @@
       "writtenOn": "2022-02-09T10:08:51Z",
       "side": 1,
       "message": "```\nif (pp.linear_solver)\n```",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f717ec7_973585c1",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "13b8dced_c91b0033",
       "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -264,6 +432,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9df3ce7_d0b96fed",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6f5e37de_bb2e5031",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9df24c40_24e9fdfe",
@@ -277,6 +463,24 @@
       "writtenOn": "2022-02-09T04:14:17Z",
       "side": 1,
       "message": "Nit: indentation. Note that the CHECK is probably still wanted?",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f981470b_65821a34",
+        "filename": "internal/ceres/visibility_based_preconditioner_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "I will come back an deal with this, this whole test is a mess.",
+      "parentUuid": "9df24c40_24e9fdfe",
       "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -298,6 +502,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91526111_f664d21e",
+        "filename": "internal/ceres/visibility_based_preconditioner_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f6766944_bde102b8",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09813bba_e001ce46",
@@ -315,6 +537,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bbdaf9e_a88335cd",
+        "filename": "internal/ceres/visibility_based_preconditioner_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "09813bba_e001ce46",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c216037e_3a80b261",
@@ -328,6 +568,24 @@
       "writtenOn": "2022-02-09T04:14:17Z",
       "side": 1,
       "message": "Indentation is wrong (2 more spaces)",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b38a6da8_5e6cec08",
+        "filename": "internal/ceres/visibility_based_preconditioner_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T14:06:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c216037e_3a80b261",
       "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
