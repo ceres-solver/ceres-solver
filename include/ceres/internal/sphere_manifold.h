@@ -29,7 +29,11 @@
 // Author: vitus@google.com (Mike Vitus)
 //         jodebo_beck@gmx.de (Johannes Beck)
 
+#ifndef CERES_PUBLIC_INTERNAL_SPHERE_MANIFOLD_H_
+#define CERES_PUBLIC_INTERNAL_SPHERE_MANIFOLD_H_
+
 #include "ceres/internal/householder_vector.h"
+#include "ceres/internal/sphere_manifold_functions.h"
 
 namespace ceres {
 
@@ -69,16 +73,6 @@ bool SphereManifold<AmbientSpaceDimension>::Plus(
     return true;
   }
 
-  // Map the delta from the minimum representation to the over parameterized
-  // homogeneous vector. See B.2 p.25 equation (106) - (107) for more details.
-  const double norm_delta_div_2 = 0.5 * norm_delta;
-  const double sin_delta_by_delta =
-      std::sin(norm_delta_div_2) / norm_delta_div_2;
-
-  AmbientVector y(size_);
-  y.head(size_ - 1) = 0.5 * sin_delta_by_delta * delta;
-  y(size_ - 1) = std::cos(norm_delta_div_2);
-
   AmbientVector v(size_);
   double beta;
 
@@ -89,8 +83,8 @@ bool SphereManifold<AmbientSpaceDimension>::Plus(
                                      double,
                                      AmbientSpaceDimension>(x, &v, &beta);
 
-  // Apply the delta update to remain on the sphere.
-  x_plus_delta = x.norm() * internal::ApplyHouseholderVector(y, v, beta);
+  internal::ComputeSphereManifoldPlus(
+      v, beta, x, delta, norm_delta, &x_plus_delta);
 
   return true;
 }
@@ -100,24 +94,7 @@ bool SphereManifold<AmbientSpaceDimension>::PlusJacobian(
     const double* x_ptr, double* jacobian_ptr) const {
   Eigen::Map<const AmbientVector> x(x_ptr, size_);
   Eigen::Map<MatrixPlusJacobian> jacobian(jacobian_ptr, size_, size_ - 1);
-
-  AmbientVector v(size_);
-  double beta;
-
-  // NOTE: The explicit template arguments are needed here because
-  // ComputeHouseholderVector is templated and some versions of MSVC
-  // have trouble deducing the type of v automatically.
-  internal::ComputeHouseholderVector<Eigen::Map<const AmbientVector>,
-                                     double,
-                                     AmbientSpaceDimension>(x, &v, &beta);
-
-  // The Jacobian is equal to J = 0.5 * H.leftCols(size_ - 1) where H is the
-  // Householder matrix (H = I - beta * v * v').
-  for (int i = 0; i < size_ - 1; ++i) {
-    jacobian.col(i) = -0.5 * beta * v(i) * v;
-    jacobian.col(i)(i) += 0.5;
-  }
-  jacobian *= x.norm();
+  internal::ComputeSphereManifoldPlusJacobian(x, &jacobian);
 
   return true;
 }
@@ -140,20 +117,7 @@ bool SphereManifold<AmbientSpaceDimension>::Minus(const double* y_ptr,
   internal::ComputeHouseholderVector<Eigen::Map<const AmbientVector>,
                                      double,
                                      AmbientSpaceDimension>(x, &v, &beta);
-
-  const AmbientVector hy =
-      internal::ApplyHouseholderVector(y, v, beta) / x.norm();
-
-  // Calculate y - x. See B.2 p.25 equation (108).
-  double y_last = hy[size_ - 1];
-  double hy_norm = hy.head(size_ - 1).norm();
-  if (hy_norm == 0.0) {
-    y_minus_x.setZero();
-  } else {
-    y_minus_x =
-        2.0 * std::atan2(hy_norm, y_last) / hy_norm * hy.head(size_ - 1);
-  }
-
+  internal::ComputeSphereManifoldMinus(v, beta, x, y, &y_minus_x);
   return true;
 }
 
@@ -163,24 +127,9 @@ bool SphereManifold<AmbientSpaceDimension>::MinusJacobian(
   Eigen::Map<const AmbientVector> x(x_ptr, size_);
   Eigen::Map<MatrixMinusJacobian> jacobian(jacobian_ptr, size_ - 1, size_);
 
-  AmbientVector v(size_);
-  double beta;
-
-  // NOTE: The explicit template arguments are needed here because
-  // ComputeHouseholderVector is templated and some versions of MSVC
-  // have trouble deducing the type of v automatically.
-  internal::ComputeHouseholderVector<Eigen::Map<const AmbientVector>,
-                                     double,
-                                     AmbientSpaceDimension>(x, &v, &beta);
-
-  // The Jacobian is equal to J = 2.0 * H.leftCols(size_ - 1) where H is the
-  // Householder matrix (H = I - beta * v * v').
-  for (int i = 0; i < size_ - 1; ++i) {
-    jacobian.row(i) = -2.0 * beta * v(i) * v;
-    jacobian.row(i)(i) += 2.0;
-  }
-  jacobian /= x.norm();
-
+  internal::ComputeSphereManifoldMinusJacobian(x, &jacobian);
   return true;
 }
 }  // namespace ceres
+
+#endif
