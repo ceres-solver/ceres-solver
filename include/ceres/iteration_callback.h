@@ -164,8 +164,6 @@ struct CERES_EXPORT IterationSummary {
 //     explicit LoggingCallback(bool log_to_stdout)
 //         : log_to_stdout_(log_to_stdout) {}
 //
-//     ~LoggingCallback() {}
-//
 //     CallbackReturnType operator()(const IterationSummary& summary) {
 //       const char* kReportRowFormat =
 //           "% 4d: f:% 8e d:% 3.2e g:% 3.2e h:% 3.2e "
@@ -194,7 +192,7 @@ struct CERES_EXPORT IterationSummary {
 //
 class CERES_EXPORT IterationCallback {
  public:
-  virtual ~IterationCallback() = default;
+  virtual ~IterationCallback();
   virtual CallbackReturnType operator()(const IterationSummary& summary) = 0;
 };
 

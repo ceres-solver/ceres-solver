@@ -78,7 +78,6 @@ struct QuadraticCostFunctor {
 
 struct RememberingCallback : public IterationCallback {
   explicit RememberingCallback(double* x) : calls(0), x(x) {}
-  ~RememberingCallback() override = default;
   CallbackReturnType operator()(const IterationSummary& summary) final {
     x_values.push_back(*x);
     return SOLVER_CONTINUE;
@@ -89,7 +88,6 @@ struct RememberingCallback : public IterationCallback {
 };
 
 struct NoOpEvaluationCallback : EvaluationCallback {
-  ~NoOpEvaluationCallback() override = default;
   void PrepareForEvaluation(bool evaluate_jacobians,
                             bool new_evaluation_point) final {
     (void)evaluate_jacobians;

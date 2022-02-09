@@ -137,6 +137,8 @@ inline void QuaternionMinusJacobianImpl(const double* x, double* jacobian_ptr) {
 
 }  // namespace
 
+Manifold::~Manifold() = default;
+
 bool Manifold::RightMultiplyByPlusJacobian(const double* x,
                                            const int num_rows,
                                            const double* ambient_matrix,

@@ -48,7 +48,6 @@ typedef std::unordered_set<int> IntSet;
 
 class CanonicalViewsClustering {
  public:
-  CanonicalViewsClustering() = default;
 
   // Compute the canonical views clustering of the vertices of the
   // graph. centers will contain the vertices that are the identified

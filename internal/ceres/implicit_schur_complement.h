@@ -100,7 +100,6 @@ class CERES_EXPORT_INTERNAL ImplicitSchurComplement : public LinearOperator {
   // TODO(sameeragarwal): Get rid of the two bools below and replace
   // them with enums.
   explicit ImplicitSchurComplement(const LinearSolver::Options& options);
-  ~ImplicitSchurComplement() override;
 
   // Initialize the Schur complement for a linear least squares
   // problem of the form

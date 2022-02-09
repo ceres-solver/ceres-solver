@@ -39,6 +39,8 @@
 
 namespace ceres {
 
+LossFunction::~LossFunction() = default;
+
 void TrivialLoss::Evaluate(double s, double rho[3]) const {
   rho[0] = s;
   rho[1] = 1.0;

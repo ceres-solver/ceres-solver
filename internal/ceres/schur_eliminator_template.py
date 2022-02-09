@@ -130,6 +130,8 @@ FACTORY_FILE_HEADER = """
 namespace ceres {
 namespace internal {
 
+SchurEliminatorBase::~SchurEliminatorBase() = default;
+
 std::unique_ptr<SchurEliminatorBase> SchurEliminatorBase::Create(
     const LinearSolver::Options& options) {
 #ifndef CERES_RESTRICT_SCHUR_SPECIALIZATION

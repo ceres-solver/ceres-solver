@@ -59,7 +59,7 @@ class CERES_EXPORT_INTERNAL DenseCholesky {
   static std::unique_ptr<DenseCholesky> Create(
       const LinearSolver::Options& options);
 
-  virtual ~DenseCholesky() = default;
+  virtual ~DenseCholesky();
 
   // Computes the Cholesky factorization of the given matrix.
   //
@@ -102,7 +102,6 @@ class CERES_EXPORT_INTERNAL DenseCholesky {
 
 class CERES_EXPORT_INTERNAL EigenDenseCholesky : public DenseCholesky {
  public:
-  ~EigenDenseCholesky() override = default;
 
   LinearSolverTerminationType Factorize(int num_cols,
                                         double* lhs,
@@ -119,7 +118,6 @@ class CERES_EXPORT_INTERNAL EigenDenseCholesky : public DenseCholesky {
 #ifndef CERES_NO_LAPACK
 class CERES_EXPORT_INTERNAL LAPACKDenseCholesky : public DenseCholesky {
  public:
-  ~LAPACKDenseCholesky() override = default;
 
   LinearSolverTerminationType Factorize(int num_cols,
                                         double* lhs,

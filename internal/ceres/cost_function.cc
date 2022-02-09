@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2019 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,29 +27,13 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-
-#ifndef CERES_PUBLIC_DYNAMIC_COST_FUNCTION_H_
-#define CERES_PUBLIC_DYNAMIC_COST_FUNCTION_H_
+//         keir@google.m (Keir Mierle)
 
 #include "ceres/cost_function.h"
 
 namespace ceres {
 
-// A common base class for DynamicAutoDiffCostFunction and
-// DynamicNumericDiffCostFunction which depend on methods that can add
-// parameter blocks and set the number of residuals at run time.
-class CERES_EXPORT DynamicCostFunction : public CostFunction {
- public:
-
-  virtual void AddParameterBlock(int size) {
-    mutable_parameter_block_sizes()->push_back(size);
-  }
-
-  virtual void SetNumResiduals(int num_residuals) {
-    set_num_residuals(num_residuals);
-  }
-};
+CostFunction::CostFunction() : num_residuals_(0) {}
+CostFunction::~CostFunction() = default;
 
 }  // namespace ceres
-
-#endif  // CERES_PUBLIC_DYNAMIC_COST_FUNCTION_H_

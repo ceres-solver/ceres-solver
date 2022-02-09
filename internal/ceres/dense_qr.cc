@@ -106,6 +106,8 @@ extern "C" void dtrtrs_(const char* uplo, const char* trans, const char* diag,
 namespace ceres {
 namespace internal {
 
+DenseQR::~DenseQR() = default;
+
 std::unique_ptr<DenseQR> DenseQR::Create(const LinearSolver::Options& options) {
   std::unique_ptr<DenseQR> dense_qr;
 

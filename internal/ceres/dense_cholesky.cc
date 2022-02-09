@@ -59,6 +59,8 @@ extern "C" void dpotrs_(const char* uplo,
 namespace ceres {
 namespace internal {
 
+DenseCholesky::~DenseCholesky() = default;
+
 std::unique_ptr<DenseCholesky> DenseCholesky::Create(
     const LinearSolver::Options& options) {
   std::unique_ptr<DenseCholesky> dense_cholesky;

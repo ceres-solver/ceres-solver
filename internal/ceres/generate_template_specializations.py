@@ -85,9 +85,9 @@ def SuffixForSize(size):
   return str(size)
 
 def SpecializationFilename(prefix, row_block_size, e_block_size, f_block_size):
-  return "_".join([prefix] + map(SuffixForSize, (row_block_size,
+  return "_".join([prefix] + list(map(SuffixForSize, (row_block_size,
                                                  e_block_size,
-                                                 f_block_size)))
+                                                 f_block_size))))
 
 def GenerateFactoryConditional(row_block_size, e_block_size, f_block_size):
   conditionals = []

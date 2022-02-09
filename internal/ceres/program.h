@@ -59,9 +59,6 @@ class TripletSparseMatrix;
 // not built for transformation.
 class CERES_EXPORT_INTERNAL Program {
  public:
-  Program();
-  explicit Program(const Program& program);
-
   // The ordered parameter and residual blocks for the program.
   const std::vector<ParameterBlock*>& parameter_blocks() const;
   const std::vector<ResidualBlock*>& residual_blocks() const;

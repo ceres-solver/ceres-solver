@@ -49,7 +49,6 @@ namespace internal {
 template <typename Vertex>
 class Graph {
  public:
-  Graph() = default;
 
   // Add a vertex.
   void AddVertex(const Vertex& vertex) {
@@ -106,7 +105,6 @@ class Graph {
 template <typename Vertex>
 class WeightedGraph {
  public:
-  WeightedGraph() = default;
 
   // Add a weighted vertex. If the vertex already exists in the graph,
   // its weight is set to the new weight.

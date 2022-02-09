@@ -128,6 +128,8 @@ FACTORY_FILE_HEADER = """
 namespace ceres {
 namespace internal {
 
+PartitionedMatrixViewBase::~PartitionedMatrixViewBase() = default;
+
 std::unique_ptr<PartitionedMatrixViewBase> PartitionedMatrixViewBase::Create(
     const LinearSolver::Options& options, const BlockSparseMatrix& matrix) {
 #ifndef CERES_RESTRICT_SCHUR_SPECIALIZATION
