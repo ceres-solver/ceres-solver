@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18b0b5cf_7beccaa9",
+        "filename": "internal/ceres/gmock_gtest_all.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-09T00:34:57Z",
+      "side": 1,
+      "message": "this file also needs to be reverted.",
+      "revId": "56a40de0bf00f27097b5a4823fd6c4a0f07674f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
