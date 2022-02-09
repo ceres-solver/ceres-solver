@@ -163,6 +163,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5b3f4339_9a24e5cf",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-09T13:09:10Z",
+      "side": 1,
+      "message": "```\nsummary-\u003einner_iterations_used \u003d !!pp.inner_iteration_minimizer;\n```\nis slightly shorter but probably not as readable.",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "674bed61_2710856b",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 11
