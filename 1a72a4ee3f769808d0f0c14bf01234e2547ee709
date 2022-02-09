@@ -143,6 +143,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "10e5634f_978b34d0",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-02-09T04:15:35Z",
+      "side": 1,
+      "message": "Tabs",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8aee4900_252e508d",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-02-09T04:15:35Z",
+      "side": 1,
+      "message": "Too many blanks",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1e1ed24f_da401e18",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 5
@@ -370,6 +404,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3b536307_de50b79c",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-02-09T04:15:35Z",
+      "side": 1,
+      "message": "I suggest a \",\" here instead of the \".\". The second sentence isn\u0027t a full sentence.",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fc81d663_69bb880a",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 5
@@ -399,6 +450,23 @@
       "side": 1,
       "message": "well I do want to say natural here, because the point is that you perform optimization in a space that corresponds to its degrees of freedom. now it so happens that this number coincides with the dimension of the tangent space.",
       "parentUuid": "fc81d663_69bb880a",
+      "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "341849fa_16e9b7d2",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-02-09T04:15:35Z",
+      "side": 1,
+      "message": "I suggest dropping the last ,",
       "revId": "1a72a4ee3f769808d0f0c14bf01234e2547ee709",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
