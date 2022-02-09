@@ -259,6 +259,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "52ccf2a4_08a6f102",
+        "filename": "internal/ceres/gradient_checking_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2022-02-09T19:00:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "063a2544_8f3dcf75",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "34591b2c_f7259969",
