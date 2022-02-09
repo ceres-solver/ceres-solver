@@ -20,6 +20,63 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "66e02a13_de9f46ab",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-09T10:08:51Z",
+      "side": 1,
+      "message": "Is there a reason for using manual memory allocation instead of a std::vector?",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 3
+      },
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7e81ed3_ded51e06",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-09T10:08:51Z",
+      "side": 1,
+      "message": "Isn\u0027t it better to mark the class as final? Then, the trivial destructor can be dropped as the compiler can generate one. In general, it is a good idea to follow rule of zero/three/five (https://en.cppreference.com/w/cpp/language/rule_of_three).",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "084d2374_0e9a18af",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-09T10:08:51Z",
+      "side": 1,
+      "message": "Theoretically, if `CallbackLossFunction` constructor throws an exception, the method will leak memory (see `callback_cost_function`).\n\nI believe, it is better to wrap the pointers in a `std::unique_ptr` and release them upon return to be exception safe.",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "108def3f_77023143",
         "filename": "internal/ceres/casts.h",
         "patchSetId": 11
@@ -54,6 +111,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "063a2544_8f3dcf75",
+        "filename": "internal/ceres/gradient_checking_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-09T10:08:51Z",
+      "side": 1,
+      "message": "I don\u0027t believe this to be an issue since this is a private function not intended to be exported in the final build and will thus not affect the ABI (see also my CL on tightening the symbol export). I\u0027m also not aware of a straightforward Windows mechanism for providing ABI compatibility (similar to .so versioning on Linux).  Therefore, users will generally want to relink on version update.",
+      "parentUuid": "fb441dd1_1604fcb3",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "34591b2c_f7259969",
         "filename": "internal/ceres/partitioned_matrix_view_template.py",
         "patchSetId": 11
@@ -82,6 +157,74 @@
       "writtenOn": "2022-02-09T04:14:17Z",
       "side": 1,
       "message": "There might be a CHECK_NOTNULL we could use that is more informative in failed cases. This is perhaps a followup change.",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "674bed61_2710856b",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-09T10:08:51Z",
+      "side": 1,
+      "message": "`std::unique_ptr` pointer validity checks can be simplified as\n```\nif (pp.reduced_program) { /*...*/ }\n```",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ea3ff5e_c2c6604b",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-09T10:08:51Z",
+      "side": 1,
+      "message": "```\nif (pp.evaluator)\n```",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13b8dced_c91b0033",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-09T10:08:51Z",
+      "side": 1,
+      "message": "```\nif (pp.linear_solver)\n```",
+      "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd3f5144_a3757142",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-09T10:08:51Z",
+      "side": 1,
+      "message": "```\nif (pp-\u003ereduced_program)\n```",
       "revId": "cb7d7451c4beaa9e5427b04cbc7c86fe21d1a495",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
