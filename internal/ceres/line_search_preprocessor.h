@@ -39,7 +39,6 @@ namespace internal {
 
 class CERES_EXPORT_INTERNAL LineSearchPreprocessor : public Preprocessor {
  public:
-  ~LineSearchPreprocessor() override;
   bool Preprocess(const Solver::Options& options,
                   ProblemImpl* problem,
                   PreprocessedProblem* preprocessed_problem) final;

@@ -63,11 +63,11 @@ namespace ceres {
 // when added with AddResidualBlock().
 class CERES_EXPORT CostFunction {
  public:
-  CostFunction() : num_residuals_(0) {}
+  CostFunction();
   CostFunction(const CostFunction&) = delete;
   void operator=(const CostFunction&) = delete;
 
-  virtual ~CostFunction() = default;
+  virtual ~CostFunction();
 
   // Inputs:
   //

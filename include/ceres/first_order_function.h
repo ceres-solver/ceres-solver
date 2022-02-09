@@ -39,7 +39,7 @@ namespace ceres {
 // and its gradient.
 class CERES_EXPORT FirstOrderFunction {
  public:
-  virtual ~FirstOrderFunction() = default;
+  virtual ~FirstOrderFunction();
 
   // cost is never null. gradient may be null. The return value
   // indicates whether the evaluation was successful or not.

@@ -59,7 +59,7 @@ class LineSearchDirection {
 
   static std::unique_ptr<LineSearchDirection> Create(const Options& options);
 
-  virtual ~LineSearchDirection() = default;
+  virtual ~LineSearchDirection();
   virtual bool NextDirection(const LineSearchMinimizer::State& previous,
                              const LineSearchMinimizer::State& current,
                              Vector* search_direction) = 0;

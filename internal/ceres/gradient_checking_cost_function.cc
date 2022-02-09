@@ -80,7 +80,6 @@ class GradientCheckingCostFunction : public CostFunction {
     set_num_residuals(function->num_residuals());
   }
 
-  ~GradientCheckingCostFunction() override = default;
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,

@@ -46,8 +46,6 @@ namespace internal {
 
 using std::vector;
 
-BlockSparseMatrix::~BlockSparseMatrix() = default;
-
 BlockSparseMatrix::BlockSparseMatrix(
     CompressedRowBlockStructure* block_structure)
     : num_rows_(0),

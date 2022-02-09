@@ -65,6 +65,8 @@ ostream& operator<<(ostream& os, const FunctionSample& sample) {
   return os;
 }
 
+LineSearch::~LineSearch() = default;
+
 LineSearch::LineSearch(const LineSearch::Options& options)
     : options_(options) {}
 

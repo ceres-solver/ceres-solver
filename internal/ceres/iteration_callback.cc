@@ -28,28 +28,10 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_PUBLIC_DYNAMIC_COST_FUNCTION_H_
-#define CERES_PUBLIC_DYNAMIC_COST_FUNCTION_H_
-
-#include "ceres/cost_function.h"
+#include "ceres/iteration_callback.h"
 
 namespace ceres {
 
-// A common base class for DynamicAutoDiffCostFunction and
-// DynamicNumericDiffCostFunction which depend on methods that can add
-// parameter blocks and set the number of residuals at run time.
-class CERES_EXPORT DynamicCostFunction : public CostFunction {
- public:
-
-  virtual void AddParameterBlock(int size) {
-    mutable_parameter_block_sizes()->push_back(size);
-  }
-
-  virtual void SetNumResiduals(int num_residuals) {
-    set_num_residuals(num_residuals);
-  }
-};
+IterationCallback::~IterationCallback() = default;
 
 }  // namespace ceres
-
-#endif  // CERES_PUBLIC_DYNAMIC_COST_FUNCTION_H_

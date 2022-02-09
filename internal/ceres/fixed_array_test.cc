@@ -500,8 +500,6 @@ TEST(FixedArrayTest, TooBigInlinedSpace) {
 
 // PickyDelete EXPECTs its class-scope deallocation funcs are unused.
 struct PickyDelete {
-  PickyDelete() = default;
-  ~PickyDelete() = default;
   void operator delete(void* p) {
     EXPECT_TRUE(false) << __FUNCTION__;
     ::operator delete(p);

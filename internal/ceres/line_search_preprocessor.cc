@@ -70,8 +70,6 @@ bool SetupEvaluator(PreprocessedProblem* pp) {
 
 }  // namespace
 
-LineSearchPreprocessor::~LineSearchPreprocessor() = default;
-
 bool LineSearchPreprocessor::Preprocess(const Solver::Options& options,
                                         ProblemImpl* problem,
                                         PreprocessedProblem* pp) {
