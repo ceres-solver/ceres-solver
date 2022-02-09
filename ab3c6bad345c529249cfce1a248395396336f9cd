@@ -34,6 +34,24 @@
       "parentUuid": "6d79a659_bdcd2fc3",
       "revId": "ab3c6bad345c529249cfce1a248395396336f9cd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22cf0b96_d220fa29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-09T00:00:13Z",
+      "side": 1,
+      "message": "As a side note, defaulted overridden destructors (maybe even some of the default copy constructors) can be probably removed altogether as these will be implicitly defined.",
+      "parentUuid": "d5bffd7c_d4ce9318",
+      "revId": "ab3c6bad345c529249cfce1a248395396336f9cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
