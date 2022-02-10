@@ -95,6 +95,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67816017_7768bc9d",
+        "filename": "include/ceres/internal/line_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-10T14:06:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4e22766_b5157cc5",
+      "range": {
+        "startLine": 159,
+        "startChar": 15,
+        "endLine": 159,
+        "endChar": 25
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae0f0b67_d0f7cbb5",
