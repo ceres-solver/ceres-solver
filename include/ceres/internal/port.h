@@ -68,6 +68,14 @@
 #endif
 #endif
 
+#if defined(_MSC_VER)
+#define CERES_DEPRECATED(message) __declspec(deprecated(message))
+#elif defined(__GNUC__)
+#define CERES_DEPRECATED(message) __attribute__((deprecated(message)))
+#else
+#define CERES_DEPRECATED(message)
+#endif
+
 // A macro to signal which functions and classes are exported when
 // building a shared library.
 #if defined(_MSC_VER)

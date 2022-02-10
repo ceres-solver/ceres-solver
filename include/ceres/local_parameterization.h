@@ -114,10 +114,10 @@ namespace ceres {
 //
 // The class LocalParameterization defines the function Plus and its
 // Jacobian which is needed to compute the Jacobian of f w.r.t delta.
-class [[deprecated(
+class CERES_DEPRECATED(
     "LocalParameterizations will be removed from the Ceres Solver API in "
-    "version 2.2.0. Use Manifolds instead.")]] CERES_EXPORT
-    LocalParameterization {
+    "version 2.2.0. Use Manifolds instead.")
+    CERES_EXPORT LocalParameterization {
  public:
   virtual ~LocalParameterization();
 
@@ -127,8 +127,9 @@ class [[deprecated(
   //
   // with the condition that Plus(x, 0) = x.
   //
-  virtual bool Plus(const double* x, const double* delta, double* x_plus_delta)
-      const = 0;
+  virtual bool Plus(const double* x,
+                    const double* delta,
+                    double* x_plus_delta) const = 0;
 
   // The jacobian of Plus(x, delta) w.r.t delta at delta = 0.
   //
@@ -158,13 +159,13 @@ class [[deprecated(
 // Some basic parameterizations
 
 // Identity Parameterization: Plus(x, delta) = x + delta
-class [[deprecated(
-    "Use EuclideanManifold instead.")]] CERES_EXPORT IdentityParameterization
-    : public LocalParameterization {
+class CERES_DEPRECATED("Use EuclideanManifold instead.")
+    CERES_EXPORT IdentityParameterization : public LocalParameterization {
  public:
   explicit IdentityParameterization(int size);
-  bool Plus(const double* x, const double* delta, double* x_plus_delta)
-      const override;
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
   bool ComputeJacobian(const double* x, double* jacobian) const override;
   bool MultiplyByJacobian(const double* x,
                           const int num_cols,
@@ -178,14 +179,14 @@ class [[deprecated(
 };
 
 // Hold a subset of the parameters inside a parameter block constant.
-class [[deprecated(
-    "Use SubsetManifold instead.")]] CERES_EXPORT SubsetParameterization
-    : public LocalParameterization {
+class CERES_DEPRECATED("Use SubsetManifold instead.")
+    CERES_EXPORT SubsetParameterization : public LocalParameterization {
  public:
   explicit SubsetParameterization(int size,
                                   const std::vector<int>& constant_parameters);
-  bool Plus(const double* x, const double* delta, double* x_plus_delta)
-      const override;
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
   bool ComputeJacobian(const double* x, double* jacobian) const override;
   bool MultiplyByJacobian(const double* x,
                           const int num_cols,
@@ -205,12 +206,12 @@ class [[deprecated(
 // with * being the quaternion multiplication operator. Here we assume
 // that the first element of the quaternion vector is the real (cos
 // theta) part.
-class [[deprecated(
-    "Use QuaternionManifold instead.")]] CERES_EXPORT QuaternionParameterization
-    : public LocalParameterization {
+class CERES_DEPRECATED("Use QuaternionManifold instead.")
+    CERES_EXPORT QuaternionParameterization : public LocalParameterization {
  public:
-  bool Plus(const double* x, const double* delta, double* x_plus_delta)
-      const override;
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
   bool ComputeJacobian(const double* x, double* jacobian) const override;
   int GlobalSize() const override { return 4; }
   int LocalSize() const override { return 3; }
@@ -227,11 +228,12 @@ class [[deprecated(
 //
 // Plus(x, delta) = [sin(|delta|) delta / |delta|, cos(|delta|)] * x
 // with * being the quaternion multiplication operator.
-class [[deprecated("Use EigenQuaternionManifold instead.")]] CERES_EXPORT
+class CERES_DEPRECATED("Use EigenQuaternionManifold instead.") CERES_EXPORT
     EigenQuaternionParameterization : public ceres::LocalParameterization {
  public:
-  bool Plus(const double* x, const double* delta, double* x_plus_delta)
-      const override;
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
   bool ComputeJacobian(const double* x, double* jacobian) const override;
   int GlobalSize() const override { return 4; }
   int LocalSize() const override { return 3; }
@@ -251,12 +253,13 @@ class [[deprecated("Use EigenQuaternionManifold instead.")]] CERES_EXPORT
 // remain on the sphere. We assume that the last element of x is the scalar
 // component. The size of the homogeneous vector is required to be greater than
 // 1.
-class [[deprecated("Use SphereManifold instead.")]] CERES_EXPORT
+class CERES_DEPRECATED("Use SphereManifold instead.") CERES_EXPORT
     HomogeneousVectorParameterization : public LocalParameterization {
  public:
   explicit HomogeneousVectorParameterization(int size);
-  bool Plus(const double* x, const double* delta, double* x_plus_delta)
-      const override;
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
   bool ComputeJacobian(const double* x, double* jacobian) const override;
   int GlobalSize() const override { return size_; }
   int LocalSize() const override { return size_ - 1; }
@@ -279,14 +282,15 @@ class [[deprecated("Use SphereManifold instead.")]] CERES_EXPORT
 // manifold (see https://en.wikipedia.org/wiki/Affine_Grassmannian_(manifold))
 // for the case Graff_1(R^n).
 template <int AmbientSpaceDimension>
-class [[deprecated("Use LineManifold instead.")]] LineParameterization
+class CERES_DEPRECATED("Use LineManifold instead.") LineParameterization
     : public LocalParameterization {
  public:
   static_assert(AmbientSpaceDimension >= 2,
                 "The ambient space must be at least 2");
 
-  bool Plus(const double* x, const double* delta, double* x_plus_delta)
-      const override;
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
   bool ComputeJacobian(const double* x, double* jacobian) const override;
   int GlobalSize() const override { return 2 * AmbientSpaceDimension; }
   int LocalSize() const override { return 2 * (AmbientSpaceDimension - 1); }
@@ -306,9 +310,8 @@ class [[deprecated("Use LineManifold instead.")]] LineParameterization
 // is the local parameterization for a rigid transformation, where the
 // rotation is represented using a quaternion.
 //
-class [[deprecated(
-    "Use ProductManifold instead.")]] CERES_EXPORT ProductParameterization
-    : public LocalParameterization {
+class CERES_DEPRECATED("Use ProductManifold instead.")
+    CERES_EXPORT ProductParameterization : public LocalParameterization {
  public:
   ProductParameterization(const ProductParameterization&) = delete;
   ProductParameterization& operator=(const ProductParameterization&) = delete;
@@ -317,7 +320,7 @@ class [[deprecated(
   // parameterizations.
   //
   template <typename... LocalParams>
-  ProductParameterization(LocalParams * ... local_params)
+  ProductParameterization(LocalParams*... local_params)
       : local_params_(sizeof...(LocalParams)),
         local_size_{0},
         global_size_{0},
@@ -344,8 +347,9 @@ class [[deprecated(
     }
   }
 
-  bool Plus(const double* x, const double* delta, double* x_plus_delta)
-      const override;
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
   bool ComputeJacobian(const double* x, double* jacobian) const override;
   int GlobalSize() const override { return global_size_; }
   int LocalSize() const override { return local_size_; }
