@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "662ac859_a94518c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-10T15:38:20Z",
+      "side": 1,
+      "message": "Let\u0027s start a separate thread about the deprecated issue.\n\nSameer",
+      "tag": "mailMessageId\u003d\u003cCABqdRUDzWQuja5YJnXub9DT4_XKwp9UyFwDETczSk0ZRFvbsDQ@mail.gmail.com\u003e",
+      "revId": "677711138aeffa889fc77a15ddf2904917d12dfb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
