@@ -649,6 +649,12 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang") # Matches Clang & AppleClang.
   endif(HAVE_RETURN_TYPE_C_LINKAGE)
 endif ()
 
+# Disable warnings about deprecated interfaces while we are
+# transitioning from LocalParameterization to Manifolds.
+add_compile_options(
+  $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-Wno-deprecated-declarations>
+  $<$<CXX_COMPILER_ID:MSVC>:/wd4996>)
+
 # Configure the Ceres config.h compile options header using the current
 # compile options and put the configured header into the Ceres build
 # directory.  Note that the ceres/internal subdir in <build>/config where
