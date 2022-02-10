@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "585968b8_f7a7694d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-10T14:46:34Z",
+      "side": 1,
+      "message": "There also another AVX2 related failure in `invert_pst_test`:\n```\nStarting program: /home/sergiu/Projects/ceres-solver/build-simple-release/bin/invert_psd_matrix_test \n[Thread debugging using libthread_db enabled]\nUsing host libthread_db library \"/usr/lib/libthread_db.so.1\".\nRunning main() from gmock_main.cc\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] Running 5 tests from 1 test suite.\n[----------] Global test environment set-up.\n[----------] 5 tests from InvertPSDMatrix\n[ RUN      ] InvertPSDMatrix.Identity3x3\n[       OK ] InvertPSDMatrix.Identity3x3 (0 ms)\n[ RUN      ] InvertPSDMatrix.FullRank5x5\n/home/sergiu/Projects/ceres-solver/internal/ceres/invert_psd_matrix_test.cc:68: Failure\nThe difference between (m * inverse_m - Matrix::Identity(5, 5)).norm() / 5.0 and 0.0 is nan, which exceeds 10 * std::numeric_limits\u003cdouble\u003e::epsilon(), where\n(m * inverse_m - Matrix::Identity(5, 5)).norm() / 5.0 evaluates to nan,\n0.0 evaluates to 0, and\n10 * std::numeric_limits\u003cdouble\u003e::epsilon() evaluates to 2.2204460492503131e-15.\n[  FAILED  ] InvertPSDMatrix.FullRank5x5 (0 ms)\n[ RUN      ] InvertPSDMatrix.RankDeficient5x5\n\nProgram received signal SIGSEGV, Segmentation fault.\n0x000055555555bfda in Eigen::SVDBase\u003cEigen::JacobiSVD\u003cEigen::Matrix\u003cdouble, 5, -1, 1, 5, -1\u003e, 2\u003e \u003e::rank (this\u003d0x7fffffffd440) at /usr/include/eigen3/Eigen/src/SVD/SVDBase.h:155\n155\t    while(i\u003e\u003d0 \u0026\u0026 m_singularValues.coeff(i) \u003c premultiplied_threshold) --i;\n(gdb) p premultiplied_threshold \n$2 \u003d \u003coptimized out\u003e\n(gdb) p m_singularValues\n$3 \u003d Eigen::Matrix\u003cdouble,5,1,ColMajor\u003e (data ptr: 0x7fffffffd520) \u003d {\n  [0] \u003d 6.953355807318014e-310,\n  [1] \u003d 0,\n  [2] \u003d 1.4821969375237396e-323,\n  [3] \u003d 2.4703282292062327e-323,\n  [4] \u003d 1.9762625833649862e-323\n}\n```\nSeems to be Eigen bug in JacobiSVD though.\n",
+      "revId": "97e52ec5a856b222dc3da66d29c5aebefca5f78c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c292206_62b41e33",
@@ -14,6 +31,30 @@
       "writtenOn": "2022-02-10T14:36:07Z",
       "side": 1,
       "message": "I think this can be fixed more simply, by simply not using fixed sized vectors no?",
+      "range": {
+        "startLine": 455,
+        "startChar": 6,
+        "endLine": 455,
+        "endChar": 11
+      },
+      "revId": "97e52ec5a856b222dc3da66d29c5aebefca5f78c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a15f8931_6b6bb9e5",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-10T14:46:34Z",
+      "side": 1,
+      "message": "This would be an alternative, yes. However, using fixed sized vectors seems to be more clearer.",
+      "parentUuid": "7c292206_62b41e33",
       "range": {
         "startLine": 455,
         "startChar": 6,
