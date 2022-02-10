@@ -17,6 +17,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUDzWQuja5YJnXub9DT4_XKwp9UyFwDETczSk0ZRFvbsDQ@mail.gmail.com\u003e",
       "revId": "677711138aeffa889fc77a15ddf2904917d12dfb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca2fac27_8e3305ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-10T15:50:52Z",
+      "side": 1,
+      "message": "Issue submitted.",
+      "parentUuid": "662ac859_a94518c3",
+      "revId": "677711138aeffa889fc77a15ddf2904917d12dfb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
