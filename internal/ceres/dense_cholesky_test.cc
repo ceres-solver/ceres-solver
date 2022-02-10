@@ -47,9 +47,12 @@ namespace internal {
 
 typedef DenseLinearAlgebraLibraryType Param;
 
+namespace {
+
 std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   return DenseLinearAlgebraLibraryTypeToString(info.param);
 }
+}  // namespace
 
 class DenseCholeskyTest : public ::testing::TestWithParam<Param> {};
 
