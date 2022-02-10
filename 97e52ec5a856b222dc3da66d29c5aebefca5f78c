@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6c93bc3_cfcc9579",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-10T14:48:51Z",
+      "side": 1,
+      "message": "Can you elaborate a little bit more on where the std::shared_ptr is? In this PR only the use of fixed size Vectors is changed and if they are not part of a struct which is dynamically allocated than alignment works since I think C++11.",
+      "revId": "97e52ec5a856b222dc3da66d29c5aebefca5f78c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c292206_62b41e33",
