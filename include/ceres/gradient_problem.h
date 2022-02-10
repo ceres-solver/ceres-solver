@@ -105,11 +105,11 @@ class CERES_EXPORT GradientProblem {
   // NOTE: This constructor is deprecated and will be removed in the next public
   // release of Ceres Solver. Please move to using the Manifold based
   // constructor.
-  [[deprecated(
+  CERES_DEPRECATED_WITH_MSG(
       "LocalParameterizations are deprecated. Please use the constructor that "
-      "uses Manifold instead.")]] GradientProblem(FirstOrderFunction* function,
-                                                  LocalParameterization*
-                                                      parameterization);
+      "uses Manifold instead.")
+  GradientProblem(FirstOrderFunction* function,
+                  LocalParameterization* parameterization);
 
   // Takes ownership of the function and the manifold.
   GradientProblem(FirstOrderFunction* function, Manifold* manifold);
@@ -154,8 +154,8 @@ class CERES_EXPORT GradientProblem {
   //
   // NOTE: This method is deprecated and will be removed in the next public
   // release of Ceres Solver.
-  [[deprecated("Use Manifolds instead.")]] const LocalParameterization*
-  parameterization() const {
+  CERES_DEPRECATED_WITH_MSG("Use Manifolds instead.")
+  const LocalParameterization* parameterization() const {
     return parameterization_.get();
   }
 
@@ -164,14 +164,15 @@ class CERES_EXPORT GradientProblem {
   //
   // NOTE: This method is deprecated and will be removed in the next public
   // release of Ceres Solver.
-  [[deprecated("Use Manifolds instead.")]] LocalParameterization*
-  mutable_parameterization() {
+  CERES_DEPRECATED_WITH_MSG("Use Manifolds instead.")
+  LocalParameterization* mutable_parameterization() {
     return parameterization_.get();
   }
 
  private:
   std::unique_ptr<FirstOrderFunction> function_;
-  [[deprecated]] std::unique_ptr<LocalParameterization> parameterization_;
+  CERES_DEPRECATED_WITH_MSG("")
+  std::unique_ptr<LocalParameterization> parameterization_;
   std::unique_ptr<Manifold> manifold_;
   std::unique_ptr<double[]> scratch_;
 };

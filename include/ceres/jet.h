@@ -472,13 +472,13 @@ using std::midpoint;
 
 // Legacy names from pre-C++11 days.
 // clang-format off
-[[deprecated("ceres::IsFinite will be removed in a future Ceres Solver release. Please use ceres::isfinite.")]]
+CERES_DEPRECATED_WITH_MSG("ceres::IsFinite will be removed in a future Ceres Solver release. Please use ceres::isfinite.")
 inline bool IsFinite(double x)   { return std::isfinite(x); }
-[[deprecated("ceres::IsInfinite will be removed in a future Ceres Solver release. Please use ceres::isinf.")]]
+CERES_DEPRECATED_WITH_MSG("ceres::IsInfinite will be removed in a future Ceres Solver release. Please use ceres::isinf.")
 inline bool IsInfinite(double x) { return std::isinf(x);    }
-[[deprecated("ceres::IsNaN will be removed in a future Ceres Solver release. Please use ceres::isnan.")]]
+CERES_DEPRECATED_WITH_MSG("ceres::IsNaN will be removed in a future Ceres Solver release. Please use ceres::isnan.")
 inline bool IsNaN(double x)      { return std::isnan(x);    }
-[[deprecated("ceres::IsNormal will be removed in a future Ceres Solver release. Please use ceres::isnormal.")]]
+CERES_DEPRECATED_WITH_MSG("ceres::IsNormal will be removed in a future Ceres Solver release. Please use ceres::isnormal.")
 inline bool IsNormal(double x)   { return std::isnormal(x); }
 // clang-format on
 
@@ -971,35 +971,35 @@ inline bool signbit(const Jet<T, N>& f) {
 
 // Legacy functions from the pre-C++11 days.
 template <typename T, int N>
-[[deprecated(
+CERES_DEPRECATED_WITH_MSG(
     "ceres::IsFinite will be removed in a future Ceres Solver release. Please "
-    "use ceres::isfinite.")]] inline bool
-IsFinite(const Jet<T, N>& f) {
+    "use ceres::isfinite.")
+inline bool IsFinite(const Jet<T, N>& f) {
   return isfinite(f);
 }
 
 template <typename T, int N>
-[[deprecated(
+CERES_DEPRECATED_WITH_MSG(
     "ceres::IsNaN will be removed in a future Ceres Solver release. Please use "
-    "ceres::isnan.")]] inline bool
-IsNaN(const Jet<T, N>& f) {
+    "ceres::isnan.")
+inline bool IsNaN(const Jet<T, N>& f) {
   return isnan(f);
 }
 
 template <typename T, int N>
-[[deprecated(
+CERES_DEPRECATED_WITH_MSG(
     "ceres::IsNormal will be removed in a future Ceres Solver release. Please "
-    "use ceres::isnormal.")]] inline bool
-IsNormal(const Jet<T, N>& f) {
+    "use ceres::isnormal.")
+inline bool IsNormal(const Jet<T, N>& f) {
   return isnormal(f);
 }
 
 // The jet is infinite if any part of the jet is infinite.
 template <typename T, int N>
-[[deprecated(
+CERES_DEPRECATED_WITH_MSG(
     "ceres::IsInfinite will be removed in a future Ceres Solver release. "
-    "Please use ceres::isinf.")]] inline bool
-IsInfinite(const Jet<T, N>& f) {
+    "Please use ceres::isinf.")
+inline bool IsInfinite(const Jet<T, N>& f) {
   return isinf(f);
 }
 
