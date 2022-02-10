@@ -80,6 +80,30 @@
       },
       "revId": "97e52ec5a856b222dc3da66d29c5aebefca5f78c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca56f299_0cb69799",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-10T14:52:14Z",
+      "side": 1,
+      "message": "In that case please add a detailed comment (the one in the commit log is fine) here to explain why this ifdef is needed.",
+      "parentUuid": "a15f8931_6b6bb9e5",
+      "range": {
+        "startLine": 455,
+        "startChar": 6,
+        "endLine": 455,
+        "endChar": 11
+      },
+      "revId": "97e52ec5a856b222dc3da66d29c5aebefca5f78c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
