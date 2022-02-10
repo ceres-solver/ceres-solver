@@ -37,6 +37,7 @@
 #include "Eigen/Geometry"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/port.h"
 #include "ceres/manifold_test_utils.h"
 #include "ceres/numeric_diff_options.h"
 #include "ceres/rotation.h"
@@ -451,10 +452,26 @@ TEST(EigenQuaternionManifold, DeltaJustBelowPi) {
   }
 }
 
+using Eigen::Vector2d;
+using Eigen::Vector3d;
+using Vector6d = Eigen::Matrix<double, 6, 1>;
+
+// Ensure memory allocated using new in AVX2 builds is correctly aligned which
+// is only guaranteed starting with C++17. Otherwise, use unaligned memory.
+// This avoids a segmentation fault in tests that use
+// EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD and fixed-size Eigen vectors.
+#ifdef CERES_HAS_CPP17
+using Eigen::Vector4d;
+using Vector8d = Eigen::Matrix<double, 8, 1>;
+#else
+using Vector4d = Eigen::Matrix<double, 4, 1, Eigen::DontAlign>;
+using Vector8d = Eigen::Matrix<double, 8, 1, Eigen::DontAlign>;
+#endif
+
 TEST(SphereManifold, ZeroTest) {
-  Eigen::Vector4d x{0.0, 0.0, 0.0, 1.0};
-  Eigen::Vector3d delta = Eigen::Vector3d::Zero();
-  Eigen::Vector4d y = Eigen::Vector4d::Zero();
+  Vector4d x{0.0, 0.0, 0.0, 1.0};
+  Vector3d delta = Vector3d::Zero();
+  Vector4d y = Vector4d::Zero();
 
   SphereManifold<4> manifold;
   manifold.Plus(x.data(), delta.data(), y.data());
@@ -462,10 +479,10 @@ TEST(SphereManifold, ZeroTest) {
 }
 
 TEST(SphereManifold, NearZeroTest1) {
-  Eigen::Vector4d x{1e-5, 1e-5, 1e-5, 1.0};
+  Vector4d x{1e-5, 1e-5, 1e-5, 1.0};
   x.normalize();
-  Eigen::Vector3d delta{0.0, 1.0, 0.0};
-  Eigen::Vector4d y = Eigen::Vector4d::Zero();
+  Vector3d delta{0.0, 1.0, 0.0};
+  Vector4d y = Vector4d::Zero();
 
   SphereManifold<4> manifold;
   manifold.Plus(x.data(), delta.data(), y.data());
@@ -473,9 +490,9 @@ TEST(SphereManifold, NearZeroTest1) {
 }
 
 TEST(SphereManifold, NearZeroTest2) {
-  Eigen::Vector4d x{0.001, 0.0, 0.0, 0.0};
-  Eigen::Vector3d delta{0.0, 1.0, 0.0};
-  Eigen::Vector4d y = Eigen::Vector4d::Zero();
+  Vector4d x{0.001, 0.0, 0.0, 0.0};
+  Vector3d delta{0.0, 1.0, 0.0};
+  Vector4d y = Vector4d::Zero();
   SphereManifold<4> manifold;
   manifold.Plus(x.data(), delta.data(), y.data());
   EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
@@ -559,12 +576,9 @@ TEST(SphereManifold, NormalFunctionTestDynamic) {
 }
 
 TEST(LineManifold, ZeroTest3D) {
-  using Vec4 = Eigen::Matrix<double, 4, 1>;
-  using Vec6 = Eigen::Matrix<double, 6, 1>;
-
-  const Vec6 x = Vec6::Unit(5);
-  const Vec4 delta = Vec4::Zero();
-  Vec6 y = Vec6::Zero();
+  const Vector6d x = Vector6d::Unit(5);
+  const Vector4d delta = Vector4d::Zero();
+  Vector6d y = Vector6d::Zero();
 
   LineManifold<3> manifold;
   EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
@@ -572,12 +586,9 @@ TEST(LineManifold, ZeroTest3D) {
 }
 
 TEST(LineManifold, ZeroTest4D) {
-  using Vec6 = Eigen::Matrix<double, 6, 1>;
-  using Vec8 = Eigen::Matrix<double, 8, 1>;
-
-  const Vec8 x = Vec8::Unit(7);
-  const Vec6 delta = Vec6::Zero();
-  Vec8 y = Vec8::Zero();
+  const Vector8d x = Vector8d::Unit(7);
+  const Vector6d delta = Vector6d::Zero();
+  Vector8d y = Vector8d::Zero();
 
   LineManifold<4> manifold;
   EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
@@ -585,13 +596,10 @@ TEST(LineManifold, ZeroTest4D) {
 }
 
 TEST(LineManifold, ZeroOriginPointTest3D) {
-  using Vec4 = Eigen::Matrix<double, 4, 1>;
-  using Vec6 = Eigen::Matrix<double, 6, 1>;
-
-  const Vec6 x = Vec6::Unit(5);
-  Vec4 delta;
+  const Vector6d x = Vector6d::Unit(5);
+  Vector4d delta;
   delta << 0.0, 0.0, 1.0, 2.0;
-  Vec6 y = Vec6::Zero();
+  Vector6d y = Vector6d::Zero();
 
   LineManifold<3> manifold;
   EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
@@ -599,13 +607,10 @@ TEST(LineManifold, ZeroOriginPointTest3D) {
 }
 
 TEST(LineManifold, ZeroOriginPointTest4D) {
-  using Vec6 = Eigen::Matrix<double, 6, 1>;
-  using Vec8 = Eigen::Matrix<double, 8, 1>;
-
-  const Vec8 x = Vec8::Unit(7);
-  Vec6 delta;
+  const Vector8d x = Vector8d::Unit(7);
+  Vector6d delta;
   delta << 0.0, 0.0, 0.0, 1.0, 2.0, 3.0;
-  Vec8 y = Vec8::Zero();
+  Vector8d y = Vector8d::Zero();
 
   LineManifold<4> manifold;
   EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
@@ -613,13 +618,10 @@ TEST(LineManifold, ZeroOriginPointTest4D) {
 }
 
 TEST(LineManifold, ZeroDirTest3D) {
-  using Vec4 = Eigen::Matrix<double, 4, 1>;
-  using Vec6 = Eigen::Matrix<double, 6, 1>;
-
-  Vec6 x = Vec6::Unit(5);
-  Vec4 delta;
+  Vector6d x = Vector6d::Unit(5);
+  Vector4d delta;
   delta << 3.0, 2.0, 0.0, 0.0;
-  Vec6 y = Vec6::Zero();
+  Vector6d y = Vector6d::Zero();
 
   LineManifold<3> manifold;
   EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
@@ -627,13 +629,10 @@ TEST(LineManifold, ZeroDirTest3D) {
 }
 
 TEST(LineManifold, ZeroDirTest4D) {
-  using Vec6 = Eigen::Matrix<double, 6, 1>;
-  using Vec8 = Eigen::Matrix<double, 8, 1>;
-
-  Vec8 x = Vec8::Unit(7);
-  Vec6 delta;
+  Vector8d x = Vector8d::Unit(7);
+  Vector6d delta;
   delta << 3.0, 2.0, 1.0, 0.0, 0.0, 0.0;
-  Vec8 y = Vec8::Zero();
+  Vector8d y = Vector8d::Zero();
 
   LineManifold<4> manifold;
   EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
@@ -641,40 +640,35 @@ TEST(LineManifold, ZeroDirTest4D) {
 }
 
 TEST(LineManifold, Plus) {
-  using Vec2 = Eigen::Matrix<double, 2, 1>;
-  using Vec3 = Eigen::Matrix<double, 3, 1>;
-  using Vec4 = Eigen::Matrix<double, 4, 1>;
-  using Vec6 = Eigen::Matrix<double, 6, 1>;
-
-  Vec6 x = Vec6::Unit(5);
+  Vector6d x = Vector6d::Unit(5);
   LineManifold<3> manifold;
 
   {
-    Vec4 delta{0.0, 4.0, M_PI, 0.0};
-    Vec6 y = Vec6::Random();
+    Vector4d delta{0.0, 4.0, M_PI, 0.0};
+    Vector6d y = Vector6d::Random();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
-    Vec6 gtY;
-    gtY << 2.0 * Vec3::UnitY(), Vec3::UnitX();
+    Vector6d gtY;
+    gtY << 2.0 * Vector3d::UnitY(), Vector3d::UnitX();
     EXPECT_LT((y - gtY).norm(), kTolerance);
   }
 
   {
-    Vec4 delta{6.0, 0.0, 0.0, M_PI};
-    Vec6 y = Vec6::Zero();
+    Vector4d delta{6.0, 0.0, 0.0, M_PI};
+    Vector6d y = Vector6d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
-    Vec6 gtY;
-    gtY << 3.0 * Vec3::UnitX(), Vec3::UnitY();
+    Vector6d gtY;
+    gtY << 3.0 * Vector3d::UnitX(), Vector3d::UnitY();
     EXPECT_LT((y - gtY).norm(), kTolerance);
   }
 
   {
-    Vec4 delta;
-    delta << Vec2(2.0, 4.0), Vec2(1, 1).normalized() * M_PI;
-    Vec6 y = Vec6::Zero();
+    Vector4d delta;
+    delta << Vector2d(2.0, 4.0), Vector2d(1, 1).normalized() * M_PI;
+    Vector6d y = Vector6d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
-    Vec6 gtY;
-    gtY << Vec3(1.0, 2.0, 0.0),
-        Vec3(std::sqrt(2.0) / 2.0, std::sqrt(2.0) / 2.0, 0.0);
+    Vector6d gtY;
+    gtY << Vector3d(1.0, 2.0, 0.0),
+        Vector3d(std::sqrt(2.0) / 2.0, std::sqrt(2.0) / 2.0, 0.0);
     EXPECT_LT((y - gtY).norm(), kTolerance);
   }
 }
