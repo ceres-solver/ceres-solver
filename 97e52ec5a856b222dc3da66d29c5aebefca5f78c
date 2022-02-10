@@ -125,6 +125,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d372cebd_bfd1fe74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-10T15:31:23Z",
+      "side": 1,
+      "message": "Sure. As a side note, current master fails to compile because GCC does not like when C++11 style attributes such as `[[deprecated]]`` are combined with GCC `__attribute__`. Related issue I also encountered: https://gitlab.kitware.com/cmake/cmake/-/issues/22908.\n\nThis is a blocker for https://ceres-solver-review.googlesource.com/c/ceres-solver/+/20200.",
+      "parentUuid": "47bfd13c_6439c1b3",
+      "revId": "97e52ec5a856b222dc3da66d29c5aebefca5f78c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c292206_62b41e33",
