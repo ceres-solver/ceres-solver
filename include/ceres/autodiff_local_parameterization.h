@@ -110,18 +110,18 @@ namespace ceres {
 // seen where instead of using k_ directly, k_ is wrapped with T(k_).
 
 template <typename Functor, int kGlobalSize, int kLocalSize>
-class [[deprecated(
-    "Use AutoDiffManifold instead.")]] AutoDiffLocalParameterization
-    : public LocalParameterization {
+class CERES_DEPRECATED("Use AutoDiffManifold instead.")
+    AutoDiffLocalParameterization : public LocalParameterization {
  public:
   AutoDiffLocalParameterization() : functor_(new Functor()) {}
 
   // Takes ownership of functor.
-  explicit AutoDiffLocalParameterization(Functor * functor)
+  explicit AutoDiffLocalParameterization(Functor* functor)
       : functor_(functor) {}
 
-  bool Plus(const double* x, const double* delta, double* x_plus_delta)
-      const override {
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override {
     return (*functor_)(x, delta, x_plus_delta);
   }
 

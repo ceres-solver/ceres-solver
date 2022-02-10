@@ -68,6 +68,17 @@
 #endif
 #endif
 
+// A macro to mark a function/variable/class as deprecated.
+// We use compiler specific attributes rather than the c++
+// attribute because they do not mix well with each other.
+#if defined(_MSC_VER)
+#define CERES_DEPRECATED(message) __declspec(deprecated(message))
+#elif defined(__GNUC__)
+#define CERES_DEPRECATED(message) __attribute__((deprecated(message)))
+#else
+#define CERES_DEPRECATED(message)
+#endif
+
 // A macro to signal which functions and classes are exported when
 // building a shared library.
 #if defined(_MSC_VER)
