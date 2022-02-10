@@ -89,6 +89,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73729807_7d93d948",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-10T15:01:43Z",
+      "side": 1,
+      "message": "It\u0027s not only `Eigen::Vector4d` but all multiples of 4 scalars.",
+      "parentUuid": "afbb28bd_ef4df4b3",
+      "revId": "97e52ec5a856b222dc3da66d29c5aebefca5f78c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c292206_62b41e33",
