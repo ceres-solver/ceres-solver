@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3c16f7ee_1a040470",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-10T14:56:15Z",
+      "side": 1,
+      "message": "I found that part in the Eigen docs: https://eigen.tuxfamily.org/dox/group__TopicStructHavingEigenMembers.html\n\n  For this reason, Eigen takes care by itself to require 256-bit alignment for \n  Eigen::Vector4d, by doing two things:\n  Eigen requires 256-bit alignment for the Eigen::Vector4d\u0027s array (of 4 doubles). With [c++11] this is done with the alignas keyword, or compiler\u0027s extensions for c++98/03.",
+      "parentUuid": "d6c93bc3_cfcc9579",
+      "revId": "97e52ec5a856b222dc3da66d29c5aebefca5f78c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c292206_62b41e33",
         "filename": "internal/ceres/manifold_test.cc",
         "patchSetId": 1
