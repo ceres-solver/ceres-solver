@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "905da8a7_10518b6b",
+        "filename": "include/ceres/internal/line_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-10T07:51:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b78dc49_fda9985a",
+      "range": {
+        "startLine": 76,
+        "startChar": 65,
+        "endLine": 76,
+        "endChar": 76
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7061169b_dcca6ba4",
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f4e22766_b5157cc5",
+        "filename": "include/ceres/internal/line_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-10T07:51:25Z",
+      "side": 1,
+      "message": "This is the case only for delta\u003d0. For delta\u003d0 the derivative of equ (107) is [1, 0, ..., 0] and the same holds for the origin part.\n\nNote: To be precise, in our case we store the first element at the end of the vector, so it is [0, ... ,0, 1] and multiply with 0.5. This is the same as for the origin part.",
+      "parentUuid": "7061169b_dcca6ba4",
+      "range": {
+        "startLine": 159,
+        "startChar": 15,
+        "endLine": 159,
+        "endChar": 25
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ae0f0b67_d0f7cbb5",
         "filename": "include/ceres/internal/line_manifold.h",
         "patchSetId": 3
@@ -60,6 +108,30 @@
       "writtenOn": "2022-02-09T21:22:11Z",
       "side": 1,
       "message": "same comment as above.",
+      "range": {
+        "startLine": 213,
+        "startChar": 15,
+        "endLine": 213,
+        "endChar": 25
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acd8ea0d_486de4a5",
+        "filename": "include/ceres/internal/line_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-10T07:51:25Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "ae0f0b67_d0f7cbb5",
       "range": {
         "startLine": 213,
         "startChar": 15,
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "647c33d1_1f2564ab",
+        "filename": "include/ceres/internal/sphere_manifold_functions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-10T07:51:25Z",
+      "side": 1,
+      "message": "As a lot of the parameters are shared between the functions I have added a description on top of the file. Would that work or shall I document every function separately?",
+      "parentUuid": "409c635f_1d1c37bc",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aef90ce5_280e8c27",
         "filename": "include/ceres/internal/sphere_manifold_functions.h",
         "patchSetId": 3
@@ -106,6 +202,30 @@
       "writtenOn": "2022-02-09T21:22:11Z",
       "side": 1,
       "message": "drop internal here and elsewhere since this function is in the internal namespace already.",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 58,
+        "endChar": 37
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6140cb6_49be44d9",
+        "filename": "include/ceres/internal/sphere_manifold_functions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-10T07:51:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aef90ce5_280e8c27",
       "range": {
         "startLine": 58,
         "startChar": 29,
@@ -139,6 +259,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd3001e7_3dcfafd3",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-10T07:51:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "877e1951_ca4ea9af",
+      "range": {
+        "startLine": 494,
+        "startChar": 6,
+        "endLine": 494,
+        "endChar": 18
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91fc120b_99ac8109",
@@ -162,6 +306,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d29c9a94_d39265ae",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-10T07:51:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91fc120b_99ac8109",
+      "range": {
+        "startLine": 498,
+        "startChar": 26,
+        "endLine": 498,
+        "endChar": 33
+      },
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b278fd9_5f03cbe7",
@@ -175,6 +343,24 @@
       "writtenOn": "2022-02-09T21:22:11Z",
       "side": 1,
       "message": "move this before the comment about static and dynamic size.",
+      "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07a58704_842b97b5",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-02-10T07:51:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b278fd9_5f03cbe7",
       "revId": "1cf760568ffe9a0531bcafe972a1235c52df08d3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
