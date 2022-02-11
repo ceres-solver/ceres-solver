@@ -36,6 +36,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23c95990_08177df5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T22:02:54Z",
+      "side": 1,
+      "message": "so this macro expansion problem exists in the latest version of MSVC? wow. \nis there an MSVC recommended solution to this problem?\n\nI started reviewing the patch thinking it was about max/min I was surprised by the other changes. its fine to include them one patch which fixes all sorts of MSVC issues.",
+      "parentUuid": "048670ea_9981e242",
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b5c7303_dab205e1",
