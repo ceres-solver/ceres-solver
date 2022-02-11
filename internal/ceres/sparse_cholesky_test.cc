@@ -174,7 +174,8 @@ TEST_P(SparseCholeskyTest, FactorAndSolve) {
   for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
        ++num_blocks) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
-      const double block_density = std::max(0.1, RandDouble());
+      const double block_density =
+          std::max CERES_PREVENT_MACRO_SUBSTITUTION(0.1, RandDouble());
       Param param = GetParam();
       SparseCholeskySolverUnitTest(::testing::get<0>(param),
                                    ::testing::get<1>(param),

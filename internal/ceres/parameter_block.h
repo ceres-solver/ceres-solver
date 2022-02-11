@@ -121,12 +121,14 @@ class ParameterBlock {
 
   double UpperBound(int index) const {
     return (upper_bounds_ ? upper_bounds_[index]
-                          : std::numeric_limits<double>::max());
+                          : std::numeric_limits<double>::max
+                                CERES_PREVENT_MACRO_SUBSTITUTION());
   }
 
   double LowerBound(int index) const {
     return (lower_bounds_ ? lower_bounds_[index]
-                          : -std::numeric_limits<double>::max());
+                          : -std::numeric_limits<double>::max
+                                CERES_PREVENT_MACRO_SUBSTITUTION());
   }
 
   bool IsUpperBounded() const { return (upper_bounds_ == nullptr); }
@@ -190,15 +192,18 @@ class ParameterBlock {
   void SetUpperBound(int index, double upper_bound) {
     CHECK_LT(index, size_);
 
-    if (upper_bound >= std::numeric_limits<double>::max() && !upper_bounds_) {
+    if (upper_bound >= std::numeric_limits<double>::max
+                           CERES_PREVENT_MACRO_SUBSTITUTION() &&
+        !upper_bounds_) {
       return;
     }
 
     if (!upper_bounds_) {
       upper_bounds_ = std::make_unique<double[]>(size_);
-      std::fill(upper_bounds_.get(),
-                upper_bounds_.get() + size_,
-                std::numeric_limits<double>::max());
+      std::fill(
+          upper_bounds_.get(),
+          upper_bounds_.get() + size_,
+          std::numeric_limits<double>::max CERES_PREVENT_MACRO_SUBSTITUTION());
     }
 
     upper_bounds_[index] = upper_bound;
@@ -207,15 +212,18 @@ class ParameterBlock {
   void SetLowerBound(int index, double lower_bound) {
     CHECK_LT(index, size_);
 
-    if (lower_bound <= -std::numeric_limits<double>::max() && !lower_bounds_) {
+    if (lower_bound <= -std::numeric_limits<double>::max
+                           CERES_PREVENT_MACRO_SUBSTITUTION() &&
+        !lower_bounds_) {
       return;
     }
 
     if (!lower_bounds_) {
       lower_bounds_ = std::make_unique<double[]>(size_);
-      std::fill(lower_bounds_.get(),
-                lower_bounds_.get() + size_,
-                -std::numeric_limits<double>::max());
+      std::fill(
+          lower_bounds_.get(),
+          lower_bounds_.get() + size_,
+          -std::numeric_limits<double>::max CERES_PREVENT_MACRO_SUBSTITUTION());
     }
 
     lower_bounds_[index] = lower_bound;
@@ -237,13 +245,15 @@ class ParameterBlock {
     // Project onto the box constraints.
     if (lower_bounds_.get() != nullptr) {
       for (int i = 0; i < size_; ++i) {
-        x_plus_delta[i] = std::max(x_plus_delta[i], lower_bounds_[i]);
+        x_plus_delta[i] = std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+            x_plus_delta[i], lower_bounds_[i]);
       }
     }
 
     if (upper_bounds_.get() != nullptr) {
       for (int i = 0; i < size_; ++i) {
-        x_plus_delta[i] = std::min(x_plus_delta[i], upper_bounds_[i]);
+        x_plus_delta[i] = std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+            x_plus_delta[i], upper_bounds_[i]);
       }
     }
 
@@ -294,7 +304,8 @@ class ParameterBlock {
 
   double LowerBoundForParameter(int index) const {
     if (lower_bounds_.get() == nullptr) {
-      return -std::numeric_limits<double>::max();
+      return -std::numeric_limits<double>::max
+      CERES_PREVENT_MACRO_SUBSTITUTION();
     } else {
       return lower_bounds_[index];
     }
@@ -302,7 +313,8 @@ class ParameterBlock {
 
   double UpperBoundForParameter(int index) const {
     if (upper_bounds_.get() == nullptr) {
-      return std::numeric_limits<double>::max();
+      return std::numeric_limits<double>::max
+      CERES_PREVENT_MACRO_SUBSTITUTION();
     } else {
       return upper_bounds_[index];
     }

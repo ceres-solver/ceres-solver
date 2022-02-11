@@ -80,8 +80,10 @@ TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
 
     jacobian->SquaredColumnNorm(diagonal_.data());
     for (int i = 0; i < num_parameters; ++i) {
-      diagonal_[i] =
-          std::min(std::max(diagonal_[i], min_diagonal_), max_diagonal_);
+      diagonal_[i] = std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+          std::max CERES_PREVENT_MACRO_SUBSTITUTION(diagonal_[i],
+                                                    min_diagonal_),
+          max_diagonal_);
     }
   }
 
@@ -146,9 +148,9 @@ TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
 
 void LevenbergMarquardtStrategy::StepAccepted(double step_quality) {
   CHECK_GT(step_quality, 0.0);
-  radius_ =
-      radius_ / std::max(1.0 / 3.0, 1.0 - pow(2.0 * step_quality - 1.0, 3));
-  radius_ = std::min(max_radius_, radius_);
+  radius_ = radius_ / std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+                          1.0 / 3.0, 1.0 - pow(2.0 * step_quality - 1.0, 3));
+  radius_ = std::min CERES_PREVENT_MACRO_SUBSTITUTION(max_radius_, radius_);
   decrease_factor_ = 2.0;
   reuse_diagonal_ = false;
 }

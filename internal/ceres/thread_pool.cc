@@ -44,7 +44,8 @@ namespace {
 
 // Constrain the total number of threads to the amount the hardware can support.
 int GetNumAllowedThreads(int requested_num_threads) {
-  return std::min(requested_num_threads, ThreadPool::MaxNumThreadsAvailable());
+  return std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+      requested_num_threads, ThreadPool::MaxNumThreadsAvailable());
 }
 
 }  // namespace
@@ -53,7 +54,8 @@ int ThreadPool::MaxNumThreadsAvailable() {
   const int num_hardware_threads = std::thread::hardware_concurrency();
   // hardware_concurrency() can return 0 if the value is not well defined or not
   // computable.
-  return num_hardware_threads == 0 ? std::numeric_limits<int>::max()
+  return num_hardware_threads == 0 ? std::numeric_limits<int>::max
+                                     CERES_PREVENT_MACRO_SUBSTITUTION()
                                    : num_hardware_threads;
 }
 

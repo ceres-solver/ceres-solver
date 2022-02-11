@@ -365,11 +365,13 @@ class CurveCostFunction : public CostFunction {
         for (int dim = 0; dim < 2; dim++) {
           jacobians[i][dim] = 0.;
 
-          if (norm_u > std::numeric_limits<double>::min()) {
+          if (norm_u > std::numeric_limits<double>::min
+                           CERES_PREVENT_MACRO_SUBSTITUTION()) {
             jacobians[i][dim] -= u[dim] / norm_u;
           }
 
-          if (norm_v > std::numeric_limits<double>::min()) {
+          if (norm_v > std::numeric_limits<double>::min
+                           CERES_PREVENT_MACRO_SUBSTITUTION()) {
             jacobians[i][dim] += v[dim] / norm_v;
           }
         }

@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <limits>
 
+#include "ceres/internal/port.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -56,7 +57,8 @@ double TrustRegionStepEvaluator::StepQuality(
   // std::numeric_limits<double>::max(). In this case, the division by
   // model_cost_change can result in an overflow. To prevent that from
   // happening, we will deal with this case explicitly.
-  if (cost >= std::numeric_limits<double>::max()) {
+  if (cost >=
+      std::numeric_limits<double>::max CERES_PREVENT_MACRO_SUBSTITUTION()) {
     return std::numeric_limits<double>::lowest();
   }
 
@@ -64,7 +66,8 @@ double TrustRegionStepEvaluator::StepQuality(
   const double historical_relative_decrease =
       (reference_cost_ - cost) /
       (accumulated_reference_model_cost_change_ + model_cost_change);
-  return std::max(relative_decrease, historical_relative_decrease);
+  return std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+      relative_decrease, historical_relative_decrease);
 }
 
 void TrustRegionStepEvaluator::StepAccepted(const double cost,

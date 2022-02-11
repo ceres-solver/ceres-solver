@@ -88,27 +88,27 @@ MATCHER(IsNormalizedQuaternion, "") {
 MATCHER_P(IsNearQuaternion, expected, "") {
   // Quaternions are equivalent upto a sign change. So we will compare
   // both signs before declaring failure.
-  bool near = true;
+  bool Near = true;
   for (int i = 0; i < 4; i++) {
     if (fabs(arg[i] - expected[i]) > kTolerance) {
-      near = false;
+      Near = false;
       break;
     }
   }
 
-  if (near) {
+  if (Near) {
     return true;
   }
 
-  near = true;
+  Near = true;
   for (int i = 0; i < 4; i++) {
     if (fabs(arg[i] + expected[i]) > kTolerance) {
-      near = false;
+      Near = false;
       break;
     }
   }
 
-  if (near) {
+  if (Near) {
     return true;
   }
 
@@ -136,7 +136,8 @@ MATCHER_P(IsNearAngleAxis, expected, "") {
   Eigen::Vector3d e(expected[0], expected[1], expected[2]);
   const double e_norm = e.norm();
 
-  double delta_norm = numeric_limits<double>::max();
+  double delta_norm =
+      numeric_limits<double>::max CERES_PREVENT_MACRO_SUBSTITUTION();
   if (e_norm > 0) {
     // Deal with the sign ambiguity near PI. Since the sign can flip,
     // we take the smaller of the two differences.
@@ -229,7 +230,8 @@ TEST(Rotation, SmallAngleAxisToQuaternion) {
 // Test that approximate conversion works for very small angles.
 TEST(Rotation, TinyAngleAxisToQuaternion) {
   // Very small value that could potentially cause underflow.
-  double theta = pow(numeric_limits<double>::min(), 0.75);
+  double theta =
+      pow(numeric_limits<double>::min CERES_PREVENT_MACRO_SUBSTITUTION(), 0.75);
   double axis_angle[3] = {theta, 0, 0};
   double quaternion[4];
   double expected[4] = {cos(theta / 2), sin(theta / 2.0), 0, 0};
@@ -290,7 +292,8 @@ TEST(Rotation, SmallQuaternionToAngleAxis) {
 // Test that approximate conversion works for very small angles.
 TEST(Rotation, TinyQuaternionToAngleAxis) {
   // Very small value that could potentially cause underflow.
-  double theta = pow(numeric_limits<double>::min(), 0.75);
+  double theta =
+      pow(numeric_limits<double>::min CERES_PREVENT_MACRO_SUBSTITUTION(), 0.75);
   double quaternion[4] = {cos(theta / 2), sin(theta / 2.0), 0, 0};
   double axis_angle[3];
   double expected[3] = {theta, 0, 0};
@@ -728,8 +731,9 @@ static const int kSmallTinyCutoff =
     static_cast<int>(2 * log(numeric_limits<double>::epsilon()) / log(10.0));
 
 // Log-10 of a value just below values representable by double.
-static const int kTinyZeroLimit =
-    static_cast<int>(1 + log(numeric_limits<double>::min()) / log(10.0));
+static const int kTinyZeroLimit = static_cast<int>(
+    1 + log(numeric_limits<double>::min CERES_PREVENT_MACRO_SUBSTITUTION()) /
+            log(10.0));
 
 // Test that exact conversion works for small angles when jets are used.
 TEST(Rotation, SmallAngleAxisToQuaternionForJets) {

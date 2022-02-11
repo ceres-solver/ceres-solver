@@ -2583,25 +2583,25 @@ TEST(Problem, SetAndGetParameterLowerBound) {
   problem.AddParameterBlock(x, 2);
 
   EXPECT_EQ(problem.GetParameterLowerBound(x, 0),
-            -std::numeric_limits<double>::max());
+            -(std::numeric_limits<double>::max)());
   EXPECT_EQ(problem.GetParameterLowerBound(x, 1),
-            -std::numeric_limits<double>::max());
+            -(std::numeric_limits<double>::max)());
 
   problem.SetParameterLowerBound(x, 0, -1.0);
   EXPECT_EQ(problem.GetParameterLowerBound(x, 0), -1.0);
   EXPECT_EQ(problem.GetParameterLowerBound(x, 1),
-            -std::numeric_limits<double>::max());
+            -(std::numeric_limits<double>::max)());
 
   problem.SetParameterLowerBound(x, 0, -2.0);
   EXPECT_EQ(problem.GetParameterLowerBound(x, 0), -2.0);
   EXPECT_EQ(problem.GetParameterLowerBound(x, 1),
-            -std::numeric_limits<double>::max());
+            -(std::numeric_limits<double>::max)());
 
-  problem.SetParameterLowerBound(x, 0, -std::numeric_limits<double>::max());
+  problem.SetParameterLowerBound(x, 0, -(std::numeric_limits<double>::max)());
   EXPECT_EQ(problem.GetParameterLowerBound(x, 0),
-            -std::numeric_limits<double>::max());
+            -(std::numeric_limits<double>::max)());
   EXPECT_EQ(problem.GetParameterLowerBound(x, 1),
-            -std::numeric_limits<double>::max());
+            -(std::numeric_limits<double>::max)());
 }
 
 TEST(Problem, SetAndGetParameterUpperBound) {
@@ -2610,25 +2610,25 @@ TEST(Problem, SetAndGetParameterUpperBound) {
   problem.AddParameterBlock(x, 2);
 
   EXPECT_EQ(problem.GetParameterUpperBound(x, 0),
-            std::numeric_limits<double>::max());
+            (std::numeric_limits<double>::max)());
   EXPECT_EQ(problem.GetParameterUpperBound(x, 1),
-            std::numeric_limits<double>::max());
+            (std::numeric_limits<double>::max)());
 
   problem.SetParameterUpperBound(x, 0, -1.0);
   EXPECT_EQ(problem.GetParameterUpperBound(x, 0), -1.0);
   EXPECT_EQ(problem.GetParameterUpperBound(x, 1),
-            std::numeric_limits<double>::max());
+            (std::numeric_limits<double>::max)());
 
   problem.SetParameterUpperBound(x, 0, -2.0);
   EXPECT_EQ(problem.GetParameterUpperBound(x, 0), -2.0);
   EXPECT_EQ(problem.GetParameterUpperBound(x, 1),
-            std::numeric_limits<double>::max());
+            (std::numeric_limits<double>::max)());
 
-  problem.SetParameterUpperBound(x, 0, std::numeric_limits<double>::max());
+  problem.SetParameterUpperBound(x, 0, (std::numeric_limits<double>::max)());
   EXPECT_EQ(problem.GetParameterUpperBound(x, 0),
-            std::numeric_limits<double>::max());
+            (std::numeric_limits<double>::max)());
   EXPECT_EQ(problem.GetParameterUpperBound(x, 1),
-            std::numeric_limits<double>::max());
+            (std::numeric_limits<double>::max)());
 }
 
 TEST(Problem, SetParameterizationTwice) {

@@ -42,7 +42,19 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
+// Make sure we correctly import the flag from the gtest target. Afterwards,
+// restore the definition.
+#if GTEST_LINKED_AS_SHARED_LIBRARY && defined(_MSC_VER)
+#pragma push_macro("GFLAGS_DLL_DECLARE_FLAG")
+#undef GFLAGS_DLL_DECLARE_FLAG
+#define GFLAGS_DLL_DECLARE_FLAG __declspec(dllimport)
+#endif
+
 DECLARE_string(test_srcdir);
+
+#if GTEST_LINKED_AS_SHARED_LIBRARY && defined(_MSC_VER)
+#pragma pop_macro("GFLAGS_DLL_DECLARE_FLAG")
+#endif
 
 // This macro is used to inject additional path information specific
 // to the build system.
@@ -65,7 +77,9 @@ bool ExpectClose(double x, double y, double max_abs_relative_difference) {
   }
 
   double absolute_difference = fabs(x - y);
-  double relative_difference = absolute_difference / std::max(fabs(x), fabs(y));
+  double relative_difference =
+      absolute_difference /
+      std::max CERES_PREVENT_MACRO_SUBSTITUTION(fabs(x), fabs(y));
   if (x == 0 || y == 0) {
     // If x or y is exactly zero, then relative difference doesn't have any
     // meaning. Take the absolute difference instead.

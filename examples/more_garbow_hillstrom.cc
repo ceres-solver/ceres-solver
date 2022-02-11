@@ -75,7 +75,8 @@ DEFINE_int32(ridders_extrapolations,
 namespace ceres {
 namespace examples {
 
-const double kDoubleMax = std::numeric_limits<double>::max();
+const double kDoubleMax =
+    std::numeric_limits<double>::max CERES_PREVENT_MACRO_SUBSTITUTION();
 
 static void SetNumericDiffOptions(ceres::NumericDiffOptions* options) {
   options->max_num_ridders_extrapolations =
@@ -249,7 +250,7 @@ BEGIN_MGH_PROBLEM(TestProblem8, 3, 15)
   for (int i = 1; i <=15; ++i) {
     const double u = i;
     const double v = 16 - i;
-    const double w = std::min(i, 16 - i);
+    const double w = std::min CERES_PREVENT_MACRO_SUBSTITUTION(i, 16 - i);
     residual[i - 1] = y[i - 1] - (x1 + u / (v * x2 + w * x3));
   }
 END_MGH_PROBLEM;

@@ -56,7 +56,9 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
     // Set this to some nonzero value to be sure.
     num_additional_elements = 13;
 
-    expected_num_nonzeros = num_rows * num_cols - std::min(num_rows, num_cols);
+    expected_num_nonzeros =
+        num_rows * num_cols -
+        std::min CERES_PREVENT_MACRO_SUBSTITUTION(num_rows, num_cols);
 
     InitialiseDenseReference();
     InitialiseSparseMatrixReferences();

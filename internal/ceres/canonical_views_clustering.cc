@@ -108,7 +108,8 @@ void CanonicalViewsClustering::ComputeClustering(
   FindValidViews(&valid_views);
   while (!valid_views.empty()) {
     // Find the next best canonical view.
-    double best_difference = -std::numeric_limits<double>::max();
+    double best_difference =
+        -std::numeric_limits<double>::max CERES_PREVENT_MACRO_SUBSTITUTION();
     int best_view = 0;
 
     // TODO(sameeragarwal): Make this loop multi-threaded.
@@ -121,7 +122,7 @@ void CanonicalViewsClustering::ComputeClustering(
       }
     }
 
-    CHECK_GT(best_difference, -std::numeric_limits<double>::max());
+    CHECK_GT(best_difference, -(std::numeric_limits<double>::max)());
 
     // Add canonical view if quality improves, or if minimum is not
     // yet met, otherwise break.

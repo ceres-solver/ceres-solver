@@ -30,7 +30,11 @@
 
 // The floating-point environment access and modification is only meaningful
 // with the following pragma.
+#ifdef _MSC_VER
+#pragma fenv_access(on)
+#else
 #pragma STDC FENV_ACCESS ON
+#endif
 
 #include "ceres/jet.h"
 
@@ -98,7 +102,8 @@ bool AreAlmostEqual(double x, double y, double max_abs_relative_difference) {
   Fenv env;  // Do not leak floating-point exceptions to the caller
   double absolute_difference = std::abs(x - y);
   double relative_difference =
-      absolute_difference / std::max(std::abs(x), std::abs(y));
+      absolute_difference /
+      std::max CERES_PREVENT_MACRO_SUBSTITUTION(std::abs(x), std::abs(y));
 
   if (std::fpclassify(x) == FP_ZERO || std::fpclassify(y) == FP_ZERO) {
     // If x or y is exactly zero, then relative difference doesn't have any
@@ -573,17 +578,17 @@ TEST(Jet, Hypot2) {
   EXPECT_THAT(hypot(y, zero), IsAlmostEqualTo(y));
 
   // hypot(x, 0, 0) == x, even when x * x underflows:
-  EXPECT_EQ(
-      std::numeric_limits<double>::min() * std::numeric_limits<double>::min(),
-      0.0);  // Make sure it underflows
-  J tiny = MakeJet(std::numeric_limits<double>::min(), 2.0, 3.14);
+  EXPECT_EQ((std::numeric_limits<double>::min)() *
+                (std::numeric_limits<double>::min)(),
+            0.0);  // Make sure it underflows
+  J tiny = MakeJet((std::numeric_limits<double>::min)(), 2.0, 3.14);
   EXPECT_THAT(hypot(tiny, J{0}), IsAlmostEqualTo(tiny));
 
   // hypot(x, 0, 0) == x, even when x * x overflows:
-  EXPECT_EQ(
-      std::numeric_limits<double>::max() * std::numeric_limits<double>::max(),
-      std::numeric_limits<double>::infinity());
-  J huge = MakeJet(std::numeric_limits<double>::max(), 2.0, 3.14);
+  EXPECT_EQ((std::numeric_limits<double>::max)() *
+                (std::numeric_limits<double>::max)(),
+            std::numeric_limits<double>::infinity());
+  J huge = MakeJet((std::numeric_limits<double>::max)(), 2.0, 3.14);
   EXPECT_THAT(hypot(huge, J{0}), IsAlmostEqualTo(huge));
 }
 
@@ -869,7 +874,8 @@ TEST(Jet, ScalarComparison) {
   one.v << std::numeric_limits<double>::quiet_NaN();
 
   Jet<double, 1> two{2.0};
-  two.v << std::numeric_limits<double>::min() / 2;
+  two.v << std::numeric_limits<double>::min CERES_PREVENT_MACRO_SUBSTITUTION() /
+               2;
 
   Jet<double, 1> three{3.0};
 
@@ -923,7 +929,8 @@ TEST(Jet, Nested2XScalarComparison) {
   one.v << std::numeric_limits<J0d>::quiet_NaN();
 
   Jet<J0d, 1> two{J0d{2.0}};
-  two.v << std::numeric_limits<J0d>::min() / J0d{2};
+  two.v << std::numeric_limits<J0d>::min CERES_PREVENT_MACRO_SUBSTITUTION() /
+               J0d{2};
 
   Jet<J0d, 1> three{J0d{3.0}};
 
@@ -1022,7 +1029,7 @@ TEST(JetTraitsTest, ClassificationScalar) {
   EXPECT_EQ(fpclassify(J0d{+0.0}), FP_ZERO);
   EXPECT_EQ(fpclassify(J0d{-0.0}), FP_ZERO);
   EXPECT_EQ(fpclassify(J0d{1.234}), FP_NORMAL);
-  EXPECT_EQ(fpclassify(J0d{std::numeric_limits<double>::min() / 2}),
+  EXPECT_EQ(fpclassify(J0d{(std::numeric_limits<double>::min)() / 2}),
             FP_SUBNORMAL);
   EXPECT_EQ(fpclassify(J0d{std::numeric_limits<double>::quiet_NaN()}), FP_NAN);
 }
@@ -1031,7 +1038,7 @@ TEST(JetTraitsTest, Nested2XClassificationScalar) {
   EXPECT_EQ(fpclassify(J0<J0d>{J0d{+0.0}}), FP_ZERO);
   EXPECT_EQ(fpclassify(J0<J0d>{J0d{-0.0}}), FP_ZERO);
   EXPECT_EQ(fpclassify(J0<J0d>{J0d{1.234}}), FP_NORMAL);
-  EXPECT_EQ(fpclassify(J0<J0d>{J0d{std::numeric_limits<double>::min() / 2}}),
+  EXPECT_EQ(fpclassify(J0<J0d>{J0d{(std::numeric_limits<double>::min)() / 2}}),
             FP_SUBNORMAL);
   EXPECT_EQ(fpclassify(J0<J0d>{J0d{std::numeric_limits<double>::quiet_NaN()}}),
             FP_NAN);

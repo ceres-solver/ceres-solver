@@ -417,7 +417,8 @@ TEST_P(RightMultiplyTest, _) {
       options.num_row_blocks = 2 * num_blocks;
       options.min_row_block_size = kMinBlockSize;
       options.max_row_block_size = kMaxBlockSize;
-      options.block_density = std::max(0.5, RandDouble());
+      options.block_density =
+          std::max CERES_PREVENT_MACRO_SUBSTITUTION(0.5, RandDouble());
       options.storage_type = ::testing::get<0>(param);
       std::unique_ptr<CompressedRowSparseMatrix> matrix =
           CompressedRowSparseMatrix::CreateRandomMatrix(options);
@@ -486,7 +487,8 @@ TEST_P(LeftMultiplyTest, _) {
       options.num_row_blocks = 2 * num_blocks;
       options.min_row_block_size = kMinBlockSize;
       options.max_row_block_size = kMaxBlockSize;
-      options.block_density = std::max(0.5, RandDouble());
+      options.block_density =
+          std::max CERES_PREVENT_MACRO_SUBSTITUTION(0.5, RandDouble());
       options.storage_type = ::testing::get<0>(param);
       std::unique_ptr<CompressedRowSparseMatrix> matrix =
           CompressedRowSparseMatrix::CreateRandomMatrix(options);
@@ -555,7 +557,8 @@ TEST_P(SquaredColumnNormTest, _) {
       options.num_row_blocks = 2 * num_blocks;
       options.min_row_block_size = kMinBlockSize;
       options.max_row_block_size = kMaxBlockSize;
-      options.block_density = std::max(0.5, RandDouble());
+      options.block_density =
+          std::max CERES_PREVENT_MACRO_SUBSTITUTION(0.5, RandDouble());
       options.storage_type = ::testing::get<0>(param);
       std::unique_ptr<CompressedRowSparseMatrix> matrix =
           CompressedRowSparseMatrix::CreateRandomMatrix(options);

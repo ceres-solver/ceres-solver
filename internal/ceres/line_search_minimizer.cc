@@ -297,10 +297,12 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     // iteration.
     const double initial_step_size =
         (iteration_summary.iteration == 1 || !line_search_status)
-            ? std::min(1.0, 1.0 / current_state.gradient_max_norm)
-            : std::min(1.0,
-                       2.0 * (current_state.cost - previous_state.cost) /
-                           current_state.directional_derivative);
+            ? std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+                  1.0, 1.0 / current_state.gradient_max_norm)
+            : std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+                  1.0,
+                  2.0 * (current_state.cost - previous_state.cost) /
+                      current_state.directional_derivative);
     // By definition, we should only ever go forwards along the specified search
     // direction in a line search, most likely cause for this being violated
     // would be a numerical failure in the line search direction calculation.

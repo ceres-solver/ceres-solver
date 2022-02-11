@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -138,5 +138,27 @@
 #endif  // __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >=
         // 202002L)
 #endif  // !defined(CERES_HAS_CPP20)
+
+// Prevents symbols from being substituted by the corresponding macro definition
+// under the same name. For instance, min and max are defined as macros on
+// Windows (unless NOMINMAX is defined) which causes compilation errors when
+// using std::min/std::max and also std::numerical_limits<>::min/max.
+//
+// To be robust in all cases where NOMINMAX cannot be defined, use this macro to
+// annotate min/max instances. Examples:
+//
+//   std::min CERES_PREVENT_MACRO_SUBSTITUTION(a, b);
+//   std::max CERES_PREVENT_MACRO_SUBSTITUTION(a, b);
+//   std::numerical_limits<double>::max CERES_PREVENT_MACRO_SUBSTITUTION()
+//
+// NOTE: In case symbols for which the substitution must be prevented are used
+// within another macro, the substitution must be inhibited as
+//
+//   (std::numerical_limits<double>::max)()
+//
+// as the helper macro will not work. Do not use this technique in general
+// case, because it will prevent argument-dependent lookup (ADL).
+//
+#define CERES_PREVENT_MACRO_SUBSTITUTION  // Yes, it's empty
 
 #endif  // CERES_PUBLIC_INTERNAL_PORT_H_

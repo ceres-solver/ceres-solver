@@ -576,9 +576,12 @@ double ComputeLRE(const Matrix& expected, const Matrix& actual) {
     //
     // The minimum LRE is capped at 0 - no digits match between the
     // computed solution and the ground truth.
-    log_relative_error =
-        std::min(log_relative_error,
-                 std::max(0.0, std::min(kMaxNumSignificantDigits, tmp_lre)));
+    log_relative_error = std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+        log_relative_error,
+        std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+            0.0,
+            std::min CERES_PREVENT_MACRO_SUBSTITUTION(kMaxNumSignificantDigits,
+                                                      tmp_lre)));
   }
   return log_relative_error;
 }
