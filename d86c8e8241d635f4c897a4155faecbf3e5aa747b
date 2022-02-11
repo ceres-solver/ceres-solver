@@ -72,6 +72,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59fa0ec2_785788bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T22:25:16Z",
+      "side": 1,
+      "message": "Regarding floating-point comparisons I submitted an issue: https://github.com/microsoft/STL/issues/2562",
+      "parentUuid": "9f4755a6_cc83d617",
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b5c7303_dab205e1",
