@@ -16,6 +16,23 @@
       "message": "I would suggest naming the macro `CERES_DEPRECATED_MSG` or the like to make clear that a message is required. CMake `GenerateExportHeader` from my other CL may generate itself a `CERES_DEPRECATED` that does not accept a message as argument.",
       "revId": "d10ea987ecc89d3040a43db6672b0e805c160b8f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac91870d_53fb3c86",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T17:04:12Z",
+      "side": 1,
+      "message": "Maybe eventually decay to `[[deprecated(\"...\")]]`?",
+      "revId": "d10ea987ecc89d3040a43db6672b0e805c160b8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
