@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "048670ea_9981e242",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T21:53:36Z",
+      "side": 1,
+      "message": "This is with the latest Visual Studio 17 2022.",
+      "parentUuid": "b88ce1ce_6a7f8c84",
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b5c7303_dab205e1",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-02-11T21:44:46Z",
       "side": 1,
       "message": "this seems unrelated to this patch.",
+      "range": {
+        "startLine": 86,
+        "startChar": 9,
+        "endLine": 86,
+        "endChar": 16
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe6b499a_dec42fee",
+        "filename": "include/ceres/internal/householder_vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T21:53:36Z",
+      "side": 1,
+      "message": "This is MSVC specific. Clang and GCC are happy with the original implementation.",
+      "parentUuid": "7b5c7303_dab205e1",
       "range": {
         "startLine": 86,
         "startChar": 9,
@@ -66,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "54d9a2cf_a948d909",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T21:53:36Z",
+      "side": 1,
+      "message": "There are otherwise various linker errors which prevent MSVC from compiling successfully. I intended to fix the build as a whole not only specific errors.",
+      "parentUuid": "4b9751f0_84ca1e72",
+      "range": {
+        "startLine": 406,
+        "startChar": 28,
+        "endLine": 406,
+        "endChar": 34
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3807b0f3_3921371f",
         "filename": "internal/ceres/dense_cholesky_test.cc",
         "patchSetId": 1
@@ -77,6 +143,30 @@
       "writtenOn": "2022-02-11T21:44:46Z",
       "side": 1,
       "message": "should be its own patch.",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 8
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4737bb14_00459e69",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T21:53:36Z",
+      "side": 1,
+      "message": "This also MSVC specific.",
+      "parentUuid": "3807b0f3_3921371f",
       "range": {
         "startLine": 101,
         "startChar": 0,
@@ -112,6 +202,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "75f97778_bfecd1d1",
+        "filename": "internal/ceres/gmock_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T21:53:36Z",
+      "side": 1,
+      "message": "If gflags is built as a static library and Ceres as shared one, linking will fail.",
+      "parentUuid": "f92b7c0e_532bf28b",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 18
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a1290358_50fcf066",
         "filename": "internal/ceres/test_util.cc",
         "patchSetId": 1
@@ -123,6 +237,30 @@
       "writtenOn": "2022-02-11T21:44:46Z",
       "side": 1,
       "message": "this should be in a separate patch.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 1
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7026f818_9ab539f4",
+        "filename": "internal/ceres/test_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T21:53:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this. All the problems fixed here are MSVC specific.",
+      "parentUuid": "a1290358_50fcf066",
       "range": {
         "startLine": 47,
         "startChar": 0,
