@@ -30,7 +30,11 @@
 
 // The floating-point environment access and modification is only meaningful
 // with the following pragma.
+#ifdef _MSC_VER
+#pragma fenv_access(on)
+#else
 #pragma STDC FENV_ACCESS ON
+#endif
 
 #include "ceres/jet.h"
 

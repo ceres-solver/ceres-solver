@@ -404,8 +404,9 @@ if (BUILD_TESTING AND GFLAGS)
   target_include_directories(gtest PUBLIC ${Ceres_SOURCE_DIR}/internal/ceres)
   if (BUILD_SHARED_LIBS)
     # Define gtest-specific shared library flags for compilation.
-    append_target_property(gtest COMPILE_DEFINITIONS
-      GTEST_CREATE_SHARED_LIBRARY)
+    target_compile_definitions(gtest
+      PRIVATE GTEST_CREATE_SHARED_LIBRARY=1
+      INTERFACE GTEST_LINKED_AS_SHARED_LIBRARY=1)
   endif()
 
   add_library(test_util
@@ -421,7 +422,7 @@ if (BUILD_TESTING AND GFLAGS)
     target_link_libraries(test_util PUBLIC Ceres::ceres gtest)
   else (MINIGLOG)
     target_link_libraries(gtest PUBLIC gflags ${GLOG_LIBRARIES})
-    target_link_libraries(test_util PUBLIC Ceres::ceres gtest ${GLOG_LIBRARIES})
+    target_link_libraries(test_util PRIVATE ${GLOG_LIBRARIES} Ceres::ceres PUBLIC gtest)
   endif (MINIGLOG)
 
   macro (CERES_TEST NAME)
@@ -430,18 +431,12 @@ if (BUILD_TESTING AND GFLAGS)
     # is invoked there, as well as the private headers in this directory which
     # may be referenced without the 'ceres' path prefix and all private
     # dependencies that may be directly referenced.
-    target_include_directories(${NAME}_test
-      PUBLIC ${CMAKE_CURRENT_LIST_DIR}
-             ${Ceres_SOURCE_DIR}/internal/ceres
-             ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
+    target_include_directories(${NAME}_test PRIVATE
+      ${Ceres_SOURCE_DIR}/internal/ceres
+      ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
 
 
-    target_link_libraries(${NAME}_test PUBLIC test_util Ceres::ceres gtest)
-    if (BUILD_SHARED_LIBS)
-      # Define gtest-specific shared library flags for linking.
-      append_target_property(${NAME}_test COMPILE_DEFINITIONS
-        GTEST_LINKED_AS_SHARED_LIBRARY)
-    endif()
+    target_link_libraries(${NAME}_test PRIVATE test_util Ceres::ceres)
     add_test(NAME ${NAME}_test
              COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${NAME}_test
              --test_srcdir

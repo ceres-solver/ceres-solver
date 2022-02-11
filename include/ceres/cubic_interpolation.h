@@ -191,7 +191,10 @@ struct Grid1D {
   }
 
   EIGEN_STRONG_INLINE void GetValue(const int n, double* f) const {
-    const int idx = std::min(std::max(begin_, n), end_ - 1) - begin_;
+    const int idx =
+        std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+            std::max CERES_PREVENT_MACRO_SUBSTITUTION(begin_, n), end_ - 1) -
+        begin_;
     if (kInterleaved) {
       for (int i = 0; i < kDataDimension; ++i) {
         f[i] = static_cast<double>(data_[kDataDimension * idx + i]);
@@ -402,9 +405,15 @@ struct Grid2D {
 
   EIGEN_STRONG_INLINE void GetValue(const int r, const int c, double* f) const {
     const int row_idx =
-        std::min(std::max(row_begin_, r), row_end_ - 1) - row_begin_;
+        std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+            std::max CERES_PREVENT_MACRO_SUBSTITUTION(row_begin_, r),
+            row_end_ - 1) -
+        row_begin_;
     const int col_idx =
-        std::min(std::max(col_begin_, c), col_end_ - 1) - col_begin_;
+        std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+            std::max CERES_PREVENT_MACRO_SUBSTITUTION(col_begin_, c),
+            col_end_ - 1) -
+        col_begin_;
 
     const int n = (kRowMajor) ? num_cols_ * row_idx + col_idx
                               : num_rows_ * col_idx + row_idx;
