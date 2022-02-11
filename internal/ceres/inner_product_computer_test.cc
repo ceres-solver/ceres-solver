@@ -98,7 +98,8 @@ TEST(InnerProductComputer, NormalOperation) {
         options.max_row_block_size = 5;
         options.min_col_block_size = 1;
         options.max_col_block_size = 10;
-        options.block_density = std::max(0.1, RandDouble());
+        options.block_density =
+            std::max CERES_PREVENT_MACRO_SUBSTITUTION(0.1, RandDouble());
 
         VLOG(2) << "num row blocks: " << options.num_row_blocks;
         VLOG(2) << "num col blocks: " << options.num_col_blocks;
@@ -157,7 +158,8 @@ TEST(InnerProductComputer, SubMatrix) {
     options.max_row_block_size = 5;
     options.min_col_block_size = 1;
     options.max_col_block_size = 10;
-    options.block_density = std::max(0.1, RandDouble());
+    options.block_density =
+        std::max CERES_PREVENT_MACRO_SUBSTITUTION(0.1, RandDouble());
 
     VLOG(2) << "num row blocks: " << options.num_row_blocks;
     VLOG(2) << "num col blocks: " << options.num_col_blocks;

@@ -148,7 +148,8 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Init(
         }
       }
 
-      buffer_size_ = std::max(buffer_size, buffer_size_);
+      buffer_size_ =
+          std::max CERES_PREVENT_MACRO_SUBSTITUTION(buffer_size, buffer_size_);
       ++chunk.size;
     }
 

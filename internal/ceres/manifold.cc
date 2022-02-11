@@ -312,6 +312,20 @@ bool SubsetManifold::MinusJacobian(const double* x,
   return true;
 }
 
+// While the trivial destructor is not necessary, MSVC (1930) complains in
+// shared library builds by issuing a linker error:
+//
+// bundle_adjuster.obj : error LNK2019: unresolved external symbol
+// "__declspec(dllimport) const ceres::ProductManifold::`vftable'"
+// (__imp_??_7ProductManifold@ceres@@6B@) referenced in function "public:
+// __cdecl ceres::ProductManifold::ProductManifold<class
+// ceres::QuaternionManifold,class ceres::EuclideanManifold>(class
+// ceres::QuaternionManifold *,class ceres::EuclideanManifold *)"
+// (??$?0VQuaternionManifold@ceres@@VEuclideanManifold@1@@ProductManifold@ceres@@QEAA@PEAVQuaternionManifold@1@PEAVEuclideanManifold@1@@Z)
+//
+// Providing a trivial implementation here resolves the issue.
+ProductManifold::~ProductManifold() = default;
+
 int ProductManifold::AmbientSize() const { return ambient_size_; }
 
 int ProductManifold::TangentSize() const { return tangent_size_; }

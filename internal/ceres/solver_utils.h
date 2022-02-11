@@ -54,7 +54,8 @@ void SetSummaryFinalCost(SummaryType* summary) {
   // iteration because the minimizer maybe making non-monotonic steps.
   for (int i = 0; i < summary->iterations.size(); ++i) {
     const IterationSummary& iteration_summary = summary->iterations[i];
-    summary->final_cost = std::min(iteration_summary.cost, summary->final_cost);
+    summary->final_cost = std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+        iteration_summary.cost, summary->final_cost);
   }
 }
 

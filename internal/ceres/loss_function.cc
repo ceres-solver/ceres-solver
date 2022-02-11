@@ -53,7 +53,9 @@ void HuberLoss::Evaluate(double s, double rho[3]) const {
     // 'r' is always positive.
     const double r = sqrt(s);
     rho[0] = 2.0 * a_ * r - b_;
-    rho[1] = std::max(std::numeric_limits<double>::min(), a_ / r);
+    rho[1] = std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+        std::numeric_limits<double>::min CERES_PREVENT_MACRO_SUBSTITUTION(),
+        a_ / r);
     rho[2] = -rho[1] / (2.0 * s);
   } else {
     // Inlier region.
@@ -68,7 +70,9 @@ void SoftLOneLoss::Evaluate(double s, double rho[3]) const {
   const double tmp = sqrt(sum);
   // 'sum' and 'tmp' are always positive, assuming that 's' is.
   rho[0] = 2.0 * b_ * (tmp - 1.0);
-  rho[1] = std::max(std::numeric_limits<double>::min(), 1.0 / tmp);
+  rho[1] = std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+      std::numeric_limits<double>::min CERES_PREVENT_MACRO_SUBSTITUTION(),
+      1.0 / tmp);
   rho[2] = -(c_ * rho[1]) / (2.0 * sum);
 }
 
@@ -77,7 +81,8 @@ void CauchyLoss::Evaluate(double s, double rho[3]) const {
   const double inv = 1.0 / sum;
   // 'sum' and 'inv' are always positive, assuming that 's' is.
   rho[0] = b_ * log(sum);
-  rho[1] = std::max(std::numeric_limits<double>::min(), inv);
+  rho[1] = std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+      std::numeric_limits<double>::min CERES_PREVENT_MACRO_SUBSTITUTION(), inv);
   rho[2] = -c_ * (inv * inv);
 }
 
@@ -86,7 +91,8 @@ void ArctanLoss::Evaluate(double s, double rho[3]) const {
   const double inv = 1 / sum;
   // 'sum' and 'inv' are always positive.
   rho[0] = a_ * atan2(s, a_);
-  rho[1] = std::max(std::numeric_limits<double>::min(), inv);
+  rho[1] = std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+      std::numeric_limits<double>::min CERES_PREVENT_MACRO_SUBSTITUTION(), inv);
   rho[2] = -2.0 * s * b_ * (inv * inv);
 }
 
@@ -112,7 +118,9 @@ void TolerantLoss::Evaluate(double s, double rho[3]) const {
   } else {
     const double e_x = exp(x);
     rho[0] = b_ * log(1.0 + e_x) - c_;
-    rho[1] = std::max(std::numeric_limits<double>::min(), e_x / (1.0 + e_x));
+    rho[1] = std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+        std::numeric_limits<double>::min CERES_PREVENT_MACRO_SUBSTITUTION(),
+        e_x / (1.0 + e_x));
     rho[2] = 0.5 / (b_ * (1.0 + cosh(x)));
   }
 }

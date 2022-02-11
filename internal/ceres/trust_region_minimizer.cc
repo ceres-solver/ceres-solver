@@ -183,7 +183,7 @@ void TrustRegionMinimizer::Init(const Minimizer::Options& options,
   jacobian_scaling_ = Vector::Ones(num_effective_parameters_);
 
   x_norm_ = -1;  // Invalid value
-  x_cost_ = std::numeric_limits<double>::max();
+  x_cost_ = std::numeric_limits<double>::max CERES_PREVENT_MACRO_SUBSTITUTION();
   minimum_cost_ = x_cost_;
   model_cost_change_ = 0.0;
 }
@@ -495,7 +495,8 @@ bool TrustRegionMinimizer::HandleInvalidStep() {
 void TrustRegionMinimizer::DoInnerIterationsIfNeeded() {
   inner_iterations_were_useful_ = false;
   if (!inner_iterations_are_enabled_ ||
-      candidate_cost_ >= std::numeric_limits<double>::max()) {
+      candidate_cost_ >=
+          std::numeric_limits<double>::max CERES_PREVENT_MACRO_SUBSTITUTION()) {
     return;
   }
 
@@ -762,7 +763,8 @@ void TrustRegionMinimizer::ComputeCandidatePointAndEvaluateCost() {
       LOG(WARNING) << "x_plus_delta = Plus(x, delta) failed. "
                    << "Treating it as a step with infinite cost";
     }
-    candidate_cost_ = std::numeric_limits<double>::max();
+    candidate_cost_ =
+        std::numeric_limits<double>::max CERES_PREVENT_MACRO_SUBSTITUTION();
     return;
   }
 
@@ -772,7 +774,8 @@ void TrustRegionMinimizer::ComputeCandidatePointAndEvaluateCost() {
       LOG(WARNING) << "Step failed to evaluate. "
                    << "Treating it as a step with infinite cost";
     }
-    candidate_cost_ = std::numeric_limits<double>::max();
+    candidate_cost_ =
+        std::numeric_limits<double>::max CERES_PREVENT_MACRO_SUBSTITUTION();
   }
 }
 

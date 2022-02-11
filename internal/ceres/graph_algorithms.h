@@ -34,6 +34,7 @@
 #define CERES_INTERNAL_GRAPH_ALGORITHMS_H_
 
 #include <algorithm>
+#include <memory>
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>

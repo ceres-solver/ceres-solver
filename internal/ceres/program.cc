@@ -206,8 +206,10 @@ bool Program::IsBoundsConstrained() const {
     for (int j = 0; j < size; ++j) {
       const double lower_bound = parameter_block->LowerBoundForParameter(j);
       const double upper_bound = parameter_block->UpperBoundForParameter(j);
-      if (lower_bound > -std::numeric_limits<double>::max() ||
-          upper_bound < std::numeric_limits<double>::max()) {
+      if (lower_bound > -std::numeric_limits<double>::max
+                            CERES_PREVENT_MACRO_SUBSTITUTION() ||
+          upper_bound < std::numeric_limits<double>::max
+                            CERES_PREVENT_MACRO_SUBSTITUTION()) {
         return true;
       }
     }
@@ -502,9 +504,9 @@ int Program::MaxScratchDoublesNeededForEvaluate() const {
   // Compute the scratch space needed for evaluate.
   int max_scratch_bytes_for_evaluate = 0;
   for (int i = 0; i < residual_blocks_.size(); ++i) {
-    max_scratch_bytes_for_evaluate =
-        std::max(max_scratch_bytes_for_evaluate,
-                 residual_blocks_[i]->NumScratchDoublesForEvaluate());
+    max_scratch_bytes_for_evaluate = std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+        max_scratch_bytes_for_evaluate,
+        residual_blocks_[i]->NumScratchDoublesForEvaluate());
   }
   return max_scratch_bytes_for_evaluate;
 }
@@ -519,7 +521,8 @@ int Program::MaxDerivativesPerResidualBlock() const {
       derivatives += residual_block->NumResiduals() *
                      residual_block->parameter_blocks()[j]->TangentSize();
     }
-    max_derivatives = std::max(max_derivatives, derivatives);
+    max_derivatives =
+        std::max CERES_PREVENT_MACRO_SUBSTITUTION(max_derivatives, derivatives);
   }
   return max_derivatives;
 }
@@ -527,8 +530,8 @@ int Program::MaxDerivativesPerResidualBlock() const {
 int Program::MaxParametersPerResidualBlock() const {
   int max_parameters = 0;
   for (int i = 0; i < residual_blocks_.size(); ++i) {
-    max_parameters =
-        std::max(max_parameters, residual_blocks_[i]->NumParameterBlocks());
+    max_parameters = std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+        max_parameters, residual_blocks_[i]->NumParameterBlocks());
   }
   return max_parameters;
 }
@@ -536,8 +539,8 @@ int Program::MaxParametersPerResidualBlock() const {
 int Program::MaxResidualsPerResidualBlock() const {
   int max_residuals = 0;
   for (int i = 0; i < residual_blocks_.size(); ++i) {
-    max_residuals =
-        std::max(max_residuals, residual_blocks_[i]->NumResiduals());
+    max_residuals = std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+        max_residuals, residual_blocks_[i]->NumResiduals());
   }
   return max_residuals;
 }

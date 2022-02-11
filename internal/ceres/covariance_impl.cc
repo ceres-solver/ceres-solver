@@ -757,8 +757,8 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
       sqrt(options_.min_reciprocal_condition_number);
 
   const bool automatic_truncation = (options_.null_space_rank < 0);
-  const int max_rank = std::min(num_singular_values,
-                                num_singular_values - options_.null_space_rank);
+  const int max_rank = std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+      num_singular_values, num_singular_values - options_.null_space_rank);
 
   // Compute the squared inverse of the singular values. Truncate the
   // computation based on min_singular_value_ratio and

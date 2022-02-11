@@ -282,7 +282,8 @@ bool GradientChecker::Probe(double const* const* parameters,
                                            relative_precision,
                                            &relative_error,
                                            &absolute_error);
-        worst_relative_error = std::max(worst_relative_error, relative_error);
+        worst_relative_error = std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+            worst_relative_error, relative_error);
 
         StringAppendF(&error_log,
                       "%6d %4d %4d %17g %17g %17g %17g %17g %17g",

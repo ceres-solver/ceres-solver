@@ -219,7 +219,10 @@ double LineSearch::InterpolatingPolynomialMinimizingStepSize(
       (interpolation_type == BISECTION && max_step_size <= current.x)) {
     // Either: sample is invalid; or we are using BISECTION and contracting
     // the step size.
-    return std::min(std::max(current.x * 0.5, min_step_size), max_step_size);
+    return std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+        std::max CERES_PREVENT_MACRO_SUBSTITUTION(current.x * 0.5,
+                                                  min_step_size),
+        max_step_size);
   } else if (interpolation_type == BISECTION) {
     CHECK_GT(max_step_size, current.x);
     // We are expanding the search (during a Wolfe bracketing phase) using

@@ -210,13 +210,13 @@ TEST(ParameterBlock, DefaultBounds) {
   double x[2];
   ParameterBlock parameter_block(x, 2, -1, nullptr);
   EXPECT_EQ(parameter_block.UpperBoundForParameter(0),
-            std::numeric_limits<double>::max());
+            (std::numeric_limits<double>::max)());
   EXPECT_EQ(parameter_block.UpperBoundForParameter(1),
-            std::numeric_limits<double>::max());
+            (std::numeric_limits<double>::max)());
   EXPECT_EQ(parameter_block.LowerBoundForParameter(0),
-            -std::numeric_limits<double>::max());
+            -(std::numeric_limits<double>::max)());
   EXPECT_EQ(parameter_block.LowerBoundForParameter(1),
-            -std::numeric_limits<double>::max());
+            -(std::numeric_limits<double>::max)());
 }
 
 TEST(ParameterBlock, SetBounds) {
@@ -227,10 +227,10 @@ TEST(ParameterBlock, SetBounds) {
 
   EXPECT_EQ(parameter_block.LowerBoundForParameter(0), 1.0);
   EXPECT_EQ(parameter_block.LowerBoundForParameter(1),
-            -std::numeric_limits<double>::max());
+            -(std::numeric_limits<double>::max)());
 
   EXPECT_EQ(parameter_block.UpperBoundForParameter(0),
-            std::numeric_limits<double>::max());
+            (std::numeric_limits<double>::max)());
   EXPECT_EQ(parameter_block.UpperBoundForParameter(1), 1.0);
 }
 

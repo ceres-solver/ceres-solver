@@ -235,7 +235,8 @@ int MaxImage(const vector<Marker>& all_markers) {
 
   int max_image = all_markers[0].image;
   for (int i = 1; i < all_markers.size(); i++) {
-    max_image = std::max(max_image, all_markers[i].image);
+    max_image = std::max CERES_PREVENT_MACRO_SUBSTITUTION(max_image,
+                                                          all_markers[i].image);
   }
   return max_image;
 }

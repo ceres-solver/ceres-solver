@@ -245,8 +245,10 @@ void SolveProblem(Problem* problem, PGMImage<double>* solution) {
   // Make the solution stay in [0, 255].
   for (int x = 0; x < solution->width(); ++x) {
     for (int y = 0; y < solution->height(); ++y) {
-      *solution->MutablePixel(x, y) =
-          std::min(255.0, std::max(0.0, solution->Pixel(x, y)));
+      *solution->MutablePixel(x, y) = std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+          255.0,
+          std::max CERES_PREVENT_MACRO_SUBSTITUTION(0.0,
+                                                    solution->Pixel(x, y)));
     }
   }
 }

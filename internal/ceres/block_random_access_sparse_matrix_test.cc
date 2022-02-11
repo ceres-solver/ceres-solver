@@ -171,8 +171,9 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
 };
 
 TEST_F(BlockRandomAccessSparseMatrixTest, IntPairToLongOverflow) {
-  CheckIntPairToLong(std::numeric_limits<int>::max(),
-                     std::numeric_limits<int>::max());
+  CheckIntPairToLong(
+      std::numeric_limits<int>::max CERES_PREVENT_MACRO_SUBSTITUTION(),
+      std::numeric_limits<int>::max CERES_PREVENT_MACRO_SUBSTITUTION());
 }
 
 TEST_F(BlockRandomAccessSparseMatrixTest, LongToIntPair) {

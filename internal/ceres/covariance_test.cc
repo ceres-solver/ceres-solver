@@ -585,7 +585,7 @@ class CovarianceTest : public ::testing::Test {
 
     int dof = 0;  // degrees of freedom = sum of LocalSize()s
     for (const auto& bound : column_bounds) {
-      dof = std::max(dof, bound.second.second);
+      dof = std::max CERES_PREVENT_MACRO_SUBSTITUTION(dof, bound.second.second);
     }
     ConstMatrixRef expected(expected_covariance, dof, dof);
     double diff_norm =

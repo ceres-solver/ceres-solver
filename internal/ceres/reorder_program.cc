@@ -78,8 +78,8 @@ static int MinParameterBlock(const ResidualBlock* residual_block,
       CHECK_NE(parameter_block->index(), -1)
           << "Did you forget to call Program::SetParameterOffsetsAndIndex()? "
           << "This is a Ceres bug; please contact the developers!";
-      min_parameter_block_position =
-          std::min(parameter_block->index(), min_parameter_block_position);
+      min_parameter_block_position = std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+          parameter_block->index(), min_parameter_block_position);
     }
   }
   return min_parameter_block_position;
