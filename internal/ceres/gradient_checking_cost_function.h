@@ -73,7 +73,8 @@ class CERES_EXPORT_INTERNAL GradientCheckingIterationCallback
 // with finite differences. This API is only intended for unit tests that intend
 // to  check the functionality of the GradientCheckingCostFunction
 // implementation directly.
-CERES_EXPORT_INTERNAL CostFunction* CreateGradientCheckingCostFunction(
+CERES_EXPORT_INTERNAL std::unique_ptr<CostFunction>
+CreateGradientCheckingCostFunction(
     const CostFunction* cost_function,
     const std::vector<const Manifold*>* manifolds,
     double relative_step_size,

@@ -37,9 +37,9 @@
 namespace ceres {
 namespace internal {
 
-ScratchEvaluatePreparer* ScratchEvaluatePreparer::Create(const Program& program,
-                                                         int num_threads) {
-  ScratchEvaluatePreparer* preparers = new ScratchEvaluatePreparer[num_threads];
+std::unique_ptr<ScratchEvaluatePreparer[]> ScratchEvaluatePreparer::Create(
+    const Program& program, int num_threads) {
+  auto preparers = std::make_unique<ScratchEvaluatePreparer[]>(num_threads);
   int max_derivatives_per_residual_block =
       program.MaxDerivativesPerResidualBlock();
   for (int i = 0; i < num_threads; i++) {

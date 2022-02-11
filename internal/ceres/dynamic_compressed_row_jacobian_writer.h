@@ -55,7 +55,8 @@ class DynamicCompressedRowJacobianWriter {
   // the cost functions. The scratch space is therefore used to store
   // the jacobians (including zeros) temporarily before only the non-zero
   // entries are copied over to the larger jacobian in `Write`.
-  ScratchEvaluatePreparer* CreateEvaluatePreparers(int num_threads);
+  std::unique_ptr<ScratchEvaluatePreparer[]> CreateEvaluatePreparers(
+      int num_threads);
 
   // Return a `DynamicCompressedRowSparseMatrix` which is filled by
   // `Write`. Note that `Finalize` must be called to make the

@@ -47,8 +47,8 @@ class SparseMatrix;
 class ScratchEvaluatePreparer {
  public:
   // Create num_threads ScratchEvaluatePreparers.
-  static ScratchEvaluatePreparer* Create(const Program& program,
-                                         int num_threads);
+  static std::unique_ptr<ScratchEvaluatePreparer[]> Create(
+      const Program& program, int num_threads);
 
   // EvaluatePreparer interface
   void Init(int max_derivatives_per_residual_block);

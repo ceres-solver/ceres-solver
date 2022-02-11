@@ -70,7 +70,7 @@ struct PreprocessedProblem;
 class CERES_EXPORT_INTERNAL Preprocessor {
  public:
   // Factory.
-  static Preprocessor* Create(MinimizerType minimizer_type);
+  static std::unique_ptr<Preprocessor> Create(MinimizerType minimizer_type);
   virtual ~Preprocessor();
   virtual bool Preprocess(const Solver::Options& options,
                           ProblemImpl* problem,

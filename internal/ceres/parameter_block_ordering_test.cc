@@ -46,9 +46,6 @@
 namespace ceres {
 namespace internal {
 
-using std::vector;
-
-typedef Graph<ParameterBlock*> HessianGraph;
 typedef std::unordered_set<ParameterBlock*> VertexSet;
 
 template <int M, int... Ns>
@@ -85,8 +82,9 @@ class SchurOrderingTest : public ::testing::Test {
 
 TEST_F(SchurOrderingTest, NoFixed) {
   const Program& program = problem_.program();
-  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
-  std::unique_ptr<HessianGraph> graph(CreateHessianGraph(program));
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program.parameter_blocks();
+  auto graph = CreateHessianGraph(program);
 
   const VertexSet& vertices = graph->vertices();
   EXPECT_EQ(vertices.size(), 4);
@@ -131,7 +129,7 @@ TEST_F(SchurOrderingTest, AllFixed) {
   problem_.SetParameterBlockConstant(w_);
 
   const Program& program = problem_.program();
-  std::unique_ptr<HessianGraph> graph(CreateHessianGraph(program));
+  auto graph = CreateHessianGraph(program);
   EXPECT_EQ(graph->vertices().size(), 0);
 }
 
@@ -139,8 +137,9 @@ TEST_F(SchurOrderingTest, OneFixed) {
   problem_.SetParameterBlockConstant(x_);
 
   const Program& program = problem_.program();
-  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
-  std::unique_ptr<HessianGraph> graph(CreateHessianGraph(program));
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program.parameter_blocks();
+  auto graph = CreateHessianGraph(program);
 
   const VertexSet& vertices = graph->vertices();
 
@@ -171,7 +170,7 @@ TEST_F(SchurOrderingTest, OneFixed) {
   }
 
   // The constant parameter block is at the end.
-  vector<ParameterBlock*> ordering;
+  std::vector<ParameterBlock*> ordering;
   ComputeSchurOrdering(program, &ordering);
   EXPECT_EQ(ordering.back(), parameter_blocks[0]);
 }

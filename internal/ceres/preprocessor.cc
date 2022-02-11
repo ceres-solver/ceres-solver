@@ -41,13 +41,14 @@
 namespace ceres {
 namespace internal {
 
-Preprocessor* Preprocessor::Create(MinimizerType minimizer_type) {
+std::unique_ptr<Preprocessor> Preprocessor::Create(
+    MinimizerType minimizer_type) {
   if (minimizer_type == TRUST_REGION) {
-    return new TrustRegionPreprocessor;
+    return std::make_unique<TrustRegionPreprocessor>();
   }
 
   if (minimizer_type == LINE_SEARCH) {
-    return new LineSearchPreprocessor;
+    return std::make_unique<LineSearchPreprocessor>();
   }
 
   LOG(FATAL) << "Unknown minimizer_type: " << minimizer_type;

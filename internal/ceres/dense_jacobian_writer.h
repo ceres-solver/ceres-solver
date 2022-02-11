@@ -33,6 +33,8 @@
 #ifndef CERES_INTERNAL_DENSE_JACOBIAN_WRITER_H_
 #define CERES_INTERNAL_DENSE_JACOBIAN_WRITER_H_
 
+#include <memory>
+
 #include "ceres/casts.h"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
@@ -54,7 +56,8 @@ class DenseJacobianWriter {
   // Since the dense matrix has different layout than that assumed by the cost
   // functions, use scratch space to store the jacobians temporarily then copy
   // them over to the larger jacobian later.
-  ScratchEvaluatePreparer* CreateEvaluatePreparers(int num_threads) {
+  std::unique_ptr<ScratchEvaluatePreparer[]> CreateEvaluatePreparers(
+      int num_threads) {
     return ScratchEvaluatePreparer::Create(*program_, num_threads);
   }
 

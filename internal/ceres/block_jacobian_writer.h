@@ -59,7 +59,8 @@ class BlockJacobianWriter {
 
   // Create evaluate prepareres that point directly into the final jacobian.
   // This makes the final Write() a nop.
-  BlockEvaluatePreparer* CreateEvaluatePreparers(int num_threads);
+  std::unique_ptr<BlockEvaluatePreparer[]> CreateEvaluatePreparers(
+      int num_threads);
 
   std::unique_ptr<SparseMatrix> CreateJacobian() const;
 

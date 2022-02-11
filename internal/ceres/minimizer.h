@@ -178,7 +178,7 @@ class CERES_EXPORT_INTERNAL Minimizer {
     std::shared_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer;
   };
 
-  static Minimizer* Create(MinimizerType minimizer_type);
+  static std::unique_ptr<Minimizer> Create(MinimizerType minimizer_type);
   static bool RunCallbacks(const Options& options,
                            const IterationSummary& iteration_summary,
                            Solver::Summary* summary);

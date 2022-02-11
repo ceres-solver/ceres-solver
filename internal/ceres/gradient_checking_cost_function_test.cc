@@ -164,13 +164,13 @@ TEST(GradientCheckingCostFunction, ResidualsAndJacobiansArePreservedTest) {
 
   TestTerm<-1, -1> term(arity, dim);
   GradientCheckingIterationCallback callback;
-  std::unique_ptr<CostFunction> gradient_checking_cost_function(
+  auto gradient_checking_cost_function =
       CreateGradientCheckingCostFunction(&term,
                                          nullptr,
                                          kRelativeStepSize,
                                          kRelativePrecision,
                                          "Ignored.",
-                                         &callback));
+                                         &callback);
   term.Evaluate(&parameters[0], &original_residual, &original_jacobians[0]);
 
   gradient_checking_cost_function->Evaluate(
@@ -220,13 +220,13 @@ TEST(GradientCheckingCostFunction, SmokeTest) {
   {
     TestTerm<1, 2> term(arity, dim);
     GradientCheckingIterationCallback callback;
-    std::unique_ptr<CostFunction> gradient_checking_cost_function(
+    auto gradient_checking_cost_function =
         CreateGradientCheckingCostFunction(&term,
                                            nullptr,
                                            kRelativeStepSize,
                                            kRelativePrecision,
                                            "Fuzzy banana",
-                                           &callback));
+                                           &callback);
     EXPECT_TRUE(gradient_checking_cost_function->Evaluate(
         &parameters[0], &residual, &jacobians[0]));
     EXPECT_TRUE(callback.gradient_error_detected());
@@ -240,13 +240,13 @@ TEST(GradientCheckingCostFunction, SmokeTest) {
   {
     TestTerm<-1, -1> term(arity, dim);
     GradientCheckingIterationCallback callback;
-    std::unique_ptr<CostFunction> gradient_checking_cost_function(
+    auto gradient_checking_cost_function =
         CreateGradientCheckingCostFunction(&term,
                                            nullptr,
                                            kRelativeStepSize,
                                            kRelativePrecision,
                                            "Fuzzy banana",
-                                           &callback));
+                                           &callback);
     EXPECT_TRUE(gradient_checking_cost_function->Evaluate(
         &parameters[0], &residual, &jacobians[0]));
     EXPECT_FALSE(callback.gradient_error_detected());
@@ -365,7 +365,7 @@ TEST(GradientCheckingProblemImpl,
   // clang-format on
 
   GradientCheckingIterationCallback callback;
-  std::unique_ptr<ProblemImpl> gradient_checking_problem_impl =
+  auto gradient_checking_problem_impl =
       CreateGradientCheckingProblemImpl(&problem_impl, 1.0, 1.0, &callback);
 
   // The dimensions of the two problems match.
@@ -443,7 +443,7 @@ TEST(GradientCheckingProblemImpl, ProblemDimensionsMatch) {
   // clang-format on
 
   GradientCheckingIterationCallback callback;
-  std::unique_ptr<ProblemImpl> gradient_checking_problem_impl =
+  auto gradient_checking_problem_impl =
       CreateGradientCheckingProblemImpl(&problem_impl, 1.0, 1.0, &callback);
 
   // The dimensions of the two problems match.
@@ -504,7 +504,7 @@ TEST(GradientCheckingProblemImpl, ConstrainedProblemBoundsArePropagated) {
   problem_impl.SetParameterUpperBound(x, 1, 2.5);
 
   GradientCheckingIterationCallback callback;
-  std::unique_ptr<ProblemImpl> gradient_checking_problem_impl =
+  auto gradient_checking_problem_impl =
       CreateGradientCheckingProblemImpl(&problem_impl, 1.0, 1.0, &callback);
 
   // The dimensions of the two problems match.

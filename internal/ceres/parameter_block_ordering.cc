@@ -54,7 +54,7 @@ int ComputeStableSchurOrdering(const Program& program,
   CHECK(ordering != nullptr);
   ordering->clear();
   EventLogger event_logger("ComputeStableSchurOrdering");
-  std::unique_ptr<Graph<ParameterBlock*>> graph(CreateHessianGraph(program));
+  auto graph = CreateHessianGraph(program);
   event_logger.AddEvent("CreateHessianGraph");
 
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
@@ -86,7 +86,7 @@ int ComputeSchurOrdering(const Program& program,
   CHECK(ordering != nullptr);
   ordering->clear();
 
-  std::unique_ptr<Graph<ParameterBlock*>> graph(CreateHessianGraph(program));
+  auto graph = CreateHessianGraph(program);
   int independent_set_size = IndependentSetOrdering(*graph, ordering);
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
 
@@ -106,7 +106,7 @@ void ComputeRecursiveIndependentSetOrdering(const Program& program,
   CHECK(ordering != nullptr);
   ordering->Clear();
   const vector<ParameterBlock*> parameter_blocks = program.parameter_blocks();
-  std::unique_ptr<Graph<ParameterBlock*>> graph(CreateHessianGraph(program));
+  auto graph = CreateHessianGraph(program);
 
   int num_covered = 0;
   int round = 0;
@@ -124,8 +124,9 @@ void ComputeRecursiveIndependentSetOrdering(const Program& program,
   }
 }
 
-Graph<ParameterBlock*>* CreateHessianGraph(const Program& program) {
-  Graph<ParameterBlock*>* graph = new Graph<ParameterBlock*>;
+std::unique_ptr<Graph<ParameterBlock*>> CreateHessianGraph(
+    const Program& program) {
+  auto graph = std::make_unique<Graph<ParameterBlock*>>();
   CHECK(graph != nullptr);
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
   for (int i = 0; i < parameter_blocks.size(); ++i) {

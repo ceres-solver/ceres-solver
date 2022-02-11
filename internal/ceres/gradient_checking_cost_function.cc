@@ -80,7 +80,6 @@ class GradientCheckingCostFunction : public CostFunction {
     set_num_residuals(function->num_residuals());
   }
 
-
   bool Evaluate(double const* const* parameters,
                 double* residuals,
                 double** jacobians) const final {
@@ -143,6 +142,7 @@ CallbackReturnType GradientCheckingIterationCallback::operator()(
   }
   return SOLVER_CONTINUE;
 }
+
 void GradientCheckingIterationCallback::SetGradientErrorDetected(
     std::string& error_log) {
   std::lock_guard<std::mutex> l(mutex_);
@@ -150,7 +150,7 @@ void GradientCheckingIterationCallback::SetGradientErrorDetected(
   error_log_ += "\n" + error_log;
 }
 
-CostFunction* CreateGradientCheckingCostFunction(
+std::unique_ptr<CostFunction> CreateGradientCheckingCostFunction(
     const CostFunction* cost_function,
     const std::vector<const Manifold*>* manifolds,
     double relative_step_size,
@@ -160,12 +160,12 @@ CostFunction* CreateGradientCheckingCostFunction(
   NumericDiffOptions numeric_diff_options;
   numeric_diff_options.relative_step_size = relative_step_size;
 
-  return new GradientCheckingCostFunction(cost_function,
-                                          manifolds,
-                                          numeric_diff_options,
-                                          relative_precision,
-                                          extra_info,
-                                          callback);
+  return std::make_unique<GradientCheckingCostFunction>(cost_function,
+                                                        manifolds,
+                                                        numeric_diff_options,
+                                                        relative_precision,
+                                                        extra_info,
+                                                        callback);
 }
 
 std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(

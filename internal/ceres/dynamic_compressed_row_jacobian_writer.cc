@@ -43,7 +43,7 @@ namespace internal {
 using std::pair;
 using std::vector;
 
-ScratchEvaluatePreparer*
+std::unique_ptr<ScratchEvaluatePreparer[]>
 DynamicCompressedRowJacobianWriter::CreateEvaluatePreparers(int num_threads) {
   return ScratchEvaluatePreparer::Create(*program_, num_threads);
 }

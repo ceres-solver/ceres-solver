@@ -257,11 +257,11 @@ Vertex FindConnectedComponent(const Vertex& vertex,
 // spanning forest, or a collection of linear paths that span the
 // graph G.
 template <typename Vertex>
-WeightedGraph<Vertex>* Degree2MaximumSpanningForest(
+std::unique_ptr<WeightedGraph<Vertex>> Degree2MaximumSpanningForest(
     const WeightedGraph<Vertex>& graph) {
   // Array of edges sorted in decreasing order of their weights.
   std::vector<std::pair<double, std::pair<Vertex, Vertex>>> weighted_edges;
-  WeightedGraph<Vertex>* forest = new WeightedGraph<Vertex>();
+  auto forest = std::make_unique<WeightedGraph<Vertex>>();
 
   // Disjoint-set to keep track of the connected components in the
   // maximum spanning tree.

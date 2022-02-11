@@ -61,9 +61,11 @@
 //     // Evaluator::CreateJacobian.
 //     std::unique_ptr<SparseMatrix> CreateJacobian() const;
 //
-//     // Create num_threads evaluate preparers. Caller owns result which must
-//     // be freed with delete[]. Resulting preparers are valid while *this is.
-//     EvaluatePreparer* CreateEvaluatePreparers(int num_threads);
+//     // Create num_threads evaluate preparers.Resulting preparers are valid
+//     // while *this is.
+//
+//     std::unique_ptr<EvaluatePreparer[]> CreateEvaluatePreparers(
+//                                           int num_threads);
 //
 //     // Write the block jacobians from a residual block evaluation to the
 //     // larger sparse jacobian.
@@ -115,8 +117,8 @@ class ProgramEvaluator : public Evaluator {
       : options_(options),
         program_(program),
         jacobian_writer_(options, program),
-        evaluate_preparers_(
-            jacobian_writer_.CreateEvaluatePreparers(options.num_threads)) {
+        evaluate_preparers_(std::move(
+            jacobian_writer_.CreateEvaluatePreparers(options.num_threads))) {
 #ifdef CERES_NO_THREADS
     if (options_.num_threads > 1) {
       LOG(WARNING) << "No threading support is compiled into this binary; "

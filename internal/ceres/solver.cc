@@ -436,8 +436,7 @@ void Minimize(internal::PreprocessedProblem* pp, Solver::Summary* summary) {
   }
 
   const Vector original_reduced_parameters = pp->reduced_parameters;
-  std::unique_ptr<Minimizer> minimizer(
-      Minimizer::Create(pp->options.minimizer_type));
+  auto minimizer = Minimizer::Create(pp->options.minimizer_type);
   minimizer->Minimize(
       pp->minimizer_options, pp->reduced_parameters.data(), summary);
 
@@ -534,8 +533,7 @@ void Solver::Solve(const Solver::Options& options,
   // The main thread also does work so we only need to launch num_threads - 1.
   problem_impl->context()->EnsureMinimumThreads(options.num_threads - 1);
 
-  std::unique_ptr<Preprocessor> preprocessor(
-      Preprocessor::Create(modified_options.minimizer_type));
+  auto preprocessor = Preprocessor::Create(modified_options.minimizer_type);
   PreprocessedProblem pp;
 
   const bool status =

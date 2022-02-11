@@ -38,13 +38,13 @@
 namespace ceres {
 namespace internal {
 
-Minimizer* Minimizer::Create(MinimizerType minimizer_type) {
+std::unique_ptr<Minimizer> Minimizer::Create(MinimizerType minimizer_type) {
   if (minimizer_type == TRUST_REGION) {
-    return new TrustRegionMinimizer;
+    return std::make_unique<TrustRegionMinimizer>();
   }
 
   if (minimizer_type == LINE_SEARCH) {
-    return new LineSearchMinimizer;
+    return std::make_unique<LineSearchMinimizer>();
   }
 
   LOG(FATAL) << "Unknown minimizer_type: " << minimizer_type;

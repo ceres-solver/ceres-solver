@@ -79,7 +79,7 @@ void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
   }
 }
 
-WeightedGraph<int>* CreateSchurComplementGraph(
+std::unique_ptr<WeightedGraph<int>> CreateSchurComplementGraph(
     const vector<set<int>>& visibility) {
   const time_t start_time = time(nullptr);
   // Compute the number of e_blocks/point blocks. Since the visibility
@@ -121,7 +121,7 @@ WeightedGraph<int>* CreateSchurComplementGraph(
     }
   }
 
-  WeightedGraph<int>* graph = new WeightedGraph<int>;
+  auto graph = std::make_unique<WeightedGraph<int>>();
 
   // Add vertices and initialize the pairs for self edges so that self
   // edges are guaranteed. This is needed for the Canonical views

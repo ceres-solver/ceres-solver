@@ -160,7 +160,7 @@ class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
   void ComputeClusterVisibility(
       const std::vector<std::set<int>>& visibility,
       std::vector<std::set<int>>* cluster_visibility) const;
-  WeightedGraph<int>* CreateClusterGraph(
+  std::unique_ptr<WeightedGraph<int>> CreateClusterGraph(
       const std::vector<std::set<int>>& visibility) const;
   void ForestToClusterPairs(
       const WeightedGraph<int>& forest,
