@@ -119,6 +119,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "271e619c_fa181752",
+        "filename": "include/ceres/internal/householder_vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T22:08:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fe6b499a_dec42fee",
+      "range": {
+        "startLine": 86,
+        "startChar": 9,
+        "endLine": 86,
+        "endChar": 16
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b9751f0_84ca1e72",
@@ -166,6 +190,53 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eddfd858_0f65ac55",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T22:08:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "54d9a2cf_a948d909",
+      "range": {
+        "startLine": 406,
+        "startChar": 28,
+        "endLine": 406,
+        "endChar": 34
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db4279f9_0b648a9d",
+        "filename": "internal/ceres/canonical_views_clustering.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T22:08:30Z",
+      "side": 1,
+      "message": "why are you able to use brackets here but not above?",
+      "range": {
+        "startLine": 125,
+        "startChar": 52,
+        "endLine": 125,
+        "endChar": 58
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3807b0f3_3921371f",
@@ -203,6 +274,30 @@
       "side": 1,
       "message": "This also MSVC specific.",
       "parentUuid": "3807b0f3_3921371f",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 8
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9115f2e_32ddfa96",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T22:08:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4737bb14_00459e69",
       "range": {
         "startLine": 101,
         "startChar": 0,
@@ -262,6 +357,53 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8c58c993_b1da50e9",
+        "filename": "internal/ceres/gmock_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T22:08:30Z",
+      "side": 1,
+      "message": "is this fixed upstream? should we update our version of gtest? it would be odd to carry this change ourselves here.",
+      "parentUuid": "75f97778_bfecd1d1",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 18
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "467b6079_806f903b",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T22:08:30Z",
+      "side": 1,
+      "message": "why change the case for this?",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 11
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a1290358_50fcf066",
         "filename": "internal/ceres/test_util.cc",
         "patchSetId": 1
@@ -297,6 +439,30 @@
       "side": 1,
       "message": "I\u0027m not sure about this. All the problems fixed here are MSVC specific.",
       "parentUuid": "a1290358_50fcf066",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 1
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8881dae6_4808ac88",
+        "filename": "internal/ceres/test_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T22:08:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7026f818_9ab539f4",
       "range": {
         "startLine": 47,
         "startChar": 0,
