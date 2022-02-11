@@ -239,6 +239,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d6ff87b3_9b39cf71",
+        "filename": "internal/ceres/canonical_views_clustering.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T22:20:16Z",
+      "side": 1,
+      "message": "No specific reason. I started using the macro mechanism until I stumbled upon this case (max/min within a macro).",
+      "parentUuid": "db4279f9_0b648a9d",
+      "range": {
+        "startLine": 125,
+        "startChar": 52,
+        "endLine": 125,
+        "endChar": 58
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3807b0f3_3921371f",
         "filename": "internal/ceres/dense_cholesky_test.cc",
         "patchSetId": 1
