@@ -55,6 +55,7 @@
 #include <cmath>
 
 #include "Eigen/Dense"
+#include "ceres/internal/port.h"
 
 namespace ceres {
 
@@ -249,8 +250,11 @@ class TinySolver {
       const Scalar min_diagonal = 1e-6;
       const Scalar max_diagonal = 1e32;
       for (int i = 0; i < lm_diagonal_.rows(); ++i) {
-        lm_diagonal_[i] = std::sqrt(
-            u * std::min(std::max(jtj_(i, i), min_diagonal), max_diagonal));
+        lm_diagonal_[i] =
+            std::sqrt(u * std::min CERES_PREVENT_MACRO_SUBSTITUTION(
+                              std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+                                  jtj_(i, i), min_diagonal),
+                              max_diagonal));
         jtj_regularized_(i, i) += lm_diagonal_[i] * lm_diagonal_[i];
       }
 
@@ -306,7 +310,8 @@ class TinySolver {
         }
 
         Scalar tmp = Scalar(2 * rho - 1);
-        u = u * std::max(Scalar(1 / 3.), 1 - tmp * tmp * tmp);
+        u = u * std::max CERES_PREVENT_MACRO_SUBSTITUTION(
+                    Scalar(1 / 3.), Scalar(1) - tmp * tmp * tmp);
         v = 2;
 
       } else {
