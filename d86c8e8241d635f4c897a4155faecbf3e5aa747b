@@ -90,6 +90,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d184183f_f8925356",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T22:34:55Z",
+      "side": 1,
+      "message": "I am out for the rest of the day, I will take a look tomorrow morning at your next revisions.",
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b5c7303_dab205e1",
@@ -281,6 +298,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "327ad57a_57dfbf80",
+        "filename": "internal/ceres/canonical_views_clustering.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T22:34:55Z",
+      "side": 1,
+      "message": "in which case would it be reasonable to just use the () solution instead of introducing one more macro?",
+      "parentUuid": "d6ff87b3_9b39cf71",
+      "range": {
+        "startLine": 125,
+        "startChar": 52,
+        "endLine": 125,
+        "endChar": 58
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3807b0f3_3921371f",
         "filename": "internal/ceres/dense_cholesky_test.cc",
         "patchSetId": 1
@@ -445,6 +486,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c68d30aa_ecb2f366",
+        "filename": "internal/ceres/gmock_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T22:34:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "77938748_1889b439",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 18
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "467b6079_806f903b",
@@ -482,6 +547,30 @@
       "side": 1,
       "message": "Heh, near (and far) are also macros (for ancient pascal calling conventions) :) Changing the case is a simple workaround.",
       "parentUuid": "467b6079_806f903b",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 11
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f384f2ba_2a147be1",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T22:34:55Z",
+      "side": 1,
+      "message": "make it is_near to respect google variable conventions please.",
+      "parentUuid": "d764625d_9c83fc60",
       "range": {
         "startLine": 91,
         "startChar": 7,
