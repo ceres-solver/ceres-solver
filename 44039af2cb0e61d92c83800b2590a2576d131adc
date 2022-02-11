@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "899e6f62_04d369dd",
+        "filename": "internal/ceres/gradient_checking_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T17:21:31Z",
+      "side": 1,
+      "message": "that won\u0027t work since I need to pass double** to the Evaluate.",
+      "parentUuid": "0c984661_a284c170",
+      "revId": "44039af2cb0e61d92c83800b2590a2576d131adc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4b08760f_8f1beef6",
         "filename": "internal/ceres/gradient_checking_cost_function_test.cc",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2022-02-11T10:04:16Z",
       "side": 1,
       "message": "Same as before: `std::array\u003cstd::unique_ptr\u003cdouble\u003e, Arity\u003e`.",
+      "revId": "44039af2cb0e61d92c83800b2590a2576d131adc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ceb65b05_2484167e",
+        "filename": "internal/ceres/gradient_checking_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T17:21:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4b08760f_8f1beef6",
       "revId": "44039af2cb0e61d92c83800b2590a2576d131adc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
