@@ -381,6 +381,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "77938748_1889b439",
+        "filename": "internal/ceres/gmock_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T22:18:42Z",
+      "side": 1,
+      "message": "I don\u0027t think this is an upstream problem. The logic seems to be the following:\nif gflags is compiled as a static library, it will assume that defining the corresponding flags is only done within a static library. This is however not generally the case. gflags on Linux seems to be more forgiving because its symbols are always visible. gflags also explicitly allows overreding the export/import mechanism presumably for such cases.",
+      "parentUuid": "8c58c993_b1da50e9",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 18
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "467b6079_806f903b",
         "filename": "internal/ceres/rotation_test.cc",
         "patchSetId": 1
@@ -392,6 +416,30 @@
       "writtenOn": "2022-02-11T22:08:30Z",
       "side": 1,
       "message": "why change the case for this?",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 11
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d764625d_9c83fc60",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T22:18:42Z",
+      "side": 1,
+      "message": "Heh, near (and far) are also macros (for ancient pascal calling conventions) :) Changing the case is a simple workaround.",
+      "parentUuid": "467b6079_806f903b",
       "range": {
         "startLine": 91,
         "startChar": 7,
