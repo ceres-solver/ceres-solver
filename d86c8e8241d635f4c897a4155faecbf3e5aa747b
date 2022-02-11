@@ -322,6 +322,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "284a58cb_2d51ac38",
+        "filename": "internal/ceres/canonical_views_clustering.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T22:47:55Z",
+      "side": 1,
+      "message": "AFAIK, in cases where ADL does not matter. Boost prefers the macro variant:\n* https://github.com/boostorg/config/blob/6d0155659c3ab4a85ad313f6dfb1bc46942726ca/include/boost/config/detail/suffix.hpp#L358-L381\n* https://github.com/boostorg/units/blob/45787015dd8c11653eb988260acf05c4af9d42e5/include/boost/units/cmath.hpp\nfor some examples.",
+      "parentUuid": "327ad57a_57dfbf80",
+      "range": {
+        "startLine": 125,
+        "startChar": 52,
+        "endLine": 125,
+        "endChar": 58
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3807b0f3_3921371f",
         "filename": "internal/ceres/dense_cholesky_test.cc",
         "patchSetId": 1
@@ -571,6 +595,30 @@
       "side": 1,
       "message": "make it is_near to respect google variable conventions please.",
       "parentUuid": "d764625d_9c83fc60",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 11
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c8c688f_af611864",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T22:47:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f384f2ba_2a147be1",
       "range": {
         "startLine": 91,
         "startChar": 7,
