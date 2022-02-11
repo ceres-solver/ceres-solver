@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ffacb97_9f755eb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T10:04:16Z",
+      "side": 1,
+      "message": "LGTM, I have just minor suggestions.",
+      "revId": "44039af2cb0e61d92c83800b2590a2576d131adc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c984661_a284c170",
+        "filename": "internal/ceres/gradient_checking_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T10:04:16Z",
+      "side": 1,
+      "message": "This could be changed to `std::array\u003cstd::unique_ptr\u003cdouble\u003e, Arity\u003e` to avoid manual deallocation at the end.",
+      "revId": "44039af2cb0e61d92c83800b2590a2576d131adc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b08760f_8f1beef6",
+        "filename": "internal/ceres/gradient_checking_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-11T10:04:16Z",
+      "side": 1,
+      "message": "Same as before: `std::array\u003cstd::unique_ptr\u003cdouble\u003e, Arity\u003e`.",
+      "revId": "44039af2cb0e61d92c83800b2590a2576d131adc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
