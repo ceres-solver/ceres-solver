@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7526fa94_42e291c8",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T17:29:40Z",
+      "side": 1,
+      "message": "Good idea.",
+      "parentUuid": "5d068d08_b720f9b7",
+      "revId": "d10ea987ecc89d3040a43db6672b0e805c160b8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac91870d_53fb3c86",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-02-11T17:04:12Z",
       "side": 1,
       "message": "Maybe eventually decay to `[[deprecated(\"...\")]]`?",
+      "revId": "d10ea987ecc89d3040a43db6672b0e805c160b8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0306328e_21549f43",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-11T17:29:40Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ac91870d_53fb3c86",
       "revId": "d10ea987ecc89d3040a43db6672b0e805c160b8f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
