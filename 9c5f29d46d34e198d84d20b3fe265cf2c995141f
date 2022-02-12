@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "173070b9_d1ba5ded",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-12T13:33:38Z",
+      "side": 0,
+      "message": "I should probably add a comment such that it is not forgotten that `near` and `far` are macros defined by Windows headers.",
+      "revId": "9c5f29d46d34e198d84d20b3fe265cf2c995141f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
