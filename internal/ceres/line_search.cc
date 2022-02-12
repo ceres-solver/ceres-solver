@@ -34,6 +34,7 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>  // NOLINT
+#include <memory>
 
 #include "ceres/evaluator.h"
 #include "ceres/function_sample.h"

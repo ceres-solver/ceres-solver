@@ -34,6 +34,8 @@
 #ifndef CERES_INTERNAL_DYNAMIC_COMPRESSED_ROW_JACOBIAN_WRITER_H_
 #define CERES_INTERNAL_DYNAMIC_COMPRESSED_ROW_JACOBIAN_WRITER_H_
 
+#include <memory>
+
 #include "ceres/evaluator.h"
 #include "ceres/scratch_evaluate_preparer.h"
 

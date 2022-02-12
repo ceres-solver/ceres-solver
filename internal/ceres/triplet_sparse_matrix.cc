@@ -31,7 +31,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 
 #include <algorithm>
-#include <cstddef>
+#include <memory>
 
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"

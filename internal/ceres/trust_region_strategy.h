@@ -31,6 +31,7 @@
 #ifndef CERES_INTERNAL_TRUST_REGION_STRATEGY_H_
 #define CERES_INTERNAL_TRUST_REGION_STRATEGY_H_
 
+#include <memory>
 #include <string>
 
 #include "ceres/internal/port.h"

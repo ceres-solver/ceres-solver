@@ -30,6 +30,8 @@
 
 #include "ceres/dynamic_compressed_row_jacobian_writer.h"
 
+#include <memory>
+
 #include "ceres/casts.h"
 #include "ceres/compressed_row_jacobian_writer.h"
 #include "ceres/dynamic_compressed_row_sparse_matrix.h"

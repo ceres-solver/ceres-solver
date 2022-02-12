@@ -31,6 +31,7 @@
 #include "ceres/inner_product_computer.h"
 
 #include <algorithm>
+#include <memory>
 
 #include "ceres/small_blas.h"
 

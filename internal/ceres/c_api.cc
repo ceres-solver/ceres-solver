@@ -35,6 +35,7 @@
 #include "ceres/c_api.h"
 
 #include <iostream>
+#include <memory>
 #include <string>
 #include <vector>
 

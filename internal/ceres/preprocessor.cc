@@ -30,6 +30,8 @@
 
 #include "ceres/preprocessor.h"
 
+#include <memory>
+
 #include "ceres/callbacks.h"
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/line_search_preprocessor.h"

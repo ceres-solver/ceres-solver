@@ -34,6 +34,7 @@
 #ifndef CERES_NO_ACCELERATE_SPARSE
 
 #include <algorithm>
+#include <memory>
 #include <string>
 #include <vector>
 

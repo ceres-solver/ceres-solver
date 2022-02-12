@@ -30,6 +30,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <memory>
 #include <vector>
 
 #include "ceres/block_sparse_matrix.h"

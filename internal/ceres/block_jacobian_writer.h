@@ -38,6 +38,7 @@
 #ifndef CERES_INTERNAL_BLOCK_JACOBIAN_WRITER_H_
 #define CERES_INTERNAL_BLOCK_JACOBIAN_WRITER_H_
 
+#include <memory>
 #include <vector>
 
 #include "ceres/evaluator.h"

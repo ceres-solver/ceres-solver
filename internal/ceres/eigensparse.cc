@@ -30,6 +30,8 @@
 
 #include "ceres/eigensparse.h"
 
+#include <memory>
+
 #ifdef CERES_USE_EIGEN_SPARSE
 
 #include <sstream>

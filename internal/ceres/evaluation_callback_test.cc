@@ -32,6 +32,7 @@
 
 #include <cmath>
 #include <limits>
+#include <memory>
 #include <vector>
 
 #include "ceres/autodiff_cost_function.h"
@@ -71,7 +72,6 @@ struct WigglyBowlCostFunctionAndEvaluationCallback : SizedCostFunction<2, 2>,
         prepare_parameter_hash(kUninitialized),
         evaluate_num_calls(0),
         evaluate_last_parameter_hash(kUninitialized) {}
-
 
   // Evaluation callback interface. This checks that all the preconditions are
   // met at the point that Ceres calls into it.

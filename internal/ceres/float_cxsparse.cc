@@ -30,6 +30,8 @@
 
 #include "ceres/float_cxsparse.h"
 
+#include <memory>
+
 #if !defined(CERES_NO_CXSPARSE)
 
 namespace ceres {

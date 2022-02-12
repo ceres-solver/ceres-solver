@@ -34,6 +34,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
+#include <memory>
 #include <numeric>
 #include <string>
 #include <vector>

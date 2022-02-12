@@ -30,6 +30,8 @@
 
 #include "ceres/minimizer.h"
 
+#include <memory>
+
 #include "ceres/line_search_minimizer.h"
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/types.h"

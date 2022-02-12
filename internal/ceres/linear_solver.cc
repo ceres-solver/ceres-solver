@@ -30,6 +30,8 @@
 
 #include "ceres/linear_solver.h"
 
+#include <memory>
+
 #include "ceres/cgnr_solver.h"
 #include "ceres/dense_normal_cholesky_solver.h"
 #include "ceres/dense_qr_solver.h"

@@ -124,6 +124,8 @@ template class SchurEliminator<%s, %s, %s>;
 """
 
 FACTORY_FILE_HEADER = """
+#include <memory>
+
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
 

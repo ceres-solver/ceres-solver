@@ -28,6 +28,8 @@
 //
 // Authors: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <memory>
+
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"
 #include "ceres/block_random_access_dense_matrix.h"

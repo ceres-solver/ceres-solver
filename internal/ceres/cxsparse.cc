@@ -33,6 +33,7 @@
 
 #ifndef CERES_NO_CXSPARSE
 
+#include <memory>
 #include <string>
 #include <vector>
 

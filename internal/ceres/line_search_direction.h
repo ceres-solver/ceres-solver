@@ -31,6 +31,8 @@
 #ifndef CERES_INTERNAL_LINE_SEARCH_DIRECTION_H_
 #define CERES_INTERNAL_LINE_SEARCH_DIRECTION_H_
 
+#include <memory>
+
 #include "ceres/internal/eigen.h"
 #include "ceres/line_search_minimizer.h"
 #include "ceres/types.h"

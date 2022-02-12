@@ -39,6 +39,7 @@
 #include "ceres/internal/port.h"
 // clang-format on
 
+#include <memory>
 #include <vector>
 
 #include "ceres/linear_solver.h"

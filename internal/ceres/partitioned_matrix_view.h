@@ -38,6 +38,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <memory>
 #include <vector>
 
 #include "ceres/block_structure.h"
