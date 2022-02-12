@@ -101,7 +101,7 @@ DEFINE_string(linear_solver,
               "and cgnr");
 DEFINE_string(dense_linear_algebra_library,
               "eigen",
-              "Options are: eigen and lapack.");
+              "Options are: eigen, lapack, and cuda.");
 DEFINE_string(preconditioner, "jacobi", "Options are: identity, jacobi");
 DEFINE_string(line_search,
               "wolfe",
