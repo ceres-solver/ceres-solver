@@ -134,15 +134,15 @@ class CERES_NO_EXPORT LAPACKDenseCholesky : public DenseCholesky {
 #endif  // CERES_NO_LAPACK
 
 #ifndef CERES_NO_CUDA
-// Implementation of DenseCholesky using the cuSolver library v.11.0 or older,
-// using the legacy cuSolverDn interface.
-class CERES_NO_EXPORT CUDADenseCholesky32Bit : public DenseCholesky {
+// CUDA implementation of DenseCholesky using the cuSolverDN library using the
+// 32-bit legacy interface for maximum compatibility.
+class CERES_EXPORT_INTERNAL CUDADenseCholesky : public DenseCholesky {
  public:
-  static std::unique_ptr<CUDADenseCholesky32Bit> Create(
+  static std::unique_ptr<CUDADenseCholesky> Create(
       const LinearSolver::Options& options);
-  ~CUDADenseCholesky32Bit() override;
-  CUDADenseCholesky32Bit(const CUDADenseCholesky32Bit&) = delete;
-  CUDADenseCholesky32Bit& operator=(const CUDADenseCholesky32Bit&) = delete;
+  ~CUDADenseCholesky() override;
+  CUDADenseCholesky(const CUDADenseCholesky&) = delete;
+  CUDADenseCholesky& operator=(const CUDADenseCholesky&) = delete;
   LinearSolverTerminationType Factorize(int num_cols,
                                         double* lhs,
                                         std::string* message) override;
@@ -151,7 +151,7 @@ class CERES_NO_EXPORT CUDADenseCholesky32Bit : public DenseCholesky {
                                     std::string* message) override;
 
  private:
-  CUDADenseCholesky32Bit() = default;
+  CUDADenseCholesky() = default;
   // Initializes the cuSolverDN context, creates an asynchronous stream, and
   // associates the stream with cuSolverDN. Returns true iff initialization was
   // successful, else it returns false and a human-readable error message is
@@ -178,59 +178,6 @@ class CERES_NO_EXPORT CUDADenseCholesky32Bit : public DenseCholesky {
   LinearSolverTerminationType factorize_result_ =
       LINEAR_SOLVER_FATAL_ERROR;
 };
-
-// Implementation of DenseCholesky using the cuSolver library v.11.1 or newer,
-// using the 64-bit cuSolverDn interface.
-class CERES_NO_EXPORT CUDADenseCholesky64Bit : public DenseCholesky {
- public:
-  static std::unique_ptr<CUDADenseCholesky64Bit> Create(
-      const LinearSolver::Options& options);
-  ~CUDADenseCholesky64Bit() override;
-  CUDADenseCholesky64Bit(const CUDADenseCholesky64Bit&) = delete;
-  CUDADenseCholesky64Bit& operator=(const CUDADenseCholesky64Bit&) = delete;
-  LinearSolverTerminationType Factorize(int num_cols,
-                                        double* lhs,
-                                        std::string* message) override;
-  LinearSolverTerminationType Solve(const double* rhs,
-                                    double* solution,
-                                    std::string* message) override;
-
- private:
-  CUDADenseCholesky64Bit() = default;
-  // Initializes the cuSolverDN context, creates an asynchronous stream, and
-  // associates the stream with cuSolverDN. Returns true iff initialization was
-  // successful, else it returns false and a human-readable error message is
-  // returned.
-  bool Init(std::string* message);
-
-  // Handle to the cuSOLVER context.
-  cusolverDnHandle_t cusolver_handle_ = nullptr;
-  // CUDA device stream.
-  cudaStream_t stream_ = nullptr;
-  // Number of columns in the A matrix, to be cached between calls to Factorize
-  // and Solve.
-  size_t num_cols_ = 0;
-  // GPU memory allocated for the A matrix (lhs matrix).
-  CudaBuffer<double> lhs_;
-  // GPU memory allocated for the B matrix (rhs vector).
-  CudaBuffer<double> rhs_;
-  // Workspace for cuSOLVER on the GPU.
-  CudaBuffer<uint8_t> device_workspace_;
-  // Workspace for cuSOLVER on the host.
-  std::vector<double> host_workspace_;
-  // Required for error handling with cuSOLVER.
-  CudaBuffer<int> error_;
-  // Cache the result of Factorize to ensure that when Solve is called, the
-  // factiorization of lhs is valid.
-  LinearSolverTerminationType factorize_result_ =
-      LINEAR_SOLVER_FATAL_ERROR;
-};
-
-#ifdef CERES_CUDA_NO_64BIT_SOLVER_API
-using CUDADenseCholesky = CUDADenseCholesky32Bit;
-#else
-using CUDADenseCholesky = CUDADenseCholesky64Bit;
-#endif
 
 #endif  // CERES_NO_CUDA
 
