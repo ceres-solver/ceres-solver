@@ -226,6 +226,7 @@ if (CUDA_FOUND)
   list(APPEND
        CERES_LIBRARY_PRIVATE_DEPENDENCIES
        ${CUDA_LIBRARIES}
+       ${CUDA_cublas_LIBRARY}
        ${CUDA_cusolver_LIBRARY}
        ${CUDA_cusparse_LIBRARY})
 endif (CUDA_FOUND)
@@ -472,6 +473,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(covariance)
   ceres_test(cubic_interpolation)
   ceres_test(cuda_dense_cholesky)
+  ceres_test(cuda_dense_qr)
   ceres_test(dense_linear_solver)
   ceres_test(dense_cholesky)
   ceres_test(dense_qr)
