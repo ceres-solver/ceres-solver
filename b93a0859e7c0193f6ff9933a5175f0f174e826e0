@@ -50,6 +50,24 @@
       "message": "This is the only change that can be moved out of this CL since it triggers compilation errors under GCC too (also reported here: https://github.com/ceres-solver/ceres-solver/issues/758).",
       "revId": "b93a0859e7c0193f6ff9933a5175f0f174e826e0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba81e020_b2ca0237",
+        "filename": "internal/ceres/graph_algorithms.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-12T16:16:37Z",
+      "side": 1,
+      "message": "I just sent out a bigger more comprehensive fix (perhaps overdoing it) but I suspect we need to do something like this for each standard header to make the code base robust to stuff being moved around.",
+      "parentUuid": "c1c89ab7_c9e79f25",
+      "revId": "b93a0859e7c0193f6ff9933a5175f0f174e826e0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
