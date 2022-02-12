@@ -270,14 +270,6 @@ if (CUDA)
         "${CUDA_LIBRARIES};"
         "${CUDA_cusolver_LIBRARY};"
         "${CUDA_cusparse_LIBRARY}")
-    if (CUDA_VERSION VERSION_LESS 11.1)
-      message("-- CUDA version ${CUDA_VERSION} is older than 11.1, "
-          "using 32-bit API.")
-      add_definitions(-DCERES_CUDA_NO_64BIT_SOLVER_API)
-    else()
-      message("-- CUDA version ${CUDA_VERSION} is at least 11.1, "
-          "using 64-bit API.")
-    endif()
   else (CUDA_FOUND)
     message("-- Did not find CUDA library, disabling CUDA support.")
     update_cache_variable(CUDA OFF)
