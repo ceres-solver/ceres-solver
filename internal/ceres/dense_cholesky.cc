@@ -211,7 +211,7 @@ bool CUDADenseCholesky32Bit::Init(std::string* message) {
     return false;
   }
   error_.Reserve(1);
-  *message = "CUDADenseCholesky64Bit::Init Success.";
+  *message = "CUDADenseCholesky32Bit::Init Success.";
   return true;
 }
 
@@ -256,8 +256,8 @@ LinearSolverTerminationType CUDADenseCholesky32Bit::Factorize(
     *message = "cuSolverDN::cusolverDnDpotrf failed.";
     return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
   }
-  if (cudaDeviceSynchronize() != cudaSuccess || cudaStreamSynchronize(stream_),
-      cudaSuccess) {
+  if (cudaDeviceSynchronize() != cudaSuccess ||
+      cudaStreamSynchronize(stream_) != cudaSuccess) {
     *message = "Cuda device synchronization failed.";
     return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
   }
@@ -306,8 +306,8 @@ LinearSolverTerminationType CUDADenseCholesky32Bit::Solve(
     *message = "cuSolverDN::cusolverDnDpotrs failed.";
     return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
   }
-  if (cudaDeviceSynchronize() != cudaSuccess || cudaStreamSynchronize(stream_),
-      cudaSuccess) {
+  if (cudaDeviceSynchronize() != cudaSuccess ||
+      cudaStreamSynchronize(stream_) != cudaSuccess) {
     *message = "Cuda device synchronization failed.";
     return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
   }

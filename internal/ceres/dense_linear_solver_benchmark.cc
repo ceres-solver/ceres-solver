@@ -98,7 +98,9 @@ BENCHMARK_TEMPLATE2(BM_DenseSolver, ceres::LAPACK, ceres::DENSE_NORMAL_CHOLESKY)
 #endif  // CERES_NO_LAPACK
 
 #ifndef CERES_NO_CUDA
-BENCHMARK(BM_DenseSolver<ceres::CUDA, ceres::DENSE_NORMAL_CHOLESKY>)
+BENCHMARK_TEMPLATE2(BM_DenseSolver, ceres::CUDA, ceres::DENSE_NORMAL_CHOLESKY)
+    ->Apply(MatrixSizes);
+BENCHMARK(BM_DenseSolver<ceres::CUDA, ceres::DENSE_QR>)
     ->Apply(MatrixSizes);
 #endif  // CERES_NO_CUDA
 
