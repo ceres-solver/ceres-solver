@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1c89ab7_c9e79f25",
+        "filename": "internal/ceres/graph_algorithms.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-12T12:27:53Z",
+      "side": 1,
+      "message": "This is the only change that can be moved out of this CL since it triggers compilation errors under GCC too (also reported here: https://github.com/ceres-solver/ceres-solver/issues/758).",
+      "revId": "b93a0859e7c0193f6ff9933a5175f0f174e826e0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
