@@ -43,14 +43,14 @@ namespace internal {
 
 #ifndef CERES_NO_CUDA
 
-TEST(DenseCholeskyCudaSolverOld, InvalidOptionOnCreate) {
+TEST(DenseCholeskyCudaSolver32Bit, InvalidOptionOnCreate) {
   LinearSolver::Options options;
   auto dense_cuda_solver = CUDADenseCholesky32Bit::Create(options);
   EXPECT_EQ(dense_cuda_solver, nullptr);
 }
 
 // Tests the CUDA Cholesky solver with a simple 4x4 matrix.
-TEST(DenseCholeskyCudaSolverOld, Cholesky4x4Matrix) {
+TEST(DenseCholeskyCudaSolver32Bit, Cholesky4x4Matrix) {
   Eigen::Matrix4d A;
   A <<  4,  12, -16, 0,
        12,  37, -43, 0,
@@ -75,7 +75,7 @@ TEST(DenseCholeskyCudaSolverOld, Cholesky4x4Matrix) {
   EXPECT_NEAR(x(3), 1.0000, std::numeric_limits<double>::epsilon() * 10);
 }
 
-TEST(DenseCholeskyCudaSolverOld, SingularMatrix) {
+TEST(DenseCholeskyCudaSolver32Bit, SingularMatrix) {
   Eigen::Matrix3d A;
   A <<  1, 0, 0,
         0, 1, 0,
@@ -92,7 +92,7 @@ TEST(DenseCholeskyCudaSolverOld, SingularMatrix) {
             LinearSolverTerminationType::LINEAR_SOLVER_FAILURE);
 }
 
-TEST(DenseCholeskyCudaSolverOld, NegativeMatrix) {
+TEST(DenseCholeskyCudaSolver32Bit, NegativeMatrix) {
   Eigen::Matrix3d A;
   A <<  1, 0, 0,
         0, 1, 0,
@@ -109,7 +109,7 @@ TEST(DenseCholeskyCudaSolverOld, NegativeMatrix) {
             LinearSolverTerminationType::LINEAR_SOLVER_FAILURE);
 }
 
-TEST(DenseCholeskyCudaSolverOld, MustFactorizeBeforeSolve) {
+TEST(DenseCholeskyCudaSolver32Bit, MustFactorizeBeforeSolve) {
   const Eigen::Vector3d b = Eigen::Vector3d::Ones();
   LinearSolver::Options options;
   options.dense_linear_algebra_library_type = CUDA;
@@ -124,13 +124,13 @@ TEST(DenseCholeskyCudaSolverOld, MustFactorizeBeforeSolve) {
 // TODO(sameeragarwal): Convert these tests into templated tests so that we use
 // the exact same code for both versions of the test.
 
-TEST(DenseCholeskyCudaSolverNew, InvalidOptionOnCreate) {
+TEST(DenseCholeskyCudaSolver64Bit, InvalidOptionOnCreate) {
   LinearSolver::Options options;
   auto dense_cuda_solver = CUDADenseCholesky64Bit::Create(options);
   EXPECT_EQ(dense_cuda_solver, nullptr);
 }
 
-TEST(DenseCholeskyCudaSolverNew, Cholesky4x4Matrix) {
+TEST(DenseCholeskyCudaSolver64Bit, Cholesky4x4Matrix) {
   Eigen::Matrix4d A;
   A <<  4,  12, -16, 0,
        12,  37, -43, 0,
@@ -155,7 +155,7 @@ TEST(DenseCholeskyCudaSolverNew, Cholesky4x4Matrix) {
   EXPECT_NEAR(x(3), 1.0000, std::numeric_limits<double>::epsilon() * 10);
 }
 
-TEST(DenseCholeskyCudaSolverNew, SingularMatrix) {
+TEST(DenseCholeskyCudaSolver64Bit, SingularMatrix) {
   Eigen::Matrix3d A;
   A <<  1, 0, 0,
         0, 1, 0,
@@ -172,7 +172,7 @@ TEST(DenseCholeskyCudaSolverNew, SingularMatrix) {
             LinearSolverTerminationType::LINEAR_SOLVER_FAILURE);
 }
 
-TEST(DenseCholeskyCudaSolverNew, NegativeMatrix) {
+TEST(DenseCholeskyCudaSolver64Bit, NegativeMatrix) {
   Eigen::Matrix3d A;
   A <<  1, 0, 0,
         0, 1, 0,
@@ -189,7 +189,7 @@ TEST(DenseCholeskyCudaSolverNew, NegativeMatrix) {
             LinearSolverTerminationType::LINEAR_SOLVER_FAILURE);
 }
 
-TEST(DenseCholeskyCudaSolverNew, MustFactorizeBeforeSolve) {
+TEST(DenseCholeskyCudaSolver64Bit, MustFactorizeBeforeSolve) {
   const Eigen::Vector3d b = Eigen::Vector3d::Ones();
   LinearSolver::Options options;
   options.dense_linear_algebra_library_type = CUDA;
