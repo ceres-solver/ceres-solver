@@ -45,7 +45,8 @@
 // the appropriate GPU device is selected before each subroutine is called. This
 // is particularly important when using multiple GPU devices on different CPU
 // threads, since active Cuda devices are determined by the cuda runtime on a
-// per-thread basis.
+// per-thread basis. Note that unless otherwise specified, all methods use the
+// default stream, and are synchronous.
 template <typename T>
 class CudaBuffer {
  public:
@@ -59,6 +60,8 @@ class CudaBuffer {
     }
   }
 
+  // Grow the GPU memory buffer if needed to accommodate data of the specified
+  // size
   void Reserve(const size_t size) {
     if (size > size_) {
       if (data_ != nullptr) {
@@ -69,12 +72,29 @@ class CudaBuffer {
     }
   }
 
+  // Perform a synchronous copy from CPU memory to GPU memory using the default
+  // stream.
   void CopyToGpu(const T* data, const size_t size) {
     Reserve(size);
     CHECK_EQ(cudaMemcpy(data_, data, size * sizeof(T), cudaMemcpyHostToDevice),
              cudaSuccess);
   }
 
+  // Perform an asynchronous copy from CPU memory to GPU memory using the stream
+  // provided.
+  void CopyToGpuAsync(const T* data, const size_t size, cudaStream_t stream) {
+    Reserve(size);
+    CHECK_EQ(cudaMemcpyAsync(data_,
+                             data,
+                             size * sizeof(T),
+                             cudaMemcpyHostToDevice,
+                             stream),
+             cudaSuccess);
+  }
+
+  // Copy data from the GPU to CPU memory. This is necessarily synchronous since
+  // any potential GPU kernels that may be writing to the buffer must finish
+  // before the transfer happens.
   void CopyToHost(T* data, const size_t size) {
     CHECK(data_ != nullptr);
     CHECK_EQ(cudaMemcpy(data, data_, size * sizeof(T), cudaMemcpyDeviceToHost),

@@ -33,6 +33,10 @@
 #include <algorithm>
 #include <memory>
 #include <string>
+#ifndef CERES_NO_CUDA
+#include "cusolverDn.h"
+#include "cublas_v2.h"
+#endif  // CERES_NO_CUDA
 
 #ifndef CERES_NO_LAPACK
 
@@ -122,6 +126,14 @@ std::unique_ptr<DenseQR> DenseQR::Create(const LinearSolver::Options& options) {
       break;
 #else
       LOG(FATAL) << "Ceres was compiled without support for LAPACK.";
+#endif
+
+    case CUDA:
+#ifndef CERES_NO_CUDA
+      dense_qr = CUDADenseQR::Create(options);
+      break;
+#else
+      LOG(FATAL) << "Ceres was compiled without support for CUDA.";
 #endif
 
     default:
@@ -295,6 +307,469 @@ LinearSolverTerminationType LAPACKDenseQR::Solve(const double* rhs,
 }
 
 #endif  // CERES_NO_LAPACK
+
+#ifndef CERES_NO_CUDA
+
+bool CUDADenseQR32Bit::Init(std::string* message) {
+  if (cublasCreate(&cublas_handle_) != CUBLAS_STATUS_SUCCESS) {
+    *message = "cuBLAS::cublasCreate failed.";
+    return false;
+  }
+  if (cusolverDnCreate(&cusolver_handle_) != CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnCreate failed.";
+    return false;
+  }
+  if (cudaStreamCreateWithFlags(&stream_, cudaStreamNonBlocking) !=
+      cudaSuccess) {
+    *message = "CUDA::cudaStreamCreateWithFlags failed.";
+    cusolverDnDestroy(cusolver_handle_);
+    cublasDestroy(cublas_handle_);
+    return false;
+  }
+  if (cusolverDnSetStream(cusolver_handle_, stream_) != CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnSetStream failed.";
+    cusolverDnDestroy(cusolver_handle_);
+    cudaStreamDestroy(stream_);
+    cublasDestroy(cublas_handle_);
+    return false;
+  }
+  if (cublasSetStream(cublas_handle_, stream_) != CUBLAS_STATUS_SUCCESS) {
+    *message = "cuBLAS::cublasSetStream failed.";
+    cusolverDnDestroy(cusolver_handle_);
+    cublasDestroy(cublas_handle_);
+    cudaStreamDestroy(stream_);
+    return false;
+  }
+  error_.Reserve(1);
+  *message = "CUDADenseQR32Bit::Init Success.";
+  return true;
+}
+
+CUDADenseQR32Bit::~CUDADenseQR32Bit() {
+  if (cublas_handle_ != nullptr) {
+    CHECK_EQ(cublasDestroy(cublas_handle_), CUBLAS_STATUS_SUCCESS);
+  }
+  if (cusolver_handle_ != nullptr) {
+    CHECK_EQ(cusolverDnDestroy(cusolver_handle_), CUSOLVER_STATUS_SUCCESS);
+  }
+  if (stream_ != nullptr) {
+    CHECK_EQ(cudaStreamDestroy(stream_), cudaSuccess);
+  }
+}
+
+LinearSolverTerminationType CUDADenseQR32Bit::Factorize(
+    int num_rows, int num_cols, double* lhs, std::string* message) {
+  factorize_result_ = LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  lhs_.Reserve(num_rows * num_cols);
+  tau_.Reserve(std::min(num_rows, num_cols));
+  num_rows_ = num_rows;
+  num_cols_ = num_cols;
+  // Copy A to GPU.
+  lhs_.CopyToGpuAsync(lhs, num_rows * num_cols, stream_);
+  int device_workspace_size = 0;
+  if (cusolverDnDgeqrf_bufferSize(cusolver_handle_,
+                                  num_rows,
+                                  num_cols,
+                                  lhs_.data(),
+                                  num_rows,
+                                  &device_workspace_size) !=
+      CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnDgeqrf_bufferSize failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  // Allocate GPU scratch memory.
+  device_workspace_.Reserve(device_workspace_size);
+
+  // Run the actual factorization (geqrf).
+  if (cusolverDnDgeqrf(cusolver_handle_,
+                       num_rows,
+                       num_cols,
+                       lhs_.data(),
+                       num_rows,
+                       tau_.data(),
+                       reinterpret_cast<double*>(device_workspace_.data()),
+                       device_workspace_.size(),
+                       error_.data()) != CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnDgeqrf failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  if (cudaDeviceSynchronize() != cudaSuccess ||
+      cudaStreamSynchronize(stream_) != cudaSuccess) {
+    *message = "Cuda device synchronization failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  int error = 0;
+  error_.CopyToHost(&error, 1);
+  if (error < 0) {
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres - "
+               << "please report it. "
+               << "cuSolverDN::cusolverDnDgeqrf fatal error. "
+               << "Argument: " << -error << " is invalid.";
+    // The following line is unreachable, but return failure just to be
+    // pedantic, since the compiler does not know that.
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+
+  *message = "Success";
+  factorize_result_ = LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+}
+
+LinearSolverTerminationType CUDADenseQR32Bit::Solve(
+    const double* rhs, double* solution, std::string* message) {
+  if (factorize_result_ != LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS) {
+    *message = "Factorize did not complete succesfully previously.";
+    return factorize_result_;
+  }
+  // Copy RHS to GPU.
+  rhs_.CopyToGpuAsync(rhs, num_rows_, stream_);
+
+  // Allocate scratch space on GPU.
+  int device_workspace_size = 0;
+  if (cusolverDnDormqr_bufferSize(cusolver_handle_,
+                                  CUBLAS_SIDE_LEFT,
+                                  CUBLAS_OP_T,
+                                  num_rows_,
+                                  1,
+                                  num_cols_,
+                                  lhs_.data(),
+                                  num_rows_,
+                                  tau_.data(),
+                                  rhs_.data(),
+                                  num_rows_,
+                                  &device_workspace_size) !=
+      CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnDormqr_bufferSize failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  // Allocate GPU scratch memory.
+  device_workspace_.Reserve(device_workspace_size);
+  // Compute rhs = Q^T * rhs, assuming that lhs has already been factorized.
+  // The result of factorization would have stored Q in a packed form in lhs_.
+  if (cusolverDnDormqr(cusolver_handle_,
+                       CUBLAS_SIDE_LEFT,
+                       CUBLAS_OP_T,
+                       num_rows_,
+                       1,
+                       num_cols_,
+                       lhs_.data(),
+                       num_rows_,
+                       tau_.data(),
+                       rhs_.data(),
+                       num_rows_,
+                       reinterpret_cast<double*>(device_workspace_.data()),
+                       device_workspace_.size(),
+                       error_.data()) != CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnDormqr failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  int error = 0;
+  error_.CopyToHost(&error, 1);
+  if (error < 0) {
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
+               << "Please report it."
+               << "cuSolverDN::cusolverDnDormqr fatal error. "
+               << "Argument: " << -error << " is invalid.";
+  }
+  // Compute the solution vector as x = R \ (Q^T * rhs). Since the previous step
+  // replaced rhs by (Q^T * rhs), this is just x = R \ rhs.
+  if (cublasDtrsv(cublas_handle_,
+                  CUBLAS_FILL_MODE_UPPER,
+                  CUBLAS_OP_N,
+                  CUBLAS_DIAG_NON_UNIT,
+                  num_cols_,
+                  lhs_.data(),
+                  num_rows_,
+                  rhs_.data(),
+                  1) != CUBLAS_STATUS_SUCCESS) {
+    *message = "cuBLAS::cublasDtrsv failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  if (cudaDeviceSynchronize() != cudaSuccess ||
+      cudaStreamSynchronize(stream_) != cudaSuccess) {
+    *message = "Cuda device synchronization failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  rhs_.CopyToHost(solution, num_cols_);
+  *message = "Success";
+  return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+}
+
+std::unique_ptr<CUDADenseQR32Bit> CUDADenseQR32Bit::Create(
+    const LinearSolver::Options& options) {
+  if (options.dense_linear_algebra_library_type != CUDA) {
+    // The user called the wrong factory method.
+    return nullptr;
+  }
+  auto cuda_dense_qr =
+      std::unique_ptr<CUDADenseQR32Bit>(new CUDADenseQR32Bit());
+  std::string cuda_error;
+  if (cuda_dense_qr->Init(&cuda_error)) {
+    return cuda_dense_qr;
+  }
+  // Initialization failed, destroy the object (done automatically) and return a
+  // nullptr.
+  LOG(ERROR) << "CUDADenseQR32Bit::Init failed: " << cuda_error;
+  return std::unique_ptr<CUDADenseQR32Bit>(nullptr);
+}
+
+std::unique_ptr<CUDADenseQR64Bit> CUDADenseQR64Bit::Create(
+    const LinearSolver::Options& options) {
+  if (options.dense_linear_algebra_library_type != CUDA) {
+    // The user called the wrong factory method.
+    return nullptr;
+  }
+  auto cuda_dense_qr =
+      std::unique_ptr<CUDADenseQR64Bit>(new CUDADenseQR64Bit());
+  std::string cuda_error;
+  if (cuda_dense_qr->Init(&cuda_error)) {
+    return cuda_dense_qr;
+  }
+  // Initialization failed, destroy the object (done automatically) and return a
+  // nullptr.
+  LOG(ERROR) << "CUDADenseQR64Bit::Init failed: " << cuda_error;
+  return std::unique_ptr<CUDADenseQR64Bit>(nullptr);
+}
+
+CUDADenseQR32Bit::CUDADenseQR32Bit()  = default;
+
+CUDADenseQR64Bit::CUDADenseQR64Bit()  = default;
+
+#ifdef CERES_CUDA_NO_64BIT_SOLVER_API
+// CUDA < 11.1 did not have the 64-bit APIs, so the implementation of the new
+// interface will just generate a fatal error.
+
+CUDADenseQR64Bit::~CUDADenseQR64Bit() {}
+
+bool CUDADenseQR64Bit::Init(std::string* message) {
+  *message = "Cannot use CUDADenseQR64Bit with CUDA < 11.1.";
+  return false;
+}
+
+LinearSolverTerminationType CUDADenseQR64Bit::Factorize(int,
+                                                        int,
+                                                        double*,
+                                                        std::string*) {
+  return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+}
+
+LinearSolverTerminationType CUDADenseQR64Bit::Solve(const double*,
+                                                    double*,
+                                                    std::string*) {
+  return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+}
+
+#else  // CERES_CUDA_NO_64BIT_SOLVER_API
+
+bool CUDADenseQR64Bit::Init(std::string* message) {
+  if (cublasCreate(&cublas_handle_) != CUBLAS_STATUS_SUCCESS) {
+    *message = "cuBLAS::cublasCreate failed.";
+    return false;
+  }
+  if (cusolverDnCreate(&cusolver_handle_) != CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnCreate failed.";
+    return false;
+  }
+  if (cudaStreamCreateWithFlags(&stream_, cudaStreamNonBlocking) !=
+      cudaSuccess) {
+    *message = "CUDA::cudaStreamCreateWithFlags failed.";
+    cusolverDnDestroy(cusolver_handle_);
+    cublasDestroy(cublas_handle_);
+    return false;
+  }
+  if (cusolverDnSetStream(cusolver_handle_, stream_) != CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnSetStream failed.";
+    cudaStreamDestroy(stream_);
+    cusolverDnDestroy(cusolver_handle_);
+    cublasDestroy(cublas_handle_);
+    return false;
+  }
+  if (cublasSetStream(cublas_handle_, stream_) != CUBLAS_STATUS_SUCCESS) {
+    *message = "cuBLAS::cublasSetStream failed.";
+    cudaStreamDestroy(stream_);
+    cusolverDnDestroy(cusolver_handle_);
+    cublasDestroy(cublas_handle_);
+    return false;
+  }
+  error_.Reserve(1);
+  *message = "CUDADenseQR64Bit::Init Success.";
+  return true;
+}
+
+CUDADenseQR64Bit::~CUDADenseQR64Bit() {
+  if (cublas_handle_ != nullptr) {
+    CHECK_EQ(cublasDestroy(cublas_handle_), CUBLAS_STATUS_SUCCESS);
+  }
+  if (cusolver_handle_ != nullptr) {
+    CHECK_EQ(cusolverDnDestroy(cusolver_handle_), CUSOLVER_STATUS_SUCCESS);
+  }
+  if (stream_ != nullptr) {
+    CHECK_EQ(cudaStreamDestroy(stream_), cudaSuccess);
+  }
+}
+
+LinearSolverTerminationType CUDADenseQR64Bit::Factorize(
+    int num_rows, int num_cols, double* lhs, std::string* message) {
+  factorize_result_ = LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  lhs_.Reserve(num_rows * num_cols);
+  tau_.Reserve(std::min(num_rows, num_cols));
+  num_rows_ = num_rows;
+  num_cols_ = num_cols;
+  lhs_.CopyToGpuAsync(lhs, num_rows * num_cols, stream_);
+
+  // Allocate scratch space on GPU.
+  size_t device_workspace_size = 0;
+  size_t host_workspace_size = 0;
+  if (cusolverDnXgeqrf_bufferSize(cusolver_handle_,
+                                  nullptr,
+                                  num_rows,
+                                  num_cols,
+                                  CUDA_R_64F,
+                                  lhs_.data(),
+                                  num_rows,
+                                  CUDA_R_64F,
+                                  tau_.data(),
+                                  CUDA_R_64F,
+                                  &device_workspace_size,
+                                  &host_workspace_size) !=
+      CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnXgeqrf_bufferSize failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  host_workspace_.resize(host_workspace_size);
+  device_workspace_.Reserve(device_workspace_size);
+
+  // Run the actual factorization (geqrf).
+  if (cusolverDnXgeqrf(cusolver_handle_,
+                       nullptr,
+                       num_rows,
+                       num_cols,
+                       CUDA_R_64F,
+                       lhs_.data(),
+                       num_rows,
+                       CUDA_R_64F,
+                       tau_.data(),
+                       CUDA_R_64F,
+                       device_workspace_.data(),
+                       device_workspace_.size(),
+                       host_workspace_.data(),
+                       host_workspace_.size(),
+                       error_.data()) != CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnDgeqrf failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  if (cudaDeviceSynchronize() != cudaSuccess ||
+      cudaStreamSynchronize(stream_) != cudaSuccess) {
+    *message = "Cuda device synchronization failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  int error = 0;
+  error_.CopyToHost(&error, 1);
+  if (error < 0) {
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres - "
+               << "please report it. "
+               << "cuSolverDN::cusolverDnXgeqrf fatal error. "
+               << "Argument: " << -error << " is invalid.";
+    // The following line is unreachable, but return failure just to be
+    // pedantic, since the compiler does not know that.
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  *message = "Success";
+  factorize_result_ = LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+}
+
+LinearSolverTerminationType CUDADenseQR64Bit::Solve(
+    const double* rhs, double* solution, std::string* message) {
+  if (factorize_result_ != LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS) {
+    *message = "Factorize did not complete succesfully previously.";
+    return factorize_result_;
+  }
+  // Copy RHS to GPU.
+  rhs_.CopyToGpuAsync(rhs, num_rows_, stream_);
+
+  // Note: As of CUDA 11.6, there is as yet no 64-bit version of ormqr, so we
+  // use the 32-bit version.
+
+  // Allocate scratch space on GPU.
+  int device_workspace_size = 0;
+  if (cusolverDnDormqr_bufferSize(cusolver_handle_,
+                                  CUBLAS_SIDE_LEFT,
+                                  CUBLAS_OP_T,
+                                  num_rows_,
+                                  1,
+                                  num_cols_,
+                                  lhs_.data(),
+                                  num_rows_,
+                                  tau_.data(),
+                                  rhs_.data(),
+                                  num_rows_,
+                                  &device_workspace_size) !=
+      CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnDormqr_bufferSize failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  // Allocate GPU scratch memory.
+  device_workspace_.Reserve(device_workspace_size);
+  // Compute rhs = Q^T * rhs, assuming that lhs has already been factorized.
+  // The result of factorization would have stored Q in a packed form in lhs_.
+  if (cusolverDnDormqr(cusolver_handle_,
+                       CUBLAS_SIDE_LEFT,
+                       CUBLAS_OP_T,
+                       num_rows_,
+                       1,
+                       num_cols_,
+                       lhs_.data(),
+                       num_rows_,
+                       tau_.data(),
+                       rhs_.data(),
+                       num_rows_,
+                       reinterpret_cast<double*>(device_workspace_.data()),
+                       device_workspace_.size(),
+                       error_.data()) != CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnDormqr failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  // Check for errors.
+  int error = 0;
+  // Copy error variable from GPU to host.
+  error_.CopyToHost(&error, 1);
+  if (error < 0) {
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
+               << "Please report it."
+               << "cuSolverDN::cusolverDnDormqr fatal error. "
+               << "Argument: " << -error << " is invalid.";
+  }
+
+  // Compute the solution vector as x = R \ (Q^T * rhs). Since the previous step
+  // replaced rhs by (Q^T * rhs), this is just x = R \ rhs.
+  if (cublasDtrsv(cublas_handle_,
+                  CUBLAS_FILL_MODE_UPPER,
+                  CUBLAS_OP_N,
+                  CUBLAS_DIAG_NON_UNIT,
+                  num_cols_,
+                  lhs_.data(),
+                  num_rows_,
+                  rhs_.data(),
+                  1) != CUBLAS_STATUS_SUCCESS) {
+    *message = "cuBLAS::cublasDtrsv failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+  if (cudaDeviceSynchronize() != cudaSuccess ||
+      cudaStreamSynchronize(stream_) != cudaSuccess) {
+    *message = "Cuda device synchronization failed.";
+    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  }
+
+  // Copy X from GPU to host.
+  rhs_.CopyToHost(solution, num_cols_);
+  *message = "Success";
+  return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+}
+
+#endif  // CERES_CUDA_NO_64BIT_SOLVER_API
+#endif  // CERES_NO_CUDA
+
 
 }  // namespace internal
 }  // namespace ceres
