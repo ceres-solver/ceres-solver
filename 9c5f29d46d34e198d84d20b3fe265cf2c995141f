@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cfe9955_30b2f78c",
+        "filename": "internal/ceres/triplet_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-12T16:31:09Z",
+      "side": 0,
+      "message": "Is there a reason for removing this include?",
+      "revId": "9c5f29d46d34e198d84d20b3fe265cf2c995141f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
