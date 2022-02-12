@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cf1a7b40_2403c162",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-12T14:52:56Z",
+      "side": 1,
+      "message": "On an additional note, there are minor issues in glog when used in combination with gflags on MSVC. Since I co-maintain glog, I can fix the issues on short notice. Ideally, we would sync the final releases of Ceres solver 2.1 and glog 0.6.",
+      "revId": "b93a0859e7c0193f6ff9933a5175f0f174e826e0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c1c89ab7_c9e79f25",
         "filename": "internal/ceres/graph_algorithms.h",
         "patchSetId": 2
