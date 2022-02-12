@@ -34,6 +34,8 @@
 #ifndef CERES_INTERNAL_DENSE_NORMAL_CHOLESKY_SOLVER_H_
 #define CERES_INTERNAL_DENSE_NORMAL_CHOLESKY_SOLVER_H_
 
+#include <memory>
+
 #include "ceres/dense_cholesky.h"
 #include "ceres/linear_solver.h"
 

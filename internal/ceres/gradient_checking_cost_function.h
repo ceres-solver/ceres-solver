@@ -32,6 +32,7 @@
 #ifndef CERES_INTERNAL_GRADIENT_CHECKING_COST_FUNCTION_H_
 #define CERES_INTERNAL_GRADIENT_CHECKING_COST_FUNCTION_H_
 
+#include <memory>
 #include <mutex>
 #include <string>
 

@@ -122,6 +122,8 @@ template class PartitionedMatrixView<%s, %s, %s>;
 """
 
 FACTORY_FILE_HEADER = """
+#include <memory>
+
 #include "ceres/linear_solver.h"
 #include "ceres/partitioned_matrix_view.h"
 

@@ -30,6 +30,8 @@
 
 #include "ceres/float_suitesparse.h"
 
+#include <memory>
+
 #if !defined(CERES_NO_SUITESPARSE)
 
 namespace ceres {

@@ -39,6 +39,7 @@
 #ifndef CERES_NO_SUITESPARSE
 
 #include <cstring>
+#include <memory>
 #include <string>
 #include <vector>
 

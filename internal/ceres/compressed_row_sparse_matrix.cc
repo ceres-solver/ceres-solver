@@ -31,6 +31,7 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 
 #include <algorithm>
+#include <memory>
 #include <numeric>
 #include <vector>
 

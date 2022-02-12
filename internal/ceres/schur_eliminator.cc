@@ -39,6 +39,8 @@
 //
 // This file is generated using generate_template_specializations.py.
 
+#include <memory>
+
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
 

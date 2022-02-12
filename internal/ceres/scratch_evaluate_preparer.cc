@@ -30,6 +30,8 @@
 
 #include "ceres/scratch_evaluate_preparer.h"
 
+#include <memory>
+
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"

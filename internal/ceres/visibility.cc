@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <cmath>
 #include <ctime>
+#include <memory>
 #include <set>
 #include <unordered_map>
 #include <utility>

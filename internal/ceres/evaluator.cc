@@ -30,6 +30,7 @@
 
 #include "ceres/evaluator.h"
 
+#include <memory>
 #include <vector>
 
 #include "ceres/block_evaluate_preparer.h"

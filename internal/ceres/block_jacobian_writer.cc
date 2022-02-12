@@ -31,6 +31,7 @@
 #include "ceres/block_jacobian_writer.h"
 
 #include <algorithm>
+#include <memory>
 
 #include "ceres/block_evaluate_preparer.h"
 #include "ceres/block_sparse_matrix.h"

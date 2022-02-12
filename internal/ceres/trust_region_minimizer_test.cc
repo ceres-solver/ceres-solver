@@ -36,6 +36,7 @@
 #include "ceres/trust_region_minimizer.h"
 
 #include <cmath>
+#include <memory>
 
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/cost_function.h"
@@ -75,7 +76,6 @@ class PowellEvaluator2 : public Evaluator {
             << col4;
   }
   // clang-format on
-
 
   // Implementation of Evaluator interface.
   std::unique_ptr<SparseMatrix> CreateJacobian() const final {

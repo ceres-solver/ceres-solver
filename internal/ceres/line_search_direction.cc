@@ -30,6 +30,8 @@
 
 #include "ceres/line_search_direction.h"
 
+#include <memory>
+
 #include "ceres/internal/eigen.h"
 #include "ceres/line_search_minimizer.h"
 #include "ceres/low_rank_inverse_hessian.h"
@@ -104,7 +106,6 @@ class LBFGS : public LineSearchDirection {
                                   use_approximate_eigenvalue_bfgs_scaling),
         is_positive_definite_(true) {}
 
-
   bool NextDirection(const LineSearchMinimizer::State& previous,
                      const LineSearchMinimizer::State& current,
                      Vector* search_direction) override {
@@ -158,7 +159,6 @@ class BFGS : public LineSearchDirection {
     // allocation crashes us, the log will highlight what the issue likely was.
     inverse_hessian_ = Matrix::Identity(num_parameters, num_parameters);
   }
-
 
   bool NextDirection(const LineSearchMinimizer::State& previous,
                      const LineSearchMinimizer::State& current,
