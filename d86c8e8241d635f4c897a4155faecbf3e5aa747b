@@ -107,6 +107,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2978e8ce_7a0d7b6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-12T11:55:34Z",
+      "side": 1,
+      "message": "To clarify (2) what I mean is that a library should not impose `NOMINMAX` on its consumers because Ceres could otherwise break its direct or indirect dependencies. However, this is essential to avoid compilation errors caused by Ceres\u0027 headers. This is why, in my opinion, (2) is impractical. If users want to use `min`/`max` functions from Ceres, e.g., those defined for `Jet` currently causing problems, they will need to take care of a fix themselves. Ceres solver has no way of knowing which fix is applicable/practical in a particular case and therefore the library should be neutral in regard to user\u0027s choice of the fix.\n\nOn a related note, I would like to contribute Github workflows to catch such problems early in the development (Travis builds seem to be dead). However, since the development does not happen on Github, the continuous integration will not guard against broken commits. Is there a possibility to sync CLs to Github to ensure the patches actually work?",
+      "parentUuid": "59fa0ec2_785788bd",
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b5c7303_dab205e1",
