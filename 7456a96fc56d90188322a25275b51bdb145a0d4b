@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ace83c22_ba6d22c4",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T20:17:02Z",
+      "side": 1,
+      "message": "drop comment.",
+      "range": {
+        "startLine": 229,
+        "startChar": 14,
+        "endLine": 229,
+        "endChar": 17
+      },
+      "revId": "7456a96fc56d90188322a25275b51bdb145a0d4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ec28f79_ea46bda8",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T20:17:02Z",
+      "side": 1,
+      "message": "drop comments in general which are obvious from the code.",
+      "range": {
+        "startLine": 232,
+        "startChar": 9,
+        "endLine": 232,
+        "endChar": 10
+      },
+      "revId": "7456a96fc56d90188322a25275b51bdb145a0d4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

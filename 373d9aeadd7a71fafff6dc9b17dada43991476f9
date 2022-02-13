@@ -107,6 +107,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7d105bf4_9d314f96",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T20:17:02Z",
+      "side": 1,
+      "message": "I guess my question then is, should we just be using async versions then? in which case is the plan to get rid of the CopyToGpu eventually? and just use CopyToGpuAsync?",
+      "parentUuid": "017e5e7a_fd0d08ac",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1fce92e2_e6bb1226",
         "filename": "internal/ceres/dense_cholesky.cc",
         "patchSetId": 1
@@ -142,6 +166,30 @@
       "side": 1,
       "message": "I have no idea. I don\u0027t know how it went through - I made a mistake when pushing changes the last time. :-(",
       "parentUuid": "1fce92e2_e6bb1226",
+      "range": {
+        "startLine": 260,
+        "startChar": 38,
+        "endLine": 260,
+        "endChar": 39
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68a21d57_c46565b4",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T20:17:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ccb19711_31a80110",
       "range": {
         "startLine": 260,
         "startChar": 38,
@@ -858,6 +906,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6e25a239_c3e865a9",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T20:17:02Z",
+      "side": 1,
+      "message": "I think option (1) is simpler, it will lead to better testing since we do not have to build two different versions. I have similar concerns about the dense cholesky api, is the code duplication there worth it? I worry about two paths not getting tested regularly and one of them bit rotting.\n\nis there a performance difference between the two APIs?",
+      "parentUuid": "734e9a4a_fdae3bab",
+      "range": {
+        "startLine": 696,
+        "startChar": 33,
+        "endLine": 696,
+        "endChar": 34
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6d924078_7c3a4dd2",
         "filename": "internal/ceres/dense_qr.h",
         "patchSetId": 1
@@ -940,6 +1012,30 @@
       "side": 1,
       "message": "Yes, agreed. This can be done with a simple Cuda kernel. I did not add that in in this patch since that will require build system changes to be able to compile cuda kernels. While we can do this check on the CPU, we might as well wait until we sort out the build issues to support custom kernels.",
       "parentUuid": "e5d512df_79434acd",
+      "range": {
+        "startLine": 148,
+        "startChar": 46,
+        "endLine": 148,
+        "endChar": 51
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de420f6d_6e0942f3",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T20:17:02Z",
+      "side": 1,
+      "message": "I think this will become a problem when we get close to convergence, so something to think about going forward.",
+      "parentUuid": "cf2d6e9f_e4c76637",
       "range": {
         "startLine": 148,
         "startChar": 46,
@@ -1128,6 +1224,30 @@
       "side": 1,
       "message": "I believe they both follow the same pattern, no? Let me know if I\u0027m missing something\n```\n#ifndef CERES_NO_LAPACK\n   // Add the Lapack tests\n#endif\n#ifndef CERES_NO_CUDA\n   // Add the CUDA tests\n#endif\n```",
       "parentUuid": "3dadb1be_6ca11e07",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 23
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c001ac6_a1212336",
+        "filename": "internal/ceres/dense_qr_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T20:17:02Z",
+      "side": 1,
+      "message": "sorry this has not been checked in yet. \n\nhttps://ceres-solver-review.googlesource.com/c/ceres-solver/+/20380/2/internal/ceres/dense_cholesky_test.cc#100\n\nis what I meant.",
+      "parentUuid": "0d09641f_29dc3bf9",
       "range": {
         "startLine": 109,
         "startChar": 8,
