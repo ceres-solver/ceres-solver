@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac357124_c6a2013d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec2694c2_9167f7e9",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7eabf742_00c82b3d",
@@ -35,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38acaa74_d0c860f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eabf742_00c82b3d",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71a103bf_c658df7c",
@@ -48,6 +84,24 @@
       "writtenOn": "2022-02-09T10:45:21Z",
       "side": 1,
       "message": "Can you clarify what you mean by (2) here as we always set the default visibility to hidden in the existing CMake",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8ef24e5_0bb669ba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "I work with toolchains that unconditionally set `-fvisibility\u003dhidden` (or require to do so). With tests enabled, setting the flag breaks the Ceres build because tests expect internal symbols to be visible while they (at least some of them) are not. Being robust to visibility changes outside of Ceres\u0027 sphere of influence is straightforward if symbols are correctly and consistently annotated.\n\nAs a nice side effect, \"tightening\" the symbol export combined with LTO reduces the size of the Ceres shared library by 5% from 4M to 3.8M on my Linux system as more optimization can be applied.",
+      "parentUuid": "71a103bf_c658df7c",
       "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -335,6 +389,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1a6cadd_e1c37da5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Alex, thanks for the review! Since `port.h` macros are needed only in very few places, I pulled `config.h` and `export.h` out of `port.h`. I believe it is now much clearer why each of the headers is included.",
+      "parentUuid": "81db2450_67604fff",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f227dd4_33701434",
@@ -348,6 +420,30 @@
       "writtenOn": "2022-02-08T01:58:24Z",
       "side": 1,
       "message": "add comment about what warnings are being ignored.",
+      "range": {
+        "startLine": 39,
+        "startChar": 31,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d83dec2_8c1d8be3",
+        "filename": "include/ceres/internal/disable_warnings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "I reverted the changes which predate the availability of the symbol export in Ceres and are not required anymore.",
+      "parentUuid": "6f227dd4_33701434",
       "range": {
         "startLine": 39,
         "startChar": 31,
@@ -375,6 +471,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eef1343f_e6dcb5f4",
+        "filename": "include/ceres/internal/disable_warnings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "You are correct. These changes date back before Ceres provided symbol export. I reverted these.",
+      "parentUuid": "f1e740b9_bb080393",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f359e9df_86cc8717",
@@ -388,6 +502,24 @@
       "writtenOn": "2022-02-09T10:45:21Z",
       "side": 1,
       "message": "I don\u0027t think we need these checks for GCC \u003e\u003d 4.6/8, those versions were released circa 2013 and do not support C++14 which Ceres now requires, and our oldest supported Ubuntu version is 18.04 which uses GCC 7.4",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c0c865b_460be12b",
+        "filename": "include/ceres/internal/disable_warnings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Reverted as outdated.",
+      "parentUuid": "f359e9df_86cc8717",
       "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -456,6 +588,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94ecc6d7_6f77b5a6",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84c68997_18646a43",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "780f917c_1147bc21",
@@ -469,6 +619,24 @@
       "writtenOn": "2022-02-09T10:45:21Z",
       "side": 1,
       "message": "Why do we need to set these globally given that we already explicitly set them for the targets in question ?",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b663f05_458b3dbf",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Leaving the corresponding target properties was an error. Global variables provide the benefit of allowing the user to easily override the settings (in case the whish to do so.) This is not possible if target properties are used. This is the same reason why Ceres allows to override the language standard being used through `CMAKE_CXX_STANDARD` instead of hard-coding it in a target property.",
+      "parentUuid": "780f917c_1147bc21",
       "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -544,6 +712,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe4cfa4d_6f36796f",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9b58a85_c4027f2d",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 22
+      },
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8e9b6fb_4090b844",
@@ -579,6 +771,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e88aecb_5bc17093",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bef0de4e_ccbd01d9",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5543d0c1_ecae2fb0",
@@ -592,6 +802,24 @@
       "writtenOn": "2022-02-09T10:45:21Z",
       "side": 1,
       "message": "Whilst this works, I\u0027m not wild about referencing targets ahead of their declaration for legibility.  As these properties are equal, we can flip this relation s/t ceres_internal contains the definitive list and ceres just copies the values from ceres_internal",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbda1822_ee9860a8",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5543d0c1_ecae2fb0",
       "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -613,6 +841,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "270e0116_1c598f65",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Agreed. Should be fixed now.",
+      "parentUuid": "846fe17b_89b45bc2",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3e2eddc_fd80261e",
@@ -630,6 +876,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37b4c3b6_83ab66e0",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3e2eddc_fd80261e",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72930654_a0f29eeb",
@@ -643,6 +907,24 @@
       "writtenOn": "2022-02-08T01:02:54Z",
       "side": 1,
       "message": "As a side note: SOVERSION is currently tied to the major version of Ceres. However, it should be bumped on ABI incompatible changes.",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57e100af_fed0daca",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72930654_a0f29eeb",
       "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -717,6 +999,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c307d56e_f41e7a59",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fb0e2c66_d39c9a49",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "622c24f1_4124e42d",
@@ -730,6 +1030,24 @@
       "writtenOn": "2022-02-09T10:45:21Z",
       "side": 1,
       "message": "I\u0027m not thrilled with this name now that this is in effect the testing version of Ceres (always built statically) *and* the test-specific utilities.\n\nI think having adding a separate `ceres_static` target that is either a direct alias of ceres in the event of NOT BUILD_SHARED_LIBS, or an explicitly STATIC version of ceres that copies its properties would be clearer.\n\nWe can then keep the test_util library as it was (util specific) and link to to ceres_static.\n\nWe also need an explanation of why ceres_static (always) exists and is used for the tests, i.e. even when BUILD_SHARED_LIBS is ON",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2bf87be_fd416230",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Good point. Fixed.",
+      "parentUuid": "622c24f1_4124e42d",
       "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -751,6 +1069,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bb3c45e_0bd0ac87",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "The reason why I choose to define global variables such as `CMAKE_CXX_VISIBILITY_PRESET` is because they can easily be overridden by the user while the property settings can be not as these essentially hard code the value. The use of corresponding properties was an error on my side.",
+      "parentUuid": "19b736d8_1eff4661",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21eaa725_dc55cde1",
@@ -764,6 +1100,24 @@
       "writtenOn": "2022-02-09T10:45:21Z",
       "side": 1,
       "message": "Why do you need Eigen3 explicitly here when it should be transitive from Ceres ?",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6ad32f1_1acc8501",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Agreed, it\u0027s not needed.",
+      "parentUuid": "21eaa725_dc55cde1",
       "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -785,6 +1139,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c91acfb6_2171a89c",
+        "filename": "internal/ceres/array_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "This is now obsolete as `port.h` no longer depends on `config.h` or `export.h` making the intention of using each header much clearer.",
+      "parentUuid": "9eb15a69_11a91c04",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32835957_c09428f1",
@@ -802,6 +1174,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6b67c50_e6e457c6",
+        "filename": "internal/ceres/block_jacobi_preconditioner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "32835957_c09428f1",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ead72c98_2556573a",
@@ -815,6 +1205,24 @@
       "writtenOn": "2022-02-09T10:45:21Z",
       "side": 1,
       "message": "As before should not be required explicitly.  This also happens in the later files",
+      "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "097b1640_397171d2",
+        "filename": "internal/ceres/block_jacobian_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T18:56:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ead72c98_2556573a",
       "revId": "e804a6b18c623a5d4ab11cccbef6e30a78d76751",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
