@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "182c29ab_dc81a910",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T21:15:09Z",
+      "side": 1,
+      "message": "Minor comments. Alex should take another look.\n\nCould you run the nist example in the examples directory? and compare the results with just using eigen as the dense library?",
+      "revId": "cf17867d568f5b9396c119d4575893227ac8a5a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e328c0b4_a5f45c67",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T21:15:09Z",
+      "side": 1,
+      "message": "this begs the question, should we think about trimming the 64bit code out of cholesky too?",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "cf17867d568f5b9396c119d4575893227ac8a5a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "260bdb39_f203a8c9",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T21:15:09Z",
+      "side": 1,
+      "message": "I believe you can just return nullptr.",
+      "range": {
+        "startLine": 505,
+        "startChar": 25,
+        "endLine": 505,
+        "endChar": 36
+      },
+      "revId": "cf17867d568f5b9396c119d4575893227ac8a5a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
