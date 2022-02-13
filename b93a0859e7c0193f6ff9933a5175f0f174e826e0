@@ -53,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73d55c89_9cd0be54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T14:22:58Z",
+      "side": 1,
+      "message": "Alex, you need to keep in mind that these problems (even though they are not caused by the library) are a burden for Windows/MSVC to get started with Ceres (cf., both Github issues). A typical Ceres solver user does want to deal with compiler specific issues that will not go away anytime soon, as it seems but use the library for solving non-linear optimization problems. In my opinion, the solution to `min`/`max` should not require the user to actively choose and apply a fix which is definitely not a user-friendly resolution.",
+      "parentUuid": "f9170056_872da214",
+      "revId": "b93a0859e7c0193f6ff9933a5175f0f174e826e0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf1a7b40_2403c162",
