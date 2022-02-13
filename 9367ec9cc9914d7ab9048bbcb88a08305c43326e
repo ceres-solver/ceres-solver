@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24adbafe_98074c7f",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 0,
+      "message": "The contents of LAPACK_LIBRARIES and BLAS_LIBRARIES should be included in the target properties of the imported SuiteSparse targets as they are still required when SuiteSparse is used.",
+      "revId": "9367ec9cc9914d7ab9048bbcb88a08305c43326e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "77d38054_b2764842",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 1,
+      "message": "\u0027allows native compilation of SuiteSparse using CMake on a variety of platforms\u0027",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b69ad062_9e40004a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 1,
+      "message": "\u0027advantage that they they are self-contained and relocatable\u0027.",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "74d1b417_9d039d98",
@@ -53,6 +87,159 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6466ec2_b68b5aa0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 1,
+      "message": "Thanks for looking at this Sergiu.  In addition to the fixes below, we should update the Sphinx docs to include a link to your SuiteSparse CMake package.",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "885b3f41_43bbc287",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 1,
+      "message": "I think we can remove this entirely now, we only try to ensure that Ceres compiles on the previous Ubuntu LTS version (currently 18.04) using its default packages.  This, if memory serves, dates back to supporting 14.04 (or maybe even 12.04) neither of which would be able to compile Ceres by default given our current CMake version and C++ compiler requirements.  This also means that we can remove the check for this variable from the main Ceres CMakeLists.txt.\n\nI think this means we could also remove the version handling from UFconfig.h given that we can now rely on SuiteSparse_config.h existing.",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54264101_efe5fd69",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 1,
+      "message": "As the top-hit on Google for SuiteSparse CMake is a different project: https://github.com/jlblancoc/suitesparse-metis-for-windows (although it seems not to have been updated for a while) which uses different target names, I think we should expand this to be sure that we have actually found a compatible SuiteSparse config.  I think something like this could work, note that I have also added some comments about why we do not need to forward any version information explicitly, and hidden SuiteSparse_DIR if have found a compatible installation (similar to what we do in other modules):\n\n# NOTE: Any version requirements specified when this module was loaded will\n#       also be available when any config script found is executed even though\n#       they are not explicitly forwarded.\nfind_package(SuiteSparse NO_MODULE QUIET)\n# Check the SuiteSparse config found provides the expected targets.\nlist(APPEND REQUIRED_SUITESPARSE_TARGETS\n   SuiteSparse::AMD\n   SuiteSparse::CAMD \n   SuiteSparse::COLAMD\n   SuiteSparse::CHOLMOD\n   SuiteSparse::SPQR\n   SuiteSparse::Config\n   SuiteSparse::UFconfig)\nforeach (SUITESPARSE_TARGET ${REQUIRED_SUITESPARSE_TARGETS})\n  if (NOT TARGET ${SUITESPARSE_TARGET})\n    list(APPEND MISSING_SUITESPARSE_TARGETS ${SUITESPARSE_TARGET})\n  endif()\nendforeach()\nif (SuiteSparse_FOUND AND NOT MISSING_SUITESPARSE_TARGETS)\n  # Found a compatible SuiteSparse config installation.\n  mark_as_advanced(SuiteSparse_DIR)\n  return()\nendif()\nunset(SuiteSparse_FOUND)\nif (MISSING_SUITESPARSE_TARGETS)\n  message(STATUS \"Exported CMake config for SuiteSparse found here: ${SuiteSparse_DIR} is missing required targets: ${MISSING_SUITESPARSE_TARGETS}. Continuing to (module) search.\")\nendif()",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c82884e_991ffb19",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 1,
+      "message": "Please put this find_package() call *after* the definitions of the macros at the top of this file",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cedfd876_0ca19201",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 1,
+      "message": "This isn\u0027t going to do anything now that the components are mapped to imported targets, instead INTERFACE_LINK_LIBRARIES would need to be updated for the target",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb609242_b9168584",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 1,
+      "message": "As above, now does nothing as the _LIBRARY vars are not referenced anymore, so the INTERFACE_LINK_LIBRARIES property of the imported target will need to be updated",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28f4161e_f647510c",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 1,
+      "message": "As above, I think we can remove this block now that our supported OSs require and provide SuiteSparse \u003e\u003d 4.x",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f45e384_e8b53e22",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 1,
+      "message": "As above, I think we can remove this block entirely given the if(Config_FOUND) block below will already bail with a useful error message if the version cannot be determined now that our supported OSs require and provide SuiteSparse \u003e\u003d 4.x",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ccd8f8c_48cc784a",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 1,
+      "message": "As above, I think we can remove this block now that our supported OSs require and provide SuiteSparse \u003e\u003d 4.x",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4764e09c_0cf53bb8",
@@ -66,6 +253,41 @@
       "writtenOn": "2022-02-06T18:27:46Z",
       "side": 1,
       "message": "This is an instance where I failed to remove the legacy SuiteSparse_LIBRARIES CMake variable.",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df938f8a_b07c6c77",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 1,
+      "message": "We can remove this block entirely now that our minimum supported Ubuntu version is 18.04 which supplies a newer version of SuiteSparse by default",
+      "parentUuid": "4764e09c_0cf53bb8",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60b570fe_50534505",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T15:48:44Z",
+      "side": 1,
+      "message": "This breaks compilation on (at least) 18.04 using the *static* libraries in the default libsuitesparse-dev package as the imported targets do not reflect the transitive dependencies between the SuiteSparse modules, e.g. SuiteSparse_config is not brought in, neither is COLAMD (required by CHOLMOD) etc.\n\nIt *does* work when using the shared libraries (which will be preferred by CMake if they are available in the same location as the static libraries which is the case here).  However, this is only because the shared libraries import the transitive dependencies.",
       "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
