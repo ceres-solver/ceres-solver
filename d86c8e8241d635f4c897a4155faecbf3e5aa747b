@@ -125,6 +125,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1aa3d371_dafac0f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T12:42:34Z",
+      "side": 1,
+      "message": "FYI, to build Ceres with glog, gflags, and gtest (as shared libraries) using MSVC the following glog fix is necessary which I merged only today: https://github.com/google/glog/pull/791. The changes will be part of the upcoming glog 0.6 release.",
+      "parentUuid": "2978e8ce_7a0d7b6e",
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b5c7303_dab205e1",
