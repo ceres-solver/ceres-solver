@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc2b834a_3ff84be4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T23:26:24Z",
+      "side": 1,
+      "message": "here is another thought for the public api. I am curious what you folks think.\n\ninstead of inserting the non-expansion macro, would it be better to define \n\nCERES_MIN and CERES_MAX macros or functions which would make this less intrusive but still better behaved?",
+      "revId": "6549f8cebe6253055ccbd44fd98f89126317d26d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfce687b_8e15bc42",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T23:26:24Z",
+      "side": 1,
+      "message": "what is a reasonable version of cmake to target at this point?",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 30
+      },
+      "revId": "6549f8cebe6253055ccbd44fd98f89126317d26d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
