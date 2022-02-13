@@ -16,6 +16,115 @@
       "message": "Done, removed the 64-bit Cuda Cholesky interface and simplified the build and test accordingly.",
       "revId": "553ee857d535c7b346f6606835d9a1ebd164a69f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2208696_3b3f9dda",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T22:12:45Z",
+      "side": 1,
+      "message": "Thanks for the cholesky simplification. I think this is going to make for a more robust build. I look forward to the time ceres is used on matrices which require 64bit indexing (atleast for dense stuff).",
+      "revId": "553ee857d535c7b346f6606835d9a1ebd164a69f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2499cbe_e41c354e",
+        "filename": "examples/nist.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T22:12:45Z",
+      "side": 1,
+      "message": "eigen, lapack, cuda since eigen is the default.",
+      "range": {
+        "startLine": 104,
+        "startChar": 34,
+        "endLine": 104,
+        "endChar": 39
+      },
+      "revId": "553ee857d535c7b346f6606835d9a1ebd164a69f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d65239a6_5dd15c62",
+        "filename": "internal/ceres/cuda_dense_qr_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T22:12:45Z",
+      "side": 1,
+      "message": "why do we need iostream?",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 18
+      },
+      "revId": "553ee857d535c7b346f6606835d9a1ebd164a69f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b348c620_27c2a289",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T22:12:45Z",
+      "side": 1,
+      "message": "make_unique",
+      "range": {
+        "startLine": 326,
+        "startChar": 47,
+        "endLine": 326,
+        "endChar": 64
+      },
+      "revId": "553ee857d535c7b346f6606835d9a1ebd164a69f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2577ac6_f7bc0812",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T22:12:45Z",
+      "side": 1,
+      "message": "make_unique instead of calling new and wrapping in unique.",
+      "range": {
+        "startLine": 496,
+        "startChar": 7,
+        "endLine": 496,
+        "endChar": 20
+      },
+      "revId": "553ee857d535c7b346f6606835d9a1ebd164a69f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
