@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbbdc383_e8124929",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T23:13:26Z",
+      "side": 1,
+      "message": "Thanks Sergiu, why do some of the header files in internal still need the macro?",
+      "revId": "9bd429e0281a746a6a778e28f42cc79ff1eda1b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "353d89ca_f519d074",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T23:13:26Z",
+      "side": 1,
+      "message": "why does this file need CERES_PREVENT_MACRO_SUBSTITUTION?",
+      "range": {
+        "startLine": 114,
+        "startChar": 18,
+        "endLine": 114,
+        "endChar": 26
+      },
+      "revId": "9bd429e0281a746a6a778e28f42cc79ff1eda1b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "228b87a3_82a67b87",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T23:13:26Z",
+      "side": 1,
+      "message": "same here?",
+      "range": {
+        "startLine": 152,
+        "startChar": 19,
+        "endLine": 152,
+        "endChar": 51
+      },
+      "revId": "9bd429e0281a746a6a778e28f42cc79ff1eda1b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0518395_5dd7e9a8",
+        "filename": "internal/ceres/solver_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T23:13:26Z",
+      "side": 1,
+      "message": "this file should not need modification no?",
+      "range": {
+        "startLine": 57,
+        "startChar": 35,
+        "endLine": 57,
+        "endChar": 67
+      },
+      "revId": "9bd429e0281a746a6a778e28f42cc79ff1eda1b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
