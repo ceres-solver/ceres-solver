@@ -35,6 +35,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c94244e_0864e8db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T22:20:34Z",
+      "side": 1,
+      "message": "Done.\n\nI noticed that the Eigen QR test (_/DenseQRTest.FactorAndSolve/EIGEN) fails on ARM, specifically on the Nvidia Jetson Xavier:\n```\n/home/nvidia/projects/ceres-solver/internal/ceres/dense_qr_test.cc:96: Failure\nThe difference between (x - actual).norm() / x.norm() and 0.0 is 1.2463506681050422e-13, which exceeds kEpsilon, where\n(x - actual).norm() / x.norm() evaluates to 1.2463506681050422e-13,\n0.0 evaluates to 0, and\nkEpsilon evaluates to 8.8817841970012523e-14.\n```\nIs it safe to reduce the tolerance for Eigen\u0027s QR test, or would you rather keep it as is?",
+      "revId": "553ee857d535c7b346f6606835d9a1ebd164a69f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2499cbe_e41c354e",
@@ -48,6 +65,30 @@
       "writtenOn": "2022-02-13T22:12:45Z",
       "side": 1,
       "message": "eigen, lapack, cuda since eigen is the default.",
+      "range": {
+        "startLine": 104,
+        "startChar": 34,
+        "endLine": 104,
+        "endChar": 39
+      },
+      "revId": "553ee857d535c7b346f6606835d9a1ebd164a69f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb252337_7e13afdb",
+        "filename": "examples/nist.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T22:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2499cbe_e41c354e",
       "range": {
         "startLine": 104,
         "startChar": 34,
@@ -81,6 +122,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "804bde0f_75b628bd",
+        "filename": "internal/ceres/cuda_dense_qr_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T22:20:34Z",
+      "side": 1,
+      "message": "We don\u0027t. I need to be more careful in removing temporary hooks, sorry.",
+      "parentUuid": "d65239a6_5dd15c62",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 18
+      },
+      "revId": "553ee857d535c7b346f6606835d9a1ebd164a69f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b348c620_27c2a289",
@@ -104,6 +169,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5ce3601_f4e23e14",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T22:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b348c620_27c2a289",
+      "range": {
+        "startLine": 326,
+        "startChar": 47,
+        "endLine": 326,
+        "endChar": 64
+      },
+      "revId": "553ee857d535c7b346f6606835d9a1ebd164a69f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2577ac6_f7bc0812",
@@ -117,6 +206,30 @@
       "writtenOn": "2022-02-13T22:12:45Z",
       "side": 1,
       "message": "make_unique instead of calling new and wrapping in unique.",
+      "range": {
+        "startLine": 496,
+        "startChar": 7,
+        "endLine": 496,
+        "endChar": 20
+      },
+      "revId": "553ee857d535c7b346f6606835d9a1ebd164a69f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d1c8c60_14ae93ca",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T22:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2577ac6_f7bc0812",
       "range": {
         "startLine": 496,
         "startChar": 7,
