@@ -20,6 +20,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d9bc3f04_24e3946f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Thanks for the speedy review!\nI\u0027ll push changes shortly resolving the small items.\nI left some of the larger issues open below with clarifications.",
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "65155ba2_a71483db",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 1
@@ -66,6 +83,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "017e5e7a_fd0d08ac",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Cuda provides streams for managing asynchronicity between different tasks.\nThis is useful for when there are multiple concurrent tasks running on the GPU - sequential operations on each stream are guaranteed to be sequential, while the driver can optimize how to order and interleave the different streams to maximize throughput.\nThe non-async one uses the default stream - for when the user does not want to manage streams. I would like to set up different streams for each solver so they can be asynchronous between them. While we are not utilizing this to its maximum potential at the moment, as we start doing more things on the GPU, the difference will be more significant.\n\nThe short answer is that if you don\u0027t want to take on the responsibility of managing streams, use the non-async version. If you do manage your own streams, you should use the async version, and provide the stream.\n\nThis seems like it might be good to document - I\u0027ll do that.",
+      "parentUuid": "9b299beb_ca9ef3fd",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1fce92e2_e6bb1226",
         "filename": "internal/ceres/dense_cholesky.cc",
         "patchSetId": 1
@@ -77,6 +118,30 @@
       "writtenOn": "2022-02-13T16:03:43Z",
       "side": 1,
       "message": "how did this ever compiler??",
+      "range": {
+        "startLine": 260,
+        "startChar": 38,
+        "endLine": 260,
+        "endChar": 39
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccb19711_31a80110",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "I have no idea. I don\u0027t know how it went through - I made a mistake when pushing changes the last time. :-(",
+      "parentUuid": "1fce92e2_e6bb1226",
       "range": {
         "startLine": 260,
         "startChar": 38,
@@ -104,6 +169,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34bfc6a8_6b913d96",
+        "filename": "internal/ceres/dense_linear_solver_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b08ceccf_5656c7d2",
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15514eda_45bbb203",
@@ -117,6 +200,30 @@
       "writtenOn": "2022-02-13T16:03:43Z",
       "side": 1,
       "message": "iostream and fstream?",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88530acc_80eb77e6",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "My mistake. Leftover from some debugging hooks I\u0027d inserted.",
+      "parentUuid": "15514eda_45bbb203",
       "range": {
         "startLine": 34,
         "startChar": 10,
@@ -144,6 +251,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbbe9f42_cc771186",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa457026_808639a2",
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37669147_390d1700",
@@ -157,6 +282,30 @@
       "writtenOn": "2022-02-13T16:03:43Z",
       "side": 1,
       "message": "blank before.",
+      "range": {
+        "startLine": 416,
+        "startChar": 2,
+        "endLine": 416,
+        "endChar": 3
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "def40e0e_0ce1b8df",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37669147_390d1700",
       "range": {
         "startLine": 416,
         "startChar": 2,
@@ -190,6 +339,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "283128b3_467d9cc3",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2c5b5ae_59cebccd",
+      "range": {
+        "startLine": 469,
+        "startChar": 11,
+        "endLine": 469,
+        "endChar": 14
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4609150_538413a7",
@@ -203,6 +376,30 @@
       "writtenOn": "2022-02-13T16:03:43Z",
       "side": 1,
       "message": "drop",
+      "range": {
+        "startLine": 471,
+        "startChar": 15,
+        "endLine": 471,
+        "endChar": 16
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3376771a_3bcf99de",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4609150_538413a7",
       "range": {
         "startLine": 471,
         "startChar": 15,
@@ -270,6 +467,66 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70e50535_36256671",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9661f785_4b3f5a19",
+      "range": {
+        "startLine": 498,
+        "startChar": 17,
+        "endLine": 498,
+        "endChar": 20
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a6bd3d3_c6a734b6",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "The GPU -\u003e CPU transfer has to be sync, since it must wait for the GPU tasks that provide the results to terminate.\n\nAgreed re. making things async where possible for Cholesky - it\u0027s on my immediate to to list.",
+      "parentUuid": "f8103965_891ccc3a",
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b886bb4_70396097",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afc10129_c41b7d91",
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d04da9c_918ad986",
@@ -283,6 +540,30 @@
       "writtenOn": "2022-02-13T16:03:43Z",
       "side": 1,
       "message": "use make_unique",
+      "range": {
+        "startLine": 510,
+        "startChar": 40,
+        "endLine": 510,
+        "endChar": 56
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c763a744_6fc6aad8",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d04da9c_918ad986",
       "range": {
         "startLine": 510,
         "startChar": 40,
@@ -316,6 +597,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34531523_14ac032e",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aa385a8_9810a5d3",
+      "range": {
+        "startLine": 614,
+        "startChar": 25,
+        "endLine": 614,
+        "endChar": 27
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1210e0bf_0c0a429f",
@@ -329,6 +634,30 @@
       "writtenOn": "2022-02-13T16:03:43Z",
       "side": 1,
       "message": "drop",
+      "range": {
+        "startLine": 619,
+        "startChar": 14,
+        "endLine": 619,
+        "endChar": 15
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c1156e9_bf018c6b",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1210e0bf_0c0a429f",
       "range": {
         "startLine": 619,
         "startChar": 14,
@@ -362,6 +691,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eaa870bf_891aa9b7",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab78fb20_f9a810e4",
+      "range": {
+        "startLine": 641,
+        "startChar": 26,
+        "endLine": 641,
+        "endChar": 32
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "920027ed_2b38f0a9",
@@ -385,6 +738,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "228e5b15_502dffac",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "920027ed_2b38f0a9",
+      "range": {
+        "startLine": 643,
+        "startChar": 5,
+        "endLine": 643,
+        "endChar": 13
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f0bfa29_b5b49692",
@@ -398,6 +775,30 @@
       "writtenOn": "2022-02-13T16:03:43Z",
       "side": 1,
       "message": "drop",
+      "range": {
+        "startLine": 671,
+        "startChar": 11,
+        "endLine": 671,
+        "endChar": 14
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6af3903_8a9ce693",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f0bfa29_b5b49692",
       "range": {
         "startLine": 671,
         "startChar": 11,
@@ -433,6 +834,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "734e9a4a_fdae3bab",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Good question, and I\u0027ve gone back and forth on this.\nFrom the Cuda doc, I believe the impacted users are those who have dense matrices large enough to need 64-bit values to capture their size. \nOn the other hand, internally the CUDADenseQR*Bit classes store the sizes in the native machine type using size_t, but the Ceres linear solver api uses 32-bit values for sizes so we\u0027re not going to be able to exploit the 64-bit capability without an API change.\n\nSo we have two options:\n1. Just omit the 64-bit API for now, until nvidia finishes adding 64-bit support to all functions that we need.\n2. Keep this as is, so that when the nvidia update happens we have less to change.\n\nI don\u0027t have a strong feeling either way. Thoughts?",
+      "parentUuid": "f7a28c0b_7c7b3fb0",
+      "range": {
+        "startLine": 696,
+        "startChar": 33,
+        "endLine": 696,
+        "endChar": 34
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6d924078_7c3a4dd2",
         "filename": "internal/ceres/dense_qr.h",
         "patchSetId": 1
@@ -444,6 +869,30 @@
       "writtenOn": "2022-02-13T16:03:43Z",
       "side": 1,
       "message": "why bother including this if there is no cuda?",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d809340_13be2102",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d924078_7c3a4dd2",
       "range": {
         "startLine": 42,
         "startChar": 16,
@@ -479,6 +928,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cf2d6e9f_e4c76637",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Yes, agreed. This can be done with a simple Cuda kernel. I did not add that in in this patch since that will require build system changes to be able to compile cuda kernels. While we can do this check on the CPU, we might as well wait until we sort out the build issues to support custom kernels.",
+      "parentUuid": "e5d512df_79434acd",
+      "range": {
+        "startLine": 148,
+        "startChar": 46,
+        "endLine": 148,
+        "endChar": 51
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f9dd30b1_bc1cc0e6",
         "filename": "internal/ceres/dense_qr.h",
         "patchSetId": 1
@@ -490,6 +963,30 @@
       "writtenOn": "2022-02-13T16:03:43Z",
       "side": 1,
       "message": "move to cc file.",
+      "range": {
+        "startLine": 166,
+        "startChar": 19,
+        "endLine": 166,
+        "endChar": 20
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95445063_09308e90",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9dd30b1_bc1cc0e6",
       "range": {
         "startLine": 166,
         "startChar": 19,
@@ -523,6 +1020,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02bf8593_e912b340",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a475585_04950b20",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 14
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e184d8d1_f0d58fda",
@@ -546,6 +1067,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd34afdc_6818c8e6",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e184d8d1_f0d58fda",
+      "range": {
+        "startLine": 229,
+        "startChar": 15,
+        "endLine": 229,
+        "endChar": 18
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3dadb1be_6ca11e07",
@@ -559,6 +1104,30 @@
       "writtenOn": "2022-02-13T16:03:43Z",
       "side": 1,
       "message": "macros inside macros lead to trouble. see dense_cholesky_test.cc for a workaround.",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 23
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d09641f_29dc3bf9",
+        "filename": "internal/ceres/dense_qr_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "I believe they both follow the same pattern, no? Let me know if I\u0027m missing something\n```\n#ifndef CERES_NO_LAPACK\n   // Add the Lapack tests\n#endif\n#ifndef CERES_NO_CUDA\n   // Add the CUDA tests\n#endif\n```",
+      "parentUuid": "3dadb1be_6ca11e07",
       "range": {
         "startLine": 109,
         "startChar": 8,
@@ -603,6 +1172,42 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31b4ebac_4fc69169",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3fe03a5_250f6148",
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f5a4474_f2a7f666",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6df6fb37_7d376402",
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c94e76a_4283891c",
@@ -639,6 +1244,48 @@
         "endLine": 37,
         "endChar": 16
       },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad55cd6e_4a014a31",
+        "filename": "internal/ceres/graph_algorithms.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cbfe15d_bf2ce1f9",
+      "range": {
+        "startLine": 37,
+        "startChar": 10,
+        "endLine": 37,
+        "endChar": 16
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1143d6be_5643a80c",
+        "filename": "internal/ceres/graph_algorithms.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c94e76a_4283891c",
       "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
