@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b861c5d6_fd8a1fee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T22:04:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77d38054_b2764842",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b69ad062_9e40004a",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-02-13T15:48:44Z",
       "side": 1,
       "message": "\u0027advantage that they they are self-contained and relocatable\u0027.",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08b43293_4cce82cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T22:04:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b69ad062_9e40004a",
       "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -104,6 +140,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64c4846a_cc68e12c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T22:04:30Z",
+      "side": 1,
+      "message": "Good point. Docs updated.",
+      "parentUuid": "d6466ec2_b68b5aa0",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "885b3f41_43bbc287",
@@ -117,6 +171,24 @@
       "writtenOn": "2022-02-13T15:48:44Z",
       "side": 1,
       "message": "I think we can remove this entirely now, we only try to ensure that Ceres compiles on the previous Ubuntu LTS version (currently 18.04) using its default packages.  This, if memory serves, dates back to supporting 14.04 (or maybe even 12.04) neither of which would be able to compile Ceres by default given our current CMake version and C++ compiler requirements.  This also means that we can remove the check for this variable from the main Ceres CMakeLists.txt.\n\nI think this means we could also remove the version handling from UFconfig.h given that we can now rely on SuiteSparse_config.h existing.",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc80acee_955e83a2",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T22:04:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "885b3f41_43bbc287",
       "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -155,6 +227,42 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c69d86fc_1c5e135a",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T22:04:30Z",
+      "side": 1,
+      "message": "That would defeat the purpose of these changes because the package config itself will the define the necessary variables (and targets.) Therefore, this should be the very first call with an early return in a CMake find module.",
+      "parentUuid": "3c82884e_991ffb19",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd294ba4_7645e4db",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T22:04:30Z",
+      "side": 1,
+      "message": "Good point. I now explicitly handle components.",
+      "parentUuid": "54264101_efe5fd69",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cedfd876_0ca19201",
@@ -168,6 +276,24 @@
       "writtenOn": "2022-02-13T15:48:44Z",
       "side": 1,
       "message": "This isn\u0027t going to do anything now that the components are mapped to imported targets, instead INTERFACE_LINK_LIBRARIES would need to be updated for the target",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36787551_ba0923e1",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T22:04:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cedfd876_0ca19201",
       "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -189,6 +315,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afe036df_adb66083",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T22:04:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb609242_b9168584",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28f4161e_f647510c",
@@ -202,6 +346,24 @@
       "writtenOn": "2022-02-13T15:48:44Z",
       "side": 1,
       "message": "As above, I think we can remove this block now that our supported OSs require and provide SuiteSparse \u003e\u003d 4.x",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31c636c0_b66d7373",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T22:04:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28f4161e_f647510c",
       "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -223,6 +385,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc43eb9d_84193ecc",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T22:04:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f45e384_e8b53e22",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ccd8f8c_48cc784a",
@@ -236,6 +416,24 @@
       "writtenOn": "2022-02-13T15:48:44Z",
       "side": 1,
       "message": "As above, I think we can remove this block now that our supported OSs require and provide SuiteSparse \u003e\u003d 4.x",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54b42d0e_c0b672e1",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T22:04:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ccd8f8c_48cc784a",
       "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -275,6 +473,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eb4dd7c_20c6cac6",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T22:04:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df938f8a_b07c6c77",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60b570fe_50534505",
@@ -288,6 +504,24 @@
       "writtenOn": "2022-02-13T15:48:44Z",
       "side": 1,
       "message": "This breaks compilation on (at least) 18.04 using the *static* libraries in the default libsuitesparse-dev package as the imported targets do not reflect the transitive dependencies between the SuiteSparse modules, e.g. SuiteSparse_config is not brought in, neither is COLAMD (required by CHOLMOD) etc.\n\nIt *does* work when using the shared libraries (which will be preferred by CMake if they are available in the same location as the static libraries which is the case here).  However, this is only because the shared libraries import the transitive dependencies.",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9caf4f54_fea30c0f",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T22:04:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60b570fe_50534505",
       "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
