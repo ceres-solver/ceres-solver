@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fcefd4c_192522a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T23:18:06Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ve overlooked the internals.",
+      "parentUuid": "fbbdc383_e8124929",
+      "revId": "9bd429e0281a746a6a778e28f42cc79ff1eda1b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "353d89ca_f519d074",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-02-13T23:13:26Z",
       "side": 1,
       "message": "why does this file need CERES_PREVENT_MACRO_SUBSTITUTION?",
+      "range": {
+        "startLine": 114,
+        "startChar": 18,
+        "endLine": 114,
+        "endChar": 26
+      },
+      "revId": "9bd429e0281a746a6a778e28f42cc79ff1eda1b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e85f8cd4_ec667aa3",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T23:18:06Z",
+      "side": 1,
+      "message": "Ah, yes. internal files don\u0027t need these.",
+      "parentUuid": "353d89ca_f519d074",
       "range": {
         "startLine": 114,
         "startChar": 18,
@@ -64,6 +106,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f2fd9cd_d996b56d",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T23:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "228b87a3_82a67b87",
+      "range": {
+        "startLine": 152,
+        "startChar": 19,
+        "endLine": 152,
+        "endChar": 51
+      },
+      "revId": "9bd429e0281a746a6a778e28f42cc79ff1eda1b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0518395_5dd7e9a8",
@@ -77,6 +143,30 @@
       "writtenOn": "2022-02-13T23:13:26Z",
       "side": 1,
       "message": "this file should not need modification no?",
+      "range": {
+        "startLine": 57,
+        "startChar": 35,
+        "endLine": 57,
+        "endChar": 67
+      },
+      "revId": "9bd429e0281a746a6a778e28f42cc79ff1eda1b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bb5e4fc_94d7de38",
+        "filename": "internal/ceres/solver_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T23:18:06Z",
+      "side": 1,
+      "message": "Correct.",
+      "parentUuid": "c0518395_5dd7e9a8",
       "range": {
         "startLine": 57,
         "startChar": 35,
