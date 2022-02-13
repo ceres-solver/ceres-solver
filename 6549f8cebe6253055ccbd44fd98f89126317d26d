@@ -36,6 +36,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4f468aa_b0b31447",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T23:55:30Z",
+      "side": 1,
+      "message": "In cases where `std::min` and `std::max` are fully qualified (no ADL), parens instead of a macro can be used.",
+      "parentUuid": "ac3e92e4_211983b3",
+      "revId": "6549f8cebe6253055ccbd44fd98f89126317d26d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfce687b_8e15bc42",
