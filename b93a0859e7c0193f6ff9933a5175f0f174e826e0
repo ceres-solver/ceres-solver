@@ -71,6 +71,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c55a92db_b947d1ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-13T15:47:29Z",
+      "side": 1,
+      "message": "can we consider different solutions for the ceres public api vs internals?\nfor the internal we should just be able to modify the cmake file to define NOMINMAX no? same for examples.\n\nthe only real problem is the public API?",
+      "revId": "b93a0859e7c0193f6ff9933a5175f0f174e826e0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf1a7b40_2403c162",
