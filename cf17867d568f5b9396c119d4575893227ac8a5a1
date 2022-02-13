@@ -78,6 +78,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7f3959e_5df7c082",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T21:26:15Z",
+      "side": 1,
+      "message": "Okay let\u0027s do it. It\u0027ll simplify the code a lot.\nMarking unresolved until done.",
+      "parentUuid": "e328c0b4_a5f45c67",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "cf17867d568f5b9396c119d4575893227ac8a5a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "260bdb39_f203a8c9",
         "filename": "internal/ceres/dense_qr.cc",
         "patchSetId": 7
@@ -89,6 +113,30 @@
       "writtenOn": "2022-02-13T21:15:09Z",
       "side": 1,
       "message": "I believe you can just return nullptr.",
+      "range": {
+        "startLine": 505,
+        "startChar": 25,
+        "endLine": 505,
+        "endChar": 36
+      },
+      "revId": "cf17867d568f5b9396c119d4575893227ac8a5a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f9ca0cd_69d8dd15",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T21:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "260bdb39_f203a8c9",
       "range": {
         "startLine": 505,
         "startChar": 25,
