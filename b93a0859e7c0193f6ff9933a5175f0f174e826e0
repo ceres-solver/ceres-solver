@@ -36,6 +36,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9170056_872da214",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-13T13:52:06Z",
+      "side": 1,
+      "message": "Thanks for looking at this Sergiu.\n\nI am not a fan of this change.  Fundamentally, this is a (very old) legacy MSVC bug that breaks standard compliance, and even MSVC\u0027s own documentation for other modules (certainly their graphics APIs) advises both the use of std::min/max() and defining NOMINMAX which is also pretty common for other projects with similar issues (eg Catch2).  Adding custom macros around the uses of min/max as we are here looks like a real maintenance headache.  Ceres is standard compliant, and we require a standard compliant compiler.  The fact is that without defining NOMINMAX, the MSVC toolchain is not standard compliant, with it defined it is (at least in this regard).\n\nI am happy to add a target compile definition to the exported Ceres target that brings this is for users, or we can add a large note that it is required in the documentation, but not exported and they will have to manually define it themselves - although I think that\u0027s unhelpful given that it is necessary in order to use Ceres.\n\nI\u0027m not concerned about conflicts with non-compliant client code that relied on NOMINMAX when even the MSVC docs they should be using the compliant std::min/max().  If that was really not possible, then it should still be possible for them to firewall the parts of their project that used Ceres (and used Jet types) from the areas that relied on the legacy Windows.h macros.",
+      "revId": "b93a0859e7c0193f6ff9933a5175f0f174e826e0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf1a7b40_2403c162",
