@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac3e92e4_211983b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T23:40:19Z",
+      "side": 1,
+      "message": "IMHO, never use macros for function calls. This can have nasty side effects.",
+      "parentUuid": "bc2b834a_3ff84be4",
+      "revId": "6549f8cebe6253055ccbd44fd98f89126317d26d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfce687b_8e15bc42",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-02-13T23:26:24Z",
       "side": 1,
       "message": "what is a reasonable version of cmake to target at this point?",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 30
+      },
+      "revId": "6549f8cebe6253055ccbd44fd98f89126317d26d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b31c4a2_26114b39",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T23:40:19Z",
+      "side": 1,
+      "message": "I\u0027d rather update CMake as necessary and neglect version availability in a specific distribution (such as Ubuntu). CMake is readily available for all major operating systems and can be used without installation. CMake 3.16 in Ubuntu 20.04, for instance, is already over 2 years old but nevertheless could help avoid some workarounds in Ceres.",
+      "parentUuid": "cfce687b_8e15bc42",
       "range": {
         "startLine": 32,
         "startChar": 23,
