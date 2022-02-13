@@ -16,6 +16,40 @@
       "message": "This CL adds dense QR support.\n",
       "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3fe03a5_250f6148",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T15:53:10Z",
+      "side": 1,
+      "message": "This addition was necessary since there are uses of std::unique_ptr in this file. L72 caused compiler errors since `std::unique_ptr` was undeclared.",
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c94e76a_4283891c",
+        "filename": "internal/ceres/graph_algorithms.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T15:53:10Z",
+      "side": 1,
+      "message": "This addition was necessary since there are uses of std::unique_ptr in this file. L260 caused compiler errors since `std::unique_ptr` was undeclared.",
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
