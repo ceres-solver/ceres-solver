@@ -88,6 +88,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "304d1eb9_b62808e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-13T15:58:48Z",
+      "side": 1,
+      "message": "Yes, this is a viable alternative. Public API can only be fixed using the macro.",
+      "parentUuid": "c55a92db_b947d1ee",
+      "revId": "b93a0859e7c0193f6ff9933a5175f0f174e826e0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf1a7b40_2403c162",
