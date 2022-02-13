@@ -129,6 +129,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "876dbf4e_9662f1bb",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T20:54:14Z",
+      "side": 1,
+      "message": "Okay, I converted all the Cholesky operations to async methods as well, so the non-async version can be taken out now.",
+      "parentUuid": "7d105bf4_9d314f96",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fce92e2_e6bb1226",
@@ -575,6 +599,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6c64e60_326174f5",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T20:54:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a6bd3d3_c6a734b6",
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d04da9c_918ad986",
@@ -928,6 +970,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82130a4c_79f8a005",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T20:54:14Z",
+      "side": 1,
+      "message": "I have not found any performance difference between the two APIs.\nOkay, I\u0027ll work on trimming out the 64-bit QR factorization.",
+      "parentUuid": "6e25a239_c3e865a9",
+      "range": {
+        "startLine": 696,
+        "startChar": 33,
+        "endLine": 696,
+        "endChar": 34
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d924078_7c3a4dd2",
@@ -1036,6 +1102,30 @@
       "side": 1,
       "message": "I think this will become a problem when we get close to convergence, so something to think about going forward.",
       "parentUuid": "cf2d6e9f_e4c76637",
+      "range": {
+        "startLine": 148,
+        "startChar": 46,
+        "endLine": 148,
+        "endChar": 51
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b38a46e_ecfb29e5",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T20:54:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "de420f6d_6e0942f3",
       "range": {
         "startLine": 148,
         "startChar": 46,
@@ -1248,6 +1338,30 @@
       "side": 1,
       "message": "sorry this has not been checked in yet. \n\nhttps://ceres-solver-review.googlesource.com/c/ceres-solver/+/20380/2/internal/ceres/dense_cholesky_test.cc#100\n\nis what I meant.",
       "parentUuid": "0d09641f_29dc3bf9",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 23
+      },
+      "revId": "373d9aeadd7a71fafff6dc9b17dada43991476f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bc2da5d_a3e6d62d",
+        "filename": "internal/ceres/dense_qr_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T20:54:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c001ac6_a1212336",
       "range": {
         "startLine": 109,
         "startChar": 8,

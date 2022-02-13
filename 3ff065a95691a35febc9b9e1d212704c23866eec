@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc6a1b88_86b3c950",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-13T20:54:14Z",
+      "side": 1,
+      "message": "Hi Sameer,\n\nI resolved the remaining issues.\nI\u0027ll work on the singularity checking for a follow-on CL, unless you think this should be a blocker.\n\n-Joydeep",
+      "revId": "3ff065a95691a35febc9b9e1d212704c23866eec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
