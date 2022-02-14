@@ -72,6 +72,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e98376a_f384c4f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-14T13:28:44Z",
+      "side": 1,
+      "message": "No, not all. Method definitions (in `jet.h`) cannot be solved using parens, AFAIK.",
+      "parentUuid": "0706d199_e4db79f6",
+      "revId": "6549f8cebe6253055ccbd44fd98f89126317d26d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfce687b_8e15bc42",
