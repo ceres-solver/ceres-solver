@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "840770d6_1fd71e23",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T13:59:49Z",
+      "side": 1,
+      "message": "this whole message can be dropped from here no? and maybe just handled in internal/cmake? I am not sure what the right cmake style thing is here.",
+      "range": {
+        "startLine": 502,
+        "startChar": 3,
+        "endLine": 502,
+        "endChar": 4
+      },
+      "revId": "64223d4d760e5c1a36e980c8ee4fc089b6eabf49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa62eb95_ad1f81ce",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T13:59:49Z",
+      "side": 1,
+      "message": "why does dense_cholesky have public symbols?",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 18
+      },
+      "revId": "64223d4d760e5c1a36e980c8ee4fc089b6eabf49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28c65cb2_7f6a9084",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T13:59:49Z",
+      "side": 1,
+      "message": "same for dense_qr?",
+      "range": {
+        "startLine": 62,
+        "startChar": 13,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "64223d4d760e5c1a36e980c8ee4fc089b6eabf49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
