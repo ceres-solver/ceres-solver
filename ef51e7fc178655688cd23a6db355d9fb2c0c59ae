@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "857f3dac_c20261ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T13:21:55Z",
+      "side": 1,
+      "message": "Thanks Sergiu.\nMinor grammar thing, and then ready to merge.",
+      "revId": "ef51e7fc178655688cd23a6db355d9fb2c0c59ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "893267d9_9d597948",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T13:21:55Z",
+      "side": 1,
+      "message": "nullptr points -\u003e nullptr",
+      "range": {
+        "startLine": 137,
+        "startChar": 47,
+        "endLine": 137,
+        "endChar": 54
+      },
+      "revId": "ef51e7fc178655688cd23a6db355d9fb2c0c59ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
