@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "099bd2b3_444c5431",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T13:34:17Z",
+      "side": 1,
+      "message": "lts 18.04 has cmake version 3.10.2 so lets move to that and that will simplify this CL further.",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 34
+      },
+      "revId": "bb620fa56ddd26c2b1f12db2d763e2513816d0ee",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dfe9c346_b0bd4e38",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 2
