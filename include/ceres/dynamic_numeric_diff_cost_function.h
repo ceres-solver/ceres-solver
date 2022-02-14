@@ -111,7 +111,7 @@ class DynamicNumericDiffCostFunction : public DynamicCostFunction {
     const bool status =
         internal::VariadicEvaluate<internal::DynamicParameterDims>(
             *functor_.get(), parameters, residuals);
-    if (jacobians == NULL || !status) {
+    if (jacobians == nullptr || !status) {
       return status;
     }
 
@@ -133,7 +133,7 @@ class DynamicNumericDiffCostFunction : public DynamicCostFunction {
     }
 
     for (size_t block = 0; block < block_sizes.size(); ++block) {
-      if (jacobians[block] != NULL &&
+      if (jacobians[block] != nullptr &&
           !NumericDiff<CostFunctor,
                        method,
                        ceres::DYNAMIC,

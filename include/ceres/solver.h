@@ -423,7 +423,7 @@ class CERES_EXPORT Solver {
     // each group, Ceres is free to order the parameter blocks as it
     // chooses.
     //
-    // If NULL, then all parameter blocks are assumed to be in the
+    // If nullptr, then all parameter blocks are assumed to be in the
     // same group and the solver is free to decide the best
     // ordering.
     //

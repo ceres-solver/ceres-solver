@@ -219,7 +219,7 @@ class NumericDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
       return false;
     }
 
-    if (jacobians == NULL) {
+    if (jacobians == nullptr) {
       return true;
     }
 

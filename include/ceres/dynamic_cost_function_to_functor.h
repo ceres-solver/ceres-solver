@@ -110,7 +110,7 @@ class DynamicCostFunctionToFunctor {
   }
 
   bool operator()(double const* const* parameters, double* residuals) const {
-    return cost_function_->Evaluate(parameters, residuals, NULL);
+    return cost_function_->Evaluate(parameters, residuals, nullptr);
   }
 
   template <typename JetT>

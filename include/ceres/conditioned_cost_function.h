@@ -76,7 +76,7 @@ class CERES_EXPORT ConditionedCostFunction : public CostFunction {
   // Builds a cost function based on a wrapped cost function, and a
   // per-residual conditioner. Takes ownership of all of the wrapped cost
   // functions, or not, depending on the ownership parameter. Conditioners
-  // may be NULL, in which case the corresponding residual is not modified.
+  // may be nullptr, in which case the corresponding residual is not modified.
   //
   // The conditioners can repeat.
   ConditionedCostFunction(CostFunction* wrapped_cost_function,

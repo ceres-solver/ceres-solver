@@ -108,7 +108,7 @@ class TinySolverCostFunctionAdapter {
                   double* residuals,
                   double* jacobian) const {
     if (!jacobian) {
-      return cost_function_.Evaluate(&parameters, residuals, NULL);
+      return cost_function_.Evaluate(&parameters, residuals, nullptr);
     }
 
     double* jacobians[1] = {row_major_jacobian_.data()};

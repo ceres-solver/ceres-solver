@@ -137,7 +137,7 @@ class CERES_DEPRECATED_WITH_MSG("Use AutoDiffManifold instead.")
     }
 
     const double* parameter_ptrs[2] = {x, zero_delta};
-    double* jacobian_ptrs[2] = {NULL, jacobian};
+    double* jacobian_ptrs[2] = {nullptr, jacobian};
     return internal::AutoDifferentiate<
         kGlobalSize,
         internal::StaticParameterDims<kGlobalSize, kLocalSize>>(
