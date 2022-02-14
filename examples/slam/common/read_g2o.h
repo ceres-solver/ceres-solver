@@ -104,8 +104,8 @@ template <typename Pose,
 bool ReadG2oFile(const std::string& filename,
                  std::map<int, Pose, std::less<int>, MapAllocator>* poses,
                  std::vector<Constraint, VectorAllocator>* constraints) {
-  CHECK(poses != NULL);
-  CHECK(constraints != NULL);
+  CHECK(poses != nullptr);
+  CHECK(constraints != nullptr);
 
   poses->clear();
   constraints->clear();

@@ -127,7 +127,7 @@ class TinySolverAutoDiffFunction {
   // This is similar to AutoDifferentiate(), but since there is only one
   // parameter block it is easier to inline to avoid overhead.
   bool operator()(const T* parameters, T* residuals, T* jacobian) const {
-    if (jacobian == NULL) {
+    if (jacobian == nullptr) {
       // No jacobian requested, so just directly call the cost function with
       // doubles, skipping jets and derivatives.
       return cost_functor_(parameters, residuals);

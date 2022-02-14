@@ -151,7 +151,7 @@ class CERES_EXPORT GradientChecker {
   // Jacobians. If the Jacobians differ by more than this amount, then the
   // probe fails.
   // results: On return, the Jacobians (and other information) will be stored
-  // here. May be NULL.
+  // here. May be nullptr.
   //
   // Returns true if no problems are detected and the difference between the
   // Jacobians is less than error_tolerance.

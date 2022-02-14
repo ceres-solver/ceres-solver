@@ -35,7 +35,7 @@
 //
 // For least squares problem where there are no outliers and standard
 // squared loss is expected, it is not necessary to create a loss
-// function; instead passing a NULL to the problem when adding
+// function; instead passing a nullptr to the problem when adding
 // residuals implies a standard squared loss.
 //
 // For least squares problems where the minimization may encounter
@@ -125,7 +125,7 @@ class CERES_EXPORT LossFunction {
 //
 // At s = 0: rho = [0, 1, 0].
 //
-// It is not normally necessary to use this, as passing NULL for the
+// It is not normally necessary to use this, as passing nullptr for the
 // loss function when building the problem accomplishes the same
 // thing.
 class CERES_EXPORT TrivialLoss : public LossFunction {
@@ -294,7 +294,7 @@ class CERES_EXPORT TukeyLoss : public ceres::LossFunction {
 
 // Composition of two loss functions.  The error is the result of first
 // evaluating g followed by f to yield the composition f(g(s)).
-// The loss functions must not be NULL.
+// The loss functions must not be nullptr.
 class CERES_EXPORT ComposedLoss : public LossFunction {
  public:
   explicit ComposedLoss(const LossFunction* f,
@@ -322,8 +322,8 @@ class CERES_EXPORT ComposedLoss : public LossFunction {
 // s -> a * rho'(s)
 // s -> a * rho''(s)
 //
-// Since we treat the a NULL Loss function as the Identity loss
-// function, rho = NULL is a valid input and will result in the input
+// Since we treat the a nullptr Loss function as the Identity loss
+// function, rho = nullptr is a valid input and will result in the input
 // being scaled by a. This provides a simple way of implementing a
 // scaled ResidualBlock.
 class CERES_EXPORT ScaledLoss : public LossFunction {
@@ -361,8 +361,8 @@ class CERES_EXPORT ScaledLoss : public LossFunction {
 // whose scale can be mutated after an optimization problem has been
 // constructed.
 //
-// Since we treat the a NULL Loss function as the Identity loss
-// function, rho = NULL is a valid input.
+// Since we treat the a nullptr Loss function as the Identity loss
+// function, rho = nullptr is a valid input.
 //
 // Example usage
 //
@@ -403,7 +403,7 @@ class CERES_EXPORT LossFunctionWrapper : public LossFunction {
   }
 
   void Evaluate(double sq_norm, double out[3]) const override {
-    if (rho_.get() == NULL) {
+    if (rho_.get() == nullptr) {
       out[0] = sq_norm;
       out[1] = 1.0;
       out[2] = 0.0;

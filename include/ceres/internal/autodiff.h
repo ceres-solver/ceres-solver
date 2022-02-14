@@ -132,10 +132,10 @@
 // respectively. This is how autodiff works for functors taking multiple vector
 // valued arguments (up to 6).
 //
-// Jacobian NULL pointers
-// ----------------------
-// In general, the functions below will accept NULL pointers for all or some of
-// the Jacobian parameters, meaning that those Jacobians will not be computed.
+// Jacobian null pointers (nullptr)
+// --------------------------------
+// In general, the functions below will accept nullptr for all or some of the
+// Jacobian parameters, meaning that those Jacobians will not be computed.
 
 #ifndef CERES_PUBLIC_INTERNAL_AUTODIFF_H_
 #define CERES_PUBLIC_INTERNAL_AUTODIFF_H_
