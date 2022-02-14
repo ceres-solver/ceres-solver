@@ -420,11 +420,20 @@ bool IsDenseLinearAlgebraLibraryTypeAvailable(
   if (type == EIGEN) {
     return true;
   }
+
   if (type == LAPACK) {
 #ifdef CERES_NO_LAPACK
     return false;
 #else
     return true;
+#endif
+  }
+
+  if (type == CUDA) {
+#ifdef CERES_NO_CUDA
+    return false;
+#else
+    return false;
 #endif
   }
 

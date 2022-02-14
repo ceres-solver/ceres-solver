@@ -154,6 +154,19 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
     return false;
   }
 
+  if (options.dense_linear_algebra_library_type == CUDA &&
+      !IsDenseLinearAlgebraLibraryTypeAvailable(CUDA) &&
+      (options.linear_solver_type == DENSE_NORMAL_CHOLESKY ||
+       options.linear_solver_type == DENSE_QR ||
+       options.linear_solver_type == DENSE_SCHUR)) {
+    *error = StringPrintf(
+        "Can't use %s with "
+        "Solver::Options::dense_linear_algebra_library_type = CUDA "
+        "because CUDA was not enabled when Ceres was built.",
+        LinearSolverTypeToString(options.linear_solver_type));
+    return false;
+  }
+
   {
     const char* sparse_linear_algebra_library_name =
         SparseLinearAlgebraLibraryTypeToString(
