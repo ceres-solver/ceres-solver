@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a86f229_292856f2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-14T14:14:33Z",
+      "side": 1,
+      "message": "Yes, it\u0027s not necessary. All these feature reports are better handled through the CMake `FeatureSummary` module. However, this is something for a separate CL.",
+      "parentUuid": "840770d6_1fd71e23",
+      "range": {
+        "startLine": 502,
+        "startChar": 3,
+        "endLine": 502,
+        "endChar": 4
+      },
+      "revId": "64223d4d760e5c1a36e980c8ee4fc089b6eabf49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa62eb95_ad1f81ce",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 3
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "65bede04_0b44acbf",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-14T14:14:33Z",
+      "side": 1,
+      "message": "Good point. Will check.",
+      "parentUuid": "aa62eb95_ad1f81ce",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 18
+      },
+      "revId": "64223d4d760e5c1a36e980c8ee4fc089b6eabf49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28c65cb2_7f6a9084",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 3
@@ -60,6 +108,30 @@
       "writtenOn": "2022-02-14T13:59:49Z",
       "side": 1,
       "message": "same for dense_qr?",
+      "range": {
+        "startLine": 62,
+        "startChar": 13,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "64223d4d760e5c1a36e980c8ee4fc089b6eabf49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d7ca809_fcbaa344",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-14T14:14:33Z",
+      "side": 1,
+      "message": "Will also check.",
+      "parentUuid": "28c65cb2_7f6a9084",
       "range": {
         "startLine": 62,
         "startChar": 13,
