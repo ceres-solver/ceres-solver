@@ -16,6 +16,23 @@
       "message": "so one question is, what do users who do not use cmake need to do to make the build work? \n\nfor example how will this affect our bazel build?",
       "revId": "f90833f5fac832b39ccb22a20567a9ad035cb71a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0b03588_ba81ddbf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T19:29:51Z",
+      "side": 1,
+      "message": "do we need an export.h file just like we have config.h ?",
+      "revId": "f90833f5fac832b39ccb22a20567a9ad035cb71a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
