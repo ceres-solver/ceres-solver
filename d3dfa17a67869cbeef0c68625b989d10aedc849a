@@ -34,6 +34,24 @@
       "parentUuid": "11a6d84e_f9fdc760",
       "revId": "d3dfa17a67869cbeef0c68625b989d10aedc849a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34a646f4_ee71e2a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-14T21:23:41Z",
+      "side": 1,
+      "message": "Yes, there were issues due to conflicting changes in cmake and the new export macros. It should be fixed now.",
+      "parentUuid": "b79559ca_65e4c7ce",
+      "revId": "d3dfa17a67869cbeef0c68625b989d10aedc849a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
