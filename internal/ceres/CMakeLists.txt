@@ -314,17 +314,10 @@ target_compile_definitions(ceres_internal PUBLIC $<TARGET_PROPERTY:ceres,COMPILE
 target_compile_options(ceres_internal PUBLIC $<TARGET_PROPERTY:ceres,COMPILE_OPTIONS>)
 target_compile_definitions(ceres_internal PRIVATE ceres_EXPORTS)
 
-# The ability to specify a minimum language version via cxx_std_[11,14,17]
-# requires CMake >= 3.8.  Prior to that we have to specify the compiler features
-# we require.
-if (CMAKE_VERSION VERSION_LESS 3.8)
-  set(REQUIRED_PUBLIC_CXX_FEATURES cxx_alignas cxx_alignof cxx_constexpr)
-else()
-  # Forward whatever C++ version Ceres was compiled with as our requirement
-  # for downstream clients.
-  set(REQUIRED_PUBLIC_CXX_FEATURES cxx_std_${CMAKE_CXX_STANDARD})
-endif()
-target_compile_features(ceres PUBLIC ${REQUIRED_PUBLIC_CXX_FEATURES})
+# Ensure the minimum required C++ language version is fulfilled as our
+# requirement by downstream clients. Consumers can choose the same or a newer
+# language standard revision.
+target_compile_features(ceres PUBLIC cxx_std_14)
 
 set_target_properties(ceres PROPERTIES
   VERSION ${CERES_VERSION}

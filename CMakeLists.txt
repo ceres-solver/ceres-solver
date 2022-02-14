@@ -29,45 +29,12 @@
 # Authors: keir@google.com (Keir Mierle)
 #          alexs.mac@gmail.com (Alex Stewart)
 
-cmake_minimum_required(VERSION 3.5)
-cmake_policy(VERSION 3.5)
-if (POLICY CMP0074)
+cmake_minimum_required(VERSION 3.10)
+
+if (POLICY CMP0074) # Added in CMake 3.12
   # FindTBB.cmake uses TBB_ROOT in a way that is historical, but also compliant
   # with CMP0074 so suppress the legacy compatibility warning and allow its use.
   cmake_policy(SET CMP0074 NEW)
-endif()
-
-# Set the C++ version when compiling Ceres.
-#
-# Reflect a user-specified (via -D) CMAKE_CXX_STANDARD if present, otherwise
-# default to C++14.
-set(DEFAULT_CXX_STANDARD ${CMAKE_CXX_STANDARD})
-if (NOT DEFAULT_CXX_STANDARD)
-  set(DEFAULT_CXX_STANDARD 14)
-endif()
-set(CMAKE_CXX_STANDARD ${DEFAULT_CXX_STANDARD} CACHE STRING
-  "C++ standard (minimum 14)" FORCE)
-# Restrict CMAKE_CXX_STANDARD to the valid versions permitted and ensure that
-# if one was forced via -D that it is in the valid set.
-set(ALLOWED_CXX_STANDARDS 14 17 20)
-set_property(CACHE CMAKE_CXX_STANDARD PROPERTY STRINGS ${ALLOWED_CXX_STANDARDS})
-list(FIND ALLOWED_CXX_STANDARDS ${CMAKE_CXX_STANDARD} POSITION)
-if (POSITION LESS 0)
-  message(FATAL_ERROR "Invalid CMAKE_CXX_STANDARD: ${CMAKE_CXX_STANDARD}. "
-    "Must be one of: ${ALLOWED_CXX_STANDARDS}")
-endif()
-# Specify the standard as a hard requirement, otherwise CMAKE_CXX_STANDARD is
-# interpreted as a suggestion that can decay *back* to lower versions.
-set(CMAKE_CXX_STANDARD_REQUIRED ON CACHE BOOL "")
-mark_as_advanced(CMAKE_CXX_STANDARD_REQUIRED)
-
-# MSVC versions < 2015 did not fully support >= C++14, and technically even
-# 2015 did not support a couple of smaller features
-if (CMAKE_CXX_COMPILER_ID MATCHES MSVC AND
-    CMAKE_CXX_COMPILER_VERSION VERSION_LESS 14.0)
-  message(FATAL_ERROR "Invalid CMAKE_CXX_COMPILER_VERSION: "
-    "${CMAKE_CXX_COMPILER_VERSION}. Ceres requires at least MSVC 2015 for "
-    "C++14 support.")
 endif()
 
 # On macOS, add the Homebrew prefix (with appropriate suffixes) to the
@@ -237,7 +204,6 @@ if (IOS)
 endif (IOS)
 
 unset(CERES_COMPILE_OPTIONS)
-message("-- Building with C++${CMAKE_CXX_STANDARD}")
 
 # Eigen.
 # Eigen delivers Eigen3Config.cmake since v3.3.3
@@ -491,6 +457,7 @@ if (BUILD_BENCHMARKS)
   mark_as_advanced(benchmark_DIR)
 endif()
 
+# TODO Report features using the FeatureSummary CMake module
 if (BUILD_SHARED_LIBS)
   message("-- Building Ceres as a shared library.")
 else (BUILD_SHARED_LIBS)
