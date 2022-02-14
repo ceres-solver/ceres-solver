@@ -46,7 +46,6 @@ set(CERES_INTERNAL_SRC
     ${CERES_PARALLEL_FOR_SRC}
     accelerate_sparse.cc
     array_utils.cc
-    blas.cc
     block_evaluate_preparer.cc
     block_jacobi_preconditioner.cc
     block_jacobian_writer.cc
