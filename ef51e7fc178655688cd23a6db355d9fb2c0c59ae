@@ -87,6 +87,30 @@
       },
       "revId": "ef51e7fc178655688cd23a6db355d9fb2c0c59ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce4b9b80_3d6b6d60",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-14T18:22:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59a9c36b_7e702756",
+      "range": {
+        "startLine": 137,
+        "startChar": 47,
+        "endLine": 137,
+        "endChar": 54
+      },
+      "revId": "ef51e7fc178655688cd23a6db355d9fb2c0c59ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
