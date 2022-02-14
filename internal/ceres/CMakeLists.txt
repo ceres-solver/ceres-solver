@@ -279,18 +279,32 @@ if (BUILD_TESTING)
     )
 endif()
 
-
 # The ability to specify a minimum language version via cxx_std_[11,14,17]
 # requires CMake >= 3.8.  Prior to that we have to specify the compiler features
 # we require.
 if (CMAKE_VERSION VERSION_LESS 3.8)
-  set(REQUIRED_PUBLIC_CXX_FEATURES cxx_alignas cxx_alignof cxx_constexpr)
+  target_compile_features(ceres PUBLIC
+    cxx_alias_templates
+    cxx_alignas
+    cxx_alignof
+    cxx_constexpr
+    cxx_default_function_template_args
+    cxx_defaulted_functions
+    cxx_deleted_functions
+    cxx_final
+    cxx_noexcept
+    cxx_nullptr
+    cxx_override
+    cxx_right_angle_brackets
+    cxx_rvalue_references
+    cxx_static_assert
+    cxx_variadic_templates
+  )
 else()
   # Forward whatever C++ version Ceres was compiled with as our requirement
   # for downstream clients.
-  set(REQUIRED_PUBLIC_CXX_FEATURES cxx_std_${CMAKE_CXX_STANDARD})
+  target_compile_features(ceres PUBLIC cxx_std_14)
 endif()
-target_compile_features(ceres PUBLIC ${REQUIRED_PUBLIC_CXX_FEATURES})
 
 include(AppendTargetProperty)
 # Always build position-independent code (PIC), even when building Ceres as a
