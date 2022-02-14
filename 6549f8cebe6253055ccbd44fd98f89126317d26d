@@ -54,6 +54,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0706d199_e4db79f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T13:26:58Z",
+      "side": 1,
+      "message": "I just went through the CL again, and I think that using parens will resolve the rest of the cases no?",
+      "parentUuid": "a4f468aa_b0b31447",
+      "revId": "6549f8cebe6253055ccbd44fd98f89126317d26d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfce687b_8e15bc42",
