@@ -16,6 +16,24 @@
       "message": "I\u0027m rebasing off master, and fixing the broken build. Will report back once it is fixed.",
       "revId": "d3dfa17a67869cbeef0c68625b989d10aedc849a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b79559ca_65e4c7ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T21:17:17Z",
+      "side": 1,
+      "message": "did the previous commit affect your build too? its possible there is a bug in the cmake file, sergiu is looking into it, or is it something else?",
+      "parentUuid": "11a6d84e_f9fdc760",
+      "revId": "d3dfa17a67869cbeef0c68625b989d10aedc849a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
