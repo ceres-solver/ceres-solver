@@ -69,6 +69,24 @@
       "parentUuid": "efb1ef8b_ae2406f4",
       "revId": "f90833f5fac832b39ccb22a20567a9ad035cb71a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a56cc65_cf433afb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-14T19:51:43Z",
+      "side": 1,
+      "message": "`export.h` would live next to `config.h`. However, since my Bazel knowledge is limited I would prefer postponing the corresponding changes to another CL.",
+      "parentUuid": "b3dd01ed_06825cd9",
+      "revId": "f90833f5fac832b39ccb22a20567a9ad035cb71a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
