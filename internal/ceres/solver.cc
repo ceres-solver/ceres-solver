@@ -141,16 +141,20 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
     return false;
   }
 
-  if (options.dense_linear_algebra_library_type == LAPACK &&
-      !IsDenseLinearAlgebraLibraryTypeAvailable(LAPACK) &&
+  if (!IsDenseLinearAlgebraLibraryTypeAvailable(
+          options.dense_linear_algebra_library_type) &&
       (options.linear_solver_type == DENSE_NORMAL_CHOLESKY ||
        options.linear_solver_type == DENSE_QR ||
        options.linear_solver_type == DENSE_SCHUR)) {
     *error = StringPrintf(
         "Can't use %s with "
-        "Solver::Options::dense_linear_algebra_library_type = LAPACK "
-        "because LAPACK was not enabled when Ceres was built.",
-        LinearSolverTypeToString(options.linear_solver_type));
+        "Solver::Options::dense_linear_algebra_library_type = %s "
+        "because %s was not enabled when Ceres was built.",
+        LinearSolverTypeToString(options.linear_solver_type),
+        DenseLinearAlgebraLibraryTypeToString(
+            options.dense_linear_algebra_library_type),
+        DenseLinearAlgebraLibraryTypeToString(
+            options.dense_linear_algebra_library_type));
     return false;
   }
 
