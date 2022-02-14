@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0da589e7_c6e3b9b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T19:29:11Z",
+      "side": 1,
+      "message": "so one question is, what do users who do not use cmake need to do to make the build work? \n\nfor example how will this affect our bazel build?",
+      "revId": "f90833f5fac832b39ccb22a20567a9ad035cb71a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
