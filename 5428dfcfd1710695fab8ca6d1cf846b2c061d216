@@ -33,6 +33,23 @@
       "message": "All these hints are actually unnecessary because CMake will automatically look in `/usr` and `/usr/local` prefixes under corresponding `include` and `lib(32|64)` directories. All other search locations seem to be very use case specific and can be easily set via `CMAKE_PREFIX_PATH` either the CMake or the environment variable. Also the special handling of Homebrew is all over the place which is generally not needed. Should this maybe be dropped?",
       "revId": "5428dfcfd1710695fab8ca6d1cf846b2c061d216",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "158a0c29_dbcdf876",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-14T15:29:24Z",
+      "side": 1,
+      "message": "This is no longer needed.",
+      "revId": "5428dfcfd1710695fab8ca6d1cf846b2c061d216",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
