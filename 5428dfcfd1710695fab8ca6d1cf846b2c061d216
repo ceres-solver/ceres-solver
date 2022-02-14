@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af4cceef_f7aeac38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-14T12:37:51Z",
+      "side": 1,
+      "message": "Since we use imported targets now, `CeresConfig.cmake` needs to pull the dependencies using `find_dependency` even though these are link only dependencies in order to find the targets. I\u0027ll wait for your comments before I make the corresponding change.",
+      "revId": "5428dfcfd1710695fab8ca6d1cf846b2c061d216",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35c69730_4127cbfb",
+        "filename": "cmake/FindCXSparse.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-14T12:37:51Z",
+      "side": 1,
+      "message": "All these hints are actually unnecessary because CMake will automatically look in `/usr` and `/usr/local` prefixes under corresponding `include` and `lib(32|64)` directories. All other search locations seem to be very use case specific and can be easily set via `CMAKE_PREFIX_PATH` either the CMake or the environment variable. Also the special handling of Homebrew is all over the place which is generally not needed. Should this maybe be dropped?",
+      "revId": "5428dfcfd1710695fab8ca6d1cf846b2c061d216",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
