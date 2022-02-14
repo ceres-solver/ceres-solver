@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86b1667a_dc3ae791",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-14T21:57:16Z",
+      "side": 1,
+      "message": "Just a small suggested edit, otherwise LGTM.\nExcited to see this moving along!",
+      "revId": "bb299668105bed86d3b345a19b63f9d0f89d4f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "033e90ae_1bd9417c",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-14T21:57:16Z",
+      "side": 1,
+      "message": "Just to make it clear what this string quote is, how about:\n```\nCan\u0027t use Solver::Options::linear_solver_type \u003d %s with \n```",
+      "revId": "bb299668105bed86d3b345a19b63f9d0f89d4f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4c8ca8d_e1d23c0f",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-14T21:57:16Z",
+      "side": 1,
+      "message": "This is a lucky coincidence that         Solver::Options::dense_linear_algebra_library_type also happens to have the same string value as the library itself.",
+      "revId": "bb299668105bed86d3b345a19b63f9d0f89d4f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
