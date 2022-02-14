@@ -16,6 +16,92 @@
       "message": "The QR tests now pass on both my Xavier and i9-9940X.",
       "revId": "a91c3a1e377fe758cdb72de046b35b0fa0e65d41",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa612f61_b74f08ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T17:13:22Z",
+      "side": 1,
+      "message": "couple of more minor comments that I missed last time. This is ready to go.",
+      "revId": "a91c3a1e377fe758cdb72de046b35b0fa0e65d41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99af25ac_9186e03b",
+        "filename": "internal/ceres/cuda_dense_qr_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T17:13:22Z",
+      "side": 1,
+      "message": "we try and discourage this in new code. I would just use std::string",
+      "range": {
+        "startLine": 39,
+        "startChar": 11,
+        "endLine": 39,
+        "endChar": 17
+      },
+      "revId": "a91c3a1e377fe758cdb72de046b35b0fa0e65d41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa52b313_60bde723",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T17:13:22Z",
+      "side": 1,
+      "message": "I like how cudaStream has different enum naming convention than cublas and cusolver..",
+      "range": {
+        "startLine": 356,
+        "startChar": 41,
+        "endLine": 356,
+        "endChar": 52
+      },
+      "revId": "a91c3a1e377fe758cdb72de046b35b0fa0e65d41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "320fcb92_b8c4193f",
+        "filename": "internal/ceres/dense_qr_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T17:13:22Z",
+      "side": 1,
+      "message": "I would not make this a parameter. I would just keep this value at 2000 and that should be fine.",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 14
+      },
+      "revId": "a91c3a1e377fe758cdb72de046b35b0fa0e65d41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
