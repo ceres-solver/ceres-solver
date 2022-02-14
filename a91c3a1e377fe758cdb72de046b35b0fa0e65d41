@@ -60,6 +60,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "f5c79e39_0ea0157a",
+        "filename": "internal/ceres/cuda_dense_qr_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-14T20:52:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99af25ac_9186e03b",
+      "range": {
+        "startLine": 39,
+        "startChar": 11,
+        "endLine": 39,
+        "endChar": 17
+      },
+      "revId": "a91c3a1e377fe758cdb72de046b35b0fa0e65d41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "aa52b313_60bde723",
         "filename": "internal/ceres/dense_qr.cc",
         "patchSetId": 11
@@ -71,6 +95,30 @@
       "writtenOn": "2022-02-14T17:13:22Z",
       "side": 1,
       "message": "I like how cudaStream has different enum naming convention than cublas and cusolver..",
+      "range": {
+        "startLine": 356,
+        "startChar": 41,
+        "endLine": 356,
+        "endChar": 52
+      },
+      "revId": "a91c3a1e377fe758cdb72de046b35b0fa0e65d41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ca77302_2d237fad",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-14T20:52:38Z",
+      "side": 1,
+      "message": "Yes - the cuSolver and cuBLAS libraries follow different naming conventions from the CUDA runtime. Sigh.",
+      "parentUuid": "aa52b313_60bde723",
       "range": {
         "startLine": 356,
         "startChar": 41,
@@ -94,6 +142,30 @@
       "writtenOn": "2022-02-14T17:13:22Z",
       "side": 1,
       "message": "I would not make this a parameter. I would just keep this value at 2000 and that should be fine.",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 14
+      },
+      "revId": "a91c3a1e377fe758cdb72de046b35b0fa0e65d41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26a27a06_e0c568e5",
+        "filename": "internal/ceres/dense_qr_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-14T20:52:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "320fcb92_b8c4193f",
       "range": {
         "startLine": 71,
         "startChar": 8,
