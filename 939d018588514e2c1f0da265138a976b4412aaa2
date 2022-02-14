@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57ec5154_9e2b4dcf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-14T19:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0400a65f_bffd57d8",
+      "range": {
+        "startLine": 11,
+        "startChar": 56,
+        "endLine": 11,
+        "endChar": 62
+      },
+      "revId": "939d018588514e2c1f0da265138a976b4412aaa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "94b3be9b_04c23d7a",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "How about just removing \"gracefully fallback to\" and replace it with \"use\"",
       "parentUuid": "a99b7155_e5f6eafe",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "939d018588514e2c1f0da265138a976b4412aaa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "508ad588_a00e32eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-14T19:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "033c2a34_1640aef6",
       "range": {
         "startLine": 14,
         "startChar": 0,
