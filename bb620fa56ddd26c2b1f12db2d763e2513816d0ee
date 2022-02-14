@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfe9c346_b0bd4e38",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T13:24:27Z",
+      "side": 1,
+      "message": "I suspect we can move to 3.10 since LTS 18.04 uses cmake 3.10. What do you think alex?",
+      "range": {
+        "startLine": 285,
+        "startChar": 4,
+        "endLine": 285,
+        "endChar": 17
+      },
+      "revId": "bb620fa56ddd26c2b1f12db2d763e2513816d0ee",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
