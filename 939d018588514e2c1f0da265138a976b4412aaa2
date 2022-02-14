@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0400a65f_bffd57d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T18:40:35Z",
+      "side": 1,
+      "message": "Rather -\u003e Instead",
+      "range": {
+        "startLine": 11,
+        "startChar": 56,
+        "endLine": 11,
+        "endChar": 62
+      },
+      "revId": "939d018588514e2c1f0da265138a976b4412aaa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94b3be9b_04c23d7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-14T18:40:35Z",
+      "side": 1,
+      "message": "fallback seems to be an odd choice of word since they would be using newer language revisions.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "939d018588514e2c1f0da265138a976b4412aaa2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
