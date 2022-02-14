@@ -16,6 +16,24 @@
       "message": "Good for me, Alex should take a look.",
       "revId": "3707f2884d753404ff10e7cc0f34343055251cde",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dc20a61_f610180f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-14T18:37:10Z",
+      "side": 1,
+      "message": "Thanks Sameer. Maybe you can check the commit message wording which I\u0027m not happy with. What I mean by \"cannot be fully enforced anyway\" is that even if Ceres requests C++14 in its interface, a project consuming Ceres can still override this choice by setting C++17 or any version above.",
+      "parentUuid": "ea125620_6365dfe6",
+      "revId": "3707f2884d753404ff10e7cc0f34343055251cde",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
