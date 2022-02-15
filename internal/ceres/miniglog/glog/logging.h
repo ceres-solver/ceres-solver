@@ -106,6 +106,7 @@
 #include <vector>
 
 #include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 
 // Log severity level constants.
 // clang-format off
