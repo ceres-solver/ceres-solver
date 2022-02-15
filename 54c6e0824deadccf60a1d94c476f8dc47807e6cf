@@ -91,6 +91,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d77f8e88_3dcb4282",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T16:58:36Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these have target includes with the private includes? That should solve the include dir problem.",
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6c9744bd_13a24e6d",
         "filename": "internal/ceres/context_impl.cc",
         "patchSetId": 1
