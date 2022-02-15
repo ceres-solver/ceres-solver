@@ -36,6 +36,7 @@
 #include <vector>
 
 #ifndef CERES_NO_CUDA
+#include "ceres/context_impl.h"
 #include "cuda_runtime.h"
 #include "cusolverDn.h"
 #endif  // CERES_NO_CUDA
@@ -193,34 +194,15 @@ LinearSolverTerminationType LAPACKDenseCholesky::Solve(const double* rhs,
 
 #ifndef CERES_NO_CUDA
 
-bool CUDADenseCholesky::Init(std::string* message) {
-  if (cusolverDnCreate(&cusolver_handle_) != CUSOLVER_STATUS_SUCCESS) {
-    *message = "cuSolverDN::cusolverDnCreate failed.";
+bool CUDADenseCholesky::Init(ContextImpl* context, std::string* message) {
+  if (!context->InitCUDA(message)) {
     return false;
   }
-  if (cudaStreamCreateWithFlags(&stream_, cudaStreamNonBlocking) !=
-      cudaSuccess) {
-    *message = "CUDA::cudaStreamCreateWithFlags failed.";
-    cusolverDnDestroy(cusolver_handle_);
-    return false;
-  }
-  if (cusolverDnSetStream(cusolver_handle_, stream_) !=
-      CUSOLVER_STATUS_SUCCESS) {
-    *message = "cuSolverDN::cusolverDnSetStream failed.";
-    cudaStreamDestroy(stream_);
-    cusolverDnDestroy(cusolver_handle_);
-    return false;
-  }
+  cusolver_handle_ = context->cusolver_handle_;
+  stream_ = context->stream_;
   error_.Reserve(1);
   *message = "CUDADenseCholesky::Init Success.";
   return true;
-}
-
-CUDADenseCholesky::~CUDADenseCholesky() {
-  if (cusolver_handle_ != nullptr) {
-    CHECK_EQ(cusolverDnDestroy(cusolver_handle_), CUSOLVER_STATUS_SUCCESS);
-    CHECK_EQ(cudaStreamDestroy(stream_), cudaSuccess);
-  }
 }
 
 LinearSolverTerminationType CUDADenseCholesky::Factorize(
@@ -326,7 +308,7 @@ std::unique_ptr<CUDADenseCholesky> CUDADenseCholesky::Create(
   auto cuda_dense_cholesky =
       std::unique_ptr<CUDADenseCholesky>(new CUDADenseCholesky());
   std::string cuda_error;
-  if (cuda_dense_cholesky->Init(&cuda_error)) {
+  if (cuda_dense_cholesky->Init(options.context, &cuda_error)) {
     return cuda_dense_cholesky;
   }
   // Initialization failed, destroy the object (done automatically) and return a

@@ -65,6 +65,8 @@ TEST_P(DenseCholeskyTest, FactorAndSolve) {
   using VectorType = Eigen::Matrix<Scalar, Eigen::Dynamic, 1>;
 
   LinearSolver::Options options;
+  ContextImpl context;
+  options.context = &context;
   options.dense_linear_algebra_library_type = GetParam();
   std::unique_ptr<DenseCholesky> dense_cholesky =
       DenseCholesky::Create(options);
