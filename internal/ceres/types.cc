@@ -433,7 +433,7 @@ bool IsDenseLinearAlgebraLibraryTypeAvailable(
 #ifdef CERES_NO_CUDA
     return false;
 #else
-    return false;
+    return true;
 #endif
   }
 

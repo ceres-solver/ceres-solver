@@ -364,23 +364,23 @@ class CERES_EXPORT Solver {
     std::unordered_set<ResidualBlockId>
         residual_blocks_for_subset_preconditioner;
 
-    // Ceres supports using multiple dense linear algebra libraries
-    // for dense matrix factorizations. Currently EIGEN and LAPACK are
-    // the valid choices. EIGEN is always available, LAPACK refers to
-    // the system BLAS + LAPACK library which may or may not be
+    // Ceres supports using multiple dense linear algebra libraries for dense
+    // matrix factorizations. Currently EIGEN, LAPACK and CUDA are the valid
+    // choices. EIGEN is always available, LAPACK refers to the system BLAS +
+    // LAPACK library which may or may not be available. CUDA refers to Nvidia's
+    // GPU based dense linear algebra library, which may or may not be
     // available.
     //
-    // This setting affects the DENSE_QR, DENSE_NORMAL_CHOLESKY and
-    // DENSE_SCHUR solvers. For small to moderate sized problem EIGEN
-    // is a fine choice but for large problems, an optimized LAPACK +
-    // BLAS implementation can make a substantial difference in
-    // performance.
+    // This setting affects the DENSE_QR, DENSE_NORMAL_CHOLESKY and DENSE_SCHUR
+    // solvers. For small to moderate sized problem EIGEN is a fine choice but
+    // for large problems, an optimized LAPACK + BLAS or CUDA implementation can
+    // make a substantial difference in performance.
     DenseLinearAlgebraLibraryType dense_linear_algebra_library_type = EIGEN;
 
-    // Ceres supports using multiple sparse linear algebra libraries
-    // for sparse matrix ordering and factorizations. Currently,
-    // SUITE_SPARSE and CX_SPARSE are the valid choices, depending on
-    // whether they are linked into Ceres at build time.
+    // Ceres supports using multiple sparse linear algebra libraries for sparse
+    // matrix ordering and factorizations. Currently, SUITE_SPARSE and CX_SPARSE
+    // are the valid choices, depending on whether they are linked into Ceres at
+    // build time.
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type =
 #if !defined(CERES_NO_SUITESPARSE)
         SUITE_SPARSE;

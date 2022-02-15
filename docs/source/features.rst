@@ -62,6 +62,9 @@ Why?
   modern C++ threads based multithreading of the Jacobian evaluation
   and the linear solvers.
 
+* **GPU Acceleration** If your system supports `CUDA`_ then Ceres
+  Solver can use the Nvidia GPU on your system to speed up the solver.
+
 * **Solution Quality** Ceres is the `best performing`_ solver on the NIST
   problem set used by Mondragon and Borchers for benchmarking
   non-linear least squares solvers.
@@ -89,3 +92,4 @@ Why?
 .. _CXSparse: https://www.cise.ufl.edu/research/sparse/CXSparse/
 .. _automatic: http://en.wikipedia.org/wiki/Automatic_differentiation
 .. _numeric: http://en.wikipedia.org/wiki/Numerical_differentiation
+.. _CUDA : https://developer.nvidia.com/cuda-toolkit

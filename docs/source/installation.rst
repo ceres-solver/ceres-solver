@@ -104,6 +104,11 @@ optional. For details on customizing the build process, see
   ``SuiteSparse``, and optionally used by Ceres directly for some
   operations.
 
+  TODO::
+
+    1. Add a more detailed note about Intel MKL.
+    2. Add detailed instructions about CUDA
+
   On ``UNIX`` OSes other than macOS we recommend `ATLAS
   <http://math-atlas.sourceforge.net/>`_, which includes ``BLAS`` and
   ``LAPACK`` routines. It is also possible to use `OpenBLAS
