@@ -53,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f95ddb0a_fc71c38e",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-15T16:40:46Z",
+      "side": 1,
+      "message": "Irrespective of my changes, changing to public should not be needed. What\u0027s the error that you get?",
+      "parentUuid": "32689f41_299b82a3",
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c9744bd_13a24e6d",
