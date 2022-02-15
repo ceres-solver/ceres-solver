@@ -94,6 +94,30 @@
       },
       "revId": "ad862890de2795d2c634e8b14aa520a76ddf1e2b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d50e2bc4_c63fbe57",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-15T19:02:24Z",
+      "side": 1,
+      "message": "Perfect, thanks!",
+      "parentUuid": "97b3bfae_24fb46d7",
+      "range": {
+        "startLine": 416,
+        "startChar": 22,
+        "endLine": 416,
+        "endChar": 38
+      },
+      "revId": "ad862890de2795d2c634e8b14aa520a76ddf1e2b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
