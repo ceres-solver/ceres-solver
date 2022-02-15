@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -37,21 +37,20 @@
 
 #include "bundle_adjustment_test_util.h"
 
-#ifndef CERES_NO_THREADS
-
 namespace ceres {
 namespace internal {
 
 TEST_F(BundleAdjustmentTest,
-       DenseSchur_AutomaticOrdering_Threads) {  // NOLINT
+       DenseSchur_Eigen_AutomaticOrdering) {  // NOLINT
   BundleAdjustmentProblem bundle_adjustment_problem;
   Solver::Options* options = bundle_adjustment_problem.mutable_solver_options();
-  options->num_threads = 4;
+  options->num_threads = 1;
   options->linear_solver_type = DENSE_SCHUR;
+  options->dense_linear_algebra_library_type = EIGEN;
   options->sparse_linear_algebra_library_type = NO_SPARSE;
   options->preconditioner_type = IDENTITY;
   if (kAutomaticOrdering) {
-    options->linear_solver_ordering.reset();
+    options->linear_solver_ordering = nullptr;
   }
   Problem* problem = bundle_adjustment_problem.mutable_problem();
   RunSolverForConfigAndExpectResidualsMatch(*options, problem);
@@ -59,5 +58,3 @@ TEST_F(BundleAdjustmentTest,
 
 }  // namespace internal
 }  // namespace ceres
-
-#endif  // CERES_NO_THREADS
