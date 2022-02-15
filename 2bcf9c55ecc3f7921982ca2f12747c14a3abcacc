@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "095a9d43_1f9b5b04",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-15T23:50:41Z",
+      "side": 1,
+      "message": "I found some other failure cases in various build combinations but simplified previous fix attempts. This is now ready.",
+      "revId": "2bcf9c55ecc3f7921982ca2f12747c14a3abcacc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
