@@ -69,6 +69,24 @@
       "parentUuid": "54e61408_255560d2",
       "revId": "57ec9dc92e53a75fab88ec3502f20b7d57ca11f7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5c10c2a_66e2144f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-15T20:34:50Z",
+      "side": 1,
+      "message": "Yes, I\u0027ve tested on my Linux machine with GCC 11.2 which defaults to C++17. This is why I did not catch compiler features propagation failure. It\u0027s good to go now. Thanks!",
+      "parentUuid": "4e7eeee0_bf985d78",
+      "revId": "57ec9dc92e53a75fab88ec3502f20b7d57ca11f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
