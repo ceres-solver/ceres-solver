@@ -75,6 +75,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eab7448_0267390c",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T19:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a0582eb_8fba5433",
+      "range": {
+        "startLine": 571,
+        "startChar": 16,
+        "endLine": 571,
+        "endChar": 63
+      },
+      "revId": "f490e52213f8ff0c10374c6548639fc31452eb82",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84f550d9_3730df4f",
@@ -88,6 +112,30 @@
       "writtenOn": "2022-02-15T18:55:15Z",
       "side": 1,
       "message": "do you have to call setstream twice? once for cusolver and once for cublas? these two conditinals can be combined into one no? since their failure mode is exactly the same?",
+      "range": {
+        "startLine": 73,
+        "startChar": 26,
+        "endLine": 73,
+        "endChar": 42
+      },
+      "revId": "f490e52213f8ff0c10374c6548639fc31452eb82",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3a0c383_7836190b",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T19:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84f550d9_3730df4f",
       "range": {
         "startLine": 73,
         "startChar": 26,
@@ -121,6 +169,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69dc73e1_6d010b2c",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T19:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b6383c7_61b4d5e4",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 17
+      },
+      "revId": "f490e52213f8ff0c10374c6548639fc31452eb82",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15bd9d13_821c6d22",
@@ -144,6 +216,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8ac87b3_f306c4f0",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T19:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15bd9d13_821c6d22",
+      "range": {
+        "startLine": 63,
+        "startChar": 11,
+        "endLine": 63,
+        "endChar": 24
+      },
+      "revId": "f490e52213f8ff0c10374c6548639fc31452eb82",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3f65034_b5e5db72",
@@ -157,6 +253,24 @@
       "writtenOn": "2022-02-15T18:55:15Z",
       "side": 1,
       "message": "we don\u0027t need a destructor at all for this class no?",
+      "revId": "f490e52213f8ff0c10374c6548639fc31452eb82",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a790e320_9d84e257",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T19:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3f65034_b5e5db72",
       "revId": "f490e52213f8ff0c10374c6548639fc31452eb82",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
