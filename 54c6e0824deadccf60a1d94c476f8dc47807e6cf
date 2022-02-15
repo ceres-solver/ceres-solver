@@ -89,6 +89,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71a7d9d8_e869b3bd",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-15T17:09:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6eb50eea_2f1493b4",
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d77f8e88_3dcb4282",
@@ -102,6 +120,24 @@
       "writtenOn": "2022-02-15T16:58:36Z",
       "side": 1,
       "message": "Shouldn\u0027t these have target includes with the private includes? That should solve the include dir problem.",
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "568bcc34_aebed641",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-15T17:09:11Z",
+      "side": 1,
+      "message": "Yes, we can expand `add_dependencies_to_benchmark` by additionally calling\n```\ntarget_include_directories(${BENCHMARK_TARGET} PRIVATE ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})\n```\nsimilar to how it is done for tests. Or we could make private includes public for the `test_util` target to avoid repeating the line.",
+      "parentUuid": "d77f8e88_3dcb4282",
       "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
