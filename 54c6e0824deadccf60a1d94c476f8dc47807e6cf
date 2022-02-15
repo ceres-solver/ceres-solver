@@ -76,6 +76,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31d1078c_0fb9b06e",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T14:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c9744bd_13a24e6d",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3d5a5e96_c4ded194",
@@ -89,6 +113,30 @@
       "writtenOn": "2022-02-15T05:22:58Z",
       "side": 1,
       "message": "this should be after the header guard not before, just like the threading includes.",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fee9900_9027201d",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T14:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d5a5e96_c4ded194",
       "range": {
         "startLine": 30,
         "startChar": 8,
@@ -122,6 +170,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd7ba32e_35db0f6f",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T14:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "218d17c2_fcb810be",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 15
+      },
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d3c7de8_528e69e5",
@@ -145,6 +217,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd0f3377_dd65daf8",
+        "filename": "internal/ceres/dense_linear_solver_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T14:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d3c7de8_528e69e5",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 17
+      },
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8289581e_68cc3ce1",
@@ -158,6 +254,30 @@
       "writtenOn": "2022-02-15T05:22:58Z",
       "side": 1,
       "message": "blank before",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3c6fb64_fd1ab400",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T14:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8289581e_68cc3ce1",
       "range": {
         "startLine": 36,
         "startChar": 8,
