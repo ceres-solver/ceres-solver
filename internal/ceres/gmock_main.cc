@@ -35,10 +35,22 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
+// Make sure we correctly export the flag to the test_util target. Afterwards,
+// restore the definition.
+#if GTEST_CREATE_SHARED_LIBRARY && defined(_MSC_VER)
+#pragma push_macro("GFLAGS_DLL_DEFINE_FLAG")
+#undef GFLAGS_DLL_DEFINE_FLAG
+#define GFLAGS_DLL_DEFINE_FLAG __declspec(dllexport)
+#endif
+
 // NOTE(keir): This flag is normally part of gtest within Google but isn't in
 // the open source Google Test, since it is build-system dependent. However for
 // Ceres this is needed for our tests. Add the new flag here.
 DEFINE_string(test_srcdir, "", "The location of the source code.");
+
+#if GTEST_CREATE_SHARED_LIBRARY && defined(_MSC_VER)
+#pragma pop_macro("GFLAGS_DLL_DEFINE_FLAG")
+#endif
 
 // MS C++ compiler/linker has a bug on Windows (not on Windows CE), which
 // causes a link error when _tmain is defined in a static library and UNICODE
