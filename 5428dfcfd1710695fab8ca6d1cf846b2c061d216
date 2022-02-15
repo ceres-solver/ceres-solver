@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "53d32bbd_6417564f",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-15T20:27:03Z",
+      "side": 1,
+      "message": "`rt` is actually not a SuiteSparse component. Therefore, it is probably better to use `CheckLibraryExists` and supply `rt` as a target dependency to avoid hard-coding the full path to the `.so`/`.a`.",
+      "revId": "5428dfcfd1710695fab8ca6d1cf846b2c061d216",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "158a0c29_dbcdf876",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 2
