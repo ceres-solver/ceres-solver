@@ -28,17 +28,6 @@
 #
 # Author: keir@google.com (Keir Mierle)
 
-# Always build position-independent code (PIC), even when building Ceres as a
-# static library so that shared libraries can link against it, not just
-# executables (PIC does not apply on Windows). Global variable can be overridden
-# by the user whereas target properties can be not.
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-# Set the default symbol visibility to hidden to unify the behavior among
-# the various compilers and to get smaller binaries
-set(CMAKE_C_VISIBILITY_PRESET hidden)
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
-
 # Avoid 'xxx.cc has no symbols' warnings from source files which are 'empty'
 # when their enclosing #ifdefs are disabled.
 if (CERES_THREADING_MODEL STREQUAL "CXX_THREADS")
@@ -428,7 +417,6 @@ if (BUILD_TESTING AND GFLAGS)
     append_target_property(gtest COMPILE_DEFINITIONS
       GTEST_CREATE_SHARED_LIBRARY)
   endif()
-  set_target_properties (gtest PROPERTIES CXX_VISIBILITY_PRESET default)
 
   target_include_directories(gtest PRIVATE ${Ceres_SOURCE_DIR}/internal/ceres)
   target_link_libraries(gtest PRIVATE Ceres::ceres gflags)
