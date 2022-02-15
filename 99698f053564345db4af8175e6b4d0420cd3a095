@@ -16,6 +16,24 @@
       "message": "this reads weird with GTEST_API_INTERFACE broken across two lines.",
       "revId": "99698f053564345db4af8175e6b4d0420cd3a095",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87d64f69_94865b50",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-15T20:04:13Z",
+      "side": 1,
+      "message": "`GTEST_API_` is a standalone token defined by `gtest`. `INTERFACE` is a CMake visibility modifier. Maybe this is the confusion?",
+      "parentUuid": "87e6ab98_ab447f7f",
+      "revId": "99698f053564345db4af8175e6b4d0420cd3a095",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
