@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcd5ffbe_ee40d2f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-15T20:15:56Z",
+      "side": 1,
+      "message": "Take 2 😊. Please try locally first.",
+      "revId": "57ec9dc92e53a75fab88ec3502f20b7d57ca11f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
