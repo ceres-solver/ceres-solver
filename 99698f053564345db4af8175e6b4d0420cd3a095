@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87e6ab98_ab447f7f",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-15T20:02:19Z",
+      "side": 1,
+      "message": "this reads weird with GTEST_API_INTERFACE broken across two lines.",
+      "revId": "99698f053564345db4af8175e6b4d0420cd3a095",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
