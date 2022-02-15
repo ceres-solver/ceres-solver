@@ -1,4 +1,21 @@
 {
-  "comments": [],
-  "submitRequirementResults": []
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "566344a2_bc875052",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-15T19:10:26Z",
+      "side": 1,
+      "message": "this CL is causing compile failures on macos, with failures of the form\n\nIn file included from /Users/sameeragarwal/ceres-solver/internal/ceres/generated/partitioned_matrix_view_2_2_d.cc:47:\nIn file included from /Users/sameeragarwal/ceres-solver/internal/ceres/partitioned_matrix_view_impl.h:39:\nIn file included from /Users/sameeragarwal/ceres-solver/internal/ceres/partitioned_matrix_view.h:48:\nIn file included from /Users/sameeragarwal/ceres-solver/internal/ceres/linear_solver.h:46:\nIn file included from /Users/sameeragarwal/ceres-solver/internal/ceres/context_impl.h:44:\n/Users/sameeragarwal/ceres-solver/internal/ceres/thread_pool.h:113:39: warning: use of right-shift operator (\u0027\u003e\u003e\u0027) in template argument will require parentheses in C++11 [-Wc++11-compat]\n  ConcurrentQueue\u003cstd::function\u003cvoid()\u003e\u003e task_queue_;\n\nsomething is not right.",
+      "revId": "d839b77928b3f9bebbbd18a1095ea2af890f3c34",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
 }
