@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19dc100d_f5cc67bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T03:03:18Z",
+      "side": 1,
+      "message": "CUDA resources are now solely managed by ContextImpl.",
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77b27991_53cb2ef4",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T03:03:18Z",
+      "side": 1,
+      "message": "Needed since ContextImpl won\u0027t compile without it.",
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "851f9332_2da69bfb",
+        "filename": "internal/ceres/types.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T03:03:18Z",
+      "side": 1,
+      "message": "Whoops, I should have noticed this in the previous review.",
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
