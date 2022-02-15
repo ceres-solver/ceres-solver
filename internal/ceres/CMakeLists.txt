@@ -411,15 +411,17 @@ install(TARGETS ceres
         LIBRARY DESTINATION lib${LIB_SUFFIX}
         ARCHIVE DESTINATION lib${LIB_SUFFIX})
 
-if (BUILD_TESTING OR benchmark_FOUND)
+# Benchmarks can be built without tests. In either case, the test_util is
+# necessary which unconditionally depends on gflags.
+if ((BUILD_TESTING OR BUILD_BENCHMARKS) AND GFLAGS)
   add_library(test_util STATIC
               evaluator_test_utils.cc
               numeric_diff_test_utils.cc
               test_util.cc)
 
   target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
-  target_link_libraries (test_util PUBLIC ceres_static)
-endif (BUILD_TESTING OR benchmark_FOUND)
+  target_link_libraries (test_util PUBLIC ceres_static gflags)
+endif ((BUILD_TESTING OR BUILD_BENCHMARKS) AND GFLAGS)
 
 if (BUILD_TESTING AND GFLAGS)
   include(AppendTargetProperty)
@@ -433,7 +435,7 @@ if (BUILD_TESTING AND GFLAGS)
   set_target_properties (gtest PROPERTIES CXX_VISIBILITY_PRESET default)
 
   target_include_directories(gtest PRIVATE ${Ceres_SOURCE_DIR}/internal/ceres)
-  target_link_libraries(gtest PRIVATE Ceres::ceres)
+  target_link_libraries(gtest PRIVATE Ceres::ceres gflags)
 
   macro (CERES_TEST NAME)
     add_executable(${NAME}_test ${NAME}_test.cc)
