@@ -82,11 +82,11 @@ void ComputeHouseholderVector(const XVectorType& x,
   v->head(v->rows() - 1) /= v_pivot;
 }
 
-template <typename XVectorType, typename Scalar, int N>
-Eigen::Matrix<Scalar, N, 1> ApplyHouseholderVector(
+template <typename XVectorType, typename Derived>
+typename Derived::PlainObject ApplyHouseholderVector(
     const XVectorType& y,
-    const Eigen::Matrix<Scalar, N, 1>& v,
-    const Scalar& beta) {
+    const Eigen::MatrixBase<Derived>& v,
+    const typename Derived::Scalar& beta) {
   return (y - v * (beta * (v.transpose() * y)));
 }
 
