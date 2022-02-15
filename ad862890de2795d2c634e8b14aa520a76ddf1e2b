@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74963620_79f143f0",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-15T17:21:47Z",
+      "side": 1,
+      "message": "two comments.\n1. this is testing BUILD_BENCHMARK not whether we can actually build benchmarks, which requires that the benchmark library be present. The previous version of this conditional did.\n\n2. there is now overlap between this conditional and the next. also why does benchmarking require test utils?",
+      "range": {
+        "startLine": 416,
+        "startChar": 22,
+        "endLine": 416,
+        "endChar": 38
+      },
+      "revId": "ad862890de2795d2c634e8b14aa520a76ddf1e2b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
