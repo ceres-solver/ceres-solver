@@ -391,7 +391,7 @@ if (ACCELERATESPARSE)
     ${AccelerateSparse_INCLUDE_DIRS})
 endif()
 if (CUDA)
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
+  list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS
     ${CUDA_INCLUDE_DIRS})
 endif()
 # Add include locations for optional dependencies to the Ceres target without

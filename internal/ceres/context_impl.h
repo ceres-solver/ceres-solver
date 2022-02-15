@@ -40,6 +40,12 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
+#ifndef CERES_NO_CUDA
+#include "cuda_runtime.h"
+#include "cublas_v2.h"
+#include "cusolverDn.h"
+#endif  // CERES_NO_CUDA
+
 #ifdef CERES_USE_CXX_THREADS
 #include "ceres/thread_pool.h"
 #endif  // CERES_USE_CXX_THREADS
@@ -50,6 +56,7 @@ namespace internal {
 class CERES_NO_EXPORT ContextImpl : public Context {
  public:
   ContextImpl();
+  ~ContextImpl() override;
   ContextImpl(const ContextImpl&) = delete;
   void operator=(const ContextImpl&) = delete;
 
@@ -59,9 +66,28 @@ class CERES_NO_EXPORT ContextImpl : public Context {
   // defined by the hardware.  Otherwise this call is a no-op.
   void EnsureMinimumThreads(int num_threads);
 
+#ifndef CERES_NO_CUDA
+  // Initializes the cuSolverDN context, creates an asynchronous stream, and
+  // associates the stream with cuSolverDN. Returns true iff initialization was
+  // successful, else it returns false and a human-readable error message is
+  // returned.
+  bool InitCUDA(std::string* message);
+#endif  // CERES_NO_CUDA
+
 #ifdef CERES_USE_CXX_THREADS
   ThreadPool thread_pool;
 #endif  // CERES_USE_CXX_THREADS
+
+#ifndef CERES_NO_CUDA
+  // Handle to the cuSOLVER context.
+  cusolverDnHandle_t cusolver_handle_ = nullptr;
+  // Handle to cuBLAS context.
+  cublasHandle_t cublas_handle_ = nullptr;
+  // CUDA device stream.
+  cudaStream_t stream_ = nullptr;
+  // Indicates whether all the CUDA resources have been initialized.
+  bool cuda_initialized_ = false;
+#endif  // CERES_NO_CUDA
 };
 
 }  // namespace internal

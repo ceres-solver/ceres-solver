@@ -48,7 +48,6 @@ static void BM_DenseSolver(benchmark::State& state) {
   Eigen::VectorXd rhs = Eigen::VectorXd::Random(num_rows, 1);
 
   Eigen::VectorXd solution(num_cols);
-
   LinearSolver::Options options;
   options.type = kSolverType;
   options.dense_linear_algebra_library_type = kLibraryType;
