@@ -67,6 +67,8 @@ TEST_P(DenseQRTest, FactorAndSolve) {
   using VectorType = Eigen::Matrix<Scalar, Eigen::Dynamic, 1>;
 
   LinearSolver::Options options;
+  ContextImpl context;
+  options.context = &context;
   options.dense_linear_algebra_library_type = GetParam();
   const double kEpsilon = std::numeric_limits<double>::epsilon() * 1.5e4;
   std::unique_ptr<DenseQR> dense_qr = DenseQR::Create(options);
