@@ -22,6 +22,30 @@
       },
       "revId": "ad862890de2795d2c634e8b14aa520a76ddf1e2b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d59531c_0c2b6517",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-15T18:45:17Z",
+      "side": 1,
+      "message": "1. Technically, you are correct. However, `BUILD_BENCHMARKS` is disabled if the `benchmark` package config is not found. Both conditions are therefore equivalent. Using `benchmark_FOUND` only ignores `BUILD_BENCHMARKS`. In general, however, I dislike the disable mechanism because even if the dependency is installed at some later point it will not be detected by Ceres which goes against CMake practice. Otherwise, we would not to check for the presence of the dependency too. I can address this in a subsequent CL.\n2. Good point. This is not (no longer) necessary. I believe it was used for convenience due to include directories.\n\nThese changes should not fix also Joydeep\u0027s problem.",
+      "parentUuid": "74963620_79f143f0",
+      "range": {
+        "startLine": 416,
+        "startChar": 22,
+        "endLine": 416,
+        "endChar": 38
+      },
+      "revId": "ad862890de2795d2c634e8b14aa520a76ddf1e2b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
