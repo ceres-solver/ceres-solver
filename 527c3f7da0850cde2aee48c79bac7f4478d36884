@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6f3f470_c3ed7683",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-15T19:00:32Z",
+      "side": 1,
+      "message": "Thanks for the cleanup Sergiu.",
+      "revId": "527c3f7da0850cde2aee48c79bac7f4478d36884",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
