@@ -28,17 +28,6 @@
 #
 # Author: keir@google.com (Keir Mierle)
 
-# Always build position-independent code (PIC), even when building Ceres as a
-# static library so that shared libraries can link against it, not just
-# executables (PIC does not apply on Windows). Global variable can be overridden
-# by the user whereas target properties can be not.
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-# Set the default symbol visibility to hidden to unify the behavior among
-# the various compilers and to get smaller binaries
-set(CMAKE_C_VISIBILITY_PRESET hidden)
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
-
 # Avoid 'xxx.cc has no symbols' warnings from source files which are 'empty'
 # when their enclosing #ifdefs are disabled.
 if (CERES_THREADING_MODEL STREQUAL "CXX_THREADS")
@@ -420,15 +409,17 @@ if (BUILD_TESTING AND GFLAGS)
   target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
   target_link_libraries (test_util PUBLIC ceres_static gflags)
 
-  include(AppendTargetProperty)
-
   add_library(gtest gmock_gtest_all.cc gmock_main.cc)
   if (BUILD_SHARED_LIBS)
     # Define gtest-specific shared library flags for compilation.
-    append_target_property(gtest COMPILE_DEFINITIONS
-      GTEST_CREATE_SHARED_LIBRARY)
+    #
+    # NOTE: We export the test_srcdir not from gflags but from our gtest target.
+    # Therefore, the gflags visibility macro must be overriden by that of gtest.
+    target_compile_definitions(gtest
+      PRIVATE GTEST_CREATE_SHARED_LIBRARY=1
+              GFLAGS_DLL_DEFINE_FLAG=GTEST_API_
+      INTERFACE GTEST_LINKED_AS_SHARED_LIBRARY=1)
   endif()
-  set_target_properties (gtest PROPERTIES CXX_VISIBILITY_PRESET default)
 
   target_include_directories(gtest PRIVATE ${Ceres_SOURCE_DIR}/internal/ceres)
   target_link_libraries(gtest PRIVATE Ceres::ceres gflags)
@@ -443,11 +434,6 @@ if (BUILD_TESTING AND GFLAGS)
       PRIVATE ${Ceres_SOURCE_DIR}/internal/ceres
               ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
     target_link_libraries(${NAME}_test PRIVATE gtest test_util ceres_static)
-    if (BUILD_SHARED_LIBS)
-      # Define gtest-specific shared library flags for linking.
-      append_target_property(${NAME}_test COMPILE_DEFINITIONS
-        GTEST_LINKED_AS_SHARED_LIBRARY)
-    endif()
     add_test(NAME ${NAME}_test
              COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${NAME}_test
              --test_srcdir
