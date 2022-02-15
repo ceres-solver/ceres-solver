@@ -1325,16 +1325,17 @@ elimination group [LiSaad]_.
    Default:``EIGEN``
 
    Ceres supports using multiple dense linear algebra libraries for
-   dense matrix factorizations. Currently ``EIGEN`` and ``LAPACK`` are
-   the valid choices. ``EIGEN`` is always available, ``LAPACK`` refers
-   to the system ``BLAS + LAPACK`` library which may or may not be
-   available.
+   dense matrix factorizations. Currently ``EIGEN``, ``LAPACK`` and
+   ``CUDA`` are the valid choices. ``EIGEN`` is always available,
+   ``LAPACK`` refers to the system ``BLAS + LAPACK`` library which may
+   or may not be available. ``CUDA`` refers to Nvidia's GPU based
+   dense linear algebra library which may or may not be available.
 
    This setting affects the ``DENSE_QR``, ``DENSE_NORMAL_CHOLESKY``
    and ``DENSE_SCHUR`` solvers. For small to moderate sized probem
    ``EIGEN`` is a fine choice but for large problems, an optimized
-   ``LAPACK + BLAS`` implementation can make a substantial difference
-   in performance.
+   ``LAPACK + BLAS`` or ``CUDA`` implementation can make a substantial
+   difference in performance.
 
 .. member:: SparseLinearAlgebraLibrary Solver::Options::sparse_linear_algebra_library_type
 

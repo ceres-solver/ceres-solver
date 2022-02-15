@@ -46,10 +46,11 @@ Why?
     computational cost in all of these methods is the solution of a
     linear system. To this end Ceres ships with a variety of linear
     solvers - dense QR and dense Cholesky factorization (using
-    `Eigen`_ or `LAPACK`_) for dense problems, sparse Cholesky
-    factorization (`SuiteSparse`_, `CXSparse`_ or `Eigen`_) for large
-    sparse problems, custom Schur complement based dense, sparse, and
-    iterative linear solvers for `bundle adjustment`_ problems.
+    `Eigen`_, `LAPACK`_ or `CUDA`_) for dense problems, sparse
+    Cholesky factorization (`SuiteSparse`_, `Apple's Accelerate`_,
+    `CXSparse`_ `Eigen`_) for large sparse problems, custom Schur
+    complement based dense, sparse, and iterative linear solvers for
+    `bundle adjustment`_ problems.
 
   - **Line Search Solvers** - When the problem size is so large that
     storing and factoring the Jacobian is not feasible or a low
@@ -61,6 +62,9 @@ Why?
   templating, hand written linear algebra routines and OpenMP or
   modern C++ threads based multithreading of the Jacobian evaluation
   and the linear solvers.
+
+* **GPU Acceleration** If your system supports `CUDA`_ then Ceres
+  Solver can use the Nvidia GPU on your system to speed up the solver.
 
 * **Solution Quality** Ceres is the `best performing`_ solver on the NIST
   problem set used by Mondragon and Borchers for benchmarking
@@ -89,3 +93,5 @@ Why?
 .. _CXSparse: https://www.cise.ufl.edu/research/sparse/CXSparse/
 .. _automatic: http://en.wikipedia.org/wiki/Automatic_differentiation
 .. _numeric: http://en.wikipedia.org/wiki/Numerical_differentiation
+.. _CUDA : https://developer.nvidia.com/cuda-toolkit
+.. _Apple's Accelerate: https://developer.apple.com/documentation/accelerate/sparse_solvers
