@@ -37,6 +37,139 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "32689f41_299b82a3",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-15T05:22:58Z",
+      "side": 1,
+      "message": "why does contextimpl need to be public? this does not seem right. but there is also some funniness that sergiu is in the midst of fixing. so lets wait on this till his CL is checked in tomorrow.",
+      "parentUuid": "77b27991_53cb2ef4",
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c9744bd_13a24e6d",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-15T05:22:58Z",
+      "side": 1,
+      "message": "why not have this function also be guarded by CERES_NO_CUDA? unlike ensureminimumthreads, this function is not going to be called by non-cuda code no?",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d5a5e96_c4ded194",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-15T05:22:58Z",
+      "side": 1,
+      "message": "this should be after the header guard not before, just like the threading includes.",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "218d17c2_fcb810be",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-15T05:22:58Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be guarded by CERES_NO_CUDA too?",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 15
+      },
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d3c7de8_528e69e5",
+        "filename": "internal/ceres/dense_linear_solver_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-15T05:22:58Z",
+      "side": 1,
+      "message": "you don\u0027t need this outside the benchmark. the loop is what is timed, so as long as it is outside the loop its no problem,",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 17
+      },
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8289581e_68cc3ce1",
+        "filename": "internal/ceres/dense_qr.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-15T05:22:58Z",
+      "side": 1,
+      "message": "blank before",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "851f9332_2da69bfb",
         "filename": "internal/ceres/types.cc",
         "patchSetId": 1
@@ -48,6 +181,24 @@
       "writtenOn": "2022-02-15T03:03:18Z",
       "side": 1,
       "message": "Whoops, I should have noticed this in the previous review.",
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f268f0c1_e1b183ba",
+        "filename": "internal/ceres/types.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-15T05:22:58Z",
+      "side": 1,
+      "message": "wow that is rather shameful on my part :/",
+      "parentUuid": "851f9332_2da69bfb",
       "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
