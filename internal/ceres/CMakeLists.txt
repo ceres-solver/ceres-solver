@@ -404,17 +404,15 @@ install(TARGETS ceres
         LIBRARY DESTINATION lib${LIB_SUFFIX}
         ARCHIVE DESTINATION lib${LIB_SUFFIX})
 
-if (BUILD_TESTING OR benchmark_FOUND)
+if (BUILD_TESTING AND GFLAGS)
   add_library(test_util STATIC
               evaluator_test_utils.cc
               numeric_diff_test_utils.cc
               test_util.cc)
 
   target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
-  target_link_libraries (test_util PUBLIC ceres_static)
-endif (BUILD_TESTING OR benchmark_FOUND)
+  target_link_libraries (test_util PUBLIC ceres_static gflags)
 
-if (BUILD_TESTING AND GFLAGS)
   include(AppendTargetProperty)
 
   add_library(gtest gmock_gtest_all.cc gmock_main.cc)
@@ -426,7 +424,7 @@ if (BUILD_TESTING AND GFLAGS)
   set_target_properties (gtest PROPERTIES CXX_VISIBILITY_PRESET default)
 
   target_include_directories(gtest PRIVATE ${Ceres_SOURCE_DIR}/internal/ceres)
-  target_link_libraries(gtest PRIVATE Ceres::ceres)
+  target_link_libraries(gtest PRIVATE Ceres::ceres gflags)
 
   macro (CERES_TEST NAME)
     add_executable(${NAME}_test ${NAME}_test.cc)
@@ -552,7 +550,11 @@ if (BUILD_TESTING AND GFLAGS)
 endif (BUILD_TESTING AND GFLAGS)
 
 macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
-  target_link_libraries(${BENCHMARK_TARGET} PRIVATE benchmark::benchmark test_util)
+  target_include_directories(${BENCHMARK_TARGET}
+    PRIVATE ${Ceres_SOURCE_DIR}/internal
+            ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
+  target_link_libraries(${BENCHMARK_TARGET}
+    PRIVATE benchmark::benchmark ceres_static)
 endmacro()
 
 if (BUILD_BENCHMARKS)
