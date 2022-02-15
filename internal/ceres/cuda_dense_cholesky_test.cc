@@ -43,6 +43,8 @@ namespace internal {
 
 TEST(CUDADenseCholesky, InvalidOptionOnCreate) {
   LinearSolver::Options options;
+  ContextImpl context;
+  options.context = &context;
   auto dense_cuda_solver = CUDADenseCholesky::Create(options);
   EXPECT_EQ(dense_cuda_solver, nullptr);
 }
@@ -56,6 +58,8 @@ TEST(CUDADenseCholesky, Cholesky4x4Matrix) {
         0,   0,   0, 1;
   const Eigen::Vector4d b = Eigen::Vector4d::Ones();
   LinearSolver::Options options;
+  ContextImpl context;
+  options.context = &context;
   options.dense_linear_algebra_library_type = CUDA;
   auto dense_cuda_solver = CUDADenseCholesky::Create(options);
   ASSERT_NE(dense_cuda_solver, nullptr);
@@ -80,6 +84,8 @@ TEST(CUDADenseCholesky, SingularMatrix) {
         0, 0, 0;
   const Eigen::Vector3d b = Eigen::Vector3d::Ones();
   LinearSolver::Options options;
+  ContextImpl context;
+  options.context = &context;
   options.dense_linear_algebra_library_type = CUDA;
   auto dense_cuda_solver = CUDADenseCholesky::Create(options);
   ASSERT_NE(dense_cuda_solver, nullptr);
@@ -97,6 +103,8 @@ TEST(CUDADenseCholesky, NegativeMatrix) {
         0, 0, -1;
   const Eigen::Vector3d b = Eigen::Vector3d::Ones();
   LinearSolver::Options options;
+  ContextImpl context;
+  options.context = &context;
   options.dense_linear_algebra_library_type = CUDA;
   auto dense_cuda_solver = CUDADenseCholesky::Create(options);
   ASSERT_NE(dense_cuda_solver, nullptr);
@@ -110,6 +118,8 @@ TEST(CUDADenseCholesky, NegativeMatrix) {
 TEST(CUDADenseCholesky, MustFactorizeBeforeSolve) {
   const Eigen::Vector3d b = Eigen::Vector3d::Ones();
   LinearSolver::Options options;
+  ContextImpl context;
+  options.context = &context;
   options.dense_linear_algebra_library_type = CUDA;
   auto dense_cuda_solver = CUDADenseCholesky::Create(options);
   ASSERT_NE(dense_cuda_solver, nullptr);

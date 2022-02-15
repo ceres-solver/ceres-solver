@@ -45,7 +45,9 @@
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 #include "glog/logging.h"
+
 #ifndef CERES_NO_CUDA
+#include "ceres/context_impl.h"
 #include "ceres/cuda_buffer.h"
 #include "cuda_runtime.h"
 #include "cublas_v2.h"
@@ -166,11 +168,10 @@ class CERES_NO_EXPORT CUDADenseQR : public DenseQR {
 
  private:
   CUDADenseQR();
-  // Initializes the cuSolverDN context, creates an asynchronous stream, and
-  // associates the stream with cuSolverDN. Returns true iff initialization was
-  // successful, else it returns false and a human-readable error message is
-  // returned.
-  bool Init(std::string* message);
+  // Picks up the cuSolverDN, cuBLAS, and cuStream handles from the context. If
+  // the context is unable to initialize CUDA, returns false with a
+  // human-readable message indicating the reason.
+  bool Init(ContextImpl* context,std::string* message);
 
   // Handle to the cuSOLVER context.
   cusolverDnHandle_t cusolver_handle_ = nullptr;
