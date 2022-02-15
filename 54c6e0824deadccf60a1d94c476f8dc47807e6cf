@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6eb50eea_2f1493b4",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T16:55:18Z",
+      "side": 1,
+      "message": "The error stems from the chain of includes from benchmark targets. Here is the error from one of the benchmark targets when this is set to PRIVATE: \n\n```\nIn file included from ceres-solver/internal/ceres/linear_solver.h:46,\n                 from ceres-solver/internal/ceres/schur_eliminator.h:46,\n                 from ceres-solver/internal/ceres/schur_eliminator_benchmark.cc:39:\nceres-solver/internal/ceres/context_impl.h:44:10: fatal error: cuda_runtime.h: No such file or directory\n   44 | #include \"cuda_runtime.h\"\n      |          ^~~~~~~~~~~~~~~~\n```",
+      "parentUuid": "f95ddb0a_fc71c38e",
+      "revId": "54c6e0824deadccf60a1d94c476f8dc47807e6cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6c9744bd_13a24e6d",
         "filename": "internal/ceres/context_impl.cc",
         "patchSetId": 1
