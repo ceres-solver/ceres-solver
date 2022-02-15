@@ -35,6 +35,10 @@
 #include "ceres/linear_solver.h"
 #include "ceres/random.h"
 
+namespace {
+  ceres::internal::ContextImpl context;
+} // namespace
+
 namespace ceres {
 namespace internal {
 
@@ -52,7 +56,6 @@ static void BM_DenseSolver(benchmark::State& state) {
   LinearSolver::Options options;
   options.type = kSolverType;
   options.dense_linear_algebra_library_type = kLibraryType;
-  ContextImpl context;
   options.context = &context;
   auto solver = LinearSolver::Create(options);
 
