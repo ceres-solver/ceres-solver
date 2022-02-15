@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65bcb8b1_2dfa8cf3",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T18:40:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e84e5438_898882ad",
+      "revId": "09853cc930e1056521a84e030d1803d543e0d9da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df235d53_8559c4ac",
@@ -41,6 +59,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2db81cab_6b21b720",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T18:40:02Z",
+      "side": 1,
+      "message": "There is a partial order:\nstream creation before association\ncublas before stream association\ncusolver before stream association",
+      "parentUuid": "df235d53_8559c4ac",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 4
+      },
+      "revId": "09853cc930e1056521a84e030d1803d543e0d9da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8ef11f2f_79e50441",
@@ -54,6 +96,30 @@
       "writtenOn": "2022-02-15T17:32:17Z",
       "side": 1,
       "message": "move this after the cuda include and consolidate the cuda stuff in one ifdef.",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 28
+      },
+      "revId": "09853cc930e1056521a84e030d1803d543e0d9da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c956332b_ee0aa238",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-02-15T18:40:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ef11f2f_79e50441",
       "range": {
         "startLine": 77,
         "startChar": 7,
