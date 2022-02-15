@@ -37,21 +37,19 @@
 
 #include "bundle_adjustment_test_util.h"
 
-#ifdef CERES_USE_EIGEN_SPARSE
-
 namespace ceres {
 namespace internal {
 
 TEST_F(BundleAdjustmentTest,
-       SparseSchur_EigenSparse_AutomaticOrdering) {  // NOLINT
+       DenseSchur_Eigen_UserOrdering) {  // NOLINT
   BundleAdjustmentProblem bundle_adjustment_problem;
   Solver::Options* options = bundle_adjustment_problem.mutable_solver_options();
   options->num_threads = 1;
-  options->linear_solver_type = SPARSE_SCHUR;
+  options->linear_solver_type = DENSE_SCHUR;
   options->dense_linear_algebra_library_type = EIGEN;
-  options->sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  options->sparse_linear_algebra_library_type = NO_SPARSE;
   options->preconditioner_type = IDENTITY;
-  if (kAutomaticOrdering) {
+  if (kUserOrdering) {
     options->linear_solver_ordering = nullptr;
   }
   Problem* problem = bundle_adjustment_problem.mutable_problem();
@@ -60,5 +58,3 @@ TEST_F(BundleAdjustmentTest,
 
 }  // namespace internal
 }  // namespace ceres
-
-#endif  // CERES_USE_EIGEN_SPARSE
