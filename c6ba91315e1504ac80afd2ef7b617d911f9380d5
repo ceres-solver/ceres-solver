@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dbfb163_354cd566",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-15T19:23:42Z",
+      "side": 1,
+      "message": "space nit, and one more rebase since I had to revert the c++14 cl and its good to go.",
+      "revId": "c6ba91315e1504ac80afd2ef7b617d911f9380d5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e30b206a_7310d9b2",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-15T19:23:42Z",
+      "side": 1,
+      "message": "trailing blanks",
+      "revId": "c6ba91315e1504ac80afd2ef7b617d911f9380d5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
