@@ -44,6 +44,7 @@
 #include "ceres/linear_solver.h"
 #include "glog/logging.h"
 #ifndef CERES_NO_CUDA
+#include "ceres/context_impl.h"
 #include "cuda_runtime.h"
 #include "cusolverDn.h"
 #endif  // CERES_NO_CUDA
@@ -152,11 +153,10 @@ class CERES_NO_EXPORT CUDADenseCholesky : public DenseCholesky {
 
  private:
   CUDADenseCholesky() = default;
-  // Initializes the cuSolverDN context, creates an asynchronous stream, and
-  // associates the stream with cuSolverDN. Returns true iff initialization was
-  // successful, else it returns false and a human-readable error message is
-  // returned.
-  bool Init(std::string* message);
+  // Picks up the cuSolverDN and cuStream handles from the context. If
+  // the context is unable to initialize CUDA, returns false with a
+  // human-readable message indicating the reason.
+  bool Init(ContextImpl* context, std::string* message);
 
   // Handle to the cuSOLVER context.
   cusolverDnHandle_t cusolver_handle_ = nullptr;

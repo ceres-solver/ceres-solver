@@ -34,6 +34,7 @@
 #include <memory>
 #include <string>
 #ifndef CERES_NO_CUDA
+#include "ceres/context_impl.h"
 #include "cusolverDn.h"
 #include "cublas_v2.h"
 #endif  // CERES_NO_CUDA
@@ -310,52 +311,19 @@ LinearSolverTerminationType LAPACKDenseQR::Solve(const double* rhs,
 
 #ifndef CERES_NO_CUDA
 
-bool CUDADenseQR::Init(std::string* message) {
-  if (cublasCreate(&cublas_handle_) != CUBLAS_STATUS_SUCCESS) {
-    *message = "cuBLAS::cublasCreate failed.";
+bool CUDADenseQR::Init(ContextImpl* context, std::string* message) {
+  if (!context->InitCUDA(message)) {
     return false;
   }
-  if (cusolverDnCreate(&cusolver_handle_) != CUSOLVER_STATUS_SUCCESS) {
-    *message = "cuSolverDN::cusolverDnCreate failed.";
-    return false;
-  }
-  if (cudaStreamCreateWithFlags(&stream_, cudaStreamNonBlocking) !=
-      cudaSuccess) {
-    *message = "CUDA::cudaStreamCreateWithFlags failed.";
-    cusolverDnDestroy(cusolver_handle_);
-    cublasDestroy(cublas_handle_);
-    return false;
-  }
-  if (cusolverDnSetStream(cusolver_handle_, stream_) != CUSOLVER_STATUS_SUCCESS) {
-    *message = "cuSolverDN::cusolverDnSetStream failed.";
-    cusolverDnDestroy(cusolver_handle_);
-    cudaStreamDestroy(stream_);
-    cublasDestroy(cublas_handle_);
-    return false;
-  }
-  if (cublasSetStream(cublas_handle_, stream_) != CUBLAS_STATUS_SUCCESS) {
-    *message = "cuBLAS::cublasSetStream failed.";
-    cusolverDnDestroy(cusolver_handle_);
-    cublasDestroy(cublas_handle_);
-    cudaStreamDestroy(stream_);
-    return false;
-  }
+  cublas_handle_ = context->cublas_handle_;
+  cusolver_handle_ = context->cusolver_handle_;
+  stream_ = context->stream_;
   error_.Reserve(1);
   *message = "CUDADenseQR::Init Success.";
   return true;
 }
 
-CUDADenseQR::~CUDADenseQR() {
-  if (cublas_handle_ != nullptr) {
-    CHECK_EQ(cublasDestroy(cublas_handle_), CUBLAS_STATUS_SUCCESS);
-  }
-  if (cusolver_handle_ != nullptr) {
-    CHECK_EQ(cusolverDnDestroy(cusolver_handle_), CUSOLVER_STATUS_SUCCESS);
-  }
-  if (stream_ != nullptr) {
-    CHECK_EQ(cudaStreamDestroy(stream_), cudaSuccess);
-  }
-}
+CUDADenseQR::~CUDADenseQR() = default;
 
 LinearSolverTerminationType CUDADenseQR::Factorize(
     int num_rows, int num_cols, double* lhs, std::string* message) {
@@ -496,7 +464,7 @@ std::unique_ptr<CUDADenseQR> CUDADenseQR::Create(
   auto cuda_dense_qr =
       std::unique_ptr<CUDADenseQR>(new CUDADenseQR());
   std::string cuda_error;
-  if (cuda_dense_qr->Init(&cuda_error)) {
+  if (cuda_dense_qr->Init(options.context, &cuda_error)) {
     return cuda_dense_qr;
   }
   // Initialization failed, destroy the object (done automatically) and return a
