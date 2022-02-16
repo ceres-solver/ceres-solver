@@ -90,6 +90,7 @@ list(APPEND CMAKE_MODULE_PATH "${Ceres_SOURCE_DIR}/cmake")
 include(AddCompileFlagsIfSupported)
 include(CheckCXXCompilerFlag)
 include(CheckLibraryExists)
+include(GNUInstallDirs)
 include(UpdateCacheVariable)
 
 check_cxx_compiler_flag(/bigobj HAVE_BIGOBJ)
@@ -170,34 +171,10 @@ if (ANDROID)
   option(ANDROID_STRIP_DEBUG_SYMBOLS "Strip debug symbols from Android builds (reduces file sizes)" ON)
 endif()
 if (MSVC)
+  # TODO Not needed starting CMake 3.15 which provides CMAKE_MSVC_RUNTIME_LIBRARY
   option(MSVC_USE_STATIC_CRT
     "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
 endif()
-
-# Allow user to specify a suffix for the library install directory, the only
-# really sensible option (other than "") being "64", such that:
-# ${CMAKE_INSTALL_PREFIX}/lib -> ${CMAKE_INSTALL_PREFIX}/lib64.
-#
-# Heuristic for determining LIB_SUFFIX. FHS recommends that 64-bit systems
-# install native libraries to lib64 rather than lib. Most distros seem to
-# follow this convention with a couple notable exceptions (Debian-based and
-# Arch-based distros) which we try to detect here.
-if (CMAKE_SYSTEM_NAME MATCHES "Linux" AND
-    NOT DEFINED LIB_SUFFIX AND
-    NOT CMAKE_CROSSCOMPILING AND
-    CMAKE_SIZEOF_VOID_P EQUAL "8" AND
-    NOT EXISTS "/etc/debian_version" AND
-    NOT EXISTS "/etc/arch-release")
-  message("-- Detected non-Debian/Arch-based 64-bit Linux distribution. "
-    "Defaulting to library install directory: lib${LIB_SUFFIX}. You can "
-    "override this by specifying LIB_SUFFIX.")
-  set(LIB_SUFFIX "64")
-endif ()
-# Only create the cache variable (for the CMake GUI) after attempting to detect
-# the suffix *if not specified by the user* (NOT DEFINED LIB_SUFFIX in if())
-# s/t the user could override our autodetected suffix with "" if desired.
-set(LIB_SUFFIX "${LIB_SUFFIX}" CACHE STRING
-  "Suffix of library install directory (to support lib/lib64)." FORCE)
 
 # IOS is defined iff using the iOS.cmake CMake toolchain to build a static
 # library for iOS.
@@ -644,14 +621,11 @@ add_compile_options(
 list(REMOVE_DUPLICATES CERES_COMPILE_OPTIONS)
 include(CreateCeresConfig)
 create_ceres_config("${CERES_COMPILE_OPTIONS}"
-  ${Ceres_BINARY_DIR}/include/ceres/internal)
+  ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal)
 
 add_subdirectory(internal/ceres)
 
 if (BUILD_DOCUMENTATION)
-  set(CERES_DOCS_INSTALL_DIR "share/doc/ceres" CACHE STRING
-      "Ceres docs install path relative to CMAKE_INSTALL_PREFIX")
-
   find_package(Sphinx)
   if (NOT SPHINX_FOUND)
     message("-- Failed to find Sphinx and/or its dependencies, disabling build of documentation.")
@@ -673,21 +647,22 @@ endif (BUILD_EXAMPLES)
 
 # Setup installation of Ceres public headers.
 file(GLOB CERES_HDRS ${Ceres_SOURCE_DIR}/include/ceres/*.h)
-install(FILES ${CERES_HDRS} DESTINATION include/ceres)
+install(FILES ${CERES_HDRS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/ceres)
 
 file(GLOB CERES_PUBLIC_INTERNAL_HDRS ${Ceres_SOURCE_DIR}/include/ceres/internal/*.h)
-install(FILES ${CERES_PUBLIC_INTERNAL_HDRS} DESTINATION include/ceres/internal)
+install(FILES ${CERES_PUBLIC_INTERNAL_HDRS} DESTINATION
+  ${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal)
 
 # Also setup installation of Ceres config.h configured with the current
 # build options and export.h into the installed headers directory.
-install(DIRECTORY ${Ceres_BINARY_DIR}/include/
-        DESTINATION include)
+install(DIRECTORY ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 if (MINIGLOG)
   # Install miniglog header if being used as logging #includes appear in
   # installed public Ceres headers.
   install(FILES ${Ceres_SOURCE_DIR}/internal/ceres/miniglog/glog/logging.h
-          DESTINATION include/ceres/internal/miniglog/glog)
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal/miniglog/glog)
 endif (MINIGLOG)
 
 # Ceres supports two mechanisms by which it can be detected & imported into
@@ -729,11 +704,7 @@ write_basic_package_version_file("${Ceres_BINARY_DIR}/CeresConfigVersion.cmake"
 
 # Set the install path for the installed CeresConfig.cmake configuration file
 # relative to CMAKE_INSTALL_PREFIX.
-if (WIN32)
-  set(RELATIVE_CMAKECONFIG_INSTALL_DIR CMake)
-else ()
-  set(RELATIVE_CMAKECONFIG_INSTALL_DIR lib${LIB_SUFFIX}/cmake/Ceres)
-endif ()
+set(RELATIVE_CMAKECONFIG_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/Ceres)
 
 # This "exports" for installation all targets which have been put into the
 # export set "CeresExport". This generates a CeresTargets.cmake file which,
