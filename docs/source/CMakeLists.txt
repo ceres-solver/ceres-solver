@@ -5,7 +5,7 @@ set(SPHINX_HTML_DIR "${Ceres_BINARY_DIR}/docs/html")
 
 # Install documentation
 install(DIRECTORY ${SPHINX_HTML_DIR}
-        DESTINATION "${CERES_DOCS_INSTALL_DIR}"
+        DESTINATION ${CMAKE_INSTALL_DOCDIR}
         COMPONENT Doc
         PATTERN "${SPHINX_HTML_DIR}/*")
 
