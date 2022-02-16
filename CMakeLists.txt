@@ -88,7 +88,12 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 # additional paths via -D.
 list(APPEND CMAKE_MODULE_PATH "${Ceres_SOURCE_DIR}/cmake")
 include(AddCompileFlagsIfSupported)
+include(CheckCXXCompilerFlag)
+include(CheckLibraryExists)
 include(UpdateCacheVariable)
+
+check_cxx_compiler_flag(/bigobj HAVE_BIGOBJ)
+check_library_exists(m pow "" HAVE_LIBM)
 
 # Xcode 11.0-1 with macOS 10.15 (Catalina) broke alignment.
 include(DetectBrokenStackCheckMacOSXcodePairing)
@@ -617,7 +622,6 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang") # Matches Clang & AppleClang.
   endif ()
   # Older versions of Clang (<= 2.9) do not support the 'return-type-c-linkage'
   # option, so check for its presence before adding it to the default flags set.
-  include(CheckCXXCompilerFlag)
   check_cxx_compiler_flag("-Wno-return-type-c-linkage"
                           HAVE_RETURN_TYPE_C_LINKAGE)
   if (HAVE_RETURN_TYPE_C_LINKAGE)

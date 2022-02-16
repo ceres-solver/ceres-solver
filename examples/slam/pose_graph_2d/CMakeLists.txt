@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2016 Google Inc. All rights reserved.
+# Copyright 2022 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -35,5 +35,5 @@ if (GFLAGS)
     pose_graph_2d.cc
     pose_graph_2d_error_term.h
     types.h)
-  target_link_libraries(pose_graph_2d Ceres::ceres gflags)
+  target_link_libraries(pose_graph_2d PRIVATE Ceres::ceres gflags)
 endif (GFLAGS)
