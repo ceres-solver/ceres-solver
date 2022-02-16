@@ -443,15 +443,9 @@ using std::fmin;
 using std::fpclassify;
 using std::hypot;
 using std::isfinite;
-using std::isgreater;
-using std::isgreaterequal;
 using std::isinf;
-using std::isless;
-using std::islessequal;
-using std::islessgreater;
 using std::isnan;
 using std::isnormal;
-using std::isunordered;
 using std::log;
 using std::log10;
 using std::log1p;
@@ -464,6 +458,47 @@ using std::sinh;
 using std::sqrt;
 using std::tan;
 using std::tanh;
+
+// MSVC (up to 1930) defines quiet comparison functions as template functions
+// which causes compilation errors due to ambiguity in the template parameter
+// type resolution for using declarations in the ceres namespace. Workaround the
+// issue by defining specific overload and bypass MSVC standard library
+// definitions.
+#if defined(_MSC_VER)
+inline bool isgreater(double lhs,
+                      double rhs) noexcept(noexcept(std::isgreater(lhs, rhs))) {
+  return std::isgreater(lhs, rhs);
+}
+inline bool isless(double lhs,
+                   double rhs) noexcept(noexcept(std::isless(lhs, rhs))) {
+  return std::isless(lhs, rhs);
+}
+inline bool islessequal(double lhs,
+                        double rhs) noexcept(noexcept(std::islessequal(lhs,
+                                                                       rhs))) {
+  return std::islessequal(lhs, rhs);
+}
+inline bool isgreaterequal(double lhs, double rhs) noexcept(
+    noexcept(std::isgreaterequal(lhs, rhs))) {
+  return std::isgreaterequal(lhs, rhs);
+}
+inline bool islessgreater(double lhs, double rhs) noexcept(
+    noexcept(std::islessgreater(lhs, rhs))) {
+  return std::islessgreater(lhs, rhs);
+}
+inline bool isunordered(double lhs,
+                        double rhs) noexcept(noexcept(std::isunordered(lhs,
+                                                                       rhs))) {
+  return std::isunordered(lhs, rhs);
+}
+#else
+using std::isgreater;
+using std::isgreaterequal;
+using std::isless;
+using std::islessequal;
+using std::islessgreater;
+using std::isunordered;
+#endif
 
 #ifdef CERES_HAS_CPP20
 using std::lerp;
@@ -1246,8 +1281,9 @@ struct numeric_limits<ceres::Jet<T, N>> {
   static constexpr bool tinyness_before =
       std::numeric_limits<T>::tinyness_before;
 
-  static constexpr ceres::Jet<T, N> min() noexcept {
-    return ceres::Jet<T, N>(std::numeric_limits<T>::min());
+  static constexpr ceres::Jet<T, N> min
+  CERES_PREVENT_MACRO_SUBSTITUTION() noexcept {
+    return ceres::Jet<T, N>((std::numeric_limits<T>::min)());
   }
   static constexpr ceres::Jet<T, N> lowest() noexcept {
     return ceres::Jet<T, N>(std::numeric_limits<T>::lowest());
@@ -1271,8 +1307,9 @@ struct numeric_limits<ceres::Jet<T, N>> {
     return ceres::Jet<T, N>(std::numeric_limits<T>::denorm_min());
   }
 
-  static constexpr ceres::Jet<T, N> max() noexcept {
-    return ceres::Jet<T, N>(std::numeric_limits<T>::max());
+  static constexpr ceres::Jet<T, N> max
+  CERES_PREVENT_MACRO_SUBSTITUTION() noexcept {
+    return ceres::Jet<T, N>((std::numeric_limits<T>::max)());
   }
 };
 
@@ -1326,8 +1363,8 @@ struct NumTraits<ceres::Jet<T, N>> {
     };
   };
 
-  static inline Real highest() { return Real(std::numeric_limits<T>::max()); }
-  static inline Real lowest() { return Real(-std::numeric_limits<T>::max()); }
+  static inline Real highest() { return Real((std::numeric_limits<T>::max)()); }
+  static inline Real lowest() { return Real(-(std::numeric_limits<T>::max)()); }
 };
 
 // Specifying the return type of binary operations between Jets and scalar types

@@ -148,7 +148,7 @@ TEST(LevenbergMarquardtStrategy, CorrectDiagonalToLinearSolver) {
     // are versions of glog which are not in the google namespace.
     using namespace google;
 
-#if defined(_MSC_VER)
+#if defined(GLOG_NO_ABBREVIATED_SEVERITIES)
     // Use GLOG_WARNING to support MSVC if GLOG_NO_ABBREVIATED_SEVERITIES
     // is defined.
     EXPECT_CALL(log,

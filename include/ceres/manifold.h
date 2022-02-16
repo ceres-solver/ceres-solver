@@ -285,6 +285,9 @@ class CERES_EXPORT ProductManifold final : public Manifold {
  public:
   ProductManifold(const ProductManifold&) = delete;
   ProductManifold& operator=(const ProductManifold&) = delete;
+  // NOTE: Do not remove the trivial destructor as this will cause linker errors
+  // in MSVC builds.
+  ~ProductManifold() override;
 
   // NOTE: The constructor takes ownership of the input
   // manifolds.
@@ -307,7 +310,7 @@ class CERES_EXPORT ProductManifold final : public Manifold {
       ManifoldPtr& manifold = manifolds_[i];
       manifold = std::move(manifolds_array[i]);
 
-      buffer_size_ = std::max(
+      buffer_size_ = (std::max)(
           buffer_size_, manifold->TangentSize() * manifold->AmbientSize());
       ambient_size_ += manifold->AmbientSize();
       tangent_size_ += manifold->TangentSize();

@@ -63,4 +63,26 @@
         // 202002L)
 #endif  // !defined(CERES_HAS_CPP20)
 
+// Prevents symbols from being substituted by the corresponding macro definition
+// under the same name. For instance, min and max are defined as macros on
+// Windows (unless NOMINMAX is defined) which causes compilation errors when
+// defining or referencing symbols under the same name.
+//
+// To be robust in all cases particularly when NOMINMAX cannot be used, use this
+// macro to annotate min/max declarations/definitions. Examples:
+//
+//   int max CERES_PREVENT_MACRO_SUBSTITUTION();
+//   min CERES_PREVENT_MACRO_SUBSTITUTION(a, b);
+//   max CERES_PREVENT_MACRO_SUBSTITUTION(a, b);
+//
+// NOTE: In case the symbols for which the substitution must be prevented are
+// used within another macro, the substitution must be inhibited using parens as
+//
+//   (std::numerical_limits<double>::max)()
+//
+// since the helper macro will not work here. Do not use this technique in
+// general case, because it will prevent argument-dependent lookup (ADL).
+//
+#define CERES_PREVENT_MACRO_SUBSTITUTION  // Yes, it's empty
+
 #endif  // CERES_PUBLIC_INTERNAL_PORT_H_

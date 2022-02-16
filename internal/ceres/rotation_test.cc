@@ -88,27 +88,29 @@ MATCHER(IsNormalizedQuaternion, "") {
 MATCHER_P(IsNearQuaternion, expected, "") {
   // Quaternions are equivalent upto a sign change. So we will compare
   // both signs before declaring failure.
-  bool near = true;
+  bool is_near = true;
+  // NOTE: near (and far) can be defined as macros on the Windows platform (for
+  // ancient pascal calling convention). Do not use these identifiers.
   for (int i = 0; i < 4; i++) {
     if (fabs(arg[i] - expected[i]) > kTolerance) {
-      near = false;
+      is_near = false;
       break;
     }
   }
 
-  if (near) {
+  if (is_near) {
     return true;
   }
 
-  near = true;
+  is_near = true;
   for (int i = 0; i < 4; i++) {
     if (fabs(arg[i] + expected[i]) > kTolerance) {
-      near = false;
+      is_near = false;
       break;
     }
   }
 
-  if (near) {
+  if (is_near) {
     return true;
   }
 
