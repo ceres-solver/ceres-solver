@@ -88,7 +88,10 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 # additional paths via -D.
 list(APPEND CMAKE_MODULE_PATH "${Ceres_SOURCE_DIR}/cmake")
 include(AddCompileFlagsIfSupported)
+include(CheckLibraryExists)
 include(UpdateCacheVariable)
+
+check_library_exists(m pow "" HAVE_LIBM)
 
 # Xcode 11.0-1 with macOS 10.15 (Catalina) broke alignment.
 include(DetectBrokenStackCheckMacOSXcodePairing)
