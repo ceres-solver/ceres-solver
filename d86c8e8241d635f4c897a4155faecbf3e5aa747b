@@ -380,6 +380,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "542ec7da_ee7d3f9c",
+        "filename": "internal/ceres/canonical_views_clustering.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-16T19:49:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "284a58cb_2d51ac38",
+      "range": {
+        "startLine": 125,
+        "startChar": 52,
+        "endLine": 125,
+        "endChar": 58
+      },
+      "revId": "d86c8e8241d635f4c897a4155faecbf3e5aa747b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3807b0f3_3921371f",
