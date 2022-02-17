@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "7ab60c9d_7dc082b1",
         "filename": "examples/bundle_adjuster.cc",
@@ -20,8 +21,8 @@
         "endChar": 9
       },
       "revId": "4b45f0d6332629d1024e3211d70b198efce166a6",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": true
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
-  ]
+  ],
+  "submitRequirementResults": []
 }
