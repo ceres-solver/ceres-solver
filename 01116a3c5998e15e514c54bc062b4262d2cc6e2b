@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80a20f08_32c943d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-17T23:39:07Z",
+      "side": 1,
+      "message": "Thanks Sergiu, could you update the commit message to be more informative please?",
+      "revId": "01116a3c5998e15e514c54bc062b4262d2cc6e2b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
