@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "733987ed_1a9e3547",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-17T18:16:49Z",
+      "side": 1,
+      "message": "was this a bug? also if you include benchmark_main do you still need to include benchmark?",
+      "range": {
+        "startLine": 546,
+        "startChar": 42,
+        "endLine": 546,
+        "endChar": 43
+      },
+      "revId": "fa5a9e93b4c834dca6b50c7438899f3f7cbd65a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9e58484_91b33f0e",
+        "filename": "internal/ceres/autodiff_benchmarks/CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-17T18:16:49Z",
+      "side": 1,
+      "message": "I think we can just drop this fast math business. Its not clear to me why we should keep around a specific compiler flag based benchmark at all. This was an old curiosity which has no real value right now.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "fa5a9e93b4c834dca6b50c7438899f3f7cbd65a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
