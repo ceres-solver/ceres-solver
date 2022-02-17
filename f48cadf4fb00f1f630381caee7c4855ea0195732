@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73c17731_f0ff252d",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-17T18:18:26Z",
+      "side": 1,
+      "message": "what about cuda? do we need to add that too here?",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 10
+      },
+      "revId": "f48cadf4fb00f1f630381caee7c4855ea0195732",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
