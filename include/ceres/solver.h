@@ -59,6 +59,9 @@ class CERES_EXPORT Solver {
   //
   // The constants are defined inside types.h
   struct CERES_EXPORT Options {
+
+    CholmodOrderingType cholmod_ordering_type = NESDIS;
+
     // Returns true if the options struct has a valid
     // configuration. Returns false otherwise, and fills in *error
     // with a message describing the problem.

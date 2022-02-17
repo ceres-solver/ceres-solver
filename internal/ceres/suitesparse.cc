@@ -334,11 +334,27 @@ cholmod_dense* SuiteSparse::Solve(cholmod_factor* L,
 
 bool SuiteSparse::ApproximateMinimumDegreeOrdering(cholmod_sparse* matrix,
                                                    int* ordering) {
+  VLOG(1) << "using approximate minimum degree ordering";
   return cholmod_amd(matrix, nullptr, 0, ordering, &cc_);
+}
+
+bool SuiteSparse::METISOrdering(cholmod_sparse* matrix, int* ordering) {
+  VLOG(1) << "using metis ordering";
+  return cholmod_metis(matrix, nullptr, 0, true, ordering, &cc_);
+}
+
+bool SuiteSparse::NestedDissectionOrdering(cholmod_sparse* matrix,
+                                                   int* ordering) {
+  std::vector<int> CParent(matrix->nrow, 0);
+  std::vector<int> CMember(matrix->nrow, 0);
+  VLOG(1) << "using nested dissection ordering";
+  return cholmod_nested_dissection(matrix, nullptr, 0, ordering,
+                                   CParent.data(), CMember.data(), &cc_);
 }
 
 bool SuiteSparse::ConstrainedApproximateMinimumDegreeOrdering(
     cholmod_sparse* matrix, int* constraints, int* ordering) {
+  VLOG(1) << "using constrained approximate minimum degree ordering";
 #ifndef CERES_NO_CAMD
   return cholmod_camd(matrix, nullptr, 0, constraints, ordering, &cc_);
 #else

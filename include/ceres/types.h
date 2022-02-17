@@ -53,6 +53,13 @@ enum Ownership {
   TAKE_OWNERSHIP,
 };
 
+enum CholmodOrderingType {
+    NATURAL,
+    COLAMD,
+    NESDIS,
+    METIS,
+};
+
 // TODO(keir): Considerably expand the explanations of each solver type.
 enum LinearSolverType {
   // These solvers are for general rectangular systems formed from the
