@@ -46,6 +46,30 @@
       },
       "revId": "f48cadf4fb00f1f630381caee7c4855ea0195732",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0e55627_610d6cea",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-17T18:49:05Z",
+      "side": 1,
+      "message": "no I meant just regular cuda support.",
+      "parentUuid": "e65ffe5d_4dbc4c9d",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 10
+      },
+      "revId": "f48cadf4fb00f1f630381caee7c4855ea0195732",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
