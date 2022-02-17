@@ -22,6 +22,30 @@
       },
       "revId": "f48cadf4fb00f1f630381caee7c4855ea0195732",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e65ffe5d_4dbc4c9d",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-17T18:36:36Z",
+      "side": 1,
+      "message": "You mean CUDA for SuiteSparse (Ceres does not use it) or the recently added CUDA support? Old CUDA support (that uses `*_INCLUDE_DIRS` stuff) does not need that.",
+      "parentUuid": "73c17731_f0ff252d",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 10
+      },
+      "revId": "f48cadf4fb00f1f630381caee7c4855ea0195732",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
