@@ -127,7 +127,8 @@ bool ReorderProgram(PreprocessedProblem* pp) {
         *options.linear_solver_ordering,
         0, /* use all the rows of the jacobian */
         pp->reduced_program.get(),
-        &pp->error);
+        &pp->error,
+        options.cholmod_ordering_type);
   }
 
   if (options.linear_solver_type == CGNR &&

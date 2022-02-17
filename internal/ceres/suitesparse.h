@@ -238,6 +238,10 @@ class CERES_NO_EXPORT SuiteSparse {
   // ordering.
   bool ApproximateMinimumDegreeOrdering(cholmod_sparse* matrix, int* ordering);
 
+  // Find a fill reducing orderings.
+  bool METISOrdering(cholmod_sparse* matrix, int* ordering);
+  bool NestedDissectionOrdering(cholmod_sparse* matrix, int* ordering);
+
   // Before SuiteSparse version 4.2.0, cholmod_camd was only enabled
   // if SuiteSparse was compiled with Metis support. This makes
   // calling and linking into cholmod_camd problematic even though it

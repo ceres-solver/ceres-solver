@@ -96,7 +96,8 @@ CERES_NO_EXPORT bool ReorderProgramForSparseCholesky(
     const ParameterBlockOrdering& parameter_block_ordering,
     int start_row_block,
     Program* program,
-    std::string* error);
+    std::string* error,
+    CholmodOrderingType cholmod_ordering_type = COLAMD);
 
 // Reorder the residual blocks in the program so that all the residual
 // blocks in bottom_residual_blocks are at the bottom. The return

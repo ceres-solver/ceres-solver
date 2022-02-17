@@ -111,7 +111,8 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
     const TripletSparseMatrix& tsm_block_jacobian_transpose,
     const vector<ParameterBlock*>& parameter_blocks,
     const ParameterBlockOrdering& parameter_block_ordering,
-    int* ordering) {
+    int* ordering,
+    CholmodOrderingType cholmod_ordering_type) {
 #ifdef CERES_NO_SUITESPARSE
   LOG(FATAL) << "Congratulations, you found a Ceres bug! "
              << "Please report this error to the developers.";
@@ -124,7 +125,15 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
   // use regular AMD.
   if (parameter_block_ordering.NumGroups() <= 1 ||
       !SuiteSparse::IsConstrainedApproximateMinimumDegreeOrderingAvailable()) {
-    ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose, &ordering[0]);
+    CHECK(cholmod_ordering_type == NESDIS || cholmod_ordering_type == METIS || cholmod_ordering_type == COLAMD);
+
+    if (cholmod_ordering_type == NESDIS) {
+      ss.NestedDissectionOrdering(block_jacobian_transpose, &ordering[0]);
+    } else if (cholmod_ordering_type == METIS) {
+      ss.METISOrdering(block_jacobian_transpose, &ordering[0]);
+    } else {
+      ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose, &ordering[0]);
+    }
   } else {
     vector<int> constraints;
     for (int i = 0; i < parameter_blocks.size(); ++i) {
@@ -511,7 +520,8 @@ bool ReorderProgramForSparseCholesky(
     const ParameterBlockOrdering& parameter_block_ordering,
     int start_row_block,
     Program* program,
-    string* error) {
+    string* error,
+    CholmodOrderingType cholmod_ordering_type) {
   if (parameter_block_ordering.NumElements() != program->NumParameterBlocks()) {
     *error = StringPrintf(
         "The program has %d parameter blocks, but the parameter block "
@@ -534,7 +544,8 @@ bool ReorderProgramForSparseCholesky(
         *tsm_block_jacobian_transpose,
         parameter_blocks,
         parameter_block_ordering,
-        &ordering[0]);
+        &ordering[0],
+        cholmod_ordering_type);
   } else if (sparse_linear_algebra_library_type == CX_SPARSE) {
     OrderingForSparseNormalCholeskyUsingCXSparse(*tsm_block_jacobian_transpose,
                                                  &ordering[0]);
