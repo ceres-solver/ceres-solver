@@ -69,6 +69,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a05d2354_385cae96",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-17T16:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53d32bbd_6417564f",
+      "revId": "5428dfcfd1710695fab8ca6d1cf846b2c061d216",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "158a0c29_dbcdf876",
@@ -82,6 +100,24 @@
       "writtenOn": "2022-02-14T15:29:24Z",
       "side": 1,
       "message": "This is no longer needed.",
+      "revId": "5428dfcfd1710695fab8ca6d1cf846b2c061d216",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8249405d_f965f2ac",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-17T16:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "158a0c29_dbcdf876",
       "revId": "5428dfcfd1710695fab8ca6d1cf846b2c061d216",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }

@@ -177,6 +177,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b5ac18d9_2dfbd62d",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-17T16:18:14Z",
+      "side": 1,
+      "message": "This is the comment style used by CMake as a convention to document find modules using reStructuredText.",
+      "parentUuid": "1cc22b3c_54f2ec96",
+      "revId": "d86915be0abf8d5eb18e7385bfd483172c2c5f95",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "885b3f41_43bbc287",
         "filename": "cmake/FindSuiteSparse.cmake",
         "patchSetId": 1
