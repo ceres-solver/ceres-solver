@@ -63,6 +63,30 @@
       },
       "revId": "09ec4997fae59d1bed5e38ad58b8f31c6f5e2d4b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af1cc5a6_788ca146",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-18T00:46:33Z",
+      "side": 1,
+      "message": "There are also other MSVC compatible compilers, such as the Intel compiler that supports same switches. Therefore, checking for `MSVC` would be too restricting.",
+      "parentUuid": "7630d40d_c99ad084",
+      "range": {
+        "startLine": 95,
+        "startChar": 32,
+        "endLine": 95,
+        "endChar": 43
+      },
+      "revId": "09ec4997fae59d1bed5e38ad58b8f31c6f5e2d4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
