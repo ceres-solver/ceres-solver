@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f906dee5_0ef90d4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-18T23:53:20Z",
+      "side": 1,
+      "message": "This requires some care. I think it is relatively straightforward to say that instances of loss functions and manifolds should not be inherited from. \nWhat I am less sure about is whether AutoDiffCostFunction should also prevent inheritence. I think it should but I am curious what you guys think.",
+      "revId": "8fe8ebc3a67041e91504338d16862ba3cc4c7e14",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
