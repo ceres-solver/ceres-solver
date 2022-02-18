@@ -117,7 +117,8 @@ class CERES_NO_EXPORT PartitionedMatrixViewBase {
 template <int kRowBlockSize = Eigen::Dynamic,
           int kEBlockSize = Eigen::Dynamic,
           int kFBlockSize = Eigen::Dynamic>
-class CERES_NO_EXPORT PartitionedMatrixView : public PartitionedMatrixViewBase {
+class CERES_NO_EXPORT PartitionedMatrixView final
+    : public PartitionedMatrixViewBase {
  public:
   // matrix = [E F], where the matrix E contains the first
   // num_col_blocks_a column blocks.

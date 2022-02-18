@@ -116,7 +116,7 @@ class IterativeRefiner;
 
 // Computes an initial solution using the given instance of
 // SparseCholesky, and then refines it using the IterativeRefiner.
-class CERES_NO_EXPORT RefinedSparseCholesky : public SparseCholesky {
+class CERES_NO_EXPORT RefinedSparseCholesky final : public SparseCholesky {
  public:
   RefinedSparseCholesky(std::unique_ptr<SparseCholesky> sparse_cholesky,
                         std::unique_ptr<IterativeRefiner> iterative_refiner);

@@ -148,7 +148,7 @@ class CERES_NO_EXPORT SchurComplementSolver : public BlockSparseMatrixSolver {
 };
 
 // Dense Cholesky factorization based solver.
-class CERES_NO_EXPORT DenseSchurComplementSolver
+class CERES_NO_EXPORT DenseSchurComplementSolver final
     : public SchurComplementSolver {
  public:
   explicit DenseSchurComplementSolver(const LinearSolver::Options& options);
@@ -167,7 +167,7 @@ class CERES_NO_EXPORT DenseSchurComplementSolver
 };
 
 // Sparse Cholesky factorization based solver.
-class CERES_NO_EXPORT SparseSchurComplementSolver
+class CERES_NO_EXPORT SparseSchurComplementSolver final
     : public SchurComplementSolver {
  public:
   explicit SparseSchurComplementSolver(const LinearSolver::Options& options);

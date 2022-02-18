@@ -55,7 +55,7 @@ class TripletSparseMatrix;
 //
 //   internal/ceres/block_structure.h
 //
-class CERES_NO_EXPORT BlockSparseMatrix : public SparseMatrix {
+class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
  public:
   // Construct a block sparse matrix with a fully initialized
   // CompressedRowBlockStructure objected. The matrix takes over

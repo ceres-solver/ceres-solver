@@ -61,7 +61,7 @@ using std::vector;
 
 namespace {
 
-class GradientCheckingCostFunction : public CostFunction {
+class GradientCheckingCostFunction final : public CostFunction {
  public:
   GradientCheckingCostFunction(const CostFunction* function,
                                const std::vector<const Manifold*>* manifolds,

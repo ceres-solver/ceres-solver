@@ -38,7 +38,7 @@
 namespace ceres {
 namespace internal {
 
-class CERES_NO_EXPORT LineSearchPreprocessor : public Preprocessor {
+class CERES_NO_EXPORT LineSearchPreprocessor final : public Preprocessor {
  public:
   bool Preprocess(const Solver::Options& options,
                   ProblemImpl* problem,

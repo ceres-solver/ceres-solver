@@ -62,12 +62,11 @@ using std::vector;
 
 namespace {
 
-class BlockRandomAccessSparseMatrixAdapter : public LinearOperator {
+class BlockRandomAccessSparseMatrixAdapter final : public LinearOperator {
  public:
   explicit BlockRandomAccessSparseMatrixAdapter(
       const BlockRandomAccessSparseMatrix& m)
       : m_(m) {}
-
 
   // y = y + Ax;
   void RightMultiply(const double* x, double* y) const final {
@@ -86,12 +85,11 @@ class BlockRandomAccessSparseMatrixAdapter : public LinearOperator {
   const BlockRandomAccessSparseMatrix& m_;
 };
 
-class BlockRandomAccessDiagonalMatrixAdapter : public LinearOperator {
+class BlockRandomAccessDiagonalMatrixAdapter final : public LinearOperator {
  public:
   explicit BlockRandomAccessDiagonalMatrixAdapter(
       const BlockRandomAccessDiagonalMatrix& m)
       : m_(m) {}
-
 
   // y = y + Ax;
   void RightMultiply(const double* x, double* y) const final {

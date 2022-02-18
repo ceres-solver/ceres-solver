@@ -139,7 +139,7 @@ class CERES_NO_EXPORT CXSparse {
 
 // An implementation of SparseCholesky interface using the CXSparse
 // library.
-class CERES_NO_EXPORT CXSparseCholesky : public SparseCholesky {
+class CERES_NO_EXPORT CXSparseCholesky final : public SparseCholesky {
  public:
   // Factory
   static std::unique_ptr<SparseCholesky> Create(OrderingType ordering_type);

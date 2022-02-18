@@ -41,7 +41,7 @@
 namespace ceres {
 namespace internal {
 
-class CERES_NO_EXPORT SteepestDescent : public LineSearchDirection {
+class CERES_NO_EXPORT SteepestDescent final : public LineSearchDirection {
  public:
   bool NextDirection(const LineSearchMinimizer::State& previous,
                      const LineSearchMinimizer::State& current,
@@ -51,7 +51,8 @@ class CERES_NO_EXPORT SteepestDescent : public LineSearchDirection {
   }
 };
 
-class CERES_NO_EXPORT NonlinearConjugateGradient : public LineSearchDirection {
+class CERES_NO_EXPORT NonlinearConjugateGradient final
+    : public LineSearchDirection {
  public:
   NonlinearConjugateGradient(const NonlinearConjugateGradientType type,
                              const double function_tolerance)
@@ -97,7 +98,7 @@ class CERES_NO_EXPORT NonlinearConjugateGradient : public LineSearchDirection {
   const double function_tolerance_;
 };
 
-class CERES_NO_EXPORT LBFGS : public LineSearchDirection {
+class CERES_NO_EXPORT LBFGS final : public LineSearchDirection {
  public:
   LBFGS(const int num_parameters,
         const int max_lbfgs_rank,
@@ -141,7 +142,7 @@ class CERES_NO_EXPORT LBFGS : public LineSearchDirection {
   bool is_positive_definite_;
 };
 
-class CERES_NO_EXPORT BFGS : public LineSearchDirection {
+class CERES_NO_EXPORT BFGS final : public LineSearchDirection {
  public:
   BFGS(const int num_parameters, const bool use_approximate_eigenvalue_scaling)
       : num_parameters_(num_parameters),

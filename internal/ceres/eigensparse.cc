@@ -47,7 +47,7 @@ namespace internal {
 // TODO(sameeragarwal): Use enable_if to clean up the implementations
 // for when Scalar == double.
 template <typename Solver>
-class EigenSparseCholeskyTemplate : public SparseCholesky {
+class EigenSparseCholeskyTemplate final : public SparseCholesky {
  public:
   EigenSparseCholeskyTemplate() : analyzed_(false) {}
   CompressedRowSparseMatrix::StorageType StorageType() const final {

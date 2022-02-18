@@ -80,7 +80,7 @@ class SparseMatrix;
 //  and z = A^T b
 //
 // Note: This class is not thread safe, since it uses some temporary storage.
-class CERES_NO_EXPORT CgnrLinearOperator : public LinearOperator {
+class CERES_NO_EXPORT CgnrLinearOperator final : public LinearOperator {
  public:
   CgnrLinearOperator(const LinearOperator& A, const double* D)
       : A_(A), D_(D), z_(new double[A.num_rows()]) {}

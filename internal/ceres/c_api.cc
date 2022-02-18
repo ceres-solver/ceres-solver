@@ -65,7 +65,7 @@ void ceres_free_problem(ceres_problem_t* problem) {
 
 // This cost function wraps a C-level function pointer from the user, to bridge
 // between C and C++.
-class CERES_NO_EXPORT CallbackCostFunction : public ceres::CostFunction {
+class CERES_NO_EXPORT CallbackCostFunction final : public ceres::CostFunction {
  public:
   CallbackCostFunction(ceres_cost_function_t cost_function,
                        void* user_data,
@@ -93,7 +93,7 @@ class CERES_NO_EXPORT CallbackCostFunction : public ceres::CostFunction {
 
 // This loss function wraps a C-level function pointer from the user, to bridge
 // between C and C++.
-class CallbackLossFunction : public ceres::LossFunction {
+class CallbackLossFunction final : public ceres::LossFunction {
  public:
   explicit CallbackLossFunction(ceres_loss_function_t loss_function,
                                 void* user_data)
