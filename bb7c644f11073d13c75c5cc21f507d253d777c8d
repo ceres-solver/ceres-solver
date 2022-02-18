@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2fa291b_08d0b772",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-18T13:42:48Z",
+      "side": 1,
+      "message": "This is a great idea. However, I\u0027m wondering why annotate internal classes only? IMHO, all classes that are not intended to be inherited from should be also marked as `final`.\n\nThis leaves classes that are special instances of an interface, such as `ProductManifold`. While debatable, I think these should also be marked as `final` because it is possible to resort to delegation which should be preferred anyway. Specifically, if one wishes to define a manifold based on `ProductManifold`, it it possible to derive from `Manifold` directly and use a `ProductManifold` member in the implementation.\n\nThe sealing of classes in the public interface would prevent misuse.",
+      "revId": "bb7c644f11073d13c75c5cc21f507d253d777c8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
