@@ -123,6 +123,24 @@
       "parentUuid": "5a488300_224756e3",
       "revId": "bb7c644f11073d13c75c5cc21f507d253d777c8d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec71aa0f_275f16b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-18T17:49:47Z",
+      "side": 1,
+      "message": "It is and was marked as internal.",
+      "parentUuid": "5a488300_224756e3",
+      "revId": "bb7c644f11073d13c75c5cc21f507d253d777c8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
