@@ -167,7 +167,7 @@ typedef TypedPreconditioner<CompressedRowSparseMatrix> CompressedRowSparseMatrix
 // clang-format on
 
 // Wrap a SparseMatrix object as a preconditioner.
-class CERES_NO_EXPORT SparseMatrixPreconditionerWrapper
+class CERES_NO_EXPORT SparseMatrixPreconditionerWrapper final
     : public SparseMatrixPreconditioner {
  public:
   // Wrapper does NOT take ownership of the matrix pointer.

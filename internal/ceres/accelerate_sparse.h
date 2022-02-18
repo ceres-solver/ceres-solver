@@ -111,7 +111,7 @@ class AccelerateSparse {
 // An implementation of SparseCholesky interface using Apple's Accelerate
 // framework.
 template <typename Scalar>
-class AppleAccelerateCholesky : public SparseCholesky {
+class AppleAccelerateCholesky final : public SparseCholesky {
  public:
   // Factory
   static std::unique_ptr<SparseCholesky> Create(OrderingType ordering_type);

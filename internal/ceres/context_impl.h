@@ -53,7 +53,7 @@
 namespace ceres {
 namespace internal {
 
-class CERES_NO_EXPORT ContextImpl : public Context {
+class CERES_NO_EXPORT ContextImpl final : public Context {
  public:
   ContextImpl();
   ~ContextImpl() override;

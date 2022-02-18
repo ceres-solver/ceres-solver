@@ -49,8 +49,8 @@
 #ifndef CERES_NO_CUDA
 #include "ceres/context_impl.h"
 #include "ceres/cuda_buffer.h"
-#include "cuda_runtime.h"
 #include "cublas_v2.h"
+#include "cuda_runtime.h"
 #include "cusolverDn.h"
 #endif  // CERES_NO_CUDA
 
@@ -106,9 +106,8 @@ class CERES_NO_EXPORT DenseQR {
                                              std::string* message);
 };
 
-class CERES_NO_EXPORT EigenDenseQR : public DenseQR {
+class CERES_NO_EXPORT EigenDenseQR final : public DenseQR {
  public:
-
   LinearSolverTerminationType Factorize(int num_rows,
                                         int num_cols,
                                         double* lhs,
@@ -123,9 +122,8 @@ class CERES_NO_EXPORT EigenDenseQR : public DenseQR {
 };
 
 #ifndef CERES_NO_LAPACK
-class CERES_NO_EXPORT LAPACKDenseQR : public DenseQR {
+class CERES_NO_EXPORT LAPACKDenseQR final : public DenseQR {
  public:
-
   LinearSolverTerminationType Factorize(int num_rows,
                                         int num_cols,
                                         double* lhs,
@@ -151,7 +149,7 @@ class CERES_NO_EXPORT LAPACKDenseQR : public DenseQR {
 // This is because cuSolverDn does not implement the singularity-checking
 // wrapper trtrs, hence this solver directly uses trsv from CUBLAS for the
 // backsubstitution.
-class CERES_NO_EXPORT CUDADenseQR : public DenseQR {
+class CERES_NO_EXPORT CUDADenseQR final : public DenseQR {
  public:
   static std::unique_ptr<CUDADenseQR> Create(
       const LinearSolver::Options& options);
@@ -170,7 +168,7 @@ class CERES_NO_EXPORT CUDADenseQR : public DenseQR {
   // Picks up the cuSolverDN, cuBLAS, and cuStream handles from the context. If
   // the context is unable to initialize CUDA, returns false with a
   // human-readable message indicating the reason.
-  bool Init(ContextImpl* context,std::string* message);
+  bool Init(ContextImpl* context, std::string* message);
 
   // Handle to the cuSOLVER context.
   cusolverDnHandle_t cusolver_handle_ = nullptr;
@@ -196,8 +194,7 @@ class CERES_NO_EXPORT CUDADenseQR : public DenseQR {
   CudaBuffer<int> error_;
   // Cache the result of Factorize to ensure that when Solve is called, the
   // factiorization of lhs is valid.
-  LinearSolverTerminationType factorize_result_ =
-      LINEAR_SOLVER_FATAL_ERROR;
+  LinearSolverTerminationType factorize_result_ = LINEAR_SOLVER_FATAL_ERROR;
 };
 
 #endif  // CERES_NO_CUDA

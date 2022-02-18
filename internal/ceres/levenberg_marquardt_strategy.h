@@ -44,7 +44,8 @@ namespace internal {
 // K. Madsen, H.B. Nielsen and O. Tingleff. Available to download from
 //
 // http://www2.imm.dtu.dk/pubdb/views/edoc_download.php/3215/pdf/imm3215.pdf
-class CERES_NO_EXPORT LevenbergMarquardtStrategy : public TrustRegionStrategy {
+class CERES_NO_EXPORT LevenbergMarquardtStrategy final
+    : public TrustRegionStrategy {
  public:
   explicit LevenbergMarquardtStrategy(
       const TrustRegionStrategy::Options& options);

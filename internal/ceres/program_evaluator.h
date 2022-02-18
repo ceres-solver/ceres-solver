@@ -111,7 +111,7 @@ struct NullJacobianFinalizer {
 template <typename EvaluatePreparer,
           typename JacobianWriter,
           typename JacobianFinalizer = NullJacobianFinalizer>
-class ProgramEvaluator : public Evaluator {
+class ProgramEvaluator final : public Evaluator {
  public:
   ProgramEvaluator(const Evaluator::Options& options, Program* program)
       : options_(options),

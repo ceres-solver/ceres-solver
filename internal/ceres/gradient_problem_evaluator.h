@@ -46,11 +46,10 @@
 namespace ceres {
 namespace internal {
 
-class CERES_NO_EXPORT GradientProblemEvaluator : public Evaluator {
+class CERES_NO_EXPORT GradientProblemEvaluator final : public Evaluator {
  public:
   explicit GradientProblemEvaluator(const GradientProblem& problem)
       : problem_(problem) {}
-
 
   std::unique_ptr<SparseMatrix> CreateJacobian() const final { return nullptr; }
 

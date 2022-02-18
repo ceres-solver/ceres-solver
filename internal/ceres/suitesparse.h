@@ -291,7 +291,7 @@ class CERES_NO_EXPORT SuiteSparse {
   cholmod_common cc_;
 };
 
-class CERES_NO_EXPORT SuiteSparseCholesky : public SparseCholesky {
+class CERES_NO_EXPORT SuiteSparseCholesky final : public SparseCholesky {
  public:
   static std::unique_ptr<SparseCholesky> Create(OrderingType ordering_type);
 

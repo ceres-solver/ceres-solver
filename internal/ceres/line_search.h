@@ -259,7 +259,7 @@ class CERES_NO_EXPORT LineSearchFunction {
 // minFunc package by Mark Schmidt.
 //
 // For more details: http://www.di.ens.fr/~mschmidt/Software/minFunc.html
-class CERES_NO_EXPORT ArmijoLineSearch : public LineSearch {
+class CERES_NO_EXPORT ArmijoLineSearch final : public LineSearch {
  public:
   explicit ArmijoLineSearch(const LineSearch::Options& options);
 
@@ -277,7 +277,7 @@ class CERES_NO_EXPORT ArmijoLineSearch : public LineSearch {
 //
 // [1] Nocedal J., Wright S., Numerical Optimization, 2nd Ed., Springer, 1999.
 // [2] http://www.di.ens.fr/~mschmidt/Software/minFunc.html.
-class CERES_NO_EXPORT WolfeLineSearch : public LineSearch {
+class CERES_NO_EXPORT WolfeLineSearch final : public LineSearch {
  public:
   explicit WolfeLineSearch(const LineSearch::Options& options);
 

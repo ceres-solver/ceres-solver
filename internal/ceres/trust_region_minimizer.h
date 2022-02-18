@@ -49,7 +49,7 @@ namespace internal {
 // Generic trust region minimization algorithm.
 //
 // For example usage, see SolverImpl::Minimize.
-class CERES_NO_EXPORT TrustRegionMinimizer : public Minimizer {
+class CERES_NO_EXPORT TrustRegionMinimizer final : public Minimizer {
  public:
   // This method is not thread safe.
   void Minimize(const Minimizer::Options& options,

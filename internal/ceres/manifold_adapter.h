@@ -9,13 +9,12 @@ namespace internal {
 // Adapter to wrap LocalParameterization and make them look like Manifolds.
 //
 // ManifoldAdapter NEVER takes ownership of local_parameterization.
-class CERES_NO_EXPORT ManifoldAdapter : public Manifold {
+class CERES_NO_EXPORT ManifoldAdapter final : public Manifold {
  public:
   ManifoldAdapter(const LocalParameterization* local_parameterization)
       : local_parameterization_(local_parameterization) {
     CHECK(local_parameterization != nullptr);
   }
-
 
   bool Plus(const double* x,
             const double* delta,

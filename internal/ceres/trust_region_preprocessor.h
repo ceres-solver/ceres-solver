@@ -38,7 +38,7 @@
 namespace ceres {
 namespace internal {
 
-class CERES_NO_EXPORT TrustRegionPreprocessor : public Preprocessor {
+class CERES_NO_EXPORT TrustRegionPreprocessor final : public Preprocessor {
  public:
   bool Preprocess(const Solver::Options& options,
                   ProblemImpl* problem,

@@ -101,9 +101,8 @@ class CERES_NO_EXPORT DenseCholesky {
                                              std::string* message);
 };
 
-class CERES_NO_EXPORT EigenDenseCholesky : public DenseCholesky {
+class CERES_NO_EXPORT EigenDenseCholesky final : public DenseCholesky {
  public:
-
   LinearSolverTerminationType Factorize(int num_cols,
                                         double* lhs,
                                         std::string* message) override;
@@ -117,9 +116,8 @@ class CERES_NO_EXPORT EigenDenseCholesky : public DenseCholesky {
 };
 
 #ifndef CERES_NO_LAPACK
-class CERES_NO_EXPORT LAPACKDenseCholesky : public DenseCholesky {
+class CERES_NO_EXPORT LAPACKDenseCholesky final : public DenseCholesky {
  public:
-
   LinearSolverTerminationType Factorize(int num_cols,
                                         double* lhs,
                                         std::string* message) override;
@@ -137,7 +135,7 @@ class CERES_NO_EXPORT LAPACKDenseCholesky : public DenseCholesky {
 #ifndef CERES_NO_CUDA
 // CUDA implementation of DenseCholesky using the cuSolverDN library using the
 // 32-bit legacy interface for maximum compatibility.
-class CERES_NO_EXPORT CUDADenseCholesky : public DenseCholesky {
+class CERES_NO_EXPORT CUDADenseCholesky final : public DenseCholesky {
  public:
   static std::unique_ptr<CUDADenseCholesky> Create(
       const LinearSolver::Options& options);
@@ -174,8 +172,7 @@ class CERES_NO_EXPORT CUDADenseCholesky : public DenseCholesky {
   CudaBuffer<int> error_;
   // Cache the result of Factorize to ensure that when Solve is called, the
   // factiorization of lhs is valid.
-  LinearSolverTerminationType factorize_result_ =
-      LINEAR_SOLVER_FATAL_ERROR;
+  LinearSolverTerminationType factorize_result_ = LINEAR_SOLVER_FATAL_ERROR;
 };
 
 #endif  // CERES_NO_CUDA

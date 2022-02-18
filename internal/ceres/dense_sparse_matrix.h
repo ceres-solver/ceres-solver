@@ -44,14 +44,13 @@ namespace internal {
 
 class TripletSparseMatrix;
 
-class CERES_NO_EXPORT DenseSparseMatrix : public SparseMatrix {
+class CERES_NO_EXPORT DenseSparseMatrix final : public SparseMatrix {
  public:
   // Build a matrix with the same content as the TripletSparseMatrix
   // m. This assumes that m does not have any repeated entries.
   explicit DenseSparseMatrix(const TripletSparseMatrix& m);
   explicit DenseSparseMatrix(const Matrix& m);
   DenseSparseMatrix(int num_rows, int num_cols);
-
 
   // SparseMatrix interface.
   void SetZero() final;

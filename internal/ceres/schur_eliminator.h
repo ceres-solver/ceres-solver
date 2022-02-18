@@ -224,7 +224,7 @@ class CERES_NO_EXPORT SchurEliminatorBase {
 template <int kRowBlockSize = Eigen::Dynamic,
           int kEBlockSize = Eigen::Dynamic,
           int kFBlockSize = Eigen::Dynamic>
-class CERES_NO_EXPORT SchurEliminator : public SchurEliminatorBase {
+class CERES_NO_EXPORT SchurEliminator final : public SchurEliminatorBase {
  public:
   explicit SchurEliminator(const LinearSolver::Options& options)
       : num_threads_(options.num_threads), context_(options.context) {
@@ -379,7 +379,8 @@ class CERES_NO_EXPORT SchurEliminator : public SchurEliminatorBase {
 template <int kRowBlockSize = Eigen::Dynamic,
           int kEBlockSize = Eigen::Dynamic,
           int kFBlockSize = Eigen::Dynamic>
-class CERES_NO_EXPORT SchurEliminatorForOneFBlock : public SchurEliminatorBase {
+class CERES_NO_EXPORT SchurEliminatorForOneFBlock final
+    : public SchurEliminatorBase {
  public:
   void Init(int num_eliminate_blocks,
             bool assume_full_rank_ete,

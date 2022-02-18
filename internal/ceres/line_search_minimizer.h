@@ -44,7 +44,7 @@ namespace internal {
 // Generic line search minimization algorithm.
 //
 // For example usage, see SolverImpl::Minimize.
-class CERES_NO_EXPORT LineSearchMinimizer : public Minimizer {
+class CERES_NO_EXPORT LineSearchMinimizer final : public Minimizer {
  public:
   struct State {
     State(int num_parameters, int num_effective_parameters)
