@@ -41,7 +41,7 @@ namespace ceres {
 // Problems, either serially or in parallel. When using it with multiple
 // Problems at the same time, they may end up contending for resources
 // (e.g. threads) managed by the Context.
-class CERES_NO_EXPORT Context {
+class CERES_EXPORT Context {
  public:
   Context();
   Context(const Context&) = delete;
