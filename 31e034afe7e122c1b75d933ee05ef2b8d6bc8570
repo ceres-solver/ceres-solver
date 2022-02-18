@@ -16,6 +16,23 @@
       "message": "Please review the added feature, and please provide pointers which unittests I\u0027d need to add to get this (for me) problem solving feature merged\n\nThanks in advance",
       "revId": "31e034afe7e122c1b75d933ee05ef2b8d6bc8570",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef022f2a_f6756609",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-18T01:17:31Z",
+      "side": 1,
+      "message": "Thanks for this patch, this requires a careful look, I will do that tomorrow. ",
+      "revId": "31e034afe7e122c1b75d933ee05ef2b8d6bc8570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
