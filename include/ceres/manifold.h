@@ -223,7 +223,7 @@ class CERES_EXPORT Manifold {
 // subtraction:
 //   Plus(x, delta) = x + delta
 //   Minus(y, x) = y - x.
-class CERES_EXPORT EuclideanManifold : public Manifold {
+class CERES_EXPORT EuclideanManifold final : public Manifold {
  public:
   EuclideanManifold(int size);
   int AmbientSize() const override;
@@ -246,7 +246,7 @@ class CERES_EXPORT EuclideanManifold : public Manifold {
 };
 
 // Hold a subset of the parameters inside a parameter block constant.
-class CERES_EXPORT SubsetManifold : public Manifold {
+class CERES_EXPORT SubsetManifold final : public Manifold {
  public:
   SubsetManifold(int size, const std::vector<int>& constant_parameters);
   int AmbientSize() const override;
@@ -281,7 +281,7 @@ class CERES_EXPORT SubsetManifold : public Manifold {
 //
 // is the manifold for a rigid transformation, where the rotation is represented
 // using a quaternion.
-class CERES_EXPORT ProductManifold : public Manifold {
+class CERES_EXPORT ProductManifold final : public Manifold {
  public:
   ProductManifold(const ProductManifold&) = delete;
   ProductManifold& operator=(const ProductManifold&) = delete;
@@ -357,7 +357,7 @@ class CERES_EXPORT ProductManifold : public Manifold {
 // (|q|=1), q^-1 = [q0; -q1; -q2; -q3]
 //
 // and to_delta( [q0; u_{3x1}] ) = u / |u| * atan2(|u|, q0)
-class CERES_EXPORT QuaternionManifold : public Manifold {
+class CERES_EXPORT QuaternionManifold final : public Manifold {
  public:
   int AmbientSize() const override { return 4; }
   int TangentSize() const override { return 3; }
@@ -381,7 +381,7 @@ class CERES_EXPORT QuaternionManifold : public Manifold {
 //
 // Since Ceres operates on parameter blocks which are raw double pointers this
 // difference is important and requires a different manifold.
-class CERES_EXPORT EigenQuaternionManifold : public Manifold {
+class CERES_EXPORT EigenQuaternionManifold final : public Manifold {
  public:
   int AmbientSize() const override { return 4; }
   int TangentSize() const override { return 3; }
@@ -431,7 +431,7 @@ class CERES_EXPORT EigenQuaternionManifold : public Manifold {
 // Hertzberg, R. Wagner, U. Frese and L. Schroder for more details
 // (https://arxiv.org/pdf/1107.1119.pdf)
 template <int AmbientSpaceDimension>
-class SphereManifold : public Manifold {
+class SphereManifold final : public Manifold {
  public:
   static_assert(
       AmbientSpaceDimension == DYNAMIC || AmbientSpaceDimension > 1,
@@ -502,7 +502,7 @@ class SphereManifold : public Manifold {
 //    LineManifold<ceres::DYNAMIC> manifold(ambient_dim);
 //
 template <int AmbientSpaceDimension>
-class LineManifold : public Manifold {
+class LineManifold final : public Manifold {
  public:
   static_assert(AmbientSpaceDimension == DYNAMIC || AmbientSpaceDimension >= 2,
                 "The ambient space must be at least 2.");

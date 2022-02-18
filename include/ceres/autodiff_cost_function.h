@@ -151,7 +151,8 @@ namespace ceres {
 template <typename CostFunctor,
           int kNumResiduals,  // Number of residuals, or ceres::DYNAMIC.
           int... Ns>          // Number of parameters in each parameter block.
-class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
+class AutoDiffCostFunction final
+    : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
   // Takes ownership of functor by default. Uses the template-provided
   // value for the number of residuals ("kNumResiduals").
@@ -215,7 +216,7 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
         jacobians);
   };
 
-  const CostFunctor & functor() const { return *functor_; }
+  const CostFunctor& functor() const { return *functor_; }
 
  private:
   std::unique_ptr<CostFunctor> functor_;

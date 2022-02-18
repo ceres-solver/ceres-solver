@@ -43,7 +43,6 @@
 #include "ceres/numeric_diff_options.h"
 #include "ceres/types.h"
 
-
 namespace ceres {
 
 // Creates FirstOrderFunctions as needed by the GradientProblem
@@ -103,7 +102,7 @@ namespace ceres {
 template <typename FirstOrderFunctor,
           NumericDiffMethodType method,
           int kNumParameters>
-class NumericDiffFirstOrderFunction : public FirstOrderFunction {
+class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
  public:
   NumericDiffFirstOrderFunction(
       FirstOrderFunctor* functor,
@@ -151,7 +150,7 @@ class NumericDiffFirstOrderFunction : public FirstOrderFunction {
 
   int NumParameters() const override { return kNumParameters; }
 
-  const FirstOrderFunctor & functor() const { return *functor_; }
+  const FirstOrderFunctor& functor() const { return *functor_; }
 
  private:
   std::unique_ptr<FirstOrderFunctor> functor_;

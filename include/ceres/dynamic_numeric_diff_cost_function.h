@@ -77,7 +77,7 @@ namespace ceres {
 //   cost_function.AddParameterBlock(10);
 //   cost_function.SetNumResiduals(21);
 template <typename CostFunctor, NumericDiffMethodType method = CENTRAL>
-class DynamicNumericDiffCostFunction : public DynamicCostFunction {
+class DynamicNumericDiffCostFunction final : public DynamicCostFunction {
  public:
   explicit DynamicNumericDiffCostFunction(
       const CostFunctor* functor,

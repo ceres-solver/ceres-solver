@@ -145,13 +145,12 @@ namespace ceres {
 //   Manifold* manifold = new AutoDiffManifold<QuaternionFunctor, 4, 3>;
 
 template <typename Functor, int kAmbientSize, int kTangentSize>
-class AutoDiffManifold : public Manifold {
+class AutoDiffManifold final : public Manifold {
  public:
   AutoDiffManifold() : functor_(std::make_unique<Functor>()) {}
 
   // Takes ownership of functor.
   explicit AutoDiffManifold(Functor* functor) : functor_(functor) {}
-
 
   int AmbientSize() const override { return kAmbientSize; }
   int TangentSize() const override { return kTangentSize; }
@@ -172,7 +171,7 @@ class AutoDiffManifold : public Manifold {
 
   bool MinusJacobian(const double* x, double* jacobian) const override;
 
-  const Functor & functor() const { return *functor_; }
+  const Functor& functor() const { return *functor_; }
 
  private:
   std::unique_ptr<Functor> functor_;

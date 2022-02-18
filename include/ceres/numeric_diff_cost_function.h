@@ -179,7 +179,8 @@ template <typename CostFunctor,
           NumericDiffMethodType method = CENTRAL,
           int kNumResiduals = 0,  // Number of residuals, or ceres::DYNAMIC
           int... Ns>              // Parameters dimensions for each block.
-class NumericDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
+class NumericDiffCostFunction final
+    : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
   NumericDiffCostFunction(
       CostFunctor* functor,
@@ -246,7 +247,7 @@ class NumericDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
     return true;
   }
 
-  const CostFunctor & functor() const { return *functor_; }
+  const CostFunctor& functor() const { return *functor_; }
 
  private:
   std::unique_ptr<CostFunctor> functor_;

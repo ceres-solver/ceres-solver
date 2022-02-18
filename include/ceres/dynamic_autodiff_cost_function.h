@@ -77,7 +77,7 @@ namespace ceres {
 // pass. There is a tradeoff with the size of the passes; you may want
 // to experiment with the stride.
 template <typename CostFunctor, int Stride = 4>
-class DynamicAutoDiffCostFunction : public DynamicCostFunction {
+class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
  public:
   // Takes ownership by default.
   DynamicAutoDiffCostFunction(CostFunctor* functor,

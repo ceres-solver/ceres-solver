@@ -129,7 +129,7 @@ class CERES_EXPORT LossFunction {
 // It is not normally necessary to use this, as passing nullptr for the
 // loss function when building the problem accomplishes the same
 // thing.
-class CERES_EXPORT TrivialLoss : public LossFunction {
+class CERES_EXPORT TrivialLoss final : public LossFunction {
  public:
   void Evaluate(double, double*) const override;
 };
@@ -172,7 +172,7 @@ class CERES_EXPORT TrivialLoss : public LossFunction {
 //
 // The scaling parameter 'a' corresponds to 'delta' on this page:
 //   http://en.wikipedia.org/wiki/Huber_Loss_Function
-class CERES_EXPORT HuberLoss : public LossFunction {
+class CERES_EXPORT HuberLoss final : public LossFunction {
  public:
   explicit HuberLoss(double a) : a_(a), b_(a * a) {}
   void Evaluate(double, double*) const override;
@@ -188,7 +188,7 @@ class CERES_EXPORT HuberLoss : public LossFunction {
 //   rho(s) = 2 (sqrt(1 + s) - 1).
 //
 // At s = 0: rho = [0, 1, -1 / (2 * a^2)].
-class CERES_EXPORT SoftLOneLoss : public LossFunction {
+class CERES_EXPORT SoftLOneLoss final : public LossFunction {
  public:
   explicit SoftLOneLoss(double a) : b_(a * a), c_(1 / b_) {}
   void Evaluate(double, double*) const override;
@@ -205,7 +205,7 @@ class CERES_EXPORT SoftLOneLoss : public LossFunction {
 //   rho(s) = log(1 + s).
 //
 // At s = 0: rho = [0, 1, -1 / a^2].
-class CERES_EXPORT CauchyLoss : public LossFunction {
+class CERES_EXPORT CauchyLoss final : public LossFunction {
  public:
   explicit CauchyLoss(double a) : b_(a * a), c_(1 / b_) {}
   void Evaluate(double, double*) const override;
@@ -226,7 +226,7 @@ class CERES_EXPORT CauchyLoss : public LossFunction {
 //   rho(s) = a atan(s / a).
 //
 // At s = 0: rho = [0, 1, 0].
-class CERES_EXPORT ArctanLoss : public LossFunction {
+class CERES_EXPORT ArctanLoss final : public LossFunction {
  public:
   explicit ArctanLoss(double a) : a_(a), b_(1 / (a * a)) {}
   void Evaluate(double, double*) const override;
@@ -265,7 +265,7 @@ class CERES_EXPORT ArctanLoss : public LossFunction {
 // concentrated in the range a - b to a + b.
 //
 // At s = 0: rho = [0, ~0, ~0].
-class CERES_EXPORT TolerantLoss : public LossFunction {
+class CERES_EXPORT TolerantLoss final : public LossFunction {
  public:
   explicit TolerantLoss(double a, double b);
   void Evaluate(double, double*) const override;
@@ -284,7 +284,7 @@ class CERES_EXPORT TolerantLoss : public LossFunction {
 //   rho(s) = a^2 / 3                            for s >  a^2.
 //
 // At s = 0: rho = [0, 1, -2 / a^2]
-class CERES_EXPORT TukeyLoss : public ceres::LossFunction {
+class CERES_EXPORT TukeyLoss final : public ceres::LossFunction {
  public:
   explicit TukeyLoss(double a) : a_squared_(a * a) {}
   void Evaluate(double, double*) const override;
@@ -296,7 +296,7 @@ class CERES_EXPORT TukeyLoss : public ceres::LossFunction {
 // Composition of two loss functions.  The error is the result of first
 // evaluating g followed by f to yield the composition f(g(s)).
 // The loss functions must not be nullptr.
-class CERES_EXPORT ComposedLoss : public LossFunction {
+class CERES_EXPORT ComposedLoss final : public LossFunction {
  public:
   explicit ComposedLoss(const LossFunction* f,
                         Ownership ownership_f,
@@ -327,7 +327,7 @@ class CERES_EXPORT ComposedLoss : public LossFunction {
 // function, rho = nullptr is a valid input and will result in the input
 // being scaled by a. This provides a simple way of implementing a
 // scaled ResidualBlock.
-class CERES_EXPORT ScaledLoss : public LossFunction {
+class CERES_EXPORT ScaledLoss final : public LossFunction {
  public:
   // Constructs a ScaledLoss wrapping another loss function. Takes
   // ownership of the wrapped loss function or not depending on the
@@ -389,7 +389,7 @@ class CERES_EXPORT ScaledLoss : public LossFunction {
 //
 //  Solve(options, &problem, &summary)
 //
-class CERES_EXPORT LossFunctionWrapper : public LossFunction {
+class CERES_EXPORT LossFunctionWrapper final : public LossFunction {
  public:
   LossFunctionWrapper(LossFunction* rho, Ownership ownership)
       : rho_(rho), ownership_(ownership) {}
