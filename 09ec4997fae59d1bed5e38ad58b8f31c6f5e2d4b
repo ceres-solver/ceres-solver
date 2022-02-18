@@ -16,7 +16,29 @@
       "message": "Thank you!",
       "revId": "09ec4997fae59d1bed5e38ad58b8f31c6f5e2d4b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "369ca262_0769de46",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-02-18T00:32:46Z",
+      "side": 1,
+      "message": "shouldn\u0027t this check only be done for msvc? I assumed that was the case when I reviewed it, but now its being done on macos and I do not think that should happen.",
+      "range": {
+        "startLine": 95,
+        "startChar": 32,
+        "endLine": 95,
+        "endChar": 43
+      },
+      "revId": "09ec4997fae59d1bed5e38ad58b8f31c6f5e2d4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
-  ],
-  "submitRequirementResults": []
+  ]
 }
