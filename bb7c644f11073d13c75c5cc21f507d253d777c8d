@@ -87,6 +87,24 @@
       "message": "I was curious what else could be sealed and grepped through public includes and saw that `Context` is in the public namespace although it is not exported. `context.h` could therefore be moved into `internal` directory leaving only a forward declaration, no?",
       "revId": "bb7c644f11073d13c75c5cc21f507d253d777c8d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a488300_224756e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-18T17:48:45Z",
+      "side": 1,
+      "message": "what do you mean it is not exported? no we want the users to have access to the Create() method so that they can hold on to it.",
+      "parentUuid": "027cf2a2_74b98dad",
+      "revId": "bb7c644f11073d13c75c5cc21f507d253d777c8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
