@@ -33,6 +33,23 @@
       "message": "Thanks for this patch, this requires a careful look, I will do that tomorrow. ",
       "revId": "31e034afe7e122c1b75d933ee05ef2b8d6bc8570",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b6f1bce_ec1663a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-19T00:02:25Z",
+      "side": 1,
+      "message": "I am sorry I did not get to this today. \n\nThis patch requires some thought around dealing with metis not being present and how it deals with the linear solver ordering that the user may provide and how it interacts with other linear solvers. \n\nI am off on vacation for the next week, I will take a look after that.\n",
+      "revId": "31e034afe7e122c1b75d933ee05ef2b8d6bc8570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
