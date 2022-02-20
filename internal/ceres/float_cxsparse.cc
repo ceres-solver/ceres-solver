@@ -40,7 +40,7 @@ namespace internal {
 std::unique_ptr<SparseCholesky> FloatCXSparseCholesky::Create(
     OrderingType ordering_type) {
   LOG(FATAL) << "FloatCXSparseCholesky is not available.";
-  return std::unique_ptr<SparseCholesky>();
+  return {};
 }
 
 }  // namespace internal

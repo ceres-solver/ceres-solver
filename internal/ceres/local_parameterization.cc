@@ -107,8 +107,8 @@ SubsetParameterization::SubsetParameterization(
       << "of the parameter block.";
   CHECK(std::adjacent_find(constant.begin(), constant.end()) == constant.end())
       << "The set of constant parameters cannot contain duplicates";
-  for (int i = 0; i < constant_parameters.size(); ++i) {
-    constancy_mask_[constant_parameters[i]] = 1;
+  for (int constant_parameter : constant_parameters) {
+    constancy_mask_[constant_parameter] = 1;
   }
 }
 

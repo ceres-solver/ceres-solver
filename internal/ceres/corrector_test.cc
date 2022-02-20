@@ -164,8 +164,8 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximation) {
   srand(5);
   for (int iter = 0; iter < 10000; ++iter) {
     // Initialize the jacobian and residual.
-    for (int i = 0; i < 2 * 3; ++i) jacobian[i] = RandDouble();
-    for (int i = 0; i < 3; ++i) residuals[i] = RandDouble();
+    for (double& i : jacobian) i = RandDouble();
+    for (double& residual : residuals) residual = RandDouble();
 
     const double sq_norm = res.dot(res);
 
@@ -230,7 +230,7 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximationZeroResidual) {
   srand(5);
   for (int iter = 0; iter < 10000; ++iter) {
     // Initialize the jacobian.
-    for (int i = 0; i < 2 * 3; ++i) jacobian[i] = RandDouble();
+    for (double& i : jacobian) i = RandDouble();
 
     // Zero residuals
     res.setZero();

@@ -68,7 +68,7 @@ namespace internal {
 //
 class CERES_NO_EXPORT ThreadTokenProvider {
  public:
-  ThreadTokenProvider(int num_threads);
+  explicit ThreadTokenProvider(int num_threads);
 
   // Returns the first token from the queue. The acquired value must be
   // given back by Release().

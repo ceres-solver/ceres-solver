@@ -62,7 +62,7 @@ class CERES_NO_EXPORT IterativeRefiner {
  public:
   // max_num_iterations is the number of refinement iterations to
   // perform.
-  IterativeRefiner(int max_num_iterations);
+  explicit IterativeRefiner(int max_num_iterations);
 
   // Needed for mocking.
   virtual ~IterativeRefiner();

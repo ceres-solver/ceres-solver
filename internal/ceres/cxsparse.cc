@@ -127,7 +127,7 @@ cs_dis* CXSparse::BlockAnalyzeCholesky(cs_di* A,
   vector<int> scalar_ordering;
   BlockOrderingToScalarOrdering(row_blocks, block_ordering, &scalar_ordering);
 
-  cs_dis* symbolic_factor =
+  auto* symbolic_factor =
       reinterpret_cast<cs_dis*>(cs_calloc(1, sizeof(cs_dis)));
   symbolic_factor->pinv = cs_pinv(&scalar_ordering[0], A->n);
   cs* permuted_A = cs_symperm(A, symbolic_factor->pinv, 0);
@@ -139,7 +139,7 @@ cs_dis* CXSparse::BlockAnalyzeCholesky(cs_di* A,
   cs_free(postordering);
   cs_spfree(permuted_A);
 
-  symbolic_factor->cp = (int*)cs_malloc(A->n + 1, sizeof(int));
+  symbolic_factor->cp = static_cast<int*>(cs_malloc(A->n + 1, sizeof(int)));
   symbolic_factor->lnz = cs_cumsum(symbolic_factor->cp, column_counts, A->n);
   symbolic_factor->unz = symbolic_factor->lnz;
 

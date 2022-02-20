@@ -60,17 +60,19 @@
 // This example demonstrates custom exit criterion by having a callback check
 // for image-space error.
 
+#include <utility>
+
 #include "ceres/ceres.h"
 #include "glog/logging.h"
 
-typedef Eigen::NumTraits<double> EigenDouble;
+using EigenDouble = Eigen::NumTraits<double>;
 
-typedef Eigen::MatrixXd Mat;
-typedef Eigen::VectorXd Vec;
-typedef Eigen::Matrix<double, 3, 3> Mat3;
-typedef Eigen::Matrix<double, 2, 1> Vec2;
-typedef Eigen::Matrix<double, Eigen::Dynamic, 8> MatX8;
-typedef Eigen::Vector3d Vec3;
+using Mat = Eigen::MatrixXd;
+using Vec = Eigen::VectorXd;
+using Mat3 = Eigen::Matrix<double, 3, 3>;
+using Vec2 = Eigen::Matrix<double, 2, 1>;
+using MatX8 = Eigen::Matrix<double, Eigen::Dynamic, 8>;
+using Vec3 = Eigen::Vector3d;
 
 namespace {
 
@@ -82,11 +84,10 @@ namespace {
 struct EstimateHomographyOptions {
   // Default settings for homography estimation which should be suitable
   // for a wide range of use cases.
-  EstimateHomographyOptions()
-      : max_num_iterations(50), expected_average_symmetric_distance(1e-16) {}
+  EstimateHomographyOptions() = default;
 
   // Maximal number of iterations for the refinement step.
-  int max_num_iterations;
+  int max_num_iterations{50};
 
   // Expected average of symmetric geometric distance between
   // actual destination points and original ones transformed by
@@ -96,7 +97,7 @@ struct EstimateHomographyOptions {
   // geometric distance is less or equal to this value.
   //
   // This distance is measured in the same units as input points are.
-  double expected_average_symmetric_distance;
+  double expected_average_symmetric_distance{1e-16};
 };
 
 // Calculate symmetric geometric cost terms:
@@ -111,7 +112,7 @@ void SymmetricGeometricDistanceTerms(const Eigen::Matrix<T, 3, 3>& H,
                                      const Eigen::Matrix<T, 2, 1>& x2,
                                      T forward_error[2],
                                      T backward_error[2]) {
-  typedef Eigen::Matrix<T, 3, 1> Vec3;
+  using Vec3 = Eigen::Matrix<T, 3, 1>;
   Vec3 x(x1(0), x1(1), T(1.0));
   Vec3 y(x2(0), x2(1), T(1.0));
 
@@ -152,8 +153,8 @@ double SymmetricGeometricDistance(const Mat3& H,
 template <typename T = double>
 class Homography2DNormalizedParameterization {
  public:
-  typedef Eigen::Matrix<T, 8, 1> Parameters;     // a, b, ... g, h
-  typedef Eigen::Matrix<T, 3, 3> Parameterized;  // H
+  using Parameters = Eigen::Matrix<T, 8, 1>;     // a, b, ... g, h
+  using Parameterized = Eigen::Matrix<T, 3, 3>;  // H
 
   // Convert from the 8 parameters to a H matrix.
   static void To(const Parameters& p, Parameterized* h) {
@@ -242,13 +243,13 @@ bool Homography2DFromCorrespondencesLinearEuc(const Mat& x1,
 // used for homography matrix refinement.
 class HomographySymmetricGeometricCostFunctor {
  public:
-  HomographySymmetricGeometricCostFunctor(const Vec2& x, const Vec2& y)
-      : x_(x), y_(y) {}
+  HomographySymmetricGeometricCostFunctor(Vec2 x, Vec2 y)
+      : x_(std::move(x)), y_(std::move(y)) {}
 
   template <typename T>
   bool operator()(const T* homography_parameters, T* residuals) const {
-    typedef Eigen::Matrix<T, 3, 3> Mat3;
-    typedef Eigen::Matrix<T, 2, 1> Vec2;
+    using Mat3 = Eigen::Matrix<T, 3, 3>;
+    using Vec2 = Eigen::Matrix<T, 2, 1>;
 
     Mat3 H(homography_parameters);
     Vec2 x(T(x_(0)), T(x_(1)));
@@ -277,8 +278,8 @@ class TerminationCheckingCallback : public ceres::IterationCallback {
                               Mat3* H)
       : options_(options), x1_(x1), x2_(x2), H_(H) {}
 
-  virtual ceres::CallbackReturnType operator()(
-      const ceres::IterationSummary& summary) {
+  ceres::CallbackReturnType operator()(
+      const ceres::IterationSummary& summary) override {
     // If the step wasn't successful, there's nothing to do.
     if (!summary.step_is_successful) {
       return ceres::SOLVER_CONTINUE;
@@ -326,9 +327,8 @@ bool EstimateHomography2DFromCorrespondences(
   // Step 2: Refine matrix using Ceres minimizer.
   ceres::Problem problem;
   for (int i = 0; i < x1.cols(); i++) {
-    HomographySymmetricGeometricCostFunctor*
-        homography_symmetric_geometric_cost_function =
-            new HomographySymmetricGeometricCostFunctor(x1.col(i), x2.col(i));
+    auto* homography_symmetric_geometric_cost_function =
+        new HomographySymmetricGeometricCostFunctor(x1.col(i), x2.col(i));
 
     problem.AddResidualBlock(
         new ceres::AutoDiffCostFunction<HomographySymmetricGeometricCostFunctor,

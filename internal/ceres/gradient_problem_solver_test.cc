@@ -113,8 +113,8 @@ TEST(Solver, UpdateStateEveryIterationOption) {
   ceres::Solve(options, problem, &x, &summary);
   num_iterations = summary.iterations.size() - 1;
   EXPECT_GT(num_iterations, 1);
-  for (int i = 0; i < callback.x_values.size(); ++i) {
-    EXPECT_EQ(50.0, callback.x_values[i]);
+  for (double& x_value : callback.x_values) {
+    EXPECT_EQ(50.0, x_value);
   }
 
   // Second try: with updating

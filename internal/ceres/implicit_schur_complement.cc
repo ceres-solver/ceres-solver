@@ -136,10 +136,10 @@ void ImplicitSchurComplement::AddDiagonalAndInvert(
     const double* D, BlockSparseMatrix* block_diagonal) {
   const CompressedRowBlockStructure* block_diagonal_structure =
       block_diagonal->block_structure();
-  for (int r = 0; r < block_diagonal_structure->rows.size(); ++r) {
-    const int row_block_pos = block_diagonal_structure->rows[r].block.position;
-    const int row_block_size = block_diagonal_structure->rows[r].block.size;
-    const Cell& cell = block_diagonal_structure->rows[r].cells[0];
+  for (const auto& row : block_diagonal_structure->rows) {
+    const int row_block_pos = row.block.position;
+    const int row_block_size = row.block.size;
+    const Cell& cell = row.cells[0];
     MatrixRef m(block_diagonal->mutable_values() + cell.position,
                 row_block_size,
                 row_block_size);

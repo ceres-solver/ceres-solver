@@ -57,7 +57,7 @@ TEST(AutodiffCostFunction, BilinearDifferentiationTest) {
       new AutoDiffCostFunction<BinaryScalarCost, 1, 2, 2>(
           new BinaryScalarCost(1.0));
 
-  double** parameters = new double*[2];
+  auto** parameters = new double*[2];
   parameters[0] = new double[2];
   parameters[1] = new double[2];
 
@@ -67,7 +67,7 @@ TEST(AutodiffCostFunction, BilinearDifferentiationTest) {
   parameters[1][0] = 3;
   parameters[1][1] = 4;
 
-  double** jacobians = new double*[2];
+  auto** jacobians = new double*[2];
   jacobians[0] = new double[2];
   jacobians[1] = new double[2];
 
@@ -126,8 +126,8 @@ TEST(AutodiffCostFunction, ManyParameterAutodiffInstantiates) {
                                1,
                                1>(new TenParameterCost);
 
-  double** parameters = new double*[10];
-  double** jacobians = new double*[10];
+  auto** parameters = new double*[10];
+  auto** jacobians = new double*[10];
   for (int i = 0; i < 10; ++i) {
     parameters[i] = new double[1];
     parameters[i][0] = i;

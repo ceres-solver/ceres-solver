@@ -118,7 +118,7 @@ class TinySolverAutoDiffFunction {
     Initialize<kNumResiduals>(cost_functor);
   }
 
-  typedef T Scalar;
+  using Scalar = T;
   enum {
     NUM_PARAMETERS = kNumParameters,
     NUM_RESIDUALS = kNumResiduals,

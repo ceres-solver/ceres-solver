@@ -120,7 +120,7 @@ const int INFO    =  0;
 
 namespace google {
 
-typedef int LogSeverity;
+using LogSeverity = int;
 // clang-format off
 const int INFO    = ::INFO;
 const int WARNING = ::WARNING;

@@ -41,19 +41,18 @@ namespace internal {
 // constructor and puts that token back with destruction.
 class CERES_NO_EXPORT ScopedThreadToken {
  public:
-  ScopedThreadToken(ThreadTokenProvider* provider)
+  explicit ScopedThreadToken(ThreadTokenProvider* provider)
       : provider_(provider), token_(provider->Acquire()) {}
 
   ~ScopedThreadToken() { provider_->Release(token_); }
+  ScopedThreadToken(ScopedThreadToken&) = delete;
+  ScopedThreadToken& operator=(ScopedThreadToken&) = delete;
 
   int token() const { return token_; }
 
  private:
   ThreadTokenProvider* provider_;
   int token_;
-
-  ScopedThreadToken(ScopedThreadToken&);
-  ScopedThreadToken& operator=(ScopedThreadToken&);
 };
 
 }  // namespace internal

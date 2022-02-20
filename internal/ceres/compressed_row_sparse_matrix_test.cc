@@ -381,7 +381,7 @@ TEST(CompressedRowSparseMatrix, FromTripletSparseMatrixTransposed) {
   }
 }
 
-typedef ::testing::tuple<CompressedRowSparseMatrix::StorageType> Param;
+using Param = ::testing::tuple<CompressedRowSparseMatrix::StorageType>;
 
 static std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   if (::testing::get<0>(info.param) ==
