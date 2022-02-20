@@ -130,6 +130,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a708483_49576b91",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T16:33:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38b3497e_00edbf58",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 22
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ebde1d16_8dc0925e",
@@ -167,6 +191,30 @@
       "side": 1,
       "message": "It\u0027s a move constructor that should use a standard signature. No `explicit` is necessary. Also `noexcept` is probably a good idea.",
       "parentUuid": "ebde1d16_8dc0925e",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 29
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8c001bd_c0ed4a8c",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T16:33:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9448ee88_f406d53d",
       "range": {
         "startLine": 87,
         "startChar": 2,
@@ -237,6 +285,30 @@
       "side": 1,
       "message": "Should either both be passed by value or by reference. Depending on whether we want to proceed with applying `clang-tidy`\u0027s suggestion/using the trick.",
       "parentUuid": "c309ced3_a74059a0",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 37
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "340e4471_8451dc1f",
+        "filename": "include/ceres/normal_prior.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T16:33:12Z",
+      "side": 1,
+      "message": "Both arguments should be passed by value or reference, it is odd to be doing one by reference and one by value. I am fine with either as long as it is consistent.",
+      "parentUuid": "8aba7704_9e0043d7",
       "range": {
         "startLine": 64,
         "startChar": 31,
@@ -717,6 +789,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f03c2eb_dd35dab9",
+        "filename": "internal/ceres/dense_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T16:33:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8434916e_1ff7c710",
+      "range": {
+        "startLine": 59,
+        "startChar": 57,
+        "endLine": 59,
+        "endChar": 61
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e15261f_51c73fc9",
@@ -753,6 +849,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "this should not be a move.",
+      "range": {
+        "startLine": 58,
+        "startChar": 28,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "741b250f_2a34df87",
+        "filename": "internal/ceres/iterative_refiner_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T16:33:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ee5edca5_683461de",
       "range": {
         "startLine": 58,
         "startChar": 28,
@@ -823,6 +943,24 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "this should not be a move.",
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24dcd669_b46a9e76",
+        "filename": "internal/ceres/normal_prior.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T16:33:12Z",
+      "side": 1,
+      "message": "see comment in the header, either both should be moves or both should be references.",
+      "parentUuid": "984a18e5_4d13b8dc",
       "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -1346,6 +1484,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2a1ea226_de89f5f9",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T16:33:12Z",
+      "side": 1,
+      "message": "I mean that i is not a great variable name here.",
+      "parentUuid": "41799968_130a3d43",
+      "range": {
+        "startLine": 329,
+        "startChar": 18,
+        "endLine": 329,
+        "endChar": 19
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f0e2ee30_e42822b4",
         "filename": "internal/ceres/rotation_test.cc",
         "patchSetId": 1
@@ -1357,6 +1519,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "this reads worse.\nsame for other loops in this file.",
+      "range": {
+        "startLine": 337,
+        "startChar": 16,
+        "endLine": 337,
+        "endChar": 17
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a92b9af_13ab47b7",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T16:33:12Z",
+      "side": 1,
+      "message": "same here",
+      "parentUuid": "f0e2ee30_e42822b4",
       "range": {
         "startLine": 337,
         "startChar": 16,
@@ -1555,6 +1741,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc508cea_f5aab1ba",
+        "filename": "internal/ceres/triplet_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T16:33:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "682d7aeb_b57bc3b6",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "add224cd_23f0550e",
@@ -1649,6 +1859,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63810546_90184401",
+        "filename": "internal/ceres/visibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T16:33:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fd3a1fc6_e1ccec17",
+      "range": {
+        "startLine": 115,
+        "startChar": 14,
+        "endLine": 115,
+        "endChar": 21
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3e50632_e8d7787a",
@@ -1686,6 +1920,30 @@
       "side": 1,
       "message": "Sadly, no because otherwise the following iterator increment would not be possible.",
       "parentUuid": "b3e50632_e8d7787a",
+      "range": {
+        "startLine": 285,
+        "startChar": 23,
+        "endLine": 285,
+        "endChar": 31
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ada53e8f_a707371f",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T16:33:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8cb0e521_0f88f6c6",
       "range": {
         "startLine": 285,
         "startChar": 23,
