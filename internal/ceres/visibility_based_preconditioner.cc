@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -70,9 +70,8 @@ static constexpr double kCanonicalViewsSimilarityPenaltyWeight = 0.0;
 static constexpr double kSingleLinkageMinSimilarity = 0.9;
 
 VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
-    const CompressedRowBlockStructure& bs,
-    const Preconditioner::Options& options)
-    : options_(options), num_blocks_(0), num_clusters_(0) {
+    const CompressedRowBlockStructure& bs, Preconditioner::Options options)
+    : options_(std::move(options)), num_blocks_(0), num_clusters_(0) {
   CHECK_GT(options_.elimination_groups.size(), 1);
   CHECK_GT(options_.elimination_groups[0], 0);
   CHECK(options_.type == CLUSTER_JACOBI || options_.type == CLUSTER_TRIDIAGONAL)
@@ -283,14 +282,12 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
       }
     }
 
-    for (set<int>::const_iterator block1 = f_blocks.begin();
-         block1 != f_blocks.end();
-         ++block1) {
-      set<int>::const_iterator block2 = block1;
+    for (auto block1 = f_blocks.begin(); block1 != f_blocks.end(); ++block1) {
+      auto block2 = block1;
       ++block2;
       for (; block2 != f_blocks.end(); ++block2) {
         if (IsBlockPairInPreconditioner(*block1, *block2)) {
-          block_pairs_.insert(make_pair(*block1, *block2));
+          block_pairs_.emplace(*block1, *block2);
         }
       }
     }
@@ -302,8 +299,8 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
     CHECK_GE(row.cells.front().block_id, num_eliminate_blocks);
     for (int i = 0; i < row.cells.size(); ++i) {
       const int block1 = row.cells[i].block_id - num_eliminate_blocks;
-      for (int j = 0; j < row.cells.size(); ++j) {
-        const int block2 = row.cells[j].block_id - num_eliminate_blocks;
+      for (const auto& cell : row.cells) {
+        const int block2 = cell.block_id - num_eliminate_blocks;
         if (block1 <= block2) {
           if (IsBlockPairInPreconditioner(block1, block2)) {
             block_pairs_.insert(make_pair(block1, block2));

@@ -68,8 +68,8 @@ class CostFunction2x3 : public SizedCostFunction<2, 3> {
 template <int kNumResiduals, int kNumParameters>
 void TestHelper() {
   std::unique_ptr<CostFunction> cost_function(new CostFunction2x3);
-  typedef TinySolverCostFunctionAdapter<kNumResiduals, kNumParameters>
-      CostFunctionAdapter;
+  using CostFunctionAdapter =
+      TinySolverCostFunctionAdapter<kNumResiduals, kNumParameters>;
   CostFunctionAdapter cfa(*cost_function);
   EXPECT_EQ(CostFunctionAdapter::NUM_RESIDUALS, kNumResiduals);
   EXPECT_EQ(CostFunctionAdapter::NUM_PARAMETERS, kNumParameters);

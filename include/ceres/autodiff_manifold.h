@@ -184,7 +184,7 @@ namespace internal {
 // expects a Functor with operator().
 template <typename Functor>
 struct PlusWrapper {
-  PlusWrapper(const Functor& functor) : functor(functor) {}
+  explicit PlusWrapper(const Functor& functor) : functor(functor) {}
   template <typename T>
   bool operator()(const T* x, const T* delta, T* x_plus_delta) const {
     return functor.Plus(x, delta, x_plus_delta);
@@ -194,7 +194,7 @@ struct PlusWrapper {
 
 template <typename Functor>
 struct MinusWrapper {
-  MinusWrapper(const Functor& functor) : functor(functor) {}
+  explicit MinusWrapper(const Functor& functor) : functor(functor) {}
   template <typename T>
   bool operator()(const T* y, const T* x, T* y_minus_x) const {
     return functor.Minus(y, x, y_minus_x);

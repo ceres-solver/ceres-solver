@@ -167,8 +167,8 @@ void InnerProductComputer::Init(
 
       for (int c2 = c2_begin; c2 < c2_end; ++c2) {
         const Cell& cell2 = row.cells[c2];
-        product_terms.push_back(InnerProductComputer::ProductTerm(
-            cell1.block_id, cell2.block_id, product_terms.size()));
+        product_terms.emplace_back(
+            cell1.block_id, cell2.block_id, product_terms.size());
       }
     }
   }

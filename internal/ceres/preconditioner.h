@@ -161,9 +161,9 @@ class CERES_NO_EXPORT TypedPreconditioner : public Preconditioner {
 // Preconditioners that depend on access to the low level structure
 // of a SparseMatrix.
 // clang-format off
-typedef TypedPreconditioner<SparseMatrix>              SparseMatrixPreconditioner;
-typedef TypedPreconditioner<BlockSparseMatrix>         BlockSparseMatrixPreconditioner;
-typedef TypedPreconditioner<CompressedRowSparseMatrix> CompressedRowSparseMatrixPreconditioner;
+using SparseMatrixPreconditioner = TypedPreconditioner<SparseMatrix>;
+using BlockSparseMatrixPreconditioner = TypedPreconditioner<BlockSparseMatrix>;
+using CompressedRowSparseMatrixPreconditioner = TypedPreconditioner<CompressedRowSparseMatrix>;
 // clang-format on
 
 // Wrap a SparseMatrix object as a preconditioner.

@@ -104,7 +104,7 @@ template <typename FirstOrderFunctor,
           int kNumParameters>
 class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
  public:
-  NumericDiffFirstOrderFunction(
+  explicit NumericDiffFirstOrderFunction(
       FirstOrderFunctor* functor,
       Ownership ownership = TAKE_OWNERSHIP,
       const NumericDiffOptions& options = NumericDiffOptions())

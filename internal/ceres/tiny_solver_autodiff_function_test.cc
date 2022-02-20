@@ -60,8 +60,8 @@ struct AutoDiffTestFunctor {
 static double const kTolerance = std::numeric_limits<double>::epsilon() * 10;
 
 TEST(TinySolverAutoDiffFunction, SimpleFunction) {
-  typedef TinySolverAutoDiffFunction<AutoDiffTestFunctor, 2, 3>
-      AutoDiffTestFunction;
+  using AutoDiffTestFunction =
+      TinySolverAutoDiffFunction<AutoDiffTestFunctor, 2, 3>;
   AutoDiffTestFunctor autodiff_test_functor;
   AutoDiffTestFunction f(autodiff_test_functor);
 
@@ -97,7 +97,7 @@ TEST(TinySolverAutoDiffFunction, SimpleFunction) {
 
 class DynamicResidualsFunctor {
  public:
-  typedef double Scalar;
+  using Scalar = double;
   enum {
     NUM_RESIDUALS = Eigen::Dynamic,
     NUM_PARAMETERS = 3,
@@ -140,7 +140,7 @@ TEST(TinySolverAutoDiffFunction, ResidualsDynamicAutoDiff) {
   EXPECT_GT(residuals.squaredNorm() / 2.0, 1e-10);
 
   TinySolver<AutoDiffCostFunctor> solver;
-  solver.Solve(f, &x0);
+  solver.Solve(f_autodiff, &x0);
   EXPECT_NEAR(0.0, solver.summary.final_cost, 1e-10);
 }
 

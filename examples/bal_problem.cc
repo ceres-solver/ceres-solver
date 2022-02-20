@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -30,6 +30,7 @@
 
 #include "bal_problem.h"
 
+#include <algorithm>
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
@@ -44,8 +45,8 @@
 namespace ceres {
 namespace examples {
 namespace {
-typedef Eigen::Map<Eigen::VectorXd> VectorRef;
-typedef Eigen::Map<const Eigen::VectorXd> ConstVectorRef;
+using VectorRef = Eigen::Map<Eigen::VectorXd>;
+using ConstVectorRef = Eigen::Map<const Eigen::VectorXd>;
 
 template <typename T>
 void FscanfOrDie(FILE* fptr, const char* format, T* value) {
@@ -63,7 +64,7 @@ void PerturbPoint3(const double sigma, double* point) {
 
 double Median(std::vector<double>* data) {
   int n = data->size();
-  std::vector<double>::iterator mid_point = data->begin() + n / 2;
+  auto mid_point = data->begin() + n / 2;
   std::nth_element(data->begin(), mid_point, data->end());
   return *mid_point;
 }
@@ -111,7 +112,7 @@ BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
   if (use_quaternions) {
     // Switch the angle-axis rotations to quaternions.
     num_parameters_ = 10 * num_cameras_ + 3 * num_points_;
-    double* quaternion_parameters = new double[num_parameters_];
+    auto* quaternion_parameters = new double[num_parameters_];
     double* original_cursor = parameters_;
     double* quaternion_cursor = quaternion_parameters;
     for (int i = 0; i < num_cameras_; ++i) {
@@ -161,8 +162,8 @@ void BALProblem::WriteToFile(const std::string& filename) const {
     } else {
       memcpy(angleaxis, parameters_ + 9 * i, 9 * sizeof(double));
     }
-    for (int j = 0; j < 9; ++j) {
-      fprintf(fptr, "%.16g\n", angleaxis[j]);
+    for (double coeff : angleaxis) {
+      fprintf(fptr, "%.16g\n", coeff);
     }
   }
 

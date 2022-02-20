@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2017 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -542,9 +542,9 @@ CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
     const double* diagonal, const vector<int>& blocks) {
   int num_rows = 0;
   int num_nonzeros = 0;
-  for (int i = 0; i < blocks.size(); ++i) {
-    num_rows += blocks[i];
-    num_nonzeros += blocks[i] * blocks[i];
+  for (int block_size : blocks) {
+    num_rows += block_size;
+    num_nonzeros += block_size * block_size;
   }
 
   std::unique_ptr<CompressedRowSparseMatrix> matrix =
@@ -558,8 +558,7 @@ CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
 
   int idx_cursor = 0;
   int col_cursor = 0;
-  for (int i = 0; i < blocks.size(); ++i) {
-    const int block_size = blocks[i];
+  for (int block_size : blocks) {
     for (int r = 0; r < block_size; ++r) {
       *(rows++) = idx_cursor;
       values[idx_cursor + r] = diagonal[col_cursor + r];

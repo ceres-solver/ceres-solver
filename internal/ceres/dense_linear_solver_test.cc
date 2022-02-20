@@ -42,9 +42,8 @@
 namespace ceres {
 namespace internal {
 
-typedef ::testing::
-    tuple<LinearSolverType, DenseLinearAlgebraLibraryType, bool, int>
-        Param;
+using Param = ::testing::
+    tuple<LinearSolverType, DenseLinearAlgebraLibraryType, bool, int>;
 
 static std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   Param param = info.param;

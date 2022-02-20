@@ -182,7 +182,7 @@ template <typename CostFunctor,
 class NumericDiffCostFunction final
     : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
-  NumericDiffCostFunction(
+  explicit NumericDiffCostFunction(
       CostFunctor* functor,
       Ownership ownership = TAKE_OWNERSHIP,
       int num_residuals = kNumResiduals,
@@ -193,7 +193,7 @@ class NumericDiffCostFunction final
     }
   }
 
-  explicit NumericDiffCostFunction(NumericDiffCostFunction&& other)
+  NumericDiffCostFunction(NumericDiffCostFunction&& other)
       : functor_(std::move(other.functor_)), ownership_(other.ownership_) {}
 
   virtual ~NumericDiffCostFunction() {

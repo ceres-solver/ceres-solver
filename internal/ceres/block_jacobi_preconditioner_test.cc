@@ -67,8 +67,7 @@ class BlockJacobiPreconditionerTest : public ::testing::Test {
 
     BlockJacobiPreconditioner pre(*A);
     pre.Update(*A, D.get());
-    BlockRandomAccessDiagonalMatrix* m =
-        const_cast<BlockRandomAccessDiagonalMatrix*>(&pre.matrix());
+    auto* m = const_cast<BlockRandomAccessDiagonalMatrix*>(&pre.matrix());
     EXPECT_EQ(m->num_rows(), A->num_cols());
     EXPECT_EQ(m->num_cols(), A->num_cols());
 

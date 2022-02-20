@@ -84,7 +84,7 @@ class CERES_NO_EXPORT SchurJacobiPreconditioner
   // It has the same structural requirement as other Schur complement
   // based solvers. Please see schur_eliminator.h for more details.
   SchurJacobiPreconditioner(const CompressedRowBlockStructure& bs,
-                            const Preconditioner::Options& options);
+                            Preconditioner::Options options);
   SchurJacobiPreconditioner(const SchurJacobiPreconditioner&) = delete;
   void operator=(const SchurJacobiPreconditioner&) = delete;
 

@@ -179,7 +179,7 @@ class AutoDiffCostFunction final
     SizedCostFunction<kNumResiduals, Ns...>::set_num_residuals(num_residuals);
   }
 
-  explicit AutoDiffCostFunction(AutoDiffCostFunction&& other)
+  AutoDiffCostFunction(AutoDiffCostFunction&& other)
       : functor_(std::move(other.functor_)), ownership_(other.ownership_) {}
 
   virtual ~AutoDiffCostFunction() {

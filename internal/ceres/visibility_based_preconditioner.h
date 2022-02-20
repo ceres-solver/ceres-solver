@@ -134,7 +134,7 @@ class CERES_NO_EXPORT VisibilityBasedPreconditioner
   // It has the same structural requirement as other Schur complement
   // based solvers. Please see schur_eliminator.h for more details.
   VisibilityBasedPreconditioner(const CompressedRowBlockStructure& bs,
-                                const Preconditioner::Options& options);
+                                Preconditioner::Options options);
   VisibilityBasedPreconditioner(const VisibilityBasedPreconditioner&) = delete;
   void operator=(const VisibilityBasedPreconditioner&) = delete;
 

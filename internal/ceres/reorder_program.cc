@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -88,8 +88,8 @@ static int MinParameterBlock(const ResidualBlock* residual_block,
 #if defined(CERES_USE_EIGEN_SPARSE)
 Eigen::SparseMatrix<int> CreateBlockJacobian(
     const TripletSparseMatrix& block_jacobian_transpose) {
-  typedef Eigen::SparseMatrix<int> SparseMatrix;
-  typedef Eigen::Triplet<int> Triplet;
+  using SparseMatrix = Eigen::SparseMatrix<int>;
+  using Triplet = Eigen::Triplet<int>;
 
   const int* rows = block_jacobian_transpose.rows();
   const int* cols = block_jacobian_transpose.cols();
@@ -97,7 +97,7 @@ Eigen::SparseMatrix<int> CreateBlockJacobian(
   vector<Triplet> triplets;
   triplets.reserve(num_nonzeros);
   for (int i = 0; i < num_nonzeros; ++i) {
-    triplets.push_back(Triplet(cols[i], rows[i], 1));
+    triplets.emplace_back(cols[i], rows[i], 1);
   }
 
   SparseMatrix block_jacobian(block_jacobian_transpose.num_cols(),
@@ -127,9 +127,9 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
     ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose, &ordering[0]);
   } else {
     vector<int> constraints;
-    for (int i = 0; i < parameter_blocks.size(); ++i) {
+    for (auto* parameter_block : parameter_blocks) {
       constraints.push_back(parameter_block_ordering.GroupId(
-          parameter_blocks[i]->mutable_user_state()));
+          parameter_block->mutable_user_state()));
     }
 
     // Renumber the entries of constraints to be contiguous integers
@@ -188,7 +188,7 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
   // things. The right thing to do here would be to get a compressed
   // row sparse matrix representation of the jacobian and go from
   // there. But that is a project for another day.
-  typedef Eigen::SparseMatrix<int> SparseMatrix;
+  using SparseMatrix = Eigen::SparseMatrix<int>;
 
   const SparseMatrix block_jacobian =
       CreateBlockJacobian(tsm_block_jacobian_transpose);
@@ -314,8 +314,8 @@ bool LexicographicallyOrderResidualBlocks(
         << "to the developers.";
   }
   // Sanity check #2: No nullptr's left behind.
-  for (int i = 0; i < reordered_residual_blocks.size(); ++i) {
-    CHECK(reordered_residual_blocks[i] != nullptr)
+  for (auto* residual_block : reordered_residual_blocks) {
+    CHECK(residual_block != nullptr)
         << "Congratulations, you found a Ceres bug! Please report this error "
         << "to the developers.";
   }
@@ -339,9 +339,9 @@ static void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
   vector<ParameterBlock*>& parameter_blocks =
       *(program->mutable_parameter_blocks());
 
-  for (int i = 0; i < parameter_blocks.size(); ++i) {
+  for (auto* parameter_block : parameter_blocks) {
     constraints.push_back(parameter_block_ordering.GroupId(
-        parameter_blocks[i]->mutable_user_state()));
+        parameter_block->mutable_user_state()));
   }
 
   // Renumber the entries of constraints to be contiguous integers as
@@ -378,7 +378,7 @@ static void MaybeReorderSchurComplementColumnsUsingEigen(
   std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
       program->CreateJacobianBlockSparsityTranspose());
 
-  typedef Eigen::SparseMatrix<int> SparseMatrix;
+  using SparseMatrix = Eigen::SparseMatrix<int>;
   const SparseMatrix block_jacobian =
       CreateBlockJacobian(*tsm_block_jacobian_transpose);
   const int num_rows = block_jacobian.rows();

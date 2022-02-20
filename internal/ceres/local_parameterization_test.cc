@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -332,8 +332,8 @@ TEST(QuaternionParameterization, NearZeroTest) {
   Normalize<4>(x);
 
   double delta[3] = {0.24, 0.15, 0.10};
-  for (int i = 0; i < 3; ++i) {
-    delta[i] = delta[i] * 1e-14;
+  for (double& delta_i : delta) {
+    delta_i = delta_i * 1e-14;
   }
 
   double q_delta[4];
@@ -411,8 +411,8 @@ TEST(EigenQuaternionParameterization, NearZeroTest) {
   x.normalize();
 
   double delta[3] = {0.24, 0.15, 0.10};
-  for (int i = 0; i < 3; ++i) {
-    delta[i] = delta[i] * 1e-14;
+  for (double& delta_i : delta) {
+    delta_i = delta_i * 1e-14;
   }
 
   // Note: w is first in the constructor.

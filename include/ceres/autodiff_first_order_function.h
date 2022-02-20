@@ -117,7 +117,7 @@ class AutoDiffFirstOrderFunction final : public FirstOrderFunction {
       return (*functor_)(parameters, cost);
     }
 
-    typedef Jet<double, kNumParameters> JetT;
+    using JetT = Jet<double, kNumParameters>;
     internal::FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(kNumParameters);
     for (int i = 0; i < kNumParameters; ++i) {
       x[i].a = parameters[i];

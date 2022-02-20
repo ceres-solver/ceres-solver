@@ -38,7 +38,7 @@ namespace ceres {
 // Identity metafunction.
 template <class T>
 struct identity_ {
-  typedef T type;
+  using type = T;
 };
 
 // Use implicit_cast as a safe version of static_cast or const_cast
