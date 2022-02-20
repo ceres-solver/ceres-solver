@@ -75,7 +75,7 @@ bool ComputeExpectedSolution(const CompressedRowSparseMatrix& lhs,
       dense_triangular_lhs, rhs, solution);
 }
 
-typedef ::testing::tuple<SparseLinearAlgebraLibraryType, bool> Param;
+using Param = ::testing::tuple<SparseLinearAlgebraLibraryType, bool>;
 
 std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   Param param = info.param;

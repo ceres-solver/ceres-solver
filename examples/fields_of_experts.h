@@ -63,9 +63,9 @@ class FieldsOfExpertsCost : public ceres::CostFunction {
   explicit FieldsOfExpertsCost(const std::vector<double>& filter);
   // The number of scalar parameters passed to Evaluate must equal the number of
   // filter coefficients passed to the constructor.
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const;
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const override;
 
  private:
   const std::vector<double>& filter_;
@@ -78,7 +78,7 @@ class FieldsOfExpertsCost : public ceres::CostFunction {
 class FieldsOfExpertsLoss : public ceres::LossFunction {
  public:
   explicit FieldsOfExpertsLoss(double alpha) : alpha_(alpha) {}
-  virtual void Evaluate(double, double*) const;
+  void Evaluate(double, double*) const override;
 
  private:
   const double alpha_;

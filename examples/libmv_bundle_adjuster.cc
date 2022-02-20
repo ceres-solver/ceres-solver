@@ -100,8 +100,9 @@
 #define close _close
 typedef unsigned __int32 uint32_t;
 #else
-#include <stdint.h>
 #include <unistd.h>
+
+#include <cstdint>
 
 // O_BINARY is not defined on unix like platforms, as there is no
 // difference between binary and text files.
@@ -114,10 +115,10 @@ typedef unsigned __int32 uint32_t;
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 
-typedef Eigen::Matrix<double, 3, 3> Mat3;
-typedef Eigen::Matrix<double, 6, 1> Vec6;
-typedef Eigen::Vector3d Vec3;
-typedef Eigen::Vector4d Vec4;
+using Mat3 = Eigen::Matrix<double, 3, 3>;
+using Vec6 = Eigen::Matrix<double, 6, 1>;
+using Vec3 = Eigen::Vector3d;
+using Vec4 = Eigen::Vector4d;
 
 using std::vector;
 
@@ -135,10 +136,10 @@ namespace {
 // R is a 3x3 matrix representing the rotation of the camera.
 // t is a translation vector representing its positions.
 struct EuclideanCamera {
-  EuclideanCamera() : image(-1) {}
-  EuclideanCamera(const EuclideanCamera& c) : image(c.image), R(c.R), t(c.t) {}
+  EuclideanCamera() = default;
+  EuclideanCamera(const EuclideanCamera& c) = default;
 
-  int image;
+  int image{-1};
   Mat3 R;
   Vec3 t;
 };
@@ -148,9 +149,9 @@ struct EuclideanCamera {
 // track identifies which track this point corresponds to.
 // X represents the 3D position of the track.
 struct EuclideanPoint {
-  EuclideanPoint() : track(-1) {}
-  EuclideanPoint(const EuclideanPoint& p) : track(p.track), X(p.X) {}
-  int track;
+  EuclideanPoint() = default;
+  EuclideanPoint(const EuclideanPoint& p) = default;
+  int track{-1};
   Vec3 X;
 };
 
@@ -262,7 +263,7 @@ EuclideanPoint* PointForTrack(vector<EuclideanPoint>* all_points,
 // denotes file endianness in this way.
 class EndianAwareFileReader {
  public:
-  EndianAwareFileReader(void) : file_descriptor_(-1) {
+  EndianAwareFileReader() {
     // Get an endian type of the host machine.
     union {
       unsigned char bytes[4];
@@ -272,7 +273,7 @@ class EndianAwareFileReader {
     file_endian_type_ = host_endian_type_;
   }
 
-  ~EndianAwareFileReader(void) {
+  ~EndianAwareFileReader() {
     if (file_descriptor_ > 0) {
       close(file_descriptor_);
     }
@@ -284,7 +285,7 @@ class EndianAwareFileReader {
       return false;
     }
     // Get an endian tpye of data in the file.
-    unsigned char file_endian_type_flag = Read<unsigned char>();
+    auto file_endian_type_flag = Read<unsigned char>();
     if (file_endian_type_flag == 'V') {
       file_endian_type_ = kBigEndian;
     } else if (file_endian_type_flag == 'v') {
@@ -297,7 +298,7 @@ class EndianAwareFileReader {
 
   // Read value from the file, will switch endian if needed.
   template <typename T>
-  T Read(void) const {
+  T Read() const {
     T value;
     CHECK_GT(read(file_descriptor_, &value, sizeof(value)), 0);
     // Switch endian type if file contains data in different type
@@ -316,7 +317,7 @@ class EndianAwareFileReader {
   template <typename T>
   T SwitchEndian(const T value) const {
     if (sizeof(T) == 4) {
-      unsigned int temp_value = static_cast<unsigned int>(value);
+      auto temp_value = static_cast<unsigned int>(value);
       // clang-format off
       return ((temp_value >> 24)) |
              ((temp_value << 8) & 0x00ff0000) |
@@ -333,7 +334,7 @@ class EndianAwareFileReader {
 
   int host_endian_type_;
   int file_endian_type_;
-  int file_descriptor_;
+  int file_descriptor_{-1};
 };
 
 // Read 3x3 column-major matrix from the file
@@ -379,7 +380,7 @@ bool ReadProblemFromFile(const std::string& file_name,
   }
 
   // Read markers' space flag.
-  unsigned char is_image_space_flag = file_reader.Read<unsigned char>();
+  auto is_image_space_flag = file_reader.Read<unsigned char>();
   if (is_image_space_flag == 'P') {
     *is_image_space = true;
   } else if (is_image_space_flag == 'N') {
@@ -692,8 +693,7 @@ void EuclideanBundleCommonIntrinsics(const vector<Marker>& all_markers,
 
   int num_residuals = 0;
   bool have_locked_camera = false;
-  for (int i = 0; i < all_markers.size(); ++i) {
-    const Marker& marker = all_markers[i];
+  for (const auto& marker : all_markers) {
     EuclideanCamera* camera = CameraForImage(all_cameras, marker.image);
     EuclideanPoint* point = PointForTrack(all_points, marker.track);
     if (camera == nullptr || point == nullptr) {
@@ -759,8 +759,7 @@ void EuclideanBundleCommonIntrinsics(const vector<Marker>& all_markers,
     // Always set K3 constant, it's not used at the moment.
     constant_intrinsics.push_back(OFFSET_K3);
 
-    ceres::SubsetManifold* subset_manifold =
-        new ceres::SubsetManifold(8, constant_intrinsics);
+    auto* subset_manifold = new ceres::SubsetManifold(8, constant_intrinsics);
     problem.SetManifold(camera_intrinsics, subset_manifold);
   }
 

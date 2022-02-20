@@ -187,9 +187,9 @@ TEST_F(BlockSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
 
 TEST(BlockSparseMatrix, CreateDiagonalMatrix) {
   std::vector<Block> column_blocks;
-  column_blocks.push_back(Block(2, 0));
-  column_blocks.push_back(Block(1, 2));
-  column_blocks.push_back(Block(3, 3));
+  column_blocks.emplace_back(2, 0);
+  column_blocks.emplace_back(1, 2);
+  column_blocks.emplace_back(3, 3);
   const int num_cols =
       column_blocks.back().size + column_blocks.back().position;
   Vector diagonal(num_cols);

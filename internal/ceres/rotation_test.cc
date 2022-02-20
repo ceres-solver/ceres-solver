@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -326,16 +326,16 @@ TEST(Rotation, AngleAxisToQuaterionAndBack) {
     // Make an axis by choosing three random numbers in [-1, 1) and
     // normalizing.
     double norm = 0;
-    for (int i = 0; i < 3; i++) {
-      axis_angle[i] = RandDouble() * 2 - 1;
-      norm += axis_angle[i] * axis_angle[i];
+    for (double& coeff : axis_angle) {
+      coeff = RandDouble() * 2 - 1;
+      norm += coeff * coeff;
     }
     norm = sqrt(norm);
 
     // Angle in [-pi, pi).
     double theta = kPi * 2 * RandDouble() - kPi;
-    for (int i = 0; i < 3; i++) {
-      axis_angle[i] = axis_angle[i] * theta / norm;
+    for (double& coeff : axis_angle) {
+      coeff = coeff * theta / norm;
     }
 
     double quaternion[4];
@@ -358,14 +358,14 @@ TEST(Rotation, QuaterionToAngleAxisAndBack) {
     double quaternion[4];
     // Choose four random numbers in [-1, 1) and normalize.
     double norm = 0;
-    for (int i = 0; i < 4; i++) {
-      quaternion[i] = RandDouble() * 2 - 1;
-      norm += quaternion[i] * quaternion[i];
+    for (double& coeff : quaternion) {
+      coeff = RandDouble() * 2 - 1;
+      norm += coeff * coeff;
     }
     norm = sqrt(norm);
 
-    for (int i = 0; i < 4; i++) {
-      quaternion[i] = quaternion[i] / norm;
+    for (double& coeff : quaternion) {
+      coeff = coeff / norm;
     }
 
     double axis_angle[3];
@@ -435,9 +435,9 @@ TEST(Rotation, NearPiAngleAxisRoundTrip) {
     // Make an axis by choosing three random numbers in [-1, 1) and
     // normalizing.
     double norm = 0;
-    for (int i = 0; i < 3; i++) {
-      in_axis_angle[i] = RandDouble() * 2 - 1;
-      norm += in_axis_angle[i] * in_axis_angle[i];
+    for (double& coeff : in_axis_angle) {
+      coeff = RandDouble() * 2 - 1;
+      norm += coeff * coeff;
     }
     norm = sqrt(norm);
 
@@ -445,8 +445,8 @@ TEST(Rotation, NearPiAngleAxisRoundTrip) {
     const double kMaxSmallAngle = 1e-8;
     double theta = kPi - kMaxSmallAngle * RandDouble();
 
-    for (int i = 0; i < 3; i++) {
-      in_axis_angle[i] *= (theta / norm);
+    for (double& coeff : in_axis_angle) {
+      coeff *= (theta / norm);
     }
     AngleAxisToRotationMatrix(in_axis_angle, matrix);
     RotationMatrixToAngleAxis(matrix, out_axis_angle);
@@ -535,16 +535,16 @@ TEST(Rotation, AngleAxisToRotationMatrixAndBack) {
     // Make an axis by choosing three random numbers in [-1, 1) and
     // normalizing.
     double norm = 0;
-    for (int i = 0; i < 3; i++) {
-      axis_angle[i] = RandDouble() * 2 - 1;
-      norm += axis_angle[i] * axis_angle[i];
+    for (double& i : axis_angle) {
+      i = RandDouble() * 2 - 1;
+      norm += i * i;
     }
     norm = sqrt(norm);
 
     // Angle in [-pi, pi).
     double theta = kPi * 2 * RandDouble() - kPi;
-    for (int i = 0; i < 3; i++) {
-      axis_angle[i] = axis_angle[i] * theta / norm;
+    for (double& i : axis_angle) {
+      i = i * theta / norm;
     }
 
     double matrix[9];
@@ -568,16 +568,16 @@ TEST(Rotation, AngleAxisToRotationMatrixAndBackNearZero) {
     // Make an axis by choosing three random numbers in [-1, 1) and
     // normalizing.
     double norm = 0;
-    for (int i = 0; i < 3; i++) {
-      axis_angle[i] = RandDouble() * 2 - 1;
-      norm += axis_angle[i] * axis_angle[i];
+    for (double& i : axis_angle) {
+      i = RandDouble() * 2 - 1;
+      norm += i * i;
     }
     norm = sqrt(norm);
 
     // Tiny theta.
     double theta = 1e-16 * (kPi * 2 * RandDouble() - kPi);
-    for (int i = 0; i < 3; i++) {
-      axis_angle[i] = axis_angle[i] * theta / norm;
+    for (double& i : axis_angle) {
+      i = i * theta / norm;
     }
 
     double matrix[9];
@@ -648,8 +648,8 @@ TEST(EulerAnglesToRotationMatrix, IsOrthonormal) {
   srand(5);
   for (int trial = 0; trial < kNumTrials; ++trial) {
     double euler_angles_degrees[3];
-    for (int i = 0; i < 3; ++i) {
-      euler_angles_degrees[i] = RandDouble() * 360.0 - 180.0;
+    for (double& euler_angles_degree : euler_angles_degrees) {
+      euler_angles_degree = RandDouble() * 360.0 - 180.0;
     }
     double rotation_matrix[9];
     EulerAnglesToRotationMatrix(euler_angles_degrees, 3, rotation_matrix);
@@ -660,8 +660,8 @@ TEST(EulerAnglesToRotationMatrix, IsOrthonormal) {
 // Tests using Jets for specific behavior involving auto differentiation
 // near singularity points.
 
-typedef Jet<double, 3> J3;
-typedef Jet<double, 4> J4;
+using J3 = Jet<double, 3>;
+using J4 = Jet<double, 4>;
 
 namespace {
 
@@ -947,8 +947,8 @@ TEST(AngleAxis, RotatePointGivesSameAnswerAsRotationMatrix) {
       }
 
       const double inv_norm = theta / sqrt(norm2);
-      for (int k = 0; k < 3; ++k) {
-        angle_axis[k] *= inv_norm;
+      for (double& angle_axi : angle_axis) {
+        angle_axi *= inv_norm;
       }
 
       AngleAxisToRotationMatrix(angle_axis, R);
@@ -990,8 +990,8 @@ TEST(AngleAxis, NearZeroRotatePointGivesSameAnswerAsRotationMatrix) {
 
     double theta = (2.0 * i * 0.0001 - 1.0) * 1e-16;
     const double inv_norm = theta / sqrt(norm2);
-    for (int k = 0; k < 3; ++k) {
-      angle_axis[k] *= inv_norm;
+    for (double& angle_axi : angle_axis) {
+      angle_axi *= inv_norm;
     }
 
     AngleAxisToRotationMatrix(angle_axis, R);

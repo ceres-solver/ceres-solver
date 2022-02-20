@@ -34,7 +34,6 @@
 // f(x,y) = (1-x)^2 + 100(y - x^2)^2;
 class Rosenbrock final : public ceres::FirstOrderFunction {
  public:
-  ~Rosenbrock() override {}
 
   bool Evaluate(const double* parameters,
                 double* cost,

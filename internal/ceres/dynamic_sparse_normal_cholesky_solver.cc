@@ -35,6 +35,7 @@
 #include <ctime>
 #include <memory>
 #include <sstream>
+#include <utility>
 
 #include "Eigen/SparseCore"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -54,8 +55,8 @@ namespace ceres {
 namespace internal {
 
 DynamicSparseNormalCholeskySolver::DynamicSparseNormalCholeskySolver(
-    const LinearSolver::Options& options)
-    : options_(options) {}
+    LinearSolver::Options options)
+    : options_(std::move(options)) {}
 
 LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
     CompressedRowSparseMatrix* A,

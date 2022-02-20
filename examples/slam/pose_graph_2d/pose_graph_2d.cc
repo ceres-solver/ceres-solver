@@ -68,18 +68,11 @@ void BuildOptimizationProblem(const std::vector<Constraint2d>& constraints,
   ceres::LossFunction* loss_function = nullptr;
   ceres::Manifold* angle_manifold = AngleManifold::Create();
 
-  for (std::vector<Constraint2d>::const_iterator constraints_iter =
-           constraints.begin();
-       constraints_iter != constraints.end();
-       ++constraints_iter) {
-    const Constraint2d& constraint = *constraints_iter;
-
-    std::map<int, Pose2d>::iterator pose_begin_iter =
-        poses->find(constraint.id_begin);
+  for (const auto& constraint : constraints) {
+    auto pose_begin_iter = poses->find(constraint.id_begin);
     CHECK(pose_begin_iter != poses->end())
         << "Pose with ID: " << constraint.id_begin << " not found.";
-    std::map<int, Pose2d>::iterator pose_end_iter =
-        poses->find(constraint.id_end);
+    auto pose_end_iter = poses->find(constraint.id_end);
     CHECK(pose_end_iter != poses->end())
         << "Pose with ID: " << constraint.id_end << " not found.";
 
@@ -108,7 +101,7 @@ void BuildOptimizationProblem(const std::vector<Constraint2d>& constraints,
   // internal damping which mitigate this issue, but it is better to properly
   // constrain the gauge freedom. This can be done by setting one of the poses
   // as constant so the optimizer cannot change it.
-  std::map<int, Pose2d>::iterator pose_start_iter = poses->begin();
+  auto pose_start_iter = poses->begin();
   CHECK(pose_start_iter != poses->end()) << "There are no poses.";
   problem->SetParameterBlockConstant(&pose_start_iter->second.x);
   problem->SetParameterBlockConstant(&pose_start_iter->second.y);
@@ -140,10 +133,7 @@ bool OutputPoses(const std::string& filename,
     std::cerr << "Error opening the file: " << filename << '\n';
     return false;
   }
-  for (std::map<int, Pose2d>::const_iterator poses_iter = poses.begin();
-       poses_iter != poses.end();
-       ++poses_iter) {
-    const std::map<int, Pose2d>::value_type& pair = *poses_iter;
+  for (const auto& pair : poses) {
     outfile << pair.first << " " << pair.second.x << " " << pair.second.y << ' '
             << pair.second.yaw_radians << '\n';
   }

@@ -376,8 +376,7 @@ void MinimizeInterpolatingPolynomial(const vector<FunctionSample>& samples,
                                      double* optimal_value) {
   const Vector polynomial = FindInterpolatingPolynomial(samples);
   MinimizePolynomial(polynomial, x_min, x_max, optimal_x, optimal_value);
-  for (int i = 0; i < samples.size(); ++i) {
-    const FunctionSample& sample = samples[i];
+  for (const auto& sample : samples) {
     if ((sample.x < x_min) || (sample.x > x_max)) {
       continue;
     }

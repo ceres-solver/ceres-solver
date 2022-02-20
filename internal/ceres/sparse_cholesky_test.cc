@@ -147,8 +147,8 @@ void SparseCholeskySolverUnitTest(
       << eigen_lhs;
 }
 
-typedef ::testing::tuple<SparseLinearAlgebraLibraryType, OrderingType, bool>
-    Param;
+using Param =
+    ::testing::tuple<SparseLinearAlgebraLibraryType, OrderingType, bool>;
 
 std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   Param param = info.param;
@@ -267,8 +267,8 @@ using testing::_;
 using testing::Return;
 
 TEST(RefinedSparseCholesky, StorageType) {
-  MockSparseCholesky* mock_sparse_cholesky = new MockSparseCholesky;
-  MockIterativeRefiner* mock_iterative_refiner = new MockIterativeRefiner;
+  auto* mock_sparse_cholesky = new MockSparseCholesky;
+  auto* mock_iterative_refiner = new MockIterativeRefiner;
   EXPECT_CALL(*mock_sparse_cholesky, StorageType())
       .Times(1)
       .WillRepeatedly(Return(CompressedRowSparseMatrix::UPPER_TRIANGULAR));
@@ -282,8 +282,8 @@ TEST(RefinedSparseCholesky, StorageType) {
 };
 
 TEST(RefinedSparseCholesky, Factorize) {
-  MockSparseCholesky* mock_sparse_cholesky = new MockSparseCholesky;
-  MockIterativeRefiner* mock_iterative_refiner = new MockIterativeRefiner;
+  auto* mock_sparse_cholesky = new MockSparseCholesky;
+  auto* mock_iterative_refiner = new MockIterativeRefiner;
   EXPECT_CALL(*mock_sparse_cholesky, Factorize(_, _))
       .Times(1)
       .WillRepeatedly(Return(LINEAR_SOLVER_SUCCESS));
@@ -299,8 +299,8 @@ TEST(RefinedSparseCholesky, Factorize) {
 };
 
 TEST(RefinedSparseCholesky, FactorAndSolveWithUnsuccessfulFactorization) {
-  MockSparseCholesky* mock_sparse_cholesky = new MockSparseCholesky;
-  MockIterativeRefiner* mock_iterative_refiner = new MockIterativeRefiner;
+  auto* mock_sparse_cholesky = new MockSparseCholesky;
+  auto* mock_iterative_refiner = new MockIterativeRefiner;
   EXPECT_CALL(*mock_sparse_cholesky, Factorize(_, _))
       .Times(1)
       .WillRepeatedly(Return(LINEAR_SOLVER_FAILURE));
@@ -320,7 +320,7 @@ TEST(RefinedSparseCholesky, FactorAndSolveWithUnsuccessfulFactorization) {
 };
 
 TEST(RefinedSparseCholesky, FactorAndSolveWithSuccess) {
-  MockSparseCholesky* mock_sparse_cholesky = new MockSparseCholesky;
+  auto* mock_sparse_cholesky = new MockSparseCholesky;
   std::unique_ptr<MockIterativeRefiner> mock_iterative_refiner(
       new MockIterativeRefiner);
   EXPECT_CALL(*mock_sparse_cholesky, Factorize(_, _))

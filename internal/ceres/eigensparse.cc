@@ -49,7 +49,7 @@ namespace internal {
 template <typename Solver>
 class EigenSparseCholeskyTemplate final : public SparseCholesky {
  public:
-  EigenSparseCholeskyTemplate() : analyzed_(false) {}
+  EigenSparseCholeskyTemplate() = default;
   CompressedRowSparseMatrix::StorageType StorageType() const final {
     return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
   }
@@ -136,20 +136,19 @@ class EigenSparseCholeskyTemplate final : public SparseCholesky {
  private:
   Eigen::Matrix<typename Solver::Scalar, Eigen::Dynamic, 1> values_,
       scalar_rhs_, scalar_solution_;
-  bool analyzed_;
+  bool analyzed_{false};
   Solver solver_;
 };
 
 std::unique_ptr<SparseCholesky> EigenSparseCholesky::Create(
     const OrderingType ordering_type) {
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
-                                Eigen::Upper,
-                                Eigen::AMDOrdering<int>>
-      WithAMDOrdering;
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
-                                Eigen::Upper,
-                                Eigen::NaturalOrdering<int>>
-      WithNaturalOrdering;
+  using WithAMDOrdering = Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
+                                                Eigen::Upper,
+                                                Eigen::AMDOrdering<int>>;
+  using WithNaturalOrdering =
+      Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
+                            Eigen::Upper,
+                            Eigen::NaturalOrdering<int>>;
 
   if (ordering_type == AMD) {
     return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
@@ -162,14 +161,13 @@ EigenSparseCholesky::~EigenSparseCholesky() = default;
 
 std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
     const OrderingType ordering_type) {
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
-                                Eigen::Upper,
-                                Eigen::AMDOrdering<int>>
-      WithAMDOrdering;
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
-                                Eigen::Upper,
-                                Eigen::NaturalOrdering<int>>
-      WithNaturalOrdering;
+  using WithAMDOrdering = Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
+                                                Eigen::Upper,
+                                                Eigen::AMDOrdering<int>>;
+  using WithNaturalOrdering =
+      Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
+                            Eigen::Upper,
+                            Eigen::NaturalOrdering<int>>;
   if (ordering_type == AMD) {
     return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
   } else {

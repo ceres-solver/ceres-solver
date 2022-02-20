@@ -145,7 +145,7 @@ ceres_residual_block_id_t* ceres_problem_add_residual_block(
     int num_parameter_blocks,
     int* parameter_block_sizes,
     double** parameters) {
-  Problem* ceres_problem = reinterpret_cast<Problem*>(problem);
+  auto* ceres_problem = reinterpret_cast<Problem*>(problem);
 
   auto callback_cost_function =
       std::make_unique<CallbackCostFunction>(cost_function,
@@ -169,7 +169,7 @@ ceres_residual_block_id_t* ceres_problem_add_residual_block(
 }
 
 void ceres_solve(ceres_problem_t* c_problem) {
-  Problem* problem = reinterpret_cast<Problem*>(c_problem);
+  auto* problem = reinterpret_cast<Problem*>(c_problem);
 
   // TODO(keir): Obviously, this way of setting options won't scale or last.
   // Instead, figure out a way to specify some of the options without

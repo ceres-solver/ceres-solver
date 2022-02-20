@@ -31,6 +31,7 @@
 #include "ceres/cgnr_solver.h"
 
 #include <memory>
+#include <utility>
 
 #include "ceres/block_jacobi_preconditioner.h"
 #include "ceres/cgnr_linear_operator.h"
@@ -44,8 +45,8 @@
 namespace ceres {
 namespace internal {
 
-CgnrSolver::CgnrSolver(const LinearSolver::Options& options)
-    : options_(options) {
+CgnrSolver::CgnrSolver(LinearSolver::Options options)
+    : options_(std::move(options)) {
   if (options_.preconditioner_type != JACOBI &&
       options_.preconditioner_type != IDENTITY &&
       options_.preconditioner_type != SUBSET) {
