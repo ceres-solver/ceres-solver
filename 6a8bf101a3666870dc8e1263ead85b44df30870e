@@ -321,6 +321,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ba06dfff_b9952386",
+        "filename": "include/ceres/normal_prior.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T18:06:10Z",
+      "side": 1,
+      "message": "I reverted to pass-by-reference because using Clang 13 failures such as the following one started to occur:\n```\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] Running 2 tests from 1 test suite.\n[----------] Global test environment set-up.\n[----------] 2 tests from NormalPriorTest\n[ RUN      ] NormalPriorTest.ResidualAtRandomPosition\nF20220220 18:51:14.170094 66425 normal_prior.cc:47] Check failed: b_.rows() \u003d\u003d A.cols() (1 vs. 0) \n```\nFor some reason, dynamic Eigen matrices cannot be safely passed by value and then moved. This is likely the reason why clang-tidy converted the second argument only but not the first one.",
+      "parentUuid": "340e4471_8451dc1f",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 37
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f5c0b2b1_8bcf8fe2",
         "filename": "internal/ceres/block_jacobi_preconditioner.cc",
         "patchSetId": 1
@@ -836,6 +860,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22be66b4_5de50c2d",
+        "filename": "internal/ceres/dense_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T18:06:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7e15261f_51c73fc9",
+      "range": {
+        "startLine": 52,
+        "startChar": 29,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee5edca5_683461de",
@@ -961,6 +1009,24 @@
       "side": 1,
       "message": "see comment in the header, either both should be moves or both should be references.",
       "parentUuid": "984a18e5_4d13b8dc",
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a57181b3_c59d0fee",
+        "filename": "internal/ceres/normal_prior.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T18:06:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24dcd669_b46a9e76",
       "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -1506,6 +1572,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c187861e_04a5f48f",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T18:06:10Z",
+      "side": 1,
+      "message": "Ah, I see. Changed to angle.",
+      "parentUuid": "2a1ea226_de89f5f9",
+      "range": {
+        "startLine": 329,
+        "startChar": 18,
+        "endLine": 329,
+        "endChar": 19
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0e2ee30_e42822b4",
@@ -1543,6 +1633,30 @@
       "side": 1,
       "message": "same here",
       "parentUuid": "f0e2ee30_e42822b4",
+      "range": {
+        "startLine": 337,
+        "startChar": 16,
+        "endLine": 337,
+        "endChar": 17
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08cc369d_f1d306a1",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T18:06:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a92b9af_13ab47b7",
       "range": {
         "startLine": 337,
         "startChar": 16,
