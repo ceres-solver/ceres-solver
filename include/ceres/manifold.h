@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2021 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,7 @@
 #include <Eigen/Core>
 #include <array>
 #include <memory>
+#include <type_traits>
 #include <vector>
 
 #include "ceres/internal/disable_warnings.h"
@@ -270,8 +271,36 @@ class CERES_EXPORT SubsetManifold : public Manifold {
   std::vector<bool> constancy_mask_;
 };
 
+// Predicate ensuring that all Types are derived from Manifold.
+template <typename... Types>
+struct AreAllManifolds;
+
+// An empty set of types cannot contain types derived from Manifold and the
+// predicate therefore indicates false.
+template <>
+struct AreAllManifolds<> : std::false_type {};
+
+// AreAllManifolds predicate specialization for a single type performing the
+// actual check.
+//
+// This predicate is a candidate for a concept definition once C++20 features
+// can be used.
+template <typename Type>
+struct AreAllManifolds<Type> : std::is_base_of<Manifold, std::decay_t<Type>> {};
+
+// Predicate recursion start.
+template <typename FirstType, typename... TailTypes>
+struct AreAllManifolds<FirstType, TailTypes...>
+    : std::integral_constant<bool,
+                             AreAllManifolds<FirstType>::value &&
+                                 AreAllManifolds<TailTypes...>::value> {};
+
+// A convenience variable template for AreAllManifolds.
+template <typename... Types>
+constexpr bool AreAllManifolds_v = AreAllManifolds<Types...>::value;
+
 // Construct a manifold by taking the Cartesian product of a number of other
-// manifolds. This is useful, when a parameter block is the cartesian product of
+// manifolds. This is useful, when a parameter block is the Cartesian product of
 // two or more manifolds. For example the parameters of a camera consist of a
 // rotation and a translation, i.e., SO(3) x R^3.
 //
@@ -291,9 +320,11 @@ class CERES_EXPORT ProductManifold : public Manifold {
   //
   template <typename... Manifolds>
   ProductManifold(Manifolds*... manifolds) : manifolds_(sizeof...(Manifolds)) {
-    constexpr int kNumManifolds = sizeof...(Manifolds);
+    constexpr std::size_t kNumManifolds = sizeof...(Manifolds);
     static_assert(kNumManifolds >= 2,
                   "At least two manifolds must be specified.");
+    static_assert(AreAllManifolds_v<Manifolds...>,
+                  "ProductManifold arguments must derive from Manifold");
 
     using ManifoldPtr = std::unique_ptr<Manifold>;
 
@@ -302,7 +333,7 @@ class CERES_EXPORT ProductManifold : public Manifold {
         ManifoldPtr(manifolds)...};
 
     // Initialize internal state.
-    for (int i = 0; i < kNumManifolds; ++i) {
+    for (std::size_t i = 0; i < kNumManifolds; ++i) {
       ManifoldPtr& manifold = manifolds_[i];
       manifold = std::move(manifolds_array[i]);
 

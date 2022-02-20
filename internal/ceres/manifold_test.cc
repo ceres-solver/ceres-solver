@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2021 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -50,6 +50,32 @@ namespace internal {
 
 constexpr int kNumTrials = 1000;
 constexpr double kTolerance = 1e-9;
+
+static_assert(!AreAllManifolds_v<>, "An empty set cannot contain manifolds");
+static_assert(!AreAllManifolds_v<int, char, double>,
+              "Scalars cannot be manifolds");
+static_assert(!AreAllManifolds_v<QuaternionManifold, EuclideanManifold, int>,
+              "An int is not a manifold");
+static_assert(AreAllManifolds_v<EigenQuaternionManifold>,
+              "EigenQuaternionManifold is a manifold");
+static_assert(AreAllManifolds_v<EigenQuaternionManifold>,
+              "QuaternionManifold is a manifold");
+static_assert(AreAllManifolds_v<EuclideanManifold>,
+              "EuclideanManifold is a manifold");
+static_assert(
+    AreAllManifolds_v<LineManifold<2>, LineManifold<3>, LineManifold<DYNAMIC>>,
+    "LineManifold is a manifold");
+static_assert(AreAllManifolds_v<ProductManifold>,
+              "ProductManifold is a manifold");
+static_assert(AreAllManifolds_v<QuaternionManifold>,
+              "QuaternionManifold is a manifold");
+static_assert(AreAllManifolds_v<SphereManifold<2>,
+                                SphereManifold<3>,
+                                SphereManifold<DYNAMIC>>,
+              "QuaternionManifold is a manifold");
+static_assert(AreAllManifolds_v<SubsetManifold>,
+              "SubsetManifold is a manifold");
+static_assert(AreAllManifolds_v<Manifold>, "Manifold is a manifold");
 
 TEST(EuclideanManifold, NormalFunctionTest) {
   EuclideanManifold manifold(3);
