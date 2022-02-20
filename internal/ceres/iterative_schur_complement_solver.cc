@@ -32,6 +32,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <utility>
 #include <vector>
 
 #include "Eigen/Dense"
@@ -54,8 +55,8 @@ namespace ceres {
 namespace internal {
 
 IterativeSchurComplementSolver::IterativeSchurComplementSolver(
-    const LinearSolver::Options& options)
-    : options_(options) {}
+    LinearSolver::Options options)
+    : options_(std::move(options)) {}
 
 IterativeSchurComplementSolver::~IterativeSchurComplementSolver() = default;
 

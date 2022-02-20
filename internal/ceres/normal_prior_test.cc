@@ -66,10 +66,10 @@ TEST(NormalPriorTest, ResidualAtRandomPosition) {
       Matrix A(num_rows, num_cols);
       RandomMatrix(&A);
 
-      double* x = new double[num_cols];
+      auto* x = new double[num_cols];
       for (int i = 0; i < num_cols; ++i) x[i] = 2 * RandDouble() - 1;
 
-      double* jacobian = new double[num_rows * num_cols];
+      auto* jacobian = new double[num_rows * num_cols];
       Vector residuals(num_rows);
 
       NormalPrior prior(A, b);
@@ -102,7 +102,7 @@ TEST(NormalPriorTest, ResidualAtRandomPositionNullJacobians) {
       Matrix A(num_rows, num_cols);
       RandomMatrix(&A);
 
-      double* x = new double[num_cols];
+      auto* x = new double[num_cols];
       for (int i = 0; i < num_cols; ++i) x[i] = 2 * RandDouble() - 1;
 
       double* jacobians[1];

@@ -157,8 +157,8 @@ namespace {
 
 using Eigen::Dynamic;
 using Eigen::RowMajor;
-typedef Eigen::Matrix<double, Dynamic, 1> Vector;
-typedef Eigen::Matrix<double, Dynamic, Dynamic, RowMajor> Matrix;
+using Vector = Eigen::Matrix<double, Dynamic, 1>;
+using Matrix = Eigen::Matrix<double, Dynamic, Dynamic, RowMajor>;
 
 using std::atof;
 using std::atoi;
@@ -528,7 +528,7 @@ template <typename Model, int num_parameters>
 CostFunction* CreateCostFunction(const Matrix& predictor,
                                  const Matrix& response,
                                  const int num_observations) {
-  Model* model = new Model(predictor.data(), response.data(), num_observations);
+  auto* model = new Model(predictor.data(), response.data(), num_observations);
   ceres::CostFunction* cost_function = nullptr;
   if (CERES_GET_FLAG(FLAGS_use_numeric_diff)) {
     ceres::NumericDiffOptions options;
@@ -620,9 +620,8 @@ int RegressionDriver(const string& filename) {
     } else {
       ceres::TinySolverCostFunctionAdapter<Eigen::Dynamic, num_parameters> cfa(
           *cost_function);
-      typedef ceres::TinySolver<
-          ceres::TinySolverCostFunctionAdapter<Eigen::Dynamic, num_parameters>>
-          Solver;
+      using Solver = ceres::TinySolver<
+          ceres::TinySolverCostFunctionAdapter<Eigen::Dynamic, num_parameters>>;
       Solver solver;
       solver.options.max_num_iterations = CERES_GET_FLAG(FLAGS_num_iterations);
       solver.options.gradient_tolerance =

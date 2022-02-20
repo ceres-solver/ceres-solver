@@ -30,6 +30,8 @@
 
 #include "ceres/iterative_refiner.h"
 
+#include <utility>
+
 #include "Eigen/Dense"
 #include "ceres/internal/eigen.h"
 #include "ceres/sparse_cholesky.h"
@@ -53,7 +55,7 @@ namespace internal {
 // A fake SparseMatrix, which uses an Eigen matrix to do the real work.
 class FakeSparseMatrix : public SparseMatrix {
  public:
-  FakeSparseMatrix(const Matrix& m) : m_(m) {}
+  explicit FakeSparseMatrix(Matrix m) : m_(std::move(m)) {}
 
   // y += Ax
   void RightMultiply(const double* x, double* y) const final {
@@ -88,7 +90,7 @@ class FakeSparseMatrix : public SparseMatrix {
 template <typename Scalar>
 class FakeSparseCholesky : public SparseCholesky {
  public:
-  FakeSparseCholesky(const Matrix& lhs) { lhs_ = lhs.cast<Scalar>(); }
+  explicit FakeSparseCholesky(const Matrix& lhs) { lhs_ = lhs.cast<Scalar>(); }
 
   LinearSolverTerminationType Solve(const double* rhs_ptr,
                                     double* solution_ptr,

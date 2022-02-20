@@ -149,9 +149,9 @@ void TranscendentalFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
   };
   // clang-format on
 
-  for (int k = 0; k < kTests.size(); ++k) {
-    double* x1 = &(kTests[k].x1[0]);
-    double* x2 = &(kTests[k].x2[0]);
+  for (auto& kTest : kTests) {
+    double* x1 = &(kTest.x1[0]);
+    double* x2 = &(kTest.x2[0]);
     double* parameters[] = {x1, x2};
 
     double dydx1[10];
@@ -207,8 +207,8 @@ void ExponentialFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
   // Minimal tolerance w.r.t. the cost function and the tests.
   const double kTolerance = 2e-14;
 
-  for (int k = 0; k < kTests.size(); ++k) {
-    double* parameters[] = {&kTests[k]};
+  for (double& kTest : kTests) {
+    double* parameters[] = {&kTest};
     double dydx;
     double* jacobians[1] = {&dydx};
     double residual;
@@ -216,7 +216,7 @@ void ExponentialFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
     ASSERT_TRUE(
         cost_function.Evaluate(&parameters[0], &residual, &jacobians[0]));
 
-    double expected_result = exp(kTests[k]);
+    double expected_result = exp(kTest);
 
     // Expect residual to be close to exp(x).
     ExpectClose(residual, expected_result, kTolerance);
@@ -248,8 +248,8 @@ void RandomizedFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
   // Initialize random number generator with given seed.
   srand(random_seed_);
 
-  for (int k = 0; k < kTests.size(); ++k) {
-    double* parameters[] = {&kTests[k]};
+  for (double& kTest : kTests) {
+    double* parameters[] = {&kTest};
     double dydx;
     double* jacobians[1] = {&dydx};
     double residual;
@@ -258,10 +258,10 @@ void RandomizedFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
         cost_function.Evaluate(&parameters[0], &residual, &jacobians[0]));
 
     // Expect residual to be close to x^2 w.r.t. noise factor.
-    ExpectClose(residual, kTests[k] * kTests[k], noise_factor_);
+    ExpectClose(residual, kTest * kTest, noise_factor_);
 
     // Check evaluated differences. (dy/dx = ~2x)
-    ExpectClose(dydx, 2 * kTests[k], kTolerance);
+    ExpectClose(dydx, 2 * kTest, kTolerance);
   }
 }
 

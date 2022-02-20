@@ -185,12 +185,12 @@ TEST(CovarianceImpl, ComputeCovarianceSparsity) {
   // clang-format on
 
   vector<pair<const double*, const double*>> covariance_blocks;
-  covariance_blocks.push_back(make_pair(block1, block1));
-  covariance_blocks.push_back(make_pair(block4, block4));
-  covariance_blocks.push_back(make_pair(block2, block2));
-  covariance_blocks.push_back(make_pair(block3, block3));
-  covariance_blocks.push_back(make_pair(block2, block3));
-  covariance_blocks.push_back(make_pair(block4, block1));  // reversed
+  covariance_blocks.emplace_back(block1, block1);
+  covariance_blocks.emplace_back(block4, block4);
+  covariance_blocks.emplace_back(block2, block2);
+  covariance_blocks.emplace_back(block3, block3);
+  covariance_blocks.emplace_back(block2, block3);
+  covariance_blocks.emplace_back(block4, block1);  // reversed
 
   Covariance::Options options;
   CovarianceImpl covariance_impl(options);
@@ -266,12 +266,12 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithConstantParameterBlock) {
   // clang-format on
 
   vector<pair<const double*, const double*>> covariance_blocks;
-  covariance_blocks.push_back(make_pair(block1, block1));
-  covariance_blocks.push_back(make_pair(block4, block4));
-  covariance_blocks.push_back(make_pair(block2, block2));
-  covariance_blocks.push_back(make_pair(block3, block3));
-  covariance_blocks.push_back(make_pair(block2, block3));
-  covariance_blocks.push_back(make_pair(block4, block1));  // reversed
+  covariance_blocks.emplace_back(block1, block1);
+  covariance_blocks.emplace_back(block4, block4);
+  covariance_blocks.emplace_back(block2, block2);
+  covariance_blocks.emplace_back(block3, block3);
+  covariance_blocks.emplace_back(block2, block3);
+  covariance_blocks.emplace_back(block4, block1);  // reversed
 
   Covariance::Options options;
   CovarianceImpl covariance_impl(options);
@@ -345,12 +345,12 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
   // clang-format on
 
   vector<pair<const double*, const double*>> covariance_blocks;
-  covariance_blocks.push_back(make_pair(block1, block1));
-  covariance_blocks.push_back(make_pair(block4, block4));
-  covariance_blocks.push_back(make_pair(block2, block2));
-  covariance_blocks.push_back(make_pair(block3, block3));
-  covariance_blocks.push_back(make_pair(block2, block3));
-  covariance_blocks.push_back(make_pair(block4, block1));  // reversed
+  covariance_blocks.emplace_back(block1, block1);
+  covariance_blocks.emplace_back(block4, block4);
+  covariance_blocks.emplace_back(block2, block2);
+  covariance_blocks.emplace_back(block3, block3);
+  covariance_blocks.emplace_back(block2, block3);
+  covariance_blocks.emplace_back(block4, block1);  // reversed
 
   Covariance::Options options;
   CovarianceImpl covariance_impl(options);
@@ -432,7 +432,7 @@ class PolynomialManifold : public Manifold {
 
 class CovarianceTest : public ::testing::Test {
  protected:
-  typedef map<const double*, pair<int, int>> BoundsMap;
+  using BoundsMap = map<const double*, pair<int, int>>;
 
   void SetUp() override {
     double* x = parameters_;
@@ -478,12 +478,12 @@ class CovarianceTest : public ::testing::Test {
           new BinaryCostFunction(1, 1, 2, jacobian1, jacobian2), nullptr, z, x);
     }
 
-    all_covariance_blocks_.push_back(make_pair(x, x));
-    all_covariance_blocks_.push_back(make_pair(y, y));
-    all_covariance_blocks_.push_back(make_pair(z, z));
-    all_covariance_blocks_.push_back(make_pair(x, y));
-    all_covariance_blocks_.push_back(make_pair(x, z));
-    all_covariance_blocks_.push_back(make_pair(y, z));
+    all_covariance_blocks_.emplace_back(x, x);
+    all_covariance_blocks_.emplace_back(y, y);
+    all_covariance_blocks_.emplace_back(z, z);
+    all_covariance_blocks_.emplace_back(x, y);
+    all_covariance_blocks_.emplace_back(x, z);
+    all_covariance_blocks_.emplace_back(y, z);
 
     column_bounds_[x] = make_pair(0, 2);
     column_bounds_[y] = make_pair(2, 5);
@@ -543,9 +543,9 @@ class CovarianceTest : public ::testing::Test {
       Covariance covariance(options);
       EXPECT_TRUE(covariance.Compute(covariance_blocks, &problem_));
 
-      for (int i = 0; i < covariance_blocks.size(); ++i) {
-        const double* block1 = covariance_blocks[i].first;
-        const double* block2 = covariance_blocks[i].second;
+      for (auto& covariance_block : covariance_blocks) {
+        const double* block1 = covariance_block.first;
+        const double* block2 = covariance_block.second;
         // block1, block2
         GetCovarianceBlockAndCompare(block1,
                                      block2,
@@ -1350,10 +1350,10 @@ TEST_F(CovarianceTest, ComputeCovarianceFailure) {
                             "Covariance::Compute called with duplicate blocks "
                             "at indices \\(0, 1\\) and \\(2, 3\\)");
   vector<pair<const double*, const double*>> covariance_blocks;
-  covariance_blocks.push_back(make_pair(x, x));
-  covariance_blocks.push_back(make_pair(x, x));
-  covariance_blocks.push_back(make_pair(y, y));
-  covariance_blocks.push_back(make_pair(y, y));
+  covariance_blocks.emplace_back(x, x);
+  covariance_blocks.emplace_back(x, x);
+  covariance_blocks.emplace_back(y, y);
+  covariance_blocks.emplace_back(y, y);
   EXPECT_DEATH_IF_SUPPORTED(covariance.Compute(covariance_blocks, &problem_),
                             "Covariance::Compute called with duplicate blocks "
                             "at indices \\(0, 1\\) and \\(2, 3\\)");
@@ -1398,12 +1398,12 @@ class RankDeficientCovarianceTest : public CovarianceTest {
           new BinaryCostFunction(1, 1, 2, jacobian1, jacobian2), nullptr, z, x);
     }
 
-    all_covariance_blocks_.push_back(make_pair(x, x));
-    all_covariance_blocks_.push_back(make_pair(y, y));
-    all_covariance_blocks_.push_back(make_pair(z, z));
-    all_covariance_blocks_.push_back(make_pair(x, y));
-    all_covariance_blocks_.push_back(make_pair(x, z));
-    all_covariance_blocks_.push_back(make_pair(y, z));
+    all_covariance_blocks_.emplace_back(x, x);
+    all_covariance_blocks_.emplace_back(y, y);
+    all_covariance_blocks_.emplace_back(z, z);
+    all_covariance_blocks_.emplace_back(x, y);
+    all_covariance_blocks_.emplace_back(x, z);
+    all_covariance_blocks_.emplace_back(y, z);
 
     column_bounds_[x] = make_pair(0, 2);
     column_bounds_[y] = make_pair(2, 5);
@@ -1475,10 +1475,10 @@ TEST(Covariance, ZeroSizedLocalParameterizationGetCovariance) {
   options.algorithm_type = DENSE_SVD;
   Covariance covariance(options);
   vector<pair<const double*, const double*>> covariance_blocks;
-  covariance_blocks.push_back(std::make_pair(&x, &x));
-  covariance_blocks.push_back(std::make_pair(&x, &y));
-  covariance_blocks.push_back(std::make_pair(&y, &x));
-  covariance_blocks.push_back(std::make_pair(&y, &y));
+  covariance_blocks.emplace_back(&x, &x);
+  covariance_blocks.emplace_back(&x, &y);
+  covariance_blocks.emplace_back(&y, &x);
+  covariance_blocks.emplace_back(&y, &y);
   EXPECT_TRUE(covariance.Compute(covariance_blocks, &problem));
 
   double value = -1;
@@ -1510,10 +1510,10 @@ TEST(Covariance, ZeroSizedLocalParameterizationGetCovarianceInTangentSpace) {
   options.algorithm_type = DENSE_SVD;
   Covariance covariance(options);
   vector<pair<const double*, const double*>> covariance_blocks;
-  covariance_blocks.push_back(std::make_pair(&x, &x));
-  covariance_blocks.push_back(std::make_pair(&x, &y));
-  covariance_blocks.push_back(std::make_pair(&y, &x));
-  covariance_blocks.push_back(std::make_pair(&y, &y));
+  covariance_blocks.emplace_back(&x, &x);
+  covariance_blocks.emplace_back(&x, &y);
+  covariance_blocks.emplace_back(&y, &x);
+  covariance_blocks.emplace_back(&y, &y);
   EXPECT_TRUE(covariance.Compute(covariance_blocks, &problem));
 
   double value = -1;
@@ -1543,10 +1543,10 @@ TEST(Covariance, ZeroSizedManifoldGetCovariance) {
   options.algorithm_type = DENSE_SVD;
   Covariance covariance(options);
   vector<pair<const double*, const double*>> covariance_blocks;
-  covariance_blocks.push_back(std::make_pair(&x, &x));
-  covariance_blocks.push_back(std::make_pair(&x, &y));
-  covariance_blocks.push_back(std::make_pair(&y, &x));
-  covariance_blocks.push_back(std::make_pair(&y, &y));
+  covariance_blocks.emplace_back(&x, &x);
+  covariance_blocks.emplace_back(&x, &y);
+  covariance_blocks.emplace_back(&y, &x);
+  covariance_blocks.emplace_back(&y, &y);
   EXPECT_TRUE(covariance.Compute(covariance_blocks, &problem));
 
   double value = -1;
@@ -1578,10 +1578,10 @@ TEST(Covariance, ZeroSizedManifoldGetCovarianceInTangentSpace) {
   options.algorithm_type = DENSE_SVD;
   Covariance covariance(options);
   vector<pair<const double*, const double*>> covariance_blocks;
-  covariance_blocks.push_back(std::make_pair(&x, &x));
-  covariance_blocks.push_back(std::make_pair(&x, &y));
-  covariance_blocks.push_back(std::make_pair(&y, &x));
-  covariance_blocks.push_back(std::make_pair(&y, &y));
+  covariance_blocks.emplace_back(&x, &x);
+  covariance_blocks.emplace_back(&x, &y);
+  covariance_blocks.emplace_back(&y, &x);
+  covariance_blocks.emplace_back(&y, &y);
   EXPECT_TRUE(covariance.Compute(covariance_blocks, &problem));
 
   double value = -1;
@@ -1620,7 +1620,7 @@ class LargeScaleCovarianceTest : public ::testing::Test {
           block_i);
       for (int j = i; j < num_parameter_blocks_; ++j) {
         double* block_j = parameters_.get() + j * parameter_block_size_;
-        all_covariance_blocks_.push_back(make_pair(block_i, block_j));
+        all_covariance_blocks_.emplace_back(block_i, block_j);
       }
     }
   }

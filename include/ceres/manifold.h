@@ -225,7 +225,7 @@ class CERES_EXPORT Manifold {
 //   Minus(y, x) = y - x.
 class CERES_EXPORT EuclideanManifold : public Manifold {
  public:
-  EuclideanManifold(int size);
+  explicit EuclideanManifold(int size);
   int AmbientSize() const override;
   int TangentSize() const override;
   bool Plus(const double* x,
@@ -290,7 +290,8 @@ class CERES_EXPORT ProductManifold : public Manifold {
   // manifolds.
   //
   template <typename... Manifolds>
-  ProductManifold(Manifolds*... manifolds) : manifolds_(sizeof...(Manifolds)) {
+  explicit ProductManifold(Manifolds*... manifolds)
+      : manifolds_(sizeof...(Manifolds)) {
     constexpr int kNumManifolds = sizeof...(Manifolds);
     static_assert(kNumManifolds >= 2,
                   "At least two manifolds must be specified.");

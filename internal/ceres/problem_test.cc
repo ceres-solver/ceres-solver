@@ -1293,8 +1293,7 @@ TEST_P(DynamicProblem, RemoveInvalidResidualBlockDies) {
 
   // Attempt to remove a cast pointer never added as a residual.
   int trash_memory = 1234;
-  ResidualBlock* invalid_residual =
-      reinterpret_cast<ResidualBlock*>(&trash_memory);
+  auto* invalid_residual = reinterpret_cast<ResidualBlock*>(&trash_memory);
   EXPECT_DEATH_IF_SUPPORTED(problem->RemoveResidualBlock(invalid_residual),
                             "not found");
 
@@ -1363,40 +1362,40 @@ TEST_P(DynamicProblem, GetXXXBlocksForYYYBlock) {
 
   ResidualBlock* r_yzw = problem->AddResidualBlock(cost_yzw, nullptr, y, z, w);
   {
-    ResidualBlockId expected_residuals[] = {r_yzw, 0};
+    ResidualBlockId expected_residuals[] = {r_yzw, nullptr};
     ExpectProblemHasResidualBlocks(*problem, expected_residuals);
   }
   ResidualBlock* r_yz  = problem->AddResidualBlock(cost_yz,  nullptr, y, z);
   {
-    ResidualBlockId expected_residuals[] = {r_yzw, r_yz, 0};
+    ResidualBlockId expected_residuals[] = {r_yzw, r_yz, nullptr};
     ExpectProblemHasResidualBlocks(*problem, expected_residuals);
   }
   ResidualBlock* r_yw  = problem->AddResidualBlock(cost_yw,  nullptr, y, w);
   {
-    ResidualBlock *expected_residuals[] = {r_yzw, r_yz, r_yw, 0};
+    ResidualBlock *expected_residuals[] = {r_yzw, r_yz, r_yw, nullptr};
     ExpectProblemHasResidualBlocks(*problem, expected_residuals);
   }
   ResidualBlock* r_zw  = problem->AddResidualBlock(cost_zw,  nullptr, z, w);
   {
-    ResidualBlock *expected_residuals[] = {r_yzw, r_yz, r_yw, r_zw, 0};
+    ResidualBlock *expected_residuals[] = {r_yzw, r_yz, r_yw, r_zw, nullptr};
     ExpectProblemHasResidualBlocks(*problem, expected_residuals);
   }
   ResidualBlock* r_y   = problem->AddResidualBlock(cost_y,   nullptr, y);
   {
-    ResidualBlock *expected_residuals[] = {r_yzw, r_yz, r_yw, r_zw, r_y, 0};
+    ResidualBlock *expected_residuals[] = {r_yzw, r_yz, r_yw, r_zw, r_y, nullptr};
     ExpectProblemHasResidualBlocks(*problem, expected_residuals);
   }
   ResidualBlock* r_z   = problem->AddResidualBlock(cost_z,   nullptr, z);
   {
     ResidualBlock *expected_residuals[] = {
-      r_yzw, r_yz, r_yw, r_zw, r_y, r_z, 0
+      r_yzw, r_yz, r_yw, r_zw, r_y, r_z, nullptr
     };
     ExpectProblemHasResidualBlocks(*problem, expected_residuals);
   }
   ResidualBlock* r_w   = problem->AddResidualBlock(cost_w,   nullptr, w);
   {
     ResidualBlock *expected_residuals[] = {
-      r_yzw, r_yz, r_yw, r_zw, r_y, r_z, r_w, 0
+      r_yzw, r_yz, r_yw, r_zw, r_y, r_z, r_w, nullptr
     };
     ExpectProblemHasResidualBlocks(*problem, expected_residuals);
   }

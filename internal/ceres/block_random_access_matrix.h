@@ -86,10 +86,10 @@ namespace internal {
 // Structure to carry a pointer to the array containing a cell and the
 // mutex guarding it.
 struct CERES_NO_EXPORT CellInfo {
-  CellInfo() : values(nullptr) {}
+  CellInfo() = default;
   explicit CellInfo(double* values) : values(values) {}
 
-  double* values;
+  double* values{nullptr};
   std::mutex m;
 };
 

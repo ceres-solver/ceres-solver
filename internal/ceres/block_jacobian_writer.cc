@@ -69,8 +69,7 @@ void BuildJacobianLayout(const Program& program,
   // matrix. Also compute the number of jacobian blocks.
   int f_block_pos = 0;
   int num_jacobian_blocks = 0;
-  for (int i = 0; i < residual_blocks.size(); ++i) {
-    ResidualBlock* residual_block = residual_blocks[i];
+  for (auto residual_block : residual_blocks) {
     const int num_residuals = residual_block->NumResiduals();
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
 
@@ -152,7 +151,7 @@ BlockJacobianWriter::CreateEvaluatePreparers(int num_threads) {
 }
 
 std::unique_ptr<SparseMatrix> BlockJacobianWriter::CreateJacobian() const {
-  CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
+  auto* bs = new CompressedRowBlockStructure;
 
   const vector<ParameterBlock*>& parameter_blocks =
       program_->parameter_blocks();

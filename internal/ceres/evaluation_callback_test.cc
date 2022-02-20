@@ -50,7 +50,7 @@ namespace internal {
 template <typename T>
 uint64_t Djb2Hash(const T* data, const int size) {
   uint64_t hash = 5381;
-  const uint8_t* data_as_bytes = reinterpret_cast<const uint8_t*>(data);
+  const auto* data_as_bytes = reinterpret_cast<const uint8_t*>(data);
   for (int i = 0; i < sizeof(*data) * size; ++i) {
     hash = hash * 33 + data_as_bytes[i];
   }

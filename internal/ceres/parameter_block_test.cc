@@ -164,7 +164,7 @@ TEST(ParameterBlock, PlusWithNoManifold) {
 // Stops computing the plus_jacobian after the first time.
 class BadManifold : public Manifold {
  public:
-  BadManifold() : calls_(0) {}
+  BadManifold() = default;
 
   bool Plus(const double* x,
             const double* delta,
@@ -195,7 +195,7 @@ class BadManifold : public Manifold {
   int TangentSize() const final { return 1; }
 
  private:
-  mutable int calls_;
+  mutable int calls_{0};
 };
 
 TEST(ParameterBlock, DetectBadManifold) {
