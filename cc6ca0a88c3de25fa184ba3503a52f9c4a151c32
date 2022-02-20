@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c524a38_d1480b7f",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T20:25:17Z",
+      "side": 1,
+      "message": "I now added previously left out explicit keywords that were added by clang-tidy because this test shows what can go wrong without `explicit`. While it is not clear whether it was on purpose to pass `f` (which is implicitly converted into `TinySolverAutoDiffFunction`) here, passing `f_autodiff` would have been more sensible (and probably was intended to be done so.)",
+      "revId": "cc6ca0a88c3de25fa184ba3503a52f9c4a151c32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
