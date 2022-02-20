@@ -1,0 +1,912 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9faf1c19_46187117",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "Thanks Sergiu, this is great. I think I only have three class of questions.\n\n1. Some of the constructors are not explicit anymore. what gives?\n2. Some of the constructors are not respecting const reference inputs and converting them into pass by value and then using move initialization. This is not efficient in some cases. how did clang decide to do that?\n3. Some of the range based loops are making copies and in some cases unnecessarily taking references when the underlying type is a pointer.\n\nFinally some of the variable names in the range based for loop transformation are odd and need to be hand tweaked. \n\nI think it would be a good idea for you and for alex to go over the CL manually and carefully to make sure we are not introducing unnecessary copies and the variable names are not getting worse.",
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ef730a9_70aa38eb",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "while you are at it, add algorithm for this please.",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 18
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5dc8248_a20748f0",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "why remove explicit here?",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 22
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebde1d16_8dc0925e",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "same comment.",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 29
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb6f883f_1567fb62",
+        "filename": "include/ceres/internal/eigen.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "I think this entire hack can go away, but thats not this CL, because that requires serious code changes downstream.",
+      "range": {
+        "startLine": 58,
+        "startChar": 14,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c309ced3_a74059a0",
+        "filename": "include/ceres/normal_prior.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "why drop the const ref here?",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 37
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5c0b2b1_8bcf8fe2",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "why not auto\u0026 cell ?",
+      "range": {
+        "startLine": 63,
+        "startChar": 14,
+        "endLine": 63,
+        "endChar": 18
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb3121fc_41ac6080",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "how do you know you are not making a copy of cell here?\nshouldn\u0027t this be auto\u0026 cell ?",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bee27aba_d2f4c1aa",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 141,
+        "startChar": 18,
+        "endLine": 141,
+        "endChar": 19
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9623aa58_82c83f04",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 158,
+        "startChar": 18,
+        "endLine": 158,
+        "endChar": 19
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24929362_3c9dad6c",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "auto\u0026 ?",
+      "range": {
+        "startLine": 180,
+        "startChar": 14,
+        "endLine": 180,
+        "endChar": 18
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43cee082_9a88100f",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "auto\u0026 ?",
+      "range": {
+        "startLine": 203,
+        "startChar": 14,
+        "endLine": 203,
+        "endChar": 18
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "949dc9ad_228edbb9",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 232,
+        "startChar": 14,
+        "endLine": 232,
+        "endChar": 18
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae6feb41_771b91c9",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "auto\u0026",
+      "range": {
+        "startLine": 272,
+        "startChar": 12,
+        "endLine": 272,
+        "endChar": 24
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dee3627_6c1e18c9",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "parameter_index",
+      "range": {
+        "startLine": 170,
+        "startChar": 13,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7382d43_87bcef97",
+        "filename": "internal/ceres/dense_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "this should not be a move.",
+      "range": {
+        "startLine": 59,
+        "startChar": 57,
+        "endLine": 59,
+        "endChar": 61
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e15261f_51c73fc9",
+        "filename": "internal/ceres/dense_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "why is this losing its reference?",
+      "range": {
+        "startLine": 52,
+        "startChar": 29,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee5edca5_683461de",
+        "filename": "internal/ceres/iterative_refiner_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "this should not be a move.",
+      "range": {
+        "startLine": 58,
+        "startChar": 28,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "430b3c5c_2c24e2ed",
+        "filename": "internal/ceres/line_search_direction.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "formatting/indentation.",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "984a18e5_4d13b8dc",
+        "filename": "internal/ceres/normal_prior.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "this should not be a move.",
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c6c9a74_2c56a549",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "auto\u0026 ?",
+      "range": {
+        "startLine": 145,
+        "startChar": 13,
+        "endLine": 145,
+        "endChar": 14
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8479e10_581c4975",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "auto\u0026",
+      "range": {
+        "startLine": 215,
+        "startChar": 18,
+        "endLine": 215,
+        "endChar": 19
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a6cbb94_150d9e15",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "auto\u0026",
+      "range": {
+        "startLine": 364,
+        "startChar": 14,
+        "endLine": 364,
+        "endChar": 18
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa270acb_ccbdec1a",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "why auto\u0026 here? its a pointer.",
+      "range": {
+        "startLine": 798,
+        "startChar": 11,
+        "endLine": 798,
+        "endChar": 12
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6eafc8ea_bfc53230",
+        "filename": "internal/ceres/program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "just auto should do",
+      "range": {
+        "startLine": 79,
+        "startChar": 11,
+        "endLine": 79,
+        "endChar": 12
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc84ea49_0aa36399",
+        "filename": "internal/ceres/program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "just auto",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 28
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8e62bd6_55b7424a",
+        "filename": "internal/ceres/program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "just auto",
+      "range": {
+        "startLine": 102,
+        "startChar": 13,
+        "endLine": 102,
+        "endChar": 28
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7309855_ea4f7354",
+        "filename": "internal/ceres/program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "just auto",
+      "range": {
+        "startLine": 306,
+        "startChar": 12,
+        "endLine": 306,
+        "endChar": 13
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "752b6b35_1dc35b80",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "auto residual_block :",
+      "range": {
+        "startLine": 317,
+        "startChar": 12,
+        "endLine": 317,
+        "endChar": 13
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dc452de_01fcc8a9",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "just auto",
+      "range": {
+        "startLine": 342,
+        "startChar": 7,
+        "endLine": 342,
+        "endChar": 11
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1258c449_271097be",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "this reads worse",
+      "range": {
+        "startLine": 329,
+        "startChar": 18,
+        "endLine": 329,
+        "endChar": 19
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0e2ee30_e42822b4",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "this reads worse.\nsame for other loops in this file.",
+      "range": {
+        "startLine": 337,
+        "startChar": 16,
+        "endLine": 337,
+        "endChar": 17
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4317cb7_000beb05",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "auto\u0026",
+      "range": {
+        "startLine": 296,
+        "startChar": 15,
+        "endLine": 296,
+        "endChar": 16
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb3f4454_9cc80d8e",
+        "filename": "internal/ceres/scoped_thread_token.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "these can be made public no?",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40c9a920_3ccb14d4",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "double x_value",
+      "range": {
+        "startLine": 121,
+        "startChar": 14,
+        "endLine": 121,
+        "endChar": 15
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abaf01d4_9b001b78",
+        "filename": "internal/ceres/triplet_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "why no explicit?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "add224cd_23f0550e",
+        "filename": "internal/ceres/visibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "i is bad variable name here.",
+      "range": {
+        "startLine": 90,
+        "startChar": 20,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7659672e_573035b7",
+        "filename": "internal/ceres/visibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "this is also a range based loop no?",
+      "range": {
+        "startLine": 115,
+        "startChar": 14,
+        "endLine": 115,
+        "endChar": 21
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3e50632_e8d7787a",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be a range based loop?",
+      "range": {
+        "startLine": 285,
+        "startChar": 23,
+        "endLine": 285,
+        "endChar": 31
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbe5ea8c_2aa1deea",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-20T05:44:21Z",
+      "side": 1,
+      "message": "auto\u0026",
+      "range": {
+        "startLine": 302,
+        "startChar": 16,
+        "endLine": 302,
+        "endChar": 20
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
