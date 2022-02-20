@@ -210,8 +210,7 @@ LinearSolver::Summary DenseSchurComplementSolver::SolveReducedLinearSystem(
   summary.termination_type = LINEAR_SOLVER_SUCCESS;
   summary.message = "Success.";
 
-  BlockRandomAccessDenseMatrix* m =
-      down_cast<BlockRandomAccessDenseMatrix*>(mutable_lhs());
+  auto* m = down_cast<BlockRandomAccessDenseMatrix*>(mutable_lhs());
   const int num_rows = m->num_rows();
 
   // The case where there are no f blocks, and the system is block
@@ -294,8 +293,8 @@ void SparseSchurComplementSolver::InitStorage(
     CHECK_GE(row.cells.front().block_id, num_eliminate_blocks);
     for (int i = 0; i < row.cells.size(); ++i) {
       int r_block1_id = row.cells[i].block_id - num_eliminate_blocks;
-      for (int j = 0; j < row.cells.size(); ++j) {
-        int r_block2_id = row.cells[j].block_id - num_eliminate_blocks;
+      for (const auto& cell : row.cells) {
+        int r_block2_id = cell.block_id - num_eliminate_blocks;
         if (r_block1_id <= r_block2_id) {
           block_pairs.insert(make_pair(r_block1_id, r_block2_id));
         }
@@ -369,8 +368,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingConjugateGradients(
         std::make_unique<BlockRandomAccessDiagonalMatrix>(blocks_);
   }
 
-  BlockRandomAccessSparseMatrix* sc =
-      down_cast<BlockRandomAccessSparseMatrix*>(mutable_lhs());
+  auto* sc = down_cast<BlockRandomAccessSparseMatrix*>(mutable_lhs());
 
   // Extract block diagonal from the Schur complement to construct the
   // schur_jacobi preconditioner.

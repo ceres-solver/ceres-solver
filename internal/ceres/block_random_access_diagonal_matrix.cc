@@ -58,10 +58,10 @@ BlockRandomAccessDiagonalMatrix::BlockRandomAccessDiagonalMatrix(
   int num_cols = 0;
   int num_nonzeros = 0;
   vector<int> block_positions;
-  for (int i = 0; i < blocks_.size(); ++i) {
+  for (int block : blocks_) {
     block_positions.push_back(num_cols);
-    num_cols += blocks_[i];
-    num_nonzeros += blocks_[i] * blocks_[i];
+    num_cols += block;
+    num_nonzeros += block * block;
   }
 
   VLOG(1) << "Matrix Size [" << num_cols << "," << num_cols << "] "
@@ -123,8 +123,7 @@ void BlockRandomAccessDiagonalMatrix::SetZero() {
 
 void BlockRandomAccessDiagonalMatrix::Invert() {
   double* values = tsm_->mutable_values();
-  for (int i = 0; i < blocks_.size(); ++i) {
-    const int block_size = blocks_[i];
+  for (int block_size : blocks_) {
     MatrixRef block(values, block_size, block_size);
     block = block.selfadjointView<Eigen::Upper>().llt().solve(
         Matrix::Identity(block_size, block_size));
@@ -137,8 +136,7 @@ void BlockRandomAccessDiagonalMatrix::RightMultiply(const double* x,
   CHECK(x != nullptr);
   CHECK(y != nullptr);
   const double* values = tsm_->values();
-  for (int i = 0; i < blocks_.size(); ++i) {
-    const int block_size = blocks_[i];
+  for (int block_size : blocks_) {
     ConstMatrixRef block(values, block_size, block_size);
     VectorRef(y, block_size).noalias() += block * ConstVectorRef(x, block_size);
     x += block_size;

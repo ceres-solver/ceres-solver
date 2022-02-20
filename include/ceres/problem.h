@@ -67,7 +67,7 @@ class ResidualBlock;
 
 // A ResidualBlockId is an opaque handle clients can use to remove residual
 // blocks from a Problem after adding them.
-typedef internal::ResidualBlock* ResidualBlockId;
+using ResidualBlockId = internal::ResidualBlock*;
 
 // A class to represent non-linear least squares problems. Such
 // problems have a cost function that is a sum of error terms (known

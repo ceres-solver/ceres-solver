@@ -154,7 +154,7 @@ class CERES_NO_EXPORT CXSparseCholesky final : public SparseCholesky {
                                     std::string* message) final;
 
  private:
-  CXSparseCholesky(const OrderingType ordering_type);
+  explicit CXSparseCholesky(const OrderingType ordering_type);
   void FreeSymbolicFactorization();
   void FreeNumericFactorization();
 

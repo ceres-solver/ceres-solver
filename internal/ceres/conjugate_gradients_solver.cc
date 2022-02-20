@@ -41,6 +41,7 @@
 
 #include <cmath>
 #include <cstddef>
+#include <utility>
 
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_operator.h"
@@ -57,8 +58,8 @@ bool IsZeroOrInfinity(double x) { return ((x == 0.0) || std::isinf(x)); }
 }  // namespace
 
 ConjugateGradientsSolver::ConjugateGradientsSolver(
-    const LinearSolver::Options& options)
-    : options_(options) {}
+    LinearSolver::Options options)
+    : options_(std::move(options)) {}
 
 LinearSolver::Summary ConjugateGradientsSolver::Solve(
     LinearOperator* A,

@@ -86,18 +86,18 @@ struct NumericDiff {
         (kParameterBlockSize != ceres::DYNAMIC ? kParameterBlockSize
                                                : parameter_block_size);
 
-    typedef Matrix<double, kNumResiduals, 1> ResidualVector;
-    typedef Matrix<double, kParameterBlockSize, 1> ParameterVector;
+    using ResidualVector = Matrix<double, kNumResiduals, 1>;
+    using ParameterVector = Matrix<double, kParameterBlockSize, 1>;
 
     // The convoluted reasoning for choosing the Row/Column major
     // ordering of the matrix is an artifact of the restrictions in
     // Eigen that prevent it from creating RowMajor matrices with a
     // single column. In these cases, we ask for a ColMajor matrix.
-    typedef Matrix<double,
-                   kNumResiduals,
-                   kParameterBlockSize,
-                   (kParameterBlockSize == 1) ? ColMajor : RowMajor>
-        JacobianMatrix;
+    using JacobianMatrix =
+        Matrix<double,
+               kNumResiduals,
+               kParameterBlockSize,
+               (kParameterBlockSize == 1) ? ColMajor : RowMajor>;
 
     Map<JacobianMatrix> parameter_jacobian(
         jacobian, num_residuals_internal, parameter_block_size_internal);
@@ -184,8 +184,8 @@ struct NumericDiff {
     using Eigen::Map;
     using Eigen::Matrix;
 
-    typedef Matrix<double, kNumResiduals, 1> ResidualVector;
-    typedef Matrix<double, kParameterBlockSize, 1> ParameterVector;
+    using ResidualVector = Matrix<double, kNumResiduals, 1>;
+    using ParameterVector = Matrix<double, kParameterBlockSize, 1>;
 
     Map<const ParameterVector> x(x_ptr, parameter_block_size);
     Map<ParameterVector> x_plus_delta(x_plus_delta_ptr, parameter_block_size);
@@ -260,10 +260,10 @@ struct NumericDiff {
     using Eigen::Map;
     using Eigen::Matrix;
 
-    typedef Matrix<double, kNumResiduals, 1> ResidualVector;
-    typedef Matrix<double, kNumResiduals, Eigen::Dynamic>
-        ResidualCandidateMatrix;
-    typedef Matrix<double, kParameterBlockSize, 1> ParameterVector;
+    using ResidualVector = Matrix<double, kNumResiduals, 1>;
+    using ResidualCandidateMatrix =
+        Matrix<double, kNumResiduals, Eigen::Dynamic>;
+    using ParameterVector = Matrix<double, kParameterBlockSize, 1>;
 
     Map<const ParameterVector> x(x_ptr, parameter_block_size);
     Map<ParameterVector> x_plus_delta(x_plus_delta_ptr, parameter_block_size);

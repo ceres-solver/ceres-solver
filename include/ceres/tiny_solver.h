@@ -140,8 +140,8 @@ class TinySolver {
     NUM_RESIDUALS = Function::NUM_RESIDUALS,
     NUM_PARAMETERS = Function::NUM_PARAMETERS
   };
-  typedef typename Function::Scalar Scalar;
-  typedef typename Eigen::Matrix<Scalar, NUM_PARAMETERS, 1> Parameters;
+  using Scalar = typename Function::Scalar;
+  using Parameters = typename Eigen::Matrix<Scalar, NUM_PARAMETERS, 1>;
 
   enum Status {
     // max_norm |J'(x) * f(x)| < gradient_tolerance
@@ -349,7 +349,7 @@ class TinySolver {
 
   template <typename T>
   struct enable_if<true, T> {
-    typedef T type;
+    using type = T;
   };
 
   // The number of parameters and residuals are dynamically sized.

@@ -11,7 +11,7 @@ namespace internal {
 // ManifoldAdapter NEVER takes ownership of local_parameterization.
 class CERES_NO_EXPORT ManifoldAdapter final : public Manifold {
  public:
-  ManifoldAdapter(const LocalParameterization* local_parameterization)
+  explicit ManifoldAdapter(const LocalParameterization* local_parameterization)
       : local_parameterization_(local_parameterization) {
     CHECK(local_parameterization != nullptr);
   }

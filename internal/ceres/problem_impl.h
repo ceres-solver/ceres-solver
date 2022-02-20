@@ -69,10 +69,10 @@ class ResidualBlock;
 
 class CERES_NO_EXPORT ProblemImpl {
  public:
-  typedef std::map<double*, ParameterBlock*> ParameterMap;
-  typedef std::unordered_set<ResidualBlock*> ResidualBlockSet;
-  typedef std::map<CostFunction*, int> CostFunctionRefCount;
-  typedef std::map<LossFunction*, int> LossFunctionRefCount;
+  using ParameterMap = std::map<double*, ParameterBlock*>;
+  using ResidualBlockSet = std::unordered_set<ResidualBlock*>;
+  using CostFunctionRefCount = std::map<CostFunction*, int>;
+  using LossFunctionRefCount = std::map<LossFunction*, int>;
 
   ProblemImpl();
   explicit ProblemImpl(const Problem::Options& options);

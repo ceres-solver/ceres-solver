@@ -249,12 +249,12 @@ double LineSearch::InterpolatingPolynomialMinimizingStepSize(
   if (interpolation_type == QUADRATIC) {
     // Two point interpolation using function values and the
     // gradient at the lower bound.
-    samples.push_back(FunctionSample(current.x, current.value));
+    samples.emplace_back(current.x, current.value);
 
     if (previous.value_is_valid) {
       // Three point interpolation, using function values and the
       // gradient at the lower bound.
-      samples.push_back(FunctionSample(previous.x, previous.value));
+      samples.emplace_back(previous.x, previous.value);
     }
   } else if (interpolation_type == CUBIC) {
     // Two point interpolation using the function values and the gradients.

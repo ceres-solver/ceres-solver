@@ -332,8 +332,8 @@ TEST(QuaternionParameterization, NearZeroTest) {
   Normalize<4>(x);
 
   double delta[3] = {0.24, 0.15, 0.10};
-  for (int i = 0; i < 3; ++i) {
-    delta[i] = delta[i] * 1e-14;
+  for (double& i : delta) {
+    i = i * 1e-14;
   }
 
   double q_delta[4];
@@ -411,8 +411,8 @@ TEST(EigenQuaternionParameterization, NearZeroTest) {
   x.normalize();
 
   double delta[3] = {0.24, 0.15, 0.10};
-  for (int i = 0; i < 3; ++i) {
-    delta[i] = delta[i] * 1e-14;
+  for (double& i : delta) {
+    i = i * 1e-14;
   }
 
   // Note: w is first in the constructor.
