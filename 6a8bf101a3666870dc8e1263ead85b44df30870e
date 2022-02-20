@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "40c7c82b_9ddadeb4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Thanks Sameer. Additional review passes are certainly necessary.\n\n1. Implicit conversions make only in few instances sense and are in general error prone. For instance, should this be allowed?\n```\nEuclideanManifold m \u003d 3;\n// or\nEuclideanManifold m \u003d {3};\n// or\nProductManifold p \u003d new EuclideanManifold(3);\n```\nParticularly, dynamically allocated instances, e.g., derived from `LocalParameterization` and `Manifold` cannot make use of implicit conversions in a sensible way anyway.\n2. This is actually a standard trick that allows treating both a move and a copy uniformly using a single implementation. With move semantics the transformation is equivalent and in general more efficient: a temporary will only be moved instead of being copied and with a reference a copy will be created followed by a move.\n3. Agreed.",
+      "parentUuid": "9faf1c19_46187117",
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ef730a9_70aa38eb",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "while you are at it, add algorithm for this please.",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 18
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65aaa432_b1ec4042",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ef730a9_70aa38eb",
       "range": {
         "startLine": 67,
         "startChar": 7,
@@ -66,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "38b3497e_00edbf58",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Explicit is not necessary because it\u0027s a move constructor. The standard signature does not include the explicit keyword. Should probably be also `noexcept`.",
+      "parentUuid": "c5dc8248_a20748f0",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 22
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ebde1d16_8dc0925e",
         "filename": "include/ceres/dynamic_autodiff_cost_function.h",
         "patchSetId": 1
@@ -77,6 +143,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "same comment.",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 29
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9448ee88_f406d53d",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "It\u0027s a move constructor that should use a standard signature. No `explicit` is necessary. Also `noexcept` is probably a good idea.",
+      "parentUuid": "ebde1d16_8dc0925e",
       "range": {
         "startLine": 87,
         "startChar": 2,
@@ -135,6 +225,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8aba7704_9e0043d7",
+        "filename": "include/ceres/normal_prior.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Should either both be passed by value or by reference. Depending on whether we want to proceed with applying `clang-tidy`\u0027s suggestion/using the trick.",
+      "parentUuid": "c309ced3_a74059a0",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 37
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f5c0b2b1_8bcf8fe2",
         "filename": "internal/ceres/block_jacobi_preconditioner.cc",
         "patchSetId": 1
@@ -146,6 +260,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "why not auto\u0026 cell ?",
+      "range": {
+        "startLine": 63,
+        "startChar": 14,
+        "endLine": 63,
+        "endChar": 18
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3edef89d_74177d06",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5c0b2b1_8bcf8fe2",
       "range": {
         "startLine": 63,
         "startChar": 14,
@@ -179,6 +317,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4b97d49_1f0b1a83",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb3121fc_41ac6080",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bee27aba_d2f4c1aa",
@@ -192,6 +354,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "same",
+      "range": {
+        "startLine": 141,
+        "startChar": 18,
+        "endLine": 141,
+        "endChar": 19
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7ae03bc_ae6e6377",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bee27aba_d2f4c1aa",
       "range": {
         "startLine": 141,
         "startChar": 18,
@@ -225,6 +411,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6d14de4_abce4c70",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9623aa58_82c83f04",
+      "range": {
+        "startLine": 158,
+        "startChar": 18,
+        "endLine": 158,
+        "endChar": 19
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "24929362_3c9dad6c",
@@ -238,6 +448,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "auto\u0026 ?",
+      "range": {
+        "startLine": 180,
+        "startChar": 14,
+        "endLine": 180,
+        "endChar": 18
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f720bba_2ae66a90",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24929362_3c9dad6c",
       "range": {
         "startLine": 180,
         "startChar": 14,
@@ -271,6 +505,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "776ce7b3_de646791",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43cee082_9a88100f",
+      "range": {
+        "startLine": 203,
+        "startChar": 14,
+        "endLine": 203,
+        "endChar": 18
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "949dc9ad_228edbb9",
@@ -284,6 +542,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "same",
+      "range": {
+        "startLine": 232,
+        "startChar": 14,
+        "endLine": 232,
+        "endChar": 18
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "994316fc_0255d5e9",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "949dc9ad_228edbb9",
       "range": {
         "startLine": 232,
         "startChar": 14,
@@ -317,6 +599,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fdb971f_5035a147",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae6feb41_771b91c9",
+      "range": {
+        "startLine": 272,
+        "startChar": 12,
+        "endLine": 272,
+        "endChar": 24
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8dee3627_6c1e18c9",
@@ -340,6 +646,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e11da98_4b28d1db",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dee3627_6c1e18c9",
+      "range": {
+        "startLine": 170,
+        "startChar": 13,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7382d43_87bcef97",
@@ -353,6 +683,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "this should not be a move.",
+      "range": {
+        "startLine": 59,
+        "startChar": 57,
+        "endLine": 59,
+        "endChar": 61
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8434916e_1ff7c710",
+        "filename": "internal/ceres/dense_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "This is debatable. The move would eliminate an unnecessary copy of a temporary.",
+      "parentUuid": "a7382d43_87bcef97",
       "range": {
         "startLine": 59,
         "startChar": 57,
@@ -432,6 +786,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8e7a18f_d109b65f",
+        "filename": "internal/ceres/line_search_direction.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Can be dropped altogether.",
+      "parentUuid": "430b3c5c_2c24e2ed",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "984a18e5_4d13b8dc",
@@ -472,6 +850,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "688fb1db_97e63a5e",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c6c9a74_2c56a549",
+      "range": {
+        "startLine": 145,
+        "startChar": 13,
+        "endLine": 145,
+        "endChar": 14
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8479e10_581c4975",
@@ -485,6 +887,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "auto\u0026",
+      "range": {
+        "startLine": 215,
+        "startChar": 18,
+        "endLine": 215,
+        "endChar": 19
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f1f67ec_b6fe74aa",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8479e10_581c4975",
       "range": {
         "startLine": 215,
         "startChar": 18,
@@ -518,6 +944,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77386b0c_aa669964",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a6cbb94_150d9e15",
+      "range": {
+        "startLine": 364,
+        "startChar": 14,
+        "endLine": 364,
+        "endChar": 18
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa270acb_ccbdec1a",
@@ -531,6 +981,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "why auto\u0026 here? its a pointer.",
+      "range": {
+        "startLine": 798,
+        "startChar": 11,
+        "endLine": 798,
+        "endChar": 12
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b449e844_75c35dcd",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa270acb_ccbdec1a",
       "range": {
         "startLine": 798,
         "startChar": 11,
@@ -564,6 +1038,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00483d63_624f1340",
+        "filename": "internal/ceres/program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "I used `auto*` to be more explicit.",
+      "parentUuid": "6eafc8ea_bfc53230",
+      "range": {
+        "startLine": 79,
+        "startChar": 11,
+        "endLine": 79,
+        "endChar": 12
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc84ea49_0aa36399",
@@ -577,6 +1075,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "just auto",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 28
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "937e372d_c1306f8d",
+        "filename": "internal/ceres/program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc84ea49_0aa36399",
       "range": {
         "startLine": 96,
         "startChar": 12,
@@ -610,6 +1132,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b59e0cc_d7027535",
+        "filename": "internal/ceres/program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8e62bd6_55b7424a",
+      "range": {
+        "startLine": 102,
+        "startChar": 13,
+        "endLine": 102,
+        "endChar": 28
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f7309855_ea4f7354",
@@ -623,6 +1169,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "just auto",
+      "range": {
+        "startLine": 306,
+        "startChar": 12,
+        "endLine": 306,
+        "endChar": 13
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f50bc3a7_efacd1d1",
+        "filename": "internal/ceres/program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7309855_ea4f7354",
       "range": {
         "startLine": 306,
         "startChar": 12,
@@ -656,6 +1226,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9db774bb_49dc8020",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "752b6b35_1dc35b80",
+      "range": {
+        "startLine": 317,
+        "startChar": 12,
+        "endLine": 317,
+        "endChar": 13
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7dc452de_01fcc8a9",
@@ -679,6 +1273,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78feaae1_26704ee0",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dc452de_01fcc8a9",
+      "range": {
+        "startLine": 342,
+        "startChar": 7,
+        "endLine": 342,
+        "endChar": 11
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1258c449_271097be",
@@ -692,6 +1310,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "this reads worse",
+      "range": {
+        "startLine": 329,
+        "startChar": 18,
+        "endLine": 329,
+        "endChar": 19
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41799968_130a3d43",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "What do you mean exactly? The for each loop eliminates the need of indexing and specifying the array size.",
+      "parentUuid": "1258c449_271097be",
       "range": {
         "startLine": 329,
         "startChar": 18,
@@ -748,6 +1390,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fac4101c_ba454c58",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4317cb7_000beb05",
+      "range": {
+        "startLine": 296,
+        "startChar": 15,
+        "endLine": 296,
+        "endChar": 16
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb3f4454_9cc80d8e",
@@ -771,6 +1437,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14bd5dde_b4223186",
+        "filename": "internal/ceres/scoped_thread_token.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Yes, should even be public.",
+      "parentUuid": "cb3f4454_9cc80d8e",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "40c9a920_3ccb14d4",
@@ -784,6 +1474,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "double x_value",
+      "range": {
+        "startLine": 121,
+        "startChar": 14,
+        "endLine": 121,
+        "endChar": 15
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eabfc154_b89523e5",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40c9a920_3ccb14d4",
       "range": {
         "startLine": 121,
         "startChar": 14,
@@ -819,6 +1533,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "682d7aeb_b57bc3b6",
+        "filename": "internal/ceres/triplet_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Because it\u0027s a copy constructor that does not use `explicit` in its signature.",
+      "parentUuid": "abaf01d4_9b001b78",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "add224cd_23f0550e",
         "filename": "internal/ceres/visibility.cc",
         "patchSetId": 1
@@ -830,6 +1568,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "i is bad variable name here.",
+      "range": {
+        "startLine": 90,
+        "startChar": 20,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af1cbe99_d7ecd429",
+        "filename": "internal/ceres/visibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Changed to `visible`.",
+      "parentUuid": "add224cd_23f0550e",
       "range": {
         "startLine": 90,
         "startChar": 20,
@@ -865,6 +1627,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fd3a1fc6_e1ccec17",
+        "filename": "internal/ceres/visibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Unfortunately, no because inner loops rely on iterators.",
+      "parentUuid": "7659672e_573035b7",
+      "range": {
+        "startLine": 115,
+        "startChar": 14,
+        "endLine": 115,
+        "endChar": 21
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b3e50632_e8d7787a",
         "filename": "internal/ceres/visibility_based_preconditioner.cc",
         "patchSetId": 1
@@ -888,6 +1674,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8cb0e521_0f88f6c6",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Sadly, no because otherwise the following iterator increment would not be possible.",
+      "parentUuid": "b3e50632_e8d7787a",
+      "range": {
+        "startLine": 285,
+        "startChar": 23,
+        "endLine": 285,
+        "endChar": 31
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bbe5ea8c_2aa1deea",
         "filename": "internal/ceres/visibility_based_preconditioner.cc",
         "patchSetId": 1
@@ -899,6 +1709,30 @@
       "writtenOn": "2022-02-20T05:44:21Z",
       "side": 1,
       "message": "auto\u0026",
+      "range": {
+        "startLine": 302,
+        "startChar": 16,
+        "endLine": 302,
+        "endChar": 20
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3912c35_a35425c9",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-20T13:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbe5ea8c_2aa1deea",
       "range": {
         "startLine": 302,
         "startChar": 16,
