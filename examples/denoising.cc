@@ -113,9 +113,9 @@ namespace {
 class QuadraticCostFunction : public ceres::SizedCostFunction<1, 1> {
  public:
   QuadraticCostFunction(double a, double b) : sqrta_(std::sqrt(a)), b_(b) {}
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const override {
     const double x = parameters[0][0];
     residuals[0] = sqrta_ * (x - b_);
     if (jacobians != nullptr && jacobians[0] != nullptr) {

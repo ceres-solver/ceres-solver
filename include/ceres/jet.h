@@ -210,7 +210,7 @@ namespace ceres {
 template <typename T, int N>
 struct Jet {
   enum { DIMENSION = N };
-  typedef T Scalar;
+  using Scalar = T;
 
   // Default-construct "a" because otherwise this can lead to false errors about
   // uninitialized uses when other classes relying on default constructed T
@@ -1284,10 +1284,10 @@ namespace Eigen {
 // Eigen arrays, getting all the goodness of Eigen combined with autodiff.
 template <typename T, int N>
 struct NumTraits<ceres::Jet<T, N>> {
-  typedef ceres::Jet<T, N> Real;
-  typedef ceres::Jet<T, N> NonInteger;
-  typedef ceres::Jet<T, N> Nested;
-  typedef ceres::Jet<T, N> Literal;
+  using Real = ceres::Jet<T, N>;
+  using NonInteger = ceres::Jet<T, N>;
+  using Nested = ceres::Jet<T, N>;
+  using Literal = ceres::Jet<T, N>;
 
   static typename ceres::Jet<T, N> dummy_precision() {
     return ceres::Jet<T, N>(1e-12);
@@ -1338,11 +1338,11 @@ struct NumTraits<ceres::Jet<T, N>> {
 // is only available on Eigen versions >= 3.3
 template <typename BinaryOp, typename T, int N>
 struct ScalarBinaryOpTraits<ceres::Jet<T, N>, T, BinaryOp> {
-  typedef ceres::Jet<T, N> ReturnType;
+  using ReturnType = ceres::Jet<T, N>;
 };
 template <typename BinaryOp, typename T, int N>
 struct ScalarBinaryOpTraits<T, ceres::Jet<T, N>, BinaryOp> {
-  typedef ceres::Jet<T, N> ReturnType;
+  using ReturnType = ceres::Jet<T, N>;
 };
 
 }  // namespace Eigen

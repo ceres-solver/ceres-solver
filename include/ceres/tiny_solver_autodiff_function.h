@@ -113,12 +113,12 @@ class TinySolverAutoDiffFunction {
   // as a member a Jet type, which itself has a fixed-size Eigen type as member.
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  TinySolverAutoDiffFunction(const CostFunctor& cost_functor)
+  explicit TinySolverAutoDiffFunction(const CostFunctor& cost_functor)
       : cost_functor_(cost_functor) {
     Initialize<kNumResiduals>(cost_functor);
   }
 
-  typedef T Scalar;
+  using Scalar = T;
   enum {
     NUM_PARAMETERS = kNumParameters,
     NUM_RESIDUALS = kNumResiduals,

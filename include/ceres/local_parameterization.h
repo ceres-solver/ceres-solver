@@ -322,11 +322,8 @@ class CERES_DEPRECATED_WITH_MSG("Use ProductManifold instead.")
   // parameterizations.
   //
   template <typename... LocalParams>
-  ProductParameterization(LocalParams*... local_params)
-      : local_params_(sizeof...(LocalParams)),
-        local_size_{0},
-        global_size_{0},
-        buffer_size_{0} {
+  explicit ProductParameterization(LocalParams*... local_params)
+      : local_params_(sizeof...(LocalParams)) {
     constexpr int kNumLocalParams = sizeof...(LocalParams);
     static_assert(kNumLocalParams >= 2,
                   "At least two local parameterizations must be specified.");
@@ -358,9 +355,9 @@ class CERES_DEPRECATED_WITH_MSG("Use ProductManifold instead.")
 
  private:
   std::vector<std::unique_ptr<LocalParameterization>> local_params_;
-  int local_size_;
-  int global_size_;
-  int buffer_size_;
+  int local_size_{0};
+  int global_size_{0};
+  int buffer_size_{0};
 };
 
 }  // namespace ceres

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -44,20 +44,13 @@ namespace internal {
 class CERES_NO_EXPORT LineSearchDirection {
  public:
   struct Options {
-    Options()
-        : num_parameters(0),
-          type(LBFGS),
-          nonlinear_conjugate_gradient_type(FLETCHER_REEVES),
-          function_tolerance(1e-12),
-          max_lbfgs_rank(20),
-          use_approximate_eigenvalue_bfgs_scaling(true) {}
-
-    int num_parameters;
-    LineSearchDirectionType type;
-    NonlinearConjugateGradientType nonlinear_conjugate_gradient_type;
-    double function_tolerance;
-    int max_lbfgs_rank;
-    bool use_approximate_eigenvalue_bfgs_scaling;
+    int num_parameters{0};
+    LineSearchDirectionType type{LBFGS};
+    NonlinearConjugateGradientType nonlinear_conjugate_gradient_type{
+        FLETCHER_REEVES};
+    double function_tolerance{1e-12};
+    int max_lbfgs_rank{20};
+    bool use_approximate_eigenvalue_bfgs_scaling{true};
   };
 
   static std::unique_ptr<LineSearchDirection> Create(const Options& options);

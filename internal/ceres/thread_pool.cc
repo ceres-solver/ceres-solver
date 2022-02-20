@@ -83,7 +83,7 @@ void ThreadPool::Resize(int num_threads) {
       GetNumAllowedThreads(num_threads) - num_current_threads;
 
   for (int i = 0; i < create_num_threads; ++i) {
-    thread_pool_.push_back(std::thread(&ThreadPool::ThreadMainLoop, this));
+    thread_pool_.emplace_back(&ThreadPool::ThreadMainLoop, this);
   }
 }
 

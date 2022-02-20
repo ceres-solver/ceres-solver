@@ -81,7 +81,7 @@ class DenseSparseMatrix;
 class CERES_NO_EXPORT DenseNormalCholeskySolver
     : public DenseSparseMatrixSolver {
  public:
-  explicit DenseNormalCholeskySolver(const LinearSolver::Options& options);
+  explicit DenseNormalCholeskySolver(LinearSolver::Options options);
 
  private:
   LinearSolver::Summary SolveImpl(

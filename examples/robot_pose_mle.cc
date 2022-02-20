@@ -125,8 +125,7 @@
 // will be computed by a DynamicAutoDiffCostFunction since the number of
 // odoemtry observations will only be known at run time.
 
-#include <math.h>
-
+#include <cmath>
 #include <cstdio>
 #include <vector>
 
@@ -169,7 +168,7 @@ DEFINE_double(range_stddev,
 static constexpr int kStride = 10;
 
 struct OdometryConstraint {
-  typedef AutoDiffCostFunction<OdometryConstraint, 1, 1> OdometryCostFunction;
+  using OdometryCostFunction = AutoDiffCostFunction<OdometryConstraint, 1, 1>;
 
   OdometryConstraint(double odometry_mean, double odometry_stddev)
       : odometry_mean(odometry_mean), odometry_stddev(odometry_stddev) {}
@@ -190,8 +189,8 @@ struct OdometryConstraint {
 };
 
 struct RangeConstraint {
-  typedef DynamicAutoDiffCostFunction<RangeConstraint, kStride>
-      RangeCostFunction;
+  using RangeCostFunction =
+      DynamicAutoDiffCostFunction<RangeConstraint, kStride>;
 
   RangeConstraint(int pose_index,
                   double range_reading,
@@ -219,12 +218,12 @@ struct RangeConstraint {
                                    const double range_reading,
                                    vector<double>* odometry_values,
                                    vector<double*>* parameter_blocks) {
-    RangeConstraint* constraint =
+    auto* constraint =
         new RangeConstraint(pose_index,
                             range_reading,
                             CERES_GET_FLAG(FLAGS_range_stddev),
                             CERES_GET_FLAG(FLAGS_corridor_length));
-    RangeCostFunction* cost_function = new RangeCostFunction(constraint);
+    auto* cost_function = new RangeCostFunction(constraint);
     // Add all the parameter blocks that affect this constraint.
     parameter_blocks->clear();
     for (int i = 0; i <= pose_index; ++i) {

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -37,6 +37,7 @@
 #include <memory>
 #include <numeric>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "ceres/dynamic_numeric_diff_cost_function.h"
@@ -67,12 +68,12 @@ class GradientCheckingCostFunction final : public CostFunction {
                                const std::vector<const Manifold*>* manifolds,
                                const NumericDiffOptions& options,
                                double relative_precision,
-                               const string& extra_info,
+                               string extra_info,
                                GradientCheckingIterationCallback* callback)
       : function_(function),
         gradient_checker_(function, manifolds, options),
         relative_precision_(relative_precision),
-        extra_info_(extra_info),
+        extra_info_(std::move(extra_info)),
         callback_(callback) {
     CHECK(callback_ != nullptr);
     const vector<int32_t>& parameter_block_sizes =
@@ -198,8 +199,7 @@ std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(
   // For every ParameterBlock in problem_impl, create a new parameter block with
   // the same manifold and constancy.
   const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
-  for (int i = 0; i < parameter_blocks.size(); ++i) {
-    ParameterBlock* parameter_block = parameter_blocks[i];
+  for (auto* parameter_block : parameter_blocks) {
     gradient_checking_problem_impl->AddParameterBlock(
         parameter_block->mutable_user_state(),
         parameter_block->Size(),

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -63,8 +63,8 @@ void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
   visibility->resize(0);
   visibility->resize(block_structure.cols.size() - num_eliminate_blocks);
 
-  for (int i = 0; i < block_structure.rows.size(); ++i) {
-    const vector<Cell>& cells = block_structure.rows[i].cells;
+  for (const auto& row : block_structure.rows) {
+    const vector<Cell>& cells = row.cells;
     int block_id = cells[0].block_id;
     // If the first block is not an e_block, then skip this row block.
     if (block_id >= num_eliminate_blocks) {
@@ -87,9 +87,9 @@ std::unique_ptr<WeightedGraph<int>> CreateSchurComplementGraph(
   // set for each e_block/camera contains the set of e_blocks/points
   // visible to it, we find the maximum across all visibility sets.
   int num_points = 0;
-  for (int i = 0; i < visibility.size(); i++) {
-    if (visibility[i].size() > 0) {
-      num_points = max(num_points, (*visibility[i].rbegin()) + 1);
+  for (const auto& visible : visibility) {
+    if (visible.size() > 0) {
+      num_points = max(num_points, (*visible.rbegin()) + 1);
     }
   }
 
@@ -101,7 +101,7 @@ std::unique_ptr<WeightedGraph<int>> CreateSchurComplementGraph(
   vector<set<int>> inverse_visibility(num_points);
   for (int i = 0; i < visibility.size(); i++) {
     const set<int>& visibility_set = visibility[i];
-    for (const int v : visibility_set) {
+    for (int v : visibility_set) {
       inverse_visibility[v].insert(i);
     }
   }
@@ -112,10 +112,10 @@ std::unique_ptr<WeightedGraph<int>> CreateSchurComplementGraph(
 
   // Count the number of points visible to each camera/f_block pair.
   for (const auto& inverse_visibility_set : inverse_visibility) {
-    for (set<int>::const_iterator camera1 = inverse_visibility_set.begin();
+    for (auto camera1 = inverse_visibility_set.begin();
          camera1 != inverse_visibility_set.end();
          ++camera1) {
-      set<int>::const_iterator camera2 = camera1;
+      auto camera2 = camera1;
       for (++camera2; camera2 != inverse_visibility_set.end(); ++camera2) {
         ++(camera_pairs[make_pair(*camera1, *camera2)]);
       }

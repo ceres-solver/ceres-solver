@@ -547,7 +547,7 @@ TEST(Jet, Pow) {
 TEST(Jet, Hypot2) {
   // Resolve the ambiguity between two and three argument hypot overloads
   using Hypot2 = J(const J&, const J&);
-  Hypot2* const hypot2 = static_cast<Hypot2*>(&hypot<double, 2>);
+  auto* const hypot2 = static_cast<Hypot2*>(&hypot<double, 2>);
 
   // clang-format off
   NumericalTest2("hypot2", hypot2,  0.0,   1e-5);
@@ -1172,8 +1172,8 @@ TEST(JetTraitsTest, ArrayScalarBinaryOps) {
 }
 
 TEST(Jet, Nested3X) {
-  typedef Jet<J, 2> JJ;
-  typedef Jet<JJ, 2> JJJ;
+  using JJ = Jet<J, 2>;
+  using JJJ = Jet<JJ, 2>;
 
   JJJ x;
   x.a = JJ(J(1, 0), 0);

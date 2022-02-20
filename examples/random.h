@@ -31,8 +31,8 @@
 #ifndef CERES_EXAMPLES_RANDOM_H_
 #define CERES_EXAMPLES_RANDOM_H_
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
 
 namespace ceres {
 namespace examples {
@@ -40,7 +40,7 @@ namespace examples {
 // Return a random number sampled from a uniform distribution in the range
 // [0,1].
 inline double RandDouble() {
-  double r = static_cast<double>(rand());
+  auto r = static_cast<double>(rand());
   return r / RAND_MAX;
 }
 

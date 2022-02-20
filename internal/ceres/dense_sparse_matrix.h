@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -49,7 +49,7 @@ class CERES_NO_EXPORT DenseSparseMatrix final : public SparseMatrix {
   // Build a matrix with the same content as the TripletSparseMatrix
   // m. This assumes that m does not have any repeated entries.
   explicit DenseSparseMatrix(const TripletSparseMatrix& m);
-  explicit DenseSparseMatrix(const Matrix& m);
+  explicit DenseSparseMatrix(Matrix m);
   DenseSparseMatrix(int num_rows, int num_cols);
 
   // SparseMatrix interface.

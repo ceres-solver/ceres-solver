@@ -37,6 +37,8 @@
 // Bicubic interpolation of f(x, y) will be exact, thus we can expect close to
 // perfect convergence
 
+#include <utility>
+
 #include "ceres/ceres.h"
 #include "ceres/cubic_interpolation.h"
 #include "glog/logging.h"
@@ -63,9 +65,9 @@ struct AutoDiffBiCubicCost {
   }
 
   AutoDiffBiCubicCost(const Interpolator& interpolator,
-                      const Eigen::Vector2d& point,
+                      Eigen::Vector2d point,
                       double value)
-      : point_(point), value_(value), interpolator_(interpolator) {}
+      : point_(std::move(point)), value_(value), interpolator_(interpolator) {}
 
   static ceres::CostFunction* Create(const Interpolator& interpolator,
                                      const Eigen::Vector2d& point,

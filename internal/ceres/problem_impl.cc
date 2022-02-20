@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2021 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -127,7 +127,7 @@ ParameterBlock* ProblemImpl::InternalAddParameterBlock(double* values,
                            << "for a parameter with size " << size;
 
   // Ignore the request if there is a block for the given pointer already.
-  ParameterMap::iterator it = parameter_block_map_.find(values);
+  auto it = parameter_block_map_.find(values);
   if (it != parameter_block_map_.end()) {
     if (!options_.disable_all_safety_checks) {
       int existing_size = it->second->Size();
@@ -143,11 +143,11 @@ ParameterBlock* ProblemImpl::InternalAddParameterBlock(double* values,
     // Before adding the parameter block, also check that it doesn't alias any
     // other parameter blocks.
     if (!parameter_block_map_.empty()) {
-      ParameterMap::iterator lb = parameter_block_map_.lower_bound(values);
+      auto lb = parameter_block_map_.lower_bound(values);
 
       // If lb is not the first block, check the previous block for aliasing.
       if (lb != parameter_block_map_.begin()) {
-        ParameterMap::iterator previous = lb;
+        auto previous = lb;
         --previous;
         CheckForNoAliasing(
             previous->first, previous->second->Size(), values, size);
@@ -162,7 +162,7 @@ ParameterBlock* ProblemImpl::InternalAddParameterBlock(double* values,
 
   // Pass the index of the new parameter block as well to keep the index in
   // sync with the position of the parameter in the program's parameter vector.
-  ParameterBlock* new_parameter_block =
+  auto* new_parameter_block =
       new ParameterBlock(values, size, program_->parameter_blocks_.size());
 
   // For dynamic problems, add the list of dependent residual blocks, which is
@@ -189,7 +189,7 @@ void ProblemImpl::InternalRemoveResidualBlock(ResidualBlock* residual_block) {
           residual_block);
     }
 
-    ResidualBlockSet::iterator it = residual_block_set_.find(residual_block);
+    auto it = residual_block_set_.find(residual_block);
     residual_block_set_.erase(it);
   }
   DeleteBlockInVector(program_->mutable_residual_blocks(), residual_block);
@@ -204,13 +204,13 @@ void ProblemImpl::DeleteBlock(ResidualBlock* residual_block) {
   // The const casts here are legit, since ResidualBlock holds these
   // pointers as const pointers but we have ownership of them and
   // have the right to destroy them when the destructor is called.
-  CostFunction* cost_function =
+  auto* cost_function =
       const_cast<CostFunction*>(residual_block->cost_function());
   if (options_.cost_function_ownership == TAKE_OWNERSHIP) {
     DecrementValueOrDeleteKey(cost_function, &cost_function_ref_count_);
   }
 
-  LossFunction* loss_function =
+  auto* loss_function =
       const_cast<LossFunction*>(residual_block->loss_function());
   if (options_.loss_function_ownership == TAKE_OWNERSHIP &&
       loss_function != nullptr) {
@@ -253,8 +253,8 @@ ProblemImpl::~ProblemImpl() {
   }
 
   // Collect the unique parameterizations and delete the parameters.
-  for (int i = 0; i < program_->parameter_blocks_.size(); ++i) {
-    DeleteBlock(program_->parameter_blocks_[i]);
+  for (auto* parameter_block : program_->parameter_blocks_) {
+    DeleteBlock(parameter_block);
   }
 
   // Delete the owned parameterizations.
@@ -327,7 +327,7 @@ ResidualBlockId ProblemImpl::AddResidualBlock(
     }
   }
 
-  ResidualBlock* new_residual_block =
+  auto* new_residual_block =
       new ResidualBlock(cost_function,
                         loss_function,
                         parameter_block_ptrs,
@@ -483,8 +483,8 @@ void ProblemImpl::RemoveParameterBlock(const double* values) {
     std::vector<ResidualBlock*> residual_blocks_to_remove(
         parameter_block->mutable_residual_blocks()->begin(),
         parameter_block->mutable_residual_blocks()->end());
-    for (int i = 0; i < residual_blocks_to_remove.size(); ++i) {
-      InternalRemoveResidualBlock(residual_blocks_to_remove[i]);
+    for (auto* residual_block : residual_blocks_to_remove) {
+      InternalRemoveResidualBlock(residual_block);
     }
   } else {
     // Scan all the residual blocks to remove ones that depend on the parameter
@@ -710,8 +710,7 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
                    back_inserter(excluded_parameter_blocks));
 
     variable_parameter_blocks.reserve(excluded_parameter_blocks.size());
-    for (int i = 0; i < excluded_parameter_blocks.size(); ++i) {
-      ParameterBlock* parameter_block = excluded_parameter_blocks[i];
+    for (auto* parameter_block : excluded_parameter_blocks) {
       if (!parameter_block->IsConstant()) {
         variable_parameter_blocks.push_back(parameter_block);
         parameter_block->SetConstant();
@@ -796,8 +795,8 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
 
   // Make the parameter blocks that were temporarily marked constant,
   // variable again.
-  for (int i = 0; i < variable_parameter_blocks.size(); ++i) {
-    variable_parameter_blocks[i]->SetVarying();
+  for (auto* parameter_block : variable_parameter_blocks) {
+    parameter_block->SetVarying();
   }
 
   if (status) {

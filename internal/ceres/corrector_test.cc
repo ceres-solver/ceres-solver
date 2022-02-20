@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -164,8 +164,8 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximation) {
   srand(5);
   for (int iter = 0; iter < 10000; ++iter) {
     // Initialize the jacobian and residual.
-    for (int i = 0; i < 2 * 3; ++i) jacobian[i] = RandDouble();
-    for (int i = 0; i < 3; ++i) residuals[i] = RandDouble();
+    for (double& jacobian_entry : jacobian) jacobian_entry = RandDouble();
+    for (double& residual : residuals) residual = RandDouble();
 
     const double sq_norm = res.dot(res);
 
@@ -230,7 +230,7 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximationZeroResidual) {
   srand(5);
   for (int iter = 0; iter < 10000; ++iter) {
     // Initialize the jacobian.
-    for (int i = 0; i < 2 * 3; ++i) jacobian[i] = RandDouble();
+    for (double& jacobian_entry : jacobian) jacobian_entry = RandDouble();
 
     // Zero residuals
     res.setZero();
