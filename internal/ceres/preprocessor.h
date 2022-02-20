@@ -81,7 +81,7 @@ class CERES_NO_EXPORT Preprocessor {
 // A PreprocessedProblem is the result of running the Preprocessor on
 // a Problem and Solver::Options object.
 struct CERES_NO_EXPORT PreprocessedProblem {
-  PreprocessedProblem() : fixed_cost(0.0) {}
+  PreprocessedProblem() = default;
 
   std::string error;
   Solver::Options options;
@@ -101,7 +101,7 @@ struct CERES_NO_EXPORT PreprocessedProblem {
 
   std::vector<double*> removed_parameter_blocks;
   Vector reduced_parameters;
-  double fixed_cost;
+  double fixed_cost{0.0};
 };
 
 // Common functions used by various preprocessors.

@@ -45,14 +45,14 @@ namespace internal {
 // Structure defining a linear least squares problem and if possible
 // ground truth solutions. To be used by various LinearSolver tests.
 struct CERES_NO_EXPORT LinearLeastSquaresProblem {
-  LinearLeastSquaresProblem() : num_eliminate_blocks(0) {}
+  LinearLeastSquaresProblem() = default;
 
   std::unique_ptr<SparseMatrix> A;
   std::unique_ptr<double[]> b;
   std::unique_ptr<double[]> D;
   // If using the schur eliminator then how many of the variable
   // blocks are e_type blocks.
-  int num_eliminate_blocks;
+  int num_eliminate_blocks{0};
 
   // Solution to min_x |Ax - b|^2
   std::unique_ptr<double[]> x;

@@ -57,8 +57,7 @@ class CompressedRowSparseMatrix;
 class CERES_NO_EXPORT DynamicSparseNormalCholeskySolver
     : public CompressedRowSparseMatrixSolver {
  public:
-  explicit DynamicSparseNormalCholeskySolver(
-      const LinearSolver::Options& options);
+  explicit DynamicSparseNormalCholeskySolver(LinearSolver::Options options);
 
  private:
   LinearSolver::Summary SolveImpl(CompressedRowSparseMatrix* A,

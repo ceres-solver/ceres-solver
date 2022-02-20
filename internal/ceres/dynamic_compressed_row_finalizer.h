@@ -40,7 +40,7 @@ namespace internal {
 
 struct CERES_NO_EXPORT DynamicCompressedRowJacobianFinalizer {
   void operator()(SparseMatrix* base_jacobian, int num_parameters) {
-    DynamicCompressedRowSparseMatrix* jacobian =
+    auto* jacobian =
         down_cast<DynamicCompressedRowSparseMatrix*>(base_jacobian);
     jacobian->Finalize(num_parameters);
   }

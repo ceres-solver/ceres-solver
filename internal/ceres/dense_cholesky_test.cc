@@ -45,7 +45,7 @@
 namespace ceres {
 namespace internal {
 
-typedef DenseLinearAlgebraLibraryType Param;
+using Param = DenseLinearAlgebraLibraryType;
 
 namespace {
 

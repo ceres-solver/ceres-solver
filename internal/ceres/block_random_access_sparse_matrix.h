@@ -112,7 +112,7 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
 
   // A mapping from <row_block_id, col_block_id> to the position in
   // the values array of tsm_ where the block is stored.
-  typedef std::unordered_map<long int, CellInfo*> LayoutType;
+  using LayoutType = std::unordered_map<long, CellInfo*>;
   LayoutType layout_;
 
   // In order traversal of contents of the matrix. This allows us to

@@ -273,9 +273,9 @@ class CERES_NO_EXPORT SchurEliminator final : public SchurEliminatorBase {
   // buffer_layout[z1] = 0
   // buffer_layout[z5] = y1 * z1
   // buffer_layout[z2] = y1 * z1 + y1 * z5
-  typedef std::map<int, int> BufferLayoutType;
+  using BufferLayoutType = std::map<int, int>;
   struct Chunk {
-    Chunk(int start) : size(0), start(start) {}
+    explicit Chunk(int start) : size(0), start(start) {}
     int size;
     int start;
     BufferLayoutType buffer_layout;

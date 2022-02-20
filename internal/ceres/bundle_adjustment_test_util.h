@@ -242,7 +242,7 @@ class BundleAdjustmentProblem {
 };
 
 double BundleAdjustmentProblem::kResidualTolerance = 1e-4;
-typedef SystemTest<BundleAdjustmentProblem> BundleAdjustmentTest;
+using BundleAdjustmentTest = SystemTest<BundleAdjustmentProblem>;
 
 }  // namespace internal
 }  // namespace ceres

@@ -286,7 +286,7 @@ class CERES_NO_EXPORT LinearSolver {
   // issues. Further, this calls are not expected to be frequent or
   // performance sensitive.
   virtual std::map<std::string, CallStatistics> Statistics() const {
-    return std::map<std::string, CallStatistics>();
+    return {};
   }
 
   // Factory

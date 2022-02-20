@@ -49,7 +49,7 @@ class CERES_NO_EXPORT DenseSparseMatrix final : public SparseMatrix {
   // Build a matrix with the same content as the TripletSparseMatrix
   // m. This assumes that m does not have any repeated entries.
   explicit DenseSparseMatrix(const TripletSparseMatrix& m);
-  explicit DenseSparseMatrix(const Matrix& m);
+  explicit DenseSparseMatrix(Matrix m);
   DenseSparseMatrix(int num_rows, int num_cols);
 
   // SparseMatrix interface.

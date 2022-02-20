@@ -114,7 +114,7 @@ static int exponential_residual(void* user_data,
                                 double** parameters,
                                 double* residuals,
                                 double** jacobians) {
-  double* measurement = (double*)user_data;
+  auto* measurement = static_cast<double*>(user_data);
   double x = measurement[0];
   double y = measurement[1];
   double m = parameters[0][0];
