@@ -228,7 +228,7 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
     return;
   }
 
-  ceres::ParameterBlockOrdering* ordering = new ceres::ParameterBlockOrdering;
+  auto* ordering = new ceres::ParameterBlockOrdering;
 
   // The points come before the cameras.
   for (int i = 0; i < num_points; ++i) {

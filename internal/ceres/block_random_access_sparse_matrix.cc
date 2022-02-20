@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -58,9 +58,9 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
   // rows/columns.
   int num_cols = 0;
   block_positions_.reserve(blocks_.size());
-  for (int i = 0; i < blocks_.size(); ++i) {
+  for (int block_size : blocks_) {
     block_positions_.push_back(num_cols);
-    num_cols += blocks_[i];
+    num_cols += block_size;
   }
 
   // Count the number of scalar non-zero entries and build the layout
@@ -87,7 +87,7 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
   for (const auto& block_pair : block_pairs) {
     const int row_block_size = blocks_[block_pair.first];
     const int col_block_size = blocks_[block_pair.second];
-    cell_values_.push_back(make_pair(block_pair, values + pos));
+    cell_values_.emplace_back(block_pair, values + pos);
     layout_[IntPairToLong(block_pair.first, block_pair.second)] =
         new CellInfo(values + pos);
     pos += row_block_size * col_block_size;

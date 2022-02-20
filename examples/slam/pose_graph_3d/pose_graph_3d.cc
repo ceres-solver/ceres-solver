@@ -60,16 +60,11 @@ void BuildOptimizationProblem(const VectorOfConstraints& constraints,
   ceres::LossFunction* loss_function = nullptr;
   ceres::Manifold* quaternion_manifold = new EigenQuaternionManifold;
 
-  for (VectorOfConstraints::const_iterator constraints_iter =
-           constraints.begin();
-       constraints_iter != constraints.end();
-       ++constraints_iter) {
-    const Constraint3d& constraint = *constraints_iter;
-
-    MapOfPoses::iterator pose_begin_iter = poses->find(constraint.id_begin);
+  for (const auto& constraint : constraints) {
+    auto pose_begin_iter = poses->find(constraint.id_begin);
     CHECK(pose_begin_iter != poses->end())
         << "Pose with ID: " << constraint.id_begin << " not found.";
-    MapOfPoses::iterator pose_end_iter = poses->find(constraint.id_end);
+    auto pose_end_iter = poses->find(constraint.id_end);
     CHECK(pose_end_iter != poses->end())
         << "Pose with ID: " << constraint.id_end << " not found.";
 
@@ -99,7 +94,7 @@ void BuildOptimizationProblem(const VectorOfConstraints& constraints,
   // internal damping which mitigates this issue, but it is better to properly
   // constrain the gauge freedom. This can be done by setting one of the poses
   // as constant so the optimizer cannot change it.
-  MapOfPoses::iterator pose_start_iter = poses->begin();
+  auto pose_start_iter = poses->begin();
   CHECK(pose_start_iter != poses->end()) << "There are no poses.";
   problem->SetParameterBlockConstant(pose_start_iter->second.p.data());
   problem->SetParameterBlockConstant(pose_start_iter->second.q.coeffs().data());
@@ -129,18 +124,7 @@ bool OutputPoses(const std::string& filename, const MapOfPoses& poses) {
     LOG(ERROR) << "Error opening the file: " << filename;
     return false;
   }
-  for (std::map<int,
-                Pose3d,
-                std::less<int>,
-                Eigen::aligned_allocator<std::pair<const int, Pose3d>>>::
-           const_iterator poses_iter = poses.begin();
-       poses_iter != poses.end();
-       ++poses_iter) {
-    const std::map<int,
-                   Pose3d,
-                   std::less<int>,
-                   Eigen::aligned_allocator<std::pair<const int, Pose3d>>>::
-        value_type& pair = *poses_iter;
+  for (const auto& pair : poses) {
     outfile << pair.first << " " << pair.second.p.transpose() << " "
             << pair.second.q.x() << " " << pair.second.q.y() << " "
             << pair.second.q.z() << " " << pair.second.q.w() << '\n';

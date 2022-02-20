@@ -73,7 +73,7 @@ class Preconditioner;
 class CERES_NO_EXPORT IterativeSchurComplementSolver final
     : public BlockSparseMatrixSolver {
  public:
-  explicit IterativeSchurComplementSolver(const LinearSolver::Options& options);
+  explicit IterativeSchurComplementSolver(LinearSolver::Options options);
   IterativeSchurComplementSolver(const IterativeSchurComplementSolver&) =
       delete;
   void operator=(const IterativeSchurComplementSolver&) = delete;

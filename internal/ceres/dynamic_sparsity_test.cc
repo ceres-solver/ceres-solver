@@ -32,6 +32,7 @@
 // Based on examples/ellipse_approximation.cc
 
 #include <cmath>
+#include <utility>
 #include <vector>
 
 #include "ceres/ceres.h"
@@ -280,8 +281,8 @@ class PointToLineSegmentContourCostFunction : public CostFunction {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
   PointToLineSegmentContourCostFunction(const int num_segments,
-                                        const Eigen::Vector2d& y)
-      : num_segments_(num_segments), y_(y) {
+                                        Eigen::Vector2d y)
+      : num_segments_(num_segments), y_(std::move(y)) {
     // The first parameter is the preimage position.
     mutable_parameter_block_sizes()->push_back(1);
     // The next parameters are the control points for the line segment contour.

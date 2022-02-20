@@ -46,25 +46,25 @@
 namespace ceres {
 namespace internal {
 
-typedef int32_t BlockSize;
+using BlockSize = int32_t;
 
 struct CERES_NO_EXPORT Block {
-  Block() : size(-1), position(-1) {}
+  Block() = default;
   Block(int size_, int position_) : size(size_), position(position_) {}
 
-  BlockSize size;
-  int position;  // Position along the row/column.
+  BlockSize size{-1};
+  int position{-1};  // Position along the row/column.
 };
 
 struct CERES_NO_EXPORT Cell {
-  Cell() : block_id(-1), position(-1) {}
+  Cell() = default;
   Cell(int block_id_, int position_)
       : block_id(block_id_), position(position_) {}
 
   // Column or row block id as the case maybe.
-  int block_id;
+  int block_id{-1};
   // Where in the values array of the jacobian is this cell located.
-  int position;
+  int position{-1};
 };
 
 // Order cell by their block_id;
@@ -75,13 +75,13 @@ struct CERES_NO_EXPORT CompressedList {
 
   // Construct a CompressedList with the cells containing num_cells
   // entries.
-  CompressedList(int num_cells) : cells(num_cells) {}
+  explicit CompressedList(int num_cells) : cells(num_cells) {}
   Block block;
   std::vector<Cell> cells;
 };
 
-typedef CompressedList CompressedRow;
-typedef CompressedList CompressedColumn;
+using CompressedRow = CompressedList;
+using CompressedColumn = CompressedList;
 
 struct CERES_NO_EXPORT CompressedRowBlockStructure {
   std::vector<Block> cols;

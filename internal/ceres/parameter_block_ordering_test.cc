@@ -46,7 +46,7 @@
 namespace ceres {
 namespace internal {
 
-typedef std::unordered_set<ParameterBlock*> VertexSet;
+using VertexSet = std::unordered_set<ParameterBlock*>;
 
 template <int M, int... Ns>
 class DummyCostFunction : public SizedCostFunction<M, Ns...> {

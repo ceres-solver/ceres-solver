@@ -52,7 +52,7 @@ class BlockJacobiPreconditioner;
 // block diagonal preconditioning is supported.
 class CERES_NO_EXPORT CgnrSolver final : public BlockSparseMatrixSolver {
  public:
-  explicit CgnrSolver(const LinearSolver::Options& options);
+  explicit CgnrSolver(LinearSolver::Options options);
   CgnrSolver(const CgnrSolver&) = delete;
   void operator=(const CgnrSolver&) = delete;
   ~CgnrSolver() override;

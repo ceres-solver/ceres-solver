@@ -57,7 +57,7 @@ class CERES_NO_EXPORT TripletSparseMatrix final : public SparseMatrix {
                       const std::vector<int>& cols,
                       const std::vector<double>& values);
 
-  explicit TripletSparseMatrix(const TripletSparseMatrix& orig);
+  TripletSparseMatrix(const TripletSparseMatrix& orig);
 
   TripletSparseMatrix& operator=(const TripletSparseMatrix& rhs);
 
