@@ -31,6 +31,7 @@
 #include "ceres/dense_sparse_matrix.h"
 
 #include <algorithm>
+#include <utility>
 
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
@@ -55,7 +56,7 @@ DenseSparseMatrix::DenseSparseMatrix(const TripletSparseMatrix& m)
   }
 }
 
-DenseSparseMatrix::DenseSparseMatrix(const Matrix& m) : m_(m) {}
+DenseSparseMatrix::DenseSparseMatrix(Matrix m) : m_(std::move(m)) {}
 
 void DenseSparseMatrix::SetZero() { m_.setZero(); }
 

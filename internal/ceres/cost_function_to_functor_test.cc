@@ -376,10 +376,9 @@ TEST(CostFunctionToFunctor, DynamicNumberOfResiduals) {
 }
 
 TEST(CostFunctionToFunctor, DynamicCostFunctionToFunctor) {
-  DynamicAutoDiffCostFunction<DynamicTwoParameterBlockFunctor>*
-      actual_cost_function(
-          new DynamicAutoDiffCostFunction<DynamicTwoParameterBlockFunctor>(
-              new DynamicTwoParameterBlockFunctor));
+  auto* actual_cost_function(
+      new DynamicAutoDiffCostFunction<DynamicTwoParameterBlockFunctor>(
+          new DynamicTwoParameterBlockFunctor));
   actual_cost_function->AddParameterBlock(2);
   actual_cost_function->AddParameterBlock(2);
   actual_cost_function->SetNumResiduals(2);

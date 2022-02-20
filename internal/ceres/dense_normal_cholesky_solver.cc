@@ -30,6 +30,8 @@
 
 #include "ceres/dense_normal_cholesky_solver.h"
 
+#include <utility>
+
 #include "Eigen/Dense"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
@@ -41,8 +43,9 @@ namespace ceres {
 namespace internal {
 
 DenseNormalCholeskySolver::DenseNormalCholeskySolver(
-    const LinearSolver::Options& options)
-    : options_(options), cholesky_(DenseCholesky::Create(options_)) {}
+    LinearSolver::Options options)
+    : options_(std::move(options)),
+      cholesky_(DenseCholesky::Create(options_)) {}
 
 LinearSolver::Summary DenseNormalCholeskySolver::SolveImpl(
     DenseSparseMatrix* A,

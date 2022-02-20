@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -94,9 +94,9 @@ bool CoordinateDescentMinimizer::Init(
   // assign zero offsets/empty independent sets to these parameter
   // blocks.
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
-  for (int i = 0; i < parameter_blocks.size(); ++i) {
-    if (!ordering.IsMember(parameter_blocks[i]->mutable_user_state())) {
-      parameter_blocks_.push_back(parameter_blocks[i]);
+  for (auto* parameter_block : parameter_blocks) {
+    if (!ordering.IsMember(parameter_block->mutable_user_state())) {
+      parameter_blocks_.push_back(parameter_block);
       independent_set_offsets_.push_back(independent_set_offsets_.back());
     }
   }
@@ -105,8 +105,7 @@ bool CoordinateDescentMinimizer::Init(
   // block.
   residual_blocks_.resize(parameter_block_index.size());
   const vector<ResidualBlock*>& residual_blocks = program.residual_blocks();
-  for (int i = 0; i < residual_blocks.size(); ++i) {
-    ResidualBlock* residual_block = residual_blocks[i];
+  for (auto* residual_block : residual_blocks) {
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
     for (int j = 0; j < num_parameter_blocks; ++j) {
       ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
@@ -129,8 +128,7 @@ void CoordinateDescentMinimizer::Minimize(const Minimizer::Options& options,
                                           double* parameters,
                                           Solver::Summary* summary) {
   // Set the state and mark all parameter blocks constant.
-  for (int i = 0; i < parameter_blocks_.size(); ++i) {
-    ParameterBlock* parameter_block = parameter_blocks_[i];
+  for (auto* parameter_block : parameter_blocks_) {
     parameter_block->SetState(parameters + parameter_block->state_offset());
     parameter_block->SetConstant();
   }
@@ -202,8 +200,8 @@ void CoordinateDescentMinimizer::Minimize(const Minimizer::Options& options,
         });
   }
 
-  for (int i = 0; i < parameter_blocks_.size(); ++i) {
-    parameter_blocks_[i]->SetVarying();
+  for (auto* parameter_block : parameter_blocks_) {
+    parameter_block->SetVarying();
   }
 
   //  for (int i = 0; i < options.num_threads; ++i) {

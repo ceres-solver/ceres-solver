@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -59,9 +59,9 @@ int ComputeStableSchurOrdering(const Program& program,
 
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
   const std::unordered_set<ParameterBlock*>& vertices = graph->vertices();
-  for (int i = 0; i < parameter_blocks.size(); ++i) {
-    if (vertices.count(parameter_blocks[i]) > 0) {
-      ordering->push_back(parameter_blocks[i]);
+  for (auto* parameter_block : parameter_blocks) {
+    if (vertices.count(parameter_block) > 0) {
+      ordering->push_back(parameter_block);
     }
   }
   event_logger.AddEvent("Preordering");
@@ -70,8 +70,7 @@ int ComputeStableSchurOrdering(const Program& program,
   event_logger.AddEvent("StableIndependentSet");
 
   // Add the excluded blocks to back of the ordering vector.
-  for (int i = 0; i < parameter_blocks.size(); ++i) {
-    ParameterBlock* parameter_block = parameter_blocks[i];
+  for (auto* parameter_block : parameter_blocks) {
     if (parameter_block->IsConstant()) {
       ordering->push_back(parameter_block);
     }
@@ -91,8 +90,7 @@ int ComputeSchurOrdering(const Program& program,
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
 
   // Add the excluded blocks to back of the ordering vector.
-  for (int i = 0; i < parameter_blocks.size(); ++i) {
-    ParameterBlock* parameter_block = parameter_blocks[i];
+  for (auto* parameter_block : parameter_blocks) {
     if (parameter_block->IsConstant()) {
       ordering->push_back(parameter_block);
     }
@@ -129,16 +127,14 @@ std::unique_ptr<Graph<ParameterBlock*>> CreateHessianGraph(
   auto graph = std::make_unique<Graph<ParameterBlock*>>();
   CHECK(graph != nullptr);
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
-  for (int i = 0; i < parameter_blocks.size(); ++i) {
-    ParameterBlock* parameter_block = parameter_blocks[i];
+  for (auto* parameter_block : parameter_blocks) {
     if (!parameter_block->IsConstant()) {
       graph->AddVertex(parameter_block);
     }
   }
 
   const vector<ResidualBlock*>& residual_blocks = program.residual_blocks();
-  for (int i = 0; i < residual_blocks.size(); ++i) {
-    const ResidualBlock* residual_block = residual_blocks[i];
+  for (auto* residual_block : residual_blocks) {
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
     ParameterBlock* const* parameter_blocks =
         residual_block->parameter_blocks();

@@ -150,7 +150,7 @@ GradientChecker::GradientChecker(
 GradientChecker::GradientChecker(const CostFunction* function,
                                  const vector<const Manifold*>* manifolds,
                                  const NumericDiffOptions& options)
-    : delete_manifolds_(false), function_(function) {
+    : function_(function) {
   CHECK(function != nullptr);
   if (manifolds != nullptr) {
     manifolds_ = *manifolds;

@@ -71,7 +71,7 @@ class InnerProductComputer;
 class CERES_NO_EXPORT SubsetPreconditioner
     : public BlockSparseMatrixPreconditioner {
  public:
-  SubsetPreconditioner(const Preconditioner::Options& options,
+  SubsetPreconditioner(Preconditioner::Options options,
                        const BlockSparseMatrix& A);
   ~SubsetPreconditioner() override;
 

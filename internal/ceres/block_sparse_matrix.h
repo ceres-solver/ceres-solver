@@ -141,7 +141,7 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
 // information
 class CERES_NO_EXPORT BlockSparseMatrixData {
  public:
-  BlockSparseMatrixData(const BlockSparseMatrix& m)
+  explicit BlockSparseMatrixData(const BlockSparseMatrix& m)
       : block_structure_(m.block_structure()), values_(m.values()){};
 
   BlockSparseMatrixData(const CompressedRowBlockStructure* block_structure,

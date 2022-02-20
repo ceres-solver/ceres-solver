@@ -181,7 +181,7 @@ template <typename CostFunctor,
           int... Ns>              // Parameters dimensions for each block.
 class NumericDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
-  NumericDiffCostFunction(
+  explicit NumericDiffCostFunction(
       CostFunctor* functor,
       Ownership ownership = TAKE_OWNERSHIP,
       int num_residuals = kNumResiduals,
@@ -192,7 +192,7 @@ class NumericDiffCostFunction : public SizedCostFunction<kNumResiduals, Ns...> {
     }
   }
 
-  explicit NumericDiffCostFunction(NumericDiffCostFunction&& other)
+  NumericDiffCostFunction(NumericDiffCostFunction&& other)
       : functor_(std::move(other.functor_)), ownership_(other.ownership_) {}
 
   virtual ~NumericDiffCostFunction() {

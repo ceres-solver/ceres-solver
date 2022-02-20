@@ -141,7 +141,7 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
   }
 
   void ExpectEqualToCompressedRowSparseMatrixReference() {
-    typedef Eigen::Map<const Eigen::VectorXi> ConstIntVectorRef;
+    using ConstIntVectorRef = Eigen::Map<const Eigen::VectorXi>;
 
     ConstIntVectorRef crsm_rows(crsm->rows(), crsm->num_rows() + 1);
     ConstIntVectorRef dcrsm_rows(dcrsm->rows(), dcrsm->num_rows() + 1);

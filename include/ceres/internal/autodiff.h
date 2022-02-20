@@ -310,7 +310,7 @@ inline bool AutoDifferentiate(const Functor& functor,
                               int dynamic_num_outputs,
                               T* function_value,
                               T** jacobians) {
-  typedef Jet<T, ParameterDims::kNumParameters> JetT;
+  using JetT = Jet<T, ParameterDims::kNumParameters>;
   using Parameters = typename ParameterDims::Parameters;
 
   if (kNumResiduals != DYNAMIC) {

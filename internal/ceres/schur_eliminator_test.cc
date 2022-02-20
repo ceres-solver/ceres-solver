@@ -228,7 +228,7 @@ TEST(SchurEliminatorForOneFBlock, MatchesSchurEliminator) {
   constexpr int kFBlockSize = 6;
   constexpr int num_e_blocks = 5;
 
-  CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
+  auto* bs = new CompressedRowBlockStructure;
   bs->cols.resize(num_e_blocks + 1);
   int col_pos = 0;
   for (int i = 0; i < num_e_blocks; ++i) {

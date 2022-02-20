@@ -42,7 +42,7 @@ class JetInputData {
   static constexpr std::size_t SIZE = 20;
 
  public:
-  JetInputData() : index_{0}, a_{}, b_{}, c_{}, d_{}, e_{} {
+  JetInputData() {
     for (int i = 0; i < static_cast<int>(SIZE); i++) {
       const T ti = static_cast<T>(i + 1);
 
@@ -83,12 +83,12 @@ class JetInputData {
   T scalar_e() const { return scalar_e_[index_]; }
 
  private:
-  std::size_t index_;
-  std::array<JetType, SIZE> a_;
-  std::array<JetType, SIZE> b_;
-  std::array<JetType, SIZE> c_;
-  std::array<JetType, SIZE> d_;
-  std::array<JetType, SIZE> e_;
+  std::size_t index_{0};
+  std::array<JetType, SIZE> a_{};
+  std::array<JetType, SIZE> b_{};
+  std::array<JetType, SIZE> c_{};
+  std::array<JetType, SIZE> d_{};
+  std::array<JetType, SIZE> e_{};
   std::array<T, SIZE> scalar_a_;
   std::array<T, SIZE> scalar_b_;
   std::array<T, SIZE> scalar_c_;

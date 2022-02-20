@@ -64,7 +64,7 @@ class ResidualBlock;
 // proper disposal of the manifold.
 class CERES_NO_EXPORT ParameterBlock {
  public:
-  typedef std::unordered_set<ResidualBlock*> ResidualBlockSet;
+  using ResidualBlockSet = std::unordered_set<ResidualBlock*>;
 
   // Create a parameter block with the user state, size, and index specified.
   // The size is the size of the parameter block and the index is the position

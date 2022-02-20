@@ -45,34 +45,34 @@ TEST(DetectStructure, EverythingStatic) {
 
   CompressedRowBlockStructure bs;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 3;
   bs.cols.back().position = 0;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 4;
   bs.cols.back().position = 3;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 4;
   bs.cols.back().position = 7;
 
   {
-    bs.rows.push_back(CompressedRow());
+    bs.rows.emplace_back();
     CompressedRow& row = bs.rows.back();
     row.block.size = 2;
     row.block.position = 0;
-    row.cells.push_back(Cell(0, 0));
-    row.cells.push_back(Cell(1, 0));
+    row.cells.emplace_back(0, 0);
+    row.cells.emplace_back(1, 0);
   }
 
   {
-    bs.rows.push_back(CompressedRow());
+    bs.rows.emplace_back();
     CompressedRow& row = bs.rows.back();
     row.block.size = 2;
     row.block.position = 2;
-    row.cells.push_back(Cell(0, 0));
-    row.cells.push_back(Cell(2, 0));
+    row.cells.emplace_back(0, 0);
+    row.cells.emplace_back(2, 0);
   }
 
   int row_block_size = 0;
@@ -94,34 +94,34 @@ TEST(DetectStructure, DynamicRow) {
 
   CompressedRowBlockStructure bs;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 3;
   bs.cols.back().position = 0;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 4;
   bs.cols.back().position = 3;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 4;
   bs.cols.back().position = 7;
 
   {
-    bs.rows.push_back(CompressedRow());
+    bs.rows.emplace_back();
     CompressedRow& row = bs.rows.back();
     row.block.size = 2;
     row.block.position = 0;
-    row.cells.push_back(Cell(0, 0));
-    row.cells.push_back(Cell(1, 0));
+    row.cells.emplace_back(0, 0);
+    row.cells.emplace_back(1, 0);
   }
 
   {
-    bs.rows.push_back(CompressedRow());
+    bs.rows.emplace_back();
     CompressedRow& row = bs.rows.back();
     row.block.size = 1;
     row.block.position = 2;
-    row.cells.push_back(Cell(0, 0));
-    row.cells.push_back(Cell(2, 0));
+    row.cells.emplace_back(0, 0);
+    row.cells.emplace_back(2, 0);
   }
 
   int row_block_size = 0;
@@ -143,34 +143,34 @@ TEST(DetectStructure, DynamicFBlockDifferentRows) {
 
   CompressedRowBlockStructure bs;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 3;
   bs.cols.back().position = 0;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 4;
   bs.cols.back().position = 3;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 3;
   bs.cols.back().position = 7;
 
   {
-    bs.rows.push_back(CompressedRow());
+    bs.rows.emplace_back();
     CompressedRow& row = bs.rows.back();
     row.block.size = 2;
     row.block.position = 0;
-    row.cells.push_back(Cell(0, 0));
-    row.cells.push_back(Cell(1, 0));
+    row.cells.emplace_back(0, 0);
+    row.cells.emplace_back(1, 0);
   }
 
   {
-    bs.rows.push_back(CompressedRow());
+    bs.rows.emplace_back();
     CompressedRow& row = bs.rows.back();
     row.block.size = 2;
     row.block.position = 2;
-    row.cells.push_back(Cell(0, 0));
-    row.cells.push_back(Cell(2, 0));
+    row.cells.emplace_back(0, 0);
+    row.cells.emplace_back(2, 0);
   }
 
   int row_block_size = 0;
@@ -192,34 +192,34 @@ TEST(DetectStructure, DynamicEBlock) {
 
   CompressedRowBlockStructure bs;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 3;
   bs.cols.back().position = 0;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 4;
   bs.cols.back().position = 3;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 3;
   bs.cols.back().position = 7;
 
   {
-    bs.rows.push_back(CompressedRow());
+    bs.rows.emplace_back();
     CompressedRow& row = bs.rows.back();
     row.block.size = 2;
     row.block.position = 0;
-    row.cells.push_back(Cell(0, 0));
-    row.cells.push_back(Cell(2, 0));
+    row.cells.emplace_back(0, 0);
+    row.cells.emplace_back(2, 0);
   }
 
   {
-    bs.rows.push_back(CompressedRow());
+    bs.rows.emplace_back();
     CompressedRow& row = bs.rows.back();
     row.block.size = 2;
     row.block.position = 2;
-    row.cells.push_back(Cell(1, 0));
-    row.cells.push_back(Cell(2, 0));
+    row.cells.emplace_back(1, 0);
+    row.cells.emplace_back(2, 0);
   }
 
   int row_block_size = 0;
@@ -241,26 +241,26 @@ TEST(DetectStructure, DynamicFBlockSameRow) {
 
   CompressedRowBlockStructure bs;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 3;
   bs.cols.back().position = 0;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 4;
   bs.cols.back().position = 3;
 
-  bs.cols.push_back(Block());
+  bs.cols.emplace_back();
   bs.cols.back().size = 3;
   bs.cols.back().position = 7;
 
   {
-    bs.rows.push_back(CompressedRow());
+    bs.rows.emplace_back();
     CompressedRow& row = bs.rows.back();
     row.block.size = 2;
     row.block.position = 0;
-    row.cells.push_back(Cell(0, 0));
-    row.cells.push_back(Cell(1, 0));
-    row.cells.push_back(Cell(2, 0));
+    row.cells.emplace_back(0, 0);
+    row.cells.emplace_back(1, 0);
+    row.cells.emplace_back(2, 0);
   }
 
   int row_block_size = 0;

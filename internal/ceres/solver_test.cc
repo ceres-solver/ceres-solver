@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2019 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -118,8 +118,8 @@ TEST(Solver, UpdateStateEveryIterationOptionNoEvaluationCallback) {
   num_iterations =
       summary.num_successful_steps + summary.num_unsuccessful_steps;
   EXPECT_GT(num_iterations, 1);
-  for (int i = 0; i < callback.x_values.size(); ++i) {
-    EXPECT_EQ(50.0, callback.x_values[i]);
+  for (double value : callback.x_values) {
+    EXPECT_EQ(50.0, value);
   }
 
   // Second: update_state_every_iteration=true, evaluation_callback=nullptr.
