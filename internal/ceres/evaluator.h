@@ -160,7 +160,7 @@ class CERES_NO_EXPORT Evaluator {
   // life time issues. Further, these calls are not expected to be
   // frequent or performance sensitive.
   virtual std::map<std::string, CallStatistics> Statistics() const {
-    return std::map<std::string, CallStatistics>();
+    return {};
   }
 };
 

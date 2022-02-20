@@ -76,8 +76,8 @@ class CERES_NO_EXPORT DoglegStrategy final : public TrustRegionStrategy {
   Matrix subspace_B() const { return subspace_B_; }
 
  private:
-  typedef Eigen::Matrix<double, 2, 1, Eigen::DontAlign> Vector2d;
-  typedef Eigen::Matrix<double, 2, 2, Eigen::DontAlign> Matrix2d;
+  using Vector2d = Eigen::Matrix<double, 2, 1, Eigen::DontAlign>;
+  using Matrix2d = Eigen::Matrix<double, 2, 2, Eigen::DontAlign>;
 
   LinearSolver::Summary ComputeGaussNewtonStep(
       const PerSolveOptions& per_solve_options,

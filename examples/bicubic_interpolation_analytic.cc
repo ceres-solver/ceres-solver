@@ -37,6 +37,8 @@
 // Bicubic interpolation of f(x, y) will be exact, thus we can expect close to
 // perfect convergence
 
+#include <utility>
+
 #include "ceres/ceres.h"
 #include "ceres/cubic_interpolation.h"
 #include "glog/logging.h"
@@ -50,7 +52,7 @@ struct AnalyticBiCubicCost : public ceres::CostFunction {
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,
-                double** jacobians) const {
+                double** jacobians) const override {
     Eigen::Map<const Eigen::Vector2d> shift(parameters[0]);
 
     const Eigen::Vector2d point = point_ + shift;
@@ -72,9 +74,9 @@ struct AnalyticBiCubicCost : public ceres::CostFunction {
   }
 
   AnalyticBiCubicCost(const Interpolator& interpolator,
-                      const Eigen::Vector2d& point,
+                      Eigen::Vector2d point,
                       double value)
-      : point_(point), value_(value), interpolator_(interpolator) {
+      : point_(std::move(point)), value_(value), interpolator_(interpolator) {
     set_num_residuals(1);
     *mutable_parameter_block_sizes() = {2};
   }

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -62,8 +62,7 @@ void DynamicCompressedRowJacobianWriter::Write(int residual_id,
                                                int residual_offset,
                                                double** jacobians,
                                                SparseMatrix* base_jacobian) {
-  DynamicCompressedRowSparseMatrix* jacobian =
-      down_cast<DynamicCompressedRowSparseMatrix*>(base_jacobian);
+  auto* jacobian = down_cast<DynamicCompressedRowSparseMatrix*>(base_jacobian);
 
   // Get the `residual_block` of interest.
   const ResidualBlock* residual_block =
@@ -79,11 +78,10 @@ void DynamicCompressedRowJacobianWriter::Write(int residual_id,
   jacobian->ClearRows(residual_offset, num_residuals);
 
   // Iterate over each parameter block.
-  for (int i = 0; i < evaluated_jacobian_blocks.size(); ++i) {
+  for (const auto& evaluated_jacobian_block : evaluated_jacobian_blocks) {
     const ParameterBlock* parameter_block =
-        program_->parameter_blocks()[evaluated_jacobian_blocks[i].first];
-    const int parameter_block_jacobian_index =
-        evaluated_jacobian_blocks[i].second;
+        program_->parameter_blocks()[evaluated_jacobian_block.first];
+    const int parameter_block_jacobian_index = evaluated_jacobian_block.second;
     const int parameter_block_size = parameter_block->TangentSize();
     const double* parameter_jacobian =
         jacobians[parameter_block_jacobian_index];

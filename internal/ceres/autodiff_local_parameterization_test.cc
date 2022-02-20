@@ -194,13 +194,13 @@ TEST(AutoDiffLocalParameterization, QuaternionParameterizationNearZeroTest) {
                        x[2] * x[2] +
                        x[3] * x[3]);
   // clang-format on
-  for (int i = 0; i < 4; ++i) {
-    x[i] = x[i] / norm_x;
+  for (double& x_i : x) {
+    x_i = x_i / norm_x;
   }
 
   double delta[3] = {0.24, 0.15, 0.10};
-  for (int i = 0; i < 3; ++i) {
-    delta[i] = delta[i] * 1e-14;
+  for (double& delta_i : delta) {
+    delta_i = delta_i * 1e-14;
   }
 
   QuaternionParameterizationTestHelper(x, delta);
@@ -215,8 +215,8 @@ TEST(AutoDiffLocalParameterization, QuaternionParameterizationNonZeroTest) {
                        x[3] * x[3]);
   // clang-format on
 
-  for (int i = 0; i < 4; ++i) {
-    x[i] = x[i] / norm_x;
+  for (double& x_i : x) {
+    x_i = x_i / norm_x;
   }
 
   double delta[3] = {0.24, 0.15, 0.10};

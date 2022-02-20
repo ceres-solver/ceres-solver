@@ -524,7 +524,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
   // computation of the right-hand matrix product, but memory
   // references to the left hand side.
   const int e_block_size = inverse_ete.rows();
-  BufferLayoutType::const_iterator it1 = buffer_layout.begin();
+  auto it1 = buffer_layout.begin();
 
   double* b1_transpose_inverse_ete =
       chunk_outer_product_buffer_.get() + thread_id * buffer_size_;
@@ -541,7 +541,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
         b1_transpose_inverse_ete, 0, 0, block1_size, e_block_size);
     // clang-format on
 
-    BufferLayoutType::const_iterator it2 = it1;
+    auto it2 = it1;
     for (; it2 != buffer_layout.end(); ++it2) {
       const int block2 = it2->first - num_eliminate_blocks_;
 

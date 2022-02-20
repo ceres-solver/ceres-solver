@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -149,8 +149,8 @@ TEST(DynamicAutodiffCostFunctionTest, TestJacobian) {
     EXPECT_EQ(4 * p - 8, jacobian_vect[0][20 * 10 + p]);
     jacobian_vect[0][20 * 10 + p] = 0.0;
   }
-  for (int i = 0; i < jacobian_vect[0].size(); ++i) {
-    EXPECT_EQ(0.0, jacobian_vect[0][i]);
+  for (double entry : jacobian_vect[0]) {
+    EXPECT_EQ(0.0, entry);
   }
 
   // Check "C" Jacobian for second parameter block.
@@ -158,8 +158,8 @@ TEST(DynamicAutodiffCostFunctionTest, TestJacobian) {
     EXPECT_EQ(1.0, jacobian_vect[1][20 * 5 + p]);
     jacobian_vect[1][20 * 5 + p] = 0.0;
   }
-  for (int i = 0; i < jacobian_vect[1].size(); ++i) {
-    EXPECT_EQ(0.0, jacobian_vect[1][i]);
+  for (double entry : jacobian_vect[1]) {
+    EXPECT_EQ(0.0, entry);
   }
 }
 
@@ -207,8 +207,8 @@ TEST(DynamicAutodiffCostFunctionTest, JacobianWithFirstParameterBlockConstant) {
     EXPECT_EQ(1.0, jacobian_vect[1][20 * 5 + p]);
     jacobian_vect[1][20 * 5 + p] = 0.0;
   }
-  for (int i = 0; i < jacobian_vect[1].size(); ++i) {
-    EXPECT_EQ(0.0, jacobian_vect[1][i]);
+  for (double& i : jacobian_vect[1]) {
+    EXPECT_EQ(0.0, i);
   }
 }
 
@@ -265,8 +265,8 @@ TEST(DynamicAutodiffCostFunctionTest,
     EXPECT_EQ(4 * p - 8, jacobian_vect[0][20 * 10 + p]);
     jacobian_vect[0][20 * 10 + p] = 0.0;
   }
-  for (int i = 0; i < jacobian_vect[0].size(); ++i) {
-    EXPECT_EQ(0.0, jacobian_vect[0][i]);
+  for (double& i : jacobian_vect[0]) {
+    EXPECT_EQ(0.0, i);
   }
 }
 
@@ -327,8 +327,8 @@ class ThreeParameterCostFunctorTest : public ::testing::Test {
     parameter_blocks_[2] = &z_[0];
 
     // Prepare the cost function.
-    typedef DynamicAutoDiffCostFunction<MyThreeParameterCostFunctor, 3>
-        DynamicMyThreeParameterCostFunction;
+    using DynamicMyThreeParameterCostFunction =
+        DynamicAutoDiffCostFunction<MyThreeParameterCostFunctor, 3>;
     auto cost_function = std::make_unique<DynamicMyThreeParameterCostFunction>(
         new MyThreeParameterCostFunctor());
     cost_function->AddParameterBlock(1);
@@ -559,8 +559,8 @@ class SixParameterCostFunctorTest : public ::testing::Test {
     parameter_blocks_[5] = &z2_;
 
     // Prepare the cost function.
-    typedef DynamicAutoDiffCostFunction<MySixParameterCostFunctor, 3>
-        DynamicMySixParameterCostFunction;
+    using DynamicMySixParameterCostFunction =
+        DynamicAutoDiffCostFunction<MySixParameterCostFunctor, 3>;
     auto cost_function = std::make_unique<DynamicMySixParameterCostFunction>(
         new MySixParameterCostFunctor());
     for (int i = 0; i < 6; ++i) {

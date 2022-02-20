@@ -33,6 +33,7 @@
 #define CERES_INTERNAL_AUTODIFF_BENCHMARK_RELATIVE_POSE_ERROR_H_
 
 #include <Eigen/Dense>
+#include <utility>
 
 #include "ceres/rotation.h"
 
@@ -43,9 +44,8 @@ namespace ceres {
 // poses T_w_i and T_w_j. For the residual we use the log of the the residual
 // pose, in split representation SO(3) x R^3.
 struct RelativePoseError {
-  RelativePoseError(const Eigen::Quaterniond& q_i_j,
-                    const Eigen::Vector3d& t_i_j)
-      : meas_q_i_j_(q_i_j), meas_t_i_j_(t_i_j) {}
+  RelativePoseError(Eigen::Quaterniond q_i_j, Eigen::Vector3d t_i_j)
+      : meas_q_i_j_(std::move(q_i_j)), meas_t_i_j_(std::move(t_i_j)) {}
 
   template <typename T>
   inline bool operator()(const T* const pose_i_ptr,

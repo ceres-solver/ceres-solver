@@ -305,7 +305,7 @@ class CERES_NO_EXPORT SuiteSparseCholesky final : public SparseCholesky {
                                     std::string* message) final;
 
  private:
-  SuiteSparseCholesky(const OrderingType ordering_type);
+  explicit SuiteSparseCholesky(const OrderingType ordering_type);
 
   const OrderingType ordering_type_;
   SuiteSparse ss_;

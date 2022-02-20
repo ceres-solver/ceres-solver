@@ -48,7 +48,7 @@ constexpr int kFBlockSize = 6;
 class BenchmarkData {
  public:
   explicit BenchmarkData(const int num_e_blocks) {
-    CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
+    auto* bs = new CompressedRowBlockStructure;
     bs->cols.resize(num_e_blocks + 1);
     int col_pos = 0;
     for (int i = 0; i < num_e_blocks; ++i) {

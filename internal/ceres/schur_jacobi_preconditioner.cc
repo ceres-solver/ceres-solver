@@ -43,9 +43,8 @@ namespace ceres {
 namespace internal {
 
 SchurJacobiPreconditioner::SchurJacobiPreconditioner(
-    const CompressedRowBlockStructure& bs,
-    const Preconditioner::Options& options)
-    : options_(options) {
+    const CompressedRowBlockStructure& bs, Preconditioner::Options options)
+    : options_(std::move(options)) {
   CHECK_GT(options_.elimination_groups.size(), 1);
   CHECK_GT(options_.elimination_groups[0], 0);
   const int num_blocks = bs.cols.size() - options_.elimination_groups[0];

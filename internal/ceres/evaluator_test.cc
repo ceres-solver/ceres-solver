@@ -60,7 +60,7 @@ using std::vector;
 template <int kFactor, int kNumResiduals, int... Ns>
 class ParameterIgnoringCostFunction
     : public SizedCostFunction<kNumResiduals, Ns...> {
-  typedef SizedCostFunction<kNumResiduals, Ns...> Base;
+  using Base = SizedCostFunction<kNumResiduals, Ns...>;
 
  public:
   explicit ParameterIgnoringCostFunction(bool succeeds = true)

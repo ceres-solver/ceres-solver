@@ -190,7 +190,7 @@ class OrderedGroups {
 };
 
 // Typedef for the most commonly used version of OrderedGroups.
-typedef OrderedGroups<double*> ParameterBlockOrdering;
+using ParameterBlockOrdering = OrderedGroups<double*>;
 
 }  // namespace ceres
 

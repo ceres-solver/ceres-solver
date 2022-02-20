@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -84,8 +84,7 @@ CovarianceImpl::~CovarianceImpl() = default;
 template <typename T>
 void CheckForDuplicates(std::vector<T> blocks) {
   std::sort(blocks.begin(), blocks.end());
-  typename std::vector<T>::iterator it =
-      std::adjacent_find(blocks.begin(), blocks.end());
+  auto it = std::adjacent_find(blocks.begin(), blocks.end());
   if (it != blocks.end()) {
     // In case there are duplicates, we search for their location.
     std::map<T, std::vector<int>> blocks_map;
@@ -384,8 +383,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   std::vector<ResidualBlock*> residual_blocks;
   problem->GetResidualBlocks(&residual_blocks);
 
-  for (int i = 0; i < residual_blocks.size(); ++i) {
-    ResidualBlock* residual_block = residual_blocks[i];
+  for (auto* residual_block : residual_blocks) {
     parameter_blocks_in_use.insert(residual_block->parameter_blocks(),
                                    residual_block->parameter_blocks() +
                                        residual_block->NumParameterBlocks());
@@ -395,8 +393,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   std::vector<double*>& active_parameter_blocks =
       evaluate_options_.parameter_blocks;
   active_parameter_blocks.clear();
-  for (int i = 0; i < all_parameter_blocks.size(); ++i) {
-    double* parameter_block = all_parameter_blocks[i];
+  for (auto* parameter_block : all_parameter_blocks) {
     ParameterBlock* block = FindOrDie(parameter_map, parameter_block);
     if (!block->IsConstant() && (parameter_blocks_in_use.count(block) > 0)) {
       active_parameter_blocks.push_back(parameter_block);
@@ -412,8 +409,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   // ordering of parameter blocks just constructed.
   int num_rows = 0;
   parameter_block_to_row_index_.clear();
-  for (int i = 0; i < active_parameter_blocks.size(); ++i) {
-    double* parameter_block = active_parameter_blocks[i];
+  for (auto* parameter_block : active_parameter_blocks) {
     const int parameter_block_size =
         problem->ParameterBlockTangentSize(parameter_block);
     parameter_block_to_row_index_[parameter_block] = num_rows;
@@ -425,9 +421,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   // triangular part of the matrix.
   int num_nonzeros = 0;
   CovarianceBlocks covariance_blocks;
-  for (int i = 0; i < original_covariance_blocks.size(); ++i) {
-    const std::pair<const double*, const double*>& block_pair =
-        original_covariance_blocks[i];
+  for (const auto& block_pair : original_covariance_blocks) {
     if (constant_parameter_blocks_.count(block_pair.first) > 0 ||
         constant_parameter_blocks_.count(block_pair.second) > 0) {
       continue;
@@ -823,7 +817,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
   problem_->Evaluate(evaluate_options_, nullptr, nullptr, nullptr, &jacobian);
   event_logger.AddEvent("Evaluate");
 
-  typedef Eigen::SparseMatrix<double, Eigen::ColMajor> EigenSparseMatrix;
+  using EigenSparseMatrix = Eigen::SparseMatrix<double, Eigen::ColMajor>;
 
   // Convert the matrix to column major order as required by SparseQR.
   EigenSparseMatrix sparse_jacobian =

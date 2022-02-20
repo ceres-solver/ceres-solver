@@ -36,6 +36,7 @@
 // dense but dynamically sparse.
 
 #include <cmath>
+#include <utility>
 #include <vector>
 
 #include "ceres/ceres.h"
@@ -275,8 +276,8 @@ ceres::ConstMatrixRef kY(kYData, kYRows, kYCols);
 class PointToLineSegmentContourCostFunction : public ceres::CostFunction {
  public:
   PointToLineSegmentContourCostFunction(const int num_segments,
-                                        const Eigen::Vector2d& y)
-      : num_segments_(num_segments), y_(y) {
+                                        Eigen::Vector2d y)
+      : num_segments_(num_segments), y_(std::move(y)) {
     // The first parameter is the preimage position.
     mutable_parameter_block_sizes()->push_back(1);
     // The next parameters are the control points for the line segment contour.
@@ -286,9 +287,9 @@ class PointToLineSegmentContourCostFunction : public ceres::CostFunction {
     set_num_residuals(2);
   }
 
-  virtual bool Evaluate(const double* const* x,
-                        double* residuals,
-                        double** jacobians) const {
+  bool Evaluate(const double* const* x,
+                double* residuals,
+                double** jacobians) const override {
     // Convert the preimage position `t` into a segment index `i0` and the
     // line segment interpolation parameter `u`. `i1` is the index of the next
     // control point.
@@ -385,8 +386,8 @@ int main(int argc, char** argv) {
 
   // Eigen::MatrixXd is column major so we define our own MatrixXd which is
   // row major. Eigen::VectorXd can be used directly.
-  typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>
-      MatrixXd;
+  using MatrixXd =
+      Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
   using Eigen::VectorXd;
 
   // `X` is the matrix of control points which make up the contour of line

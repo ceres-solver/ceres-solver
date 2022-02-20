@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -113,8 +113,8 @@ TEST(Solver, UpdateStateEveryIterationOption) {
   ceres::Solve(options, problem, &x, &summary);
   num_iterations = summary.iterations.size() - 1;
   EXPECT_GT(num_iterations, 1);
-  for (int i = 0; i < callback.x_values.size(); ++i) {
-    EXPECT_EQ(50.0, callback.x_values[i]);
+  for (double value : callback.x_values) {
+    EXPECT_EQ(50.0, value);
   }
 
   // Second try: with updating

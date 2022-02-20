@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -172,8 +172,8 @@ TEST(AutoDiff, ProjectiveCameraModel) {
 
   // Make random P and X, in a single vector.
   double PX[12 + 4];
-  for (int i = 0; i < 12 + 4; ++i) {
-    PX[i] = RandDouble();
+  for (double& PX_i : PX) {
+    PX_i = RandDouble();
   }
 
   // Handy names for the P and X parts.
@@ -292,7 +292,7 @@ TEST(AutoDiff, Metric) {
 
   // Make random parameter vector.
   double qcX[4 + 3 + 3];
-  for (int i = 0; i < 4 + 3 + 3; ++i) qcX[i] = RandDouble();
+  for (double& qcX_i : qcX) qcX_i = RandDouble();
 
   // Handy names.
   double* q = qcX;
@@ -658,7 +658,7 @@ TEST(AutoDiff, AlignedAllocationTest) {
   // this function.
   y += 1;
 
-  typedef Jet<double, 2> JetT;
+  using JetT = Jet<double, 2>;
   FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(3);
 
   // Need this to makes sure that x does not get optimized out.

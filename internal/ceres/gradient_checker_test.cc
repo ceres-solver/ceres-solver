@@ -34,6 +34,7 @@
 
 #include <cmath>
 #include <cstdlib>
+#include <utility>
 #include <vector>
 
 #include "ceres/cost_function.h"
@@ -289,8 +290,8 @@ TEST(GradientChecker, SmokeTest) {
  */
 class LinearCostFunction : public CostFunction {
  public:
-  explicit LinearCostFunction(const Vector& residuals_offset)
-      : residuals_offset_(residuals_offset) {
+  explicit LinearCostFunction(Vector residuals_offset)
+      : residuals_offset_(std::move(residuals_offset)) {
     set_num_residuals(residuals_offset_.size());
   }
 

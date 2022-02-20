@@ -44,8 +44,8 @@ namespace internal {
 
 using std::vector;
 
-typedef std::unordered_map<int, int> IntMap;
-typedef std::unordered_set<int> IntSet;
+using IntMap = std::unordered_map<int, int>;
+using IntSet = std::unordered_set<int>;
 
 class CERES_NO_EXPORT CanonicalViewsClustering {
  public:
@@ -174,9 +174,9 @@ double CanonicalViewsClustering::ComputeClusteringQualityDifference(
   difference -= options_.size_penalty_weight;
 
   // Orthogonality.
-  for (int i = 0; i < centers.size(); ++i) {
+  for (int center : centers) {
     difference -= options_.similarity_penalty_weight *
-                  graph_->EdgeWeight(centers[i], candidate);
+                  graph_->EdgeWeight(center, candidate);
   }
 
   return difference;

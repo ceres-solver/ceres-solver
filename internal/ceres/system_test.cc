@@ -139,7 +139,7 @@ class PowellsFunction {
 
 double PowellsFunction::kResidualTolerance = 1e-8;
 
-typedef SystemTest<PowellsFunction> PowellTest;
+using PowellTest = SystemTest<PowellsFunction>;
 
 TEST_F(PowellTest, DenseQR) {
   PowellsFunction powells_function;
