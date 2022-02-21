@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ad64f1d_68c4d59f",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-21T16:09:44Z",
+      "side": 1,
+      "message": "Sergiu, I do not think this should be in this header as it takes away from the readability of this file. same reason why we have the implementations in other header files.\n\nAlso I am wondering if this predicate can be generalized to take a base class as an argument? \n\nso I suggest moving this into its own file or one of the files in include/ceres/internal",
+      "range": {
+        "startLine": 276,
+        "startChar": 7,
+        "endLine": 276,
+        "endChar": 22
+      },
+      "revId": "3559e7be976609315c611d46126a79e5f6e38425",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
