@@ -1537,7 +1537,15 @@ manifold can be constructed as:
 
 .. code-block:: c++
 
-   ProductManifold se3(new QuaternionManifold, new EuclideanManifold<3>);
+   ProductManifold<QuaternionManifold, EuclideanManifold<3>> se3{QuaternionManifold{}, EuclideanManifold<3>{}};
+
+
+In C++17, the template parameters can be left out as they are automatically
+deduced making the initialization much simpler:
+
+.. code-block:: c++
+
+   ProductManifold se3{QuaternionManifold{}, EuclideanManifold<3>{}};
 
 
 :class:`QuaternionManifold`
