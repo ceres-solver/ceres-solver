@@ -156,52 +156,52 @@ TEST(SubsetManifold, NormalFunctionTest) {
 }
 
 TEST(ProductManifold, Size2) {
-  Manifold* manifold1 = new SubsetManifold(5, {2});
-  Manifold* manifold2 = new SubsetManifold(3, {0, 1});
+  SubsetManifold manifold1(5, {2});
+  SubsetManifold manifold2(3, {0, 1});
   ProductManifold manifold(manifold1, manifold2);
 
   EXPECT_EQ(manifold.AmbientSize(),
-            manifold1->AmbientSize() + manifold2->AmbientSize());
+            manifold1.AmbientSize() + manifold2.AmbientSize());
   EXPECT_EQ(manifold.TangentSize(),
-            manifold1->TangentSize() + manifold2->TangentSize());
+            manifold1.TangentSize() + manifold2.TangentSize());
 }
 
 TEST(ProductManifold, Size3) {
-  Manifold* manifold1 = new SubsetManifold(5, {2});
-  Manifold* manifold2 = new SubsetManifold(3, {0, 1});
-  Manifold* manifold3 = new SubsetManifold(4, {1});
+  SubsetManifold manifold1(5, {2});
+  SubsetManifold manifold2(3, {0, 1});
+  SubsetManifold manifold3(4, {1});
 
   ProductManifold manifold(manifold1, manifold2, manifold3);
 
   EXPECT_EQ(manifold.AmbientSize(),
-            manifold1->AmbientSize() + manifold2->AmbientSize() +
-                manifold3->AmbientSize());
+            manifold1.AmbientSize() + manifold2.AmbientSize() +
+                manifold3.AmbientSize());
   EXPECT_EQ(manifold.TangentSize(),
-            manifold1->TangentSize() + manifold2->TangentSize() +
-                manifold3->TangentSize());
+            manifold1.TangentSize() + manifold2.TangentSize() +
+                manifold3.TangentSize());
 }
 
 TEST(ProductManifold, Size4) {
-  Manifold* manifold1 = new SubsetManifold(5, {2});
-  Manifold* manifold2 = new SubsetManifold(3, {0, 1});
-  Manifold* manifold3 = new SubsetManifold(4, {1});
-  Manifold* manifold4 = new SubsetManifold(2, {0});
+  SubsetManifold manifold1(5, {2});
+  SubsetManifold manifold2(3, {0, 1});
+  SubsetManifold manifold3(4, {1});
+  SubsetManifold manifold4(2, {0});
 
   ProductManifold manifold(manifold1, manifold2, manifold3, manifold4);
 
   EXPECT_EQ(manifold.AmbientSize(),
-            manifold1->AmbientSize() + manifold2->AmbientSize() +
-                manifold3->AmbientSize() + manifold4->AmbientSize());
+            manifold1.AmbientSize() + manifold2.AmbientSize() +
+                manifold3.AmbientSize() + manifold4.AmbientSize());
   EXPECT_EQ(manifold.TangentSize(),
-            manifold1->TangentSize() + manifold2->TangentSize() +
-                manifold3->TangentSize() + manifold4->TangentSize());
+            manifold1.TangentSize() + manifold2.TangentSize() +
+                manifold3.TangentSize() + manifold4.TangentSize());
 }
 
 TEST(ProductManifold, NormalFunctionTest) {
-  Manifold* manifold1 = new SubsetManifold(5, {2});
-  Manifold* manifold2 = new SubsetManifold(3, {0, 1});
-  Manifold* manifold3 = new SubsetManifold(4, {1});
-  Manifold* manifold4 = new SubsetManifold(2, {0});
+  SubsetManifold manifold1(5, {2});
+  SubsetManifold manifold2(3, {0, 1});
+  SubsetManifold manifold3(4, {1});
+  SubsetManifold manifold4(2, {0});
 
   ProductManifold manifold(manifold1, manifold2, manifold3, manifold4);
 
@@ -216,29 +216,29 @@ TEST(ProductManifold, NormalFunctionTest) {
     int ambient_cursor = 0;
     int tangent_cursor = 0;
 
-    EXPECT_TRUE(manifold1->Plus(&x[ambient_cursor],
-                                &delta[tangent_cursor],
-                                &x_plus_delta_expected[ambient_cursor]));
-    ambient_cursor += manifold1->AmbientSize();
-    tangent_cursor += manifold1->TangentSize();
+    EXPECT_TRUE(manifold1.Plus(&x[ambient_cursor],
+                               &delta[tangent_cursor],
+                               &x_plus_delta_expected[ambient_cursor]));
+    ambient_cursor += manifold1.AmbientSize();
+    tangent_cursor += manifold1.TangentSize();
 
-    EXPECT_TRUE(manifold2->Plus(&x[ambient_cursor],
-                                &delta[tangent_cursor],
-                                &x_plus_delta_expected[ambient_cursor]));
-    ambient_cursor += manifold2->AmbientSize();
-    tangent_cursor += manifold2->TangentSize();
+    EXPECT_TRUE(manifold2.Plus(&x[ambient_cursor],
+                               &delta[tangent_cursor],
+                               &x_plus_delta_expected[ambient_cursor]));
+    ambient_cursor += manifold2.AmbientSize();
+    tangent_cursor += manifold2.TangentSize();
 
-    EXPECT_TRUE(manifold3->Plus(&x[ambient_cursor],
-                                &delta[tangent_cursor],
-                                &x_plus_delta_expected[ambient_cursor]));
-    ambient_cursor += manifold3->AmbientSize();
-    tangent_cursor += manifold3->TangentSize();
+    EXPECT_TRUE(manifold3.Plus(&x[ambient_cursor],
+                               &delta[tangent_cursor],
+                               &x_plus_delta_expected[ambient_cursor]));
+    ambient_cursor += manifold3.AmbientSize();
+    tangent_cursor += manifold3.TangentSize();
 
-    EXPECT_TRUE(manifold4->Plus(&x[ambient_cursor],
-                                &delta[tangent_cursor],
-                                &x_plus_delta_expected[ambient_cursor]));
-    ambient_cursor += manifold4->AmbientSize();
-    tangent_cursor += manifold4->TangentSize();
+    EXPECT_TRUE(manifold4.Plus(&x[ambient_cursor],
+                               &delta[tangent_cursor],
+                               &x_plus_delta_expected[ambient_cursor]));
+    ambient_cursor += manifold4.AmbientSize();
+    tangent_cursor += manifold4.TangentSize();
 
     for (int i = 0; i < x.size(); ++i) {
       EXPECT_EQ(x_plus_delta[i], x_plus_delta_expected[i]);
@@ -250,8 +250,8 @@ TEST(ProductManifold, NormalFunctionTest) {
 }
 
 TEST(ProductManifold, ZeroTangentSizeAndEuclidean) {
-  Manifold* subset_manifold = new SubsetManifold(1, {0});
-  Manifold* euclidean_manifold = new EuclideanManifold<2>;
+  SubsetManifold subset_manifold(1, {0});
+  EuclideanManifold<2> euclidean_manifold;
   ProductManifold manifold(subset_manifold, euclidean_manifold);
   EXPECT_EQ(manifold.AmbientSize(), 3);
   EXPECT_EQ(manifold.TangentSize(), 2);
@@ -274,8 +274,8 @@ TEST(ProductManifold, ZeroTangentSizeAndEuclidean) {
 }
 
 TEST(ProductManifold, EuclideanAndZeroTangentSize) {
-  Manifold* subset_manifold = new SubsetManifold(1, {0});
-  Manifold* euclidean_manifold = new EuclideanManifold<2>;
+  SubsetManifold subset_manifold(1, {0});
+  EuclideanManifold<2> euclidean_manifold;
   ProductManifold manifold(euclidean_manifold, subset_manifold);
   EXPECT_EQ(manifold.AmbientSize(), 3);
   EXPECT_EQ(manifold.TangentSize(), 2);
@@ -293,6 +293,118 @@ TEST(ProductManifold, EuclideanAndZeroTangentSize) {
     EXPECT_EQ(x_plus_delta[2], x[2]);
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
+}
+
+struct CopyableManifold : ceres::Manifold {
+  CopyableManifold() = default;
+  CopyableManifold(const CopyableManifold&) = default;
+  // Do not care about copy-assignment
+  CopyableManifold& operator=(const CopyableManifold&) = delete;
+  // Not moveable
+  CopyableManifold(CopyableManifold&&) = delete;
+  CopyableManifold& operator=(CopyableManifold&&) = delete;
+
+  int AmbientSize() const override { return 3; }
+  int TangentSize() const override { return 2; }
+
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override {
+    return true;
+  }
+
+  bool PlusJacobian(const double* x, double* jacobian) const override {
+    return true;
+  }
+
+  bool RightMultiplyByPlusJacobian(const double* x,
+                                   const int num_rows,
+                                   const double* ambient_matrix,
+                                   double* tangent_matrix) const override {
+    return true;
+  }
+
+  bool Minus(const double* y,
+             const double* x,
+             double* y_minus_x) const override {
+    return true;
+  }
+
+  bool MinusJacobian(const double* x, double* jacobian) const override {
+    return true;
+  }
+};
+
+struct MoveableManifold : ceres::Manifold {
+  MoveableManifold() = default;
+  MoveableManifold(MoveableManifold&&) = default;
+  // Do not care about move-assignment
+  MoveableManifold& operator=(MoveableManifold&&) = delete;
+  // Not copyable
+  MoveableManifold(const MoveableManifold&) = delete;
+  MoveableManifold& operator=(const MoveableManifold&) = delete;
+
+  int AmbientSize() const override { return 3; }
+  int TangentSize() const override { return 2; }
+
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override {
+    return true;
+  }
+
+  bool PlusJacobian(const double* x, double* jacobian) const override {
+    return true;
+  }
+
+  bool RightMultiplyByPlusJacobian(const double* x,
+                                   const int num_rows,
+                                   const double* ambient_matrix,
+                                   double* tangent_matrix) const override {
+    return true;
+  }
+
+  bool Minus(const double* y,
+             const double* x,
+             double* y_minus_x) const override {
+    return true;
+  }
+
+  bool MinusJacobian(const double* x, double* jacobian) const override {
+    return true;
+  }
+};
+
+TEST(ProductManifold, CopyableOnly) {
+  ProductManifold manifold1{CopyableManifold{}, EuclideanManifold<3>{}};
+
+  CopyableManifold inner2;
+  ProductManifold manifold2{inner2, EuclideanManifold<3>{}};
+
+  EXPECT_EQ(manifold1.AmbientSize(), manifold2.AmbientSize());
+  EXPECT_EQ(manifold1.TangentSize(), manifold2.TangentSize());
+}
+
+TEST(ProductManifold, MoveableOnly) {
+  ProductManifold manifold1{MoveableManifold{}, EuclideanManifold<3>{}};
+
+  MoveableManifold inner2;
+  ProductManifold manifold2{std::move(inner2), EuclideanManifold<3>{}};
+
+  EXPECT_EQ(manifold1.AmbientSize(), manifold2.AmbientSize());
+  EXPECT_EQ(manifold1.TangentSize(), manifold2.TangentSize());
+}
+
+TEST(ProductManifold, CopyableOrMoveable) {
+  const CopyableManifold inner12{};
+  ProductManifold manifold1{MoveableManifold{}, inner12};
+
+  MoveableManifold inner21;
+  CopyableManifold inner22;
+  ProductManifold manifold2{std::move(inner21), inner22};
+
+  EXPECT_EQ(manifold1.AmbientSize(), manifold2.AmbientSize());
+  EXPECT_EQ(manifold1.TangentSize(), manifold2.TangentSize());
 }
 
 TEST(QuaternionManifold, PlusPiBy2) {

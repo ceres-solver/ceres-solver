@@ -281,96 +281,27 @@ bool SubsetManifold::MinusJacobian(const double* x,
 // Providing a trivial implementation here resolves the issue.
 ProductManifold::~ProductManifold() = default;
 
-int ProductManifold::AmbientSize() const { return ambient_size_; }
-
-int ProductManifold::TangentSize() const { return tangent_size_; }
+int ProductManifold::AmbientSize() const { return impl_->AmbientSize(); }
+int ProductManifold::TangentSize() const { return impl_->TangentSize(); }
 
 bool ProductManifold::Plus(const double* x,
                            const double* delta,
                            double* x_plus_delta) const {
-  int ambient_cursor = 0;
-  int tangent_cursor = 0;
-  for (const auto& m : manifolds_) {
-    if (!m->Plus(x + ambient_cursor,
-                 delta + tangent_cursor,
-                 x_plus_delta + ambient_cursor)) {
-      return false;
-    }
-    tangent_cursor += m->TangentSize();
-    ambient_cursor += m->AmbientSize();
-  }
-
-  return true;
+  return impl_->Plus(x, delta, x_plus_delta);
 }
 
-bool ProductManifold::PlusJacobian(const double* x,
-                                   double* jacobian_ptr) const {
-  MatrixRef jacobian(jacobian_ptr, AmbientSize(), TangentSize());
-  jacobian.setZero();
-  internal::FixedArray<double> buffer(buffer_size_);
-
-  int ambient_cursor = 0;
-  int tangent_cursor = 0;
-  for (const auto& m : manifolds_) {
-    const int ambient_size = m->AmbientSize();
-    const int tangent_size = m->TangentSize();
-
-    if (!m->PlusJacobian(x + ambient_cursor, buffer.data())) {
-      return false;
-    }
-
-    jacobian.block(ambient_cursor, tangent_cursor, ambient_size, tangent_size) =
-        MatrixRef(buffer.data(), ambient_size, tangent_size);
-
-    ambient_cursor += ambient_size;
-    tangent_cursor += tangent_size;
-  }
-
-  return true;
+bool ProductManifold::PlusJacobian(const double* x, double* jacobian) const {
+  return impl_->PlusJacobian(x, jacobian);
 }
 
 bool ProductManifold::Minus(const double* y,
                             const double* x,
                             double* y_minus_x) const {
-  int ambient_cursor = 0;
-  int tangent_cursor = 0;
-  for (const auto& m : manifolds_) {
-    if (!m->Minus(y + ambient_cursor,
-                  x + ambient_cursor,
-                  y_minus_x + tangent_cursor)) {
-      return false;
-    }
-    tangent_cursor += m->TangentSize();
-    ambient_cursor += m->AmbientSize();
-  }
-
-  return true;
+  return impl_->Minus(y, x, y_minus_x);
 }
 
-bool ProductManifold::MinusJacobian(const double* x,
-                                    double* jacobian_ptr) const {
-  MatrixRef jacobian(jacobian_ptr, TangentSize(), AmbientSize());
-  jacobian.setZero();
-  internal::FixedArray<double> buffer(buffer_size_);
-
-  int ambient_cursor = 0;
-  int tangent_cursor = 0;
-  for (const auto& m : manifolds_) {
-    const int ambient_size = m->AmbientSize();
-    const int tangent_size = m->TangentSize();
-
-    if (!m->MinusJacobian(x + ambient_cursor, buffer.data())) {
-      return false;
-    }
-
-    jacobian.block(tangent_cursor, ambient_cursor, tangent_size, ambient_size) =
-        MatrixRef(buffer.data(), tangent_size, ambient_size);
-
-    ambient_cursor += ambient_size;
-    tangent_cursor += tangent_size;
-  }
-
-  return true;
+bool ProductManifold::MinusJacobian(const double* x, double* jacobian) const {
+  return impl_->MinusJacobian(x, jacobian);
 }
 
 bool QuaternionManifold::Plus(const double* x,
