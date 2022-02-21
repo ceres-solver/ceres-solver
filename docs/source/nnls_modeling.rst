@@ -1537,7 +1537,7 @@ manifold can be constructed as:
 
 .. code-block:: c++
 
-   ProductManifold se3(new QuaternionManifold, new EuclideanManifold<3>);
+   ProductManifold se3{QuaternionManifold{}, EuclideanManifold<3>{}};
 
 
 :class:`QuaternionManifold`
