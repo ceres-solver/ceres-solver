@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2019 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -64,6 +64,7 @@
 #include "ceres/numeric_diff_options.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/problem.h"
+#include "ceres/product_manifold.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"
 #include "ceres/sphere_manifold.h"

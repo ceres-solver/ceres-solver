@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2021 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,7 @@
 #include <algorithm>
 #include <array>
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include "ceres/internal/disable_warnings.h"
@@ -335,72 +336,6 @@ class CERES_EXPORT SubsetManifold final : public Manifold {
  private:
   const int tangent_size_ = 0;
   std::vector<bool> constancy_mask_;
-};
-
-// Construct a manifold by taking the Cartesian product of a number of other
-// manifolds. This is useful, when a parameter block is the cartesian product
-// of two or more manifolds. For example the parameters of a camera consist of
-// a rotation and a translation, i.e., SO(3) x R^3.
-//
-// Example usage:
-//
-// ProductParameterization se3(new Quaternion(), new EuclideanManifold(3));
-//
-// is the manifold for a rigid transformation, where the rotation is
-// represented using a quaternion.
-class CERES_EXPORT ProductManifold final : public Manifold {
- public:
-  ProductManifold(const ProductManifold&) = delete;
-  ProductManifold& operator=(const ProductManifold&) = delete;
-  // NOTE: Do not remove the trivial destructor as this will cause linker
-  // errors in MSVC builds.
-  ~ProductManifold() override;
-
-  // NOTE: The constructor takes ownership of the input
-  // manifolds.
-  //
-  template <typename... Manifolds>
-  explicit ProductManifold(Manifolds*... manifolds)
-      : manifolds_(sizeof...(Manifolds)) {
-    constexpr int kNumManifolds = sizeof...(Manifolds);
-    static_assert(kNumManifolds >= 2,
-                  "At least two manifolds must be specified.");
-
-    using ManifoldPtr = std::unique_ptr<Manifold>;
-
-    // Wrap all raw pointers into std::unique_ptr for exception safety.
-    std::array<ManifoldPtr, kNumManifolds> manifolds_array{
-        ManifoldPtr(manifolds)...};
-
-    // Initialize internal state.
-    for (int i = 0; i < kNumManifolds; ++i) {
-      ManifoldPtr& manifold = manifolds_[i];
-      manifold = std::move(manifolds_array[i]);
-
-      buffer_size_ = (std::max)(
-          buffer_size_, manifold->TangentSize() * manifold->AmbientSize());
-      ambient_size_ += manifold->AmbientSize();
-      tangent_size_ += manifold->TangentSize();
-    }
-  }
-
-  int AmbientSize() const override;
-  int TangentSize() const override;
-
-  bool Plus(const double* x,
-            const double* delta,
-            double* x_plus_delta) const override;
-  bool PlusJacobian(const double* x, double* jacobian) const override;
-  bool Minus(const double* y,
-             const double* x,
-             double* y_minus_x) const override;
-  bool MinusJacobian(const double* x, double* jacobian) const override;
-
- private:
-  std::vector<std::unique_ptr<Manifold>> manifolds_;
-  int ambient_size_ = 0;
-  int tangent_size_ = 0;
-  int buffer_size_ = 0;
 };
 
 // Implements the manifold for a Hamilton quaternion as defined in
