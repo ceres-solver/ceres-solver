@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2021 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -33,11 +33,16 @@
 
 #include <Eigen/Core>
 #include <array>
+#include <initializer_list>
 #include <memory>
+#include <tuple>
+#include <type_traits>
 #include <vector>
 
 #include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
+#include "ceres/internal/fixed_array.h"
 #include "ceres/types.h"
 
 namespace ceres {
@@ -270,6 +275,217 @@ class CERES_EXPORT SubsetManifold : public Manifold {
   std::vector<bool> constancy_mask_;
 };
 
+namespace internal {
+
+template <typename T, typename Sequence>
+struct MakeTuple;
+
+template <typename T, std::size_t... Indices>
+struct MakeTuple<T, std::index_sequence<Indices...>> {
+  using type = decltype(std::make_tuple((Indices, std::declval<T>())...));
+};
+
+template <class T, std::size_t N>
+using TupleOf = MakeTuple<T, std::make_index_sequence<N>>;
+
+template <class T, std::size_t N>
+using TupleOf_t = typename TupleOf<T, N>::type;
+
+template <typename... Types>
+constexpr decltype(auto) ComputeSum(std::tuple<Types...> /*values*/,
+                                    std::index_sequence<>) noexcept {
+  return 0;
+}
+
+template <typename... Types, std::size_t Index0, std::size_t... Indices>
+constexpr decltype(auto) ComputeSum(
+    std::tuple<Types...> values,
+    std::index_sequence<Index0, Indices...>) noexcept {
+  return std::get<Index0>(values) +
+         ComputeSum(values, std::index_sequence<Indices...>{});
+}
+
+template <typename... Types>
+constexpr decltype(auto) ComputeSum(std::tuple<Types...> values) noexcept {
+  return ComputeSum(values, std::index_sequence_for<Types...>{});
+}
+
+template <typename... Types, std::size_t... Indices>
+constexpr decltype(auto) ComputeCumSum(
+    std::tuple<Types...> values, std::index_sequence<Indices...>) noexcept {
+  return std::tuple_cat(std::make_tuple(
+      ComputeSum(values, std::make_index_sequence<Indices>{}))...);
+}
+
+template <typename... Types>
+constexpr decltype(auto) ComputeCumSum(std::tuple<Types...> values) noexcept {
+  return ComputeCumSum(values, std::index_sequence_for<Types...>{});
+}
+
+template <typename... Manifolds>
+class ProductManifoldImpl : public Manifold {
+ public:
+  template <typename... ManifoldPtrs>
+  explicit ProductManifoldImpl(ManifoldPtrs&&... ptrs)
+      : buffer_size_{(std::max)(
+            {(ptrs->TangentSize() * ptrs->AmbientSize())...})},
+        ambient_sizes_{std::make_tuple(ptrs->AmbientSize()...)},
+        tangent_sizes_{std::make_tuple(ptrs->TangentSize()...)},
+        ambient_offsets_{ComputeCumSum(ambient_sizes_)},
+        tangent_offsets_{ComputeCumSum(tangent_sizes_)},
+        ambient_size_{ComputeSum(ambient_sizes_)},
+        tangent_size_{ComputeSum(tangent_sizes_)},
+        manifolds_{std::forward<ManifoldPtrs>(ptrs)...} {}
+
+  int AmbientSize() const override { return ambient_size_; }
+  int TangentSize() const override { return tangent_size_; }
+
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override {
+    return Plus(x, delta, x_plus_delta, std::make_index_sequence<N>{});
+  }
+
+  bool Minus(const double* y,
+             const double* x,
+             double* y_minus_x) const override {
+    return Minus(y, x, y_minus_x, std::make_index_sequence<N>{});
+  }
+
+  bool PlusJacobian(const double* x, double* jacobian_ptr) const override {
+    MatrixRef jacobian(jacobian_ptr, AmbientSize(), TangentSize());
+    jacobian.setZero();
+    internal::FixedArray<double> buffer(buffer_size_);
+
+    return PlusJacobian(x, jacobian, buffer, std::make_index_sequence<N>{});
+  }
+
+  bool MinusJacobian(const double* x, double* jacobian_ptr) const override {
+    MatrixRef jacobian(jacobian_ptr, TangentSize(), AmbientSize());
+    jacobian.setZero();
+    internal::FixedArray<double> buffer(buffer_size_);
+
+    return MinusJacobian(x, jacobian, buffer, std::make_index_sequence<N>{});
+  }
+
+ private:
+  static constexpr std::size_t N = sizeof...(Manifolds);
+
+  template <std::size_t Index0, std::size_t... Indices>
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta,
+            std::index_sequence<Index0, Indices...>) const {
+    if (!std::get<Index0>(manifolds_)
+             ->Plus(x + std::get<Index0>(ambient_offsets_),
+                    delta + std::get<Index0>(tangent_offsets_),
+                    x_plus_delta + std::get<Index0>(ambient_offsets_))) {
+      return false;
+    }
+
+    return Plus(x, delta, x_plus_delta, std::index_sequence<Indices...>{});
+  }
+
+  static constexpr bool Plus(const double* /*x*/,
+                             const double* /*delta*/,
+                             double* /*x_plus_delta*/,
+                             std::index_sequence<>) {
+    return true;
+  }
+
+  template <std::size_t Index0, std::size_t... Indices>
+  bool Minus(const double* y,
+             const double* x,
+             double* y_minus_x,
+             std::index_sequence<Index0, Indices...>) const {
+    if (!std::get<Index0>(manifolds_)
+             ->Minus(y + std::get<Index0>(ambient_offsets_),
+                     x + std::get<Index0>(ambient_offsets_),
+                     y_minus_x + std::get<Index0>(tangent_offsets_))) {
+      return false;
+    }
+
+    return Minus(y, x, y_minus_x, std::index_sequence<Indices...>{});
+  }
+
+  static constexpr bool Minus(const double* /*y*/,
+                              const double* /*x*/,
+                              double* /*y_minus_x*/,
+                              std::index_sequence<>) {
+    return true;
+  }
+
+  template <std::size_t Index0, std::size_t... Indices>
+  bool PlusJacobian(const double* x,
+                    MatrixRef& jacobian,
+                    internal::FixedArray<double>& buffer,
+                    std::index_sequence<Index0, Indices...>) const {
+    if (!std::get<Index0>(manifolds_)
+             ->PlusJacobian(x + std::get<Index0>(ambient_offsets_),
+                            buffer.data())) {
+      return false;
+    }
+
+    jacobian.block(std::get<Index0>(ambient_offsets_),
+                   std::get<Index0>(tangent_offsets_),
+                   std::get<Index0>(ambient_sizes_),
+                   std::get<Index0>(tangent_sizes_)) =
+        MatrixRef(buffer.data(),
+                  std::get<Index0>(ambient_sizes_),
+                  std::get<Index0>(tangent_sizes_));
+
+    return PlusJacobian(x, jacobian, buffer, std::index_sequence<Indices...>{});
+  }
+
+  static constexpr bool PlusJacobian(const double* /*x*/,
+                                     MatrixRef& /*jacobian*/,
+                                     internal::FixedArray<double>& /*buffer*/,
+                                     std::index_sequence<>) noexcept {
+    return true;
+  }
+
+  template <std::size_t Index0, std::size_t... Indices>
+  bool MinusJacobian(const double* x,
+                     MatrixRef& jacobian,
+                     internal::FixedArray<double>& buffer,
+                     std::index_sequence<Index0, Indices...>) const {
+    if (!std::get<Index0>(manifolds_)
+             ->MinusJacobian(x + std::get<Index0>(ambient_offsets_),
+                             buffer.data())) {
+      return false;
+    }
+
+    jacobian.block(std::get<Index0>(tangent_offsets_),
+                   std::get<Index0>(ambient_offsets_),
+                   std::get<Index0>(tangent_sizes_),
+                   std::get<Index0>(ambient_sizes_)) =
+        MatrixRef(buffer.data(),
+                  std::get<Index0>(tangent_sizes_),
+                  std::get<Index0>(ambient_sizes_));
+
+    return MinusJacobian(
+        x, jacobian, buffer, std::index_sequence<Indices...>{});
+  }
+
+  static constexpr bool MinusJacobian(const double* /*x*/,
+                                      MatrixRef& /*jacobian*/,
+                                      internal::FixedArray<double>& /*buffer*/,
+                                      std::index_sequence<>) noexcept {
+    return true;
+  }
+
+  int buffer_size_;
+  TupleOf_t<int, N> ambient_sizes_;
+  TupleOf_t<int, N> tangent_sizes_;
+  TupleOf_t<int, N> ambient_offsets_;
+  TupleOf_t<int, N> tangent_offsets_;
+  int ambient_size_;
+  int tangent_size_;
+  std::tuple<std::unique_ptr<Manifolds>...> manifolds_;
+};
+
+}  // namespace internal
+
 // Construct a manifold by taking the Cartesian product of a number of other
 // manifolds. This is useful, when a parameter block is the cartesian product of
 // two or more manifolds. For example the parameters of a camera consist of a
@@ -289,28 +505,11 @@ class CERES_EXPORT ProductManifold : public Manifold {
   // NOTE: The constructor takes ownership of the input
   // manifolds.
   //
-  template <typename... Manifolds>
-  ProductManifold(Manifolds*... manifolds) : manifolds_(sizeof...(Manifolds)) {
-    constexpr int kNumManifolds = sizeof...(Manifolds);
-    static_assert(kNumManifolds >= 2,
-                  "At least two manifolds must be specified.");
-
-    using ManifoldPtr = std::unique_ptr<Manifold>;
-
-    // Wrap all raw pointers into std::unique_ptr for exception safety.
-    std::array<ManifoldPtr, kNumManifolds> manifolds_array{
-        ManifoldPtr(manifolds)...};
-
-    // Initialize internal state.
-    for (int i = 0; i < kNumManifolds; ++i) {
-      ManifoldPtr& manifold = manifolds_[i];
-      manifold = std::move(manifolds_array[i]);
-
-      buffer_size_ = std::max(
-          buffer_size_, manifold->TangentSize() * manifold->AmbientSize());
-      ambient_size_ += manifold->AmbientSize();
-      tangent_size_ += manifold->TangentSize();
-    }
+  template <typename Manifold0, typename Manifold1, typename... Manifolds>
+  ProductManifold(Manifold0* manifold0,
+                  Manifold1* manifold1,
+                  Manifolds*... manifolds) {
+    Initialize(manifold0, manifold1, manifolds...);
   }
 
   int AmbientSize() const override;
@@ -319,17 +518,23 @@ class CERES_EXPORT ProductManifold : public Manifold {
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
+
   bool PlusJacobian(const double* x, double* jacobian) const override;
+
   bool Minus(const double* y,
              const double* x,
              double* y_minus_x) const override;
+
   bool MinusJacobian(const double* x, double* jacobian) const override;
 
  private:
-  std::vector<std::unique_ptr<Manifold>> manifolds_;
-  int ambient_size_ = 0;
-  int tangent_size_ = 0;
-  int buffer_size_ = 0;
+  template <typename... Manifolds>
+  void Initialize(Manifolds*... manifolds) {
+    manifold_ = std::make_unique<internal::ProductManifoldImpl<Manifolds...>>(
+        std::unique_ptr<Manifolds>(manifolds)...);
+  }
+
+  std::unique_ptr<Manifold> manifold_;
 };
 
 // Implements the manifold for a Hamilton quaternion as defined in
