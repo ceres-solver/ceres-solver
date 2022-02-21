@@ -343,6 +343,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8318f58_03a7a8a2",
+        "filename": "include/ceres/normal_prior.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-21T16:15:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ba06dfff_b9952386",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 37
+      },
+      "revId": "6a8bf101a3666870dc8e1263ead85b44df30870e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f5c0b2b1_8bcf8fe2",
