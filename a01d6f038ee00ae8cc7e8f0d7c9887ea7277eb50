@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c7ee674_da2ee04d",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-21T18:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90dd44b5_df0cc5e7",
+      "range": {
+        "startLine": 329,
+        "startChar": 17,
+        "endLine": 329,
+        "endChar": 22
+      },
+      "revId": "a01d6f038ee00ae8cc7e8f0d7c9887ea7277eb50",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e6cdcf5_bbe628f5",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-02-21T16:15:07Z",
       "side": 1,
       "message": "coeff",
+      "range": {
+        "startLine": 438,
+        "startChar": 17,
+        "endLine": 438,
+        "endChar": 22
+      },
+      "revId": "a01d6f038ee00ae8cc7e8f0d7c9887ea7277eb50",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8165642d_f80bbf92",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-21T18:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e6cdcf5_bbe628f5",
       "range": {
         "startLine": 438,
         "startChar": 17,

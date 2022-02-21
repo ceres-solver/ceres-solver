@@ -1375,6 +1375,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da6355da_248f9ed7",
+        "filename": "internal/ceres/numeric_diff_test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-21T18:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f72929c8_e0a4c39e",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 152,
+        "endChar": 18
+      },
+      "revId": "da60b3fd5cd0d32d885c3bf187001d7fb15a3991",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "53aae2a2_50b92cad",
@@ -1446,6 +1470,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a4845fe_9a11d107",
+        "filename": "internal/ceres/numeric_diff_test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-21T18:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "693c54df_c7eafc21",
+      "range": {
+        "startLine": 210,
+        "startChar": 15,
+        "endLine": 210,
+        "endChar": 20
+      },
+      "revId": "da60b3fd5cd0d32d885c3bf187001d7fb15a3991",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0df719d_ba03ce57",
@@ -1507,6 +1555,30 @@
       "side": 1,
       "message": "same",
       "parentUuid": "8fcb5961_f2d4faa0",
+      "range": {
+        "startLine": 251,
+        "startChar": 15,
+        "endLine": 251,
+        "endChar": 20
+      },
+      "revId": "da60b3fd5cd0d32d885c3bf187001d7fb15a3991",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dddf6ab_e08e3928",
+        "filename": "internal/ceres/numeric_diff_test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-21T18:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e913029a_f1307efc",
       "range": {
         "startLine": 251,
         "startChar": 15,
