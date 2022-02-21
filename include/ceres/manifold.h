@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2021 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,7 @@
 #include <algorithm>
 #include <array>
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include "ceres/internal/disable_warnings.h"
@@ -344,7 +345,7 @@ class CERES_EXPORT SubsetManifold final : public Manifold {
 //
 // Example usage:
 //
-// ProductParameterization se3(new Quaternion(), new EuclideanManifold(3));
+// ProductParameterization se3(Quaternion(), EuclideanManifold(3));
 //
 // is the manifold for a rigid transformation, where the rotation is
 // represented using a quaternion.
@@ -356,32 +357,13 @@ class CERES_EXPORT ProductManifold final : public Manifold {
   // errors in MSVC builds.
   ~ProductManifold() override;
 
-  // NOTE: The constructor takes ownership of the input
-  // manifolds.
-  //
-  template <typename... Manifolds>
-  explicit ProductManifold(Manifolds*... manifolds)
-      : manifolds_(sizeof...(Manifolds)) {
-    constexpr int kNumManifolds = sizeof...(Manifolds);
-    static_assert(kNumManifolds >= 2,
-                  "At least two manifolds must be specified.");
-
-    using ManifoldPtr = std::unique_ptr<Manifold>;
-
-    // Wrap all raw pointers into std::unique_ptr for exception safety.
-    std::array<ManifoldPtr, kNumManifolds> manifolds_array{
-        ManifoldPtr(manifolds)...};
-
-    // Initialize internal state.
-    for (int i = 0; i < kNumManifolds; ++i) {
-      ManifoldPtr& manifold = manifolds_[i];
-      manifold = std::move(manifolds_array[i]);
-
-      buffer_size_ = (std::max)(
-          buffer_size_, manifold->TangentSize() * manifold->AmbientSize());
-      ambient_size_ += manifold->AmbientSize();
-      tangent_size_ += manifold->TangentSize();
-    }
+  template <typename Manifold0, typename Manifold1, typename... Manifolds>
+  ProductManifold(Manifold0&& manifold0,
+                  Manifold1&& manifold1,
+                  Manifolds&&... manifolds) {
+    Initialize(std::forward<Manifold0>(manifold0),
+               std::forward<Manifold1>(manifold1),
+               std::forward<Manifolds>(manifolds)...);
   }
 
   int AmbientSize() const override;
@@ -390,17 +372,20 @@ class CERES_EXPORT ProductManifold final : public Manifold {
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const override;
+
   bool PlusJacobian(const double* x, double* jacobian) const override;
+
   bool Minus(const double* y,
              const double* x,
              double* y_minus_x) const override;
+
   bool MinusJacobian(const double* x, double* jacobian) const override;
 
  private:
-  std::vector<std::unique_ptr<Manifold>> manifolds_;
-  int ambient_size_ = 0;
-  int tangent_size_ = 0;
-  int buffer_size_ = 0;
+  template <typename... Manifolds>
+  void Initialize(Manifolds&&... manifolds);
+
+  std::unique_ptr<Manifold> manifold_;
 };
 
 // Implements the manifold for a Hamilton quaternion as defined in
@@ -621,6 +606,7 @@ class LineManifold final : public Manifold {
 }  // namespace ceres
 
 #include "internal/line_manifold.h"
+#include "internal/product_manifold.h"
 #include "internal/sphere_manifold.h"
 
 // clang-format off
