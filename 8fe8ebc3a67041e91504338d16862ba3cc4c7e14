@@ -16,6 +16,23 @@
       "message": "This requires some care. I think it is relatively straightforward to say that instances of loss functions and manifolds should not be inherited from. \nWhat I am less sure about is whether AutoDiffCostFunction should also prevent inheritence. I think it should but I am curious what you guys think.",
       "revId": "8fe8ebc3a67041e91504338d16862ba3cc4c7e14",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59f672c9_90b69362",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-22T12:09:04Z",
+      "side": 1,
+      "message": "As a minor remark, I would note in the documentation that in order to extend existing manifold implementations one should derive from Manifold directly and delegate calls to implemented interface methods to manifold implementations instantiated as class members (delegation pattern). This also allows straightforward composition of manifolds if desired.",
+      "revId": "8fe8ebc3a67041e91504338d16862ba3cc4c7e14",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
