@@ -68,6 +68,24 @@
       "parentUuid": "17d3b4f3_fe3c6579",
       "revId": "3aa172b8fd7d345698baed6e552e51bacd28632e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0df2bf9d_55ddd95d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-22T15:30:50Z",
+      "side": 1,
+      "message": "yep",
+      "parentUuid": "dc40246f_ff13e913",
+      "revId": "3aa172b8fd7d345698baed6e552e51bacd28632e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
