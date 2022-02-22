@@ -16,6 +16,23 @@
       "message": "This is an initial (undocumented) but already working implementation of `ProductManifold` using a `std::tuple` and mixed runtime/compile-time arithmetic. Please let me know if you would like to consider it.",
       "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebd54774_232ce46a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-22T04:36:59Z",
+      "side": 1,
+      "message": "I like this implementation in principle.\nMy advice would be to pull out the sequence stuff into its own file perhaps collocate it with the other integer_sequence stuff.\n\nIt would be nice if we can avoid the pimpl pattern and just have one class, if its not avoidable or is overly complex then thats fine. \n\nOn the other hand, the nice thing about the pimpl pattern is that we can move the whole implementation into its own header which is nice.\n\nI will let you decide the tradeoff there.",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
