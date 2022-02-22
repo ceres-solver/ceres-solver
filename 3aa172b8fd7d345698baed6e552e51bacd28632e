@@ -33,6 +33,23 @@
       "message": "Alex should take another look, this is a massive patch and there is a good chance I missed something.",
       "revId": "3aa172b8fd7d345698baed6e552e51bacd28632e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17d3b4f3_fe3c6579",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-22T13:23:39Z",
+      "side": 1,
+      "message": "`angle` does not seem to be correct here. 9 coefficients seem to point towards a 3-D rotation matrix.",
+      "revId": "3aa172b8fd7d345698baed6e552e51bacd28632e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
