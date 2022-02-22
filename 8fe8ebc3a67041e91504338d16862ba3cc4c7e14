@@ -33,6 +33,24 @@
       "message": "As a minor remark, I would note in the documentation that in order to extend existing manifold implementations one should derive from Manifold directly and delegate calls to implemented interface methods to manifold implementations instantiated as class members (delegation pattern). This also allows straightforward composition of manifolds if desired.",
       "revId": "8fe8ebc3a67041e91504338d16862ba3cc4c7e14",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56612ae0_0676025d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-22T13:38:48Z",
+      "side": 1,
+      "message": "that seems like general advice that would apply more broadly not just to manifolds. I am not sure what the best place to put it is.",
+      "parentUuid": "59f672c9_90b69362",
+      "revId": "8fe8ebc3a67041e91504338d16862ba3cc4c7e14",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
