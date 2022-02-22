@@ -50,6 +50,24 @@
       "message": "`angle` does not seem to be correct here. 9 coefficients seem to point towards a 3-D rotation matrix.",
       "revId": "3aa172b8fd7d345698baed6e552e51bacd28632e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc40246f_ff13e913",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-22T14:50:46Z",
+      "side": 1,
+      "message": "Should be `coeff` too, no?",
+      "parentUuid": "17d3b4f3_fe3c6579",
+      "revId": "3aa172b8fd7d345698baed6e552e51bacd28632e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
