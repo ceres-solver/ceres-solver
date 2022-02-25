@@ -278,6 +278,7 @@ if(BUILD_SHARED_LIBS)
   add_library(ceres_static STATIC $<TARGET_OBJECTS:ceres_internal> ${CERES_LIBRARY_SOURCE})
   target_include_directories(ceres_static PUBLIC $<TARGET_PROPERTY:ceres,INCLUDE_DIRECTORIES>)
   target_compile_definitions(ceres_static PUBLIC $<TARGET_PROPERTY:ceres,COMPILE_DEFINITIONS>)
+  target_compile_features(ceres_static PUBLIC $<TARGET_PROPERTY:ceres,COMPILE_FEATURES>)
   target_compile_options(ceres_static PUBLIC $<TARGET_PROPERTY:ceres,COMPILE_OPTIONS>)
   target_link_libraries(ceres_static
     INTERFACE $<TARGET_PROPERTY:ceres,INTERFACE_LINK_LIBRARIES>
