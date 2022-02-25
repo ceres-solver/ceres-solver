@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ee3840f_6dec20c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-25T19:10:28Z",
+      "side": 1,
+      "message": "This CL: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/20561 broke the shared-library build on macOS, it should actually have failed more widely but interestingly it did not fail on Ubuntu 18/20.04.",
+      "revId": "98bc3ca17acf61fb9b63b87623c212ed2689d01c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
