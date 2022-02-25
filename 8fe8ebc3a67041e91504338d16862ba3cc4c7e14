@@ -86,6 +86,23 @@
       "message": "LGTM.  I think we should make AutoDiffCostFunction and its ilk final, as we\u0027re certainly not expecting users to derive from them, and if they *really* need to then can inherit and aggregate.  However, for almost all users who won\u0027t, the performance improvements from possible devirtualization would be beneficial.",
       "revId": "8fe8ebc3a67041e91504338d16862ba3cc4c7e14",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "766b1a26_9ef59419",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-25T16:51:07Z",
+      "side": 1,
+      "message": "TY.",
+      "revId": "8fe8ebc3a67041e91504338d16862ba3cc4c7e14",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
