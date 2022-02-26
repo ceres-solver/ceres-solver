@@ -171,6 +171,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60b17d02_5a585ba3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-26T20:45:25Z",
+      "side": 1,
+      "message": "Thanks Alex for reviewing and the comments.\n\nUnfortunately, it is not possible to use `Sum` since the implementation requires the values to be known at compile-time. However, this is not the case for values in a tuple. Only the size of the tuple is known at compile-time requiring a different approach.",
+      "parentUuid": "32ece10b_bce78b20",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7dc02fd8_565a9a69",
