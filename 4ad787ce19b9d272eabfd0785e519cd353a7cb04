@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2830646d_1578577c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-02-27T19:08:36Z",
+      "side": 1,
+      "message": "LGTM, although I haven\u0027t set-up Bazel to try this myself",
+      "revId": "4ad787ce19b9d272eabfd0785e519cd353a7cb04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
