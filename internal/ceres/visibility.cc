@@ -88,7 +88,7 @@ std::unique_ptr<WeightedGraph<int>> CreateSchurComplementGraph(
   // visible to it, we find the maximum across all visibility sets.
   int num_points = 0;
   for (const auto& visible : visibility) {
-    if (visible.size() > 0) {
+    if (!visible.empty()) {
       num_points = max(num_points, (*visible.rbegin()) + 1);
     }
   }

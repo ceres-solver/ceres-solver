@@ -31,6 +31,7 @@
 #ifndef EXAMPLES_CERES_TYPES_H_
 #define EXAMPLES_CERES_TYPES_H_
 
+#include <functional>
 #include <istream>
 #include <map>
 #include <string>
