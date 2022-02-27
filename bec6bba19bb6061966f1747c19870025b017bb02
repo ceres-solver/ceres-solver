@@ -53,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6365045_736497ad",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-27T12:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "846f80ec_e2dd3ba9",
+      "revId": "bec6bba19bb6061966f1747c19870025b017bb02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e252db6_e545511e",
@@ -66,6 +84,24 @@
       "writtenOn": "2022-02-25T18:11:46Z",
       "side": 1,
       "message": "I think this should remain benchmark::benchmark as per their docs here: https://github.com/google/benchmark#basic-usage as we still reference the BENCHMARK_MAIN() macro in our benchmarks",
+      "revId": "bec6bba19bb6061966f1747c19870025b017bb02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23658d92_9686b92f",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-27T12:26:08Z",
+      "side": 1,
+      "message": "You are right. This is my fault as I unintentionally changed the semantics of `BENCHMARK_MAIN` in the current development version of Google benchmark: https://github.com/google/benchmark/pull/1357",
+      "parentUuid": "5e252db6_e545511e",
       "revId": "bec6bba19bb6061966f1747c19870025b017bb02",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
