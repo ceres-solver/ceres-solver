@@ -50,6 +50,23 @@
       "message": "I am sorry I did not get to this today. \n\nThis patch requires some thought around dealing with metis not being present and how it deals with the linear solver ordering that the user may provide and how it interacts with other linear solvers. \n\nI am off on vacation for the next week, I will take a look after that.\n",
       "revId": "31e034afe7e122c1b75d933ee05ef2b8d6bc8570",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "856b1791_176f0689",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-27T13:47:57Z",
+      "side": 1,
+      "message": "I looked into this a little bit and the way cholmod uses metis. This is going to take some work and it requires changes to the API. So I am going to look at it right after we release version ceres solver 2.1.",
+      "revId": "31e034afe7e122c1b75d933ee05ef2b8d6bc8570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
