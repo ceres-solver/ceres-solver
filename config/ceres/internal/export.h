@@ -32,15 +32,15 @@
 //
 // IMPORTANT: Most users of Ceres will not use this file, when compiling Ceres
 //            with CMake, CMake will configure a new config.h with the currently
-//            selected Ceres compile options in <BUILD_DIR>/config, which will
+//            selected Ceres compile options in <BUILD_DIR>/export, which will
 //            be added to the include path for compilation, and installed with
 //            the public Ceres headers.  However, for some users of Ceres who
 //            compile without CMake (Bazel), this file ensures that Ceres will
 //            compile, with the user either specifying manually the Ceres
 //            compile options, or passing them directly through the compiler.
 
-#ifndef CERES_PUBLIC_INTERNAL_CONFIG_H_
-#define CERES_PUBLIC_INTERNAL_CONFIG_H_
+#ifndef CERES_PUBLIC_INTERNAL_EXPORT_H_
+#define CERES_PUBLIC_INTERNAL_EXPORT_H_
 
 
-#endif  // CERES_PUBLIC_INTERNAL_CONFIG_H_
+#endif  // CERES_PUBLIC_INTERNAL_EXPORT_H_

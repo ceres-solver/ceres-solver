@@ -31,7 +31,6 @@
 CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "accelerate_sparse.cc",
     "array_utils.cc",
-    "blas.cc",
     "block_evaluate_preparer.cc",
     "block_jacobian_writer.cc",
     "block_jacobi_preconditioner.cc",
@@ -78,7 +77,6 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "inner_product_computer.cc",
     "iterative_refiner.cc",
     "iterative_schur_complement_solver.cc",
-    "lapack.cc",
     "levenberg_marquardt_strategy.cc",
     "line_search.cc",
     "line_search_direction.cc",
@@ -174,11 +172,13 @@ def ceres_library(name,
                 "include/ceres/internal/*.h",
             ]) +
 
-            # This is an empty config, since the Bazel-based build does not
-            # generate a config.h from config.h.in. This is fine, since Bazel
-            # properly handles propagating -D defines to dependent targets.
+            # This is an empty config and export, since the
+            # Bazel-based build does not generate a
+            # config.h/export.h. This is fine, since Bazel properly
+            # handles propagating -D defines to dependent targets.
             native.glob([
                 "config/ceres/internal/config.h",
+                "config/ceres/internal/export.h",
             ]),
         copts = [
             "-I" + internal,
@@ -202,6 +202,9 @@ def ceres_library(name,
             "CERES_NO_LAPACK",
             "CERES_USE_EIGEN_SPARSE",
             "CERES_USE_CXX_THREADS",
+            "CERES_NO_CUDA",
+            "CERES_EXPORT=",
+            "CERES_NO_EXPORT=",
         ],
         includes = [
             "config",
