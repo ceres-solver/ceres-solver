@@ -31,10 +31,10 @@ Why?
     allows the user to *shape* their residuals using a
     :class:`LossFunction` to reduce the influence of outliers.
 
-  - **Local Parameterization** In many cases, some parameters lie on a
-    manifold other than Euclidean space, e.g., rotation matrices. In
-    such cases, the user can specify the geometry of the local tangent
-    space by specifying a :class:`LocalParameterization` object.
+  - **Manifolds** In many cases, some parameters lie on a manifold
+    other than Euclidean space, e.g., rotation matrices. In such
+    cases, the user can specify the geometry of the local tangent
+    space by specifying a :class:`Manifold` object.
 
 * **Solver Choice** Depending on the size, sparsity structure, time &
   memory budgets, and solution quality requirements, different

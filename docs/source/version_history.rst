@@ -1,8 +1,119 @@
+.. default-domain:: cpp
+
+.. highlight:: c++
+
+.. cpp:namespace:: ceres
+
+
 .. _chapter-version-history:
 
 ===============
 Version History
 ===============
+
+2.1.0
+=====
+
+New Features
+------------
+
+#. Support for CUDA based dense solvers - ``DENSE_QR``,
+   ``DENSE_NORMAL_CHOLESKY`` & ``DENSE_SCHUR`` (Joydeep Biswas, Sameer
+   Agarwal)
+#. :class:`Manifold` is the new
+   :class:`LocalParameterization`. Version 2.1 is the transition
+   release where users can use both :class:`LocalParameterization` as
+   well as :class:`Manifold` objects as they transition from the
+   former to the latter. :class:`LocalParameterization` will be
+   removed in version 2.2. There should be no numerical change to the
+   results as a result of this change.
+#. A number of changes to `Jet`s (Sergiu Deitsch)
+
+   #. Add support for ``std::norm``, ``std::logp1``, ``std::expm1``,
+      ``std::log10``, ``std::fma``, ``std::midpoint``, ``std::lerp``,
+      3-argument ``std::hypot``, ``std::copysign``.
+   #. Support promototion in comparison between `Jet` and scalars.
+   #. Uniform support for comparing and classifying `Jet` objects.
+
+#. Add :class:`NumericDiffFirstOrderFunction` (Sameer Agarwal)
+
+
+Backward Incompatible API Changes
+---------------------------------
+
+#. :class:`LocalParameterization` is deprecated. It will be removed in
+   version 2.2. Use :class:`Manifold` instead.
+#. Classification functions like ``IsFinite`` are deprecated. Use the
+   ``c++11`` functions going forward.
+
+Bug Fixes & Minor Changes
+-------------------------
+
+#. Modernize the code to be inline with ``c++14`` (Sergiu Deitsch, Sameer
+   Agarwal)
+#. Lots of fixes to make Ceres compile out of the box on Windows
+   (Sergiu Deitsch)
+#. Standardize path handling using ``GNUImstallDirs`` (Sergiu Deitsch)
+#. Add final specifier to classes to help the compiler with
+   devirtualization (Sameer Agarwal)
+#. LOTs of clean & modernization of the CMake build files (Sergiu
+   Deitsch & Alex Stewart)
+#. Simplification to the symbol export logic (Sergiu Deitsch)
+#. Add cmake option ``ENABLE_BITCODE`` for iOS builds (John Harrison)
+#. Add const accessor for functor wrapped by auto/numeric-diff objects
+   (Alex Stewart)
+#. Cleanup & refactor ``jet_test.cc``. (Sameer Agarwal)
+#. Fix docs of supported sparse backends for mixed precision solvers
+   (Alex Stewart)
+#. Fix C++20 compilation (Sergiu Deitsch)
+#. Add an example for ``BiCubicInterpolator`` (Dmitriy Korcchemkin)
+#. Add a section to the documentation on implicit and inverse function
+   theorems (Sameer Agarwal)
+#. Add a note about Trigg's correction (Sameer Agarwal)
+#. Fix the docs for ``Problem::RemoveResidualBlock`` &
+   ``Problem::RemoveParameterBlock`` (Sameer Agarwal)
+#. Fix an incorrect check in ``reorder_program.cc`` (William Gandler)
+#. Add ``function_tolerance`` based convergence testing to ``TinySolver``
+   (Sameer Agarwal).
+#. Fix a number of typos in ``rotation.h`` (@yiping)
+#. Fix a typo in ``interfacing_with_autodiff.rst`` (@tangobravo)
+#. Fix a matrix sizing bug in covariance_impl.cc (William Gandler)
+#. Fix a bug in ``system_test.cc`` (William Gandler)
+#. Fix the Jacobian computation in ``trust_region_minimizer_test.cc``
+(William Gandler)
+#. Fix a bug in ``local_parameterization_test.cc`` (William Gandler)
+#. Add accessors to ``GradientProblem`` (Sameer Agarwal)
+#. Refactor ``small_blas_gemm_benchmark`` (Ahmed Taei)
+#. Refactor ``small_blas_test`` (Ahmed Taei)
+#. Fix dependency check for building documentation (Sumit Dey)
+#. Fix an errant double link in the docs (Timon Knigge)
+#. Fix a typo in the version history (Noah Snavely)
+#. Fix typo in LossFunctionWrapper sample code (Dmitriy Korchemkin)
+#. Add fmax/fmin overloads for scalars (Alex Karatarakis)
+#. Introduce benchmarks for ``Jet`` operations (Alexander Karatarakis)
+#. Fix typos in documentation and fix the documentation for
+   ``IterationSummary`` (Alexander Karatarakis)
+#. Do not check MaxNumThreadsAvailable if the thread number is set
+   to 1. (Fuhao Shi)
+#. Add a macro ``CERES_GET_FLAG``. (Sameer Agarwal)
+#. Reduce log spam in ``covariance_impl.cc`` (Daniel Henell)
+#. Fix FindTBB version detection with TBB >= 2021.1.1 (Alex Stewart)
+#. Fix Eigen3_VERSION (Florian Berchtold)
+#. Allow Unity Build (Tobias Schluter)
+#. Make miniglog's InitGoogleLogging argument const (Tobias Schluter)
+#. Use portable expression for constant 2/sqrt(pi) (Tobias Schluter)
+#. Fix a number of compile errors related (Austin Schuch)
+   #. ``format not a string literal``
+   #. ``-Wno-maybe-uninitialized error``
+   #. ``nonnull arg compared to NULL``
+   #. ``-Wno-format-nonliteral``
+   #. ``-Wmissing-field-initializers``
+   #. ``-Werror``
+#. Fix ``cc_binary`` includes so examples build as an external repo
+   (Austin Schuh)
+#. Fix an explicit double in TinySolver (Bogdan Burlacu)
+#. Fix unit quaternion rotation (Mykyta Kozlov)
+
 
 2.0.0
 =====
