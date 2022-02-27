@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f06a83ba_4b57d09a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-27T15:04:35Z",
+      "side": 1,
+      "message": "here is a first cut of the release notes for 2.1. I hope to cut the first release candidate by end of next week.",
+      "revId": "7fed1da34f08bc1f8f31a588a62ed4e6714c5a00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
