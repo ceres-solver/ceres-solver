@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe30b12b_24277607",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-28T20:28:28Z",
+      "side": 1,
+      "message": "We have the same semantics for all objects in our public API, costfunctions as well as loss functions.\n\nI do not think it is a good idea to make things inconsistent by making manifolds be shared ptrs and the rest not.\n\nPlus this would require a bunch of changes to Ceres internals also.\n\nSameer",
+      "tag": "mailMessageId\u003d\u003cCABqdRUAXqPr6nPoG7Lent9f+E\u003dxiSSsKUT6xJZDkA2yqQAJPpg@mail.gmail.com\u003e",
+      "revId": "5731bbf2aa2f6fe6226e8f21dedb48835b8fc742",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
