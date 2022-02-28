@@ -121,6 +121,24 @@
       "parentUuid": "132e7708_a9c6b9e7",
       "revId": "06a161dfa8af89dac4f0395c9fae0a776c5829a3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e0dbe09_91ca7765",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-28T20:17:23Z",
+      "side": 1,
+      "message": "Thanks. Can\u0027t `shared_ptr` be used for `SetManifold` anyway since it\u0027s a new API?",
+      "parentUuid": "35a46748_7ed4cce9",
+      "revId": "06a161dfa8af89dac4f0395c9fae0a776c5829a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
