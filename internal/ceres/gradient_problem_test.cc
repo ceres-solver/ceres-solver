@@ -107,7 +107,7 @@ TEST(GradientProblem, EvaluationWithParameterizationAndWithGradient) {
 
 TEST(GradientProblem, EvalutaionWithManifoldAndNoGradient) {
   ceres::GradientProblem problem(new QuadraticTestFunction(),
-                                 new EuclideanManifold(1));
+                                 new EuclideanManifold<1>);
   double x = 7.0;
   double cost = 0;
   problem.Evaluate(&x, &cost, nullptr);
@@ -125,7 +125,7 @@ TEST(GradientProblem, EvaluationWithoutManifoldAndWithGradient) {
 
 TEST(GradientProblem, EvaluationWithManifoldAndWithGradient) {
   ceres::GradientProblem problem(new QuadraticTestFunction(),
-                                 new EuclideanManifold(1));
+                                 new EuclideanManifold<1>);
   double x = 7.0;
   double cost = 0;
   double gradient = 0;

@@ -159,51 +159,6 @@ bool Manifold::RightMultiplyByPlusJacobian(const double* x,
   return true;
 }
 
-EuclideanManifold::EuclideanManifold(int size) : size_(size) {
-  CHECK_GE(size, 0);
-}
-
-int EuclideanManifold::AmbientSize() const { return size_; }
-
-int EuclideanManifold::TangentSize() const { return size_; }
-
-bool EuclideanManifold::Plus(const double* x,
-                             const double* delta,
-                             double* x_plus_delta) const {
-  for (int i = 0; i < size_; ++i) {
-    x_plus_delta[i] = x[i] + delta[i];
-  }
-  return true;
-}
-
-bool EuclideanManifold::PlusJacobian(const double* x, double* jacobian) const {
-  MatrixRef(jacobian, size_, size_).setIdentity();
-  return true;
-}
-
-bool EuclideanManifold::RightMultiplyByPlusJacobian(
-    const double* x,
-    const int num_rows,
-    const double* ambient_matrix,
-    double* tangent_matrix) const {
-  std::copy_n(ambient_matrix, num_rows * size_, tangent_matrix);
-  return true;
-}
-
-bool EuclideanManifold::Minus(const double* y,
-                              const double* x,
-                              double* y_minus_x) const {
-  for (int i = 0; i < size_; ++i) {
-    y_minus_x[i] = y[i] - x[i];
-  }
-  return true;
-};
-
-bool EuclideanManifold::MinusJacobian(const double* x, double* jacobian) const {
-  MatrixRef(jacobian, size_, size_).setIdentity();
-  return true;
-}
-
 SubsetManifold::SubsetManifold(const int size,
                                const std::vector<int>& constant_parameters)
 
