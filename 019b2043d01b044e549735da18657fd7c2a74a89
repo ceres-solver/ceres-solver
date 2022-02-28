@@ -221,6 +221,24 @@
       "message": "Here\u0027s another design decision necessary: since we can store the actual manifold implementations instead of pointers to the base class, the user does not need to instantiate these on the heap using `new`. Should we drop pointers then?",
       "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15df0280_2095b349",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-28T19:56:43Z",
+      "side": 1,
+      "message": "how would this work with manifolds that are user defined and require constructor arguments?",
+      "parentUuid": "b2bcb59e_3a8f9b6a",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
