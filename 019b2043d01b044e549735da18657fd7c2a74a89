@@ -225,6 +225,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "66d03ede_f4b25931",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-28T21:46:04Z",
+      "side": 1,
+      "message": "that sounds like a good idea.\ncan you send out a tuple_algorithm.h/tuple_algorithm_test.cc as a separate CL, it will make for easier/faster reviewing.",
+      "parentUuid": "a3be0548_76406a5c",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2bcb59e_3a8f9b6a",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 1
@@ -290,6 +308,24 @@
       "side": 1,
       "message": "As a side remark, `ProductManifoldImpl` is only avoidable if we are OK with introducing template arguments to `ProductManifold`:\n```\nProductManifold\u003cMyManifold, OtherManifold\u003e m{MyManifold{foo, bar}, OtherManifold{foobar}};\n```\nwhich is admittedly less convenient but avoids heap allocation.",
       "parentUuid": "a407414c_6b8ebb2d",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70c9e332_b315aa5c",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-28T21:46:04Z",
+      "side": 1,
+      "message": "I am okay with ProductManifoldImpl and moving it into another file. That way this file remains clean.\n\nYour proposal would require Manifolds to be copyable though right? something we have not required in the past. Though admittedly its not clear to me why they should not be copyable.",
+      "parentUuid": "abbdcc61_0035fdad",
       "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
