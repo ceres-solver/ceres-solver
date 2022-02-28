@@ -1475,6 +1475,21 @@ no need to use this manifold on its own. It is provided for the
 purpose of testing and for use in combination with other manifolds
 using :class:`ProductManifold`.
 
+The class works with dynamic and static ambient space dimensions. If
+the ambient space dimensions is know at compile time use
+
+.. code-block:: c++
+
+   EuclideanManifold<3> manifold;
+
+If the ambient space dimensions is not known at compile time the
+template parameter needs to be set to `ceres::DYNAMIC` and the actual
+dimension needs to be provided as a constructor argument:
+
+.. code-block:: c++
+
+   EuclideanManifold<ceres::DYNAMIC> manifold(ambient_dim);
+
 :class:`SubsetManifold`
 -----------------------
 
@@ -1521,7 +1536,7 @@ manifold can be constructed as:
 
 .. code-block:: c++
 
-   ProductManifold se3(new QuaternionManifold(), new EuclideanManifold(3));
+   ProductManifold se3(new QuaternionManifold, new EuclideanManifold<3>);
 
 
 :class:`QuaternionManifold`

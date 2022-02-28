@@ -67,7 +67,6 @@ class UnaryCostFunction : public CostFunction {
     mutable_parameter_block_sizes()->push_back(parameter_block_size);
   }
 
-
   bool Evaluate(double const* const* parameters,
                 double* residuals,
                 double** jacobians) const final {
@@ -595,7 +594,7 @@ TEST(Problem, SetManifoldWithUnknownPtrDies) {
   Problem problem;
   problem.AddParameterBlock(x, 3);
 
-  EXPECT_DEATH_IF_SUPPORTED(problem.SetManifold(y, new EuclideanManifold(3)),
+  EXPECT_DEATH_IF_SUPPORTED(problem.SetManifold(y, new EuclideanManifold<3>),
                             "Parameter block not found:");
 }
 
@@ -632,7 +631,7 @@ TEST(Problem, GetManifold) {
   problem.AddParameterBlock(x, 3);
   problem.AddParameterBlock(y, 2);
 
-  Manifold* manifold = new EuclideanManifold(3);
+  Manifold* manifold = new EuclideanManifold<3>;
   problem.SetManifold(x, manifold);
   EXPECT_EQ(problem.GetManifold(x), manifold);
   EXPECT_TRUE(problem.GetManifold(y) == nullptr);
@@ -660,7 +659,7 @@ TEST(Problem, HasManifold) {
   problem.AddParameterBlock(x, 3);
   problem.AddParameterBlock(y, 2);
 
-  Manifold* manifold = new EuclideanManifold(3);
+  Manifold* manifold = new EuclideanManifold<3>;
   problem.SetManifold(x, manifold);
   EXPECT_TRUE(problem.HasManifold(x));
   EXPECT_FALSE(problem.HasManifold(y));
