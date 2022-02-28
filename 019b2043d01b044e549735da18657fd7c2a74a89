@@ -204,6 +204,23 @@
       "message": "I think we can replace all of these with our existing algorithms in ceres/internal/integer_sequence_algorithm.h, specifically Sum and ExclusiveScan",
       "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2bcb59e_3a8f9b6a",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-28T19:55:26Z",
+      "side": 1,
+      "message": "Here\u0027s another design decision necessary: since we can store the actual manifold implementations instead of pointers to the base class, the user does not need to instantiate these on the heap using `new`. Should we drop pointers then?",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
