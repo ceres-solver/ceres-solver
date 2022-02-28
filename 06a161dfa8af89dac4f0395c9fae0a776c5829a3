@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0005ce0_3e3fe018",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-28T19:50:34Z",
+      "side": 1,
+      "message": "Looks good, Sameer. Only few remarks.",
+      "revId": "06a161dfa8af89dac4f0395c9fae0a776c5829a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "760d4d07_f21ee6a1",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-28T19:50:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the type be a boolean here?",
+      "revId": "06a161dfa8af89dac4f0395c9fae0a776c5829a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bdcadb0_60deff55",
+        "filename": "internal/ceres/gradient_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-28T19:50:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this use `std::make_unique`? This would require converting the ternary into `if/else`.",
+      "revId": "06a161dfa8af89dac4f0395c9fae0a776c5829a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "132e7708_a9c6b9e7",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-28T19:50:34Z",
+      "side": 1,
+      "message": "While not relevant for this CL, I\u0027m wondering what is the reason that `SetManifold` does not use `std::unique_ptr` to imply ownership assumption over the manifold instance in the public API?",
+      "revId": "06a161dfa8af89dac4f0395c9fae0a776c5829a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
