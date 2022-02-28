@@ -51,8 +51,29 @@ namespace internal {
 constexpr int kNumTrials = 1000;
 constexpr double kTolerance = 1e-9;
 
-TEST(EuclideanManifold, NormalFunctionTest) {
-  EuclideanManifold manifold(3);
+TEST(EuclideanManifold, StaticNormalFunctionTest) {
+  EuclideanManifold<3> manifold;
+  EXPECT_EQ(manifold.AmbientSize(), 3);
+  EXPECT_EQ(manifold.TangentSize(), 3);
+
+  Vector zero_tangent = Vector::Zero(manifold.TangentSize());
+  for (int trial = 0; trial < kNumTrials; ++trial) {
+    const Vector x = Vector::Random(manifold.AmbientSize());
+    const Vector y = Vector::Random(manifold.AmbientSize());
+    Vector delta = Vector::Random(manifold.TangentSize());
+    Vector x_plus_delta = Vector::Zero(manifold.AmbientSize());
+
+    manifold.Plus(x.data(), delta.data(), x_plus_delta.data());
+    EXPECT_NEAR((x_plus_delta - x - delta).norm() / (x + delta).norm(),
+                0.0,
+                kTolerance);
+
+    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+  }
+}
+
+TEST(EuclideanManifold, DynamicNormalFunctionTest) {
+  EuclideanManifold<DYNAMIC> manifold(3);
   EXPECT_EQ(manifold.AmbientSize(), 3);
   EXPECT_EQ(manifold.TangentSize(), 3);
 
@@ -230,7 +251,7 @@ TEST(ProductManifold, NormalFunctionTest) {
 
 TEST(ProductManifold, ZeroTangentSizeAndEuclidean) {
   Manifold* subset_manifold = new SubsetManifold(1, {0});
-  Manifold* euclidean_manifold = new EuclideanManifold(2);
+  Manifold* euclidean_manifold = new EuclideanManifold<2>;
   ProductManifold manifold(subset_manifold, euclidean_manifold);
   EXPECT_EQ(manifold.AmbientSize(), 3);
   EXPECT_EQ(manifold.TangentSize(), 2);
@@ -254,7 +275,7 @@ TEST(ProductManifold, ZeroTangentSizeAndEuclidean) {
 
 TEST(ProductManifold, EuclideanAndZeroTangentSize) {
   Manifold* subset_manifold = new SubsetManifold(1, {0});
-  Manifold* euclidean_manifold = new EuclideanManifold(2);
+  Manifold* euclidean_manifold = new EuclideanManifold<2>;
   ProductManifold manifold(euclidean_manifold, subset_manifold);
   EXPECT_EQ(manifold.AmbientSize(), 3);
   EXPECT_EQ(manifold.TangentSize(), 2);

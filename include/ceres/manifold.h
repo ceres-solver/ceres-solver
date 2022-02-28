@@ -32,6 +32,7 @@
 #define CERES_PUBLIC_MANIFOLD_H_
 
 #include <Eigen/Core>
+#include <algorithm>
 #include <array>
 #include <memory>
 #include <vector>
@@ -39,6 +40,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 
@@ -223,26 +225,91 @@ class CERES_EXPORT Manifold {
 // subtraction:
 //   Plus(x, delta) = x + delta
 //   Minus(y, x) = y - x.
+//
+// The class works with dynamic and static ambient space dimensions. If the
+// ambient space dimensions is know at compile time use
+//
+//    EuclideanManifold<3> manifold;
+//
+// If the ambient space dimensions is not known at compile time the template
+// parameter needs to be set to ceres::DYNAMIC and the actual dimension needs
+// to be provided as a constructor argument:
+//
+//    EuclideanManifold<ceres::DYNAMIC> manifold(ambient_dim);
+template <int Size>
 class CERES_EXPORT EuclideanManifold final : public Manifold {
  public:
-  explicit EuclideanManifold(int size);
-  int AmbientSize() const override;
-  int TangentSize() const override;
-  bool Plus(const double* x,
-            const double* delta,
-            double* x_plus_delta) const override;
-  bool PlusJacobian(const double* x, double* jacobian) const override;
+  static_assert(Size == ceres::DYNAMIC || Size >= 0,
+                "The size of the manifold needs to be non-negative.");
+  static_assert(ceres::DYNAMIC == Eigen::Dynamic,
+                "ceres::DYNAMIC needs to be the same as Eigen::Dynamic.");
+
+  EuclideanManifold() : size_{Size} {
+    static_assert(
+        Size != ceres::DYNAMIC,
+        "The size is set to dynamic. Please call the constructor with a size.");
+  }
+
+  explicit EuclideanManifold(int size) : size_(size) {
+    if (Size != ceres::DYNAMIC) {
+      CHECK_EQ(Size, size)
+          << "Specified size by template parameter differs from the supplied "
+             "one.";
+    } else {
+      CHECK_GE(size_, 0)
+          << "The size of the manifold needs to be non-negative.";
+    }
+  }
+
+  int AmbientSize() const override { return size_; }
+  int TangentSize() const override { return size_; }
+
+  bool Plus(const double* x_ptr,
+            const double* delta_ptr,
+            double* x_plus_delta_ptr) const override {
+    Eigen::Map<const AmbientVector> x(x_ptr, size_);
+    Eigen::Map<const AmbientVector> delta(delta_ptr, size_);
+    Eigen::Map<AmbientVector> x_plus_delta(x_plus_delta_ptr, size_);
+    x_plus_delta = x + delta;
+    return true;
+  }
+
+  bool PlusJacobian(const double* x_ptr, double* jacobian_ptr) const override {
+    Eigen::Map<MatrixJacobian> jacobian(jacobian_ptr, size_, size_);
+    jacobian.setIdentity();
+    return true;
+  }
+
   bool RightMultiplyByPlusJacobian(const double* x,
                                    const int num_rows,
                                    const double* ambient_matrix,
-                                   double* tangent_matrix) const override;
-  bool Minus(const double* y,
-             const double* x,
-             double* y_minus_x) const override;
-  bool MinusJacobian(const double* x, double* jacobian) const override;
+                                   double* tangent_matrix) const override {
+    std::copy_n(ambient_matrix, num_rows * size_, tangent_matrix);
+    return true;
+  }
+
+  bool Minus(const double* y_ptr,
+             const double* x_ptr,
+             double* y_minus_x_ptr) const override {
+    Eigen::Map<const AmbientVector> x(x_ptr, size_);
+    Eigen::Map<const AmbientVector> y(y_ptr, size_);
+    Eigen::Map<AmbientVector> y_minus_x(y_minus_x_ptr, size_);
+    y_minus_x = y - x;
+    return true;
+  }
+
+  bool MinusJacobian(const double* x_ptr, double* jacobian_ptr) const override {
+    Eigen::Map<MatrixJacobian> jacobian(jacobian_ptr, size_, size_);
+    jacobian.setIdentity();
+    return true;
+  }
 
  private:
-  int size_ = 0;
+  static constexpr bool IsDynamic = (Size == ceres::DYNAMIC);
+  using AmbientVector = Eigen::Matrix<double, Size, 1>;
+  using MatrixJacobian = Eigen::Matrix<double, Size, Size, Eigen::RowMajor>;
+
+  int size_{};
 };
 
 // Hold a subset of the parameters inside a parameter block constant.
@@ -271,22 +338,22 @@ class CERES_EXPORT SubsetManifold final : public Manifold {
 };
 
 // Construct a manifold by taking the Cartesian product of a number of other
-// manifolds. This is useful, when a parameter block is the cartesian product of
-// two or more manifolds. For example the parameters of a camera consist of a
-// rotation and a translation, i.e., SO(3) x R^3.
+// manifolds. This is useful, when a parameter block is the cartesian product
+// of two or more manifolds. For example the parameters of a camera consist of
+// a rotation and a translation, i.e., SO(3) x R^3.
 //
 // Example usage:
 //
 // ProductParameterization se3(new Quaternion(), new EuclideanManifold(3));
 //
-// is the manifold for a rigid transformation, where the rotation is represented
-// using a quaternion.
+// is the manifold for a rigid transformation, where the rotation is
+// represented using a quaternion.
 class CERES_EXPORT ProductManifold final : public Manifold {
  public:
   ProductManifold(const ProductManifold&) = delete;
   ProductManifold& operator=(const ProductManifold&) = delete;
-  // NOTE: Do not remove the trivial destructor as this will cause linker errors
-  // in MSVC builds.
+  // NOTE: Do not remove the trivial destructor as this will cause linker
+  // errors in MSVC builds.
   ~ProductManifold() override;
 
   // NOTE: The constructor takes ownership of the input
@@ -337,8 +404,8 @@ class CERES_EXPORT ProductManifold final : public Manifold {
 };
 
 // Implements the manifold for a Hamilton quaternion as defined in
-// https://en.wikipedia.org/wiki/Quaternion. Quaternions are represented as unit
-// norm 4-vectors, i.e.
+// https://en.wikipedia.org/wiki/Quaternion. Quaternions are represented as
+// unit norm 4-vectors, i.e.
 //
 // q = [q0; q1; q2; q3], |q| = 1
 //
@@ -351,8 +418,8 @@ class CERES_EXPORT ProductManifold final : public Manifold {
 //
 // where: i*i = j*j = k*k = -1 and i*j = k, j*k = i, k*i = j.
 //
-// The tangent space is R^3, which relates to the ambient space through the Plus
-// and Minus operations defined as:
+// The tangent space is R^3, which relates to the ambient space through the
+// Plus and Minus operations defined as:
 //
 // Plus(x, delta) = [cos(|delta|); sin(|delta|) * delta / |delta|] * x
 //    Minus(y, x) = to_delta(y * x^{-1})
@@ -376,12 +443,12 @@ class CERES_EXPORT QuaternionManifold final : public Manifold {
   bool MinusJacobian(const double* x, double* jacobian) const override;
 };
 
-// Implements the quaternion manifold for Eigen's representation of the Hamilton
-// quaternion. Geometrically it is exactly the same as the QuaternionManifold
-// defined above. However, Eigen uses a different internal memory layout for the
-// elements of the quaternion than what is commonly used. It stores the
-// quaternion in memory as [q1, q2, q3, q0] or [x, y, z, w] where the real
-// (scalar) part is last.
+// Implements the quaternion manifold for Eigen's representation of the
+// Hamilton quaternion. Geometrically it is exactly the same as the
+// QuaternionManifold defined above. However, Eigen uses a different internal
+// memory layout for the elements of the quaternion than what is commonly
+// used. It stores the quaternion in memory as [q1, q2, q3, q0] or
+// [x, y, z, w] where the real (scalar) part is last.
 //
 // Since Ceres operates on parameter blocks which are raw double pointers this
 // difference is important and requires a different manifold.
@@ -420,27 +487,27 @@ class CERES_EXPORT EigenQuaternionManifold final : public Manifold {
 // than 1.
 //
 // The class works with dynamic and static ambient space dimensions. If the
-// ambient space dimensions is know at compile time use
+// ambient space dimensions is known at compile time use
 //
 //    SphereManifold<3> manifold;
 //
 // If the ambient space dimensions is not known at compile time the template
-// parameter needs to be set to ceres::DYNAMIC and the actual dimension needs to
-// be provided as a constructor argument:
+// parameter needs to be set to ceres::DYNAMIC and the actual dimension needs
+// to be provided as a constructor argument:
 //
 //    SphereManifold<ceres::DYNAMIC> manifold(ambient_dim);
 //
-// See  section B.2 (p.25) in "Integrating Generic Sensor Fusion Algorithms with
-// Sound State Representations through Encapsulation of Manifolds" by C.
+// See  section B.2 (p.25) in "Integrating Generic Sensor Fusion Algorithms
+// with Sound State Representations through Encapsulation of Manifolds" by C.
 // Hertzberg, R. Wagner, U. Frese and L. Schroder for more details
 // (https://arxiv.org/pdf/1107.1119.pdf)
 template <int AmbientSpaceDimension>
 class SphereManifold final : public Manifold {
  public:
   static_assert(
-      AmbientSpaceDimension == DYNAMIC || AmbientSpaceDimension > 1,
+      AmbientSpaceDimension == ceres::DYNAMIC || AmbientSpaceDimension > 1,
       "The size of the homogeneous vector needs to be greater than 1.");
-  static_assert(DYNAMIC == Eigen::Dynamic,
+  static_assert(ceres::DYNAMIC == Eigen::Dynamic,
                 "ceres::DYNAMIC needs to be the same as Eigen::Dynamic.");
 
   SphereManifold();
@@ -495,13 +562,13 @@ class SphereManifold final : public Manifold {
 // for the case Graff_1(R^n).
 //
 // The class works with dynamic and static ambient space dimensions. If the
-// ambient space dimensions is know at compile time use
+// ambient space dimensions is known at compile time use
 //
 //    LineManifold<3> manifold;
 //
 // If the ambient space dimensions is not known at compile time the template
-// parameter needs to be set to ceres::DYNAMIC and the actual dimension needs to
-// be provided as a constructor argument:
+// parameter needs to be set to ceres::DYNAMIC and the actual dimension needs
+// to be provided as a constructor argument:
 //
 //    LineManifold<ceres::DYNAMIC> manifold(ambient_dim);
 //
@@ -510,7 +577,7 @@ class LineManifold final : public Manifold {
  public:
   static_assert(AmbientSpaceDimension == DYNAMIC || AmbientSpaceDimension >= 2,
                 "The ambient space must be at least 2.");
-  static_assert(DYNAMIC == Eigen::Dynamic,
+  static_assert(ceres::DYNAMIC == Eigen::Dynamic,
                 "ceres::DYNAMIC needs to be the same as Eigen::Dynamic.");
 
   LineManifold();
@@ -528,14 +595,14 @@ class LineManifold final : public Manifold {
   bool MinusJacobian(const double* x, double* jacobian) const override;
 
  private:
-  static constexpr int IsDynamic = (AmbientSpaceDimension == Eigen::Dynamic);
+  static constexpr bool IsDynamic = (AmbientSpaceDimension == ceres::DYNAMIC);
   static constexpr int TangentSpaceDimension =
-      IsDynamic ? Eigen::Dynamic : AmbientSpaceDimension - 1;
+      IsDynamic ? ceres::DYNAMIC : AmbientSpaceDimension - 1;
 
   static constexpr int DAmbientSpaceDimension =
-      IsDynamic ? Eigen::Dynamic : 2 * AmbientSpaceDimension;
+      IsDynamic ? ceres::DYNAMIC : 2 * AmbientSpaceDimension;
   static constexpr int DTangentSpaceDimension =
-      IsDynamic ? Eigen::Dynamic : 2 * TangentSpaceDimension;
+      IsDynamic ? ceres::DYNAMIC : 2 * TangentSpaceDimension;
 
   using AmbientVector = Eigen::Matrix<double, AmbientSpaceDimension, 1>;
   using TangentVector = Eigen::Matrix<double, TangentSpaceDimension, 1>;

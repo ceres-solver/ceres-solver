@@ -40,8 +40,8 @@ namespace ceres {
 
 GradientProblem::GradientProblem(FirstOrderFunction* function)
     : function_(function),
-      manifold_(
-          std::make_unique<EuclideanManifold>(function_->NumParameters())),
+      manifold_(std::make_unique<EuclideanManifold<DYNAMIC>>(
+          function_->NumParameters())),
       scratch_(new double[function_->NumParameters()]) {
   CHECK(function != nullptr);
 }
@@ -56,7 +56,8 @@ GradientProblem::GradientProblem(FirstOrderFunction* function,
     manifold_ =
         std::make_unique<internal::ManifoldAdapter>(parameterization_.get());
   } else {
-    manifold_ = std::make_unique<EuclideanManifold>(function_->NumParameters());
+    manifold_ = std::make_unique<EuclideanManifold<DYNAMIC>>(
+        function_->NumParameters());
   }
   CHECK_EQ(function_->NumParameters(), manifold_->AmbientSize());
 }
@@ -65,9 +66,12 @@ GradientProblem::GradientProblem(FirstOrderFunction* function,
                                  Manifold* manifold)
     : function_(function), scratch_(new double[function_->NumParameters()]) {
   CHECK(function != nullptr);
-  manifold_.reset(manifold != nullptr
-                      ? manifold
-                      : new EuclideanManifold(function_->NumParameters()));
+  if (manifold != nullptr) {
+    manifold_.reset(manifold);
+  } else {
+    manifold_ = std::make_unique<EuclideanManifold<DYNAMIC>>(
+        function_->NumParameters());
+  }
   CHECK_EQ(function_->NumParameters(), manifold_->AmbientSize());
 }
 
