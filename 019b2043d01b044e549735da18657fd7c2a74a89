@@ -208,6 +208,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a3be0548_76406a5c",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-28T21:44:56Z",
+      "side": 1,
+      "message": "I will rename the function to `ComputeExclusiveScan` to be more explicit and in line with `std::exclusive_scan` available in C++17 for ranges and `ExclusiveScan` from `integer_sequence_algorithm.h`. Also I intend to move all tuple related functionality into `tuple_algorithm.h`.\n\nPlease let me know if you have any concerns.",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2bcb59e_3a8f9b6a",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 1
