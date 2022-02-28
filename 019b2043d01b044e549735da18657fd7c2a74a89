@@ -400,6 +400,24 @@
       "parentUuid": "887dad22_07fa8fb1",
       "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2420aae6_fbce90d7",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-28T23:25:43Z",
+      "side": 1,
+      "message": "While I\u0027m finishing this up, should we provide access to inner manifold instances in `ProductManifold` as a tuple to base (`Manifold`) pointers? This would only require that the manifold types are actually derived from the base interface (which is generally expected.)",
+      "parentUuid": "d308bcb7_df5f8643",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
