@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7546bcba_cfa6628b",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-28T20:00:46Z",
+      "side": 1,
+      "message": "good catch, fixed here and below.",
+      "parentUuid": "760d4d07_f21ee6a1",
+      "revId": "06a161dfa8af89dac4f0395c9fae0a776c5829a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6bdcadb0_60deff55",
@@ -52,6 +70,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94068d43_18d0faeb",
+        "filename": "internal/ceres/gradient_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-28T20:00:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bdcadb0_60deff55",
+      "revId": "06a161dfa8af89dac4f0395c9fae0a776c5829a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "132e7708_a9c6b9e7",
@@ -65,6 +101,24 @@
       "writtenOn": "2022-02-28T19:50:34Z",
       "side": 1,
       "message": "While not relevant for this CL, I\u0027m wondering what is the reason that `SetManifold` does not use `std::unique_ptr` to imply ownership assumption over the manifold instance in the public API?",
+      "revId": "06a161dfa8af89dac4f0395c9fae0a776c5829a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35a46748_7ed4cce9",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-02-28T20:00:46Z",
+      "side": 1,
+      "message": "There are two reasons for this.\n1. we allow parameter blocks to share manifolds, so setmanifold taking unique_ptr won\u0027t make sense.\n2. shared_ptr is more sensible, but our public api predates c++11.",
+      "parentUuid": "132e7708_a9c6b9e7",
       "revId": "06a161dfa8af89dac4f0395c9fae0a776c5829a3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
