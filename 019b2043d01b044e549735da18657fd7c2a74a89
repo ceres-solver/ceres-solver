@@ -328,6 +328,24 @@
       "parentUuid": "abbdcc61_0035fdad",
       "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cee51283_97ddeadd",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-28T21:48:50Z",
+      "side": 1,
+      "message": "Not necessarily. Either copyable or moveable.",
+      "parentUuid": "70c9e332_b315aa5c",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
