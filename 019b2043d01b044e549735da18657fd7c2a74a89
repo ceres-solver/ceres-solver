@@ -243,6 +243,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "60b63569_ae3b81b0",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-02-28T23:45:35Z",
+      "side": 1,
+      "message": "I think `tuple_algorithm.h` is small enough (around 43 lines) such that it can remain part of this CL. Moving the sources into a separate CL will otherwise generate some overhead requiring me to continuously rebase.",
+      "parentUuid": "66d03ede_f4b25931",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2bcb59e_3a8f9b6a",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 1
