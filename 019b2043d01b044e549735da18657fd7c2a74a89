@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca3ddccc_1aacda61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T19:41:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c68d4bc_80a4e47d",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eda66923_547e6bbd",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-02-26T18:10:47Z",
       "side": 1,
       "message": "required by a",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c05930d_300e332e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T19:41:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda66923_547e6bbd",
       "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -52,6 +88,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0750affa_44a0322c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T19:41:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "106150e7_bd0e6253",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "508e1e4a_0c40c2db",
@@ -65,6 +119,24 @@
       "writtenOn": "2022-02-26T18:10:47Z",
       "side": 1,
       "message": "allows us to store",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ca8abb5_0c1f4cdd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T19:41:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "508e1e4a_0c40c2db",
       "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -86,6 +158,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f51cf4d_3024dc10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T19:41:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "387bde16_22c16192",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5cc41667_e33f227f",
@@ -103,6 +193,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a67f7649_c9294161",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T19:41:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cc41667_e33f227f",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d15aed94_295836c8",
@@ -116,6 +224,24 @@
       "writtenOn": "2022-02-26T18:10:47Z",
       "side": 1,
       "message": "implementation more efficient in both memory and runtime",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6aef5d8_86ccda7f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T19:41:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d15aed94_295836c8",
       "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -189,6 +315,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7487d6ea_f6851024",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T19:41:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86a2d9c4_81fdb8de",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7dc02fd8_565a9a69",
@@ -202,6 +346,24 @@
       "writtenOn": "2022-02-26T18:10:47Z",
       "side": 1,
       "message": "I think we can replace all of these with our existing algorithms in ceres/internal/integer_sequence_algorithm.h, specifically Sum and ExclusiveScan",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6e93b68_9164fd6c",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T19:41:49Z",
+      "side": 1,
+      "message": "As previously mentioned, this is unfortunately not possible.",
+      "parentUuid": "7dc02fd8_565a9a69",
       "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -273,6 +435,24 @@
       "side": 1,
       "message": "sgtm",
       "parentUuid": "60b63569_ae3b81b0",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f44f9853_fa93e09a",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T19:41:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a0755ee_4954836a",
       "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
