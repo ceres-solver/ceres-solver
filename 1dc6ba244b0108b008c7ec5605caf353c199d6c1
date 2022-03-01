@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6010f51d_cf69e3ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "No, `std::array` can only store values of same type (homogeneous container). Tuple does not have this restriction (heterogenous).",
+      "parentUuid": "b4c80680_d0bfd0f8",
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2899db5d_e02b66e4",
@@ -58,6 +76,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fc14e57_d62fd4d2",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2899db5d_e02b66e4",
+      "range": {
+        "startLine": 14,
+        "startChar": 32,
+        "endLine": 14,
+        "endChar": 40
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0475346d_148e16bd",
@@ -71,6 +113,30 @@
       "writtenOn": "2022-03-01T21:29:37Z",
       "side": 1,
       "message": "its odd to call this manifolds but then call individual methods on manifolds, should this be called manifold instead? I am not sure what the right style guidance here is.",
+      "range": {
+        "startLine": 53,
+        "startChar": 41,
+        "endLine": 53,
+        "endChar": 50
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe71c5a1_aa2d7e48",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "Actually, it\u0027s not odd because it\u0027s a pack of multiple values. The method is not called on a single instance but on a pack of manifolds.",
+      "parentUuid": "0475346d_148e16bd",
       "range": {
         "startLine": 53,
         "startChar": 41,
@@ -121,6 +187,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dae5968_db08c85d",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "No, `std::partial_sum` does something completely different from `std::exclusive_scan` and does not work with tuples.",
+      "parentUuid": "36551f5a_cf1fb414",
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac3bdf8c_d1344aaa",
@@ -134,6 +218,30 @@
       "writtenOn": "2022-03-01T21:29:37Z",
       "side": 1,
       "message": "std::accumulate does not work?",
+      "range": {
+        "startLine": 60,
+        "startChar": 22,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eaf07175_19be3581",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "No, does no work with tuples but only with ranges.",
+      "parentUuid": "ac3bdf8c_d1344aaa",
       "range": {
         "startLine": 60,
         "startChar": 22,
@@ -167,6 +275,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9879449_7cff6a3b",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26b7f5f8_e0f0ae0c",
+      "range": {
+        "startLine": 96,
+        "startChar": 31,
+        "endLine": 96,
+        "endChar": 32
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19aa3ab5_625f4bff",
@@ -180,6 +312,30 @@
       "writtenOn": "2022-03-01T21:29:37Z",
       "side": 1,
       "message": "PlusImpl and so on would be better. Overloading the name makes readability worse IMO.",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 11
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b09c589c_b8225292",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19aa3ab5_625f4bff",
       "range": {
         "startLine": 99,
         "startChar": 7,
@@ -213,6 +369,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e532165d_e1fde0dd",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "This is a `std::tuple`. `TupleOf_t` generates one. See also my other answer.",
+      "parentUuid": "f1e89142_dd863dcd",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 11
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6be5bce6_1c46995d",
@@ -226,6 +406,30 @@
       "writtenOn": "2022-03-01T21:29:37Z",
       "side": 1,
       "message": "I think this should be in manifold.h. It is odd to be putting this code here.",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 8
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c00d308_ddc1a0e1",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "That does not work because `ProductManifoldImpl` is defined after `ProductManifold`.",
+      "parentUuid": "6be5bce6_1c46995d",
       "range": {
         "startLine": 213,
         "startChar": 0,
@@ -259,6 +463,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8602dea3_469e85d0",
+        "filename": "include/ceres/internal/tuple_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa6d17c1_bf167974",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3eae3d0d_89d179fb",
@@ -272,6 +500,30 @@
       "writtenOn": "2022-03-01T21:29:37Z",
       "side": 1,
       "message": "I am confused as to why we can\u0027t use std::tuple here? why do we have to define our own type?",
+      "range": {
+        "startLine": 68,
+        "startChar": 18,
+        "endLine": 68,
+        "endChar": 19
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36c706ae_6d3671fa",
+        "filename": "include/ceres/internal/tuple_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "We don\u0027t. This is a `std::tuple` albeit obtained using template expansion. We use a type generator that generically defines `std::tuple\u003cT, ..., T\u003e` with `T` repeated `N` times.",
+      "parentUuid": "3eae3d0d_89d179fb",
       "range": {
         "startLine": 68,
         "startChar": 18,
@@ -305,6 +557,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f491a0be_f5a8b91b",
+        "filename": "include/ceres/internal/tuple_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "Not really as there\u0027s no init value specifiable. That would also be inconsistent to `integer_algorithms.h` definition.",
+      "parentUuid": "2501650a_e2918003",
+      "range": {
+        "startLine": 73,
+        "startChar": 44,
+        "endLine": 73,
+        "endChar": 54
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b1ef9619_2b754309",
@@ -322,6 +598,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ac6b3b7_257a0ee8",
+        "filename": "include/ceres/internal/tuple_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "No, that would be an inclusive scan.",
+      "parentUuid": "b1ef9619_2b754309",
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd44e48f_d677595a",
@@ -335,6 +629,30 @@
       "writtenOn": "2022-03-01T21:29:37Z",
       "side": 1,
       "message": "update the documentation to describe what the requirements are on the input parameterizations.",
+      "range": {
+        "startLine": 341,
+        "startChar": 3,
+        "endLine": 341,
+        "endChar": 12
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25a01d2b_e4397e0c",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd44e48f_d677595a",
       "range": {
         "startLine": 341,
         "startChar": 3,
@@ -370,6 +688,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fe0b5d0a_b549058e",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "Previously, a `static_assert` already required this. I replaced it by implicit signature check. Also, it does not make sense to use less than two manifolds since the manifold can be used directly. Apart from that, the user should be discouraged from using `ProductManifold` with a single manifold because the former introduces an unnecessary indirection and an additional heap allocation which is just a waste of resources.",
+      "parentUuid": "ad4a6d6d_406d8619",
+      "range": {
+        "startLine": 360,
+        "startChar": 31,
+        "endLine": 360,
+        "endChar": 32
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "742c59fe_52ca5495",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 2
@@ -381,6 +723,30 @@
       "writtenOn": "2022-03-01T21:29:37Z",
       "side": 1,
       "message": "impl_",
+      "range": {
+        "startLine": 388,
+        "startChar": 28,
+        "endLine": 388,
+        "endChar": 37
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66916abe_f1bcedef",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "742c59fe_52ca5495",
       "range": {
         "startLine": 388,
         "startChar": 28,
