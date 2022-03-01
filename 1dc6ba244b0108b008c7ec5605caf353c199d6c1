@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e46f4896_53c0486c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T22:51:51Z",
+      "side": 1,
+      "message": "yes I am only talking about how TupleOf is being used.\n\nsorry if I am being obtuse, but why do we need constexpr on std:array? \n\nyou can populate the std:array at construction time and then you can iterate over it the same way you are over the tuple, no?",
+      "parentUuid": "05d32de6_b78d2836",
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2899db5d_e02b66e4",
         "filename": "include/ceres/internal/product_manifold.h",
         "patchSetId": 2
