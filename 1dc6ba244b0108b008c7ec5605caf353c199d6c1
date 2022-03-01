@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "20e23a1c_524ded96",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T23:18:20Z",
+      "side": 1,
+      "message": "Not a problem.\n\n`constexpr` is relevant at least for the tests which can be performed at compile time. Changing to `std::array` would require a complete rewrite of all the tests including exclusive scan at no advantage except that we could use `std::accumulate` which is not suitable for fixed-size sequences in C++14.",
+      "parentUuid": "e46f4896_53c0486c",
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2899db5d_e02b66e4",
         "filename": "include/ceres/internal/product_manifold.h",
         "patchSetId": 2
