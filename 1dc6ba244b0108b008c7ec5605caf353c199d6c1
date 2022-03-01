@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "05d32de6_b78d2836",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T22:45:39Z",
+      "side": 1,
+      "message": "Oh, you were talking about the sizes and offsets, not the manifolds. `std::array` does not support `constexpr` in C++14 and since algorithms are applied to packs, a container would not provide any advantage here. Also `std::tuple` is consistent to how the inner manifolds are stored.",
+      "parentUuid": "fd593ff1_e386f620",
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2899db5d_e02b66e4",
         "filename": "include/ceres/internal/product_manifold.h",
         "patchSetId": 2
