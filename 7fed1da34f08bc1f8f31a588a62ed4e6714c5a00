@@ -104,6 +104,24 @@
       "parentUuid": "0aa97c4c_85f22b43",
       "revId": "7fed1da34f08bc1f8f31a588a62ed4e6714c5a00",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ca3a10a_aa764d8d",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T17:44:58Z",
+      "side": 1,
+      "message": "I already mentioned this during the review (and I believe you did not disagree): there\u0027s just no real use for that. The problem is that you would need to choose a convention for aggregating categorization results (all vs. any, if `std::is*` overloads were to be used) which may be suitable in one situation but not the other. For the rare case where sanity checks are needed, the easiest and unambiguous way to do this is by letting the user write his own helper functions.",
+      "parentUuid": "20cf1630_a7091b44",
+      "revId": "7fed1da34f08bc1f8f31a588a62ed4e6714c5a00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
