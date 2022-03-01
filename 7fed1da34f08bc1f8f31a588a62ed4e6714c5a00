@@ -68,6 +68,24 @@
       "parentUuid": "52e81e89_700190a1",
       "revId": "7fed1da34f08bc1f8f31a588a62ed4e6714c5a00",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0aa97c4c_85f22b43",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T17:30:52Z",
+      "side": 1,
+      "message": "Yes, there\u0027s a comment in `jet.h` that exactly addresses this. The check should be done explicitly on the dual part which allows choosing the conjunction (i.e., all/and vs. any/or).",
+      "parentUuid": "db0eb566_83683c99",
+      "revId": "7fed1da34f08bc1f8f31a588a62ed4e6714c5a00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
