@@ -86,6 +86,24 @@
       "parentUuid": "db0eb566_83683c99",
       "revId": "7fed1da34f08bc1f8f31a588a62ed4e6714c5a00",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20cf1630_a7091b44",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T17:32:01Z",
+      "side": 1,
+      "message": "sure but when the user is writing templated code, unless they do some template programming themselves they will not be able to just check on the type T. so we should perhaps add some functions which address this usecase?",
+      "parentUuid": "0aa97c4c_85f22b43",
+      "revId": "7fed1da34f08bc1f8f31a588a62ed4e6714c5a00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
