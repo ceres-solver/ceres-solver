@@ -472,6 +472,24 @@
       "parentUuid": "2420aae6_fbce90d7",
       "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c94d2a3_cd2ce1df",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T14:57:59Z",
+      "side": 1,
+      "message": "After further evaluation, this is actually not straightforward because the number of `Manifold` instances is erased during construction and would require returning a dynamically sized container of pointers to base class instead of a tuple.",
+      "parentUuid": "58626e67_a6742e81",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
