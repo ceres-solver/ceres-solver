@@ -140,6 +140,24 @@
       "parentUuid": "5ca3a10a_aa764d8d",
       "revId": "7fed1da34f08bc1f8f31a588a62ed4e6714c5a00",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f3d1e24_1be9cc8c",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-01T17:58:26Z",
+      "side": 1,
+      "message": "Ah, I understand now. I think it would be doable to just add overloads that can be called on `T` as follows:\n```\nvoid foo(T value)\n{\n   DCHECK(ceres::isfinite(value, ceres::All));\n   DCHECK(ceres::isfinite(value, ceres::Any));\n}\n```\nHowever, there\u0027s all the case where the check should be applied to gradients only, without considering the scalar part.\n\nA clean API will require spending some effort.",
+      "parentUuid": "1c8d168f_25708852",
+      "revId": "7fed1da34f08bc1f8f31a588a62ed4e6714c5a00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
