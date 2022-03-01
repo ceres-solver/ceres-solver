@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fd593ff1_e386f620",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T22:32:51Z",
+      "side": 1,
+      "message": "but we are not using hetereogenous values, we are just storing ints.\n\n  TupleOf_t\u003cint, kNumManifolds\u003e ambient_sizes_;\n  TupleOf_t\u003cint, kNumManifolds\u003e tangent_sizes_;\n  TupleOf_t\u003cint, kNumManifolds\u003e ambient_offsets_;\n  TupleOf_t\u003cint, kNumManifolds\u003e tangent_offsets_;\n  \n  is the same as \n  \n  \n  std::array\u003cint, kNumManifolds\u003e ambient_sizes_;\n  std::array\u003cint, kNumManifolds\u003e tangent_sizes_;\n  std::array\u003cint, kNumManifolds\u003e ambient_offsets_;\n  std::array\u003cint, kNumManifolds\u003e tangent_offsets_;",
+      "parentUuid": "6010f51d_cf69e3ff",
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2899db5d_e02b66e4",
         "filename": "include/ceres/internal/product_manifold.h",
         "patchSetId": 2
