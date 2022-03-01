@@ -50,6 +50,24 @@
       "message": "Maybe this full list of changes to `Jet` is also helpful (Markdown-like):\n\n```\n* Jet gained support for\n  * `copysign`\n  * `fma` (fused multiply-add)\n  * `midpoint` (C++20 and above)\n  * `lerp` (C++20 and above)\n  * 3-argument `hypot` (C++17 and above)\n  * `log10`\n  * `log1p`\n  * `exp1m`\n  * `norm` (squared L^2 norm)\n* Quiet floating-point comparison:\n  * `isless`\n  * `isgreater`\n  * `islessgreater`\n  * `islessequal`\n  * `isgreaterequal`\n  * `isunordered`\n  * `signbit`\n  * `fdim`\n* Categorization and comparison operations are applied exclusively and consistently to the scalar part of a Jet now:\n  * `isnan`, `isinf`, `isnormal`, `isfinite`, `fpclassify` (new)\n  * `fmin`, `fmax`\n  * It is now possible to safely compare a Jet against a scalar (or literal) without constructing a Jet first (even if it\u0027s nested):\n\n    \u003ccode\u003e\n       Jet\u003cJet\u003cJet\u003cT, N\u003e, M\u003e, O\u003e x;\n       if (x \u003d\u003d 2) { } // equivalent to x.a.a.a \u003d\u003d 2\n    \u003c/code\u003e\n\n     This enables interaction with various arithmetic functions that expect a scalar like instance, such as `boost::math::pow\u003c-N\u003e` for reciprocal computation.\n```\n\nParticularly, changes to categorization functions `isnan`, `isfinite`, etc., are not backward compatible. Previously, the logic was applied to the infinitesimals as well, although inconsistently (all vs. any).",
       "revId": "7fed1da34f08bc1f8f31a588a62ed4e6714c5a00",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db0eb566_83683c99",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T17:13:31Z",
+      "side": 1,
+      "message": "I think this raises an interesting question. For debugging purposes we may want to have specialized functions which do check that the entire jet is zero or finite. \n\nOr maybe add something to Jets which will do this checking when compiled in debug mode?",
+      "parentUuid": "52e81e89_700190a1",
+      "revId": "7fed1da34f08bc1f8f31a588a62ed4e6714c5a00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
