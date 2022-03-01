@@ -1,0 +1,377 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e53aed60_dba4cf58",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "I like this implementation. The use of tuples is very clever. \nWhat I do not understand is, why we can\u0027t just use std::tuple? what am I missing?",
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2899db5d_e02b66e4",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "I recommend renaming this to product_manifold_impl.h",
+      "range": {
+        "startLine": 14,
+        "startChar": 32,
+        "endLine": 14,
+        "endChar": 40
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0475346d_148e16bd",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "its odd to call this manifolds but then call individual methods on manifolds, should this be called manifold instead? I am not sure what the right style guidance here is.",
+      "range": {
+        "startLine": 53,
+        "startChar": 41,
+        "endLine": 53,
+        "endChar": 50
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b28e189_5fa5c5c9",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "this is cool, I am always suprised by how you can apply algorithms like max and expand the pack.",
+      "range": {
+        "startLine": 55,
+        "startChar": 24,
+        "endLine": 55,
+        "endChar": 35
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36551f5a_cf1fb414",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "ExclusiveScan is such a terrible name (not blaming you, just the usage in general), isn\u0027t this basically std::partial_sum ? I am assuing that partial_sum does not work with tuples?",
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac3bdf8c_d1344aaa",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "std::accumulate does not work?",
+      "range": {
+        "startLine": 60,
+        "startChar": 22,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26b7f5f8_e0f0ae0c",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "N is not a great name, how about kNumManifolds ?",
+      "range": {
+        "startLine": 96,
+        "startChar": 31,
+        "endLine": 96,
+        "endChar": 32
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19aa3ab5_625f4bff",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "PlusImpl and so on would be better. Overloading the name makes readability worse IMO.",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 11
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1e89142_dd863dcd",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "maybe you answered this before, but why can\u0027t we use std::tuple to store these sizes and offsets?",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 11
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6be5bce6_1c46995d",
+        "filename": "include/ceres/internal/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "I think this should be in manifold.h. It is odd to be putting this code here.",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 8
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa6d17c1_bf167974",
+        "filename": "include/ceres/internal/tuple_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "I do not understand this comment, perhaps it will be clearer with an example?",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3eae3d0d_89d179fb",
+        "filename": "include/ceres/internal/tuple_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "I am confused as to why we can\u0027t use std::tuple here? why do we have to define our own type?",
+      "range": {
+        "startLine": 68,
+        "startChar": 18,
+        "endLine": 68,
+        "endChar": 19
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2501650a_e2918003",
+        "filename": "include/ceres/internal/tuple_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "shouldn\u0027t this just be called Accumulate ?",
+      "range": {
+        "startLine": 73,
+        "startChar": 44,
+        "endLine": 73,
+        "endChar": 54
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1ef9619_2b754309",
+        "filename": "include/ceres/internal/tuple_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "PartialSum ?",
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd44e48f_d677595a",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "update the documentation to describe what the requirements are on the input parameterizations.",
+      "range": {
+        "startLine": 341,
+        "startChar": 3,
+        "endLine": 341,
+        "endChar": 12
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad4a6d6d_406d8619",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "Here in the signature you are enforcing that there are at least two manifolds as input, but there no real reason to require that product manifold should always have two manifolds right? mathematically its fine if it has just one manifold as input?",
+      "range": {
+        "startLine": 360,
+        "startChar": 31,
+        "endLine": 360,
+        "endChar": 32
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "742c59fe_52ca5495",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T21:29:37Z",
+      "side": 1,
+      "message": "impl_",
+      "range": {
+        "startLine": 388,
+        "startChar": 28,
+        "endLine": 388,
+        "endChar": 37
+      },
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
