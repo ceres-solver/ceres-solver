@@ -122,6 +122,24 @@
       "parentUuid": "20cf1630_a7091b44",
       "revId": "7fed1da34f08bc1f8f31a588a62ed4e6714c5a00",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c8d168f_25708852",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T17:47:54Z",
+      "side": 1,
+      "message": "oh I am not talking about modifying the semantics of existing functions. I am good with that, they should be consistent with comparison semantics. \n\nI am thinking about adding a new very verbosely named function sort of like the DCHECK macros in glog.",
+      "parentUuid": "5ca3a10a_aa764d8d",
+      "revId": "7fed1da34f08bc1f8f31a588a62ed4e6714c5a00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
