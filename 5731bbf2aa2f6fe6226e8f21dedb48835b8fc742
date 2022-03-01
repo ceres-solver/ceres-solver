@@ -17,6 +17,125 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUAXqPr6nPoG7Lent9f+E\u003dxiSSsKUT6xJZDkA2yqQAJPpg@mail.gmail.com\u003e",
       "revId": "5731bbf2aa2f6fe6226e8f21dedb48835b8fc742",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1b7e998_27e58020",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-01T17:23:12Z",
+      "side": 1,
+      "message": "Some minor comments, but otherwise looks good",
+      "revId": "5731bbf2aa2f6fe6226e8f21dedb48835b8fc742",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db292b63_1b080087",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-01T17:23:12Z",
+      "side": 1,
+      "message": "known at compile time",
+      "revId": "5731bbf2aa2f6fe6226e8f21dedb48835b8fc742",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b331a07_20f48e1a",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-01T17:23:12Z",
+      "side": 1,
+      "message": "known at compile time",
+      "revId": "5731bbf2aa2f6fe6226e8f21dedb48835b8fc742",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "755237a8_020ef19d",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-01T17:23:12Z",
+      "side": 1,
+      "message": "Prefer ceres::DYNAMIC here as the comparison, they should be the same above but the docs still say to populate with ceres::DYNAMIC rather than Eigen::Dynamic",
+      "revId": "5731bbf2aa2f6fe6226e8f21dedb48835b8fc742",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9181a54b_a4e46f02",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-01T17:23:12Z",
+      "side": 1,
+      "message": "Prefer ceres::DYNAMIC here as the comparator, as that is what the docs state they should be using, and the equivalence to Eigen::Dynamic is an implementation detail rather than strictly part of the public API",
+      "revId": "5731bbf2aa2f6fe6226e8f21dedb48835b8fc742",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5845762c_0898d988",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-01T17:23:12Z",
+      "side": 1,
+      "message": "Again, prefer ceres::DYNAMIC here as the comparator",
+      "revId": "5731bbf2aa2f6fe6226e8f21dedb48835b8fc742",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "665081d9_00a7d216",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-01T17:23:12Z",
+      "side": 1,
+      "message": "Nitpick: Since the wrapping change, this breaks: [x, y, z, w] over two lines, it would be cleaner just to move it s/t it appears on one for legibility.",
+      "revId": "5731bbf2aa2f6fe6226e8f21dedb48835b8fc742",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
