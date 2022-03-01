@@ -261,6 +261,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8a0755ee_4954836a",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T00:11:31Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "60b63569_ae3b81b0",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2bcb59e_3a8f9b6a",
         "filename": "include/ceres/manifold.h",
         "patchSetId": 1
@@ -434,6 +452,24 @@
       "side": 1,
       "message": "While I\u0027m finishing this up, should we provide access to inner manifold instances in `ProductManifold` as a tuple to base (`Manifold`) pointers? This would only require that the manifold types are actually derived from the base interface (which is generally expected.)",
       "parentUuid": "d308bcb7_df5f8643",
+      "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58626e67_a6742e81",
+        "filename": "include/ceres/manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T00:11:31Z",
+      "side": 1,
+      "message": "I think the only reason to do that would be for testing, we don\u0027t need it inside ceres.",
+      "parentUuid": "2420aae6_fbce90d7",
       "revId": "019b2043d01b044e549735da18657fd7c2a74a89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
