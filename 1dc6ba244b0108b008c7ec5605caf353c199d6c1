@@ -127,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1154b693_f75c4282",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-01T23:23:14Z",
+      "side": 1,
+      "message": "What tests? do you mean checks you are performing in the implementation or do you mean unit tests? I am not worried about the unit tests. \n\nThe point of this implementation as I understand is is to reduce vtable calls, and to not do any heap allocation. Both of these should be doable with std:array no?\n\nIf we can reduce the amount of custom code/template metaprogramming then I am all for it, as it reduces the cost of maintaining down the line.",
+      "parentUuid": "20e23a1c_524ded96",
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2899db5d_e02b66e4",
         "filename": "include/ceres/internal/product_manifold.h",
         "patchSetId": 2
