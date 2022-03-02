@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a20c21d_6ee8c101",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T21:37:16Z",
+      "side": 1,
+      "message": "Good point about installing modules.\n\nUsing separate logic for shared/static builds, however, is a recipe for disaster because you are making a strong assumption about how SuiteSparse is built. However, dependencies can be necessary regardless of what kind of library type is built. This is solely decided by the package targets.\n\nCustom logic can not only fail but also complicates the code. I would therefore prefer to keep these files as lean as possible abstaining from unnecessary conditionals as the sources are already complex enough.",
+      "parentUuid": "36df5f0d_ea90ca3a",
+      "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f896c99_19230c2e",
@@ -48,6 +66,24 @@
       "writtenOn": "2022-02-26T20:55:56Z",
       "side": 1,
       "message": "See my comment above, this requires installing more of our CMake find modules with Ceres to cover the typical case for almost all users where they are using a standard install of CXSparse",
+      "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ae1ce0a_04c3270b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T21:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f896c99_19230c2e",
       "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -69,6 +105,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "50a911b5_ff82386a",
+        "filename": "cmake/FindCXSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T21:37:16Z",
+      "side": 1,
+      "message": "Good catch!",
+      "parentUuid": "4861db82_705c0b50",
+      "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d795978c_43d6f644",
@@ -82,6 +136,24 @@
       "writtenOn": "2022-02-26T20:55:56Z",
       "side": 1,
       "message": "Can this go inside the if (CXSparse_FOUND) block below s/t we only hide variable that we think are already correctly populated in the cache as before, leaving any that are not-found visible by default to make it easy for the user to find them.",
+      "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b159d95_627008ce",
+        "filename": "cmake/FindCXSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T21:37:16Z",
+      "side": 1,
+      "message": "While theoretically a good idea, this is inconsistent to how CMake find modules are generally written. Setting `*_INCLUDE_DIR` and `*_LIBRARY` variables is only a last resort. Instead, users should specify the search prefix using `CMAKE_PREFIX_PATH`.",
+      "parentUuid": "d795978c_43d6f644",
       "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -103,6 +175,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "21a9c31a_035f59e1",
+        "filename": "cmake/FindCXSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T21:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d903c0d_4f4b577b",
+      "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e4bade0_b02585b2",
@@ -116,6 +206,24 @@
       "writtenOn": "2022-02-26T20:55:56Z",
       "side": 1,
       "message": "I think you have this the wrong way round, debug \u0026 optimized are preceding the RELEASE and DEBUG targets respectively.  I imagine this didn\u0027t cause you any problems as you only use this for checking existence, so the ordering is irrelevant as it is not used for linking.",
+      "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ded2e822_deee7f2b",
+        "filename": "cmake/FindMETIS.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T21:37:16Z",
+      "side": 1,
+      "message": "You are correct. This module was taken with almost no modifications from my SuiteSparse CMake implementation.",
+      "parentUuid": "1e4bade0_b02585b2",
       "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -137,6 +245,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a6f2fc4_b8b25112",
+        "filename": "cmake/FindMETIS.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T21:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ac8b017_dfb53b83",
+      "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec03d730_5ef8dfb5",
@@ -150,6 +276,24 @@
       "writtenOn": "2022-02-26T20:55:56Z",
       "side": 1,
       "message": "As per my previous comment, this early return doesn\u0027t guarantee that we find _your_ version of SuiteSparse as there are others that use different component names.  The spell I wrote in my original comment will address this case and ensure that we don\u0027t report found when the imported targets don\u0027t match the form we are expecting",
+      "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dc42e31_30314ea3",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T21:37:16Z",
+      "side": 1,
+      "message": "I previously tested this and the logic works as expected. Using `suitesparse-metis-for-windows` the early return will not occur because our components are spelled in uppercase but theirs lowercase. This indicates that `suitesparse-metis-for-windows` correctly checks and signals component presence.",
+      "parentUuid": "ec03d730_5ef8dfb5",
       "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -171,6 +315,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "498a089a_20385ae6",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T21:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90a6dc5e_cc041f42",
+      "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f151edd_984b429f",
@@ -184,6 +346,24 @@
       "writtenOn": "2022-02-26T20:55:56Z",
       "side": 1,
       "message": "This changes the logic for calling this module to require that the components be specified (except for SuiteSparse::Config which is always found) as opposed to them being optional, and if unspecified then all are assumed to be requested.\n\nAlthough there is no common rule about Modules should do when they support COMPONENTS but none are specified, let\u0027s stick to our original behaviour of finding all in this case.  We can do this by populating SuiteSparse_FIND_COMPONENTS with the complete component list if it is empty at the top.",
+      "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0022ce67_b5e45b91",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T21:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f151edd_984b429f",
       "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -205,6 +385,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6d88b59_0e3ad41b",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T21:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58e82325_8b6cdc86",
+      "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6edb96d9_211a5d6d",
@@ -218,6 +416,24 @@
       "writtenOn": "2022-02-26T20:55:56Z",
       "side": 1,
       "message": "Add a brief comment as to why we are only adding BLAS and LAPACK as dependencies here and not for the SuiteSparse components that also directly use them (convenience given that all components depend on Config).",
+      "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42c21960_51879e24",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T21:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6edb96d9_211a5d6d",
       "revId": "67013c21b7ba65f14afd6ad3669b563d8b7b0279",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
