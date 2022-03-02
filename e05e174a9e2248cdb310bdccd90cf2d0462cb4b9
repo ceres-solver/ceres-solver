@@ -54,6 +54,40 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1370c2d_040086cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T00:59:57Z",
+      "side": 1,
+      "message": "only two real comments. The rest looks good to me.",
+      "revId": "e05e174a9e2248cdb310bdccd90cf2d0462cb4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7594f03_991c1b3c",
+        "filename": "include/ceres/internal/product_manifold_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T00:59:57Z",
+      "side": 1,
+      "message": "Minor comment:\n\nWhy bother with calling exclusive_scan and dealing with its availability when you can just write \n\ntemplate \u003ctypename T, std::size_t N\u003e\ninline std::array\u003cT, N\u003e ComputeExclusiveScan(const std::array\u003cT, N\u003e\u0026 values) {\n  std::array\u003cT, N\u003e result;\n  result[0] \u003d 0;\n  for (int i \u003d 1; i \u003c N; ++i) {\n   result[i] \u003d result[i-1] + values[i-1];\n  }\n  return result;\n}",
+      "revId": "e05e174a9e2248cdb310bdccd90cf2d0462cb4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "274f6d46_cd3d8029",
@@ -120,6 +154,29 @@
         "startChar": 7,
         "endLine": 133,
         "endChar": 15
+      },
+      "revId": "e05e174a9e2248cdb310bdccd90cf2d0462cb4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87d5733a_6fd07a04",
+        "filename": "include/ceres/internal/product_manifold_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T00:59:57Z",
+      "side": 1,
+      "message": "replace get\u003cIndex0\u003e here and elsewhere with direct array access.",
+      "range": {
+        "startLine": 217,
+        "startChar": 27,
+        "endLine": 217,
+        "endChar": 28
       },
       "revId": "e05e174a9e2248cdb310bdccd90cf2d0462cb4b9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
