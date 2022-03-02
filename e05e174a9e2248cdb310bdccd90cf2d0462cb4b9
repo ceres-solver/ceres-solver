@@ -88,6 +88,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e6c0844_90965648",
+        "filename": "include/ceres/internal/product_manifold_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T10:07:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7594f03_991c1b3c",
+      "revId": "e05e174a9e2248cdb310bdccd90cf2d0462cb4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "274f6d46_cd3d8029",
@@ -172,6 +190,30 @@
       "writtenOn": "2022-03-02T00:59:57Z",
       "side": 1,
       "message": "replace get\u003cIndex0\u003e here and elsewhere with direct array access.",
+      "range": {
+        "startLine": 217,
+        "startChar": 27,
+        "endLine": 217,
+        "endChar": 28
+      },
+      "revId": "e05e174a9e2248cdb310bdccd90cf2d0462cb4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce5188da_926983a8",
+        "filename": "include/ceres/internal/product_manifold_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T10:07:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87d5733a_6fd07a04",
       "range": {
         "startLine": 217,
         "startChar": 27,
