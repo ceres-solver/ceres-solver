@@ -52,6 +52,24 @@
       "parentUuid": "1db236cc_ec09e5a1",
       "revId": "eadfead69d16dead98f28dec207abf0e9e79e082",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5464436d_31ee38af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T15:07:12Z",
+      "side": 1,
+      "message": "I think it is okay, in 2.2 we plan to move to c++17 anyways.\nalso now is the time to make these changes, as this API is still under development, once we make a public release things get much more complicated.",
+      "parentUuid": "e206bb4a_bf7ed7d9",
+      "revId": "eadfead69d16dead98f28dec207abf0e9e79e082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
