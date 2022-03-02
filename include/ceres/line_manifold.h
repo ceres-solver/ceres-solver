@@ -29,13 +29,94 @@
 // Author: jodebo_beck@gmx.de (Johannes Beck)
 //
 
-#ifndef CERES_PUBLIC_INTERNAL_LINE_MANIFOLD_H_
-#define CERES_PUBLIC_INTERNAL_LINE_MANIFOLD_H_
+#ifndef CERES_PUBLIC_LINE_MANIFOLD_H_
+#define CERES_PUBLIC_LINE_MANIFOLD_H_
 
+#include <Eigen/Core>
+#include <algorithm>
+#include <array>
+#include <memory>
+#include <vector>
+
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/internal/householder_vector.h"
 #include "ceres/internal/sphere_manifold_functions.h"
+#include "ceres/manifold.h"
+#include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
+// This provides a manifold for lines, where the line is
+// over-parameterized by an origin point and a direction vector. So the
+// parameter vector size needs to be two times the ambient space dimension,
+// where the first half is interpreted as the origin point and the second half
+// as the direction.
+//
+// The plus operator for the line direction is the same as for the
+// SphereManifold. The update of the origin point is
+// perpendicular to the line direction before the update.
+//
+// This manifold is a special case of the affine Grassmannian
+// manifold (see https://en.wikipedia.org/wiki/Affine_Grassmannian_(manifold))
+// for the case Graff_1(R^n).
+//
+// The class works with dynamic and static ambient space dimensions. If the
+// ambient space dimensions is known at compile time use
+//
+//    LineManifold<3> manifold;
+//
+// If the ambient space dimensions is not known at compile time the template
+// parameter needs to be set to ceres::DYNAMIC and the actual dimension needs
+// to be provided as a constructor argument:
+//
+//    LineManifold<ceres::DYNAMIC> manifold(ambient_dim);
+//
+template <int AmbientSpaceDimension>
+class LineManifold final : public Manifold {
+ public:
+  static_assert(AmbientSpaceDimension == DYNAMIC || AmbientSpaceDimension >= 2,
+                "The ambient space must be at least 2.");
+  static_assert(ceres::DYNAMIC == Eigen::Dynamic,
+                "ceres::DYNAMIC needs to be the same as Eigen::Dynamic.");
+
+  LineManifold();
+  explicit LineManifold(int size);
+
+  int AmbientSize() const override { return 2 * size_; }
+  int TangentSize() const override { return 2 * (size_ - 1); }
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override;
+  bool PlusJacobian(const double* x, double* jacobian) const override;
+  bool Minus(const double* y,
+             const double* x,
+             double* y_minus_x) const override;
+  bool MinusJacobian(const double* x, double* jacobian) const override;
+
+ private:
+  static constexpr bool IsDynamic = (AmbientSpaceDimension == ceres::DYNAMIC);
+  static constexpr int TangentSpaceDimension =
+      IsDynamic ? ceres::DYNAMIC : AmbientSpaceDimension - 1;
+
+  static constexpr int DAmbientSpaceDimension =
+      IsDynamic ? ceres::DYNAMIC : 2 * AmbientSpaceDimension;
+  static constexpr int DTangentSpaceDimension =
+      IsDynamic ? ceres::DYNAMIC : 2 * TangentSpaceDimension;
+
+  using AmbientVector = Eigen::Matrix<double, AmbientSpaceDimension, 1>;
+  using TangentVector = Eigen::Matrix<double, TangentSpaceDimension, 1>;
+  using MatrixPlusJacobian = Eigen::Matrix<double,
+                                           DAmbientSpaceDimension,
+                                           DTangentSpaceDimension,
+                                           Eigen::RowMajor>;
+  using MatrixMinusJacobian = Eigen::Matrix<double,
+                                            DTangentSpaceDimension,
+                                            DAmbientSpaceDimension,
+                                            Eigen::RowMajor>;
+
+  const int size_{AmbientSpaceDimension};
+};
 
 template <int AmbientSpaceDimension>
 LineManifold<AmbientSpaceDimension>::LineManifold()
@@ -216,4 +297,8 @@ bool LineManifold<AmbientSpaceDimension>::MinusJacobian(
 
 }  // namespace ceres
 
-#endif  // CERES_PUBLIC_INTERNAL_LINE_MANIFOLD_H_
+// clang-format off
+#include "ceres/internal/reenable_warnings.h"
+// clang-format on
+
+#endif  // CERES_PUBLIC_LINE_MANIFOLD_H_
