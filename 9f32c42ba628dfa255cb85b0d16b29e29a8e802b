@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47ec7fd5_3c7bcb39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-02T19:26:30Z",
+      "side": 1,
+      "message": "https://app.travis-ci.com/github/ceres-solver/ceres-solver/builds/247303465 is a manually triggered example",
+      "revId": "9f32c42ba628dfa255cb85b0d16b29e29a8e802b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
