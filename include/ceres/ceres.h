@@ -55,6 +55,7 @@
 #include "ceres/gradient_problem_solver.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/jet.h"
+#include "ceres/line_manifold.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
 #include "ceres/manifold.h"
@@ -65,6 +66,7 @@
 #include "ceres/problem.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"
+#include "ceres/sphere_manifold.h"
 #include "ceres/types.h"
 #include "ceres/version.h"
 
