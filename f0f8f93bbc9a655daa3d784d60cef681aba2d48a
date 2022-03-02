@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b5a400e_c0235532",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T13:56:03Z",
+      "side": 1,
+      "message": "Thanks Sergiu!",
+      "revId": "f0f8f93bbc9a655daa3d784d60cef681aba2d48a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0326d4d8_47dbf2e2",
@@ -14,6 +31,24 @@
       "writtenOn": "2022-03-02T13:08:11Z",
       "side": 1,
       "message": "Maybe better refer to different quaternions as `p` and `q`? `q_1` and `q_2` can be easily confused as quaternion coefficients.",
+      "revId": "f0f8f93bbc9a655daa3d784d60cef681aba2d48a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8129c4fc_5374f2e2",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 3137,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T13:56:03Z",
+      "side": 1,
+      "message": "sure, though it seems clear from the context here.",
+      "parentUuid": "0326d4d8_47dbf2e2",
       "revId": "f0f8f93bbc9a655daa3d784d60cef681aba2d48a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
