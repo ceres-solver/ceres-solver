@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f4b8de4_6e225c7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-02T18:53:23Z",
+      "side": 1,
+      "message": "This definitely looks cleaner than before as a separate file to me.  Some small points, but otherwise looks great",
+      "revId": "3e8faab582dcf2d2ffeef19e795d646dfe5e194b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36093b83_504fa0de",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-02T18:53:23Z",
+      "side": 1,
+      "message": "What is this adding functionally here?  The compile error won\u0027t (AFAIK) be that much clearer in the event that they pass a Manifold which is *not* copyable or movable, there\u0027s no real SFINAE going on here as we\u0027re not selecting between different implementations based on this, as it\u0027s the only implementation.\n\nIMO, I would remove this, as it\u0027s a compile error either way and I think it would be as clear in either case, and I think the use of rvalue references as args already makes it evident from the declaration.",
+      "revId": "3e8faab582dcf2d2ffeef19e795d646dfe5e194b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5dbc061_4529f879",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-02T18:53:23Z",
+      "side": 1,
+      "message": "Nit, this might read better: \u0027disambiguate public/private constructors, which both use variadic arguments\u0027",
+      "revId": "3e8faab582dcf2d2ffeef19e795d646dfe5e194b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4da5d664_213138f0",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-02T18:53:23Z",
+      "side": 1,
+      "message": "\u0027that allows the user to avoid explicitly specifying the template parameters\u0027",
+      "revId": "3e8faab582dcf2d2ffeef19e795d646dfe5e194b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a536a027_3ddf659c",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-02T18:53:23Z",
+      "side": 1,
+      "message": "\u0027can instead be\u0027",
+      "revId": "3e8faab582dcf2d2ffeef19e795d646dfe5e194b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
