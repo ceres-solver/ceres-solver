@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "152309f9_bbdb324b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T19:17:14Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "3e8faab582dcf2d2ffeef19e795d646dfe5e194b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36093b83_504fa0de",
@@ -31,6 +48,24 @@
       "writtenOn": "2022-03-02T18:53:23Z",
       "side": 1,
       "message": "What is this adding functionally here?  The compile error won\u0027t (AFAIK) be that much clearer in the event that they pass a Manifold which is *not* copyable or movable, there\u0027s no real SFINAE going on here as we\u0027re not selecting between different implementations based on this, as it\u0027s the only implementation.\n\nIMO, I would remove this, as it\u0027s a compile error either way and I think it would be as clear in either case, and I think the use of rvalue references as args already makes it evident from the declaration.",
+      "revId": "3e8faab582dcf2d2ffeef19e795d646dfe5e194b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89155e53_51bd673a",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T19:17:14Z",
+      "side": 1,
+      "message": "This is necessary for disambiguating the constructor signatures. Removing is not an option.",
+      "parentUuid": "36093b83_504fa0de",
       "revId": "3e8faab582dcf2d2ffeef19e795d646dfe5e194b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -52,6 +87,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa2986c3_2abdcbaa",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T19:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5dbc061_4529f879",
+      "revId": "3e8faab582dcf2d2ffeef19e795d646dfe5e194b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4da5d664_213138f0",
@@ -69,6 +122,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "376a846b_ecd7dd72",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T19:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4da5d664_213138f0",
+      "revId": "3e8faab582dcf2d2ffeef19e795d646dfe5e194b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a536a027_3ddf659c",
@@ -82,6 +153,24 @@
       "writtenOn": "2022-03-02T18:53:23Z",
       "side": 1,
       "message": "\u0027can instead be\u0027",
+      "revId": "3e8faab582dcf2d2ffeef19e795d646dfe5e194b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e72acd1_a84d5665",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T19:17:14Z",
+      "side": 1,
+      "message": "It\u0027s actually not instead but additionally. The usage is optional.",
+      "parentUuid": "a536a027_3ddf659c",
       "revId": "3e8faab582dcf2d2ffeef19e795d646dfe5e194b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
