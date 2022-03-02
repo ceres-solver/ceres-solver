@@ -163,6 +163,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a3c5ce6e_1647cc1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T00:26:59Z",
+      "side": 1,
+      "message": "yes this looks considerably simpler to my eyes.\nAlso most of the calls to std::get\u003cIndex0\u003e can be replaced by direct array indexing no?",
+      "parentUuid": "1674e6cb_4a2d4ccb",
+      "revId": "1dc6ba244b0108b008c7ec5605caf353c199d6c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2899db5d_e02b66e4",
         "filename": "include/ceres/internal/product_manifold.h",
         "patchSetId": 2

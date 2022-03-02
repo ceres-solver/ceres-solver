@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "274f6d46_cd3d8029",
+        "filename": "include/ceres/internal/product_manifold_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T00:26:59Z",
+      "side": 1,
+      "message": "also PlusImpl (and related functions) can be made simpler by just passing one integer as a template argument which is the index of the current manifold and terminating the recursion when it is equal to kNumManifolds? ala the classic factorial computation or is that more complicated than using std::integer_sequence?",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 15
+      },
+      "revId": "e05e174a9e2248cdb310bdccd90cf2d0462cb4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
