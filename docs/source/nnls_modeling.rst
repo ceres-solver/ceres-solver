@@ -292,13 +292,13 @@ the corresponding accessors. This information will be verified by the
                Dimension of x ------------------------------------+  |
                Dimension of y ---------------------------------------+
 
-   **WARNING 1** A common beginner's error when first using
-   :class:`AutoDiffCostFunction` is to get the sizing wrong. In particular,
-   there is a tendency to set the template parameters to (dimension of
-   residual, number of parameters) instead of passing a dimension
-   parameter for *every parameter block*. In the example above, that
-   would be ``<MyScalarCostFunction, 1, 2>``, which is missing the 2
-   as the last template argument.
+   .. warning::
+       A common beginner's error when first using :class:`AutoDiffCostFunction`
+       is to get the sizing wrong. In particular, there is a tendency to set the
+       template parameters to (dimension of residual, number of parameters)
+       instead of passing a dimension parameter for *every parameter block*. In
+       the example above, that would be ``<MyScalarCostFunction, 1, 2>``, which
+       is missing the 2 as the last template argument.
 
 
 :class:`DynamicAutoDiffCostFunction`
@@ -504,14 +504,14 @@ the corresponding accessors. This information will be verified by the
   results, either try forward difference to improve performance or
   Ridders' method to improve accuracy.
 
-  **WARNING** A common beginner's error when first using
-  :class:`NumericDiffCostFunction` is to get the sizing wrong. In
-  particular, there is a tendency to set the template parameters to
-  (dimension of residual, number of parameters) instead of passing a
-  dimension parameter for *every parameter*. In the example above,
-  that would be ``<MyScalarCostFunctor, 1, 2>``, which is missing the
-  last ``2`` argument. Please be careful when setting the size
-  parameters.
+  .. warning::
+      A common beginner's error when first using
+      :class:`NumericDiffCostFunction` is to get the sizing wrong. In
+      particular, there is a tendency to set the template parameters to
+      (dimension of residual, number of parameters) instead of passing a
+      dimension parameter for *every parameter*. In the example above, that
+      would be ``<MyScalarCostFunctor, 1, 2>``, which is missing the last ``2``
+      argument. Please be careful when setting the size parameters.
 
 
 Numeric Differentiation & Manifolds
@@ -621,9 +621,9 @@ Numeric Differentiation & Manifolds
    As a rule of thumb, try using :class:`NumericDiffCostFunction` before
    you use :class:`DynamicNumericDiffCostFunction`.
 
-   **WARNING** The same caution about mixing manifolds with numeric
-   differentiation applies as is the case with
-   :class:`NumericDiffCostFunction`.
+   .. warning::
+       The same caution about mixing manifolds with numeric differentiation
+       applies as is the case with :class:`NumericDiffCostFunction`.
 
 :class:`CostFunctionToFunctor`
 ==============================
@@ -1264,9 +1264,9 @@ difference operations.
 
 A more interesting case is the case :math:`SO(3)`, the `special
 orthogonal group <https://en.wikipedia.org/wiki/3D_rotation_group>`_
-in three dimensions - the space of 3x3 rotation
+in three dimensions - the space of :math:`3\times3` rotation
 matrices. :math:`SO(3)` is a three dimensional manifold embedded in
-:math:`R^9` or :math:`R^{3\times 3}`.  So points on :math:`SO(3)` are
+:math:`\mathbb{R}^9` or :math:`\mathbb{R}^{3\times 3}`.  So points on :math:`SO(3)` are
 represented using 9 dimensional vectors or :math:`3\times 3` matrices,
 and points in its tangent spaces are represented by 3 dimensional
 vectors.
@@ -1303,17 +1303,18 @@ Given :math:`x \in SO(3)`, we have
 
 where,
 
-.. math:: \theta = cos^{-1}((\operatorname{Trace}(x) - 1)/2)
+.. math:: \theta = \cos^{-1}((\operatorname{Trace}(x) - 1)/2)
 
 Then,
 
 .. math::
    \begin{align*}
    \boxplus(x, \Delta) &= x \exp(\Delta)
+   \\
    \boxminus(y, x) &= \log(x^T y)
    \end{align*}
 
-For :math:`\boxplus` and :math:`\boxplus` to be mathematically
+For :math:`\boxplus` and :math:`\boxminus` to be mathematically
 consistent, the following identities must be satisfied at all points
 :math:`x` on the manifold:
 
@@ -1327,7 +1328,7 @@ consistent, the following identities must be satisfied at all points
    \Delta`. This ensures that :math:`\boxplus` is an injective
    (one-to-one) map.
 4. For all :math:`\Delta_1, \Delta_2\ |\boxminus(\boxplus(x, \Delta_1),
-   \boxplus(x, \Delta_2)) <= |\Delta_1 - \Delta_2|`. Allows us to define
+   \boxplus(x, \Delta_2)) \leq |\Delta_1 - \Delta_2|`. Allows us to define
    a metric on the manifold.
 
 Additionally we require that :math:`\boxplus` and :math:`\boxminus` be
@@ -1342,9 +1343,9 @@ By C. Hertzberg, R. Wagner, U. Frese and L. Schroder
 The :class:`Manifold` interface allows the user to define a manifold
 for the purposes optimization by implementing ``Plus`` and ``Minus``
 operations and their derivatives (corresponding naturally to
-:math:`\boxplus` and :math:`boxminus`).
+:math:`\boxplus` and :math:`\boxminus`).
 
-..code-block c++::
+.. code-block:: c++
 
   class Manifold {
    public:
@@ -1391,7 +1392,7 @@ operations and their derivatives (corresponding naturally to
 .. function:: bool PlusJacobian(const double* x, double* jacobian) const;
 
    Compute the derivative of :math:`\boxplus(x, \Delta)` w.r.t
-   :math:`\Delta` at :\math:`\Delta = 0`, i.e. :math:`(D_2
+   :math:`\Delta` at :math:`\Delta = 0`, i.e. :math:`(D_2
    \boxplus)(x, 0)`.
 
    ``jacobian`` is a row-major :func:`Manifold::AmbientSize`
@@ -1554,7 +1555,7 @@ Manifold for a Hamilton `Quaternion
 <https://en.wikipedia.org/wiki/Quaternion>`_. Quaternions are a three
 dimensional manifold represented as unit norm 4-vectors, i.e.
 
-.. math:: q = \left [\begin{matrix}q_0,& q_1,& q_2,& q_3\end{matrix}\right], \|q\| = 1
+.. math:: q = \left [\begin{matrix}q_0,& q_1,& q_2,& q_3\end{matrix}\right], \quad \|q\| = 1
 
 is the ambient space representation. Here :math:`q_0` is the scalar
 part. :math:`q_1` is the coefficient of :math:`i`, :math:`q_2` is the
@@ -1577,9 +1578,10 @@ The tangent space is three dimensional and the :math:`\boxplus` and
 :math:`\log` operations.
 
 .. math::
-
-   \boxplus(x, \Delta) = \exp\left(\Delta\right) \otimes  x \\
-   \boxminus(y,x) = \log\left(y \otimes x^{-1}\right)
+   \begin{align*}
+   \boxplus(x, \Delta) &= \exp\left(\Delta\right) \otimes  x \\
+   \boxminus(y,x) &= \log\left(y \otimes x^{-1}\right)
+   \end{align*}
 
 Where :math:`\otimes` is the `Quaternion product
 <https://en.wikipedia.org/wiki/Quaternion#Hamilton_product>`_ and
@@ -1678,7 +1680,7 @@ of squared distances to all the points.
 
 .. class:: AutoDiffManifold
 
-Create a :math:`Manifold` with Jacobians computed via automatic
+Create a :class:`Manifold` with Jacobians computed via automatic
 differentiation.
 
 To get an auto differentiated manifold, you must define a Functor with
@@ -1726,7 +1728,7 @@ Given this Functor, the corresponding :class:`Manifold` can be constructed as:
 .. NOTE::
 
    The following is only used for illustration purposes. Ceres Solver
-   ships with an optimized, production grade :math:`QuaternionManifold`
+   ships with an optimized, production grade :class:`QuaternionManifold`
    implementation.
 
 As a concrete example consider the case of `Quaternions
@@ -1878,19 +1880,19 @@ be constructed as
 
   Let us consider two examples:
 
-  The Euclidean space :math:`R^n` is the simplest example of a
+  The Euclidean space :math:`\mathbb{R}^n` is the simplest example of a
   manifold. It has dimension :math:`n` (and so does its tangent space)
   and :math:`\boxplus` is the familiar vector sum operation.
 
     .. math:: \boxplus(x, \Delta) = x + \Delta
 
   A more interesting case is :math:`SO(3)`, the special orthogonal
-  group in three dimensions - the space of 3x3 rotation
+  group in three dimensions - the space of :math:`3\times3` rotation
   matrices. :math:`SO(3)` is a three dimensional manifold embedded in
-  :math:`R^9` or :math:`R^{3\times 3}`.
+  :math:`\mathbb{R}^9` or :math:`\mathbb{R}^{3\times 3}`.
 
   :math:`\boxplus` on :math:`SO(3)` is defined using the *Exponential*
-  map, from the tangent space (:math:`R^3`) to the manifold. The
+  map, from the tangent space (:math:`\mathbb{R}^3`) to the manifold. The
   Exponential map :math:`\operatorname{Exp}` is defined as:
 
   .. math::
@@ -1923,7 +1925,7 @@ be constructed as
 
      class LocalParameterization {
       public:
-       virtual ~LocalParameterization() {}
+       virtual ~LocalParameterization() = default;
        virtual bool Plus(const double* x,
                          const double* delta,
                          double* x_plus_delta) const = 0;
@@ -2008,9 +2010,9 @@ Another example that occurs commonly in Structure from Motion problems
 is when camera rotations are parameterized using a quaternion. This is
 a 3-dimensional manifold that lives in 4-dimensional space.
 
-.. math:: \boxplus(x, \Delta) = \left[ \cos(|\Delta|), \frac{\sin\left(|\Delta|\right)}{|\Delta|} \Delta \right] * x
+.. math:: \boxplus(x, \Delta) = \left[ \cos(|\Delta|), \frac{\sin\left(|\Delta|\right)}{|\Delta|} \Delta \right] \otimes x
 
-The multiplication :math:`*` between the two 4-vectors on the right
+The multiplication :math:`\otimes` between the two 4-vectors on the right
 hand side is the standard quaternion product.
 
 :class:`EigenQuaternionParameterization`
@@ -2330,7 +2332,7 @@ quaternion, a local parameterization can be constructed as
    This option controls whether the Problem object owns the cost
    functions.
 
-   If set to TAKE_OWNERSHIP, then the problem object will delete the
+   If set to ``TAKE_OWNERSHIP``, then the problem object will delete the
    cost functions on destruction. The destructor is careful to delete
    the pointers only once, since sharing cost functions is allowed.
 
@@ -2341,7 +2343,7 @@ quaternion, a local parameterization can be constructed as
    This option controls whether the Problem object owns the loss
    functions.
 
-   If set to TAKE_OWNERSHIP, then the problem object will delete the
+   If set to ``TAKE_OWNERSHIP``, then the problem object will delete the
    loss functions on destruction. The destructor is careful to delete
    the pointers only once, since sharing loss functions is allowed.
 
@@ -2359,7 +2361,7 @@ quaternion, a local parameterization can be constructed as
    This option controls whether the Problem object owns the local
    parameterizations.
 
-   If set to TAKE_OWNERSHIP, then the problem object will delete the
+   If set to ``TAKE_OWNERSHIP``, then the problem object will delete the
    local parameterizations on destruction. The destructor is careful
    to delete the pointers only once, since sharing local
    parameterizations is allowed.
@@ -2370,7 +2372,7 @@ quaternion, a local parameterization can be constructed as
 
    This option controls whether the Problem object owns the manifolds.
 
-   If set to TAKE_OWNERSHIP, then the problem object will delete the
+   If set to ``TAKE_OWNERSHIP``, then the problem object will delete the
    manifolds on destruction. The destructor is careful to delete the
    pointers only once, since sharing manifolds is allowed.
 
@@ -2409,12 +2411,13 @@ quaternion, a local parameterization can be constructed as
     overhead you want to avoid, then you can set
     disable_all_safety_checks to true.
 
-    **WARNING** Do not set this to true, unless you are absolutely
-    sure of what you are doing.
+    .. warning::
+        Do not set this to true, unless you are absolutely sure of what you are
+        doing.
 
 .. member:: Context* Problem::Options::context
 
-    Default: `nullptr`
+    Default: ``nullptr``
 
     A Ceres global context to use for solving this problem. This may
     help to reduce computation time as Ceres can reuse expensive
@@ -2425,7 +2428,7 @@ quaternion, a local parameterization can be constructed as
 
 .. member:: EvaluationCallback* Problem::Options::evaluation_callback
 
-    Default: `nullptr`
+    Default: ``nullptr``
 
     Using this callback interface, Ceres will notify you when it is
     about to evaluate the residuals or Jacobians.
@@ -2445,7 +2448,7 @@ quaternion, a local parameterization can be constructed as
 
        Evaluation callbacks are incompatible with inner iterations. So
        calling Solve with
-       :member:`Solver::Options::use_inner_iterations` set to `true`
+       :member:`Solver::Options::use_inner_iterations` set to ``true``
        on a :class:`Problem` with a non-null evaluation callback is an
        error.
 
@@ -2458,7 +2461,7 @@ quaternion, a local parameterization can be constructed as
    parameter blocks it expects. The function checks that these match
    the sizes of the parameter blocks listed in parameter_blocks. The
    program aborts if a mismatch is detected. loss_function can be
-   `nullptr`, in which case the cost of the term is just the squared
+   ``nullptr``, in which case the cost of the term is just the squared
    norm of the residuals.
 
    The parameter blocks may be passed together as a
@@ -2476,11 +2479,12 @@ quaternion, a local parameterization can be constructed as
    keep control over the destruction of these objects, then they can
    do this by setting the corresponding enums in the Options struct.
 
-   Note: Even though the Problem takes ownership of cost_function
-   and loss_function, it does not preclude the user from re-using
-   them in another residual block. The destructor takes care to call
-   delete on each cost_function or loss_function pointer only once,
-   regardless of how many residual blocks refer to them.
+   .. note::
+       Even though the Problem takes ownership of ``cost_function``
+       and ``loss_function``, it does not preclude the user from re-using
+       them in another residual block. The destructor takes care to call
+       delete on each cost_function or loss_function pointer only once,
+       regardless of how many residual blocks refer to them.
 
    Example usage:
 
@@ -2520,11 +2524,11 @@ quaternion, a local parameterization can be constructed as
        :func:`LocalParameterization::LocalSize`.
 
    Add a parameter block with appropriate size and parameterization to the
-   problem. It is okay for `local_parameterization` to be `nullptr`.
+   problem. It is okay for ``local_parameterization`` to be ``nullptr``.
 
    Repeated calls with the same arguments are ignored. Repeated calls
    with the same double pointer but a different size results in a crash
-   (unless `Solver::Options::diable_all_safety_checks` is set to true).
+   (unless :member:`Solver::Options::diable_all_safety_checks` is set to ``true``).
 
    Repeated calls with the same double pointer and size but different
    :class:`LocalParameterization` is equivalent to calling
@@ -2546,11 +2550,11 @@ quaternion, a local parameterization can be constructed as
       :class:`Manifold` object will be replaced with the manifold.
 
    Add a parameter block with appropriate size and Manifold to the
-   problem. It is okay for `manifold` to be `nullptr`.
+   problem. It is okay for ``manifold`` to be ``nullptr``.
 
    Repeated calls with the same arguments are ignored. Repeated calls
    with the same double pointer but a different size results in a crash
-   (unless `Solver::Options::diable_all_safety_checks` is set to true).
+   (unless :member:`Solver::Options::diable_all_safety_checks` is set to true).
 
    Repeated calls with the same double pointer and size but different
    :class:`Manifold` is equivalent to calling `SetManifold(manifold)`,
@@ -2574,36 +2578,38 @@ quaternion, a local parameterization can be constructed as
    for the corresponding cost function and loss function objects are
    decreased and when this count reaches zero, they are deleted.
 
-   If Problem::Options::enable_fast_removal is true, then the removal
+   If :member:`Problem::Options::enable_fast_removal` is ``true``, then the removal
    is fast (almost constant time). Otherwise it is linear, requiring a
    scan of the entire problem.
 
    Removing a residual block has no effect on the parameter blocks
    that the problem depends on.
 
-   **WARNING:** Removing a residual or parameter block will destroy
-   the implicit ordering, rendering the jacobian or residuals returned
-   from the solver uninterpretable. If you depend on the evaluated
-   jacobian, do not use remove! This may change in a future release.
-   Hold the indicated parameter block constant during optimization.
+   .. warning::
+       Removing a residual or parameter block will destroy the implicit
+       ordering, rendering the jacobian or residuals returned from the solver
+       uninterpretable. If you depend on the evaluated jacobian, do not use
+       remove! This may change in a future release. Hold the indicated parameter
+       block constant during optimization.
 
 .. function:: void Problem::RemoveParameterBlock(const double* values)
 
    Remove a parameter block from the problem. Any residual blocks that
    depend on the parameter are also removed, as described above in
-   RemoveResidualBlock().
+   :func:`RemoveResidualBlock()`.
 
    The parameterization of the parameter block, if it exists, will
    persist until the deletion of the problem.
 
-   If Problem::Options::enable_fast_removal is true, then the removal
+   If :member:`Problem::Options::enable_fast_removal` is ``true``, then the removal
    is fast (almost constant time). Otherwise, removing a parameter
    block will scan the entire Problem.
 
-   **WARNING:** Removing a residual or parameter block will destroy
-   the implicit ordering, rendering the jacobian or residuals returned
-   from the solver uninterpretable. If you depend on the evaluated
-   jacobian, do not use remove! This may change in a future release.
+   .. warning::
+       Removing a residual or parameter block will destroy the implicit
+       ordering, rendering the jacobian or residuals returned from the solver
+       uninterpretable. If you depend on the evaluated jacobian, do not use
+       remove! This may change in a future release.
 
 .. function:: void Problem::SetParameterBlockConstant(const double* values)
 
@@ -2657,7 +2663,7 @@ quaternion, a local parameterization can be constructed as
 
    Get the local parameterization object associated with this
    parameter block. If there is no parameterization object associated
-   then `nullptr` is returned
+   then ``nullptr`` is returned
 
    .. NOTE::
 
@@ -2687,7 +2693,7 @@ quaternion, a local parameterization can be constructed as
       This method is deprecated and will be removed in the next public
       release of Ceres Solver. Use :func:`Problem::HasManifold` instead.
 
-      Note also that if a ::class::`Manifold` is associated with the
+      Note also that if a :class:`Manifold` is associated with the
       parameter block, this method will return ``false``.
 
 .. function:: void SetManifold(double* values, Manifold* manifold);
@@ -2711,7 +2717,7 @@ quaternion, a local parameterization can be constructed as
 
    Get the :class:`Manifold` object associated with this parameter block.
 
-   If there is no :class:`Manifold` Or :class:`LocalParameterization`
+   If there is no :class:`Manifold` or :class:`LocalParameterization`
    object associated then ``nullptr`` is returned.
 
    .. NOTE::
@@ -2827,8 +2833,8 @@ quaternion, a local parameterization can be constructed as
    Get all the residual blocks that depend on the given parameter
    block.
 
-   If `Problem::Options::enable_fast_removal` is
-   `true`, then getting the residual blocks is fast and depends only
+   If :member:`Problem::Options::enable_fast_removal` is
+   ``true``, then getting the residual blocks is fast and depends only
    on the number of residual blocks. Otherwise, getting the residual
    blocks for a parameter block will scan the entire problem.
 
@@ -2902,7 +2908,7 @@ quaternion, a local parameterization can be constructed as
 .. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)
 
    Evaluate a :class:`Problem`. Any of the output pointers can be
-   `nullptr`. Which residual blocks and parameter blocks are used is
+   ``nullptr``. Which residual blocks and parameter blocks are used is
    controlled by the :class:`Problem::EvaluateOptions` struct below.
 
    .. NOTE::
@@ -3006,7 +3012,7 @@ quaternion, a local parameterization can be constructed as
 
       class EvaluationCallback {
        public:
-        virtual ~EvaluationCallback() {}
+        virtual ~EvaluationCallback() = default;
         virtual void PrepareForEvaluation()(bool evaluate_jacobians
                                             bool new_evaluation_point) = 0;
       };
@@ -3024,7 +3030,7 @@ quaternion, a local parameterization can be constructed as
    different from the last evaluated point. Otherwise, it is the same
    point that was evaluated previously (either Jacobian or residual)
    and the user can use cached results from previous evaluations. If
-   ``evaluate_jacobians`` is true, then Ceres will request Jacobians
+   ``evaluate_jacobians`` is ``true``, then Ceres will request Jacobians
    in the upcoming cost evaluation.
 
    Using this callback interface, Ceres can notify you when it is
@@ -3093,14 +3099,14 @@ within Ceres Solver's automatic differentiation framework.
 .. function:: template <typename T> void RotationMatrixToAngleAxis(T const * R, T * angle_axis)
 .. function:: template <typename T> void AngleAxisToRotationMatrix(T const * angle_axis, T * R)
 
-   Conversions between 3x3 rotation matrix with given column and row strides and
+   Conversions between :math:`3\times3` rotation matrix with given column and row strides and
    axis-angle rotation representations. The functions that take a pointer to T instead
    of a MatrixAdapter assume a column major representation with unit row stride and a column stride of 3.
 
 .. function:: template <typename T, int row_stride, int col_stride> void EulerAnglesToRotationMatrix(const T* euler, const MatrixAdapter<T, row_stride, col_stride>& R)
 .. function:: template <typename T> void EulerAnglesToRotationMatrix(const T* euler, int row_stride, T* R)
 
-   Conversions between 3x3 rotation matrix with given column and row strides and
+   Conversions between :math:`3\times3` rotation matrix with given column and row strides and
    Euler angle (in degrees) rotation representations.
 
    The {pitch,roll,yaw} Euler angles are rotations around the {x,y,z}
@@ -3114,7 +3120,7 @@ within Ceres Solver's automatic differentiation framework.
 .. function:: template <typename T, int row_stride, int col_stride> void QuaternionToScaledRotation(const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R)
 .. function:: template <typename T> void QuaternionToScaledRotation(const T q[4], T R[3 * 3])
 
-   Convert a 4-vector to a 3x3 scaled rotation matrix.
+   Convert a 4-vector to a :math:`3\times3` scaled rotation matrix.
 
    The choice of rotation is such that the quaternion
    :math:`\begin{bmatrix} 1 &0 &0 &0\end{bmatrix}` goes to an identity
@@ -3128,8 +3134,8 @@ within Ceres Solver's automatic differentiation framework.
 
    which corresponds to a Rodrigues approximation, the last matrix
    being the cross-product matrix of :math:`\begin{bmatrix} a& b&
-   c\end{bmatrix}`. Together with the property that :math:`R(q1 * q2)
-   = R(q1) * R(q2)` this uniquely defines the mapping from :math:`q` to
+   c\end{bmatrix}`. Together with the property that :math:`R(q_1 \otimes q_2)
+   = R(q_1) R(q_2)` this uniquely defines the mapping from :math:`q` to
    :math:`R`.
 
    In the function that accepts a pointer to T instead of a MatrixAdapter,
@@ -3138,7 +3144,7 @@ within Ceres Solver's automatic differentiation framework.
 
    No normalization of the quaternion is performed, i.e.
    :math:`R = \|q\|^2  Q`, where :math:`Q` is an orthonormal matrix
-   such that :math:`\det(Q) = 1` and :math:`Q*Q' = I`.
+   such that :math:`\det(Q) = 1` and :math:`QQ' = I`.
 
 
 .. function:: template <typename T> void QuaternionToRotation(const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R)
@@ -3165,9 +3171,9 @@ within Ceres Solver's automatic differentiation framework.
 
 .. function:: template <typename T> void QuaternionProduct(const T z[4], const T w[4], T zw[4])
 
-   .. math:: zw = z * w
+   .. math:: zw = z \otimes w
 
-   where :math:`*` is the Quaternion product between 4-vectors.
+   where :math:`\otimes` is the Quaternion product between 4-vectors.
 
 
 .. function:: template <typename T> void CrossProduct(const T x[3], const T y[3], T x_cross_y[3])

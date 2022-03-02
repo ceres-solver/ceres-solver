@@ -30,12 +30,12 @@ New Features
    results as a result of this change. (Sameer Agarwal, Johannes Beck,
    Sergiu Deitsch)
 
-#. A number of changes to ``Jet`` s (Sergiu Deitsch)
+#. A number of changes to :class:`Jet` s (Sergiu Deitsch)
 
-   * Jet gained support for, ``copysign``, ``fma`` (fused
+   * :class:`Jet` gained support for, ``copysign``, ``fma`` (fused
      multiply-add), ``midpoint`` (C++20 and above), ``lerp`` (C++20
      and above), 3-argument ``hypot`` (C++17 and above), ``log10``,
-     ``log1p``, ``exp1m``, ``norm`` (squared L^2 norm).
+     ``log1p``, ``exp1m``, ``norm`` (squared :math:`L^2` norm).
 
    * Quiet floating-point comparison: ``isless``, ``isgreater``,
      ``islessgreater``, ``islessequal``, ``isgreaterequal``,
@@ -46,8 +46,8 @@ New Features
      ``isinf``, ``isnormal``, ``isfinite``, ``fpclassify`` (new),
      ``fmin``, ``fmax``
 
-  * It is now possible to safely compare a ``Jet`` against a scalar
-    (or literal) without constructing a ``Jet`` first (even if it's
+  * It is now possible to safely compare a :class:`Jet` against a scalar
+    (or literal) without constructing a :class:`Jet` first (even if it's
     nested):
 
     .. code-block:: c++
@@ -69,15 +69,15 @@ Backward Incompatible API Changes
 #. :class:`LocalParameterization` is deprecated. It will be removed in
    version 2.2. Use :class:`Manifold` instead.
 #. Classification functions like ``IsFinite`` are deprecated. Use the
-   ``c++11`` functions (``isfinite``, ``isnan`` etc) going
+   ``C++11`` functions (``isfinite``, ``isnan`` etc) going
    forward. However to maintain consistent behaviour with comparison
    operators, these functions only inspect the scalar part of the
-   ``Jet``.
+   :class:`Jet`.
 
 Bug Fixes & Minor Changes
 -------------------------
 
-#. Modernize the code to be inline with ``c++14`` (Sergiu Deitsch, Sameer
+#. Modernize the code to be inline with ``C++14`` (Sergiu Deitsch, Sameer
    Agarwal)
 #. Lots of fixes to make Ceres compile out of the box on Windows
    (Sergiu Deitsch)
@@ -131,12 +131,14 @@ Bug Fixes & Minor Changes
 #. Make miniglog's InitGoogleLogging argument const (Tobias Schluter)
 #. Use portable expression for constant 2/sqrt(pi) (Tobias Schluter)
 #. Fix a number of compile errors related (Austin Schuch)
-   *. ``format not a string literal``
-   *. ``-Wno-maybe-uninitialized error``
-   *. ``nonnull arg compared to NULL``
-   *. ``-Wno-format-nonliteral``
-   *. ``-Wmissing-field-initializers``
-   *. ``-Werror``
+
+   * ``format not a string literal``
+   * ``-Wno-maybe-uninitialized error``
+   * ``nonnull arg compared to NULL``
+   * ``-Wno-format-nonliteral``
+   * ``-Wmissing-field-initializers``
+   * ``-Werror``
+
 #. Fix ``cc_binary`` includes so examples build as an external repo
    (Austin Schuh)
 #. Fix an explicit double in TinySolver (Bogdan Burlacu)
