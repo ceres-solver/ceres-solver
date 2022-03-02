@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": false,
       "key": {
         "uuid": "4c1dddbe_f6b40217",
         "filename": "/PATCHSET_LEVEL",
@@ -14,10 +15,10 @@
       "side": 1,
       "message": "ping? 2.0.0 is almost out of the door.",
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": false
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "7c1108a8_1e90f645",
         "filename": "/PATCHSET_LEVEL",
@@ -31,10 +32,27 @@
       "side": 1,
       "message": "Hi Sameer and Alex, I have the bandwidth to make the necessary changes. Can one of you please answer my last question about building ceres as a shared library(.dll) v/s static library?\n\nLooking at https://ceres-solver-review.googlesource.com/c/ceres-solver/+/16580, there was a mention of building ceres.dll.\n\nIn this case, we should be adding instructions for both dynamic and static linking right?",
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": false
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf13b8ab_e9c460b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T16:56:20Z",
+      "side": 1,
+      "message": "Alex can you take a look at this please?",
+      "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "40d89823_9ba95f7f",
         "filename": "docs/source/installation.rst",
@@ -54,10 +72,10 @@
         "endChar": 7
       },
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": true
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "61df23f4_b2f81c73",
         "filename": "docs/source/installation.rst",
@@ -78,10 +96,10 @@
         "endChar": 7
       },
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": true
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "34e2f297_4a3ed3c4",
         "filename": "docs/source/installation.rst",
@@ -95,10 +113,10 @@
       "side": 1,
       "message": "If you are using a recent version of glog (the expected case) and building with CMake, then like gflags you would only need to set glog_DIR",
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": true
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "f045ee34_25e413f3",
         "filename": "docs/source/installation.rst",
@@ -113,10 +131,10 @@
       "message": "Sure, I\u0027ll make the change.",
       "parentUuid": "34e2f297_4a3ed3c4",
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": true
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "aef3b91f_b8196cdd",
         "filename": "docs/source/installation.rst",
@@ -130,10 +148,10 @@
       "side": 1,
       "message": "I\u0027m confused here about why this does not include any of the dependency identification above, are you assuming that the user has built all of the dependencies using this new CMake support in VS and therefore the detection will be automatic?  That would not be the case for SuiteSparse or CXSparse by default for example.",
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": true
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "cb8b9212_ec38dc9e",
         "filename": "docs/source/installation.rst",
@@ -148,10 +166,10 @@
       "message": "I understand your point. This is the exact problem which I\u0027m facing right now. (I\u0027d posted a question regarding this on the previous patch. Ideally unresolved comments from previous patches should carry forward to the latest patch, not sure why the carry forward is not happening).\n\nAnyway,\n\n1. I installed SuiteSparse using CMake with LAPACK and BLAS included as shared libraries. But when building Ceres, I get a linker error of the following form: \nLNK2019\tunresolved external symbol dsyrk_ referenced in function \"public: static void __cdecl ceres::internal::BLAS::SymmetricRankKUpdate(int,int,double const *,bool,double,double,double *)\"\nAdded \"SUITESPARSE_INCLUDE_DIR_HINTS\" and \"SUITESPARSE_LIBRARY_DIR_HINTS\" options for Ceres.\nI tried building Ceres as a shared library using the flag \"BUILD_SHARED_LIBS\" as well as static library. Both options give the same linker error mentioned above.\n\n2. The links for CXSparse cmake build point to repos which are at least 8 years old. Should we still provide instructions for CXSparse?\n\nI\u0027ll update the instructions after we resolve this issue.",
       "parentUuid": "aef3b91f_b8196cdd",
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": true
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "b7c17b2a_c2bfd7c6",
         "filename": "docs/source/installation.rst",
@@ -166,10 +184,10 @@
       "message": "For 1), what is the value of LAPACK_LIBRARIES?  There should be a line like this: \"-- Found LAPACK library: XXX\" in the configure output\n\n2. CXSparse is typically distributed as part of SuiteSparse, but it has different licensing, so yes we do still support it",
       "parentUuid": "cb8b9212_ec38dc9e",
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": true
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "a4e54bd1_bbe6f472",
         "filename": "docs/source/installation.rst",
@@ -184,8 +202,7 @@
       "message": "Found BLAS: XXX/ceres/suitesparse-metis-for-windows/lapack_windows/x64/liblapack.lib  \nFound LAPACK Library: XXX/ceres/suitesparse-metis-for-windows/lapack_windows/x64/liblapack.lib\n\nPlease note that both LAPACK and BLAS are included in the form of dlls. Now I\u0027m able to build the library without errors. But when I run any of the binaries which use blas or lapack. I get the following error: \"The code execution cannot proceed because libblas.dll was not found.\"\n\n1. Is this because of this issue: https://github.com/ceres-solver/ceres-solver/issues/59\ni.e. not being able to build Ceres as a shared library on Windows?\n\n2. If we have to build Ceres as a static library, can the internal libraries like LAPACK, BLAS be included in the form of a shared/dynamic library? Otherwise I\u0027ll have rebuild BLAS and LAPACK as static libraries.",
       "parentUuid": "b7c17b2a_c2bfd7c6",
       "revId": "aad8b4e010540029d4706e7f9a4428a22f709770",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": true
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
