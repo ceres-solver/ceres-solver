@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25be23e5_27881e1a",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T16:34:08Z",
+      "side": 1,
+      "message": "drop INTERNAL from the ifdef guard.",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 54
+      },
+      "revId": "6dfd2d6b5bac696e6eb1ca28ebfb511c3acd5866",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7945c506_81438f6c",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T16:34:08Z",
+      "side": 1,
+      "message": "move this into one of the internal headers, or a private static function.\nmostly because it interferes with the readability of this header.",
+      "range": {
+        "startLine": 51,
+        "startChar": 10,
+        "endLine": 51,
+        "endChar": 18
+      },
+      "revId": "6dfd2d6b5bac696e6eb1ca28ebfb511c3acd5866",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77fbf8a7_41b751ed",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T16:34:08Z",
+      "side": 1,
+      "message": "add the comment about c++17 usage here too, as I suspect a number of our clients are already at c++17.",
+      "range": {
+        "startLine": 76,
+        "startChar": 18,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "6dfd2d6b5bac696e6eb1ca28ebfb511c3acd5866",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
