@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ceres-solver/ceres-solver.svg?branch=master)](https://travis-ci.org/ceres-solver/ceres-solver)
+[![Build Status](https://app.travis-ci.com/ceres-solver/ceres-solver.svg?branch=master)](https://app.travis-ci.com/ceres-solver/ceres-solver)
 
 Ceres Solver
 ============
