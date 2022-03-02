@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b375e609_fd884919",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T11:38:35Z",
+      "side": 1,
+      "message": "I noticed several problems in the docs and tried to eliminate inconsistencies.\n\nParticularly, `*` is used inconsistently throughout both for quaternion products (although `\\otimes` was introduced as well) and matrix multiplication. This seems weird to me, because `*` is often used as a convolution operator.",
+      "revId": "ceb19c08bae8abbceb7dce108798f3d30abdbecd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
