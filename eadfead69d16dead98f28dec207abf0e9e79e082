@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebf58da0_e4c9e211",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T14:52:56Z",
+      "side": 1,
+      "message": "Sergiu, talking to alex we decided that this pattern is better long term than accumulating more headers at the bottom of manifold.h\n\nThis should also simplify the implementation of product_manifold and reduce it to a single header and also reduce one level of indirection as ProductManifoldImpl can go away entirely.",
+      "revId": "eadfead69d16dead98f28dec207abf0e9e79e082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
