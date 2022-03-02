@@ -22,6 +22,30 @@
       },
       "revId": "e05e174a9e2248cdb310bdccd90cf2d0462cb4b9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d88f310f_cf5b6b8f",
+        "filename": "include/ceres/internal/product_manifold_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T00:36:58Z",
+      "side": 1,
+      "message": "I would leave that as is because it is a standard well-known pattern supported by the standard library. No need for custom logic.",
+      "parentUuid": "274f6d46_cd3d8029",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 15
+      },
+      "revId": "e05e174a9e2248cdb310bdccd90cf2d0462cb4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
