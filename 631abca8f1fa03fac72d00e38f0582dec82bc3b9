@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50b0af75_9e11950c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T13:47:58Z",
+      "side": 1,
+      "message": "Thanks Sergiu, looks good to me. Alex should take a final look.",
+      "revId": "631abca8f1fa03fac72d00e38f0582dec82bc3b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
