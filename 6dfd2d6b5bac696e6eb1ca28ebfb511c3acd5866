@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29895286_84155ccb",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T16:51:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25be23e5_27881e1a",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 54
+      },
+      "revId": "6dfd2d6b5bac696e6eb1ca28ebfb511c3acd5866",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7945c506_81438f6c",
@@ -47,6 +71,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "882b14e5_f5e142db",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T16:51:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7945c506_81438f6c",
+      "range": {
+        "startLine": 51,
+        "startChar": 10,
+        "endLine": 51,
+        "endChar": 18
+      },
+      "revId": "6dfd2d6b5bac696e6eb1ca28ebfb511c3acd5866",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77fbf8a7_41b751ed",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-03-02T16:34:08Z",
       "side": 1,
       "message": "add the comment about c++17 usage here too, as I suspect a number of our clients are already at c++17.",
+      "range": {
+        "startLine": 76,
+        "startChar": 18,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "6dfd2d6b5bac696e6eb1ca28ebfb511c3acd5866",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff290142_81f0c6a3",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T16:51:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77fbf8a7_41b751ed",
       "range": {
         "startLine": 76,
         "startChar": 18,
