@@ -34,6 +34,24 @@
       "parentUuid": "ebf58da0_e4c9e211",
       "revId": "eadfead69d16dead98f28dec207abf0e9e79e082",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e206bb4a_bf7ed7d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T15:05:12Z",
+      "side": 1,
+      "message": "I personally don\u0027t mind it. However, prior to C++17 users will need to explicitly specify the types as template parameters. For C++17 and above we can provide deduction guides which eliminate the need of specifying the types: https://en.cppreference.com/w/cpp/language/class_template_argument_deduction. Not sure what your plan here is.",
+      "parentUuid": "1db236cc_ec09e5a1",
+      "revId": "eadfead69d16dead98f28dec207abf0e9e79e082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
