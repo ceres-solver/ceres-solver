@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0326d4d8_47dbf2e2",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 3137,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-02T13:08:11Z",
+      "side": 1,
+      "message": "Maybe better refer to different quaternions as `p` and `q`? `q_1` and `q_2` can be easily confused as quaternion coefficients.",
+      "revId": "f0f8f93bbc9a655daa3d784d60cef681aba2d48a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
