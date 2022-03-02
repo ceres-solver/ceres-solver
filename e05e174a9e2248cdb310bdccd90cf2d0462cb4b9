@@ -63,6 +63,30 @@
       },
       "revId": "e05e174a9e2248cdb310bdccd90cf2d0462cb4b9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f79d3543_a0445beb",
+        "filename": "include/ceres/internal/product_manifold_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-02T00:38:28Z",
+      "side": 1,
+      "message": "if its a standard pattern I am good with it.",
+      "parentUuid": "d88f310f_cf5b6b8f",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 15
+      },
+      "revId": "e05e174a9e2248cdb310bdccd90cf2d0462cb4b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
