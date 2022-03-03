@@ -22,6 +22,30 @@
       },
       "revId": "284be88ca127860c5acae513321a464bfbcf9537",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2ea10cb_033d1466",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-03T14:14:33Z",
+      "side": 1,
+      "message": "The constructor perfect forwards the arguments to the `std::tuple` member variable. The pack can be empty in which invokes `std::tuple` default constructor and correspondingly default constructs manifolds stored in the tuple.",
+      "parentUuid": "42300ced_aae9f01c",
+      "range": {
+        "startLine": 89,
+        "startChar": 11,
+        "endLine": 89,
+        "endChar": 26
+      },
+      "revId": "284be88ca127860c5acae513321a464bfbcf9537",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
