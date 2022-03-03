@@ -79,7 +79,7 @@ class CERES_NO_EXPORT TranscendentalFunctor {
       const CostFunction& cost_function, NumericDiffMethodType method) const;
 };
 
-class CERES_EXPORT TranscendentalCostFunction
+class CERES_NO_EXPORT TranscendentalCostFunction
     : public SizedCostFunction<2, 5, 5> {
  public:
   bool Evaluate(double const* const* parameters,
@@ -129,7 +129,7 @@ class CERES_NO_EXPORT RandomizedFunctor {
   unsigned int random_seed_;
 };
 
-class CERES_EXPORT RandomizedCostFunction : public SizedCostFunction<1, 1> {
+class CERES_NO_EXPORT RandomizedCostFunction : public SizedCostFunction<1, 1> {
  public:
   RandomizedCostFunction(double noise_factor, unsigned int random_seed)
       : functor_(noise_factor, random_seed) {}
