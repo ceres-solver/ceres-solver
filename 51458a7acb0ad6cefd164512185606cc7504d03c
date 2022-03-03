@@ -107,6 +107,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc9b6d88_a935ec68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-03T14:35:58Z",
+      "side": 1,
+      "message": "Do you have a specific example?\n\nCurrently, I see two cases:\n1. The user stores the manifold in a `ProductManifold` (already supported)\n2. The user constructs a manifold elsewhere, stores it in a, say, `std::unique_ptr` and passes the reference around to (possibly several) `ProductManifold` instances.\n\nIf ManifoldWrapper store the reference to `Manifold` in a `std::unique_ptr` that would be equivalent to 1. I believe you want to store the instance as a plain pointer in ManifoldWrapper to be able to share it. In this case, we can however allow pointer types to be passed to `ProductManifold` directly. No thin wrapper necessary.\n\nExample:\n```\nstd::unique_ptr\u003cMyHeavyManifold\u003e ptr{...};\n\nProductManifold\u003cMyHeavyManifold*, OtherManifold1\u003e prod1{ptr.get(), ...};\nProductManifold\u003cMyHeavyManifold*, OtherManifold2\u003e prod1{ptr.get(), ...};\n```",
+      "parentUuid": "0e9fa1ae_5ddb3283",
+      "revId": "51458a7acb0ad6cefd164512185606cc7504d03c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a928644_d89ef617",
