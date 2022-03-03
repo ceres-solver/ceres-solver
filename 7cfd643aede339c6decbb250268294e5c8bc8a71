@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4bd93fb_e0e81373",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-03T15:46:02Z",
+      "side": 1,
+      "message": "this is cool.\n\njust to be clear the following will also work no?\n\nProductManifold\u003cstd::unique_ptr\u003cManifold\u003e, std::unique_ptr\u003cManifold\u003e pm(p,q); ?",
+      "range": {
+        "startLine": 482,
+        "startChar": 5,
+        "endLine": 482,
+        "endChar": 20
+      },
+      "revId": "7cfd643aede339c6decbb250268294e5c8bc8a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
