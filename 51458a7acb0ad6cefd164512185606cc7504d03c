@@ -73,6 +73,24 @@
       "message": "We can reduce constructor overloads to a single one if we do not require at least two manifolds to be specified during `ProductManifold` if any are given. The construction logic can be handled by perfect forwarding using a single constructor.\n\nI believe enforcing the number of constructor parameters is not necessary anymore because this is done by class template parameters already. Also, it would further simplify submanifold handling: a user may choose to place a non-default constructible manifold first, and those with a default constructor after that.\n\nAny objections?",
       "revId": "51458a7acb0ad6cefd164512185606cc7504d03c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff497439_88c08544",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-03T13:21:18Z",
+      "side": 1,
+      "message": "I think thats fine by me.",
+      "parentUuid": "3b291884_c81fea66",
+      "revId": "51458a7acb0ad6cefd164512185606cc7504d03c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
