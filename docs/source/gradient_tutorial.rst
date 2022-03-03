@@ -110,7 +110,7 @@ algorithm.
     33: f: 4.835994e-17 d: 1.00e-12 g: 1.05e-07 h: 1.13e-06 s: 1.00e+00 e:  1 it: 4.05e-06 tt: 6.59e-04
     34: f: 1.885250e-22 d: 4.84e-17 g: 2.69e-10 h: 1.45e-08 s: 1.00e+00 e:  1 it: 4.05e-06 tt: 6.67e-04
 
-  Solver Summary (v 2.0.0-eigen-(3.3.9)-lapack-suitesparse-(5.8.1)-cxsparse-(3.2.0)-acceleratesparse-eigensparse-no_openmp-no_custom_blas)
+  Solver Summary (v 2.1.0-eigen-(3.4.0)-lapack-suitesparse-(5.10.1)-cxsparse-(3.2.0)-acceleratesparse-eigensparse-no_openmp)
 
   Parameters                                  2
   Line search direction              LBFGS (20)
@@ -127,14 +127,15 @@ algorithm.
   Time (in seconds):
 
     Cost evaluation                    0.000000 (0)
-    Gradient & cost evaluation         0.000008 (44)
-    Polynomial minimization            0.000067
-  Total                                0.000721
+    Gradient & cost evaluation         0.000005 (44)
+    Polynomial minimization            0.000041
+  Total                                0.000368
 
   Termination:                      CONVERGENCE (Parameter tolerance reached. Relative step_norm: 1.890726e-11 <= 1.000000e-08.)
 
   Initial x: -1.2 y: 1
   Final   x: 1 y: 1
+
 
 
 If you are unable to use automatic differentiation for some reason
