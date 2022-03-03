@@ -35,6 +35,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cassert>
 #include <cstddef>
 #include <numeric>
 #include <tuple>
@@ -66,6 +67,12 @@ namespace ceres {
 // SubsetManifold manifold2(3, {0, 1});
 // ProductManifold<SubsetManifold, SubsetManifold> manifold(manifold1,
 //                                                          manifold2);
+//
+// In advanced use cases, manifolds can be dynamically allocated and passed as
+// (smart) pointers:
+//
+// ProductManifold<std::unique_ptr<QuaternionManifold>, EuclideanManifold<3>>
+//     se3{std::make_unique<QuaternionManifold>(), EuclideanManifold<3>{}};
 //
 // In C++17, the template parameters can be left out as they are automatically
 // deduced making the initialization much simpler:
@@ -131,11 +138,13 @@ class ProductManifold final : public Manifold {
   template <std::size_t... Indices, typename... Args>
   explicit ProductManifold(std::index_sequence<Indices...>, Args&&... manifolds)
       : manifolds_{std::forward<Args>(manifolds)...},
-        buffer_size_{
-            (std::max)({(std::get<Indices>(manifolds_).TangentSize() *
-                         std::get<Indices>(manifolds_).AmbientSize())...})},
-        ambient_sizes_{std::get<Indices>(manifolds_).AmbientSize()...},
-        tangent_sizes_{std::get<Indices>(manifolds_).TangentSize()...},
+        buffer_size_{(std::max)(
+            {(Dereference(std::get<Indices>(manifolds_)).TangentSize() *
+              Dereference(std::get<Indices>(manifolds_)).AmbientSize())...})},
+        ambient_sizes_{
+            Dereference(std::get<Indices>(manifolds_)).AmbientSize()...},
+        tangent_sizes_{
+            Dereference(std::get<Indices>(manifolds_)).TangentSize()...},
         ambient_offsets_{ExclusiveScan(ambient_sizes_)},
         tangent_offsets_{ExclusiveScan(tangent_sizes_)},
         ambient_size_{
@@ -148,7 +157,7 @@ class ProductManifold final : public Manifold {
                 const double* delta,
                 double* x_plus_delta,
                 std::index_sequence<Index0, Indices...>) const {
-    if (!std::get<Index0>(manifolds_)
+    if (!Dereference(std::get<Index0>(manifolds_))
              .Plus(x + ambient_offsets_[Index0],
                    delta + tangent_offsets_[Index0],
                    x_plus_delta + ambient_offsets_[Index0])) {
@@ -170,7 +179,7 @@ class ProductManifold final : public Manifold {
                  const double* x,
                  double* y_minus_x,
                  std::index_sequence<Index0, Indices...>) const {
-    if (!std::get<Index0>(manifolds_)
+    if (!Dereference(std::get<Index0>(manifolds_))
              .Minus(y + ambient_offsets_[Index0],
                     x + ambient_offsets_[Index0],
                     y_minus_x + tangent_offsets_[Index0])) {
@@ -192,7 +201,7 @@ class ProductManifold final : public Manifold {
                         MatrixRef& jacobian,
                         internal::FixedArray<double>& buffer,
                         std::index_sequence<Index0, Indices...>) const {
-    if (!std::get<Index0>(manifolds_)
+    if (!Dereference(std::get<Index0>(manifolds_))
              .PlusJacobian(x + ambient_offsets_[Index0], buffer.data())) {
       return false;
     }
@@ -221,7 +230,7 @@ class ProductManifold final : public Manifold {
                          MatrixRef& jacobian,
                          internal::FixedArray<double>& buffer,
                          std::index_sequence<Index0, Indices...>) const {
-    if (!std::get<Index0>(manifolds_)
+    if (!Dereference(std::get<Index0>(manifolds_))
              .MinusJacobian(x + ambient_offsets_[Index0], buffer.data())) {
       return false;
     }
@@ -257,6 +266,39 @@ class ProductManifold final : public Manifold {
     }
 
     return result;
+  }
+
+  // TODO Replace by std::void_t once C++17 is available
+  template <typename... Types>
+  struct Void {
+    using type = void;
+  };
+
+  template <typename T, typename E = void>
+  struct IsDereferenceable : std::false_type {};
+
+  template <typename T>
+  struct IsDereferenceable<T, typename Void<decltype(*std::declval<T>())>::type>
+      : std::true_type {};
+
+  template <typename T,
+            std::enable_if_t<!IsDereferenceable<T>::value>* = nullptr>
+  static constexpr decltype(auto) Dereference(T& value) {
+    return value;
+  }
+
+  // Support dereferenceable types such as std::unique_ptr, std::shared_ptr, raw
+  // pointers etc.
+  template <typename T,
+            std::enable_if_t<IsDereferenceable<T>::value>* = nullptr>
+  static constexpr decltype(auto) Dereference(T& value) {
+    return *value;
+  }
+
+  template <typename T>
+  static constexpr decltype(auto) Dereference(T* p) {
+    assert(p != nullptr);
+    return *p;
   }
 
   std::tuple<Manifold0, Manifold1, ManifoldN...> manifolds_;
