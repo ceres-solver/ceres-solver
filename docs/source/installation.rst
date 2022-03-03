@@ -9,7 +9,7 @@ Getting the source code
 .. _section-source:
 
 You can start with the `latest stable release
-<http://ceres-solver.org/ceres-solver-2.0.0.tar.gz>`_ . Or if you want
+<http://ceres-solver.org/ceres-solver-2.1.0.tar.gz>`_ . Or if you want
 the latest version, you can clone the git repository
 
 .. code-block:: bash
@@ -115,16 +115,17 @@ optional. For details on customizing the build process, see
   ``SuiteSparse``, and optionally used by Ceres directly for some
   operations.
 
-  TODO::
+  For best performance on ``x86`` based Linux systems we recommend
+  using `Intel MKL
+  <https://www.intel.com/content/www/us/en/develop/documentation/get-started-with-mkl-for-dpcpp/top.html>`_.
 
-    1. Add a more detailed note about Intel MKL.
-    2. Add detailed instructions about CUDA
+  Two other good options are
 
-  On ``UNIX`` OSes other than macOS we recommend `ATLAS
-  <http://math-atlas.sourceforge.net/>`_, which includes ``BLAS`` and
-  ``LAPACK`` routines. It is also possible to use `OpenBLAS
-  <https://github.com/xianyi/OpenBLAS>`_ . However, one needs to be
-  careful to `turn off the threading
+  *. `ATLAS <http://math-atlas.sourceforge.net/>`_, which includes ``BLAS`` and
+  ``LAPACK`` routines.
+
+  *. `OpenBLAS <https://github.com/xianyi/OpenBLAS>`_ . However, one
+  needs to be careful to `turn off the threading
   <https://github.com/xianyi/OpenBLAS/wiki/faq#wiki-multi-threaded>`_
   inside ``OpenBLAS`` as it conflicts with use of threads in Ceres.
 
@@ -137,6 +138,14 @@ optional. For details on customizing the build process, see
   has detailed instructions..
 
   **Optional but required for** ``SuiteSparse``.
+
+- `CUDA <https://developer.nvidia.com/cuda-toolkit>`_ If you have an
+  nVidia GPU then Ceres Solver can use it accelerate the solution of
+  the Gauss-Newton linear systems using ``CUDA``. Currently this
+  support is limited to using the dense linear solvers that ship with
+  ``CUDA``. As a result GPU acceleration can be used to speed up
+  ``DENSE_QR``, ``DENSE_NORMAL_CHOLESKY`` and
+  ``DENSE_SCHUR``. **Optional**.
 
 .. _section-linux:
 
@@ -160,7 +169,7 @@ Start by installing all the dependencies.
      sudo apt-get install cmake
      # google-glog + gflags
      sudo apt-get install libgoogle-glog-dev libgflags-dev
-     # BLAS & LAPACK
+     # Use ATLAS for BLAS & LAPACK
      sudo apt-get install libatlas-base-dev
      # Eigen3
      sudo apt-get install libeigen3-dev
@@ -171,10 +180,10 @@ We are now ready to build, test, and install Ceres.
 
 .. code-block:: bash
 
- tar zxf ceres-solver-2.0.0.tar.gz
+ tar zxf ceres-solver-2.1.0.tar.gz
  mkdir ceres-bin
  cd ceres-bin
- cmake ../ceres-solver-2.0.0
+ cmake ../ceres-solver-2.1.0
  make -j3
  make test
  # Optionally install Ceres, it can also be exported using CMake which
@@ -188,7 +197,7 @@ dataset [Agarwal]_.
 
 .. code-block:: bash
 
- bin/simple_bundle_adjuster ../ceres-solver-2.0.0/data/problem-16-22106-pre.txt
+ bin/simple_bundle_adjuster ../ceres-solver-2.1.0/data/problem-16-22106-pre.txt
 
 This runs Ceres for a maximum of 10 iterations using the
 ``DENSE_SCHUR`` linear solver. The output should look something like
@@ -205,46 +214,46 @@ this.
        5  1.803399e+04    5.33e+01    1.48e+04   1.23e+01   9.99e-01  8.33e+05       1    1.45e-01    1.08e+00
        6  1.803390e+04    9.02e-02    6.35e+01   8.00e-01   1.00e+00  2.50e+06       1    1.50e-01    1.23e+00
 
-    Ceres Solver v2.0.0 Solve Report
-    ----------------------------------
-                                         Original                  Reduced
-    Parameter blocks                        22122                    22122
-    Parameters                              66462                    66462
-    Residual blocks                         83718                    83718
-    Residual                               167436                   167436
+  Solver Summary (v 2.1.0-eigen-(3.4.0)-lapack-suitesparse-(5.10.1)-cxsparse-(3.2.0)-acceleratesparse-eigensparse-no_openmp)
 
-    Minimizer                        TRUST_REGION
+				       Original                  Reduced
+  Parameter blocks                        22122                    22122
+  Parameters                              66462                    66462
+  Residual blocks                         83718                    83718
+  Residuals                              167436                   167436
 
-    Dense linear algebra library            EIGEN
-    Trust region strategy     LEVENBERG_MARQUARDT
+  Minimizer                        TRUST_REGION
 
-                                            Given                     Used
-    Linear solver                     DENSE_SCHUR              DENSE_SCHUR
-    Threads                                     1                        1
-    Linear solver threads                       1                        1
-    Linear solver ordering              AUTOMATIC                22106, 16
+  Dense linear algebra library            EIGEN
+  Trust region strategy     LEVENBERG_MARQUARDT
 
-    Cost:
-    Initial                          4.185660e+06
-    Final                            1.803390e+04
-    Change                           4.167626e+06
+					  Given                     Used
+  Linear solver                     DENSE_SCHUR              DENSE_SCHUR
+  Threads                                     1                        1
+  Linear solver ordering              AUTOMATIC                 22106,16
+  Schur structure                         2,3,9                    2,3,9
 
-    Minimizer iterations                        6
-    Successful steps                            6
-    Unsuccessful steps                          0
+  Cost:
+  Initial                          4.185660e+06
+  Final                            1.803390e+04
+  Change                           4.167626e+06
 
-    Time (in seconds):
-    Preprocessor                            0.261
+  Minimizer iterations                        7
+  Successful steps                            7
+  Unsuccessful steps                          0
 
-      Residual evaluation                   0.082
-      Jacobian evaluation                   0.412
-      Linear solver                         0.442
-    Minimizer                               1.051
+  Time (in seconds):
+  Preprocessor                         0.121654
 
-    Postprocessor                           0.002
-    Total                                   1.357
+    Residual only evaluation           0.065968 (7)
+    Jacobian & residual evaluation     0.303356 (7)
+    Linear solver                      0.436650 (7)
+  Minimizer                            0.890535
 
-    Termination:                      CONVERGENCE (Function tolerance reached. |cost_change|/cost: 1.769766e-09 <= 1.000000e-06)
+  Postprocessor                        0.001684
+  Total                                1.013873
+
+  Termination:                      CONVERGENCE (Function tolerance reached. |cost_change|/cost: 1.769756e-09 <= 1.000000e-06)
 
 .. section-macos:
 
@@ -300,10 +309,10 @@ We are now ready to build, test, and install Ceres.
 
 .. code-block:: bash
 
-   tar zxf ceres-solver-2.0.0.tar.gz
+   tar zxf ceres-solver-2.1.0.tar.gz
    mkdir ceres-bin
    cd ceres-bin
-   cmake ../ceres-solver-2.0.0
+   cmake ../ceres-solver-2.1.0
    make -j3
    make test
    # Optionally install Ceres, it can also be exported using CMake which
@@ -331,7 +340,7 @@ following:
 
 .. code-block:: bash
 
-   tar zxf ceres-solver-2.0.0.tar.gz
+   tar zxf ceres-solver-2.1.0.tar.gz
    mkdir ceres-bin
    cd ceres-bin
    # Configure the local shell only (not persistent) to use the Homebrew LLVM
@@ -342,7 +351,7 @@ following:
    export CPPFLAGS="-I/usr/local/opt/llvm/include"
    export PATH="/usr/local/opt/llvm/bin:$PATH"
    # Force CMake to use the Homebrew version of Clang and enable OpenMP.
-   cmake -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ -DCERES_THREADING_MODEL=OPENMP ../ceres-solver-2.0.0
+   cmake -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ -DCERES_THREADING_MODEL=OPENMP ../ceres-solver-2.1.0
    make -j3
    make test
    # Optionally install Ceres.  It can also be exported using CMake which
@@ -419,7 +428,7 @@ dependencies.
 
 #. Unpack the Ceres tarball into ``ceres``. For the tarball, you
    should get a directory inside ``ceres`` similar to
-   ``ceres-solver-2.0.0``. Alternately, checkout Ceres via ``git`` to
+   ``ceres-solver-2.1.0``. Alternately, checkout Ceres via ``git`` to
    get ``ceres-solver.git`` inside ``ceres``.
 
 #. Install ``CMake``,
