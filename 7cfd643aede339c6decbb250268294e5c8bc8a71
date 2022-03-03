@@ -22,6 +22,30 @@
       },
       "revId": "7cfd643aede339c6decbb250268294e5c8bc8a71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b2ffa7e_6f144be2",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-03T15:58:07Z",
+      "side": 1,
+      "message": "Yes, of course. The number of pointers does not matter.",
+      "parentUuid": "a4bd93fb_e0e81373",
+      "range": {
+        "startLine": 482,
+        "startChar": 5,
+        "endLine": 482,
+        "endChar": 20
+      },
+      "revId": "7cfd643aede339c6decbb250268294e5c8bc8a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
