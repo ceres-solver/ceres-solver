@@ -46,6 +46,30 @@
       },
       "revId": "284be88ca127860c5acae513321a464bfbcf9537",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17aeed4e_2a40ce01",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-03T14:19:44Z",
+      "side": 1,
+      "message": "Thanks that makes sense. I had not realized that manifolds could be empty and in that case it is just the tuple being called with an empty argument.",
+      "parentUuid": "b2ea10cb_033d1466",
+      "range": {
+        "startLine": 89,
+        "startChar": 11,
+        "endLine": 89,
+        "endChar": 26
+      },
+      "revId": "284be88ca127860c5acae513321a464bfbcf9537",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
