@@ -89,6 +89,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e9fa1ae_5ddb3283",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-03T14:18:49Z",
+      "side": 1,
+      "message": "The use case is that the user has some manifolds constructed and will at runtime decide to compose them for whatever reason, so they need someone to own the manifolds, it makes sense for the productmanifold to own them (as it did previously) but now since we are storing tuples of manifolds rather then pointers we will need to construct a ManifoldWrapper that holds the pointer and acts as a concrete class which is then owner by a ProductManifold.\n\ndoes that make sense?",
+      "parentUuid": "11208602_ac07c8d7",
+      "revId": "51458a7acb0ad6cefd164512185606cc7504d03c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a928644_d89ef617",
