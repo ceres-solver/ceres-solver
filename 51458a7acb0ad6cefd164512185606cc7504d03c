@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ac72660_b90f993a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-03T14:07:56Z",
+      "side": 1,
+      "message": "I think it would make sense to allow passing directly pointer types:\n```\nProductManifold\u003cManifold1*, Manifold2\u003e\n```\nThen the user could store `Manifold1` in a `std::unique_ptr` somewhere else without `ProductManifold` taking ownership.\n\nIf we provide a thin wrapper, `CreateProductManifoldFromPtrs` is not really needed.",
+      "parentUuid": "e0666dc2_c27f214b",
+      "revId": "51458a7acb0ad6cefd164512185606cc7504d03c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a928644_d89ef617",
