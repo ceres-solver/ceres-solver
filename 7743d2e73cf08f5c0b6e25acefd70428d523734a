@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc735f48_6ebd6571",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-03T12:50:42Z",
+      "side": 0,
+      "message": "I should have caught this.",
+      "range": {
+        "startLine": 170,
+        "startChar": 13,
+        "endLine": 170,
+        "endChar": 20
+      },
+      "revId": "7743d2e73cf08f5c0b6e25acefd70428d523734a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
