@@ -19,6 +19,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4e55355_3e68895d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-03T16:25:05Z",
+      "side": 1,
+      "message": "Ah, yes. This works also and is implied by the use of interface methods.",
+      "parentUuid": "3f33a1f9_da2e1938",
+      "revId": "7cfd643aede339c6decbb250268294e5c8bc8a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4bd93fb_e0e81373",
