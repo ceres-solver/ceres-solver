@@ -33,6 +33,24 @@
       "message": "LAPACK",
       "revId": "b6900c7876bac086c6a079dc925d991a6a22e455",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "338b9c30_5802c5ab",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-03T20:14:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9735419_a5c1b58a",
+      "revId": "b6900c7876bac086c6a079dc925d991a6a22e455",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
