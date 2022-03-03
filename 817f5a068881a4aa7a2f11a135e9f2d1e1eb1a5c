@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55ed8b21_6256e5ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-03T20:45:45Z",
+      "side": 1,
+      "message": "If possible please test using Homebrew locally first to ensure nothing is broken.",
+      "revId": "817f5a068881a4aa7a2f11a135e9f2d1e1eb1a5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
