@@ -189,7 +189,7 @@ class CERES_NO_EXPORT CUDADenseQR final : public DenseQR {
   // GPU memory allocated for the TAU matrix (scaling of householder vectors).
   CudaBuffer<double> tau_;
   // Scratch space for cuSOLVER on the GPU.
-  CudaBuffer<uint8_t> device_workspace_;
+  CudaBuffer<double> device_workspace_;
   // Required for error handling with cuSOLVER.
   CudaBuffer<int> error_;
   // Cache the result of Factorize to ensure that when Solve is called, the
