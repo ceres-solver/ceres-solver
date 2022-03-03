@@ -9,7 +9,7 @@ Getting the source code
 .. _section-source:
 
 You can start with the `latest stable release
-<http://ceres-solver.org/ceres-solver-2.0.0.tar.gz>`_ . Or if you want
+<http://ceres-solver.org/ceres-solver-2.1.0.tar.gz>`_ . Or if you want
 the latest version, you can clone the git repository
 
 .. code-block:: bash
@@ -21,7 +21,7 @@ the latest version, you can clone the git repository
 Dependencies
 ============
 
-  .. NOTE ::
+ .. NOTE ::
 
     Starting with v2.0 Ceres requires a **fully C++14-compliant**
     compiler.  In versions <= 1.14, C++11 was an optional requirement.
@@ -29,6 +29,8 @@ Dependencies
 Ceres relies on a number of open source libraries, some of which are
 optional. For details on customizing the build process, see
 :ref:`section-customizing` .
+
+- `CMake <http://www.cmake.org>`_ 3.10 or later **required**.
 
 - `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_
   3.3 or later **required**.
@@ -39,9 +41,7 @@ optional. For details on customizing the build process, see
     library. Please see the documentation for ``EIGENSPARSE`` for
     more details.
 
-- `CMake <http://www.cmake.org>`_ 3.5 or later **required**.
-
-- `glog <https://github.com/google/glog>`_ 0.3.1 or
+- `glog <https://github.com/google/glog>`_ 0.3.5 or
   later. **Recommended**
 
   ``glog`` is used extensively throughout Ceres for logging detailed
@@ -65,22 +65,13 @@ optional. For details on customizing the build process, see
   recommend against it. ``miniglog`` has worse performance than
   ``glog`` and is much harder to control and use.
 
-  .. NOTE ::
-
-     If you are compiling ``glog`` from source, please note that
-     currently, the unit tests for ``glog`` (which are enabled by
-     default) do not compile against a default build of ``gflags`` 2.1
-     as the gflags namespace changed from ``google::`` to
-     ``gflags::``.  A patch to fix this is available from `here
-     <https://code.google.com/p/google-glog/issues/detail?id=194>`_.
-
 - `gflags <https://github.com/gflags/gflags>`_. Needed to build
   examples and tests and usually a dependency for glog.
 
-- `SuiteSparse
-  <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_ 4.0 or later. Needed
-  for solving large sparse linear systems. **Optional; strongly recomended for
-  large scale bundle adjustment**
+- `SuiteSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_
+  5.0 or later. Needed for solving large sparse linear
+  systems. **Optional; strongly recomended for large scale bundle
+  adjustment**
 
   .. NOTE ::
 
@@ -115,14 +106,13 @@ optional. For details on customizing the build process, see
   ``SuiteSparse``, and optionally used by Ceres directly for some
   operations.
 
-  TODO::
+  For best performance on ``x86`` based Linux systems we recommend
+  using `Intel MKL
+  <https://www.intel.com/content/www/us/en/develop/documentation/get-started-with-mkl-for-dpcpp/top.html>`_.
 
-    1. Add a more detailed note about Intel MKL.
-    2. Add detailed instructions about CUDA
-
-  On ``UNIX`` OSes other than macOS we recommend `ATLAS
+  Two other good options are `ATLAS
   <http://math-atlas.sourceforge.net/>`_, which includes ``BLAS`` and
-  ``LAPACK`` routines. It is also possible to use `OpenBLAS
+  ``LAPACK`` routines and `OpenBLAS
   <https://github.com/xianyi/OpenBLAS>`_ . However, one needs to be
   careful to `turn off the threading
   <https://github.com/xianyi/OpenBLAS/wiki/faq#wiki-multi-threaded>`_
@@ -138,6 +128,14 @@ optional. For details on customizing the build process, see
 
   **Optional but required for** ``SuiteSparse``.
 
+- `CUDA <https://developer.nvidia.com/cuda-toolkit>`_ If you have an
+  NVIDIA GPU then Ceres Solver can use it accelerate the solution of
+  the Gauss-Newton linear systems using ``CUDA``. Currently this
+  support is limited to using the dense linear solvers that ship with
+  ``CUDA``. As a result GPU acceleration can be used to speed up
+  ``DENSE_QR``, ``DENSE_NORMAL_CHOLESKY`` and
+  ``DENSE_SCHUR``. **Optional**.
+
 .. _section-linux:
 
 Linux
@@ -146,11 +144,12 @@ Linux
 We will use `Ubuntu <http://www.ubuntu.com>`_ as our example linux
 distribution.
 
-  .. NOTE ::
+.. NOTE::
 
-    These instructions are for Ubuntu 18.04 and newer. On Ubuntu 16.04
-    you need to manually get a more recent version of Eigen, such as
-    3.3.7.
+   Ceres Solver always supports the previous and current Ubuntu LTS
+   releases, currently 18.04 and 20.04, using the default Ubuntu
+   repositories and compiler toolchain. Support for earlier versions
+   is not guaranteed or maintained.
 
 Start by installing all the dependencies.
 
@@ -160,7 +159,7 @@ Start by installing all the dependencies.
      sudo apt-get install cmake
      # google-glog + gflags
      sudo apt-get install libgoogle-glog-dev libgflags-dev
-     # BLAS & LAPACK
+     # Use ATLAS for BLAS & LAPACK
      sudo apt-get install libatlas-base-dev
      # Eigen3
      sudo apt-get install libeigen3-dev
@@ -171,10 +170,10 @@ We are now ready to build, test, and install Ceres.
 
 .. code-block:: bash
 
- tar zxf ceres-solver-2.0.0.tar.gz
+ tar zxf ceres-solver-2.1.0.tar.gz
  mkdir ceres-bin
  cd ceres-bin
- cmake ../ceres-solver-2.0.0
+ cmake ../ceres-solver-2.1.0
  make -j3
  make test
  # Optionally install Ceres, it can also be exported using CMake which
@@ -188,7 +187,7 @@ dataset [Agarwal]_.
 
 .. code-block:: bash
 
- bin/simple_bundle_adjuster ../ceres-solver-2.0.0/data/problem-16-22106-pre.txt
+ bin/simple_bundle_adjuster ../ceres-solver-2.1.0/data/problem-16-22106-pre.txt
 
 This runs Ceres for a maximum of 10 iterations using the
 ``DENSE_SCHUR`` linear solver. The output should look something like
@@ -205,55 +204,55 @@ this.
        5  1.803399e+04    5.33e+01    1.48e+04   1.23e+01   9.99e-01  8.33e+05       1    1.45e-01    1.08e+00
        6  1.803390e+04    9.02e-02    6.35e+01   8.00e-01   1.00e+00  2.50e+06       1    1.50e-01    1.23e+00
 
-    Ceres Solver v2.0.0 Solve Report
-    ----------------------------------
-                                         Original                  Reduced
-    Parameter blocks                        22122                    22122
-    Parameters                              66462                    66462
-    Residual blocks                         83718                    83718
-    Residual                               167436                   167436
+  Solver Summary (v 2.1.0-eigen-(3.4.0)-lapack-suitesparse-(5.10.1)-cxsparse-(3.2.0)-acceleratesparse-eigensparse-no_openmp)
 
-    Minimizer                        TRUST_REGION
+				       Original                  Reduced
+  Parameter blocks                        22122                    22122
+  Parameters                              66462                    66462
+  Residual blocks                         83718                    83718
+  Residuals                              167436                   167436
 
-    Dense linear algebra library            EIGEN
-    Trust region strategy     LEVENBERG_MARQUARDT
+  Minimizer                        TRUST_REGION
 
-                                            Given                     Used
-    Linear solver                     DENSE_SCHUR              DENSE_SCHUR
-    Threads                                     1                        1
-    Linear solver threads                       1                        1
-    Linear solver ordering              AUTOMATIC                22106, 16
+  Dense linear algebra library            EIGEN
+  Trust region strategy     LEVENBERG_MARQUARDT
 
-    Cost:
-    Initial                          4.185660e+06
-    Final                            1.803390e+04
-    Change                           4.167626e+06
+					  Given                     Used
+  Linear solver                     DENSE_SCHUR              DENSE_SCHUR
+  Threads                                     1                        1
+  Linear solver ordering              AUTOMATIC                 22106,16
+  Schur structure                         2,3,9                    2,3,9
 
-    Minimizer iterations                        6
-    Successful steps                            6
-    Unsuccessful steps                          0
+  Cost:
+  Initial                          4.185660e+06
+  Final                            1.803390e+04
+  Change                           4.167626e+06
 
-    Time (in seconds):
-    Preprocessor                            0.261
+  Minimizer iterations                        7
+  Successful steps                            7
+  Unsuccessful steps                          0
 
-      Residual evaluation                   0.082
-      Jacobian evaluation                   0.412
-      Linear solver                         0.442
-    Minimizer                               1.051
+  Time (in seconds):
+  Preprocessor                         0.121654
 
-    Postprocessor                           0.002
-    Total                                   1.357
+    Residual only evaluation           0.065968 (7)
+    Jacobian & residual evaluation     0.303356 (7)
+    Linear solver                      0.436650 (7)
+  Minimizer                            0.890535
 
-    Termination:                      CONVERGENCE (Function tolerance reached. |cost_change|/cost: 1.769766e-09 <= 1.000000e-06)
+  Postprocessor                        0.001684
+  Total                                1.013873
+
+  Termination:                      CONVERGENCE (Function tolerance reached. |cost_change|/cost: 1.769756e-09 <= 1.000000e-06)
 
 .. section-macos:
 
 macOS
 =====
 
-On macOS, you can either use `Homebrew
-<https://brew.sh/>`_ (recommended) or `MacPorts
-<https://www.macports.org/>`_ to install Ceres Solver.
+On macOS, you can either use `Homebrew <https://brew.sh/>`_
+(recommended) or `MacPorts <https://www.macports.org/>`_ to install
+Ceres Solver.
 
 If using `Homebrew <https://brew.sh/>`_, then
 
@@ -300,10 +299,10 @@ We are now ready to build, test, and install Ceres.
 
 .. code-block:: bash
 
-   tar zxf ceres-solver-2.0.0.tar.gz
+   tar zxf ceres-solver-2.1.0.tar.gz
    mkdir ceres-bin
    cd ceres-bin
-   cmake ../ceres-solver-2.0.0
+   cmake ../ceres-solver-2.1.0
    make -j3
    make test
    # Optionally install Ceres, it can also be exported using CMake which
@@ -311,52 +310,17 @@ We are now ready to build, test, and install Ceres.
    # documentation for the EXPORT_BUILD_DIR option for more information.
    make install
 
-Building with OpenMP on macOS
------------------------------
-
-Up to at least Xcode 12, OpenMP support was disabled in Apple's version of
-Clang.  However, you can install the latest version of the LLVM toolchain
-from Homebrew which does support OpenMP, and thus build Ceres with OpenMP
-support on macOS.  To do this, you must install llvm via Homebrew:
-
-.. code-block:: bash
-
-      # Install latest version of LLVM toolchain.
-      brew install llvm
-
-As the LLVM formula in Homebrew is keg-only, it will not be installed to
-``/usr/local`` to avoid conflicts with the standard Apple LLVM toolchain.
-To build Ceres with the Homebrew LLVM toolchain you should do the
-following:
-
-.. code-block:: bash
-
-   tar zxf ceres-solver-2.0.0.tar.gz
-   mkdir ceres-bin
-   cd ceres-bin
-   # Configure the local shell only (not persistent) to use the Homebrew LLVM
-   # toolchain in favour of the default Apple version.  This is taken
-   # verbatim from the instructions output by Homebrew when installing the
-   # llvm formula.
-   export LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
-   export CPPFLAGS="-I/usr/local/opt/llvm/include"
-   export PATH="/usr/local/opt/llvm/bin:$PATH"
-   # Force CMake to use the Homebrew version of Clang and enable OpenMP.
-   cmake -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ -DCERES_THREADING_MODEL=OPENMP ../ceres-solver-2.0.0
-   make -j3
-   make test
-   # Optionally install Ceres.  It can also be exported using CMake which
-   # allows Ceres to be used without requiring installation.  See the
-   # documentation for the EXPORT_BUILD_DIR option for more information.
-   make install
-
-Like the Linux build, you should now be able to run
-``bin/simple_bundle_adjuster``.
-
 .. _section-windows:
 
 Windows
 =======
+
+`Vckpg <https://github.com/microsoft/vcpkg>`_ is the homebrew
+equivalent on Microsoft Windows and can be used to install Ceres
+Solver.
+
+If building from source on Windows, we support building with Visual
+Studio 2015.2 of newer.
 
 .. NOTE::
 
@@ -365,34 +329,8 @@ Windows
   <https://github.com/tbennun/ceres-windows>`_ for Ceres Solver by Tal
   Ben-Nun.
 
-On Windows, we support building with Visual Studio 2015.2 of newer. Note
-that the Windows port is less featureful and less tested than the
-Linux or macOS versions due to the lack of an officially supported
-way of building SuiteSparse and CXSparse.  There are however a number
-of unofficial ways of building these libraries. Building on Windows
-also a bit more involved since there is no automated way to install
-dependencies.
-
-.. NOTE:: Using ``google-glog`` & ``miniglog`` with windows.h.
-
- The windows.h header if used with GDI (Graphics Device Interface)
- defines ``ERROR``, which conflicts with the definition of ``ERROR``
- as a LogSeverity level in ``google-glog`` and ``miniglog``.  There
- are at least two possible fixes to this problem:
-
- #. Use ``google-glog`` and define ``GLOG_NO_ABBREVIATED_SEVERITIES``
-    when building Ceres and your own project, as documented `here
-    <http://google-glog.googlecode.com/svn/trunk/doc/glog.html>`__.
-    Note that this fix will not work for ``miniglog``, but use of
-    ``miniglog`` is strongly discouraged on any platform for which
-    ``google-glog`` is available (which includes Windows).
- #. If you do not require GDI, then define ``NOGDI`` **before**
-    including windows.h.  This solution should work for both
-    ``google-glog`` and ``miniglog`` and is documented for
-    ``google-glog`` `here
-    <https://code.google.com/p/google-glog/issues/detail?id=33>`__.
-
 #. Make a toplevel directory for deps & build & src somewhere: ``ceres/``
+
 #. Get dependencies; unpack them as subdirectories in ``ceres/``
    (``ceres/eigen``, ``ceres/glog``, etc)
 
@@ -419,7 +357,7 @@ dependencies.
 
 #. Unpack the Ceres tarball into ``ceres``. For the tarball, you
    should get a directory inside ``ceres`` similar to
-   ``ceres-solver-2.0.0``. Alternately, checkout Ceres via ``git`` to
+   ``ceres-solver-2.1.0``. Alternately, checkout Ceres via ``git`` to
    get ``ceres-solver.git`` inside ``ceres``.
 
 #. Install ``CMake``,
