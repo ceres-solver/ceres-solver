@@ -55,41 +55,44 @@ namespace ceres {
 //
 // Example usage:
 //
-// ProductManifold<QuaternionManifold, EuclideanManifold<3>>
-//      se3(QuaternionManifold(), EuclideanManifold<3>());
+// ProductManifold<QuaternionManifold, EuclideanManifold<3>> se3;
 //
 // is the manifold for a rigid transformation, where the rotation is
 // represented using a quaternion.
+//
+// Manifolds can be copied and moved to ProductManifold:
+//
+// SubsetManifold manifold1(5, {2});
+// SubsetManifold manifold2(3, {0, 1});
+// ProductManifold<SubsetManifold, SubsetManifold> manifold(manifold1,
+//                                                          manifold2);
 //
 // In C++17, the template parameters can be left out as they are automatically
 // deduced making the initialization much simpler:
 //
 // ProductManifold se3{QuaternionManifold{}, EuclideanManifold<3>{}};
 //
-// The manifold implementations must be either copyable or moveable to be usable
-// in a ProductManifold.
-template <typename... Manifolds>
+// The manifold implementations must be either default constructible, copyable
+// or moveable to be usable in a ProductManifold.
+template <typename Manifold0, typename Manifold1, typename... ManifoldN>
 class ProductManifold final : public Manifold {
-  struct InitTag {};
-
  public:
-  template <
-      typename Manifold0,
-      typename Manifold1,
-      typename... ManifoldN,
-      std::enable_if_t<std::is_constructible<std::tuple<Manifolds...>,
-                                             Manifold0,
-                                             Manifold1,
-                                             ManifoldN...>::value>* = nullptr>
-  ProductManifold(Manifold0&& manifold0,
-                  Manifold1&& manifold1,
-                  ManifoldN&&... manifolds)
-      : ProductManifold{
-            InitTag{},  // Use InitTag to disambiguate public/private
-                        // constructors, which both use variadic arguments
-            std::forward<Manifold0>(manifold0),
-            std::forward<Manifold1>(manifold1),
-            std::forward<ManifoldN>(manifolds)...} {}
+  ProductManifold()
+      : ProductManifold{std::make_index_sequence<kNumManifolds>{}} {}
+
+  template <typename Arg0,
+            typename Arg1,
+            typename... ArgN,
+            std::enable_if_t<std::is_constructible<
+                std::tuple<Manifold0, Manifold1, ManifoldN...>,
+                Arg0,
+                Arg1,
+                ArgN...>::value>* = nullptr>
+  ProductManifold(Arg0&& manifold0, Arg1&& manifold1, ArgN&&... manifolds)
+      : ProductManifold{std::make_index_sequence<kNumManifolds>{},
+                        std::forward<Arg0>(manifold0),
+                        std::forward<Arg1>(manifold1),
+                        std::forward<ArgN>(manifolds)...} {}
 
   int AmbientSize() const override { return ambient_size_; }
   int TangentSize() const override { return tangent_size_; }
@@ -127,27 +130,22 @@ class ProductManifold final : public Manifold {
   }
 
  private:
-  static constexpr std::size_t kNumManifolds = sizeof...(Manifolds);
+  static constexpr std::size_t kNumManifolds = 2 + sizeof...(ManifoldN);
 
-  // In the public constructor, we enforce at least two parameters. Then, the
-  // public constructor delegates the arguments to this private constructor to
-  // be able to construct-initialize the manifolds tuple. The delegation is
-  // necessary to avoid requiring the manifolds to be default constructible.
-  // InitTag is used as a token to disambiguate between both variadic parameter
-  // constructors.
-  template <typename... Args>
-  explicit ProductManifold(InitTag, Args&&... manifolds)
-      : buffer_size_{(std::max)(
-            {(manifolds.TangentSize() * manifolds.AmbientSize())...})},
-        ambient_sizes_{manifolds.AmbientSize()...},
-        tangent_sizes_{manifolds.TangentSize()...},
+  template <std::size_t... Indices, typename... Args>
+  explicit ProductManifold(std::index_sequence<Indices...>, Args&&... manifolds)
+      : manifolds_{std::forward<Args>(manifolds)...},
+        buffer_size_{
+            (std::max)({(std::get<Indices>(manifolds_).TangentSize() *
+                         std::get<Indices>(manifolds_).AmbientSize())...})},
+        ambient_sizes_{std::get<Indices>(manifolds_).AmbientSize()...},
+        tangent_sizes_{std::get<Indices>(manifolds_).TangentSize()...},
         ambient_offsets_{ExclusiveScan(ambient_sizes_)},
         tangent_offsets_{ExclusiveScan(tangent_sizes_)},
         ambient_size_{
             std::accumulate(ambient_sizes_.begin(), ambient_sizes_.end(), 0)},
         tangent_size_{
-            std::accumulate(tangent_sizes_.begin(), tangent_sizes_.end(), 0)},
-        manifolds_{std::forward<Args>(manifolds)...} {}
+            std::accumulate(tangent_sizes_.begin(), tangent_sizes_.end(), 0)} {}
 
   template <std::size_t Index0, std::size_t... Indices>
   bool PlusImpl(const double* x,
@@ -265,6 +263,7 @@ class ProductManifold final : public Manifold {
     return result;
   }
 
+  std::tuple<Manifold0, Manifold1, ManifoldN...> manifolds_;
   int buffer_size_;
   std::array<int, kNumManifolds> ambient_sizes_;
   std::array<int, kNumManifolds> tangent_sizes_;
@@ -272,7 +271,6 @@ class ProductManifold final : public Manifold {
   std::array<int, kNumManifolds> tangent_offsets_;
   int ambient_size_;
   int tangent_size_;
-  std::tuple<Manifolds...> manifolds_;
 };
 
 #ifdef CERES_HAS_CPP17

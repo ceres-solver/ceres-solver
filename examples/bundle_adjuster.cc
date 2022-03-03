@@ -306,8 +306,7 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
   if (CERES_GET_FLAG(FLAGS_use_quaternions) &&
       CERES_GET_FLAG(FLAGS_use_manifolds)) {
     Manifold* camera_manifold =
-        new ProductManifold<QuaternionManifold, EuclideanManifold<6>>{
-            QuaternionManifold{}, EuclideanManifold<6>{}};
+        new ProductManifold<QuaternionManifold, EuclideanManifold<6>>{};
     for (int i = 0; i < bal_problem->num_cameras(); ++i) {
       problem->SetManifold(cameras + camera_block_size * i, camera_manifold);
     }
