@@ -128,6 +128,48 @@ TEST(CUDADenseCholesky, MustFactorizeBeforeSolve) {
             LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR);
 }
 
+TEST(CUDADenseCholesky, Randomized1600x1600Tests) {
+  const int kNumCols = 1600;
+  using LhsType = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>;
+  using RhsType = Eigen::Matrix<double, Eigen::Dynamic, 1>;
+  using SolutionType = Eigen::Matrix<double, Eigen::Dynamic, 1>;
+
+  LinearSolver::Options options;
+  ContextImpl context;
+  options.context = &context;
+  options.dense_linear_algebra_library_type = ceres::CUDA;
+  std::unique_ptr<DenseCholesky> dense_cholesky = CUDADenseCholesky::Create(options);
+
+  const int kNumTrials = 20;
+  for (int i = 0; i < kNumTrials; ++i) {
+    LhsType lhs = LhsType::Random(kNumCols, kNumCols);
+    lhs = lhs.transpose() * lhs;
+    lhs += 1e-3 * LhsType::Identity(kNumCols, kNumCols);
+    SolutionType x_expected = SolutionType::Random(kNumCols);
+    RhsType rhs = lhs * x_expected;
+    SolutionType x_computed = SolutionType::Zero(kNumCols);
+    // Sanity check the random matrix sizes.
+    EXPECT_EQ(lhs.rows(), kNumCols);
+    EXPECT_EQ(lhs.cols(), kNumCols);
+    EXPECT_EQ(rhs.rows(), kNumCols);
+    EXPECT_EQ(rhs.cols(), 1);
+    EXPECT_EQ(x_expected.rows(), kNumCols);
+    EXPECT_EQ(x_expected.cols(), 1);
+    EXPECT_EQ(x_computed.rows(), kNumCols);
+    EXPECT_EQ(x_computed.cols(), 1);
+    LinearSolver::Summary summary;
+    summary.termination_type = dense_cholesky->FactorAndSolve(kNumCols,
+                                                              lhs.data(),
+                                                              rhs.data(),
+                                                              x_computed.data(),
+                                                              &summary.message);
+    ASSERT_EQ(summary.termination_type, LINEAR_SOLVER_SUCCESS);
+    ASSERT_NEAR((x_computed - x_expected).norm() / x_expected.norm(),
+                0.0,
+                1e-10);
+  }
+}
+
 #endif  // CERES_NO_CUDA
 
 }  // namespace internal

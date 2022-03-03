@@ -135,10 +135,6 @@ TEST(CUDADenseQR, Randomized1600x100Tests) {
   std::unique_ptr<DenseQR> dense_qr = CUDADenseQR::Create(options);
 
   const int kNumTrials = 100;
-  const int kMinNumCols = 1;
-  const int kMaxNumCols = 10;
-  const int kMinRowsFactor = 1;
-  const int kMaxRowsFactor = 3;
   for (int i = 0; i < kNumTrials; ++i) {
     LhsType lhs = LhsType::Random(kNumRows, kNumCols);
     SolutionType x_expected = SolutionType::Random(kNumCols);
