@@ -1,6 +1,24 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f33a1f9_da2e1938",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-03T16:15:56Z",
+      "side": 1,
+      "message": "No I meant the type conversion from unique_ptr or euclideanmanifold to uniqueptr of manifold.",
+      "tag": "mailMessageId\u003d\u003cCABqdRUBPiFxFCnmkf7-Qw6tKr-BgRWH6E5nAcHzTJi59Y9dTbQ@mail.gmail.com\u003e",
+      "revId": "7cfd643aede339c6decbb250268294e5c8bc8a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4bd93fb_e0e81373",
