@@ -33,6 +33,7 @@
 #include <cmath>
 #include <limits>
 #include <memory>
+#include <utility>
 
 #include "Eigen/Geometry"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
