@@ -167,7 +167,7 @@ class CERES_NO_EXPORT CUDADenseCholesky final : public DenseCholesky {
   // GPU memory allocated for the B matrix (rhs vector).
   CudaBuffer<double> rhs_;
   // Scratch space for cuSOLVER on the GPU.
-  CudaBuffer<uint8_t> device_workspace_;
+  CudaBuffer<double> device_workspace_;
   // Required for error handling with cuSOLVER.
   CudaBuffer<int> error_;
   // Cache the result of Factorize to ensure that when Solve is called, the
