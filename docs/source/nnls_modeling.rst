@@ -1528,7 +1528,7 @@ coordinates that are held constant.
 In cases, where a parameter block is the Cartesian product of a number
 of manifolds and you have the manifold of the individual
 parameter blocks available, :class:`ProductManifold` can be used to
-construct a :class:`Manifold` of the cartesian product.
+construct a :class:`Manifold` of the Cartesian product.
 
 For the case of the rigid transformation, where say you have a
 parameter block of size 7, where the first four entries represent the
@@ -1537,8 +1537,16 @@ manifold can be constructed as:
 
 .. code-block:: c++
 
-   ProductManifold<QuaternionManifold, EuclideanManifold<3>> se3{QuaternionManifold{}, EuclideanManifold<3>{}};
+   ProductManifold<QuaternionManifold, EuclideanManifold<3>> se3;
 
+Manifolds can be copied and moved to :class:`ProductManifold`:
+
+.. code-block:: c++
+
+   SubsetManifold manifold1(5, {2});
+   SubsetManifold manifold2(3, {0, 1});
+   ProductManifold<SubsetManifold, SubsetManifold> manifold(manifold1,
+                                                            manifold2);
 
 In C++17, the template parameters can be left out as they are automatically
 deduced making the initialization much simpler:
@@ -2153,7 +2161,7 @@ transformation?
 In cases, where a parameter block is the Cartesian product of a number
 of manifolds and you have the local parameterization of the individual
 manifolds available, :class:`ProductParameterization` can be used to
-construct a local parameterization of the cartesian product. For the
+construct a local parameterization of the Cartesian product. For the
 case of the rigid transformation, where say you have a parameter block
 of size 7, where the first four entries represent the rotation as a
 quaternion, a local parameterization can be constructed as

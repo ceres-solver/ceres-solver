@@ -428,6 +428,57 @@ TEST(ProductManifold, CopyableOrMoveable) {
   EXPECT_EQ(manifold1.TangentSize(), manifold2.TangentSize());
 }
 
+struct NonDefaultConstructibleManifold : ceres::Manifold {
+  NonDefaultConstructibleManifold(int, int) {}
+  int AmbientSize() const override { return 4; }
+  int TangentSize() const override { return 3; }
+
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const override {
+    return true;
+  }
+
+  bool PlusJacobian(const double* x, double* jacobian) const override {
+    return true;
+  }
+
+  bool RightMultiplyByPlusJacobian(const double* x,
+                                   const int num_rows,
+                                   const double* ambient_matrix,
+                                   double* tangent_matrix) const override {
+    return true;
+  }
+
+  bool Minus(const double* y,
+             const double* x,
+             double* y_minus_x) const override {
+    return true;
+  }
+
+  bool MinusJacobian(const double* x, double* jacobian) const override {
+    return true;
+  }
+};
+
+TEST(ProductManifold, NonDefaultConstructible) {
+  ProductManifold<NonDefaultConstructibleManifold, QuaternionManifold>
+      manifold1{NonDefaultConstructibleManifold{1, 2}, QuaternionManifold{}};
+  ProductManifold<QuaternionManifold, NonDefaultConstructibleManifold>
+      manifold2{QuaternionManifold{}, NonDefaultConstructibleManifold{1, 2}};
+
+  EXPECT_EQ(manifold1.AmbientSize(), manifold2.AmbientSize());
+  EXPECT_EQ(manifold1.TangentSize(), manifold2.TangentSize());
+}
+
+TEST(ProductManifold, DefaultConstructible) {
+  ProductManifold<EuclideanManifold<3>, SphereManifold<4>> manifold1;
+  ProductManifold<SphereManifold<4>, EuclideanManifold<3>> manifold2;
+
+  EXPECT_EQ(manifold1.AmbientSize(), manifold2.AmbientSize());
+  EXPECT_EQ(manifold1.TangentSize(), manifold2.TangentSize());
+}
+
 TEST(QuaternionManifold, PlusPiBy2) {
   QuaternionManifold manifold;
   Vector x = Vector::Zero(4);
