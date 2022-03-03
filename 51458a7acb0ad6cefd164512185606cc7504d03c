@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0666dc2_c27f214b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-03T13:12:08Z",
+      "side": 1,
+      "message": "I just realized while migrating some existing code to this new interface that the productmanifold now has the problem that it cannot be composed out of instances of Manifold interface anymore, you must have access to the concrete subtype of Manifold at all times. \n\nThis is not a problem when you use ProductManifold immediately, but if you are building a more sophisticated problem solver like say a distributed solver where you maybe passing pointers of type Manifold around, which would have worked before, it won\u0027t work anymore. \n\nBut this should be solvable no? while Manifold itself is not copyable/movable, we could easily construct a thin wrapper that takes a Manifold pointer and owns it and behaves likes a Manifold object, and all this should be doable automatically maybe with a helper function which constructs such an object from pointers somethign like\n\n\nclass ManifoldWrapper : Manifold {\n  // everything gets delegated to manifold_\n  std::unique_ptr\u003cManifold\u003e manifold_;\n}\n\nstd::unique_ptr\u003cManifold\u003e CreateProductManifoldFromPtrs(Manifold* ...) {\n   // wrap each Manifold* into a ManifoldWrapper \n   // Construct a ProductManifold of ManifoldWrappers.\n}\n\nwhat do you think? or perhaps there is a better solution? ",
+      "revId": "51458a7acb0ad6cefd164512185606cc7504d03c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a928644_d89ef617",
