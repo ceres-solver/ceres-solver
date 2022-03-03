@@ -34,7 +34,9 @@
 // This include must come before any #ifndef check on Ceres compile options.
 // clang-format off
 #include "ceres/internal/config.h"
-// clanf-format on
+// clang-format on
+
+#include <string>
 
 #include "ceres/context.h"
 #include "ceres/internal/disable_warnings.h"
