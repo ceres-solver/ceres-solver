@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a90de5a5_a3f457a3",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-03T13:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a928644_d89ef617",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 17
+      },
+      "revId": "51458a7acb0ad6cefd164512185606cc7504d03c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3b291884_c81fea66",
@@ -89,6 +113,24 @@
       "side": 1,
       "message": "I think thats fine by me.",
       "parentUuid": "3b291884_c81fea66",
+      "revId": "51458a7acb0ad6cefd164512185606cc7504d03c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "704cfb47_e5fb3226",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-03T13:53:22Z",
+      "side": 1,
+      "message": "Actually, `std::tuple` requires that one passes an argument for each type or none at all. There\u0027s no inbetween which is perfectly fine too.",
+      "parentUuid": "ff497439_88c08544",
       "revId": "51458a7acb0ad6cefd164512185606cc7504d03c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
