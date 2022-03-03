@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42300ced_aae9f01c",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-03T14:11:48Z",
+      "side": 1,
+      "message": "is it evident from this definition that you can just use default construction here? in fact it is not clear to me, where the default construction actually happens if the default constructor is invoked?",
+      "range": {
+        "startLine": 89,
+        "startChar": 11,
+        "endLine": 89,
+        "endChar": 26
+      },
+      "revId": "284be88ca127860c5acae513321a464bfbcf9537",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
