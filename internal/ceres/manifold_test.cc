@@ -479,6 +479,24 @@ TEST(ProductManifold, DefaultConstructible) {
   EXPECT_EQ(manifold1.TangentSize(), manifold2.TangentSize());
 }
 
+TEST(ProductManifold, Pointers) {
+  auto p = std::make_unique<QuaternionManifold>();
+  auto q = std::make_shared<EuclideanManifold<3>>();
+
+  ProductManifold<std::unique_ptr<Manifold>,
+                  EuclideanManifold<3>,
+                  std::shared_ptr<EuclideanManifold<3>>>
+      manifold1{
+          std::make_unique<QuaternionManifold>(), EuclideanManifold<3>{}, q};
+  ProductManifold<QuaternionManifold*,
+                  EuclideanManifold<3>,
+                  std::shared_ptr<EuclideanManifold<3>>>
+      manifold2{p.get(), EuclideanManifold<3>{}, q};
+
+  EXPECT_EQ(manifold1.AmbientSize(), manifold2.AmbientSize());
+  EXPECT_EQ(manifold1.TangentSize(), manifold2.TangentSize());
+}
+
 TEST(QuaternionManifold, PlusPiBy2) {
   QuaternionManifold manifold;
   Vector x = Vector::Zero(4);
