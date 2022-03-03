@@ -71,6 +71,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11208602_ac07c8d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-03T14:16:26Z",
+      "side": 1,
+      "message": "I believe I\u0027m missing something. What\u0027s the point of storing a manifold in a `std::unique_ptr` which is immediately moved into `ProductManifold`? Wouldn\u0027t that be same as not using `std::unique_ptr`?",
+      "parentUuid": "b155860c_e48406ab",
+      "revId": "51458a7acb0ad6cefd164512185606cc7504d03c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a928644_d89ef617",
