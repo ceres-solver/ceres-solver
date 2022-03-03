@@ -53,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b155860c_e48406ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-03T14:13:00Z",
+      "side": 1,
+      "message": "I do not think the user wants to keep the ownership somewhere else. it makes things complicated. I think it is simpler for the wrapper should take ownership.",
+      "parentUuid": "3ac72660_b90f993a",
+      "revId": "51458a7acb0ad6cefd164512185606cc7504d03c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a928644_d89ef617",
