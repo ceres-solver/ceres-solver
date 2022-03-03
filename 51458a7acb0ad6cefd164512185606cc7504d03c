@@ -125,6 +125,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "046f8463_7ea875ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-03T14:45:23Z",
+      "side": 1,
+      "message": "We could also easily support something like this:\n```\nProductManifold\u003cstd::unique_ptr\u003cManifold\u003e, ...\u003e manifold;\n```\nIs this what you have in mind?",
+      "parentUuid": "bc9b6d88_a935ec68",
+      "revId": "51458a7acb0ad6cefd164512185606cc7504d03c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a928644_d89ef617",
