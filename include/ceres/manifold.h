@@ -238,7 +238,7 @@ class CERES_EXPORT Manifold {
 //
 //    EuclideanManifold<ceres::DYNAMIC> manifold(ambient_dim);
 template <int Size>
-class CERES_EXPORT EuclideanManifold final : public Manifold {
+class EuclideanManifold final : public Manifold {
  public:
   static_assert(Size == ceres::DYNAMIC || Size >= 0,
                 "The size of the manifold needs to be non-negative.");
