@@ -1548,6 +1548,13 @@ Manifolds can be copied and moved to :class:`ProductManifold`:
    ProductManifold<SubsetManifold, SubsetManifold> manifold(manifold1,
                                                             manifold2);
 
+In advanced use cases, manifolds can be dynamically allocated and passed as (smart) pointers:
+
+.. code-block:: c++
+
+   ProductManifold<std::unique_ptr<QuaternionManifold>, EuclideanManifold<3>> se3
+        {std::make_unique<QuaternionManifold>(), EuclideanManifold<3>{}};
+
 In C++17, the template parameters can be left out as they are automatically
 deduced making the initialization much simpler:
 
