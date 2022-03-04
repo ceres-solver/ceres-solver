@@ -435,6 +435,14 @@ if (BUILD_TESTING AND GFLAGS)
       PRIVATE ${Ceres_SOURCE_DIR}/internal/ceres
               ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
     target_link_libraries(${NAME}_test PRIVATE gtest test_util ceres_static)
+
+    # covariance_test uses SuiteSparseQR.hpp. However, since SuiteSparse import
+    # targets are private (link only) dependencies not propagated to consumers,
+    # we need to link against the target explicitly here.
+    if (TARGET SuiteSparse::SPQR)
+      target_link_libraries (${NAME}_test PRIVATE SuiteSparse::SPQR)
+    endif (TARGET SuiteSparse::SPQR)
+
     add_test(NAME ${NAME}_test
              COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${NAME}_test
              --test_srcdir
