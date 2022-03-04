@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "212934cd_116c8931",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-04T16:25:35Z",
+      "side": 1,
+      "message": "Why isn\u0027t this an issue on macos? what makes the ubuntu situation different? because the fix seems like a generic cmake fix which should be needed in general no?",
+      "revId": "1a377d707821157ae4f9189beca7ec785fd2b755",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
