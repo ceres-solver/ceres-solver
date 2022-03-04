@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb5b8188_71590f97",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-04T11:01:12Z",
+      "side": 1,
+      "message": "I think they prefer the all-caps \u0027NVIDIA\u0027 spelling of their name",
+      "revId": "063d8cb0fef6f0fbb0518a3dbc056bceba8c2a33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "885bfacd_0b7c8b09",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-04T11:01:12Z",
+      "side": 1,
+      "message": "IMO, this is a bit misleading, as the features are all there provided that the dependencies exist (threading etc all still work) and via Sergiu\u0027s CMake-SuiteSparse project it\u0027s easy to build Ceres with all features enabled.",
+      "revId": "063d8cb0fef6f0fbb0518a3dbc056bceba8c2a33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

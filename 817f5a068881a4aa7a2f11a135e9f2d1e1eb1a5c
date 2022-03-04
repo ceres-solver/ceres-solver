@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "373f39a5_85cbbf70",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-04T11:01:12Z",
+      "side": 0,
+      "message": "Actually I think it\u0027s worth keeping this, it\u0027s not uncommon to include a declaration of the minimum C++ version required in the docs.",
+      "revId": "817f5a068881a4aa7a2f11a135e9f2d1e1eb1a5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "243c3ff4_55965266",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-04T11:01:12Z",
+      "side": 0,
+      "message": "I think it\u0027s worth modifying this note text to something like:\n\nCeres should always support the previous and current Ubuntu LTS releases, currently 18.04 and 20.04, using the default Ubuntu package repositories and compiler toolchain.  Support for earlier versions is not guaranteed or maintained.",
+      "revId": "817f5a068881a4aa7a2f11a135e9f2d1e1eb1a5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
