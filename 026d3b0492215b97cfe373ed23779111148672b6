@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d62d2001_2dcb80fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-04T15:20:32Z",
+      "side": 1,
+      "message": "FYI, there\u0027s a problem on Ubuntu 20.04: https://github.com/ceres-solver/ceres-solver/issues/764\n\nI will provide a fix shortly.",
+      "revId": "026d3b0492215b97cfe373ed23779111148672b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
