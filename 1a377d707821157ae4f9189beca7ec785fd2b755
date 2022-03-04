@@ -16,6 +16,24 @@
       "message": "Why isn\u0027t this an issue on macos? what makes the ubuntu situation different? because the fix seems like a generic cmake fix which should be needed in general no?",
       "revId": "1a377d707821157ae4f9189beca7ec785fd2b755",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a642de3_ac43ff76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-04T16:33:38Z",
+      "side": 1,
+      "message": "If the header is located in a directory always visible to Ceres the problem is not triggered. On Ubuntu 20.04, however, SuiteSparse headers are placed in a `suitesparse` directory which is not included by default. See the list of files here: https://ubuntu.pkgs.org/20.04/ubuntu-main-amd64/libsuitesparse-dev_5.7.1+dfsg-2_amd64.deb.html",
+      "parentUuid": "212934cd_116c8931",
+      "revId": "1a377d707821157ae4f9189beca7ec785fd2b755",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
