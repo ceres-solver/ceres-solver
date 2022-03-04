@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "634fbbca_62cadeb1",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-04T12:28:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb5b8188_71590f97",
+      "revId": "063d8cb0fef6f0fbb0518a3dbc056bceba8c2a33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "885bfacd_0b7c8b09",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-03-04T11:01:12Z",
       "side": 1,
       "message": "IMO, this is a bit misleading, as the features are all there provided that the dependencies exist (threading etc all still work) and via Sergiu\u0027s CMake-SuiteSparse project it\u0027s easy to build Ceres with all features enabled.",
+      "revId": "063d8cb0fef6f0fbb0518a3dbc056bceba8c2a33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "300581c6_ddd9202f",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-04T12:28:44Z",
+      "side": 1,
+      "message": "I had just copied the stuff from below because I don\u0027t really have a clue as to what the state of affairs for windows is. I have removed some of this text, but i am happy to update it based on your or sergiu\u0027s suggestions.\n\nAlso we are linking to suitesparse and cxsparse distributions and saying that they are experimental.. I suppose that part should also be updated?",
+      "parentUuid": "885bfacd_0b7c8b09",
       "revId": "063d8cb0fef6f0fbb0518a3dbc056bceba8c2a33",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
