@@ -16,6 +16,58 @@
       "message": "Folks,\nI could use some help with the windows installation instructions. As alex points out, in light of Sergiu\u0027s work they are a bit outdated and inconsistent. ",
       "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "809b4b83_36d724e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-04T12:50:12Z",
+      "side": 1,
+      "message": "Will it help if I provide binary packages of SuiteSparse (including BLAS and LAPACK)? This should minimize differences between Ceres Solver setup on Linux and Windows.",
+      "parentUuid": "022bc4b3_9a606370",
+      "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98cfeebd_b839b700",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-04T12:50:12Z",
+      "side": 1,
+      "message": "An off-topic question: are the results produced by the same system? The runtime performance improvements seem to be significant. Also below.",
+      "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f07fd23_a3877e1e",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-04T12:50:12Z",
+      "side": 1,
+      "message": "Even though the number of iterations increased by one, the runtime is shorter. Nice!",
+      "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
