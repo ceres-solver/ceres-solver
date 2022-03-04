@@ -91,6 +91,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "1cd19f6c_d2f2a12b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-04T13:50:24Z",
+      "side": 1,
+      "message": "Yes, I can do that. However, I\u0027m not sure if I can submit the CL this week since this involves several tasks (including providing the binary packages). You can therefore go ahead merge this CL and release the first candidate in the meantime.\n\nNevertheless, you can safely remove the outdated instructions I commented earlier. I do not believe this will change.",
+      "parentUuid": "22fd64c1_12c70568",
+      "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "98cfeebd_b839b700",
         "filename": "docs/source/gradient_tutorial.rst",
         "patchSetId": 6
