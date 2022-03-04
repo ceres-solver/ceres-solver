@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "dd9a9a6a_9a6085d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-04T12:54:26Z",
+      "side": 1,
+      "message": "Yes I am sure that will help for sure.\nI am curious as to what vcpkg is doing here too? is it packing suitesparse with blas and lapack?\n\nalso I could use help with updating the windows build instructions. should we be linking to these experimental builds of suitesparse and cxsparse still?",
+      "parentUuid": "809b4b83_36d724e7",
+      "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "98cfeebd_b839b700",
         "filename": "docs/source/gradient_tutorial.rst",
         "patchSetId": 6
@@ -55,6 +73,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "1fdf213f_07c736d1",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-04T12:54:26Z",
+      "side": 1,
+      "message": "I think those are old results maybe from my old laptop. I would not put too much stock into these numbers.",
+      "parentUuid": "98cfeebd_b839b700",
+      "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "3f07fd23_a3877e1e",
         "filename": "docs/source/installation.rst",
         "patchSetId": 6
@@ -66,6 +102,24 @@
       "writtenOn": "2022-03-04T12:50:12Z",
       "side": 1,
       "message": "Even though the number of iterations increased by one, the runtime is shorter. Nice!",
+      "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97aeb2e5_4e628133",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-04T12:54:26Z",
+      "side": 1,
+      "message": "the number of iterations increasing is an artifact of an old bugfix in the way we were counting iterations. as for time improvements, they are likely an artifact of an old laptop.",
+      "parentUuid": "3f07fd23_a3877e1e",
       "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
