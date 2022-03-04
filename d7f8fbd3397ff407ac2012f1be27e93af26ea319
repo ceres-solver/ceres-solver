@@ -56,6 +56,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "bdfe794b_8a754b1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-04T13:10:09Z",
+      "side": 1,
+      "message": "Yes, vcpkg seems to package BLAS \u0026 LAPACK as well; this is unavoidable as this is a required dependency.",
+      "parentUuid": "dd9a9a6a_9a6085d0",
+      "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "98cfeebd_b839b700",
         "filename": "docs/source/gradient_tutorial.rst",
         "patchSetId": 6
@@ -91,6 +109,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8393efcf_84fc948e",
+        "filename": "docs/source/gradient_tutorial.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-04T13:10:09Z",
+      "side": 1,
+      "message": "I see, thanks!",
+      "parentUuid": "1fdf213f_07c736d1",
+      "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "3f07fd23_a3877e1e",
         "filename": "docs/source/installation.rst",
         "patchSetId": 6
@@ -120,6 +156,75 @@
       "side": 1,
       "message": "the number of iterations increasing is an artifact of an old bugfix in the way we were counting iterations. as for time improvements, they are likely an artifact of an old laptop.",
       "parentUuid": "3f07fd23_a3877e1e",
+      "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dd5d432_6f524135",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-04T13:10:09Z",
+      "side": 1,
+      "message": "Thanks for the info!",
+      "parentUuid": "97aeb2e5_4e628133",
+      "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9000949_05eea39d",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-04T13:10:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is necessary anymore even with minilog. During my tests using Visual Studio 2022 Ceres Solver (without SuiteSparse) worked out of the box with recent versions of benchmark, gflags, and glog.",
+      "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "635d3b0f_86af63de",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-04T13:10:09Z",
+      "side": 1,
+      "message": "This is not necessary since version 0.3.5 of glog (which uses CMake since then).",
+      "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "462e96df_18487a26",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-04T13:10:09Z",
+      "side": 1,
+      "message": "As above, not necessary.",
       "revId": "d7f8fbd3397ff407ac2012f1be27e93af26ea319",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
