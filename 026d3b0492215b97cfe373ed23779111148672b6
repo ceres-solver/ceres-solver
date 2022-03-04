@@ -34,6 +34,23 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUDs\u003dGT5\u003diJ7H_Oa81wFXcSOwm08ZaqP3hoj44ZKoGAVUA@mail.gmail.com\u003e",
       "revId": "026d3b0492215b97cfe373ed23779111148672b6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7c28d62_d1c4f0e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-04T18:44:48Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "026d3b0492215b97cfe373ed23779111148672b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
