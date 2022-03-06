@@ -16,6 +16,23 @@
       "message": "Found a solution.",
       "revId": "94af09186fe8df96ff4ba340dded0f9daf293171",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6279d89f_906addda",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-06T14:56:55Z",
+      "side": 1,
+      "message": "Successful build: https://github.com/sergiud/ceres-solver/actions/runs/1941437379",
+      "revId": "94af09186fe8df96ff4ba340dded0f9daf293171",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
