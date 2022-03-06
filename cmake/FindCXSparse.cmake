@@ -228,7 +228,7 @@ find_package_handle_standard_args(CXSparse
   REQUIRED_VARS CXSparse_INCLUDE_DIR CXSparse_LIBRARY
   VERSION_VAR CXSparse_VERSION)
 
-if (CXSparse_FOUND)
+if (CXSparse_INCLUDE_DIR AND CXSparse_LIBRARY)
   if (NOT TARGET CXSparse::CXSparse)
     add_library (CXSparse::CXSparse IMPORTED UNKNOWN)
   endif (NOT TARGET CXSparse::CXSparse)
@@ -237,4 +237,4 @@ if (CXSparse_FOUND)
     IMPORTED_LOCATION ${CXSparse_LIBRARY})
   set_property (TARGET CXSparse::CXSparse PROPERTY
     INTERFACE_INCLUDE_DIRECTORIES ${CXSparse_INCLUDE_DIR})
-endif (CXSparse_FOUND)
+endif (CXSparse_INCLUDE_DIR AND CXSparse_LIBRARY)

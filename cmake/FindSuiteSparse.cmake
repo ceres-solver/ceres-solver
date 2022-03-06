@@ -221,16 +221,6 @@ macro(suitesparse_find_component COMPONENT)
     if (SuiteSparse_${COMPONENT}_LIBRARY)
       message(STATUS "Found ${COMPONENT} library: ${SuiteSparse_${COMPONENT}_LIBRARY}")
       mark_as_advanced(SuiteSparse_${COMPONENT}_LIBRARY)
-
-      if(NOT TARGET SuiteSparse::${COMPONENT})
-        add_library(SuiteSparse::${COMPONENT} IMPORTED UNKNOWN)
-      endif()
-      set_property(TARGET SuiteSparse::${COMPONENT} PROPERTY
-        INTERFACE_INCLUDE_DIRECTORIES ${SuiteSparse_${COMPONENT}_INCLUDE_DIR})
-      set_property(TARGET SuiteSparse::${COMPONENT} PROPERTY
-        IMPORTED_LOCATION_RELEASE ${SuiteSparse_${COMPONENT}_LIBRARY})
-      set_property(TARGET SuiteSparse::${COMPONENT} APPEND PROPERTY
-        IMPORTED_CONFIGURATIONS RELEASE)
     else ()
       # Specified libraries not found.
       set(SuiteSparse_${COMPONENT}_FOUND FALSE)
@@ -245,6 +235,18 @@ macro(suitesparse_find_component COMPONENT)
       endif()
     endif()
   endif()
+
+  # Define the target only if the include directory and the library were found
+  if (SuiteSparse_${COMPONENT}_INCLUDE_DIR AND SuiteSparse_${COMPONENT}_LIBRARY)
+    if (NOT TARGET SuiteSparse::${COMPONENT})
+      add_library(SuiteSparse::${COMPONENT} IMPORTED UNKNOWN)
+    endif (NOT TARGET SuiteSparse::${COMPONENT})
+
+    set_property(TARGET SuiteSparse::${COMPONENT} PROPERTY
+      INTERFACE_INCLUDE_DIRECTORIES ${SuiteSparse_${COMPONENT}_INCLUDE_DIR})
+    set_property(TARGET SuiteSparse::${COMPONENT} PROPERTY
+      IMPORTED_LOCATION ${SuiteSparse_${COMPONENT}_LIBRARY})
+  endif (SuiteSparse_${COMPONENT}_INCLUDE_DIR AND SuiteSparse_${COMPONENT}_LIBRARY)
 endmacro()
 
 # Given the number of components of SuiteSparse, and to ensure that the
