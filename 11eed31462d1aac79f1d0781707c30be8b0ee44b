@@ -34,6 +34,24 @@
       "parentUuid": "88342b54_5f70870c",
       "revId": "11eed31462d1aac79f1d0781707c30be8b0ee44b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1890d98e_d1939b13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-06T18:35:11Z",
+      "side": 1,
+      "message": "Thanks Sergiu.\n\nLet us as a first step get these actions checked in. The move to github is a bigger decision, which involves setting up a CLA flow but also I think the github developer flow has a worse code review tool than gerrit. \n\nOur development pace is slow enough that it is likely okay if sometimes we break stuff post submit and then come back and fix it.\n\nAs for the windows flow, once this is checked in do you want to take a whack at updating the windows installation docs?",
+      "parentUuid": "d3d8bac3_28c6362b",
+      "revId": "11eed31462d1aac79f1d0781707c30be8b0ee44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
