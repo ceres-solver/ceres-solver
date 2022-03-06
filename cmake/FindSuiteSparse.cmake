@@ -109,6 +109,11 @@ if (NOT SuiteSparse_FIND_COMPONENTS)
   )
 endif (NOT SuiteSparse_FIND_COMPONENTS)
 
+# Assume SuiteSparse was found and set it to false only if third-party
+# dependencies could not be located. SuiteSparse components are handled by
+# FindPackageHandleStandardArgs HANDLE_COMPONENTS option.
+set (SuiteSparse_FOUND TRUE)
+
 include (CheckLibraryExists)
 
 # CHOLMOD depends on AMD, CAMD, CCOLAMD, and COLAMD
@@ -186,10 +191,6 @@ macro(suitesparse_find_component COMPONENT)
   cmake_parse_arguments(SuiteSparse_FIND_${COMPONENT}
     "${OPTIONS}" "" "${MULTI_VALUE_ARGS}" ${ARGN})
 
-  if (SuiteSparse_FIND_${COMPONENT}_REQUIRED)
-    list(APPEND SuiteSparse_FOUND_REQUIRED_VARS SuiteSparse_${COMPONENT}_FOUND)
-  endif()
-
   set(SuiteSparse_${COMPONENT}_FOUND TRUE)
   if (SuiteSparse_FIND_${COMPONENT}_FILES)
     find_path(SuiteSparse_${COMPONENT}_INCLUDE_DIR
@@ -245,6 +246,11 @@ macro(suitesparse_find_component COMPONENT)
       endif()
     endif()
   endif()
+
+  list (APPEND SuiteSparse_FOUND_REQUIRED_VARS
+    SuiteSparse_${COMPONENT}_INCLUDE_DIR)
+  list (APPEND SuiteSparse_FOUND_REQUIRED_VARS
+    SuiteSparse_${COMPONENT}_LIBRARY)
 endmacro()
 
 # Given the number of components of SuiteSparse, and to ensure that the
@@ -258,16 +264,16 @@ find_package(BLAS QUIET)
 if (NOT BLAS_FOUND)
   suitesparse_report_not_found(
     "Did not find BLAS library (required for SuiteSparse).")
+  set (SuiteSparse_FOUND FALSE)
 endif (NOT BLAS_FOUND)
-list(APPEND SuiteSparse_FOUND_REQUIRED_VARS BLAS_FOUND)
 
 # LAPACK.
 find_package(LAPACK QUIET)
 if (NOT LAPACK_FOUND)
   suitesparse_report_not_found(
     "Did not find LAPACK library (required for SuiteSparse).")
+  set (SuiteSparse_FOUND FALSE)
 endif (NOT LAPACK_FOUND)
-list(APPEND SuiteSparse_FOUND_REQUIRED_VARS LAPACK_FOUND)
 
 foreach (component IN LISTS SuiteSparse_FIND_COMPONENTS)
   string (TOLOWER ${component} component_lower)
