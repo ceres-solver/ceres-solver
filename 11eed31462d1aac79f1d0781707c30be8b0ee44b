@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32338e37_329a9729",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-06T18:51:02Z",
+      "side": 1,
+      "message": "It is not always safe to use static runtime: https://developer.android.com/ndk/guides/cpp-support#static_runtimes",
+      "parentUuid": "7f17a488_96e10630",
+      "range": {
+        "startLine": 59,
+        "startChar": 44,
+        "endLine": 59,
+        "endChar": 51
+      },
+      "revId": "11eed31462d1aac79f1d0781707c30be8b0ee44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c11b768_9965d568",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-03-06T18:37:27Z",
       "side": 1,
       "message": "make 28 a shell variable up above?",
+      "range": {
+        "startLine": 93,
+        "startChar": 39,
+        "endLine": 93,
+        "endChar": 41
+      },
+      "revId": "11eed31462d1aac79f1d0781707c30be8b0ee44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "510aa83c_127c0b8c",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-06T18:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c11b768_9965d568",
       "range": {
         "startLine": 93,
         "startChar": 39,
@@ -70,6 +118,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "770c5dac_df9d3b77",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-06T18:51:02Z",
+      "side": 1,
+      "message": "Building with LTO is challenging as it exposes incorrectly exported symbols.",
+      "parentUuid": "fa2f7868_7e0dbc36",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "11eed31462d1aac79f1d0781707c30be8b0ee44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9aa8acb_af82ebbe",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-03-06T18:37:27Z",
       "side": 1,
       "message": "why add this flag?",
+      "range": {
+        "startLine": 51,
+        "startChar": 36,
+        "endLine": 51,
+        "endChar": 46
+      },
+      "revId": "11eed31462d1aac79f1d0781707c30be8b0ee44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97a5e0a6_60426f2b",
+        "filename": ".github/workflows/macos.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-06T18:51:02Z",
+      "side": 1,
+      "message": "As above, exposes incorrectly export symbols + runtime performance (for tests). macOS runner is rather slow compared to Ubuntu runner.",
+      "parentUuid": "f9aa8acb_af82ebbe",
       "range": {
         "startLine": 51,
         "startChar": 36,
@@ -142,6 +238,24 @@
       "side": 1,
       "message": "Thanks Sergiu.\n\nLet us as a first step get these actions checked in. The move to github is a bigger decision, which involves setting up a CLA flow but also I think the github developer flow has a worse code review tool than gerrit. \n\nOur development pace is slow enough that it is likely okay if sometimes we break stuff post submit and then come back and fix it.\n\nAs for the windows flow, once this is checked in do you want to take a whack at updating the windows installation docs?",
       "parentUuid": "d3d8bac3_28c6362b",
+      "revId": "11eed31462d1aac79f1d0781707c30be8b0ee44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea734039_46935da3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-06T18:51:02Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll update the instructions. Moving to Github is not a prerequisite for using the Github workflow, of course.\n\nWith Github workflow in place, Travis builds (which are currently partially broken) are redundant. We can therefore drop them as part of this CL.",
+      "parentUuid": "1890d98e_d1939b13",
       "revId": "11eed31462d1aac79f1d0781707c30be8b0ee44b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
