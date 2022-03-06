@@ -1,0 +1,90 @@
+name: Linux
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: ${{matrix.os}}-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.threading_model}}
+    runs-on: ${{matrix.os}}
+    defaults:
+      run:
+        shell: bash -e -o pipefail {0}
+    env:
+      CCACHE_DIR: ${{github.workspace}}/ccache
+      CMAKE_GENERATOR: Ninja
+      DEBIAN_FRONTEND: noninteractive
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-18.04
+          - ubuntu-20.04
+        build_type:
+          - Release
+        lib:
+          - shared
+          - static
+        threading_model:
+          - CXX_THREADS
+          - NO_THREADS
+          - OPENMP
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            ccache \
+            cmake \
+            libbenchmark-dev \
+            libblas-dev \
+            libeigen3-dev \
+            libgflags-dev \
+            libgoogle-glog-dev \
+            liblapack-dev \
+            libsuitesparse-dev \
+            ninja-build
+
+      - name: Cache Build
+        id: cache-build
+        uses: actions/cache@v2
+        with:
+          path: ${{env.CCACHE_DIR}}
+          key: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.threading_model}}-${{github.run_id}}
+          restore-keys: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.threading_model}}-
+
+      - name: Setup Environment
+        if: matrix.build_type == 'Release'
+        run: |
+          echo 'CXXFLAGS=-flto' >> $GITHUB_ENV
+
+      - name: Configure
+        run: |
+          cmake -S . -B build_${{matrix.build_type}} \
+                -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} \
+                -DCERES_THREADING_MODEL=${{matrix.threading_model}} \
+                -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
+                -DCMAKE_C_COMPILER_LAUNCHER=$(which ccache) \
+                -DCMAKE_CXX_COMPILER_LAUNCHER=$(which ccache) \
+                -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install
+
+      - name: Build
+        run: |
+          cmake --build build_${{matrix.build_type}} \
+                --config ${{matrix.build_type}}
+
+      - name: Test
+        run: |
+          ctest --test-dir build_${{matrix.build_type}} \
+                --config ${{matrix.build_type}} \
+                --output-on-failure \
+                -j$(nproc)
+
+      - name: Install
+        run: |
+          cmake --build build_${{matrix.build_type}}/ \
+                --config ${{matrix.build_type}} \
+                --target install
