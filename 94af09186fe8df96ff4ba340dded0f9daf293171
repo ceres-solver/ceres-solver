@@ -67,6 +67,42 @@
       "message": "Sergiu,\nHow are you finding all these issues with the build system? can we automate this as part of ceres solver\u0027s github repo itself?\n",
       "revId": "94af09186fe8df96ff4ba340dded0f9daf293171",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8daea2a2_7d07dbb4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-06T14:59:19Z",
+      "side": 1,
+      "message": "NDK is a customized LLVM, not vanilla one.",
+      "parentUuid": "895a693d_904f068d",
+      "revId": "94af09186fe8df96ff4ba340dded0f9daf293171",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b624a3d_1a148263",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-06T14:59:19Z",
+      "side": 1,
+      "message": "Yes, this is what I\u0027m preparing to submit.",
+      "parentUuid": "29f20d3e_f586887f",
+      "revId": "94af09186fe8df96ff4ba340dded0f9daf293171",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
