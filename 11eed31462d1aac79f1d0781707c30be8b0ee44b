@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88342b54_5f70870c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-06T17:06:37Z",
+      "side": 1,
+      "message": "Successful runs can be seen here: https://github.com/sergiud/ceres-solver/actions (github-workflow branch). These changes depend on this CL: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/20982\n\nTo effectively use Github workflows, I recommend moving the development to Github. This way, successful workflow runs can be used as a precondition for merging PRs minimizing the likelihood of code breakage.",
+      "revId": "11eed31462d1aac79f1d0781707c30be8b0ee44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
