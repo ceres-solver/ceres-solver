@@ -1,0 +1,167 @@
+name: Windows
+
+on: [push, pull_request]
+
+jobs:
+  build-msvc:
+    name: ${{matrix.msvc}}-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
+    runs-on: ${{matrix.os}}
+    defaults:
+      run:
+        shell: powershell
+    env:
+      CL: /MP
+      CMAKE_GENERATOR: ${{matrix.generator}}
+      CMAKE_GENERATOR_PLATFORM: ${{matrix.arch}}
+    strategy:
+      fail-fast: true
+      matrix:
+        arch:
+          - x64
+        build_type:
+          - Release
+        msvc:
+          - VS-16-2019
+          - VS-17-2022
+        lib:
+          - shared
+        include:
+          - msvc: VS-16-2019
+            os: windows-2019
+            generator: 'Visual Studio 16 2019'
+            marker: vc16
+          - msvc: VS-17-2022
+            os: windows-2022
+            generator: 'Visual Studio 17 2022'
+            marker: vc17
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache gflags
+        id: cache-gflags
+        uses: actions/cache@v2
+        with:
+          path: gflags/
+          key: ${{matrix.msvc}}-gflags-2.2.2-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
+
+      - name: Download gflags
+        if: steps.cache-gflags.outputs.cache-hit != 'true'
+        run: |
+          (New-Object System.Net.WebClient).DownloadFile("https://github.com/gflags/gflags/archive/refs/tags/v2.2.2.zip", "v2.2.2.zip");
+          Expand-Archive -Path v2.2.2.zip -DestinationPath .;
+
+      - name: Setup gflags
+        if: steps.cache-gflags.outputs.cache-hit != 'true'
+        run: |
+          cmake -S gflags-2.2.2 -B build-gflags `
+                -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} `
+                -DBUILD_TESTING=OFF `
+                -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/gflags
+          cmake --build build-gflags `
+                --config ${{matrix.build_type}} `
+                --target install
+
+      - name: Cache glog
+        id: cache-glog
+        uses: actions/cache@v2
+        with:
+          path: glog/
+          key: ${{matrix.msvc}}-glog-0.6.0rc1-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
+
+      - name: Download glog
+        if: steps.cache-glog.outputs.cache-hit != 'true'
+        run: |
+          (New-Object System.Net.WebClient).DownloadFile("https://github.com/google/glog/archive/refs/tags/v0.6.0-rc1.zip", "v0.6.0-rc1.zip");
+          Expand-Archive -Path v0.6.0-rc1.zip -DestinationPath .;
+
+      - name: Setup glog
+        if: steps.cache-glog.outputs.cache-hit != 'true'
+        run: |
+          cmake -S glog-0.6.0-rc1 -B build-glog `
+                -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} `
+                -DBUILD_TESTING=OFF `
+                -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/glog `
+                -DCMAKE_PREFIX_PATH=${{github.workspace}}/gflags
+          cmake --build build-glog `
+                --config ${{matrix.build_type}} `
+                --target install
+
+      - name: Cache SuiteSparse
+        id: cache-suitesparse
+        uses: actions/cache@v2
+        with:
+          path: suitesparse/
+          key: ${{matrix.msvc}}-suitesparse-5.10.1-cmake.1-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
+
+      - name: Download SuiteSparse
+        if: steps.cache-suitesparse.outputs.cache-hit != 'true'
+        run: |
+          (New-Object System.Net.WebClient).DownloadFile("https://github.com/sergiud/SuiteSparse/releases/download/5.10.1-cmake.1/SuiteSparse-5.10.1-cmake.1-${{matrix.marker}}-Win64-${{matrix.build_type}}-${{matrix.lib}}-gpl.zip", "suitesparse.zip");
+          Expand-Archive -Path suitesparse.zip -DestinationPath ${{github.workspace}}/suitesparse;
+
+      - name: Cache Eigen
+        id: cache-eigen
+        uses: actions/cache@v2
+        with:
+          path: eigen/
+          key: ${{runner.os}}-eigen-3.4.0
+
+      - name: Download Eigen
+        if: steps.cache-eigen.outputs.cache-hit != 'true'
+        run: |
+          (New-Object System.Net.WebClient).DownloadFile("https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.zip", "eigen-3.4.0.zip");
+          Expand-Archive -Path eigen-3.4.0.zip -DestinationPath .;
+
+      - name: Setup Eigen
+        if: steps.cache-eigen.outputs.cache-hit != 'true'
+        run: |
+          cmake -S eigen-3.4.0 -B build-eigen `
+                -DBUILD_TESTING=OFF `
+                -DCMAKE_Fortran_COMPILER= `
+                -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/eigen `
+                -DEIGEN_BUILD_DOC=OFF
+          cmake --build build-eigen `
+                --config ${{matrix.build_type}} `
+                --target install
+
+      - name: Setup Build Environment
+        run: |
+          echo "Eigen3_ROOT=${{github.workspace}}/eigen" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "gflags_ROOT=${{github.workspace}}/gflags" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "glog_ROOT=${{github.workspace}}/glog" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CMAKE_PREFIX_PATH=${{github.workspace}}/suitesparse" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Setup Runtime Environment
+        run: |
+          echo '${{github.workspace}}\gflags\bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo '${{github.workspace}}\glog\bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo '${{github.workspace}}\suitesparse\bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Configure
+        run: |
+          cmake -S . -B build_${{matrix.build_type}}/ `
+                -DBLAS_blas_LIBRARY=${{github.workspace}}/suitesparse/lib/libblas.lib `
+                -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} `
+                -DCMAKE_CONFIGURATION_TYPES=${{matrix.build_type}} `
+                -DCMAKE_INSTALL_PREFIX:PATH=${{github.workspace}}/install `
+                -DLAPACK_lapack_LIBRARY=${{github.workspace}}/suitesparse/lib/liblapack.lib
+
+      - name: Build
+        run: |
+          cmake --build build_${{matrix.build_type}}/ `
+                --config ${{matrix.build_type}}
+
+      - name: Test
+        env:
+          CTEST_OUTPUT_ON_FAILURE: 1
+        run: |
+          cmake --build build_${{matrix.build_type}}/ `
+                --config ${{matrix.build_type}} `
+                --target RUN_TESTS
+
+      - name: Install
+        run: |
+          cmake --build build_${{matrix.build_type}}/ `
+                --config ${{matrix.build_type}} `
+                --target INSTALL
