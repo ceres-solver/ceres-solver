@@ -112,19 +112,35 @@ if (NOT SuiteSparse_FIND_COMPONENTS)
     COLAMD
     SPQR
   )
+
+  foreach (component IN_LISTS SuiteSparse_FIND_COMPONENTS)
+    set (SuiteSparse_FIND_REQUIRED_${component} TRUE)
+  endforeach (component IN_LISTS SuiteSparse_FIND_COMPONENTS)
 endif (NOT SuiteSparse_FIND_COMPONENTS)
+
+# Assume SuiteSparse was found and set it to false only if third-party
+# dependencies could not be located. SuiteSparse components are handled by
+# FindPackageHandleStandardArgs HANDLE_COMPONENTS option.
+set (SuiteSparse_FOUND TRUE)
 
 include (CheckLibraryExists)
 
 # CHOLMOD depends on AMD, CAMD, CCOLAMD, and COLAMD.
 if (CHOLMOD IN_LIST SuiteSparse_FIND_COMPONENTS)
-  list (APPEND SuiteSparse_FIND_COMPONENTS AMD CAMD CCOLAMD COLAMD)
+  list (APPEND SuiteSparse_IMPLICIT_COMPONENTS AMD CAMD CCOLAMD COLAMD)
 endif (CHOLMOD IN_LIST SuiteSparse_FIND_COMPONENTS)
 
 # SPQR depends on CHOLMOD.
 if (SPQR IN_LIST SuiteSparse_FIND_COMPONENTS)
-  list (APPEND SuiteSparse_FIND_COMPONENTS CHOLMOD)
+  list (APPEND SuiteSparse_IMPLICIT_COMPONENTS CHOLMOD)
 endif (SPQR IN_LIST SuiteSparse_FIND_COMPONENTS)
+
+# Implicit components are always required
+foreach (component IN_LISTS SuiteSparse_IMPLICIT_COMPONENTS)
+  set (SuiteSparse_FIND_REQUIRED_${component} TRUE)
+endforeach (component IN_LISTS SuiteSparse_IMPLICIT_COMPONENTS)
+
+list (APPEND SuiteSparse_FIND_COMPONENTS ${SuiteSparse_IMPLICIT_COMPONENTS})
 
 # Do not list components multiple times.
 list (REMOVE_DUPLICATES SuiteSparse_FIND_COMPONENTS)
@@ -141,7 +157,10 @@ endmacro(SuiteSparse_RESET_FIND_LIBRARY_PREFIX)
 # unsets all public (designed to be used externally) variables and reports
 # error message at priority depending upon [REQUIRED/QUIET/<NONE>] argument.
 macro(SuiteSparse_REPORT_NOT_FOUND REASON_MSG)
-  # Do NOT unset SuiteSparse_FOUND_REQUIRED_VARS here, as it is used by
+  # Will be set to FALSE by find_package_handle_standard_args
+  unset (SuiteSparse_FOUND)
+
+  # Do NOT unset SuiteSparse_REQUIRED_VARS here, as it is used by
   # FindPackageHandleStandardArgs() to generate the automatic error message on
   # failure which highlights which components are missing.
 
@@ -182,23 +201,17 @@ list(APPEND SuiteSparse_CHECK_PATH_SUFFIXES
 # Wrappers to find_path/library that pass the SuiteSparse search hints/paths.
 #
 # suitesparse_find_component(<component> [FILES name1 [name2 ...]]
-#                                        [LIBRARIES name1 [name2 ...]]
-#                                        [REQUIRED])
+#                                        [LIBRARIES name1 [name2 ...]])
 macro(suitesparse_find_component COMPONENT)
   include(CMakeParseArguments)
-  set(OPTIONS REQUIRED)
   set(MULTI_VALUE_ARGS FILES LIBRARIES)
-  cmake_parse_arguments(SuiteSparse_FIND_${COMPONENT}
-    "${OPTIONS}" "" "${MULTI_VALUE_ARGS}" ${ARGN})
-
-  if (SuiteSparse_FIND_${COMPONENT}_REQUIRED)
-    list(APPEND SuiteSparse_FOUND_REQUIRED_VARS SuiteSparse_${COMPONENT}_FOUND)
-  endif()
+  cmake_parse_arguments(SuiteSparse_FIND_COMPONENT_${COMPONENT}
+    "" "" "${MULTI_VALUE_ARGS}" ${ARGN})
 
   set(SuiteSparse_${COMPONENT}_FOUND TRUE)
-  if (SuiteSparse_FIND_${COMPONENT}_FILES)
+  if (SuiteSparse_FIND_COMPONENT_${COMPONENT}_FILES)
     find_path(SuiteSparse_${COMPONENT}_INCLUDE_DIR
-      NAMES ${SuiteSparse_FIND_${COMPONENT}_FILES}
+      NAMES ${SuiteSparse_FIND_COMPONENT_${COMPONENT}_FILES}
       PATH_SUFFIXES ${SuiteSparse_CHECK_PATH_SUFFIXES})
     if (SuiteSparse_${COMPONENT}_INCLUDE_DIR)
       message(STATUS "Found ${COMPONENT} headers in: "
@@ -207,7 +220,7 @@ macro(suitesparse_find_component COMPONENT)
     else()
       # Specified headers not found.
       set(SuiteSparse_${COMPONENT}_FOUND FALSE)
-      if (SuiteSparse_FIND_${COMPONENT}_REQUIRED)
+      if (SuiteSparse_FIND_REQUIRED_${COMPONENT})
         suitesparse_report_not_found(
           "Did not find ${COMPONENT} header (required SuiteSparse component).")
       else()
@@ -219,9 +232,9 @@ macro(suitesparse_find_component COMPONENT)
     endif()
   endif()
 
-  if (SuiteSparse_FIND_${COMPONENT}_LIBRARIES)
+  if (SuiteSparse_FIND_COMPONENT_${COMPONENT}_LIBRARIES)
     find_library(SuiteSparse_${COMPONENT}_LIBRARY
-      NAMES ${SuiteSparse_FIND_${COMPONENT}_LIBRARIES}
+      NAMES ${SuiteSparse_FIND_COMPONENT_${COMPONENT}_LIBRARIES}
       PATH_SUFFIXES ${SuiteSparse_CHECK_PATH_SUFFIXES})
     if (SuiteSparse_${COMPONENT}_LIBRARY)
       message(STATUS "Found ${COMPONENT} library: ${SuiteSparse_${COMPONENT}_LIBRARY}")
@@ -229,7 +242,7 @@ macro(suitesparse_find_component COMPONENT)
     else ()
       # Specified libraries not found.
       set(SuiteSparse_${COMPONENT}_FOUND FALSE)
-      if (SuiteSparse_FIND_${COMPONENT}_REQUIRED)
+      if (SuiteSparse_FIND_REQUIRED_${COMPONENT})
         suitesparse_report_not_found(
           "Did not find ${COMPONENT} library (required SuiteSparse component).")
       else()
@@ -240,6 +253,16 @@ macro(suitesparse_find_component COMPONENT)
       endif()
     endif()
   endif()
+
+  # A component can be optional (given to OPTIONAL_COMPONENTS). However, if the
+  # component is implicit (must be always present, such as the Config component)
+  # assume it be required as well.
+  if (NOT DEFINED SuiteSparse_FIND_REQUIRED_${COMPONENT} OR
+      SuiteSparse_FIND_REQUIRED_${COMPONENT})
+    list (APPEND SuiteSparse_REQUIRED_VARS SuiteSparse_${COMPONENT}_INCLUDE_DIR)
+    list (APPEND SuiteSparse_REQUIRED_VARS SuiteSparse_${COMPONENT}_LIBRARY)
+  endif (NOT DEFINED SuiteSparse_FIND_REQUIRED_${COMPONENT} OR
+    SuiteSparse_FIND_REQUIRED_${COMPONENT})
 
   # Define the target only if the include directory and the library were found
   if (SuiteSparse_${COMPONENT}_INCLUDE_DIR AND SuiteSparse_${COMPONENT}_LIBRARY)
@@ -258,7 +281,7 @@ endmacro()
 # automatic failure message generated by FindPackageHandleStandardArgs()
 # when not all required components are found is helpful, we maintain a list
 # of all variables that must be defined for SuiteSparse to be considered found.
-unset(SuiteSparse_FOUND_REQUIRED_VARS)
+unset(SuiteSparse_REQUIRED_VARS)
 
 # BLAS.
 find_package(BLAS QUIET)
@@ -266,7 +289,6 @@ if (NOT BLAS_FOUND)
   suitesparse_report_not_found(
     "Did not find BLAS library (required for SuiteSparse).")
 endif (NOT BLAS_FOUND)
-list(APPEND SuiteSparse_FOUND_REQUIRED_VARS BLAS_FOUND)
 
 # LAPACK.
 find_package(LAPACK QUIET)
@@ -274,7 +296,6 @@ if (NOT LAPACK_FOUND)
   suitesparse_report_not_found(
     "Did not find LAPACK library (required for SuiteSparse).")
 endif (NOT LAPACK_FOUND)
-list(APPEND SuiteSparse_FOUND_REQUIRED_VARS LAPACK_FOUND)
 
 foreach (component IN LISTS SuiteSparse_FIND_COMPONENTS)
   string (TOLOWER ${component} component_lower)
@@ -285,7 +306,8 @@ foreach (component IN LISTS SuiteSparse_FIND_COMPONENTS)
     set (component_header ${component_lower}.h)
   endif (component STREQUAL "SPQR")
 
-  suitesparse_find_component(${component} REQUIRED FILES ${component_header}
+  suitesparse_find_component(${component}
+    FILES ${component_header}
     LIBRARIES ${component_lower})
 endforeach (component IN LISTS SuiteSparse_FIND_COMPONENTS)
 
@@ -450,7 +472,7 @@ suitesparse_reset_find_library_prefix()
 include(FindPackageHandleStandardArgs)
 if (SuiteSparse_FOUND)
   find_package_handle_standard_args(SuiteSparse
-    REQUIRED_VARS ${SuiteSparse_FOUND_REQUIRED_VARS}
+    REQUIRED_VARS ${SuiteSparse_REQUIRED_VARS}
     VERSION_VAR SuiteSparse_VERSION
     FAIL_MESSAGE "Failed to find some/all required components of SuiteSparse."
     HANDLE_COMPONENTS)
@@ -459,7 +481,7 @@ else (SuiteSparse_FOUND)
   # find SuiteSparse to avoid a confusing autogenerated failure message
   # that states 'not found (missing: FOO) (found version: x.y.z)'.
   find_package_handle_standard_args(SuiteSparse
-    REQUIRED_VARS ${SuiteSparse_FOUND_REQUIRED_VARS}
+    REQUIRED_VARS ${SuiteSparse_REQUIRED_VARS}
     FAIL_MESSAGE "Failed to find some/all required components of SuiteSparse."
     HANDLE_COMPONENTS)
 endif (SuiteSparse_FOUND)
