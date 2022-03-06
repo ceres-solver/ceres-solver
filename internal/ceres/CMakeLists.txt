@@ -400,19 +400,7 @@ install(TARGETS ceres
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 if (BUILD_TESTING AND GFLAGS)
-  add_library(gtest gmock_gtest_all.cc gmock_main.cc)
-  if (BUILD_SHARED_LIBS)
-    # Define gtest-specific shared library flags for compilation.
-    #
-    # NOTE: We export the test_srcdir flag not from gflags but from our gtest
-    # target. Therefore, the gflags visibility macro must be overriden by that
-    # of gtest.
-    target_compile_definitions(gtest
-      PRIVATE GTEST_CREATE_SHARED_LIBRARY=1
-              GFLAGS_DLL_DEFINE_FLAG=GTEST_API_
-      INTERFACE GTEST_LINKED_AS_SHARED_LIBRARY=1
-                GFLAGS_DLL_DECLARE_FLAG=GTEST_API_)
-  endif()
+  add_library(gtest STATIC gmock_gtest_all.cc gmock_main.cc)
 
   target_include_directories(gtest PRIVATE ${Ceres_SOURCE_DIR}/internal/ceres)
   target_link_libraries(gtest PRIVATE Ceres::ceres gflags)
