@@ -33,6 +33,23 @@
       "message": "Successful build: https://github.com/sergiud/ceres-solver/actions/runs/1941437379",
       "revId": "94af09186fe8df96ff4ba340dded0f9daf293171",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "895a693d_904f068d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-06T14:57:16Z",
+      "side": 1,
+      "message": "I am surprised by this fix since NDK uses LLVM too just like other linux and macos, why does this become a problem with the ndk?",
+      "revId": "94af09186fe8df96ff4ba340dded0f9daf293171",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
