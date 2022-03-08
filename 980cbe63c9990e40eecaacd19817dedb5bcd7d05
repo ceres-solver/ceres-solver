@@ -16,6 +16,23 @@
       "message": "Alex should look at this.",
       "revId": "980cbe63c9990e40eecaacd19817dedb5bcd7d05",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c72874f_6b1d5657",
+        "filename": "cmake/FindCXSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T19:04:37Z",
+      "side": 1,
+      "message": "Why does this change the behaviour when the call to find_package_handle_standard_args() directly above requires that both CXSparse_INCLUDE_DIR and CXSparse_LIBRARY be set in order for CXSparse_FOUND to be set?",
+      "revId": "980cbe63c9990e40eecaacd19817dedb5bcd7d05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
