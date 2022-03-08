@@ -98,6 +98,11 @@ if (SuiteSparse_FOUND)
   return ()
 endif (SuiteSparse_FOUND)
 
+# Push CMP0057 to enable support for IN_LIST, when cmake_minimum_required is
+# set to <3.3.
+cmake_policy (PUSH)
+cmake_policy (SET CMP0057 NEW)
+
 if (NOT SuiteSparse_FIND_COMPONENTS)
   set (SuiteSparse_FIND_COMPONENTS
     AMD
@@ -111,17 +116,17 @@ endif (NOT SuiteSparse_FIND_COMPONENTS)
 
 include (CheckLibraryExists)
 
-# CHOLMOD depends on AMD, CAMD, CCOLAMD, and COLAMD
+# CHOLMOD depends on AMD, CAMD, CCOLAMD, and COLAMD.
 if (CHOLMOD IN_LIST SuiteSparse_FIND_COMPONENTS)
   list (APPEND SuiteSparse_FIND_COMPONENTS AMD CAMD CCOLAMD COLAMD)
 endif (CHOLMOD IN_LIST SuiteSparse_FIND_COMPONENTS)
 
-# SPQR depends on CHOLMOD
+# SPQR depends on CHOLMOD.
 if (SPQR IN_LIST SuiteSparse_FIND_COMPONENTS)
   list (APPEND SuiteSparse_FIND_COMPONENTS CHOLMOD)
 endif (SPQR IN_LIST SuiteSparse_FIND_COMPONENTS)
 
-# Do note list components multiple times
+# Do not list components multiple times.
 list (REMOVE_DUPLICATES SuiteSparse_FIND_COMPONENTS)
 
 # Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when
@@ -458,3 +463,6 @@ else (SuiteSparse_FOUND)
     FAIL_MESSAGE "Failed to find some/all required components of SuiteSparse."
     HANDLE_COMPONENTS)
 endif (SuiteSparse_FOUND)
+
+# Pop CMP0057.
+cmake_policy (POP)
