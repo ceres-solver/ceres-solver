@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "783a1c37_86e52337",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6647
+      },
+      "writtenOn": "2022-03-08T21:34:37Z",
+      "side": 1,
+      "message": "Hi!\nJust fixing an issue that was raised here -- https://github.com/colmap/colmap/issues/1451",
+      "revId": "cad7ac4fa360e71f0576b929eb243415f109b2f6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
