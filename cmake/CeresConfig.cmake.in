@@ -60,6 +60,12 @@
 #       CMake target already includes the definition of its public
 #       include directories.
 
+# Ceres targets CMake 3.10, but the project invoking find_package()
+# may have a lower version set. We push 3.10 to the policy stack to
+# avoid compatibility issues.
+cmake_policy(PUSH)
+cmake_policy(VERSION 3.10)
+
 include(CMakeFindDependencyMacro)
 
 # Called if we failed to find Ceres or any of its required dependencies,
@@ -338,3 +344,6 @@ if (NOT TARGET ceres)
   add_library(ceres INTERFACE IMPORTED)
   set_target_properties(ceres PROPERTIES INTERFACE_LINK_LIBRARIES Ceres::ceres)
 endif()
+
+# Pop CMake version from the policy stack.
+cmake_policy(POP)

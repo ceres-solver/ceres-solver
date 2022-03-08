@@ -111,18 +111,18 @@ endif (NOT SuiteSparse_FIND_COMPONENTS)
 
 include (CheckLibraryExists)
 
-# CHOLMOD depends on AMD, CAMD, CCOLAMD, and COLAMD
+# CHOLMOD depends on AMD, CAMD, CCOLAMD, and COLAMD.
 if (CHOLMOD IN_LIST SuiteSparse_FIND_COMPONENTS)
-  list (APPEND SuiteSparse_FIND_COMPONENTS AMD CAMD CCOLAMD COLAMD)
+  list(APPEND SuiteSparse_FIND_COMPONENTS AMD CAMD CCOLAMD COLAMD)
 endif (CHOLMOD IN_LIST SuiteSparse_FIND_COMPONENTS)
 
-# SPQR depends on CHOLMOD
+# SPQR depends on CHOLMOD.
 if (SPQR IN_LIST SuiteSparse_FIND_COMPONENTS)
-  list (APPEND SuiteSparse_FIND_COMPONENTS CHOLMOD)
+  list(APPEND SuiteSparse_FIND_COMPONENTS CHOLMOD)
 endif (SPQR IN_LIST SuiteSparse_FIND_COMPONENTS)
 
-# Do note list components multiple times
-list (REMOVE_DUPLICATES SuiteSparse_FIND_COMPONENTS)
+# Do not list components multiple times.
+list(REMOVE_DUPLICATES SuiteSparse_FIND_COMPONENTS)
 
 # Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when
 # FindSuiteSparse was invoked.
