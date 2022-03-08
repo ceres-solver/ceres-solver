@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad01be3f_f5417276",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "I think we can use a clearer name here given that this is not part of the standard GitHub workflow definition and I think you are referring here to the Android API version.  Something like android_api_version would be clearer.",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ce22622_1736e26d",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "Is this really necessary?  What compiler would it otherwise detect given that CMAKE_SYSTEM_NAME is specified?",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fad5180f_06b6f5eb",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "I think you should be able to use: CMAKE_ANDROID_API here instead which would be clearer",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebe40ebf_138ddb9b",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "Same comment as above re: CMAKE_ANDROID_API",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb1de867_13daf3bf",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "Same comment as above re: CMAKE_ANDROID_API",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a4e28e2_963e9286",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "Same comment as above re: CMAKE_ANDROID_API",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "796d5ecd_588eb1bf",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "We could also extend this to include the CERES_THREADING_MODEL being set to CXX_THREADS or OPENMP, which should be available with (the default compiler) GCC on these OSs",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bacb00f_ae2bd426",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "It would be good to include Google Benchmark here s/t the benchmarks are also included",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c977c02_7feeced4",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "I don\u0027t think we should do this as this is isn\u0027t going to replicate the default behaviour on someone\u0027s stock Ubuntu machine.",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6570f958_cc6a8583",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "I would use --output-on-failure here instead of CTEST_OUTPUT_ON_FAILURE for consistency.",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "007bbd03_e3b19da0",
+        "filename": ".github/workflows/macos.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "It would be good to include Google Benchmark here s/t the benchmarks are also included",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56ce91a2_14e07d4b",
+        "filename": ".github/workflows/macos.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "As in the Linux case, I don\u0027t think we should do this here as it is not representative of a default build on someone else\u0027s machine",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96753888_c373ba4d",
+        "filename": ".github/workflows/macos.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "I would use --output-on-failure here instead of CTEST_OUTPUT_ON_FAILURE for consistency.",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "115d6dff_4750c36f",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "I assume that you can\u0027t use ctest directly as before on Windows for some reason?\n\nIf you can, same comment as before re: --output-on-failure here instead of CTEST_OUTPUT_ON_FAILURE for consistency.",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be730d95_aa7c349d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T20:12:59Z",
+      "side": 1,
+      "message": "This looks great Sergiu, I have various comments but nothing major.  I think we could also use the macOS agents to build for iOS if we want to replicate that job from Travis as well",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
