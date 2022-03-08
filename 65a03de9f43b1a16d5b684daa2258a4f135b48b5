@@ -16,6 +16,74 @@
       "message": "Alex should look at this.",
       "revId": "65a03de9f43b1a16d5b684daa2258a4f135b48b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5546d7c9_c26210e4",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T19:32:10Z",
+      "side": 1,
+      "message": "It would be best to explicitly unset SuiteSparse_FOUND here as we used to do now that you are defaulting it to TRUE given how this is used.",
+      "revId": "65a03de9f43b1a16d5b684daa2258a4f135b48b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41f99734_49da3c39",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T19:32:10Z",
+      "side": 1,
+      "message": "This changes the behaviour, as even if this macro was not invoked with REQUIRED, the variables are still appended to the required list when they shouldn\u0027t be.",
+      "revId": "65a03de9f43b1a16d5b684daa2258a4f135b48b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e06f708e_c8d7ea6e",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T19:32:10Z",
+      "side": 1,
+      "message": "See above, this can be removed once suitesparse_report_not_found() is updated as there is no situation where that would be called and we should not reset SuiteSparse_FOUND",
+      "revId": "65a03de9f43b1a16d5b684daa2258a4f135b48b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74dd88ad_09482721",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-08T19:32:10Z",
+      "side": 1,
+      "message": "As above, this can be removed",
+      "revId": "65a03de9f43b1a16d5b684daa2258a4f135b48b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
