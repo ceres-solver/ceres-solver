@@ -227,6 +227,24 @@
       "parentUuid": "f93192e1_05a7e193",
       "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a793e08_9f737259",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6647
+      },
+      "writtenOn": "2022-03-09T10:33:42Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "0dfdf18d_dcc2af46",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
