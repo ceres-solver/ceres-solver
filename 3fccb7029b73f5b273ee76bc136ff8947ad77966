@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7a40242_150479cf",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-09T03:40:23Z",
+      "side": 1,
+      "message": "```\ncmake_policy (PUSH)\ncmake_policy (SET CMP0057 NEW) # if IN_LIST\n```",
+      "revId": "3fccb7029b73f5b273ee76bc136ff8947ad77966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d88dc0a_b789e2a5",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-09T03:40:23Z",
+      "side": 1,
+      "message": "Ceres solver requires at least CMake 3.10. Therefore, going back to outdated paradigm (CMake 3.3 is almost 7 years old) is not necessary. Instead, `CMP0057` should be pushed onto the policy stack.",
+      "revId": "3fccb7029b73f5b273ee76bc136ff8947ad77966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "156b4503_d38fe572",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-09T03:40:23Z",
+      "side": 1,
+      "message": "```\ncmake_policy (POP)\n```",
+      "revId": "3fccb7029b73f5b273ee76bc136ff8947ad77966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
