@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0aa8832_9a86529f",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6647
+      },
+      "writtenOn": "2022-03-09T08:27:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b7a40242_150479cf",
+      "revId": "3fccb7029b73f5b273ee76bc136ff8947ad77966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d88dc0a_b789e2a5",
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9a9edf5b_898136d3",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6647
+      },
+      "writtenOn": "2022-03-09T08:27:56Z",
+      "side": 1,
+      "message": "Agree that going back to the old pattern feels wrong!\n\nI just uploaded an alternative approach, which does a policy push but of a local CMake version (3.10) for the whole `CeresConfig.cmake` file instead of special-casing the `IN_LIST` operator for `FindSuiteSparse.cmake`. This feels more general/robust to me — curious about your thoughts.",
+      "parentUuid": "8d88dc0a_b789e2a5",
+      "revId": "3fccb7029b73f5b273ee76bc136ff8947ad77966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "156b4503_d38fe572",
         "filename": "cmake/FindSuiteSparse.cmake",
         "patchSetId": 6
@@ -48,6 +84,24 @@
       "writtenOn": "2022-03-09T03:40:23Z",
       "side": 1,
       "message": "```\ncmake_policy (POP)\n```",
+      "revId": "3fccb7029b73f5b273ee76bc136ff8947ad77966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e2b09d8_b9d129f9",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 6647
+      },
+      "writtenOn": "2022-03-09T08:27:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "156b4503_d38fe572",
       "revId": "3fccb7029b73f5b273ee76bc136ff8947ad77966",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
