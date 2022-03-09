@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "00b0ec66_e455c417",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-09T09:28:22Z",
+      "side": 1,
+      "message": "This is not a good idea. If `find_dependecy/find_package` fails, CMake will additionally complain about a missing `cmake_policy (POP)` due to early return performed by one of the former commands which can be confusing for users. Also, someone may choose to use `FindSuiteSparse.cmake` outside of Ceres and will likely face the same problem again.\n\nTherefore, applying the policy locally as previously suggested is a more robust approach.",
+      "parentUuid": "9a9edf5b_898136d3",
+      "revId": "3fccb7029b73f5b273ee76bc136ff8947ad77966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "156b4503_d38fe572",
         "filename": "cmake/FindSuiteSparse.cmake",
         "patchSetId": 6

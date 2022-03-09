@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe2d761c_37fda34f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-09T09:28:22Z",
+      "side": 1,
+      "message": "The commit message is misleading since Ceres does not aim to support CMake 3.3. Instead, reference the missing policy. COLMAP is not relevant here.",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca5f4ba0_f236e42c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-09T09:28:22Z",
+      "side": 1,
+      "message": "Again, misleading because Ceres requires at least CMake 3.10.",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "707f960b_06268887",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-09T09:28:22Z",
+      "side": 1,
+      "message": "This problem is not COLMAP specific but is caused by a missing policy setting that needs to be explicitly enabled.",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0245a16e_44fdd91c",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-09T09:28:22Z",
+      "side": 1,
+      "message": "Revert whitespace changes.",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5f277c2_1f50eb7a",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-09T09:28:22Z",
+      "side": 1,
+      "message": "Revert whitespace changes.",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2b3e9ad_c26273c6",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-09T09:28:22Z",
+      "side": 1,
+      "message": "Why do you need to change the whitespaces? Looks more inconsistent than before.",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
