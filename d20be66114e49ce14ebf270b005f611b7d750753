@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7bc28f5_1db88cb7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6647
+      },
+      "writtenOn": "2022-03-09T10:16:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe2d761c_37fda34f",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca5f4ba0_f236e42c",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-03-09T09:28:22Z",
       "side": 1,
       "message": "Again, misleading because Ceres requires at least CMake 3.10.",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "806dece1_dc49a85c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6647
+      },
+      "writtenOn": "2022-03-09T10:16:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca5f4ba0_f236e42c",
       "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -52,6 +88,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1fe227b_8ebffdd9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6647
+      },
+      "writtenOn": "2022-03-09T10:16:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "707f960b_06268887",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0245a16e_44fdd91c",
@@ -65,6 +119,24 @@
       "writtenOn": "2022-03-09T09:28:22Z",
       "side": 1,
       "message": "Revert whitespace changes.",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35ae44b0_da1defab",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6647
+      },
+      "writtenOn": "2022-03-09T10:16:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0245a16e_44fdd91c",
       "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -86,6 +158,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7df0298a_1b3befe2",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 6647
+      },
+      "writtenOn": "2022-03-09T10:16:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e5f277c2_1f50eb7a",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2b3e9ad_c26273c6",
@@ -99,6 +189,24 @@
       "writtenOn": "2022-03-09T09:28:22Z",
       "side": 1,
       "message": "Why do you need to change the whitespaces? Looks more inconsistent than before.",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f93192e1_05a7e193",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6647
+      },
+      "writtenOn": "2022-03-09T10:16:43Z",
+      "side": 1,
+      "message": "This was because `list()` is exclusively used in the rest of this file + repository.\n\nIf you\u0027d prefer I can introduce the whitespace to all of the `list()` calls in this file (~7), though it\u0027d be inconsistent with occurences in the rest of the CMake files (~70).",
+      "parentUuid": "e2b3e9ad_c26273c6",
       "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }

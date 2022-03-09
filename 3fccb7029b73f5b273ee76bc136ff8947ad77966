@@ -89,6 +89,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9b978e5_0c8cd86b",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6647
+      },
+      "writtenOn": "2022-03-09T10:16:43Z",
+      "side": 1,
+      "message": "Appreciate the explanation \u0026 made the change 👍\n\nIt still feels weird to be special-casing operations like these, since Ceres is written and built with `cmake_minimum_required(VERSION 3.10)` in mind and these special cases only matter when that version is set much lower. But perhaps there are just no perfect solutions here.",
+      "parentUuid": "00b0ec66_e455c417",
+      "revId": "3fccb7029b73f5b273ee76bc136ff8947ad77966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "156b4503_d38fe572",
