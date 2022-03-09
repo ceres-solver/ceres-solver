@@ -209,6 +209,24 @@
       "parentUuid": "e2b3e9ad_c26273c6",
       "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dfdf18d_dcc2af46",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-09T10:24:50Z",
+      "side": 1,
+      "message": "Reverting is sufficient since the changes are unrelated.",
+      "parentUuid": "f93192e1_05a7e193",
+      "revId": "d20be66114e49ce14ebf270b005f611b7d750753",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
