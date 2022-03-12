@@ -32,6 +32,8 @@
 
 #include <string>
 
+#include "ceres/internal/config.h"
+
 #ifndef CERES_NO_CUDA
 #include "cuda_runtime.h"
 #include "cublas_v2.h"

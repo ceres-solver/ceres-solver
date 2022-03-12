@@ -31,6 +31,7 @@
 #include <string>
 
 #include "ceres/dense_cholesky.h"
+#include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 
 #include "glog/logging.h"
