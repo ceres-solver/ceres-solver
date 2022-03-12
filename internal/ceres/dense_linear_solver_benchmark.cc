@@ -32,6 +32,7 @@
 #include "benchmark/benchmark.h"
 #include "ceres/context_impl.h"
 #include "ceres/dense_sparse_matrix.h"
+#include "ceres/internal/config.h"
 #include "ceres/linear_solver.h"
 #include "ceres/random.h"
 

@@ -35,6 +35,7 @@
 #include <cstdlib>
 
 #include "ceres/autodiff_cost_function.h"
+#include "ceres/internal/config.h"
 #include "ceres/problem.h"
 #include "ceres/solver.h"
 #include "ceres/test_util.h"

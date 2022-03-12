@@ -36,6 +36,7 @@
 #include <vector>
 
 #include "Eigen/Dense"
+#include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "glog/logging.h"

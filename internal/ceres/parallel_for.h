@@ -28,8 +28,8 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
-#ifndef CERES_INTERNAL_PARALLEL_FOR_
-#define CERES_INTERNAL_PARALLEL_FOR_
+#ifndef CERES_INTERNAL_PARALLEL_FOR_H_
+#define CERES_INTERNAL_PARALLEL_FOR_H_
 
 #include <functional>
 

@@ -30,6 +30,8 @@
 
 #include "ceres/wall_time.h"
 
+#include "ceres/internal/config.h"
+
 #ifdef CERES_USE_OPENMP
 #include <omp.h>
 #else
