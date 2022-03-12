@@ -136,6 +136,7 @@ COPYRIGHT_HEADER = (
 
 BUNDLE_ADJUSTMENT_TEST_TEMPLATE = (COPYRIGHT_HEADER + """
 
+#include "ceres/internal/config.h"
 #include "bundle_adjustment_test_util.h"
 %(preprocessor_conditions_begin)s
 namespace ceres {

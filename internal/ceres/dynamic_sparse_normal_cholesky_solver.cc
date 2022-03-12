@@ -40,6 +40,7 @@
 #include "Eigen/SparseCore"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/cxsparse.h"
+#include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/suitesparse.h"

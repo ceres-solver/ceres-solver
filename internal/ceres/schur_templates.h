@@ -32,6 +32,7 @@
 #ifndef CERES_INTERNAL_SCHUR_TEMPLATES_H_
 #define CERES_INTERNAL_SCHUR_TEMPLATES_H_
 
+#include "ceres/internal/config.h"
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 

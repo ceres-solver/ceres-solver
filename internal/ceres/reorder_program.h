@@ -117,4 +117,4 @@ CERES_NO_EXPORT int ReorderResidualBlocksByPartition(
 
 #include "ceres/internal/reenable_warnings.h"
 
-#endif  // CERES_INTERNAL_REORDER_PROGRAM_
+#endif  // CERES_INTERNAL_REORDER_PROGRAM_H_

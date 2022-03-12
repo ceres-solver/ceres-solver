@@ -41,6 +41,7 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/dense_cholesky.h"
+#include "ceres/internal/config.h"
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"

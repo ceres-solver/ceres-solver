@@ -35,6 +35,7 @@
 //
 // This file is generated using generate_bundle_adjustment_tests.py.
 
+#include "ceres/internal/config.h"
 #include "bundle_adjustment_test_util.h"
 
 #ifndef CERES_NO_LAPACK
