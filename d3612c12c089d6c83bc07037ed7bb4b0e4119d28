@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0eae346d_132fda52",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-12T23:36:13Z",
+      "side": 0,
+      "message": "I guess this change is unintended, no?",
+      "revId": "d3612c12c089d6c83bc07037ed7bb4b0e4119d28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
