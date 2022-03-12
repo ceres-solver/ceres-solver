@@ -33,6 +33,7 @@
 #include <array>
 #include <map>
 
+#include "ceres/internal/config.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/problem_impl.h"
 #include "ceres/sized_cost_function.h"

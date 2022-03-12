@@ -32,6 +32,7 @@
 
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
+#include "ceres/internal/config.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"

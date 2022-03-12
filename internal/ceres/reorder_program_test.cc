@@ -32,6 +32,7 @@
 
 #include <random>
 
+#include "ceres/internal/config.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"

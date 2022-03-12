@@ -35,6 +35,8 @@
 #include <string>
 #include <vector>
 
+#include "ceres/internal/config.h"
+
 #ifndef CERES_NO_CUDA
 #include "ceres/context_impl.h"
 #include "cuda_runtime.h"

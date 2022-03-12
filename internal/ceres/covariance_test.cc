@@ -41,6 +41,7 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/cost_function.h"
 #include "ceres/covariance_impl.h"
+#include "ceres/internal/config.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/manifold.h"
 #include "ceres/map_util.h"
