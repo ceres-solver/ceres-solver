@@ -34,6 +34,24 @@
       "parentUuid": "0eae346d_132fda52",
       "revId": "d3612c12c089d6c83bc07037ed7bb4b0e4119d28",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51a99045_4d5d7cac",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T00:01:29Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "0a791b19_2ba6801b",
+      "revId": "d3612c12c089d6c83bc07037ed7bb4b0e4119d28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
