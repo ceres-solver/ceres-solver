@@ -137,14 +137,16 @@ if (CUDA_FOUND)
        ${CUDA_cublas_LIBRARY}
        ${CUDA_cusolver_LIBRARY}
        ${CUDA_cusparse_LIBRARY})
-  add_test(
-      NAME cuda_memcheck_dense_qr_test
-      COMMAND cuda-memcheck --leak-check full
-          ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/cuda_dense_qr_test)
-  add_test(
-      NAME cuda_memcheck_dense_cholesky_test
-      COMMAND cuda-memcheck --leak-check full
-          ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/cuda_dense_cholesky_test)
+  if (BUILD_TESTING)
+    add_test(
+        NAME cuda_memcheck_dense_qr_test
+        COMMAND cuda-memcheck --leak-check full
+            $<TARGET_FILE:cuda_dense_qr_test>)
+    add_test(
+        NAME cuda_memcheck_dense_cholesky_test
+        COMMAND cuda-memcheck --leak-check full
+            $<TARGET_FILE:cuda_dense_cholesky_test>)
+  endif (BUILD_TESTING)
 endif (CUDA_FOUND)
 
 if (LAPACK_FOUND)
