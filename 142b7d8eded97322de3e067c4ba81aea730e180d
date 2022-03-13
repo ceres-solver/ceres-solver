@@ -69,6 +69,24 @@
       "parentUuid": "9098e46f_3a52ea82",
       "revId": "142b7d8eded97322de3e067c4ba81aea730e180d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d9122dd_4ef43886",
+        "filename": "cmake/iOS.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T20:06:09Z",
+      "side": 1,
+      "message": "For reference, here\u0027s the failure: https://github.com/sergiud/ceres-solver/runs/5527201590?check_suite_focus\u003dtrue",
+      "parentUuid": "2e8fb538_5f74c017",
+      "revId": "142b7d8eded97322de3e067c4ba81aea730e180d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
