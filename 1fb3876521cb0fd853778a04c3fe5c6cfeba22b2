@@ -16,6 +16,40 @@
       "message": "Sergiu/Alex should review.",
       "revId": "1fb3876521cb0fd853778a04c3fe5c6cfeba22b2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1626922f_84846914",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T00:28:00Z",
+      "side": 1,
+      "message": "To reference the executable you could use `$\u003cTARGET_FILE:cuda_dense_qr_test\u003e`.",
+      "revId": "1fb3876521cb0fd853778a04c3fe5c6cfeba22b2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7388dfb9_698d2e5f",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T00:28:00Z",
+      "side": 1,
+      "message": "As above.",
+      "revId": "1fb3876521cb0fd853778a04c3fe5c6cfeba22b2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
