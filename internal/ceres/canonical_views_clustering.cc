@@ -49,7 +49,6 @@ using IntSet = std::unordered_set<int>;
 
 class CERES_NO_EXPORT CanonicalViewsClustering {
  public:
-
   // Compute the canonical views clustering of the vertices of the
   // graph. centers will contain the vertices that are the identified
   // as the canonical views/cluster centers, and membership is a map

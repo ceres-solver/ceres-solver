@@ -35,8 +35,8 @@
 #include <string>
 #ifndef CERES_NO_CUDA
 #include "ceres/context_impl.h"
-#include "cusolverDn.h"
 #include "cublas_v2.h"
+#include "cusolverDn.h"
 #endif  // CERES_NO_CUDA
 
 #ifndef CERES_NO_LAPACK
@@ -323,8 +323,10 @@ bool CUDADenseQR::Init(ContextImpl* context, std::string* message) {
   return true;
 }
 
-LinearSolverTerminationType CUDADenseQR::Factorize(
-    int num_rows, int num_cols, double* lhs, std::string* message) {
+LinearSolverTerminationType CUDADenseQR::Factorize(int num_rows,
+                                                   int num_cols,
+                                                   double* lhs,
+                                                   std::string* message) {
   factorize_result_ = LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
   lhs_.Reserve(num_rows * num_cols);
   tau_.Reserve(std::min(num_rows, num_cols));
@@ -377,8 +379,9 @@ LinearSolverTerminationType CUDADenseQR::Factorize(
   return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
 }
 
-LinearSolverTerminationType CUDADenseQR::Solve(
-    const double* rhs, double* solution, std::string* message) {
+LinearSolverTerminationType CUDADenseQR::Solve(const double* rhs,
+                                               double* solution,
+                                               std::string* message) {
   if (factorize_result_ != LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS) {
     *message = "Factorize did not complete succesfully previously.";
     return factorize_result_;
@@ -459,8 +462,7 @@ std::unique_ptr<CUDADenseQR> CUDADenseQR::Create(
     // The user called the wrong factory method.
     return nullptr;
   }
-  auto cuda_dense_qr =
-      std::unique_ptr<CUDADenseQR>(new CUDADenseQR());
+  auto cuda_dense_qr = std::unique_ptr<CUDADenseQR>(new CUDADenseQR());
   std::string cuda_error;
   if (cuda_dense_qr->Init(options.context, &cuda_error)) {
     return cuda_dense_qr;
@@ -471,10 +473,9 @@ std::unique_ptr<CUDADenseQR> CUDADenseQR::Create(
   return nullptr;
 }
 
-CUDADenseQR::CUDADenseQR()  = default;
+CUDADenseQR::CUDADenseQR() = default;
 
 #endif  // CERES_NO_CUDA
-
 
 }  // namespace internal
 }  // namespace ceres

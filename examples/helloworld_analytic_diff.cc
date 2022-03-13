@@ -49,7 +49,6 @@ class QuadraticCostFunction
     : public SizedCostFunction<1 /* number of residuals */,
                                1 /* size of first parameter */> {
  public:
-
   bool Evaluate(double const* const* parameters,
                 double* residuals,
                 double** jacobians) const override {

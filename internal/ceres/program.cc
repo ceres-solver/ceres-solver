@@ -54,7 +54,6 @@
 namespace ceres {
 namespace internal {
 
-
 const std::vector<ParameterBlock*>& Program::parameter_blocks() const {
   return parameter_blocks_;
 }

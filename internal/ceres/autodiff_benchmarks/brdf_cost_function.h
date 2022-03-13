@@ -45,7 +45,6 @@ namespace ceres {
 // https://github.com/wdas/brdf/blob/master/src/brdfs/disney.brdf
 struct Brdf {
  public:
-
   template <typename T>
   inline bool operator()(const T* const material,
                          const T* const c_ptr,

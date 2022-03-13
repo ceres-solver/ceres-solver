@@ -39,7 +39,6 @@ namespace internal {
 // Rosenbrock function; see http://en.wikipedia.org/wiki/Rosenbrock_function .
 class Rosenbrock : public ceres::FirstOrderFunction {
  public:
-
   bool Evaluate(const double* parameters,
                 double* cost,
                 double* gradient) const final {

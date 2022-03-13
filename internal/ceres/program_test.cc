@@ -331,7 +331,6 @@ class NumParameterBlocksCostFunction : public CostFunction {
     }
   }
 
-
   bool Evaluate(double const* const* parameters,
                 double* residuals,
                 double** jacobians) const final {

@@ -76,11 +76,8 @@ class CudaBuffer {
   // provided.
   void CopyToGpuAsync(const T* data, const size_t size, cudaStream_t stream) {
     Reserve(size);
-    CHECK_EQ(cudaMemcpyAsync(data_,
-                             data,
-                             size * sizeof(T),
-                             cudaMemcpyHostToDevice,
-                             stream),
+    CHECK_EQ(cudaMemcpyAsync(
+                 data_, data, size * sizeof(T), cudaMemcpyHostToDevice, stream),
              cudaSuccess);
   }
 

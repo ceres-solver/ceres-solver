@@ -380,7 +380,6 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
 // x_plus_delta = delta * x;
 class PolynomialParameterization : public LocalParameterization {
  public:
-
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const final {
@@ -402,7 +401,6 @@ class PolynomialParameterization : public LocalParameterization {
 // x_plus_delta = delta * x;
 class PolynomialManifold : public Manifold {
  public:
-
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const final {

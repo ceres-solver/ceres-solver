@@ -50,7 +50,6 @@ namespace internal {
 template <typename Vertex>
 class CERES_NO_EXPORT Graph {
  public:
-
   // Add a vertex.
   void AddVertex(const Vertex& vertex) {
     if (vertices_.insert(vertex).second) {
@@ -106,7 +105,6 @@ class CERES_NO_EXPORT Graph {
 template <typename Vertex>
 class WeightedGraph {
  public:
-
   // Add a weighted vertex. If the vertex already exists in the graph,
   // its weight is set to the new weight.
   void AddVertex(const Vertex& vertex, double weight) {

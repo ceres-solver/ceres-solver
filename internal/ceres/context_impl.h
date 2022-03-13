@@ -43,8 +43,8 @@
 #include "ceres/internal/export.h"
 
 #ifndef CERES_NO_CUDA
-#include "cuda_runtime.h"
 #include "cublas_v2.h"
+#include "cuda_runtime.h"
 #include "cusolverDn.h"
 #endif  // CERES_NO_CUDA
 
@@ -61,7 +61,6 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   ~ContextImpl() override;
   ContextImpl(const ContextImpl&) = delete;
   void operator=(const ContextImpl&) = delete;
-
 
   // When compiled with C++ threading support, resize the thread pool to have
   // at min(num_thread, num_hardware_threads) where num_hardware_threads is

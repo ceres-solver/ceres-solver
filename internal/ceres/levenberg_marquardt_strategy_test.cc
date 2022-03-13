@@ -58,7 +58,6 @@ class RegularizationCheckingLinearSolver : public DenseSparseMatrixSolver {
   RegularizationCheckingLinearSolver(const int num_cols, const double* diagonal)
       : num_cols_(num_cols), diagonal_(diagonal) {}
 
-
  private:
   LinearSolver::Summary SolveImpl(
       DenseSparseMatrix* A,

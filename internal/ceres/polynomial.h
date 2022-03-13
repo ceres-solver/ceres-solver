@@ -67,7 +67,8 @@ inline double EvaluatePolynomial(const Vector& polynomial, double x) {
 // that the eigenvalues of the companion matrix could not be computed.
 // On failure, a more detailed message will be written to LOG(ERROR).
 // If real is not nullptr, the real parts of the roots will be returned in it.
-// Likewise, if imaginary is not nullptr, imaginary parts will be returned in it.
+// Likewise, if imaginary is not nullptr, imaginary parts will be returned in
+// it.
 CERES_NO_EXPORT bool FindPolynomialRoots(const Vector& polynomial,
                                          Vector* real,
                                          Vector* imaginary);

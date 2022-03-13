@@ -111,7 +111,6 @@ TEST(ParameterBlock, SetManifoldAndNormalOperation) {
 
 struct TestManifold : public Manifold {
  public:
-
   bool Plus(const double* x,
             const double* delta,
             double* x_plus_delta) const final {

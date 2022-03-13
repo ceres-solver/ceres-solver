@@ -228,4 +228,4 @@ bool SphereManifold<AmbientSpaceDimension>::MinusJacobian(
 #include "ceres/internal/reenable_warnings.h"
 // clang-format on
 
-#endif // CERES_PUBLIC_SPHERE_MANIFOLD_H_
+#endif  // CERES_PUBLIC_SPHERE_MANIFOLD_H_

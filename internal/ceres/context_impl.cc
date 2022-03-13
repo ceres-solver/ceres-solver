@@ -35,8 +35,8 @@
 #include "ceres/internal/config.h"
 
 #ifndef CERES_NO_CUDA
-#include "cuda_runtime.h"
 #include "cublas_v2.h"
+#include "cuda_runtime.h"
 #include "cusolverDn.h"
 #endif  // CERES_NO_CUDA
 
@@ -73,7 +73,7 @@ bool ContextImpl::InitCUDA(std::string* message) {
     return false;
   }
   if (cusolverDnSetStream(cusolver_handle_, stream_) !=
-      CUSOLVER_STATUS_SUCCESS ||
+          CUSOLVER_STATUS_SUCCESS ||
       cublasSetStream(cublas_handle_, stream_) != CUBLAS_STATUS_SUCCESS) {
     *message =
         "cuSolverDN::cusolverDnSetStream or cuBLAS::cublasSetStream failed.";

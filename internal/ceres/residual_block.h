@@ -80,8 +80,8 @@ class CERES_NO_EXPORT ResidualBlock {
   // components in *residuals, and the jacobians between the parameters and
   // residuals in jacobians[i], in row-major order. If residuals is nullptr, the
   // residuals are not computed. If jacobians is nullptr, no jacobians are
-  // computed. If jacobians[i] is nullptr, then the jacobian for that parameter is
-  // not computed.
+  // computed. If jacobians[i] is nullptr, then the jacobian for that parameter
+  // is not computed.
   //
   // cost must not be null.
   //

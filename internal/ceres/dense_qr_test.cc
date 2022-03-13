@@ -107,15 +107,14 @@ namespace {
 
 // NOTE: preprocessor directives in a macro are not standard conforming
 decltype(auto) MakeValues() {
-  return ::testing::Values(
-      EIGEN
+  return ::testing::Values(EIGEN
 #ifndef CERES_NO_LAPACK
-      ,
-      LAPACK
+                           ,
+                           LAPACK
 #endif
 #ifndef CERES_NO_CUDA
-      ,
-      CUDA
+                           ,
+                           CUDA
 #endif
   );
 }
