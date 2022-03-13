@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47c4438f_548178d9",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T23:30:45Z",
+      "side": 1,
+      "message": "Good idea.",
+      "parentUuid": "5546d7c9_c26210e4",
+      "revId": "65a03de9f43b1a16d5b684daa2258a4f135b48b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41f99734_49da3c39",
@@ -48,6 +66,24 @@
       "writtenOn": "2022-03-08T19:32:10Z",
       "side": 1,
       "message": "This changes the behaviour, as even if this macro was not invoked with REQUIRED, the variables are still appended to the required list when they shouldn\u0027t be.",
+      "revId": "65a03de9f43b1a16d5b684daa2258a4f135b48b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef264f1e_00815e0a",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T23:30:45Z",
+      "side": 1,
+      "message": "This is actually not the case because there are no optional components anymore compared to initial version of the module (SuiteSparse components must be there if requested). The components are in fact already handled by `HANDLE_COMPONENTS`. The `REQUIRED_VARS` remain mainly for optics/Config component. This reminds me that the Config component must also be marked as required.\n\nAlso, `REQUIRED` option for the macro is not necessary anymore since there\u0027s already `SuiteSparse_FIND_REQUIRED_\u003ccomponent\u003e`.",
+      "parentUuid": "41f99734_49da3c39",
       "revId": "65a03de9f43b1a16d5b684daa2258a4f135b48b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -69,6 +105,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6669d409_222a1447",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T23:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e06f708e_c8d7ea6e",
+      "revId": "65a03de9f43b1a16d5b684daa2258a4f135b48b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74dd88ad_09482721",
@@ -82,6 +136,24 @@
       "writtenOn": "2022-03-08T19:32:10Z",
       "side": 1,
       "message": "As above, this can be removed",
+      "revId": "65a03de9f43b1a16d5b684daa2258a4f135b48b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e51a62b_ea3ed89e",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T23:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74dd88ad_09482721",
       "revId": "65a03de9f43b1a16d5b684daa2258a4f135b48b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
