@@ -140,11 +140,11 @@ if (CUDA_FOUND)
   add_test(
       NAME cuda_memcheck_dense_qr_test
       COMMAND cuda-memcheck --leak-check full
-          ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/cuda_dense_qr_test)
+          $<TARGET_FILE_DIR:cuda_dense_qr_test>/cuda_dense_qr_test)
   add_test(
       NAME cuda_memcheck_dense_cholesky_test
       COMMAND cuda-memcheck --leak-check full
-          ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/cuda_dense_cholesky_test)
+          $<TARGET_FILE_DIR:cuda_dense_cholesky_test>/cuda_dense_cholesky_test)
 endif (CUDA_FOUND)
 
 if (LAPACK_FOUND)
