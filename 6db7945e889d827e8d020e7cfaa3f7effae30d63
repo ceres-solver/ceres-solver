@@ -16,6 +16,24 @@
       "message": "Ah, there is one slight issue. If `BUILD_TESTING` is off, then the CMake \"Generate\" step now fails with:\n\n```\n1\u003e [CMake] -- Configuring done\n1\u003e [CMake] CMake Error at internal/ceres/CMakeLists.txt:140 (add_test):\n1\u003e [CMake]   Error evaluating generator expression:\n1\u003e [CMake] \n1\u003e [CMake]     $\u003cTARGET_FILE_DIR:cuda_dense_qr_test\u003e\n1\u003e [CMake] \n1\u003e [CMake]   No target \"cuda_dense_qr_test\"\n1\u003e [CMake] \n1\u003e [CMake] \n1\u003e [CMake] CMake Error at internal/ceres/CMakeLists.txt:144 (add_test):\n1\u003e [CMake]   Error evaluating generator expression:\n1\u003e [CMake] \n1\u003e [CMake]     $\u003cTARGET_FILE_DIR:cuda_dense_cholesky_test\u003e\n1\u003e [CMake] \n1\u003e [CMake]   No target \"cuda_dense_cholesky_test\"\n1\u003e [CMake] \n1\u003e [CMake] \n1\u003e [CMake] -- Generating done\n```\n\nI think the CUDA test should probably be wrapped with a `if(BUILD_TESTING)`?",
       "revId": "6db7945e889d827e8d020e7cfaa3f7effae30d63",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db2c3623_54771512",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-03-13T15:44:45Z",
+      "side": 1,
+      "message": "Ah, I missed that, thanks for catching!",
+      "parentUuid": "32b3de37_ee188e76",
+      "revId": "6db7945e889d827e8d020e7cfaa3f7effae30d63",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
