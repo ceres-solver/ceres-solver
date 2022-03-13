@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "650b7bd4_2cd530ae",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad01be3f_f5417276",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ce22622_1736e26d",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-03-08T20:12:59Z",
       "side": 1,
       "message": "Is this really necessary?  What compiler would it otherwise detect given that CMAKE_SYSTEM_NAME is specified?",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e311cdab_e595377a",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "Yes, this is required. Otherwise the host `gfortran` is selected which eventually fails the whole build.",
+      "parentUuid": "3ce22622_1736e26d",
       "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -52,6 +88,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e7b0e57_fcedb4aa",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fad5180f_06b6f5eb",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ebe40ebf_138ddb9b",
@@ -65,6 +119,24 @@
       "writtenOn": "2022-03-08T20:12:59Z",
       "side": 1,
       "message": "Same comment as above re: CMAKE_ANDROID_API",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd576094_239f2557",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebe40ebf_138ddb9b",
       "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -86,6 +158,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c3414d1_7f4400ae",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb1de867_13daf3bf",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a4e28e2_963e9286",
@@ -99,6 +189,24 @@
       "writtenOn": "2022-03-08T20:12:59Z",
       "side": 1,
       "message": "Same comment as above re: CMAKE_ANDROID_API",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8722a25_01604f59",
+        "filename": ".github/workflows/android.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a4e28e2_963e9286",
       "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -120,6 +228,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e728214_0c50e80b",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "796d5ecd_588eb1bf",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0bacb00f_ae2bd426",
@@ -133,6 +259,24 @@
       "writtenOn": "2022-03-08T20:12:59Z",
       "side": 1,
       "message": "It would be good to include Google Benchmark here s/t the benchmarks are also included",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a4d2368_2b3910e6",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bacb00f_ae2bd426",
       "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -156,6 +300,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ef269bc8_7888e6ff",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "This is not accurate. The only reason why LTO is not used by default is because projects do not (cleanly) link with LTO enabled. As such, there is no reason not to use LTO in release builds since this provides a more challenging baseline. Given Ceres already compiles and runs with LTO, we can keep compiling with the flag to be able to catch changes that break LTO support.\n\nMy previous symbol export rework was partly motivated by the fact that I had problems compiling Ceres solver with LTO in the past. Therefore, unless there is a strong opposition against enabling the flag, I would keep it as is.",
+      "parentUuid": "1c977c02_7feeced4",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6570f958_cc6a8583",
         "filename": ".github/workflows/linux.yml",
         "patchSetId": 3
@@ -167,6 +329,24 @@
       "writtenOn": "2022-03-08T20:12:59Z",
       "side": 1,
       "message": "I would use --output-on-failure here instead of CTEST_OUTPUT_ON_FAILURE for consistency.",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0523d57f_a5d999b6",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6570f958_cc6a8583",
       "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -184,6 +364,24 @@
       "writtenOn": "2022-03-08T20:12:59Z",
       "side": 1,
       "message": "It would be good to include Google Benchmark here s/t the benchmarks are also included",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ab9266c_3cd17ec2",
+        "filename": ".github/workflows/macos.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "007bbd03_e3b19da0",
       "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -207,6 +405,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "54151826_7c5c2152",
+        "filename": ".github/workflows/macos.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "I would disagree because there\u0027s generally no good reason not to support LTO. Major Linux distribution are moving forward to enabling LTO by default for packages, e.g., https://www.phoronix.com/scan.php?page\u003dnews_item\u0026px\u003dArch-Linux-LTO-Proposed. LTO should be supported by default regardless of platform. With LTO in place it can be safely ensured that the default builds (without LTO) work as well.",
+      "parentUuid": "56ce91a2_14e07d4b",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "96753888_c373ba4d",
         "filename": ".github/workflows/macos.yml",
         "patchSetId": 3
@@ -218,6 +434,24 @@
       "writtenOn": "2022-03-08T20:12:59Z",
       "side": 1,
       "message": "I would use --output-on-failure here instead of CTEST_OUTPUT_ON_FAILURE for consistency.",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5ee7a73_1c3e951a",
+        "filename": ".github/workflows/macos.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96753888_c373ba4d",
       "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -241,6 +475,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "409d0ffa_6dea5aee",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "Invoking ctest directly does not work here: https://gitlab.kitware.com/cmake/cmake/-/issues/20283",
+      "parentUuid": "115d6dff_4750c36f",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "be730d95_aa7c349d",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -252,6 +504,24 @@
       "writtenOn": "2022-03-08T20:12:59Z",
       "side": 1,
       "message": "This looks great Sergiu, I have various comments but nothing major.  I think we could also use the macOS agents to build for iOS if we want to replicate that job from Travis as well",
+      "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3860b924_6a52cd38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-13T13:43:46Z",
+      "side": 1,
+      "message": "Thanks for the review. I added iOS builds and removed the Travis pipeline and the badge. It may be necessary to deactivate Travis for the Github repo to prevent the Github workflow from failing due to missing `.travis.yml`.\n\nBuilds are here: https://github.com/sergiud/ceres-solver/actions",
+      "parentUuid": "be730d95_aa7c349d",
       "revId": "00ca2a6b4cc18963fa2e91b1642f971919da4d20",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
