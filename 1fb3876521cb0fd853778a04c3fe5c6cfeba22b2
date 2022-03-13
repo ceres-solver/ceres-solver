@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6e20119_98bafcfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6220
+      },
+      "writtenOn": "2022-03-13T12:01:04Z",
+      "side": 1,
+      "message": "This makes it work for me on Windows with the VS 2022 CMake generator. I also just tried \"File -\u003e Open -\u003e CMake...\" in VS 2022 directly and it works as well.",
+      "revId": "1fb3876521cb0fd853778a04c3fe5c6cfeba22b2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1626922f_84846914",
