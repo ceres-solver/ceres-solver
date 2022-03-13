@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92ad3ac2_887fa592",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-13T19:24:22Z",
+      "side": 1,
+      "message": "I think we\u0027re almost there, I have one question about the modification of iOS.cmake which I think is a mistake.  We should also be able to delete the \u0027travis\u0027 top-level directory as part of this CL.",
+      "revId": "142b7d8eded97322de3e067c4ba81aea730e180d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9098e46f_3a52ea82",
+        "filename": "cmake/iOS.cmake",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-13T19:24:22Z",
+      "side": 1,
+      "message": "Why did this change?  There is find_host_package() explicitly if that is required, but the default behaviour should only be to use the SDK version of apps that might also be elsewhere on the filesystem",
+      "revId": "142b7d8eded97322de3e067c4ba81aea730e180d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
