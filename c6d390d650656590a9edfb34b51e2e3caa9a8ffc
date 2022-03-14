@@ -34,6 +34,23 @@
       "parentUuid": "89527890_d429b269",
       "revId": "c6d390d650656590a9edfb34b51e2e3caa9a8ffc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9c7f605_f12c06ed",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-14T09:38:47Z",
+      "side": 1,
+      "message": "I don\u0027t think you need the first case here, as you have explicitly set SuiteSparse_FIND_REQUIRED_XXX for all implicit components on line 139",
+      "revId": "c6d390d650656590a9edfb34b51e2e3caa9a8ffc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
