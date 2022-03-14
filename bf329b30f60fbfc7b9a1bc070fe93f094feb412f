@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f53c99a_c2c8296c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-14T17:58:06Z",
+      "side": 1,
+      "message": "Now correctly shown: https://github.com/sergiud/ceres-solver/tree/macos-badge",
+      "revId": "bf329b30f60fbfc7b9a1bc070fe93f094feb412f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
