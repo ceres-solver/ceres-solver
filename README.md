@@ -1,6 +1,6 @@
 [![Android](https://github.com/ceres-solver/ceres-solver/actions/workflows/android.yml/badge.svg)](https://github.com/ceres-solver/ceres-solver/actions/workflows/android.yml)
 [![Linux](https://github.com/ceres-solver/ceres-solver/actions/workflows/linux.yml/badge.svg)](https://github.com/ceres-solver/ceres-solver/actions/workflows/linux.yml)
-[![macOS](https://github.com/ceres-solver/ceres-solver/actions/workflows/macOS.yml/badge.svg)](https://github.com/ceres-solver/ceres-solver/actions/workflows/macOS.yml)
+[![macOS](https://github.com/ceres-solver/ceres-solver/actions/workflows/macos.yml/badge.svg)](https://github.com/ceres-solver/ceres-solver/actions/workflows/macos.yml)
 [![Windows](https://github.com/ceres-solver/ceres-solver/actions/workflows/windows.yml/badge.svg)](https://github.com/ceres-solver/ceres-solver/actions/workflows/windows.yml)
 
 Ceres Solver
