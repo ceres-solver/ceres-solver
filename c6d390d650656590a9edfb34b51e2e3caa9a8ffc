@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89527890_d429b269",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-14T09:30:17Z",
+      "side": 1,
+      "message": "The variable should be set for `Config` component as well to avoid misleading status messages as seen here (Config is always required): https://github.com/sergiud/ceres-solver/runs/5530527702?check_suite_focus\u003dtrue",
+      "revId": "c6d390d650656590a9edfb34b51e2e3caa9a8ffc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
