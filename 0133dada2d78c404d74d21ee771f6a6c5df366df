@@ -16,6 +16,24 @@
       "message": "Thanks Sergiu!",
       "revId": "0133dada2d78c404d74d21ee771f6a6c5df366df",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cb72e99_82a3dd69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-14T09:45:00Z",
+      "side": 1,
+      "message": "Thanks Alex. There\u0027s one minor problem: The macOS badge references `macOS.yml` instead of `macos.yml`. I can provide a CL later in the day.",
+      "parentUuid": "b2d47d26_d612e135",
+      "revId": "0133dada2d78c404d74d21ee771f6a6c5df366df",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": []
