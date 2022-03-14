@@ -54,6 +54,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9592b5bc_cf68c890",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-14T20:48:00Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "1dd16884_8d3c5de8",
+      "revId": "c6d390d650656590a9edfb34b51e2e3caa9a8ffc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9c7f605_f12c06ed",
@@ -121,6 +139,24 @@
       "side": 1,
       "message": "Yes, sorry. I meant above.",
       "parentUuid": "982fa5a8_eb83c800",
+      "revId": "c6d390d650656590a9edfb34b51e2e3caa9a8ffc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c705a1fb_e537afeb",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-14T20:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e69cc84_1c7af778",
       "revId": "c6d390d650656590a9edfb34b51e2e3caa9a8ffc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
