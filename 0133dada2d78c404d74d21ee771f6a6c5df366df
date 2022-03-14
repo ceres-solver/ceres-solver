@@ -34,6 +34,23 @@
       "parentUuid": "b2d47d26_d612e135",
       "revId": "0133dada2d78c404d74d21ee771f6a6c5df366df",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8d7a9a0_cb322206",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-14T09:53:32Z",
+      "side": 1,
+      "message": "One general remark: the ceres-solver Github user seems to be a basic user. Thus, the number of Github work runners/parallel builds is very limited.\n\nAlex, Sameer: if you use a Github pro account, it would make sense to associate ceres-solver with corresponding runners.\n\nFor reference, even with my pro account the builds take around 1 hour to finish.\n",
+      "revId": "0133dada2d78c404d74d21ee771f6a6c5df366df",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": []
