@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1dd16884_8d3c5de8",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-14T11:42:32Z",
+      "side": 1,
+      "message": "Can we not handle this by always adding Config to SuiteSparse_IMPLICIT_COMPONENTS above?",
+      "parentUuid": "8db333bc_1073a5e8",
+      "revId": "c6d390d650656590a9edfb34b51e2e3caa9a8ffc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a9c7f605_f12c06ed",
         "filename": "cmake/FindSuiteSparse.cmake",
         "patchSetId": 4
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "Unfortunately, this does not work for Config which is not requested as component (but it\u0027s always there). Thus, the extra check. However, with my proposal below this should not necessary. Alternatively, we could handle Config as any other component.",
       "parentUuid": "a9c7f605_f12c06ed",
+      "revId": "c6d390d650656590a9edfb34b51e2e3caa9a8ffc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "982fa5a8_eb83c800",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-03-14T11:42:32Z",
+      "side": 1,
+      "message": "I think you mean above here?  Assuming that this relates to always adding Config as an implicit component (which are always required)",
+      "parentUuid": "dc893168_2ee03709",
       "revId": "c6d390d650656590a9edfb34b51e2e3caa9a8ffc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
