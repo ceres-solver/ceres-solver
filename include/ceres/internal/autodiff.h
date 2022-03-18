@@ -197,7 +197,7 @@ struct Make1stOrderPerturbation {
 template <int N, int Offset, typename T, typename JetT>
 struct Make1stOrderPerturbation<N, N, Offset, T, JetT> {
  public:
-  static void Apply(const T* src, JetT* dst) {}
+  static void Apply(const T* /* NOT USED */, JetT* /* NOT USED */) {}
 };
 
 // Calls Make1stOrderPerturbation for every parameter block.
