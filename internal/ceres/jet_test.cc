@@ -32,8 +32,11 @@
 // with the following pragma.
 #ifdef _MSC_VER
 #pragma fenv_access(on)
-#else
+#elif !(defined(__ARM_ARCH) && __ARM_ARCH >= 8)
+// NOTE: FENV_ACCESS cannot be set to ON when targeting arm(v8)
 #pragma STDC FENV_ACCESS ON
+#else
+#define CERES_NO_FENV_ACCESS
 #endif
 
 #include "ceres/jet.h"
@@ -80,8 +83,13 @@ double const kTolerance = 1e-13;
 // Useful for avoiding side-effects.
 class Fenv {
  public:
+#ifndef CERES_NO_FENV_ACCESS
   Fenv() { std::fegetenv(&e); }
   ~Fenv() { std::fesetenv(&e); }
+#else
+  // Do not use = default to avoid unused variable warnings
+  Fenv() {} // NOLINT
+#endif
 
   Fenv(const Fenv&) = delete;
   Fenv& operator=(const Fenv&) = delete;
