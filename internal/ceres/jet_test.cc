@@ -32,8 +32,11 @@
 // with the following pragma.
 #ifdef _MSC_VER
 #pragma fenv_access(on)
-#else
+#elif !(defined(__ARM_ARCH) && __ARM_ARCH >= 8)
+// NOTE: FENV_ACCESS cannot be set to ON when targeting arm(v8)
 #pragma STDC FENV_ACCESS ON
+#else
+#define CERES_NO_FENV_ACCESS
 #endif
 
 #include "ceres/jet.h"
@@ -699,7 +702,9 @@ TEST(Jet, Fmax) {
   EXPECT_THAT(fmax(std::numeric_limits<double>::quiet_NaN(), x),
               IsAlmostEqualTo(x));
 
+#ifndef CERES_NO_FENV_ACCESS
   EXPECT_EQ(std::fetestexcept(FE_ALL_EXCEPT & ~FE_INEXACT), 0);
+#endif
 }
 
 TEST(Jet, Fmin) {
@@ -719,7 +724,9 @@ TEST(Jet, Fmin) {
   EXPECT_THAT(fmin(std::numeric_limits<double>::quiet_NaN(), x),
               IsAlmostEqualTo(x));
 
+#ifndef CERES_NO_FENV_ACCESS
   EXPECT_EQ(std::fetestexcept(FE_ALL_EXCEPT & ~FE_INEXACT), 0);
+#endif
 }
 
 TEST(Jet, Fdim) {
@@ -744,7 +751,9 @@ TEST(Jet, Fdim) {
   EXPECT_TRUE(isnan(fdim(x, std::numeric_limits<double>::quiet_NaN())));
   EXPECT_TRUE(isnan(fdim(std::numeric_limits<double>::quiet_NaN(), x)));
 
+#ifndef CERES_NO_FENV_ACCESS
   EXPECT_EQ(std::fetestexcept(FE_ALL_EXCEPT & ~FE_INEXACT), 0);
+#endif
 }
 
 TEST(Jet, CopySign) {
