@@ -33,6 +33,23 @@
       "message": "Patrik I hope this fixes some of your C++20 issues.",
       "revId": "ca54293379dce31272afba5b08fec76e8049d49c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b9e5659_69998ca6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-20T11:11:45Z",
+      "side": 1,
+      "message": "Compiled locally in C++20 mode. The update fixes the problems.",
+      "revId": "ca54293379dce31272afba5b08fec76e8049d49c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
