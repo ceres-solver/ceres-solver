@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa79606d_3fd93d57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-20T00:25:54Z",
+      "side": 1,
+      "message": "I am not updating to gtest at head because it seems to be in flux and the scripts for fusing into single headers have been deprecated and I do not want to futz with the build system for testing so late into the release cycle. \n\nThis update itself should be relatively painless, but for the 2.2 cycle as gtest takes absl as a dependency, the writing really is on the wall in terms of ceres depending on absl also.",
+      "revId": "ca54293379dce31272afba5b08fec76e8049d49c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
