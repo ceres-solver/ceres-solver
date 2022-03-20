@@ -28,17 +28,6 @@
 //
 // Author: keir@google.com (Keir Mierle)
 
-// The floating-point environment access and modification is only meaningful
-// with the following pragma.
-#ifdef _MSC_VER
-#pragma fenv_access(on)
-#elif !(defined(__ARM_ARCH) && __ARM_ARCH >= 8)
-// NOTE: FENV_ACCESS cannot be set to ON when targeting arm(v8)
-#pragma STDC FENV_ACCESS ON
-#else
-#define CERES_NO_FENV_ACCESS
-#endif
-
 #include "ceres/jet.h"
 
 #include <Eigen/Dense>
@@ -51,6 +40,18 @@
 #include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+
+// The floating-point environment access and modification is only meaningful
+// with the following pragma.
+#ifdef _MSC_VER
+#pragma float_control(precise, on, push)
+#pragma fenv_access(on)
+#elif !(defined(__ARM_ARCH) && __ARM_ARCH >= 8)
+// NOTE: FENV_ACCESS cannot be set to ON when targeting arm(v8)
+#pragma STDC FENV_ACCESS ON
+#else
+#define CERES_NO_FENV_ACCESS
+#endif
 
 namespace ceres {
 namespace internal {
@@ -1293,3 +1294,7 @@ TYPED_TEST(JetTest, Nested3XComparison) {
 
 }  // namespace internal
 }  // namespace ceres
+
+#ifdef _MSC_VER
+#pragma float_control(pop)
+#endif
