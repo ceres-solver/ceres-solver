@@ -647,7 +647,7 @@ TEST(Jet, Lerp) {
   EXPECT_THAT(lerp(y, y, J{0}), IsAlmostEqualTo(y));
   EXPECT_THAT(lerp(x, y, J{0.5}), IsAlmostEqualTo((x + y) / J{2.0}));
   EXPECT_THAT(lerp(x, y, J{2}), IsAlmostEqualTo(J{2.0} * y - x));
-  EXPECT_THAT(lerp(x, y, J{-2}), IsAlmostEqualTo(J{3.0} * x - J{2} * x));
+  EXPECT_THAT(lerp(x, y, J{-2}), IsAlmostEqualTo(J{3.0} * x - J{2} * y));
 }
 
 TEST(Jet, Midpoint) {
