@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d9806bc_8eb37fc5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-20T11:52:52Z",
+      "side": 1,
+      "message": "Issue submitted: https://github.com/microsoft/STL/issues/2613",
+      "revId": "fa00624306f0b525cb15e9d391e7d3df0d81b0ee",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
