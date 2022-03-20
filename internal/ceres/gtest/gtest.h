@@ -49,12 +49,14 @@
 
 // GOOGLETEST_CM0001 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_GTEST_H_
-#define GTEST_INCLUDE_GTEST_GTEST_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_GTEST_H_
+#define GOOGLETEST_INCLUDE_GTEST_GTEST_H_
 
+#include <cstddef>
 #include <limits>
 #include <memory>
 #include <ostream>
+#include <type_traits>
 #include <vector>
 
 // Copyright 2005, Google Inc.
@@ -93,8 +95,8 @@
 
 // GOOGLETEST_CM0001 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_INTERNAL_H_
-#define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_INTERNAL_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_INTERNAL_H_
+#define GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_INTERNAL_H_
 
 // Copyright 2005, Google Inc.
 // All rights reserved.
@@ -138,8 +140,8 @@
 
 // GOOGLETEST_CM0001 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_H_
-#define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_H_
+#define GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_H_
 
 // Environment-describing macros
 // -----------------------------
@@ -170,10 +172,6 @@
 //                              is/isn't available.
 //   GTEST_HAS_EXCEPTIONS     - Define it to 1/0 to indicate that exceptions
 //                              are enabled.
-//   GTEST_HAS_GLOBAL_STRING  - Define it to 1/0 to indicate that ::string
-//                              is/isn't available
-//   GTEST_HAS_GLOBAL_WSTRING - Define it to 1/0 to indicate that ::wstring
-//                              is/isn't available
 //   GTEST_HAS_POSIX_RE       - Define it to 1/0 to indicate that POSIX regular
 //                              expressions are/aren't available.
 //   GTEST_HAS_PTHREAD        - Define it to 1/0 to indicate that <pthread.h>
@@ -219,6 +217,7 @@
 //   GTEST_OS_FREEBSD  - FreeBSD
 //   GTEST_OS_FUCHSIA  - Fuchsia
 //   GTEST_OS_GNU_KFREEBSD - GNU/kFreeBSD
+//   GTEST_OS_HAIKU    - Haiku
 //   GTEST_OS_HPUX     - HP-UX
 //   GTEST_OS_LINUX    - Linux
 //     GTEST_OS_LINUX_ANDROID - Google Android
@@ -238,7 +237,7 @@
 //     GTEST_OS_WINDOWS_RT       - Windows Store App/WinRT
 //   GTEST_OS_ZOS      - z/OS
 //
-// Among the platforms, Cygwin, Linux, Max OS X, and Windows have the
+// Among the platforms, Cygwin, Linux, Mac OS X, and Windows have the
 // most stable support.  Since core members of the Google Test project
 // don't have access to other platforms, support for them may be less
 // stable.  If you notice any problems on your platform, please notify
@@ -291,22 +290,31 @@
 //   GTEST_AMBIGUOUS_ELSE_BLOCKER_ - for disabling a gcc warning.
 //   GTEST_ATTRIBUTE_UNUSED_  - declares that a class' instances or a
 //                              variable don't have to be used.
-//   GTEST_DISALLOW_ASSIGN_   - disables operator=.
+//   GTEST_DISALLOW_ASSIGN_   - disables copy operator=.
 //   GTEST_DISALLOW_COPY_AND_ASSIGN_ - disables copy ctor and operator=.
+//   GTEST_DISALLOW_MOVE_ASSIGN_   - disables move operator=.
+//   GTEST_DISALLOW_MOVE_AND_ASSIGN_ - disables move ctor and operator=.
 //   GTEST_MUST_USE_RESULT_   - declares that a function's result must be used.
 //   GTEST_INTENTIONAL_CONST_COND_PUSH_ - start code section where MSVC C4127 is
 //                                        suppressed (constant conditional).
 //   GTEST_INTENTIONAL_CONST_COND_POP_  - finish code section where MSVC C4127
 //                                        is suppressed.
+//   GTEST_INTERNAL_HAS_ANY - for enabling UniversalPrinter<std::any> or
+//                            UniversalPrinter<absl::any> specializations.
+//   GTEST_INTERNAL_HAS_OPTIONAL - for enabling UniversalPrinter<std::optional>
+//   or
+//                                 UniversalPrinter<absl::optional>
+//                                 specializations.
+//   GTEST_INTERNAL_HAS_STRING_VIEW - for enabling Matcher<std::string_view> or
+//                                    Matcher<absl::string_view>
+//                                    specializations.
+//   GTEST_INTERNAL_HAS_VARIANT - for enabling UniversalPrinter<std::variant> or
+//                                UniversalPrinter<absl::variant>
+//                                specializations.
 //
 // Synchronization:
 //   Mutex, MutexLock, ThreadLocal, GetThreadCount()
 //                            - synchronization primitives.
-//
-// Template meta programming:
-//   IteratorTraits - partial implementation of std::iterator_traits, which
-//                    is not available in libCstd when compiled with Sun C++.
-//
 //
 // Regular expressions:
 //   RE             - a simple regular expression class using the POSIX
@@ -329,8 +337,7 @@
 //
 // Integer types:
 //   TypeWithSize   - maps an integer to a int type.
-//   Int32, UInt32, Int64, UInt64, TimeInMillis
-//                  - integers of known sizes.
+//   TimeInMillis   - integers of known sizes.
 //   BiggestInt     - the biggest signed integer type.
 //
 // Command-line utilities:
@@ -341,7 +348,7 @@
 // Environment variable utilities:
 //   GetEnv()             - gets the value of an environment variable.
 //   BoolFromGTestEnv()   - parses a bool environment variable.
-//   Int32FromGTestEnv()  - parses an Int32 environment variable.
+//   Int32FromGTestEnv()  - parses an int32_t environment variable.
 //   StringFromGTestEnv() - parses a string environment variable.
 //
 // Deprecation warnings:
@@ -354,7 +361,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <memory>
+
+#include <cerrno>
+#include <cstdint>
+#include <limits>
 #include <type_traits>
 
 #ifndef _WIN32_WCE
@@ -367,16 +377,50 @@
 # include <TargetConditionals.h>
 #endif
 
-// Brings in the definition of HAS_GLOBAL_STRING.  This must be done
-// BEFORE we test HAS_GLOBAL_STRING.
-#include <string>     // NOLINT
-#include <algorithm>  // NOLINT
-#include <iostream>   // NOLINT
-#include <sstream>    // NOLINT
+#include <iostream>  // NOLINT
+#include <locale>
+#include <memory>
+#include <string>  // NOLINT
 #include <tuple>
-#include <utility>
 #include <vector>  // NOLINT
 
+// Copyright 2015, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//     * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// Injection point for custom user configurations. See README for details
+//
+// ** Custom implementation starts here **
+
+#ifndef GOOGLETEST_INCLUDE_GTEST_INTERNAL_CUSTOM_GTEST_PORT_H_
+#define GOOGLETEST_INCLUDE_GTEST_INTERNAL_CUSTOM_GTEST_PORT_H_
+
+#endif  // GOOGLETEST_INCLUDE_GTEST_INTERNAL_CUSTOM_GTEST_PORT_H_
 // Copyright 2015, Google Inc.
 // All rights reserved.
 //
@@ -411,8 +455,8 @@
 // This header file defines the GTEST_OS_* macro.
 // It is separate from gtest-port.h so that custom/gtest-port.h can include it.
 
-#ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_ARCH_H_
-#define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_ARCH_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_ARCH_H_
+#define GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_ARCH_H_
 
 // Determines the platform on which Google Test is compiled.
 #ifdef __CYGWIN__
@@ -447,6 +491,7 @@
 # define GTEST_OS_OS2 1
 #elif defined __APPLE__
 # define GTEST_OS_MAC 1
+# include <TargetConditionals.h>
 # if TARGET_OS_IPHONE
 #  define GTEST_OS_IOS 1
 # endif
@@ -479,46 +524,17 @@
 # define GTEST_OS_OPENBSD 1
 #elif defined __QNX__
 # define GTEST_OS_QNX 1
+#elif defined(__HAIKU__)
+#define GTEST_OS_HAIKU 1
+#elif defined ESP8266
+#define GTEST_OS_ESP8266 1
+#elif defined ESP32
+#define GTEST_OS_ESP32 1
+#elif defined(__XTENSA__)
+#define GTEST_OS_XTENSA 1
 #endif  // __CYGWIN__
 
-#endif  // GTEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_ARCH_H_
-// Copyright 2015, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//     * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// Injection point for custom user configurations. See README for details
-//
-// ** Custom implementation starts here **
-
-#ifndef GTEST_INCLUDE_GTEST_INTERNAL_CUSTOM_GTEST_PORT_H_
-#define GTEST_INCLUDE_GTEST_INTERNAL_CUSTOM_GTEST_PORT_H_
-
-#endif  // GTEST_INCLUDE_GTEST_INTERNAL_CUSTOM_GTEST_PORT_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_ARCH_H_
 
 #if !defined(GTEST_DEV_EMAIL_)
 # define GTEST_DEV_EMAIL_ "googletestframework@@googlegroups.com"
@@ -592,6 +608,10 @@ typedef struct _CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 // WindowsTypesTest.CRITICAL_SECTIONIs_RTL_CRITICAL_SECTION.
 typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 #endif
+#elif GTEST_OS_XTENSA
+#include <unistd.h>
+// Xtensa toolchains define strcasecmp in the string.h header instead of
+// strings.h. string.h is already included.
 #else
 // This assumes that non-Windows OSes provide unistd.h. For OSes where this
 // is not the case, we need to include headers that provide the functions
@@ -605,13 +625,14 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 #  include <android/api-level.h>  // NOLINT
 #endif
 
-// Defines this to true iff Google Test can use POSIX regular expressions.
+// Defines this to true if and only if Google Test can use POSIX regular
+// expressions.
 #ifndef GTEST_HAS_POSIX_RE
 # if GTEST_OS_LINUX_ANDROID
 // On Android, <regex.h> is only available starting with Gingerbread.
 #  define GTEST_HAS_POSIX_RE (__ANDROID_API__ >= 9)
 # else
-#  define GTEST_HAS_POSIX_RE (!GTEST_OS_WINDOWS)
+#define GTEST_HAS_POSIX_RE (!GTEST_OS_WINDOWS && !GTEST_OS_XTENSA)
 # endif
 #endif
 
@@ -646,7 +667,7 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 // The user didn't tell us whether exceptions are enabled, so we need
 // to figure it out.
 # if defined(_MSC_VER) && defined(_CPPUNWIND)
-// MSVC defines _CPPUNWIND to 1 iff exceptions are enabled.
+// MSVC defines _CPPUNWIND to 1 if and only if exceptions are enabled.
 #  define GTEST_HAS_EXCEPTIONS 1
 # elif defined(__BORLANDC__)
 // C++Builder's implementation of the STL uses the _HAS_EXCEPTIONS
@@ -657,16 +678,17 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 #  endif  // _HAS_EXCEPTIONS
 #  define GTEST_HAS_EXCEPTIONS _HAS_EXCEPTIONS
 # elif defined(__clang__)
-// clang defines __EXCEPTIONS iff exceptions are enabled before clang 220714,
-// but iff cleanups are enabled after that. In Obj-C++ files, there can be
-// cleanups for ObjC exceptions which also need cleanups, even if C++ exceptions
-// are disabled. clang has __has_feature(cxx_exceptions) which checks for C++
-// exceptions starting at clang r206352, but which checked for cleanups prior to
-// that. To reliably check for C++ exception availability with clang, check for
+// clang defines __EXCEPTIONS if and only if exceptions are enabled before clang
+// 220714, but if and only if cleanups are enabled after that. In Obj-C++ files,
+// there can be cleanups for ObjC exceptions which also need cleanups, even if
+// C++ exceptions are disabled. clang has __has_feature(cxx_exceptions) which
+// checks for C++ exceptions starting at clang r206352, but which checked for
+// cleanups prior to that. To reliably check for C++ exception availability with
+// clang, check for
 // __EXCEPTIONS && __has_feature(cxx_exceptions).
 #  define GTEST_HAS_EXCEPTIONS (__EXCEPTIONS && __has_feature(cxx_exceptions))
 # elif defined(__GNUC__) && __EXCEPTIONS
-// gcc defines __EXCEPTIONS to 1 iff exceptions are enabled.
+// gcc defines __EXCEPTIONS to 1 if and only if exceptions are enabled.
 #  define GTEST_HAS_EXCEPTIONS 1
 # elif defined(__SUNPRO_CC)
 // Sun Pro CC supports exceptions.  However, there is no compile-time way of
@@ -674,7 +696,7 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 // they are enabled unless the user tells us otherwise.
 #  define GTEST_HAS_EXCEPTIONS 1
 # elif defined(__IBMCPP__) && __EXCEPTIONS
-// xlC defines __EXCEPTIONS to 1 iff exceptions are enabled.
+// xlC defines __EXCEPTIONS to 1 if and only if exceptions are enabled.
 #  define GTEST_HAS_EXCEPTIONS 1
 # elif defined(__HP_aCC)
 // Exception handling is in effect by default in HP aCC compiler. It has to
@@ -687,36 +709,17 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 # endif  // defined(_MSC_VER) || defined(__BORLANDC__)
 #endif  // GTEST_HAS_EXCEPTIONS
 
-#if !defined(GTEST_HAS_STD_STRING)
-// Even though we don't use this macro any longer, we keep it in case
-// some clients still depend on it.
-# define GTEST_HAS_STD_STRING 1
-#elif !GTEST_HAS_STD_STRING
-// The user told us that ::std::string isn't available.
-# error "::std::string isn't available."
-#endif  // !defined(GTEST_HAS_STD_STRING)
-
-#ifndef GTEST_HAS_GLOBAL_STRING
-# define GTEST_HAS_GLOBAL_STRING 0
-#endif  // GTEST_HAS_GLOBAL_STRING
-
 #ifndef GTEST_HAS_STD_WSTRING
 // The user didn't tell us whether ::std::wstring is available, so we need
 // to figure it out.
 // Cygwin 1.7 and below doesn't support ::std::wstring.
 // Solaris' libc++ doesn't support it either.  Android has
 // no support for it at least as recent as Froyo (2.2).
-# define GTEST_HAS_STD_WSTRING \
-    (!(GTEST_OS_LINUX_ANDROID || GTEST_OS_CYGWIN || GTEST_OS_SOLARIS))
+#define GTEST_HAS_STD_WSTRING                                         \
+  (!(GTEST_OS_LINUX_ANDROID || GTEST_OS_CYGWIN || GTEST_OS_SOLARIS || \
+     GTEST_OS_HAIKU || GTEST_OS_ESP32 || GTEST_OS_ESP8266 || GTEST_OS_XTENSA))
 
 #endif  // GTEST_HAS_STD_WSTRING
-
-#ifndef GTEST_HAS_GLOBAL_WSTRING
-// The user didn't tell us whether ::wstring is available, so we need
-// to figure it out.
-# define GTEST_HAS_GLOBAL_WSTRING \
-    (GTEST_HAS_STD_WSTRING && GTEST_HAS_GLOBAL_STRING)
-#endif  // GTEST_HAS_GLOBAL_WSTRING
 
 // Determines whether RTTI is available.
 #ifndef GTEST_HAS_RTTI
@@ -725,13 +728,14 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 
 # ifdef _MSC_VER
 
-#  ifdef _CPPRTTI  // MSVC defines this macro iff RTTI is enabled.
+#ifdef _CPPRTTI  // MSVC defines this macro if and only if RTTI is enabled.
 #   define GTEST_HAS_RTTI 1
 #  else
 #   define GTEST_HAS_RTTI 0
 #  endif
 
-// Starting with version 4.3.2, gcc defines __GXX_RTTI iff RTTI is enabled.
+// Starting with version 4.3.2, gcc defines __GXX_RTTI if and only if RTTI is
+// enabled.
 # elif defined(__GNUC__)
 
 #  ifdef __GXX_RTTI
@@ -788,10 +792,11 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 //
 // To disable threading support in Google Test, add -DGTEST_HAS_PTHREAD=0
 // to your compiler flags.
-#define GTEST_HAS_PTHREAD                                             \
-  (GTEST_OS_LINUX || GTEST_OS_MAC || GTEST_OS_HPUX || GTEST_OS_QNX || \
+#define GTEST_HAS_PTHREAD                                                      \
+  (GTEST_OS_LINUX || GTEST_OS_MAC || GTEST_OS_HPUX || GTEST_OS_QNX ||          \
    GTEST_OS_FREEBSD || GTEST_OS_NACL || GTEST_OS_NETBSD || GTEST_OS_FUCHSIA || \
-   GTEST_OS_DRAGONFLY || GTEST_OS_GNU_KFREEBSD || GTEST_OS_OPENBSD)
+   GTEST_OS_DRAGONFLY || GTEST_OS_GNU_KFREEBSD || GTEST_OS_OPENBSD ||          \
+   GTEST_OS_HAIKU)
 #endif  // GTEST_HAS_PTHREAD
 
 #if GTEST_HAS_PTHREAD
@@ -836,7 +841,8 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 #ifndef GTEST_HAS_STREAM_REDIRECTION
 // By default, we assume that stream redirection is supported on all
 // platforms except known mobile ones.
-# if GTEST_OS_WINDOWS_MOBILE || GTEST_OS_WINDOWS_PHONE || GTEST_OS_WINDOWS_RT
+#if GTEST_OS_WINDOWS_MOBILE || GTEST_OS_WINDOWS_PHONE || \
+    GTEST_OS_WINDOWS_RT || GTEST_OS_ESP8266 || GTEST_OS_XTENSA
 #  define GTEST_HAS_STREAM_REDIRECTION 0
 # else
 #  define GTEST_HAS_STREAM_REDIRECTION 1
@@ -845,13 +851,12 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 
 // Determines whether to support death tests.
 // pops up a dialog window that cannot be suppressed programmatically.
-#if (GTEST_OS_LINUX || GTEST_OS_CYGWIN || GTEST_OS_SOLARIS ||   \
-     (GTEST_OS_MAC && !GTEST_OS_IOS) ||                         \
-     (GTEST_OS_WINDOWS_DESKTOP && _MSC_VER) ||                  \
-     GTEST_OS_WINDOWS_MINGW || GTEST_OS_AIX || GTEST_OS_HPUX || \
-     GTEST_OS_OPENBSD || GTEST_OS_QNX || GTEST_OS_FREEBSD || \
-     GTEST_OS_NETBSD || GTEST_OS_FUCHSIA || GTEST_OS_DRAGONFLY || \
-     GTEST_OS_GNU_KFREEBSD)
+#if (GTEST_OS_LINUX || GTEST_OS_CYGWIN || GTEST_OS_SOLARIS ||             \
+     (GTEST_OS_MAC && !GTEST_OS_IOS) ||                                   \
+     (GTEST_OS_WINDOWS_DESKTOP && _MSC_VER) || GTEST_OS_WINDOWS_MINGW ||  \
+     GTEST_OS_AIX || GTEST_OS_HPUX || GTEST_OS_OPENBSD || GTEST_OS_QNX || \
+     GTEST_OS_FREEBSD || GTEST_OS_NETBSD || GTEST_OS_FUCHSIA ||           \
+     GTEST_OS_DRAGONFLY || GTEST_OS_GNU_KFREEBSD || GTEST_OS_HAIKU)
 # define GTEST_HAS_DEATH_TEST 1
 #endif
 
@@ -931,16 +936,27 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 #endif
 
 
-// A macro to disallow operator=
+// A macro to disallow copy operator=
 // This should be used in the private: declarations for a class.
 #define GTEST_DISALLOW_ASSIGN_(type) \
-  void operator=(type const &) = delete
+  type& operator=(type const &) = delete
 
 // A macro to disallow copy constructor and operator=
 // This should be used in the private: declarations for a class.
 #define GTEST_DISALLOW_COPY_AND_ASSIGN_(type) \
-  type(type const &) = delete; \
-  GTEST_DISALLOW_ASSIGN_(type)
+  type(type const&) = delete;                 \
+  type& operator=(type const&) = delete
+
+// A macro to disallow move operator=
+// This should be used in the private: declarations for a class.
+#define GTEST_DISALLOW_MOVE_ASSIGN_(type) \
+  type& operator=(type &&) noexcept = delete
+
+// A macro to disallow move constructor and operator=
+// This should be used in the private: declarations for a class.
+#define GTEST_DISALLOW_MOVE_AND_ASSIGN_(type) \
+  type(type&&) noexcept = delete;             \
+  type& operator=(type&&) noexcept = delete
 
 // Tell the compiler to warn about unused return values for functions declared
 // with this macro.  The macro should be used on function declarations
@@ -1057,6 +1073,18 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 # define GTEST_ATTRIBUTE_NO_SANITIZE_ADDRESS_
 #endif  // __clang__
 
+// A function level attribute to disable HWAddressSanitizer instrumentation.
+#if defined(__clang__)
+# if __has_feature(hwaddress_sanitizer)
+#  define GTEST_ATTRIBUTE_NO_SANITIZE_HWADDRESS_ \
+       __attribute__((no_sanitize("hwaddress")))
+# else
+#  define GTEST_ATTRIBUTE_NO_SANITIZE_HWADDRESS_
+# endif  // __has_feature(hwaddress_sanitizer)
+#else
+# define GTEST_ATTRIBUTE_NO_SANITIZE_HWADDRESS_
+#endif  // __clang__
+
 // A function level attribute to disable ThreadSanitizer instrumentation.
 #if defined(__clang__)
 # if __has_feature(thread_sanitizer)
@@ -1099,42 +1127,6 @@ class Secret;
 // expression is false, compiler will issue an error containing this identifier.
 #define GTEST_COMPILE_ASSERT_(expr, msg) static_assert(expr, #msg)
 
-// StaticAssertTypeEqHelper is used by StaticAssertTypeEq defined in gtest.h.
-//
-// This template is declared, but intentionally undefined.
-template <typename T1, typename T2>
-struct StaticAssertTypeEqHelper;
-
-template <typename T>
-struct StaticAssertTypeEqHelper<T, T> {
-  enum { value = true };
-};
-
-// Same as std::is_same<>.
-template <typename T, typename U>
-struct IsSame {
-  enum { value = false };
-};
-template <typename T>
-struct IsSame<T, T> {
-  enum { value = true };
-};
-
-// Evaluates to the number of elements in 'array'.
-#define GTEST_ARRAY_SIZE_(array) (sizeof(array) / sizeof(array[0]))
-
-#if GTEST_HAS_GLOBAL_STRING
-typedef ::string string;
-#else
-typedef ::std::string string;
-#endif  // GTEST_HAS_GLOBAL_STRING
-
-#if GTEST_HAS_GLOBAL_WSTRING
-typedef ::wstring wstring;
-#elif GTEST_HAS_STD_WSTRING
-typedef ::std::wstring wstring;
-#endif  // GTEST_HAS_GLOBAL_WSTRING
-
 // A helper for suppressing warnings on constant condition.  It just
 // returns 'condition'.
 GTEST_API_ bool IsTrue(bool condition);
@@ -1156,21 +1148,15 @@ class GTEST_API_ RE {
   // Constructs an RE from a string.
   RE(const ::std::string& regex) { Init(regex.c_str()); }  // NOLINT
 
-# if GTEST_HAS_GLOBAL_STRING
-
-  RE(const ::string& regex) { Init(regex.c_str()); }  // NOLINT
-
-# endif  // GTEST_HAS_GLOBAL_STRING
-
   RE(const char* regex) { Init(regex); }  // NOLINT
   ~RE();
 
   // Returns the string representation of the regex.
   const char* pattern() const { return pattern_; }
 
-  // FullMatch(str, re) returns true iff regular expression re matches
-  // the entire str.
-  // PartialMatch(str, re) returns true iff regular expression re
+  // FullMatch(str, re) returns true if and only if regular expression re
+  // matches the entire str.
+  // PartialMatch(str, re) returns true if and only if regular expression re
   // matches a substring of str (including str itself).
   static bool FullMatch(const ::std::string& str, const RE& re) {
     return FullMatch(str.c_str(), re);
@@ -1178,17 +1164,6 @@ class GTEST_API_ RE {
   static bool PartialMatch(const ::std::string& str, const RE& re) {
     return PartialMatch(str.c_str(), re);
   }
-
-# if GTEST_HAS_GLOBAL_STRING
-
-  static bool FullMatch(const ::string& str, const RE& re) {
-    return FullMatch(str.c_str(), re);
-  }
-  static bool PartialMatch(const ::string& str, const RE& re) {
-    return PartialMatch(str.c_str(), re);
-  }
-
-# endif  // GTEST_HAS_GLOBAL_STRING
 
   static bool FullMatch(const char* str, const RE& re);
   static bool PartialMatch(const char* str, const RE& re);
@@ -1208,8 +1183,6 @@ class GTEST_API_ RE {
   const char* full_pattern_;  // For FullMatch();
 
 # endif
-
-  GTEST_DISALLOW_ASSIGN_(RE);
 };
 
 #endif  // GTEST_USES_PCRE
@@ -1298,19 +1271,6 @@ inline void FlushInfoLog() { fflush(nullptr); }
   if (const int gtest_error = (posix_call)) \
     GTEST_LOG_(FATAL) << #posix_call << "failed with error " \
                       << gtest_error
-
-// Adds reference to a type if it is not a reference type,
-// otherwise leaves it unchanged.  This is the same as
-// tr1::add_reference, which is not widely available yet.
-template <typename T>
-struct AddReference { typedef T& type; };  // NOLINT
-template <typename T>
-struct AddReference<T&> { typedef T& type; };  // NOLINT
-
-// A handy wrapper around AddReference that works when the argument T
-// depends on template parameters.
-#define GTEST_ADD_REFERENCE_(T) \
-    typename ::testing::internal::AddReference<T>::type
 
 // Transforms "T" into "const T&" according to standard reference collapsing
 // rules (this is only needed as a backport for C++98 compilers that do not
@@ -1445,9 +1405,6 @@ std::vector<std::string> GetInjectableArgvs();
 // Deprecated: pass the args vector by value instead.
 void SetInjectableArgvs(const std::vector<std::string>* new_argvs);
 void SetInjectableArgvs(const std::vector<std::string>& new_argvs);
-#if GTEST_HAS_GLOBAL_STRING
-void SetInjectableArgvs(const std::vector< ::string>& new_argvs);
-#endif  // GTEST_HAS_GLOBAL_STRING
 void ClearInjectableArgvs();
 
 #endif  // GTEST_HAS_DEATH_TEST
@@ -1539,7 +1496,8 @@ class GTEST_API_ AutoHandle {
   void Reset(Handle handle);
 
  private:
-  // Returns true iff the handle is a valid handle object that can be closed.
+  // Returns true if and only if the handle is a valid handle object that can be
+  // closed.
   bool IsCloseable() const;
 
   Handle handle_;
@@ -1641,7 +1599,8 @@ class ThreadWithParam : public ThreadWithParamBase {
   // When non-NULL, used to block execution until the controller thread
   // notifies.
   Notification* const thread_can_start_;
-  bool finished_;  // true iff we know that the thread function has finished.
+  bool finished_;  // true if and only if we know that the thread function has
+                   // finished.
   pthread_t thread_;  // The native thread object.
 
   GTEST_DISALLOW_COPY_AND_ASSIGN_(ThreadWithParam);
@@ -1906,7 +1865,7 @@ class ThreadLocal : public ThreadLocalBase {
   class DefaultValueHolderFactory : public ValueHolderFactory {
    public:
     DefaultValueHolderFactory() {}
-    virtual ValueHolder* MakeNewHolder() const { return new ValueHolder(); }
+    ValueHolder* MakeNewHolder() const override { return new ValueHolder(); }
 
    private:
     GTEST_DISALLOW_COPY_AND_ASSIGN_(DefaultValueHolderFactory);
@@ -1915,7 +1874,7 @@ class ThreadLocal : public ThreadLocalBase {
   class InstanceValueHolderFactory : public ValueHolderFactory {
    public:
     explicit InstanceValueHolderFactory(const T& value) : value_(value) {}
-    virtual ValueHolder* MakeNewHolder() const {
+    ValueHolder* MakeNewHolder() const override {
       return new ValueHolder(value_);
     }
 
@@ -2115,7 +2074,7 @@ class GTEST_API_ ThreadLocal {
   class DefaultValueHolderFactory : public ValueHolderFactory {
    public:
     DefaultValueHolderFactory() {}
-    virtual ValueHolder* MakeNewHolder() const { return new ValueHolder(); }
+    ValueHolder* MakeNewHolder() const override { return new ValueHolder(); }
 
    private:
     GTEST_DISALLOW_COPY_AND_ASSIGN_(DefaultValueHolderFactory);
@@ -2124,7 +2083,7 @@ class GTEST_API_ ThreadLocal {
   class InstanceValueHolderFactory : public ValueHolderFactory {
    public:
     explicit InstanceValueHolderFactory(const T& value) : value_(value) {}
-    virtual ValueHolder* MakeNewHolder() const {
+    ValueHolder* MakeNewHolder() const override {
       return new ValueHolder(value_);
     }
 
@@ -2194,47 +2153,12 @@ class GTEST_API_ ThreadLocal {
 // we cannot detect it.
 GTEST_API_ size_t GetThreadCount();
 
-template <bool bool_value>
-struct bool_constant {
-  typedef bool_constant<bool_value> type;
-  static const bool value = bool_value;
-};
-template <bool bool_value> const bool bool_constant<bool_value>::value;
-
-typedef bool_constant<false> false_type;
-typedef bool_constant<true> true_type;
-
-template <typename T, typename U>
-struct is_same : public false_type {};
-
-template <typename T>
-struct is_same<T, T> : public true_type {};
-
-template <typename Iterator>
-struct IteratorTraits {
-  typedef typename Iterator::value_type value_type;
-};
-
-
-template <typename T>
-struct IteratorTraits<T*> {
-  typedef T value_type;
-};
-
-template <typename T>
-struct IteratorTraits<const T*> {
-  typedef T value_type;
-};
-
 #if GTEST_OS_WINDOWS
 # define GTEST_PATH_SEP_ "\\"
 # define GTEST_HAS_ALT_PATH_SEP_ 1
-// The biggest signed integer type the compiler supports.
-typedef __int64 BiggestInt;
 #else
 # define GTEST_PATH_SEP_ "/"
 # define GTEST_HAS_ALT_PATH_SEP_ 0
-typedef long long BiggestInt;  // NOLINT
 #endif  // GTEST_OS_WINDOWS
 
 // Utilities for char.
@@ -2264,6 +2188,19 @@ inline bool IsUpper(char ch) {
 }
 inline bool IsXDigit(char ch) {
   return isxdigit(static_cast<unsigned char>(ch)) != 0;
+}
+#ifdef __cpp_char8_t
+inline bool IsXDigit(char8_t ch) {
+  return isxdigit(static_cast<unsigned char>(ch)) != 0;
+}
+#endif
+inline bool IsXDigit(char16_t ch) {
+  const unsigned char low_byte = static_cast<unsigned char>(ch);
+  return ch == low_byte && isxdigit(low_byte) != 0;
+}
+inline bool IsXDigit(char32_t ch) {
+  const unsigned char low_byte = static_cast<unsigned char>(ch);
+  return ch == low_byte && isxdigit(low_byte) != 0;
 }
 inline bool IsXDigit(wchar_t ch) {
   const unsigned char low_byte = static_cast<unsigned char>(ch);
@@ -2299,16 +2236,16 @@ namespace posix {
 typedef struct _stat StatStruct;
 
 # ifdef __BORLANDC__
-inline int IsATTY(int fd) { return isatty(fd); }
+inline int DoIsATTY(int fd) { return isatty(fd); }
 inline int StrCaseCmp(const char* s1, const char* s2) {
   return stricmp(s1, s2);
 }
 inline char* StrDup(const char* src) { return strdup(src); }
 # else  // !__BORLANDC__
 #  if GTEST_OS_WINDOWS_MOBILE
-inline int IsATTY(int /* fd */) { return 0; }
+inline int DoIsATTY(int /* fd */) { return 0; }
 #  else
-inline int IsATTY(int fd) { return _isatty(fd); }
+inline int DoIsATTY(int fd) { return _isatty(fd); }
 #  endif  // GTEST_OS_WINDOWS_MOBILE
 inline int StrCaseCmp(const char* s1, const char* s2) {
   return _stricmp(s1, s2);
@@ -2329,12 +2266,28 @@ inline bool IsDir(const StatStruct& st) {
 }
 # endif  // GTEST_OS_WINDOWS_MOBILE
 
+#elif GTEST_OS_ESP8266
+typedef struct stat StatStruct;
+
+inline int FileNo(FILE* file) { return fileno(file); }
+inline int DoIsATTY(int fd) { return isatty(fd); }
+inline int Stat(const char* path, StatStruct* buf) {
+  // stat function not implemented on ESP8266
+  return 0;
+}
+inline int StrCaseCmp(const char* s1, const char* s2) {
+  return strcasecmp(s1, s2);
+}
+inline char* StrDup(const char* src) { return strdup(src); }
+inline int RmDir(const char* dir) { return rmdir(dir); }
+inline bool IsDir(const StatStruct& st) { return S_ISDIR(st.st_mode); }
+
 #else
 
 typedef struct stat StatStruct;
 
 inline int FileNo(FILE* file) { return fileno(file); }
-inline int IsATTY(int fd) { return isatty(fd); }
+inline int DoIsATTY(int fd) { return isatty(fd); }
 inline int Stat(const char* path, StatStruct* buf) { return stat(path, buf); }
 inline int StrCaseCmp(const char* s1, const char* s2) {
   return strcasecmp(s1, s2);
@@ -2345,23 +2298,39 @@ inline bool IsDir(const StatStruct& st) { return S_ISDIR(st.st_mode); }
 
 #endif  // GTEST_OS_WINDOWS
 
+inline int IsATTY(int fd) {
+  // DoIsATTY might change errno (for example ENOTTY in case you redirect stdout
+  // to a file on Linux), which is unexpected, so save the previous value, and
+  // restore it after the call.
+  int savedErrno = errno;
+  int isAttyValue = DoIsATTY(fd);
+  errno = savedErrno;
+
+  return isAttyValue;
+}
+
 // Functions deprecated by MSVC 8.0.
 
 GTEST_DISABLE_MSC_DEPRECATED_PUSH_()
-
-inline const char* StrNCpy(char* dest, const char* src, size_t n) {
-  return strncpy(dest, src, n);
-}
 
 // ChDir(), FReopen(), FDOpen(), Read(), Write(), Close(), and
 // StrError() aren't needed on Windows CE at this time and thus not
 // defined there.
 
-#if !GTEST_OS_WINDOWS_MOBILE && !GTEST_OS_WINDOWS_PHONE && !GTEST_OS_WINDOWS_RT
+#if !GTEST_OS_WINDOWS_MOBILE && !GTEST_OS_WINDOWS_PHONE && \
+    !GTEST_OS_WINDOWS_RT && !GTEST_OS_ESP8266 && !GTEST_OS_XTENSA
 inline int ChDir(const char* dir) { return chdir(dir); }
 #endif
 inline FILE* FOpen(const char* path, const char* mode) {
+#if GTEST_OS_WINDOWS && !GTEST_OS_WINDOWS_MINGW
+  struct wchar_codecvt : public std::codecvt<wchar_t, char, std::mbstate_t> {};
+  std::wstring_convert<wchar_codecvt> converter;
+  std::wstring wide_path = converter.from_bytes(path);
+  std::wstring wide_mode = converter.from_bytes(mode);
+  return _wfopen(wide_path.c_str(), wide_mode.c_str());
+#else  // GTEST_OS_WINDOWS && !GTEST_OS_WINDOWS_MINGW
   return fopen(path, mode);
+#endif  // GTEST_OS_WINDOWS && !GTEST_OS_WINDOWS_MINGW
 }
 #if !GTEST_OS_WINDOWS_MOBILE
 inline FILE *FReopen(const char* path, const char* mode, FILE* stream) {
@@ -2381,8 +2350,9 @@ inline int Close(int fd) { return close(fd); }
 inline const char* StrError(int errnum) { return strerror(errnum); }
 #endif
 inline const char* GetEnv(const char* name) {
-#if GTEST_OS_WINDOWS_MOBILE || GTEST_OS_WINDOWS_PHONE || GTEST_OS_WINDOWS_RT
-  // We are on Windows CE, which has no environment variables.
+#if GTEST_OS_WINDOWS_MOBILE || GTEST_OS_WINDOWS_PHONE || \
+    GTEST_OS_WINDOWS_RT || GTEST_OS_ESP8266 || GTEST_OS_XTENSA
+  // We are on an embedded platform, which has no environment variables.
   static_cast<void>(name);  // To prevent 'unused argument' warning.
   return nullptr;
 #elif defined(__BORLANDC__) || defined(__SunOS_5_8) || defined(__SunOS_5_9)
@@ -2424,15 +2394,13 @@ GTEST_DISABLE_MSC_DEPRECATED_POP_()
 # define GTEST_SNPRINTF_ snprintf
 #endif
 
-// The maximum number a BiggestInt can represent.  This definition
-// works no matter BiggestInt is represented in one's complement or
-// two's complement.
+// The biggest signed integer type the compiler supports.
 //
-// We cannot rely on numeric_limits in STL, as __int64 and long long
-// are not part of standard C++ and numeric_limits doesn't need to be
-// defined for them.
-const BiggestInt kMaxBiggestInt =
-    ~(static_cast<BiggestInt>(1) << (8*sizeof(BiggestInt) - 1));
+// long long is guaranteed to be at least 64-bits in C++11.
+using BiggestInt = long long;  // NOLINT
+
+// The maximum number a BiggestInt can represent.
+constexpr BiggestInt kMaxBiggestInt = (std::numeric_limits<BiggestInt>::max)();
 
 // This template class serves as a compile-time function from size to
 // type.  It maps a size in bytes to a primitive type with that
@@ -2457,40 +2425,27 @@ class TypeWithSize {
  public:
   // This prevents the user from using TypeWithSize<N> with incorrect
   // values of N.
-  typedef void UInt;
+  using UInt = void;
 };
 
 // The specialization for size 4.
 template <>
 class TypeWithSize<4> {
  public:
-  // unsigned int has size 4 in both gcc and MSVC.
-  //
-  // As base/basictypes.h doesn't compile on Windows, we cannot use
-  // uint32, uint64, and etc here.
-  typedef int Int;
-  typedef unsigned int UInt;
+  using Int = std::int32_t;
+  using UInt = std::uint32_t;
 };
 
 // The specialization for size 8.
 template <>
 class TypeWithSize<8> {
  public:
-#if GTEST_OS_WINDOWS
-  typedef __int64 Int;
-  typedef unsigned __int64 UInt;
-#else
-  typedef long long Int;  // NOLINT
-  typedef unsigned long long UInt;  // NOLINT
-#endif  // GTEST_OS_WINDOWS
+  using Int = std::int64_t;
+  using UInt = std::uint64_t;
 };
 
 // Integer types of known sizes.
-typedef TypeWithSize<4>::Int Int32;
-typedef TypeWithSize<4>::UInt UInt32;
-typedef TypeWithSize<8>::Int Int64;
-typedef TypeWithSize<8>::UInt UInt64;
-typedef TypeWithSize<8>::Int TimeInMillis;  // Represents time in milliseconds.
+using TimeInMillis = int64_t;  // Represents time in milliseconds.
 
 // Utilities for command line flags and environment variables.
 
@@ -2509,7 +2464,7 @@ typedef TypeWithSize<8>::Int TimeInMillis;  // Represents time in milliseconds.
 // Macros for declaring flags.
 # define GTEST_DECLARE_bool_(name) GTEST_API_ extern bool GTEST_FLAG(name)
 # define GTEST_DECLARE_int32_(name) \
-    GTEST_API_ extern ::testing::internal::Int32 GTEST_FLAG(name)
+    GTEST_API_ extern std::int32_t GTEST_FLAG(name)
 # define GTEST_DECLARE_string_(name) \
     GTEST_API_ extern ::std::string GTEST_FLAG(name)
 
@@ -2517,7 +2472,7 @@ typedef TypeWithSize<8>::Int TimeInMillis;  // Represents time in milliseconds.
 # define GTEST_DEFINE_bool_(name, default_val, doc) \
     GTEST_API_ bool GTEST_FLAG(name) = (default_val)
 # define GTEST_DEFINE_int32_(name, default_val, doc) \
-    GTEST_API_ ::testing::internal::Int32 GTEST_FLAG(name) = (default_val)
+    GTEST_API_ std::int32_t GTEST_FLAG(name) = (default_val)
 # define GTEST_DEFINE_string_(name, default_val, doc) \
     GTEST_API_ ::std::string GTEST_FLAG(name) = (default_val)
 
@@ -2532,12 +2487,13 @@ typedef TypeWithSize<8>::Int TimeInMillis;  // Represents time in milliseconds.
 // Parses 'str' for a 32-bit signed integer.  If successful, writes the result
 // to *value and returns true; otherwise leaves *value unchanged and returns
 // false.
-bool ParseInt32(const Message& src_text, const char* str, Int32* value);
+GTEST_API_ bool ParseInt32(const Message& src_text, const char* str,
+                           int32_t* value);
 
-// Parses a bool/Int32/string from the environment variable
+// Parses a bool/int32_t/string from the environment variable
 // corresponding to the given Google Test flag.
 bool BoolFromGTestEnv(const char* flag, bool default_val);
-GTEST_API_ Int32 Int32FromGTestEnv(const char* flag, Int32 default_val);
+GTEST_API_ int32_t Int32FromGTestEnv(const char* flag, int32_t default_val);
 std::string OutputFlagAlsoCheckEnvVar();
 const char* StringFromGTestEnv(const char* flag, const char* default_val);
 
@@ -2564,7 +2520,122 @@ const char* StringFromGTestEnv(const char* flag, const char* default_val);
 
 #endif  // !defined(GTEST_INTERNAL_DEPRECATED)
 
-#endif  // GTEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_H_
+#if GTEST_HAS_ABSL
+// Always use absl::any for UniversalPrinter<> specializations if googletest
+// is built with absl support.
+#define GTEST_INTERNAL_HAS_ANY 1
+#include "absl/types/any.h"
+namespace testing {
+namespace internal {
+using Any = ::absl::any;
+}  // namespace internal
+}  // namespace testing
+#else
+#ifdef __has_include
+#if __has_include(<any>) && __cplusplus >= 201703L
+// Otherwise for C++17 and higher use std::any for UniversalPrinter<>
+// specializations.
+#define GTEST_INTERNAL_HAS_ANY 1
+#include <any>
+namespace testing {
+namespace internal {
+using Any = ::std::any;
+}  // namespace internal
+}  // namespace testing
+// The case where absl is configured NOT to alias std::any is not
+// supported.
+#endif  // __has_include(<any>) && __cplusplus >= 201703L
+#endif  // __has_include
+#endif  // GTEST_HAS_ABSL
+
+#if GTEST_HAS_ABSL
+// Always use absl::optional for UniversalPrinter<> specializations if
+// googletest is built with absl support.
+#define GTEST_INTERNAL_HAS_OPTIONAL 1
+#include "absl/types/optional.h"
+namespace testing {
+namespace internal {
+template <typename T>
+using Optional = ::absl::optional<T>;
+}  // namespace internal
+}  // namespace testing
+#else
+#ifdef __has_include
+#if __has_include(<optional>) && __cplusplus >= 201703L
+// Otherwise for C++17 and higher use std::optional for UniversalPrinter<>
+// specializations.
+#define GTEST_INTERNAL_HAS_OPTIONAL 1
+#include <optional>
+namespace testing {
+namespace internal {
+template <typename T>
+using Optional = ::std::optional<T>;
+}  // namespace internal
+}  // namespace testing
+// The case where absl is configured NOT to alias std::optional is not
+// supported.
+#endif  // __has_include(<optional>) && __cplusplus >= 201703L
+#endif  // __has_include
+#endif  // GTEST_HAS_ABSL
+
+#if GTEST_HAS_ABSL
+// Always use absl::string_view for Matcher<> specializations if googletest
+// is built with absl support.
+# define GTEST_INTERNAL_HAS_STRING_VIEW 1
+#include "absl/strings/string_view.h"
+namespace testing {
+namespace internal {
+using StringView = ::absl::string_view;
+}  // namespace internal
+}  // namespace testing
+#else
+# ifdef __has_include
+#   if __has_include(<string_view>) && __cplusplus >= 201703L
+// Otherwise for C++17 and higher use std::string_view for Matcher<>
+// specializations.
+#   define GTEST_INTERNAL_HAS_STRING_VIEW 1
+#include <string_view>
+namespace testing {
+namespace internal {
+using StringView = ::std::string_view;
+}  // namespace internal
+}  // namespace testing
+// The case where absl is configured NOT to alias std::string_view is not
+// supported.
+#  endif  // __has_include(<string_view>) && __cplusplus >= 201703L
+# endif  // __has_include
+#endif  // GTEST_HAS_ABSL
+
+#if GTEST_HAS_ABSL
+// Always use absl::variant for UniversalPrinter<> specializations if googletest
+// is built with absl support.
+#define GTEST_INTERNAL_HAS_VARIANT 1
+#include "absl/types/variant.h"
+namespace testing {
+namespace internal {
+template <typename... T>
+using Variant = ::absl::variant<T...>;
+}  // namespace internal
+}  // namespace testing
+#else
+#ifdef __has_include
+#if __has_include(<variant>) && __cplusplus >= 201703L
+// Otherwise for C++17 and higher use std::variant for UniversalPrinter<>
+// specializations.
+#define GTEST_INTERNAL_HAS_VARIANT 1
+#include <variant>
+namespace testing {
+namespace internal {
+template <typename... T>
+using Variant = ::std::variant<T...>;
+}  // namespace internal
+}  // namespace testing
+// The case where absl is configured NOT to alias std::variant is not supported.
+#endif  // __has_include(<variant>) && __cplusplus >= 201703L
+#endif  // __has_include
+#endif  // GTEST_HAS_ABSL
+
+#endif  // GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_H_
 
 #if GTEST_OS_LINUX
 # include <stdlib.h>
@@ -2580,6 +2651,7 @@ const char* StringFromGTestEnv(const char* flag, const char* default_val);
 #include <ctype.h>
 #include <float.h>
 #include <string.h>
+#include <cstdint>
 #include <iomanip>
 #include <limits>
 #include <map>
@@ -2634,11 +2706,12 @@ const char* StringFromGTestEnv(const char* flag, const char* default_val);
 
 // GOOGLETEST_CM0001 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_GTEST_MESSAGE_H_
-#define GTEST_INCLUDE_GTEST_GTEST_MESSAGE_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_GTEST_MESSAGE_H_
+#define GOOGLETEST_INCLUDE_GTEST_GTEST_MESSAGE_H_
 
 #include <limits>
 #include <memory>
+#include <sstream>
 
 
 GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
@@ -2768,12 +2841,6 @@ class GTEST_API_ Message {
   Message& operator <<(const ::std::wstring& wstr);
 #endif  // GTEST_HAS_STD_WSTRING
 
-#if GTEST_HAS_GLOBAL_WSTRING
-  // Converts the given wide string to a narrow string using the UTF-8
-  // encoding, and streams the result to this Message object.
-  Message& operator <<(const ::wstring& wstr);
-#endif  // GTEST_HAS_GLOBAL_WSTRING
-
   // Gets the text streamed to this object so far as an std::string.
   // Each '\0' character in the buffer is replaced with "\\0".
   //
@@ -2810,7 +2877,7 @@ std::string StreamableToString(const T& streamable) {
 
 GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 
-#endif  // GTEST_INCLUDE_GTEST_GTEST_MESSAGE_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_GTEST_MESSAGE_H_
 // Copyright 2008, Google Inc.
 // All rights reserved.
 //
@@ -2850,8 +2917,8 @@ GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 
 // GOOGLETEST_CM0001 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_FILEPATH_H_
-#define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_FILEPATH_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_FILEPATH_H_
+#define GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_FILEPATH_H_
 
 // Copyright 2005, Google Inc.
 // All rights reserved.
@@ -2893,8 +2960,8 @@ GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 
 // GOOGLETEST_CM0001 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_STRING_H_
-#define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_STRING_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_STRING_H_
+#define GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_STRING_H_
 
 #ifdef __BORLANDC__
 // string.h is not guaranteed to provide strcpy on C++ Builder.
@@ -2902,6 +2969,7 @@ GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 #endif
 
 #include <string.h>
+#include <cstdint>
 #include <string>
 
 
@@ -2948,7 +3016,8 @@ class GTEST_API_ String {
   static const char* Utf16ToAnsi(LPCWSTR utf16_str);
 #endif
 
-  // Compares two C strings.  Returns true iff they have the same content.
+  // Compares two C strings.  Returns true if and only if they have the same
+  // content.
   //
   // Unlike strcmp(), this function can handle NULL argument(s).  A
   // NULL C string is considered different to any non-NULL C string,
@@ -2961,16 +3030,16 @@ class GTEST_API_ String {
   // returned.
   static std::string ShowWideCString(const wchar_t* wide_c_str);
 
-  // Compares two wide C strings.  Returns true iff they have the same
-  // content.
+  // Compares two wide C strings.  Returns true if and only if they have the
+  // same content.
   //
   // Unlike wcscmp(), this function can handle NULL argument(s).  A
   // NULL C string is considered different to any non-NULL C string,
   // including the empty string.
   static bool WideCStringEquals(const wchar_t* lhs, const wchar_t* rhs);
 
-  // Compares two C strings, ignoring case.  Returns true iff they
-  // have the same content.
+  // Compares two C strings, ignoring case.  Returns true if and only if
+  // they have the same content.
   //
   // Unlike strcasecmp(), this function can handle NULL argument(s).
   // A NULL C string is considered different to any non-NULL C string,
@@ -2978,8 +3047,8 @@ class GTEST_API_ String {
   static bool CaseInsensitiveCStringEquals(const char* lhs,
                                            const char* rhs);
 
-  // Compares two wide C strings, ignoring case.  Returns true iff they
-  // have the same content.
+  // Compares two wide C strings, ignoring case.  Returns true if and only if
+  // they have the same content.
   //
   // Unlike wcscasecmp(), this function can handle NULL argument(s).
   // A NULL C string is considered different to any non-NULL wide C string,
@@ -2993,16 +3062,22 @@ class GTEST_API_ String {
   static bool CaseInsensitiveWideCStringEquals(const wchar_t* lhs,
                                                const wchar_t* rhs);
 
-  // Returns true iff the given string ends with the given suffix, ignoring
-  // case. Any string is considered to end with an empty suffix.
+  // Returns true if and only if the given string ends with the given suffix,
+  // ignoring case. Any string is considered to end with an empty suffix.
   static bool EndsWithCaseInsensitive(
       const std::string& str, const std::string& suffix);
 
   // Formats an int value as "%02d".
   static std::string FormatIntWidth2(int value);  // "%02d" for width == 2
 
+  // Formats an int value to given width with leading zeros.
+  static std::string FormatIntWidthN(int value, int width);
+
   // Formats an int value as "%X".
   static std::string FormatHexInt(int value);
+
+  // Formats an int value as "%X".
+  static std::string FormatHexUInt32(uint32_t value);
 
   // Formats a byte as "%02X".
   static std::string FormatByte(unsigned char value);
@@ -3018,7 +3093,7 @@ GTEST_API_ std::string StringStreamToString(::std::stringstream* stream);
 }  // namespace internal
 }  // namespace testing
 
-#endif  // GTEST_INCLUDE_GTEST_INTERNAL_GTEST_STRING_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_STRING_H_
 
 GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
 /* class A needs to have dll-interface to be used by clients of class B */)
@@ -3088,7 +3163,7 @@ class GTEST_API_ FilePath {
                                          const FilePath& base_name,
                                          const char* extension);
 
-  // Returns true iff the path is "".
+  // Returns true if and only if the path is "".
   bool IsEmpty() const { return pathname_.empty(); }
 
   // If input name has a trailing separator character, removes it and returns
@@ -3173,7 +3248,7 @@ class GTEST_API_ FilePath {
 
   void Normalize();
 
-  // Returns a pointer to the last occurence of a valid path separator in
+  // Returns a pointer to the last occurrence of a valid path separator in
   // the FilePath. On Windows, for example, both '/' and '\' are valid path
   // separators. Returns NULL if no path separator was found.
   const char* FindLastPathSeparator() const;
@@ -3186,11 +3261,7 @@ class GTEST_API_ FilePath {
 
 GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 
-#endif  // GTEST_INCLUDE_GTEST_INTERNAL_GTEST_FILEPATH_H_
-// This file was GENERATED by command:
-//     pump.py gtest-type-util.h.pump
-// DO NOT EDIT BY HAND!!!
-
+#endif  // GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_FILEPATH_H_
 // Copyright 2008 Google Inc.
 // All Rights Reserved.
 //
@@ -3221,17 +3292,12 @@ GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Type utilities needed for implementing typed and type-parameterized
-// tests.  This file is generated by a SCRIPT.  DO NOT EDIT BY HAND!
-//
-// Currently we support at most 50 types in a list, and at most 50
-// type-parameterized tests in one type-parameterized test suite.
-// Please contact googletestframework@googlegroups.com if you need
-// more.
+// tests.
 
 // GOOGLETEST_CM0001 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_TYPE_UTIL_H_
-#define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_TYPE_UTIL_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_TYPE_UTIL_H_
+#define GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_TYPE_UTIL_H_
 
 
 // #ifdef __GNUC__ is too general here.  It is possible to use gcc without using
@@ -3261,1567 +3327,42 @@ inline std::string CanonicalizeForStdLibVersioning(std::string s) {
   return s;
 }
 
-// GetTypeName<T>() returns a human-readable name of type T.
-// NB: This function is also used in Google Mock, so don't move it inside of
-// the typed-test-only section below.
-template <typename T>
-std::string GetTypeName() {
-# if GTEST_HAS_RTTI
-
-  const char* const name = typeid(T).name();
-#  if GTEST_HAS_CXXABI_H_ || defined(__HP_aCC)
+#if GTEST_HAS_RTTI
+// GetTypeName(const std::type_info&) returns a human-readable name of type T.
+inline std::string GetTypeName(const std::type_info& type) {
+  const char* const name = type.name();
+#if GTEST_HAS_CXXABI_H_ || defined(__HP_aCC)
   int status = 0;
   // gcc's implementation of typeid(T).name() mangles the type name,
   // so we have to demangle it.
-#   if GTEST_HAS_CXXABI_H_
+#if GTEST_HAS_CXXABI_H_
   using abi::__cxa_demangle;
-#   endif  // GTEST_HAS_CXXABI_H_
+#endif  // GTEST_HAS_CXXABI_H_
   char* const readable_name = __cxa_demangle(name, nullptr, nullptr, &status);
   const std::string name_str(status == 0 ? readable_name : name);
   free(readable_name);
   return CanonicalizeForStdLibVersioning(name_str);
-#  else
+#else
   return name;
-#  endif  // GTEST_HAS_CXXABI_H_ || __HP_aCC
+#endif  // GTEST_HAS_CXXABI_H_ || __HP_aCC
+}
+#endif  // GTEST_HAS_RTTI
 
-# else
-
+// GetTypeName<T>() returns a human-readable name of type T if and only if
+// RTTI is enabled, otherwise it returns a dummy type name.
+// NB: This function is also used in Google Mock, so don't move it inside of
+// the typed-test-only section below.
+template <typename T>
+std::string GetTypeName() {
+#if GTEST_HAS_RTTI
+  return GetTypeName(typeid(T));
+#else
   return "<type>";
-
-# endif  // GTEST_HAS_RTTI
+#endif  // GTEST_HAS_RTTI
 }
 
-#if GTEST_HAS_TYPED_TEST || GTEST_HAS_TYPED_TEST_P
-
-// AssertyTypeEq<T1, T2>::type is defined iff T1 and T2 are the same
-// type.  This can be used as a compile-time assertion to ensure that
-// two types are equal.
-
-template <typename T1, typename T2>
-struct AssertTypeEq;
-
-template <typename T>
-struct AssertTypeEq<T, T> {
-  typedef bool type;
-};
-
-// A unique type used as the default value for the arguments of class
-// template Types.  This allows us to simulate variadic templates
-// (e.g. Types<int>, Type<int, double>, and etc), which C++ doesn't
-// support directly.
+// A unique type indicating an empty node
 struct None {};
-
-// The following family of struct and struct templates are used to
-// represent type lists.  In particular, TypesN<T1, T2, ..., TN>
-// represents a type list with N types (T1, T2, ..., and TN) in it.
-// Except for Types0, every struct in the family has two member types:
-// Head for the first type in the list, and Tail for the rest of the
-// list.
-
-// The empty type list.
-struct Types0 {};
-
-// Type lists of length 1, 2, 3, and so on.
-
-template <typename T1>
-struct Types1 {
-  typedef T1 Head;
-  typedef Types0 Tail;
-};
-template <typename T1, typename T2>
-struct Types2 {
-  typedef T1 Head;
-  typedef Types1<T2> Tail;
-};
-
-template <typename T1, typename T2, typename T3>
-struct Types3 {
-  typedef T1 Head;
-  typedef Types2<T2, T3> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4>
-struct Types4 {
-  typedef T1 Head;
-  typedef Types3<T2, T3, T4> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5>
-struct Types5 {
-  typedef T1 Head;
-  typedef Types4<T2, T3, T4, T5> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6>
-struct Types6 {
-  typedef T1 Head;
-  typedef Types5<T2, T3, T4, T5, T6> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7>
-struct Types7 {
-  typedef T1 Head;
-  typedef Types6<T2, T3, T4, T5, T6, T7> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8>
-struct Types8 {
-  typedef T1 Head;
-  typedef Types7<T2, T3, T4, T5, T6, T7, T8> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9>
-struct Types9 {
-  typedef T1 Head;
-  typedef Types8<T2, T3, T4, T5, T6, T7, T8, T9> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10>
-struct Types10 {
-  typedef T1 Head;
-  typedef Types9<T2, T3, T4, T5, T6, T7, T8, T9, T10> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11>
-struct Types11 {
-  typedef T1 Head;
-  typedef Types10<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12>
-struct Types12 {
-  typedef T1 Head;
-  typedef Types11<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13>
-struct Types13 {
-  typedef T1 Head;
-  typedef Types12<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14>
-struct Types14 {
-  typedef T1 Head;
-  typedef Types13<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15>
-struct Types15 {
-  typedef T1 Head;
-  typedef Types14<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16>
-struct Types16 {
-  typedef T1 Head;
-  typedef Types15<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17>
-struct Types17 {
-  typedef T1 Head;
-  typedef Types16<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18>
-struct Types18 {
-  typedef T1 Head;
-  typedef Types17<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19>
-struct Types19 {
-  typedef T1 Head;
-  typedef Types18<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20>
-struct Types20 {
-  typedef T1 Head;
-  typedef Types19<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21>
-struct Types21 {
-  typedef T1 Head;
-  typedef Types20<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22>
-struct Types22 {
-  typedef T1 Head;
-  typedef Types21<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23>
-struct Types23 {
-  typedef T1 Head;
-  typedef Types22<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24>
-struct Types24 {
-  typedef T1 Head;
-  typedef Types23<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25>
-struct Types25 {
-  typedef T1 Head;
-  typedef Types24<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26>
-struct Types26 {
-  typedef T1 Head;
-  typedef Types25<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27>
-struct Types27 {
-  typedef T1 Head;
-  typedef Types26<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28>
-struct Types28 {
-  typedef T1 Head;
-  typedef Types27<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29>
-struct Types29 {
-  typedef T1 Head;
-  typedef Types28<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30>
-struct Types30 {
-  typedef T1 Head;
-  typedef Types29<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31>
-struct Types31 {
-  typedef T1 Head;
-  typedef Types30<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32>
-struct Types32 {
-  typedef T1 Head;
-  typedef Types31<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33>
-struct Types33 {
-  typedef T1 Head;
-  typedef Types32<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34>
-struct Types34 {
-  typedef T1 Head;
-  typedef Types33<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35>
-struct Types35 {
-  typedef T1 Head;
-  typedef Types34<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36>
-struct Types36 {
-  typedef T1 Head;
-  typedef Types35<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37>
-struct Types37 {
-  typedef T1 Head;
-  typedef Types36<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38>
-struct Types38 {
-  typedef T1 Head;
-  typedef Types37<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37, T38> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39>
-struct Types39 {
-  typedef T1 Head;
-  typedef Types38<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37, T38, T39> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40>
-struct Types40 {
-  typedef T1 Head;
-  typedef Types39<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41>
-struct Types41 {
-  typedef T1 Head;
-  typedef Types40<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42>
-struct Types42 {
-  typedef T1 Head;
-  typedef Types41<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43>
-struct Types43 {
-  typedef T1 Head;
-  typedef Types42<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42,
-      T43> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44>
-struct Types44 {
-  typedef T1 Head;
-  typedef Types43<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43,
-      T44> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44, typename T45>
-struct Types45 {
-  typedef T1 Head;
-  typedef Types44<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43,
-      T44, T45> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44, typename T45,
-    typename T46>
-struct Types46 {
-  typedef T1 Head;
-  typedef Types45<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43,
-      T44, T45, T46> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44, typename T45,
-    typename T46, typename T47>
-struct Types47 {
-  typedef T1 Head;
-  typedef Types46<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43,
-      T44, T45, T46, T47> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44, typename T45,
-    typename T46, typename T47, typename T48>
-struct Types48 {
-  typedef T1 Head;
-  typedef Types47<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43,
-      T44, T45, T46, T47, T48> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44, typename T45,
-    typename T46, typename T47, typename T48, typename T49>
-struct Types49 {
-  typedef T1 Head;
-  typedef Types48<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43,
-      T44, T45, T46, T47, T48, T49> Tail;
-};
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44, typename T45,
-    typename T46, typename T47, typename T48, typename T49, typename T50>
-struct Types50 {
-  typedef T1 Head;
-  typedef Types49<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-      T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-      T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43,
-      T44, T45, T46, T47, T48, T49, T50> Tail;
-};
-
-
-}  // namespace internal
-
-// We don't want to require the users to write TypesN<...> directly,
-// as that would require them to count the length.  Types<...> is much
-// easier to write, but generates horrible messages when there is a
-// compiler error, as gcc insists on printing out each template
-// argument, even if it has the default value (this means Types<int>
-// will appear as Types<int, None, None, ..., None> in the compiler
-// errors).
-//
-// Our solution is to combine the best part of the two approaches: a
-// user would write Types<T1, ..., TN>, and Google Test will translate
-// that to TypesN<T1, ..., TN> internally to make error messages
-// readable.  The translation is done by the 'type' member of the
-// Types template.
-template <typename T1 = internal::None, typename T2 = internal::None,
-    typename T3 = internal::None, typename T4 = internal::None,
-    typename T5 = internal::None, typename T6 = internal::None,
-    typename T7 = internal::None, typename T8 = internal::None,
-    typename T9 = internal::None, typename T10 = internal::None,
-    typename T11 = internal::None, typename T12 = internal::None,
-    typename T13 = internal::None, typename T14 = internal::None,
-    typename T15 = internal::None, typename T16 = internal::None,
-    typename T17 = internal::None, typename T18 = internal::None,
-    typename T19 = internal::None, typename T20 = internal::None,
-    typename T21 = internal::None, typename T22 = internal::None,
-    typename T23 = internal::None, typename T24 = internal::None,
-    typename T25 = internal::None, typename T26 = internal::None,
-    typename T27 = internal::None, typename T28 = internal::None,
-    typename T29 = internal::None, typename T30 = internal::None,
-    typename T31 = internal::None, typename T32 = internal::None,
-    typename T33 = internal::None, typename T34 = internal::None,
-    typename T35 = internal::None, typename T36 = internal::None,
-    typename T37 = internal::None, typename T38 = internal::None,
-    typename T39 = internal::None, typename T40 = internal::None,
-    typename T41 = internal::None, typename T42 = internal::None,
-    typename T43 = internal::None, typename T44 = internal::None,
-    typename T45 = internal::None, typename T46 = internal::None,
-    typename T47 = internal::None, typename T48 = internal::None,
-    typename T49 = internal::None, typename T50 = internal::None>
-struct Types {
-  typedef internal::Types50<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40,
-      T41, T42, T43, T44, T45, T46, T47, T48, T49, T50> type;
-};
-
-template <>
-struct Types<internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None> {
-  typedef internal::Types0 type;
-};
-template <typename T1>
-struct Types<T1, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None> {
-  typedef internal::Types1<T1> type;
-};
-template <typename T1, typename T2>
-struct Types<T1, T2, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None> {
-  typedef internal::Types2<T1, T2> type;
-};
-template <typename T1, typename T2, typename T3>
-struct Types<T1, T2, T3, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None> {
-  typedef internal::Types3<T1, T2, T3> type;
-};
-template <typename T1, typename T2, typename T3, typename T4>
-struct Types<T1, T2, T3, T4, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None> {
-  typedef internal::Types4<T1, T2, T3, T4> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5>
-struct Types<T1, T2, T3, T4, T5, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None> {
-  typedef internal::Types5<T1, T2, T3, T4, T5> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6>
-struct Types<T1, T2, T3, T4, T5, T6, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None> {
-  typedef internal::Types6<T1, T2, T3, T4, T5, T6> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7>
-struct Types<T1, T2, T3, T4, T5, T6, T7, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None> {
-  typedef internal::Types7<T1, T2, T3, T4, T5, T6, T7> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None> {
-  typedef internal::Types8<T1, T2, T3, T4, T5, T6, T7, T8> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None> {
-  typedef internal::Types9<T1, T2, T3, T4, T5, T6, T7, T8, T9> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None> {
-  typedef internal::Types10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None> {
-  typedef internal::Types11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None> {
-  typedef internal::Types12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
-      T12> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None> {
-  typedef internal::Types13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None> {
-  typedef internal::Types14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None> {
-  typedef internal::Types15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None> {
-  typedef internal::Types16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None> {
-  typedef internal::Types17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None> {
-  typedef internal::Types18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None> {
-  typedef internal::Types19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None> {
-  typedef internal::Types20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None> {
-  typedef internal::Types21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None> {
-  typedef internal::Types22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None> {
-  typedef internal::Types23<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None> {
-  typedef internal::Types24<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None> {
-  typedef internal::Types25<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None> {
-  typedef internal::Types26<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25,
-      T26> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None> {
-  typedef internal::Types27<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None> {
-  typedef internal::Types28<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None> {
-  typedef internal::Types29<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None> {
-  typedef internal::Types30<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None> {
-  typedef internal::Types31<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None> {
-  typedef internal::Types32<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None> {
-  typedef internal::Types33<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None> {
-  typedef internal::Types34<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None> {
-  typedef internal::Types35<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None> {
-  typedef internal::Types36<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, T37, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None> {
-  typedef internal::Types37<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, T37, T38, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None> {
-  typedef internal::Types38<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, T37, T38, T39, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None> {
-  typedef internal::Types39<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None> {
-  typedef internal::Types40<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39,
-      T40> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None, internal::None> {
-  typedef internal::Types41<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40,
-      T41> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, internal::None,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None> {
-  typedef internal::Types42<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40,
-      T41, T42> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None, internal::None> {
-  typedef internal::Types43<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40,
-      T41, T42, T43> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None, internal::None> {
-  typedef internal::Types44<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40,
-      T41, T42, T43, T44> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44, typename T45>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45,
-    internal::None, internal::None, internal::None, internal::None,
-    internal::None> {
-  typedef internal::Types45<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40,
-      T41, T42, T43, T44, T45> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44, typename T45,
-    typename T46>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45,
-    T46, internal::None, internal::None, internal::None, internal::None> {
-  typedef internal::Types46<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40,
-      T41, T42, T43, T44, T45, T46> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44, typename T45,
-    typename T46, typename T47>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45,
-    T46, T47, internal::None, internal::None, internal::None> {
-  typedef internal::Types47<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40,
-      T41, T42, T43, T44, T45, T46, T47> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44, typename T45,
-    typename T46, typename T47, typename T48>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45,
-    T46, T47, T48, internal::None, internal::None> {
-  typedef internal::Types48<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40,
-      T41, T42, T43, T44, T45, T46, T47, T48> type;
-};
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44, typename T45,
-    typename T46, typename T47, typename T48, typename T49>
-struct Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15,
-    T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30,
-    T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45,
-    T46, T47, T48, T49, internal::None> {
-  typedef internal::Types49<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40,
-      T41, T42, T43, T44, T45, T46, T47, T48, T49> type;
-};
-
-namespace internal {
 
 # define GTEST_TEMPLATE_ template <typename T> class
 
@@ -4844,1695 +3385,65 @@ struct TemplateSel {
 # define GTEST_BIND_(TmplSel, T) \
   TmplSel::template Bind<T>::type
 
-// A unique struct template used as the default value for the
-// arguments of class template Templates.  This allows us to simulate
-// variadic templates (e.g. Templates<int>, Templates<int, double>,
-// and etc), which C++ doesn't support directly.
-template <typename T>
-struct NoneT {};
-
-// The following family of struct and struct templates are used to
-// represent template lists.  In particular, TemplatesN<T1, T2, ...,
-// TN> represents a list of N templates (T1, T2, ..., and TN).  Except
-// for Templates0, every struct in the family has two member types:
-// Head for the selector of the first template in the list, and Tail
-// for the rest of the list.
-
-// The empty template list.
-struct Templates0 {};
-
-// Template lists of length 1, 2, 3, and so on.
-
-template <GTEST_TEMPLATE_ T1>
-struct Templates1 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates0 Tail;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2>
-struct Templates2 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates1<T2> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3>
-struct Templates3 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates2<T2, T3> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4>
-struct Templates4 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates3<T2, T3, T4> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5>
-struct Templates5 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates4<T2, T3, T4, T5> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6>
-struct Templates6 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates5<T2, T3, T4, T5, T6> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7>
-struct Templates7 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates6<T2, T3, T4, T5, T6, T7> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8>
-struct Templates8 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates7<T2, T3, T4, T5, T6, T7, T8> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9>
-struct Templates9 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates8<T2, T3, T4, T5, T6, T7, T8, T9> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10>
-struct Templates10 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates9<T2, T3, T4, T5, T6, T7, T8, T9, T10> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11>
-struct Templates11 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates10<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12>
-struct Templates12 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates11<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13>
-struct Templates13 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates12<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14>
-struct Templates14 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates13<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15>
-struct Templates15 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates14<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16>
-struct Templates16 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates15<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17>
-struct Templates17 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates16<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18>
-struct Templates18 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates17<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19>
-struct Templates19 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates18<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20>
-struct Templates20 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates19<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21>
-struct Templates21 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates20<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22>
-struct Templates22 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates21<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23>
-struct Templates23 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates22<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24>
-struct Templates24 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates23<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25>
-struct Templates25 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates24<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26>
-struct Templates26 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates25<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27>
-struct Templates27 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates26<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28>
-struct Templates28 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates27<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29>
-struct Templates29 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates28<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30>
-struct Templates30 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates29<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31>
-struct Templates31 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates30<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32>
-struct Templates32 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates31<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33>
-struct Templates33 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates32<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34>
-struct Templates34 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates33<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35>
-struct Templates35 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates34<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36>
-struct Templates36 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates35<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37>
-struct Templates37 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates36<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38>
-struct Templates38 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates37<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37, T38> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39>
-struct Templates39 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates38<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40>
-struct Templates40 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates39<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41>
-struct Templates41 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates40<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42>
-struct Templates42 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates41<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41,
-      T42> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43>
-struct Templates43 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates42<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42,
-      T43> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43, GTEST_TEMPLATE_ T44>
-struct Templates44 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates43<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42,
-      T43, T44> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43, GTEST_TEMPLATE_ T44, GTEST_TEMPLATE_ T45>
-struct Templates45 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates44<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42,
-      T43, T44, T45> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43, GTEST_TEMPLATE_ T44, GTEST_TEMPLATE_ T45,
-    GTEST_TEMPLATE_ T46>
-struct Templates46 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates45<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42,
-      T43, T44, T45, T46> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43, GTEST_TEMPLATE_ T44, GTEST_TEMPLATE_ T45,
-    GTEST_TEMPLATE_ T46, GTEST_TEMPLATE_ T47>
-struct Templates47 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates46<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42,
-      T43, T44, T45, T46, T47> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43, GTEST_TEMPLATE_ T44, GTEST_TEMPLATE_ T45,
-    GTEST_TEMPLATE_ T46, GTEST_TEMPLATE_ T47, GTEST_TEMPLATE_ T48>
-struct Templates48 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates47<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42,
-      T43, T44, T45, T46, T47, T48> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43, GTEST_TEMPLATE_ T44, GTEST_TEMPLATE_ T45,
-    GTEST_TEMPLATE_ T46, GTEST_TEMPLATE_ T47, GTEST_TEMPLATE_ T48,
-    GTEST_TEMPLATE_ T49>
-struct Templates49 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates48<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42,
-      T43, T44, T45, T46, T47, T48, T49> Tail;
-};
-
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43, GTEST_TEMPLATE_ T44, GTEST_TEMPLATE_ T45,
-    GTEST_TEMPLATE_ T46, GTEST_TEMPLATE_ T47, GTEST_TEMPLATE_ T48,
-    GTEST_TEMPLATE_ T49, GTEST_TEMPLATE_ T50>
-struct Templates50 {
-  typedef TemplateSel<T1> Head;
-  typedef Templates49<T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-      T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-      T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42,
-      T43, T44, T45, T46, T47, T48, T49, T50> Tail;
-};
-
-
-// We don't want to require the users to write TemplatesN<...> directly,
-// as that would require them to count the length.  Templates<...> is much
-// easier to write, but generates horrible messages when there is a
-// compiler error, as gcc insists on printing out each template
-// argument, even if it has the default value (this means Templates<list>
-// will appear as Templates<list, NoneT, NoneT, ..., NoneT> in the compiler
-// errors).
-//
-// Our solution is to combine the best part of the two approaches: a
-// user would write Templates<T1, ..., TN>, and Google Test will translate
-// that to TemplatesN<T1, ..., TN> internally to make error messages
-// readable.  The translation is done by the 'type' member of the
-// Templates template.
-template <GTEST_TEMPLATE_ T1 = NoneT, GTEST_TEMPLATE_ T2 = NoneT,
-    GTEST_TEMPLATE_ T3 = NoneT, GTEST_TEMPLATE_ T4 = NoneT,
-    GTEST_TEMPLATE_ T5 = NoneT, GTEST_TEMPLATE_ T6 = NoneT,
-    GTEST_TEMPLATE_ T7 = NoneT, GTEST_TEMPLATE_ T8 = NoneT,
-    GTEST_TEMPLATE_ T9 = NoneT, GTEST_TEMPLATE_ T10 = NoneT,
-    GTEST_TEMPLATE_ T11 = NoneT, GTEST_TEMPLATE_ T12 = NoneT,
-    GTEST_TEMPLATE_ T13 = NoneT, GTEST_TEMPLATE_ T14 = NoneT,
-    GTEST_TEMPLATE_ T15 = NoneT, GTEST_TEMPLATE_ T16 = NoneT,
-    GTEST_TEMPLATE_ T17 = NoneT, GTEST_TEMPLATE_ T18 = NoneT,
-    GTEST_TEMPLATE_ T19 = NoneT, GTEST_TEMPLATE_ T20 = NoneT,
-    GTEST_TEMPLATE_ T21 = NoneT, GTEST_TEMPLATE_ T22 = NoneT,
-    GTEST_TEMPLATE_ T23 = NoneT, GTEST_TEMPLATE_ T24 = NoneT,
-    GTEST_TEMPLATE_ T25 = NoneT, GTEST_TEMPLATE_ T26 = NoneT,
-    GTEST_TEMPLATE_ T27 = NoneT, GTEST_TEMPLATE_ T28 = NoneT,
-    GTEST_TEMPLATE_ T29 = NoneT, GTEST_TEMPLATE_ T30 = NoneT,
-    GTEST_TEMPLATE_ T31 = NoneT, GTEST_TEMPLATE_ T32 = NoneT,
-    GTEST_TEMPLATE_ T33 = NoneT, GTEST_TEMPLATE_ T34 = NoneT,
-    GTEST_TEMPLATE_ T35 = NoneT, GTEST_TEMPLATE_ T36 = NoneT,
-    GTEST_TEMPLATE_ T37 = NoneT, GTEST_TEMPLATE_ T38 = NoneT,
-    GTEST_TEMPLATE_ T39 = NoneT, GTEST_TEMPLATE_ T40 = NoneT,
-    GTEST_TEMPLATE_ T41 = NoneT, GTEST_TEMPLATE_ T42 = NoneT,
-    GTEST_TEMPLATE_ T43 = NoneT, GTEST_TEMPLATE_ T44 = NoneT,
-    GTEST_TEMPLATE_ T45 = NoneT, GTEST_TEMPLATE_ T46 = NoneT,
-    GTEST_TEMPLATE_ T47 = NoneT, GTEST_TEMPLATE_ T48 = NoneT,
-    GTEST_TEMPLATE_ T49 = NoneT, GTEST_TEMPLATE_ T50 = NoneT>
+template <GTEST_TEMPLATE_ Head_, GTEST_TEMPLATE_... Tail_>
 struct Templates {
-  typedef Templates50<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41,
-      T42, T43, T44, T45, T46, T47, T48, T49, T50> type;
+  using Head = TemplateSel<Head_>;
+  using Tail = Templates<Tail_...>;
 };
 
-template <>
-struct Templates<NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT> {
-  typedef Templates0 type;
-};
-template <GTEST_TEMPLATE_ T1>
-struct Templates<T1, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT> {
-  typedef Templates1<T1> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2>
-struct Templates<T1, T2, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT> {
-  typedef Templates2<T1, T2> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3>
-struct Templates<T1, T2, T3, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates3<T1, T2, T3> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4>
-struct Templates<T1, T2, T3, T4, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates4<T1, T2, T3, T4> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5>
-struct Templates<T1, T2, T3, T4, T5, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates5<T1, T2, T3, T4, T5> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6>
-struct Templates<T1, T2, T3, T4, T5, T6, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates6<T1, T2, T3, T4, T5, T6> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates7<T1, T2, T3, T4, T5, T6, T7> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates8<T1, T2, T3, T4, T5, T6, T7, T8> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates9<T1, T2, T3, T4, T5, T6, T7, T8, T9> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT> {
-  typedef Templates22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT> {
-  typedef Templates23<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT> {
-  typedef Templates24<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT> {
-  typedef Templates25<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT> {
-  typedef Templates26<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT> {
-  typedef Templates27<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT> {
-  typedef Templates28<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT> {
-  typedef Templates29<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates30<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates31<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates32<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates33<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates34<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates35<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates36<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, T37, NoneT, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates37<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, T37, T38, NoneT, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates38<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates39<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, NoneT, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates40<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, NoneT, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates41<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40,
-      T41> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, NoneT,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates42<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41,
-      T42> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates43<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41,
-      T42, T43> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43, GTEST_TEMPLATE_ T44>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44,
-    NoneT, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates44<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41,
-      T42, T43, T44> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43, GTEST_TEMPLATE_ T44, GTEST_TEMPLATE_ T45>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44,
-    T45, NoneT, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates45<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41,
-      T42, T43, T44, T45> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43, GTEST_TEMPLATE_ T44, GTEST_TEMPLATE_ T45,
-    GTEST_TEMPLATE_ T46>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44,
-    T45, T46, NoneT, NoneT, NoneT, NoneT> {
-  typedef Templates46<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41,
-      T42, T43, T44, T45, T46> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43, GTEST_TEMPLATE_ T44, GTEST_TEMPLATE_ T45,
-    GTEST_TEMPLATE_ T46, GTEST_TEMPLATE_ T47>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44,
-    T45, T46, T47, NoneT, NoneT, NoneT> {
-  typedef Templates47<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41,
-      T42, T43, T44, T45, T46, T47> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43, GTEST_TEMPLATE_ T44, GTEST_TEMPLATE_ T45,
-    GTEST_TEMPLATE_ T46, GTEST_TEMPLATE_ T47, GTEST_TEMPLATE_ T48>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44,
-    T45, T46, T47, T48, NoneT, NoneT> {
-  typedef Templates48<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41,
-      T42, T43, T44, T45, T46, T47, T48> type;
-};
-template <GTEST_TEMPLATE_ T1, GTEST_TEMPLATE_ T2, GTEST_TEMPLATE_ T3,
-    GTEST_TEMPLATE_ T4, GTEST_TEMPLATE_ T5, GTEST_TEMPLATE_ T6,
-    GTEST_TEMPLATE_ T7, GTEST_TEMPLATE_ T8, GTEST_TEMPLATE_ T9,
-    GTEST_TEMPLATE_ T10, GTEST_TEMPLATE_ T11, GTEST_TEMPLATE_ T12,
-    GTEST_TEMPLATE_ T13, GTEST_TEMPLATE_ T14, GTEST_TEMPLATE_ T15,
-    GTEST_TEMPLATE_ T16, GTEST_TEMPLATE_ T17, GTEST_TEMPLATE_ T18,
-    GTEST_TEMPLATE_ T19, GTEST_TEMPLATE_ T20, GTEST_TEMPLATE_ T21,
-    GTEST_TEMPLATE_ T22, GTEST_TEMPLATE_ T23, GTEST_TEMPLATE_ T24,
-    GTEST_TEMPLATE_ T25, GTEST_TEMPLATE_ T26, GTEST_TEMPLATE_ T27,
-    GTEST_TEMPLATE_ T28, GTEST_TEMPLATE_ T29, GTEST_TEMPLATE_ T30,
-    GTEST_TEMPLATE_ T31, GTEST_TEMPLATE_ T32, GTEST_TEMPLATE_ T33,
-    GTEST_TEMPLATE_ T34, GTEST_TEMPLATE_ T35, GTEST_TEMPLATE_ T36,
-    GTEST_TEMPLATE_ T37, GTEST_TEMPLATE_ T38, GTEST_TEMPLATE_ T39,
-    GTEST_TEMPLATE_ T40, GTEST_TEMPLATE_ T41, GTEST_TEMPLATE_ T42,
-    GTEST_TEMPLATE_ T43, GTEST_TEMPLATE_ T44, GTEST_TEMPLATE_ T45,
-    GTEST_TEMPLATE_ T46, GTEST_TEMPLATE_ T47, GTEST_TEMPLATE_ T48,
-    GTEST_TEMPLATE_ T49>
-struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
-    T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29,
-    T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44,
-    T45, T46, T47, T48, T49, NoneT> {
-  typedef Templates49<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-      T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27,
-      T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41,
-      T42, T43, T44, T45, T46, T47, T48, T49> type;
+template <GTEST_TEMPLATE_ Head_>
+struct Templates<Head_> {
+  using Head = TemplateSel<Head_>;
+  using Tail = None;
 };
 
-// The TypeList template makes it possible to use either a single type
-// or a Types<...> list in TYPED_TEST_SUITE() and
-// INSTANTIATE_TYPED_TEST_SUITE_P().
+// Tuple-like type lists
+template <typename Head_, typename... Tail_>
+struct Types {
+  using Head = Head_;
+  using Tail = Types<Tail_...>;
+};
 
+template <typename Head_>
+struct Types<Head_> {
+  using Head = Head_;
+  using Tail = None;
+};
+
+// Helper metafunctions to tell apart a single type from types
+// generated by ::testing::Types
+template <typename... Ts>
+struct ProxyTypeList {
+  using type = Types<Ts...>;
+};
+
+template <typename>
+struct is_proxy_type_list : std::false_type {};
+
+template <typename... Ts>
+struct is_proxy_type_list<ProxyTypeList<Ts...>> : std::true_type {};
+
+// Generator which conditionally creates type lists.
+// It recognizes if a requested type list should be created
+// and prevents creating a new type list nested within another one.
 template <typename T>
-struct TypeList {
-  typedef Types1<T> type;
-};
+struct GenerateTypeList {
+ private:
+  using proxy = typename std::conditional<is_proxy_type_list<T>::value, T,
+                                          ProxyTypeList<T>>::type;
 
-template <typename T1, typename T2, typename T3, typename T4, typename T5,
-    typename T6, typename T7, typename T8, typename T9, typename T10,
-    typename T11, typename T12, typename T13, typename T14, typename T15,
-    typename T16, typename T17, typename T18, typename T19, typename T20,
-    typename T21, typename T22, typename T23, typename T24, typename T25,
-    typename T26, typename T27, typename T28, typename T29, typename T30,
-    typename T31, typename T32, typename T33, typename T34, typename T35,
-    typename T36, typename T37, typename T38, typename T39, typename T40,
-    typename T41, typename T42, typename T43, typename T44, typename T45,
-    typename T46, typename T47, typename T48, typename T49, typename T50>
-struct TypeList<Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
-    T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28,
-    T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43,
-    T44, T45, T46, T47, T48, T49, T50> > {
-  typedef typename Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
-      T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26,
-      T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40,
-      T41, T42, T43, T44, T45, T46, T47, T48, T49, T50>::type type;
+ public:
+  using type = typename proxy::type;
 };
-
-#endif  // GTEST_HAS_TYPED_TEST || GTEST_HAS_TYPED_TEST_P
 
 }  // namespace internal
+
+template <typename... Ts>
+using Types = internal::ProxyTypeList<Ts...>;
+
 }  // namespace testing
 
-#endif  // GTEST_INCLUDE_GTEST_INTERNAL_GTEST_TYPE_UTIL_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_TYPE_UTIL_H_
 
 // Due to C++ preprocessor weirdness, we need double indirection to
 // concatenate two tokens when one of them is __LINE__.  Writing
@@ -6546,10 +3457,20 @@ struct TypeList<Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
 #define GTEST_CONCAT_TOKEN_IMPL_(foo, bar) foo ## bar
 
 // Stringifies its argument.
-#define GTEST_STRINGIFY_(name) #name
+// Work around a bug in visual studio which doesn't accept code like this:
+//
+//   #define GTEST_STRINGIFY_(name) #name
+//   #define MACRO(a, b, c) ... GTEST_STRINGIFY_(a) ...
+//   MACRO(, x, y)
+//
+// Complaining about the argument to GTEST_STRINGIFY_ being empty.
+// This is allowed by the spec.
+#define GTEST_STRINGIFY_HELPER_(name, ...) #name
+#define GTEST_STRINGIFY_(...) GTEST_STRINGIFY_HELPER_(__VA_ARGS__, )
 
-class ProtocolMessage;
-namespace proto2 { class Message; }
+namespace proto2 {
+class MessageLite;
+}
 
 namespace testing {
 
@@ -6591,37 +3512,6 @@ class IgnoredValue {
                                     int>::type = 0>
   IgnoredValue(const T& /* ignored */) {}  // NOLINT(runtime/explicit)
 };
-
-// The only type that should be convertible to Secret* is nullptr.
-// The other null pointer constants are not of a type that is convertible to
-// Secret*. Only the literal with the right value is.
-template <typename T>
-using TypeIsValidNullptrConstant = std::integral_constant<
-    bool, std::is_same<typename std::decay<T>::type, std::nullptr_t>::value ||
-              !std::is_convertible<T, Secret*>::value>;
-
-// Two overloaded helpers for checking at compile time whether an
-// expression is a null pointer literal (i.e. NULL or any 0-valued
-// compile-time integral constant).  These helpers have no
-// implementations, as we only need their signatures.
-//
-// Given IsNullLiteralHelper(x), the compiler will pick the first
-// version if x can be implicitly converted to Secret*, and pick the
-// second version otherwise.  Since Secret is a secret and incomplete
-// type, the only expression a user can write that has type Secret* is
-// a null pointer literal.  Therefore, we know that x is a null
-// pointer literal if and only if the first version is picked by the
-// compiler.
-std::true_type IsNullLiteralHelper(Secret*, std::true_type);
-std::false_type IsNullLiteralHelper(IgnoredValue, std::false_type);
-std::false_type IsNullLiteralHelper(IgnoredValue, std::true_type);
-
-// A compile-time bool constant that is true if and only if x is a null pointer
-// literal (i.e. nullptr, NULL or any 0-valued compile-time integral constant).
-#define GTEST_IS_NULL_LITERAL_(x)                    \
-  decltype(::testing::internal::IsNullLiteralHelper( \
-      x,                                             \
-      ::testing::internal::TypeIsValidNullptrConstant<decltype(x)>()))::value
 
 // Appends the user-supplied message to the Google-Test-generated message.
 GTEST_API_ std::string AppendUserMessage(
@@ -6689,7 +3579,7 @@ GTEST_API_ std::string DiffStrings(const std::string& left,
 //   expected_value:      "5"
 //   actual_value:        "6"
 //
-// The ignoring_case parameter is true iff the assertion is a
+// The ignoring_case parameter is true if and only if the assertion is a
 // *_STRCASEEQ*.  When it's true, the string " (ignoring case)" will
 // be inserted into the message.
 GTEST_API_ AssertionResult EqFailure(const char* expected_expression,
@@ -6775,7 +3665,7 @@ class FloatingPoint {
   //
   // See the following article for more details on ULP:
   // http://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
-  static const size_t kMaxUlps = 4;
+  static const uint32_t kMaxUlps = 4;
 
   // Constructs a FloatingPoint from a raw floating-point number.
   //
@@ -6818,15 +3708,15 @@ class FloatingPoint {
   // Returns the sign bit of this number.
   Bits sign_bit() const { return kSignBitMask & u_.bits_; }
 
-  // Returns true iff this is NAN (not a number).
+  // Returns true if and only if this is NAN (not a number).
   bool is_nan() const {
     // It's a NAN if the exponent bits are all ones and the fraction
     // bits are not entirely zeros.
     return (exponent_bits() == kExponentBitMask) && (fraction_bits() != 0);
   }
 
-  // Returns true iff this number is at most kMaxUlps ULP's away from
-  // rhs.  In particular, this function:
+  // Returns true if and only if this number is at most kMaxUlps ULP's away
+  // from rhs.  In particular, this function:
   //
   //   - returns false if either number is (or both are) NAN.
   //   - treats really large numbers as almost equal to infinity.
@@ -7006,7 +3896,9 @@ struct SuiteApiResolver : T {
   using Test =
       typename std::conditional<sizeof(T) != 0, ::testing::Test, void>::type;
 
-  static SetUpTearDownSuiteFuncType GetSetUpCaseOrSuite() {
+  static SetUpTearDownSuiteFuncType GetSetUpCaseOrSuite(const char* filename,
+                                                        int line_num) {
+#ifndef GTEST_REMOVE_LEGACY_TEST_CASEAPI_
     SetUpTearDownSuiteFuncType test_case_fp =
         GetNotDefaultOrNull(&T::SetUpTestCase, &Test::SetUpTestCase);
     SetUpTearDownSuiteFuncType test_suite_fp =
@@ -7014,12 +3906,20 @@ struct SuiteApiResolver : T {
 
     GTEST_CHECK_(!test_case_fp || !test_suite_fp)
         << "Test can not provide both SetUpTestSuite and SetUpTestCase, please "
-           "make sure there is only one present ";
+           "make sure there is only one present at "
+        << filename << ":" << line_num;
 
     return test_case_fp != nullptr ? test_case_fp : test_suite_fp;
+#else
+    (void)(filename);
+    (void)(line_num);
+    return &T::SetUpTestSuite;
+#endif
   }
 
-  static SetUpTearDownSuiteFuncType GetTearDownCaseOrSuite() {
+  static SetUpTearDownSuiteFuncType GetTearDownCaseOrSuite(const char* filename,
+                                                           int line_num) {
+#ifndef GTEST_REMOVE_LEGACY_TEST_CASEAPI_
     SetUpTearDownSuiteFuncType test_case_fp =
         GetNotDefaultOrNull(&T::TearDownTestCase, &Test::TearDownTestCase);
     SetUpTearDownSuiteFuncType test_suite_fp =
@@ -7027,9 +3927,15 @@ struct SuiteApiResolver : T {
 
     GTEST_CHECK_(!test_case_fp || !test_suite_fp)
         << "Test can not provide both TearDownTestSuite and TearDownTestCase,"
-           " please make sure there is only one present ";
+           " please make sure there is only one present at"
+        << filename << ":" << line_num;
 
     return test_case_fp != nullptr ? test_case_fp : test_suite_fp;
+#else
+    (void)(filename);
+    (void)(line_num);
+    return &T::TearDownTestSuite;
+#endif
   }
 };
 
@@ -7038,11 +3944,11 @@ struct SuiteApiResolver : T {
 //
 // Arguments:
 //
-//   test_suite_name:   name of the test suite
+//   test_suite_name:  name of the test suite
 //   name:             name of the test
-//   type_param        the name of the test's type parameter, or NULL if
+//   type_param:       the name of the test's type parameter, or NULL if
 //                     this is not a typed or a type-parameterized test.
-//   value_param       text representation of the test's value parameter,
+//   value_param:      text representation of the test's value parameter,
 //                     or NULL if this is not a type-parameterized test.
 //   code_location:    code location where the test is defined
 //   fixture_class_id: ID of the test fixture class
@@ -7061,8 +3967,6 @@ GTEST_API_ TestInfo* MakeAndRegisterTestInfo(
 // past the prefix and returns true; otherwise leaves *pstr unchanged
 // and returns false.  None of pstr, *pstr, and prefix can be NULL.
 GTEST_API_ bool SkipPrefix(const char* prefix, const char** pstr);
-
-#if GTEST_HAS_TYPED_TEST || GTEST_HAS_TYPED_TEST_P
 
 GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
 /* class A needs to have dll-interface to be used by clients of class B */)
@@ -7103,8 +4007,9 @@ class GTEST_API_ TypedTestSuitePState {
   // Verifies that registered_tests match the test names in
   // defined_test_names_; returns registered_tests if successful, or
   // aborts the program otherwise.
-  const char* VerifyRegisteredTestNames(
-      const char* file, int line, const char* registered_tests);
+  const char* VerifyRegisteredTestNames(const char* test_suite_name,
+                                        const char* file, int line,
+                                        const char* registered_tests);
 
  private:
   typedef ::std::map<std::string, CodeLocation> RegisteredTestsMap;
@@ -7158,7 +4063,7 @@ struct NameGeneratorSelector {
 };
 
 template <typename NameGenerator>
-void GenerateNamesRecursively(Types0, std::vector<std::string>*, int) {}
+void GenerateNamesRecursively(internal::None, std::vector<std::string>*, int) {}
 
 template <typename NameGenerator, typename Types>
 void GenerateNamesRecursively(Types, std::vector<std::string>* result, int i) {
@@ -7200,14 +4105,16 @@ class TypeParameterizedTest {
     // list.
     MakeAndRegisterTestInfo(
         (std::string(prefix) + (prefix[0] == '\0' ? "" : "/") + case_name +
-         "/" + type_names[index])
+         "/" + type_names[static_cast<size_t>(index)])
             .c_str(),
         StripTrailingSpaces(GetPrefixUntilComma(test_names)).c_str(),
         GetTypeName<Type>().c_str(),
         nullptr,  // No value parameter.
         code_location, GetTypeId<FixtureClass>(),
-        SuiteApiResolver<TestClass>::GetSetUpCaseOrSuite(),
-        SuiteApiResolver<TestClass>::GetTearDownCaseOrSuite(),
+        SuiteApiResolver<TestClass>::GetSetUpCaseOrSuite(
+            code_location.file.c_str(), code_location.line),
+        SuiteApiResolver<TestClass>::GetTearDownCaseOrSuite(
+            code_location.file.c_str(), code_location.line),
         new TestFactoryImpl<TestClass>);
 
     // Next, recurses (at compile time) with the tail of the type list.
@@ -7223,7 +4130,7 @@ class TypeParameterizedTest {
 
 // The base case for the compile time recursion.
 template <GTEST_TEMPLATE_ Fixture, class TestSel>
-class TypeParameterizedTest<Fixture, TestSel, Types0> {
+class TypeParameterizedTest<Fixture, TestSel, internal::None> {
  public:
   static bool Register(const char* /*prefix*/, const CodeLocation&,
                        const char* /*case_name*/, const char* /*test_names*/,
@@ -7233,6 +4140,11 @@ class TypeParameterizedTest<Fixture, TestSel, Types0> {
     return true;
   }
 };
+
+GTEST_API_ void RegisterTypeParameterizedTestSuite(const char* test_suite_name,
+                                                   CodeLocation code_location);
+GTEST_API_ void RegisterTypeParameterizedTestSuiteInstantiation(
+    const char* case_name);
 
 // TypeParameterizedTestSuite<Fixture, Tests, Types>::Register()
 // registers *all combinations* of 'Tests' and 'Types' with Google
@@ -7246,6 +4158,7 @@ class TypeParameterizedTestSuite {
                        const char* test_names,
                        const std::vector<std::string>& type_names =
                            GenerateNames<DefaultNameGenerator, Types>()) {
+    RegisterTypeParameterizedTestSuiteInstantiation(case_name);
     std::string test_name = StripTrailingSpaces(
         GetPrefixUntilComma(test_names));
     if (!state->TestExists(test_name)) {
@@ -7275,7 +4188,7 @@ class TypeParameterizedTestSuite {
 
 // The base case for the compile time recursion.
 template <GTEST_TEMPLATE_ Fixture, typename Types>
-class TypeParameterizedTestSuite<Fixture, Templates0, Types> {
+class TypeParameterizedTestSuite<Fixture, internal::None, Types> {
  public:
   static bool Register(const char* /*prefix*/, const CodeLocation&,
                        const TypedTestSuitePState* /*state*/,
@@ -7285,8 +4198,6 @@ class TypeParameterizedTestSuite<Fixture, Templates0, Types> {
     return true;
   }
 };
-
-#endif  // GTEST_HAS_TYPED_TEST || GTEST_HAS_TYPED_TEST_P
 
 // Returns the current OS stack trace as an std::string.
 //
@@ -7319,6 +4230,16 @@ struct GTEST_API_ ConstCharPtr {
   const char* value;
 };
 
+// Helper for declaring std::string within 'if' statement
+// in pre C++17 build environment.
+struct TrueWithString {
+  TrueWithString() = default;
+  explicit TrueWithString(const char* str) : value(str) {}
+  explicit TrueWithString(const std::string& str) : value(str) {}
+  explicit operator bool() const { return true; }
+  std::string value;
+};
+
 // A simple Linear Congruential Generator for generating random
 // numbers with a uniform distribution.  Unlike rand() and srand(), it
 // doesn't use global state (and therefore can't interfere with user
@@ -7326,77 +4247,53 @@ struct GTEST_API_ ConstCharPtr {
 // but it's good enough for our purposes.
 class GTEST_API_ Random {
  public:
-  static const UInt32 kMaxRange = 1u << 31;
+  static const uint32_t kMaxRange = 1u << 31;
 
-  explicit Random(UInt32 seed) : state_(seed) {}
+  explicit Random(uint32_t seed) : state_(seed) {}
 
-  void Reseed(UInt32 seed) { state_ = seed; }
+  void Reseed(uint32_t seed) { state_ = seed; }
 
   // Generates a random number from [0, range).  Crashes if 'range' is
   // 0 or greater than kMaxRange.
-  UInt32 Generate(UInt32 range);
+  uint32_t Generate(uint32_t range);
 
  private:
-  UInt32 state_;
+  uint32_t state_;
   GTEST_DISALLOW_COPY_AND_ASSIGN_(Random);
 };
 
-// Defining a variable of type CompileAssertTypesEqual<T1, T2> will cause a
-// compiler error iff T1 and T2 are different types.
-template <typename T1, typename T2>
-struct CompileAssertTypesEqual;
-
-template <typename T>
-struct CompileAssertTypesEqual<T, T> {
-};
-
-// Removes the reference from a type if it is a reference type,
-// otherwise leaves it unchanged.  This is the same as
-// tr1::remove_reference, which is not widely available yet.
-template <typename T>
-struct RemoveReference { typedef T type; };  // NOLINT
-template <typename T>
-struct RemoveReference<T&> { typedef T type; };  // NOLINT
-
-// A handy wrapper around RemoveReference that works when the argument
-// T depends on template parameters.
-#define GTEST_REMOVE_REFERENCE_(T) \
-    typename ::testing::internal::RemoveReference<T>::type
-
-// Removes const from a type if it is a const type, otherwise leaves
-// it unchanged.  This is the same as tr1::remove_const, which is not
-// widely available yet.
-template <typename T>
-struct RemoveConst { typedef T type; };  // NOLINT
-template <typename T>
-struct RemoveConst<const T> { typedef T type; };  // NOLINT
-
-// MSVC 8.0, Sun C++, and IBM XL C++ have a bug which causes the above
-// definition to fail to remove the const in 'const int[3]' and 'const
-// char[3][4]'.  The following specialization works around the bug.
-template <typename T, size_t N>
-struct RemoveConst<const T[N]> {
-  typedef typename RemoveConst<T>::type type[N];
-};
-
-// A handy wrapper around RemoveConst that works when the argument
-// T depends on template parameters.
-#define GTEST_REMOVE_CONST_(T) \
-    typename ::testing::internal::RemoveConst<T>::type
-
 // Turns const U&, U&, const U, and U all into U.
 #define GTEST_REMOVE_REFERENCE_AND_CONST_(T) \
-    GTEST_REMOVE_CONST_(GTEST_REMOVE_REFERENCE_(T))
+  typename std::remove_const<typename std::remove_reference<T>::type>::type
 
-// IsAProtocolMessage<T>::value is a compile-time bool constant that's
-// true iff T is type ProtocolMessage, proto2::Message, or a subclass
-// of those.
+// HasDebugStringAndShortDebugString<T>::value is a compile-time bool constant
+// that's true if and only if T has methods DebugString() and ShortDebugString()
+// that return std::string.
 template <typename T>
-struct IsAProtocolMessage
-    : public bool_constant<
-  std::is_convertible<const T*, const ::ProtocolMessage*>::value ||
-  std::is_convertible<const T*, const ::proto2::Message*>::value> {
+class HasDebugStringAndShortDebugString {
+ private:
+  template <typename C>
+  static auto CheckDebugString(C*) -> typename std::is_same<
+      std::string, decltype(std::declval<const C>().DebugString())>::type;
+  template <typename>
+  static std::false_type CheckDebugString(...);
+
+  template <typename C>
+  static auto CheckShortDebugString(C*) -> typename std::is_same<
+      std::string, decltype(std::declval<const C>().ShortDebugString())>::type;
+  template <typename>
+  static std::false_type CheckShortDebugString(...);
+
+  using HasDebugStringType = decltype(CheckDebugString<T>(nullptr));
+  using HasShortDebugStringType = decltype(CheckShortDebugString<T>(nullptr));
+
+ public:
+  static constexpr bool value =
+      HasDebugStringType::value && HasShortDebugStringType::value;
 };
+
+template <typename T>
+constexpr bool HasDebugStringAndShortDebugString<T>::value;
 
 // When the compiler sees expression IsContainerTest<C>(0), if C is an
 // STL-style container class, the first overload of IsContainerTest
@@ -7463,7 +4360,7 @@ template <typename C,
 struct IsRecursiveContainerImpl;
 
 template <typename C>
-struct IsRecursiveContainerImpl<C, false> : public false_type {};
+struct IsRecursiveContainerImpl<C, false> : public std::false_type {};
 
 // Since the IsRecursiveContainerImpl depends on the IsContainerTest we need to
 // obey the same inconsistencies as the IsContainerTest, namely check if
@@ -7473,9 +4370,9 @@ template <typename C>
 struct IsRecursiveContainerImpl<C, true> {
   using value_type = decltype(*std::declval<typename C::const_iterator>());
   using type =
-      is_same<typename std::remove_const<
-                  typename std::remove_reference<value_type>::type>::type,
-              C>;
+      std::is_same<typename std::remove_const<
+                       typename std::remove_reference<value_type>::type>::type,
+                   C>;
 };
 
 // IsRecursiveContainer<Type> is a unary compile-time predicate that
@@ -7486,13 +4383,6 @@ struct IsRecursiveContainerImpl<C, true> {
 // boost::filesystem::path.
 template <typename C>
 struct IsRecursiveContainer : public IsRecursiveContainerImpl<C>::type {};
-
-// EnableIf<condition>::type is void when 'Cond' is true, and
-// undefined when 'Cond' is false.  To use SFINAE to make a function
-// overload only apply when a particular expression is true, add
-// "typename EnableIf<expression>::type* = 0" as the last parameter.
-template<bool> struct EnableIf;
-template<> struct EnableIf<true> { typedef void type; };  // NOLINT
 
 // Utilities for native arrays.
 
@@ -7616,10 +4506,9 @@ class NativeArray {
   }
 
  private:
-  enum {
-    kCheckTypeIsNotConstOrAReference = StaticAssertTypeEqHelper<
-        Element, GTEST_REMOVE_REFERENCE_AND_CONST_(Element)>::value
-  };
+  static_assert(!std::is_const<Element>::value, "Type must not be const");
+  static_assert(!std::is_reference<Element>::value,
+                "Type must not be a reference");
 
   // Initializes this object with a copy of the input.
   void InitCopy(const Element* array, size_t a_size) {
@@ -7640,8 +4529,6 @@ class NativeArray {
   const Element* array_;
   size_t size_;
   void (NativeArray::*clone_)(const Element*, size_t);
-
-  GTEST_DISALLOW_ASSIGN_(NativeArray);
 };
 
 // Backport of std::index_sequence.
@@ -7665,32 +4552,44 @@ struct DoubleSequence<false, IndexSequence<I...>, sizeofT> {
 // Backport of std::make_index_sequence.
 // It uses O(ln(N)) instantiation depth.
 template <size_t N>
-struct MakeIndexSequence
-    : DoubleSequence<N % 2 == 1, typename MakeIndexSequence<N / 2>::type,
+struct MakeIndexSequenceImpl
+    : DoubleSequence<N % 2 == 1, typename MakeIndexSequenceImpl<N / 2>::type,
                      N / 2>::type {};
 
 template <>
-struct MakeIndexSequence<0> : IndexSequence<> {};
+struct MakeIndexSequenceImpl<0> : IndexSequence<> {};
 
-// FIXME: This implementation of ElemFromList is O(1) in instantiation depth,
-// but it is O(N^2) in total instantiations. Not sure if this is the best
-// tradeoff, as it will make it somewhat slow to compile.
-template <typename T, size_t, size_t>
-struct ElemFromListImpl {};
+template <size_t N>
+using MakeIndexSequence = typename MakeIndexSequenceImpl<N>::type;
 
-template <typename T, size_t I>
-struct ElemFromListImpl<T, I, I> {
-  using type = T;
+template <typename... T>
+using IndexSequenceFor = typename MakeIndexSequence<sizeof...(T)>::type;
+
+template <size_t>
+struct Ignore {
+  Ignore(...);  // NOLINT
 };
 
-// Get the Nth element from T...
-// It uses O(1) instantiation depth.
-template <size_t N, typename I, typename... T>
-struct ElemFromList;
+template <typename>
+struct ElemFromListImpl;
+template <size_t... I>
+struct ElemFromListImpl<IndexSequence<I...>> {
+  // We make Ignore a template to solve a problem with MSVC.
+  // A non-template Ignore would work fine with `decltype(Ignore(I))...`, but
+  // MSVC doesn't understand how to deal with that pack expansion.
+  // Use `0 * I` to have a single instantiation of Ignore.
+  template <typename R>
+  static R Apply(Ignore<0 * I>..., R (*)(), ...);
+};
 
-template <size_t N, size_t... I, typename... T>
-struct ElemFromList<N, IndexSequence<I...>, T...>
-    : ElemFromListImpl<T, N, I>... {};
+template <size_t N, typename... T>
+struct ElemFromList {
+  using type =
+      decltype(ElemFromListImpl<typename MakeIndexSequence<N>::type>::Apply(
+          static_cast<T (*)()>(nullptr)...));
+};
+
+struct FlatTupleConstructTag {};
 
 template <typename... T>
 class FlatTuple;
@@ -7700,11 +4599,11 @@ struct FlatTupleElemBase;
 
 template <typename... T, size_t I>
 struct FlatTupleElemBase<FlatTuple<T...>, I> {
-  using value_type =
-      typename ElemFromList<I, typename MakeIndexSequence<sizeof...(T)>::type,
-                            T...>::type;
+  using value_type = typename ElemFromList<I, T...>::type;
   FlatTupleElemBase() = default;
-  explicit FlatTupleElemBase(value_type t) : value(std::move(t)) {}
+  template <typename Arg>
+  explicit FlatTupleElemBase(FlatTupleConstructTag, Arg&& t)
+      : value(std::forward<Arg>(t)) {}
   value_type value;
 };
 
@@ -7716,13 +4615,35 @@ struct FlatTupleBase<FlatTuple<T...>, IndexSequence<Idx...>>
     : FlatTupleElemBase<FlatTuple<T...>, Idx>... {
   using Indices = IndexSequence<Idx...>;
   FlatTupleBase() = default;
-  explicit FlatTupleBase(T... t)
-      : FlatTupleElemBase<FlatTuple<T...>, Idx>(std::move(t))... {}
+  template <typename... Args>
+  explicit FlatTupleBase(FlatTupleConstructTag, Args&&... args)
+      : FlatTupleElemBase<FlatTuple<T...>, Idx>(FlatTupleConstructTag{},
+                                                std::forward<Args>(args))... {}
+
+  template <size_t I>
+  const typename ElemFromList<I, T...>::type& Get() const {
+    return FlatTupleElemBase<FlatTuple<T...>, I>::value;
+  }
+
+  template <size_t I>
+  typename ElemFromList<I, T...>::type& Get() {
+    return FlatTupleElemBase<FlatTuple<T...>, I>::value;
+  }
+
+  template <typename F>
+  auto Apply(F&& f) -> decltype(std::forward<F>(f)(this->Get<Idx>()...)) {
+    return std::forward<F>(f)(Get<Idx>()...);
+  }
+
+  template <typename F>
+  auto Apply(F&& f) const -> decltype(std::forward<F>(f)(this->Get<Idx>()...)) {
+    return std::forward<F>(f)(Get<Idx>()...);
+  }
 };
 
 // Analog to std::tuple but with different tradeoffs.
 // This class minimizes the template instantiation depth, thus allowing more
-// elements that std::tuple would. std::tuple has been seen to require an
+// elements than std::tuple would. std::tuple has been seen to require an
 // instantiation depth of more than 10x the number of elements in some
 // implementations.
 // FlatTuple and ElemFromList are not recursive and have a fixed depth
@@ -7733,21 +4654,17 @@ template <typename... T>
 class FlatTuple
     : private FlatTupleBase<FlatTuple<T...>,
                             typename MakeIndexSequence<sizeof...(T)>::type> {
-  using Indices = typename FlatTuple::FlatTupleBase::Indices;
+  using Indices = typename FlatTupleBase<
+      FlatTuple<T...>, typename MakeIndexSequence<sizeof...(T)>::type>::Indices;
 
  public:
   FlatTuple() = default;
-  explicit FlatTuple(T... t) : FlatTuple::FlatTupleBase(std::move(t)...) {}
+  template <typename... Args>
+  explicit FlatTuple(FlatTupleConstructTag tag, Args&&... args)
+      : FlatTuple::FlatTupleBase(tag, std::forward<Args>(args)...) {}
 
-  template <size_t I>
-  const typename ElemFromList<I, Indices, T...>::type& Get() const {
-    return static_cast<const FlatTupleElemBase<FlatTuple, I>*>(this)->value;
-  }
-
-  template <size_t I>
-  typename ElemFromList<I, Indices, T...>::type& Get() {
-    return static_cast<FlatTupleElemBase<FlatTuple, I>*>(this)->value;
-  }
+  using FlatTuple::FlatTupleBase::Apply;
+  using FlatTuple::FlatTupleBase::Get;
 };
 
 // Utility functions to be called with static_assert to induce deprecation
@@ -7780,6 +4697,22 @@ constexpr bool InstantiateTypedTestCase_P_IsDeprecated() { return true; }
 }  // namespace internal
 }  // namespace testing
 
+namespace std {
+// Some standard library implementations use `struct tuple_size` and some use
+// `class tuple_size`. Clang warns about the mismatch.
+// https://reviews.llvm.org/D55466
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmismatched-tags"
+#endif
+template <typename... Ts>
+struct tuple_size<testing::internal::FlatTuple<Ts...>>
+    : std::integral_constant<size_t, sizeof...(Ts)> {};
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+}  // namespace std
+
 #define GTEST_MESSAGE_AT_(file, line, message, result_type) \
   ::testing::internal::AssertHelper(result_type, file, line, message) \
     = ::testing::Message()
@@ -7802,48 +4735,122 @@ constexpr bool InstantiateTypedTestCase_P_IsDeprecated() { return true; }
 // Suppress MSVC warning 4072 (unreachable code) for the code following
 // statement if it returns or throws (or doesn't return or throw in some
 // situations).
+// NOTE: The "else" is important to keep this expansion to prevent a top-level
+// "else" from attaching to our "if".
 #define GTEST_SUPPRESS_UNREACHABLE_CODE_WARNING_BELOW_(statement) \
-  if (::testing::internal::AlwaysTrue()) { statement; }
+  if (::testing::internal::AlwaysTrue()) {                        \
+    statement;                                                    \
+  } else                     /* NOLINT */                         \
+    static_assert(true, "")  // User must have a semicolon after expansion.
 
-#define GTEST_TEST_THROW_(statement, expected_exception, fail) \
-  GTEST_AMBIGUOUS_ELSE_BLOCKER_ \
-  if (::testing::internal::ConstCharPtr gtest_msg = "") { \
-    bool gtest_caught_expected = false; \
-    try { \
-      GTEST_SUPPRESS_UNREACHABLE_CODE_WARNING_BELOW_(statement); \
-    } \
-    catch (expected_exception const&) { \
-      gtest_caught_expected = true; \
-    } \
-    catch (...) { \
-      gtest_msg.value = \
-          "Expected: " #statement " throws an exception of type " \
-          #expected_exception ".\n  Actual: it throws a different type."; \
-      goto GTEST_CONCAT_TOKEN_(gtest_label_testthrow_, __LINE__); \
-    } \
-    if (!gtest_caught_expected) { \
-      gtest_msg.value = \
-          "Expected: " #statement " throws an exception of type " \
-          #expected_exception ".\n  Actual: it throws nothing."; \
-      goto GTEST_CONCAT_TOKEN_(gtest_label_testthrow_, __LINE__); \
-    } \
-  } else \
-    GTEST_CONCAT_TOKEN_(gtest_label_testthrow_, __LINE__): \
-      fail(gtest_msg.value)
+#if GTEST_HAS_EXCEPTIONS
+
+namespace testing {
+namespace internal {
+
+class NeverThrown {
+ public:
+  const char* what() const noexcept {
+    return "this exception should never be thrown";
+  }
+};
+
+}  // namespace internal
+}  // namespace testing
+
+#if GTEST_HAS_RTTI
+
+#define GTEST_EXCEPTION_TYPE_(e) ::testing::internal::GetTypeName(typeid(e))
+
+#else  // GTEST_HAS_RTTI
+
+#define GTEST_EXCEPTION_TYPE_(e) \
+  std::string { "an std::exception-derived error" }
+
+#endif  // GTEST_HAS_RTTI
+
+#define GTEST_TEST_THROW_CATCH_STD_EXCEPTION_(statement, expected_exception)   \
+  catch (typename std::conditional<                                            \
+         std::is_same<typename std::remove_cv<typename std::remove_reference<  \
+                          expected_exception>::type>::type,                    \
+                      std::exception>::value,                                  \
+         const ::testing::internal::NeverThrown&, const std::exception&>::type \
+             e) {                                                              \
+    gtest_msg.value = "Expected: " #statement                                  \
+                      " throws an exception of type " #expected_exception      \
+                      ".\n  Actual: it throws ";                               \
+    gtest_msg.value += GTEST_EXCEPTION_TYPE_(e);                               \
+    gtest_msg.value += " with description \"";                                 \
+    gtest_msg.value += e.what();                                               \
+    gtest_msg.value += "\".";                                                  \
+    goto GTEST_CONCAT_TOKEN_(gtest_label_testthrow_, __LINE__);                \
+  }
+
+#else  // GTEST_HAS_EXCEPTIONS
+
+#define GTEST_TEST_THROW_CATCH_STD_EXCEPTION_(statement, expected_exception)
+
+#endif  // GTEST_HAS_EXCEPTIONS
+
+#define GTEST_TEST_THROW_(statement, expected_exception, fail)              \
+  GTEST_AMBIGUOUS_ELSE_BLOCKER_                                             \
+  if (::testing::internal::TrueWithString gtest_msg{}) {                    \
+    bool gtest_caught_expected = false;                                     \
+    try {                                                                   \
+      GTEST_SUPPRESS_UNREACHABLE_CODE_WARNING_BELOW_(statement);            \
+    } catch (expected_exception const&) {                                   \
+      gtest_caught_expected = true;                                         \
+    }                                                                       \
+    GTEST_TEST_THROW_CATCH_STD_EXCEPTION_(statement, expected_exception)    \
+    catch (...) {                                                           \
+      gtest_msg.value = "Expected: " #statement                             \
+                        " throws an exception of type " #expected_exception \
+                        ".\n  Actual: it throws a different type.";         \
+      goto GTEST_CONCAT_TOKEN_(gtest_label_testthrow_, __LINE__);           \
+    }                                                                       \
+    if (!gtest_caught_expected) {                                           \
+      gtest_msg.value = "Expected: " #statement                             \
+                        " throws an exception of type " #expected_exception \
+                        ".\n  Actual: it throws nothing.";                  \
+      goto GTEST_CONCAT_TOKEN_(gtest_label_testthrow_, __LINE__);           \
+    }                                                                       \
+  } else /*NOLINT*/                                                         \
+    GTEST_CONCAT_TOKEN_(gtest_label_testthrow_, __LINE__)                   \
+        : fail(gtest_msg.value.c_str())
+
+#if GTEST_HAS_EXCEPTIONS
+
+#define GTEST_TEST_NO_THROW_CATCH_STD_EXCEPTION_()                \
+  catch (std::exception const& e) {                               \
+    gtest_msg.value = "it throws ";                               \
+    gtest_msg.value += GTEST_EXCEPTION_TYPE_(e);                  \
+    gtest_msg.value += " with description \"";                    \
+    gtest_msg.value += e.what();                                  \
+    gtest_msg.value += "\".";                                     \
+    goto GTEST_CONCAT_TOKEN_(gtest_label_testnothrow_, __LINE__); \
+  }
+
+#else  // GTEST_HAS_EXCEPTIONS
+
+#define GTEST_TEST_NO_THROW_CATCH_STD_EXCEPTION_()
+
+#endif  // GTEST_HAS_EXCEPTIONS
 
 #define GTEST_TEST_NO_THROW_(statement, fail) \
   GTEST_AMBIGUOUS_ELSE_BLOCKER_ \
-  if (::testing::internal::AlwaysTrue()) { \
+  if (::testing::internal::TrueWithString gtest_msg{}) { \
     try { \
       GTEST_SUPPRESS_UNREACHABLE_CODE_WARNING_BELOW_(statement); \
     } \
+    GTEST_TEST_NO_THROW_CATCH_STD_EXCEPTION_() \
     catch (...) { \
+      gtest_msg.value = "it throws."; \
       goto GTEST_CONCAT_TOKEN_(gtest_label_testnothrow_, __LINE__); \
     } \
   } else \
     GTEST_CONCAT_TOKEN_(gtest_label_testnothrow_, __LINE__): \
-      fail("Expected: " #statement " doesn't throw an exception.\n" \
-           "  Actual: it throws.")
+      fail(("Expected: " #statement " doesn't throw an exception.\n" \
+            "  Actual: " + gtest_msg.value).c_str())
 
 #define GTEST_TEST_ANY_THROW_(statement, fail) \
   GTEST_AMBIGUOUS_ELSE_BLOCKER_ \
@@ -7866,7 +4873,7 @@ constexpr bool InstantiateTypedTestCase_P_IsDeprecated() { return true; }
 
 // Implements Boolean test assertions such as EXPECT_TRUE. expression can be
 // either a boolean expression or an AssertionResult. text is a textual
-// represenation of expression as it was passed into the EXPECT_TRUE.
+// representation of expression as it was passed into the EXPECT_TRUE.
 #define GTEST_TEST_BOOLEAN_(expression, text, actual, expected, fail) \
   GTEST_AMBIGUOUS_ELSE_BLOCKER_ \
   if (const ::testing::AssertionResult gtest_ar_ = \
@@ -7896,16 +4903,23 @@ constexpr bool InstantiateTypedTestCase_P_IsDeprecated() { return true; }
 
 // Helper macro for defining tests.
 #define GTEST_TEST_(test_suite_name, test_name, parent_class, parent_id)      \
+  static_assert(sizeof(GTEST_STRINGIFY_(test_suite_name)) > 1,                \
+                "test_suite_name must not be empty");                         \
+  static_assert(sizeof(GTEST_STRINGIFY_(test_name)) > 1,                      \
+                "test_name must not be empty");                               \
   class GTEST_TEST_CLASS_NAME_(test_suite_name, test_name)                    \
       : public parent_class {                                                 \
    public:                                                                    \
-    GTEST_TEST_CLASS_NAME_(test_suite_name, test_name)() {}                   \
-                                                                              \
-   private:                                                                   \
-    virtual void TestBody();                                                  \
-    static ::testing::TestInfo* const test_info_ GTEST_ATTRIBUTE_UNUSED_;     \
+    GTEST_TEST_CLASS_NAME_(test_suite_name, test_name)() = default;           \
+    ~GTEST_TEST_CLASS_NAME_(test_suite_name, test_name)() override = default; \
     GTEST_DISALLOW_COPY_AND_ASSIGN_(GTEST_TEST_CLASS_NAME_(test_suite_name,   \
                                                            test_name));       \
+    GTEST_DISALLOW_MOVE_AND_ASSIGN_(GTEST_TEST_CLASS_NAME_(test_suite_name,   \
+                                                           test_name));       \
+                                                                              \
+   private:                                                                   \
+    void TestBody() override;                                                 \
+    static ::testing::TestInfo* const test_info_ GTEST_ATTRIBUTE_UNUSED_;     \
   };                                                                          \
                                                                               \
   ::testing::TestInfo* const GTEST_TEST_CLASS_NAME_(test_suite_name,          \
@@ -7914,14 +4928,14 @@ constexpr bool InstantiateTypedTestCase_P_IsDeprecated() { return true; }
           #test_suite_name, #test_name, nullptr, nullptr,                     \
           ::testing::internal::CodeLocation(__FILE__, __LINE__), (parent_id), \
           ::testing::internal::SuiteApiResolver<                              \
-              parent_class>::GetSetUpCaseOrSuite(),                           \
+              parent_class>::GetSetUpCaseOrSuite(__FILE__, __LINE__),         \
           ::testing::internal::SuiteApiResolver<                              \
-              parent_class>::GetTearDownCaseOrSuite(),                        \
+              parent_class>::GetTearDownCaseOrSuite(__FILE__, __LINE__),      \
           new ::testing::internal::TestFactoryImpl<GTEST_TEST_CLASS_NAME_(    \
               test_suite_name, test_name)>);                                  \
   void GTEST_TEST_CLASS_NAME_(test_suite_name, test_name)::TestBody()
 
-#endif  // GTEST_INCLUDE_GTEST_INTERNAL_GTEST_INTERNAL_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_INTERNAL_H_
 // Copyright 2005, Google Inc.
 // All rights reserved.
 //
@@ -7959,8 +4973,8 @@ constexpr bool InstantiateTypedTestCase_P_IsDeprecated() { return true; }
 // directly.
 // GOOGLETEST_CM0001 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_GTEST_DEATH_TEST_H_
-#define GTEST_INCLUDE_GTEST_GTEST_DEATH_TEST_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_GTEST_DEATH_TEST_H_
+#define GOOGLETEST_INCLUDE_GTEST_GTEST_DEATH_TEST_H_
 
 // Copyright 2005, Google Inc.
 // All rights reserved.
@@ -7997,8 +5011,8 @@ constexpr bool InstantiateTypedTestCase_P_IsDeprecated() { return true; }
 // death tests.  They are subject to change without notice.
 // GOOGLETEST_CM0001 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_DEATH_TEST_INTERNAL_H_
-#define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_DEATH_TEST_INTERNAL_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_DEATH_TEST_INTERNAL_H_
+#define GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_DEATH_TEST_INTERNAL_H_
 
 // Copyright 2007, Google Inc.
 // All rights reserved.
@@ -8034,16 +5048,14 @@ constexpr bool InstantiateTypedTestCase_P_IsDeprecated() { return true; }
 // This file implements just enough of the matcher interface to allow
 // EXPECT_DEATH and friends to accept a matcher argument.
 
-// IWYU pragma: private, include "testing/base/public/gunit.h"
-// IWYU pragma: friend third_party/googletest/googlemock/.*
-// IWYU pragma: friend third_party/googletest/googletest/.*
+#ifndef GOOGLETEST_INCLUDE_GTEST_GTEST_MATCHERS_H_
+#define GOOGLETEST_INCLUDE_GTEST_GTEST_MATCHERS_H_
 
-#ifndef GTEST_INCLUDE_GTEST_GTEST_MATCHERS_H_
-#define GTEST_INCLUDE_GTEST_GTEST_MATCHERS_H_
-
+#include <atomic>
 #include <memory>
 #include <ostream>
 #include <string>
+#include <type_traits>
 
 // Copyright 2007, Google Inc.
 // All rights reserved.
@@ -8144,10 +5156,11 @@ constexpr bool InstantiateTypedTestCase_P_IsDeprecated() { return true; }
 
 // GOOGLETEST_CM0001 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_GTEST_PRINTERS_H_
-#define GTEST_INCLUDE_GTEST_GTEST_PRINTERS_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_GTEST_PRINTERS_H_
+#define GOOGLETEST_INCLUDE_GTEST_GTEST_PRINTERS_H_
 
 #include <functional>
+#include <memory>
 #include <ostream>  // NOLINT
 #include <sstream>
 #include <string>
@@ -8156,60 +5169,121 @@ constexpr bool InstantiateTypedTestCase_P_IsDeprecated() { return true; }
 #include <utility>
 #include <vector>
 
-#if GTEST_HAS_ABSL
-#include "absl/strings/string_view.h"
-#include "absl/types/optional.h"
-#include "absl/types/variant.h"
-#endif  // GTEST_HAS_ABSL
 
 namespace testing {
 
-// Definitions in the 'internal' and 'internal2' name spaces are
-// subject to change without notice.  DO NOT USE THEM IN USER CODE!
-namespace internal2 {
+// Definitions in the internal* namespaces are subject to change without notice.
+// DO NOT USE THEM IN USER CODE!
+namespace internal {
 
-// Prints the given number of bytes in the given object to the given
-// ostream.
-GTEST_API_ void PrintBytesInObjectTo(const unsigned char* obj_bytes,
-                                     size_t count,
-                                     ::std::ostream* os);
+template <typename T>
+void UniversalPrint(const T& value, ::std::ostream* os);
 
-// For selecting which printer to use when a given type has neither <<
-// nor PrintTo().
-enum TypeKind {
-  kProtobuf,              // a protobuf type
-  kConvertibleToInteger,  // a type implicitly convertible to BiggestInt
-                          // (e.g. a named or unnamed enum type)
-#if GTEST_HAS_ABSL
-  kConvertibleToStringView,  // a type implicitly convertible to
-                             // absl::string_view
-#endif
-  kOtherType  // anything else
-};
+// Used to print an STL-style container when the user doesn't define
+// a PrintTo() for it.
+struct ContainerPrinter {
+  template <typename T,
+            typename = typename std::enable_if<
+                (sizeof(IsContainerTest<T>(0)) == sizeof(IsContainer)) &&
+                !IsRecursiveContainer<T>::value>::type>
+  static void PrintValue(const T& container, std::ostream* os) {
+    const size_t kMaxCount = 32;  // The maximum number of elements to print.
+    *os << '{';
+    size_t count = 0;
+    for (auto&& elem : container) {
+      if (count > 0) {
+        *os << ',';
+        if (count == kMaxCount) {  // Enough has been printed.
+          *os << " ...";
+          break;
+        }
+      }
+      *os << ' ';
+      // We cannot call PrintTo(elem, os) here as PrintTo() doesn't
+      // handle `elem` being a native array.
+      internal::UniversalPrint(elem, os);
+      ++count;
+    }
 
-// TypeWithoutFormatter<T, kTypeKind>::PrintValue(value, os) is called
-// by the universal printer to print a value of type T when neither
-// operator<< nor PrintTo() is defined for T, where kTypeKind is the
-// "kind" of T as defined by enum TypeKind.
-template <typename T, TypeKind kTypeKind>
-class TypeWithoutFormatter {
- public:
-  // This default version is called when kTypeKind is kOtherType.
-  static void PrintValue(const T& value, ::std::ostream* os) {
-    PrintBytesInObjectTo(static_cast<const unsigned char*>(
-                             reinterpret_cast<const void*>(&value)),
-                         sizeof(value), os);
+    if (count > 0) {
+      *os << ' ';
+    }
+    *os << '}';
   }
 };
 
-// We print a protobuf using its ShortDebugString() when the string
-// doesn't exceed this many characters; otherwise we print it using
-// DebugString() for better readability.
-const size_t kProtobufOneLinerMaxLength = 50;
+// Used to print a pointer that is neither a char pointer nor a member
+// pointer, when the user doesn't define PrintTo() for it.  (A member
+// variable pointer or member function pointer doesn't really point to
+// a location in the address space.  Their representation is
+// implementation-defined.  Therefore they will be printed as raw
+// bytes.)
+struct FunctionPointerPrinter {
+  template <typename T, typename = typename std::enable_if<
+                            std::is_function<T>::value>::type>
+  static void PrintValue(T* p, ::std::ostream* os) {
+    if (p == nullptr) {
+      *os << "NULL";
+    } else {
+      // T is a function type, so '*os << p' doesn't do what we want
+      // (it just prints p as bool).  We want to print p as a const
+      // void*.
+      *os << reinterpret_cast<const void*>(p);
+    }
+  }
+};
 
-template <typename T>
-class TypeWithoutFormatter<T, kProtobuf> {
- public:
+struct PointerPrinter {
+  template <typename T>
+  static void PrintValue(T* p, ::std::ostream* os) {
+    if (p == nullptr) {
+      *os << "NULL";
+    } else {
+      // T is not a function type.  We just call << to print p,
+      // relying on ADL to pick up user-defined << for their pointer
+      // types, if any.
+      *os << p;
+    }
+  }
+};
+
+namespace internal_stream_operator_without_lexical_name_lookup {
+
+// The presence of an operator<< here will terminate lexical scope lookup
+// straight away (even though it cannot be a match because of its argument
+// types). Thus, the two operator<< calls in StreamPrinter will find only ADL
+// candidates.
+struct LookupBlocker {};
+void operator<<(LookupBlocker, LookupBlocker);
+
+struct StreamPrinter {
+  template <typename T,
+            // Don't accept member pointers here. We'd print them via implicit
+            // conversion to bool, which isn't useful.
+            typename = typename std::enable_if<
+                !std::is_member_pointer<T>::value>::type,
+            // Only accept types for which we can find a streaming operator via
+            // ADL (possibly involving implicit conversions).
+            typename = decltype(std::declval<std::ostream&>()
+                                << std::declval<const T&>())>
+  static void PrintValue(const T& value, ::std::ostream* os) {
+    // Call streaming operator found by ADL, possibly with implicit conversions
+    // of the arguments.
+    *os << value;
+  }
+};
+
+}  // namespace internal_stream_operator_without_lexical_name_lookup
+
+struct ProtobufPrinter {
+  // We print a protobuf using its ShortDebugString() when the string
+  // doesn't exceed this many characters; otherwise we print it using
+  // DebugString() for better readability.
+  static const size_t kProtobufOneLinerMaxLength = 50;
+
+  template <typename T,
+            typename = typename std::enable_if<
+                internal::HasDebugStringAndShortDebugString<T>::value>::type>
   static void PrintValue(const T& value, ::std::ostream* os) {
     std::string pretty_str = value.ShortDebugString();
     if (pretty_str.length() > kProtobufOneLinerMaxLength) {
@@ -8219,9 +5293,7 @@ class TypeWithoutFormatter<T, kProtobuf> {
   }
 };
 
-template <typename T>
-class TypeWithoutFormatter<T, kConvertibleToInteger> {
- public:
+struct ConvertibleToIntegerPrinter {
   // Since T has no << operator or PrintTo() but can be implicitly
   // converted to BiggestInt, we print it as a BiggestInt.
   //
@@ -8229,112 +5301,73 @@ class TypeWithoutFormatter<T, kConvertibleToInteger> {
   // case printing it as an integer is the desired behavior.  In case
   // T is not an enum, printing it as an integer is the best we can do
   // given that it has no user-defined printer.
-  static void PrintValue(const T& value, ::std::ostream* os) {
-    const internal::BiggestInt kBigInt = value;
-    *os << kBigInt;
+  static void PrintValue(internal::BiggestInt value, ::std::ostream* os) {
+    *os << value;
   }
 };
 
-#if GTEST_HAS_ABSL
-template <typename T>
-class TypeWithoutFormatter<T, kConvertibleToStringView> {
- public:
-  // Since T has neither operator<< nor PrintTo() but can be implicitly
-  // converted to absl::string_view, we print it as a absl::string_view.
-  //
-  // Note: the implementation is further below, as it depends on
-  // internal::PrintTo symbol which is defined later in the file.
-  static void PrintValue(const T& value, ::std::ostream* os);
+struct ConvertibleToStringViewPrinter {
+#if GTEST_INTERNAL_HAS_STRING_VIEW
+  static void PrintValue(internal::StringView value, ::std::ostream* os) {
+    internal::UniversalPrint(value, os);
+  }
+#endif
 };
-#endif
 
-// Prints the given value to the given ostream.  If the value is a
-// protocol message, its debug string is printed; if it's an enum or
-// of a type implicitly convertible to BiggestInt, it's printed as an
-// integer; otherwise the bytes in the value are printed.  This is
-// what UniversalPrinter<T>::Print() does when it knows nothing about
-// type T and T has neither << operator nor PrintTo().
-//
-// A user can override this behavior for a class type Foo by defining
-// a << operator in the namespace where Foo is defined.
-//
-// We put this operator in namespace 'internal2' instead of 'internal'
-// to simplify the implementation, as much code in 'internal' needs to
-// use << in STL, which would conflict with our own << were it defined
-// in 'internal'.
-//
-// Note that this operator<< takes a generic std::basic_ostream<Char,
-// CharTraits> type instead of the more restricted std::ostream.  If
-// we define it to take an std::ostream instead, we'll get an
-// "ambiguous overloads" compiler error when trying to print a type
-// Foo that supports streaming to std::basic_ostream<Char,
-// CharTraits>, as the compiler cannot tell whether
-// operator<<(std::ostream&, const T&) or
-// operator<<(std::basic_stream<Char, CharTraits>, const Foo&) is more
-// specific.
-template <typename Char, typename CharTraits, typename T>
-::std::basic_ostream<Char, CharTraits>& operator<<(
-    ::std::basic_ostream<Char, CharTraits>& os, const T& x) {
-  TypeWithoutFormatter<T, (internal::IsAProtocolMessage<T>::value
-                               ? kProtobuf
-                               : std::is_convertible<
-                                     const T&, internal::BiggestInt>::value
-                                     ? kConvertibleToInteger
-                                     :
-#if GTEST_HAS_ABSL
-                                     std::is_convertible<
-                                         const T&, absl::string_view>::value
-                                         ? kConvertibleToStringView
-                                         :
-#endif
-                                         kOtherType)>::PrintValue(x, &os);
-  return os;
-}
 
-}  // namespace internal2
-}  // namespace testing
+// Prints the given number of bytes in the given object to the given
+// ostream.
+GTEST_API_ void PrintBytesInObjectTo(const unsigned char* obj_bytes,
+                                     size_t count,
+                                     ::std::ostream* os);
+struct RawBytesPrinter {
+  // SFINAE on `sizeof` to make sure we have a complete type.
+  template <typename T, size_t = sizeof(T)>
+  static void PrintValue(const T& value, ::std::ostream* os) {
+    PrintBytesInObjectTo(
+        static_cast<const unsigned char*>(
+            // Load bearing cast to void* to support iOS
+            reinterpret_cast<const void*>(std::addressof(value))),
+        sizeof(value), os);
+  }
+};
 
-// This namespace MUST NOT BE NESTED IN ::testing, or the name look-up
-// magic needed for implementing UniversalPrinter won't work.
-namespace testing_internal {
+struct FallbackPrinter {
+  template <typename T>
+  static void PrintValue(const T&, ::std::ostream* os) {
+    *os << "(incomplete type)";
+  }
+};
 
-// Used to print a value that is not an STL-style container when the
-// user doesn't define PrintTo() for it.
+// Try every printer in order and return the first one that works.
+template <typename T, typename E, typename Printer, typename... Printers>
+struct FindFirstPrinter : FindFirstPrinter<T, E, Printers...> {};
+
+template <typename T, typename Printer, typename... Printers>
+struct FindFirstPrinter<
+    T, decltype(Printer::PrintValue(std::declval<const T&>(), nullptr)),
+    Printer, Printers...> {
+  using type = Printer;
+};
+
+// Select the best printer in the following order:
+//  - Print containers (they have begin/end/etc).
+//  - Print function pointers.
+//  - Print object pointers.
+//  - Use the stream operator, if available.
+//  - Print protocol buffers.
+//  - Print types convertible to BiggestInt.
+//  - Print types convertible to StringView, if available.
+//  - Fallback to printing the raw bytes of the object.
 template <typename T>
-void DefaultPrintNonContainerTo(const T& value, ::std::ostream* os) {
-  // With the following statement, during unqualified name lookup,
-  // testing::internal2::operator<< appears as if it was declared in
-  // the nearest enclosing namespace that contains both
-  // ::testing_internal and ::testing::internal2, i.e. the global
-  // namespace.  For more details, refer to the C++ Standard section
-  // 7.3.4-1 [namespace.udir].  This allows us to fall back onto
-  // testing::internal2::operator<< in case T doesn't come with a <<
-  // operator.
-  //
-  // We cannot write 'using ::testing::internal2::operator<<;', which
-  // gcc 3.3 fails to compile due to a compiler bug.
-  using namespace ::testing::internal2;  // NOLINT
-
-  // Assuming T is defined in namespace foo, in the next statement,
-  // the compiler will consider all of:
-  //
-  //   1. foo::operator<< (thanks to Koenig look-up),
-  //   2. ::operator<< (as the current namespace is enclosed in ::),
-  //   3. testing::internal2::operator<< (thanks to the using statement above).
-  //
-  // The operator<< whose type matches T best will be picked.
-  //
-  // We deliberately allow #2 to be a candidate, as sometimes it's
-  // impossible to define #1 (e.g. when foo is ::std, defining
-  // anything in it is undefined behavior unless you are a compiler
-  // vendor.).
-  *os << value;
+void PrintWithFallback(const T& value, ::std::ostream* os) {
+  using Printer = typename FindFirstPrinter<
+      T, void, ContainerPrinter, FunctionPointerPrinter, PointerPrinter,
+      internal_stream_operator_without_lexical_name_lookup::StreamPrinter,
+      ProtobufPrinter, ConvertibleToIntegerPrinter,
+      ConvertibleToStringViewPrinter, RawBytesPrinter, FallbackPrinter>::type;
+  Printer::PrintValue(value, os);
 }
-
-}  // namespace testing_internal
-
-namespace testing {
-namespace internal {
 
 // FormatForComparison<ToPrint, OtherOperand>::Format(value) formats a
 // value of type ToPrint that is an operand of a comparison assertion
@@ -8384,6 +5417,14 @@ GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_(char);
 GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_(const char);
 GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_(wchar_t);
 GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_(const wchar_t);
+#ifdef __cpp_char8_t
+GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_(char8_t);
+GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_(const char8_t);
+#endif
+GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_(char16_t);
+GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_(const char16_t);
+GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_(char32_t);
+GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_(const char32_t);
 
 #undef GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_
 
@@ -8401,16 +5442,14 @@ GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_(const wchar_t);
 
 GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(char, ::std::string);
 GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(const char, ::std::string);
-
-#if GTEST_HAS_GLOBAL_STRING
-GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(char, ::string);
-GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(const char, ::string);
+#ifdef __cpp_char8_t
+GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(char8_t, ::std::u8string);
+GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(const char8_t, ::std::u8string);
 #endif
-
-#if GTEST_HAS_GLOBAL_WSTRING
-GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(wchar_t, ::wstring);
-GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(const wchar_t, ::wstring);
-#endif
+GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(char16_t, ::std::u16string);
+GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(const char16_t, ::std::u16string);
+GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(char32_t, ::std::u32string);
+GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(const char32_t, ::std::u32string);
 
 #if GTEST_HAS_STD_WSTRING
 GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(wchar_t, ::std::wstring);
@@ -8443,85 +5482,6 @@ std::string FormatForComparisonFailureMessage(
 template <typename T>
 class UniversalPrinter;
 
-template <typename T>
-void UniversalPrint(const T& value, ::std::ostream* os);
-
-enum DefaultPrinterType {
-  kPrintContainer,
-  kPrintPointer,
-  kPrintFunctionPointer,
-  kPrintOther,
-};
-template <DefaultPrinterType type> struct WrapPrinterType {};
-
-// Used to print an STL-style container when the user doesn't define
-// a PrintTo() for it.
-template <typename C>
-void DefaultPrintTo(WrapPrinterType<kPrintContainer> /* dummy */,
-                    const C& container, ::std::ostream* os) {
-  const size_t kMaxCount = 32;  // The maximum number of elements to print.
-  *os << '{';
-  size_t count = 0;
-  for (typename C::const_iterator it = container.begin();
-       it != container.end(); ++it, ++count) {
-    if (count > 0) {
-      *os << ',';
-      if (count == kMaxCount) {  // Enough has been printed.
-        *os << " ...";
-        break;
-      }
-    }
-    *os << ' ';
-    // We cannot call PrintTo(*it, os) here as PrintTo() doesn't
-    // handle *it being a native array.
-    internal::UniversalPrint(*it, os);
-  }
-
-  if (count > 0) {
-    *os << ' ';
-  }
-  *os << '}';
-}
-
-// Used to print a pointer that is neither a char pointer nor a member
-// pointer, when the user doesn't define PrintTo() for it.  (A member
-// variable pointer or member function pointer doesn't really point to
-// a location in the address space.  Their representation is
-// implementation-defined.  Therefore they will be printed as raw
-// bytes.)
-template <typename T>
-void DefaultPrintTo(WrapPrinterType<kPrintPointer> /* dummy */,
-                    T* p, ::std::ostream* os) {
-  if (p == nullptr) {
-    *os << "NULL";
-  } else {
-    // T is not a function type.  We just call << to print p,
-    // relying on ADL to pick up user-defined << for their pointer
-    // types, if any.
-    *os << p;
-  }
-}
-template <typename T>
-void DefaultPrintTo(WrapPrinterType<kPrintFunctionPointer> /* dummy */,
-                    T* p, ::std::ostream* os) {
-  if (p == nullptr) {
-    *os << "NULL";
-  } else {
-    // T is a function type, so '*os << p' doesn't do what we want
-    // (it just prints p as bool).  We want to print p as a const
-    // void*.
-    *os << reinterpret_cast<const void*>(p);
-  }
-}
-
-// Used to print a non-container, non-pointer value when the user
-// doesn't define PrintTo() for it.
-template <typename T>
-void DefaultPrintTo(WrapPrinterType<kPrintOther> /* dummy */,
-                    const T& value, ::std::ostream* os) {
-  ::testing_internal::DefaultPrintNonContainerTo(value, os);
-}
-
 // Prints the given value using the << operator if it has one;
 // otherwise prints the bytes in it.  This is what
 // UniversalPrinter<T>::Print() does when PrintTo() is not specialized
@@ -8535,36 +5495,7 @@ void DefaultPrintTo(WrapPrinterType<kPrintOther> /* dummy */,
 // wants).
 template <typename T>
 void PrintTo(const T& value, ::std::ostream* os) {
-  // DefaultPrintTo() is overloaded.  The type of its first argument
-  // determines which version will be picked.
-  //
-  // Note that we check for container types here, prior to we check
-  // for protocol message types in our operator<<.  The rationale is:
-  //
-  // For protocol messages, we want to give people a chance to
-  // override Google Mock's format by defining a PrintTo() or
-  // operator<<.  For STL containers, other formats can be
-  // incompatible with Google Mock's format for the container
-  // elements; therefore we check for container types here to ensure
-  // that our format is used.
-  //
-  // Note that MSVC and clang-cl do allow an implicit conversion from
-  // pointer-to-function to pointer-to-object, but clang-cl warns on it.
-  // So don't use ImplicitlyConvertible if it can be helped since it will
-  // cause this warning, and use a separate overload of DefaultPrintTo for
-  // function pointers so that the `*os << p` in the object pointer overload
-  // doesn't cause that warning either.
-  DefaultPrintTo(
-      WrapPrinterType <
-                  (sizeof(IsContainerTest<T>(0)) == sizeof(IsContainer)) &&
-              !IsRecursiveContainer<T>::value
-          ? kPrintContainer
-          : !std::is_pointer<T>::value
-                ? kPrintOther
-                : std::is_function<typename std::remove_pointer<T>::type>::value
-                      ? kPrintFunctionPointer
-                      : kPrintPointer > (),
-      value, os);
+  internal::PrintWithFallback(value, os);
 }
 
 // The following list of PrintTo() overloads tells
@@ -8595,6 +5526,16 @@ inline void PrintTo(bool x, ::std::ostream* os) {
 // is implemented as an unsigned type.
 GTEST_API_ void PrintTo(wchar_t wc, ::std::ostream* os);
 
+GTEST_API_ void PrintTo(char32_t c, ::std::ostream* os);
+inline void PrintTo(char16_t c, ::std::ostream* os) {
+  PrintTo(ImplicitCast_<char32_t>(c), os);
+}
+#ifdef __cpp_char8_t
+inline void PrintTo(char8_t c, ::std::ostream* os) {
+  PrintTo(ImplicitCast_<char32_t>(c), os);
+}
+#endif
+
 // Overloads for C strings.
 GTEST_API_ void PrintTo(const char* s, ::std::ostream* os);
 inline void PrintTo(char* s, ::std::ostream* os) {
@@ -8614,6 +5555,23 @@ inline void PrintTo(const unsigned char* s, ::std::ostream* os) {
 }
 inline void PrintTo(unsigned char* s, ::std::ostream* os) {
   PrintTo(ImplicitCast_<const void*>(s), os);
+}
+#ifdef __cpp_char8_t
+// Overloads for u8 strings.
+GTEST_API_ void PrintTo(const char8_t* s, ::std::ostream* os);
+inline void PrintTo(char8_t* s, ::std::ostream* os) {
+  PrintTo(ImplicitCast_<const char8_t*>(s), os);
+}
+#endif
+// Overloads for u16 strings.
+GTEST_API_ void PrintTo(const char16_t* s, ::std::ostream* os);
+inline void PrintTo(char16_t* s, ::std::ostream* os) {
+  PrintTo(ImplicitCast_<const char16_t*>(s), os);
+}
+// Overloads for u32 strings.
+GTEST_API_ void PrintTo(const char32_t* s, ::std::ostream* os);
+inline void PrintTo(char32_t* s, ::std::ostream* os) {
+  PrintTo(ImplicitCast_<const char32_t*>(s), os);
 }
 
 // MSVC can be configured to define wchar_t as a typedef of unsigned
@@ -8643,27 +5601,33 @@ void PrintRawArrayTo(const T a[], size_t count, ::std::ostream* os) {
   }
 }
 
-// Overloads for ::string and ::std::string.
-#if GTEST_HAS_GLOBAL_STRING
-GTEST_API_ void PrintStringTo(const ::string&s, ::std::ostream* os);
-inline void PrintTo(const ::string& s, ::std::ostream* os) {
-  PrintStringTo(s, os);
-}
-#endif  // GTEST_HAS_GLOBAL_STRING
-
+// Overloads for ::std::string.
 GTEST_API_ void PrintStringTo(const ::std::string&s, ::std::ostream* os);
 inline void PrintTo(const ::std::string& s, ::std::ostream* os) {
   PrintStringTo(s, os);
 }
 
-// Overloads for ::wstring and ::std::wstring.
-#if GTEST_HAS_GLOBAL_WSTRING
-GTEST_API_ void PrintWideStringTo(const ::wstring&s, ::std::ostream* os);
-inline void PrintTo(const ::wstring& s, ::std::ostream* os) {
-  PrintWideStringTo(s, os);
+// Overloads for ::std::u8string
+#ifdef __cpp_char8_t
+GTEST_API_ void PrintU8StringTo(const ::std::u8string& s, ::std::ostream* os);
+inline void PrintTo(const ::std::u8string& s, ::std::ostream* os) {
+  PrintU8StringTo(s, os);
 }
-#endif  // GTEST_HAS_GLOBAL_WSTRING
+#endif
 
+// Overloads for ::std::u16string
+GTEST_API_ void PrintU16StringTo(const ::std::u16string& s, ::std::ostream* os);
+inline void PrintTo(const ::std::u16string& s, ::std::ostream* os) {
+  PrintU16StringTo(s, os);
+}
+
+// Overloads for ::std::u32string
+GTEST_API_ void PrintU32StringTo(const ::std::u32string& s, ::std::ostream* os);
+inline void PrintTo(const ::std::u32string& s, ::std::ostream* os) {
+  PrintU32StringTo(s, os);
+}
+
+// Overloads for ::std::wstring.
 #if GTEST_HAS_STD_WSTRING
 GTEST_API_ void PrintWideStringTo(const ::std::wstring&s, ::std::ostream* os);
 inline void PrintTo(const ::std::wstring& s, ::std::ostream* os) {
@@ -8671,18 +5635,55 @@ inline void PrintTo(const ::std::wstring& s, ::std::ostream* os) {
 }
 #endif  // GTEST_HAS_STD_WSTRING
 
-#if GTEST_HAS_ABSL
-// Overload for absl::string_view.
-inline void PrintTo(absl::string_view sp, ::std::ostream* os) {
+#if GTEST_INTERNAL_HAS_STRING_VIEW
+// Overload for internal::StringView.
+inline void PrintTo(internal::StringView sp, ::std::ostream* os) {
   PrintTo(::std::string(sp), os);
 }
-#endif  // GTEST_HAS_ABSL
+#endif  // GTEST_INTERNAL_HAS_STRING_VIEW
 
 inline void PrintTo(std::nullptr_t, ::std::ostream* os) { *os << "(nullptr)"; }
 
 template <typename T>
 void PrintTo(std::reference_wrapper<T> ref, ::std::ostream* os) {
   UniversalPrinter<T&>::Print(ref.get(), os);
+}
+
+inline const void* VoidifyPointer(const void* p) { return p; }
+inline const void* VoidifyPointer(volatile const void* p) {
+  return const_cast<const void*>(p);
+}
+
+template <typename T, typename Ptr>
+void PrintSmartPointer(const Ptr& ptr, std::ostream* os, char) {
+  if (ptr == nullptr) {
+    *os << "(nullptr)";
+  } else {
+    // We can't print the value. Just print the pointer..
+    *os << "(" << (VoidifyPointer)(ptr.get()) << ")";
+  }
+}
+template <typename T, typename Ptr,
+          typename = typename std::enable_if<!std::is_void<T>::value &&
+                                             !std::is_array<T>::value>::type>
+void PrintSmartPointer(const Ptr& ptr, std::ostream* os, int) {
+  if (ptr == nullptr) {
+    *os << "(nullptr)";
+  } else {
+    *os << "(ptr = " << (VoidifyPointer)(ptr.get()) << ", value = ";
+    UniversalPrinter<T>::Print(*ptr, os);
+    *os << ")";
+  }
+}
+
+template <typename T, typename D>
+void PrintTo(const std::unique_ptr<T, D>& ptr, std::ostream* os) {
+  (PrintSmartPointer<T>)(ptr, os, 0);
+}
+
+template <typename T>
+void PrintTo(const std::shared_ptr<T>& ptr, std::ostream* os) {
+  (PrintSmartPointer<T>)(ptr, os, 0);
 }
 
 // Helper function for printing a tuple.  T must be instantiated with
@@ -8750,14 +5751,46 @@ class UniversalPrinter {
   GTEST_DISABLE_MSC_WARNINGS_POP_()
 };
 
-#if GTEST_HAS_ABSL
+// Remove any const-qualifiers before passing a type to UniversalPrinter.
+template <typename T>
+class UniversalPrinter<const T> : public UniversalPrinter<T> {};
 
-// Printer for absl::optional
+#if GTEST_INTERNAL_HAS_ANY
+
+// Printer for std::any / absl::any
+
+template <>
+class UniversalPrinter<Any> {
+ public:
+  static void Print(const Any& value, ::std::ostream* os) {
+    if (value.has_value()) {
+      *os << "value of type " << GetTypeName(value);
+    } else {
+      *os << "no value";
+    }
+  }
+
+ private:
+  static std::string GetTypeName(const Any& value) {
+#if GTEST_HAS_RTTI
+    return internal::GetTypeName(value.type());
+#else
+    static_cast<void>(value);  // possibly unused
+    return "<unknown_type>";
+#endif  // GTEST_HAS_RTTI
+  }
+};
+
+#endif  // GTEST_INTERNAL_HAS_ANY
+
+#if GTEST_INTERNAL_HAS_OPTIONAL
+
+// Printer for std::optional / absl::optional
 
 template <typename T>
-class UniversalPrinter<::absl::optional<T>> {
+class UniversalPrinter<Optional<T>> {
  public:
-  static void Print(const ::absl::optional<T>& value, ::std::ostream* os) {
+  static void Print(const Optional<T>& value, ::std::ostream* os) {
     *os << '(';
     if (!value) {
       *os << "nullopt";
@@ -8768,14 +5801,22 @@ class UniversalPrinter<::absl::optional<T>> {
   }
 };
 
-// Printer for absl::variant
+#endif  // GTEST_INTERNAL_HAS_OPTIONAL
+
+#if GTEST_INTERNAL_HAS_VARIANT
+
+// Printer for std::variant / absl::variant
 
 template <typename... T>
-class UniversalPrinter<::absl::variant<T...>> {
+class UniversalPrinter<Variant<T...>> {
  public:
-  static void Print(const ::absl::variant<T...>& value, ::std::ostream* os) {
+  static void Print(const Variant<T...>& value, ::std::ostream* os) {
     *os << '(';
-    absl::visit(Visitor{os}, value);
+#if GTEST_HAS_ABSL
+    absl::visit(Visitor{os, value.index()}, value);
+#else
+    std::visit(Visitor{os, value.index()}, value);
+#endif  // GTEST_HAS_ABSL
     *os << ')';
   }
 
@@ -8783,14 +5824,16 @@ class UniversalPrinter<::absl::variant<T...>> {
   struct Visitor {
     template <typename U>
     void operator()(const U& u) const {
-      *os << "'" << GetTypeName<U>() << "' with value ";
+      *os << "'" << GetTypeName<U>() << "(index = " << index
+          << ")' with value ";
       UniversalPrint(u, os);
     }
     ::std::ostream* os;
+    std::size_t index;
   };
 };
 
-#endif  // GTEST_HAS_ABSL
+#endif  // GTEST_INTERNAL_HAS_VARIANT
 
 // UniversalPrintArray(begin, len, os) prints an array of 'len'
 // elements, starting at address 'begin'.
@@ -8818,6 +5861,20 @@ void UniversalPrintArray(const T* begin, size_t len, ::std::ostream* os) {
 // This overload prints a (const) char array compactly.
 GTEST_API_ void UniversalPrintArray(
     const char* begin, size_t len, ::std::ostream* os);
+
+#ifdef __cpp_char8_t
+// This overload prints a (const) char8_t array compactly.
+GTEST_API_ void UniversalPrintArray(const char8_t* begin, size_t len,
+                                    ::std::ostream* os);
+#endif
+
+// This overload prints a (const) char16_t array compactly.
+GTEST_API_ void UniversalPrintArray(const char16_t* begin, size_t len,
+                                    ::std::ostream* os);
+
+// This overload prints a (const) char32_t array compactly.
+GTEST_API_ void UniversalPrintArray(const char32_t* begin, size_t len,
+                                    ::std::ostream* os);
 
 // This overload prints a (const) wchar_t array compactly.
 GTEST_API_ void UniversalPrintArray(
@@ -8891,12 +5948,55 @@ class UniversalTersePrinter<const char*> {
   }
 };
 template <>
-class UniversalTersePrinter<char*> {
+class UniversalTersePrinter<char*> : public UniversalTersePrinter<const char*> {
+};
+
+#ifdef __cpp_char8_t
+template <>
+class UniversalTersePrinter<const char8_t*> {
  public:
-  static void Print(char* str, ::std::ostream* os) {
-    UniversalTersePrinter<const char*>::Print(str, os);
+  static void Print(const char8_t* str, ::std::ostream* os) {
+    if (str == nullptr) {
+      *os << "NULL";
+    } else {
+      UniversalPrint(::std::u8string(str), os);
+    }
   }
 };
+template <>
+class UniversalTersePrinter<char8_t*>
+    : public UniversalTersePrinter<const char8_t*> {};
+#endif
+
+template <>
+class UniversalTersePrinter<const char16_t*> {
+ public:
+  static void Print(const char16_t* str, ::std::ostream* os) {
+    if (str == nullptr) {
+      *os << "NULL";
+    } else {
+      UniversalPrint(::std::u16string(str), os);
+    }
+  }
+};
+template <>
+class UniversalTersePrinter<char16_t*>
+    : public UniversalTersePrinter<const char16_t*> {};
+
+template <>
+class UniversalTersePrinter<const char32_t*> {
+ public:
+  static void Print(const char32_t* str, ::std::ostream* os) {
+    if (str == nullptr) {
+      *os << "NULL";
+    } else {
+      UniversalPrint(::std::u32string(str), os);
+    }
+  }
+};
+template <>
+class UniversalTersePrinter<char32_t*>
+    : public UniversalTersePrinter<const char32_t*> {};
 
 #if GTEST_HAS_STD_WSTRING
 template <>
@@ -8969,16 +6069,6 @@ Strings UniversalTersePrintTupleFieldsToStrings(const Tuple& value) {
 
 }  // namespace internal
 
-#if GTEST_HAS_ABSL
-namespace internal2 {
-template <typename T>
-void TypeWithoutFormatter<T, kConvertibleToStringView>::PrintValue(
-    const T& value, ::std::ostream* os) {
-  internal::PrintTo(absl::string_view(value), os);
-}
-}  // namespace internal2
-#endif
-
 template <typename T>
 ::std::string PrintToString(const T& value) {
   ::std::stringstream ss;
@@ -9029,35 +6119,38 @@ template <typename T>
 //
 // ** Custom implementation starts here **
 
-#ifndef GTEST_INCLUDE_GTEST_INTERNAL_CUSTOM_GTEST_PRINTERS_H_
-#define GTEST_INCLUDE_GTEST_INTERNAL_CUSTOM_GTEST_PRINTERS_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_INTERNAL_CUSTOM_GTEST_PRINTERS_H_
+#define GOOGLETEST_INCLUDE_GTEST_INTERNAL_CUSTOM_GTEST_PRINTERS_H_
 
-#endif  // GTEST_INCLUDE_GTEST_INTERNAL_CUSTOM_GTEST_PRINTERS_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_INTERNAL_CUSTOM_GTEST_PRINTERS_H_
 
-#endif  // GTEST_INCLUDE_GTEST_GTEST_PRINTERS_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_GTEST_PRINTERS_H_
+
+// MSVC warning C5046 is new as of VS2017 version 15.8.
+#if defined(_MSC_VER) && _MSC_VER >= 1915
+#define GTEST_MAYBE_5046_ 5046
+#else
+#define GTEST_MAYBE_5046_
+#endif
 
 GTEST_DISABLE_MSC_WARNINGS_PUSH_(
-    4251 5046 /* class A needs to have dll-interface to be used by clients of
-                 class B */
+    4251 GTEST_MAYBE_5046_ /* class A needs to have dll-interface to be used by
+                              clients of class B */
     /* Symbol involving type with internal linkage not defined */)
 
 namespace testing {
 
 // To implement a matcher Foo for type T, define:
-//   1. a class FooMatcherImpl that implements the
-//      MatcherInterface<T> interface, and
+//   1. a class FooMatcherMatcher that implements the matcher interface:
+//     using is_gtest_matcher = void;
+//     bool MatchAndExplain(const T&, std::ostream*);
+//       (MatchResultListener* can also be used instead of std::ostream*)
+//     void DescribeTo(std::ostream*);
+//     void DescribeNegationTo(std::ostream*);
+//
 //   2. a factory function that creates a Matcher<T> object from a
-//      FooMatcherImpl*.
-//
-// The two-level delegation design makes it possible to allow a user
-// to write "v" instead of "Eq(v)" where a Matcher is expected, which
-// is impossible if we pass matchers by pointers.  It also eases
-// ownership management as Matcher objects can now be copied like
-// plain values.
+//      FooMatcherMatcher.
 
-// MatchResultListener is an abstract class.  Its << operator can be
-// used by a matcher to explain why a value matches or doesn't match.
-//
 class MatchResultListener {
  public:
   // Creates a listener object with the given underlying ostream.  The
@@ -9077,8 +6170,8 @@ class MatchResultListener {
   // Returns the underlying ostream.
   ::std::ostream* stream() { return stream_; }
 
-  // Returns true iff the listener is interested in an explanation of
-  // the match result.  A matcher's MatchAndExplain() method can use
+  // Returns true if and only if the listener is interested in an explanation
+  // of the match result.  A matcher's MatchAndExplain() method can use
   // this information to avoid generating the explanation when no one
   // intends to hear it.
   bool IsInterested() const { return stream_ != nullptr; }
@@ -9094,7 +6187,7 @@ inline MatchResultListener::~MatchResultListener() {
 
 // An instance of a subclass of this knows how to describe itself as a
 // matcher.
-class MatcherDescriberInterface {
+class GTEST_API_ MatcherDescriberInterface {
  public:
   virtual ~MatcherDescriberInterface() {}
 
@@ -9122,8 +6215,8 @@ class MatcherDescriberInterface {
 template <typename T>
 class MatcherInterface : public MatcherDescriberInterface {
  public:
-  // Returns true iff the matcher matches x; also explains the match
-  // result to 'listener' if necessary (see the next paragraph), in
+  // Returns true if and only if the matcher matches x; also explains the
+  // match result to 'listener' if necessary (see the next paragraph), in
   // the form of a non-restrictive relative clause ("which ...",
   // "whose ...", etc) that describes x.  For example, the
   // MatchAndExplain() method of the Pointee(...) matcher should
@@ -9161,31 +6254,6 @@ class MatcherInterface : public MatcherDescriberInterface {
 };
 
 namespace internal {
-
-// Converts a MatcherInterface<T> to a MatcherInterface<const T&>.
-template <typename T>
-class MatcherInterfaceAdapter : public MatcherInterface<const T&> {
- public:
-  explicit MatcherInterfaceAdapter(const MatcherInterface<T>* impl)
-      : impl_(impl) {}
-  ~MatcherInterfaceAdapter() override { delete impl_; }
-
-  void DescribeTo(::std::ostream* os) const override { impl_->DescribeTo(os); }
-
-  void DescribeNegationTo(::std::ostream* os) const override {
-    impl_->DescribeNegationTo(os);
-  }
-
-  bool MatchAndExplain(const T& x,
-                       MatchResultListener* listener) const override {
-    return impl_->MatchAndExplain(x, listener);
-  }
-
- private:
-  const MatcherInterface<T>* const impl_;
-
-  GTEST_DISALLOW_COPY_AND_ASSIGN_(MatcherInterfaceAdapter);
-};
 
 struct AnyEq {
   template <typename A, typename B>
@@ -9233,30 +6301,53 @@ class StreamMatchResultListener : public MatchResultListener {
   GTEST_DISALLOW_COPY_AND_ASSIGN_(StreamMatchResultListener);
 };
 
+struct SharedPayloadBase {
+  std::atomic<int> ref{1};
+  void Ref() { ref.fetch_add(1, std::memory_order_relaxed); }
+  bool Unref() { return ref.fetch_sub(1, std::memory_order_acq_rel) == 1; }
+};
+
+template <typename T>
+struct SharedPayload : SharedPayloadBase {
+  explicit SharedPayload(const T& v) : value(v) {}
+  explicit SharedPayload(T&& v) : value(std::move(v)) {}
+
+  static void Destroy(SharedPayloadBase* shared) {
+    delete static_cast<SharedPayload*>(shared);
+  }
+
+  T value;
+};
+
 // An internal class for implementing Matcher<T>, which will derive
 // from it.  We put functionalities common to all Matcher<T>
 // specializations here to avoid code duplication.
 template <typename T>
-class MatcherBase {
+class MatcherBase : private MatcherDescriberInterface {
  public:
-  // Returns true iff the matcher matches x; also explains the match
-  // result to 'listener'.
+  // Returns true if and only if the matcher matches x; also explains the
+  // match result to 'listener'.
   bool MatchAndExplain(const T& x, MatchResultListener* listener) const {
-    return impl_->MatchAndExplain(x, listener);
+    GTEST_CHECK_(vtable_ != nullptr);
+    return vtable_->match_and_explain(*this, x, listener);
   }
 
-  // Returns true iff this matcher matches x.
+  // Returns true if and only if this matcher matches x.
   bool Matches(const T& x) const {
     DummyMatchResultListener dummy;
     return MatchAndExplain(x, &dummy);
   }
 
   // Describes this matcher to an ostream.
-  void DescribeTo(::std::ostream* os) const { impl_->DescribeTo(os); }
+  void DescribeTo(::std::ostream* os) const final {
+    GTEST_CHECK_(vtable_ != nullptr);
+    vtable_->describe(*this, os, false);
+  }
 
   // Describes the negation of this matcher to an ostream.
-  void DescribeNegationTo(::std::ostream* os) const {
-    impl_->DescribeNegationTo(os);
+  void DescribeNegationTo(::std::ostream* os) const final {
+    GTEST_CHECK_(vtable_ != nullptr);
+    vtable_->describe(*this, os, true);
   }
 
   // Explains why x matches, or doesn't match, the matcher.
@@ -9269,31 +6360,194 @@ class MatcherBase {
   // of the describer, which is only guaranteed to be alive when
   // this matcher object is alive.
   const MatcherDescriberInterface* GetDescriber() const {
-    return impl_.get();
+    if (vtable_ == nullptr) return nullptr;
+    return vtable_->get_describer(*this);
   }
 
  protected:
-  MatcherBase() {}
+  MatcherBase() : vtable_(nullptr) {}
 
   // Constructs a matcher from its implementation.
-  explicit MatcherBase(const MatcherInterface<const T&>* impl) : impl_(impl) {}
-
   template <typename U>
-  explicit MatcherBase(
-      const MatcherInterface<U>* impl,
-      typename internal::EnableIf<
-          !internal::IsSame<U, const U&>::value>::type* = nullptr)
-      : impl_(new internal::MatcherInterfaceAdapter<U>(impl)) {}
+  explicit MatcherBase(const MatcherInterface<U>* impl) {
+    Init(impl);
+  }
 
-  MatcherBase(const MatcherBase&) = default;
-  MatcherBase& operator=(const MatcherBase&) = default;
-  MatcherBase(MatcherBase&&) = default;
-  MatcherBase& operator=(MatcherBase&&) = default;
+  template <typename M, typename = typename std::remove_reference<
+                            M>::type::is_gtest_matcher>
+  MatcherBase(M&& m) {  // NOLINT
+    Init(std::forward<M>(m));
+  }
 
-  virtual ~MatcherBase() {}
+  MatcherBase(const MatcherBase& other)
+      : vtable_(other.vtable_), buffer_(other.buffer_) {
+    if (IsShared()) buffer_.shared->Ref();
+  }
+
+  MatcherBase& operator=(const MatcherBase& other) {
+    if (this == &other) return *this;
+    Destroy();
+    vtable_ = other.vtable_;
+    buffer_ = other.buffer_;
+    if (IsShared()) buffer_.shared->Ref();
+    return *this;
+  }
+
+  MatcherBase(MatcherBase&& other)
+      : vtable_(other.vtable_), buffer_(other.buffer_) {
+    other.vtable_ = nullptr;
+  }
+
+  MatcherBase& operator=(MatcherBase&& other) {
+    if (this == &other) return *this;
+    Destroy();
+    vtable_ = other.vtable_;
+    buffer_ = other.buffer_;
+    other.vtable_ = nullptr;
+    return *this;
+  }
+
+  ~MatcherBase() override { Destroy(); }
 
  private:
-  std::shared_ptr<const MatcherInterface<const T&>> impl_;
+  struct VTable {
+    bool (*match_and_explain)(const MatcherBase&, const T&,
+                              MatchResultListener*);
+    void (*describe)(const MatcherBase&, std::ostream*, bool negation);
+    // Returns the captured object if it implements the interface, otherwise
+    // returns the MatcherBase itself.
+    const MatcherDescriberInterface* (*get_describer)(const MatcherBase&);
+    // Called on shared instances when the reference count reaches 0.
+    void (*shared_destroy)(SharedPayloadBase*);
+  };
+
+  bool IsShared() const {
+    return vtable_ != nullptr && vtable_->shared_destroy != nullptr;
+  }
+
+  // If the implementation uses a listener, call that.
+  template <typename P>
+  static auto MatchAndExplainImpl(const MatcherBase& m, const T& value,
+                                  MatchResultListener* listener)
+      -> decltype(P::Get(m).MatchAndExplain(value, listener->stream())) {
+    return P::Get(m).MatchAndExplain(value, listener->stream());
+  }
+
+  template <typename P>
+  static auto MatchAndExplainImpl(const MatcherBase& m, const T& value,
+                                  MatchResultListener* listener)
+      -> decltype(P::Get(m).MatchAndExplain(value, listener)) {
+    return P::Get(m).MatchAndExplain(value, listener);
+  }
+
+  template <typename P>
+  static void DescribeImpl(const MatcherBase& m, std::ostream* os,
+                           bool negation) {
+    if (negation) {
+      P::Get(m).DescribeNegationTo(os);
+    } else {
+      P::Get(m).DescribeTo(os);
+    }
+  }
+
+  template <typename P>
+  static const MatcherDescriberInterface* GetDescriberImpl(
+      const MatcherBase& m) {
+    // If the impl is a MatcherDescriberInterface, then return it.
+    // Otherwise use MatcherBase itself.
+    // This allows us to implement the GetDescriber() function without support
+    // from the impl, but some users really want to get their impl back when
+    // they call GetDescriber().
+    // We use std::get on a tuple as a workaround of not having `if constexpr`.
+    return std::get<(
+        std::is_convertible<decltype(&P::Get(m)),
+                            const MatcherDescriberInterface*>::value
+            ? 1
+            : 0)>(std::make_tuple(&m, &P::Get(m)));
+  }
+
+  template <typename P>
+  const VTable* GetVTable() {
+    static constexpr VTable kVTable = {&MatchAndExplainImpl<P>,
+                                       &DescribeImpl<P>, &GetDescriberImpl<P>,
+                                       P::shared_destroy};
+    return &kVTable;
+  }
+
+  union Buffer {
+    // Add some types to give Buffer some common alignment/size use cases.
+    void* ptr;
+    double d;
+    int64_t i;
+    // And add one for the out-of-line cases.
+    SharedPayloadBase* shared;
+  };
+
+  void Destroy() {
+    if (IsShared() && buffer_.shared->Unref()) {
+      vtable_->shared_destroy(buffer_.shared);
+    }
+  }
+
+  template <typename M>
+  static constexpr bool IsInlined() {
+    return sizeof(M) <= sizeof(Buffer) && alignof(M) <= alignof(Buffer) &&
+           std::is_trivially_copy_constructible<M>::value &&
+           std::is_trivially_destructible<M>::value;
+  }
+
+  template <typename M, bool = MatcherBase::IsInlined<M>()>
+  struct ValuePolicy {
+    static const M& Get(const MatcherBase& m) {
+      // When inlined along with Init, need to be explicit to avoid violating
+      // strict aliasing rules.
+      const M *ptr = static_cast<const M*>(
+          static_cast<const void*>(&m.buffer_));
+      return *ptr;
+    }
+    static void Init(MatcherBase& m, M impl) {
+      ::new (static_cast<void*>(&m.buffer_)) M(impl);
+    }
+    static constexpr auto shared_destroy = nullptr;
+  };
+
+  template <typename M>
+  struct ValuePolicy<M, false> {
+    using Shared = SharedPayload<M>;
+    static const M& Get(const MatcherBase& m) {
+      return static_cast<Shared*>(m.buffer_.shared)->value;
+    }
+    template <typename Arg>
+    static void Init(MatcherBase& m, Arg&& arg) {
+      m.buffer_.shared = new Shared(std::forward<Arg>(arg));
+    }
+    static constexpr auto shared_destroy = &Shared::Destroy;
+  };
+
+  template <typename U, bool B>
+  struct ValuePolicy<const MatcherInterface<U>*, B> {
+    using M = const MatcherInterface<U>;
+    using Shared = SharedPayload<std::unique_ptr<M>>;
+    static const M& Get(const MatcherBase& m) {
+      return *static_cast<Shared*>(m.buffer_.shared)->value;
+    }
+    static void Init(MatcherBase& m, M* impl) {
+      m.buffer_.shared = new Shared(std::unique_ptr<M>(impl));
+    }
+
+    static constexpr auto shared_destroy = &Shared::Destroy;
+  };
+
+  template <typename M>
+  void Init(M&& m) {
+    using MM = typename std::decay<M>::type;
+    using Policy = ValuePolicy<MM>;
+    vtable_ = GetVTable<Policy>();
+    Policy::Init(*this, std::forward<M>(m));
+  }
+
+  const VTable* vtable_;
+  Buffer buffer_;
 };
 
 }  // namespace internal
@@ -9315,10 +6569,15 @@ class Matcher : public internal::MatcherBase<T> {
       : internal::MatcherBase<T>(impl) {}
 
   template <typename U>
-  explicit Matcher(const MatcherInterface<U>* impl,
-                   typename internal::EnableIf<
-                       !internal::IsSame<U, const U&>::value>::type* = nullptr)
+  explicit Matcher(
+      const MatcherInterface<U>* impl,
+      typename std::enable_if<!std::is_same<U, const U&>::value>::type* =
+          nullptr)
       : internal::MatcherBase<T>(impl) {}
+
+  template <typename M, typename = typename std::remove_reference<
+                            M>::type::is_gtest_matcher>
+  Matcher(M&& m) : internal::MatcherBase<T>(std::forward<M>(m)) {}  // NOLINT
 
   // Implicit constructor here allows people to write
   // EXPECT_CALL(foo, Bar(5)) instead of EXPECT_CALL(foo, Bar(Eq(5))) sometimes
@@ -9337,15 +6596,14 @@ class GTEST_API_ Matcher<const std::string&>
   explicit Matcher(const MatcherInterface<const std::string&>* impl)
       : internal::MatcherBase<const std::string&>(impl) {}
 
+  template <typename M, typename = typename std::remove_reference<
+                            M>::type::is_gtest_matcher>
+  Matcher(M&& m)  // NOLINT
+      : internal::MatcherBase<const std::string&>(std::forward<M>(m)) {}
+
   // Allows the user to write str instead of Eq(str) sometimes, where
   // str is a std::string object.
   Matcher(const std::string& s);  // NOLINT
-
-#if GTEST_HAS_GLOBAL_STRING
-  // Allows the user to write str instead of Eq(str) sometimes, where
-  // str is a ::string object.
-  Matcher(const ::string& s);  // NOLINT
-#endif                         // GTEST_HAS_GLOBAL_STRING
 
   // Allows the user to write "foo" instead of Eq("foo") sometimes.
   Matcher(const char* s);  // NOLINT
@@ -9362,127 +6620,76 @@ class GTEST_API_ Matcher<std::string>
   explicit Matcher(const MatcherInterface<std::string>* impl)
       : internal::MatcherBase<std::string>(impl) {}
 
+  template <typename M, typename = typename std::remove_reference<
+                            M>::type::is_gtest_matcher>
+  Matcher(M&& m)  // NOLINT
+      : internal::MatcherBase<std::string>(std::forward<M>(m)) {}
+
   // Allows the user to write str instead of Eq(str) sometimes, where
   // str is a string object.
   Matcher(const std::string& s);  // NOLINT
 
-#if GTEST_HAS_GLOBAL_STRING
-  // Allows the user to write str instead of Eq(str) sometimes, where
-  // str is a ::string object.
-  Matcher(const ::string& s);  // NOLINT
-#endif                         // GTEST_HAS_GLOBAL_STRING
-
   // Allows the user to write "foo" instead of Eq("foo") sometimes.
   Matcher(const char* s);  // NOLINT
 };
 
-#if GTEST_HAS_GLOBAL_STRING
-// The following two specializations allow the user to write str
-// instead of Eq(str) and "foo" instead of Eq("foo") when a ::string
-// matcher is expected.
-template <>
-class GTEST_API_ Matcher<const ::string&>
-    : public internal::MatcherBase<const ::string&> {
- public:
-  Matcher() {}
-
-  explicit Matcher(const MatcherInterface<const ::string&>* impl)
-      : internal::MatcherBase<const ::string&>(impl) {}
-
-  // Allows the user to write str instead of Eq(str) sometimes, where
-  // str is a std::string object.
-  Matcher(const std::string& s);  // NOLINT
-
-  // Allows the user to write str instead of Eq(str) sometimes, where
-  // str is a ::string object.
-  Matcher(const ::string& s);  // NOLINT
-
-  // Allows the user to write "foo" instead of Eq("foo") sometimes.
-  Matcher(const char* s);  // NOLINT
-};
-
-template <>
-class GTEST_API_ Matcher< ::string>
-    : public internal::MatcherBase< ::string> {
- public:
-  Matcher() {}
-
-  explicit Matcher(const MatcherInterface<const ::string&>* impl)
-      : internal::MatcherBase< ::string>(impl) {}
-  explicit Matcher(const MatcherInterface< ::string>* impl)
-      : internal::MatcherBase< ::string>(impl) {}
-
-  // Allows the user to write str instead of Eq(str) sometimes, where
-  // str is a std::string object.
-  Matcher(const std::string& s);  // NOLINT
-
-  // Allows the user to write str instead of Eq(str) sometimes, where
-  // str is a ::string object.
-  Matcher(const ::string& s);  // NOLINT
-
-  // Allows the user to write "foo" instead of Eq("foo") sometimes.
-  Matcher(const char* s);  // NOLINT
-};
-#endif  // GTEST_HAS_GLOBAL_STRING
-
-#if GTEST_HAS_ABSL
+#if GTEST_INTERNAL_HAS_STRING_VIEW
 // The following two specializations allow the user to write str
 // instead of Eq(str) and "foo" instead of Eq("foo") when a absl::string_view
 // matcher is expected.
 template <>
-class GTEST_API_ Matcher<const absl::string_view&>
-    : public internal::MatcherBase<const absl::string_view&> {
+class GTEST_API_ Matcher<const internal::StringView&>
+    : public internal::MatcherBase<const internal::StringView&> {
  public:
   Matcher() {}
 
-  explicit Matcher(const MatcherInterface<const absl::string_view&>* impl)
-      : internal::MatcherBase<const absl::string_view&>(impl) {}
+  explicit Matcher(const MatcherInterface<const internal::StringView&>* impl)
+      : internal::MatcherBase<const internal::StringView&>(impl) {}
+
+  template <typename M, typename = typename std::remove_reference<
+                            M>::type::is_gtest_matcher>
+  Matcher(M&& m)  // NOLINT
+      : internal::MatcherBase<const internal::StringView&>(std::forward<M>(m)) {
+  }
 
   // Allows the user to write str instead of Eq(str) sometimes, where
   // str is a std::string object.
   Matcher(const std::string& s);  // NOLINT
 
-#if GTEST_HAS_GLOBAL_STRING
-  // Allows the user to write str instead of Eq(str) sometimes, where
-  // str is a ::string object.
-  Matcher(const ::string& s);  // NOLINT
-#endif                         // GTEST_HAS_GLOBAL_STRING
-
   // Allows the user to write "foo" instead of Eq("foo") sometimes.
   Matcher(const char* s);  // NOLINT
 
-  // Allows the user to pass absl::string_views directly.
-  Matcher(absl::string_view s);  // NOLINT
+  // Allows the user to pass absl::string_views or std::string_views directly.
+  Matcher(internal::StringView s);  // NOLINT
 };
 
 template <>
-class GTEST_API_ Matcher<absl::string_view>
-    : public internal::MatcherBase<absl::string_view> {
+class GTEST_API_ Matcher<internal::StringView>
+    : public internal::MatcherBase<internal::StringView> {
  public:
   Matcher() {}
 
-  explicit Matcher(const MatcherInterface<const absl::string_view&>* impl)
-      : internal::MatcherBase<absl::string_view>(impl) {}
-  explicit Matcher(const MatcherInterface<absl::string_view>* impl)
-      : internal::MatcherBase<absl::string_view>(impl) {}
+  explicit Matcher(const MatcherInterface<const internal::StringView&>* impl)
+      : internal::MatcherBase<internal::StringView>(impl) {}
+  explicit Matcher(const MatcherInterface<internal::StringView>* impl)
+      : internal::MatcherBase<internal::StringView>(impl) {}
+
+  template <typename M, typename = typename std::remove_reference<
+                            M>::type::is_gtest_matcher>
+  Matcher(M&& m)  // NOLINT
+      : internal::MatcherBase<internal::StringView>(std::forward<M>(m)) {}
 
   // Allows the user to write str instead of Eq(str) sometimes, where
   // str is a std::string object.
   Matcher(const std::string& s);  // NOLINT
 
-#if GTEST_HAS_GLOBAL_STRING
-  // Allows the user to write str instead of Eq(str) sometimes, where
-  // str is a ::string object.
-  Matcher(const ::string& s);  // NOLINT
-#endif                         // GTEST_HAS_GLOBAL_STRING
-
   // Allows the user to write "foo" instead of Eq("foo") sometimes.
   Matcher(const char* s);  // NOLINT
 
-  // Allows the user to pass absl::string_views directly.
-  Matcher(absl::string_view s);  // NOLINT
+  // Allows the user to pass absl::string_views or std::string_views directly.
+  Matcher(internal::StringView s);  // NOLINT
 };
-#endif  // GTEST_HAS_ABSL
+#endif  // GTEST_INTERNAL_HAS_STRING_VIEW
 
 // Prints a matcher in a human-readable format.
 template <typename T>
@@ -9582,37 +6789,32 @@ template <typename D, typename Rhs, typename Op>
 class ComparisonBase {
  public:
   explicit ComparisonBase(const Rhs& rhs) : rhs_(rhs) {}
+
+  using is_gtest_matcher = void;
+
   template <typename Lhs>
-  operator Matcher<Lhs>() const {
-    return Matcher<Lhs>(new Impl<const Lhs&>(rhs_));
+  bool MatchAndExplain(const Lhs& lhs, std::ostream*) const {
+    return Op()(lhs, Unwrap(rhs_));
+  }
+  void DescribeTo(std::ostream* os) const {
+    *os << D::Desc() << " ";
+    UniversalPrint(Unwrap(rhs_), os);
+  }
+  void DescribeNegationTo(std::ostream* os) const {
+    *os << D::NegatedDesc() << " ";
+    UniversalPrint(Unwrap(rhs_), os);
   }
 
  private:
   template <typename T>
-  static const T& Unwrap(const T& v) { return v; }
+  static const T& Unwrap(const T& v) {
+    return v;
+  }
   template <typename T>
-  static const T& Unwrap(std::reference_wrapper<T> v) { return v; }
+  static const T& Unwrap(std::reference_wrapper<T> v) {
+    return v;
+  }
 
-  template <typename Lhs, typename = Rhs>
-  class Impl : public MatcherInterface<Lhs> {
-   public:
-    explicit Impl(const Rhs& rhs) : rhs_(rhs) {}
-    bool MatchAndExplain(Lhs lhs,
-                         MatchResultListener* /* listener */) const override {
-      return Op()(lhs, Unwrap(rhs_));
-    }
-    void DescribeTo(::std::ostream* os) const override {
-      *os << D::Desc() << " ";
-      UniversalPrint(Unwrap(rhs_), os);
-    }
-    void DescribeNegationTo(::std::ostream* os) const override {
-      *os << D::NegatedDesc() <<  " ";
-      UniversalPrint(Unwrap(rhs_), os);
-    }
-
-   private:
-    Rhs rhs_;
-  };
   Rhs rhs_;
 };
 
@@ -9665,6 +6867,10 @@ class GeMatcher : public ComparisonBase<GeMatcher<Rhs>, Rhs, AnyGe> {
   static const char* NegatedDesc() { return "isn't >="; }
 };
 
+template <typename T, typename = typename std::enable_if<
+                          std::is_constructible<std::string, T>::value>::type>
+using StringLike = T;
+
 // Implements polymorphic matchers MatchesRegex(regex) and
 // ContainsRegex(regex), which can be used as a Matcher<T> as long as
 // T can be converted to a string.
@@ -9673,12 +6879,12 @@ class MatchesRegexMatcher {
   MatchesRegexMatcher(const RE* regex, bool full_match)
       : regex_(regex), full_match_(full_match) {}
 
-#if GTEST_HAS_ABSL
-  bool MatchAndExplain(const absl::string_view& s,
+#if GTEST_INTERNAL_HAS_STRING_VIEW
+  bool MatchAndExplain(const internal::StringView& s,
                        MatchResultListener* listener) const {
-    return MatchAndExplain(string(s), listener);
+    return MatchAndExplain(std::string(s), listener);
   }
-#endif  // GTEST_HAS_ABSL
+#endif  // GTEST_INTERNAL_HAS_STRING_VIEW
 
   // Accepts pointer types, particularly:
   //   const char*
@@ -9725,9 +6931,10 @@ inline PolymorphicMatcher<internal::MatchesRegexMatcher> MatchesRegex(
     const internal::RE* regex) {
   return MakePolymorphicMatcher(internal::MatchesRegexMatcher(regex, true));
 }
-inline PolymorphicMatcher<internal::MatchesRegexMatcher> MatchesRegex(
-    const std::string& regex) {
-  return MatchesRegex(new internal::RE(regex));
+template <typename T = std::string>
+PolymorphicMatcher<internal::MatchesRegexMatcher> MatchesRegex(
+    const internal::StringLike<T>& regex) {
+  return MatchesRegex(new internal::RE(std::string(regex)));
 }
 
 // Matches a string that contains regular expression 'regex'.
@@ -9736,9 +6943,10 @@ inline PolymorphicMatcher<internal::MatchesRegexMatcher> ContainsRegex(
     const internal::RE* regex) {
   return MakePolymorphicMatcher(internal::MatchesRegexMatcher(regex, false));
 }
-inline PolymorphicMatcher<internal::MatchesRegexMatcher> ContainsRegex(
-    const std::string& regex) {
-  return ContainsRegex(new internal::RE(regex));
+template <typename T = std::string>
+PolymorphicMatcher<internal::MatchesRegexMatcher> ContainsRegex(
+    const internal::StringLike<T>& regex) {
+  return ContainsRegex(new internal::RE(std::string(regex)));
 }
 
 // Creates a polymorphic matcher that matches anything equal to x.
@@ -9800,7 +7008,7 @@ inline internal::NeMatcher<Rhs> Ne(Rhs x) {
 
 GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251 5046
 
-#endif  // GTEST_INCLUDE_GTEST_GTEST_MATCHERS_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_GTEST_MATCHERS_H_
 
 #include <stdio.h>
 #include <memory>
@@ -9939,12 +7147,6 @@ inline Matcher<const ::std::string&> MakeDeathTestMatcher(
     const ::std::string& regex) {
   return ContainsRegex(regex);
 }
-#if GTEST_HAS_GLOBAL_STRING
-inline Matcher<const ::std::string&> MakeDeathTestMatcher(
-    const ::string& regex) {
-  return ContainsRegex(regex);
-}
-#endif
 
 // If a Matcher<const ::std::string&> is passed to EXPECT_DEATH (etc.), it's
 // used directly.
@@ -10070,7 +7272,7 @@ InternalRunDeathTestFlag* ParseInternalRunDeathTestFlag();
 }  // namespace internal
 }  // namespace testing
 
-#endif  // GTEST_INCLUDE_GTEST_INTERNAL_GTEST_DEATH_TEST_INTERNAL_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_DEATH_TEST_INTERNAL_H_
 
 namespace testing {
 
@@ -10128,6 +7330,10 @@ GTEST_API_ bool InDeathTestChild();
 //   }
 //
 //   ASSERT_EXIT(client.HangUpServer(), KilledBySIGHUP, "Hanging up!");
+//
+// The final parameter to each of these macros is a matcher applied to any data
+// the sub-process wrote to stderr.  For compatibility with existing tests, a
+// bare string is interpreted as a regular expression matcher.
 //
 // On the regular expressions used in death tests:
 //
@@ -10194,27 +7400,27 @@ GTEST_API_ bool InDeathTestChild();
 //   directory in PATH.
 //
 
-// Asserts that a given statement causes the program to exit, with an
-// integer exit status that satisfies predicate, and emitting error output
-// that matches regex.
-# define ASSERT_EXIT(statement, predicate, regex) \
-    GTEST_DEATH_TEST_(statement, predicate, regex, GTEST_FATAL_FAILURE_)
+// Asserts that a given `statement` causes the program to exit, with an
+// integer exit status that satisfies `predicate`, and emitting error output
+// that matches `matcher`.
+# define ASSERT_EXIT(statement, predicate, matcher) \
+    GTEST_DEATH_TEST_(statement, predicate, matcher, GTEST_FATAL_FAILURE_)
 
-// Like ASSERT_EXIT, but continues on to successive tests in the
+// Like `ASSERT_EXIT`, but continues on to successive tests in the
 // test suite, if any:
-# define EXPECT_EXIT(statement, predicate, regex) \
-    GTEST_DEATH_TEST_(statement, predicate, regex, GTEST_NONFATAL_FAILURE_)
+# define EXPECT_EXIT(statement, predicate, matcher) \
+    GTEST_DEATH_TEST_(statement, predicate, matcher, GTEST_NONFATAL_FAILURE_)
 
-// Asserts that a given statement causes the program to exit, either by
+// Asserts that a given `statement` causes the program to exit, either by
 // explicitly exiting with a nonzero exit code or being killed by a
-// signal, and emitting error output that matches regex.
-# define ASSERT_DEATH(statement, regex) \
-    ASSERT_EXIT(statement, ::testing::internal::ExitedUnsuccessfully, regex)
+// signal, and emitting error output that matches `matcher`.
+# define ASSERT_DEATH(statement, matcher) \
+    ASSERT_EXIT(statement, ::testing::internal::ExitedUnsuccessfully, matcher)
 
-// Like ASSERT_DEATH, but continues on to successive tests in the
+// Like `ASSERT_DEATH`, but continues on to successive tests in the
 // test suite, if any:
-# define EXPECT_DEATH(statement, regex) \
-    EXPECT_EXIT(statement, ::testing::internal::ExitedUnsuccessfully, regex)
+# define EXPECT_DEATH(statement, matcher) \
+    EXPECT_EXIT(statement, ::testing::internal::ExitedUnsuccessfully, matcher)
 
 // Two predicate classes that can be used in {ASSERT,EXPECT}_EXIT*:
 
@@ -10222,11 +7428,10 @@ GTEST_API_ bool InDeathTestChild();
 class GTEST_API_ ExitedWithCode {
  public:
   explicit ExitedWithCode(int exit_code);
+  ExitedWithCode(const ExitedWithCode&) = default;
+  void operator=(const ExitedWithCode& other) = delete;
   bool operator()(int exit_status) const;
  private:
-  // No implementation - assignment is unsupported.
-  void operator=(const ExitedWithCode& other);
-
   const int exit_code_;
 };
 
@@ -10308,20 +7513,20 @@ class GTEST_API_ KilledBySignal {
 // This macro is used for implementing macros such as
 // EXPECT_DEATH_IF_SUPPORTED and ASSERT_DEATH_IF_SUPPORTED on systems where
 // death tests are not supported. Those macros must compile on such systems
-// iff EXPECT_DEATH and ASSERT_DEATH compile with the same parameters on
-// systems that support death tests. This allows one to write such a macro
-// on a system that does not support death tests and be sure that it will
-// compile on a death-test supporting system. It is exposed publicly so that
-// systems that have death-tests with stricter requirements than
-// GTEST_HAS_DEATH_TEST can write their own equivalent of
-// EXPECT_DEATH_IF_SUPPORTED and ASSERT_DEATH_IF_SUPPORTED.
+// if and only if EXPECT_DEATH and ASSERT_DEATH compile with the same parameters
+// on systems that support death tests. This allows one to write such a macro on
+// a system that does not support death tests and be sure that it will compile
+// on a death-test supporting system. It is exposed publicly so that systems
+// that have death-tests with stricter requirements than GTEST_HAS_DEATH_TEST
+// can write their own equivalent of EXPECT_DEATH_IF_SUPPORTED and
+// ASSERT_DEATH_IF_SUPPORTED.
 //
 // Parameters:
 //   statement -  A statement that a macro such as EXPECT_DEATH would test
 //                for program termination. This macro has to make sure this
 //                statement is compiled but not executed, to ensure that
 //                EXPECT_DEATH_IF_SUPPORTED compiles with a certain
-//                parameter iff EXPECT_DEATH compiles with it.
+//                parameter if and only if EXPECT_DEATH compiles with it.
 //   regex     -  A regex that a macro such as EXPECT_DEATH would use to test
 //                the output of statement.  This parameter has to be
 //                compiled but not evaluated by this macro, to ensure that
@@ -10372,7 +7577,7 @@ class GTEST_API_ KilledBySignal {
 
 }  // namespace testing
 
-#endif  // GTEST_INCLUDE_GTEST_GTEST_DEATH_TEST_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_GTEST_DEATH_TEST_H_
 // Copyright 2008, Google Inc.
 // All rights reserved.
 //
@@ -10405,12 +7610,9 @@ class GTEST_API_ KilledBySignal {
 // Macros and functions for implementing parameterized tests
 // in Google C++ Testing and Mocking Framework (Google Test)
 //
-// This file is generated by a SCRIPT.  DO NOT EDIT BY HAND!
-//
 // GOOGLETEST_CM0001 DO NOT DELETE
-#ifndef GTEST_INCLUDE_GTEST_GTEST_PARAM_TEST_H_
-#define GTEST_INCLUDE_GTEST_GTEST_PARAM_TEST_H_
-
+#ifndef GOOGLETEST_INCLUDE_GTEST_GTEST_PARAM_TEST_H_
+#define GOOGLETEST_INCLUDE_GTEST_GTEST_PARAM_TEST_H_
 
 // Value-parameterized tests allow you to test your code with different
 // parameters without writing multiple copies of the same test.
@@ -10475,7 +7677,7 @@ INSTANTIATE_TEST_SUITE_P(InstantiationName,
                          Values("meeny", "miny", "moe"));
 
 // To distinguish different instances of the pattern, (yes, you
-// can instantiate it more then once) the first argument to the
+// can instantiate it more than once) the first argument to the
 // INSTANTIATE_TEST_SUITE_P macro is a prefix that will be added to the
 // actual test suite name. Remember to pick unique prefixes for different
 // instantiations. The tests from the instantiation above will have
@@ -10549,6 +7751,7 @@ TEST_P(DerivedTest, DoesBlah) {
 
 #endif  // 0
 
+#include <iterator>
 #include <utility>
 
 // Copyright 2008 Google Inc.
@@ -10585,8 +7788,8 @@ TEST_P(DerivedTest, DoesBlah) {
 
 // GOOGLETEST_CM0001 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_PARAM_UTIL_H_
-#define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_PARAM_UTIL_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_PARAM_UTIL_H_
+#define GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_PARAM_UTIL_H_
 
 #include <ctype.h>
 
@@ -10595,9 +7798,192 @@ TEST_P(DerivedTest, DoesBlah) {
 #include <memory>
 #include <set>
 #include <tuple>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//     * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// GOOGLETEST_CM0001 DO NOT DELETE
+
+#ifndef GOOGLETEST_INCLUDE_GTEST_GTEST_TEST_PART_H_
+#define GOOGLETEST_INCLUDE_GTEST_GTEST_TEST_PART_H_
+
+#include <iosfwd>
+#include <vector>
+
+GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
+/* class A needs to have dll-interface to be used by clients of class B */)
+
+namespace testing {
+
+// A copyable object representing the result of a test part (i.e. an
+// assertion or an explicit FAIL(), ADD_FAILURE(), or SUCCESS()).
+//
+// Don't inherit from TestPartResult as its destructor is not virtual.
+class GTEST_API_ TestPartResult {
+ public:
+  // The possible outcomes of a test part (i.e. an assertion or an
+  // explicit SUCCEED(), FAIL(), or ADD_FAILURE()).
+  enum Type {
+    kSuccess,          // Succeeded.
+    kNonFatalFailure,  // Failed but the test can continue.
+    kFatalFailure,     // Failed and the test should be terminated.
+    kSkip              // Skipped.
+  };
+
+  // C'tor.  TestPartResult does NOT have a default constructor.
+  // Always use this constructor (with parameters) to create a
+  // TestPartResult object.
+  TestPartResult(Type a_type, const char* a_file_name, int a_line_number,
+                 const char* a_message)
+      : type_(a_type),
+        file_name_(a_file_name == nullptr ? "" : a_file_name),
+        line_number_(a_line_number),
+        summary_(ExtractSummary(a_message)),
+        message_(a_message) {}
+
+  // Gets the outcome of the test part.
+  Type type() const { return type_; }
+
+  // Gets the name of the source file where the test part took place, or
+  // NULL if it's unknown.
+  const char* file_name() const {
+    return file_name_.empty() ? nullptr : file_name_.c_str();
+  }
+
+  // Gets the line in the source file where the test part took place,
+  // or -1 if it's unknown.
+  int line_number() const { return line_number_; }
+
+  // Gets the summary of the failure message.
+  const char* summary() const { return summary_.c_str(); }
+
+  // Gets the message associated with the test part.
+  const char* message() const { return message_.c_str(); }
+
+  // Returns true if and only if the test part was skipped.
+  bool skipped() const { return type_ == kSkip; }
+
+  // Returns true if and only if the test part passed.
+  bool passed() const { return type_ == kSuccess; }
+
+  // Returns true if and only if the test part non-fatally failed.
+  bool nonfatally_failed() const { return type_ == kNonFatalFailure; }
+
+  // Returns true if and only if the test part fatally failed.
+  bool fatally_failed() const { return type_ == kFatalFailure; }
+
+  // Returns true if and only if the test part failed.
+  bool failed() const { return fatally_failed() || nonfatally_failed(); }
+
+ private:
+  Type type_;
+
+  // Gets the summary of the failure message by omitting the stack
+  // trace in it.
+  static std::string ExtractSummary(const char* message);
+
+  // The name of the source file where the test part took place, or
+  // "" if the source file is unknown.
+  std::string file_name_;
+  // The line in the source file where the test part took place, or -1
+  // if the line number is unknown.
+  int line_number_;
+  std::string summary_;  // The test failure summary.
+  std::string message_;  // The test failure message.
+};
+
+// Prints a TestPartResult object.
+std::ostream& operator<<(std::ostream& os, const TestPartResult& result);
+
+// An array of TestPartResult objects.
+//
+// Don't inherit from TestPartResultArray as its destructor is not
+// virtual.
+class GTEST_API_ TestPartResultArray {
+ public:
+  TestPartResultArray() {}
+
+  // Appends the given TestPartResult to the array.
+  void Append(const TestPartResult& result);
+
+  // Returns the TestPartResult at the given index (0-based).
+  const TestPartResult& GetTestPartResult(int index) const;
+
+  // Returns the number of TestPartResult objects in the array.
+  int size() const;
+
+ private:
+  std::vector<TestPartResult> array_;
+
+  GTEST_DISALLOW_COPY_AND_ASSIGN_(TestPartResultArray);
+};
+
+// This interface knows how to report a test part result.
+class GTEST_API_ TestPartResultReporterInterface {
+ public:
+  virtual ~TestPartResultReporterInterface() {}
+
+  virtual void ReportTestPartResult(const TestPartResult& result) = 0;
+};
+
+namespace internal {
+
+// This helper class is used by {ASSERT|EXPECT}_NO_FATAL_FAILURE to check if a
+// statement generates new fatal failures. To do so it registers itself as the
+// current test part result reporter. Besides checking if fatal failures were
+// reported, it only delegates the reporting to the former result reporter.
+// The original result reporter is restored in the destructor.
+// INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
+class GTEST_API_ HasNewFatalFailureHelper
+    : public TestPartResultReporterInterface {
+ public:
+  HasNewFatalFailureHelper();
+  ~HasNewFatalFailureHelper() override;
+  void ReportTestPartResult(const TestPartResult& result) override;
+  bool has_new_fatal_failure() const { return has_new_fatal_failure_; }
+ private:
+  bool has_new_fatal_failure_;
+  TestPartResultReporterInterface* original_reporter_;
+
+  GTEST_DISALLOW_COPY_AND_ASSIGN_(HasNewFatalFailureHelper);
+};
+
+}  // namespace internal
+
+}  // namespace testing
+
+GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
+
+#endif  // GOOGLETEST_INCLUDE_GTEST_GTEST_TEST_PART_H_
 
 namespace testing {
 // Input to a parameterized test name generator, describing a test parameter.
@@ -11007,11 +8393,11 @@ class ParameterizedTestSuiteInfoBase {
 
   // Base part of test suite name for display purposes.
   virtual const std::string& GetTestSuiteName() const = 0;
-  // Test case id to verify identity.
+  // Test suite id to verify identity.
   virtual TypeId GetTestSuiteTypeId() const = 0;
   // UnitTest class invokes this method to register tests in this
   // test suite right before running them in RUN_ALL_TESTS macro.
-  // This method should not be called more then once on any single
+  // This method should not be called more than once on any single
   // instance of a ParameterizedTestSuiteInfoBase derived class.
   virtual void RegisterTests() = 0;
 
@@ -11021,6 +8407,17 @@ class ParameterizedTestSuiteInfoBase {
  private:
   GTEST_DISALLOW_COPY_AND_ASSIGN_(ParameterizedTestSuiteInfoBase);
 };
+
+// INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE.
+//
+// Report a the name of a test_suit as safe to ignore
+// as the side effect of construction of this type.
+struct GTEST_API_ MarkAsIgnored {
+  explicit MarkAsIgnored(const char* test_suite);
+};
+
+GTEST_API_ void InsertSyntheticTestCase(const std::string& name,
+                                        CodeLocation location, bool has_test_p);
 
 // INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE.
 //
@@ -11044,11 +8441,11 @@ class ParameterizedTestSuiteInfo : public ParameterizedTestSuiteInfoBase {
                                       CodeLocation code_location)
       : test_suite_name_(name), code_location_(code_location) {}
 
-  // Test case base name for display purposes.
+  // Test suite base name for display purposes.
   const std::string& GetTestSuiteName() const override {
     return test_suite_name_;
   }
-  // Test case id to verify identity.
+  // Test suite id to verify identity.
   TypeId GetTestSuiteTypeId() const override { return GetTypeId<TestSuite>(); }
   // TEST_P macro uses AddTestPattern() to record information
   // about a single test in a LocalTestInfo structure.
@@ -11057,9 +8454,10 @@ class ParameterizedTestSuiteInfo : public ParameterizedTestSuiteInfoBase {
   // parameter index. For the test SequenceA/FooTest.DoBar/1 FooTest is
   // test suite base name and DoBar is test base name.
   void AddTestPattern(const char* test_suite_name, const char* test_base_name,
-                      TestMetaFactoryBase<ParamType>* meta_factory) {
-    tests_.push_back(std::shared_ptr<TestInfo>(
-        new TestInfo(test_suite_name, test_base_name, meta_factory)));
+                      TestMetaFactoryBase<ParamType>* meta_factory,
+                      CodeLocation code_location) {
+    tests_.push_back(std::shared_ptr<TestInfo>(new TestInfo(
+        test_suite_name, test_base_name, meta_factory, code_location)));
   }
   // INSTANTIATE_TEST_SUITE_P macro uses AddGenerator() to record information
   // about a generator.
@@ -11072,11 +8470,13 @@ class ParameterizedTestSuiteInfo : public ParameterizedTestSuiteInfoBase {
     return 0;  // Return value used only to run this method in namespace scope.
   }
   // UnitTest class invokes this method to register tests in this test suite
-  // test suites right before running tests in RUN_ALL_TESTS macro.
-  // This method should not be called more then once on any single
+  // right before running tests in RUN_ALL_TESTS macro.
+  // This method should not be called more than once on any single
   // instance of a ParameterizedTestSuiteInfoBase derived class.
-  // UnitTest has a guard to prevent from calling this method more then once.
+  // UnitTest has a guard to prevent from calling this method more than once.
   void RegisterTests() override {
+    bool generated_instantiations = false;
+
     for (typename TestInfoContainer::iterator test_it = tests_.begin();
          test_it != tests_.end(); ++test_it) {
       std::shared_ptr<TestInfo> test_info = *test_it;
@@ -11099,6 +8499,8 @@ class ParameterizedTestSuiteInfo : public ParameterizedTestSuiteInfoBase {
         for (typename ParamGenerator<ParamType>::iterator param_it =
                  generator.begin();
              param_it != generator.end(); ++param_it, ++i) {
+          generated_instantiations = true;
+
           Message test_name_stream;
 
           std::string param_name = name_func(
@@ -11115,18 +8517,27 @@ class ParameterizedTestSuiteInfo : public ParameterizedTestSuiteInfoBase {
 
           test_param_names.insert(param_name);
 
-          test_name_stream << test_info->test_base_name << "/" << param_name;
+          if (!test_info->test_base_name.empty()) {
+            test_name_stream << test_info->test_base_name << "/";
+          }
+          test_name_stream << param_name;
           MakeAndRegisterTestInfo(
               test_suite_name.c_str(), test_name_stream.GetString().c_str(),
               nullptr,  // No type parameter.
-              PrintToString(*param_it).c_str(), code_location_,
+              PrintToString(*param_it).c_str(), test_info->code_location,
               GetTestSuiteTypeId(),
-              SuiteApiResolver<TestSuite>::GetSetUpCaseOrSuite(),
-              SuiteApiResolver<TestSuite>::GetTearDownCaseOrSuite(),
+              SuiteApiResolver<TestSuite>::GetSetUpCaseOrSuite(file, line),
+              SuiteApiResolver<TestSuite>::GetTearDownCaseOrSuite(file, line),
               test_info->test_meta_factory->CreateTestFactory(*param_it));
         }  // for param_it
       }  // for gen_it
     }  // for test_it
+
+    if (!generated_instantiations) {
+      // There are no generaotrs, or they all generate nothing ...
+      InsertSyntheticTestCase(GetTestSuiteName(), code_location_,
+                              !tests_.empty());
+    }
   }    // RegisterTests
 
  private:
@@ -11134,14 +8545,17 @@ class ParameterizedTestSuiteInfo : public ParameterizedTestSuiteInfoBase {
   // with TEST_P macro.
   struct TestInfo {
     TestInfo(const char* a_test_suite_base_name, const char* a_test_base_name,
-             TestMetaFactoryBase<ParamType>* a_test_meta_factory)
+             TestMetaFactoryBase<ParamType>* a_test_meta_factory,
+             CodeLocation a_code_location)
         : test_suite_base_name(a_test_suite_base_name),
           test_base_name(a_test_base_name),
-          test_meta_factory(a_test_meta_factory) {}
+          test_meta_factory(a_test_meta_factory),
+          code_location(a_code_location) {}
 
     const std::string test_suite_base_name;
     const std::string test_base_name;
     const std::unique_ptr<TestMetaFactoryBase<ParamType> > test_meta_factory;
+    const CodeLocation code_location;
   };
   using TestInfoContainer = ::std::vector<std::shared_ptr<TestInfo> >;
   // Records data received from INSTANTIATE_TEST_SUITE_P macros:
@@ -11174,7 +8588,7 @@ class ParameterizedTestSuiteInfo : public ParameterizedTestSuiteInfoBase {
 
     // Check for invalid characters
     for (std::string::size_type index = 0; index < name.size(); ++index) {
-      if (!isalnum(name[index]) && name[index] != '_')
+      if (!IsAlNum(name[index]) && name[index] != '_')
         return false;
     }
 
@@ -11264,6 +8678,34 @@ class ParameterizedTestSuiteRegistry {
   GTEST_DISALLOW_COPY_AND_ASSIGN_(ParameterizedTestSuiteRegistry);
 };
 
+// Keep track of what type-parameterized test suite are defined and
+// where as well as which are intatiated. This allows susequently
+// identifying suits that are defined but never used.
+class TypeParameterizedTestSuiteRegistry {
+ public:
+  // Add a suite definition
+  void RegisterTestSuite(const char* test_suite_name,
+                         CodeLocation code_location);
+
+  // Add an instantiation of a suit.
+  void RegisterInstantiation(const char* test_suite_name);
+
+  // For each suit repored as defined but not reported as instantiation,
+  // emit a test that reports that fact (configurably, as an error).
+  void CheckForInstantiations();
+
+ private:
+  struct TypeParameterizedTestSuiteInfo {
+    explicit TypeParameterizedTestSuiteInfo(CodeLocation c)
+        : code_location(c), instantiated(false) {}
+
+    CodeLocation code_location;
+    bool instantiated;
+  };
+
+  std::map<std::string, TypeParameterizedTestSuiteInfo> suites_;
+};
+
 }  // namespace internal
 
 // Forward declarations of ValuesIn(), which is implemented in
@@ -11275,10 +8717,15 @@ internal::ParamGenerator<typename Container::value_type> ValuesIn(
 namespace internal {
 // Used in the Values() function to provide polymorphic capabilities.
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4100)
+#endif
+
 template <typename... Ts>
 class ValueArray {
  public:
-  ValueArray(Ts... v) : v_{std::move(v)...} {}
+  explicit ValueArray(Ts... v) : v_(FlatTupleConstructTag{}, std::move(v)...) {}
 
   template <typename T>
   operator ParamGenerator<T>() const {  // NOLINT
@@ -11293,6 +8740,10 @@ class ValueArray {
 
   FlatTuple<Ts...> v_;
 };
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 template <typename... T>
 class CartesianProductGenerator
@@ -11427,7 +8878,7 @@ class CartesianProductHolder {
 }  // namespace internal
 }  // namespace testing
 
-#endif  // GTEST_INCLUDE_GTEST_INTERNAL_GTEST_PARAM_UTIL_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_PARAM_UTIL_H_
 
 namespace testing {
 
@@ -11541,10 +8992,9 @@ internal::ParamGenerator<T> Range(T start, T end) {
 //
 template <typename ForwardIterator>
 internal::ParamGenerator<
-  typename ::testing::internal::IteratorTraits<ForwardIterator>::value_type>
+    typename std::iterator_traits<ForwardIterator>::value_type>
 ValuesIn(ForwardIterator begin, ForwardIterator end) {
-  typedef typename ::testing::internal::IteratorTraits<ForwardIterator>
-      ::value_type ParamType;
+  typedef typename std::iterator_traits<ForwardIterator>::value_type ParamType;
   return internal::ParamGenerator<ParamType>(
       new internal::ValuesInIteratorRangeGenerator<ParamType>(begin, end));
 }
@@ -11620,8 +9070,6 @@ inline internal::ParamGenerator<bool> Bool() {
 //     std::tuple<T1, T2, ..., TN> where T1, T2, ..., TN are the types
 //     of elements from sequences produces by gen1, gen2, ..., genN.
 //
-// Combine can have up to 10 arguments.
-//
 // Example:
 //
 // This will instantiate tests in test suite AnimalTest each one with
@@ -11665,19 +9113,20 @@ internal::CartesianProductHolder<Generator...> Combine(const Generator&... g) {
       : public test_suite_name {                                               \
    public:                                                                     \
     GTEST_TEST_CLASS_NAME_(test_suite_name, test_name)() {}                    \
-    virtual void TestBody();                                                   \
+    void TestBody() override;                                                  \
                                                                                \
    private:                                                                    \
     static int AddToRegistry() {                                               \
       ::testing::UnitTest::GetInstance()                                       \
           ->parameterized_test_registry()                                      \
           .GetTestSuitePatternHolder<test_suite_name>(                         \
-              #test_suite_name,                                                \
+              GTEST_STRINGIFY_(test_suite_name),                               \
               ::testing::internal::CodeLocation(__FILE__, __LINE__))           \
           ->AddTestPattern(                                                    \
               GTEST_STRINGIFY_(test_suite_name), GTEST_STRINGIFY_(test_name),  \
               new ::testing::internal::TestMetaFactory<GTEST_TEST_CLASS_NAME_( \
-                  test_suite_name, test_name)>());                             \
+                  test_suite_name, test_name)>(),                              \
+              ::testing::internal::CodeLocation(__FILE__, __LINE__));          \
       return 0;                                                                \
     }                                                                          \
     static int gtest_registering_dummy_ GTEST_ATTRIBUTE_UNUSED_;               \
@@ -11732,12 +9181,20 @@ internal::CartesianProductHolder<Generator...> Combine(const Generator&... g) {
           ::testing::UnitTest::GetInstance()                                  \
               ->parameterized_test_registry()                                 \
               .GetTestSuitePatternHolder<test_suite_name>(                    \
-                  #test_suite_name,                                           \
+                  GTEST_STRINGIFY_(test_suite_name),                          \
                   ::testing::internal::CodeLocation(__FILE__, __LINE__))      \
               ->AddTestSuiteInstantiation(                                    \
-                  #prefix, &gtest_##prefix##test_suite_name##_EvalGenerator_, \
+                  GTEST_STRINGIFY_(prefix),                                   \
+                  &gtest_##prefix##test_suite_name##_EvalGenerator_,          \
                   &gtest_##prefix##test_suite_name##_EvalGenerateName_,       \
                   __FILE__, __LINE__)
+
+
+// Allow Marking a Parameterized test class as not needing to be instantiated.
+#define GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(T)                   \
+  namespace gtest_do_not_use_outside_namespace_scope {}                   \
+  static const ::testing::internal::MarkAsIgnored gtest_allow_ignore_##T( \
+      GTEST_STRINGIFY_(T))
 
 // Legacy API is deprecated but still available
 #ifndef GTEST_REMOVE_LEGACY_TEST_CASEAPI_
@@ -11749,7 +9206,7 @@ internal::CartesianProductHolder<Generator...> Combine(const Generator&... g) {
 
 }  // namespace testing
 
-#endif  // GTEST_INCLUDE_GTEST_GTEST_PARAM_TEST_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_GTEST_PARAM_TEST_H_
 // Copyright 2006, Google Inc.
 // All rights reserved.
 //
@@ -11783,8 +9240,8 @@ internal::CartesianProductHolder<Generator...> Combine(const Generator&... g) {
 // Google C++ Testing and Mocking Framework definitions useful in production code.
 // GOOGLETEST_CM0003 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_GTEST_PROD_H_
-#define GTEST_INCLUDE_GTEST_GTEST_PROD_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_GTEST_PROD_H_
+#define GOOGLETEST_INCLUDE_GTEST_GTEST_PROD_H_
 
 // When you need to test the private or protected members of a class,
 // use the FRIEND_TEST macro to declare your tests as friends of the
@@ -11810,189 +9267,7 @@ internal::CartesianProductHolder<Generator...> Combine(const Generator&... g) {
 #define FRIEND_TEST(test_case_name, test_name)\
 friend class test_case_name##_##test_name##_Test
 
-#endif  // GTEST_INCLUDE_GTEST_GTEST_PROD_H_
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//     * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// GOOGLETEST_CM0001 DO NOT DELETE
-
-#ifndef GTEST_INCLUDE_GTEST_GTEST_TEST_PART_H_
-#define GTEST_INCLUDE_GTEST_GTEST_TEST_PART_H_
-
-#include <iosfwd>
-#include <vector>
-
-GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
-/* class A needs to have dll-interface to be used by clients of class B */)
-
-namespace testing {
-
-// A copyable object representing the result of a test part (i.e. an
-// assertion or an explicit FAIL(), ADD_FAILURE(), or SUCCESS()).
-//
-// Don't inherit from TestPartResult as its destructor is not virtual.
-class GTEST_API_ TestPartResult {
- public:
-  // The possible outcomes of a test part (i.e. an assertion or an
-  // explicit SUCCEED(), FAIL(), or ADD_FAILURE()).
-  enum Type {
-    kSuccess,          // Succeeded.
-    kNonFatalFailure,  // Failed but the test can continue.
-    kFatalFailure,     // Failed and the test should be terminated.
-    kSkip              // Skipped.
-  };
-
-  // C'tor.  TestPartResult does NOT have a default constructor.
-  // Always use this constructor (with parameters) to create a
-  // TestPartResult object.
-  TestPartResult(Type a_type, const char* a_file_name, int a_line_number,
-                 const char* a_message)
-      : type_(a_type),
-        file_name_(a_file_name == nullptr ? "" : a_file_name),
-        line_number_(a_line_number),
-        summary_(ExtractSummary(a_message)),
-        message_(a_message) {}
-
-  // Gets the outcome of the test part.
-  Type type() const { return type_; }
-
-  // Gets the name of the source file where the test part took place, or
-  // NULL if it's unknown.
-  const char* file_name() const {
-    return file_name_.empty() ? nullptr : file_name_.c_str();
-  }
-
-  // Gets the line in the source file where the test part took place,
-  // or -1 if it's unknown.
-  int line_number() const { return line_number_; }
-
-  // Gets the summary of the failure message.
-  const char* summary() const { return summary_.c_str(); }
-
-  // Gets the message associated with the test part.
-  const char* message() const { return message_.c_str(); }
-
-  // Returns true iff the test part was skipped.
-  bool skipped() const { return type_ == kSkip; }
-
-  // Returns true iff the test part passed.
-  bool passed() const { return type_ == kSuccess; }
-
-  // Returns true iff the test part non-fatally failed.
-  bool nonfatally_failed() const { return type_ == kNonFatalFailure; }
-
-  // Returns true iff the test part fatally failed.
-  bool fatally_failed() const { return type_ == kFatalFailure; }
-
-  // Returns true iff the test part failed.
-  bool failed() const { return fatally_failed() || nonfatally_failed(); }
-
- private:
-  Type type_;
-
-  // Gets the summary of the failure message by omitting the stack
-  // trace in it.
-  static std::string ExtractSummary(const char* message);
-
-  // The name of the source file where the test part took place, or
-  // "" if the source file is unknown.
-  std::string file_name_;
-  // The line in the source file where the test part took place, or -1
-  // if the line number is unknown.
-  int line_number_;
-  std::string summary_;  // The test failure summary.
-  std::string message_;  // The test failure message.
-};
-
-// Prints a TestPartResult object.
-std::ostream& operator<<(std::ostream& os, const TestPartResult& result);
-
-// An array of TestPartResult objects.
-//
-// Don't inherit from TestPartResultArray as its destructor is not
-// virtual.
-class GTEST_API_ TestPartResultArray {
- public:
-  TestPartResultArray() {}
-
-  // Appends the given TestPartResult to the array.
-  void Append(const TestPartResult& result);
-
-  // Returns the TestPartResult at the given index (0-based).
-  const TestPartResult& GetTestPartResult(int index) const;
-
-  // Returns the number of TestPartResult objects in the array.
-  int size() const;
-
- private:
-  std::vector<TestPartResult> array_;
-
-  GTEST_DISALLOW_COPY_AND_ASSIGN_(TestPartResultArray);
-};
-
-// This interface knows how to report a test part result.
-class GTEST_API_ TestPartResultReporterInterface {
- public:
-  virtual ~TestPartResultReporterInterface() {}
-
-  virtual void ReportTestPartResult(const TestPartResult& result) = 0;
-};
-
-namespace internal {
-
-// This helper class is used by {ASSERT|EXPECT}_NO_FATAL_FAILURE to check if a
-// statement generates new fatal failures. To do so it registers itself as the
-// current test part result reporter. Besides checking if fatal failures were
-// reported, it only delegates the reporting to the former result reporter.
-// The original result reporter is restored in the destructor.
-// INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
-class GTEST_API_ HasNewFatalFailureHelper
-    : public TestPartResultReporterInterface {
- public:
-  HasNewFatalFailureHelper();
-  ~HasNewFatalFailureHelper() override;
-  void ReportTestPartResult(const TestPartResult& result) override;
-  bool has_new_fatal_failure() const { return has_new_fatal_failure_; }
- private:
-  bool has_new_fatal_failure_;
-  TestPartResultReporterInterface* original_reporter_;
-
-  GTEST_DISALLOW_COPY_AND_ASSIGN_(HasNewFatalFailureHelper);
-};
-
-}  // namespace internal
-
-}  // namespace testing
-
-GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
-
-#endif  // GTEST_INCLUDE_GTEST_GTEST_TEST_PART_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_GTEST_PROD_H_
 // Copyright 2008 Google Inc.
 // All Rights Reserved.
 //
@@ -12022,11 +9297,10 @@ GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
 // GOOGLETEST_CM0001 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_GTEST_TYPED_TEST_H_
-#define GTEST_INCLUDE_GTEST_GTEST_TYPED_TEST_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_GTEST_TYPED_TEST_H_
+#define GOOGLETEST_INCLUDE_GTEST_GTEST_TYPED_TEST_H_
 
 // This header implements typed tests and type-parameterized tests.
 
@@ -12060,9 +9334,9 @@ TYPED_TEST_SUITE(FooTest, MyTypes);
 // Then, use TYPED_TEST() instead of TEST_F() to define as many typed
 // tests for this test suite as you want.
 TYPED_TEST(FooTest, DoesBlah) {
-  // Inside a test, refer to TypeParam to get the type parameter.
-  // Since we are inside a derived class template, C++ requires use to
-  // visit the members of FooTest via 'this'.
+  // Inside a test, refer to the special name TypeParam to get the type
+  // parameter.  Since we are inside a derived class template, C++ requires
+  // us to visit the members of FooTest via 'this'.
   TypeParam n = this->value_;
 
   // To visit static members of the fixture, add the TestFixture::
@@ -12168,8 +9442,6 @@ INSTANTIATE_TYPED_TEST_SUITE_P(My, FooTest, MyTypes);
 
 // Implements typed tests.
 
-#if GTEST_HAS_TYPED_TEST
-
 // INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE.
 //
 // Expands to the name of the typedef for the type parameters of the
@@ -12181,27 +9453,25 @@ INSTANTIATE_TYPED_TEST_SUITE_P(My, FooTest, MyTypes);
 #define GTEST_NAME_GENERATOR_(TestSuiteName) \
   gtest_type_params_##TestSuiteName##_NameGenerator
 
-// The 'Types' template argument below must have spaces around it
-// since some compilers may choke on '>>' when passing a template
-// instance (e.g. Types<int>)
-#define TYPED_TEST_SUITE(CaseName, Types, ...)                           \
-  typedef ::testing::internal::TypeList<Types>::type GTEST_TYPE_PARAMS_( \
-      CaseName);                                                         \
-  typedef ::testing::internal::NameGeneratorSelector<__VA_ARGS__>::type  \
+#define TYPED_TEST_SUITE(CaseName, Types, ...)                          \
+  typedef ::testing::internal::GenerateTypeList<Types>::type            \
+      GTEST_TYPE_PARAMS_(CaseName);                                     \
+  typedef ::testing::internal::NameGeneratorSelector<__VA_ARGS__>::type \
       GTEST_NAME_GENERATOR_(CaseName)
 
-# define TYPED_TEST(CaseName, TestName)                                       \
+#define TYPED_TEST(CaseName, TestName)                                        \
+  static_assert(sizeof(GTEST_STRINGIFY_(TestName)) > 1,                       \
+                "test-name must not be empty");                               \
   template <typename gtest_TypeParam_>                                        \
   class GTEST_TEST_CLASS_NAME_(CaseName, TestName)                            \
       : public CaseName<gtest_TypeParam_> {                                   \
    private:                                                                   \
     typedef CaseName<gtest_TypeParam_> TestFixture;                           \
     typedef gtest_TypeParam_ TypeParam;                                       \
-    virtual void TestBody();                                                  \
+    void TestBody() override;                                                 \
   };                                                                          \
   static bool gtest_##CaseName##_##TestName##_registered_                     \
-        GTEST_ATTRIBUTE_UNUSED_ =                                             \
-      ::testing::internal::TypeParameterizedTest<                             \
+      GTEST_ATTRIBUTE_UNUSED_ = ::testing::internal::TypeParameterizedTest<   \
           CaseName,                                                           \
           ::testing::internal::TemplateSel<GTEST_TEST_CLASS_NAME_(CaseName,   \
                                                                   TestName)>, \
@@ -12209,7 +9479,8 @@ INSTANTIATE_TYPED_TEST_SUITE_P(My, FooTest, MyTypes);
               CaseName)>::Register("",                                        \
                                    ::testing::internal::CodeLocation(         \
                                        __FILE__, __LINE__),                   \
-                                   #CaseName, #TestName, 0,                   \
+                                   GTEST_STRINGIFY_(CaseName),                \
+                                   GTEST_STRINGIFY_(TestName), 0,             \
                                    ::testing::internal::GenerateNames<        \
                                        GTEST_NAME_GENERATOR_(CaseName),       \
                                        GTEST_TYPE_PARAMS_(CaseName)>());      \
@@ -12224,11 +9495,7 @@ INSTANTIATE_TYPED_TEST_SUITE_P(My, FooTest, MyTypes);
   TYPED_TEST_SUITE
 #endif  // GTEST_REMOVE_LEGACY_TEST_CASEAPI_
 
-#endif  // GTEST_HAS_TYPED_TEST
-
 // Implements type-parameterized tests.
-
-#if GTEST_HAS_TYPED_TEST_P
 
 // INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE.
 //
@@ -12272,24 +9539,26 @@ INSTANTIATE_TYPED_TEST_SUITE_P(My, FooTest, MyTypes);
      private:                                                         \
       typedef SuiteName<gtest_TypeParam_> TestFixture;                \
       typedef gtest_TypeParam_ TypeParam;                             \
-      virtual void TestBody();                                        \
+      void TestBody() override;                                       \
     };                                                                \
     static bool gtest_##TestName##_defined_ GTEST_ATTRIBUTE_UNUSED_ = \
         GTEST_TYPED_TEST_SUITE_P_STATE_(SuiteName).AddTestName(       \
-            __FILE__, __LINE__, #SuiteName, #TestName);               \
+            __FILE__, __LINE__, GTEST_STRINGIFY_(SuiteName),          \
+            GTEST_STRINGIFY_(TestName));                              \
   }                                                                   \
   template <typename gtest_TypeParam_>                                \
   void GTEST_SUITE_NAMESPACE_(                                        \
       SuiteName)::TestName<gtest_TypeParam_>::TestBody()
 
-#define REGISTER_TYPED_TEST_SUITE_P(SuiteName, ...)                            \
-  namespace GTEST_SUITE_NAMESPACE_(SuiteName) {                                \
-    typedef ::testing::internal::Templates<__VA_ARGS__>::type gtest_AllTests_; \
-  }                                                                            \
-  static const char* const GTEST_REGISTERED_TEST_NAMES_(                       \
-      SuiteName) GTEST_ATTRIBUTE_UNUSED_ =                                     \
-      GTEST_TYPED_TEST_SUITE_P_STATE_(SuiteName).VerifyRegisteredTestNames(    \
-          __FILE__, __LINE__, #__VA_ARGS__)
+// Note: this won't work correctly if the trailing arguments are macros.
+#define REGISTER_TYPED_TEST_SUITE_P(SuiteName, ...)                         \
+  namespace GTEST_SUITE_NAMESPACE_(SuiteName) {                             \
+    typedef ::testing::internal::Templates<__VA_ARGS__> gtest_AllTests_;    \
+  }                                                                         \
+  static const char* const GTEST_REGISTERED_TEST_NAMES_(                    \
+      SuiteName) GTEST_ATTRIBUTE_UNUSED_ =                                  \
+      GTEST_TYPED_TEST_SUITE_P_STATE_(SuiteName).VerifyRegisteredTestNames( \
+          GTEST_STRINGIFY_(SuiteName), __FILE__, __LINE__, #__VA_ARGS__)
 
 // Legacy API is deprecated but still available
 #ifndef GTEST_REMOVE_LEGACY_TEST_CASEAPI_
@@ -12299,22 +9568,22 @@ INSTANTIATE_TYPED_TEST_SUITE_P(My, FooTest, MyTypes);
   REGISTER_TYPED_TEST_SUITE_P
 #endif  // GTEST_REMOVE_LEGACY_TEST_CASEAPI_
 
-// The 'Types' template argument below must have spaces around it
-// since some compilers may choke on '>>' when passing a template
-// instance (e.g. Types<int>)
 #define INSTANTIATE_TYPED_TEST_SUITE_P(Prefix, SuiteName, Types, ...)       \
+  static_assert(sizeof(GTEST_STRINGIFY_(Prefix)) > 1,                       \
+                "test-suit-prefix must not be empty");                      \
   static bool gtest_##Prefix##_##SuiteName GTEST_ATTRIBUTE_UNUSED_ =        \
       ::testing::internal::TypeParameterizedTestSuite<                      \
           SuiteName, GTEST_SUITE_NAMESPACE_(SuiteName)::gtest_AllTests_,    \
-          ::testing::internal::TypeList<Types>::type>::                     \
-          Register(#Prefix,                                                 \
+          ::testing::internal::GenerateTypeList<Types>::type>::             \
+          Register(GTEST_STRINGIFY_(Prefix),                                \
                    ::testing::internal::CodeLocation(__FILE__, __LINE__),   \
-                   &GTEST_TYPED_TEST_SUITE_P_STATE_(SuiteName), #SuiteName, \
+                   &GTEST_TYPED_TEST_SUITE_P_STATE_(SuiteName),             \
+                   GTEST_STRINGIFY_(SuiteName),                             \
                    GTEST_REGISTERED_TEST_NAMES_(SuiteName),                 \
                    ::testing::internal::GenerateNames<                      \
                        ::testing::internal::NameGeneratorSelector<          \
                            __VA_ARGS__>::type,                              \
-                       ::testing::internal::TypeList<Types>::type>())
+                       ::testing::internal::GenerateTypeList<Types>::type>())
 
 // Legacy API is deprecated but still available
 #ifndef GTEST_REMOVE_LEGACY_TEST_CASEAPI_
@@ -12324,27 +9593,10 @@ INSTANTIATE_TYPED_TEST_SUITE_P(My, FooTest, MyTypes);
   INSTANTIATE_TYPED_TEST_SUITE_P
 #endif  // GTEST_REMOVE_LEGACY_TEST_CASEAPI_
 
-#endif  // GTEST_HAS_TYPED_TEST_P
-
-#endif  // GTEST_INCLUDE_GTEST_GTEST_TYPED_TEST_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_GTEST_TYPED_TEST_H_
 
 GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
 /* class A needs to have dll-interface to be used by clients of class B */)
-
-// Depending on the platform, different string classes are available.
-// On Linux, in addition to ::std::string, Google also makes use of
-// class ::string, which has the same interface as ::std::string, but
-// has a different implementation.
-//
-// You can define GTEST_HAS_GLOBAL_STRING to 1 to indicate that
-// ::string is available AND is a distinct type to ::std::string, or
-// define it to 0 to indicate otherwise.
-//
-// If ::std::string and ::string are the same class on your platform
-// due to aliasing, you should define GTEST_HAS_GLOBAL_STRING to 0.
-//
-// If you do not define GTEST_HAS_GLOBAL_STRING, it is defined
-// heuristically.
 
 namespace testing {
 
@@ -12374,6 +9626,10 @@ GTEST_DECLARE_bool_(catch_exceptions);
 // to let Google Test decide.
 GTEST_DECLARE_string_(color);
 
+// This flag controls whether the test runner should continue execution past
+// first failure.
+GTEST_DECLARE_bool_(fail_fast);
+
 // This flag sets up the filter to select by name using a glob pattern
 // the tests to run. If the filter is not given all tests are executed.
 GTEST_DECLARE_string_(filter);
@@ -12389,6 +9645,9 @@ GTEST_DECLARE_bool_(list_tests);
 // This flag controls whether Google Test emits a detailed XML report to a file
 // in addition to its normal textual output.
 GTEST_DECLARE_string_(output);
+
+// This flags control whether Google Test prints only test failures.
+GTEST_DECLARE_bool_(brief);
 
 // This flags control whether Google Test prints the elapsed time for each
 // test.
@@ -12450,6 +9709,7 @@ class FuchsiaDeathTest;
 class UnitTestImpl* GetUnitTestImpl();
 void ReportFailureInUnknownLocation(TestPartResult::Type result_type,
                                     const std::string& message);
+std::set<std::string>* GetIgnoredParameterizedTestSuites();
 
 }  // namespace internal
 
@@ -12551,7 +9811,11 @@ class GTEST_API_ AssertionResult {
   // Used in EXPECT_TRUE/FALSE(assertion_result).
   AssertionResult(const AssertionResult& other);
 
-#if defined(_MSC_VER) && _MSC_VER < 1910
+// C4800 is a level 3 warning in Visual Studio 2015 and earlier.
+// This warning is not emitted in Visual Studio 2017.
+// This warning is off by default starting in Visual Studio 2019 but can be
+// enabled with command-line options.
+#if defined(_MSC_VER) && (_MSC_VER < 1910 || _MSC_VER >= 1920)
   GTEST_DISABLE_MSC_WARNINGS_PUSH_(4800 /* forcing value to bool */)
 #endif
 
@@ -12565,13 +9829,13 @@ class GTEST_API_ AssertionResult {
   template <typename T>
   explicit AssertionResult(
       const T& success,
-      typename internal::EnableIf<
+      typename std::enable_if<
           !std::is_convertible<T, AssertionResult>::value>::type*
       /*enabler*/
       = nullptr)
       : success_(success) {}
 
-#if defined(_MSC_VER) && _MSC_VER < 1910
+#if defined(_MSC_VER) && (_MSC_VER < 1910 || _MSC_VER >= 1920)
   GTEST_DISABLE_MSC_WARNINGS_POP_()
 #endif
 
@@ -12581,7 +9845,7 @@ class GTEST_API_ AssertionResult {
     return *this;
   }
 
-  // Returns true iff the assertion succeeded.
+  // Returns true if and only if the assertion succeeded.
   operator bool() const { return success_; }  // NOLINT
 
   // Returns the assertion's negation. Used with EXPECT/ASSERT_FALSE.
@@ -12680,8 +9944,8 @@ GTEST_API_ AssertionResult AssertionFailure(const Message& msg);
 // Implements a family of generic predicate assertion macros.
 // GOOGLETEST_CM0001 DO NOT DELETE
 
-#ifndef GTEST_INCLUDE_GTEST_GTEST_PRED_IMPL_H_
-#define GTEST_INCLUDE_GTEST_GTEST_PRED_IMPL_H_
+#ifndef GOOGLETEST_INCLUDE_GTEST_GTEST_PRED_IMPL_H_
+#define GOOGLETEST_INCLUDE_GTEST_GTEST_PRED_IMPL_H_
 
 
 namespace testing {
@@ -13002,7 +10266,7 @@ AssertionResult AssertPred5Helper(const char* pred_text,
 
 }  // namespace testing
 
-#endif  // GTEST_INCLUDE_GTEST_GTEST_PRED_IMPL_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_GTEST_PRED_IMPL_H_
 
 namespace testing {
 
@@ -13036,38 +10300,39 @@ class GTEST_API_ Test {
   // The d'tor is virtual as we intend to inherit from Test.
   virtual ~Test();
 
-  // Sets up the stuff shared by all tests in this test case.
+  // Sets up the stuff shared by all tests in this test suite.
   //
   // Google Test will call Foo::SetUpTestSuite() before running the first
-  // test in test case Foo.  Hence a sub-class can define its own
+  // test in test suite Foo.  Hence a sub-class can define its own
   // SetUpTestSuite() method to shadow the one defined in the super
   // class.
   static void SetUpTestSuite() {}
 
-  // Tears down the stuff shared by all tests in this test case.
+  // Tears down the stuff shared by all tests in this test suite.
   //
   // Google Test will call Foo::TearDownTestSuite() after running the last
-  // test in test case Foo.  Hence a sub-class can define its own
+  // test in test suite Foo.  Hence a sub-class can define its own
   // TearDownTestSuite() method to shadow the one defined in the super
   // class.
   static void TearDownTestSuite() {}
 
-  // Legacy API is deprecated but still available
+  // Legacy API is deprecated but still available. Use SetUpTestSuite and
+  // TearDownTestSuite instead.
 #ifndef GTEST_REMOVE_LEGACY_TEST_CASEAPI_
   static void TearDownTestCase() {}
   static void SetUpTestCase() {}
 #endif  // GTEST_REMOVE_LEGACY_TEST_CASEAPI_
 
-  // Returns true iff the current test has a fatal failure.
+  // Returns true if and only if the current test has a fatal failure.
   static bool HasFatalFailure();
 
-  // Returns true iff the current test has a non-fatal failure.
+  // Returns true if and only if the current test has a non-fatal failure.
   static bool HasNonfatalFailure();
 
-  // Returns true iff the current test was skipped.
+  // Returns true if and only if the current test was skipped.
   static bool IsSkipped();
 
-  // Returns true iff the current test has a (either fatal or
+  // Returns true if and only if the current test has a (either fatal or
   // non-fatal) failure.
   static bool HasFailure() { return HasFatalFailure() || HasNonfatalFailure(); }
 
@@ -13098,8 +10363,8 @@ class GTEST_API_ Test {
   virtual void TearDown();
 
  private:
-  // Returns true iff the current test has the same fixture class as
-  // the first test in the current test suite.
+  // Returns true if and only if the current test has the same fixture class
+  // as the first test in the current test suite.
   static bool HasSameFixtureClass();
 
   // Runs the test after the test fixture has been set up.
@@ -13200,23 +10465,27 @@ class GTEST_API_ TestResult {
   // Returns the number of the test properties.
   int test_property_count() const;
 
-  // Returns true iff the test passed (i.e. no test part failed).
+  // Returns true if and only if the test passed (i.e. no test part failed).
   bool Passed() const { return !Skipped() && !Failed(); }
 
-  // Returns true iff the test was skipped.
+  // Returns true if and only if the test was skipped.
   bool Skipped() const;
 
-  // Returns true iff the test failed.
+  // Returns true if and only if the test failed.
   bool Failed() const;
 
-  // Returns true iff the test fatally failed.
+  // Returns true if and only if the test fatally failed.
   bool HasFatalFailure() const;
 
-  // Returns true iff the test has a non-fatal failure.
+  // Returns true if and only if the test has a non-fatal failure.
   bool HasNonfatalFailure() const;
 
   // Returns the elapsed time, in milliseconds.
   TimeInMillis elapsed_time() const { return elapsed_time_; }
+
+  // Gets the time of the test case start, in ms from the start of the
+  // UNIX epoch.
+  TimeInMillis start_timestamp() const { return start_timestamp_; }
 
   // Returns the i-th test part result among all the results. i can range from 0
   // to total_part_count() - 1. If i is not in that range, aborts the program.
@@ -13247,6 +10516,9 @@ class GTEST_API_ TestResult {
   const std::vector<TestProperty>& test_properties() const {
     return test_properties_;
   }
+
+  // Sets the start time.
+  void set_start_timestamp(TimeInMillis start) { start_timestamp_ = start; }
 
   // Sets the elapsed time.
   void set_elapsed_time(TimeInMillis elapsed) { elapsed_time_ = elapsed; }
@@ -13283,7 +10555,7 @@ class GTEST_API_ TestResult {
 
   // Protects mutable state of the property vector and of owned
   // properties, whose values may be updated.
-  internal::Mutex test_properites_mutex_;
+  internal::Mutex test_properties_mutex_;
 
   // The vector of TestPartResults
   std::vector<TestPartResult> test_part_results_;
@@ -13291,6 +10563,8 @@ class GTEST_API_ TestResult {
   std::vector<TestProperty> test_properties_;
   // Running count of death tests.
   int death_test_count_;
+  // The start time, in milliseconds since UNIX Epoch.
+  TimeInMillis start_timestamp_;
   // The elapsed time, in milliseconds.
   TimeInMillis elapsed_time_;
 
@@ -13367,7 +10641,7 @@ class GTEST_API_ TestInfo {
   // contains the character 'A' or starts with "Foo.".
   bool should_run() const { return should_run_; }
 
-  // Returns true iff this test will appear in the XML report.
+  // Returns true if and only if this test will appear in the XML report.
   bool is_reportable() const {
     // The XML report includes tests matching the filter, excluding those
     // run in other shards.
@@ -13411,6 +10685,9 @@ class GTEST_API_ TestInfo {
   // deletes it.
   void Run();
 
+  // Skip and records the test result for this object.
+  void Skip();
+
   static void ClearTestResult(TestInfo* test_info) {
     test_info->result_.Clear();
   }
@@ -13425,12 +10702,12 @@ class GTEST_API_ TestInfo {
   // value-parameterized test.
   const std::unique_ptr<const ::std::string> value_param_;
   internal::CodeLocation location_;
-  const internal::TypeId fixture_class_id_;   // ID of the test fixture class
-  bool should_run_;                 // True iff this test should run
-  bool is_disabled_;                // True iff this test is disabled
-  bool matches_filter_;             // True if this test matches the
-                                    // user-specified filter.
-  bool is_in_another_shard_;        // Will be run in another shard.
+  const internal::TypeId fixture_class_id_;  // ID of the test fixture class
+  bool should_run_;           // True if and only if this test should run
+  bool is_disabled_;          // True if and only if this test is disabled
+  bool matches_filter_;       // True if this test matches the
+                              // user-specified filter.
+  bool is_in_another_shard_;  // Will be run in another shard.
   internal::TestFactoryBase* const factory_;  // The factory that creates
                                               // the test object
 
@@ -13502,14 +10779,20 @@ class GTEST_API_ TestSuite {
   // Gets the number of all tests in this test suite.
   int total_test_count() const;
 
-  // Returns true iff the test suite passed.
+  // Returns true if and only if the test suite passed.
   bool Passed() const { return !Failed(); }
 
-  // Returns true iff the test suite failed.
-  bool Failed() const { return failed_test_count() > 0; }
+  // Returns true if and only if the test suite failed.
+  bool Failed() const {
+    return failed_test_count() > 0 || ad_hoc_test_result().Failed();
+  }
 
   // Returns the elapsed time, in milliseconds.
   TimeInMillis elapsed_time() const { return elapsed_time_; }
+
+  // Gets the time of the test suite start, in ms from the start of the
+  // UNIX epoch.
+  TimeInMillis start_timestamp() const { return start_timestamp_; }
 
   // Returns the i-th test among all the tests. i can range from 0 to
   // total_test_count() - 1. If i is not in that range, returns NULL.
@@ -13553,6 +10836,9 @@ class GTEST_API_ TestSuite {
   // Runs every test in this TestSuite.
   void Run();
 
+  // Skips the execution of tests under this TestSuite
+  void Skip();
+
   // Runs SetUpTestSuite() for this TestSuite.  This wrapper is needed
   // for catching exceptions thrown from SetUpTestSuite().
   void RunSetUpTestSuite() {
@@ -13569,33 +10855,33 @@ class GTEST_API_ TestSuite {
     }
   }
 
-  // Returns true iff test passed.
+  // Returns true if and only if test passed.
   static bool TestPassed(const TestInfo* test_info) {
     return test_info->should_run() && test_info->result()->Passed();
   }
 
-  // Returns true iff test skipped.
+  // Returns true if and only if test skipped.
   static bool TestSkipped(const TestInfo* test_info) {
     return test_info->should_run() && test_info->result()->Skipped();
   }
 
-  // Returns true iff test failed.
+  // Returns true if and only if test failed.
   static bool TestFailed(const TestInfo* test_info) {
     return test_info->should_run() && test_info->result()->Failed();
   }
 
-  // Returns true iff the test is disabled and will be reported in the XML
-  // report.
+  // Returns true if and only if the test is disabled and will be reported in
+  // the XML report.
   static bool TestReportableDisabled(const TestInfo* test_info) {
     return test_info->is_reportable() && test_info->is_disabled_;
   }
 
-  // Returns true iff test is disabled.
+  // Returns true if and only if test is disabled.
   static bool TestDisabled(const TestInfo* test_info) {
     return test_info->is_disabled_;
   }
 
-  // Returns true iff this test will appear in the XML report.
+  // Returns true if and only if this test will appear in the XML report.
   static bool TestReportable(const TestInfo* test_info) {
     return test_info->is_reportable();
   }
@@ -13627,8 +10913,10 @@ class GTEST_API_ TestSuite {
   internal::SetUpTestSuiteFunc set_up_tc_;
   // Pointer to the function that tears down the test suite.
   internal::TearDownTestSuiteFunc tear_down_tc_;
-  // True iff any test in this test suite should run.
+  // True if and only if any test in this test suite should run.
   bool should_run_;
+  // The start time, in milliseconds since UNIX Epoch.
+  TimeInMillis start_timestamp_;
   // Elapsed time, in milliseconds.
   TimeInMillis elapsed_time_;
   // Holds test properties recorded during execution of SetUpTestSuite and
@@ -13927,7 +11215,7 @@ class GTEST_API_ UnitTest {
   int failed_test_case_count() const;
   int total_test_case_count() const;
   int test_case_to_run_count() const;
-#endif  //  EMOVE_LEGACY_TEST_CASEAPI
+#endif  //  GTEST_REMOVE_LEGACY_TEST_CASEAPI_
 
   // Gets the number of successful tests.
   int successful_test_count() const;
@@ -13960,11 +11248,12 @@ class GTEST_API_ UnitTest {
   // Gets the elapsed time, in milliseconds.
   TimeInMillis elapsed_time() const;
 
-  // Returns true iff the unit test passed (i.e. all test suites passed).
+  // Returns true if and only if the unit test passed (i.e. all test suites
+  // passed).
   bool Passed() const;
 
-  // Returns true iff the unit test failed (i.e. some test suite failed
-  // or something outside of all tests failed).
+  // Returns true if and only if the unit test failed (i.e. some test suite
+  // failed or something outside of all tests failed).
   bool Failed() const;
 
   // Gets the i-th test suite among all the test suites. i can range from 0 to
@@ -14030,6 +11319,7 @@ class GTEST_API_ UnitTest {
   friend class internal::StreamingListenerTest;
   friend class internal::UnitTestRecordPropertyTestHelper;
   friend Environment* AddGlobalTestEnvironment(Environment* env);
+  friend std::set<std::string>* internal::GetIgnoredParameterizedTestSuites();
   friend internal::UnitTestImpl* internal::GetUnitTestImpl();
   friend void internal::ReportFailureInUnknownLocation(
       TestPartResult::Type result_type,
@@ -14141,26 +11431,17 @@ AssertionResult CmpHelperEQ(const char* lhs_expression,
   return CmpHelperEQFailure(lhs_expression, rhs_expression, lhs, rhs);
 }
 
-// With this overloaded version, we allow anonymous enums to be used
-// in {ASSERT|EXPECT}_EQ when compiled with gcc 4, as anonymous enums
-// can be implicitly cast to BiggestInt.
-GTEST_API_ AssertionResult CmpHelperEQ(const char* lhs_expression,
-                                       const char* rhs_expression,
-                                       BiggestInt lhs,
-                                       BiggestInt rhs);
-
-// The helper class for {ASSERT|EXPECT}_EQ.  The template argument
-// lhs_is_null_literal is true iff the first argument to ASSERT_EQ()
-// is a null pointer literal.  The following default implementation is
-// for lhs_is_null_literal being false.
-template <bool lhs_is_null_literal>
 class EqHelper {
  public:
   // This templatized version is for the general case.
-  template <typename T1, typename T2>
+  template <
+      typename T1, typename T2,
+      // Disable this overload for cases where one argument is a pointer
+      // and the other is the null pointer constant.
+      typename std::enable_if<!std::is_integral<T1>::value ||
+                              !std::is_pointer<T2>::value>::type* = nullptr>
   static AssertionResult Compare(const char* lhs_expression,
-                                 const char* rhs_expression,
-                                 const T1& lhs,
+                                 const char* rhs_expression, const T1& lhs,
                                  const T2& rhs) {
     return CmpHelperEQ(lhs_expression, rhs_expression, lhs, rhs);
   }
@@ -14177,44 +11458,12 @@ class EqHelper {
                                  BiggestInt rhs) {
     return CmpHelperEQ(lhs_expression, rhs_expression, lhs, rhs);
   }
-};
 
-// This specialization is used when the first argument to ASSERT_EQ()
-// is a null pointer literal, like NULL, false, or 0.
-template <>
-class EqHelper<true> {
- public:
-  // We define two overloaded versions of Compare().  The first
-  // version will be picked when the second argument to ASSERT_EQ() is
-  // NOT a pointer, e.g. ASSERT_EQ(0, AnIntFunction()) or
-  // EXPECT_EQ(false, a_bool).
-  template <typename T1, typename T2>
-  static AssertionResult Compare(
-      const char* lhs_expression, const char* rhs_expression, const T1& lhs,
-      const T2& rhs,
-      // The following line prevents this overload from being considered if T2
-      // is not a pointer type.  We need this because ASSERT_EQ(NULL, my_ptr)
-      // expands to Compare("", "", NULL, my_ptr), which requires a conversion
-      // to match the Secret* in the other overload, which would otherwise make
-      // this template match better.
-      typename EnableIf<!std::is_pointer<T2>::value>::type* = nullptr) {
-    return CmpHelperEQ(lhs_expression, rhs_expression, lhs, rhs);
-  }
-
-  // This version will be picked when the second argument to ASSERT_EQ() is a
-  // pointer, e.g. ASSERT_EQ(NULL, a_pointer).
   template <typename T>
   static AssertionResult Compare(
-      const char* lhs_expression,
-      const char* rhs_expression,
-      // We used to have a second template parameter instead of Secret*.  That
-      // template parameter would deduce to 'long', making this a better match
-      // than the first overload even without the first overload's EnableIf.
-      // Unfortunately, gcc with -Wconversion-null warns when "passing NULL to
-      // non-pointer argument" (even a deduced integral argument), so the old
-      // implementation caused warnings in user code.
-      Secret* /* lhs (NULL) */,
-      T* rhs) {
+      const char* lhs_expression, const char* rhs_expression,
+      // Handle cases where '0' is used as a null pointer literal.
+      std::nullptr_t /* lhs */, T* rhs) {
     // We already know that 'lhs' is a null pointer.
     return CmpHelperEQ(lhs_expression, rhs_expression, static_cast<T*>(nullptr),
                        rhs);
@@ -14238,11 +11487,6 @@ AssertionResult CmpHelperOpFailure(const char* expr1, const char* expr2,
 // ASSERT_?? and EXPECT_??.  It is here just to avoid copy-and-paste
 // of similar code.
 //
-// For each templatized helper function, we also define an overloaded
-// version for BiggestInt in order to reduce code bloat and allow
-// anonymous enums to be used with {ASSERT|EXPECT}_?? when compiled
-// with gcc 4.
-//
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 
 #define GTEST_IMPL_CMP_HELPER_(op_name, op)\
@@ -14254,22 +11498,20 @@ AssertionResult CmpHelper##op_name(const char* expr1, const char* expr2, \
   } else {\
     return CmpHelperOpFailure(expr1, expr2, val1, val2, #op);\
   }\
-}\
-GTEST_API_ AssertionResult CmpHelper##op_name(\
-    const char* expr1, const char* expr2, BiggestInt val1, BiggestInt val2)
+}
 
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 
 // Implements the helper function for {ASSERT|EXPECT}_NE
-GTEST_IMPL_CMP_HELPER_(NE, !=);
+GTEST_IMPL_CMP_HELPER_(NE, !=)
 // Implements the helper function for {ASSERT|EXPECT}_LE
-GTEST_IMPL_CMP_HELPER_(LE, <=);
+GTEST_IMPL_CMP_HELPER_(LE, <=)
 // Implements the helper function for {ASSERT|EXPECT}_LT
-GTEST_IMPL_CMP_HELPER_(LT, <);
+GTEST_IMPL_CMP_HELPER_(LT, <)
 // Implements the helper function for {ASSERT|EXPECT}_GE
-GTEST_IMPL_CMP_HELPER_(GE, >=);
+GTEST_IMPL_CMP_HELPER_(GE, >=)
 // Implements the helper function for {ASSERT|EXPECT}_GT
-GTEST_IMPL_CMP_HELPER_(GT, >);
+GTEST_IMPL_CMP_HELPER_(GT, >)
 
 #undef GTEST_IMPL_CMP_HELPER_
 
@@ -14446,12 +11688,6 @@ class GTEST_API_ AssertHelper {
   GTEST_DISALLOW_COPY_AND_ASSIGN_(AssertHelper);
 };
 
-enum GTestColor { COLOR_DEFAULT, COLOR_RED, COLOR_GREEN, COLOR_YELLOW };
-
-GTEST_API_ GTEST_ATTRIBUTE_PRINTF_(2, 3) void ColoredPrintf(GTestColor color,
-                                                            const char* fmt,
-                                                            ...);
-
 }  // namespace internal
 
 // The pure interface class that all value-parameterized tests inherit from.
@@ -14532,7 +11768,7 @@ class TestWithParam : public Test, public WithParamInterface<T> {
 // Skips test in runtime.
 // Skipping test aborts current function.
 // Skipped tests are neither successful nor failed.
-#define GTEST_SKIP() GTEST_SKIP_("Skipped")
+#define GTEST_SKIP() GTEST_SKIP_("")
 
 // ADD_FAILURE unconditionally adds a failure to the current test.
 // SUCCEED generates a success - it doesn't automatically make the
@@ -14562,6 +11798,11 @@ class TestWithParam : public Test, public WithParamInterface<T> {
 
 // Generates a fatal failure with a generic message.
 #define GTEST_FAIL() GTEST_FATAL_FAILURE_("Failed")
+
+// Like GTEST_FAIL(), but at the given source file location.
+#define GTEST_FAIL_AT(file, line)         \
+  GTEST_MESSAGE_AT_(file, line, "Failed", \
+                    ::testing::TestPartResult::kFatalFailure)
 
 // Define this macro to 1 to omit the definition of FAIL(), which is a
 // generic name and clashes with some other libraries.
@@ -14603,18 +11844,37 @@ class TestWithParam : public Test, public WithParamInterface<T> {
 // Boolean assertions. Condition can be either a Boolean expression or an
 // AssertionResult. For more information on how to use AssertionResult with
 // these macros see comments on that class.
-#define EXPECT_TRUE(condition) \
+#define GTEST_EXPECT_TRUE(condition) \
   GTEST_TEST_BOOLEAN_(condition, #condition, false, true, \
                       GTEST_NONFATAL_FAILURE_)
-#define EXPECT_FALSE(condition) \
+#define GTEST_EXPECT_FALSE(condition) \
   GTEST_TEST_BOOLEAN_(!(condition), #condition, true, false, \
                       GTEST_NONFATAL_FAILURE_)
-#define ASSERT_TRUE(condition) \
+#define GTEST_ASSERT_TRUE(condition) \
   GTEST_TEST_BOOLEAN_(condition, #condition, false, true, \
                       GTEST_FATAL_FAILURE_)
-#define ASSERT_FALSE(condition) \
+#define GTEST_ASSERT_FALSE(condition) \
   GTEST_TEST_BOOLEAN_(!(condition), #condition, true, false, \
                       GTEST_FATAL_FAILURE_)
+
+// Define these macros to 1 to omit the definition of the corresponding
+// EXPECT or ASSERT, which clashes with some users' own code.
+
+#if !GTEST_DONT_DEFINE_EXPECT_TRUE
+#define EXPECT_TRUE(condition) GTEST_EXPECT_TRUE(condition)
+#endif
+
+#if !GTEST_DONT_DEFINE_EXPECT_FALSE
+#define EXPECT_FALSE(condition) GTEST_EXPECT_FALSE(condition)
+#endif
+
+#if !GTEST_DONT_DEFINE_ASSERT_TRUE
+#define ASSERT_TRUE(condition) GTEST_ASSERT_TRUE(condition)
+#endif
+
+#if !GTEST_DONT_DEFINE_ASSERT_FALSE
+#define ASSERT_FALSE(condition) GTEST_ASSERT_FALSE(condition)
+#endif
 
 // Macros for testing equalities and inequalities.
 //
@@ -14663,9 +11923,7 @@ class TestWithParam : public Test, public WithParamInterface<T> {
 //   ASSERT_GT(records.size(), 0) << "There is no record left.";
 
 #define EXPECT_EQ(val1, val2) \
-  EXPECT_PRED_FORMAT2(::testing::internal:: \
-                      EqHelper<GTEST_IS_NULL_LITERAL_(val1)>::Compare, \
-                      val1, val2)
+  EXPECT_PRED_FORMAT2(::testing::internal::EqHelper::Compare, val1, val2)
 #define EXPECT_NE(val1, val2) \
   EXPECT_PRED_FORMAT2(::testing::internal::CmpHelperNE, val1, val2)
 #define EXPECT_LE(val1, val2) \
@@ -14678,9 +11936,7 @@ class TestWithParam : public Test, public WithParamInterface<T> {
   EXPECT_PRED_FORMAT2(::testing::internal::CmpHelperGT, val1, val2)
 
 #define GTEST_ASSERT_EQ(val1, val2) \
-  ASSERT_PRED_FORMAT2(::testing::internal:: \
-                      EqHelper<GTEST_IS_NULL_LITERAL_(val1)>::Compare, \
-                      val1, val2)
+  ASSERT_PRED_FORMAT2(::testing::internal::EqHelper::Compare, val1, val2)
 #define GTEST_ASSERT_NE(val1, val2) \
   ASSERT_PRED_FORMAT2(::testing::internal::CmpHelperNE, val1, val2)
 #define GTEST_ASSERT_LE(val1, val2) \
@@ -14871,12 +12127,6 @@ class GTEST_API_ ScopedTrace {
     PushTrace(file, line, message ? message : "(null)");
   }
 
-#if GTEST_HAS_GLOBAL_STRING
-  ScopedTrace(const char* file, int line, const ::string& message) {
-    PushTrace(file, line, message);
-  }
-#endif
-
   ScopedTrace(const char* file, int line, const std::string& message) {
     PushTrace(file, line, message);
   }
@@ -14914,10 +12164,9 @@ class GTEST_API_ ScopedTrace {
   ::testing::ScopedTrace GTEST_CONCAT_TOKEN_(gtest_trace_, __LINE__)(\
     __FILE__, __LINE__, (message))
 
-
 // Compile-time assertion for type equality.
-// StaticAssertTypeEq<type1, type2>() compiles iff type1 and type2 are
-// the same type.  The value it returns is not interesting.
+// StaticAssertTypeEq<type1, type2>() compiles if and only if type1 and type2
+// are the same type.  The value it returns is not interesting.
 //
 // Instead of making StaticAssertTypeEq a class template, we make it a
 // function template that invokes a helper class template.  This
@@ -14946,8 +12195,8 @@ class GTEST_API_ ScopedTrace {
 //
 // to cause a compiler error.
 template <typename T1, typename T2>
-bool StaticAssertTypeEq() {
-  (void)internal::StaticAssertTypeEqHelper<T1, T2>();
+constexpr bool StaticAssertTypeEq() noexcept {
+  static_assert(std::is_same<T1, T2>::value, "T1 and T2 are not the same type");
   return true;
 }
 
@@ -15013,9 +12262,11 @@ bool StaticAssertTypeEq() {
 //   }
 //
 // GOOGLETEST_CM0011 DO NOT DELETE
+#if !GTEST_DONT_DEFINE_TEST
 #define TEST_F(test_fixture, test_name)\
   GTEST_TEST_(test_fixture, test_name, test_fixture, \
               ::testing::internal::GetTypeId<test_fixture>())
+#endif  // !GTEST_DONT_DEFINE_TEST
 
 // Returns a path to temporary directory.
 // Tries to determine an appropriate directory for the platform.
@@ -15100,8 +12351,8 @@ TestInfo* RegisterTest(const char* test_suite_name, const char* test_name,
   return internal::MakeAndRegisterTestInfo(
       test_suite_name, test_name, type_param, value_param,
       internal::CodeLocation(file, line), internal::GetTypeId<TestT>(),
-      internal::SuiteApiResolver<TestT>::GetSetUpCaseOrSuite(),
-      internal::SuiteApiResolver<TestT>::GetTearDownCaseOrSuite(),
+      internal::SuiteApiResolver<TestT>::GetSetUpCaseOrSuite(file, line),
+      internal::SuiteApiResolver<TestT>::GetTearDownCaseOrSuite(file, line),
       new FactoryImpl{std::move(factory)});
 }
 
@@ -15123,4 +12374,4 @@ inline int RUN_ALL_TESTS() {
 
 GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 
-#endif  // GTEST_INCLUDE_GTEST_GTEST_H_
+#endif  // GOOGLETEST_INCLUDE_GTEST_GTEST_H_
