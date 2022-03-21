@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: If you use Ceres Solver for a publication, please cite it as below.
+title: Ceres Solver
+abstract: A large scale non-linear optimization library
+authors:
+- family-names: Agarwal
+  given-names: Sameer
+- family-names: Mierle
+  given-names: Keir
+version: 2.1
+date-released: 2022-03-28
+license: Apache-2.0
+repository-code: https://github.com/ceres-solver/ceres-solver
+url: http://ceres-solver.org
