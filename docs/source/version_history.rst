@@ -77,8 +77,27 @@ Backward Incompatible API Changes
 Bug Fixes & Minor Changes
 -------------------------
 
-#. Modernize the code to be inline with ``C++14`` (Sergiu Deitsch, Sameer
-   Agarwal)
+#. Updated included gtest version to 1.11.0. This should fix some
+   ``C++20`` compilation problems. (Sameer Agarwal).
+#. Workaround ``MSVC`` ``STL`` deficiency in ``C++17`` mode (Sergiu
+   Deitsch)
+#. Fix ``Jet`` test failures on ``ARMv8`` with recent ``Xcode``
+   (Sergiu Deitsch)
+#. Fix unused arguments of ``Make1stOrderPerturbation`` (Dmitriy
+   Korchemkin)
+#. Fix ``SuiteSparse`` path and version reporting (Sergiu Deitsch)
+#. Enable `GitHub` workflows and deprecate ``TravisCI`` (Sergiu
+   Deitsch)
+#. Add missing includes (Sergiu Deitsch, Sameer Agarwal)
+#. Fix path for ``cuda-memcheck`` tests (Joydeep Biswas)
+#. ClangFormat cleanup (Sameer Agarwal)
+#. Set ``CMP0057`` policy for ``IN_LIST`` operator in
+   ``FindSuiteSparse.cmake`` (Brent Yi)
+#. Do not define unusable import targets (Sergiu Deitsch)
+#. Fix Ubuntu 18.04 shared library build (Sergiu Deitsch)
+#. Force ``C++`` linker when building the ``C`` API (Sergiu Deitsch)  
+#. Modernize the code to be inline with ``C++14`` (Sergiu Deitsch,
+   Sameer Agarwal)
 #. Lots of fixes to make Ceres compile out of the box on Windows
    (Sergiu Deitsch)
 #. Standardize path handling using ``GNUImstallDirs`` (Sergiu Deitsch)
