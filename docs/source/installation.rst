@@ -21,10 +21,9 @@ the latest version, you can clone the git repository
 Dependencies
 ============
 
- .. NOTE ::
+ .. note ::
 
-    Starting with v2.0 Ceres requires a **fully C++14-compliant**
-    compiler.  In versions <= 1.14, C++11 was an optional requirement.
+    Ceres Solver 2.1 requires a **fully C++14-compliant** compiler.
 
 Ceres relies on a number of open source libraries, some of which are
 optional. For details on customizing the build process, see
@@ -69,7 +68,7 @@ optional. For details on customizing the build process, see
   examples and tests and usually a dependency for glog.
 
 - `SuiteSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_
-  5.0 or later. Needed for solving large sparse linear
+  4.0 or later. Needed for solving large sparse linear
   systems. **Optional; strongly recomended for large scale bundle
   adjustment**
 
@@ -319,8 +318,8 @@ Windows
 equivalent on Microsoft Windows and can be used to install Ceres
 Solver.
 
-If building from source on Windows, we support building with Visual
-Studio 2015.2 of newer.
+Ceres Solver can also be built from source. For this purpose, we support Visual
+Studio 2019 and newer.
 
 .. NOTE::
 
@@ -329,10 +328,11 @@ Studio 2015.2 of newer.
   <https://github.com/tbennun/ceres-windows>`_ for Ceres Solver by Tal
   Ben-Nun.
 
-#. Make a toplevel directory for deps & build & src somewhere: ``ceres/``
+#. Create a top-level directory for dependencies, build, and sources somewhere,
+   e.g., ``ceres/``
 
 #. Get dependencies; unpack them as subdirectories in ``ceres/``
-   (``ceres/eigen``, ``ceres/glog``, etc)
+   (``ceres/eigen``, ``ceres/glog``, etc.)
 
    #. ``Eigen`` 3.3 . Configure and optionally install Eigen. It should be
       exported into the CMake package registry by default as part of the
@@ -355,6 +355,17 @@ Studio 2015.2 of newer.
       wish to use ``CXSparse``, follow their instructions for
       obtaining and building it.
 
+   #. Alternatively, Ceres Solver supports ``SuiteSparse`` binary
+      packages available for Visual Studio 2019 and 2022 provided by the `CMake
+      support for SuiteSparse <https://github.com/sergiud/SuiteSparse>`_ project
+      that also include `reference LAPACK <http://www.netlib.org/blas>`_ (and
+      BLAS). The binary packages are used by Ceres Solver for continuous testing
+      on Github.
+
+      .. note::
+
+          The GPL licensed version of the SuiteSparse package is required.
+
 #. Unpack the Ceres tarball into ``ceres``. For the tarball, you
    should get a directory inside ``ceres`` similar to
    ``ceres-solver-2.1.0``. Alternately, checkout Ceres via ``git`` to
@@ -362,27 +373,40 @@ Studio 2015.2 of newer.
 
 #. Install ``CMake``,
 
-#. Make a dir ``ceres/ceres-bin`` (for an out-of-tree build)
+#. Create a directory ``ceres/ceres-bin`` (for an out-of-tree build)
+
+   #. If you use the above binary ``SuiteSparse`` package, make sure CMake can
+      find it, e.g., by assigning the path of the directory that contains the
+      unzipped contents to the ``CMAKE_PREFIX_PATH`` environment variable. In a
+      Windows command prompt this can be achieved as follows:
+
+      .. code:: bat
+
+        export CMAKE_PREFIX_PATH=C:/Downloads/SuiteSparse-5.11.0-cmake.1-vc16-Win64-Release-shared-gpl
 
 #. Run ``CMake``; select the ``ceres-solver-X.Y.Z`` or
    ``ceres-solver.git`` directory for the CMake file. Then select the
-   ``ceres-bin`` for the build dir.
+   ``ceres-bin`` for the build directory.
 
-#. Try running ``Configure``. It won't work. It'll show a bunch of options.
-   You'll need to set:
+#. Try running ``Configure`` which can fail at first because some dependencies
+   cannot be automatically located. In this case, you must set the following
+   CMake variables to the appropriate directories where you unpacked/built them:
 
    #. ``Eigen3_DIR`` (Set to directory containing ``Eigen3Config.cmake``)
    #. ``GLOG_INCLUDE_DIR_HINTS``
    #. ``GLOG_LIBRARY_DIR_HINTS``
    #. (Optional) ``gflags_DIR`` (Set to directory containing ``gflags-config.cmake``)
+   #. (SuiteSparse binary package) ``BLAS_blas_LIBRARY`` and
+      ``LAPACK_lapack_LIBRARY`` CMake variables must be `explicitly set` to
+      ``<path>/lib/blas.lib`` and ``<path>/lib/lapack.lib``, respectively, both
+      located in the unzipped package directory ``<path>``.
 
-   to the appropriate directories where you unpacked/built them. If
-   any of the variables are not visible in the ``CMake`` GUI, create a
-   new entry for them.  We recommend using the
-   ``<NAME>_(INCLUDE/LIBRARY)_DIR_HINTS`` variables rather than
-   setting the ``<NAME>_INCLUDE_DIR`` & ``<NAME>_LIBRARY`` variables
-   directly to keep all of the validity checking, and to avoid having
-   to specify the library files manually.
+   If any of the variables are not visible in the ``CMake`` GUI, create a new
+   entry for them.  We recommend using the
+   ``<NAME>_(INCLUDE/LIBRARY)_DIR_HINTS`` variables rather than setting the
+   ``<NAME>_INCLUDE_DIR`` & ``<NAME>_LIBRARY`` variables directly to keep all of
+   the validity checking, and to avoid having to specify the library files
+   manually.
 
 #. You may have to tweak some more settings to generate a MSVC
    project.  After each adjustment, try pressing Configure & Generate
@@ -397,17 +421,14 @@ RUN_TESTS** from the build menu.
 Like the Linux build, you should now be able to run
 ``bin/simple_bundle_adjuster``.
 
-Notes:
+.. note::
 
-#. The default build is Debug; consider switching it to release mode.
-#. Currently ``system_test`` is not working properly.
-#. CMake puts the resulting test binaries in ``ceres-bin/examples/Debug``
-   by default.
-#. The solvers supported on Windows are ``DENSE_QR``, ``DENSE_SCHUR``,
-   ``CGNR``, and ``ITERATIVE_SCHUR``.
-#. We're looking for someone to work with upstream ``SuiteSparse`` to
-   port their build system to something sane like ``CMake``, and get a
-   fully supported Windows port.
+    #. The default build is ``Debug``; consider switching it to ``Release`` for
+       optimal performance.
+    #. CMake puts the resulting test binaries in ``ceres-bin/examples/Debug`` by
+       default.
+    #. Without ``SuiteSparse``, only a subset of solvers is usable,
+       namely: ``DENSE_QR``, ``DENSE_SCHUR``, ``CGNR``, and ``ITERATIVE_SCHUR``.
 
 
 .. _section-android:
