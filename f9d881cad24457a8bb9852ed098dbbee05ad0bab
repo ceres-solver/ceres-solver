@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "384ac12f_9d5e3aae",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-25T01:18:58Z",
+      "side": 1,
+      "message": "are you sure the minimum version is 4.0?",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 5
+      },
+      "revId": "f9d881cad24457a8bb9852ed098dbbee05ad0bab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d39e60fe_bd554604",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-25T01:18:58Z",
+      "side": 1,
+      "message": "this last line is not true if suitesparse is available, then all linear solvers can be used",
+      "range": {
+        "startLine": 431,
+        "startChar": 23,
+        "endLine": 431,
+        "endChar": 38
+      },
+      "revId": "f9d881cad24457a8bb9852ed098dbbee05ad0bab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
