@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03f9dff9_4becb033",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-25T18:20:27Z",
+      "side": 1,
+      "message": "Yes, this is the minimum required version currently set at `CMakeLists.txt:269`.",
+      "parentUuid": "384ac12f_9d5e3aae",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 5
+      },
+      "revId": "f9d881cad24457a8bb9852ed098dbbee05ad0bab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d39e60fe_bd554604",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-03-25T01:18:58Z",
       "side": 1,
       "message": "this last line is not true if suitesparse is available, then all linear solvers can be used",
+      "range": {
+        "startLine": 431,
+        "startChar": 23,
+        "endLine": 431,
+        "endChar": 38
+      },
+      "revId": "f9d881cad24457a8bb9852ed098dbbee05ad0bab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86ed28cb_df36a6a2",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-25T18:20:27Z",
+      "side": 1,
+      "message": "Good point. Fixed.",
+      "parentUuid": "d39e60fe_bd554604",
       "range": {
         "startLine": 431,
         "startChar": 23,
