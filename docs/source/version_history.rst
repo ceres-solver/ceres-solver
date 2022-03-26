@@ -46,19 +46,19 @@ New Features
      ``isinf``, ``isnormal``, ``isfinite``, ``fpclassify`` (new),
      ``fmin``, ``fmax``
 
-  * It is now possible to safely compare a :class:`Jet` against a scalar
-    (or literal) without constructing a :class:`Jet` first (even if it's
-    nested):
+   * It is now possible to safely compare a :class:`Jet` against a scalar
+     (or literal) without constructing a :class:`Jet` first (even if it's
+     nested):
 
-    .. code-block:: c++
+     .. code-block:: c++
 
-       Jet<Jet<Jet<T, N>, M>, O> x;
-       if (x == 2) { } // equivalent to x.a.a.a == 2
+        Jet<Jet<Jet<T, N>, M>, O> x;
+        if (x == 2) { } // equivalent to x.a.a.a == 2
 
 
-    This enables interaction with various arithmetic functions that
-    expect a scalar like instance, such as ``boost::math::pow<-N>``
-    for reciprocal computation.
+     This enables interaction with various arithmetic functions that
+     expect a scalar like instance, such as ``boost::math::pow<-N>``
+     for reciprocal computation.
 
 #. Add :class:`NumericDiffFirstOrderFunction` (Sameer Agarwal)
 
@@ -95,7 +95,7 @@ Bug Fixes & Minor Changes
    ``FindSuiteSparse.cmake`` (Brent Yi)
 #. Do not define unusable import targets (Sergiu Deitsch)
 #. Fix Ubuntu 18.04 shared library build (Sergiu Deitsch)
-#. Force ``C++`` linker when building the ``C`` API (Sergiu Deitsch)  
+#. Force ``C++`` linker when building the ``C`` API (Sergiu Deitsch)
 #. Modernize the code to be inline with ``C++14`` (Sergiu Deitsch,
    Sameer Agarwal)
 #. Lots of fixes to make Ceres compile out of the box on Windows
