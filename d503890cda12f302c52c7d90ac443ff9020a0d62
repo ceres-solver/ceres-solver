@@ -16,6 +16,23 @@
       "message": "I left the pointer increments on the left hand side as is because the order they are invoked will hardly change the overall result. However, this does not seem to be the case for sequential access through pointer increments on the right hand side; their execution order is important.\n\nPatrik, please test the changes carefully and report back as I\u0027m out for today.",
       "revId": "d503890cda12f302c52c7d90ac443ff9020a0d62",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b24116b_7f767727",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-27T17:25:48Z",
+      "side": 1,
+      "message": "I will wait to hear from you Patrik before merging.",
+      "revId": "d503890cda12f302c52c7d90ac443ff9020a0d62",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
