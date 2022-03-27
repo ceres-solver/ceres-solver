@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "961ab0cd_233d53e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-27T16:34:39Z",
+      "side": 1,
+      "message": "Sergiu, the earlier entry said \"Sameer Agarwal, Keir Mierle \u0026 Others\", which was not great but at least did not take all the credit. The current CLIFF entry does that, that does not seem fair.\n\nDo you know of a better convention used by open source software here? where we acknowledge that this is not just the two people who founded the project but it is a team effort?",
+      "revId": "ff46e1372d4a826e32908034a6752e3d31497fa4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
