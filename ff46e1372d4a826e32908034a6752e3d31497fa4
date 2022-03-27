@@ -34,6 +34,24 @@
       "parentUuid": "961ab0cd_233d53e5",
       "revId": "ff46e1372d4a826e32908034a6752e3d31497fa4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ccf34ff_d98b671c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-27T17:21:32Z",
+      "side": 1,
+      "message": "I think those are the authors of the original paper. We have never written a paper on ceres solver and I have no plan on writing one. I will update the cff file and go from there.",
+      "parentUuid": "f4bc2fd7_499a0f5c",
+      "revId": "ff46e1372d4a826e32908034a6752e3d31497fa4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
