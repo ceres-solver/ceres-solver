@@ -7,6 +7,7 @@ authors:
   given-names: Sameer
 - family-names: Mierle
   given-names: Keir
+- name: The Ceres Solver Team
 version: 2.1
 date-released: 2022-03-28
 license: Apache-2.0
