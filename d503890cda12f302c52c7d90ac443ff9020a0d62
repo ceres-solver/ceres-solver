@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "686e5638_1a05541a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-27T16:54:01Z",
+      "side": 1,
+      "message": "I left the pointer increments on the left hand side as is because the order they are invoked will hardly change the overall result. However, this does not seem to be the case for sequential access through pointer increments on the right hand side; their execution order is important.\n\nPatrik, please test the changes carefully and report back as I\u0027m out for today.",
+      "revId": "d503890cda12f302c52c7d90ac443ff9020a0d62",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
