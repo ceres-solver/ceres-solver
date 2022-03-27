@@ -16,6 +16,24 @@
       "message": "Sergiu, the earlier entry said \"Sameer Agarwal, Keir Mierle \u0026 Others\", which was not great but at least did not take all the credit. The current CLIFF entry does that, that does not seem fair.\n\nDo you know of a better convention used by open source software here? where we acknowledge that this is not just the two people who founded the project but it is a team effort?",
       "revId": "ff46e1372d4a826e32908034a6752e3d31497fa4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4bc2fd7_499a0f5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-27T17:02:36Z",
+      "side": 1,
+      "message": "One convention that comes to my mind is to explicitly list main contributors (not sure how these are defined). For instance, TensorFlow does this: https://github.com/tensorflow/tensorflow/blob/master/CITATION.cff. Alternatively, we could just add `Others` as before and probably leave the `given-names` field empty.",
+      "parentUuid": "961ab0cd_233d53e5",
+      "revId": "ff46e1372d4a826e32908034a6752e3d31497fa4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
