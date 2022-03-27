@@ -16,6 +16,23 @@
       "message": "Thanks Sergiu.",
       "revId": "ab9436cb9e67139f7dbee2f97d728f5b2f71630b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dc37bb3_f922e39f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6220
+      },
+      "writtenOn": "2022-03-27T11:27:22Z",
+      "side": 1,
+      "message": "Can also confirm the workaround works, thanks!",
+      "revId": "ab9436cb9e67139f7dbee2f97d728f5b2f71630b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
