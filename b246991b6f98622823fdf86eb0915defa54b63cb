@@ -33,6 +33,24 @@
       "message": "for future reference \n\nhttps://github.com/citation-file-format/citation-file-format/blob/main/schema-guide.md#how-to-deal-with-unknown-individual-authors",
       "revId": "b246991b6f98622823fdf86eb0915defa54b63cb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c030e20_8c31bf27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-27T17:23:07Z",
+      "side": 1,
+      "message": "Great!",
+      "parentUuid": "1bc6e455_398b8c7f",
+      "revId": "b246991b6f98622823fdf86eb0915defa54b63cb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
