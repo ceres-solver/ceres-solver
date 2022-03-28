@@ -77,6 +77,9 @@ Backward Incompatible API Changes
 Bug Fixes & Minor Changes
 -------------------------
 
+#. Worked around an MSVC ordering bug when using C++17/20 (Sergiu
+   Deitsch)
+#. Added a CITATION.cff file. (Sergiu Deitsch)
 #. Updated included gtest version to 1.11.0. This should fix some
    ``C++20`` compilation problems. (Sameer Agarwal).
 #. Workaround ``MSVC`` ``STL`` deficiency in ``C++17`` mode (Sergiu
