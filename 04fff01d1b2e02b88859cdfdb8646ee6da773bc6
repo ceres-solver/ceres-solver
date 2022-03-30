@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0975543_21ea407c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "I finally found the time to review the code, discussion and some of the related literature. I apologize in advance for the long post.\n\nI\u0027d like to second Sameer\u0027s compliments. Your documentation is very much to the point and much easier to follow than the papers. The code is also very clear and easy to follow.\n\nFirst, I also found your PDF notes very useful. Are those accessible somewhere? I only found them in attachments to the notification emails. I don\u0027t even see them on Gerrit. It would be great if those could be made available somewhere also for posterity.\n\nSecond, I\u0027d like to highlight something which I have been confused about, hopefully to clarify for others as well. It\u0027s more of a remark, not so much something that needs to be changed, but I\u0027d welcome comments if I\u0027m not making sense or got something wrong. There seem to be different uses of the terms global / local in this context that can get mixed up:\n\n1. There was a discussion about whether the prior should be expressed in ambient space (\"global coordinates\") or tangent space (\"local coordinates\"). I believe the discussion has already converged on tangent space being the right choice (I agree) and with the new Manifold feature that\u0027s naturally supported. The global / local terminology was also used in LocalParamterization, whereas Manifold uses ambient / tangent. I think we should stick with the latter here as well (the documentation still uses global / local; see inline comment).\n\n2. Then there is the notion of local vs global linearization points during marginalization that comes up in the literature. Here, \"global\" linearization points refers to the current state estimates (MLE estimate using all residuals) and \"local\" linearization points means state estimates obtained from the MLE estimate using only the residuals that are marginalized. The latter amounts to running a full optimization with the local problem (w/ only residuals to be marginalized) right before marginalization. Eckenhoff\u002716 argues that \"local\" is preferable, but it seems the reason is that their marginalization prior formulation (and also the formulation in Carlevaris-Bianco\u002714) ignores the gradient term and only retains the Hessian after marginalization. \"Local\" linearization points ensure the gradient term is 0 and thus dropping it doesn\u0027t introduce an error. Hence the argument that \"local\" is better. But IMHO the better strategy is to use \"global\" linearization points (the \"best\" linearization points we have---to minimize linearization errors) and then simply not drop the gradient terms. This is also exactly what Evan\u0027s implementation does.\n\n3. Both Carlevaris-Bianco\u002714 and Eckenhoff\u002716 discuss that in a pose-graph scenario (or in general when your measurements provide relative information between state variables, rather than global information), it is important to apply a \"local\" / \"relative\" re-parameterization of the state variables to obtain a local prior on the relative state, not the global one. This is not currently supported in Evan\u0027s implementation, but I think it would be an important addition (can be done as follow-up, see below).\n\nThird, there was one thing in the discussion I did not understand. \n\n\u003e 2. There is an assumption that the minimization w.r.t dx actually results in a value thats less than \\sum_i f_i(x_0, y_0), i.e. it is better than the linearization point. This may or may not be true. I suppose this is not something that is being handled.\n\nWhere exactly is this assumption used?\n\nFourth (and last), there are some extensions to the basic marginalization feature proposed here that would be great to include (at some point). I don\u0027t think we should increase the scope of the initial addition. For now I just want to make sure they can be added later (w/o breaking the API).\n\na. Above in 3. I already mentioned the re-parameterization of the prior to create relative (rather than global) constraints. I think this would be essential to make this feature usable for something like pose graph sparsification. The approach in Carlevaris-Bianco\u002714 seems really attractive, b/c AFAIU all you have to do is supply an invertible reparameterization (including its Jacobian), and we then transform the marginalization prior using the inverse Jacobian. The MarginalizationPriorCostFunction would need to retain a pointer to the reparameterization (so there is a question of managing ownership) and apply it whenever the MarginalizationPriorCostFunction is evaluated. This also means the reparameterization can be relinearized even after marginalization. Could be done later as an additional overload of MarginalizeOutVariables that takes the reparameterization as an additional argument. I don\u0027t see any API issues here.\n\nb. Sparsification of the linear cost function is another obvious later addition. In terms of API, this could of course be a completely separate step. I.e. first the user calls MarginalizeOutVariables and then in a second step it passes the MarginalizationPriorCostFunction to another API to sparsify it (convert it to a set of \"smaller\" cost functions). It would also be attractive to add it as an additional option to MarginalizationOptions, such that the sparsification step is performed right awaya. But then there is the issue that the marginalizatio_prior_id output parameter would need to be a vector of ResidualBlockIds. Not sure if there is something that should be changed now to make this more natural to include later.\n\nc. There is some discussion in the literature whether to include other residuals that depend only on the variables in the Markov blanket in the marginalization (Eckenhoff\u002716 calls these intra-clique factors). In particular when not doing sparsification, there is an argument to be made to not include intra-clique factors, b/c they can then be relinearized later. But it could still make sense to add this as an option. In terms of API, there could be a boolean in MarginalizationOptions to automatically include all intra-clique factors. Or alternatively, it might also be a valid use-case to only include a subset of intra-clique factors. Then we\u0027d have to accept an additional list of residuals / residual-ids. Could be done later as an additional overload of MarginalizeOutVariables. I don\u0027t see any API issues here.\n\nd. Shameless plug of my own work: We are currently marginalizing by starting with the linear system in Jacobian form, then forming normal equations, then marginalizing with the Schur complement, and then bringing the result back into Jacobian form by computing a square root of the marginalization Hessian. It think it would be quite natural to instead marginalize directly in square root (Jacobian) form using QR-decomposition. This even works in the rank deficient case and is algebraically equivalent to the Schur complement (with pseudo inverse). See section 4 in Demmel\u002721. The implementation boils down to a \"flat\" Householder QR decomposition (see Basalt\u0027s marginalizeHelperSqrtToSqrt). In terms of API, this alternative marginalization strategy could be added as an option in MarginalizationOptions. I don\u0027t see any API issues here.\n\nReferences:\n\nCarlevaris-Bianco\u002714: http://www.cs.cmu.edu/~kaess/pub/CarlevarisBianco14tro.pdf\nEckenhoff\u002716: https://ieeexplore.ieee.org/document/7759505\nDemmel\u002721: https://arxiv.org/abs/2109.02182\nmarginalizeHelperSqrtToSqrt: https://gitlab.com/VladyslavUsenko/basalt/-/blob/de4525a88d990e00115fa7309eebc8ff38b67936/src/vi_estimator/marg_helper.cpp#L257-347",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caf4427b_5159463d",
+        "filename": "include/ceres/marginalization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "Global and local are very ambiguous terms in this context (see also general comments). Maybe use ambient and tangent space, which seems to also be the terminology adopted by the new Manifold concept in ceres.",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87e25e4f_417910d9",
+        "filename": "include/ceres/marginalization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "typo: marginalization_prior_id",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6d8c93b_64a8128f",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "Maybe this should be an epsilon check together with clamping small negative values to 0?",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a576a7b_2e080aa4",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "Should it be an epsilon check to count small positive values as 0? Or does Eigen already do that when computing EVs (i.e. clamping small positive EVs to exactly 0)?\n\nThe epsilon check is also discussed in Carlevaris-Bianco\u002714 in Section III.E.",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb2cac7d_a924e32f",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "The reason we are setting DENSE_SCHUR here is to make the Evaluator use BlockJacobianWriter, right? Maybe a comment to that effect would be good.\n\nI\u0027m wondering if DenseJacobianWriter would also be an option here, since this is the reduced problem with only the parameter blocks in the Markov blanket? (But I have to admit I didn\u0027t check how the differently Jacobian writers work, so maybe not.)",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59dbcd2d_eb8b618a",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "I guess one option could be to support the case where we only supply the linearization state explicitly for a subset of the variables in the Markov blanket. But thinking again, maybe it\u0027s better to go for all-or-nothing as it is, then we at least get an error when we inadvertedly forget a PB is in the markov blanket when we intended to set the linearization state explicitly for all PBs.",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13198a2c_0ff09138",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "J is unused?",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "947b6354_8d20db2c",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "This loop appears to do nothing, since residual_blocks is discarded after it is retrieved.",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "473281ee_cacd2c7a",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "Should there also be a check for tan_size_marginalized \u003e 0, or is this already checked elsewhere? Ah, I think IsParameterBlockConstant would have already caused an assertion earlier. Maybe it would still be good to have a comment (or assert) that tan_size_marginalized \u003e 0 is guaranteed here.",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ff8385e_479aafa8",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "state_vector is an output, but unused",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "432125c0_10599b13",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "Is there a reason to compute b \u003d S^T \\Lambda^{-1} g and not b \u003d S^{-1} g ?",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49f5e79c_de4887cd",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "problem could be const",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10b60e8f_a5979a1d",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "Why do we need localProblem as an output here? Getting access to the manifold for blanket states we could also get from problem, no?",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5ef0f95_b196b21c",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "Should we not use the parameter_block_linearization_states as the reference state for the linear cost function if supplied?",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f835578_572086fd",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "In the current API of this class passing parameter_block_tan_sizes explicitly seems redundant, since it could be inferred from the manifold objects (or parameter_block_reference_points sizes when a manifold is nullptr). (It could still make sense to keep it as member function, but also a small helper that queries the stored manifold or reference point size could do for use in Evaluate.)",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc8c4209_8a723e7b",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-03-30T22:51:22Z",
+      "side": 1,
+      "message": "I think it would be great if this (and the marginalization in general) would also work for parameter blocks w/o a manifold object set (and assume Euclidean). Or does ceres automatically insert a Euclidean manifold object for all parameter blocks?",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
