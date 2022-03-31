@@ -33,7 +33,6 @@
 #include "ceres/dense_cholesky.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
-
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
@@ -53,10 +52,13 @@ TEST(CUDADenseCholesky, InvalidOptionOnCreate) {
 // Tests the CUDA Cholesky solver with a simple 4x4 matrix.
 TEST(CUDADenseCholesky, Cholesky4x4Matrix) {
   Eigen::Matrix4d A;
+  // clang-format off
   A <<  4,  12, -16, 0,
        12,  37, -43, 0,
       -16, -43,  98, 0,
         0,   0,   0, 1;
+  // clang-format on
+
   const Eigen::Vector4d b = Eigen::Vector4d::Ones();
   LinearSolver::Options options;
   ContextImpl context;
@@ -65,9 +67,7 @@ TEST(CUDADenseCholesky, Cholesky4x4Matrix) {
   auto dense_cuda_solver = CUDADenseCholesky::Create(options);
   ASSERT_NE(dense_cuda_solver, nullptr);
   std::string error_string;
-  ASSERT_EQ(dense_cuda_solver->Factorize(A.cols(),
-                                        A.data(),
-                                        &error_string),
+  ASSERT_EQ(dense_cuda_solver->Factorize(A.cols(), A.data(), &error_string),
             LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
   Eigen::Vector4d x = Eigen::Vector4d::Zero();
   ASSERT_EQ(dense_cuda_solver->Solve(b.data(), x.data(), &error_string),
@@ -80,9 +80,12 @@ TEST(CUDADenseCholesky, Cholesky4x4Matrix) {
 
 TEST(CUDADenseCholesky, SingularMatrix) {
   Eigen::Matrix3d A;
+  // clang-format off
   A <<  1, 0, 0,
         0, 1, 0,
         0, 0, 0;
+  // clang-format on
+
   const Eigen::Vector3d b = Eigen::Vector3d::Ones();
   LinearSolver::Options options;
   ContextImpl context;
@@ -91,17 +94,18 @@ TEST(CUDADenseCholesky, SingularMatrix) {
   auto dense_cuda_solver = CUDADenseCholesky::Create(options);
   ASSERT_NE(dense_cuda_solver, nullptr);
   std::string error_string;
-  ASSERT_EQ(dense_cuda_solver->Factorize(A.cols(),
-                                        A.data(),
-                                        &error_string),
+  ASSERT_EQ(dense_cuda_solver->Factorize(A.cols(), A.data(), &error_string),
             LinearSolverTerminationType::LINEAR_SOLVER_FAILURE);
 }
 
 TEST(CUDADenseCholesky, NegativeMatrix) {
   Eigen::Matrix3d A;
+  // clang-format off
   A <<  1, 0, 0,
         0, 1, 0,
         0, 0, -1;
+  // clang-format on
+
   const Eigen::Vector3d b = Eigen::Vector3d::Ones();
   LinearSolver::Options options;
   ContextImpl context;
@@ -110,9 +114,7 @@ TEST(CUDADenseCholesky, NegativeMatrix) {
   auto dense_cuda_solver = CUDADenseCholesky::Create(options);
   ASSERT_NE(dense_cuda_solver, nullptr);
   std::string error_string;
-  ASSERT_EQ(dense_cuda_solver->Factorize(A.cols(),
-                                        A.data(),
-                                        &error_string),
+  ASSERT_EQ(dense_cuda_solver->Factorize(A.cols(), A.data(), &error_string),
             LinearSolverTerminationType::LINEAR_SOLVER_FAILURE);
 }
 
@@ -139,7 +141,8 @@ TEST(CUDADenseCholesky, Randomized1600x1600Tests) {
   ContextImpl context;
   options.context = &context;
   options.dense_linear_algebra_library_type = ceres::CUDA;
-  std::unique_ptr<DenseCholesky> dense_cholesky = CUDADenseCholesky::Create(options);
+  std::unique_ptr<DenseCholesky> dense_cholesky =
+      CUDADenseCholesky::Create(options);
 
   const int kNumTrials = 20;
   for (int i = 0; i < kNumTrials; ++i) {
@@ -159,15 +162,11 @@ TEST(CUDADenseCholesky, Randomized1600x1600Tests) {
     EXPECT_EQ(x_computed.rows(), kNumCols);
     EXPECT_EQ(x_computed.cols(), 1);
     LinearSolver::Summary summary;
-    summary.termination_type = dense_cholesky->FactorAndSolve(kNumCols,
-                                                              lhs.data(),
-                                                              rhs.data(),
-                                                              x_computed.data(),
-                                                              &summary.message);
+    summary.termination_type = dense_cholesky->FactorAndSolve(
+        kNumCols, lhs.data(), rhs.data(), x_computed.data(), &summary.message);
     ASSERT_EQ(summary.termination_type, LINEAR_SOLVER_SUCCESS);
-    ASSERT_NEAR((x_computed - x_expected).norm() / x_expected.norm(),
-                0.0,
-                1e-10);
+    ASSERT_NEAR(
+        (x_computed - x_expected).norm() / x_expected.norm(), 0.0, 1e-10);
   }
 }
 
