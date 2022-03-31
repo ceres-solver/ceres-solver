@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6666ffd_a5a48d37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-31T16:03:29Z",
+      "side": 1,
+      "message": "Thanks Nikolaus for the detailed (thats an understatement) review!\nOne question I was wondering about, how does marginalization deal with loss functions? and if there are different loss functions across the residual blocks being marginalized?",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "caf4427b_5159463d",
