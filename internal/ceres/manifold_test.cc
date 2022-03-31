@@ -679,18 +679,8 @@ TEST(EigenQuaternionManifold, DeltaJustBelowPi) {
 using Eigen::Vector2d;
 using Eigen::Vector3d;
 using Vector6d = Eigen::Matrix<double, 6, 1>;
-
-// Ensure memory allocated using new in AVX2 builds is correctly aligned which
-// is only guaranteed starting with C++17. Otherwise, use unaligned memory.
-// This avoids a segmentation fault in tests that use
-// EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD and fixed-size Eigen vectors.
-#ifdef CERES_HAS_CPP17
 using Eigen::Vector4d;
 using Vector8d = Eigen::Matrix<double, 8, 1>;
-#else
-using Vector4d = Eigen::Matrix<double, 4, 1, Eigen::DontAlign>;
-using Vector8d = Eigen::Matrix<double, 8, 1, Eigen::DontAlign>;
-#endif
 
 TEST(SphereManifold, ZeroTest) {
   Vector4d x{0.0, 0.0, 0.0, 1.0};
