@@ -45,24 +45,55 @@ const double kTolerance = 5.0 * std::numeric_limits<double>::epsilon();
 enum class DimType { Static, Dynamic };
 
 // Constructs matrix functor type.
-#define MATRIX_FUN_TY(FN)                                                      \
-  template <int kRowA, int kColA, int kRowB, int kColB, int kOperation,        \
-            DimType kDimType>                                                  \
-  struct FN##Ty {                                                              \
-    void operator()(const double *A, const int num_row_a, const int num_col_a, \
-                    const double *B, const int num_row_b, const int num_col_b, \
-                    double *C, const int start_row_c, const int start_col_c,   \
-                    const int row_stride_c, const int col_stride_c) {          \
-      if (kDimType == DimType::Static) {                                       \
-        FN<kRowA, kColA, kRowB, kColB, kOperation>(                            \
-            A, num_row_a, num_col_a, B, num_row_b, num_col_b, C, start_row_c,  \
-            start_col_c, row_stride_c, col_stride_c);                          \
-      } else {                                                                 \
-        FN<Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic,     \
-           kOperation>(A, num_row_a, num_col_a, B, num_row_b, num_col_b, C,    \
-                       start_row_c, start_col_c, row_stride_c, col_stride_c);  \
-      }                                                                        \
-    }                                                                          \
+#define MATRIX_FUN_TY(FN)                                         \
+  template <int kRowA,                                            \
+            int kColA,                                            \
+            int kRowB,                                            \
+            int kColB,                                            \
+            int kOperation,                                       \
+            DimType kDimType>                                     \
+  struct FN##Ty {                                                 \
+    void operator()(const double* A,                              \
+                    const int num_row_a,                          \
+                    const int num_col_a,                          \
+                    const double* B,                              \
+                    const int num_row_b,                          \
+                    const int num_col_b,                          \
+                    double* C,                                    \
+                    const int start_row_c,                        \
+                    const int start_col_c,                        \
+                    const int row_stride_c,                       \
+                    const int col_stride_c) {                     \
+      if (kDimType == DimType::Static) {                          \
+        FN<kRowA, kColA, kRowB, kColB, kOperation>(A,             \
+                                                   num_row_a,     \
+                                                   num_col_a,     \
+                                                   B,             \
+                                                   num_row_b,     \
+                                                   num_col_b,     \
+                                                   C,             \
+                                                   start_row_c,   \
+                                                   start_col_c,   \
+                                                   row_stride_c,  \
+                                                   col_stride_c); \
+      } else {                                                    \
+        FN<Eigen::Dynamic,                                        \
+           Eigen::Dynamic,                                        \
+           Eigen::Dynamic,                                        \
+           Eigen::Dynamic,                                        \
+           kOperation>(A,                                         \
+                       num_row_a,                                 \
+                       num_col_a,                                 \
+                       B,                                         \
+                       num_row_b,                                 \
+                       num_col_b,                                 \
+                       C,                                         \
+                       start_row_c,                               \
+                       start_col_c,                               \
+                       row_stride_c,                              \
+                       col_stride_c);                             \
+      }                                                           \
+    }                                                             \
   };
 
 MATRIX_FUN_TY(MatrixMatrixMultiply)
@@ -73,7 +104,7 @@ MATRIX_FUN_TY(MatrixTransposeMatrixMultiplyNaive)
 #undef MATRIX_FUN_TY
 
 // Initializes matrix entires.
-static void initMatrix(Matrix &mat) {
+static void initMatrix(Matrix& mat) {
   for (int i = 0; i < mat.rows(); ++i) {
     for (int j = 0; j < mat.cols(); ++j) {
       mat(i, j) = i + j + 1;
@@ -81,8 +112,12 @@ static void initMatrix(Matrix &mat) {
   }
 }
 
-template <int kRowA, int kColA, int kColB, DimType kDimType,
-          template <int, int, int, int, int, DimType> class FunctorTy>
+template <int kRowA,
+          int kColA,
+          int kColB,
+          DimType kDimType,
+          template <int, int, int, int, int, DimType>
+          class FunctorTy>
 struct TestMatrixFunctions {
   void operator()() {
     Matrix A(kRowA, kColA);
@@ -109,9 +144,17 @@ struct TestMatrixFunctions {
           for (int start_col_c = 0; start_col_c + kColB < col_stride_c;
                ++start_col_c) {
             C_plus_ref.block(start_row_c, start_col_c, kRowA, kColB) += A * B;
-            FunctorTy<kRowA, kColA, kRowB, kColB, 1, kDimType>()(
-                A.data(), kRowA, kColA, B.data(), kRowB, kColB, C_plus.data(),
-                start_row_c, start_col_c, row_stride_c, col_stride_c);
+            FunctorTy<kRowA, kColA, kRowB, kColB, 1, kDimType>()(A.data(),
+                                                                 kRowA,
+                                                                 kColA,
+                                                                 B.data(),
+                                                                 kRowB,
+                                                                 kColB,
+                                                                 C_plus.data(),
+                                                                 start_row_c,
+                                                                 start_col_c,
+                                                                 row_stride_c,
+                                                                 col_stride_c);
 
             EXPECT_NEAR((C_plus_ref - C_plus).norm(), 0.0, kTolerance)
                 << "C += A * B \n"
@@ -126,8 +169,17 @@ struct TestMatrixFunctions {
 
             C_minus_ref.block(start_row_c, start_col_c, kRowA, kColB) -= A * B;
             FunctorTy<kRowA, kColA, kRowB, kColB, -1, kDimType>()(
-                A.data(), kRowA, kColA, B.data(), kRowB, kColB, C_minus.data(),
-                start_row_c, start_col_c, row_stride_c, col_stride_c);
+                A.data(),
+                kRowA,
+                kColA,
+                B.data(),
+                kRowB,
+                kColB,
+                C_minus.data(),
+                start_row_c,
+                start_col_c,
+                row_stride_c,
+                col_stride_c);
 
             EXPECT_NEAR((C_minus_ref - C_minus).norm(), 0.0, kTolerance)
                 << "C -= A * B \n"
@@ -143,8 +195,17 @@ struct TestMatrixFunctions {
             C_assign_ref.block(start_row_c, start_col_c, kRowA, kColB) = A * B;
 
             FunctorTy<kRowA, kColA, kRowB, kColB, 0, kDimType>()(
-                A.data(), kRowA, kColA, B.data(), kRowB, kColB, C_assign.data(),
-                start_row_c, start_col_c, row_stride_c, col_stride_c);
+                A.data(),
+                kRowA,
+                kColA,
+                B.data(),
+                kRowB,
+                kColB,
+                C_assign.data(),
+                start_row_c,
+                start_col_c,
+                row_stride_c,
+                col_stride_c);
 
             EXPECT_NEAR((C_assign_ref - C_assign).norm(), 0.0, kTolerance)
                 << "C = A * B \n"
@@ -163,8 +224,12 @@ struct TestMatrixFunctions {
   }
 };
 
-template <int kRowA, int kColA, int kColB, DimType kDimType,
-          template <int, int, int, int, int, DimType> class FunctorTy>
+template <int kRowA,
+          int kColA,
+          int kColB,
+          DimType kDimType,
+          template <int, int, int, int, int, DimType>
+          class FunctorTy>
 struct TestMatrixTransposeFunctions {
   void operator()() {
     Matrix A(kRowA, kColA);
@@ -192,9 +257,17 @@ struct TestMatrixTransposeFunctions {
             C_plus_ref.block(start_row_c, start_col_c, kColA, kColB) +=
                 A.transpose() * B;
 
-            FunctorTy<kRowA, kColA, kRowB, kColB, 1, kDimType>()(
-                A.data(), kRowA, kColA, B.data(), kRowB, kColB, C_plus.data(),
-                start_row_c, start_col_c, row_stride_c, col_stride_c);
+            FunctorTy<kRowA, kColA, kRowB, kColB, 1, kDimType>()(A.data(),
+                                                                 kRowA,
+                                                                 kColA,
+                                                                 B.data(),
+                                                                 kRowB,
+                                                                 kColB,
+                                                                 C_plus.data(),
+                                                                 start_row_c,
+                                                                 start_col_c,
+                                                                 row_stride_c,
+                                                                 col_stride_c);
 
             EXPECT_NEAR((C_plus_ref - C_plus).norm(), 0.0, kTolerance)
                 << "C += A' * B \n"
@@ -211,8 +284,17 @@ struct TestMatrixTransposeFunctions {
                 A.transpose() * B;
 
             FunctorTy<kRowA, kColA, kRowB, kColB, -1, kDimType>()(
-                A.data(), kRowA, kColA, B.data(), kRowB, kColB, C_minus.data(),
-                start_row_c, start_col_c, row_stride_c, col_stride_c);
+                A.data(),
+                kRowA,
+                kColA,
+                B.data(),
+                kRowB,
+                kColB,
+                C_minus.data(),
+                start_row_c,
+                start_col_c,
+                row_stride_c,
+                col_stride_c);
 
             EXPECT_NEAR((C_minus_ref - C_minus).norm(), 0.0, kTolerance)
                 << "C -= A' * B \n"
@@ -229,8 +311,17 @@ struct TestMatrixTransposeFunctions {
                 A.transpose() * B;
 
             FunctorTy<kRowA, kColA, kRowB, kColB, 0, kDimType>()(
-                A.data(), kRowA, kColA, B.data(), kRowB, kColB, C_assign.data(),
-                start_row_c, start_col_c, row_stride_c, col_stride_c);
+                A.data(),
+                kRowA,
+                kColA,
+                B.data(),
+                kRowB,
+                kColB,
+                C_assign.data(),
+                start_row_c,
+                start_col_c,
+                row_stride_c,
+                col_stride_c);
 
             EXPECT_NEAR((C_assign_ref - C_assign).norm(), 0.0, kTolerance)
                 << "C = A' * B \n"
@@ -274,92 +365,146 @@ TEST(BLAS, MatrixMatrixMultiply_9_9_9_Dynamic) {
 }
 
 TEST(BLAS, MatrixMatrixMultiplyNaive_5_3_7) {
-  TestMatrixFunctions<5, 3, 7, DimType::Static,
+  TestMatrixFunctions<5,
+                      3,
+                      7,
+                      DimType::Static,
                       MatrixMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiplyNaive_5_3_7_Dynamic) {
-  TestMatrixFunctions<5, 3, 7, DimType::Dynamic,
+  TestMatrixFunctions<5,
+                      3,
+                      7,
+                      DimType::Dynamic,
                       MatrixMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiplyNaive_1_1_1) {
-  TestMatrixFunctions<1, 1, 1, DimType::Static,
+  TestMatrixFunctions<1,
+                      1,
+                      1,
+                      DimType::Static,
                       MatrixMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiplyNaive_1_1_1_Dynamic) {
-  TestMatrixFunctions<1, 1, 1, DimType::Dynamic,
+  TestMatrixFunctions<1,
+                      1,
+                      1,
+                      DimType::Dynamic,
                       MatrixMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiplyNaive_9_9_9) {
-  TestMatrixFunctions<9, 9, 9, DimType::Static,
+  TestMatrixFunctions<9,
+                      9,
+                      9,
+                      DimType::Static,
                       MatrixMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixMatrixMultiplyNaive_9_9_9_Dynamic) {
-  TestMatrixFunctions<9, 9, 9, DimType::Dynamic,
+  TestMatrixFunctions<9,
+                      9,
+                      9,
+                      DimType::Dynamic,
                       MatrixMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiply_5_3_7) {
-  TestMatrixTransposeFunctions<5, 3, 7, DimType::Static,
+  TestMatrixTransposeFunctions<5,
+                               3,
+                               7,
+                               DimType::Static,
                                MatrixTransposeMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiply_5_3_7_Dynamic) {
-  TestMatrixTransposeFunctions<5, 3, 7, DimType::Dynamic,
+  TestMatrixTransposeFunctions<5,
+                               3,
+                               7,
+                               DimType::Dynamic,
                                MatrixTransposeMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiply_1_1_1) {
-  TestMatrixTransposeFunctions<1, 1, 1, DimType::Static,
+  TestMatrixTransposeFunctions<1,
+                               1,
+                               1,
+                               DimType::Static,
                                MatrixTransposeMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiply_1_1_1_Dynamic) {
-  TestMatrixTransposeFunctions<1, 1, 1, DimType::Dynamic,
+  TestMatrixTransposeFunctions<1,
+                               1,
+                               1,
+                               DimType::Dynamic,
                                MatrixTransposeMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiply_9_9_9) {
-  TestMatrixTransposeFunctions<9, 9, 9, DimType::Static,
+  TestMatrixTransposeFunctions<9,
+                               9,
+                               9,
+                               DimType::Static,
                                MatrixTransposeMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiply_9_9_9_Dynamic) {
-  TestMatrixTransposeFunctions<9, 9, 9, DimType::Dynamic,
+  TestMatrixTransposeFunctions<9,
+                               9,
+                               9,
+                               DimType::Dynamic,
                                MatrixTransposeMatrixMultiplyTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiplyNaive_5_3_7) {
-  TestMatrixTransposeFunctions<5, 3, 7, DimType::Static,
+  TestMatrixTransposeFunctions<5,
+                               3,
+                               7,
+                               DimType::Static,
                                MatrixTransposeMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiplyNaive_5_3_7_Dynamic) {
-  TestMatrixTransposeFunctions<5, 3, 7, DimType::Dynamic,
+  TestMatrixTransposeFunctions<5,
+                               3,
+                               7,
+                               DimType::Dynamic,
                                MatrixTransposeMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiplyNaive_1_1_1) {
-  TestMatrixTransposeFunctions<1, 1, 1, DimType::Static,
+  TestMatrixTransposeFunctions<1,
+                               1,
+                               1,
+                               DimType::Static,
                                MatrixTransposeMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiplyNaive_1_1_1_Dynamic) {
-  TestMatrixTransposeFunctions<1, 1, 1, DimType::Dynamic,
+  TestMatrixTransposeFunctions<1,
+                               1,
+                               1,
+                               DimType::Dynamic,
                                MatrixTransposeMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiplyNaive_9_9_9) {
-  TestMatrixTransposeFunctions<9, 9, 9, DimType::Static,
+  TestMatrixTransposeFunctions<9,
+                               9,
+                               9,
+                               DimType::Static,
                                MatrixTransposeMatrixMultiplyNaiveTy>()();
 }
 
 TEST(BLAS, MatrixTransposeMatrixMultiplyNaive_9_9_9_Dynamic) {
-  TestMatrixTransposeFunctions<9, 9, 9, DimType::Dynamic,
+  TestMatrixTransposeFunctions<9,
+                               9,
+                               9,
+                               DimType::Dynamic,
                                MatrixTransposeMatrixMultiplyNaiveTy>()();
 }
 
@@ -473,5 +618,5 @@ TEST(BLAS, MatrixTransposeVectorMultiply) {
   }
 }
 
-} // namespace internal
-} // namespace ceres
+}  // namespace internal
+}  // namespace ceres

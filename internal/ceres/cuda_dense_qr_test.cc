@@ -32,7 +32,6 @@
 
 #include "ceres/dense_qr.h"
 #include "ceres/internal/eigen.h"
-
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
@@ -50,10 +49,12 @@ TEST(CUDADenseQR, InvalidOptionOnCreate) {
 // Tests the CUDA QR solver with a simple 4x4 matrix.
 TEST(CUDADenseQR, QR4x4Matrix) {
   Eigen::Matrix4d A;
+  // clang-format off
   A <<  4,  12, -16, 0,
        12,  37, -43, 0,
       -16, -43,  98, 0,
         0,   0,   0, 1;
+  // clang-format on
   const Eigen::Vector4d b = Eigen::Vector4d::Ones();
   LinearSolver::Options options;
   ContextImpl context;
@@ -62,11 +63,9 @@ TEST(CUDADenseQR, QR4x4Matrix) {
   auto dense_cuda_solver = CUDADenseQR::Create(options);
   ASSERT_NE(dense_cuda_solver, nullptr);
   std::string error_string;
-  ASSERT_EQ(dense_cuda_solver->Factorize(A.rows(),
-                                         A.cols(),
-                                         A.data(),
-                                         &error_string),
-            LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
+  ASSERT_EQ(
+      dense_cuda_solver->Factorize(A.rows(), A.cols(), A.data(), &error_string),
+      LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
   Eigen::Vector4d x = Eigen::Vector4d::Zero();
   ASSERT_EQ(dense_cuda_solver->Solve(b.data(), x.data(), &error_string),
             LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
@@ -81,10 +80,13 @@ TEST(CUDADenseQR, QR4x4Matrix) {
 // Tests the CUDA QR solver with a simple 4x4 matrix.
 TEST(CUDADenseQR, QR4x2Matrix) {
   Eigen::Matrix<double, 4, 2> A;
+  // clang-format off
   A <<  4,  12,
        12,  37,
       -16, -43,
         0,   0;
+  // clang-format on
+
   const std::vector<double> b(4, 1.0);
   LinearSolver::Options options;
   ContextImpl context;
@@ -93,11 +95,9 @@ TEST(CUDADenseQR, QR4x2Matrix) {
   auto dense_cuda_solver = CUDADenseQR::Create(options);
   ASSERT_NE(dense_cuda_solver, nullptr);
   std::string error_string;
-  ASSERT_EQ(dense_cuda_solver->Factorize(A.rows(),
-                                         A.cols(),
-                                         A.data(),
-                                         &error_string),
-            LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
+  ASSERT_EQ(
+      dense_cuda_solver->Factorize(A.rows(), A.cols(), A.data(), &error_string),
+      LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
   std::vector<double> x(2, 0);
   ASSERT_EQ(dense_cuda_solver->Solve(b.data(), x.data(), &error_string),
             LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
