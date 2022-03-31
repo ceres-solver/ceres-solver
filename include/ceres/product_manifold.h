@@ -257,28 +257,15 @@ class ProductManifold final : public Manifold {
   template <typename T, std::size_t N>
   static std::array<T, N> ExclusiveScan(const std::array<T, N>& values) {
     std::array<T, N> result;
-    T init = 0;
-
-    // TODO Replace by std::exclusive_scan once C++17 is available
-    for (std::size_t i = 0; i != N; ++i) {
-      result[i] = init;
-      init += values[i];
-    }
-
+    std::exclusive_scan(values.begin(), values.end(), result.begin(), 0);
     return result;
   }
-
-  // TODO Replace by std::void_t once C++17 is available
-  template <typename... Types>
-  struct Void {
-    using type = void;
-  };
 
   template <typename T, typename E = void>
   struct IsDereferenceable : std::false_type {};
 
   template <typename T>
-  struct IsDereferenceable<T, typename Void<decltype(*std::declval<T>())>::type>
+  struct IsDereferenceable<T, std::void_t<decltype(*std::declval<T>())>>
       : std::true_type {};
 
   template <typename T,
@@ -311,7 +298,6 @@ class ProductManifold final : public Manifold {
   int tangent_size_;
 };
 
-#ifdef CERES_HAS_CPP17
 // C++17 deduction guide that allows the user to avoid explicitly specifying
 // the template parameters of ProductManifold. The class can instead be
 // instantiated as follows:
@@ -321,7 +307,6 @@ class ProductManifold final : public Manifold {
 template <typename Manifold0, typename Manifold1, typename... Manifolds>
 ProductManifold(Manifold0&&, Manifold1&&, Manifolds&&...)
     -> ProductManifold<Manifold0, Manifold1, Manifolds...>;
-#endif
 
 }  // namespace ceres
 
