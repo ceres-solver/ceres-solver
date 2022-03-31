@@ -724,7 +724,6 @@ inline Jet<T, N> hypot(const Jet<T, N>& x, const Jet<T, N>& y) {
   return Jet<T, N>(tmp, x.a / tmp * x.v + y.a / tmp * y.v);
 }
 
-#ifdef CERES_HAS_CPP17
 // Like sqrt(x^2 + y^2 + z^2),
 // but acts to prevent underflow/overflow for small/large x/y/z.
 // Note that the function is non-smooth at x=y=z=0,
@@ -744,8 +743,8 @@ inline Jet<T, N> hypot(const Jet<T, N>& x,
   const T tmp = hypot(x.a, y.a, z.a);
   return Jet<T, N>(tmp, x.a / tmp * x.v + y.a / tmp * y.v + z.a / tmp * z.v);
 }
-#endif  // defined(CERES_HAS_CPP17)
-
+#endif
+  
 // Like x * y + z but rounded only once.
 template <typename T, int N>
 inline Jet<T, N> fma(const Jet<T, N>& x,

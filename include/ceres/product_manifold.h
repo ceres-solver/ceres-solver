@@ -311,7 +311,6 @@ class ProductManifold final : public Manifold {
   int tangent_size_;
 };
 
-#ifdef CERES_HAS_CPP17
 // C++17 deduction guide that allows the user to avoid explicitly specifying
 // the template parameters of ProductManifold. The class can instead be
 // instantiated as follows:
@@ -321,7 +320,6 @@ class ProductManifold final : public Manifold {
 template <typename Manifold0, typename Manifold1, typename... Manifolds>
 ProductManifold(Manifold0&&, Manifold1&&, Manifolds&&...)
     -> ProductManifold<Manifold0, Manifold1, Manifolds...>;
-#endif
 
 }  // namespace ceres
 

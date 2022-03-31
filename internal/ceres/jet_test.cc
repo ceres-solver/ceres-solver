@@ -595,7 +595,6 @@ TEST(Jet, Hypot2) {
   EXPECT_THAT(hypot(huge, J{0}), IsAlmostEqualTo(huge));
 }
 
-#ifdef CERES_HAS_CPP17
 TEST(Jet, Hypot3) {
   J zero = MakeJet(0.0, 2.0, 3.14);
 
@@ -636,8 +635,6 @@ TEST(Jet, Hypot3) {
   EXPECT_THAT(hypot(huge, J{0}, J{0}), IsAlmostEqualTo(huge));
 #endif
 }
-
-#endif  // defined(CERES_HAS_CPP17)
 
 #ifdef CERES_HAS_CPP20
 

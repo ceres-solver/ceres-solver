@@ -23,7 +23,7 @@ Dependencies
 
  .. note ::
 
-    Ceres Solver 2.1 requires a **fully C++14-compliant** compiler.
+    Ceres Solver 2.2 requires a **fully C++17-compliant** compiler.
 
 Ceres relies on a number of open source libraries, some of which are
 optional. For details on customizing the build process, see
