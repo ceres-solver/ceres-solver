@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3d86945_949e6d3e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-03-31T14:16:51Z",
+      "side": 1,
+      "message": "I think it is time to move to c++17, what do you guys think?\n2.2 won\u0027t go out before end of year, as there is still plenty of work to be done, by that time the current LTS will have expired too and we can expect c++17 going forward.",
+      "revId": "fe1351d7ff83dffd19b12d1c103a8ca494789341",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
