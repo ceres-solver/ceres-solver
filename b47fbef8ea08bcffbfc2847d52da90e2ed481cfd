@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d71a02e_1d2c1786",
+        "filename": "internal/ceres/small_blas_generic.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-31T14:29:14Z",
+      "side": 1,
+      "message": "Maybe call the local variable `cvec` or `cvec4` instead to be more explicit?",
+      "revId": "b47fbef8ea08bcffbfc2847d52da90e2ed481cfd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
