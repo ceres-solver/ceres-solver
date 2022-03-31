@@ -47,14 +47,6 @@
 #define CERES_GET_FLAG(X) X
 #endif
 
-// Indicates whether C++17 is currently active
-#ifndef CERES_HAS_CPP17
-#if __cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >= 201703L)
-#define CERES_HAS_CPP17
-#endif  // __cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >=
-        // 201703L)
-#endif  // !defined(CERES_HAS_CPP17)
-
 // Indicates whether C++20 is currently active
 #ifndef CERES_HAS_CPP20
 #if __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >= 202002L)
