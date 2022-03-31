@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89220cb8_24cc3749",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-31T17:04:57Z",
+      "side": 1,
+      "message": "Nit: `typename` is not necessary here.",
+      "revId": "65c08fc23fc4681b04c3dc97008d5869d11247aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2591c1ae_c9726f59",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-03-31T17:04:57Z",
+      "side": 1,
+      "message": "`const` will inhibit move/copy. Is this intentional?",
+      "revId": "65c08fc23fc4681b04c3dc97008d5869d11247aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
