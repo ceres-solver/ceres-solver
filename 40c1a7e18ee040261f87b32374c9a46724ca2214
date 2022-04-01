@@ -16,6 +16,23 @@
       "message": "Builds are here: https://github.com/sergiud/ceres-solver/actions",
       "revId": "40c1a7e18ee040261f87b32374c9a46724ca2214",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6256e682_526a072d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-04-01T19:46:44Z",
+      "side": 1,
+      "message": "Thank you.",
+      "revId": "40c1a7e18ee040261f87b32374c9a46724ca2214",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
