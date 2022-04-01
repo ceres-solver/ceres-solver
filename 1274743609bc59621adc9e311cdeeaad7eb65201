@@ -33,6 +33,24 @@
       "message": "I\u0027m happy, the benefits of upgrading are notable and it\u0027s been 5 years.  Going beyond C++17 anytime soon would likely be a problem for automotives though, as certified compilers for QNX (for example) have only just started to support C++17, and won\u0027t support C++20 for quite a while on past form.",
       "revId": "1274743609bc59621adc9e311cdeeaad7eb65201",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "004a4d8b_2d0ba8ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-04-01T16:58:35Z",
+      "side": 1,
+      "message": "given current trends, we will not be updating to c++20 before 2025 at least :)",
+      "parentUuid": "2721a439_50ca95b1",
+      "revId": "1274743609bc59621adc9e311cdeeaad7eb65201",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
