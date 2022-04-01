@@ -17,7 +17,6 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - ubuntu-18.04
           - ubuntu-20.04
         build_type:
           - Release
