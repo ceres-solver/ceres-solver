@@ -42,17 +42,6 @@
 namespace ceres {
 namespace internal {
 
-// Predicate that determines whether T is a Jet.
-template <typename T, typename E = void>
-struct IsJet : std::false_type {};
-
-template <typename T, int N>
-struct IsJet<Jet<T, N>> : std::true_type {};
-
-// Convenience variable template for IsJet.
-template <typename T>
-constexpr bool IsJet_v = IsJet<T>::value;
-
 // Predicate that determines whether any of the Types is a Jet.
 template <typename... Types>
 struct AreAnyJet : std::false_type {};
@@ -84,27 +73,8 @@ using UnderlyingScalar_t = typename UnderlyingScalar<T>::type;
 //
 // Specifically, the predicate applies std::is_same recursively to pairs of
 // Types in the pack.
-//
-// The predicate is defined only for template packs containing at least two
-// types.
-template <typename T1, typename T2, typename... Types>
-// clang-format off
-struct AreAllSame : std::integral_constant
-<
-    bool,
-    AreAllSame<T1, T2>::value &&
-    AreAllSame<T2, Types...>::value
->
-// clang-format on
-{};
-
-// AreAllSame pairwise test.
-template <typename T1, typename T2>
-struct AreAllSame<T1, T2> : std::is_same<T1, T2> {};
-
-// Convenience variable template for AreAllSame.
-template <typename... Types>
-constexpr bool AreAllSame_v = AreAllSame<Types...>::value;
+template <typename T1, typename... Types>
+inline constexpr bool AreAllSame = (std::is_same<T1, Types>::value && ...);
 
 // Determines the rank of a type. This allows to ensure that types passed as
 // arguments are compatible to each other. The rank of Jet is determined by the
@@ -161,7 +131,7 @@ struct CompatibleJetOperands : std::integral_constant
     // At least one of the types is a Jet
     internal::AreAnyJet_v<Types...> &&
     // The underlying floating-point types are exactly the same
-    internal::AreAllSame_v<internal::UnderlyingScalar_t<Types>...> &&
+    internal::AreAllSame<internal::UnderlyingScalar_t<Types>...> &&
     // Non-zero ranks of types are equal
     internal::IsEmptyOrAreAllEqual_v<internal::RemoveValue_t<internal::Ranks_t<Types...>, 0>>
 >
