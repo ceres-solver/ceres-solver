@@ -53,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39de7b25_4aa877cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-04-02T12:17:52Z",
+      "side": 1,
+      "message": "I think thats fine and reasonable, I just wanted to raise the issue that the math and the API should account for it.",
+      "parentUuid": "cd79f54d_bea166d9",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "caf4427b_5159463d",
