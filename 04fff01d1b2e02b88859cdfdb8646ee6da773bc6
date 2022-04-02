@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd79f54d_bea166d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-04-02T08:33:42Z",
+      "side": 1,
+      "message": "That\u0027s a good question. My 2 cents: I haven\u0027t come across robust loss functions being explicitly mentioned in any of the marginalization papers that I\u0027ve read. I would guess people just marginalize the weighted residuals and Jacobians, resulting in a linear factor w/ quadratic loss function. That\u0027s what I would do here for this Ceres functionality as well (and that\u0027s what is currently implemented AFAICT).\n\nI haven\u0027t thought too deeply about it, but I don\u0027t see what else could be done. Even if all residuals had the same loss function, we cannot just stack them into a single residual block with a single loss function. The only case where in my mind it really could make sense to keep the loss function, is when we are marginalizing just a single residual. But that\u0027s probably a rather exotic case.",
+      "parentUuid": "f6666ffd_a5a48d37",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "caf4427b_5159463d",
