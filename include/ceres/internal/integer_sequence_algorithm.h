@@ -43,68 +43,6 @@
 namespace ceres {
 namespace internal {
 
-// Implementation of calculating the sum of an integer sequence.
-// Recursively instantiate SumImpl and calculate the sum of the N first
-// numbers. This reduces the number of instantiations and speeds up
-// compilation.
-//
-// Examples:
-// 1) integer_sequence<int, 5>:
-//   Value = 5
-//
-// 2) integer_sequence<int, 4, 2>:
-//   Value = 4 + 2 + SumImpl<integer_sequence<int>>::Value
-//   Value = 4 + 2 + 0
-//
-// 3) integer_sequence<int, 2, 1, 4>:
-//   Value = 2 + 1 + SumImpl<integer_sequence<int, 4>>::Value
-//   Value = 2 + 1 + 4
-template <typename Seq>
-struct SumImpl;
-
-// Strip of and sum the first number.
-template <typename T, T N, T... Ns>
-struct SumImpl<std::integer_sequence<T, N, Ns...>> {
-  static constexpr T Value =
-      N + SumImpl<std::integer_sequence<T, Ns...>>::Value;
-};
-
-// Strip of and sum the first two numbers.
-template <typename T, T N1, T N2, T... Ns>
-struct SumImpl<std::integer_sequence<T, N1, N2, Ns...>> {
-  static constexpr T Value =
-      N1 + N2 + SumImpl<std::integer_sequence<T, Ns...>>::Value;
-};
-
-// Strip of and sum the first four numbers.
-template <typename T, T N1, T N2, T N3, T N4, T... Ns>
-struct SumImpl<std::integer_sequence<T, N1, N2, N3, N4, Ns...>> {
-  static constexpr T Value =
-      N1 + N2 + N3 + N4 + SumImpl<std::integer_sequence<T, Ns...>>::Value;
-};
-
-// Only one number is left. 'Value' is just that number ('recursion' ends).
-template <typename T, T N>
-struct SumImpl<std::integer_sequence<T, N>> {
-  static constexpr T Value = N;
-};
-
-// No number is left. 'Value' is the identity element (for sum this is zero).
-template <typename T>
-struct SumImpl<std::integer_sequence<T>> {
-  static constexpr T Value = T(0);
-};
-
-// Calculate the sum of an integer sequence. The resulting sum will be stored in
-// 'Value'.
-template <typename Seq>
-class Sum {
-  using T = typename Seq::value_type;
-
- public:
-  static constexpr T Value = SumImpl<Seq>::Value;
-};
-
 // Implementation of calculating an exclusive scan (exclusive prefix sum) of an
 // integer sequence. Exclusive means that the i-th input element is not included
 // in the i-th sum. Calculating the exclusive scan for an input array I results
@@ -232,40 +170,11 @@ struct RemoveValue
 template <typename Sequence, typename Sequence::value_type ValueToRemove>
 using RemoveValue_t = typename RemoveValue<Sequence, ValueToRemove>::type;
 
-// Determines whether the values of an integer sequence are all the same.
+// Returns true if all elements of Values are equal to HeadValue.
 //
-// The integer sequence must contain at least one value. The predicate is
-// undefined for empty sequences. The evaluation result of the predicate for a
-// sequence containing only one value is defined to be true.
-template <typename... Sequence>
-struct AreAllEqual;
-
-// The predicate result for a sequence containing one element is defined to be
-// true.
-template <typename T, T Value>
-struct AreAllEqual<std::integer_sequence<T, Value>> : std::true_type {};
-
-// Recursion end.
-template <typename T, T Value1, T Value2>
-struct AreAllEqual<std::integer_sequence<T, Value1, Value2>>
-    : std::integral_constant<bool, Value1 == Value2> {};
-
-// Recursion for sequences containing at least two elements.
-template <typename T, T Value1, T Value2, T... Values>
-// clang-format off
-struct AreAllEqual<std::integer_sequence<T, Value1, Value2, Values...> >
-    : std::integral_constant
-<
-    bool,
-    AreAllEqual<std::integer_sequence<T, Value1, Value2> >::value &&
-    AreAllEqual<std::integer_sequence<T, Value2, Values...> >::value
->
-// clang-format on
-{};
-
-// Convenience variable template for AreAllEqual.
-template <class Sequence>
-constexpr bool AreAllEqual_v = AreAllEqual<Sequence>::value;
+// Returns true if Values is empty.
+template <typename T, T HeadValue, T... Values>
+inline constexpr bool AreAllEqual_v = ((HeadValue == Values) && ...);
 
 // Predicate determining whether an integer sequence is either empty or all
 // values are equal.
@@ -279,11 +188,12 @@ struct IsEmptyOrAreAllEqual<std::integer_sequence<T>> : std::true_type {};
 // General case for sequences containing at least one value.
 template <typename T, T HeadValue, T... Values>
 struct IsEmptyOrAreAllEqual<std::integer_sequence<T, HeadValue, Values...>>
-    : AreAllEqual<std::integer_sequence<T, HeadValue, Values...>> {};
+    : std::integral_constant<bool, AreAllEqual_v<T, HeadValue, Values...>> {};
 
 // Convenience variable template for IsEmptyOrAreAllEqual.
 template <class Sequence>
-constexpr bool IsEmptyOrAreAllEqual_v = IsEmptyOrAreAllEqual<Sequence>::value;
+inline constexpr bool IsEmptyOrAreAllEqual_v =
+    IsEmptyOrAreAllEqual<Sequence>::value;
 
 }  // namespace internal
 }  // namespace ceres

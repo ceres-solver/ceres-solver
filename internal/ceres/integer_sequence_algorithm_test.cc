@@ -39,20 +39,6 @@
 namespace ceres {
 namespace internal {
 
-// Unit tests for summation of integer sequence.
-static_assert(Sum<std::integer_sequence<int>>::Value == 0,
-              "Unit test of summing up an integer sequence failed.");
-static_assert(Sum<std::integer_sequence<int, 2>>::Value == 2,
-              "Unit test of summing up an integer sequence failed.");
-static_assert(Sum<std::integer_sequence<int, 2, 3>>::Value == 5,
-              "Unit test of summing up an integer sequence failed.");
-static_assert(Sum<std::integer_sequence<int, 2, 3, 10>>::Value == 15,
-              "Unit test of summing up an integer sequence failed.");
-static_assert(Sum<std::integer_sequence<int, 2, 3, 10, 4>>::Value == 19,
-              "Unit test of summing up an integer sequence failed.");
-static_assert(Sum<std::integer_sequence<int, 2, 3, 10, 4, 1>>::Value == 20,
-              "Unit test of summing up an integer sequence failed.");
-
 // Unit tests for exclusive scan of integer sequence.
 static_assert(std::is_same<ExclusiveScan<std::integer_sequence<int>>,
                            std::integer_sequence<int>>::value,
@@ -129,15 +115,15 @@ static_assert(!AreAllSame_v<double, int>, "types must not be the same");
 static_assert(!AreAllSame_v<int, short, char>, "types must not be the same");
 
 // Ensure all values in the integer sequence match
-static_assert(AreAllEqual_v<std::integer_sequence<int, 1, 1>>,
+static_assert(AreAllEqual_v<int, 1, 1>,
               "integer sequence must contain same values");
-static_assert(AreAllEqual_v<std::integer_sequence<long, 2>>,
+static_assert(AreAllEqual_v<long, 2>,
               "integer sequence must contain one value");
-static_assert(!AreAllEqual_v<std::integer_sequence<short, 3, 4>>,
+static_assert(!AreAllEqual_v<short, 3, 4>,
               "integer sequence must not contain the same values");
-static_assert(!AreAllEqual_v<std::integer_sequence<unsigned, 3, 4, 3>>,
+static_assert(!AreAllEqual_v<unsigned, 3, 4, 3>,
               "integer sequence must not contain the same values");
-static_assert(!AreAllEqual_v<std::integer_sequence<int, 4, 4, 3>>,
+static_assert(!AreAllEqual_v<int, 4, 4, 3>,
               "integer sequence must not contain the same values");
 
 static_assert(IsEmptyOrAreAllEqual_v<std::integer_sequence<short>>,
