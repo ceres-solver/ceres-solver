@@ -70,7 +70,7 @@ class MockCostFunctionBase : public SizedCostFunction<kNumResiduals, Ns...> {
   bool Evaluate(double const* const* parameters,
                 double* residuals,
                 double** jacobians) const final {
-    const int kNumParameters = Sum<std::integer_sequence<int, Ns...>>::Value;
+    constexpr int kNumParameters = (Ns + ... + 0);
 
     for (int i = 0; i < kNumResiduals; ++i) {
       residuals[i] = kNumResiduals + kNumParameters;

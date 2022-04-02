@@ -320,7 +320,7 @@ target_compile_features(ceres_internal PRIVATE $<TARGET_PROPERTY:ceres,COMPILE_F
 # Ensure the minimum required C++ language version is fulfilled as our
 # requirement by downstream clients. Consumers can choose the same or a newer
 # language standard revision.
-target_compile_features(ceres PUBLIC cxx_std_14)
+target_compile_features(ceres PUBLIC cxx_std_17)
 
 set_target_properties(ceres PROPERTIES
   VERSION ${CERES_VERSION}
