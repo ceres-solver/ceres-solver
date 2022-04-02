@@ -32,20 +32,6 @@
 namespace ceres {
 namespace internal {
 
-// Is valid parameter dims unit test
-static_assert(IsValidParameterDimensionSequence(std::integer_sequence<int>()) ==
-                  true,
-              "Unit test of is valid parameter dimension sequence failed.");
-static_assert(IsValidParameterDimensionSequence(
-                  std::integer_sequence<int, 2, 1>()) == true,
-              "Unit test of is valid parameter dimension sequence failed.");
-static_assert(IsValidParameterDimensionSequence(
-                  std::integer_sequence<int, 0, 1>()) == false,
-              "Unit test of is valid parameter dimension sequence failed.");
-static_assert(IsValidParameterDimensionSequence(
-                  std::integer_sequence<int, 3, 0>()) == false,
-              "Unit test of is valid parameter dimension sequence failed.");
-
 // Static parameter dims unit test
 static_assert(
     std::is_same<StaticParameterDims<4, 2, 1>::Parameters,
