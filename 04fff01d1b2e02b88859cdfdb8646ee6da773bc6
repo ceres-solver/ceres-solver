@@ -359,6 +359,24 @@
       "parentUuid": "fc8c4209_8a723e7b",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5b0ab85_063d3320",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-04-02T12:28:53Z",
+      "side": 1,
+      "message": "Makes sense. The code here should handle both cases. (And if it gets merged before LocalParameterization is removed, maybe a simple assert at the start of the marginalization should verify that none of the involved parameter blocks have a LocalParameterization set, just to avoid any pitfalls.)",
+      "parentUuid": "2bbf06a1_efd1ed36",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
