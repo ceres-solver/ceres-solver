@@ -81,8 +81,8 @@ class ParameterDims {
   static_assert(kIsDynamic || kNumParameterBlocks > 0,
                 "At least one parameter block must be specified.");
 
-  static constexpr int kNumParameters =
-      Sum<std::integer_sequence<int, Ns...>>::Value;
+  static constexpr int kNumParameters = (Ns + ... + 0);
+  //      Sum<std::integer_sequence<int, Ns...>>::Value;
 
   static constexpr int GetDim(int dim) { return params_[dim]; }
 
