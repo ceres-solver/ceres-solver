@@ -36,6 +36,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "80be0833_d5fb685b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-04-03T19:48:49Z",
+      "side": 1,
+      "message": "Do you mean the Github workflow fix? I\u0027m asking because I did not touch any `CMakeLists.txt` there.",
+      "parentUuid": "3c9b5a7e_642ee557",
+      "revId": "8f23b36a4c24a96ddff5b8d485e1713ddb487e7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "6b3e1b9d_550eb7ab",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "for my own education, why a variable template and not a function?\nisn\u0027t constexpr function a better way to do this and more complicated expressions?",
       "parentUuid": "fccbf0ef_7b47e091",
+      "revId": "8f23b36a4c24a96ddff5b8d485e1713ddb487e7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bed446fa_4666c38e",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-04-03T19:48:49Z",
+      "side": 1,
+      "message": "Actually, a variable template is more concise because it does not require function call syntax. Complexity wise a variable template is much simpler since there\u0027s neither a `return` expression nor a `noexcept` annotation which are both implied.\n\nThis is just off the top of my head.",
+      "parentUuid": "db917b16_588c495c",
       "revId": "8f23b36a4c24a96ddff5b8d485e1713ddb487e7c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
