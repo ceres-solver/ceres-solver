@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "330a11ca_7099606c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-04-03T19:02:34Z",
+      "side": 1,
+      "message": "I don\u0027t see any changes to `CMakeLists.txt`. Is this description line outdated?",
+      "revId": "8f23b36a4c24a96ddff5b8d485e1713ddb487e7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "6b3e1b9d_550eb7ab",
@@ -14,6 +31,23 @@
       "writtenOn": "2022-04-03T17:55:31Z",
       "side": 1,
       "message": "I suspect more simplifications are possible, but I am just learning my way through the mildly obscure syntax of fold expressions.",
+      "revId": "8f23b36a4c24a96ddff5b8d485e1713ddb487e7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fccbf0ef_7b47e091",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-04-03T19:02:34Z",
+      "side": 1,
+      "message": "Can we keep this a variable template? A function is not necessary. Something along the lines should work:\n```\ntemplate \u003ctypename T, T HeadValue, T... Values\u003e\ninline constexpr bool AreAllEqual \u003d ((HeadValue \u003d\u003d Values) \u0026\u0026 ...);\n```\nNote the extra `inline` for avoiding ODR violations. Similar for other metafunctions.",
       "revId": "8f23b36a4c24a96ddff5b8d485e1713ddb487e7c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
