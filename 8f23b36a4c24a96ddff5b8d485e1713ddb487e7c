@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b3e1b9d_550eb7ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-04-03T17:55:31Z",
+      "side": 1,
+      "message": "I suspect more simplifications are possible, but I am just learning my way through the mildly obscure syntax of fold expressions.",
+      "revId": "8f23b36a4c24a96ddff5b8d485e1713ddb487e7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
