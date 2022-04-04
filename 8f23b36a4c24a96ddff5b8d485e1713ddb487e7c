@@ -140,6 +140,24 @@
       "parentUuid": "bed446fa_4666c38e",
       "revId": "8f23b36a4c24a96ddff5b8d485e1713ddb487e7c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21a3e148_31d18cb6",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-04-04T13:36:04Z",
+      "side": 1,
+      "message": "Thanks that makes sense.",
+      "parentUuid": "673eef23_c5d1e694",
+      "revId": "8f23b36a4c24a96ddff5b8d485e1713ddb487e7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
