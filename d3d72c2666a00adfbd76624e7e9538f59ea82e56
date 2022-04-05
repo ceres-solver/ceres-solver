@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e499a80_a183ac6b",
+        "filename": "docs/source/nnls_covariance.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-04-05T20:39:08Z",
+      "side": 1,
+      "message": "Nit, but probably say which norm you mean here",
+      "revId": "d3d72c2666a00adfbd76624e7e9538f59ea82e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0fe8700_31129dde",
+        "filename": "docs/source/nnls_covariance.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-04-05T20:39:08Z",
+      "side": 1,
+      "message": "\u0027Jacobian (J) respectively\u0027",
+      "revId": "d3d72c2666a00adfbd76624e7e9538f59ea82e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b39fc7b_3ea30432",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-04-05T20:39:08Z",
+      "side": 1,
+      "message": "Same comments as in the markdown docs",
+      "revId": "d3d72c2666a00adfbd76624e7e9538f59ea82e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78627930_e1ba2719",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-04-05T20:39:08Z",
+      "side": 1,
+      "message": "This is fine I think, but SuiteSparse actually uses -2 for the default, and values in the -2 \u003c x \u003c 0 range mean another \u0027special\u0027 behaviour of \u0027no tolerance\u0027 [1], would you want to permit the user to specify that (currently they cannot)?\n\nPerhaps we should state that the interpretation of any values \u003c 0 is sparse-linear-algebra library specific in the docs and then pass this straight through and/or have our own magic value here which is \u003c the SuiteSparse ones to avoid any conflict, and bound our values to SPQR_DEFAULT_TOL here?\n\n[1]: https://github.com/DrTimothyAldenDavis/SuiteSparse/blob/573e52b4023f1e0e51961e6a80e70df28ec86655/SPQR/Include/SuiteSparseQR_definitions.h#L28",
+      "revId": "d3d72c2666a00adfbd76624e7e9538f59ea82e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
