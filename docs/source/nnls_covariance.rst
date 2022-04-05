@@ -187,6 +187,22 @@ cases.
       well as rank deficient Jacobians.
 
 
+.. member:: double Covariance::Options::column_pivot_threshold
+
+   Default: :math:`-1`
+
+    During QR factorization, if a column with norm less than
+    ``column_pivot_threshold`` is encountered it is treated as zero.
+    
+    If ``column_pivot_threshold < 0``, then an automatic default value
+    of `20*(m+n)*eps*sqrt(max(diag(J’*J)))` is used.  Here `m` and `n`
+    are the number of rows and columns of the Jacobian respectively.
+    
+    This is an advanced option meant for users who know enough about
+    their Jacobian matrices that they can determine a value better
+    than the default.
+	    
+	    
 .. member:: int Covariance::Options::min_reciprocal_condition_number
 
    Default: :math:`10^{-14}`
