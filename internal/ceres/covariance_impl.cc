@@ -628,13 +628,15 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   // more efficient, both in runtime as well as the quality of
   // ordering computed. So, it maybe worth doing that analysis
   // separately.
-  const SuiteSparse_long rank = SuiteSparseQR<double>(SPQR_ORDERING_BESTAMD,
-                                                      SPQR_DEFAULT_TOL,
-                                                      cholmod_jacobian.ncol,
-                                                      &cholmod_jacobian,
-                                                      &R,
-                                                      &permutation,
-                                                      &cc);
+  const SuiteSparse_long rank = SuiteSparseQR<double>(
+      SPQR_ORDERING_BESTAMD,
+      options_.column_pivot_threshold < 0 ? SPQR_DEFAULT_TOL
+                                          : options_.column_pivot_threshold,
+      cholmod_jacobian.ncol,
+      &cholmod_jacobian,
+      &R,
+      &permutation,
+      &cc);
   event_logger.AddEvent("Numeric Factorization");
   if (R == nullptr) {
     LOG(ERROR) << "Something is wrong. SuiteSparseQR returned R = nullptr.";
@@ -830,19 +832,23 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
           jacobian.values.data());
   event_logger.AddEvent("ConvertToSparseMatrix");
 
-  Eigen::SparseQR<EigenSparseMatrix, Eigen::COLAMDOrdering<int>> qr_solver(
-      sparse_jacobian);
+  Eigen::SparseQR<EigenSparseMatrix, Eigen::COLAMDOrdering<int>> qr;
+  if (options_.column_pivot_threshold > 0) {
+    qr.setPivotThreshold(options_.column_pivot_threshold);
+  }
+
+  qr.compute(sparse_jacobian);
   event_logger.AddEvent("QRDecomposition");
 
-  if (qr_solver.info() != Eigen::Success) {
+  if (qr.info() != Eigen::Success) {
     LOG(ERROR) << "Eigen::SparseQR decomposition failed.";
     return false;
   }
 
-  if (qr_solver.rank() < jacobian.num_cols) {
+  if (qr.rank() < jacobian.num_cols) {
     LOG(ERROR) << "Jacobian matrix is rank deficient. "
                << "Number of columns: " << jacobian.num_cols
-               << " rank: " << qr_solver.rank();
+               << " rank: " << qr.rank();
     return false;
   }
 
@@ -852,7 +858,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
 
   // Compute the inverse column permutation used by QR factorization.
   Eigen::PermutationMatrix<Eigen::Dynamic, Eigen::Dynamic> inverse_permutation =
-      qr_solver.colsPermutation().inverse();
+      qr.colsPermutation().inverse();
 
   // The following loop exploits the fact that the i^th column of A^{-1}
   // is given by the solution to the linear system
@@ -875,9 +881,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
         if (row_end != row_begin) {
           double* solution = workspace.get() + thread_id * num_cols;
           SolveRTRWithSparseRHS<int>(num_cols,
-                                     qr_solver.matrixR().innerIndexPtr(),
-                                     qr_solver.matrixR().outerIndexPtr(),
-                                     &qr_solver.matrixR().data().value(0),
+                                     qr.matrixR().innerIndexPtr(),
+                                     qr.matrixR().outerIndexPtr(),
+                                     &qr.matrixR().data().value(0),
                                      inverse_permutation.indices().coeff(r),
                                      solution);
 

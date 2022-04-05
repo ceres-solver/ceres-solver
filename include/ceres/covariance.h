@@ -246,6 +246,20 @@ class CERES_EXPORT Covariance {
     // used.
     CovarianceAlgorithmType algorithm_type = SPARSE_QR;
 
+    // During QR factorization, if a column with Euclidean norm less
+    // than column_pivot_threshold is encountered it is treated as
+    // zero.
+    //
+    // If column_pivot_threshold < 0, then an automatic default value
+    // of 20*(m+n)*eps*sqrt(max(diag(J’*J))) is used. Here m and n are
+    // the number of rows and columns of the Jacobian (J)
+    // respectively.
+    //
+    // This is an advanced option meant for users who know enough
+    // about their Jacobian matrices that they can determine a value
+    // better than the default.
+    double column_pivot_threshold = -1;
+
     // If the Jacobian matrix is near singular, then inverting J'J
     // will result in unreliable results, e.g, if
     //
