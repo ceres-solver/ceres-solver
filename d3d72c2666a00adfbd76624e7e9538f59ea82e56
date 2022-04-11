@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5a04e66_1d889652",
+        "filename": "docs/source/nnls_covariance.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-04-11T23:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e499a80_a183ac6b",
+      "revId": "d3d72c2666a00adfbd76624e7e9538f59ea82e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0fe8700_31129dde",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-04-05T20:39:08Z",
       "side": 1,
       "message": "\u0027Jacobian (J) respectively\u0027",
+      "revId": "d3d72c2666a00adfbd76624e7e9538f59ea82e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc5713fc_4f83a36f",
+        "filename": "docs/source/nnls_covariance.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-04-11T23:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0fe8700_31129dde",
       "revId": "d3d72c2666a00adfbd76624e7e9538f59ea82e56",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -52,6 +88,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5448cff_69bc43eb",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-04-11T23:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b39fc7b_3ea30432",
+      "revId": "d3d72c2666a00adfbd76624e7e9538f59ea82e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "78627930_e1ba2719",
@@ -65,6 +119,24 @@
       "writtenOn": "2022-04-05T20:39:08Z",
       "side": 1,
       "message": "This is fine I think, but SuiteSparse actually uses -2 for the default, and values in the -2 \u003c x \u003c 0 range mean another \u0027special\u0027 behaviour of \u0027no tolerance\u0027 [1], would you want to permit the user to specify that (currently they cannot)?\n\nPerhaps we should state that the interpretation of any values \u003c 0 is sparse-linear-algebra library specific in the docs and then pass this straight through and/or have our own magic value here which is \u003c the SuiteSparse ones to avoid any conflict, and bound our values to SPQR_DEFAULT_TOL here?\n\n[1]: https://github.com/DrTimothyAldenDavis/SuiteSparse/blob/573e52b4023f1e0e51961e6a80e70df28ec86655/SPQR/Include/SuiteSparseQR_definitions.h#L28",
+      "revId": "d3d72c2666a00adfbd76624e7e9538f59ea82e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63958db0_7e55094c",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-04-11T23:03:51Z",
+      "side": 1,
+      "message": "So the no tolerance thing is the same as zero tolerance IMO which the user can set explicitly if they are so inclined. I looked at the Eigen API also and this is the behavior thats consistent across the two. If you set a value it uses it regardless, otherwise by default is uses the default tolerance.\n\nhttps://eigen.tuxfamily.org/dox/classEigen_1_1SparseQR.html#a05f11a211307cb106e9e47ee9730d7ed\n\nhttps://github.com/eigenteam/eigen-git-mirror/blob/master/test/sparseqr.cpp#L105",
+      "parentUuid": "78627930_e1ba2719",
       "revId": "d3d72c2666a00adfbd76624e7e9538f59ea82e56",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
