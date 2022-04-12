@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c892bf9b_0156c2c9",
+        "filename": "docs/source/nnls_covariance.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-04-12T17:48:15Z",
+      "side": 1,
+      "message": "Jacobian (\u0027J\u0027) - i.e. space after Jacobian and before (",
+      "revId": "d7f9fc074eafcc73492e241cee3afbb90762977a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d2fdb64_9447992d",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-04-12T17:48:15Z",
+      "side": 1,
+      "message": "Jacobian (\u0027J\u0027) - i.e. space after Jacobian and before (",
+      "revId": "d7f9fc074eafcc73492e241cee3afbb90762977a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

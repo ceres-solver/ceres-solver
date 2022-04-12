@@ -139,6 +139,24 @@
       "parentUuid": "78627930_e1ba2719",
       "revId": "d3d72c2666a00adfbd76624e7e9538f59ea82e56",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eb3a2f7_d3d09b83",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-04-12T17:48:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "63958db0_7e55094c",
+      "revId": "d3d72c2666a00adfbd76624e7e9538f59ea82e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
