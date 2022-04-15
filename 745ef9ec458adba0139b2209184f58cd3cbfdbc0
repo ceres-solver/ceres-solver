@@ -16,6 +16,24 @@
       "message": "Note that there\u0027s now an inconsistency how variable templates are named. Some use the `_v` suffix and some don\u0027t.\n\nDropping `_v` makes harder differentiating trait classes (that require referencing the static `::value` member) from actual variable templates.\n\nAlso, all variable templates should ideally be upgraded to use the `inline` modifier.",
       "revId": "745ef9ec458adba0139b2209184f58cd3cbfdbc0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e930037a_998b31dc",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-04-15T13:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af0cd1b9_3b4be2f9",
+      "revId": "745ef9ec458adba0139b2209184f58cd3cbfdbc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
