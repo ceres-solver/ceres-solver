@@ -38,8 +38,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 struct FunctionSample;
 
@@ -116,8 +115,7 @@ CERES_NO_EXPORT void MinimizeInterpolatingPolynomial(
     double* optimal_x,
     double* optimal_value);
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

@@ -47,8 +47,7 @@
 
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class ResidualBlock;
 
@@ -78,7 +77,6 @@ std::string EvaluationToString(const ResidualBlock& block,
                                double* residuals,
                                double** jacobians);
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_RESIDUAL_BLOCK_UTILS_H_

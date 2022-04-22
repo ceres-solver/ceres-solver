@@ -43,8 +43,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -278,7 +277,6 @@ void CXSparseCholesky::FreeNumericFactorization() {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_NO_CXSPARSE

@@ -45,8 +45,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // A thread safe square block sparse implementation of
 // BlockRandomAccessMatrix. Internally a TripletSparseMatrix is used
@@ -125,8 +124,7 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
   friend class BlockRandomAccessSparseMatrixTest;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

@@ -40,8 +40,7 @@
 #include "ceres/solver.h"
 #include "ceres/trust_region_preprocessor.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 std::unique_ptr<Preprocessor> Preprocessor::Create(
     MinimizerType minimizer_type) {
@@ -104,5 +103,4 @@ void SetupCommonMinimizerOptions(PreprocessedProblem* pp) {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -91,15 +91,13 @@ HEADER = """// Ceres Solver - A fast non-linear least squares minimizer
 DYNAMIC_FILE = """
 #include "ceres/partitioned_matrix_view_impl.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 template class PartitionedMatrixView<%s,
                                      %s,
                                      %s>;
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 """
 
 SPECIALIZATION_FILE = """
@@ -110,13 +108,11 @@ SPECIALIZATION_FILE = """
 
 #include "ceres/partitioned_matrix_view_impl.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 template class PartitionedMatrixView<%s, %s, %s>;
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_RESTRICT_SCHUR_SPECIALIZATION
 """
@@ -127,8 +123,7 @@ FACTORY_FILE_HEADER = """
 #include "ceres/linear_solver.h"
 #include "ceres/partitioned_matrix_view.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 PartitionedMatrixViewBase::~PartitionedMatrixViewBase() = default;
 
@@ -150,6 +145,5 @@ FACTORY_FOOTER = """
       matrix, options.elimination_groups[0]);
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 """

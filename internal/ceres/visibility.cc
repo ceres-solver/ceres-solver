@@ -44,8 +44,7 @@
 #include "ceres/pair_hash.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::make_pair;
 using std::max;
@@ -151,5 +150,4 @@ std::unique_ptr<WeightedGraph<int>> CreateSchurComplementGraph(
   return graph;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

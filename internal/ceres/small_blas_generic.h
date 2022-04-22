@@ -35,8 +35,7 @@
 #ifndef CERES_INTERNAL_SMALL_BLAS_GENERIC_H_
 #define CERES_INTERNAL_SMALL_BLAS_GENERIC_H_
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // The following macros are used to share code
 #define CERES_GEMM_OPT_NAIVE_HEADER       \
@@ -311,7 +310,6 @@ static inline void MTV_mat4x1(const int col_a,
 #undef CERES_GEMM_OPT_NAIVE_HEADER
 #undef CERES_GEMM_OPT_STORE_MAT1X4
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_SMALL_BLAS_GENERIC_H_

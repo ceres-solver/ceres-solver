@@ -41,12 +41,10 @@
 
 #include "ceres/partitioned_matrix_view_impl.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 template class PartitionedMatrixView<Eigen::Dynamic,
                                      Eigen::Dynamic,
                                      Eigen::Dynamic>;
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

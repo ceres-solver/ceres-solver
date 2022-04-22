@@ -64,8 +64,7 @@
 #include "ceres/stringprintf.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 namespace {
 // Returns true if two regions of memory, a and b, with sizes size_a and size_b
 // respectively, overlap.
@@ -968,5 +967,4 @@ void ProblemImpl::GetResidualBlocksForParameterBlock(
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

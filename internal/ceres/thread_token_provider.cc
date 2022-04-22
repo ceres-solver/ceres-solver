@@ -34,8 +34,7 @@
 #include <omp.h>
 #endif
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 ThreadTokenProvider::ThreadTokenProvider(int num_threads) {
   (void)num_threads;
@@ -69,5 +68,4 @@ void ThreadTokenProvider::Release(int thread_id) {
 #endif
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

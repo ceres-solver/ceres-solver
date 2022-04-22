@@ -47,8 +47,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // TODO(sameeragarwal): Re-enable this test once serialization is
 // working again.
@@ -340,5 +339,4 @@ namespace internal {
 //   EXPECT_TRUE(PreconditionerValuesMatch());
 // }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

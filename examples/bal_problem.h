@@ -39,8 +39,7 @@
 
 #include <string>
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 
 class BALProblem {
  public:
@@ -105,7 +104,6 @@ class BALProblem {
   double* parameters_;
 };
 
-}  // namespace examples
-}  // namespace ceres
+}  // namespace ceres::examples
 
 #endif  // CERES_EXAMPLES_BAL_PROBLEM_H_

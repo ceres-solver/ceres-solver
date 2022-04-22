@@ -36,8 +36,7 @@
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Noise factor for randomized cost function.
 static constexpr double kNoiseFactor = 0.01;
@@ -144,7 +143,6 @@ class CERES_NO_EXPORT RandomizedCostFunction : public SizedCostFunction<1, 1> {
   RandomizedFunctor functor_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_NUMERIC_DIFF_TEST_UTILS_H_

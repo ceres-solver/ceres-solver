@@ -36,8 +36,7 @@
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 std::unique_ptr<ScratchEvaluatePreparer[]> ScratchEvaluatePreparer::Create(
     const Program& program, int num_threads) {
@@ -75,5 +74,4 @@ void ScratchEvaluatePreparer::Prepare(const ResidualBlock* residual_block,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

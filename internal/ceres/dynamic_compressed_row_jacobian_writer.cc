@@ -39,8 +39,7 @@
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::pair;
 using std::vector;
@@ -100,5 +99,4 @@ void DynamicCompressedRowJacobianWriter::Write(int residual_id,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

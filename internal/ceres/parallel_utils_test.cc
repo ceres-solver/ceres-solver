@@ -38,8 +38,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Tests that unfolding linear iterations to triangular iterations produces
 // indices that are in-range and unique.
@@ -60,5 +59,4 @@ TEST(LinearIndexToUpperTriangularIndexTest, UniqueAndValid) {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

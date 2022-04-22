@@ -35,8 +35,7 @@
 #include "ceres/internal/eigen.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 BlockRandomAccessDenseMatrix::BlockRandomAccessDenseMatrix(
     const std::vector<int>& blocks) {
@@ -83,5 +82,4 @@ void BlockRandomAccessDenseMatrix::SetZero() {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

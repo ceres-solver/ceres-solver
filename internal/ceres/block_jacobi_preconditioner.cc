@@ -36,8 +36,7 @@
 #include "ceres/casts.h"
 #include "ceres/internal/eigen.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 BlockJacobiPreconditioner::BlockJacobiPreconditioner(
     const BlockSparseMatrix& A) {
@@ -96,5 +95,4 @@ void BlockJacobiPreconditioner::RightMultiply(const double* x,
   m_->RightMultiply(x, y);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

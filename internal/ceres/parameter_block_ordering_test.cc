@@ -43,8 +43,7 @@
 #include "ceres/stl_util.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using VertexSet = std::unordered_set<ParameterBlock*>;
 
@@ -175,5 +174,4 @@ TEST_F(SchurOrderingTest, OneFixed) {
   EXPECT_EQ(ordering.back(), parameter_blocks[0]);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

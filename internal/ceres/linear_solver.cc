@@ -43,8 +43,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 LinearSolver::~LinearSolver() = default;
 
@@ -120,5 +119,4 @@ std::unique_ptr<LinearSolver> LinearSolver::Create(
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

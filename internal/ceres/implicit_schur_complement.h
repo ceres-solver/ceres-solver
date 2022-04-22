@@ -44,8 +44,7 @@
 #include "ceres/partitioned_matrix_view.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class BlockSparseMatrix;
 
@@ -163,8 +162,7 @@ class CERES_NO_EXPORT ImplicitSchurComplement final : public LinearOperator {
   mutable Vector tmp_f_cols_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

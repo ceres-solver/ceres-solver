@@ -43,8 +43,7 @@
 #include "ceres/sparse_matrix.h"
 #include "ceres/wall_time.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class CERES_NO_EXPORT GradientProblemEvaluator final : public Evaluator {
  public:
@@ -97,8 +96,7 @@ class CERES_NO_EXPORT GradientProblemEvaluator final : public Evaluator {
   ::ceres::internal::ExecutionSummary execution_summary_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

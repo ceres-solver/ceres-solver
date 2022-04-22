@@ -39,8 +39,7 @@
 #include "ceres/schur_eliminator.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 SchurJacobiPreconditioner::SchurJacobiPreconditioner(
     const CompressedRowBlockStructure& bs, Preconditioner::Options options)
@@ -99,5 +98,4 @@ void SchurJacobiPreconditioner::RightMultiply(const double* x,
 
 int SchurJacobiPreconditioner::num_rows() const { return m_->num_rows(); }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

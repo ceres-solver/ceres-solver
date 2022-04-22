@@ -36,8 +36,7 @@
 
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -510,5 +509,4 @@ TEST_F(ThreeParameterCostFunctorTest,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

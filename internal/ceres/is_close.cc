@@ -33,8 +33,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 bool IsClose(double x,
              double y,
              double relative_precision,
@@ -57,5 +56,4 @@ bool IsClose(double x,
   }
   return *relative_error < std::fabs(relative_precision);
 }
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

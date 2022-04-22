@@ -39,8 +39,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TripletSparseMatrix::TripletSparseMatrix()
     : num_rows_(0), num_cols_(0), max_num_nonzeros_(0), num_nonzeros_(0) {}
@@ -305,5 +304,4 @@ std::unique_ptr<TripletSparseMatrix> TripletSparseMatrix::CreateRandomMatrix(
       options.num_rows, options.num_cols, rows, cols, values);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

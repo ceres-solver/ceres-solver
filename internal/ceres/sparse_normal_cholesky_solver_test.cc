@@ -41,8 +41,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // TODO(sameeragarwal): These tests needs to be re-written, since
 // SparseNormalCholeskySolver is a composition of two classes now,
@@ -202,5 +201,4 @@ TEST_F(SparseNormalCholeskySolverTest,
 }
 #endif  // CERES_USE_EIGEN_SPARSE
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

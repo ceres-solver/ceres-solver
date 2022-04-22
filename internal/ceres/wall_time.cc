@@ -44,8 +44,7 @@
 #include <sys/time.h>
 #endif
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 double WallTimeInSeconds() {
 #ifdef CERES_USE_OPENMP
@@ -103,5 +102,4 @@ void EventLogger::AddEvent(const std::string& event_name) {
                 absolute_time_delta);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

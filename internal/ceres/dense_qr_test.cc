@@ -43,8 +43,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using Param = DenseLinearAlgebraLibraryType;
 
@@ -123,5 +122,4 @@ decltype(auto) MakeValues() {
 
 INSTANTIATE_TEST_SUITE_P(_, DenseQRTest, MakeValues(), ParamInfoToString);
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

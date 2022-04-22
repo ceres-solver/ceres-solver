@@ -43,8 +43,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // This class implements the SystemTestProblem interface and provides
 // access to an implementation of Powell's singular function.
@@ -220,5 +219,4 @@ TEST_F(PowellTest, SparseNormalCholeskyUsingEigenSparse) {
 }
 #endif  // CERES_USE_EIGEN_SPARSE
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

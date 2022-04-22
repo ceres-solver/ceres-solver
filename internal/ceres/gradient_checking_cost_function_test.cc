@@ -50,8 +50,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 using testing::_;
@@ -526,5 +525,4 @@ TEST(GradientCheckingProblemImpl, ConstrainedProblemBoundsArePropagated) {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

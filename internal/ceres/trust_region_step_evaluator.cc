@@ -35,8 +35,7 @@
 
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TrustRegionStepEvaluator::TrustRegionStepEvaluator(
     const double initial_cost, const int max_consecutive_nonmonotonic_steps)
@@ -111,5 +110,4 @@ void TrustRegionStepEvaluator::StepAccepted(const double cost,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

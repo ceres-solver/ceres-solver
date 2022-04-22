@@ -38,8 +38,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/preconditioner.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class BlockSparseMatrix;
 struct CompressedRowBlockStructure;
@@ -76,8 +75,7 @@ class CERES_NO_EXPORT BlockJacobiPreconditioner
   std::unique_ptr<BlockRandomAccessDiagonalMatrix> m_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

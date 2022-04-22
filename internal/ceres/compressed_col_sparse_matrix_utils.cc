@@ -36,8 +36,7 @@
 #include "ceres/internal/export.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -71,7 +70,7 @@ void CompressedColumnScalarMatrixToBlockMatrix(const int* scalar_rows,
   for (int col_block = 0; col_block < num_col_blocks; ++col_block) {
     int column_size = 0;
     for (int idx = scalar_cols[c]; idx < scalar_cols[c + 1]; ++idx) {
-      vector<int>::const_iterator it = std::lower_bound(
+      auto it = std::lower_bound(
           row_block_starts.begin(), row_block_starts.end(), scalar_rows[idx]);
       // Since we are using lower_bound, it will return the row id
       // where the row block starts. For everything but the first row
@@ -118,5 +117,4 @@ void BlockOrderingToScalarOrdering(const vector<int>& blocks,
     }
   }
 }
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

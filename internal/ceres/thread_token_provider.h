@@ -38,8 +38,7 @@
 #include "ceres/concurrent_queue.h"
 #endif
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Helper for C++ thread number identification that is similar to
 // omp_get_thread_num() behaviour. This is necessary to support C++
@@ -91,7 +90,6 @@ class CERES_NO_EXPORT ThreadTokenProvider {
   ThreadTokenProvider& operator=(ThreadTokenProvider&) = delete;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_THREAD_TOKEN_PROVIDER_H_

@@ -44,8 +44,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 namespace {
 const double kMaxMu = 1.0;
 const double kMinMu = 1e-8;
@@ -710,5 +709,4 @@ bool DoglegStrategy::ComputeSubspaceModel(SparseMatrix* jacobian) {
   return true;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

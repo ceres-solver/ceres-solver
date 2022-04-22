@@ -40,8 +40,7 @@
 #include "ceres/cost_function.h"
 #include "ceres/internal/parameter_dims.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // For fixed size cost functors
 template <typename Functor, typename T, int... Indices>
@@ -107,7 +106,6 @@ inline bool VariadicEvaluate(const Functor& functor,
   return VariadicEvaluateImpl<ParameterDims>(functor, input, output, &functor);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_PUBLIC_INTERNAL_VARIADIC_EVALUATE_H_

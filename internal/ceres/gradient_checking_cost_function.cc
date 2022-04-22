@@ -52,8 +52,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::abs;
 using std::max;
@@ -280,5 +279,4 @@ std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(
   return gradient_checking_problem_impl;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

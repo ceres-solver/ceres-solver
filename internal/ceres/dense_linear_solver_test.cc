@@ -40,8 +40,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using Param = ::testing::
     tuple<LinearSolverType, DenseLinearAlgebraLibraryType, bool, int>;
@@ -136,5 +135,4 @@ INSTANTIATE_TEST_SUITE_P(
 
 #endif
 }  // namespace
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

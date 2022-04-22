@@ -40,8 +40,7 @@
 #include "Eigen/Core"
 #include "normalize_angle.h"
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 
 // The state for each vertex in the pose graph.
 struct Pose2d {
@@ -95,7 +94,6 @@ inline std::istream& operator>>(std::istream& input, Constraint2d& constraint) {
   return input;
 }
 
-}  // namespace examples
-}  // namespace ceres
+}  // namespace ceres::examples
 
 #endif  // CERES_EXAMPLES_POSE_GRAPH_2D_TYPES_H_

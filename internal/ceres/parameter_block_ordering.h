@@ -40,8 +40,7 @@
 #include "ceres/ordered_groups.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class Program;
 class ParameterBlock;
@@ -88,8 +87,7 @@ CERES_NO_EXPORT std::unique_ptr<Graph<ParameterBlock*>> CreateHessianGraph(
 CERES_NO_EXPORT void OrderingToGroupSizes(
     const ParameterBlockOrdering* ordering, std::vector<int>* group_sizes);
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

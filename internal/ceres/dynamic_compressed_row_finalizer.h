@@ -35,8 +35,7 @@
 #include "ceres/dynamic_compressed_row_sparse_matrix.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 struct CERES_NO_EXPORT DynamicCompressedRowJacobianFinalizer {
   void operator()(SparseMatrix* base_jacobian, int num_parameters) {
@@ -46,7 +45,6 @@ struct CERES_NO_EXPORT DynamicCompressedRowJacobianFinalizer {
   }
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_DYNAMIC_COMPRESED_ROW_FINALISER_H_

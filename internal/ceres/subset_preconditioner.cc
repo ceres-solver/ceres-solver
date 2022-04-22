@@ -40,8 +40,7 @@
 #include "ceres/sparse_cholesky.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 SubsetPreconditioner::SubsetPreconditioner(Preconditioner::Options options,
                                            const BlockSparseMatrix& A)
@@ -114,5 +113,4 @@ bool SubsetPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   return true;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

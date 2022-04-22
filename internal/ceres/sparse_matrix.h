@@ -40,8 +40,7 @@
 #include "ceres/linear_operator.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // This class defines the interface for storing and manipulating
 // sparse matrices. The key property that differentiates different
@@ -103,7 +102,6 @@ class CERES_NO_EXPORT SparseMatrix : public LinearOperator {
   virtual int num_nonzeros() const = 0;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_SPARSE_MATRIX_H_

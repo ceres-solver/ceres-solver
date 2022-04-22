@@ -52,8 +52,7 @@
 #include "Eigen/SparseCholesky"
 #endif
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 DynamicSparseNormalCholeskySolver::DynamicSparseNormalCholeskySolver(
     LinearSolver::Options options)
@@ -285,5 +284,4 @@ DynamicSparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
 #endif
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

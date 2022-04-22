@@ -41,8 +41,7 @@
 #include "ceres/types.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TEST(ConjugateGradientTest, Solves3x3IdentitySystem) {
   double diagonal[] = {1.0, 1.0, 1.0};
@@ -132,5 +131,4 @@ TEST(ConjuateGradientTest, Solves3x3SymmetricSystem) {
   ASSERT_DOUBLE_EQ(2, x(2));
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

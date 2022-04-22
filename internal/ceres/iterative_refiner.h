@@ -39,8 +39,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class SparseCholesky;
 class SparseMatrix;
@@ -91,7 +90,6 @@ class CERES_NO_EXPORT IterativeRefiner {
   Vector lhs_x_solution_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_ITERATIVE_REFINER_H_

@@ -38,8 +38,7 @@
 #include "ceres/residual_block.h"
 #include "ceres/sparse_matrix.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 void BlockEvaluatePreparer::Init(int const* const* jacobian_layout,
                                  int max_derivatives_per_residual_block) {
@@ -78,5 +77,4 @@ void BlockEvaluatePreparer::Prepare(const ResidualBlock* residual_block,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

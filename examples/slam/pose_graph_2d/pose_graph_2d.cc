@@ -49,8 +49,7 @@
 
 DEFINE_string(input, "", "The pose graph definition filename in g2o format.");
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 namespace {
 
 // Constructs the nonlinear least squares optimization problem from the pose
@@ -141,8 +140,7 @@ bool OutputPoses(const std::string& filename,
 }
 
 }  // namespace
-}  // namespace examples
-}  // namespace ceres
+}  // namespace ceres::examples
 
 int main(int argc, char** argv) {
   google::InitGoogleLogging(argv[0]);

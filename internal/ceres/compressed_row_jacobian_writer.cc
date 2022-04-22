@@ -44,8 +44,7 @@
 #include "ceres/residual_block.h"
 #include "ceres/scratch_evaluate_preparer.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::adjacent_find;
 using std::make_pair;
@@ -238,5 +237,4 @@ void CompressedRowJacobianWriter::Write(int residual_id,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -40,8 +40,7 @@
 #include "ceres/small_blas.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
@@ -380,5 +379,4 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

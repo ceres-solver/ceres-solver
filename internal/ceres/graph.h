@@ -42,8 +42,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // A unweighted undirected graph templated over the vertex ids. Vertex
 // should be hashable.
@@ -206,7 +205,6 @@ class WeightedGraph {
       edge_weights_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_GRAPH_H_

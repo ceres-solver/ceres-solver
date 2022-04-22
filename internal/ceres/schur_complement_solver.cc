@@ -52,8 +52,7 @@
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::make_pair;
 using std::pair;
@@ -414,5 +413,4 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingConjugateGradients(
       lhs_adapter.get(), rhs(), cg_per_solve_options, solution);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
