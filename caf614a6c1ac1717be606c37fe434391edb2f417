@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34d0aaa4_f0fdfa81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-04-22T21:58:47Z",
+      "side": 1,
+      "message": "Merging",
+      "revId": "caf614a6c1ac1717be606c37fe434391edb2f417",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e30b0f95_43699123",
