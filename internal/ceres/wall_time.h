@@ -39,8 +39,7 @@
 #include "ceres/stringprintf.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Returns time, in seconds, from some arbitrary starting point. If
 // OpenMP is available then the high precision openmp_get_wtime()
@@ -84,8 +83,7 @@ class CERES_NO_EXPORT EventLogger {
   std::string events_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

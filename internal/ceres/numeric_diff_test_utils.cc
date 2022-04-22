@@ -39,8 +39,7 @@
 #include "ceres/types.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 bool EasyFunctor::operator()(const double* x1,
                              const double* x2,
@@ -265,5 +264,4 @@ void RandomizedFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

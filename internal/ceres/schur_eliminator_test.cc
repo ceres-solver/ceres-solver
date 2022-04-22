@@ -51,8 +51,7 @@
 // TODO(sameeragarwal): Reduce the size of these tests and redo the
 // parameterization to be more efficient.
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class SchurEliminatorTest : public ::testing::Test {
  protected:
@@ -369,5 +368,4 @@ TEST(SchurEliminatorForOneFBlock, MatchesSchurEliminator) {
       << actual_e_sol;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

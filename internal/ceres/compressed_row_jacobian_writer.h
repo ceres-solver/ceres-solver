@@ -41,8 +41,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/scratch_evaluate_preparer.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class CompressedRowSparseMatrix;
 class Program;
@@ -107,7 +106,6 @@ class CERES_NO_EXPORT CompressedRowJacobianWriter {
   Program* program_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_COMPRESSED_ROW_JACOBIAN_WRITER_H_

@@ -41,8 +41,7 @@
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -209,5 +208,4 @@ std::unique_ptr<SparseMatrix> BlockJacobianWriter::CreateJacobian() const {
   return std::make_unique<BlockSparseMatrix>(bs);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

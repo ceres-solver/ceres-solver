@@ -46,12 +46,10 @@
 
 #include "ceres/schur_eliminator_impl.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 template class SchurEliminator<2, 4, 6>;
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_RESTRICT_SCHUR_SPECIALIZATION

@@ -37,8 +37,7 @@
 #include "ceres/rotation.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 namespace {
 
@@ -292,5 +291,4 @@ TEST(AutoDiffManifold, QuaternionDeltaJustBelowPi) {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -44,8 +44,7 @@
 #include "ceres/sized_cost_function.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::string;
 
@@ -551,5 +550,4 @@ TEST(Solver, ZeroSizedManifoldHoldsParameterBlockConstant) {
   EXPECT_EQ(y, 1.0);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

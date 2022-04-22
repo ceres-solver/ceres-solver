@@ -39,8 +39,7 @@
 #include "ceres/concurrent_queue.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // A thread-safe thread pool with an unbounded task queue and a resizable number
 // of workers.  The size of the thread pool can be increased but never decreased
@@ -115,7 +114,6 @@ class CERES_NO_EXPORT ThreadPool {
   std::mutex thread_pool_mutex_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_THREAD_POOL_H_

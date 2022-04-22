@@ -38,8 +38,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Corrector is responsible for applying the second order correction
 // to the residual and jacobian of a least squares problem based on a
@@ -87,8 +86,7 @@ class CERES_NO_EXPORT Corrector {
   double residual_scaling_;
   double alpha_sq_norm_;
 };
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

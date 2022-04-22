@@ -3,8 +3,7 @@
 #include "ceres/manifold.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Adapter to wrap LocalParameterization and make them look like Manifolds.
 //
@@ -56,5 +55,4 @@ class CERES_NO_EXPORT ManifoldAdapter final : public Manifold {
   const LocalParameterization* local_parameterization_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

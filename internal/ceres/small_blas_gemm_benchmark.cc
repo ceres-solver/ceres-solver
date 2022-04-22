@@ -34,8 +34,7 @@
 #include "benchmark/benchmark.h"
 #include "ceres/small_blas.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Benchmarking matrix-matrix multiply routines and optimizing memory
 // access requires that we make sure that they are not just sitting in
@@ -213,7 +212,6 @@ BENCHMARK_DYNAMIC_MMT_FN(MatrixTransposeMatrixMultiplyNaive, 3, 9, 9)
 #undef BENCHMARK_DYNAMIC_MMT_FN
 #undef BENCHMARK_STATIC_MMT_FN
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 BENCHMARK_MAIN();

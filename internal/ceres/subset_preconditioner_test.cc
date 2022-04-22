@@ -42,8 +42,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 namespace {
 
@@ -206,5 +205,4 @@ INSTANTIATE_TEST_SUITE_P(SubsetPreconditionerWithEigenSparse,
                          ParamInfoToString);
 #endif
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

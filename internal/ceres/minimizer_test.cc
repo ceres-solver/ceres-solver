@@ -34,8 +34,7 @@
 #include "ceres/solver.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class FakeIterationCallback : public IterationCallback {
  public:
@@ -94,5 +93,4 @@ TEST(Minimizer, UserSuccessUpdatesSummaryMessage) {
             "User callback returned SOLVER_TERMINATE_SUCCESSFULLY.");
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

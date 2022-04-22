@@ -42,8 +42,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // A thread safe block diagonal matrix implementation of
 // BlockRandomAccessMatrix.
@@ -96,8 +95,7 @@ class CERES_NO_EXPORT BlockRandomAccessDiagonalMatrix
   friend class BlockRandomAccessDiagonalMatrixTest;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

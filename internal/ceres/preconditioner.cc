@@ -32,8 +32,7 @@
 
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 Preconditioner::~Preconditioner() = default;
 
@@ -70,5 +69,4 @@ int SparseMatrixPreconditionerWrapper::num_rows() const {
   return matrix_->num_rows();
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

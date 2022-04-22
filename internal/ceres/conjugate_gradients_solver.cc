@@ -49,8 +49,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 namespace {
 
 bool IsZeroOrInfinity(double x) { return ((x == 0.0) || std::isinf(x)); }
@@ -249,5 +248,4 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   return summary;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

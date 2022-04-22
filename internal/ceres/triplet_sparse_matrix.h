@@ -40,8 +40,7 @@
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // An implementation of the SparseMatrix interface to store and
 // manipulate sparse matrices in triplet (i,j,s) form.  This object is
@@ -154,8 +153,7 @@ class CERES_NO_EXPORT TripletSparseMatrix final : public SparseMatrix {
   std::unique_ptr<double[]> values_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

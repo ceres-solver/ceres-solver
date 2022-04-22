@@ -38,8 +38,7 @@
 
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // A thread-safe multi-producer, multi-consumer queue for queueing items that
 // are typically handled asynchronously by multiple threads. The ConcurrentQueue
@@ -152,7 +151,6 @@ class ConcurrentQueue {
   bool wait_{true};
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_CONCURRENT_QUEUE_H_

@@ -43,8 +43,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 LevenbergMarquardtStrategy::LevenbergMarquardtStrategy(
     const TrustRegionStrategy::Options& options)
@@ -161,5 +160,4 @@ void LevenbergMarquardtStrategy::StepRejected(double step_quality) {
 
 double LevenbergMarquardtStrategy::Radius() const { return radius_; }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

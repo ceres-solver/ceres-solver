@@ -33,8 +33,7 @@
 #include "ceres/internal/eigen.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 void DetectStructure(const CompressedRowBlockStructure& bs,
                      const int num_eliminate_blocks,
@@ -119,5 +118,4 @@ void DetectStructure(const CompressedRowBlockStructure& bs,
   // clang-format on
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

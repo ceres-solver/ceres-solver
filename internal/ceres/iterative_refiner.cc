@@ -36,8 +36,7 @@
 #include "ceres/sparse_cholesky.h"
 #include "ceres/sparse_matrix.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 IterativeRefiner::IterativeRefiner(const int max_num_iterations)
     : max_num_iterations_(max_num_iterations) {}
@@ -71,5 +70,4 @@ void IterativeRefiner::Refine(const SparseMatrix& lhs,
   }
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

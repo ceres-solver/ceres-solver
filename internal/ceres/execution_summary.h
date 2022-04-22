@@ -39,8 +39,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/wall_time.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 struct CallStatistics {
   CallStatistics() = default;
@@ -85,7 +84,6 @@ class ScopedExecutionTimer {
   ExecutionSummary* summary_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_EXECUTION_SUMMARY_H_

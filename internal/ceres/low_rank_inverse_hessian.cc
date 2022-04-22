@@ -35,8 +35,7 @@
 #include "ceres/internal/eigen.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::list;
 
@@ -179,5 +178,4 @@ void LowRankInverseHessian::RightMultiply(const double* x_ptr,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

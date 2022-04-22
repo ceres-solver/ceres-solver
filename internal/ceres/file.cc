@@ -36,8 +36,7 @@
 
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::string;
 
@@ -90,5 +89,4 @@ string JoinPath(const string& dirname, const string& basename) {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

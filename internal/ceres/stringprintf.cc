@@ -38,8 +38,7 @@
 
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::string;
 
@@ -118,5 +117,4 @@ void StringAppendF(string* dst, const char* format, ...) {
   va_end(ap);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

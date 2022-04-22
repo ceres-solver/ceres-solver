@@ -42,8 +42,7 @@
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 CgnrSolver::CgnrSolver(LinearSolver::Options options)
     : options_(std::move(options)) {
@@ -108,5 +107,4 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
   return summary;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

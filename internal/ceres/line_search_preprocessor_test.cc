@@ -37,8 +37,7 @@
 #include "ceres/solver.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TEST(LineSearchPreprocessor, ZeroProblem) {
   ProblemImpl problem;
@@ -134,5 +133,4 @@ TEST(LineSearchPreprocessor, NormalOperation) {
   EXPECT_TRUE(pp.evaluator.get() != nullptr);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

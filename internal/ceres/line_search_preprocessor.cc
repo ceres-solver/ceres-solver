@@ -41,8 +41,7 @@
 #include "ceres/program.h"
 #include "ceres/wall_time.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 namespace {
 
 bool IsProgramValid(const Program& program, std::string* error) {
@@ -102,5 +101,4 @@ bool LineSearchPreprocessor::Preprocess(const Solver::Options& options,
   return true;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -39,8 +39,7 @@
 #include "ceres/map_util.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -222,5 +221,4 @@ void CanonicalViewsClustering::ComputeClusterMembership(
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

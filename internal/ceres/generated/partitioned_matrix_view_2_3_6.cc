@@ -46,12 +46,10 @@
 
 #include "ceres/partitioned_matrix_view_impl.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 template class PartitionedMatrixView<2, 3, 6>;
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_RESTRICT_SCHUR_SPECIALIZATION

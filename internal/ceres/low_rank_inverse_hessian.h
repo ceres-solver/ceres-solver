@@ -40,8 +40,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/linear_operator.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // LowRankInverseHessian is a positive definite approximation to the
 // Hessian using the limited memory variant of the
@@ -102,7 +101,6 @@ class CERES_NO_EXPORT LowRankInverseHessian final : public LinearOperator {
   std::list<int> indices_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_LOW_RANK_INVERSE_HESSIAN_H_

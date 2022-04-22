@@ -44,8 +44,7 @@
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 SchurEliminatorBase::~SchurEliminatorBase() = default;
 
@@ -161,5 +160,4 @@ std::unique_ptr<SchurEliminatorBase> SchurEliminatorBase::Create(
                                           Eigen::Dynamic>>(options);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

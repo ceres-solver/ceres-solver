@@ -39,8 +39,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Macros to help us define virtual methods which we do not expect to
 // use/call in this test.
@@ -163,5 +162,4 @@ TEST_F(IterativeRefinerTest,
               std::numeric_limits<double>::epsilon() * 10);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

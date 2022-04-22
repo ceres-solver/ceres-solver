@@ -34,8 +34,7 @@
 
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TEST(TripletSparseMatrix, DefaultConstructorReturnsEmptyObject) {
   TripletSparseMatrix m;
@@ -344,5 +343,4 @@ TEST(TripletSparseMatrix, Resize) {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -37,8 +37,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Extract the block sparsity pattern of the scalar compressed columns
 // matrix and return it in compressed column form. The compressed
@@ -141,8 +140,7 @@ void SolveRTRWithSparseRHS(IntegerType num_cols,
   SolveUpperTriangularInPlace(num_cols, rows, cols, values, solution);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

@@ -38,8 +38,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 ImplicitSchurComplement::ImplicitSchurComplement(
     const LinearSolver::Options& options)
@@ -212,5 +211,4 @@ void ImplicitSchurComplement::UpdateRhs() {
   A_->LeftMultiplyF(tmp_rows_.data(), rhs_.data());
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

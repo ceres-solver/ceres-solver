@@ -45,8 +45,7 @@
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
@@ -110,5 +109,4 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
   return summary;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

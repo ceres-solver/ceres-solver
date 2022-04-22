@@ -45,8 +45,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 const double kTolerance = 1e-12;
@@ -832,5 +831,4 @@ TEST(GradientChecker, TestCorrectnessWithManifolds) {
   EXPECT_EQ(CONVERGENCE, summary.termination_type);
   EXPECT_LE(summary.final_cost, 1e-12);
 }
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

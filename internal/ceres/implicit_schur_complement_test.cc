@@ -47,8 +47,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using testing::AssertionResult;
 
@@ -206,5 +205,4 @@ TEST_F(ImplicitSchurComplementTest, SchurMatrixValuesTest) {
   EXPECT_TRUE(TestImplicitSchurComplement(D_.get()));
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

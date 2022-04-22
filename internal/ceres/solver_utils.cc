@@ -40,8 +40,7 @@
 #include "cuda_runtime.h"
 #endif  // CERES_NO_CUDA
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // clang-format off
 #define CERES_EIGEN_VERSION                 \
@@ -97,5 +96,4 @@ std::string VersionString() {
   return value;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

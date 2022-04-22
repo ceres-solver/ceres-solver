@@ -40,8 +40,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::set;
 using std::vector;
@@ -201,5 +200,4 @@ TEST(VisibilityTest, NoEBlocks) {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

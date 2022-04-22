@@ -30,10 +30,8 @@
 
 #include "ceres/block_random_access_matrix.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 BlockRandomAccessMatrix::~BlockRandomAccessMatrix() = default;
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

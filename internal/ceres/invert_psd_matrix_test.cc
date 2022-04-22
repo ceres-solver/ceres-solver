@@ -33,8 +33,7 @@
 #include "ceres/internal/eigen.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 static constexpr bool kFullRank = true;
 static constexpr bool kRankDeficient = false;
@@ -109,5 +108,4 @@ TEST(InvertPSDMatrix, DynamicRankDeficient5x5) {
               10 * std::numeric_limits<double>::epsilon());
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
