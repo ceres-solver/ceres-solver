@@ -33,6 +33,24 @@
       "message": "I don\u0027t see how this compiles without errors when normal_prior.cc is not updated, I assume it was not staged?",
       "revId": "caf614a6c1ac1717be606c37fe434391edb2f417",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38332889_64896e4a",
+        "filename": "include/ceres/normal_prior.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-04-22T21:53:00Z",
+      "side": 1,
+      "message": "it is updated, you just didn\u0027t see all the files :).\nMerging!",
+      "parentUuid": "e30b0f95_43699123",
+      "revId": "caf614a6c1ac1717be606c37fe434391edb2f417",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
