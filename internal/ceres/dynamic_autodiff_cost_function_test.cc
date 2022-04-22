@@ -37,8 +37,7 @@
 
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -805,5 +804,4 @@ TEST(DynamicAutoDiffCostFunction,
   EXPECT_EQ(residual, target_value);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

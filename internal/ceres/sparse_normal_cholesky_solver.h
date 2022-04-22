@@ -45,8 +45,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class CompressedRowSparseMatrix;
 class InnerProductComputer;
@@ -75,7 +74,6 @@ class CERES_NO_EXPORT SparseNormalCholeskySolver
   std::unique_ptr<InnerProductComputer> inner_product_computer_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_

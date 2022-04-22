@@ -45,8 +45,7 @@
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::map;
 using std::ostream;
@@ -883,5 +882,4 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
   return true;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -37,8 +37,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 std::unique_ptr<Minimizer> Minimizer::Create(MinimizerType minimizer_type) {
   if (minimizer_type == TRUST_REGION) {
@@ -89,5 +88,4 @@ bool Minimizer::RunCallbacks(const Minimizer::Options& options,
   return false;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

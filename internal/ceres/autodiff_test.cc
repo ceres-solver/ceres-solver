@@ -33,8 +33,7 @@
 #include "ceres/random.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 template <typename T>
 inline T& RowMajorAccess(T* base, int rows, int cols, int i, int j) {
@@ -665,5 +664,4 @@ TEST(AutoDiff, AlignedAllocationTest) {
   x[0] = x[0] + JetT(1.0);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

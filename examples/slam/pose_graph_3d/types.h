@@ -40,8 +40,7 @@
 #include "Eigen/Core"
 #include "Eigen/Geometry"
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 
 struct Pose3d {
   Eigen::Vector3d p;
@@ -65,7 +64,7 @@ inline std::istream& operator>>(std::istream& input, Pose3d& pose) {
 using MapOfPoses =
     std::map<int,
              Pose3d,
-             std::less<int>,
+             std::less<>,
              Eigen::aligned_allocator<std::pair<const int, Pose3d>>>;
 
 // The constraint between two vertices in the pose graph. The constraint is the
@@ -107,7 +106,6 @@ inline std::istream& operator>>(std::istream& input, Constraint3d& constraint) {
 using VectorOfConstraints =
     std::vector<Constraint3d, Eigen::aligned_allocator<Constraint3d>>;
 
-}  // namespace examples
-}  // namespace ceres
+}  // namespace ceres::examples
 
 #endif  // EXAMPLES_CERES_TYPES_H_

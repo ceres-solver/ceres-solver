@@ -39,8 +39,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/sparse_matrix.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Structure defining a linear least squares problem and if possible
 // ground truth solutions. To be used by various LinearSolver tests.
@@ -85,8 +84,7 @@ bool DumpLinearLeastSquaresProblem(const std::string& filename_base,
                                    const double* b,
                                    const double* x,
                                    int num_eliminate_blocks);
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

@@ -42,8 +42,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class Evaluator;
 class LineSearchFunction;
@@ -302,7 +301,6 @@ class CERES_NO_EXPORT WolfeLineSearch final : public LineSearch {
                 Summary* summary) const final;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_LINE_SEARCH_H_

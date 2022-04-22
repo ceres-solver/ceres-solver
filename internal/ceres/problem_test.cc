@@ -51,8 +51,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -2805,5 +2804,4 @@ TEST(ProblemEvaluateResidualBlock, OldPointCallsEvaluationCallback) {
                                             jacobians));
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

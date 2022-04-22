@@ -43,8 +43,7 @@
 
 #include "glog/logging.h"
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 
 template <typename Real>
 class PGMImage {
@@ -311,7 +310,6 @@ const std::vector<Real>& PGMImage<Real>::data() const {
   return data_;
 }
 
-}  // namespace examples
-}  // namespace ceres
+}  // namespace ceres::examples
 
 #endif  // CERES_EXAMPLES_PGM_IMAGE_H_

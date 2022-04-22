@@ -73,8 +73,7 @@
 
 #include "ceres/internal/disable_warnings.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class CompressedRowSparseMatrix;
 class TripletSparseMatrix;
@@ -312,8 +311,7 @@ class CERES_NO_EXPORT SuiteSparseCholesky final : public SparseCholesky {
   cholmod_factor* factor_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

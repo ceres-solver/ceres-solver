@@ -40,8 +40,7 @@
 #include "ceres/problem_impl.h"
 #include "ceres/solver.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class Program;
 class LinearSolver;
@@ -103,7 +102,6 @@ class CERES_NO_EXPORT CoordinateDescentMinimizer final : public Minimizer {
   ContextImpl* context_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_COORDINATE_DESCENT_MINIMIZER_H_

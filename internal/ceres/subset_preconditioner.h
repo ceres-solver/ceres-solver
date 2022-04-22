@@ -37,8 +37,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/preconditioner.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class BlockSparseMatrix;
 class SparseCholesky;
@@ -89,8 +88,7 @@ class CERES_NO_EXPORT SubsetPreconditioner
   std::unique_ptr<InnerProductComputer> inner_product_computer_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

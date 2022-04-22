@@ -35,8 +35,7 @@
 #include "ceres/autodiff_manifold.h"
 #include "normalize_angle.h"
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 
 // Defines a manifold for updating the angle to be constrained in [-pi to pi).
 class AngleManifold {
@@ -64,7 +63,6 @@ class AngleManifold {
   }
 };
 
-}  // namespace examples
-}  // namespace ceres
+}  // namespace ceres::examples
 
 #endif  // CERES_EXAMPLES_POSE_GRAPH_2D_ANGLE_MANIFOLD_H_

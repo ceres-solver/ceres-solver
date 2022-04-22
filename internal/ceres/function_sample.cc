@@ -32,8 +32,7 @@
 
 #include "ceres/stringprintf.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 FunctionSample::FunctionSample()
     : x(0.0),
@@ -75,5 +74,4 @@ std::string FunctionSample::ToDebugString() const {
       gradient_is_valid);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

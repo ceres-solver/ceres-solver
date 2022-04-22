@@ -30,8 +30,7 @@
 
 #include "ceres/parallel_utils.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 void LinearIndexToUpperTriangularIndex(int k, int n, int* i, int* j) {
   // This works by unfolding a rectangle into a triangle.
@@ -86,5 +85,4 @@ void LinearIndexToUpperTriangularIndex(int k, int n, int* i, int* j) {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -39,8 +39,7 @@
 #include "ceres/linear_least_squares_problems.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class BlockJacobiPreconditionerTest : public ::testing::Test {
  protected:
@@ -96,5 +95,4 @@ TEST_F(BlockJacobiPreconditionerTest, SmallProblem) { VerifyDiagonalBlocks(2); }
 
 TEST_F(BlockJacobiPreconditionerTest, LargeProblem) { VerifyDiagonalBlocks(3); }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

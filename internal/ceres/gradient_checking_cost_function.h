@@ -42,8 +42,7 @@
 #include "ceres/iteration_callback.h"
 #include "ceres/manifold.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class ProblemImpl;
 
@@ -109,8 +108,7 @@ CERES_NO_EXPORT std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(
     double relative_precision,
     GradientCheckingIterationCallback* callback);
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

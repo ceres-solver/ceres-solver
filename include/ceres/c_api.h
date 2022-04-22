@@ -55,15 +55,10 @@ CERES_EXPORT void ceres_init();
  * The user may keep private information inside the opaque user_data object.
  * The pointer here is the same one passed in the ceres_add_residual_block().
  */
-typedef int (*ceres_cost_function_t)(void* user_data,
-                                     double** parameters,
-                                     double* residuals,
-                                     double** jacobians);
+using ceres_cost_function_t = int (*)(void*, double**, double*, double**);
 
 /* Equivalent to LossFunction::Evaluate() from the C++ API. */
-typedef void (*ceres_loss_function_t)(void* user_data,
-                                      double squared_norm,
-                                      double out[3]);
+using ceres_loss_function_t = void (*)(void*, double, double*);
 
 /* Create callback data for Ceres' stock loss functions.
  *
@@ -113,10 +108,10 @@ CERES_EXPORT void ceres_stock_loss_function(void* user_data,
 
 /* Equivalent to Problem from the C++ API. */
 struct ceres_problem_s;
-typedef struct ceres_problem_s ceres_problem_t;
+using ceres_problem_t = struct ceres_problem_s;
 
 struct ceres_residual_block_id_s;
-typedef struct ceres_residual_block_id_s ceres_residual_block_id_t;
+using ceres_residual_block_id_t = struct ceres_residual_block_id_s;
 
 /* Create and destroy a problem */
 /* TODO(keir): Add options for the problem. */

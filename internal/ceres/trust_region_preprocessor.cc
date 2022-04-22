@@ -48,8 +48,7 @@
 #include "ceres/trust_region_strategy.h"
 #include "ceres/wall_time.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -391,5 +390,4 @@ bool TrustRegionPreprocessor::Preprocess(const Solver::Options& options,
   return true;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

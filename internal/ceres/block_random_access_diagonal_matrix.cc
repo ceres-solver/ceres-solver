@@ -43,8 +43,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -145,5 +144,4 @@ void BlockRandomAccessDiagonalMatrix::RightMultiply(const double* x,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

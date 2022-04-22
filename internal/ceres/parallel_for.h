@@ -37,8 +37,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Returns the maximum number of threads supported by the threading backend
 // Ceres was compiled with.
@@ -65,8 +64,7 @@ CERES_NO_EXPORT void ParallelFor(
     int end,
     int num_threads,
     const std::function<void(int thread_id, int i)>& function);
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/disable_warnings.h"
 

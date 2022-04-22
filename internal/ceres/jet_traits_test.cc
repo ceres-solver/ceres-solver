@@ -34,8 +34,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using J = Jet<double, 2>;
 // Don't care about the dual part for scalar part categorization and comparison
@@ -104,5 +103,4 @@ static_assert(!PromotableJetOperands_v<Eigen::Array<double, 2, 3>, float, int>,
 static_assert(!PromotableJetOperands_v<Eigen::Matrix<double, 3, 2>, float, int>,
               "Eigen::Matrix must not be Jet promotable");
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

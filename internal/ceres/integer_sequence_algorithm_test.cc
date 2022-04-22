@@ -36,8 +36,7 @@
 
 #include "ceres/internal/jet_traits.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Unit tests for exclusive scan of integer sequence.
 static_assert(std::is_same<ExclusiveScan<std::integer_sequence<int>>,
@@ -136,5 +135,4 @@ static_assert(
     IsEmptyOrAreAllEqual_v<std::integer_sequence<long, 111, 111, 111, 111>>,
     "expected all equal sequence is not");
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

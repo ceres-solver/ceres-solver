@@ -45,8 +45,7 @@
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Compare two vertices of a graph by their degrees, if the degrees
 // are equal then order them by their ids.
@@ -340,7 +339,6 @@ std::unique_ptr<WeightedGraph<Vertex>> Degree2MaximumSpanningForest(
   return forest;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_GRAPH_ALGORITHMS_H_

@@ -35,8 +35,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 #ifndef CERES_NO_CUDA
 
@@ -164,5 +163,4 @@ TEST(CUDADenseQR, Randomized1600x100Tests) {
 }
 #endif  // CERES_NO_CUDA
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

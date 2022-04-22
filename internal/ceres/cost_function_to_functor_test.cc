@@ -38,8 +38,7 @@
 #include "ceres/dynamic_cost_function_to_functor.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 const double kTolerance = 1e-18;
@@ -392,5 +391,4 @@ TEST(CostFunctionToFunctor, DynamicCostFunctionToFunctor) {
   ExpectCostFunctionsAreEqual(cost_function, *actual_cost_function);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

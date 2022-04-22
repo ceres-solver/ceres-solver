@@ -43,8 +43,7 @@
 #include "ceres/problem_impl.h"
 #include "ceres/suitesparse.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class CompressedRowSparseMatrix;
 
@@ -96,8 +95,7 @@ class CERES_NO_EXPORT CovarianceImpl {
   std::unique_ptr<CompressedRowSparseMatrix> covariance_matrix_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

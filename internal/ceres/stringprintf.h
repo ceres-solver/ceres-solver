@@ -44,8 +44,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 #if (defined(__GNUC__) || defined(__clang__))
 // Tell the compiler to do printf format string checking if the compiler
@@ -90,8 +89,7 @@ CERES_NO_EXPORT extern void StringAppendV(std::string* dst,
 
 #undef CERES_PRINTF_ATTRIBUTE
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

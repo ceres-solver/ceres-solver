@@ -40,8 +40,7 @@
 #include "ceres/internal/export.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -389,5 +388,4 @@ void MinimizeInterpolatingPolynomial(const vector<FunctionSample>& samples,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

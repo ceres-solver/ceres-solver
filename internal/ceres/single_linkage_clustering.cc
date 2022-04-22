@@ -36,8 +36,7 @@
 #include "ceres/graph.h"
 #include "ceres/graph_algorithms.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 int ComputeSingleLinkageClustering(
     const SingleLinkageClusteringOptions& options,
@@ -91,5 +90,4 @@ int ComputeSingleLinkageClustering(
   return num_clusters;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

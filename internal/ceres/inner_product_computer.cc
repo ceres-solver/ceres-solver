@@ -35,8 +35,7 @@
 
 #include "ceres/small_blas.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Create the CompressedRowSparseMatrix matrix that will contain the
 // inner product.
@@ -330,5 +329,4 @@ void InnerProductComputer::Compute() {
   CHECK_EQ(cursor, result_offsets_.size());
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

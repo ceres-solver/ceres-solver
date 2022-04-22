@@ -38,8 +38,7 @@
 #include "ceres/line_search_minimizer.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class CERES_NO_EXPORT LineSearchDirection {
  public:
@@ -61,7 +60,6 @@ class CERES_NO_EXPORT LineSearchDirection {
                              Vector* search_direction) = 0;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_LINE_SEARCH_DIRECTION_H_

@@ -52,8 +52,7 @@
 #include "ceres/sized_cost_function.h"
 #include "pgm_image.h"
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 
 // One sum in the FoE regularizer. This is a dot product between a filter and an
 // image patch. It simply calculates the dot product between the filter
@@ -128,7 +127,6 @@ class FieldsOfExperts {
   std::vector<std::vector<double>> filters_;
 };
 
-}  // namespace examples
-}  // namespace ceres
+}  // namespace ceres::examples
 
 #endif  // CERES_EXAMPLES_FIELDS_OF_EXPERTS_H_

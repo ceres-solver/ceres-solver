@@ -46,8 +46,7 @@
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class CERES_NO_EXPORT EigenSparseCholesky : public SparseCholesky {
  public:
@@ -83,8 +82,7 @@ class CERES_NO_EXPORT FloatEigenSparseCholesky : public SparseCholesky {
                                     std::string* message) override = 0;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_USE_EIGEN_SPARSE
 

@@ -35,8 +35,7 @@
 
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TEST(OrderedGroups, EmptyOrderedGroupBehavesCorrectly) {
   ParameterBlockOrdering ordering;
@@ -229,5 +228,4 @@ TEST(OrderedGroups, MinNonZeroGroup) {
   // No non-zero groups left.
   EXPECT_DEATH_IF_SUPPORTED(ordering.MinNonZeroGroup(), "NumGroups");
 }
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

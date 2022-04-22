@@ -42,8 +42,7 @@
 #include "ceres/stringprintf.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::string;
 
@@ -141,5 +140,4 @@ bool IsEvaluationValid(const ResidualBlock& block,
   return true;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -46,8 +46,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using testing::ElementsAreArray;
 using testing::UnorderedElementsAreArray;
@@ -167,5 +166,4 @@ TEST(ParallelForWithThreadId, UniqueThreadIds) {
 }
 #endif  // CERES_NO_THREADS
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

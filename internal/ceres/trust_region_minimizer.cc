@@ -59,8 +59,7 @@
     }                                                            \
   } while (0)
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                                     double* parameters,
@@ -821,5 +820,4 @@ bool TrustRegionMinimizer::HandleSuccessfulStep() {
   return true;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -42,8 +42,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/schur_templates.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 void GetBestSchurTemplateSpecialization(int* row_block_size,
                                         int* e_block_size,
@@ -223,5 +222,4 @@ void GetBestSchurTemplateSpecialization(int* row_block_size,
   return;
 }
 
-}  // namespace internal
 }  // namespace ceres

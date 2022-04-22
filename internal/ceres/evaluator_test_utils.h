@@ -33,8 +33,7 @@
 
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Fixed sized struct for storing an evaluation.
 struct CERES_NO_EXPORT ExpectedEvaluation {
@@ -58,5 +57,4 @@ CERES_NO_EXPORT void CompareEvaluations(int expected_num_rows,
                                         const double* actual_gradient,
                                         const double* actual_jacobian);
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

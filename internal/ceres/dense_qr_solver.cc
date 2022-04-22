@@ -40,8 +40,7 @@
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 DenseQRSolver::DenseQRSolver(const LinearSolver::Options& options)
     : options_(options), dense_qr_(DenseQR::Create(options)) {}
@@ -81,5 +80,4 @@ LinearSolver::Summary DenseQRSolver::SolveImpl(
   return summary;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

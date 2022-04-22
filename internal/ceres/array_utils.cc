@@ -38,8 +38,7 @@
 
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::string;
 
@@ -103,5 +102,4 @@ void MapValuesToContiguousRange(const int size, int* array) {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

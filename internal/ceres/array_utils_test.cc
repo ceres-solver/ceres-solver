@@ -36,8 +36,7 @@
 
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -121,5 +120,4 @@ TEST(MapValuesToContiguousRange, NonContiguousRepeatingEntries) {
   EXPECT_EQ(array, expected);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

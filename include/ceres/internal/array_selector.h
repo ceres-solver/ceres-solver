@@ -38,8 +38,7 @@
 #include "ceres/internal/fixed_array.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // StaticFixedArray selects the best array implementation based on template
 // arguments. If the size is not known at compile-time, pass
@@ -91,7 +90,6 @@ struct ArraySelector<T, num_elements, max_num_elements_on_stack, false, false>
   }
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_PUBLIC_INTERNAL_ARRAY_SELECTOR_H_

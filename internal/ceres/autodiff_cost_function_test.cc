@@ -36,8 +36,7 @@
 #include "ceres/cost_function.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class BinaryScalarCost {
  public:
@@ -179,5 +178,4 @@ TEST(AutoDiffCostFunction, PartiallyFilledResidualShouldFailEvaluation) {
   EXPECT_FALSE(IsArrayValid(2, residuals));
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

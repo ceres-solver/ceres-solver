@@ -34,8 +34,7 @@
 #include "ceres/internal/eigen.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 void CompareEvaluations(int expected_num_rows,
                         int expected_num_cols,
@@ -88,5 +87,4 @@ void CompareEvaluations(int expected_num_rows,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

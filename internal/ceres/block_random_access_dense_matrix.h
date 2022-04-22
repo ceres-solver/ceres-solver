@@ -38,8 +38,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // A square block random accessible matrix with the same row and
 // column block structure. All cells are stored in the same single
@@ -92,8 +91,7 @@ class CERES_NO_EXPORT BlockRandomAccessDenseMatrix
   std::unique_ptr<CellInfo[]> cell_infos_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

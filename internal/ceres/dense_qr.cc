@@ -108,8 +108,7 @@ extern "C" void dtrtrs_(const char* uplo, const char* trans, const char* diag,
 
 #endif
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 DenseQR::~DenseQR() = default;
 
@@ -477,5 +476,4 @@ CUDADenseQR::CUDADenseQR() = default;
 
 #endif  // CERES_NO_CUDA
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

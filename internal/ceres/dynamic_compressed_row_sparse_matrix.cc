@@ -32,8 +32,7 @@
 
 #include <cstring>
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 DynamicCompressedRowSparseMatrix::DynamicCompressedRowSparseMatrix(
     int num_rows, int num_cols, int initial_max_num_nonzeros)
@@ -99,5 +98,4 @@ void DynamicCompressedRowSparseMatrix::Finalize(int num_additional_elements) {
       << "the number of jacobian nonzeros. Please contact the developers!";
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

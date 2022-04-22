@@ -40,8 +40,7 @@
 #include "ceres/test_util.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -512,5 +511,4 @@ TEST(Polynomial, CubicInterpolatingPolynomialFromValuesAndGradients) {
   EXPECT_NEAR((true_polynomial - polynomial).norm(), 0.0, 1e-14);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
