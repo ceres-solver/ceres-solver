@@ -42,8 +42,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/sparse_matrix.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class TripletSparseMatrix;
 
@@ -158,7 +157,6 @@ class CERES_NO_EXPORT BlockSparseMatrixData {
   const double* values_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

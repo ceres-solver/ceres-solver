@@ -43,8 +43,7 @@
 #include "ceres/trust_region_strategy.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Generic trust region minimization algorithm.
 //
@@ -160,7 +159,6 @@ class CERES_NO_EXPORT TrustRegionMinimizer final : public Minimizer {
   int num_consecutive_invalid_steps_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

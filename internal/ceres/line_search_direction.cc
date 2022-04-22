@@ -38,8 +38,7 @@
 #include "ceres/low_rank_inverse_hessian.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class CERES_NO_EXPORT SteepestDescent final : public LineSearchDirection {
  public:
@@ -367,5 +366,4 @@ std::unique_ptr<LineSearchDirection> LineSearchDirection::Create(
   return nullptr;
 }
 
-}  // namespace internal
 }  // namespace ceres

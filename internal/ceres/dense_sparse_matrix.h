@@ -39,8 +39,7 @@
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class TripletSparseMatrix;
 
@@ -73,7 +72,6 @@ class CERES_NO_EXPORT DenseSparseMatrix final : public SparseMatrix {
   Matrix m_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

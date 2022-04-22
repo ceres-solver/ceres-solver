@@ -42,8 +42,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "cholmod.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::string;
 using std::vector;
@@ -425,7 +424,6 @@ LinearSolverTerminationType SuiteSparseCholesky::Solve(const double* rhs,
   return LINEAR_SOLVER_SUCCESS;
 }
 
-}  // namespace internal
 }  // namespace ceres
 
 #endif  // CERES_NO_SUITESPARSE

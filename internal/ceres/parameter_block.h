@@ -47,8 +47,7 @@
 #include "ceres/stringprintf.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class ProblemImpl;
 class ResidualBlock;
@@ -382,7 +381,6 @@ class CERES_NO_EXPORT ParameterBlock {
   friend class ProblemImpl;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

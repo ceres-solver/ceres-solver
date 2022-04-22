@@ -44,8 +44,7 @@
 #include "ceres/thread_token_provider.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 namespace {
 // This class creates a thread safe barrier which will block until a
 // pre-specified number of threads call Finished.  This allows us to block the
@@ -239,7 +238,6 @@ void ParallelFor(ContextImpl* context,
   shared_state->block_until_finished.Block();
 }
 
-}  // namespace internal
 }  // namespace ceres
 
 #endif  // CERES_USE_CXX_THREADS

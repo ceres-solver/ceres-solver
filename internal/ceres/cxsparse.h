@@ -45,8 +45,7 @@
 #include "ceres/sparse_cholesky.h"
 #include "cs.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class CompressedRowSparseMatrix;
 class TripletSparseMatrix;
@@ -164,7 +163,6 @@ class CERES_NO_EXPORT CXSparseCholesky final : public SparseCholesky {
   csn* numeric_factor_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

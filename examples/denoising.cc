@@ -102,8 +102,7 @@ DEFINE_double(subset_fraction,
               "The fraction of residual blocks to use for the"
               " subset preconditioner.");
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 namespace {
 
 // This cost function is used to build the data term.
@@ -252,7 +251,6 @@ void SolveProblem(Problem* problem, PGMImage<double>* solution) {
 }
 
 }  // namespace
-}  // namespace examples
 }  // namespace ceres
 
 int main(int argc, char** argv) {

@@ -40,8 +40,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class ParameterBlock;
 class ProblemImpl;
@@ -192,7 +191,6 @@ class CERES_NO_EXPORT Program {
   friend class ProblemImpl;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

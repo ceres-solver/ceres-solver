@@ -41,8 +41,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class DenseSparseMatrix;
 
@@ -94,7 +93,6 @@ class CERES_NO_EXPORT DenseNormalCholeskySolver
   std::unique_ptr<DenseCholesky> cholesky_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

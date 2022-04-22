@@ -44,8 +44,7 @@
 #include "ceres/evaluator.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class BlockEvaluatePreparer;
 class Program;
@@ -124,7 +123,6 @@ class CERES_NO_EXPORT BlockJacobianWriter {
   std::vector<int> jacobian_layout_storage_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #endif  // CERES_INTERNAL_BLOCK_JACOBIAN_WRITER_H_

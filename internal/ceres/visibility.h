@@ -43,8 +43,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 struct CompressedRowBlockStructure;
 
@@ -77,7 +76,6 @@ CERES_NO_EXPORT void ComputeVisibility(
 CERES_NO_EXPORT std::unique_ptr<WeightedGraph<int>> CreateSchurComplementGraph(
     const std::vector<std::set<int>>& visibility);
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

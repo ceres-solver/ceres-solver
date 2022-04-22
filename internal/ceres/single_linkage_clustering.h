@@ -37,8 +37,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 struct SingleLinkageClusteringOptions {
   // Graph edges with edge weight less than min_similarity are ignored
@@ -61,7 +60,6 @@ CERES_NO_EXPORT int ComputeSingleLinkageClustering(
     const WeightedGraph<int>& graph,
     std::unordered_map<int, int>* membership);
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

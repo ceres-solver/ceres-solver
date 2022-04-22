@@ -69,8 +69,7 @@
 #include "ceres/thread_token_provider.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::~SchurEliminator() {
@@ -716,7 +715,6 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
   }
 }
 
-}  // namespace internal
 }  // namespace ceres
 
 #endif  // CERES_INTERNAL_SCHUR_ELIMINATOR_IMPL_H_

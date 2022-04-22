@@ -40,8 +40,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class DenseSparseMatrix;
 
@@ -112,7 +111,6 @@ class CERES_NO_EXPORT DenseQRSolver final : public DenseSparseMatrixSolver {
   std::unique_ptr<DenseQR> dense_qr_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

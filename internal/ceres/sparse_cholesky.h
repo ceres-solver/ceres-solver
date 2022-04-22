@@ -43,8 +43,7 @@
 #include "ceres/linear_solver.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // An interface that abstracts away the internal details of various
 // sparse linear algebra libraries and offers a simple API for solving
@@ -135,7 +134,6 @@ class CERES_NO_EXPORT RefinedSparseCholesky final : public SparseCholesky {
   CompressedRowSparseMatrix* lhs_ = nullptr;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

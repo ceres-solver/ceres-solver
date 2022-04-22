@@ -47,298 +47,104 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
 
-// TODO(sameeragarwal): Re-enable this test once serialization is
-// working again.
 
-// using testing::AssertionResult;
-// using testing::AssertionSuccess;
-// using testing::AssertionFailure;
 
-// static const double kTolerance = 1e-12;
 
-// class VisibilityBasedPreconditionerTest : public ::testing::Test {
-//  public:
-//   static const int kCameraSize = 9;
 
-//  protected:
-//   void SetUp() {
-//     string input_file = TestFileAbsolutePath("problem-6-1384-000.lsqp");
 
-//     std::unique_ptr<LinearLeastSquaresProblem> problem =
-//     CreateLinearLeastSquaresProblemFromFile(input_file));
-//     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
-//     b_.reset(problem->b.release());
-//     D_.reset(problem->D.release());
 
-//     const CompressedRowBlockStructure* bs =
-//         CHECK_NOTNULL(A_->block_structure());
-//     const int num_col_blocks = bs->cols.size();
 
-//     num_cols_ = A_->num_cols();
-//     num_rows_ = A_->num_rows();
-//     num_eliminate_blocks_ = problem->num_eliminate_blocks;
-//     num_camera_blocks_ = num_col_blocks - num_eliminate_blocks_;
-//     options_.elimination_groups.push_back(num_eliminate_blocks_);
-//     options_.elimination_groups.push_back(
-//         A_->block_structure()->cols.size() - num_eliminate_blocks_);
 
-//     vector<int> blocks(num_col_blocks - num_eliminate_blocks_, 0);
-//     for (int i = num_eliminate_blocks_; i < num_col_blocks; ++i) {
-//       blocks[i - num_eliminate_blocks_] = bs->cols[i].size;
-//     }
 
-//     // The input matrix is a real jacobian and fairly poorly
-//     // conditioned. Setting D to a large constant makes the normal
-//     // equations better conditioned and makes the tests below better
-//     // conditioned.
-//     VectorRef(D_.get(), num_cols_).setConstant(10.0);
 
-//     schur_complement_ =
-//     std::make_unique<BlockRandomAccessDenseMatrix>(blocks);
-//     Vector rhs(schur_complement_->num_rows());
 
-//     std::unique_ptr<SchurEliminatorBase> eliminator;
-//     LinearSolver::Options eliminator_options;
-//     eliminator_options.elimination_groups = options_.elimination_groups;
-//     eliminator_options.num_threads = options_.num_threads;
 
-//     eliminator = SchurEliminatorBase::Create(eliminator_options);
-//     eliminator->Init(num_eliminate_blocks_, bs);
-//     eliminator->Eliminate(A_.get(), b_.get(), D_.get(),
-//                           schur_complement_.get(), rhs.data());
-//   }
 
-//   AssertionResult IsSparsityStructureValid() {
-//     preconditioner_->InitStorage(*A_->block_structure());
-//     const std::unordered_set<pair<int, int>, pair_hash>& cluster_pairs =
-//     get_cluster_pairs(); const vector<int>& cluster_membership =
-//     get_cluster_membership();
 
-//     for (int i = 0; i < num_camera_blocks_; ++i) {
-//       for (int j = i; j < num_camera_blocks_; ++j) {
-//         if (cluster_pairs.count(make_pair(cluster_membership[i],
-//                                           cluster_membership[j]))) {
-//           if (!IsBlockPairInPreconditioner(i, j)) {
-//             return AssertionFailure()
-//                 << "block pair (" << i << "," << j << "missing";
-//           }
-//         } else {
-//           if (IsBlockPairInPreconditioner(i, j)) {
-//             return AssertionFailure()
-//                << "block pair (" << i << "," << j << "should not be present";
-//           }
-//         }
-//       }
-//     }
-//     return AssertionSuccess();
-//   }
 
-//   AssertionResult PreconditionerValuesMatch() {
-//     preconditioner_->Update(*A_, D_.get());
-//     const std::unordered_set<pair<int, int>, pair_hash>& cluster_pairs =
-//     get_cluster_pairs(); const BlockRandomAccessSparseMatrix* m = get_m();
-//     Matrix preconditioner_matrix;
-//     m->matrix()->ToDenseMatrix(&preconditioner_matrix);
-//     ConstMatrixRef full_schur_complement(schur_complement_->values(),
-//                                          m->num_rows(),
-//                                          m->num_rows());
-//     const int num_clusters = get_num_clusters();
-//     const int kDiagonalBlockSize =
-//         kCameraSize * num_camera_blocks_ / num_clusters;
 
-//     for (int i = 0; i < num_clusters; ++i) {
-//       for (int j = i; j < num_clusters; ++j) {
-//         double diff = 0.0;
-//         if (cluster_pairs.count(make_pair(i, j))) {
-//           diff =
-//               (preconditioner_matrix.block(kDiagonalBlockSize * i,
-//                                            kDiagonalBlockSize * j,
-//                                            kDiagonalBlockSize,
-//                                            kDiagonalBlockSize) -
-//                full_schur_complement.block(kDiagonalBlockSize * i,
-//                                            kDiagonalBlockSize * j,
-//                                            kDiagonalBlockSize,
-//                                            kDiagonalBlockSize)).norm();
-//         } else {
-//           diff = preconditioner_matrix.block(kDiagonalBlockSize * i,
-//                                              kDiagonalBlockSize * j,
-//                                              kDiagonalBlockSize,
-//                                              kDiagonalBlockSize).norm();
-//         }
-//         if (diff > kTolerance) {
-//           return AssertionFailure()
-//               << "Preconditioner block " << i << " " << j << " differs "
-//               << "from expected value by " << diff;
-//         }
-//       }
-//     }
-//     return AssertionSuccess();
-//   }
 
-//   // Accessors
-//   int get_num_blocks() { return preconditioner_->num_blocks_; }
 
-//   int get_num_clusters() { return preconditioner_->num_clusters_; }
-//   int* get_mutable_num_clusters() { return &preconditioner_->num_clusters_; }
 
-//   const vector<int>& get_block_size() {
-//     return preconditioner_->block_size_; }
 
-//   vector<int>* get_mutable_block_size() {
-//     return &preconditioner_->block_size_; }
 
-//   const vector<int>& get_cluster_membership() {
-//     return preconditioner_->cluster_membership_;
-//   }
 
-//   vector<int>* get_mutable_cluster_membership() {
-//     return &preconditioner_->cluster_membership_;
-//   }
 
-//   const set<pair<int, int>>& get_block_pairs() {
-//     return preconditioner_->block_pairs_;
-//   }
 
-//   set<pair<int, int>>* get_mutable_block_pairs() {
-//     return &preconditioner_->block_pairs_;
-//   }
 
-//   const std::unordered_set<pair<int, int>, pair_hash>& get_cluster_pairs() {
-//     return preconditioner_->cluster_pairs_;
-//   }
 
-//   std::unordered_set<pair<int, int>, pair_hash>* get_mutable_cluster_pairs()
-//   {
-//     return &preconditioner_->cluster_pairs_;
-//   }
 
-//   bool IsBlockPairInPreconditioner(const int block1, const int block2) {
-//     return preconditioner_->IsBlockPairInPreconditioner(block1, block2);
-//   }
 
-//   bool IsBlockPairOffDiagonal(const int block1, const int block2) {
-//     return preconditioner_->IsBlockPairOffDiagonal(block1, block2);
-//   }
 
-//   const BlockRandomAccessSparseMatrix* get_m() {
-//     return preconditioner_->m_.get();
-//   }
 
-//   int num_rows_;
-//   int num_cols_;
-//   int num_eliminate_blocks_;
-//   int num_camera_blocks_;
 
-//   std::unique_ptr<BlockSparseMatrix> A_;
-//   std::unique_ptr<double[]> b_;
-//   std::unique_ptr<double[]> D_;
 
-//   Preconditioner::Options options_;
-//   std::unique_ptr<VisibilityBasedPreconditioner> preconditioner_;
-//   std::unique_ptr<BlockRandomAccessDenseMatrix> schur_complement_;
-// };
 
-// TEST_F(VisibilityBasedPreconditionerTest, OneClusterClusterJacobi) {
-//   options_.type = CLUSTER_JACOBI;
-//   preconditioner_ =
-//       std::make_unique<VisibilityBasedPreconditioner>(
-//          *A_->block_structure(), options_);
 
-//   // Override the clustering to be a single clustering containing all
-//   // the cameras.
-//   vector<int>& cluster_membership = *get_mutable_cluster_membership();
-//   for (int i = 0; i < num_camera_blocks_; ++i) {
-//     cluster_membership[i] = 0;
-//   }
 
-//   *get_mutable_num_clusters() = 1;
 
-//   std::unordered_set<pair<int, int>, pair_hash>& cluster_pairs =
-//   *get_mutable_cluster_pairs(); cluster_pairs.clear();
-//   cluster_pairs.insert(make_pair(0, 0));
 
-//   EXPECT_TRUE(IsSparsityStructureValid());
-//   EXPECT_TRUE(PreconditionerValuesMatch());
 
-//   // Multiplication by the inverse of the preconditioner.
-//   const int num_rows = schur_complement_->num_rows();
-//   ConstMatrixRef full_schur_complement(schur_complement_->values(),
-//                                        num_rows,
-//                                        num_rows);
-//   Vector x(num_rows);
-//   Vector y(num_rows);
-//   Vector z(num_rows);
 
-//   for (int i = 0; i < num_rows; ++i) {
-//     x.setZero();
-//     y.setZero();
-//     z.setZero();
-//     x[i] = 1.0;
-//     preconditioner_->RightMultiply(x.data(), y.data());
-//     z = full_schur_complement
-//         .selfadjointView<Eigen::Upper>()
-//         .llt().solve(x);
-//     double max_relative_difference =
-//         ((y - z).array() / z.array()).matrix().lpNorm<Eigen::Infinity>();
-//     EXPECT_NEAR(max_relative_difference, 0.0, kTolerance);
-//   }
-// }
 
-// TEST_F(VisibilityBasedPreconditionerTest, ClusterJacobi) {
-//   options_.type = CLUSTER_JACOBI;
-//   preconditioner_ =
-//   std::make_unique<VisibilityBasedPreconditioner>(*A_->block_structure(),
-//   options_);
 
-//   // Override the clustering to be equal number of cameras.
-//   vector<int>& cluster_membership = *get_mutable_cluster_membership();
-//   cluster_membership.resize(num_camera_blocks_);
-//   static const int kNumClusters = 3;
 
-//   for (int i = 0; i < num_camera_blocks_; ++i) {
-//     cluster_membership[i] = (i * kNumClusters) / num_camera_blocks_;
-//   }
-//   *get_mutable_num_clusters() = kNumClusters;
 
-//   std::unordered_set<pair<int, int>, pair_hash>& cluster_pairs =
-//   *get_mutable_cluster_pairs(); cluster_pairs.clear(); for (int i = 0; i <
-//   kNumClusters; ++i) {
-//     cluster_pairs.insert(make_pair(i, i));
-//   }
 
-//   EXPECT_TRUE(IsSparsityStructureValid());
-//   EXPECT_TRUE(PreconditionerValuesMatch());
-// }
 
-// TEST_F(VisibilityBasedPreconditionerTest, ClusterTridiagonal) {
-//   options_.type = CLUSTER_TRIDIAGONAL;
-//   preconditioner_ =
-//     std::make_unique<VisibilityBasedPreconditioner>(*A_->block_structure(),
-//     options_);
-//   static const int kNumClusters = 3;
 
-//   // Override the clustering to be 3 clusters.
-//   vector<int>& cluster_membership = *get_mutable_cluster_membership();
-//   cluster_membership.resize(num_camera_blocks_);
-//   for (int i = 0; i < num_camera_blocks_; ++i) {
-//     cluster_membership[i] = (i * kNumClusters) / num_camera_blocks_;
-//   }
-//   *get_mutable_num_clusters() = kNumClusters;
 
-//   // Spanning forest has structure 0-1 2
-//   std::unordered_set<pair<int, int>, pair_hash>& cluster_pairs =
-//   *get_mutable_cluster_pairs(); cluster_pairs.clear(); for (int i = 0; i <
-//   kNumClusters; ++i) {
-//     cluster_pairs.insert(make_pair(i, i));
-//   }
-//   cluster_pairs.insert(make_pair(0, 1));
 
-//   EXPECT_TRUE(IsSparsityStructureValid());
-//   EXPECT_TRUE(PreconditionerValuesMatch());
-// }
 
-}  // namespace internal
-}  // namespace ceres
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -38,8 +38,7 @@
 #include "ceres/sized_cost_function.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -324,5 +323,4 @@ TEST(ResidualBlock, EvaluteWithManifolds) {
   EXPECT_EQ(expected_jacobian_rz, jacobian_rz);
 }
 
-}  // namespace internal
 }  // namespace ceres

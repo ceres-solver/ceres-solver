@@ -48,8 +48,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Fill the array x with an impossible value that the user code is
 // never expected to compute.
@@ -85,7 +84,6 @@ CERES_NO_EXPORT void AppendArrayToString(const int size,
 // [1 0 2 3 0 1 3]
 CERES_NO_EXPORT void MapValuesToContiguousRange(int size, int* array);
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

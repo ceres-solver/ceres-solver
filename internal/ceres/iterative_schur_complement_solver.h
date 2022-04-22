@@ -39,8 +39,7 @@
 #include "ceres/linear_solver.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class BlockSparseMatrix;
 class ImplicitSchurComplement;
@@ -94,7 +93,6 @@ class CERES_NO_EXPORT IterativeSchurComplementSolver final
   Vector reduced_linear_system_solution_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

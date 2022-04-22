@@ -47,8 +47,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class CERES_NO_EXPORT DynamicCompressedRowSparseMatrix final
     : public CompressedRowSparseMatrix {
@@ -98,7 +97,6 @@ class CERES_NO_EXPORT DynamicCompressedRowSparseMatrix final
   std::vector<std::vector<double>> dynamic_values_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

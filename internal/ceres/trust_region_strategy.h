@@ -38,8 +38,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class LinearSolver;
 class SparseMatrix;
@@ -141,7 +140,6 @@ class CERES_NO_EXPORT TrustRegionStrategy {
   virtual double Radius() const = 0;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

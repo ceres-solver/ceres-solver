@@ -49,8 +49,7 @@
 #include "cusolverDn.h"
 #endif  // CERES_NO_CUDA
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // An interface that abstracts away the internal details of various dense linear
 // algebra libraries and offers a simple API for solving dense symmetric
@@ -177,7 +176,6 @@ class CERES_NO_EXPORT CUDADenseCholesky final : public DenseCholesky {
 
 #endif  // CERES_NO_CUDA
 
-}  // namespace internal
 }  // namespace ceres
 
 #endif  // CERES_INTERNAL_DENSE_CHOLESKY_H_

@@ -42,8 +42,7 @@
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class BlockSparseMatrix;
 class SparseMatrix;
@@ -183,7 +182,6 @@ class CERES_NO_EXPORT SparseMatrixPreconditionerWrapper final
   const SparseMatrix* matrix_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

@@ -59,8 +59,7 @@ extern "C" void dpotrs_(const char* uplo,
                         int* info);
 #endif
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 DenseCholesky::~DenseCholesky() = default;
 
@@ -323,5 +322,4 @@ std::unique_ptr<CUDADenseCholesky> CUDADenseCholesky::Create(
 
 #endif  // CERES_NO_CUDA
 
-}  // namespace internal
 }  // namespace ceres

@@ -32,8 +32,7 @@
 #include "benchmark/benchmark.h"
 #include "ceres/invert_psd_matrix.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 template <int kSize>
 void BenchmarkFixedSizedInvertPSDMatrix(benchmark::State& state) {
@@ -84,7 +83,6 @@ BENCHMARK(BenchmarkDynamicallyInvertPSDMatrix)
       }
     });
 
-}  // namespace internal
 }  // namespace ceres
 
 BENCHMARK_MAIN();

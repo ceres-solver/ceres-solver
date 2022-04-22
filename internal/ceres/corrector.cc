@@ -36,8 +36,7 @@
 #include "ceres/internal/eigen.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 Corrector::Corrector(const double sq_norm, const double rho[3]) {
   CHECK_GE(sq_norm, 0.0);
@@ -155,5 +154,4 @@ void Corrector::CorrectJacobian(const int num_rows,
   }
 }
 
-}  // namespace internal
 }  // namespace ceres

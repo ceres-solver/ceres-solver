@@ -40,8 +40,7 @@
 #include "ceres/iteration_callback.h"
 #include "ceres/solver.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class Evaluator;
 class SparseMatrix;
@@ -193,7 +192,6 @@ class CERES_NO_EXPORT Minimizer {
                         Solver::Summary* summary) = 0;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

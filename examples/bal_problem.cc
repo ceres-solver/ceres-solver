@@ -42,8 +42,7 @@
 #include "glog/logging.h"
 #include "random.h"
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 namespace {
 using VectorRef = Eigen::Map<Eigen::VectorXd>;
 using ConstVectorRef = Eigen::Map<const Eigen::VectorXd>;
@@ -332,5 +331,4 @@ BALProblem::~BALProblem() {
   delete[] parameters_;
 }
 
-}  // namespace examples
 }  // namespace ceres

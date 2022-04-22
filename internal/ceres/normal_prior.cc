@@ -31,6 +31,7 @@
 #include "ceres/normal_prior.h"
 
 #include <cstddef>
+#include <utility>
 #include <vector>
 
 #include "ceres/internal/eigen.h"
@@ -39,7 +40,7 @@
 
 namespace ceres {
 
-NormalPrior::NormalPrior(const Matrix& A, const Vector& b) : A_(A), b_(b) {
+NormalPrior::NormalPrior(const Matrix& A, Vector  b) : A_(A), b_(std::move(b)) {
   CHECK_GT(b_.rows(), 0);
   CHECK_GT(A_.rows(), 0);
   CHECK_EQ(b_.rows(), A.cols());

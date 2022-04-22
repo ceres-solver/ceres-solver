@@ -46,8 +46,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Classes implementing the SchurEliminatorBase interface implement
 // variable elimination for linear least squares problems. Assuming
@@ -623,7 +622,6 @@ class CERES_NO_EXPORT SchurEliminatorForOneFBlock final
   std::vector<double> e_t_e_inverse_matrices_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

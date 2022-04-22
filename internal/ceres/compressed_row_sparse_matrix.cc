@@ -41,8 +41,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -733,5 +732,4 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
   return matrix;
 }
 
-}  // namespace internal
 }  // namespace ceres

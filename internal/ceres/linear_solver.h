@@ -52,8 +52,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 enum LinearSolverTerminationType {
   // Termination criterion was met.
@@ -338,7 +337,6 @@ typedef TypedLinearSolver<DenseSparseMatrix>         DenseSparseMatrixSolver;   
 typedef TypedLinearSolver<TripletSparseMatrix>       TripletSparseMatrixSolver;        // NOLINT
 // clang-format on
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

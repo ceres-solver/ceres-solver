@@ -54,8 +54,7 @@
 
 #include "ceres/internal/disable_warnings.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class BlockSparseMatrix;
 class SparseCholesky;
@@ -191,7 +190,6 @@ class CERES_NO_EXPORT SparseSchurComplementSolver final
   std::unique_ptr<BlockRandomAccessDiagonalMatrix> preconditioner_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

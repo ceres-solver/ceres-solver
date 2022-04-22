@@ -55,6 +55,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -130,8 +131,7 @@ DEFINE_string(final_ply, "", "Export the refined BAL file data as a PLY "
 
 // clang-format on
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 namespace {
 
 void SetLinearSolver(Solver::Options* options) {
@@ -168,14 +168,14 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   if (options->use_inner_iterations) {
     if (CERES_GET_FLAG(FLAGS_blocks_for_inner_iterations) == "cameras") {
       LOG(INFO) << "Camera blocks for inner iterations";
-      options->inner_iteration_ordering.reset(new ParameterBlockOrdering);
+      options->inner_iteration_ordering = std::make_shared<ParameterBlockOrdering>();
       for (int i = 0; i < num_cameras; ++i) {
         options->inner_iteration_ordering->AddElementToGroup(
             cameras + camera_block_size * i, 0);
       }
     } else if (CERES_GET_FLAG(FLAGS_blocks_for_inner_iterations) == "points") {
       LOG(INFO) << "Point blocks for inner iterations";
-      options->inner_iteration_ordering.reset(new ParameterBlockOrdering);
+      options->inner_iteration_ordering = std::make_shared<ParameterBlockOrdering>();
       for (int i = 0; i < num_points; ++i) {
         options->inner_iteration_ordering->AddElementToGroup(
             points + point_block_size * i, 0);
@@ -183,7 +183,7 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
     } else if (CERES_GET_FLAG(FLAGS_blocks_for_inner_iterations) ==
                "cameras,points") {
       LOG(INFO) << "Camera followed by point blocks for inner iterations";
-      options->inner_iteration_ordering.reset(new ParameterBlockOrdering);
+      options->inner_iteration_ordering = std::make_shared<ParameterBlockOrdering>();
       for (int i = 0; i < num_cameras; ++i) {
         options->inner_iteration_ordering->AddElementToGroup(
             cameras + camera_block_size * i, 0);
@@ -195,7 +195,7 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
     } else if (CERES_GET_FLAG(FLAGS_blocks_for_inner_iterations) ==
                "points,cameras") {
       LOG(INFO) << "Point followed by camera blocks for inner iterations";
-      options->inner_iteration_ordering.reset(new ParameterBlockOrdering);
+      options->inner_iteration_ordering = std::make_shared<ParameterBlockOrdering>();
       for (int i = 0; i < num_cameras; ++i) {
         options->inner_iteration_ordering->AddElementToGroup(
             cameras + camera_block_size * i, 1);
@@ -343,7 +343,6 @@ void SolveProblem(const char* filename) {
 }
 
 }  // namespace
-}  // namespace examples
 }  // namespace ceres
 
 int main(int argc, char** argv) {

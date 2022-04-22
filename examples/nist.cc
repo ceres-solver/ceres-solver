@@ -151,8 +151,7 @@ DEFINE_int32(ridders_extrapolations,
              3,
              "Maximal number of Ridders extrapolations.");
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 namespace {
 
 using Eigen::Dynamic;
@@ -709,7 +708,6 @@ void SolveNISTProblems() {
 }
 
 }  // namespace
-}  // namespace examples
 }  // namespace ceres
 
 int main(int argc, char** argv) {

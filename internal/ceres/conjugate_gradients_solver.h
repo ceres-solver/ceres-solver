@@ -38,8 +38,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class LinearOperator;
 
@@ -68,7 +67,6 @@ class CERES_NO_EXPORT ConjugateGradientsSolver final : public LinearSolver {
   const LinearSolver::Options options_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

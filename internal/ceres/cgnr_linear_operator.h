@@ -39,8 +39,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/linear_operator.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class SparseMatrix;
 
@@ -115,7 +114,6 @@ class CERES_NO_EXPORT CgnrLinearOperator final : public LinearOperator {
   std::unique_ptr<double[]> z_;
 };
 
-}  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

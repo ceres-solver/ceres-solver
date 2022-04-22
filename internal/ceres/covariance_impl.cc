@@ -57,8 +57,7 @@
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::swap;
 
@@ -901,5 +900,4 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
   return true;
 }
 
-}  // namespace internal
 }  // namespace ceres
