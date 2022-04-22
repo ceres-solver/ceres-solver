@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "558eefe1_cb8c6d93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-04-22T18:45:44Z",
+      "side": 1,
+      "message": "Mostly LGTM, but I think you are missing an update to normal_prior.cc",
+      "revId": "caf614a6c1ac1717be606c37fe434391edb2f417",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e30b0f95_43699123",
+        "filename": "include/ceres/normal_prior.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-04-22T18:45:44Z",
+      "side": 1,
+      "message": "I don\u0027t see how this compiles without errors when normal_prior.cc is not updated, I assume it was not staged?",
+      "revId": "caf614a6c1ac1717be606c37fe434391edb2f417",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
