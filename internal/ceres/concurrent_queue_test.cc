@@ -40,8 +40,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // A basic test of push and pop.
 TEST(ConcurrentQueue, PushPop) {
@@ -300,7 +299,6 @@ TEST(ConcurrentQueue, StopAndEnableWaiters) {
   EXPECT_EQ(13456, value);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_USE_CXX_THREADS

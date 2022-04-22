@@ -43,8 +43,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 static void CompareMatrices(const SparseMatrix* a, const SparseMatrix* b) {
   EXPECT_EQ(a->num_rows(), b->num_rows());
@@ -166,5 +165,4 @@ TEST_F(DenseSparseMatrixTest, ToDenseMatrix) {
   EXPECT_EQ((tsm_dense - dsm_dense).norm(), 0.0);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

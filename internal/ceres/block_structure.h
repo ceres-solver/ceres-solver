@@ -43,8 +43,7 @@
 
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using BlockSize = int32_t;
 
@@ -93,7 +92,6 @@ struct CERES_NO_EXPORT CompressedColumnBlockStructure {
   std::vector<CompressedColumn> cols;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_BLOCK_STRUCTURE_H_

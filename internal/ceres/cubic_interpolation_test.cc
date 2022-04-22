@@ -36,8 +36,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 static constexpr double kTolerance = 1e-12;
 
@@ -530,5 +529,4 @@ TEST(BiCubicInterpolator, JetEvaluation) {
               kTolerance);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

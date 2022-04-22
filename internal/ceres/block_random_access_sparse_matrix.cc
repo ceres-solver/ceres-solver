@@ -41,8 +41,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::make_pair;
 using std::pair;
@@ -127,8 +126,7 @@ CellInfo* BlockRandomAccessSparseMatrix::GetCell(int row_block_id,
                                                  int* col,
                                                  int* row_stride,
                                                  int* col_stride) {
-  const LayoutType::iterator it =
-      layout_.find(IntPairToLong(row_block_id, col_block_id));
+  const auto it = layout_.find(IntPairToLong(row_block_id, col_block_id));
   if (it == layout_.end()) {
     return nullptr;
   }
@@ -182,5 +180,4 @@ void BlockRandomAccessSparseMatrix::SymmetricRightMultiply(const double* x,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

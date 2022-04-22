@@ -45,8 +45,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class SchurComplementSolverTest : public ::testing::Test {
  protected:
@@ -244,5 +243,4 @@ TEST_F(SchurComplementSolverTest, SparseSchurWithEigenSparseLargeProblem) {
 }
 #endif  // CERES_USE_EIGEN_SPARSE
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

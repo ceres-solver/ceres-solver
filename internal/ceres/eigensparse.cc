@@ -41,8 +41,7 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/linear_solver.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // TODO(sameeragarwal): Use enable_if to clean up the implementations
 // for when Scalar == double.
@@ -177,7 +176,6 @@ std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
 
 FloatEigenSparseCholesky::~FloatEigenSparseCholesky() = default;
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_USE_EIGEN_SPARSE

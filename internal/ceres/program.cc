@@ -51,8 +51,7 @@
 #include "ceres/stl_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 const std::vector<ParameterBlock*>& Program::parameter_blocks() const {
   return parameter_blocks_;
@@ -545,5 +544,4 @@ std::string Program::ToString() const {
   return ret;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

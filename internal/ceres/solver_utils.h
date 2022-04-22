@@ -39,8 +39,7 @@
 #include "ceres/iteration_callback.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 template <typename SummaryType>
 bool IsSolutionUsable(const SummaryType& summary) {
@@ -63,8 +62,7 @@ void SetSummaryFinalCost(SummaryType* summary) {
 CERES_NO_EXPORT
 std::string VersionString();
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

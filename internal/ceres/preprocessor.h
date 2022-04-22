@@ -47,8 +47,7 @@
 #include "ceres/program.h"
 #include "ceres/solver.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 struct PreprocessedProblem;
 
@@ -118,8 +117,7 @@ void ChangeNumThreadsIfNeeded(Solver::Options* options);
 CERES_NO_EXPORT
 void SetupCommonMinimizerOptions(PreprocessedProblem* pp);
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

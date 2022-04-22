@@ -33,8 +33,7 @@
 #include "ceres/gradient_problem.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Rosenbrock function; see http://en.wikipedia.org/wiki/Rosenbrock_function .
 class Rosenbrock : public ceres::FirstOrderFunction {
@@ -127,5 +126,4 @@ TEST(Solver, UpdateStateEveryIterationOption) {
   EXPECT_NE(original_x, callback.x_values[1]);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -35,8 +35,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class QuadraticFirstOrderFunction : public ceres::FirstOrderFunction {
  public:
@@ -62,5 +61,4 @@ TEST(LineSearchMinimizerTest, FinalCostIsZero) {
   EXPECT_NEAR(summary.final_cost, 0.0, std::numeric_limits<double>::epsilon());
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

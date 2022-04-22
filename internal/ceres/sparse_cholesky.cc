@@ -40,8 +40,7 @@
 #include "ceres/iterative_refiner.h"
 #include "ceres/suitesparse.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 std::unique_ptr<SparseCholesky> SparseCholesky::Create(
     const LinearSolver::Options& options) {
@@ -161,5 +160,4 @@ LinearSolverTerminationType RefinedSparseCholesky::Solve(const double* rhs,
   return LINEAR_SOLVER_SUCCESS;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

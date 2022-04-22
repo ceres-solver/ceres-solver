@@ -42,8 +42,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::vector;
 
@@ -404,5 +403,4 @@ std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
   return matrix;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -39,8 +39,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Data generated with the following Python code.
 //   import numpy as np
@@ -454,5 +453,4 @@ TEST(DynamicSparsity, StaticAndDynamicSparsityProduceSameSolution) {
       << dynamic_summary.FullReport();
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

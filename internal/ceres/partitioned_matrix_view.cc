@@ -44,8 +44,7 @@
 #include "ceres/linear_solver.h"
 #include "ceres/partitioned_matrix_view.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 PartitionedMatrixViewBase::~PartitionedMatrixViewBase() = default;
 
@@ -183,5 +182,4 @@ std::unique_ptr<PartitionedMatrixViewBase> PartitionedMatrixViewBase::Create(
       matrix, options.elimination_groups[0]);
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

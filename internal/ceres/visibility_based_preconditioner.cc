@@ -50,8 +50,7 @@
 #include "ceres/visibility.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::make_pair;
 using std::pair;
@@ -576,5 +575,4 @@ void VisibilityBasedPreconditioner::FlattenMembershipMap(
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

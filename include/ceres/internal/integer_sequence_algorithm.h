@@ -40,8 +40,7 @@
 
 #include "ceres/jet_fwd.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Implementation of calculating an exclusive scan (exclusive prefix sum) of an
 // integer sequence. Exclusive means that the i-th input element is not included
@@ -195,7 +194,6 @@ template <class Sequence>
 inline constexpr bool IsEmptyOrAreAllEqual_v =
     IsEmptyOrAreAllEqual<Sequence>::value;
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_PUBLIC_INTERNAL_INTEGER_SEQUENCE_ALGORITHM_H_

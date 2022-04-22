@@ -36,8 +36,7 @@
 
 #include "ceres/internal/integer_sequence_algorithm.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Helper class that represents the parameter dimensions. The parameter
 // dimensions are either dynamic or the sizes are known at compile time. It is
@@ -102,7 +101,6 @@ template <int... Ns>
 using StaticParameterDims = ParameterDims<false, Ns...>;
 using DynamicParameterDims = ParameterDims<true>;
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_PUBLIC_INTERNAL_PARAMETER_DIMS_H_

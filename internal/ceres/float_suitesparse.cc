@@ -34,8 +34,7 @@
 
 #if !defined(CERES_NO_SUITESPARSE)
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 std::unique_ptr<SparseCholesky> FloatSuiteSparseCholesky::Create(
     OrderingType ordering_type) {
@@ -43,7 +42,6 @@ std::unique_ptr<SparseCholesky> FloatSuiteSparseCholesky::Create(
   return {};
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // !defined(CERES_NO_SUITESPARSE)

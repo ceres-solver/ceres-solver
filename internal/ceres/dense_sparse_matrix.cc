@@ -38,8 +38,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 DenseSparseMatrix::DenseSparseMatrix(int num_rows, int num_cols)
     : m_(Matrix(num_rows, num_cols)) {}
@@ -100,5 +99,4 @@ void DenseSparseMatrix::ToTextFile(FILE* file) const {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

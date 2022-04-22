@@ -34,8 +34,7 @@
 #include "Eigen/Core"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Algorithm 5.1.1 from 'Matrix Computations' by Golub et al. (Johns Hopkins
 // Studies in Mathematical Sciences) but using the nth element of the input
@@ -90,7 +89,6 @@ typename Derived::PlainObject ApplyHouseholderVector(
   return (y - v * (beta * (v.transpose() * y)));
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_PUBLIC_INTERNAL_HOUSEHOLDER_VECTOR_H_

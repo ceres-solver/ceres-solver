@@ -139,8 +139,7 @@ BUNDLE_ADJUSTMENT_TEST_TEMPLATE = (COPYRIGHT_HEADER + """
 #include "ceres/internal/config.h"
 #include "bundle_adjustment_test_util.h"
 %(preprocessor_conditions_begin)s
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TEST_F(BundleAdjustmentTest,
        %(test_class_name)s) {  // NOLINT
@@ -158,8 +157,7 @@ TEST_F(BundleAdjustmentTest,
   RunSolverForConfigAndExpectResidualsMatch(*options, problem);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 %(preprocessor_conditions_end)s""")
 
 def camelcasify(token):
@@ -267,7 +265,7 @@ def generate_bundle_test(linear_solver,
     fd.write(BUNDLE_ADJUSTMENT_TEST_TEMPLATE % template_parameters)
 
   # All done.
-  print 'Generated', filename
+  print('Generated', filename)
 
   return filename
 

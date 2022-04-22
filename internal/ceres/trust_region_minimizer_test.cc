@@ -50,8 +50,7 @@
 #include "ceres/trust_region_strategy.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Templated Evaluator for Powell's function. The template parameters
 // indicate which of the four variables/columns of the jacobian are
@@ -433,5 +432,4 @@ TEST(TrustRegionMinimizer, GradientToleranceConvergenceUpdatesStep) {
   EXPECT_NEAR(expected_final_cost, summary.final_cost, 1e-12);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

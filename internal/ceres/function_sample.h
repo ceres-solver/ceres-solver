@@ -37,8 +37,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // FunctionSample is used by the line search routines to store and
 // communicate the value and (optionally) the gradient of the function
@@ -88,8 +87,7 @@ struct CERES_NO_EXPORT FunctionSample {
   bool gradient_is_valid;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

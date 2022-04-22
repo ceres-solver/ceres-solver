@@ -38,8 +38,7 @@
 
 #include "ceres/thread_pool.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 namespace {
 
 // Constrain the total number of threads to the amount the hardware can support.
@@ -105,7 +104,6 @@ void ThreadPool::ThreadMainLoop() {
 
 void ThreadPool::Stop() { task_queue_.StopWaiters(); }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_USE_CXX_THREADS

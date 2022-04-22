@@ -53,8 +53,7 @@
 #define CERES_NO_FENV_ACCESS
 #endif
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 namespace {
 
@@ -1289,8 +1288,7 @@ TYPED_TEST(JetTest, Nested3XComparison) {
 
 #endif  // GTEST_HAS_TYPED_TEST
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #ifdef _MSC_VER
 #pragma float_control(pop)

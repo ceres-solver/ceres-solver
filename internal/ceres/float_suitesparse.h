@@ -43,8 +43,7 @@
 
 #if !defined(CERES_NO_SUITESPARSE)
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Fake implementation of a single precision Sparse Cholesky using
 // SuiteSparse.
@@ -53,8 +52,7 @@ class CERES_NO_EXPORT FloatSuiteSparseCholesky : public SparseCholesky {
   static std::unique_ptr<SparseCholesky> Create(OrderingType ordering_type);
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // !defined(CERES_NO_SUITESPARSE)
 

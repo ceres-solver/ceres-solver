@@ -38,8 +38,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Generic line search minimization algorithm.
 //
@@ -69,7 +68,6 @@ class CERES_NO_EXPORT LineSearchMinimizer final : public Minimizer {
                 Solver::Summary* summary) final;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_LINE_SEARCH_MINIMIZER_H_

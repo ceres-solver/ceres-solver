@@ -56,8 +56,7 @@
 
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::map;
 using std::set;
@@ -575,5 +574,4 @@ int ReorderResidualBlocksByPartition(
   return it - residual_blocks->begin();
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -59,8 +59,7 @@
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 namespace {
 
 bool EvaluateGradientNorms(Evaluator* evaluator,
@@ -473,5 +472,4 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

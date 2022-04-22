@@ -33,8 +33,7 @@
 
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // The job of the TrustRegionStepEvaluator is to evaluate the quality
 // of a step, i.e., how the cost of a step compares with the reduction
@@ -118,7 +117,6 @@ class CERES_NO_EXPORT TrustRegionStepEvaluator {
   int num_consecutive_nonmonotonic_steps_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_TRUST_REGION_STEP_EVALUATOR_H_

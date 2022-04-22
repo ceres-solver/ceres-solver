@@ -43,8 +43,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Adds a number of tasks to the thread pool and ensures they all run.
 TEST(ThreadPool, AddTask) {
@@ -193,7 +192,6 @@ TEST(ThreadPool, Resize) {
   EXPECT_EQ(2, thread_pool.Size());
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_USE_CXX_THREADS

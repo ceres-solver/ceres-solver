@@ -42,8 +42,7 @@
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::map;
 using std::set;
@@ -171,5 +170,4 @@ void OrderingToGroupSizes(const ParameterBlockOrdering* ordering,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -36,14 +36,12 @@
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 CERES_NO_EXPORT
 void GetBestSchurTemplateSpecialization(int* row_block_size,
                                         int* e_block_size,
                                         int* f_block_size);
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_SCHUR_TEMPLATES_H_

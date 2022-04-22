@@ -37,8 +37,7 @@
 #include "ceres/autodiff_cost_function.h"
 #include "types.h"
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 
 // Computes the error term for two poses that have a relative pose measurement
 // between them. Let the hat variables be the measurement. We have two poses x_a
@@ -129,7 +128,6 @@ class PoseGraph3dErrorTerm {
   const Eigen::Matrix<double, 6, 6> sqrt_information_;
 };
 
-}  // namespace examples
-}  // namespace ceres
+}  // namespace ceres::examples
 
 #endif  // EXAMPLES_CERES_POSE_GRAPH_3D_ERROR_TERM_H_

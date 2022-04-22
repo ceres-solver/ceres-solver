@@ -36,8 +36,7 @@
 #include "ceres/first_order_function.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class QuadraticCostFunctor {
  public:
@@ -75,5 +74,4 @@ TEST(NumericDiffFirstOrderFunction, BilinearDifferentiationTest) {
   EXPECT_NEAR(gradient[3], parameters[2], kTolerance);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

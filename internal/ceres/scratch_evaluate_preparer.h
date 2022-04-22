@@ -40,8 +40,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class Program;
 class ResidualBlock;
@@ -66,8 +65,7 @@ class CERES_NO_EXPORT ScratchEvaluatePreparer {
   std::unique_ptr<double[]> jacobian_scratch_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

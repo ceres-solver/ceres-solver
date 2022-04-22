@@ -41,8 +41,7 @@
 #ifndef CERES_NO_ACCELERATE_SPARSE
 #ifndef CERES_NO_THREADS
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TEST_F(BundleAdjustmentTest,
        IterativeSchur_AccelerateSparse_ClusterJacobi_AutomaticOrdering_Threads) {  // NOLINT
@@ -60,8 +59,7 @@ TEST_F(BundleAdjustmentTest,
   RunSolverForConfigAndExpectResidualsMatch(*options, problem);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_NO_THREADS
 #endif  // CERES_NO_ACCELERATE_SPARSE

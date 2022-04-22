@@ -61,8 +61,7 @@
 #include "ceres/preconditioner.h"
 #include "ceres/sparse_cholesky.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class BlockRandomAccessSparseMatrix;
 class BlockSparseMatrix;
@@ -197,7 +196,6 @@ class CERES_NO_EXPORT VisibilityBasedPreconditioner
   std::unique_ptr<SparseCholesky> sparse_cholesky_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_VISIBILITY_BASED_PRECONDITIONER_H_

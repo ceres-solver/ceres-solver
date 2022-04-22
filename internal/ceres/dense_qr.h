@@ -54,8 +54,7 @@
 #include "cusolverDn.h"
 #endif  // CERES_NO_CUDA
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // An interface that abstracts away the internal details of various dense linear
 // algebra libraries and offers a simple API for solving dense linear systems
@@ -199,8 +198,7 @@ class CERES_NO_EXPORT CUDADenseQR final : public DenseQR {
 
 #endif  // CERES_NO_CUDA
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

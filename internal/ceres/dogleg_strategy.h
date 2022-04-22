@@ -36,8 +36,7 @@
 #include "ceres/linear_solver.h"
 #include "ceres/trust_region_strategy.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Dogleg step computation and trust region sizing strategy based on
 // on "Methods for Nonlinear Least Squares" by K. Madsen, H.B. Nielsen
@@ -159,8 +158,7 @@ class CERES_NO_EXPORT DoglegStrategy final : public TrustRegionStrategy {
   Matrix2d subspace_B_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

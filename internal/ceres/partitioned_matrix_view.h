@@ -50,8 +50,7 @@
 #include "ceres/small_blas.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Given generalized bi-partite matrix A = [E F], with the same block
 // structure as required by the Schur complement based solver, found
@@ -154,8 +153,7 @@ class CERES_NO_EXPORT PartitionedMatrixView final
   int num_cols_f_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

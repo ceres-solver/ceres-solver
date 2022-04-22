@@ -58,8 +58,7 @@
 // used in order to allow also Eigen::Ref and Eigen block expressions to
 // be passed to the function.
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 template <typename VT, typename XT, typename DeltaT, typename XPlusDeltaT>
 inline void ComputeSphereManifoldPlus(const VT& v,
@@ -156,7 +155,6 @@ inline void ComputeSphereManifoldMinusJacobian(const VT& x,
   (*jacobian) /= x.norm();
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif

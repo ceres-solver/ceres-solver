@@ -40,8 +40,7 @@
 #include "cusolverDn.h"
 #endif  // CERES_NO_CUDA
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 ContextImpl::ContextImpl() = default;
 
@@ -104,5 +103,4 @@ void ContextImpl::EnsureMinimumThreads(int num_threads) {
   thread_pool.Resize(num_threads);
 #endif  // CERES_USE_CXX_THREADS
 }
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

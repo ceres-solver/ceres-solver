@@ -38,8 +38,7 @@
 #include "ceres/random.h"
 #include "ceres/schur_eliminator.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 constexpr int kRowBlockSize = 2;
 constexpr int kEBlockSize = 3;
@@ -219,7 +218,6 @@ BENCHMARK(BM_SchurEliminatorForOneFBlockEliminate)->Range(10, 10000);
 BENCHMARK(BM_SchurEliminatorBackSubstitute)->Range(10, 10000);
 BENCHMARK(BM_SchurEliminatorForOneFBlockBackSubstitute)->Range(10, 10000);
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 BENCHMARK_MAIN();

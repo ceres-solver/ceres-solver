@@ -72,8 +72,7 @@ DEFINE_int32(ridders_extrapolations,
              3,
              "Maximal number of extrapolations in Ridders' method.");
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 
 const double kDoubleMax = std::numeric_limits<double>::max();
 
@@ -581,8 +580,7 @@ bool Solve(bool is_constrained, int trial) {
   return success;
 }
 
-}  // namespace examples
-}  // namespace ceres
+}  // namespace ceres::examples
 
 int main(int argc, char** argv) {
   GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);

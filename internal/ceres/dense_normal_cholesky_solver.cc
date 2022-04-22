@@ -39,8 +39,7 @@
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 DenseNormalCholeskySolver::DenseNormalCholeskySolver(
     LinearSolver::Options options)
@@ -87,5 +86,4 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveImpl(
   return summary;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

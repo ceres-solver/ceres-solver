@@ -51,8 +51,7 @@
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 IterativeSchurComplementSolver::IterativeSchurComplementSolver(
     LinearSolver::Options options)
@@ -172,5 +171,4 @@ void IterativeSchurComplementSolver::CreatePreconditioner(
   }
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

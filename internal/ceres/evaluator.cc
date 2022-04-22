@@ -46,8 +46,7 @@
 #include "ceres/scratch_evaluate_preparer.h"
 #include "glog/logging.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 Evaluator::~Evaluator() = default;
 
@@ -88,5 +87,4 @@ std::unique_ptr<Evaluator> Evaluator::Create(const Evaluator::Options& options,
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

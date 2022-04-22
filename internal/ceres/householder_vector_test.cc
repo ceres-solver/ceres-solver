@@ -34,8 +34,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 static void HouseholderTestHelper(const Vector& x) {
   const double kTolerance = 1e-14;
@@ -116,5 +115,4 @@ TEST(HouseholderVector, LastElementZero) {
   HouseholderTestHelper(x);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

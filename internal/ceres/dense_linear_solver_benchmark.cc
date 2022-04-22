@@ -36,8 +36,7 @@
 #include "ceres/linear_solver.h"
 #include "ceres/random.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 template <ceres::DenseLinearAlgebraLibraryType kLibraryType,
           ceres::LinearSolverType kSolverType>
@@ -105,7 +104,6 @@ BENCHMARK_TEMPLATE2(BM_DenseSolver, ceres::CUDA, ceres::DENSE_QR)
     ->Apply(MatrixSizes);
 #endif  // CERES_NO_CUDA
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 BENCHMARK_MAIN();

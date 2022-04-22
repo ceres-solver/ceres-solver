@@ -38,8 +38,7 @@
 #include "ceres/internal/config.h"
 #include "bundle_adjustment_test_util.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TEST_F(BundleAdjustmentTest,
        IterativeSchur_Jacobi_UserOrdering) {  // NOLINT
@@ -57,5 +56,4 @@ TEST_F(BundleAdjustmentTest,
   RunSolverForConfigAndExpectResidualsMatch(*options, problem);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -52,8 +52,7 @@
 #include "ceres/thread_pool.h"
 #endif  // CERES_USE_CXX_THREADS
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class CERES_NO_EXPORT ContextImpl final : public Context {
  public:
@@ -89,8 +88,7 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
 #endif  // CERES_NO_CUDA
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 

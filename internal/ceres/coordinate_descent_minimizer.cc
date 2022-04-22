@@ -49,8 +49,7 @@
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/trust_region_strategy.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 using std::map;
 using std::max;
@@ -270,5 +269,4 @@ CoordinateDescentMinimizer::CreateOrdering(const Program& program) {
   return ordering;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

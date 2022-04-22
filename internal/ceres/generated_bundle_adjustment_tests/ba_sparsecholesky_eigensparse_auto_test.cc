@@ -40,8 +40,7 @@
 
 #ifdef CERES_USE_EIGEN_SPARSE
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TEST_F(BundleAdjustmentTest,
        SparseNormalCholesky_EigenSparse_AutomaticOrdering) {  // NOLINT
@@ -59,7 +58,6 @@ TEST_F(BundleAdjustmentTest,
   RunSolverForConfigAndExpectResidualsMatch(*options, problem);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_USE_EIGEN_SPARSE

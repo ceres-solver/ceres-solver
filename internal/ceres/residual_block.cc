@@ -47,8 +47,7 @@
 
 using Eigen::Dynamic;
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 ResidualBlock::ResidualBlock(
     const CostFunction* cost_function,
@@ -216,5 +215,4 @@ int ResidualBlock::NumScratchDoublesForEvaluate() const {
   return scratch_doubles;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

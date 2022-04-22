@@ -49,8 +49,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 constexpr int kNumTrials = 1000;
 constexpr double kTolerance = 1e-9;
@@ -931,5 +930,4 @@ TEST(LineManifold, NormalFunctionTestDynamic) {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

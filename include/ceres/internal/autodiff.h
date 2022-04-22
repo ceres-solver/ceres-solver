@@ -164,8 +164,7 @@
 #define CERES_AUTODIFF_MAX_RESIDUALS_ON_STACK 20
 #endif
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 // Extends src by a 1st order perturbation for every dimension and puts it in
 // dst. The size of src is N. Since this is also used for perturbations in
@@ -359,7 +358,6 @@ inline bool AutoDifferentiate(const Functor& functor,
   return true;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_PUBLIC_INTERNAL_AUTODIFF_H_

@@ -40,8 +40,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 namespace {
 
 class Fixture : public testing::Test {
@@ -275,5 +274,4 @@ TEST_F(DoglegStrategyFixtureValley, CorrectStepGlobalOptimumAlongGradient) {
   EXPECT_NEAR(x_(5), 0.0, kToleranceLoose);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

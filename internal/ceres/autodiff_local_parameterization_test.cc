@@ -36,8 +36,7 @@
 #include "ceres/rotation.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 struct IdentityPlus {
   template <typename T>
@@ -223,5 +222,4 @@ TEST(AutoDiffLocalParameterization, QuaternionParameterizationNonZeroTest) {
   QuaternionParameterizationTestHelper(x, delta);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

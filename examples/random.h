@@ -34,8 +34,7 @@
 #include <cmath>
 #include <cstdlib>
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 
 // Return a random number sampled from a uniform distribution in the range
 // [0,1].
@@ -58,7 +57,6 @@ inline double RandNormal() {
   return x1 * w;
 }
 
-}  // namespace examples
-}  // namespace ceres
+}  // namespace ceres::examples
 
 #endif  // CERES_EXAMPLES_RANDOM_H_

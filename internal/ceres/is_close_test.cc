@@ -34,8 +34,7 @@
 
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 const double kTolerance = 1e-9;
 
@@ -174,5 +173,4 @@ TEST(IsClose, BothParametersZero) {
   EXPECT_NEAR(relative_error, 0.0, kTolerance);
   EXPECT_NEAR(absolute_error, 0.0, kTolerance);
 }
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

@@ -35,8 +35,7 @@
 #include "ceres/graph.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TEST(SingleLinkageClustering, GraphHasTwoComponents) {
   WeightedGraph<int> graph;
@@ -122,5 +121,4 @@ TEST(SingleLinkageClustering, ComponentWithWeakLinkAndStrongLink) {
   EXPECT_EQ(membership[4], membership[5]);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

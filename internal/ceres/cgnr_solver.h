@@ -36,8 +36,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class Preconditioner;
 
@@ -67,7 +66,6 @@ class CERES_NO_EXPORT CgnrSolver final : public BlockSparseMatrixSolver {
   std::unique_ptr<Preconditioner> preconditioner_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_CGNR_SOLVER_H_

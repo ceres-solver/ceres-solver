@@ -40,8 +40,7 @@
 
 #ifndef CERES_NO_SUITESPARSE
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TEST_F(BundleAdjustmentTest,
        SparseNormalCholesky_SuiteSparse_UserOrdering) {  // NOLINT
@@ -59,7 +58,6 @@ TEST_F(BundleAdjustmentTest,
   RunSolverForConfigAndExpectResidualsMatch(*options, problem);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
 #endif  // CERES_NO_SUITESPARSE
