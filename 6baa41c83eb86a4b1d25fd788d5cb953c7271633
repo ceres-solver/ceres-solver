@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": false,
       "key": {
         "uuid": "cb83c6b2_3109469a",
         "filename": "/PATCHSET_LEVEL",
@@ -14,10 +15,10 @@
       "side": 1,
       "message": "I just stumbled upon this. It would be indeed nice to have in ceres.\n\n@Evan, I didn\u0027t review all of the discussion and the full diff in detail yet, but since you mentioned the VINSmono and the okvis paper, I was woundering if/how this deals with first-estimate Jacobians? ",
       "revId": "6baa41c83eb86a4b1d25fd788d5cb953c7271633",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": false
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "f61e881a_d0479453",
         "filename": "/PATCHSET_LEVEL",
@@ -32,10 +33,10 @@
       "message": "Hi Nikolaus, appreciate your input as well, and this is a great question. As of now, this PR does nothing special for FEJ. In computing the marginalization prior, it recomputes the Jacobians and residuals using the state at the time of marginalization. \n\nI have not implemented the FEJ-EKF, so please correct me if I am wrong, but here is my understanding and my initial thoughts on how it could be implement with this feature and a few changes. In an FEJ-EKF setting, my understanding is that the Jacobians for state propagation and measurement are computed with the first available estimate, while the residual is computed as in the traditional EKF with the estimate after the update. This can be viewed as marginalization, but different states are required for the Jacobian and residual calculations. I think in Ceres, two calls to Evaluate would be required, one with the current state to compute the residuals and another with first estimates to compute the Jacobians. The API would just have to be amended to accept first estimates as an additional optional argument, and these would be passed a few function calls down to where Evaluate is called. The \"gradient\" would have to be computed outside of Evaluate with the desired J and r. Please let me know if you think decoupling Jacobian and residual calculations in this way would be valid and support the use case you have in mind.",
       "parentUuid": "cb83c6b2_3109469a",
       "revId": "6baa41c83eb86a4b1d25fd788d5cb953c7271633",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": true
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "ea568c9e_09dd74da",
         "filename": "/PATCHSET_LEVEL",
@@ -50,8 +51,25 @@
       "message": "Thanks for your reply and sorry for the slow response.\n\nTo my understanding, the point of FEJ is to ensure that the linear system has the same null space (gauge freedom) as the non-linear one. I\u0027m not sure how is the situation in the \"node-removal\" / \"edge sparsification\" use case, but for VINS systems it seems this is important not only for filters, but also for sliding window optimization based systems with repeated marginalization. The ones you mention, VINSmono and okvis both employ FEJ (other examples are basalt and DSO, the latter being monocular odometry, not VINS). What happens without FEJ in VINS is that the null spaces vanish and the system becomes over-confident, thinking e.g. that global yaw is observable (which it isn\u0027t), leading to degraded estimation down the line. Not mixing different residuals of the same state at different linearization points avoids this, hence FEJ.\n\nYes, I think you would have to evaluate the residual blocks twice, once for the residual value with the current state, and once for the Jacobians with the \"linearization state\". And you\u0027d need an API in ceres to store linearization points for parameter vectors and mark them as \"fixed\". You also need a way to get the current delta between the linearized state and the current state (for parameters with local parameterization; again, for VINS this is essential for rotations). You could check how this is implemented in okvis, since AFAIK it uses ceres.\n\nI just think that a generic feature like this in ceres should at least have everything to fully support one of the prime use cases, namely such sliding window odometry systems.",
       "parentUuid": "f61e881a_d0479453",
       "revId": "6baa41c83eb86a4b1d25fd788d5cb953c7271633",
-      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
-      "unresolved": true
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3642e036_376ee5f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f61e881a_d0479453",
+      "revId": "6baa41c83eb86a4b1d25fd788d5cb953c7271633",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

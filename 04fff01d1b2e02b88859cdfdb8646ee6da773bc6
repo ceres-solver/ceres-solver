@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c6763f5a_b8e406a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Hi Nikolaus, thank you very much for the comments and thoughtful review. I realized I forgot to address a couple, so I will push another new patch set soon.\n\n\"There is an assumption that the minimization w.r.t dx actually results in a value thats less than \\sum_i f_i(x_0, y_0), i.e. it is better than the linearization point. This may or may not be true. I suppose this is not something that is being handled.\"\n\nI think the idea is the method relies on analytically minimizing out \\delta x_m based on the approximated cost function (approximated due to linearization). This minimizer is a function of delta x_b. However, there is no check that this actually decreases the actual cost function. I need to think about this more and whether it makes sense to add any checks here.",
+      "parentUuid": "a0975543_21ea407c",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "caf4427b_5159463d",
         "filename": "include/ceres/marginalization.h",
         "patchSetId": 9
@@ -84,6 +102,24 @@
       "writtenOn": "2022-03-30T22:51:22Z",
       "side": 1,
       "message": "Global and local are very ambiguous terms in this context (see also general comments). Maybe use ambient and tangent space, which seems to also be the terminology adopted by the new Manifold concept in ceres.",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "912fb65e_0f43b355",
+        "filename": "include/ceres/marginalization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caf4427b_5159463d",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -101,6 +137,24 @@
       "writtenOn": "2022-03-30T22:51:22Z",
       "side": 1,
       "message": "typo: marginalization_prior_id",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b65387a_779e3890",
+        "filename": "include/ceres/marginalization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e25e4f_417910d9",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -124,6 +178,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "db18013a_143ae9db",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Oops I agree and just forgot the clamping",
+      "parentUuid": "c6d8c93b_64a8128f",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6a576a7b_2e080aa4",
         "filename": "internal/ceres/marginalization.cc",
         "patchSetId": 9
@@ -135,6 +207,24 @@
       "writtenOn": "2022-03-30T22:51:22Z",
       "side": 1,
       "message": "Should it be an epsilon check to count small positive values as 0? Or does Eigen already do that when computing EVs (i.e. clamping small positive EVs to exactly 0)?\n\nThe epsilon check is also discussed in Carlevaris-Bianco\u002714 in Section III.E.",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d12f52c5_58571d02",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a576a7b_2e080aa4",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -152,6 +242,24 @@
       "writtenOn": "2022-03-30T22:51:22Z",
       "side": 1,
       "message": "The reason we are setting DENSE_SCHUR here is to make the Evaluator use BlockJacobianWriter, right? Maybe a comment to that effect would be good.\n\nI\u0027m wondering if DenseJacobianWriter would also be an option here, since this is the reduced problem with only the parameter blocks in the Markov blanket? (But I have to admit I didn\u0027t check how the differently Jacobian writers work, so maybe not.)",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a82cfc00_b36a85f4",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Good find-- I think this was just oversight on my part. DenseJacobianWriter should be sufficient.",
+      "parentUuid": "eb2cac7d_a924e32f",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -175,6 +283,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1f3bb644_475729d9",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "I think all or none makes sense, but I\u0027ll leave this unresolve for some time in case folks have different opinions",
+      "parentUuid": "59dbcd2d_eb8b618a",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "13198a2c_0ff09138",
         "filename": "internal/ceres/marginalization.cc",
         "patchSetId": 9
@@ -186,6 +312,24 @@
       "writtenOn": "2022-03-30T22:51:22Z",
       "side": 1,
       "message": "J is unused?",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c70688d_71e6aa7c",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13198a2c_0ff09138",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -207,6 +351,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "55e25c7e_ed333442",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Good catch. I think I added this for debugging and forgot to take it out.",
+      "parentUuid": "947b6354_8d20db2c",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "473281ee_cacd2c7a",
@@ -220,6 +382,24 @@
       "writtenOn": "2022-03-30T22:51:22Z",
       "side": 1,
       "message": "Should there also be a check for tan_size_marginalized \u003e 0, or is this already checked elsewhere? Ah, I think IsParameterBlockConstant would have already caused an assertion earlier. Maybe it would still be good to have a comment (or assert) that tan_size_marginalized \u003e 0 is guaranteed here.",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b65bfa8c_31d72db6",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "I think it makes sense to check this here as well",
+      "parentUuid": "473281ee_cacd2c7a",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -241,6 +421,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b9dc643_a4c5edf9",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ff8385e_479aafa8",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "432125c0_10599b13",
@@ -254,6 +452,24 @@
       "writtenOn": "2022-03-30T22:51:22Z",
       "side": 1,
       "message": "Is there a reason to compute b \u003d S^T \\Lambda^{-1} g and not b \u003d S^{-1} g ?",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62943e24_c00d9558",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "This must have been a careless mistake on my part. We should not mix LDLT and the eigen-decomposition.  The correct residual would be D^(1/2) U^T delta_b + D^(-1/2) U^T g_t",
+      "parentUuid": "432125c0_10599b13",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -275,6 +491,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "99e5f8e2_232d813c",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49f5e79c_de4887cd",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "10b60e8f_a5979a1d",
@@ -288,6 +522,24 @@
       "writtenOn": "2022-03-30T22:51:22Z",
       "side": 1,
       "message": "Why do we need localProblem as an output here? Getting access to the manifold for blanket states we could also get from problem, no?",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d480ba2b_345ae8e7",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Thanks. Good catch",
+      "parentUuid": "10b60e8f_a5979a1d",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -322,6 +574,24 @@
       "writtenOn": "2022-03-30T22:51:22Z",
       "side": 1,
       "message": "In the current API of this class passing parameter_block_tan_sizes explicitly seems redundant, since it could be inferred from the manifold objects (or parameter_block_reference_points sizes when a manifold is nullptr). (It could still make sense to keep it as member function, but also a small helper that queries the stored manifold or reference point size could do for use in Evaluate.)",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75207787_f2ed0a7b",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f835578_572086fd",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -375,6 +645,24 @@
       "side": 1,
       "message": "Makes sense. The code here should handle both cases. (And if it gets merged before LocalParameterization is removed, maybe a simple assert at the start of the marginalization should verify that none of the involved parameter blocks have a LocalParameterization set, just to avoid any pitfalls.)",
       "parentUuid": "2bbf06a1_efd1ed36",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "091d8fdb_a899e87a",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5b0ab85_063d3320",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }

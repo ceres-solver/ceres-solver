@@ -52,6 +52,24 @@
       "tag": "mailMessageId\u003d\u003cCAK0oyEqcT937MC3j445_arJO0sFT_M4RbgmMD32dhbFJmwDTrw@mail.gmail.com\u003e",
       "revId": "5de3d8d83bd0759ccbada250b4ec5071f56fd5a1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57d8b2c1_35f3fb40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Hi Sameer, I pushed a new patch set with the changes to incorporate the manifold class. This allowed me to make many simplifications, and I really appreciate the new class!",
+      "parentUuid": "0bcda846_dfbd8db9",
+      "revId": "5de3d8d83bd0759ccbada250b4ec5071f56fd5a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

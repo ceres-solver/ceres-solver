@@ -16,6 +16,41 @@
       "message": "Evan, \nis this ready to be looked at again? or are you still working on it?",
       "revId": "f1e509afadf08b12e8881e1a6316a8e7fa9ba489",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c8e059f_b9207a8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "[EDIT 4/19]\n\nStill working on it.\n\nSorry I responded to the older thread above, but I should be clear. I pushed this too early with a few unresolved comments from Nikolaus. I just understood some issues related to first-estimates Jacobians (linearization_states in the code). Sorry for the confusion! Will push an update soon\n\nEvan",
+      "parentUuid": "581852f1_bd7e7757",
+      "revId": "f1e509afadf08b12e8881e1a6316a8e7fa9ba489",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04c67e76_5f2355ae",
+        "filename": "internal/ceres/block_jacobian_writer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-23T14:31:28Z",
+      "side": 1,
+      "message": "Oops, correct this in another PR",
+      "revId": "f1e509afadf08b12e8881e1a6316a8e7fa9ba489",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
