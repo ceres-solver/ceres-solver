@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d18b5aae_c2124407",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-04-23T11:31:17Z",
+      "side": 1,
+      "message": "Latest Ubuntu LTS has been released. The corresponding runner is now used along Ubuntu 20.04.\n\nBuilds are here: https://github.com/sergiud/ceres-solver/actions",
+      "revId": "464abc19830179e99904dec1d7342a8ae0cc228c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
