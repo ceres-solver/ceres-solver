@@ -16,6 +16,23 @@
       "message": "Latest Ubuntu LTS has been released. The corresponding runner is now used along Ubuntu 20.04.\n\nBuilds are here: https://github.com/sergiud/ceres-solver/actions",
       "revId": "464abc19830179e99904dec1d7342a8ae0cc228c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c6d2b0b_05eadaaa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-04-23T16:33:34Z",
+      "side": 1,
+      "message": "Thanks Sergiu!",
+      "revId": "464abc19830179e99904dec1d7342a8ae0cc228c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
