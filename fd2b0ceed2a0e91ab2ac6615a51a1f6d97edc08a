@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bca03c1_c4b5a5ef",
+        "filename": "internal/ceres/corrector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-24T21:28:56Z",
+      "side": 1,
+      "message": "Assuming BAMS stands for Bundle Adjustment: A Modern Synthesis",
+      "revId": "fd2b0ceed2a0e91ab2ac6615a51a1f6d97edc08a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
