@@ -30,7 +30,7 @@
 //
 // Class definition for the object that is responsible for applying a
 // second order correction to the Gauss-Newton based on the ideas in
-// BANS by Triggs et al.
+// BAMS by Triggs et al.
 
 #ifndef CERES_INTERNAL_CORRECTOR_H_
 #define CERES_INTERNAL_CORRECTOR_H_
@@ -47,7 +47,7 @@ namespace ceres::internal {
 // The key idea here is to look at the expressions for the robustified
 // gauss newton approximation and then take its square root to get the
 // corresponding corrections to the residual and jacobian.  For the
-// full expressions see Eq. 10 and 11 in BANS by Triggs et al.
+// full expressions see Eq. 10 and 11 in BAMS by Triggs et al.
 class CERES_NO_EXPORT Corrector {
  public:
   // The constructor takes the squared norm, the value, the first and

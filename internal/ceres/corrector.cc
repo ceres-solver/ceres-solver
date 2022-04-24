@@ -87,7 +87,7 @@ Corrector::Corrector(const double sq_norm, const double rho[3]) {
   // We now require that the first derivative of the loss function be
   // positive only if the second derivative is positive. This is
   // because when the second derivative is non-positive, we do not use
-  // the second order correction suggested by BANS and instead use a
+  // the second order correction suggested by BAMS and instead use a
   // simpler first order strategy which does not use a division by the
   // gradient of the loss function.
   CHECK_GT(rho[1], 0.0);
@@ -111,7 +111,7 @@ Corrector::Corrector(const double sq_norm, const double rho[3]) {
 
 void Corrector::CorrectResiduals(const int num_rows, double* residuals) {
   DCHECK(residuals != nullptr);
-  // Equation 11 in BANS.
+  // Equation 11 in BAMS.
   VectorRef(residuals, num_rows) *= residual_scaling_;
 }
 
@@ -128,7 +128,7 @@ void Corrector::CorrectJacobian(const int num_rows,
     return;
   }
 
-  // Equation 11 in BANS.
+  // Equation 11 in BAMS.
   //
   //  J = sqrt(rho) * (J - alpha^2 r * r' J)
   //
