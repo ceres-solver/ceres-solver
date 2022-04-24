@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "340e32f3_72d60bbf",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-24T22:39:45Z",
+      "side": 1,
+      "message": "I introduced code to make a copy of the linearization state so that it can be const. The linearization state is only used for evaluation, so an alternative would be to const_cast the linearization_state, but I think the copy is cheap and the better option. Let me know if folks have other opinions.",
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ad2ed9ac_4664de69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-24T22:39:45Z",
+      "side": 1,
+      "message": "Thinking again, there could be a check that the cost is reduced for the marginalized states. The δx_m that minimizes the cost is -H_{mm}^{-1} (g_{mm}+H_{mb} δx_b). One could possibly re-evaluate the cost for terms involving x_m at δx_b \u003d 0 and compare to the corresponding cost at δx_m \u003d δx_b \u003d 0. I suppose marginalization could fail if an option \"use_monotonic_steps\" is true and the cost increases?\n\nOn the follow-ups, I think they should be feasible. I can address them in a future CR or this one, but I think it is probably easier to address them in a future one because they would add a lot of complexity and be mostly independent.",
+      "parentUuid": "c6763f5a_b8e406a1",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "caf4427b_5159463d",
         "filename": "include/ceres/marginalization.h",
         "patchSetId": 9
@@ -190,6 +208,24 @@
       "side": 1,
       "message": "Oops I agree and just forgot the clamping",
       "parentUuid": "c6d8c93b_64a8128f",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5d6699a_f73cc635",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-24T22:39:45Z",
+      "side": 1,
+      "message": "After some additional thought, I think the right thing to do is LLT (not LDLT) if the matrix is assumed to be full rank and the eigendecomposition otherwise. My rationale is that the user should be forced to handle failure in the case where the marginal information is incorrectly assumed to be full rank. This also guarantees that the Jacobian for the marginalization prior cost function computed here is full rank.",
+      "parentUuid": "db18013a_143ae9db",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -557,6 +593,24 @@
       "writtenOn": "2022-03-30T22:51:22Z",
       "side": 1,
       "message": "Should we not use the parameter_block_linearization_states as the reference state for the linear cost function if supplied?",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74c6d775_7a6d58e3",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-24T22:39:45Z",
+      "side": 1,
+      "message": "Great point, and I agree. After giving this some thought, it makes sense to use the linearization state as the reference point. One reason is that the Jacobian of the marginalization prior is a function of this state, so it must be the linearization state so that we avoid changing the Jacobian of the prior with respect to the Markov blanket variables.\n\nMany of the changes in the new patch set are a result of this change. It simplifies the evaluation step. However, there is some additional complexity because I am trying to make the linearization states be const, so I make a copy of them, which then get added to the \"new problem\" with the marginalized blocks and Markov blanket. I will start a separate thread about this.",
+      "parentUuid": "b5ef0f95_b196b21c",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
