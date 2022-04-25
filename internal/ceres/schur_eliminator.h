@@ -168,9 +168,9 @@ class CERES_NO_EXPORT SchurEliminatorBase {
  public:
   virtual ~SchurEliminatorBase();
 
-  // Initialize the eliminator. It is the user's responsibilty to call
+  // Initialize the eliminator. It is the user's responsibility to call
   // this function before calling Eliminate or BackSubstitute. It is
-  // also the caller's responsibilty to ensure that the
+  // also the caller's responsibility to ensure that the
   // CompressedRowBlockStructure object passed to this method is the
   // same one (or is equivalent to) the one associated with the
   // BlockSparseMatrix objects below.
@@ -446,7 +446,7 @@ class CERES_NO_EXPORT SchurEliminatorForOneFBlock final
     const CompressedRowBlockStructure* bs = A.block_structure();
     const double* values = A.values();
 
-    // Add the diagonal to the schur complement.
+    // Add the diagonal to the Schur complement.
     if (D != nullptr) {
       typename EigenTypes<kFBlockSize>::ConstVectorRef diag(
           D + bs->cols[num_eliminate_blocks_].position, kFBlockSize);
@@ -478,7 +478,7 @@ class CERES_NO_EXPORT SchurEliminatorForOneFBlock final
       const Chunk& chunk = chunks_[i];
       const int e_block_id = bs->rows[chunk.start].cells.front().block_id;
 
-      // Naming covention, e_t_e = e_block.transpose() * e_block;
+      // Naming convention, e_t_e = e_block.transpose() * e_block;
       Eigen::Matrix<double, kEBlockSize, kEBlockSize> e_t_e;
       Eigen::Matrix<double, kEBlockSize, kFBlockSize> e_t_f;
       Eigen::Matrix<double, kEBlockSize, 1> e_t_b;

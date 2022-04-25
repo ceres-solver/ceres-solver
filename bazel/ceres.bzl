@@ -184,7 +184,7 @@ def ceres_library(name,
             "-I" + internal,
             "-Wno-sign-compare",
 
-            # Disable warnings about deprecated interfraces while we are
+            # Disable warnings about deprecated interfaces while we are
             # transitioning from LocalParameterization to Manifolds.
             "-Wno-deprecated-declarations",
         ] + schur_eliminator_copts,

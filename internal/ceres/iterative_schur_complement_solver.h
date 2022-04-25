@@ -52,7 +52,7 @@ class Preconditioner;
 // The algorithm used by this solver was developed in a series of
 // papers - "Agarwal et al, Bundle Adjustment in the Large, ECCV 2010"
 // and "Wu et al, Multicore Bundle Adjustment, submitted to CVPR
-// 2011" at the Univeristy of Washington.
+// 2011" at the University of Washington.
 //
 // The key idea is that one can run Conjugate Gradients on the Schur
 // Complement system without explicitly forming the Schur Complement

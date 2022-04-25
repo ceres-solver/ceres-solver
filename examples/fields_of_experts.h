@@ -28,7 +28,7 @@
 //
 // Author: strandmark@google.com (Petter Strandmark)
 //
-// Class for loading the data required for descibing a Fields of Experts (FoE)
+// Class for loading the data required for describing a Fields of Experts (FoE)
 // model. The Fields of Experts regularization consists of terms of the type
 //
 //   alpha * log(1 + (1/2)*sum(F .* X)^2),

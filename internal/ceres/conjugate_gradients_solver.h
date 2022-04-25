@@ -43,8 +43,8 @@ namespace ceres::internal {
 class LinearOperator;
 
 // This class implements the now classical Conjugate Gradients
-// algorithm of Hestenes & Stiefel for solving postive semidefinite
-// linear sytems. Optionally it can use a preconditioner also to
+// algorithm of Hestenes & Stiefel for solving positive semidefinite
+// linear systems. Optionally it can use a preconditioner also to
 // reduce the condition number of the linear system and improve the
 // convergence rate. Modern references for Conjugate Gradients are the
 // books by Yousef Saad and Trefethen & Bau. This implementation of CG

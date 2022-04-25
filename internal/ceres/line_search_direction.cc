@@ -241,7 +241,7 @@ class CERES_NO_EXPORT BFGS final : public LineSearchDirection {
         //
         // The original origin of this rescaling trick is somewhat unclear, the
         // earliest reference appears to be Oren [1], however it is widely
-        // discussed without specific attributation in various texts including
+        // discussed without specific attribution in various texts including
         // [2] (p143).
         //
         // [1] Oren S.S., Self-scaling variable metric (SSVM) algorithms

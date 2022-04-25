@@ -493,7 +493,7 @@ substantial savings in time and memory for large sparse
 problems. Ceres uses the sparse Cholesky factorization routines in
 Professor Tim Davis' ``SuiteSparse`` or ``CXSparse`` packages [Chen]_
 or the sparse Cholesky factorization algorithm in ``Eigen`` (which
-incidently is a port of the algorithm implemented inside ``CXSparse``)
+incidentally is a port of the algorithm implemented inside ``CXSparse``)
 
 .. _section-cgnr:
 
@@ -921,7 +921,7 @@ elimination group [LiSaad]_.
    Choices are ``ARMIJO`` and ``WOLFE`` (strong Wolfe conditions).
    Note that in order for the assumptions underlying the ``BFGS`` and
    ``LBFGS`` line search direction algorithms to be guaranteed to be
-   satisifed, the ``WOLFE`` line search should be used.
+   satisfied, the ``WOLFE`` line search should be used.
 
 .. member:: NonlinearConjugateGradientType Solver::Options::nonlinear_conjugate_gradient_type
 
@@ -1332,7 +1332,7 @@ elimination group [LiSaad]_.
    dense linear algebra library which may or may not be available.
 
    This setting affects the ``DENSE_QR``, ``DENSE_NORMAL_CHOLESKY``
-   and ``DENSE_SCHUR`` solvers. For small to moderate sized probem
+   and ``DENSE_SCHUR`` solvers. For small to moderate sized problem
    ``EIGEN`` is a fine choice but for large problems, an optimized
    ``LAPACK + BLAS`` or ``CUDA`` implementation can make a substantial
    difference in performance.

@@ -33,7 +33,7 @@
 // Note that for good denoising results the weighting between the data term
 // and the Fields of Experts term needs to be adjusted. This is discussed
 // in [1]. This program assumes Gaussian noise. The noise model can be changed
-// by substituing another function for QuadraticCostFunction.
+// by substituting another function for QuadraticCostFunction.
 //
 // [1] S. Roth and M.J. Black. "Fields of Experts." International Journal of
 //     Computer Vision, 82(2):205--229, 2009.

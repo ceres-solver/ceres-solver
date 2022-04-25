@@ -115,18 +115,18 @@ inline void ComputeSphereManifoldMinus(
       AmbientSpaceDim == Eigen::Dynamic ? Eigen::Dynamic : AmbientSpaceDim - 1;
   using AmbientVector = Eigen::Matrix<double, AmbientSpaceDim, 1>;
 
-  const int tanget_size = v.size() - 1;
+  const int tangent_size = v.size() - 1;
 
   const AmbientVector hy = ApplyHouseholderVector(y, v, beta) / x.norm();
 
   // Calculate y - x. See B.2 p.25 equation (108).
-  double y_last = hy[tanget_size];
-  double hy_norm = hy.template head<TangentSpaceDim>(tanget_size).norm();
+  double y_last = hy[tangent_size];
+  double hy_norm = hy.template head<TangentSpaceDim>(tangent_size).norm();
   if (hy_norm == 0.0) {
     y_minus_x->setZero();
   } else {
     *y_minus_x = 2.0 * std::atan2(hy_norm, y_last) / hy_norm *
-                 hy.template head<TangentSpaceDim>(tanget_size);
+                 hy.template head<TangentSpaceDim>(tangent_size);
   }
 }
 

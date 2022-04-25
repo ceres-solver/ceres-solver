@@ -326,7 +326,7 @@ starting with a fairly large step size :math:`h = 0.01`, we get:
 Compared to the *correct* value :math:`Df(1.0) = 140.73773557129658`,
 :math:`A(5, 1)` has a relative error of :math:`10^{-13}`. For
 comparison, the relative error for the central difference formula with
-the same stepsize (:math:`0.01/2^4 = 0.000625`) is :math:`10^{-5}`.
+the same step size (:math:`0.01/2^4 = 0.000625`) is :math:`10^{-5}`.
 
 The above tableau is the basis of Ridders' method for numeric
 differentiation. The full implementation is an adaptive scheme that

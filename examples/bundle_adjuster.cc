@@ -120,7 +120,7 @@ DEFINE_double(point_sigma, 0.0, "Standard deviation of the point "
               "perturbation.");
 DEFINE_int32(random_seed, 38401, "Random seed used to set the state "
              "of the pseudo random number generator used to generate "
-             "the pertubations.");
+             "the perturbations.");
 DEFINE_bool(line_search, false, "Use a line search instead of trust region "
             "algorithm.");
 DEFINE_bool(mixed_precision_solves, false, "Use mixed precision solves.");
@@ -298,7 +298,7 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
     LossFunction* loss_function =
         CERES_GET_FLAG(FLAGS_robustify) ? new HuberLoss(1.0) : nullptr;
 
-    // Each observation correponds to a pair of a camera and a point
+    // Each observation corresponds to a pair of a camera and a point
     // which are identified by camera_index()[i] and point_index()[i]
     // respectively.
     double* camera =

@@ -78,7 +78,7 @@ BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
     return;
   };
 
-  // This wil die horribly on invalid files. Them's the breaks.
+  // This will die horribly on invalid files. Them's the breaks.
   FscanfOrDie(fptr, "%d", &num_cameras_);
   FscanfOrDie(fptr, "%d", &num_points_);
   FscanfOrDie(fptr, "%d", &num_observations_);

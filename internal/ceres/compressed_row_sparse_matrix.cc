@@ -48,7 +48,7 @@ using std::vector;
 namespace {
 
 // Helper functor used by the constructor for reordering the contents
-// of a TripletSparseMatrix. This comparator assumes thay there are no
+// of a TripletSparseMatrix. This comparator assumes that there are no
 // duplicates in the pair of arrays rows and cols, i.e., there is no
 // indices i and j (not equal to each other) s.t.
 //

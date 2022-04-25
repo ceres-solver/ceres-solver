@@ -228,7 +228,7 @@ bool SuiteSparse::BlockAMDOrdering(const cholmod_sparse* A,
   const int num_col_blocks = col_blocks.size();
 
   // Arrays storing the compressed column structure of the matrix
-  // incoding the block sparsity of A.
+  // encoding the block sparsity of A.
   vector<int> block_cols;
   vector<int> block_rows;
 

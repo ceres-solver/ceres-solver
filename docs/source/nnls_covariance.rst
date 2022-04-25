@@ -166,7 +166,7 @@ cases.
       moderately fast algorithm suitable for small to medium sized
       matrices. For best performance we recommend using
       ``SuiteSparseQR`` which is enabled by setting
-      :member:`Covaraince::Options::sparse_linear_algebra_library_type`
+      :member:`Covariance::Options::sparse_linear_algebra_library_type`
       to ``SUITE_SPARSE``.
 
       ``SPARSE_QR`` cannot compute the covariance if the
@@ -238,7 +238,7 @@ cases.
       .. math:: \frac{\sigma_{\text{min}}}{\sigma_{\text{max}}}  < \sqrt{\text{min_reciprocal_condition_number}}
 
       where :math:`\sigma_{\text{min}}` and
-      :math:`\sigma_{\text{max}}` are the minimum and maxiumum
+      :math:`\sigma_{\text{max}}` are the minimum and maximum
       singular values of :math:`J` respectively.
 
    2. ``SPARSE_QR``

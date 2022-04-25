@@ -136,7 +136,7 @@ Solving
    Choices are ``ARMIJO`` and ``WOLFE`` (strong Wolfe conditions).
    Note that in order for the assumptions underlying the ``BFGS`` and
    ``LBFGS`` line search direction algorithms to be guaranteed to be
-   satisifed, the ``WOLFE`` line search should be used.
+   satisfied, the ``WOLFE`` line search should be used.
 
 .. member:: NonlinearConjugateGradientType GradientProblemSolver::Options::nonlinear_conjugate_gradient_type
 
@@ -205,7 +205,7 @@ Solving
   low-sensitivity parameters. It can also reduce the robustness of the
   solution to errors in the Jacobians.
 
-.. member:: LineSearchIterpolationType GradientProblemSolver::Options::line_search_interpolation_type
+.. member:: LineSearchInterpolationType GradientProblemSolver::Options::line_search_interpolation_type
 
    Default: ``CUBIC``
 

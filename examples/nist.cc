@@ -117,7 +117,7 @@ DEFINE_int32(max_line_search_restarts,
              "Maximum number of restarts of line search direction algorithm.");
 DEFINE_string(line_search_interpolation,
               "cubic",
-              "Degree of polynomial aproximation in line search, choices are: "
+              "Degree of polynomial approximation in line search, choices are: "
               "bisection, quadratic & cubic.");
 DEFINE_int32(lbfgs_rank,
              20,
@@ -179,7 +179,7 @@ void SplitStringUsingChar(const string& full,
     } else {
       const char* start = p;
       while (++p != end && *p != delim) {
-        // Skip to the next occurence of the delimiter.
+        // Skip to the next occurrence of the delimiter.
       }
       *it++ = string(start, p - start);
     }
@@ -250,7 +250,7 @@ class NISTProblem {
       final_parameters_(0, parameter_id) = atof(pieces[2 + kNumTries].c_str());
     }
 
-    // Certfied cost
+    // Certified cost
     SkipLines(ifs, 1);
     GetAndSplitLine(ifs, &pieces);
     certified_cost_ = atof(pieces[4].c_str()) / 2.0;

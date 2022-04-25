@@ -50,7 +50,7 @@
 //
 // There are two types of residuals in this problem:
 // 1) The OdometryConstraint residual, that accounts for the odometry readings
-//    between successive pose estimatess of the robot.
+//    between successive pose estimates of the robot.
 // 2) The RangeConstraint residual, that accounts for the errors in the observed
 //    range readings from each pose.
 //
@@ -97,14 +97,14 @@
 // timesteps 0 to i for that variable, both inclusive.
 //
 // Bayes' rule is used to derive eq. 3 from 2, and the independence of
-// odometry observations and range readings is expolited to derive 4 from 3.
+// odometry observations and range readings is exploited to derive 4 from 3.
 //
 // Thus, the Belief, up to scale, is factored as a product of a number of
 // terms, two for each pose, where for each pose term there is one term for the
 // range reading, P(y_i | u*_(0:i) and one term for the odometry reading,
 // P(u*_i | u_i) . Note that the term for the range reading is dependent on all
 // odometry values u*_(0:i), while the odometry term, P(u*_i | u_i) depends only
-// on a single value, u_i. Both the range reading as well as odoemtry
+// on a single value, u_i. Both the range reading as well as odometry
 // probability terms are modeled as the Normal distribution, and have the form:
 //
 // p(x) \propto \exp{-((x - x_mean) / x_stddev)^2}
@@ -123,7 +123,7 @@
 // variable, and will be computed by an AutoDiffCostFunction, while the term
 // for the range reading will depend on all previous odometry observations, and
 // will be computed by a DynamicAutoDiffCostFunction since the number of
-// odoemtry observations will only be known at run time.
+// odometry observations will only be known at run time.
 
 #include <cmath>
 #include <cstdio>

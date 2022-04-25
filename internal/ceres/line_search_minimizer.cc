@@ -30,7 +30,7 @@
 //
 // Generic loop for line search based optimization algorithms.
 //
-// This is primarily inpsired by the minFunc packaged written by Mark
+// This is primarily inspired by the minFunc packaged written by Mark
 // Schmidt.
 //
 // http://www.di.ens.fr/~mschmidt/Software/minFunc.html

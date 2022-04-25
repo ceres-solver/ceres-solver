@@ -94,7 +94,7 @@ class FirstOrderFunction;
 // NOTE: We are currently in the process of transitioning from
 // LocalParameterization to Manifolds in the Ceres API. During this period,
 // GradientProblem will support using both Manifold and LocalParameterization
-// objects interchangably. For methods in the API affected by this change, see
+// objects interchangeably. For methods in the API affected by this change, see
 // their documentation below.
 class CERES_EXPORT GradientProblem {
  public:
