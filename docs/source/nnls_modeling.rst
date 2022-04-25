@@ -2551,7 +2551,7 @@ quaternion, a local parameterization can be constructed as
 
    Repeated calls with the same arguments are ignored. Repeated calls
    with the same double pointer but a different size results in a crash
-   (unless :member:`Solver::Options::diable_all_safety_checks` is set to ``true``).
+   (unless :member:`Solver::Options::disable_all_safety_checks` is set to ``true``).
 
    Repeated calls with the same double pointer and size but different
    :class:`LocalParameterization` is equivalent to calling
@@ -2577,7 +2577,7 @@ quaternion, a local parameterization can be constructed as
 
    Repeated calls with the same arguments are ignored. Repeated calls
    with the same double pointer but a different size results in a crash
-   (unless :member:`Solver::Options::diable_all_safety_checks` is set to true).
+   (unless :member:`Solver::Options::disable_all_safety_checks` is set to true).
 
    Repeated calls with the same double pointer and size but different
    :class:`Manifold` is equivalent to calling `SetManifold(manifold)`,
@@ -2680,7 +2680,7 @@ quaternion, a local parameterization can be constructed as
 
    It is acceptable to set the same :class:`LocalParameterization` for
    multiple parameter blocks; the Problem destructor is careful to
-   delete :class:`LocalParamaterizations` only once.
+   delete :class:`LocalParameterizations` only once.
 
 .. function:: LocalParameterization* Problem::GetParameterization(const double* values) const
 

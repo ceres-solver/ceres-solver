@@ -446,7 +446,7 @@ class CERES_NO_EXPORT SchurEliminatorForOneFBlock final
     const CompressedRowBlockStructure* bs = A.block_structure();
     const double* values = A.values();
 
-    // Add the diagonal to the schur complement.
+    // Add the diagonal to the Schur complement.
     if (D != nullptr) {
       typename EigenTypes<kFBlockSize>::ConstVectorRef diag(
           D + bs->cols[num_eliminate_blocks_].position, kFBlockSize);

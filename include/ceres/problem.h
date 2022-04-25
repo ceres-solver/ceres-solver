@@ -276,7 +276,7 @@ class CERES_EXPORT Problem {
   //
   // Repeated calls with the same arguments are ignored. Repeated calls
   // with the same double pointer but a different size results in a crash
-  // (unless Solver::Options::diable_all_safety_checks is set to true).
+  // (unless Solver::Options::disable_all_safety_checks is set to true).
   //
   // Repeated calls with the same double pointer and size but different
   // LocalParameterization is equivalent to calling
@@ -308,7 +308,7 @@ class CERES_EXPORT Problem {
   //
   // Repeated calls with the same arguments are ignored. Repeated calls
   // with the same double pointer but a different size results in a crash
-  // (unless Solver::Options::diable_all_safety_checks is set to true).
+  // (unless Solver::Options::disable_all_safety_checks is set to true).
   //
   // Repeated calls with the same double pointer and size but different Manifold
   // is equivalent to calling SetManifold(manifold), i.e., any previously
@@ -377,7 +377,7 @@ class CERES_EXPORT Problem {
   //
   // It is acceptable to set the same LocalParameterization for multiple
   // parameter blocks; the destructor is careful to delete
-  // LocalParamaterizations only once.
+  // LocalParameterizations only once.
   //
   // NOTE:
   // ----
@@ -493,7 +493,7 @@ class CERES_EXPORT Problem {
       "instead.")
   int ParameterBlockLocalSize(const double* values) const;
 
-  // The dimenion of the tangent space of the LocalParameterization or Manifold
+  // The dimension of the tangent space of the LocalParameterization or Manifold
   // for the parameter block. If there is no LocalParameterization or Manifold
   // associated with this parameter block, then ParameterBlockTangentSize =
   // ParameterBlockSize.

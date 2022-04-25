@@ -106,7 +106,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Init(
   }
 
   // TODO(sameeragarwal): Now that we may have subset block structure,
-  // we need to make sure that we account for the fact that somep
+  // we need to make sure that we account for the fact that some
   // point blocks only have a "diagonal" row and nothing more.
   //
   // This likely requires a slightly different algorithm, which works
@@ -300,7 +300,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Eliminate(
             thread_id, bs, inverse_ete, buffer, chunk.buffer_layout, lhs);
       });
 
-  // For rows with no e_blocks, the schur complement update reduces to
+  // For rows with no e_blocks, the Schur complement update reduces to
   // S += F'F.
   NoEBlockRowsUpdate(A, b, uneliminated_row_begins_, lhs, rhs);
 }
@@ -562,7 +562,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
   }
 }
 
-// For rows with no e_blocks, the schur complement update reduces to S
+// For rows with no e_blocks, the Schur complement update reduces to S
 // += F'F. This function iterates over the rows of A with no e_block,
 // and calls NoEBlockRowOuterProduct on each row.
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
@@ -595,7 +595,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
 }
 
 // A row r of A, which has no e_blocks gets added to the Schur
-// Complement as S += r r'. This function is responsible for computing
+// complement as S += r r'. This function is responsible for computing
 // the contribution of a single row r to the Schur complement. It is
 // very similar in structure to EBlockRowOuterProduct except for
 // one difference. It does not use any of the template

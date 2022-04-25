@@ -170,7 +170,7 @@ class CERES_NO_EXPORT CUDADenseCholesky final : public DenseCholesky {
   // Required for error handling with cuSOLVER.
   CudaBuffer<int> error_;
   // Cache the result of Factorize to ensure that when Solve is called, the
-  // factiorization of lhs is valid.
+  // factorization of lhs is valid.
   LinearSolverTerminationType factorize_result_ = LINEAR_SOLVER_FATAL_ERROR;
 };
 

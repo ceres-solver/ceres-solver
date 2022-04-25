@@ -331,7 +331,7 @@ class LinearCostFunction : public CostFunction {
   }
 
   /// Add offset to the given Jacobian before returning it from Evaluate(),
-  /// thus introducing an error in the comutation.
+  /// thus introducing an error in the computation.
   void SetJacobianOffset(size_t index, Matrix offset) {
     CHECK_LT(index, residual_J_params_.size());
     CHECK_EQ(residual_J_params_[index].rows(), offset.rows());

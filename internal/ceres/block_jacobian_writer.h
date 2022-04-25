@@ -50,7 +50,7 @@ class BlockEvaluatePreparer;
 class Program;
 class SparseMatrix;
 
-// TODO(sameeragarwal): This class needs documemtation.
+// TODO(sameeragarwal): This class needs documentation.
 class CERES_NO_EXPORT BlockJacobianWriter {
  public:
   BlockJacobianWriter(const Evaluator::Options& options, Program* program);

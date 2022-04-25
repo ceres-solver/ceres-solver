@@ -52,7 +52,7 @@ namespace ceres::internal {
 class CERES_NO_EXPORT DynamicCompressedRowSparseMatrix final
     : public CompressedRowSparseMatrix {
  public:
-  // Set the number of rows and columns for the underlyig
+  // Set the number of rows and columns for the underlying
   // `CompressedRowSparseMatrix` and set the initial number of maximum non-zero
   // entries. Note that following the insertion of entries, when `Finalize`
   // is called the number of non-zeros is determined and all internal
@@ -73,7 +73,7 @@ class CERES_NO_EXPORT DynamicCompressedRowSparseMatrix final
 
   // Insert an entry at a given row and column position. This method is
   // thread-safe across rows i.e. different threads can insert values
-  // simultaneously into different rows. It should be emphasised that this
+  // simultaneously into different rows. It should be emphasized that this
   // method always inserts a new entry and does not check for existing
   // entries at the specified row and column position. Duplicate entries
   // for a given row and column position will result in undefined

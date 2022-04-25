@@ -82,7 +82,7 @@ struct CERES_NO_EXPORT FunctionSample {
   //
   // where d is the search direction.
   double gradient;
-  // True if the evaluation of the gradient was sucessful and the
+  // True if the evaluation of the gradient was successful and the
   // value is a finite number.
   bool gradient_is_valid;
 };
