@@ -426,7 +426,7 @@ void WolfeLineSearch::DoSearch(const double step_size_estimate,
     // shrank the bracket width until it was below our minimum tolerance.
     // As these are 'artificial' constraints, and we would otherwise fail to
     // produce a valid point when ArmijoLineSearch would succeed, we return the
-    // point with the lowest cost found thus far which satsifies the Armijo
+    // point with the lowest cost found thus far which satisfies the Armijo
     // condition (but not the Wolfe conditions).
     summary->optimal_point = bracket_low;
     summary->success = true;
@@ -448,8 +448,8 @@ void WolfeLineSearch::DoSearch(const double step_size_estimate,
   // defined by bracket_low & bracket_high, which satisfy:
   //
   //   1. The interval bounded by step sizes: bracket_low.x & bracket_high.x
-  //      contains step sizes that satsify the strong Wolfe conditions.
-  //   2. bracket_low.x is of all the step sizes evaluated *which satisifed the
+  //      contains step sizes that satisfy the strong Wolfe conditions.
+  //   2. bracket_low.x is of all the step sizes evaluated *which satisfied the
   //      Armijo sufficient decrease condition*, the one which generated the
   //      smallest function value, i.e. bracket_low.value <
   //      f(all other steps satisfying Armijo).
@@ -493,7 +493,7 @@ void WolfeLineSearch::DoSearch(const double step_size_estimate,
 // Or, searching was stopped due to an 'artificial' constraint, i.e. not
 // a condition imposed / required by the underlying algorithm, but instead an
 // engineering / implementation consideration. But a step which exceeds the
-// minimum step size, and satsifies the Armijo condition was still found,
+// minimum step size, and satisfies the Armijo condition was still found,
 // and should thus be used [zoom not required].
 //
 // Returns false if no step size > minimum step size was found which
@@ -517,7 +517,7 @@ bool WolfeLineSearch::BracketingPhase(const FunctionSample& initial_position,
   // As we require the gradient to evaluate the Wolfe condition, we always
   // calculate it together with the value, irrespective of the interpolation
   // type.  As opposed to only calculating the gradient after the Armijo
-  // condition is satisifed, as the computational saving from this approach
+  // condition is satisfied, as the computational saving from this approach
   // would be slight (perhaps even negative due to the extra call).  Also,
   // always calculating the value & gradient together protects against us
   // reporting invalid solutions if the cost function returns slightly different
@@ -820,7 +820,7 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
     // As we require the gradient to evaluate the Wolfe condition, we always
     // calculate it together with the value, irrespective of the interpolation
     // type.  As opposed to only calculating the gradient after the Armijo
-    // condition is satisifed, as the computational saving from this approach
+    // condition is satisfied, as the computational saving from this approach
     // would be slight (perhaps even negative due to the extra call).  Also,
     // always calculating the value & gradient together protects against us
     // reporting invalid solutions if the cost function returns slightly

@@ -1161,7 +1161,7 @@ TEST_F(CovarianceTest, TruncatedRank) {
   //  -15 -18  3   6  13  0
   //    6  -4  0   0   0 29
 
-  // 3.4142 is the smallest eigen value of J'J. The following matrix
+  // 3.4142 is the smallest eigenvalue of J'J. The following matrix
   // was obtained by dropping the eigenvector corresponding to this
   // eigenvalue.
   // clang-format off

@@ -98,7 +98,7 @@ extern "C" void dormqr_(const char* side, const char* trans, const int* m,
 // a is a column major lda x n.
 // b is a column major matrix of ldb x nrhs
 //
-// info = 0 succesful.
+// info = 0 successful.
 //      = -i < 0 i^th argument is an illegal value.
 //      = i > 0, i^th diagonal element of A is zero.
 extern "C" void dtrtrs_(const char* uplo, const char* trans, const char* diag,
@@ -382,7 +382,7 @@ LinearSolverTerminationType CUDADenseQR::Solve(const double* rhs,
                                                double* solution,
                                                std::string* message) {
   if (factorize_result_ != LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS) {
-    *message = "Factorize did not complete succesfully previously.";
+    *message = "Factorize did not complete successfully previously.";
     return factorize_result_;
   }
   rhs_.CopyToGpuAsync(rhs, num_rows_, stream_);

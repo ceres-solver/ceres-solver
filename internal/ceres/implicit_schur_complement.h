@@ -81,10 +81,10 @@ class BlockSparseMatrix;
 // (which for our purposes is an easily inverted block diagonal
 // matrix), it can be done in terms of matrix vector products with E,
 // F and (E'E)^-1. This class implements this functionality and other
-// auxilliary bits needed to implement a CG solver on the Schur
+// auxiliary bits needed to implement a CG solver on the Schur
 // complement using the PartitionedMatrixView object.
 //
-// THREAD SAFETY: This class is nqot thread safe. In particular, the
+// THREAD SAFETY: This class is not thread safe. In particular, the
 // RightMultiply (and the LeftMultiply) methods are not thread safe as
 // they depend on mutable arrays used for the temporaries needed to
 // compute the product y += Sx;

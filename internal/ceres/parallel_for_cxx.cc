@@ -158,8 +158,8 @@ void ParallelFor(ContextImpl* context,
 // it on every iteration of the for loop. The thread ID is guaranteed to be in
 // [0, num_threads).
 //
-// A performance analysis has shown this implementation is onpar with OpenMP and
-// TBB.
+// A performance analysis has shown this implementation is on par with OpenMP
+// and TBB.
 void ParallelFor(ContextImpl* context,
                  int start,
                  int end,

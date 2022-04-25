@@ -603,19 +603,19 @@ struct LineParameterizationPlus {
   bool operator()(const Scalar* p_x,
                   const Scalar* p_delta,
                   Scalar* p_x_plus_delta) const {
-    static constexpr int kTangetSpaceDim = AmbientSpaceDim - 1;
+    static constexpr int kTangentSpaceDim = AmbientSpaceDim - 1;
     Eigen::Map<const Eigen::Matrix<Scalar, AmbientSpaceDim, 1>> origin_point(
         p_x);
     Eigen::Map<const Eigen::Matrix<Scalar, AmbientSpaceDim, 1>> dir(
         p_x + AmbientSpaceDim);
-    Eigen::Map<const Eigen::Matrix<Scalar, kTangetSpaceDim, 1>>
+    Eigen::Map<const Eigen::Matrix<Scalar, kTangentSpaceDim, 1>>
         delta_origin_point(p_delta);
     Eigen::Map<Eigen::Matrix<Scalar, AmbientSpaceDim, 1>>
         origin_point_plus_delta(p_x_plus_delta);
 
     HomogeneousVectorParameterizationPlus<AmbientSpaceDim> dir_plus;
     dir_plus(dir.data(),
-             p_delta + kTangetSpaceDim,
+             p_delta + kTangentSpaceDim,
              p_x_plus_delta + AmbientSpaceDim);
 
     Eigen::Matrix<Scalar, AmbientSpaceDim, 1> v;

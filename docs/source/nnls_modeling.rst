@@ -1582,7 +1582,7 @@ dimensional manifold represented as unit norm 4-vectors, i.e.
 
 is the ambient space representation. Here :math:`q_0` is the scalar
 part. :math:`q_1` is the coefficient of :math:`i`, :math:`q_2` is the
-coefficient of :math:`j`, and :math:`q_3` is the coeffcient of
+coefficient of :math:`j`, and :math:`q_3` is the coefficient of
 :math:`k`. Where:
 
 .. math::
@@ -2113,7 +2113,7 @@ manifold that embedded in :math:`n` dimensional space where the
 scale of the vector does not matter, i.e., elements of the
 projective space :math:`\mathbb{P}^{n-1}`. It assumes that the last
 coordinate of the :math:`n`-vector is the *scalar* component of the
-homogenous vector, i.e., *finite* points in this representation are
+homogeneous vector, i.e., *finite* points in this representation are
 those for which the *scalar* component is non-zero.
 
 Further, ``HomogeneousVectorParameterization::Plus`` preserves the
@@ -2235,7 +2235,7 @@ quaternion, a local parameterization can be constructed as
             q_delta[3] = delta[2];
           }
 
-          Quaternionproduct(q_delta, x, x_plus_delta);
+          QuaternionProduct(q_delta, x, x_plus_delta);
           return true;
         }
       };
@@ -2262,7 +2262,7 @@ quaternion, a local parameterization can be constructed as
       :class:`LocalParameterization` to :class:`Manifolds` in the
       Ceres Solver API. During this period, :class:`Problem` will
       support using both :class:`Manifold` and
-      :class:`LocalParameterization` objects interchangably. In
+      :class:`LocalParameterization` objects interchangeably. In
       particular, adding a :class:`LocalParameterization` to a
       parameter block is the same as adding a :class:`Manifold` to
       that parameter block. For methods in the API affected by this
@@ -2551,7 +2551,7 @@ quaternion, a local parameterization can be constructed as
 
    Repeated calls with the same arguments are ignored. Repeated calls
    with the same double pointer but a different size results in a crash
-   (unless :member:`Solver::Options::diable_all_safety_checks` is set to ``true``).
+   (unless :member:`Solver::Options::disable_all_safety_checks` is set to ``true``).
 
    Repeated calls with the same double pointer and size but different
    :class:`LocalParameterization` is equivalent to calling
@@ -2577,7 +2577,7 @@ quaternion, a local parameterization can be constructed as
 
    Repeated calls with the same arguments are ignored. Repeated calls
    with the same double pointer but a different size results in a crash
-   (unless :member:`Solver::Options::diable_all_safety_checks` is set to true).
+   (unless :member:`Solver::Options::disable_all_safety_checks` is set to true).
 
    Repeated calls with the same double pointer and size but different
    :class:`Manifold` is equivalent to calling `SetManifold(manifold)`,
@@ -2680,7 +2680,7 @@ quaternion, a local parameterization can be constructed as
 
    It is acceptable to set the same :class:`LocalParameterization` for
    multiple parameter blocks; the Problem destructor is careful to
-   delete :class:`LocalParamaterizations` only once.
+   delete :class:`LocalParameterizations` only once.
 
 .. function:: LocalParameterization* Problem::GetParameterization(const double* values) const
 

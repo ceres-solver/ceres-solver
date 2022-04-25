@@ -165,7 +165,7 @@ TEST(_, ApplyOrderingNormal) {
 }
 
 #ifndef CERES_NO_SUITESPARSE
-class ReorderProgramFoSparseCholeskyUsingSuiteSparseTest
+class ReorderProgramForSparseCholeskyUsingSuiteSparseTest
     : public ::testing::Test {
  protected:
   void SetUp() override {
@@ -204,7 +204,7 @@ class ReorderProgramFoSparseCholeskyUsingSuiteSparseTest
   double z_;
 };
 
-TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest,
+TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest,
        EverythingInGroupZero) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
@@ -214,7 +214,7 @@ TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest,
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
-TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest, ContiguousGroups) {
+TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest, ContiguousGroups) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
   linear_solver_ordering.AddElementToGroup(&y_, 1);
@@ -223,7 +223,7 @@ TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest, ContiguousGroups) {
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
-TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest, GroupsWithGaps) {
+TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest, GroupsWithGaps) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
   linear_solver_ordering.AddElementToGroup(&y_, 2);
@@ -232,7 +232,7 @@ TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest, GroupsWithGaps) {
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
-TEST_F(ReorderProgramFoSparseCholeskyUsingSuiteSparseTest,
+TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest,
        NonContiguousStartingAtTwo) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 2);

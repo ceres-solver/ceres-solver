@@ -66,7 +66,7 @@ static void CheckEvaluation(const CostFunction& cost_function, bool is_good) {
             is_good);
 }
 
-// A CostFunction that behaves normaly, i.e., it computes numerically
+// A CostFunction that behaves normally, i.e., it computes numerically
 // valid residuals and jacobians.
 class GoodCostFunction : public SizedCostFunction<1, 1> {
  public:

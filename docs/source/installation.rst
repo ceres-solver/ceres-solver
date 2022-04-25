@@ -69,7 +69,7 @@ optional. For details on customizing the build process, see
 
 - `SuiteSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_
   4.0 or later. Needed for solving large sparse linear
-  systems. **Optional; strongly recomended for large scale bundle
+  systems. **Optional; strongly recommended for large scale bundle
   adjustment**
 
   .. NOTE ::

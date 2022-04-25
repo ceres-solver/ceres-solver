@@ -498,7 +498,7 @@ if (MSVC)
   add_definitions("-D_USE_MATH_DEFINES")
   # Disable signed/unsigned int conversion warnings.
   add_compile_options("/wd4018" "/wd4267")
-  # Disable warning about using struct/class for the same symobl.
+  # Disable warning about using struct/class for the same symbol.
   add_compile_options("/wd4099")
   # Disable warning about the insecurity of using "std::copy".
   add_compile_options("/wd4996")
@@ -609,7 +609,7 @@ add_compile_options(
   $<$<CXX_COMPILER_ID:MSVC>:/wd4996>)
 
 if (CMAKE_VERSION VERSION_LESS 3.12)
-  # Disable the definiton of min/max macros within the project
+  # Disable the definition of min/max macros within the project
   if (WIN32)
     add_definitions (-DNOMINMAX)
   endif (WIN32)

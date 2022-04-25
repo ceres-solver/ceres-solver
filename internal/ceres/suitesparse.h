@@ -90,7 +90,7 @@ class CERES_NO_EXPORT SuiteSparse {
 
   // Functions for building cholmod_sparse objects from sparse
   // matrices stored in triplet form. The matrix A is not
-  // modifed. Called owns the result.
+  // modified. Called owns the result.
   cholmod_sparse* CreateSparseMatrix(TripletSparseMatrix* A);
 
   // This function works like CreateSparseMatrix, except that the

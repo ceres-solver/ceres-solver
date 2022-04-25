@@ -268,7 +268,7 @@ LinearSolverTerminationType CUDADenseCholesky::Solve(const double* rhs,
                                                      double* solution,
                                                      std::string* message) {
   if (factorize_result_ != LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS) {
-    *message = "Factorize did not complete succesfully previously.";
+    *message = "Factorize did not complete successfully previously.";
     return factorize_result_;
   }
   rhs_.CopyToGpuAsync(rhs, num_cols_, stream_);

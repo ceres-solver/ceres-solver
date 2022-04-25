@@ -368,7 +368,7 @@ class BiCubicInterpolator {
 //
 //   f001, f002, f011, f012, ...
 //
-// A commonly occuring example are color images (RGB) where the three
+// A commonly occurring example are color images (RGB) where the three
 // channels are stored interleaved.
 //
 // If kInterleaved = false, then it is stored as

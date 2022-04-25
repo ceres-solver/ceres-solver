@@ -171,7 +171,7 @@ class TinySolverAutoDiffFunction {
   const CostFunctor& cost_functor_;
 
   // The number of residuals at runtime.
-  // This will be overriden if NUM_RESIDUALS == Eigen::Dynamic.
+  // This will be overridden if NUM_RESIDUALS == Eigen::Dynamic.
   int num_residuals_ = kNumResiduals;
 
   // To evaluate the cost function with jets, temporary storage is needed. These

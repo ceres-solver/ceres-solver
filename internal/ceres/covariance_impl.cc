@@ -189,7 +189,7 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
   const int* cols_begin = cols + rows[row_begin];
 
   // The only part that requires work is walking the compressed column
-  // vector to determine where the set of columns correspnding to the
+  // vector to determine where the set of columns corresponding to the
   // covariance block begin.
   int offset = 0;
   while (cols_begin[offset] != col_begin && offset < row_size) {

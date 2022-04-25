@@ -148,7 +148,7 @@ A function that returns its value and derivative
 ------------------------------------------------
 
 Now suppose we are given a function :code:`ComputeDistortionValue`
-thatis able to compute its value and optionally its Jacobian on demand
+that is able to compute its value and optionally its Jacobian on demand
 and has the following signature:
 
 .. code-block:: c++
