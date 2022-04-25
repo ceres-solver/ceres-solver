@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55f187f3_0fb5df27",
+        "filename": "internal/ceres/gmock_gtest_all.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1253,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-25T02:10:44Z",
+      "side": 1,
+      "message": "Here the variable is spelled wrong (repoter -\u003e reporter), but I have only edited comments. Is this something that should be changed?",
+      "revId": "737907e671317c640ffa63a62953ef55208c8603",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
