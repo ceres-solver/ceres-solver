@@ -52,6 +52,24 @@
       "parentUuid": "a8a5578d_94055f22",
       "revId": "737907e671317c640ffa63a62953ef55208c8603",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11131224_bf73d3c1",
+        "filename": "internal/ceres/gmock_gtest_all.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1253,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-25T02:24:34Z",
+      "side": 1,
+      "message": "Ok-- just to confirm, I should keep the corrections to comments in this file, correct?",
+      "parentUuid": "7e7693ea_160052e7",
+      "revId": "737907e671317c640ffa63a62953ef55208c8603",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
