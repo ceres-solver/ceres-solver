@@ -65,7 +65,7 @@ class SparseCholesky;
 //
 //  E y + F z = b
 //
-// Where x = [y;z] is a partition of the variables.  The paritioning
+// Where x = [y;z] is a partition of the variables.  The partitioning
 // of the variables is such that, E'E is a block diagonal
 // matrix. Further, the rows of A are ordered so that for every
 // variable block in y, all the rows containing that variable block

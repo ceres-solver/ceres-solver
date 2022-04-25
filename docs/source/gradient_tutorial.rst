@@ -139,7 +139,7 @@ algorithm.
 
 
 If you are unable to use automatic differentiation for some reason
-(say beacause you need to call an external library), then you can
+(say because you need to call an external library), then you can
 use numeric differentiation. In that case the functor is defined as
 follows [#f2]_.
 

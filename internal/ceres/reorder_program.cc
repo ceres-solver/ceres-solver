@@ -288,7 +288,7 @@ bool LexicographicallyOrderResidualBlocks(
   // of the bucket. The filling order among the buckets is dictated by the
   // residual blocks. This loop uses the offsets as counters; subtracting one
   // from each offset as a residual block is placed in the bucket. When the
-  // filling is finished, the offset pointerts should have shifted down one
+  // filling is finished, the offset pointers should have shifted down one
   // entry (this is verified below).
   vector<ResidualBlock*> reordered_residual_blocks(
       (*residual_blocks).size(), static_cast<ResidualBlock*>(nullptr));
@@ -325,7 +325,7 @@ bool LexicographicallyOrderResidualBlocks(
   return true;
 }
 
-// Pre-order the columns corresponding to the schur complement if
+// Pre-order the columns corresponding to the Schur complement if
 // possible.
 static void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
     const ParameterBlockOrdering& parameter_block_ordering, Program* program) {

@@ -380,10 +380,10 @@ int main(int argc, char** argv) {
 
   Mat x2 = x1;
   for (int i = 0; i < x2.cols(); ++i) {
-    Vec3 homogenous_x1 = Vec3(x1(0, i), x1(1, i), 1.0);
-    Vec3 homogenous_x2 = homography_matrix * homogenous_x1;
-    x2(0, i) = homogenous_x2(0) / homogenous_x2(2);
-    x2(1, i) = homogenous_x2(1) / homogenous_x2(2);
+    Vec3 homogeneous_x1 = Vec3(x1(0, i), x1(1, i), 1.0);
+    Vec3 homogeneous_x2 = homography_matrix * homogeneous_x1;
+    x2(0, i) = homogeneous_x2(0) / homogeneous_x2(2);
+    x2(1, i) = homogeneous_x2(1) / homogeneous_x2(2);
 
     // Apply some noise so algebraic estimation is not good enough.
     x2(0, i) += static_cast<double>(rand() % 1000) / 5000.0;

@@ -28,7 +28,7 @@
 //
 // Author: strandmark@google.com (Petter Strandmark)
 //
-// Class for loading the data required for descibing a Fields of Experts (FoE)
+// Class for loading the data required for describing a Fields of Experts (FoE)
 // model.
 
 #include "fields_of_experts.h"

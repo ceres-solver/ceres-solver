@@ -46,8 +46,8 @@ class Program;
 class ParameterBlock;
 
 // Uses an approximate independent set ordering to order the parameter
-// blocks of a problem so that it is suitable for use with Schur
-// complement based solvers. The output variable ordering contains an
+// blocks of a problem so that it is suitable for use with Schur-
+// complement-based solvers. The output variable ordering contains an
 // ordering of the parameter blocks and the return value is size of
 // the independent set or the number of e_blocks (see
 // schur_complement_solver.h for an explanation). Constant parameters

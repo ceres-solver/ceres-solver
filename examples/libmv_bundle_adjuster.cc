@@ -60,7 +60,7 @@
 // Image number shall be greater or equal to zero. Order of cameras does not
 // matter and gaps are possible.
 //
-// Every 3D point is decribed by:
+// Every 3D point is described by:
 //
 //  - Track number point belongs to (single 4 bytes integer value).
 //  - 3D position vector, 3-component vector of float values.

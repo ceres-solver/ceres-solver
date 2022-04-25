@@ -328,7 +328,7 @@ class TypedLinearSolver : public LinearSolver {
   ExecutionSummary execution_summary_;
 };
 
-// Linear solvers that depend on acccess to the low level structure of
+// Linear solvers that depend on access to the low level structure of
 // a SparseMatrix.
 // clang-format off
 typedef TypedLinearSolver<BlockSparseMatrix>         BlockSparseMatrixSolver;          // NOLINT

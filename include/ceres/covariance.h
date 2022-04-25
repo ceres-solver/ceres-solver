@@ -280,7 +280,7 @@ class CERES_EXPORT Covariance {
     //
     //      min_sigma / max_sigma < sqrt(min_reciprocal_condition_number)
     //
-    //    where min_sigma and max_sigma are the minimum and maxiumum
+    //    where min_sigma and max_sigma are the minimum and maximum
     //    singular values of J respectively.
     //
     // 2. SPARSE_QR

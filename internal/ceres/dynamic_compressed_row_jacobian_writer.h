@@ -67,7 +67,7 @@ class CERES_NO_EXPORT DynamicCompressedRowJacobianWriter {
 
   // Write only the non-zero jacobian entries for a residual block
   // (specified by `residual_id`) into `base_jacobian`, starting at the row
-  // specifed by `residual_offset`.
+  // specified by `residual_offset`.
   //
   // This method is thread-safe over residual blocks (each `residual_id`).
   void Write(int residual_id,

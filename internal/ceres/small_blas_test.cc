@@ -103,7 +103,7 @@ MATRIX_FUN_TY(MatrixTransposeMatrixMultiplyNaive)
 
 #undef MATRIX_FUN_TY
 
-// Initializes matrix entires.
+// Initializes matrix entries.
 static void initMatrix(Matrix& mat) {
   for (int i = 0; i < mat.rows(); ++i) {
     for (int j = 0; j < mat.cols(); ++j) {

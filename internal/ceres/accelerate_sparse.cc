@@ -61,7 +61,7 @@ const char* SparseStatusToString(SparseStatus_t status) {
     CASESTR(SparseParameterError);
     CASESTR(SparseStatusReleased);
     default:
-      return "UKNOWN";
+      return "UNKNOWN";
   }
 }
 }  // namespace.

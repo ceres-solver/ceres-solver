@@ -59,7 +59,7 @@ bool ReadVertex(std::ifstream* infile,
   return true;
 }
 
-// Reads the contraints between two vertices in the pose graph
+// Reads the constraints between two vertices in the pose graph
 template <typename Constraint, typename Allocator>
 void ReadConstraint(std::ifstream* infile,
                     std::vector<Constraint, Allocator>* constraints) {

@@ -257,7 +257,7 @@ endif()
 
 set(CMAKE_C_FLAGS
   "${XCODE_IOS_PLATFORM_VERSION_FLAGS} -fobjc-abi-version=2 -fobjc-arc ${CMAKE_C_FLAGS}")
-# Hidden visibilty is required for C++ on iOS.
+# Hidden visibility is required for C++ on iOS.
 set(CMAKE_CXX_FLAGS
   "${XCODE_IOS_PLATFORM_VERSION_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden -fobjc-abi-version=2 -fobjc-arc ${CMAKE_CXX_FLAGS}")
 set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O3 -fomit-frame-pointer -ffast-math ${CMAKE_CXX_FLAGS_RELEASE}")

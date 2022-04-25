@@ -165,7 +165,7 @@ class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
   // given bounds.
   //
   // Then we walk the block structure of the resulting matrix, and with
-  // probability block_density detemine whether they are structurally
+  // probability block_density determine whether they are structurally
   // zero or not. If the answer is no, then we generate entries for the
   // block which are distributed normally.
   struct RandomMatrixOptions {
@@ -209,7 +209,7 @@ class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
   StorageType storage_type_;
 
   // If the matrix has an underlying block structure, then it can also
-  // carry with it row and column block sizes. This is auxilliary and
+  // carry with it row and column block sizes. This is auxiliary and
   // optional information for use by algorithms operating on the
   // matrix. The class itself does not make use of this information in
   // any way.

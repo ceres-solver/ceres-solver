@@ -802,7 +802,7 @@ template <typename T, int N>
 inline Jet<T, N> erf(const Jet<T, N>& x) {
   // We evaluate the constant as follows:
   //   2 / sqrt(pi) = 1 / sqrt(atan(1.))
-  // On POSIX sytems it is defined as M_2_SQRTPI, but this is not
+  // On POSIX systems it is defined as M_2_SQRTPI, but this is not
   // portable and the type may not be T.  The above expression
   // evaluates to full precision with IEEE arithmetic and, since it's
   // constant, the compiler can generate exactly the same code.  gcc

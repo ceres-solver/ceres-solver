@@ -263,7 +263,7 @@ void InnerProductComputer::ComputeOffsetsAndCreateResultMatrix(
     if (previous->row == current->row) {
       // if the current and previous terms are in the same row block,
       // then they differ in the column block, in which case advance
-      // col_nnz by the column size of the prevous term.
+      // col_nnz by the column size of the previous term.
       col_nnz += col_blocks[previous->col].size;
     } else {
       // If we have moved to a new row-block , then col_nnz is zero,

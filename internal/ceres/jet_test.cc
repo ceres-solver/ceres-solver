@@ -378,7 +378,7 @@ TEST(Jet, Log1p) {
     J x = MakeJet(1e-16, 1e-8, 1e-4);
     EXPECT_THAT(log1p(x),
                 IsAlmostEqualTo(MakeJet(9.9999999999999998e-17, 1e-8, 1e-4)));
-    // log(1 + x) collapes to 0
+    // log(1 + x) collapses to 0
     J v = log(J{1} + x);
     EXPECT_TRUE(v.a == 0);
   }
@@ -391,7 +391,7 @@ TEST(Jet, Expm1) {
   {  // expm1(x) does not loose precision for small x
     J x = MakeJet(9.9999999999999998e-17, 1e-8, 1e-4);
     EXPECT_THAT(expm1(x), IsAlmostEqualTo(MakeJet(1e-16, 1e-8, 1e-4)));
-    // exp(x) - 1 collapes to 0
+    // exp(x) - 1 collapses to 0
     J v = exp(x) - J{1};
     EXPECT_TRUE(v.a == 0);
   }

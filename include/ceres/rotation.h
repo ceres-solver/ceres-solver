@@ -60,7 +60,7 @@ namespace ceres {
 //
 // the expression  M(i, j) is equivalent to
 //
-//   arrary[i * row_stride + j * col_stride]
+//   array[i * row_stride + j * col_stride]
 //
 // Conversion functions to and from rotation matrices accept
 // MatrixAdapters to permit using row-major and column-major layouts,
