@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2affe0f2_03370362",
+        "filename": "data/nist/Nelson.dat",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-04-25T04:11:03Z",
+      "side": 1,
+      "message": "Should I make this change? I am not sure if this file and some others are copies of some other files, in which case it might make sense to keep them identical.",
+      "revId": "bee55a4e65d8777ce5df83dcb7a2c222b9b5d4e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
