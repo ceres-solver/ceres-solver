@@ -67,18 +67,18 @@ jobs:
         uses: actions/cache@v2
         with:
           path: glog/
-          key: ${{matrix.msvc}}-glog-0.6.0rc1-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
+          key: ${{matrix.msvc}}-glog-0.6.0-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
 
       - name: Download glog
         if: steps.cache-glog.outputs.cache-hit != 'true'
         run: |
-          (New-Object System.Net.WebClient).DownloadFile("https://github.com/google/glog/archive/refs/tags/v0.6.0-rc1.zip", "v0.6.0-rc1.zip");
-          Expand-Archive -Path v0.6.0-rc1.zip -DestinationPath .;
+          (New-Object System.Net.WebClient).DownloadFile("https://github.com/google/glog/archive/refs/tags/v0.6.0.zip", "v0.6.0.zip");
+          Expand-Archive -Path v0.6.0.zip -DestinationPath .;
 
       - name: Setup glog
         if: steps.cache-glog.outputs.cache-hit != 'true'
         run: |
-          cmake -S glog-0.6.0-rc1 -B build-glog `
+          cmake -S glog-0.6.0 -B build-glog `
                 -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} `
                 -DBUILD_TESTING=OFF `
                 -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/glog `
