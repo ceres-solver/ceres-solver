@@ -69,6 +69,230 @@
       "message": "I introduced code to make a copy of the linearization state so that it can be const. The linearization state is only used for evaluation, so an alternative would be to const_cast the linearization_state, but I think the copy is cheap and the better option. Let me know if folks have other opinions.",
       "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc51c900_6fee5b8b",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-01T19:20:39Z",
+      "side": 1,
+      "message": "I suggest sending this file (and its tests) out for a review on its own first, since it doesn\u0027t really depend on the rest of the CL.\n\nAlso split this into a marginalization_prior_cost_function.h/.cc putting the implementation in the cc file.",
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a83aa02_5ef78866",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-01T19:20:39Z",
+      "side": 1,
+      "message": "expand this documentation.",
+      "range": {
+        "startLine": 14,
+        "startChar": 30,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fa77ce6_6e9a9f2a",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-01T19:20:39Z",
+      "side": 1,
+      "message": "document the constructor.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87daf2f3_16c31507",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-01T19:20:39Z",
+      "side": 1,
+      "message": "is it one point or more? if you just say x0 then it appears you are dealing with one point, but that does not seem to be the case.",
+      "range": {
+        "startLine": 22,
+        "startChar": 51,
+        "endLine": 22,
+        "endChar": 53
+      },
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b35e563b_d125cd4c",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-01T19:20:39Z",
+      "side": 1,
+      "message": "are the tangent sizes the same as the tangent size of the manifolds? if so why do you need a separate array?\n\nif not then its worth explaining in the documentation as to what is going on.",
+      "range": {
+        "startLine": 44,
+        "startChar": 24,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aea7e2af_73c3ba52",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-01T19:20:39Z",
+      "side": 1,
+      "message": "these matrix allocations inside the loop can get expensive, maybe it won\u0027t matter since there are so few of them, but something worth thinking about in the future.",
+      "range": {
+        "startLine": 87,
+        "startChar": 13,
+        "endLine": 87,
+        "endChar": 27
+      },
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b736aa7_90274e24",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-01T19:20:39Z",
+      "side": 1,
+      "message": "why assign to a temporary which will cause a matrix allocation, why not just assign it below in the expression?",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 18
+      },
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a755aaba_aabe87a2",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-01T19:20:39Z",
+      "side": 1,
+      "message": "this is a bit cryptic. who uses this function and for what?",
+      "range": {
+        "startLine": 104,
+        "startChar": 63,
+        "endLine": 104,
+        "endChar": 72
+      },
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1abdc692_f6143f8c",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-01T19:20:39Z",
+      "side": 1,
+      "message": "just b() should do. also why not return a const reference?",
+      "range": {
+        "startLine": 105,
+        "startChar": 9,
+        "endLine": 105,
+        "endChar": 13
+      },
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ccb25fb_cbdbf2f2",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-01T19:20:39Z",
+      "side": 1,
+      "message": "the words parameter_block as a suffix is not particularly useful since it is used everywhere, it just makes things longer. How about\n\n\ntangent_sizes_\nmanifolds_\nreference_points_\n\nalso why do you need tangent_sizes when you have the manifolds available?",
+      "range": {
+        "startLine": 108,
+        "startChar": 19,
+        "endLine": 108,
+        "endChar": 45
+      },
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
