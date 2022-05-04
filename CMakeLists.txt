@@ -486,6 +486,10 @@ if (MINGW)
           "to a MinGW bug: http://eigen.tuxfamily.org/bz/show_bug.cgi?id=556")
   string(REPLACE "-O3" "-O2" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
   update_cache_variable(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
+
+  # Add the equivalent of /bigobj for MSVC for MinGW to fix 'too many sections'
+  # compile errors due to extensive use of templates.
+  add_compile_options(-Wa,-mbig-obj)
 endif (MINGW)
 
 # After the tweaks for the compile settings, disable some warnings on MSVC.
