@@ -19,6 +19,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f045221c_4c4c3e2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-05-04T02:09:52Z",
+      "side": 1,
+      "message": "Hi Sameer, thank you for the comments. I can address them and others, but first I wanted to discuss one issue here, which is related to the Jacobian.\n\nThe cost function for the marginalization prior is (an affine function of) Minus(x, y), where y is the linearization point used in marginalization. The Jacobian would involve the derivative of Minus(x, y) wrt x at an arbitrary x. However, Manifold\u0027s MinusJacobian provides the derivative at y only. I do not think there is a generic way to compute this derivative in terms of the other functions in Manifold. Is this right?",
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b357d74_3934ae65",
@@ -228,6 +245,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9ff54832_7edc864b",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-05-04T02:09:52Z",
+      "side": 1,
+      "message": "Thanks; missed this",
+      "parentUuid": "4b736aa7_90274e24",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 18
+      },
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a755aaba_aabe87a2",
         "filename": "internal/ceres/marginalization_prior_cost_function.h",
         "patchSetId": 11
@@ -274,6 +315,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aa6b672f_f78c6b1f",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-05-04T02:09:52Z",
+      "side": 1,
+      "message": "Oops, forgot the const ref. b sounds good",
+      "parentUuid": "1abdc692_f6143f8c",
+      "range": {
+        "startLine": 105,
+        "startChar": 9,
+        "endLine": 105,
+        "endChar": 13
+      },
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ccb25fb_cbdbf2f2",
         "filename": "internal/ceres/marginalization_prior_cost_function.h",
         "patchSetId": 11
@@ -285,6 +350,30 @@
       "writtenOn": "2022-05-01T19:20:39Z",
       "side": 1,
       "message": "the words parameter_block as a suffix is not particularly useful since it is used everywhere, it just makes things longer. How about\n\n\ntangent_sizes_\nmanifolds_\nreference_points_\n\nalso why do you need tangent_sizes when you have the manifolds available?",
+      "range": {
+        "startLine": 108,
+        "startChar": 19,
+        "endLine": 108,
+        "endChar": 45
+      },
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07ab4d35_c56cdd10",
+        "filename": "internal/ceres/marginalization_prior_cost_function.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-05-04T02:09:52Z",
+      "side": 1,
+      "message": "Sounds good. You are right-- I originally thought about handling the case that the manifolds are nullptr, but I can get the tangent space size from the reference point to handle that case.",
+      "parentUuid": "4ccb25fb_cbdbf2f2",
       "range": {
         "startLine": 108,
         "startChar": 19,
