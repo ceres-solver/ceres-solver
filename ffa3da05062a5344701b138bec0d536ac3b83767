@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58b42237_8d20c825",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-07T13:37:50Z",
+      "side": 1,
+      "message": "is this still a thing?",
+      "range": {
+        "startLine": 485,
+        "startChar": 28,
+        "endLine": 485,
+        "endChar": 29
+      },
+      "revId": "ffa3da05062a5344701b138bec0d536ac3b83767",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
