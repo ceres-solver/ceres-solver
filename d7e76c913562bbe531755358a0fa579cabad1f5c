@@ -36,6 +36,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59e6af45_2203def1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-07T01:16:58Z",
+      "side": 1,
+      "message": "You are right, Minus Jacobian computes D_2 Minus(x,x). So no, the Manifold API does not provide a generic way computing this derivative :/",
+      "parentUuid": "f045221c_4c4c3e2f",
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b357d74_3934ae65",
