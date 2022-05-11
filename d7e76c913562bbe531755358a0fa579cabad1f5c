@@ -56,6 +56,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1acc245d_4270493c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-05-11T13:23:08Z",
+      "side": 1,
+      "message": "Sameer, might it make sense to extend the Manifold API for this additional Jacobian? One could provide a default implementation in the base class that just raises a (descriptive) \"not implemented\" runtime error, such that users that don\u0027t need this functionality (marginalization), don\u0027t have provide an (empty) implementation in their manifold classes. (The same argument for providing a default implementation could also be made for the existing Minus and MinusJacobian functions.)",
+      "parentUuid": "59e6af45_2203def1",
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f18c6c0_12eaa7f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-05-11T13:23:08Z",
+      "side": 1,
+      "message": "Thanks Evan! I haven\u0027t looked at the code yet, but see my replies to some of the comments. The MinusJacobian limitation is a bummer, I also didn\u0027t notice before...",
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b357d74_3934ae65",
         "filename": "include/ceres/marginalization.h",
         "patchSetId": 11
@@ -102,6 +137,24 @@
       "writtenOn": "2022-04-24T22:39:45Z",
       "side": 1,
       "message": "I introduced code to make a copy of the linearization state so that it can be const. The linearization state is only used for evaluation, so an alternative would be to const_cast the linearization_state, but I think the copy is cheap and the better option. Let me know if folks have other opinions.",
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd693b53_5a22ba85",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-05-11T13:23:08Z",
+      "side": 1,
+      "message": "Wait, why would we need a const_cast to go from not-const to const? Shouldn\u0027t it only be needed for the other way round?\n\nBut in any case, I think a copy of the linearization state is needed, b/c otherwise the passed parameters are not guaranteed to not be changed by someone outside the marginalization prior later. Or maybe that\u0027s what you meant?",
+      "parentUuid": "340e32f3_72d60bbf",
       "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },

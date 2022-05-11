@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f7e0acdf_98d82652",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-05-11T13:23:08Z",
+      "side": 1,
+      "message": "\u003e Thinking again, there could be a check that the cost is reduced for the marginalized states. The δx_m that minimizes the cost is -H_{mm}^{-1} (g_{mm}+H_{mb} δx_b). One could possibly re-evaluate the cost for terms involving x_m at δx_b \u003d 0 and compare to the corresponding cost at δx_m \u003d δx_b \u003d 0. I suppose marginalization could fail if an option \"use_monotonic_steps\" is true and the cost increases?\n\nI see. Although if you do the marginalization after optimizing the joint cost, the optimal deltas should both be 0 anyway, no? But otherwise, to me such a check doesn\u0027t really make that much sense. When you are asking to marginalize a set of residuals, you are explicitly asking for a quadratic approximation of the non-linear cost terms. Of course depending on the non-linearity of the residuals, this can be a good or bad approximation. But maybe there is some use case where you do want to check this and it could be added as an option...\n\nAnother thought related to the cost and checking monotonicity: It could make sense to (optionally) store also the constant part of the quadratic prior in the returned residual. This way, the total cost before and after marginalization should be unchanged. Often times this won\u0027t matter b/c it should not influence the minimizer, but sometimes it could be interesting to make cost values between optimizations before and after the marginalization comparable. Thinking again: Since computing and storing and using this constant cost term should be really cheap compared to all the other operations, maybe it would be even good to always do it, not just optionally.",
+      "parentUuid": "ad2ed9ac_4664de69",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "caf4427b_5159463d",
         "filename": "include/ceres/marginalization.h",
         "patchSetId": 9
@@ -232,6 +250,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2567c1c9_f2757d3b",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-05-11T13:23:08Z",
+      "side": 1,
+      "message": "Makes sense. I\u0027m just thinking about cases where it\u0027s full rank, but numerically close to singular. Maybe LDLT is more stable in than LLT in such cases? Not sure. AFAIK the only advantage of LLT is that it\u0027s supposedly faster, but I guess runtime speed is not the primary concern here.",
+      "parentUuid": "a5d6699a_f73cc635",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6a576a7b_2e080aa4",
         "filename": "internal/ceres/marginalization.cc",
         "patchSetId": 9
@@ -331,6 +367,24 @@
       "side": 1,
       "message": "I think all or none makes sense, but I\u0027ll leave this unresolve for some time in case folks have different opinions",
       "parentUuid": "59dbcd2d_eb8b618a",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2489b21_b9a22a78",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-05-11T13:23:08Z",
+      "side": 1,
+      "message": "I agree that all or none is best.",
+      "parentUuid": "1f3bb644_475729d9",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -611,6 +665,24 @@
       "side": 1,
       "message": "Great point, and I agree. After giving this some thought, it makes sense to use the linearization state as the reference point. One reason is that the Jacobian of the marginalization prior is a function of this state, so it must be the linearization state so that we avoid changing the Jacobian of the prior with respect to the Markov blanket variables.\n\nMany of the changes in the new patch set are a result of this change. It simplifies the evaluation step. However, there is some additional complexity because I am trying to make the linearization states be const, so I make a copy of them, which then get added to the \"new problem\" with the marginalized blocks and Markov blanket. I will start a separate thread about this.",
       "parentUuid": "b5ef0f95_b196b21c",
+      "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d29ca89_0fc999e7",
+        "filename": "internal/ceres/marginalization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-05-11T13:23:08Z",
+      "side": 1,
+      "message": "I\u0027m not sure why we need a copy at this point (during marginalization). I\u0027d have thought we only need a copy for the linearization points that we store in the MarginalizationPriorCost. (I haven\u0027t checked the updated code carefully yet.)",
+      "parentUuid": "74c6d775_7a6d58e3",
       "revId": "04fff01d1b2e02b88859cdfdb8646ee6da773bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
