@@ -86,10 +86,12 @@ DEFINE_string(linear_solver, "sparse_schur", "Options are: "
 DEFINE_bool(explicit_schur_complement, false, "If using ITERATIVE_SCHUR "
             "then explicitly compute the Schur complement.");
 DEFINE_string(preconditioner, "jacobi", "Options are: "
-              "identity, jacobi, schur_jacobi, cluster_jacobi, "
+              "identity, jacobi, schur_jacobi, schur_power_series_expansion, cluster_jacobi, "
               "cluster_tridiagonal.");
 DEFINE_string(visibility_clustering, "canonical_views",
               "single_linkage, canonical_views");
+DEFINE_bool(use_power_series_expansion_initialization, false,
+            "Use power series expansion to initialize the solution of schur complement via PCG.");
 
 DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
               "Options are: suite_sparse, cx_sparse, accelerate_sparse and eigen_sparse.");
@@ -109,6 +111,14 @@ DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
 
 DEFINE_int32(num_threads, 1, "Number of threads.");
 DEFINE_int32(num_iterations, 5, "Number of iterations.");
+DEFINE_int32(max_linear_solve_iterations, 500, "Maximum number of iterations"
+            " for solution of linear system.");
+DEFINE_double(e_tolerance, 0.01,
+             "Tolerance to reach during the iterations of power series expansion initialization or preconditioning.");
+DEFINE_int32(min_num_preconditioner_iterations, 5,
+             "Minimum number of iterations for power series expansion initialization or preconditioning.");
+DEFINE_int32(max_num_preconditioner_iterations, 5,
+             "Maximum number of iterations for power series expansion initialization or preconditioning.");
 DEFINE_double(max_solver_time, 1e32, "Maximum solve time in seconds.");
 DEFINE_bool(nonmonotonic_steps, false, "Trust region algorithm can use"
             " nonmonotic steps.");
@@ -157,6 +167,15 @@ void SetLinearSolver(Solver::Options* options) {
       CERES_GET_FLAG(FLAGS_mixed_precision_solves);
   options->max_num_refinement_iterations =
       CERES_GET_FLAG(FLAGS_max_num_refinement_iterations);
+  options->max_linear_solver_iterations =
+      CERES_GET_FLAG(FLAGS_max_linear_solve_iterations);
+  options->use_power_series_expansion_initialization =
+      CERES_GET_FLAG(FLAGS_use_power_series_expansion_initialization);
+  options->e_tolerance = CERES_GET_FLAG(FLAGS_e_tolerance);
+  options->min_num_preconditioner_iterations =
+      CERES_GET_FLAG(FLAGS_min_num_preconditioner_iterations);
+  options->max_num_preconditioner_iterations =
+      CERES_GET_FLAG(FLAGS_max_num_preconditioner_iterations);
 }
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {

@@ -43,6 +43,7 @@
 #include "ceres/implicit_schur_complement.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
+#include "ceres/power_series_expansion_preconditioner.h"
 #include "ceres/preconditioner.h"
 #include "ceres/schur_jacobi_preconditioner.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -116,6 +117,19 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
     cg_per_solve_options.preconditioner = preconditioner_.get();
   }
 
+  if (options_.use_power_series_expansion_initialization) {
+    Preconditioner::Options preconditioner_options;
+    preconditioner_options.e_tolerance = options_.e_tolerance;
+    preconditioner_options.min_num_iterations =
+        options_.min_num_preconditioner_iterations;
+    preconditioner_options.max_num_iterations =
+        options_.max_num_preconditioner_iterations;
+    PowerSeriesExpansionPreconditioner pse_solver(
+        schur_complement_.get(), std::move(preconditioner_options));
+    pse_solver.RightMultiply(schur_complement_->rhs().data(),
+                             reduced_linear_system_solution_.data());
+  }
+
   event_logger.AddEvent("Setup");
   LinearSolver::Summary summary =
       cg_solver.Solve(schur_complement_.get(),
@@ -151,11 +165,20 @@ void IterativeSchurComplementSolver::CreatePreconditioner(
   preconditioner_options.elimination_groups = options_.elimination_groups;
   CHECK(options_.context != nullptr);
   preconditioner_options.context = options_.context;
+  preconditioner_options.e_tolerance = options_.e_tolerance;
+  preconditioner_options.min_num_iterations =
+      options_.min_num_preconditioner_iterations;
+  preconditioner_options.max_num_iterations =
+      options_.max_num_preconditioner_iterations;
 
   switch (options_.preconditioner_type) {
     case JACOBI:
       preconditioner_ = std::make_unique<SparseMatrixPreconditionerWrapper>(
           schur_complement_->block_diagonal_FtF_inverse());
+      break;
+    case SCHUR_POWER_SERIES_EXPANSION:
+      preconditioner_ = std::make_unique<PowerSeriesExpansionPreconditioner>(
+          schur_complement_.get(), preconditioner_options);
       break;
     case SCHUR_JACOBI:
       preconditioner_ = std::make_unique<SchurJacobiPreconditioner>(

@@ -69,6 +69,7 @@ class Preconditioner;
 // a proof of this fact and others related to this solver please see
 // the section on Domain Decomposition Methods in Saad's book
 // "Iterative Methods for Sparse Linear Systems".
+
 class CERES_NO_EXPORT IterativeSchurComplementSolver final
     : public BlockSparseMatrixSolver {
  public:

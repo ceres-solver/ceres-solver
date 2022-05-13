@@ -691,6 +691,17 @@ class CERES_EXPORT Solver {
     // as its termination type.
     int max_linear_solver_iterations = 500;
 
+    // Use power series expansion to initialize iterations of PCG in
+    // ITERATIVE_SCHUR linear solver.
+    bool use_power_series_expansion_initialization = false;
+
+    // Tolerance to reach while accumulating power series expansion.
+    double e_tolerance = 0.01;
+
+    // Bounds on number of power series expansion iterations.
+    int min_num_preconditioner_iterations = 5;
+    int max_num_preconditioner_iterations = 5;
+
     // Forcing sequence parameter. The truncated Newton solver uses
     // this number to control the relative accuracy with which the
     // Newton step is computed.

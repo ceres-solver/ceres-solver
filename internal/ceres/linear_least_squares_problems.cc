@@ -160,13 +160,15 @@ std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem0() {
              12    0    1   17   1
               0   30    1    1  37]
 
+      cond(A'A) = 200.36
+
       S = [ 42.3419  -1.4000  -11.5806
             -1.4000   2.6000    1.0000
            -11.5806   1.0000   31.1935]
 
       r = [ 4.3032
             5.4000
-            5.0323]
+            4.0323]
 
       S\r = [ 0.2102
               2.1367

@@ -103,6 +103,13 @@ class CERES_NO_EXPORT Preconditioner : public LinearOperator {
     int e_block_size = Eigen::Dynamic;
     int f_block_size = Eigen::Dynamic;
 
+    // Tolerance to reach while accumulating power series expansion.
+    double e_tolerance = 0.01;
+
+    // Bounds on number of power series expansion iterations.
+    int min_num_iterations = 5;
+    int max_num_iterations = 5;
+
     ContextImpl* context = nullptr;
   };
 
