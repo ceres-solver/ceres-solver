@@ -67,6 +67,23 @@
       "message": "I looked into this a little bit and the way cholmod uses metis. This is going to take some work and it requires changes to the API. So I am going to look at it right after we release version ceres solver 2.1.",
       "revId": "31e034afe7e122c1b75d933ee05ef2b8d6bc8570",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd5d8f65_2328925c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-13T00:11:41Z",
+      "side": 1,
+      "message": "Hi There,\nI finally have time to work on this. we can go about this two ways.\nI can give you some feedback on the API and we can work on revising the whole patch, or I can take over your patch and revise the API and submit it (with credit to you ofcourse).\n\nI am happy to work either ways, please let me know what would work better for you.\nSameer\n",
+      "revId": "31e034afe7e122c1b75d933ee05ef2b8d6bc8570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
