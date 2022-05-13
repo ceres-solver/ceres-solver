@@ -465,6 +465,11 @@ TEST(Solver, LinearSolverTypeNormalOperation) {
 
   options.linear_solver_type = ITERATIVE_SCHUR;
   EXPECT_TRUE(options.IsValid(&message));
+
+  options.linear_solver_type = ITERATIVE_SCHUR_POWER;
+  EXPECT_FALSE(options.IsValid(&message));
+  options.preconditioner_type = IDENTITY;
+  EXPECT_TRUE(options.IsValid(&message));
 }
 
 template <int kNumResiduals, int... Ns>

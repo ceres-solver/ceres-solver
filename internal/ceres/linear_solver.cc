@@ -64,7 +64,8 @@ LinearSolverType LinearSolver::LinearSolverForZeroEBlocks(
     return DENSE_QR;
   }
 
-  if (linear_solver_type == ITERATIVE_SCHUR) {
+  if (linear_solver_type == ITERATIVE_SCHUR ||
+      linear_solver_type == ITERATIVE_SCHUR_POWER) {
     return CGNR;
   }
 
@@ -106,6 +107,9 @@ std::unique_ptr<LinearSolver> LinearSolver::Create(
       } else {
         return std::make_unique<IterativeSchurComplementSolver>(options);
       }
+
+    case ITERATIVE_SCHUR_POWER:
+      return std::make_unique<IterativeSchurComplementSolver>(options);
 
     case DENSE_QR:
       return std::make_unique<DenseQRSolver>(options);

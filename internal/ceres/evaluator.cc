@@ -64,6 +64,7 @@ std::unique_ptr<Evaluator> Evaluator::Create(const Evaluator::Options& options,
     case DENSE_SCHUR:
     case SPARSE_SCHUR:
     case ITERATIVE_SCHUR:
+    case ITERATIVE_SCHUR_POWER:
     case CGNR:
       return std::make_unique<
           ProgramEvaluator<BlockEvaluatePreparer, BlockJacobianWriter>>(

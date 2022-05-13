@@ -81,7 +81,7 @@ DEFINE_string(blocks_for_inner_iterations, "automatic", "Options are: "
               "automatic, cameras, points, cameras,points, points,cameras");
 
 DEFINE_string(linear_solver, "sparse_schur", "Options are: "
-              "sparse_schur, dense_schur, iterative_schur, sparse_normal_cholesky, "
+              "sparse_schur, dense_schur, iterative_schur, iterative_schur_power, sparse_normal_cholesky, "
               "dense_qr, dense_normal_cholesky and cgnr.");
 DEFINE_bool(explicit_schur_complement, false, "If using ITERATIVE_SCHUR "
             "then explicitly compute the Schur complement.");
@@ -109,6 +109,8 @@ DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
 
 DEFINE_int32(num_threads, 1, "Number of threads.");
 DEFINE_int32(num_iterations, 5, "Number of iterations.");
+DEFINE_int32(max_linear_solve_iterations, 500, "Maximum number of iterations"
+            " for solution of linear system.");
 DEFINE_double(max_solver_time, 1e32, "Maximum solve time in seconds.");
 DEFINE_bool(nonmonotonic_steps, false, "Trust region algorithm can use"
             " nonmonotic steps.");
@@ -157,6 +159,8 @@ void SetLinearSolver(Solver::Options* options) {
       CERES_GET_FLAG(FLAGS_mixed_precision_solves);
   options->max_num_refinement_iterations =
       CERES_GET_FLAG(FLAGS_max_num_refinement_iterations);
+  options->max_linear_solver_iterations =
+      CERES_GET_FLAG(FLAGS_max_linear_solve_iterations);
 }
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {

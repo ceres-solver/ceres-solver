@@ -58,6 +58,7 @@ const char* LinearSolverTypeToString(LinearSolverType type) {
     CASESTR(DENSE_SCHUR);
     CASESTR(SPARSE_SCHUR);
     CASESTR(ITERATIVE_SCHUR);
+    CASESTR(ITERATIVE_SCHUR_POWER);
     CASESTR(CGNR);
     default:
       return "UNKNOWN";
@@ -72,6 +73,7 @@ bool StringToLinearSolverType(string value, LinearSolverType* type) {
   STRENUM(DENSE_SCHUR);
   STRENUM(SPARSE_SCHUR);
   STRENUM(ITERATIVE_SCHUR);
+  STRENUM(ITERATIVE_SCHUR_POWER);
   STRENUM(CGNR);
   return false;
 }
@@ -388,7 +390,8 @@ bool IsSchurType(LinearSolverType type) {
   // clang-format off
   return ((type == SPARSE_SCHUR) ||
           (type == DENSE_SCHUR)  ||
-          (type == ITERATIVE_SCHUR));
+          (type == ITERATIVE_SCHUR) ||
+          (type == ITERATIVE_SCHUR_POWER));
   // clang-format on
 }
 

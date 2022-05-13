@@ -74,7 +74,8 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     num_eliminate_blocks_ = problem->num_eliminate_blocks;
   }
 
-  AssertionResult TestSolver(double* D) {
+  AssertionResult TestSolver(double* D,
+                             LinearSolverType type = ITERATIVE_SCHUR) {
     TripletSparseMatrix triplet_A(
         A_->num_rows(), A_->num_cols(), A_->num_nonzeros());
     A_->ToTripletSparseMatrix(&triplet_A);
@@ -92,22 +93,26 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     Vector reference_solution(num_cols_);
     qr->Solve(&dense_A, b_.get(), per_solve_options, reference_solution.data());
 
+    options.type = type;
     options.elimination_groups.push_back(num_eliminate_blocks_);
     options.elimination_groups.push_back(0);
-    options.max_num_iterations = num_cols_;
-    options.preconditioner_type = SCHUR_JACOBI;
+    options.max_num_iterations = type == ITERATIVE_SCHUR ? num_cols_ : 500;
+    options.preconditioner_type =
+        type == ITERATIVE_SCHUR ? SCHUR_JACOBI : IDENTITY;
     IterativeSchurComplementSolver isc(options);
 
     Vector isc_sol(num_cols_);
     per_solve_options.r_tolerance = 1e-12;
+    per_solve_options.e_tolerance = 1e-15;
     isc.Solve(A_.get(), b_.get(), per_solve_options, isc_sol.data());
     double diff = (isc_sol - reference_solution).norm();
     if (diff < kEpsilon) {
       return testing::AssertionSuccess();
     } else {
       return testing::AssertionFailure()
-             << "The reference solution differs from the ITERATIVE_SCHUR"
-             << " solution by " << diff << " which is more than " << kEpsilon;
+             << "The reference solution differs from the "
+             << LinearSolverTypeToString(type) << " solution by " << diff
+             << " which is more than " << kEpsilon;
     }
   }
 
@@ -119,16 +124,34 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
   std::unique_ptr<double[]> D_;
 };
 
-TEST_F(IterativeSchurComplementSolverTest, NormalProblem) {
+TEST_F(IterativeSchurComplementSolverTest, CGNormalProblem) {
   SetUpProblem(2);
   EXPECT_TRUE(TestSolver(nullptr));
   EXPECT_TRUE(TestSolver(D_.get()));
 }
 
-TEST_F(IterativeSchurComplementSolverTest, ProblemWithNoFBlocks) {
+TEST_F(IterativeSchurComplementSolverTest, CGProblemBlockDiagonalFtF) {
+  SetUpProblem(5);
+  EXPECT_TRUE(TestSolver(nullptr));
+  EXPECT_TRUE(TestSolver(D_.get()));
+}
+
+TEST_F(IterativeSchurComplementSolverTest, CGProblemWithNoFBlocks) {
   SetUpProblem(3);
   EXPECT_TRUE(TestSolver(nullptr));
   EXPECT_TRUE(TestSolver(D_.get()));
+}
+
+TEST_F(IterativeSchurComplementSolverTest,
+       PowerSeriesExpansionProblemBlockDiagonalFtF) {
+  SetUpProblem(5);
+  EXPECT_TRUE(TestSolver(D_.get(), ITERATIVE_SCHUR_POWER));
+}
+
+TEST_F(IterativeSchurComplementSolverTest,
+       PowerSeriesExpansionProblemWithNoFBlocks) {
+  SetUpProblem(3);
+  EXPECT_TRUE(TestSolver(D_.get(), ITERATIVE_SCHUR_POWER));
 }
 
 }  // namespace internal

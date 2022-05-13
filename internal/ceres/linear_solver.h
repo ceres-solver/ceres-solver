@@ -295,6 +295,10 @@ class CERES_NO_EXPORT LinearSolver {
     //      124(1-2), 45-59, 2000.
     //
     double q_tolerance = 0.0;
+
+    // If solution x is estimated as a partial sum {x_i}, then accumulate up to
+    // |x_i| < e_tolerance * |x_0|
+    double e_tolerance = 0.0;
   };
 
   // Summary of a call to the Solve method. We should move away from

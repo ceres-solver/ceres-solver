@@ -85,7 +85,8 @@ void AlternateLinearSolverAndPreconditionerForSchurTypeLinearSolver(
       LinearSolver::LinearSolverForZeroEBlocks(linear_solver_type_given);
 
   std::string message;
-  if (linear_solver_type_given == ITERATIVE_SCHUR) {
+  if (linear_solver_type_given == ITERATIVE_SCHUR ||
+      linear_solver_type_given == ITERATIVE_SCHUR_POWER) {
     options->preconditioner_type =
         Preconditioner::PreconditionerForZeroEBlocks(preconditioner_type_given);
 

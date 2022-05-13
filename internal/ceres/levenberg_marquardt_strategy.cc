@@ -89,6 +89,7 @@ TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
   LinearSolver::PerSolveOptions solve_options;
   solve_options.D = lm_diagonal_.data();
   solve_options.q_tolerance = per_solve_options.eta;
+  solve_options.e_tolerance = per_solve_options.eta;
   // Disable r_tolerance checking. Since we only care about
   // termination via the q_tolerance. As Nash and Sofer show,
   // r_tolerance based termination is essentially useless in

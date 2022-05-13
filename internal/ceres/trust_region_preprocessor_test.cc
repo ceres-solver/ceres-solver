@@ -204,8 +204,13 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, CGNR) {
   PreprocessForGivenLinearSolverAndVerify(CGNR);
 }
 
-TEST_F(LinearSolverAndEvaluatorCreationTest, IterativeSchur) {
+TEST_F(LinearSolverAndEvaluatorCreationTest, IterativeSchurCG) {
   PreprocessForGivenLinearSolverAndVerify(ITERATIVE_SCHUR);
+}
+
+TEST_F(LinearSolverAndEvaluatorCreationTest,
+       IterativeSchurPowerSeriesExpansion) {
+  PreprocessForGivenLinearSolverAndVerify(ITERATIVE_SCHUR_POWER);
 }
 
 TEST_F(LinearSolverAndEvaluatorCreationTest, MinimizerIsAwareOfBounds) {

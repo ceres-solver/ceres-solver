@@ -43,6 +43,7 @@
 #include "ceres/implicit_schur_complement.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
+#include "ceres/power_series_expansion_solver.h"
 #include "ceres/preconditioner.h"
 #include "ceres/schur_jacobi_preconditioner.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -94,14 +95,23 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   reduced_linear_system_solution_.resize(schur_complement_->num_rows());
   reduced_linear_system_solution_.setZero();
 
-  LinearSolver::Options cg_options;
-  cg_options.min_num_iterations = options_.min_num_iterations;
-  cg_options.max_num_iterations = options_.max_num_iterations;
-  ConjugateGradientsSolver cg_solver(cg_options);
+  LinearSolver::Options options;
+  options.type = options_.type;
+  options.preconditioner_type = options_.preconditioner_type;
+  options.min_num_iterations = options_.min_num_iterations;
+  options.max_num_iterations = options_.max_num_iterations;
 
-  LinearSolver::PerSolveOptions cg_per_solve_options;
-  cg_per_solve_options.r_tolerance = per_solve_options.r_tolerance;
-  cg_per_solve_options.q_tolerance = per_solve_options.q_tolerance;
+  std::unique_ptr<LinearSolver> linear_solver(
+      options_.type == ITERATIVE_SCHUR
+          ? static_cast<LinearSolver*>(
+                new ConjugateGradientsSolver(std::move(options)))
+          : static_cast<LinearSolver*>(
+                new PowerSeriesExpansionSolver(std::move(options))));
+
+  LinearSolver::PerSolveOptions per_solve_options_local;
+  per_solve_options_local.r_tolerance = per_solve_options.r_tolerance;
+  per_solve_options_local.q_tolerance = per_solve_options.q_tolerance;
+  per_solve_options_local.e_tolerance = per_solve_options.e_tolerance;
 
   CreatePreconditioner(A);
   if (preconditioner_.get() != nullptr) {
@@ -113,15 +123,15 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
       return summary;
     }
 
-    cg_per_solve_options.preconditioner = preconditioner_.get();
+    per_solve_options_local.preconditioner = preconditioner_.get();
   }
 
   event_logger.AddEvent("Setup");
   LinearSolver::Summary summary =
-      cg_solver.Solve(schur_complement_.get(),
-                      schur_complement_->rhs().data(),
-                      cg_per_solve_options,
-                      reduced_linear_system_solution_.data());
+      linear_solver->Solve(schur_complement_.get(),
+                           schur_complement_->rhs().data(),
+                           per_solve_options_local,
+                           reduced_linear_system_solution_.data());
   if (summary.termination_type != LinearSolverTerminationType::FAILURE &&
       summary.termination_type != LinearSolverTerminationType::FATAL_ERROR) {
     schur_complement_->BackSubstitute(reduced_linear_system_solution_.data(),

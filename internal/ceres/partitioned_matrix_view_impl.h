@@ -55,7 +55,7 @@ PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
   // in E maybe less than the number of row blocks in the input matrix
   // as some of the row blocks at the bottom may not have any
   // e_blocks. For a definition of what an e_block is, please see
-  // explicit_schur_complement_solver.h
+  // schur_complement_solver.h
   num_row_blocks_e_ = 0;
   for (const auto& row : bs->rows) {
     const std::vector<Cell>& cells = row.cells;
@@ -228,7 +228,7 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 // Given a range of columns blocks of a matrix m, compute the block
 // structure of the block diagonal of the matrix m(:,
 // start_col_block:end_col_block)'m(:, start_col_block:end_col_block)
-// and return a BlockSparseMatrix with the this block structure. The
+// and return a BlockSparseMatrix with this block structure. The
 // caller owns the result.
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 std::unique_ptr<BlockSparseMatrix>

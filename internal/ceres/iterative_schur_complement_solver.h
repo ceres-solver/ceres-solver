@@ -69,6 +69,11 @@ class Preconditioner;
 // a proof of this fact and others related to this solver please see
 // the section on Domain Decomposition Methods in Saad's book
 // "Iterative Methods for Sparse Linear Systems".
+//
+// Alternatively, implicitly formed reduced camera system may be solved
+// iteratively using power series expansion as described in "Weber et al, Power
+// Bundle Adjustment for Large-Scale 3D Reconstruction".
+
 class CERES_NO_EXPORT IterativeSchurComplementSolver final
     : public BlockSparseMatrixSolver {
  public:

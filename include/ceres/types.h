@@ -86,6 +86,9 @@ enum LinearSolverType {
   // problems.
   ITERATIVE_SCHUR,
 
+  // Solves the reduced linear system using power series expansion.
+  ITERATIVE_SCHUR_POWER,
+
   // Conjugate gradients on the normal equations.
   CGNR
 };

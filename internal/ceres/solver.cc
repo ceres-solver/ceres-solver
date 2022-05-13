@@ -185,6 +185,21 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
     OPTION_GT(max_consecutive_nonmonotonic_steps, 0);
   }
 
+  if (options.linear_solver_type == ITERATIVE_SCHUR_POWER) {
+    if (options.use_explicit_schur_complement) {
+      *error =
+          "use_explicit_schur_complement is not supported for "
+          "ITERATIVE_SCHUR_POWER linear solver.";
+      return false;
+    }
+
+    if (options.preconditioner_type != IDENTITY) {
+      *error =
+          "Preconditioning is not supported by ITERATIVE_SCHUR_POWER solver.";
+      return false;
+    }
+  }
+
   if (options.linear_solver_type == ITERATIVE_SCHUR &&
       options.use_explicit_schur_complement &&
       options.preconditioner_type != SCHUR_JACOBI) {
@@ -276,7 +291,8 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
 
   if (options.trust_region_strategy_type == DOGLEG) {
     if (options.linear_solver_type == ITERATIVE_SCHUR ||
-        options.linear_solver_type == CGNR) {
+        options.linear_solver_type == CGNR ||
+        options.linear_solver_type == ITERATIVE_SCHUR_POWER) {
       *error =
           "DOGLEG only supports exact factorization based linear "
           "solvers. If you want to use an iterative solver please "

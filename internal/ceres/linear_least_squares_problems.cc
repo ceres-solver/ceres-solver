@@ -61,6 +61,8 @@ CreateLinearLeastSquaresProblemFromId(int id) {
       return LinearLeastSquaresProblem3();
     case 4:
       return LinearLeastSquaresProblem4();
+    case 5:
+      return LinearLeastSquaresProblem5();
     default:
       LOG(FATAL) << "Unknown problem id requested " << id;
   }
@@ -160,13 +162,15 @@ std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem0() {
              12    0    1   17   1
               0   30    1    1  37]
 
+      cond(A'A) = 200.36
+
       S = [ 42.3419  -1.4000  -11.5806
             -1.4000   2.6000    1.0000
            -11.5806   1.0000   31.1935]
 
       r = [ 4.3032
             5.4000
-            5.0323]
+            4.0323]
 
       S\r = [ 0.2102
               2.1367
@@ -610,6 +614,171 @@ std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem4() {
   }
 
   problem->A = std::move(A);
+  return problem;
+}
+
+/*
+A problem with block-diagonal F'F.
+
+      A = [1  0 | 0 0 2
+           3  0 | 0 0 4
+           0 -1 | 0 2 0
+           0 -3 | 0 1 0
+           0 -1 | 3 0 0
+           0  0 | 1 0 0]
+
+      b = [0
+           1
+           2
+           3
+           4
+           5]
+
+      c = A'* b = [  3
+                   -15
+                    17
+                     7
+                     4]
+
+      A'A = [10    0    0    0   14
+              0   11   -3   -5    0
+              0   -3   10    0    0
+              0   -5    0    5    0
+             14    0    0    0   20]
+
+      cond(A'A) = 223.00
+
+      S = [9.1818  -1.3636        0
+          -1.3636   2.7273        0
+                0        0   0.4000]
+
+      r = [12.9091
+            0.1818
+           -0.2000]
+
+      S\r = [ 1.5294
+              0.8314
+             -0.5000]
+
+      A\b = [1.0000
+            -0.5686
+             1.5294
+             0.8314
+            -0.5000]
+*/
+
+std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem5() {
+  int num_rows = 6;
+  int num_cols = 5;
+
+  std::unique_ptr<LinearLeastSquaresProblem> problem =
+      std::make_unique<LinearLeastSquaresProblem>();
+
+  problem->b = std::make_unique<double[]>(num_rows);
+  problem->D = std::make_unique<double[]>(num_cols);
+  problem->num_eliminate_blocks = 2;
+
+  auto* bs = new CompressedRowBlockStructure;
+  std::unique_ptr<double[]> values =
+      std::make_unique<double[]>(num_rows * num_cols);
+
+  for (int c = 0; c < num_cols; ++c) {
+    bs->cols.emplace_back();
+    bs->cols.back().size = 1;
+    bs->cols.back().position = c;
+  }
+
+  int nnz = 0;
+
+  // Row 1
+  {
+    values[nnz++] = 1;
+    values[nnz++] = 2;
+
+    bs->rows.emplace_back();
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 1;
+    row.block.position = 0;
+    row.cells.emplace_back(0, 0);
+    row.cells.emplace_back(4, 1);
+  }
+
+  // Row 2
+  {
+    values[nnz++] = 3;
+    values[nnz++] = 4;
+
+    bs->rows.emplace_back();
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 1;
+    row.block.position = 1;
+    row.cells.emplace_back(0, 2);
+    row.cells.emplace_back(4, 3);
+  }
+
+  // Row 3
+  {
+    values[nnz++] = -1;
+    values[nnz++] = 2;
+
+    bs->rows.emplace_back();
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 1;
+    row.block.position = 2;
+    row.cells.emplace_back(1, 4);
+    row.cells.emplace_back(3, 5);
+  }
+
+  // Row 4
+  {
+    values[nnz++] = -3;
+    values[nnz++] = 1;
+
+    bs->rows.emplace_back();
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 1;
+    row.block.position = 3;
+    row.cells.emplace_back(1, 6);
+    row.cells.emplace_back(3, 7);
+  }
+
+  // Row 5
+  {
+    values[nnz++] = -1;
+    values[nnz++] = 3;
+
+    bs->rows.emplace_back();
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 1;
+    row.block.position = 4;
+    row.cells.emplace_back(1, 8);
+    row.cells.emplace_back(2, 9);
+  }
+
+  // Row 6
+  {
+    values[nnz++] = 1;
+
+    bs->rows.emplace_back();
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 1;
+    row.block.position = 5;
+    row.cells.emplace_back(2, 10);
+  }
+
+  auto A = std::make_unique<BlockSparseMatrix>(bs);
+  memcpy(A->mutable_values(), values.get(), nnz * sizeof(*A->values()));
+
+  for (int i = 0; i < num_cols; ++i) {
+    problem->D.get()[i] = 1;
+  }
+
+  for (int i = 0; i < num_rows; ++i) {
+    problem->b.get()[i] = i;
+  }
+
+  problem->A = std::move(A);
+
   return problem;
 }
 
