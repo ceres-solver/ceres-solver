@@ -336,6 +336,18 @@ bool SuiteSparse::ApproximateMinimumDegreeOrdering(cholmod_sparse* matrix,
   return cholmod_amd(matrix, nullptr, 0, ordering, &cc_);
 }
 
+bool SuiteSparse::NestedDissectionOrdering(cholmod_sparse* matrix,
+                                           int* ordering) {
+#ifdef CERES_NO_METIS
+  return false;
+#else
+  std::vector<int> CParent(matrix->nrow, 0);
+  std::vector<int> CMember(matrix->nrow, 0);
+  return cholmod_nested_dissection(
+      matrix, nullptr, 0, ordering, CParent.data(), CMember.data(), &cc_);
+#endif
+}
+
 bool SuiteSparse::ConstrainedApproximateMinimumDegreeOrdering(
     cholmod_sparse* matrix, int* constraints, int* ordering) {
 #ifndef CERES_NO_CAMD
@@ -375,7 +387,7 @@ LinearSolverTerminationType SuiteSparseCholesky::Factorize(
   cholmod_sparse cholmod_lhs = ss_.CreateSparseMatrixTransposeView(lhs);
 
   if (factor_ == nullptr) {
-    if (ordering_type_ == NATURAL) {
+    if (ordering_type_ == OrderingType::NATURAL) {
       factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&cholmod_lhs, message);
     } else {
       if (!lhs->col_blocks().empty() && !(lhs->row_blocks().empty())) {
@@ -396,7 +408,7 @@ LinearSolverTerminationType SuiteSparseCholesky::Factorize(
 
 CompressedRowSparseMatrix::StorageType SuiteSparseCholesky::StorageType()
     const {
-  return ((ordering_type_ == NATURAL)
+  return ((ordering_type_ == OrderingType::NATURAL)
               ? CompressedRowSparseMatrix::UPPER_TRIANGULAR
               : CompressedRowSparseMatrix::LOWER_TRIANGULAR);
 }

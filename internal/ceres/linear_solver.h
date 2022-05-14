@@ -76,12 +76,15 @@ enum LinearSolverTerminationType {
 // This enum controls the fill-reducing ordering a sparse linear
 // algebra library should use before computing a sparse factorization
 // (usually Cholesky).
-enum OrderingType {
+//
+// TODO(sameeragarwal): Add support for nested dissection
+enum class OrderingType {
   NATURAL,  // Do not re-order the matrix. This is useful when the
             // matrix has been ordered using a fill-reducing ordering
             // already.
-  AMD       // Use the Approximate Minimum Degree algorithm to re-order
-            // the matrix.
+
+  AMD,  // Use the Approximate Minimum Degree algorithm to re-order
+        // the matrix.
 };
 
 class LinearOperator;

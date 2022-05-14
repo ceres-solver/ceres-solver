@@ -149,7 +149,7 @@ std::unique_ptr<SparseCholesky> EigenSparseCholesky::Create(
                             Eigen::Upper,
                             Eigen::NaturalOrdering<int>>;
 
-  if (ordering_type == AMD) {
+  if (ordering_type == OrderingType::AMD) {
     return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
   } else {
     return std::make_unique<EigenSparseCholeskyTemplate<WithNaturalOrdering>>();
@@ -167,7 +167,7 @@ std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
       Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
                             Eigen::Upper,
                             Eigen::NaturalOrdering<int>>;
-  if (ordering_type == AMD) {
+  if (ordering_type == OrderingType::AMD) {
     return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
   } else {
     return std::make_unique<EigenSparseCholeskyTemplate<WithNaturalOrdering>>();
