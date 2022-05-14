@@ -44,17 +44,16 @@ namespace ceres::internal {
 
 std::unique_ptr<SparseCholesky> SparseCholesky::Create(
     const LinearSolver::Options& options) {
-  const OrderingType ordering_type =
-      options.use_postordering ? OrderingType::AMD : OrderingType::NATURAL;
   std::unique_ptr<SparseCholesky> sparse_cholesky;
 
   switch (options.sparse_linear_algebra_library_type) {
     case SUITE_SPARSE:
 #ifndef CERES_NO_SUITESPARSE
       if (options.use_mixed_precision_solves) {
-        sparse_cholesky = FloatSuiteSparseCholesky::Create(ordering_type);
+        sparse_cholesky =
+            FloatSuiteSparseCholesky::Create(options.ordering_type);
       } else {
-        sparse_cholesky = SuiteSparseCholesky::Create(ordering_type);
+        sparse_cholesky = SuiteSparseCholesky::Create(options.ordering_type);
       }
       break;
 #else
@@ -64,9 +63,10 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
     case EIGEN_SPARSE:
 #ifdef CERES_USE_EIGEN_SPARSE
       if (options.use_mixed_precision_solves) {
-        sparse_cholesky = FloatEigenSparseCholesky::Create(ordering_type);
+        sparse_cholesky =
+            FloatEigenSparseCholesky::Create(options.ordering_type);
       } else {
-        sparse_cholesky = EigenSparseCholesky::Create(ordering_type);
+        sparse_cholesky = EigenSparseCholesky::Create(options.ordering_type);
       }
       break;
 #else
@@ -77,9 +77,9 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
     case CX_SPARSE:
 #ifndef CERES_NO_CXSPARSE
       if (options.use_mixed_precision_solves) {
-        sparse_cholesky = FloatCXSparseCholesky::Create(ordering_type);
+        sparse_cholesky = FloatCXSparseCholesky::Create(options.ordering_type);
       } else {
-        sparse_cholesky = CXSparseCholesky::Create(ordering_type);
+        sparse_cholesky = CXSparseCholesky::Create(options.ordering_type);
       }
       break;
 #else
@@ -89,10 +89,11 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
     case ACCELERATE_SPARSE:
 #ifndef CERES_NO_ACCELERATE_SPARSE
       if (options.use_mixed_precision_solves) {
-        sparse_cholesky = AppleAccelerateCholesky<float>::Create(ordering_type);
+        sparse_cholesky =
+            AppleAccelerateCholesky<float>::Create(options.ordering_type);
       } else {
         sparse_cholesky =
-            AppleAccelerateCholesky<double>::Create(ordering_type);
+            AppleAccelerateCholesky<double>::Create(options.ordering_type);
       }
       break;
 #else
