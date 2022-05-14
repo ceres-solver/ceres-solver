@@ -95,7 +95,7 @@ DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
               "Options are: suite_sparse and cx_sparse.");
 DEFINE_string(dense_linear_algebra_library, "eigen",
               "Options are: eigen, lapack, and cuda");
-DEFINE_string(ordering, "automatic", "Options are: automatic, user.");
+DEFINE_string(ordering, "amd", "Options are: amd, nesdis and user");
 
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
             "rotations. If false, angle axis is used.");
@@ -128,7 +128,6 @@ DEFINE_int32(max_num_refinement_iterations, 0, "Iterative refinement iterations"
 DEFINE_string(initial_ply, "", "Export the BAL file data as a PLY file.");
 DEFINE_string(final_ply, "", "Export the refined BAL file data as a PLY "
               "file.");
-
 // clang-format on
 
 namespace ceres::examples {
@@ -228,24 +227,30 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   // the right ParameterBlock ordering, or by manually specifying a
   // suitable ordering vector and defining
   // Options::num_eliminate_blocks.
-  if (CERES_GET_FLAG(FLAGS_ordering) == "automatic") {
-    return;
+  if (CERES_GET_FLAG(FLAGS_ordering) == "user") {
+    auto* ordering = new ceres::ParameterBlockOrdering;
+
+    // The points come before the cameras.
+    for (int i = 0; i < num_points; ++i) {
+      ordering->AddElementToGroup(points + point_block_size * i, 0);
+    }
+
+    for (int i = 0; i < num_cameras; ++i) {
+      // When using axis-angle, there is a single parameter block for
+      // the entire camera.
+      ordering->AddElementToGroup(cameras + camera_block_size * i, 1);
+    }
+
+    options->linear_solver_ordering.reset(ordering);
+  } else {
+    if (CERES_GET_FLAG(FLAGS_ordering) == "amd") {
+      options->linear_solver_ordering_type = AMD;
+    } else if (CERES_GET_FLAG(FLAGS_ordering) == "nesdis") {
+      options->linear_solver_ordering_type = NESDIS;
+    } else {
+      LOG(FATAL) << "Unknown ordering type: " << CERES_GET_FLAG(FLAGS_ordering);
+    }
   }
-
-  auto* ordering = new ceres::ParameterBlockOrdering;
-
-  // The points come before the cameras.
-  for (int i = 0; i < num_points; ++i) {
-    ordering->AddElementToGroup(points + point_block_size * i, 0);
-  }
-
-  for (int i = 0; i < num_cameras; ++i) {
-    // When using axis-angle, there is a single parameter block for
-    // the entire camera.
-    ordering->AddElementToGroup(cameras + camera_block_size * i, 1);
-  }
-
-  options->linear_solver_ordering.reset(ordering);
 }
 
 void SetMinimizerOptions(Solver::Options* options) {

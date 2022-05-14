@@ -113,7 +113,7 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
   // factorization. So we must tell the SparseCholesky object to
   // perform approximate minimum-degree reordering, which is done by
   // setting use_postordering to true.
-  sparse_cholesky_options.use_postordering = true;
+  sparse_cholesky_options.ordering_type = options.ordering_type;
   sparse_cholesky_ = SparseCholesky::Create(sparse_cholesky_options);
 
   const time_t init_time = time(nullptr);
