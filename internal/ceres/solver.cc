@@ -50,6 +50,7 @@
 #include "ceres/schur_templates.h"
 #include "ceres/solver_utils.h"
 #include "ceres/stringprintf.h"
+#include "ceres/suitesparse.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
@@ -182,8 +183,10 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
             name,
             sparse_linear_algebra_library_name);
         return false;
-      } else if (!IsSparseLinearAlgebraLibraryTypeAvailable(
-                     options.sparse_linear_algebra_library_type)) {
+      }
+
+      if (!IsSparseLinearAlgebraLibraryTypeAvailable(
+              options.sparse_linear_algebra_library_type)) {
         *error = StringPrintf(
             "Can't use %s with "
             "Solver::Options::sparse_linear_algebra_library_type = %s, "
@@ -191,6 +194,47 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
             name,
             sparse_linear_algebra_library_name);
         return false;
+      }
+
+      if (options.linear_solver_ordering_type == NESDIS) {
+        if (options.sparse_linear_algebra_library_type == CX_SPARSE) {
+          *error = StringPrintf(
+              "Can't use NESDIS with "
+              "Solver::Options::sparse_linear_algebra_library_type = %s.",
+              sparse_linear_algebra_library_name);
+          return false;
+        }
+
+        if (options.sparse_linear_algebra_library_type == EIGEN_SPARSE) {
+          *error = StringPrintf(
+              "Can't use NESDIS with "
+              "Solver::Options::sparse_linear_algebra_library_type = %s.",
+              sparse_linear_algebra_library_name);
+          return false;
+        }
+
+        if (options.sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
+          *error = StringPrintf(
+              "Can't use NESDIS with "
+              "Solver::Options::sparse_linear_algebra_library_type = %s.",
+              sparse_linear_algebra_library_name);
+          return false;
+        }
+
+        if (options.sparse_linear_algebra_library_type == SUITE_SPARSE &&
+            !internal::SuiteSparse::IsNestedDissectionAvailable()) {
+          *error =
+              "Can't use NESDIS with SUITE_SPARSE because SuiteSparse was "
+              "not compiled with Metis support.";
+          return false;
+        }
+
+        if (options.linear_solver_type != SPARSE_NORMAL_CHOLESKY) {
+          *error =
+              "Nested dissection (NESDIS) is currently only available when "
+              "using SPARSE_NORMAL_CHOLESKY.";
+          return false;
+        }
       }
     }
   }
@@ -717,6 +761,7 @@ string Solver::Summary::FullReport() const {
                   num_threads_given,
                   num_threads_used);
 
+    // TODO(sameeragarwal): Update this to account for ordering type.
     string given;
     StringifyOrdering(linear_solver_ordering_given, &given);
     string used;
