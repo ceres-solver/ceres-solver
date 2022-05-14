@@ -85,7 +85,6 @@ static int MinParameterBlock(const ResidualBlock* residual_block,
   return min_parameter_block_position;
 }
 
-#if defined(CERES_USE_EIGEN_SPARSE)
 Eigen::SparseMatrix<int> CreateBlockJacobian(
     const TripletSparseMatrix& block_jacobian_transpose) {
   using SparseMatrix = Eigen::SparseMatrix<int>;
@@ -105,9 +104,9 @@ Eigen::SparseMatrix<int> CreateBlockJacobian(
   block_jacobian.setFromTriplets(triplets.begin(), triplets.end());
   return block_jacobian;
 }
-#endif
 
 void OrderingForSparseNormalCholeskyUsingSuiteSparse(
+    const LinearSolverOrderingType linear_solver_ordering_type,
     const TripletSparseMatrix& tsm_block_jacobian_transpose,
     const vector<ParameterBlock*>& parameter_blocks,
     const ParameterBlockOrdering& parameter_block_ordering,
@@ -120,41 +119,58 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
   cholmod_sparse* block_jacobian_transpose = ss.CreateSparseMatrix(
       const_cast<TripletSparseMatrix*>(&tsm_block_jacobian_transpose));
 
-  // No CAMD or the user did not supply a useful ordering, then just
-  // use regular AMD.
-  if (parameter_block_ordering.NumGroups() <= 1 ||
-      !SuiteSparse::IsConstrainedApproximateMinimumDegreeOrderingAvailable()) {
-    ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose, &ordering[0]);
-  } else {
-    vector<int> constraints;
-    for (auto* parameter_block : parameter_blocks) {
-      constraints.push_back(parameter_block_ordering.GroupId(
-          parameter_block->mutable_user_state()));
+  if (linear_solver_ordering_type == ceres::AMD) {
+    // No CAMD or the user did not supply a useful ordering, then just
+    // use regular AMD.
+    if (parameter_block_ordering.NumGroups() <= 1 ||
+        !SuiteSparse::
+            IsConstrainedApproximateMinimumDegreeOrderingAvailable()) {
+      ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose,
+                                          &ordering[0]);
+    } else {
+      // TODO(sameeragarwal): Deal with Nested Dissection in the case
+      // the user specifies a linear_solver_ordering.
+      vector<int> constraints;
+      for (auto* parameter_block : parameter_blocks) {
+        constraints.push_back(parameter_block_ordering.GroupId(
+            parameter_block->mutable_user_state()));
+      }
+
+      // Renumber the entries of constraints to be contiguous integers
+      // as CAMD requires that the group ids be in the range [0,
+      // parameter_blocks.size() - 1].
+      MapValuesToContiguousRange(constraints.size(), &constraints[0]);
+      ss.ConstrainedApproximateMinimumDegreeOrdering(
+          block_jacobian_transpose, &constraints[0], ordering);
     }
-
-    // Renumber the entries of constraints to be contiguous integers
-    // as CAMD requires that the group ids be in the range [0,
-    // parameter_blocks.size() - 1].
-    MapValuesToContiguousRange(constraints.size(), &constraints[0]);
-    ss.ConstrainedApproximateMinimumDegreeOrdering(
-        block_jacobian_transpose, &constraints[0], ordering);
+  } else if (linear_solver_ordering_type == ceres::NESDIS) {
+    // If nested dissection is chosen as an ordering algorithm, then
+    // ignore any user provided linear_solver_ordering.
+    CHECK(SuiteSparse::IsNestedDissectionAvailable())
+        << "Congratulations, you found a Ceres bug! "
+        << "Please report this error to the developers.";
+    ss.NestedDissectionOrdering(block_jacobian_transpose, &ordering[0]);
+  } else {
+    LOG(FATAL) << "Congratulations, you found a Ceres bug! "
+               << "Please report this error to the developers.";
   }
-
-  VLOG(2) << "Block ordering stats: "
-          << " flops: " << ss.mutable_cc()->fl
-          << " lnz  : " << ss.mutable_cc()->lnz
-          << " anz  : " << ss.mutable_cc()->anz;
 
   ss.Free(block_jacobian_transpose);
 #endif  // CERES_NO_SUITESPARSE
 }
 
 void OrderingForSparseNormalCholeskyUsingCXSparse(
-    const TripletSparseMatrix& tsm_block_jacobian_transpose, int* ordering) {
+    const LinearSolverOrderingType linear_solver_ordering_type,
+    const TripletSparseMatrix& tsm_block_jacobian_transpose,
+    int* ordering) {
 #ifdef CERES_NO_CXSPARSE
   LOG(FATAL) << "Congratulations, you found a Ceres bug! "
              << "Please report this error to the developers.";
 #else
+  CHECK_NE(linear_solver_ordering_type, NESDIS)
+      << "Congratulations, you found a Ceres bug! "
+      << "Please report this error to the developers.";
+
   // CXSparse works with J'J instead of J'. So compute the block
   // sparsity for J'J and compute an approximate minimum degree
   // ordering.
@@ -174,14 +190,19 @@ void OrderingForSparseNormalCholeskyUsingCXSparse(
 }
 
 void OrderingForSparseNormalCholeskyUsingEigenSparse(
-    const TripletSparseMatrix& tsm_block_jacobian_transpose, int* ordering) {
+    const LinearSolverOrderingType linear_solver_ordering_type,
+    const TripletSparseMatrix& tsm_block_jacobian_transpose,
+    int* ordering) {
 #ifndef CERES_USE_EIGEN_SPARSE
   LOG(FATAL) << "SPARSE_NORMAL_CHOLESKY cannot be used with EIGEN_SPARSE "
                 "because Ceres was not built with support for "
                 "Eigen's SimplicialLDLT decomposition. "
                 "This requires enabling building with -DEIGENSPARSE=ON.";
 #else
-
+  CHECK_NE(linear_solver_ordering_type, NESDIS)
+      << "Congratulations, you found a Ceres bug! "
+      << "Please report this error to the developers.";
+  
   // This conversion from a TripletSparseMatrix to a Eigen::Triplet
   // matrix is unfortunate, but unavoidable for now. It is not a
   // significant performance penalty in the grand scheme of
@@ -508,6 +529,7 @@ bool ReorderProgramForSchurTypeLinearSolver(
 
 bool ReorderProgramForSparseCholesky(
     const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+    const LinearSolverOrderingType linear_solver_ordering_type,
     const ParameterBlockOrdering& parameter_block_ordering,
     int start_row_block,
     Program* program,
@@ -531,12 +553,14 @@ bool ReorderProgramForSparseCholesky(
 
   if (sparse_linear_algebra_library_type == SUITE_SPARSE) {
     OrderingForSparseNormalCholeskyUsingSuiteSparse(
+        linear_solver_ordering_type,
         *tsm_block_jacobian_transpose,
         parameter_blocks,
         parameter_block_ordering,
         &ordering[0]);
   } else if (sparse_linear_algebra_library_type == CX_SPARSE) {
-    OrderingForSparseNormalCholeskyUsingCXSparse(*tsm_block_jacobian_transpose,
+    OrderingForSparseNormalCholeskyUsingCXSparse(linear_solver_ordering_type,
+                                                 *tsm_block_jacobian_transpose,
                                                  &ordering[0]);
   } else if (sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
     // Accelerate does not provide a function to perform reordering without
@@ -549,7 +573,9 @@ bool ReorderProgramForSparseCholesky(
 
   } else if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
     OrderingForSparseNormalCholeskyUsingEigenSparse(
-        *tsm_block_jacobian_transpose, &ordering[0]);
+        linear_solver_ordering_type,
+        *tsm_block_jacobian_transpose,
+        &ordering[0]);
   }
 
   // Apply ordering.
