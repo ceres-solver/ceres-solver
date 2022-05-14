@@ -98,15 +98,16 @@ class FakeSparseCholesky : public SparseCholesky {
     VectorRef solution(solution_ptr, num_cols);
     ConstVectorRef rhs(rhs_ptr, num_cols);
     solution = lhs_.llt().solve(rhs.cast<Scalar>()).template cast<double>();
-    return LINEAR_SOLVER_SUCCESS;
+    return LinearSolverTerminationType::SUCCESS;
   }
 
   // The following methods are not needed for tests in this file.
   CompressedRowSparseMatrix::StorageType StorageType() const final
-      DO_NOT_CALL_WITH_RETURN(CompressedRowSparseMatrix::UPPER_TRIANGULAR);
+      DO_NOT_CALL_WITH_RETURN(
+          CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR);
   LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
                                         std::string* message) final
-      DO_NOT_CALL_WITH_RETURN(LINEAR_SOLVER_FAILURE);
+      DO_NOT_CALL_WITH_RETURN(LinearSolverTerminationType::FAILURE);
 
  private:
   Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic> lhs_;

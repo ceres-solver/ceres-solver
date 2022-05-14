@@ -152,7 +152,7 @@ LinearSolverTerminationType DenseQR::FactorAndSolve(int num_rows,
                                                     std::string* message) {
   LinearSolverTerminationType termination_type =
       Factorize(num_rows, num_cols, lhs, message);
-  if (termination_type == LINEAR_SOLVER_SUCCESS) {
+  if (termination_type == LinearSolverTerminationType::SUCCESS) {
     termination_type = Solve(rhs, solution, message);
   }
   return termination_type;
@@ -165,7 +165,7 @@ LinearSolverTerminationType EigenDenseQR::Factorize(int num_rows,
   Eigen::Map<ColMajorMatrix> m(lhs, num_rows, num_cols);
   qr_ = std::make_unique<QRType>(m);
   *message = "Success.";
-  return LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 LinearSolverTerminationType EigenDenseQR::Solve(const double* rhs,
@@ -174,7 +174,7 @@ LinearSolverTerminationType EigenDenseQR::Solve(const double* rhs,
   VectorRef(solution, qr_->cols()) =
       qr_->solve(ConstVectorRef(rhs, qr_->rows()));
   *message = "Success.";
-  return LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 #ifndef CERES_NO_LAPACK
@@ -236,7 +236,7 @@ LinearSolverTerminationType LAPACKDenseQR::Factorize(int num_rows,
                << "Argument: " << -info << " is invalid.";
   }
 
-  termination_type_ = LINEAR_SOLVER_SUCCESS;
+  termination_type_ = LinearSolverTerminationType::SUCCESS;
   *message = "Success.";
   return termination_type_;
 }
@@ -244,7 +244,7 @@ LinearSolverTerminationType LAPACKDenseQR::Factorize(int num_rows,
 LinearSolverTerminationType LAPACKDenseQR::Solve(const double* rhs,
                                                  double* solution,
                                                  std::string* message) {
-  if (termination_type_ != LINEAR_SOLVER_SUCCESS) {
+  if (termination_type_ != LinearSolverTerminationType::SUCCESS) {
     *message = "QR factorization failed and solve called.";
     return termination_type_;
   }
@@ -297,10 +297,10 @@ LinearSolverTerminationType LAPACKDenseQR::Solve(const double* rhs,
     *message =
         "QR factorization failure. The factorization is not full rank. R has "
         "zeros on the diagonal.";
-    termination_type_ = LINEAR_SOLVER_FAILURE;
+    termination_type_ = LinearSolverTerminationType::FAILURE;
   } else {
     std::copy_n(q_transpose_rhs_.data(), num_cols_, solution);
-    termination_type_ = LINEAR_SOLVER_SUCCESS;
+    termination_type_ = LinearSolverTerminationType::SUCCESS;
   }
 
   return termination_type_;
@@ -326,7 +326,7 @@ LinearSolverTerminationType CUDADenseQR::Factorize(int num_rows,
                                                    int num_cols,
                                                    double* lhs,
                                                    std::string* message) {
-  factorize_result_ = LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  factorize_result_ = LinearSolverTerminationType::FATAL_ERROR;
   lhs_.Reserve(num_rows * num_cols);
   tau_.Reserve(std::min(num_rows, num_cols));
   num_rows_ = num_rows;
@@ -341,7 +341,7 @@ LinearSolverTerminationType CUDADenseQR::Factorize(int num_rows,
                                   &device_workspace_size) !=
       CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnDgeqrf_bufferSize failed.";
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
   device_workspace_.Reserve(device_workspace_size);
   if (cusolverDnDgeqrf(cusolver_handle_,
@@ -354,12 +354,12 @@ LinearSolverTerminationType CUDADenseQR::Factorize(int num_rows,
                        device_workspace_.size(),
                        error_.data()) != CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnDgeqrf failed.";
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
   if (cudaDeviceSynchronize() != cudaSuccess ||
       cudaStreamSynchronize(stream_) != cudaSuccess) {
     *message = "Cuda device synchronization failed.";
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
   error_.CopyToHost(&error, 1);
@@ -370,18 +370,18 @@ LinearSolverTerminationType CUDADenseQR::Factorize(int num_rows,
                << "Argument: " << -error << " is invalid.";
     // The following line is unreachable, but return failure just to be
     // pedantic, since the compiler does not know that.
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
 
   *message = "Success";
-  factorize_result_ = LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
-  return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+  factorize_result_ = LinearSolverTerminationType::SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 LinearSolverTerminationType CUDADenseQR::Solve(const double* rhs,
                                                double* solution,
                                                std::string* message) {
-  if (factorize_result_ != LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS) {
+  if (factorize_result_ != LinearSolverTerminationType::SUCCESS) {
     *message = "Factorize did not complete successfully previously.";
     return factorize_result_;
   }
@@ -401,7 +401,7 @@ LinearSolverTerminationType CUDADenseQR::Solve(const double* rhs,
                                   &device_workspace_size) !=
       CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnDormqr_bufferSize failed.";
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
   device_workspace_.Reserve(device_workspace_size);
   // Compute rhs = Q^T * rhs, assuming that lhs has already been factorized.
@@ -421,7 +421,7 @@ LinearSolverTerminationType CUDADenseQR::Solve(const double* rhs,
                        device_workspace_.size(),
                        error_.data()) != CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnDormqr failed.";
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
   error_.CopyToHost(&error, 1);
@@ -443,16 +443,16 @@ LinearSolverTerminationType CUDADenseQR::Solve(const double* rhs,
                   rhs_.data(),
                   1) != CUBLAS_STATUS_SUCCESS) {
     *message = "cuBLAS::cublasDtrsv failed.";
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
   if (cudaDeviceSynchronize() != cudaSuccess ||
       cudaStreamSynchronize(stream_) != cudaSuccess) {
     *message = "Cuda device synchronization failed.";
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
   rhs_.CopyToHost(solution, num_cols_);
   *message = "Success";
-  return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 std::unique_ptr<CUDADenseQR> CUDADenseQR::Create(

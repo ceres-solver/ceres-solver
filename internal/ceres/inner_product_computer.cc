@@ -129,8 +129,10 @@ std::unique_ptr<InnerProductComputer> InnerProductComputer::Create(
     const int start_row_block,
     const int end_row_block,
     CompressedRowSparseMatrix::StorageType product_storage_type) {
-  CHECK(product_storage_type == CompressedRowSparseMatrix::LOWER_TRIANGULAR ||
-        product_storage_type == CompressedRowSparseMatrix::UPPER_TRIANGULAR);
+  CHECK(product_storage_type ==
+            CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR ||
+        product_storage_type ==
+            CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR);
   CHECK_GT(m.num_nonzeros(), 0)
       << "Congratulations, you found a bug in Ceres. Please report it.";
   std::unique_ptr<InnerProductComputer> inner_product_computer(
@@ -156,7 +158,8 @@ void InnerProductComputer::Init(
     for (int c1 = 0; c1 < row.cells.size(); ++c1) {
       const Cell& cell1 = row.cells[c1];
       int c2_begin, c2_end;
-      if (product_storage_type == CompressedRowSparseMatrix::LOWER_TRIANGULAR) {
+      if (product_storage_type ==
+          CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {
         c2_begin = 0;
         c2_end = c1 + 1;
       } else {
@@ -301,7 +304,8 @@ void InnerProductComputer::Compute() {
                           rows[bs->cols[cell1.block_id].position];
 
       int c2_begin, c2_end;
-      if (storage_type == CompressedRowSparseMatrix::LOWER_TRIANGULAR) {
+      if (storage_type ==
+          CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {
         c2_begin = 0;
         c2_end = c1 + 1;
       } else {

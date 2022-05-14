@@ -105,7 +105,7 @@ bool SubsetPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   const LinearSolverTerminationType termination_type =
       sparse_cholesky_->Factorize(inner_product_computer_->mutable_result(),
                                   &message);
-  if (termination_type != LINEAR_SOLVER_SUCCESS) {
+  if (termination_type != LinearSolverTerminationType::SUCCESS) {
     LOG(ERROR) << "Preconditioner factorization failed: " << message;
     return false;
   }

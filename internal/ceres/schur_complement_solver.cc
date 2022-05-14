@@ -168,7 +168,7 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
       SolveReducedLinearSystem(per_solve_options, reduced_solution);
   event_logger.AddEvent("ReducedSolve");
 
-  if (summary.termination_type == LINEAR_SOLVER_SUCCESS) {
+  if (summary.termination_type == LinearSolverTerminationType::SUCCESS) {
     eliminator_->BackSubstitute(
         BlockSparseMatrixData(*A), b, per_solve_options.D, reduced_solution, x);
     event_logger.AddEvent("BackSubstitute");
@@ -206,7 +206,7 @@ LinearSolver::Summary DenseSchurComplementSolver::SolveReducedLinearSystem(
     const LinearSolver::PerSolveOptions& per_solve_options, double* solution) {
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
-  summary.termination_type = LINEAR_SOLVER_SUCCESS;
+  summary.termination_type = LinearSolverTerminationType::SUCCESS;
   summary.message = "Success.";
 
   auto* m = down_cast<BlockRandomAccessDenseMatrix*>(mutable_lhs());
@@ -315,7 +315,7 @@ LinearSolver::Summary SparseSchurComplementSolver::SolveReducedLinearSystem(
 
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
-  summary.termination_type = LINEAR_SOLVER_SUCCESS;
+  summary.termination_type = LinearSolverTerminationType::SUCCESS;
   summary.message = "Success.";
 
   const TripletSparseMatrix* tsm =
@@ -327,12 +327,15 @@ LinearSolver::Summary SparseSchurComplementSolver::SolveReducedLinearSystem(
   std::unique_ptr<CompressedRowSparseMatrix> lhs;
   const CompressedRowSparseMatrix::StorageType storage_type =
       sparse_cholesky_->StorageType();
-  if (storage_type == CompressedRowSparseMatrix::UPPER_TRIANGULAR) {
+  if (storage_type ==
+      CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
     lhs = CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm);
-    lhs->set_storage_type(CompressedRowSparseMatrix::UPPER_TRIANGULAR);
+    lhs->set_storage_type(
+        CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR);
   } else {
     lhs = CompressedRowSparseMatrix::FromTripletSparseMatrixTransposed(*tsm);
-    lhs->set_storage_type(CompressedRowSparseMatrix::LOWER_TRIANGULAR);
+    lhs->set_storage_type(
+        CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR);
   }
 
   *lhs->mutable_col_blocks() = blocks_;
@@ -354,7 +357,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingConjugateGradients(
   if (num_rows == 0) {
     LinearSolver::Summary summary;
     summary.num_iterations = 0;
-    summary.termination_type = LINEAR_SOLVER_SUCCESS;
+    summary.termination_type = LinearSolverTerminationType::SUCCESS;
     summary.message = "Success.";
     return summary;
   }

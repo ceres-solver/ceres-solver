@@ -86,7 +86,7 @@ TEST_P(DenseLinearSolverTest, _) {
   Vector solution(num_cols);
   LinearSolver::Summary summary =
       solver->Solve(&lhs, rhs.data(), per_solve_options, solution.data());
-  EXPECT_EQ(summary.termination_type, LINEAR_SOLVER_SUCCESS);
+  EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 
   Vector normal_rhs = lhs.matrix().transpose() * rhs.head(num_rows);
   Matrix normal_lhs = lhs.matrix().transpose() * lhs.matrix();

@@ -85,7 +85,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
     VLOG(2) << "No parameter blocks left in the schur complement.";
     LinearSolver::Summary summary;
     summary.num_iterations = 0;
-    summary.termination_type = LINEAR_SOLVER_SUCCESS;
+    summary.termination_type = LinearSolverTerminationType::SUCCESS;
     schur_complement_->BackSubstitute(nullptr, x);
     return summary;
   }
@@ -108,7 +108,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
     if (!preconditioner_->Update(*A, per_solve_options.D)) {
       LinearSolver::Summary summary;
       summary.num_iterations = 0;
-      summary.termination_type = LINEAR_SOLVER_FAILURE;
+      summary.termination_type = LinearSolverTerminationType::FAILURE;
       summary.message = "Preconditioner update failed.";
       return summary;
     }
@@ -122,8 +122,8 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
                       schur_complement_->rhs().data(),
                       cg_per_solve_options,
                       reduced_linear_system_solution_.data());
-  if (summary.termination_type != LINEAR_SOLVER_FAILURE &&
-      summary.termination_type != LINEAR_SOLVER_FATAL_ERROR) {
+  if (summary.termination_type != LinearSolverTerminationType::FAILURE &&
+      summary.termination_type != LinearSolverTerminationType::FATAL_ERROR) {
     schur_complement_->BackSubstitute(reduced_linear_system_solution_.data(),
                                       x);
   }

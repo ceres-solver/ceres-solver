@@ -7,7 +7,7 @@
 //
 // * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// * Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must rep%roduce the above copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
 // * Neither the name of Google Inc. nor the names of its contributors may be
@@ -201,7 +201,7 @@ std::unique_ptr<SparseCholesky> CXSparseCholesky::Create(
 }
 
 CompressedRowSparseMatrix::StorageType CXSparseCholesky::StorageType() const {
-  return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
+  return CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR;
 }
 
 CXSparseCholesky::CXSparseCholesky(const OrderingType ordering_type)
@@ -219,13 +219,13 @@ LinearSolverTerminationType CXSparseCholesky::Factorize(
   CHECK_EQ(lhs->storage_type(), StorageType());
   if (lhs == nullptr) {
     *message = "Failure: Input lhs is nullptr.";
-    return LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
 
   cs_di cs_lhs = cs_.CreateSparseMatrixTransposeView(lhs);
 
   if (symbolic_factor_ == nullptr) {
-    if (ordering_type_ == NATURAL) {
+    if (ordering_type_ == OrderingType::NATURAL) {
       symbolic_factor_ = cs_.AnalyzeCholeskyWithNaturalOrdering(&cs_lhs);
     } else {
       if (!lhs->col_blocks().empty() && !(lhs->row_blocks().empty())) {
@@ -238,7 +238,7 @@ LinearSolverTerminationType CXSparseCholesky::Factorize(
 
     if (symbolic_factor_ == nullptr) {
       *message = "CXSparse Failure : Symbolic factorization failed.";
-      return LINEAR_SOLVER_FATAL_ERROR;
+      return LinearSolverTerminationType::FATAL_ERROR;
     }
   }
 
@@ -246,10 +246,10 @@ LinearSolverTerminationType CXSparseCholesky::Factorize(
   numeric_factor_ = cs_.Cholesky(&cs_lhs, symbolic_factor_);
   if (numeric_factor_ == nullptr) {
     *message = "CXSparse Failure : Numeric factorization failed.";
-    return LINEAR_SOLVER_FAILURE;
+    return LinearSolverTerminationType::FAILURE;
   }
 
-  return LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 LinearSolverTerminationType CXSparseCholesky::Solve(const double* rhs,
@@ -260,7 +260,7 @@ LinearSolverTerminationType CXSparseCholesky::Solve(const double* rhs,
   const int num_cols = numeric_factor_->L->n;
   memcpy(solution, rhs, num_cols * sizeof(*solution));
   cs_.Solve(symbolic_factor_, numeric_factor_, solution);
-  return LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 void CXSparseCholesky::FreeSymbolicFactorization() {

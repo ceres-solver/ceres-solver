@@ -50,7 +50,7 @@ class EigenSparseCholeskyTemplate final : public SparseCholesky {
  public:
   EigenSparseCholeskyTemplate() = default;
   CompressedRowSparseMatrix::StorageType StorageType() const final {
-    return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
+    return CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR;
   }
 
   LinearSolverTerminationType Factorize(
@@ -67,7 +67,7 @@ class EigenSparseCholeskyTemplate final : public SparseCholesky {
 
       if (solver_.info() != Eigen::Success) {
         *message = "Eigen failure. Unable to find symbolic factorization.";
-        return LINEAR_SOLVER_FATAL_ERROR;
+        return LinearSolverTerminationType::FATAL_ERROR;
       }
 
       analyzed_ = true;
@@ -76,9 +76,9 @@ class EigenSparseCholeskyTemplate final : public SparseCholesky {
     solver_.factorize(lhs);
     if (solver_.info() != Eigen::Success) {
       *message = "Eigen failure. Unable to find numeric factorization.";
-      return LINEAR_SOLVER_FAILURE;
+      return LinearSolverTerminationType::FAILURE;
     }
-    return LINEAR_SOLVER_SUCCESS;
+    return LinearSolverTerminationType::SUCCESS;
   }
 
   LinearSolverTerminationType Solve(const double* rhs_ptr,
@@ -100,9 +100,9 @@ class EigenSparseCholeskyTemplate final : public SparseCholesky {
 
     if (solver_.info() != Eigen::Success) {
       *message = "Eigen failure. Unable to do triangular solve.";
-      return LINEAR_SOLVER_FAILURE;
+      return LinearSolverTerminationType::FAILURE;
     }
-    return LINEAR_SOLVER_SUCCESS;
+    return LinearSolverTerminationType::SUCCESS;
   }
 
   LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
@@ -149,7 +149,7 @@ std::unique_ptr<SparseCholesky> EigenSparseCholesky::Create(
                             Eigen::Upper,
                             Eigen::NaturalOrdering<int>>;
 
-  if (ordering_type == AMD) {
+  if (ordering_type == OrderingType::AMD) {
     return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
   } else {
     return std::make_unique<EigenSparseCholeskyTemplate<WithNaturalOrdering>>();
@@ -167,7 +167,7 @@ std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
       Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
                             Eigen::Upper,
                             Eigen::NaturalOrdering<int>>;
-  if (ordering_type == AMD) {
+  if (ordering_type == OrderingType::AMD) {
     return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
   } else {
     return std::make_unique<EigenSparseCholeskyTemplate<WithNaturalOrdering>>();

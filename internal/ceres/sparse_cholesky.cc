@@ -44,7 +44,8 @@ namespace ceres::internal {
 
 std::unique_ptr<SparseCholesky> SparseCholesky::Create(
     const LinearSolver::Options& options) {
-  const OrderingType ordering_type = options.use_postordering ? AMD : NATURAL;
+  const OrderingType ordering_type =
+      options.use_postordering ? OrderingType::AMD : OrderingType::NATURAL;
   std::unique_ptr<SparseCholesky> sparse_cholesky;
 
   switch (options.sparse_linear_algebra_library_type) {
@@ -122,7 +123,7 @@ LinearSolverTerminationType SparseCholesky::FactorAndSolve(
     double* solution,
     std::string* message) {
   LinearSolverTerminationType termination_type = Factorize(lhs, message);
-  if (termination_type == LINEAR_SOLVER_SUCCESS) {
+  if (termination_type == LinearSolverTerminationType::SUCCESS) {
     termination_type = Solve(rhs, solution, message);
   }
   return termination_type;
@@ -152,12 +153,12 @@ LinearSolverTerminationType RefinedSparseCholesky::Solve(const double* rhs,
                                                          std::string* message) {
   CHECK(lhs_ != nullptr);
   auto termination_type = sparse_cholesky_->Solve(rhs, solution, message);
-  if (termination_type != LINEAR_SOLVER_SUCCESS) {
+  if (termination_type != LinearSolverTerminationType::SUCCESS) {
     return termination_type;
   }
 
   iterative_refiner_->Refine(*lhs_, rhs, sparse_cholesky_.get(), solution);
-  return LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 }  // namespace ceres::internal
