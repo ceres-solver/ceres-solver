@@ -109,6 +109,8 @@ void AlternateLinearSolverAndPreconditionerForSchurTypeLinearSolver(
 // Reorder the program to reduce fill-in and increase cache coherency.
 bool ReorderProgram(PreprocessedProblem* pp) {
   const Solver::Options& options = pp->options;
+  // TODO(sameeragarwal): Add support for nested dissection when using
+  // a Schur type linear solver.
   if (IsSchurType(options.linear_solver_type)) {
     return ReorderProgramForSchurTypeLinearSolver(
         options.linear_solver_type,
@@ -123,7 +125,8 @@ bool ReorderProgram(PreprocessedProblem* pp) {
       !options.dynamic_sparsity) {
     return ReorderProgramForSparseCholesky(
         options.sparse_linear_algebra_library_type,
-        *options.linear_solver_ordering,
+	options.linear_solver_ordering_type,
+	*options.linear_solver_ordering,
         0, /* use all the rows of the jacobian */
         pp->reduced_program.get(),
         &pp->error);
@@ -138,6 +141,7 @@ bool ReorderProgram(PreprocessedProblem* pp) {
 
     return ReorderProgramForSparseCholesky(
         options.sparse_linear_algebra_library_type,
+	options.linear_solver_ordering_type,
         *options.linear_solver_ordering,
         pp->linear_solver_options.subset_preconditioner_start_row_block,
         pp->reduced_program.get(),

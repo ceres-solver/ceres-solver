@@ -44,7 +44,7 @@ namespace ceres::internal {
 
 std::unique_ptr<SparseCholesky> SparseCholesky::Create(
     const LinearSolver::Options& options) {
-  const OrderingType ordering_type = options.use_postordering ? AMD : NATURAL;
+  const OrderingType ordering_type = options.use_postordering ? OrderingType::AMD : OrderingType::NATURAL;
   std::unique_ptr<SparseCholesky> sparse_cholesky;
 
   switch (options.sparse_linear_algebra_library_type) {

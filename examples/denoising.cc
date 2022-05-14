@@ -74,6 +74,8 @@ DEFINE_string(preconditioner,
 DEFINE_string(sparse_linear_algebra_library,
               "suite_sparse",
               "Options are: suite_sparse, cx_sparse and eigen_sparse");
+DEFINE_string(ordering, "amd", "Options are: amd and nesdis");
+
 DEFINE_double(eta,
               1e-2,
               "Default value for eta. Eta determines the "
@@ -177,6 +179,14 @@ void CreateProblem(const FieldsOfExperts& foe,
 void SetLinearSolver(Solver::Options* options) {
   CHECK(StringToLinearSolverType(CERES_GET_FLAG(FLAGS_linear_solver),
                                  &options->linear_solver_type));
+  if (CERES_GET_FLAG(FLAGS_ordering) == "amd") {
+    options->linear_solver_ordering_type = AMD;
+  } else if (CERES_GET_FLAG(FLAGS_ordering) == "nesdis") {
+    options->linear_solver_ordering_type = NESDIS;
+  } else {
+    LOG(FATAL) << "Unknown ordering type: " <<  CERES_GET_FLAG(FLAGS_ordering);
+  }
+
   CHECK(StringToPreconditionerType(CERES_GET_FLAG(FLAGS_preconditioner),
                                    &options->preconditioner_type));
   CHECK(StringToSparseLinearAlgebraLibraryType(

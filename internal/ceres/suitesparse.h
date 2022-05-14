@@ -237,6 +237,9 @@ class CERES_NO_EXPORT SuiteSparse {
   // ordering.
   bool ApproximateMinimumDegreeOrdering(cholmod_sparse* matrix, int* ordering);
 
+  // Find a fill reducing ordering using nested dissection. 
+  bool NestedDissectionOrdering(cholmod_sparse* matrix, int* ordering);
+  
   // Before SuiteSparse version 4.2.0, cholmod_camd was only enabled
   // if SuiteSparse was compiled with Metis support. This makes
   // calling and linking into cholmod_camd problematic even though it
@@ -251,6 +254,16 @@ class CERES_NO_EXPORT SuiteSparse {
     return (SUITESPARSE_VERSION > 4001);
   }
 
+  // Nested dissection is only available if SuiteSparse is compiled
+  // with Metis support.
+  static bool IsNestedDissectionAvailable() {
+#ifdef CERES_NO_METIS
+    return false;
+#else
+    return true;
+#endif
+  }
+  
   // Find a fill reducing approximate minimum degree
   // ordering. constraints is an array which associates with each
   // column of the matrix an elimination group. i.e., all columns in
