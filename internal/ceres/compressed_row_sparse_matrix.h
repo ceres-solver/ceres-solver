@@ -50,7 +50,7 @@ class TripletSparseMatrix;
 
 class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
  public:
-  enum StorageType {
+  enum class StorageType {
     UNSYMMETRIC,
     // Matrix is assumed to be symmetric but only the lower triangular
     // part of the matrix is stored.
@@ -176,7 +176,7 @@ class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
     // (lower triangular) part. In this case, num_col_blocks,
     // min_col_block_size and max_col_block_size will be ignored and
     // assumed to be equal to the corresponding row settings.
-    StorageType storage_type = UNSYMMETRIC;
+    StorageType storage_type = StorageType::UNSYMMETRIC;
 
     int num_row_blocks = 0;
     int min_row_block_size = 0;
@@ -217,6 +217,23 @@ class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
   std::vector<int> col_blocks_;
 };
 
+inline std::ostream& operator<<(std::ostream& s,
+                                CompressedRowSparseMatrix::StorageType type) {
+  switch (type) {
+    case CompressedRowSparseMatrix::StorageType::UNSYMMETRIC:
+      s << "UNSYMMETRIC";
+      break;
+    case CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR:
+      s << "UPPER_TRIANGULAR";
+      break;
+    case CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR:
+      s << "LOWER_TRIANGULAR";
+      break;
+    default:
+      s << "UNKNOWN CompressedRowSparseMatrix::StorageType";
+  }
+  return s;
+}
 }  // namespace internal
 }  // namespace ceres
 

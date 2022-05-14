@@ -62,11 +62,10 @@ namespace ceres::internal {
 //
 //  CompressedRowSparseMatrix lhs = ...;
 //  std::string message;
-//  CHECK_EQ(sparse_cholesky->Factorize(&lhs, &message), LINEAR_SOLVER_SUCCESS);
-//  Vector rhs = ...;
-//  Vector solution = ...;
-//  CHECK_EQ(sparse_cholesky->Solve(rhs.data(), solution.data(), &message),
-//           LINEAR_SOLVER_SUCCESS);
+//  CHECK_EQ(sparse_cholesky->Factorize(&lhs, &message),
+//  LinearSolverTerminationType::SUCCESS); Vector rhs = ...; Vector solution =
+//  ...; CHECK_EQ(sparse_cholesky->Solve(rhs.data(), solution.data(), &message),
+//           LinearSolverTerminationType::SUCCESS);
 
 class CERES_NO_EXPORT SparseCholesky {
  public:
@@ -104,7 +103,7 @@ class CERES_NO_EXPORT SparseCholesky {
 
   // Convenience method which combines a call to Factorize and
   // Solve. Solve is only called if Factorize returns
-  // LINEAR_SOLVER_SUCCESS.
+  // LinearSolverTerminationType::SUCCESS.
   LinearSolverTerminationType FactorAndSolve(CompressedRowSparseMatrix* lhs,
                                              const double* rhs,
                                              double* solution,

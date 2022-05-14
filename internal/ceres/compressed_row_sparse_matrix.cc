@@ -162,7 +162,7 @@ CompressedRowSparseMatrix::CompressedRowSparseMatrix(int num_rows,
                                                      int max_num_nonzeros) {
   num_rows_ = num_rows;
   num_cols_ = num_cols;
-  storage_type_ = UNSYMMETRIC;
+  storage_type_ = StorageType::UNSYMMETRIC;
   rows_.resize(num_rows + 1, 0);
   cols_.resize(max_num_nonzeros, 0);
   values_.resize(max_num_nonzeros, 0.0);
@@ -254,7 +254,7 @@ CompressedRowSparseMatrix::CompressedRowSparseMatrix(const double* diagonal,
 
   num_rows_ = num_rows;
   num_cols_ = num_rows;
-  storage_type_ = UNSYMMETRIC;
+  storage_type_ = StorageType::UNSYMMETRIC;
   rows_.resize(num_rows + 1);
   cols_.resize(num_rows);
   values_.resize(num_rows);
@@ -282,7 +282,7 @@ void CompressedRowSparseMatrix::RightMultiply(const double* x,
   CHECK(x != nullptr);
   CHECK(y != nullptr);
 
-  if (storage_type_ == UNSYMMETRIC) {
+  if (storage_type_ == StorageType::UNSYMMETRIC) {
     for (int r = 0; r < num_rows_; ++r) {
       for (int idx = rows_[r]; idx < rows_[r + 1]; ++idx) {
         const int c = cols_[idx];
@@ -290,7 +290,7 @@ void CompressedRowSparseMatrix::RightMultiply(const double* x,
         y[r] += v * x[c];
       }
     }
-  } else if (storage_type_ == UPPER_TRIANGULAR) {
+  } else if (storage_type_ == StorageType::UPPER_TRIANGULAR) {
     // Because of their block structure, we will have entries that lie
     // above (below) the diagonal for lower (upper) triangular matrices,
     // so the loops below need to account for this.
@@ -316,7 +316,7 @@ void CompressedRowSparseMatrix::RightMultiply(const double* x,
         }
       }
     }
-  } else if (storage_type_ == LOWER_TRIANGULAR) {
+  } else if (storage_type_ == StorageType::LOWER_TRIANGULAR) {
     for (int r = 0; r < num_rows_; ++r) {
       int idx = rows_[r];
       const int idx_end = rows_[r + 1];
@@ -343,7 +343,7 @@ void CompressedRowSparseMatrix::LeftMultiply(const double* x, double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
 
-  if (storage_type_ == UNSYMMETRIC) {
+  if (storage_type_ == StorageType::UNSYMMETRIC) {
     for (int r = 0; r < num_rows_; ++r) {
       for (int idx = rows_[r]; idx < rows_[r + 1]; ++idx) {
         y[cols_[idx]] += values_[idx] * x[r];
@@ -359,11 +359,11 @@ void CompressedRowSparseMatrix::SquaredColumnNorm(double* x) const {
   CHECK(x != nullptr);
 
   std::fill(x, x + num_cols_, 0.0);
-  if (storage_type_ == UNSYMMETRIC) {
+  if (storage_type_ == StorageType::UNSYMMETRIC) {
     for (int idx = 0; idx < rows_[num_rows_]; ++idx) {
       x[cols_[idx]] += values_[idx] * values_[idx];
     }
-  } else if (storage_type_ == UPPER_TRIANGULAR) {
+  } else if (storage_type_ == StorageType::UPPER_TRIANGULAR) {
     // Because of their block structure, we will have entries that lie
     // above (below) the diagonal for lower (upper) triangular
     // matrices, so the loops below need to account for this.
@@ -389,7 +389,7 @@ void CompressedRowSparseMatrix::SquaredColumnNorm(double* x) const {
         }
       }
     }
-  } else if (storage_type_ == LOWER_TRIANGULAR) {
+  } else if (storage_type_ == StorageType::LOWER_TRIANGULAR) {
     for (int r = 0; r < num_rows_; ++r) {
       int idx = rows_[r];
       const int idx_end = rows_[r + 1];
@@ -434,7 +434,7 @@ void CompressedRowSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
 void CompressedRowSparseMatrix::DeleteRows(int delta_rows) {
   CHECK_GE(delta_rows, 0);
   CHECK_LE(delta_rows, num_rows_);
-  CHECK_EQ(storage_type_, UNSYMMETRIC);
+  CHECK_EQ(storage_type_, StorageType::UNSYMMETRIC);
 
   num_rows_ -= delta_rows;
   rows_.resize(num_rows_ + 1);
@@ -458,7 +458,7 @@ void CompressedRowSparseMatrix::DeleteRows(int delta_rows) {
 }
 
 void CompressedRowSparseMatrix::AppendRows(const CompressedRowSparseMatrix& m) {
-  CHECK_EQ(storage_type_, UNSYMMETRIC);
+  CHECK_EQ(storage_type_, StorageType::UNSYMMETRIC);
   CHECK_EQ(m.num_cols(), num_cols_);
 
   CHECK((row_blocks_.empty() && m.row_blocks().empty()) ||
@@ -584,14 +584,14 @@ CompressedRowSparseMatrix::Transpose() const {
           num_cols_, num_rows_, num_nonzeros());
 
   switch (storage_type_) {
-    case UNSYMMETRIC:
-      transpose->set_storage_type(UNSYMMETRIC);
+    case StorageType::UNSYMMETRIC:
+      transpose->set_storage_type(StorageType::UNSYMMETRIC);
       break;
-    case LOWER_TRIANGULAR:
-      transpose->set_storage_type(UPPER_TRIANGULAR);
+    case StorageType::LOWER_TRIANGULAR:
+      transpose->set_storage_type(StorageType::UPPER_TRIANGULAR);
       break;
-    case UPPER_TRIANGULAR:
-      transpose->set_storage_type(LOWER_TRIANGULAR);
+    case StorageType::UPPER_TRIANGULAR:
+      transpose->set_storage_type(StorageType::LOWER_TRIANGULAR);
       break;
     default:
       LOG(FATAL) << "Unknown storage type: " << storage_type_;
@@ -626,7 +626,7 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
   CHECK_GT(options.max_row_block_size, 0);
   CHECK_LE(options.min_row_block_size, options.max_row_block_size);
 
-  if (options.storage_type == UNSYMMETRIC) {
+  if (options.storage_type == StorageType::UNSYMMETRIC) {
     CHECK_GT(options.num_col_blocks, 0);
     CHECK_GT(options.min_col_block_size, 0);
     CHECK_GT(options.max_col_block_size, 0);
@@ -652,7 +652,7 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
     row_blocks.push_back(options.min_row_block_size + delta_block_size);
   }
 
-  if (options.storage_type == UNSYMMETRIC) {
+  if (options.storage_type == StorageType::UNSYMMETRIC) {
     // Generate the col block structure.
     for (int i = 0; i < options.num_col_blocks; ++i) {
       // Generate a random integer in [min_col_block_size, max_col_block_size]
@@ -686,8 +686,10 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
     for (int r = 0; r < options.num_row_blocks; ++r) {
       int col_block_begin = 0;
       for (int c = 0; c < options.num_col_blocks; ++c) {
-        if (((options.storage_type == UPPER_TRIANGULAR) && (r > c)) ||
-            ((options.storage_type == LOWER_TRIANGULAR) && (r < c))) {
+        if (((options.storage_type == StorageType::UPPER_TRIANGULAR) &&
+             (r > c)) ||
+            ((options.storage_type == StorageType::LOWER_TRIANGULAR) &&
+             (r < c))) {
           col_block_begin += col_blocks[c];
           continue;
         }
@@ -696,7 +698,7 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
         if (RandDouble() <= options.block_density) {
           // If the matrix is symmetric, then we take care to generate
           // symmetric diagonal blocks.
-          if (options.storage_type == UNSYMMETRIC || r != c) {
+          if (options.storage_type == StorageType::UNSYMMETRIC || r != c) {
             AddRandomBlock(row_blocks[r],
                            col_blocks[c],
                            row_block_begin,

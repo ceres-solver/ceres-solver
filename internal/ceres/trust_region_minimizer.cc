@@ -356,13 +356,13 @@ bool TrustRegionMinimizer::FinalizeIterationAndCheckIfMinimizerCanContinue() {
 // Compute the trust region step using the TrustRegionStrategy chosen
 // by the user.
 //
-// If the strategy returns with LINEAR_SOLVER_FATAL_ERROR, which
+// If the strategy returns with LinearSolverTerminationType::FATAL_ERROR, which
 // indicates an unrecoverable error, return false. This is the only
 // condition that returns false.
 //
-// If the strategy returns with LINEAR_SOLVER_FAILURE, which indicates
-// a numerical failure that could be recovered from by retrying
-// (e.g. by increasing the strength of the regularization), we set
+// If the strategy returns with LinearSolverTerminationType::FAILURE, which
+// indicates a numerical failure that could be recovered from by retrying (e.g.
+// by increasing the strength of the regularization), we set
 // iteration_summary_.step_is_valid to false and return true.
 //
 // In all other cases, we compute the decrease in the trust region
@@ -394,7 +394,8 @@ bool TrustRegionMinimizer::ComputeTrustRegionStep() {
                              residuals_.data(),
                              trust_region_step_.data());
 
-  if (strategy_summary.termination_type == LINEAR_SOLVER_FATAL_ERROR) {
+  if (strategy_summary.termination_type ==
+      LinearSolverTerminationType::FATAL_ERROR) {
     solver_summary_->message =
         "Linear solver failed due to unrecoverable "
         "non-numeric causes. Please see the error log for clues. ";
@@ -406,7 +407,8 @@ bool TrustRegionMinimizer::ComputeTrustRegionStep() {
       WallTimeInSeconds() - strategy_start_time;
   iteration_summary_.linear_solver_iterations = strategy_summary.num_iterations;
 
-  if (strategy_summary.termination_type == LINEAR_SOLVER_FAILURE) {
+  if (strategy_summary.termination_type ==
+      LinearSolverTerminationType::FAILURE) {
     return true;
   }
 

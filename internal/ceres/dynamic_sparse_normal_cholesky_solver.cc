@@ -112,7 +112,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(
 
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
-  summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
+  summary.termination_type = LinearSolverTerminationType::FATAL_ERROR;
   summary.message =
       "SPARSE_NORMAL_CHOLESKY cannot be used with EIGEN_SPARSE "
       "because Ceres was not built with support for "
@@ -137,7 +137,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(
 
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
-  summary.termination_type = LINEAR_SOLVER_SUCCESS;
+  summary.termination_type = LinearSolverTerminationType::SUCCESS;
   summary.message = "Success.";
 
   solver.analyzePattern(lhs);
@@ -149,7 +149,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(
 
   event_logger.AddEvent("Analyze");
   if (solver.info() != Eigen::Success) {
-    summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
+    summary.termination_type = LinearSolverTerminationType::FATAL_ERROR;
     summary.message = "Eigen failure. Unable to find symbolic factorization.";
     return summary;
   }
@@ -157,7 +157,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(
   solver.factorize(lhs);
   event_logger.AddEvent("Factorize");
   if (solver.info() != Eigen::Success) {
-    summary.termination_type = LINEAR_SOLVER_FAILURE;
+    summary.termination_type = LinearSolverTerminationType::FAILURE;
     summary.message = "Eigen failure. Unable to find numeric factorization.";
     return summary;
   }
@@ -166,7 +166,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(
   VectorRef(rhs_and_solution, lhs.cols()) = solver.solve(rhs);
   event_logger.AddEvent("Solve");
   if (solver.info() != Eigen::Success) {
-    summary.termination_type = LINEAR_SOLVER_FAILURE;
+    summary.termination_type = LinearSolverTerminationType::FAILURE;
     summary.message = "Eigen failure. Unable to do triangular solve.";
     return summary;
   }
@@ -181,7 +181,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingCXSparse(
 
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
-  summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
+  summary.termination_type = LinearSolverTerminationType::FATAL_ERROR;
   summary.message =
       "SPARSE_NORMAL_CHOLESKY cannot be used with CX_SPARSE "
       "because Ceres was not built with support for CXSparse. "
@@ -195,7 +195,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingCXSparse(
 
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
-  summary.termination_type = LINEAR_SOLVER_SUCCESS;
+  summary.termination_type = LinearSolverTerminationType::SUCCESS;
   summary.message = "Success.";
 
   CXSparse cxsparse;
@@ -216,7 +216,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingCXSparse(
   event_logger.AddEvent("NormalEquations");
 
   if (!cxsparse.SolveCholesky(lhs, rhs_and_solution)) {
-    summary.termination_type = LINEAR_SOLVER_FAILURE;
+    summary.termination_type = LinearSolverTerminationType::FAILURE;
     summary.message = "CXSparse::SolveCholesky failed";
   }
   event_logger.AddEvent("Solve");
@@ -234,7 +234,7 @@ DynamicSparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
 
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
-  summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
+  summary.termination_type = LinearSolverTerminationType::FATAL_ERROR;
   summary.message =
       "SPARSE_NORMAL_CHOLESKY cannot be used with SUITE_SPARSE "
       "because Ceres was not built with support for SuiteSparse. "
@@ -246,7 +246,7 @@ DynamicSparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   EventLogger event_logger(
       "DynamicSparseNormalCholeskySolver::SuiteSparse::Solve");
   LinearSolver::Summary summary;
-  summary.termination_type = LINEAR_SOLVER_SUCCESS;
+  summary.termination_type = LinearSolverTerminationType::SUCCESS;
   summary.num_iterations = 1;
   summary.message = "Success.";
 
@@ -258,12 +258,12 @@ DynamicSparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   event_logger.AddEvent("Analysis");
 
   if (factor == nullptr) {
-    summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
+    summary.termination_type = LinearSolverTerminationType::FATAL_ERROR;
     return summary;
   }
 
   summary.termination_type = ss.Cholesky(&lhs, factor, &summary.message);
-  if (summary.termination_type == LINEAR_SOLVER_SUCCESS) {
+  if (summary.termination_type == LinearSolverTerminationType::SUCCESS) {
     cholmod_dense cholmod_rhs =
         ss.CreateDenseVectorView(rhs_and_solution, num_cols);
     cholmod_dense* solution = ss.Solve(factor, &cholmod_rhs, &summary.message);
@@ -273,7 +273,7 @@ DynamicSparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
           rhs_and_solution, solution->x, num_cols * sizeof(*rhs_and_solution));
       ss.Free(solution);
     } else {
-      summary.termination_type = LINEAR_SOLVER_FAILURE;
+      summary.termination_type = LinearSolverTerminationType::FAILURE;
     }
   }
 

@@ -87,7 +87,7 @@ TEST_P(DenseCholeskyTest, FactorAndSolve) {
       LinearSolver::Summary summary;
       summary.termination_type = dense_cholesky->FactorAndSolve(
           num_cols, lhs.data(), rhs.data(), actual.data(), &summary.message);
-      EXPECT_EQ(summary.termination_type, LINEAR_SOLVER_SUCCESS);
+      EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
       EXPECT_NEAR((x - actual).norm() / x.norm(),
                   0.0,
                   std::numeric_limits<double>::epsilon() * 10)

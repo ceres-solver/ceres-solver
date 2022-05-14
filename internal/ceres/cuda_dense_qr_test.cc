@@ -64,10 +64,10 @@ TEST(CUDADenseQR, QR4x4Matrix) {
   std::string error_string;
   ASSERT_EQ(
       dense_cuda_solver->Factorize(A.rows(), A.cols(), A.data(), &error_string),
-      LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
+      LinearSolverTerminationType::SUCCESS);
   Eigen::Vector4d x = Eigen::Vector4d::Zero();
   ASSERT_EQ(dense_cuda_solver->Solve(b.data(), x.data(), &error_string),
-            LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
+            LinearSolverTerminationType::SUCCESS);
   // Empirically observed accuracy of cuSolverDN's QR solver.
   const double kEpsilon = 1e-11;
   EXPECT_NEAR(x(0), 113.75 / 3.0, kEpsilon);
@@ -96,10 +96,10 @@ TEST(CUDADenseQR, QR4x2Matrix) {
   std::string error_string;
   ASSERT_EQ(
       dense_cuda_solver->Factorize(A.rows(), A.cols(), A.data(), &error_string),
-      LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
+      LinearSolverTerminationType::SUCCESS);
   std::vector<double> x(2, 0);
   ASSERT_EQ(dense_cuda_solver->Solve(b.data(), x.data(), &error_string),
-            LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
+            LinearSolverTerminationType::SUCCESS);
   // Empirically observed accuracy of cuSolverDN's QR solver.
   const double kEpsilon = 1e-11;
   // Solution values computed with Octave.
@@ -117,7 +117,7 @@ TEST(CUDADenseQR, MustFactorizeBeforeSolve) {
   ASSERT_NE(dense_cuda_solver, nullptr);
   std::string error_string;
   ASSERT_EQ(dense_cuda_solver->Solve(b.data(), nullptr, &error_string),
-            LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR);
+            LinearSolverTerminationType::FATAL_ERROR);
 }
 
 TEST(CUDADenseQR, Randomized1600x100Tests) {
@@ -155,7 +155,7 @@ TEST(CUDADenseQR, Randomized1600x100Tests) {
                                                         rhs.data(),
                                                         x_computed.data(),
                                                         &summary.message);
-    ASSERT_EQ(summary.termination_type, LINEAR_SOLVER_SUCCESS);
+    ASSERT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
     ASSERT_NEAR((x_computed - x_expected).norm() / x_expected.norm(),
                 0.0,
                 std::numeric_limits<double>::epsilon() * 400);

@@ -68,10 +68,10 @@ TEST(CUDADenseCholesky, Cholesky4x4Matrix) {
   ASSERT_NE(dense_cuda_solver, nullptr);
   std::string error_string;
   ASSERT_EQ(dense_cuda_solver->Factorize(A.cols(), A.data(), &error_string),
-            LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
+            LinearSolverTerminationType::SUCCESS);
   Eigen::Vector4d x = Eigen::Vector4d::Zero();
   ASSERT_EQ(dense_cuda_solver->Solve(b.data(), x.data(), &error_string),
-            LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS);
+            LinearSolverTerminationType::SUCCESS);
   EXPECT_NEAR(x(0), 113.75 / 3.0, std::numeric_limits<double>::epsilon() * 10);
   EXPECT_NEAR(x(1), -31.0 / 3.0, std::numeric_limits<double>::epsilon() * 10);
   EXPECT_NEAR(x(2), 5.0 / 3.0, std::numeric_limits<double>::epsilon() * 10);
@@ -95,7 +95,7 @@ TEST(CUDADenseCholesky, SingularMatrix) {
   ASSERT_NE(dense_cuda_solver, nullptr);
   std::string error_string;
   ASSERT_EQ(dense_cuda_solver->Factorize(A.cols(), A.data(), &error_string),
-            LinearSolverTerminationType::LINEAR_SOLVER_FAILURE);
+            LinearSolverTerminationType::FAILURE);
 }
 
 TEST(CUDADenseCholesky, NegativeMatrix) {
@@ -115,7 +115,7 @@ TEST(CUDADenseCholesky, NegativeMatrix) {
   ASSERT_NE(dense_cuda_solver, nullptr);
   std::string error_string;
   ASSERT_EQ(dense_cuda_solver->Factorize(A.cols(), A.data(), &error_string),
-            LinearSolverTerminationType::LINEAR_SOLVER_FAILURE);
+            LinearSolverTerminationType::FAILURE);
 }
 
 TEST(CUDADenseCholesky, MustFactorizeBeforeSolve) {
@@ -128,7 +128,7 @@ TEST(CUDADenseCholesky, MustFactorizeBeforeSolve) {
   ASSERT_NE(dense_cuda_solver, nullptr);
   std::string error_string;
   ASSERT_EQ(dense_cuda_solver->Solve(b.data(), nullptr, &error_string),
-            LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR);
+            LinearSolverTerminationType::FATAL_ERROR);
 }
 
 TEST(CUDADenseCholesky, Randomized1600x1600Tests) {
@@ -164,7 +164,7 @@ TEST(CUDADenseCholesky, Randomized1600x1600Tests) {
     LinearSolver::Summary summary;
     summary.termination_type = dense_cholesky->FactorAndSolve(
         kNumCols, lhs.data(), rhs.data(), x_computed.data(), &summary.message);
-    ASSERT_EQ(summary.termination_type, LINEAR_SOLVER_SUCCESS);
+    ASSERT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
     ASSERT_NEAR(
         (x_computed - x_expected).norm() / x_expected.norm(), 0.0, 1e-10);
   }

@@ -104,7 +104,7 @@ LinearSolverTerminationType DenseCholesky::FactorAndSolve(
     std::string* message) {
   LinearSolverTerminationType termination_type =
       Factorize(num_cols, lhs, message);
-  if (termination_type == LINEAR_SOLVER_SUCCESS) {
+  if (termination_type == LinearSolverTerminationType::SUCCESS) {
     termination_type = Solve(rhs, solution, message);
   }
   return termination_type;
@@ -116,11 +116,11 @@ LinearSolverTerminationType EigenDenseCholesky::Factorize(
   llt_ = std::make_unique<LLTType>(m);
   if (llt_->info() != Eigen::Success) {
     *message = "Eigen failure. Unable to perform dense Cholesky factorization.";
-    return LINEAR_SOLVER_FAILURE;
+    return LinearSolverTerminationType::FAILURE;
   }
 
   *message = "Success.";
-  return LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 LinearSolverTerminationType EigenDenseCholesky::Solve(const double* rhs,
@@ -128,13 +128,13 @@ LinearSolverTerminationType EigenDenseCholesky::Solve(const double* rhs,
                                                       std::string* message) {
   if (llt_->info() != Eigen::Success) {
     *message = "Eigen failure. Unable to perform dense Cholesky factorization.";
-    return LINEAR_SOLVER_FAILURE;
+    return LinearSolverTerminationType::FAILURE;
   }
 
   VectorRef(solution, llt_->cols()) =
       llt_->solve(ConstVectorRef(rhs, llt_->cols()));
   *message = "Success.";
-  return LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 #ifndef CERES_NO_LAPACK
@@ -148,19 +148,19 @@ LinearSolverTerminationType LAPACKDenseCholesky::Factorize(
   dpotrf_(&uplo, &num_cols_, lhs_, &num_cols_, &info);
 
   if (info < 0) {
-    termination_type_ = LINEAR_SOLVER_FATAL_ERROR;
+    termination_type_ = LinearSolverTerminationType::FATAL_ERROR;
     LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
                << "Please report it. "
                << "LAPACK::dpotrf fatal error. "
                << "Argument: " << -info << " is invalid.";
   } else if (info > 0) {
-    termination_type_ = LINEAR_SOLVER_FAILURE;
+    termination_type_ = LinearSolverTerminationType::FAILURE;
     *message = StringPrintf(
         "LAPACK::dpotrf numerical failure. "
         "The leading minor of order %d is not positive definite.",
         info);
   } else {
-    termination_type_ = LINEAR_SOLVER_SUCCESS;
+    termination_type_ = LinearSolverTerminationType::SUCCESS;
     *message = "Success.";
   }
   return termination_type_;
@@ -178,7 +178,7 @@ LinearSolverTerminationType LAPACKDenseCholesky::Solve(const double* rhs,
       &uplo, &num_cols_, &nrhs, lhs_, &num_cols_, solution, &num_cols_, &info);
 
   if (info < 0) {
-    termination_type_ = LINEAR_SOLVER_FATAL_ERROR;
+    termination_type_ = LinearSolverTerminationType::FATAL_ERROR;
     LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
                << "Please report it. "
                << "LAPACK::dpotrs fatal error. "
@@ -186,7 +186,7 @@ LinearSolverTerminationType LAPACKDenseCholesky::Solve(const double* rhs,
   }
 
   *message = "Success";
-  termination_type_ = LINEAR_SOLVER_SUCCESS;
+  termination_type_ = LinearSolverTerminationType::SUCCESS;
 
   return termination_type_;
 }
@@ -209,7 +209,7 @@ bool CUDADenseCholesky::Init(ContextImpl* context, std::string* message) {
 LinearSolverTerminationType CUDADenseCholesky::Factorize(int num_cols,
                                                          double* lhs,
                                                          std::string* message) {
-  factorize_result_ = LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+  factorize_result_ = LinearSolverTerminationType::FATAL_ERROR;
   lhs_.Reserve(num_cols * num_cols);
   num_cols_ = num_cols;
   lhs_.CopyToGpuAsync(lhs, num_cols * num_cols, stream_);
@@ -222,7 +222,7 @@ LinearSolverTerminationType CUDADenseCholesky::Factorize(int num_cols,
                                   &device_workspace_size) !=
       CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnDpotrf_bufferSize failed.";
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
   device_workspace_.Reserve(device_workspace_size);
   if (cusolverDnDpotrf(cusolver_handle_,
@@ -234,12 +234,12 @@ LinearSolverTerminationType CUDADenseCholesky::Factorize(int num_cols,
                        device_workspace_.size(),
                        error_.data()) != CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnDpotrf failed.";
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
   if (cudaDeviceSynchronize() != cudaSuccess ||
       cudaStreamSynchronize(stream_) != cudaSuccess) {
     *message = "Cuda device synchronization failed.";
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
   error_.CopyToHost(&error, 1);
@@ -250,24 +250,24 @@ LinearSolverTerminationType CUDADenseCholesky::Factorize(int num_cols,
                << "Argument: " << -error << " is invalid.";
     // The following line is unreachable, but return failure just to be
     // pedantic, since the compiler does not know that.
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   } else if (error > 0) {
     *message = StringPrintf(
         "cuSolverDN::cusolverDnDpotrf numerical failure. "
         "The leading minor of order %d is not positive definite.",
         error);
-    factorize_result_ = LinearSolverTerminationType::LINEAR_SOLVER_FAILURE;
-    return LinearSolverTerminationType::LINEAR_SOLVER_FAILURE;
+    factorize_result_ = LinearSolverTerminationType::FAILURE;
+    return LinearSolverTerminationType::FAILURE;
   }
   *message = "Success";
-  factorize_result_ = LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
-  return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+  factorize_result_ = LinearSolverTerminationType::SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 LinearSolverTerminationType CUDADenseCholesky::Solve(const double* rhs,
                                                      double* solution,
                                                      std::string* message) {
-  if (factorize_result_ != LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS) {
+  if (factorize_result_ != LinearSolverTerminationType::SUCCESS) {
     *message = "Factorize did not complete successfully previously.";
     return factorize_result_;
   }
@@ -282,12 +282,12 @@ LinearSolverTerminationType CUDADenseCholesky::Solve(const double* rhs,
                        num_cols_,
                        error_.data()) != CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnDpotrs failed.";
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
   if (cudaDeviceSynchronize() != cudaSuccess ||
       cudaStreamSynchronize(stream_) != cudaSuccess) {
     *message = "Cuda device synchronization failed.";
-    return LinearSolverTerminationType::LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
   error_.CopyToHost(&error, 1);
@@ -299,7 +299,7 @@ LinearSolverTerminationType CUDADenseCholesky::Solve(const double* rhs,
   }
   rhs_.CopyToHost(solution, num_cols_);
   *message = "Success";
-  return LinearSolverTerminationType::LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 std::unique_ptr<CUDADenseCholesky> CUDADenseCholesky::Create(

@@ -199,7 +199,7 @@ LinearSolverTerminationType AppleAccelerateCholesky<Scalar>::Factorize(
   CHECK_EQ(lhs->storage_type(), StorageType());
   if (lhs == nullptr) {
     *message = "Failure: Input lhs is nullptr.";
-    return LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
   typename SparseTypesTrait<Scalar>::SparseMatrix as_lhs =
       as_.CreateSparseMatrixTransposeView(lhs);
@@ -213,7 +213,7 @@ LinearSolverTerminationType AppleAccelerateCholesky<Scalar>::Factorize(
           "Apple Accelerate Failure : Symbolic factorisation failed: %s",
           SparseStatusToString(symbolic_factor_->status));
       FreeSymbolicFactorization();
-      return LINEAR_SOLVER_FATAL_ERROR;
+      return LinearSolverTerminationType::FATAL_ERROR;
     }
   }
 
@@ -230,10 +230,10 @@ LinearSolverTerminationType AppleAccelerateCholesky<Scalar>::Factorize(
         "Apple Accelerate Failure : Numeric factorisation failed: %s",
         SparseStatusToString(numeric_factor_->status));
     FreeNumericFactorization();
-    return LINEAR_SOLVER_FAILURE;
+    return LinearSolverTerminationType::FAILURE;
   }
 
-  return LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 template <typename Scalar>
@@ -259,7 +259,7 @@ LinearSolverTerminationType AppleAccelerateCholesky<Scalar>::Solve(
     VectorRef(solution, num_cols) =
         scalar_rhs_and_solution_.template cast<double>();
   }
-  return LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 template <typename Scalar>

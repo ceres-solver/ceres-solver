@@ -111,7 +111,8 @@ class CERES_NO_EXPORT TrustRegionStrategy {
     int num_iterations = -1;
 
     // Status of the linear solver used to solve the Newton system.
-    LinearSolverTerminationType termination_type = LINEAR_SOLVER_FAILURE;
+    LinearSolverTerminationType termination_type =
+        LinearSolverTerminationType::FAILURE;
   };
 
   // Use the current radius to solve for the trust region step.
