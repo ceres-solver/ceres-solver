@@ -93,12 +93,14 @@ class DynamicSparseNormalCholeskySolverTest : public ::testing::Test {
   }
 
   void TestSolver(
-      const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type) {
+      const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+      const OrderingType ordering_type) {
     LinearSolver::Options options;
     options.type = SPARSE_NORMAL_CHOLESKY;
     options.dynamic_sparsity = true;
     options.sparse_linear_algebra_library_type =
         sparse_linear_algebra_library_type;
+    options.ordering_type = OrderingType::AMD;
     ContextImpl context;
     options.context = &context;
     TestSolver(options, nullptr);
@@ -111,20 +113,25 @@ class DynamicSparseNormalCholeskySolverTest : public ::testing::Test {
 };
 
 #ifndef CERES_NO_SUITESPARSE
-TEST_F(DynamicSparseNormalCholeskySolverTest, SuiteSparse) {
-  TestSolver(SUITE_SPARSE);
+TEST_F(DynamicSparseNormalCholeskySolverTest, SuiteSparseAMD) {
+  TestSolver(SUITE_SPARSE, OrderingType::AMD);
 }
+#ifndef CERES_NO_METIS
+TEST_F(DynamicSparseNormalCholeskySolverTest, SuiteSparseNESDIS) {
+  TestSolver(SUITE_SPARSE, OrderingType::NESDIS);
+}
+#endif
 #endif
 
 #ifndef CERES_NO_CXSPARSE
 TEST_F(DynamicSparseNormalCholeskySolverTest, CXSparse) {
-  TestSolver(CX_SPARSE);
+  TestSolver(CX_SPARSE, OrderingType::AMD);
 }
 #endif
 
 #ifdef CERES_USE_EIGEN_SPARSE
 TEST_F(DynamicSparseNormalCholeskySolverTest, Eigen) {
-  TestSolver(EIGEN_SPARSE);
+  TestSolver(EIGEN_SPARSE, OrderingType::AMD);
 }
 #endif  // CERES_USE_EIGEN_SPARSE
 
