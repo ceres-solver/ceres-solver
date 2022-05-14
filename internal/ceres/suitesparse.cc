@@ -336,6 +336,18 @@ bool SuiteSparse::ApproximateMinimumDegreeOrdering(cholmod_sparse* matrix,
   return cholmod_amd(matrix, nullptr, 0, ordering, &cc_);
 }
 
+bool SuiteSparse::NestedDissectionOrdering(cholmod_sparse* matrix,
+                                           int* ordering) {
+#ifdef CERES_NO_METIS
+  return false;
+#else
+  std::vector<int> CParent(matrix->nrow, 0);
+  std::vector<int> CMember(matrix->nrow, 0);
+  return cholmod_nested_dissection(
+      matrix, nullptr, 0, ordering, CParent.data(), CMember.data(), &cc_);
+#endif
+}
+
 bool SuiteSparse::ConstrainedApproximateMinimumDegreeOrdering(
     cholmod_sparse* matrix, int* constraints, int* ordering) {
 #ifndef CERES_NO_CAMD
