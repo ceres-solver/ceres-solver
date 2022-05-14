@@ -183,6 +183,30 @@ enum SparseLinearAlgebraLibraryType {
   NO_SPARSE
 };
 
+// The order in which variables are eliminated in a linear solver
+// can have a significant of impact on the efficiency and accuracy
+// of the method. e.g., when doing sparse Cholesky factorization,
+// there are matrices for which a good ordering will give a
+// Cholesky factor with O(n) storage, where as a bad ordering will
+// result in an completely dense factor.
+//
+// So sparse direct solvers like SPARSE_NORMAL_CHOLESKY and
+// SPARSE_SCHUR and preconditioners like SUBSET, CLUSTER_JACOBI &
+// CLUSTER_TRIDIAGONAL use a fill reducing ordering of the columns and
+// rows of the matrix being factorized before actually the numeric
+// factorization.
+//
+// This enum controls the class of algorithm used to compute this
+// fill reducing ordering. There is no single algorithm that works
+// on all matrices, so determining which algorithm works better is a
+// matter of empirical experimentation.
+enum LinearSolverOrderingType {
+  // Approximate Minimum Degree.
+  AMD,
+  // Nested Dissection.
+  NESDIS
+};
+
 enum DenseLinearAlgebraLibraryType {
   EIGEN,
   LAPACK,
@@ -466,6 +490,11 @@ CERES_EXPORT const char* SparseLinearAlgebraLibraryTypeToString(
     SparseLinearAlgebraLibraryType type);
 CERES_EXPORT bool StringToSparseLinearAlgebraLibraryType(
     std::string value, SparseLinearAlgebraLibraryType* type);
+
+CERES_EXPORT const char* LinearSolverOrderingTypeToString(
+    LinearSolverOrderingType type);
+CERES_EXPORT bool StringToLinearSolverOrderingType(
+    std::string value, LinearSolverOrderingType* type);
 
 CERES_EXPORT const char* DenseLinearAlgebraLibraryTypeToString(
     DenseLinearAlgebraLibraryType type);
