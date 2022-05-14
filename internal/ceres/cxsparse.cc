@@ -225,7 +225,7 @@ LinearSolverTerminationType CXSparseCholesky::Factorize(
   cs_di cs_lhs = cs_.CreateSparseMatrixTransposeView(lhs);
 
   if (symbolic_factor_ == nullptr) {
-    if (ordering_type_ == NATURAL) {
+    if (ordering_type_ == OrderingType::NATURAL) {
       symbolic_factor_ = cs_.AnalyzeCholeskyWithNaturalOrdering(&cs_lhs);
     } else {
       if (!lhs->col_blocks().empty() && !(lhs->row_blocks().empty())) {

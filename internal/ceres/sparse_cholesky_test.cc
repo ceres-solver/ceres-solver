@@ -113,7 +113,8 @@ void SparseCholeskySolverUnitTest(
   LinearSolver::Options sparse_cholesky_options;
   sparse_cholesky_options.sparse_linear_algebra_library_type =
       sparse_linear_algebra_library_type;
-  sparse_cholesky_options.use_postordering = (ordering_type == AMD);
+  sparse_cholesky_options.use_postordering =
+      (ordering_type == OrderingType::AMD);
   auto sparse_cholesky = SparseCholesky::Create(sparse_cholesky_options);
   const CompressedRowSparseMatrix::StorageType storage_type =
       sparse_cholesky->StorageType();
@@ -154,7 +155,8 @@ std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   Param param = info.param;
   std::stringstream ss;
   ss << SparseLinearAlgebraLibraryTypeToString(::testing::get<0>(param)) << "_"
-     << (::testing::get<1>(param) == AMD ? "AMD" : "NATURAL") << "_"
+     << (::testing::get<1>(param) == OrderingType::AMD ? "AMD" : "NATURAL")
+     << "_"
      << (::testing::get<2>(param) ? "UseBlockStructure" : "NoBlockStructure");
   return ss.str();
 }
@@ -190,21 +192,25 @@ TEST_P(SparseCholeskyTest, FactorAndSolve) {
 namespace {
 
 #ifndef CERES_NO_SUITESPARSE
-INSTANTIATE_TEST_SUITE_P(SuiteSparseCholesky,
-                         SparseCholeskyTest,
-                         ::testing::Combine(::testing::Values(SUITE_SPARSE),
-                                            ::testing::Values(AMD, NATURAL),
-                                            ::testing::Values(true, false)),
-                         ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(
+    SuiteSparseCholesky,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(SUITE_SPARSE),
+                       ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NATURAL),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
 #endif
 
 #ifndef CERES_NO_CXSPARSE
-INSTANTIATE_TEST_SUITE_P(CXSparseCholesky,
-                         SparseCholeskyTest,
-                         ::testing::Combine(::testing::Values(CX_SPARSE),
-                                            ::testing::Values(AMD, NATURAL),
-                                            ::testing::Values(true, false)),
-                         ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(
+    CXSparseCholesky,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(CX_SPARSE),
+                       ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NATURAL),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
 #endif
 
 #ifndef CERES_NO_ACCELERATE_SPARSE
@@ -212,7 +218,8 @@ INSTANTIATE_TEST_SUITE_P(
     AccelerateSparseCholesky,
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(ACCELERATE_SPARSE),
-                       ::testing::Values(AMD, NATURAL),
+                       ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NATURAL),
                        ::testing::Values(true, false)),
     ParamInfoToString);
 
@@ -220,25 +227,30 @@ INSTANTIATE_TEST_SUITE_P(
     AccelerateSparseCholeskySingle,
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(ACCELERATE_SPARSE),
-                       ::testing::Values(AMD, NATURAL),
+                       ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NATURAL),
                        ::testing::Values(true, false)),
     ParamInfoToString);
 #endif
 
 #ifdef CERES_USE_EIGEN_SPARSE
-INSTANTIATE_TEST_SUITE_P(EigenSparseCholesky,
-                         SparseCholeskyTest,
-                         ::testing::Combine(::testing::Values(EIGEN_SPARSE),
-                                            ::testing::Values(AMD, NATURAL),
-                                            ::testing::Values(true, false)),
-                         ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(
+    EigenSparseCholesky,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(EIGEN_SPARSE),
+                       ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NATURAL),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
 
-INSTANTIATE_TEST_SUITE_P(EigenSparseCholeskySingle,
-                         SparseCholeskyTest,
-                         ::testing::Combine(::testing::Values(EIGEN_SPARSE),
-                                            ::testing::Values(AMD, NATURAL),
-                                            ::testing::Values(true, false)),
-                         ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(
+    EigenSparseCholeskySingle,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(EIGEN_SPARSE),
+                       ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NATURAL),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
 #endif
 
 class MockSparseCholesky : public SparseCholesky {
