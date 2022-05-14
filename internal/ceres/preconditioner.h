@@ -41,6 +41,7 @@
 #include "ceres/linear_operator.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
+#include "ceres/linear_solver.h"
 
 namespace ceres::internal {
 
@@ -54,7 +55,8 @@ class CERES_NO_EXPORT Preconditioner : public LinearOperator {
     VisibilityClusteringType visibility_clustering_type = CANONICAL_VIEWS;
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type =
         SUITE_SPARSE;
-
+    OrderingType ordering_type = OrderingType::NATURAL;
+    
     // When using the subset preconditioner, all row blocks starting
     // from this row block are used to construct the preconditioner.
     //
@@ -66,9 +68,6 @@ class CERES_NO_EXPORT Preconditioner : public LinearOperator {
     // where P has subset_preconditioner_start_row_block row blocks,
     // and the preconditioner is the inverse of the matrix Q'Q.
     int subset_preconditioner_start_row_block = -1;
-
-    // See solver.h for information about these flags.
-    bool use_postordering = false;
 
     // If possible, how many threads the preconditioner can use.
     int num_threads = 1;

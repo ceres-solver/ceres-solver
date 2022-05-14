@@ -144,14 +144,10 @@ cholmod_dense* SuiteSparse::CreateDenseVector(const double* x,
   return v;
 }
 
-cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A,
-                                             string* message) {
-  // Cholmod can try multiple re-ordering strategies to find a fill
-  // reducing ordering. Here we just tell it use AMD with automatic
-  // matrix dependence choice of supernodal versus simplicial
-  // factorization.
+cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A, int ordering_type, string* message) {
+					     
   cc_.nmethods = 1;
-  cc_.method[0].ordering = CHOLMOD_AMD;
+  cc_.method[0].ordering = ordering_type;
   cc_.supernodal = CHOLMOD_AUTO;
 
   cholmod_factor* factor = cholmod_analyze(A, &cc_);
@@ -168,18 +164,7 @@ cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A,
   CHECK(factor != nullptr);
   return factor;
 }
-
-cholmod_factor* SuiteSparse::BlockAnalyzeCholesky(cholmod_sparse* A,
-                                                  const vector<int>& row_blocks,
-                                                  const vector<int>& col_blocks,
-                                                  string* message) {
-  vector<int> ordering;
-  if (!BlockAMDOrdering(A, row_blocks, col_blocks, &ordering)) {
-    return nullptr;
-  }
-  return AnalyzeCholeskyWithUserOrdering(A, ordering, message);
-}
-
+  
 cholmod_factor* SuiteSparse::AnalyzeCholeskyWithUserOrdering(
     cholmod_sparse* A, const vector<int>& ordering, string* message) {
   CHECK_EQ(ordering.size(), A->nrow);
@@ -202,30 +187,15 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithUserOrdering(
   return factor;
 }
 
-cholmod_factor* SuiteSparse::AnalyzeCholeskyWithNaturalOrdering(
-    cholmod_sparse* A, string* message) {
-  cc_.nmethods = 1;
-  cc_.method[0].ordering = CHOLMOD_NATURAL;
-  cc_.postorder = 0;
 
-  cholmod_factor* factor = cholmod_analyze(A, &cc_);
-  if (VLOG_IS_ON(2)) {
-    cholmod_print_common(const_cast<char*>("Symbolic Analysis"), &cc_);
-  }
-  if (cc_.status != CHOLMOD_OK) {
-    *message =
-        StringPrintf("cholmod_analyze failed. error code: %d", cc_.status);
-    return nullptr;
-  }
-
-  CHECK(factor != nullptr);
-  return factor;
-}
-
-bool SuiteSparse::BlockAMDOrdering(const cholmod_sparse* A,
-                                   const vector<int>& row_blocks,
-                                   const vector<int>& col_blocks,
-                                   vector<int>* ordering) {
+  
+bool SuiteSparse::BlockOrdering(const cholmod_sparse* A,
+				int ordering_type,
+				const vector<int>& row_blocks,
+				const vector<int>& col_blocks,
+				vector<int>* ordering) {
+  CHECK(ordering_type == CHOLMOD_AMD || ordering_type == CHOLMOD_NESDIS)
+    << ordering_type;
   const int num_row_blocks = row_blocks.size();
   const int num_col_blocks = col_blocks.size();
 
@@ -255,13 +225,45 @@ bool SuiteSparse::BlockAMDOrdering(const cholmod_sparse* A,
   block_matrix.packed = 1;
 
   vector<int> block_ordering(num_row_blocks);
-  if (!cholmod_amd(&block_matrix, nullptr, 0, &block_ordering[0], &cc_)) {
-    return false;
+  if (ordering_type == CHOLMOD_AMD) {
+    if (!ApproximateMinimumDegreeOrdering(&block_matrix, block_ordering.data())) {
+      return false;
+    }
+  } else if (ordering_type == CHOLMOD_NESDIS) {
+     if (!NestedDissectionOrdering(&block_matrix, block_ordering.data())) {
+      return false;
+    }
+  } else {
+    LOG(FATAL) << "Congratulations you have discovered a bug in Ceres Solver."
+	       << "Please report this to the developers.";
   }
-
+    
   BlockOrderingToScalarOrdering(row_blocks, block_ordering, ordering);
   return true;
 }
+
+  
+  
+  cholmod_factor* SuiteSparse::BlockAnalyzeCholesky(cholmod_sparse* A,
+						    int ordering_type,
+						    const vector<int>& row_blocks,
+						    const vector<int>& col_blocks,
+						    string* message) {
+    vector<int> ordering;
+    if (ordering_type != CHOLMOD_NATURAL) {
+      if (!BlockOrdering(A, ordering_type, row_blocks, col_blocks, &ordering)) {
+	return nullptr;
+      }
+    } else {
+      ordering.resize(A->nrow);
+      for (int i = 0; i < ordering.size(); ++i) {
+	ordering[i] = i;
+      }
+    }
+    return AnalyzeCholeskyWithUserOrdering(A, ordering, message);
+}
+
+
 
 LinearSolverTerminationType SuiteSparse::Cholesky(cholmod_sparse* A,
                                                   cholmod_factor* L,
@@ -355,6 +357,29 @@ bool SuiteSparse::ConstrainedApproximateMinimumDegreeOrdering(
   return cholmod_camd(matrix, nullptr, 0, constraints, ordering, &cc_);
 }
 
+  int SuiteSparse::OrderingTypeToCHOLMODEnum(OrderingType ordering_type) {
+    if (ordering_type == OrderingType::AMD) {
+      return CHOLMOD_AMD;
+    }
+    if (ordering_type == OrderingType::NESDIS) {
+      return CHOLMOD_NESDIS;
+    }
+
+    if (ordering_type == OrderingType::NATURAL) {
+      return CHOLMOD_NATURAL;
+    }
+    LOG(FATAL) << "Congratulations you have discovered a bug in Ceres Solver."
+	       << "Please report it to the developers. " << ordering_type;
+    return -1;
+  }
+
+  bool SuiteSparse::IsNestedDissectionAvailable() {
+    #ifdef CERES_NO_METIS
+    return false;
+    #else
+    return true;
+    #endif
+  }
 std::unique_ptr<SparseCholesky> SuiteSparseCholesky::Create(
     const OrderingType ordering_type) {
   return std::unique_ptr<SparseCholesky>(
@@ -378,17 +403,19 @@ LinearSolverTerminationType SuiteSparseCholesky::Factorize(
   }
 
   cholmod_sparse cholmod_lhs = ss_.CreateSparseMatrixTransposeView(lhs);
-
+  
+  
   if (factor_ == nullptr) {
-    if (ordering_type_ == OrderingType::NATURAL) {
-      factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&cholmod_lhs, message);
+    if (!lhs->col_blocks().empty() && !(lhs->row_blocks().empty())) {
+      factor_ = ss_.BlockAnalyzeCholesky(&cholmod_lhs,
+					 SuiteSparse::OrderingTypeToCHOLMODEnum(ordering_type_),
+					 lhs->col_blocks(),
+					 lhs->row_blocks(),
+					 message);					 
     } else {
-      if (!lhs->col_blocks().empty() && !(lhs->row_blocks().empty())) {
-        factor_ = ss_.BlockAnalyzeCholesky(
-            &cholmod_lhs, lhs->col_blocks(), lhs->row_blocks(), message);
-      } else {
-        factor_ = ss_.AnalyzeCholesky(&cholmod_lhs, message);
-      }
+      factor_ = ss_.AnalyzeCholesky(&cholmod_lhs,
+				    SuiteSparse::OrderingTypeToCHOLMODEnum(ordering_type_) ,
+				    message);
     }
 
     if (factor_ == nullptr) {

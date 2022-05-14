@@ -114,8 +114,7 @@ void SparseCholeskySolverUnitTest(
   LinearSolver::Options sparse_cholesky_options;
   sparse_cholesky_options.sparse_linear_algebra_library_type =
       sparse_linear_algebra_library_type;
-  sparse_cholesky_options.use_postordering =
-      (ordering_type == OrderingType::AMD);
+  sparse_cholesky_options.ordering_type = ordering_type;
   auto sparse_cholesky = SparseCholesky::Create(sparse_cholesky_options);
   const CompressedRowSparseMatrix::StorageType storage_type =
       sparse_cholesky->StorageType();
@@ -156,7 +155,7 @@ std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   Param param = info.param;
   std::stringstream ss;
   ss << SparseLinearAlgebraLibraryTypeToString(::testing::get<0>(param)) << "_"
-     << (::testing::get<1>(param) == OrderingType::AMD ? "AMD" : "NATURAL")
+     << ::testing::get<1>(param)
      << "_"
      << (::testing::get<2>(param) ? "UseBlockStructure" : "NoBlockStructure");
   return ss.str();
@@ -197,8 +196,9 @@ INSTANTIATE_TEST_SUITE_P(
     SuiteSparseCholesky,
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(SUITE_SPARSE),
-                       ::testing::Values(OrderingType::AMD,
-                                         OrderingType::NATURAL),
+                       ::testing::Values(OrderingType::NATURAL,
+					 OrderingType::AMD,
+					 OrderingType::NESDIS),
                        ::testing::Values(true, false)),
     ParamInfoToString);
 #endif

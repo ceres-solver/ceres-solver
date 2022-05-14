@@ -38,6 +38,7 @@
 #include "ceres/parameter_block_ordering.h"
 #include "ceres/problem_impl.h"
 #include "ceres/types.h"
+#include "ceres/linear_solver.h"
 
 namespace ceres::internal {
 
@@ -75,6 +76,7 @@ CERES_NO_EXPORT bool LexicographicallyOrderResidualBlocks(
 CERES_NO_EXPORT bool ReorderProgramForSchurTypeLinearSolver(
     LinearSolverType linear_solver_type,
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+    LinearSolverOrderingType linear_solver_ordering_type,
     const ProblemImpl::ParameterMap& parameter_map,
     ParameterBlockOrdering* parameter_block_ordering,
     Program* program,
@@ -92,6 +94,7 @@ CERES_NO_EXPORT bool ReorderProgramForSchurTypeLinearSolver(
 // ordering will take it into account, otherwise it will be ignored.
 CERES_NO_EXPORT bool ReorderProgramForSparseCholesky(
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+    LinearSolverOrderingType linear_solver_ordering_type,
     const ParameterBlockOrdering& parameter_block_ordering,
     int start_row_block,
     Program* program,
@@ -111,6 +114,13 @@ CERES_NO_EXPORT int ReorderResidualBlocksByPartition(
     const std::unordered_set<ResidualBlockId>& bottom_residual_blocks,
     Program* program);
 
+  OrderingType OrderingTypeFromSolverOptions(LinearSolverType linear_solver_type,
+						  PreconditionerType preconditioner_type,
+						  SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+						  LinearSolverOrderingType linear_solver_ordering_type,
+						  bool use_postordering,
+						  bool has_dynamic_sparsity);
+						  
 }  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
