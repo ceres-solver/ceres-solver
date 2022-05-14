@@ -109,9 +109,12 @@ void AlternateLinearSolverAndPreconditionerForSchurTypeLinearSolver(
 // Reorder the program to reduce fill-in and increase cache coherency.
 bool ReorderProgram(PreprocessedProblem* pp) {
   const Solver::Options& options = pp->options;
+  // TODO(sameeragarwal): Add support for nested dissection when using
+  // a Schur type linear solver.
   if (IsSchurType(options.linear_solver_type)) {
     return ReorderProgramForSchurTypeLinearSolver(
         options.linear_solver_type,
+        options.linear_solver_ordering_type,
         options.sparse_linear_algebra_library_type,
         pp->problem->parameter_map(),
         options.linear_solver_ordering.get(),
@@ -123,6 +126,7 @@ bool ReorderProgram(PreprocessedProblem* pp) {
       !options.dynamic_sparsity) {
     return ReorderProgramForSparseCholesky(
         options.sparse_linear_algebra_library_type,
+        options.linear_solver_ordering_type,
         *options.linear_solver_ordering,
         0, /* use all the rows of the jacobian */
         pp->reduced_program.get(),
@@ -138,6 +142,7 @@ bool ReorderProgram(PreprocessedProblem* pp) {
 
     return ReorderProgramForSparseCholesky(
         options.sparse_linear_algebra_library_type,
+        options.linear_solver_ordering_type,
         *options.linear_solver_ordering,
         pp->linear_solver_options.subset_preconditioner_start_row_block,
         pp->reduced_program.get(),
@@ -225,25 +230,18 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
       pp->linear_solver_options.elimination_groups.push_back(0);
     }
 
-    if (options.linear_solver_type == SPARSE_SCHUR) {
-      // When using SPARSE_SCHUR, we ignore the user's postordering
-      // preferences in certain cases.
-      //
-      // 1. SUITE_SPARSE is the sparse linear algebra library requested
-      //    but cholmod_camd is not available.
-      // 2. CX_SPARSE is the sparse linear algebra library requested.
-      //
-      // This ensures that the linear solver does not assume that a
-      // fill-reducing pre-ordering has been done.
-      //
-      // TODO(sameeragarwal): Implement the reordering of parameter
-      // blocks for CX_SPARSE.
-      if ((options.sparse_linear_algebra_library_type == SUITE_SPARSE &&
-           !SuiteSparse::
-               IsConstrainedApproximateMinimumDegreeOrderingAvailable()) ||
-          (options.sparse_linear_algebra_library_type == CX_SPARSE)) {
-        pp->linear_solver_options.use_postordering = true;
-      }
+    // TODO(sameeragarwal): This logic is cryptic and buried deep
+    // inside the preprocessor and depends on the knowledge of changes
+    // to reorder_program.cc and will cause problems down the road,
+    // this should be simplified.
+    //
+    // Also if the user has asked for post ordering, why do any
+    // pre-eordering at all then, may as well save some effort.
+    if (options.linear_solver_type == SPARSE_SCHUR &&
+        (options.linear_solver_ordering_type == ceres::NESDIS ||
+         options.sparse_linear_algebra_library_type == CX_SPARSE ||
+         options.sparse_linear_algebra_library_type == ACCELERATE_SPARSE)) {
+      pp->linear_solver_options.use_postordering = true;
     }
   }
 

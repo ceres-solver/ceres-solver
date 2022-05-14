@@ -92,6 +92,7 @@ CERES_NO_EXPORT bool ReorderProgramForSchurTypeLinearSolver(
 // ordering will take it into account, otherwise it will be ignored.
 CERES_NO_EXPORT bool ReorderProgramForSparseCholesky(
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+    LinearSolverOrderingType linear_solver_ordering_type,
     const ParameterBlockOrdering& parameter_block_ordering,
     int start_row_block,
     Program* program,
