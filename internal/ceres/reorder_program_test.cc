@@ -185,6 +185,7 @@ class ReorderProgramForSparseCholeskyUsingSuiteSparseTest
 
     std::string error;
     EXPECT_TRUE(ReorderProgramForSparseCholesky(ceres::SUITE_SPARSE,
+                                                ceres::AMD,
                                                 linear_solver_ordering,
                                                 0, /* use all rows */
                                                 program,
