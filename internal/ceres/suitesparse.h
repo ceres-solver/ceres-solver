@@ -44,12 +44,11 @@
 #include <vector>
 
 #include "SuiteSparseQR.hpp"
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 #include "cholmod.h"
 #include "glog/logging.h"
-
-#include "ceres/internal/disable_warnings.h"
 
 namespace ceres::internal {
 
@@ -132,9 +131,13 @@ class CERES_NO_EXPORT SuiteSparse {
   // message contains an explanation of the failures if any.
   //
   // Caller owns the result.
-  cholmod_factor* AnalyzeCholesky(cholmod_sparse* A, std::string* message);
+  cholmod_factor* AnalyzeCholesky(cholmod_sparse* A,
+                                  OrderingType ordering_type,
+                                  std::string* message);
 
+  // Block oriented version of AnalyzeCholesky.
   cholmod_factor* BlockAnalyzeCholesky(cholmod_sparse* A,
+                                       OrderingType ordering_type,
                                        const std::vector<int>& row_blocks,
                                        const std::vector<int>& col_blocks,
                                        std::string* message);
@@ -154,15 +157,6 @@ class CERES_NO_EXPORT SuiteSparse {
       cholmod_sparse* A,
       const std::vector<int>& ordering,
       std::string* message);
-
-  // Perform a symbolic factorization of A without re-ordering A. No
-  // postordering of the elimination tree is performed. This ensures
-  // that the symbolic factor does not introduce an extra permutation
-  // on the matrix. See the documentation for CHOLMOD for more details.
-  //
-  // message contains an explanation of the failures if any.
-  cholmod_factor* AnalyzeCholeskyWithNaturalOrdering(cholmod_sparse* A,
-                                                     std::string* message);
 
   // Use the symbolic factorization in L, to find the numerical
   // factorization for the matrix A or AA^T. Return true if
@@ -186,47 +180,40 @@ class CERES_NO_EXPORT SuiteSparse {
   // By virtue of the modeling layer in Ceres being block oriented,
   // all the matrices used by Ceres are also block oriented. When
   // doing sparse direct factorization of these matrices the
-  // fill-reducing ordering algorithms (in particular AMD) can either
-  // be run on the block or the scalar form of these matrices. The two
-  // SuiteSparse::AnalyzeCholesky methods allows the client to
-  // compute the symbolic factorization of a matrix by either using
-  // AMD on the matrix or a user provided ordering of the rows.
+  // fill-reducing ordering algorithms can either be run on the block
+  // or the scalar form of these matrices. The two
+  // SuiteSparse::AnalyzeCholesky methods allows the client to compute
+  // the symbolic factorization of a matrix by either using AMD,
+  // NESDIS or a user provided ordering of rows.
   //
   // But since the underlying matrices are block oriented, it is worth
-  // running AMD on just the block structure of these matrices and then
-  // lifting these block orderings to a full scalar ordering. This
-  // preserves the block structure of the permuted matrix, and exposes
-  // more of the super-nodal structure of the matrix to the numerical
-  // factorization routines.
+  // running the fill reducing ordering on just the block structure of
+  // these matrices and then lifting these block orderings to a full
+  // scalar ordering. This preserves the block structure of the
+  // permuted matrix, and exposes more of the super-nodal structure of
+  // the matrix to the numerical factorization routines.
   //
-  // Find the block oriented AMD ordering of a matrix A, whose row and
-  // column blocks are given by row_blocks, and col_blocks
-  // respectively. The matrix may or may not be symmetric. The entries
-  // of col_blocks do not need to sum to the number of columns in
-  // A. If this is the case, only the first sum(col_blocks) are used
-  // to compute the ordering.
-  bool BlockAMDOrdering(const cholmod_sparse* A,
-                        const std::vector<int>& row_blocks,
-                        const std::vector<int>& col_blocks,
-                        std::vector<int>* ordering);
+  // Find the block oriented fill reducing ordering of a matrix A,
+  // whose row and column blocks are given by row_blocks, and
+  // col_blocks respectively. The matrix may or may not be
+  // symmetric. The entries of col_blocks do not need to sum to the
+  // number of columns in A. If this is the case, only the first
+  // sum(col_blocks) are used to compute the ordering.
+  bool BlockOrdering(const cholmod_sparse* A,
+                     OrderingType ordering_type,
+                     const std::vector<int>& row_blocks,
+                     const std::vector<int>& col_blocks,
+                     std::vector<int>* ordering);
 
-  // Find a fill reducing approximate minimum degree
-  // ordering. ordering is expected to be large enough to hold the
-  // ordering.
-  bool ApproximateMinimumDegreeOrdering(cholmod_sparse* matrix, int* ordering);
-
-  // Find a fill reducing ordering using nested dissection.
-  bool NestedDissectionOrdering(cholmod_sparse* matrix, int* ordering);
+  // Find a fill reducing ordering. ordering is expected to be large
+  // enough to hold the ordering.
+  bool Ordering(cholmod_sparse* matrix,
+                OrderingType ordering_type,
+                int* ordering);
 
   // Nested dissection is only available if SuiteSparse is compiled
   // with Metis support.
-  static bool IsNestedDissectionAvailable() {
-#ifdef CERES_NO_METIS
-    return false;
-#else
-    return true;
-#endif
-  }
+  static bool IsNestedDissectionAvailable();
 
   // Find a fill reducing approximate minimum degree
   // ordering. constraints is an array which associates with each

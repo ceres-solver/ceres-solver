@@ -50,6 +50,7 @@
 #include "ceres/schur_templates.h"
 #include "ceres/solver_utils.h"
 #include "ceres/stringprintf.h"
+#include "ceres/suitesparse.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
@@ -182,8 +183,10 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
             name,
             sparse_linear_algebra_library_name);
         return false;
-      } else if (!IsSparseLinearAlgebraLibraryTypeAvailable(
-                     options.sparse_linear_algebra_library_type)) {
+      }
+
+      if (!IsSparseLinearAlgebraLibraryTypeAvailable(
+              options.sparse_linear_algebra_library_type)) {
         *error = StringPrintf(
             "Can't use %s with "
             "Solver::Options::sparse_linear_algebra_library_type = %s, "
@@ -191,6 +194,40 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
             name,
             sparse_linear_algebra_library_name);
         return false;
+      }
+
+      if (options.linear_solver_ordering_type == NESDIS) {
+        if (options.sparse_linear_algebra_library_type == CX_SPARSE) {
+          *error = StringPrintf(
+              "Can't use NESDIS with "
+              "Solver::Options::sparse_linear_algebra_library_type = %s.",
+              sparse_linear_algebra_library_name);
+          return false;
+        }
+
+        if (options.sparse_linear_algebra_library_type == EIGEN_SPARSE) {
+          *error = StringPrintf(
+              "Can't use NESDIS with "
+              "Solver::Options::sparse_linear_algebra_library_type = %s.",
+              sparse_linear_algebra_library_name);
+          return false;
+        }
+
+        if (options.sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
+          *error = StringPrintf(
+              "Can't use NESDIS with "
+              "Solver::Options::sparse_linear_algebra_library_type = %s.",
+              sparse_linear_algebra_library_name);
+          return false;
+        }
+
+        if (options.sparse_linear_algebra_library_type == SUITE_SPARSE &&
+            !internal::SuiteSparse::IsNestedDissectionAvailable()) {
+          *error =
+              "Can't use NESDIS with SUITE_SPARSE because SuiteSparse was "
+              "not compiled with Metis support.";
+          return false;
+        }
       }
     }
   }
@@ -339,7 +376,7 @@ void PreSolveSummarize(const Solver::Options& options,
                                  &(summary->inner_iteration_ordering_given));
 
   // clang-format off
-  summary->dense_linear_algebra_library_type  = options.dense_linear_algebra_library_type;  //  NOLINT
+  summary->dense_linear_algebra_library_type  = options.dense_linear_algebra_library_type;  
   summary->dogleg_type                        = options.dogleg_type;
   summary->inner_iteration_time_in_seconds    = 0.0;
   summary->num_line_search_steps              = 0;
@@ -348,18 +385,19 @@ void PreSolveSummarize(const Solver::Options& options,
   summary->line_search_polynomial_minimization_time_in_seconds = 0.0;
   summary->line_search_total_time_in_seconds  = 0.0;
   summary->inner_iterations_given             = options.use_inner_iterations;
-  summary->line_search_direction_type         = options.line_search_direction_type;         //  NOLINT
-  summary->line_search_interpolation_type     = options.line_search_interpolation_type;     //  NOLINT
+  summary->line_search_direction_type         = options.line_search_direction_type;       
+  summary->line_search_interpolation_type     = options.line_search_interpolation_type;   
   summary->line_search_type                   = options.line_search_type;
   summary->linear_solver_type_given           = options.linear_solver_type;
   summary->max_lbfgs_rank                     = options.max_lbfgs_rank;
   summary->minimizer_type                     = options.minimizer_type;
-  summary->nonlinear_conjugate_gradient_type  = options.nonlinear_conjugate_gradient_type;  //  NOLINT
+  summary->nonlinear_conjugate_gradient_type  = options.nonlinear_conjugate_gradient_type; 
   summary->num_threads_given                  = options.num_threads;
   summary->preconditioner_type_given          = options.preconditioner_type;
-  summary->sparse_linear_algebra_library_type = options.sparse_linear_algebra_library_type; //  NOLINT
-  summary->trust_region_strategy_type         = options.trust_region_strategy_type;         //  NOLINT
-  summary->visibility_clustering_type         = options.visibility_clustering_type;         //  NOLINT
+  summary->sparse_linear_algebra_library_type = options.sparse_linear_algebra_library_type;
+  summary->linear_solver_ordering_type        = options.linear_solver_ordering_type;       
+  summary->trust_region_strategy_type         = options.trust_region_strategy_type;        
+  summary->visibility_clustering_type         = options.visibility_clustering_type;        
   // clang-format on
 }
 
@@ -367,11 +405,14 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
                         Solver::Summary* summary) {
   internal::OrderingToGroupSizes(pp.options.linear_solver_ordering.get(),
                                  &(summary->linear_solver_ordering_used));
+  // TODO(sameeragarwal): Update the preprocessor to collapse the
+  // second and higher groups into one group when nested dissection is
+  // used.
   internal::OrderingToGroupSizes(pp.options.inner_iteration_ordering.get(),
                                  &(summary->inner_iteration_ordering_used));
 
   // clang-format off
-  summary->inner_iterations_used          = pp.inner_iteration_minimizer.get() != nullptr;     // NOLINT
+  summary->inner_iterations_used          = pp.inner_iteration_minimizer.get() != nullptr;   
   summary->linear_solver_type_used        = pp.linear_solver_options.type;
   summary->num_threads_used               = pp.options.num_threads;
   summary->preconditioner_type_used       = pp.options.preconditioner_type;
@@ -665,18 +706,7 @@ string Solver::Summary::FullReport() const {
                     DenseLinearAlgebraLibraryTypeToString(
                         dense_linear_algebra_library_type));
     }
-
-    if (linear_solver_type_used == SPARSE_NORMAL_CHOLESKY ||
-        linear_solver_type_used == SPARSE_SCHUR ||
-        (linear_solver_type_used == ITERATIVE_SCHUR &&
-         (preconditioner_type_used == CLUSTER_JACOBI ||
-          preconditioner_type_used == CLUSTER_TRIDIAGONAL))) {
-      StringAppendF(&report,
-                    "\nSparse linear algebra library %15s\n",
-                    SparseLinearAlgebraLibraryTypeToString(
-                        sparse_linear_algebra_library_type));
-    }
-
+    
     StringAppendF(&report,
                   "Trust region strategy     %19s",
                   TrustRegionStrategyTypeToString(trust_region_strategy_type));
@@ -687,9 +717,23 @@ string Solver::Summary::FullReport() const {
         StringAppendF(&report, " (SUBSPACE)");
       }
     }
-    StringAppendF(&report, "\n");
-    StringAppendF(&report, "\n");
+    
+    if (linear_solver_type_used == SPARSE_NORMAL_CHOLESKY ||
+        linear_solver_type_used == SPARSE_SCHUR ||
+	(linear_solver_type_used == CGNR &&
+	 preconditioner_type_used == SUBSET) || 
+        (linear_solver_type_used == ITERATIVE_SCHUR &&
+         (preconditioner_type_used == CLUSTER_JACOBI ||
+          preconditioner_type_used == CLUSTER_TRIDIAGONAL))) {
+      StringAppendF(&report,
+                    "\nSparse linear algebra library %15s + %s\n",
+                    SparseLinearAlgebraLibraryTypeToString(
+							   sparse_linear_algebra_library_type),
+		   LinearSolverOrderingTypeToString(linear_solver_ordering_type));
+    }
 
+
+    StringAppendF(&report, "\n");
     StringAppendF(&report, "%45s    %21s\n", "Given", "Used");
     StringAppendF(&report,
                   "Linear solver       %25s%25s\n",
