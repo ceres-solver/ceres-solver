@@ -106,14 +106,7 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
   LinearSolver::Options sparse_cholesky_options;
   sparse_cholesky_options.sparse_linear_algebra_library_type =
       options_.sparse_linear_algebra_library_type;
-
-  // The preconditioner's sparsity is not available in the
-  // preprocessor, so the columns of the Jacobian have not been
-  // reordered to minimize fill in when computing its sparse Cholesky
-  // factorization. So we must tell the SparseCholesky object to
-  // perform approximate minimum-degree reordering, which is done by
-  // setting use_postordering to true.
-  sparse_cholesky_options.use_postordering = true;
+  sparse_cholesky_options.ordering_type = options.ordering_type;
   sparse_cholesky_ = SparseCholesky::Create(sparse_cholesky_options);
 
   const time_t init_time = time(nullptr);

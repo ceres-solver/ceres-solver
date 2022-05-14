@@ -44,12 +44,11 @@
 #include <vector>
 
 #include "SuiteSparseQR.hpp"
+#include "ceres/internal/disable_warnings.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 #include "cholmod.h"
 #include "glog/logging.h"
-
-#include "ceres/internal/disable_warnings.h"
 
 namespace ceres::internal {
 
@@ -132,9 +131,12 @@ class CERES_NO_EXPORT SuiteSparse {
   // message contains an explanation of the failures if any.
   //
   // Caller owns the result.
-  cholmod_factor* AnalyzeCholesky(cholmod_sparse* A, std::string* message);
+  cholmod_factor* AnalyzeCholesky(cholmod_sparse* A,
+                                  int ordering_type,
+                                  std::string* message);
 
   cholmod_factor* BlockAnalyzeCholesky(cholmod_sparse* A,
+                                       int ordering_type,
                                        const std::vector<int>& row_blocks,
                                        const std::vector<int>& col_blocks,
                                        std::string* message);
@@ -154,15 +156,6 @@ class CERES_NO_EXPORT SuiteSparse {
       cholmod_sparse* A,
       const std::vector<int>& ordering,
       std::string* message);
-
-  // Perform a symbolic factorization of A without re-ordering A. No
-  // postordering of the elimination tree is performed. This ensures
-  // that the symbolic factor does not introduce an extra permutation
-  // on the matrix. See the documentation for CHOLMOD for more details.
-  //
-  // message contains an explanation of the failures if any.
-  cholmod_factor* AnalyzeCholeskyWithNaturalOrdering(cholmod_sparse* A,
-                                                     std::string* message);
 
   // Use the symbolic factorization in L, to find the numerical
   // factorization for the matrix A or AA^T. Return true if
@@ -205,10 +198,11 @@ class CERES_NO_EXPORT SuiteSparse {
   // of col_blocks do not need to sum to the number of columns in
   // A. If this is the case, only the first sum(col_blocks) are used
   // to compute the ordering.
-  bool BlockAMDOrdering(const cholmod_sparse* A,
-                        const std::vector<int>& row_blocks,
-                        const std::vector<int>& col_blocks,
-                        std::vector<int>* ordering);
+  bool BlockOrdering(const cholmod_sparse* A,
+                     int cholmod_ordering_type,
+                     const std::vector<int>& row_blocks,
+                     const std::vector<int>& col_blocks,
+                     std::vector<int>* ordering);
 
   // Find a fill reducing approximate minimum degree
   // ordering. ordering is expected to be large enough to hold the
@@ -220,13 +214,10 @@ class CERES_NO_EXPORT SuiteSparse {
 
   // Nested dissection is only available if SuiteSparse is compiled
   // with Metis support.
-  static bool IsNestedDissectionAvailable() {
-#ifdef CERES_NO_METIS
-    return false;
-#else
-    return true;
-#endif
-  }
+  static bool IsNestedDissectionAvailable();
+
+  // Conver the OrderingType enum to the equivalent CHOLMOD constants.
+  static int OrderingTypeToCHOLMODEnum(OrderingType type);
 
   // Find a fill reducing approximate minimum degree
   // ordering. constraints is an array which associates with each

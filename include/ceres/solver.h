@@ -401,6 +401,23 @@ class CERES_EXPORT Solver {
     // Cholesky factor with O(n) storage, where as a bad ordering will
     // result in an completely dense factor.
     //
+    // So sparse direct solvers like SPARSE_NORMAL_CHOLESKY and SPARSE_SCHUR
+    // use a fill reducing ordering of the columns and rows of the matrix
+    // being factorized before actually computing the numeric factorization.
+    //
+    // This enum controls the type of algorithm used to compute
+    // this fill reducing ordering. There is no single algorithm
+    // that works on all matrices, so determining which algorithm
+    // works better is a matter of empirical experimentation.
+    //
+    // Implementation status.
+    //
+    // AMD works for SUITE_SPARSE, CX_SPARSE, EIGEN_SPARSE & ACCELERATE_SPARSE.
+    //
+    // WARNING: This is WIP, NESDIS support for all the sparse
+    // linear algebra libraries will be added incrementally.
+    LinearSolverOrderingType linear_solver_ordering_type = AMD;
+
     // Ceres allows the user to provide varying amounts of hints to
     // the solver about the variable elimination ordering to use. This
     // can range from no hints, where the solver is free to decide the
@@ -418,15 +435,26 @@ class CERES_EXPORT Solver {
     // associated with it, that determines its order in the set of
     // groups.
     //
-    // Given such an ordering, Ceres ensures that the parameter blocks in
-    // the lowest numbered group are eliminated first, and then the
-    // parameter blocks in the next lowest numbered group and so on. Within
-    // each group, Ceres is free to order the parameter blocks as it
-    // chooses.
+    // The exact interpretation of this information depends on the
+    // values of linear_solver_ordering_type and
+    // linear_solver_type/preconditioner_type.
     //
-    // If nullptr, then all parameter blocks are assumed to be in the
-    // same group and the solver is free to decide the best
-    // ordering.
+    // linear_solver_ordering_type = AMD
+    // ---------------------------------
+    //
+    // if linear_solver_ordering = nullptr, then Ceres assumes that
+    // all parameter blocks are in the same elimination group and uses
+    // the Approximate Minimum Degree algorithm provided by the sparse
+    // linear algebra library to compute a fill reducing ordering.
+    //
+    // TODO(sameeragarwal): Update this section to point out that this
+    // only works with SuiteSparse.
+    //
+    // If linear_solver_order is not null, then Ceres ensures that the
+    // parameter blocks in the lowest numbered group are eliminated
+    // first, and then the parameter blocks in the next lowest
+    // numbered group and so on. Within each group, Ceres is free to
+    // order the parameter blocks as it chooses.
     //
     // e.g. Consider the linear system
     //
@@ -446,6 +474,24 @@ class CERES_EXPORT Solver {
     // heuristics, put all the variables in group 0 and to control the
     // ordering for every variable, create groups 0..N-1, one per
     // variable, in the desired order.
+    //
+    // linear_solver_ordering = NESDIS
+    // -------------------------------
+    //
+    // If linear_solver_type = SPARSE_NORMAL_CHOLESKY or
+    //    linear_solver_type = CGNR
+    //
+    // then the value of linear_solver_ordering is ignored.
+    //
+    // If linear_solver_type = SPARSE_SCHUR or
+    //    linear_solver_type = ITERATIVE_SCHUR
+    //
+    // then if linear_solver_ordering is not null, the parameter
+    // blocks in the lowest numbered group are treated as
+    // landmarks/points and eliminated to compute the Schur
+    // complement. All other groups are ignored and nested dissection
+    // is applied to the corresponding Schur complement matrix or a
+    // subset thereof used that is used as a preconditioner.
     //
     // Bundle Adjustment
     // -----------------
@@ -500,6 +546,8 @@ class CERES_EXPORT Solver {
     // Jacobian matrix and generally speaking, there is no performance
     // penalty for doing so.
 
+    // TODO(sameeragarwal): Remove this
+    //
     // In some rare cases, it is worth using a more complicated
     // reordering algorithm which has slightly better runtime
     // performance at the expense of an extra copy of the Jacobian

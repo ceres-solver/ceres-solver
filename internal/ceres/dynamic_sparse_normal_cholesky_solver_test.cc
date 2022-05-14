@@ -99,6 +99,7 @@ class DynamicSparseNormalCholeskySolverTest : public ::testing::Test {
     options.dynamic_sparsity = true;
     options.sparse_linear_algebra_library_type =
         sparse_linear_algebra_library_type;
+    options.ordering_type = OrderingType::AMD;
     ContextImpl context;
     options.context = &context;
     TestSolver(options, nullptr);
