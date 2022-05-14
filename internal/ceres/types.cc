@@ -124,6 +124,23 @@ bool StringToSparseLinearAlgebraLibraryType(
   return false;
 }
 
+const char* LinearSolverOrderingTypeToString(LinearSolverOrderingType type) {
+  switch (type) {
+    CASESTR(AMD);
+    CASESTR(NESDIS);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+bool StringToLinearSolverOrderingType(string value,
+                                      LinearSolverOrderingType* type) {
+  UpperCase(&value);
+  STRENUM(AMD);
+  STRENUM(NESDIS);
+  return false;
+}
+
 const char* DenseLinearAlgebraLibraryTypeToString(
     DenseLinearAlgebraLibraryType type) {
   switch (type) {
