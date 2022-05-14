@@ -63,7 +63,7 @@ namespace ceres::internal {
 //  CompressedRowSparseMatrix lhs = ...;
 //  std::string message;
 //  CHECK_EQ(sparse_cholesky->Factorize(&lhs, &message),
-//  LinearSolverTerminationType::SUCCESS);
+//           LinearSolverTerminationType::SUCCESS);
 //  Vector rhs = ...;
 //  Vector solution = ...;
 //  CHECK_EQ(sparse_cholesky->Solve(rhs.data(), solution.data(), &message),
