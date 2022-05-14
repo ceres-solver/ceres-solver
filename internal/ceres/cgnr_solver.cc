@@ -80,7 +80,7 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
           options_.subset_preconditioner_start_row_block;
       preconditioner_options.sparse_linear_algebra_library_type =
           options_.sparse_linear_algebra_library_type;
-      preconditioner_options.use_postordering = options_.use_postordering;
+      preconditioner_options.ordering_type = options_.ordering_type;
       preconditioner_options.num_threads = options_.num_threads;
       preconditioner_options.context = options_.context;
       preconditioner_ =
