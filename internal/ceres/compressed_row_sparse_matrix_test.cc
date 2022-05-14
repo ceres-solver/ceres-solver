@@ -66,7 +66,6 @@ static void CompareMatrices(const SparseMatrix* a, const SparseMatrix* b) {
 
     a->RightMultiply(x.data(), y_a.data());
     b->RightMultiply(x.data(), y_b.data());
-
     EXPECT_EQ((y_a - y_b).norm(), 0);
   }
 }
@@ -385,12 +384,12 @@ using Param = ::testing::tuple<CompressedRowSparseMatrix::StorageType>;
 
 static std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   if (::testing::get<0>(info.param) ==
-      CompressedRowSparseMatrix::UPPER_TRIANGULAR) {
+      CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
     return "UPPER";
   }
 
   if (::testing::get<0>(info.param) ==
-      CompressedRowSparseMatrix::LOWER_TRIANGULAR) {
+      CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {
     return "LOWER";
   }
 
@@ -435,10 +434,10 @@ TEST_P(RightMultiplyTest, _) {
       matrix->ToDenseMatrix(&dense);
       Vector expected_y;
       if (::testing::get<0>(param) ==
-          CompressedRowSparseMatrix::UPPER_TRIANGULAR) {
+          CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
         expected_y = dense.selfadjointView<Eigen::Upper>() * x;
       } else if (::testing::get<0>(param) ==
-                 CompressedRowSparseMatrix::LOWER_TRIANGULAR) {
+                 CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {
         expected_y = dense.selfadjointView<Eigen::Lower>() * x;
       } else {
         expected_y = dense * x;
@@ -461,9 +460,9 @@ TEST_P(RightMultiplyTest, _) {
 INSTANTIATE_TEST_SUITE_P(
     CompressedRowSparseMatrix,
     RightMultiplyTest,
-    ::testing::Values(CompressedRowSparseMatrix::LOWER_TRIANGULAR,
-                      CompressedRowSparseMatrix::UPPER_TRIANGULAR,
-                      CompressedRowSparseMatrix::UNSYMMETRIC),
+    ::testing::Values(CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR,
+                      CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR,
+                      CompressedRowSparseMatrix::StorageType::UNSYMMETRIC),
     ParamInfoToString);
 
 class LeftMultiplyTest : public ::testing::TestWithParam<Param> {};
@@ -504,10 +503,10 @@ TEST_P(LeftMultiplyTest, _) {
       matrix->ToDenseMatrix(&dense);
       Vector expected_y;
       if (::testing::get<0>(param) ==
-          CompressedRowSparseMatrix::UPPER_TRIANGULAR) {
+          CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
         expected_y = dense.selfadjointView<Eigen::Upper>() * x;
       } else if (::testing::get<0>(param) ==
-                 CompressedRowSparseMatrix::LOWER_TRIANGULAR) {
+                 CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {
         expected_y = dense.selfadjointView<Eigen::Lower>() * x;
       } else {
         expected_y = dense.transpose() * x;
@@ -530,9 +529,9 @@ TEST_P(LeftMultiplyTest, _) {
 INSTANTIATE_TEST_SUITE_P(
     CompressedRowSparseMatrix,
     LeftMultiplyTest,
-    ::testing::Values(CompressedRowSparseMatrix::LOWER_TRIANGULAR,
-                      CompressedRowSparseMatrix::UPPER_TRIANGULAR,
-                      CompressedRowSparseMatrix::UNSYMMETRIC),
+    ::testing::Values(CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR,
+                      CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR,
+                      CompressedRowSparseMatrix::StorageType::UNSYMMETRIC),
     ParamInfoToString);
 
 class SquaredColumnNormTest : public ::testing::TestWithParam<Param> {};
@@ -569,11 +568,11 @@ TEST_P(SquaredColumnNormTest, _) {
       matrix->ToDenseMatrix(&dense);
       Vector expected;
       if (::testing::get<0>(param) ==
-          CompressedRowSparseMatrix::UPPER_TRIANGULAR) {
+          CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
         const Matrix full = dense.selfadjointView<Eigen::Upper>();
         expected = full.colwise().squaredNorm();
       } else if (::testing::get<0>(param) ==
-                 CompressedRowSparseMatrix::LOWER_TRIANGULAR) {
+                 CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {
         const Matrix full = dense.selfadjointView<Eigen::Lower>();
         expected = full.colwise().squaredNorm();
       } else {
@@ -595,9 +594,9 @@ TEST_P(SquaredColumnNormTest, _) {
 INSTANTIATE_TEST_SUITE_P(
     CompressedRowSparseMatrix,
     SquaredColumnNormTest,
-    ::testing::Values(CompressedRowSparseMatrix::LOWER_TRIANGULAR,
-                      CompressedRowSparseMatrix::UPPER_TRIANGULAR,
-                      CompressedRowSparseMatrix::UNSYMMETRIC),
+    ::testing::Values(CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR,
+                      CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR,
+                      CompressedRowSparseMatrix::StorageType::UNSYMMETRIC),
     ParamInfoToString);
 
 // TODO(sameeragarwal) Add tests for the random matrix creation methods.

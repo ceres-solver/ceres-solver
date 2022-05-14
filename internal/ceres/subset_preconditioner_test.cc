@@ -67,7 +67,8 @@ bool ComputeExpectedSolution(const CompressedRowSparseMatrix& lhs,
                              Vector* solution) {
   Matrix dense_triangular_lhs;
   lhs.ToDenseMatrix(&dense_triangular_lhs);
-  if (lhs.storage_type() == CompressedRowSparseMatrix::UPPER_TRIANGULAR) {
+  if (lhs.storage_type() ==
+      CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
     Matrix full_lhs = dense_triangular_lhs.selfadjointView<Eigen::Upper>();
     return SolveLinearSystemUsingEigen<Eigen::Upper>(full_lhs, rhs, solution);
   }
@@ -120,7 +121,7 @@ class SubsetPreconditionerTest : public ::testing::TestWithParam<Param> {
     // either case the preconditioner matrix is b_' b + D'D.
     b_->AppendRows(*block_diagonal_);
     inner_product_computer_ = InnerProductComputer::Create(
-        *b_, CompressedRowSparseMatrix::UPPER_TRIANGULAR);
+        *b_, CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR);
     inner_product_computer_->Compute();
   }
 

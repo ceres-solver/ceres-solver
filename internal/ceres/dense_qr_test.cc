@@ -93,7 +93,8 @@ TEST_P(DenseQRTest, FactorAndSolve) {
                                                             rhs.data(),
                                                             actual.data(),
                                                             &summary.message);
-        ASSERT_EQ(summary.termination_type, LINEAR_SOLVER_SUCCESS);
+        ASSERT_EQ(summary.termination_type,
+                  LinearSolverTerminationType::SUCCESS);
         ASSERT_NEAR((x - actual).norm() / x.norm(), 0.0, kEpsilon)
             << "\nexpected: " << x.transpose()
             << "\nactual  : " << actual.transpose();

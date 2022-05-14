@@ -83,7 +83,7 @@ class DynamicSparseNormalCholeskySolverTest : public ::testing::Test {
     summary = solver->Solve(
         A_.get(), b_.get(), per_solve_options, actual_solution.data());
 
-    EXPECT_EQ(summary.termination_type, LINEAR_SOLVER_SUCCESS);
+    EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 
     for (int i = 0; i < A_->num_cols(); ++i) {
       EXPECT_NEAR(expected_solution(i), actual_solution(i), 1e-8)

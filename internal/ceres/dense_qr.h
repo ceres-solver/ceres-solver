@@ -91,7 +91,7 @@ class CERES_NO_EXPORT DenseQR {
                                             std::string* message) = 0;
 
   // Convenience method which combines a call to Factorize and Solve. Solve is
-  // only called if Factorize returns LINEAR_SOLVER_SUCCESS.
+  // only called if Factorize returns LinearSolverTerminationType::SUCCESS.
   //
   // The input matrix lhs may be modified by the implementation to store the
   // factorization, irrespective of whether the method succeeds or not. It is
@@ -135,7 +135,8 @@ class CERES_NO_EXPORT LAPACKDenseQR final : public DenseQR {
   double* lhs_ = nullptr;
   int num_rows_;
   int num_cols_;
-  LinearSolverTerminationType termination_type_ = LINEAR_SOLVER_FATAL_ERROR;
+  LinearSolverTerminationType termination_type_ =
+      LinearSolverTerminationType::FATAL_ERROR;
   Vector work_;
   Vector tau_;
   Vector q_transpose_rhs_;
@@ -193,7 +194,8 @@ class CERES_NO_EXPORT CUDADenseQR final : public DenseQR {
   CudaBuffer<int> error_;
   // Cache the result of Factorize to ensure that when Solve is called, the
   // factiorization of lhs is valid.
-  LinearSolverTerminationType factorize_result_ = LINEAR_SOLVER_FATAL_ERROR;
+  LinearSolverTerminationType factorize_result_ =
+      LinearSolverTerminationType::FATAL_ERROR;
 };
 
 #endif  // CERES_NO_CUDA

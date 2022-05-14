@@ -63,7 +63,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
   EventLogger event_logger("SparseNormalCholeskySolver::Solve");
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
-  summary.termination_type = LINEAR_SOLVER_SUCCESS;
+  summary.termination_type = LinearSolverTerminationType::SUCCESS;
   summary.message = "Success.";
 
   const int num_cols = A->num_cols();

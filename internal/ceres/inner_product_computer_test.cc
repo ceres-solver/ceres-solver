@@ -62,7 +62,7 @@ namespace internal {
     EXPECT_EQ(actual_inner_product.rows(), expected_inner_product.rows());   \
     Matrix expected_t, actual_t;                                             \
     if (actual_product_crsm->storage_type() ==                               \
-        CompressedRowSparseMatrix::LOWER_TRIANGULAR) {                       \
+        CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {          \
       expected_t = expected_inner_product.triangularView<Eigen::Upper>();    \
       actual_t = actual_inner_product.triangularView<Eigen::Upper>();        \
     } else {                                                                 \
@@ -128,10 +128,12 @@ TEST(InnerProductComputer, NormalOperation) {
         std::unique_ptr<InnerProductComputer> inner_product_computer;
 
         inner_product_computer = InnerProductComputer::Create(
-            *random_matrix, CompressedRowSparseMatrix::LOWER_TRIANGULAR);
+            *random_matrix,
+            CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR);
         COMPUTE_AND_COMPARE;
         inner_product_computer = InnerProductComputer::Create(
-            *random_matrix, CompressedRowSparseMatrix::UPPER_TRIANGULAR);
+            *random_matrix,
+            CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR);
         COMPUTE_AND_COMPARE;
       }
     }
@@ -205,13 +207,13 @@ TEST(InnerProductComputer, SubMatrix) {
             *random_matrix,
             start_row_block,
             end_row_block,
-            CompressedRowSparseMatrix::LOWER_TRIANGULAR);
+            CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR);
         COMPUTE_AND_COMPARE;
         inner_product_computer = InnerProductComputer::Create(
             *random_matrix,
             start_row_block,
             end_row_block,
-            CompressedRowSparseMatrix::UPPER_TRIANGULAR);
+            CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR);
         COMPUTE_AND_COMPARE;
       }
     }

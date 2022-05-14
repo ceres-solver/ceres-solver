@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2015 Google Inc.% All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -102,9 +102,11 @@ cholmod_sparse SuiteSparse::CreateSparseMatrixTransposeView(
   m.x = reinterpret_cast<void*>(A->mutable_values());
   m.z = nullptr;
 
-  if (A->storage_type() == CompressedRowSparseMatrix::LOWER_TRIANGULAR) {
+  if (A->storage_type() ==
+      CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {
     m.stype = 1;
-  } else if (A->storage_type() == CompressedRowSparseMatrix::UPPER_TRIANGULAR) {
+  } else if (A->storage_type() ==
+             CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
     m.stype = -1;
   } else {
     m.stype = 0;
@@ -281,43 +283,43 @@ LinearSolverTerminationType SuiteSparse::Cholesky(cholmod_sparse* A,
   switch (cc_.status) {
     case CHOLMOD_NOT_INSTALLED:
       *message = "CHOLMOD failure: Method not installed.";
-      return LINEAR_SOLVER_FATAL_ERROR;
+      return LinearSolverTerminationType::FATAL_ERROR;
     case CHOLMOD_OUT_OF_MEMORY:
       *message = "CHOLMOD failure: Out of memory.";
-      return LINEAR_SOLVER_FATAL_ERROR;
+      return LinearSolverTerminationType::FATAL_ERROR;
     case CHOLMOD_TOO_LARGE:
       *message = "CHOLMOD failure: Integer overflow occurred.";
-      return LINEAR_SOLVER_FATAL_ERROR;
+      return LinearSolverTerminationType::FATAL_ERROR;
     case CHOLMOD_INVALID:
       *message = "CHOLMOD failure: Invalid input.";
-      return LINEAR_SOLVER_FATAL_ERROR;
+      return LinearSolverTerminationType::FATAL_ERROR;
     case CHOLMOD_NOT_POSDEF:
       *message = "CHOLMOD warning: Matrix not positive definite.";
-      return LINEAR_SOLVER_FAILURE;
+      return LinearSolverTerminationType::FAILURE;
     case CHOLMOD_DSMALL:
       *message =
           "CHOLMOD warning: D for LDL' or diag(L) or "
           "LL' has tiny absolute value.";
-      return LINEAR_SOLVER_FAILURE;
+      return LinearSolverTerminationType::FAILURE;
     case CHOLMOD_OK:
       if (cholmod_status != 0) {
-        return LINEAR_SOLVER_SUCCESS;
+        return LinearSolverTerminationType::SUCCESS;
       }
 
       *message =
           "CHOLMOD failure: cholmod_factorize returned false "
           "but cholmod_common::status is CHOLMOD_OK."
           "Please report this to ceres-solver@googlegroups.com.";
-      return LINEAR_SOLVER_FATAL_ERROR;
+      return LinearSolverTerminationType::FATAL_ERROR;
     default:
       *message = StringPrintf(
           "Unknown cholmod return code: %d. "
           "Please report this to ceres-solver@googlegroups.com.",
           cc_.status);
-      return LINEAR_SOLVER_FATAL_ERROR;
+      return LinearSolverTerminationType::FATAL_ERROR;
   }
 
-  return LINEAR_SOLVER_FATAL_ERROR;
+  return LinearSolverTerminationType::FATAL_ERROR;
 }
 
 cholmod_dense* SuiteSparse::Solve(cholmod_factor* L,
@@ -369,13 +371,13 @@ LinearSolverTerminationType SuiteSparseCholesky::Factorize(
     CompressedRowSparseMatrix* lhs, string* message) {
   if (lhs == nullptr) {
     *message = "Failure: Input lhs is nullptr.";
-    return LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
 
   cholmod_sparse cholmod_lhs = ss_.CreateSparseMatrixTransposeView(lhs);
 
   if (factor_ == nullptr) {
-    if (ordering_type_ == NATURAL) {
+    if (ordering_type_ == OrderingType::NATURAL) {
       factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&cholmod_lhs, message);
     } else {
       if (!lhs->col_blocks().empty() && !(lhs->row_blocks().empty())) {
@@ -387,7 +389,7 @@ LinearSolverTerminationType SuiteSparseCholesky::Factorize(
     }
 
     if (factor_ == nullptr) {
-      return LINEAR_SOLVER_FATAL_ERROR;
+      return LinearSolverTerminationType::FATAL_ERROR;
     }
   }
 
@@ -396,9 +398,9 @@ LinearSolverTerminationType SuiteSparseCholesky::Factorize(
 
 CompressedRowSparseMatrix::StorageType SuiteSparseCholesky::StorageType()
     const {
-  return ((ordering_type_ == NATURAL)
-              ? CompressedRowSparseMatrix::UPPER_TRIANGULAR
-              : CompressedRowSparseMatrix::LOWER_TRIANGULAR);
+  return ((ordering_type_ == OrderingType::NATURAL)
+              ? CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR
+              : CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR);
 }
 
 LinearSolverTerminationType SuiteSparseCholesky::Solve(const double* rhs,
@@ -407,7 +409,7 @@ LinearSolverTerminationType SuiteSparseCholesky::Solve(const double* rhs,
   // Error checking
   if (factor_ == nullptr) {
     *message = "Solve called without a call to Factorize first.";
-    return LINEAR_SOLVER_FATAL_ERROR;
+    return LinearSolverTerminationType::FATAL_ERROR;
   }
 
   const int num_cols = factor_->n;
@@ -416,12 +418,12 @@ LinearSolverTerminationType SuiteSparseCholesky::Solve(const double* rhs,
       ss_.Solve(factor_, &cholmod_rhs, message);
 
   if (cholmod_dense_solution == nullptr) {
-    return LINEAR_SOLVER_FAILURE;
+    return LinearSolverTerminationType::FAILURE;
   }
 
   memcpy(solution, cholmod_dense_solution->x, num_cols * sizeof(*solution));
   ss_.Free(cholmod_dense_solution);
-  return LINEAR_SOLVER_SUCCESS;
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 }  // namespace ceres::internal

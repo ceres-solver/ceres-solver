@@ -122,7 +122,7 @@ class SchurComplementSolverTest : public ::testing::Test {
     }
 
     summary = solver->Solve(A.get(), b.get(), per_solve_options, x.data());
-    EXPECT_EQ(summary.termination_type, LINEAR_SOLVER_SUCCESS);
+    EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 
     if (regularization) {
       ASSERT_NEAR((sol_d - x).norm() / num_cols, 0, 1e-10)
