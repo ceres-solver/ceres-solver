@@ -62,10 +62,9 @@ constexpr char kVersion[] =
   "-suitesparse-(" CERES_SUITESPARSE_VERSION ")"
 #endif
 
-// TODO(sergiud) Capture METIS version
-// #ifndef CERES_NO_METIS
-//   "-metis-(" CERES_METIS_VERSION ")"
-// #endif
+#ifndef CERES_NO_METIS
+  "-metis-(" CERES_METIS_VERSION ")"
+#endif
 
 #ifndef CERES_NO_ACCELERATE_SPARSE
   "-acceleratesparse"
