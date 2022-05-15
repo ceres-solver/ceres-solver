@@ -118,6 +118,10 @@ if (SUITESPARSE AND SuiteSparse_FOUND)
   add_definitions(-DCERES_SUITESPARSE_VERSION="${SuiteSparse_VERSION}")
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES SuiteSparse::CHOLMOD
     SuiteSparse::SPQR)
+
+  if (SuiteSparse_Partition_FOUND)
+    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES SuiteSparse::Partition)
+  endif (SuiteSparse_Partition_FOUND)
 endif (SUITESPARSE AND SuiteSparse_FOUND)
 
 if (CXSPARSE AND CXSparse_FOUND)

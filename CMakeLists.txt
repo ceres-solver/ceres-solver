@@ -266,7 +266,8 @@ if (SUITESPARSE)
   # built with SuiteSparse support.
 
   # Check for SuiteSparse and dependencies.
-  find_package(SuiteSparse 4.5.6 COMPONENTS CHOLMOD SPQR)
+  find_package(SuiteSparse 4.5.6 COMPONENTS CHOLMOD SPQR
+    OPTIONAL_COMPONENTS Partition)
   if (SuiteSparse_FOUND)
     set(SuiteSparse_DEPENDENCY "find_dependency(SuiteSparse ${SuiteSparse_VERSION})")
     # By default, if all of SuiteSparse's dependencies are found, Ceres is
@@ -290,6 +291,10 @@ else (SUITESPARSE)
   message("-- Building without SuiteSparse.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE)
 endif (SUITESPARSE)
+
+if (NOT SuiteSparse_Partition_FOUND)
+  list (APPEND CERES_COMPILE_OPTIONS CERES_NO_METIS)
+endif (NOT SuiteSparse_Partition_FOUND)
 
 # CXSparse.
 if (CXSPARSE)
