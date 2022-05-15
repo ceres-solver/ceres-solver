@@ -36,7 +36,7 @@
 
 #include <sstream>
 
-#ifndef CERES_NO_METIS
+#ifndef CERES_NO_EIGEN_METIS
 #include <iostream>  // This is needed because MetisSupport depends on iostream.
 
 #include "Eigen/MetisSupport"
@@ -157,7 +157,7 @@ std::unique_ptr<SparseCholesky> EigenSparseCholesky::Create(
 
   if (ordering_type == OrderingType::AMD) {
     return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
-#ifndef CERES_NO_METIS
+#ifndef CERES_NO_EIGEN_METIS
   } else if (ordering_type == OrderingType::NESDIS) {
     using WithMetisOrdering = Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
                                                     Eigen::Upper,
@@ -190,7 +190,7 @@ std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
                             Eigen::NaturalOrdering<int>>;
   if (ordering_type == OrderingType::AMD) {
     return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
-#ifndef CERES_NO_METIS
+#ifndef CERES_NO_EIGEN_METIS
   } else if (ordering_type == OrderingType::NESDIS) {
     using WithMetisOrdering = Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
                                                     Eigen::Upper,

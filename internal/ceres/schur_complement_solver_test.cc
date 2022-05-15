@@ -215,7 +215,7 @@ TEST_F(SchurComplementSolverTest, SparseSchurWithSuiteSparseLargeProblemAMD) {
       3, true, SPARSE_SCHUR, EIGEN, SUITE_SPARSE, OrderingType::AMD);
 }
 
-#ifndef CERES_NO_METIS
+#ifndef CERES_NO_EIGEN_METIS
 TEST_F(SchurComplementSolverTest,
        SparseSchurWithSuiteSparseSmallProblemNESDIS) {
   ComputeAndCompareSolutions(
@@ -230,7 +230,7 @@ TEST_F(SchurComplementSolverTest,
   ComputeAndCompareSolutions(
       3, true, SPARSE_SCHUR, EIGEN, SUITE_SPARSE, OrderingType::NESDIS);
 }
-#endif  // CERES_NO_METIS
+#endif  // CERES_NO_EIGEN_METIS
 #endif  // CERES_NO_SUITESPARSE
 
 #ifndef CERES_NO_ACCELERATE_SPARSE
@@ -275,7 +275,7 @@ TEST_F(SchurComplementSolverTest, SparseSchurWithEigenSparseSmallProblemAMD) {
       2, true, SPARSE_SCHUR, EIGEN, EIGEN_SPARSE, OrderingType::AMD);
 }
 
-#ifndef CERES_NO_METIS
+#ifndef CERES_NO_EIGEN_METIS
 TEST_F(SchurComplementSolverTest,
        SparseSchurWithEigenSparseSmallProblemNESDIS) {
   ComputeAndCompareSolutions(
@@ -300,7 +300,7 @@ TEST_F(SchurComplementSolverTest, SparseSchurWithEigenSparseLargeProblemAMD) {
       3, true, SPARSE_SCHUR, EIGEN, EIGEN_SPARSE, OrderingType::AMD);
 }
 
-#ifndef CERES_NO_METIS
+#ifndef CERES_NO_EIGEN_METIS
 TEST_F(SchurComplementSolverTest,
        SparseSchurWithEigenSparseLargeProblemNESDIS) {
   ComputeAndCompareSolutions(

@@ -203,15 +203,16 @@ def ceres_library(name,
         # part of a Skylark Ceres target macro.
         # https://github.com/ceres-solver/ceres-solver/issues/396
         defines = [
-            "CERES_NO_SUITESPARSE",
-            "CERES_NO_METIS",
-            "CERES_NO_ACCELERATE_SPARSE",
-            "CERES_NO_LAPACK",
-            "CERES_USE_EIGEN_SPARSE",
-            "CERES_USE_CXX_THREADS",
-            "CERES_NO_CUDA",
             "CERES_EXPORT=",
+            "CERES_NO_ACCELERATE_SPARSE",
+            "CERES_NO_CHOLMOD_PARTITION",
+            "CERES_NO_CUDA",
+            "CERES_NO_EIGEN_METIS",
             "CERES_NO_EXPORT=",
+            "CERES_NO_LAPACK",
+            "CERES_NO_SUITESPARSE",
+            "CERES_USE_CXX_THREADS",
+            "CERES_USE_EIGEN_SPARSE",
         ],
         includes = [
             "config",

@@ -51,7 +51,7 @@
 
 #ifdef CERES_USE_EIGEN_SPARSE
 
-#ifndef CERES_NO_METIS
+#ifndef CERES_NO_EIGEN_METIS
 #include <iostream>  // Need this because MetisSupport refers to std::cerr.
 
 #include "Eigen/MetisSupport"
@@ -191,7 +191,7 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
     Eigen::AMDOrdering<int> amd_ordering;
     amd_ordering(block_hessian, perm);
   } else {
-#ifndef CERES_NO_METIS
+#ifndef CERES_NO_EIGEN_METIS
     Eigen::MetisOrdering<int> metis_ordering;
     metis_ordering(block_hessian, perm);
 #else
@@ -400,7 +400,7 @@ static void ReorderSchurComplementColumnsUsingEigen(
     Eigen::AMDOrdering<int> amd_ordering;
     amd_ordering(block_schur_complement, perm);
   } else {
-#ifndef CERES_NO_METIS
+#ifndef CERES_NO_EIGEN_METIS
     Eigen::MetisOrdering<int> metis_ordering;
     metis_ordering(block_schur_complement, perm);
 #else

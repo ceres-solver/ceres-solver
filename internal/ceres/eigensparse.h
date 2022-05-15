@@ -51,7 +51,7 @@ namespace ceres::internal {
 class EigenSparse {
  public:
   static constexpr bool IsNestedDissectionAvailable() noexcept {
-#ifdef CERES_NO_METIS
+#ifdef CERES_NO_EIGEN_METIS
     return false;
 #else
     return true;
