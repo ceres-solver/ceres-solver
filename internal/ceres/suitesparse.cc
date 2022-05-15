@@ -345,7 +345,7 @@ bool SuiteSparse::Ordering(cholmod_sparse* matrix,
     return cholmod_amd(matrix, nullptr, 0, ordering, &cc_);
   }
 
-#ifdef CERES_NO_METIS
+#ifdef CERES_NO_CHOLMOD_PARTITION
   return false;
 #else
   std::vector<int> CParent(matrix->nrow, 0);
@@ -361,7 +361,7 @@ bool SuiteSparse::ConstrainedApproximateMinimumDegreeOrdering(
 }
 
 bool SuiteSparse::IsNestedDissectionAvailable() {
-#ifdef CERES_NO_METIS
+#ifdef CERES_NO_CHOLMOD_PARTITION
   return false;
 #else
   return true;
