@@ -48,6 +48,7 @@ jobs:
             gflags \
             glog \
             google-benchmark \
+            metis \
             ninja \
             suite-sparse
 

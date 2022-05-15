@@ -31,7 +31,6 @@
 #include "ceres/reorder_program.h"
 
 #include <algorithm>
-#include <iostream>  // Need this because MetisSupport refers to std::cerr.
 #include <memory>
 #include <numeric>
 #include <vector>
@@ -51,8 +50,12 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 
-#ifdef CERES_USE_EIGEN_SPARSE
+#ifndef CERES_NO_METIS
+#include <iostream>  // Need this because MetisSupport refers to std::cerr.
+
 #include "Eigen/MetisSupport"
+#endif
+#ifdef CERES_USE_EIGEN_SPARSE
 #include "Eigen/OrderingMethods"
 #endif
 
@@ -218,10 +221,10 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
     amd_ordering(block_hessian, perm);
   } else {
 #ifndef CERES_NO_METIS
-    perm.setIdentity(block_hessian.rows());
-#else
     Eigen::MetisOrdering<int> metis_ordering;
     metis_ordering(block_hessian, perm);
+#else
+    perm.setIdentity(block_hessian.rows());
 #endif
   }
 
@@ -427,10 +430,10 @@ static void ReorderSchurComplementColumnsUsingEigen(
     amd_ordering(block_schur_complement, perm);
   } else {
 #ifndef CERES_NO_METIS
-    perm.setIdentity(block_schur_complement.rows());
-#else
     Eigen::MetisOrdering<int> metis_ordering;
     metis_ordering(block_schur_complement, perm);
+#else
+    perm.setIdentity(block_schur_complement.rows());
 #endif
   }
 
