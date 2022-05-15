@@ -34,10 +34,14 @@
 
 #ifdef CERES_USE_EIGEN_SPARSE
 
-#include <iostream>  // This is needed because MetisSupport depends on iostream.
 #include <sstream>
 
+#ifndef CERES_NO_METIS
+#include <iostream>  // This is needed because MetisSupport depends on iostream.
+
 #include "Eigen/MetisSupport"
+#endif
+
 #include "Eigen/SparseCholesky"
 #include "Eigen/SparseCore"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -146,9 +150,6 @@ std::unique_ptr<SparseCholesky> EigenSparseCholesky::Create(
   using WithAMDOrdering = Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
                                                 Eigen::Upper,
                                                 Eigen::AMDOrdering<int>>;
-  using WithMetisOrdering = Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
-                                                  Eigen::Upper,
-                                                  Eigen::MetisOrdering<int>>;
   using WithNaturalOrdering =
       Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
                             Eigen::Upper,
@@ -158,6 +159,9 @@ std::unique_ptr<SparseCholesky> EigenSparseCholesky::Create(
     return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
 #ifndef CERES_NO_METIS
   } else if (ordering_type == OrderingType::NESDIS) {
+    using WithMetisOrdering = Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
+                                                    Eigen::Upper,
+                                                    Eigen::MetisOrdering<int>>;
     return std::make_unique<EigenSparseCholeskyTemplate<WithMetisOrdering>>();
   }
 #else
@@ -179,9 +183,6 @@ std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
   using WithAMDOrdering = Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
                                                 Eigen::Upper,
                                                 Eigen::AMDOrdering<int>>;
-  using WithMetisOrdering = Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
-                                                  Eigen::Upper,
-                                                  Eigen::MetisOrdering<int>>;
   using WithNaturalOrdering =
       Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
                             Eigen::Upper,
@@ -190,6 +191,9 @@ std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
     return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
 #ifndef CERES_NO_METIS
   } else if (ordering_type == OrderingType::NESDIS) {
+    using WithMetisOrdering = Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
+                                                    Eigen::Upper,
+                                                    Eigen::MetisOrdering<int>>;
     return std::make_unique<EigenSparseCholeskyTemplate<WithMetisOrdering>>();
   }
 #else

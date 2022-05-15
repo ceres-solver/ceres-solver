@@ -80,6 +80,8 @@
 @CERES_USE_OPENMP@
 // If defined Ceres was compiled with modern C++ multithreading.
 @CERES_USE_CXX_THREADS@
+// If defined Ceres was compiled without SuiteSparse Partition module.
+@CERES_NO_METIS@
 
 // If defined, Ceres was compiled with a version MSVC >= 2005 which
 // deprecated the standard POSIX names for bessel functions, replacing them
