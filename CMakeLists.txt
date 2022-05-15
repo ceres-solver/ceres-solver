@@ -266,7 +266,8 @@ if (SUITESPARSE)
   # built with SuiteSparse support.
 
   # Check for SuiteSparse and dependencies.
-  find_package(SuiteSparse 4.5.6 COMPONENTS CHOLMOD SPQR)
+  find_package(SuiteSparse 4.5.6 COMPONENTS CHOLMOD SPQR
+    OPTIONAL_COMPONENTS Partition)
   if (SuiteSparse_FOUND)
     set(SuiteSparse_DEPENDENCY "find_dependency(SuiteSparse ${SuiteSparse_VERSION})")
     # By default, if all of SuiteSparse's dependencies are found, Ceres is
@@ -290,6 +291,19 @@ else (SUITESPARSE)
   message("-- Building without SuiteSparse.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE)
 endif (SUITESPARSE)
+
+if (SuiteSparse_Partition_FOUND)
+  # NOTE METIS is a private (i.e., non transitive) dependency of SuiteSparse.
+  # Therefore, METIS includes are not necessarily made visible to Ceres. Aside
+  # from that, METIS is a direct dependency of Ceres and thus must be included
+  # explicitly either way.
+  find_package (METIS REQUIRED)
+  # While METIS is a private dependency, we still need to access the
+  # link-only METIS::METIS target.
+  set(METIS_DEPENDENCY "find_dependency(METIS ${METIS_VERSION})")
+else (SuiteSparse_Partition_FOUND)
+  list (APPEND CERES_COMPILE_OPTIONS CERES_NO_METIS)
+endif (SuiteSparse_Partition_FOUND)
 
 # CXSparse.
 if (CXSPARSE)

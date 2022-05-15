@@ -180,6 +180,7 @@ find_dependency(Threads)
 
 # Optional dependencies
 @CXSparse_DEPENDENCY@
+@METIS_DEPENDENCY@
 @SuiteSparse_DEPENDENCY@
 
 # As imported CMake targets are not re-exported when a dependent target is
