@@ -46,6 +46,7 @@ jobs:
             libgflags-dev \
             libgoogle-glog-dev \
             liblapack-dev \
+            libmetis-dev \
             libsuitesparse-dev \
             ninja-build
 

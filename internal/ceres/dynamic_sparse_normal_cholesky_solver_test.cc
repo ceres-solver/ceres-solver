@@ -117,7 +117,7 @@ TEST_F(DynamicSparseNormalCholeskySolverTest, SuiteSparseAMD) {
   TestSolver(SUITE_SPARSE, OrderingType::AMD);
 }
 
-#ifndef CERES_NO_METIS
+#ifndef CERES_NO_CHOLMOD_PARTITION
 TEST_F(DynamicSparseNormalCholeskySolverTest, SuiteSparseNESDIS) {
   TestSolver(SUITE_SPARSE, OrderingType::NESDIS);
 }
@@ -129,7 +129,7 @@ TEST_F(DynamicSparseNormalCholeskySolverTest, EigenAMD) {
   TestSolver(EIGEN_SPARSE, OrderingType::AMD);
 }
 
-#ifndef CERES_NO_METIS
+#ifndef CERES_NO_EIGEN_METIS
 TEST_F(DynamicSparseNormalCholeskySolverTest, EigenNESDIS) {
   TestSolver(EIGEN_SPARSE, OrderingType::NESDIS);
 }
