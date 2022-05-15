@@ -120,6 +120,16 @@ if (SUITESPARSE AND SuiteSparse_FOUND)
     SuiteSparse::SPQR)
 endif (SUITESPARSE AND SuiteSparse_FOUND)
 
+if (PARTITION AND SuiteSparse_Partition_FOUND)
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES SuiteSparse::Partition)
+endif (PARTITION AND SuiteSparse_Partition_FOUND)
+
+if (METIS AND METIS_FOUND)
+  # Define version information for use in Solver::FullReport.
+  add_definitions(-DCERES_METIS_VERSION="${METIS_VERSION}")
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES METIS::METIS)
+endif (METIS AND METIS_FOUND)
+
 if (ACCELERATESPARSE AND AccelerateSparse_FOUND)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${AccelerateSparse_LIBRARIES})
 endif()

@@ -119,7 +119,9 @@ read_ceres_version_from_source(${Ceres_SOURCE_DIR})
 enable_testing()
 
 include(CeresThreadingModels)
+include(CMakeDependentOption)
 include(PrettyPrintCMakeList)
+
 find_available_ceres_threading_models(CERES_THREADING_MODELS_AVAILABLE)
 pretty_print_cmake_list(PRETTY_CERES_THREADING_MODELS_AVAILABLE
   ${CERES_THREADING_MODELS_AVAILABLE})
@@ -145,6 +147,9 @@ if (APPLE)
 endif()
 option(CUDA "Enable use of CUDA linear algebra solvers." ON)
 option(LAPACK "Enable use of LAPACK directly within Ceres." ON)
+option(METIS "Enable Eigen METIS support." ON)
+cmake_dependent_option(PARTITION "Enable SuiteSparse Partition support." ON
+  SUITESPARSE OFF)
 # Template specializations for the Schur complement based solvers. If
 # compile time, binary size or compiler performance is an issue, you
 # may consider disabling this.
@@ -265,7 +270,8 @@ if (SUITESPARSE)
   # built with SuiteSparse support.
 
   # Check for SuiteSparse and dependencies.
-  find_package(SuiteSparse 4.5.6 COMPONENTS CHOLMOD SPQR)
+  find_package(SuiteSparse 4.5.6 COMPONENTS CHOLMOD SPQR
+    OPTIONAL_COMPONENTS Partition)
   if (SuiteSparse_FOUND)
     set(SuiteSparse_DEPENDENCY "find_dependency(SuiteSparse ${SuiteSparse_VERSION})")
     # By default, if all of SuiteSparse's dependencies are found, Ceres is
@@ -289,6 +295,28 @@ else (SUITESPARSE)
   message("-- Building without SuiteSparse.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE)
 endif (SUITESPARSE)
+
+if (NOT PARTITION OR NOT SuiteSparse_Partition_FOUND)
+  list (APPEND CERES_COMPILE_OPTIONS CERES_NO_PARTITION)
+endif (NOT PARTITION OR NOT SuiteSparse_Partition_FOUND)
+
+if (METIS)
+  find_package (METIS)
+  if (METIS_FOUND)
+    # While METIS is a private dependency, we still need to access the
+    # link-only METIS::METIS target.
+    set(METIS_DEPENDENCY "find_dependency(METIS ${METIS_VERSION})")
+    # METIS find module must be installed unless a package config is being used.
+    if (NOT METIS_DIR)
+      install(FILES ${Ceres_SOURCE_DIR}/cmake/FindMETIS.cmake
+              DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
+    endif (NOT METIS_DIR)
+  endif (METIS_FOUND)
+endif (METIS)
+
+if (NOT METIS OR NOT METIS_FOUND)
+  list (APPEND CERES_COMPILE_OPTIONS CERES_NO_METIS)
+endif (NOT METIS OR NOT METIS_FOUND)
 
 if (ACCELERATESPARSE)
   find_package(AccelerateSparse)
