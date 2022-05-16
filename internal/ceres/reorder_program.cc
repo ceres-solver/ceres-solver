@@ -120,10 +120,9 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
   cholmod_sparse* block_jacobian_transpose = ss.CreateSparseMatrix(
       const_cast<TripletSparseMatrix*>(&tsm_block_jacobian_transpose));
 
-  // No CAMD or the user did not supply a useful ordering, then just
-  // use regular AMD.
-  if (parameter_block_ordering.NumGroups() <= 1 ||
-      !SuiteSparse::IsConstrainedApproximateMinimumDegreeOrderingAvailable()) {
+  // If the user did not supply a useful ordering, then just use
+  // regular AMD.
+  if (parameter_block_ordering.NumGroups() <= 1) {
     ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose, &ordering[0]);
   } else {
     vector<int> constraints;
@@ -331,10 +330,6 @@ static void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
     const ParameterBlockOrdering& parameter_block_ordering, Program* program) {
 #ifndef CERES_NO_SUITESPARSE
   SuiteSparse ss;
-  if (!SuiteSparse::IsConstrainedApproximateMinimumDegreeOrderingAvailable()) {
-    return;
-  }
-
   vector<int> constraints;
   vector<ParameterBlock*>& parameter_blocks =
       *(program->mutable_parameter_blocks());
