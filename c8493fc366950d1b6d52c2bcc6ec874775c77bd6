@@ -16,6 +16,29 @@
       "message": "Merging.",
       "revId": "c8493fc366950d1b6d52c2bcc6ec874775c77bd6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cbdee2a_44ce69d8",
+        "filename": "internal/ceres/sparse_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2022-05-16T19:50:35Z",
+      "side": 1,
+      "message": "Aligning this under \"sparse\" would be ideal, if you haven\u0027t already hit \"submit\".",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 31
+      },
+      "revId": "c8493fc366950d1b6d52c2bcc6ec874775c77bd6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
