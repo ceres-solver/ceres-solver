@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c56c40e8_7bf3d1ca",
+        "filename": "internal/ceres/sparse_cholesky.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2022-05-16T19:41:49Z",
+      "side": 1,
+      "message": "This got reflowed.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "563af426ca204b3c77e299b8a1f25c798141aeeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2020b10d_e8189d3d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2022-05-16T19:41:49Z",
+      "side": 1,
+      "message": "Stray %.",
+      "range": {
+        "startLine": 2,
+        "startChar": 29,
+        "endLine": 2,
+        "endChar": 30
+      },
+      "revId": "563af426ca204b3c77e299b8a1f25c798141aeeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
