@@ -227,21 +227,15 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
 
     if (options.linear_solver_type == SPARSE_SCHUR) {
       // When using SPARSE_SCHUR, we ignore the user's postordering
-      // preferences in certain cases.
-      //
-      // 1. SUITE_SPARSE is the sparse linear algebra library requested
-      //    but cholmod_camd is not available.
-      // 2. CX_SPARSE is the sparse linear algebra library requested.
+      // preferences if CX_SPARSE is the sparse linear algebra
+      // backend.
       //
       // This ensures that the linear solver does not assume that a
       // fill-reducing pre-ordering has been done.
       //
       // TODO(sameeragarwal): Implement the reordering of parameter
       // blocks for CX_SPARSE.
-      if ((options.sparse_linear_algebra_library_type == SUITE_SPARSE &&
-           !SuiteSparse::
-               IsConstrainedApproximateMinimumDegreeOrderingAvailable()) ||
-          (options.sparse_linear_algebra_library_type == CX_SPARSE)) {
+      if (options.sparse_linear_algebra_library_type == CX_SPARSE) {
         pp->linear_solver_options.use_postordering = true;
       }
     }

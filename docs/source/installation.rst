@@ -68,7 +68,7 @@ optional. For details on customizing the build process, see
   examples and tests and usually a dependency for glog.
 
 - `SuiteSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_
-  4.0 or later. Needed for solving large sparse linear
+  4.5.6 or later. Needed for solving large sparse linear
   systems. **Optional; strongly recommended for large scale bundle
   adjustment**
 
