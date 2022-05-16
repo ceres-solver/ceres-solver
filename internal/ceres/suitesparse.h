@@ -49,28 +49,6 @@
 #include "cholmod.h"
 #include "glog/logging.h"
 
-// Before SuiteSparse version 4.2.0, cholmod_camd was only enabled
-// if SuiteSparse was compiled with Metis support. This makes
-// calling and linking into cholmod_camd problematic even though it
-// has nothing to do with Metis. This has been fixed reliably in
-// 4.2.0.
-//
-// The fix was actually committed in 4.1.0, but there is
-// some confusion about a silent update to the tar ball, so we are
-// being conservative and choosing the next minor version where
-// things are stable.
-#if (SUITESPARSE_VERSION < 4002)
-#define CERES_NO_CAMD
-#endif
-
-// UF_long is deprecated but SuiteSparse_long is only available in
-// newer versions of SuiteSparse. So for older versions of
-// SuiteSparse, we define SuiteSparse_long to be the same as UF_long,
-// which is what recent versions of SuiteSparse do anyways.
-#ifndef SuiteSparse_long
-#define SuiteSparse_long UF_long
-#endif
-
 #include "ceres/internal/disable_warnings.h"
 
 namespace ceres::internal {
@@ -240,20 +218,6 @@ class CERES_NO_EXPORT SuiteSparse {
   // Find a fill reducing ordering using nested dissection.
   bool NestedDissectionOrdering(cholmod_sparse* matrix, int* ordering);
 
-  // Before SuiteSparse version 4.2.0, cholmod_camd was only enabled
-  // if SuiteSparse was compiled with Metis support. This makes
-  // calling and linking into cholmod_camd problematic even though it
-  // has nothing to do with Metis. This has been fixed reliably in
-  // 4.2.0.
-  //
-  // The fix was actually committed in 4.1.0, but there is
-  // some confusion about a silent update to the tar ball, so we are
-  // being conservative and choosing the next minor version where
-  // things are stable.
-  static bool IsConstrainedApproximateMinimumDegreeOrderingAvailable() {
-    return (SUITESPARSE_VERSION > 4001);
-  }
-
   // Nested dissection is only available if SuiteSparse is compiled
   // with Metis support.
   static bool IsNestedDissectionAvailable() {
@@ -274,9 +238,6 @@ class CERES_NO_EXPORT SuiteSparse {
   // Calling ApproximateMinimumDegreeOrdering is equivalent to calling
   // ConstrainedApproximateMinimumDegreeOrdering with a constraint
   // array that puts all columns in the same elimination group.
-  //
-  // If CERES_NO_CAMD is defined then calling this function will
-  // result in a crash.
   bool ConstrainedApproximateMinimumDegreeOrdering(cholmod_sparse* matrix,
                                                    int* constraints,
                                                    int* ordering);
@@ -339,17 +300,6 @@ namespace internal {
 
 class CERES_NO_EXPORT SuiteSparse {
  public:
-  // Defining this static function even when SuiteSparse is not
-  // available, allows client code to check for the presence of CAMD
-  // without checking for the absence of the CERES_NO_CAMD symbol.
-  //
-  // This is safer because the symbol maybe missing due to a user
-  // accidentally not including suitesparse.h in their code when
-  // checking for the symbol.
-  static bool IsConstrainedApproximateMinimumDegreeOrderingAvailable() {
-    return false;
-  }
-
   void Free(void* /*arg*/) {}
 };
 

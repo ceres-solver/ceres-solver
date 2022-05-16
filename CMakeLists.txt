@@ -266,7 +266,7 @@ if (SUITESPARSE)
   # built with SuiteSparse support.
 
   # Check for SuiteSparse and dependencies.
-  find_package(SuiteSparse 4.0 COMPONENTS CHOLMOD SPQR)
+  find_package(SuiteSparse 4.5.6 COMPONENTS CHOLMOD SPQR)
   if (SuiteSparse_FOUND)
     set(SuiteSparse_DEPENDENCY "find_dependency(SuiteSparse ${SuiteSparse_VERSION})")
     # By default, if all of SuiteSparse's dependencies are found, Ceres is
