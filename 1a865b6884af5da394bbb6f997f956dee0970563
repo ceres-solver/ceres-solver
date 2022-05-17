@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98b0a1a6_74c6f172",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-05-17T20:41:39Z",
+      "side": 1,
+      "message": "I\u0027m really looking forward to this landing!",
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "794265d5_ddf31873",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-05-17T20:41:39Z",
+      "side": 1,
+      "message": "In a couple test files we set the ordering which repeats this code.  Should we use StringToLinearSolverOrderingType?",
+      "range": {
+        "startLine": 182,
+        "startChar": 1,
+        "endLine": 188,
+        "endChar": 3
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b14eca8f_128bbf79",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-05-17T20:41:39Z",
+      "side": 1,
+      "message": "nit: You can remove \u0027so\u0027 to have it read better.",
+      "range": {
+        "startLine": 404,
+        "startChar": 7,
+        "endLine": 404,
+        "endChar": 9
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c187b11_dec631b2",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-05-17T20:41:39Z",
+      "side": 1,
+      "message": "nit: \u0027actually\u0027 is superfluous and can be removed.",
+      "range": {
+        "startLine": 406,
+        "startChar": 50,
+        "endLine": 406,
+        "endChar": 58
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5af53590_2ac052df",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-05-17T20:41:39Z",
+      "side": 1,
+      "message": "the mentioning of the landmarks/points seems to be out of place. I think you can eliminate and maintain the same meaining.",
+      "range": {
+        "startLine": 494,
+        "startChar": 43,
+        "endLine": 495,
+        "endChar": 28
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fbb99fe_9fb99edc",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-05-17T20:41:39Z",
+      "side": 1,
+      "message": "nit: remove",
+      "range": {
+        "startLine": 187,
+        "startChar": 26,
+        "endLine": 187,
+        "endChar": 28
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae2cdc94_0bbad8e5",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-05-17T20:41:39Z",
+      "side": 1,
+      "message": "nit: can remove",
+      "range": {
+        "startLine": 196,
+        "startChar": 46,
+        "endLine": 196,
+        "endChar": 54
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ac3b42a_94c5c121",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-05-17T20:41:39Z",
+      "side": 1,
+      "message": "this should be ordering_type",
+      "range": {
+        "startLine": 103,
+        "startChar": 28,
+        "endLine": 103,
+        "endChar": 45
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c5f122b_7f04e137",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-05-17T20:41:39Z",
+      "side": 1,
+      "message": "Might read better with a switch.",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 4
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2265b6fa_82fa71d5",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-05-17T20:41:39Z",
+      "side": 1,
+      "message": "Just flagging this just in case you wanted to do this in this CL.",
+      "range": {
+        "startLine": 757,
+        "startChar": 4,
+        "endLine": 757,
+        "endChar": 28
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28a808e0_5089e103",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-05-17T20:41:39Z",
+      "side": 1,
+      "message": "nit: this has some weird double spaces between words",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 193,
+        "endChar": 70
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
