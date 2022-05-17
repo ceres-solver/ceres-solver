@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eaa268d_5a02f8b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-17T21:55:14Z",
+      "side": 1,
+      "message": "Thanks Mike.",
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "794265d5_ddf31873",
@@ -31,6 +48,30 @@
       "writtenOn": "2022-05-17T20:41:39Z",
       "side": 1,
       "message": "In a couple test files we set the ordering which repeats this code.  Should we use StringToLinearSolverOrderingType?",
+      "range": {
+        "startLine": 182,
+        "startChar": 1,
+        "endLine": 188,
+        "endChar": 3
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e57f4b4_c70a3720",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-17T21:55:14Z",
+      "side": 1,
+      "message": "it will work here, but it won\u0027t in bundle_adjuster since we have the user ordering there. I am just going to drop this particular file since nested dissection doesn\u0027t actually do anything here. I will come back and rationalize flags in a subsequent CL.",
+      "parentUuid": "794265d5_ddf31873",
       "range": {
         "startLine": 182,
         "startChar": 1,
@@ -64,6 +105,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f5aa254_da3d72d1",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-17T21:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b14eca8f_128bbf79",
+      "range": {
+        "startLine": 404,
+        "startChar": 7,
+        "endLine": 404,
+        "endChar": 9
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c187b11_dec631b2",
@@ -77,6 +142,30 @@
       "writtenOn": "2022-05-17T20:41:39Z",
       "side": 1,
       "message": "nit: \u0027actually\u0027 is superfluous and can be removed.",
+      "range": {
+        "startLine": 406,
+        "startChar": 50,
+        "endLine": 406,
+        "endChar": 58
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25ff6097_a4fba12d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-17T21:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c187b11_dec631b2",
       "range": {
         "startLine": 406,
         "startChar": 50,
@@ -110,6 +199,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1990a98_b068edc3",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-17T21:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5af53590_2ac052df",
+      "range": {
+        "startLine": 494,
+        "startChar": 43,
+        "endLine": 495,
+        "endChar": 28
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5fbb99fe_9fb99edc",
@@ -123,6 +236,30 @@
       "writtenOn": "2022-05-17T20:41:39Z",
       "side": 1,
       "message": "nit: remove",
+      "range": {
+        "startLine": 187,
+        "startChar": 26,
+        "endLine": 187,
+        "endChar": 28
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0b0fa55_690237d8",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-17T21:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fbb99fe_9fb99edc",
       "range": {
         "startLine": 187,
         "startChar": 26,
@@ -156,6 +293,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d3b9c5b_cf029e19",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-17T21:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae2cdc94_0bbad8e5",
+      "range": {
+        "startLine": 196,
+        "startChar": 46,
+        "endLine": 196,
+        "endChar": 54
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8ac3b42a_94c5c121",
@@ -169,6 +330,30 @@
       "writtenOn": "2022-05-17T20:41:39Z",
       "side": 1,
       "message": "this should be ordering_type",
+      "range": {
+        "startLine": 103,
+        "startChar": 28,
+        "endLine": 103,
+        "endChar": 45
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb3ee0d8_52d85f47",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-17T21:55:14Z",
+      "side": 1,
+      "message": "good catch!",
+      "parentUuid": "8ac3b42a_94c5c121",
       "range": {
         "startLine": 103,
         "startChar": 28,
@@ -202,6 +387,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3c748b8_81e34157",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-17T21:55:14Z",
+      "side": 1,
+      "message": "with a case statement won\u0027t this be a massive hunk of code which then has to use a break statement?",
+      "parentUuid": "6c5f122b_7f04e137",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 4
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2265b6fa_82fa71d5",
@@ -225,6 +434,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df76620f_a78d0c9f",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-17T21:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2265b6fa_82fa71d5",
+      "range": {
+        "startLine": 757,
+        "startChar": 4,
+        "endLine": 757,
+        "endChar": 28
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28a808e0_5089e103",
@@ -238,6 +471,30 @@
       "writtenOn": "2022-05-17T20:41:39Z",
       "side": 1,
       "message": "nit: this has some weird double spaces between words",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 193,
+        "endChar": 70
+      },
+      "revId": "1a865b6884af5da394bbb6f997f956dee0970563",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5aa2bbd9_ad4d1aaa",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-17T21:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28a808e0_5089e103",
       "range": {
         "startLine": 191,
         "startChar": 7,
