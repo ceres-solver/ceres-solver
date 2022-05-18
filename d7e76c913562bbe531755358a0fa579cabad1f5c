@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7de180a4_7c605cad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T13:33:34Z",
+      "side": 1,
+      "message": "I think this would require a fundamental change to the API, because we have two functions that compute specific derivatives, and now we are a more general derivative which is not used in the common case. Adding one more derivative function is going to make this API tricky. \n\nWe have not done the \"default implementation is not available\" thing in the API either. It makes the API unpredictable, where now some objects are only partially defined.\n\nSo, I\u0027d like to think about this some more. Is there another way to achieve the same thing?",
+      "parentUuid": "1acc245d_4270493c",
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b357d74_3934ae65",
         "filename": "include/ceres/marginalization.h",
         "patchSetId": 11
