@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab411c2c_c38c5a21",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2022-05-18T15:23:18Z",
+      "side": 1,
+      "message": "What happens if linear_solver_order !\u003d nullptr but sparse_linear_algebra_library_type !\u003d SUITE_SPARSE?",
+      "range": {
+        "startLine": 455,
+        "startChar": 7,
+        "endLine": 455,
+        "endChar": 56
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "042f6da0_03013ae8",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2022-05-18T15:23:18Z",
+      "side": 1,
+      "message": "In this case, what happens if linear_solver_ordering is null?",
+      "range": {
+        "startLine": 493,
+        "startChar": 7,
+        "endLine": 493,
+        "endChar": 49
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a51129c1_143ae85e",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2022-05-18T15:23:18Z",
+      "side": 1,
+      "message": "not specify an ordering at all; in this case, the solver...",
+      "range": {
+        "startLine": 504,
+        "startChar": 42,
+        "endLine": 505,
+        "endChar": 17
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3428631c_4b8f6a23",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2022-05-18T15:23:18Z",
+      "side": 1,
+      "message": "More than that: is it even wired up to anything after this CL?",
+      "range": {
+        "startLine": 553,
+        "startChar": 47,
+        "endLine": 555,
+        "endChar": 19
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32ab7e71_f6f9ce03",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2022-05-18T15:23:18Z",
+      "side": 1,
+      "message": "Make this an enum class, if that\u0027s appropriate at this stage in your plan to enum-class-ify things.",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 4
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "846d339f_18f8b4cb",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2022-05-18T15:23:18Z",
+      "side": 1,
+      "message": "This returns false just before it would have... returned false. Does this check need to exist, or is one or the other of the \"return false\"s incorrect?",
+      "range": {
+        "startLine": 644,
+        "startChar": 0,
+        "endLine": 644,
+        "endChar": 17
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e96bc3fb_58b26ee6",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2022-05-18T15:23:18Z",
+      "side": 1,
+      "message": "Combine these three s_l_a_l_t checks into one test?",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 70
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7863b2bf_07410ff1",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2022-05-18T15:23:18Z",
+      "side": 1,
+      "message": "A few trailing whitespaces on this line and four more in this section.",
+      "range": {
+        "startLine": 379,
+        "startChar": 90,
+        "endLine": 379,
+        "endChar": 92
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ee87597_f46398fa",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2022-05-18T15:23:18Z",
+      "side": 1,
+      "message": "Update comment.",
+      "range": {
+        "startLine": 123,
+        "startChar": 13,
+        "endLine": 123,
+        "endChar": 52
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

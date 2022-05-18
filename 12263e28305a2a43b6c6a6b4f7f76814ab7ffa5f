@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf8af6b0_f63504f0",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2022-05-18T15:23:18Z",
+      "side": 0,
+      "message": "Why is this guard no longer needed?",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 35
+      },
+      "revId": "12263e28305a2a43b6c6a6b4f7f76814ab7ffa5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
