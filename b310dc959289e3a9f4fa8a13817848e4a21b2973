@@ -48,6 +48,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f02df7d_98d44f94",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94ef75dd_28e1ac1e",
+      "range": {
+        "startLine": 455,
+        "startChar": 7,
+        "endLine": 455,
+        "endChar": 56
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "042f6da0_03013ae8",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "re-written the whole section.",
       "parentUuid": "042f6da0_03013ae8",
+      "range": {
+        "startLine": 493,
+        "startChar": 7,
+        "endLine": 493,
+        "endChar": 49
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0abe48bf_d7ac9c99",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc09aac6_0124e4b7",
       "range": {
         "startLine": 493,
         "startChar": 7,
@@ -189,6 +237,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc86096b_1d9e11fb",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6823cea1_d21c30f2",
+      "range": {
+        "startLine": 553,
+        "startChar": 47,
+        "endLine": 555,
+        "endChar": 19
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32ab7e71_f6f9ce03",
@@ -273,6 +345,30 @@
       "side": 1,
       "message": "this is entirely meant for making things explicit that we are handling each of the four sparse linear algebra backends explicitly. I can remove it if you like.",
       "parentUuid": "846d339f_18f8b4cb",
+      "range": {
+        "startLine": 644,
+        "startChar": 0,
+        "endLine": 644,
+        "endChar": 17
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1abf20d8_a7046a7c",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3f20dcf_42bb37e7",
       "range": {
         "startLine": 644,
         "startChar": 0,
@@ -390,6 +486,30 @@
       "writtenOn": "2022-05-18T15:23:18Z",
       "side": 1,
       "message": "Update comment.",
+      "range": {
+        "startLine": 123,
+        "startChar": 13,
+        "endLine": 123,
+        "endChar": 52
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66b76e8c_2bf84be2",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ee87597_f46398fa",
       "range": {
         "startLine": 123,
         "startChar": 13,
