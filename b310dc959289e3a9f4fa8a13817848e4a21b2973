@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "94ef75dd_28e1ac1e",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:25:21Z",
+      "side": 1,
+      "message": "the short of it is, that for SPARSE_NORMAL_CHOLESKY it is ignored. for SPARSE_SCHUR, DENSE_SCHUR and ITERATIVE_SCHUR the first group is paid attention to just like NESDIS. I have re-written this section.",
+      "parentUuid": "ab411c2c_c38c5a21",
+      "range": {
+        "startLine": 455,
+        "startChar": 7,
+        "endLine": 455,
+        "endChar": 56
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "042f6da0_03013ae8",
         "filename": "include/ceres/solver.h",
         "patchSetId": 19
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fc09aac6_0124e4b7",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:25:21Z",
+      "side": 1,
+      "message": "re-written the whole section.",
+      "parentUuid": "042f6da0_03013ae8",
+      "range": {
+        "startLine": 493,
+        "startChar": 7,
+        "endLine": 493,
+        "endChar": 49
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a51129c1_143ae85e",
         "filename": "include/ceres/solver.h",
         "patchSetId": 19
@@ -60,6 +108,30 @@
       "writtenOn": "2022-05-18T15:23:18Z",
       "side": 1,
       "message": "not specify an ordering at all; in this case, the solver...",
+      "range": {
+        "startLine": 504,
+        "startChar": 42,
+        "endLine": 505,
+        "endChar": 17
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1e73a65_3e281be0",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a51129c1_143ae85e",
       "range": {
         "startLine": 504,
         "startChar": 42,
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6823cea1_d21c30f2",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:25:21Z",
+      "side": 1,
+      "message": "yes, but I am going to kill it shortly after this goes in.",
+      "parentUuid": "3428631c_4b8f6a23",
+      "range": {
+        "startLine": 553,
+        "startChar": 47,
+        "endLine": 555,
+        "endChar": 19
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "32ab7e71_f6f9ce03",
         "filename": "include/ceres/types.h",
         "patchSetId": 19
@@ -106,6 +202,30 @@
       "writtenOn": "2022-05-18T15:23:18Z",
       "side": 1,
       "message": "Make this an enum class, if that\u0027s appropriate at this stage in your plan to enum-class-ify things.",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 4
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "604525ae_e61b9459",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:25:21Z",
+      "side": 1,
+      "message": "I would very much line to, but that would involve converting everything in this file for consistency  and breaking a lot of existing usage.",
+      "parentUuid": "32ab7e71_f6f9ce03",
       "range": {
         "startLine": 203,
         "startChar": 0,
@@ -141,6 +261,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e3f20dcf_42bb37e7",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:25:21Z",
+      "side": 1,
+      "message": "this is entirely meant for making things explicit that we are handling each of the four sparse linear algebra backends explicitly. I can remove it if you like.",
+      "parentUuid": "846d339f_18f8b4cb",
+      "range": {
+        "startLine": 644,
+        "startChar": 0,
+        "endLine": 644,
+        "endChar": 17
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e96bc3fb_58b26ee6",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 19
@@ -152,6 +296,30 @@
       "writtenOn": "2022-05-18T15:23:18Z",
       "side": 1,
       "message": "Combine these three s_l_a_l_t checks into one test?",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 70
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0d59bfb_5b6e5480",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:25:21Z",
+      "side": 1,
+      "message": "done.",
+      "parentUuid": "e96bc3fb_58b26ee6",
       "range": {
         "startLine": 200,
         "startChar": 0,
@@ -175,6 +343,30 @@
       "writtenOn": "2022-05-18T15:23:18Z",
       "side": 1,
       "message": "A few trailing whitespaces on this line and four more in this section.",
+      "range": {
+        "startLine": 379,
+        "startChar": 90,
+        "endLine": 379,
+        "endChar": 92
+      },
+      "revId": "b310dc959289e3a9f4fa8a13817848e4a21b2973",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "549b9661_af7880d2",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:25:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7863b2bf_07410ff1",
       "range": {
         "startLine": 379,
         "startChar": 90,

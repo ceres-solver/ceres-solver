@@ -22,6 +22,30 @@
       },
       "revId": "12263e28305a2a43b6c6a6b4f7f76814ab7ffa5f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f46ef8f_5025ce27",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-18T16:25:21Z",
+      "side": 0,
+      "message": "so it used to be the case that we guarded against the use of eigen_sparse because of licensing issues, but thats resolved.\nbut even in that case this particular function only uses core eigen functionality and none of the trouble some reordering/factoring algorithms, so removing this guard is fine.",
+      "parentUuid": "bf8af6b0_f63504f0",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 35
+      },
+      "revId": "12263e28305a2a43b6c6a6b4f7f76814ab7ffa5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
