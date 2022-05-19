@@ -190,7 +190,7 @@ AppleAccelerateCholesky<Scalar>::~AppleAccelerateCholesky() {
 template <typename Scalar>
 CompressedRowSparseMatrix::StorageType
 AppleAccelerateCholesky<Scalar>::StorageType() const {
-  return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
+  return CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR;
 }
 
 template <typename Scalar>
