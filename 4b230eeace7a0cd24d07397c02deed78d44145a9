@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71aa2d31_10e35c48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-19T21:10:29Z",
+      "side": 1,
+      "message": "This is just pure code deletion, gonna go ahead and merge this.",
+      "revId": "4b230eeace7a0cd24d07397c02deed78d44145a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
