@@ -123,7 +123,7 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
   // If the user did not supply a useful ordering, then just use
   // regular AMD.
   if (parameter_block_ordering.NumGroups() <= 1) {
-    ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose, &ordering[0]);
+    ss.Ordering(block_jacobian_transpose, OrderingType::AMD, &ordering[0]);
   } else {
     vector<int> constraints;
     for (auto* parameter_block : parameter_blocks) {

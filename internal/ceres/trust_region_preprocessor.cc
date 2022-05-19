@@ -210,7 +210,10 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
   pp->linear_solver_options.max_num_refinement_iterations =
       options.max_num_refinement_iterations;
   pp->linear_solver_options.num_threads = options.num_threads;
-  pp->linear_solver_options.use_postordering = options.use_postordering;
+  pp->linear_solver_options.ordering_type = OrderingType::NATURAL;
+  if (options.use_postordering) {
+    pp->linear_solver_options.ordering_type = OrderingType::AMD;
+  }
   pp->linear_solver_options.context = pp->problem->context();
 
   if (IsSchurType(pp->linear_solver_options.type)) {
@@ -236,7 +239,7 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
       // TODO(sameeragarwal): Implement the reordering of parameter
       // blocks for CX_SPARSE.
       if (options.sparse_linear_algebra_library_type == CX_SPARSE) {
-        pp->linear_solver_options.use_postordering = true;
+        pp->linear_solver_options.ordering_type = OrderingType::AMD;
       }
     }
   }
