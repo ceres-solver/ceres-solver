@@ -183,14 +183,13 @@ cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A,
         StringPrintf("cholmod_analyze failed. error code: %d", cc_.status);
     return nullptr;
   }
+  
   CHECK(factor != nullptr);
-
   if (VLOG_IS_ON(2)) {
     cholmod_print_common(const_cast<char*>("Symbolic Analysis"), &cc_);
   }
-}
 
-return factor;
+  return factor;
 }
 
 cholmod_factor* SuiteSparse::AnalyzeCholeskyWithGivenOrdering(
