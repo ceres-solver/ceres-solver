@@ -72,6 +72,7 @@ enum class LinearSolverTerminationType {
   // the wrong arguments.
   FATAL_ERROR
 };
+
 inline std::ostream& operator<<(std::ostream& s,
                                 LinearSolverTerminationType type) {
   switch (type) {
@@ -105,7 +106,26 @@ enum class OrderingType {
 
   AMD,  // Use the Approximate Minimum Degree algorithm to re-order
         // the matrix.
+
+  NESDIS,  // Use the Nested Dissection algorithm to re-order the matrix.
 };
+
+inline std::ostream& operator<<(std::ostream& s, OrderingType type) {
+  switch (type) {
+    case OrderingType::NATURAL:
+      s << "NATURAL";
+      break;
+    case OrderingType::AMD:
+      s << "AMD";
+      break;
+    case OrderingType::NESDIS:
+      s << "NESDIS";
+      break;
+    default:
+      s << "UNKNOWN OrderingType";
+  }
+  return s;
+}
 
 class LinearOperator;
 
@@ -134,9 +154,9 @@ class CERES_NO_EXPORT LinearSolver {
     DenseLinearAlgebraLibraryType dense_linear_algebra_library_type = EIGEN;
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type =
         SUITE_SPARSE;
+    OrderingType ordering_type = OrderingType::NATURAL;
 
     // See solver.h for information about these flags.
-    bool use_postordering = false;
     bool dynamic_sparsity = false;
     bool use_explicit_schur_complement = false;
 
