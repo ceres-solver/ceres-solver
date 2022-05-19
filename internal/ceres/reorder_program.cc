@@ -602,13 +602,7 @@ bool AreJacobianColumnsOrdered(
     const LinearSolverType linear_solver_type,
     const PreconditionerType preconditioner_type,
     const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
-    const LinearSolverOrderingType linear_solver_ordering_type,
-    const bool use_postordering,
-    const bool dynamic_sparsity) {
-  if (use_postordering || dynamic_sparsity) {
-    return false;
-  }
-
+    const LinearSolverOrderingType linear_solver_ordering_type) {
   if (sparse_linear_algebra_library_type == SUITE_SPARSE) {
     if (linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
         (linear_solver_type == CGNR && preconditioner_type == SUBSET)) {

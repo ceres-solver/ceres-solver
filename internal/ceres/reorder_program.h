@@ -120,9 +120,7 @@ CERES_NO_EXPORT bool AreJacobianColumnsOrdered(
     LinearSolverType linear_solver_type,
     PreconditionerType preconditioner_type,
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
-    LinearSolverOrderingType linear_solver_ordering_type,
-    bool use_postordering,
-    bool dynamic_sparsity);
+    LinearSolverOrderingType linear_solver_ordering_type);
 
 }  // namespace ceres::internal
 

@@ -588,16 +588,6 @@ class CERES_EXPORT Solver {
     // Jacobian matrix and generally speaking, there is no performance
     // penalty for doing so.
 
-    // TODO(sameeragarwal): Remove this option. It is too obscure and
-    // there is no clear way of figuring out when this is a useful
-    // thing to do.
-    //
-    // In some rare cases, it is worth using a more complicated
-    // reordering algorithm which has slightly better runtime
-    // performance at the expense of an extra copy of the Jacobian
-    // matrix. Setting use_postordering to true enables this tradeoff.
-    bool use_postordering = false;
-
     // Some non-linear least squares problems are symbolically dense but
     // numerically sparse. i.e. at any given state only a small number
     // of jacobian entries are non-zero, but the position and number of
