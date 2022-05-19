@@ -229,12 +229,11 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
     }
   }
 
-  if (AreJacobianColumnsOrdered(options.linear_solver_type,
+  if (!options.dynamic_sparsity &&
+      AreJacobianColumnsOrdered(options.linear_solver_type,
                                 options.preconditioner_type,
                                 options.sparse_linear_algebra_library_type,
-                                options.linear_solver_ordering_type,
-                                options.use_postordering,
-                                options.dynamic_sparsity)) {
+                                options.linear_solver_ordering_type)) {
     pp->linear_solver_options.ordering_type = OrderingType::NATURAL;
   } else {
     if (options.linear_solver_ordering_type == ceres::AMD) {

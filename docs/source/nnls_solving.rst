@@ -1415,30 +1415,6 @@ elimination group [LiSaad]_.
      This option can only be used with the ``SCHUR_JACOBI``
      preconditioner.
 
-.. member:: bool Solver::Options::use_post_ordering
-
-   Default: ``false``
-
-   Sparse Cholesky factorization algorithms use a fill-reducing
-   ordering to permute the columns of the Jacobian matrix. There are
-   two ways of doing this.
-
-   1. Compute the Jacobian matrix in some order and then have the
-      factorization algorithm permute the columns of the Jacobian.
-
-   2. Compute the Jacobian with its columns already permuted.
-
-   The first option incurs a significant memory penalty. The
-   factorization algorithm has to make a copy of the permuted Jacobian
-   matrix, thus Ceres pre-permutes the columns of the Jacobian matrix
-   and generally speaking, there is no performance penalty for doing
-   so.
-
-   In some rare cases, it is worth using a more complicated reordering
-   algorithm which has slightly better runtime performance at the
-   expense of an extra copy of the Jacobian matrix. Setting
-   ``use_postordering`` to ``true`` enables this tradeoff.
-
 .. member:: bool Solver::Options::dynamic_sparsity
 
    Some non-linear least squares problems are symbolically dense but
