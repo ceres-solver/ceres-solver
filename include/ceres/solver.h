@@ -439,6 +439,25 @@ class CERES_EXPORT Solver {
     // associated with it, that determines its order in the set of
     // groups.
     //
+    // e.g. Consider the linear system
+    //
+    //   x + y = 3
+    //   2x + 3y = 7
+    //
+    // There are two ways in which it can be solved. First eliminating x
+    // from the two equations, solving for y and then back substituting
+    // for x, or first eliminating y, solving for x and back substituting
+    // for y. The user can construct three orderings here.
+    //
+    //   {0: x}, {1: y} - eliminate x first.
+    //   {0: y}, {1: x} - eliminate y first.
+    //   {0: x, y}      - Solver gets to decide the elimination order.
+    //
+    // Thus, to have Ceres determine the ordering automatically, put
+    // all the variables in group 0 and to control the ordering for
+    // every variable, create groups 0..N-1, one per variable, in the
+    // desired order.
+    //
     // The exact interpretation of this information depends on the
     // values of linear_solver_ordering_type and
     // linear_solver_type/preconditioner_type and
@@ -460,6 +479,10 @@ class CERES_EXPORT Solver {
     // number group is used as the first elimination group to compute
     // the Schur complement. All other groups are ignored.
     //
+    // If linear_solver_ordering is nullptr then a greedy maximum
+    // independent set algorithm is used to determine the first
+    // elimination group.
+    //
     // sparse_linear_algebra_library_type == SUITE_SPARSE
     // ==================================================
     //
@@ -480,25 +503,6 @@ class CERES_EXPORT Solver {
     // first, and then the parameter blocks in the next lowest
     // numbered group and so on. Within each group, CAMD free to order
     // the parameter blocks as it chooses.
-    //
-    // e.g. Consider the linear system
-    //
-    //   x + y = 3
-    //   2x + 3y = 7
-    //
-    // There are two ways in which it can be solved. First eliminating x
-    // from the two equations, solving for y and then back substituting
-    // for x, or first eliminating y, solving for x and back substituting
-    // for y. The user can construct three orderings here.
-    //
-    //   {0: x}, {1: y} - eliminate x first.
-    //   {0: y}, {1: x} - eliminate y first.
-    //   {0: x, y}      - Solver gets to decide the elimination order.
-    //
-    // Thus, to have Ceres determine the ordering automatically, put
-    // all the variables in group 0 and to control the ordering for
-    // every variable, create groups 0..N-1, one per variable, in the
-    // desired order.
     //
     // b. linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR
     //
@@ -538,16 +542,21 @@ class CERES_EXPORT Solver {
     // Bundle Adjustment
     // -----------------
     //
-    // A particular case of interest is bundle adjustment, where the
-    // user has two options. The default is not specifying ordering at
-    // all; in this case the solver will see that the user wants to
-    // use a Schur type solver and figure out an elimination ordering.
+    // If the user is using one of the Schur solvers (DENSE_SCHUR,
+    // SPARSE_SCHUR, ITERATIVE_SCHUR) and chooses to specify an
+    // ordering, it must have one important property. The lowest
+    // numbered elimination group must form an independent set in the
+    // graph corresponding to the Hessian, or in other words, no two
+    // parameter blocks in in the first elimination group should
+    // co-occur in the same residual block. For the best performance,
+    // this elimination group should be as large as possible. For
+    // standard bundle adjustment problems, this corresponds to the
+    // first elimination group containing all the 3d points, and the
+    // second containing the all the cameras parameter blocks.
     //
-    // But if the user already knows what parameter blocks are points and
-    // what are cameras, they can save preprocessing time by partitioning
-    // the parameter blocks into two groups, one for the points and one
-    // for the cameras, where the group containing the points has an id
-    // smaller than the group containing cameras.
+    // If the user leaves the choice to Ceres, then the solver uses an
+    // approximate maximum independent set algorithm to identify the
+    // first elimination group.
     std::shared_ptr<ParameterBlockOrdering> linear_solver_ordering;
 
     // Use an explicitly computed Schur complement matrix with
