@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ee966bf_fea978ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6297
+      },
+      "writtenOn": "2022-05-20T02:42:53Z",
+      "side": 1,
+      "message": "One way I see to achieve this are to have every parameterization (manifold) involved implement some separate interface that extends the Manifold API. Somehow, we would have to provide this extra function. There are probably alternatives to the interface approach.\n\nIn reality, the extra factors in the Jacobian introduced by the minus here are very close to identity, so it is tempting to neglect them. Along these lines, another completely different approach would be to formulate this differently where the tangent space has to be fixed for the variables in the Markov blanket after marginalization. I have not thought through the feasibility of that one, and it is probably not ideal as the default behavior for a generic implementation.",
+      "parentUuid": "7de180a4_7c605cad",
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b357d74_3934ae65",
         "filename": "include/ceres/marginalization.h",
         "patchSetId": 11
