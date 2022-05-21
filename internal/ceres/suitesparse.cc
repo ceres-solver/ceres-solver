@@ -166,18 +166,8 @@ cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A,
                                              string* message) {
   cc_.nmethods = 1;
   cc_.method[0].ordering = OrderingTypeToCHOLMODEnum(ordering_type);
-  cc_.supernodal = CHOLMOD_AUTO;
-
-  // TODO(sameeragarwal): The following modification exists entirely
-  // to preserve existing behaviour. It is not clear if this is
-  // actually the optimal thing to do. Once I understand the use of
-  // postordering better, I will come back and document this/remove it
-  // as the case maybe.
-  if (ordering_type == OrderingType::NATURAL) {
-    cc_.postorder = 0;
-  }
-
   cholmod_factor* factor = cholmod_analyze(A, &cc_);
+
   if (cc_.status != CHOLMOD_OK) {
     *message =
         StringPrintf("cholmod_analyze failed. error code: %d", cc_.status);
@@ -198,9 +188,9 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithGivenOrdering(
 
   cc_.nmethods = 1;
   cc_.method[0].ordering = CHOLMOD_GIVEN;
-
   cholmod_factor* factor =
       cholmod_analyze_p(A, const_cast<int*>(&ordering[0]), nullptr, 0, &cc_);
+
   if (cc_.status != CHOLMOD_OK) {
     *message =
         StringPrintf("cholmod_analyze failed. error code: %d", cc_.status);
