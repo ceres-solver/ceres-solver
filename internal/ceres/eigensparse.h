@@ -48,6 +48,17 @@
 
 namespace ceres::internal {
 
+class EigenSparse {
+ public:
+  static constexpr bool IsNestedDissectionAvailable() noexcept {
+#ifdef CERES_NO_METIS
+    return false;
+#else
+    return true;
+#endif
+  }
+};
+
 class CERES_NO_EXPORT EigenSparseCholesky : public SparseCholesky {
  public:
   // Factory

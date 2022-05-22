@@ -252,20 +252,36 @@ TEST_F(SchurComplementSolverTest, SparseSchurWithCXSparseLargeProblem) {
 #endif  // CERES_NO_CXSPARSE
 
 #ifndef CERES_NO_ACCELERATE_SPARSE
-// TODO(sameeragarwal): Extend these tests for NATURAL & NESDIS, once the linear
-// solver supports it.
-TEST_F(SchurComplementSolverTest, SparseSchurWithAccelerateSparseSmallProblem) {
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithAccelerateSparseSmallProblemAMD) {
   ComputeAndCompareSolutions(
       2, false, SPARSE_SCHUR, EIGEN, ACCELERATE_SPARSE, OrderingType::AMD);
   ComputeAndCompareSolutions(
       2, true, SPARSE_SCHUR, EIGEN, ACCELERATE_SPARSE, OrderingType::AMD);
 }
 
-TEST_F(SchurComplementSolverTest, SparseSchurWithAccelerateSparseLargeProblem) {
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithAccelerateSparseSmallProblemNESDIS) {
+  ComputeAndCompareSolutions(
+      2, false, SPARSE_SCHUR, EIGEN, ACCELERATE_SPARSE, OrderingType::NESDIS);
+  ComputeAndCompareSolutions(
+      2, true, SPARSE_SCHUR, EIGEN, ACCELERATE_SPARSE, OrderingType::NESDIS);
+}
+
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithAccelerateSparseLargeProblemAMD) {
   ComputeAndCompareSolutions(
       3, false, SPARSE_SCHUR, EIGEN, ACCELERATE_SPARSE, OrderingType::AMD);
   ComputeAndCompareSolutions(
       3, true, SPARSE_SCHUR, EIGEN, ACCELERATE_SPARSE, OrderingType::AMD);
+}
+
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithAccelerateSparseLargeProblemNESDIS) {
+  ComputeAndCompareSolutions(
+      3, false, SPARSE_SCHUR, EIGEN, ACCELERATE_SPARSE, OrderingType::NESDIS);
+  ComputeAndCompareSolutions(
+      3, true, SPARSE_SCHUR, EIGEN, ACCELERATE_SPARSE, OrderingType::NESDIS);
 }
 #endif  // CERES_NO_ACCELERATE_SPARSE
 
@@ -276,6 +292,16 @@ TEST_F(SchurComplementSolverTest, SparseSchurWithEigenSparseSmallProblemAMD) {
   ComputeAndCompareSolutions(
       2, true, SPARSE_SCHUR, EIGEN, EIGEN_SPARSE, OrderingType::AMD);
 }
+
+#ifndef CERES_NO_METIS
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithEigenSparseSmallProblemNESDIS) {
+  ComputeAndCompareSolutions(
+      2, false, SPARSE_SCHUR, EIGEN, EIGEN_SPARSE, OrderingType::NESDIS);
+  ComputeAndCompareSolutions(
+      2, true, SPARSE_SCHUR, EIGEN, EIGEN_SPARSE, OrderingType::NESDIS);
+}
+#endif
 
 TEST_F(SchurComplementSolverTest,
        SparseSchurWithEigenSparseSmallProblemNATURAL) {
@@ -291,6 +317,16 @@ TEST_F(SchurComplementSolverTest, SparseSchurWithEigenSparseLargeProblemAMD) {
   ComputeAndCompareSolutions(
       3, true, SPARSE_SCHUR, EIGEN, EIGEN_SPARSE, OrderingType::AMD);
 }
+
+#ifndef CERES_NO_METIS
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithEigenSparseLargeProblemNESDIS) {
+  ComputeAndCompareSolutions(
+      3, false, SPARSE_SCHUR, EIGEN, EIGEN_SPARSE, OrderingType::NESDIS);
+  ComputeAndCompareSolutions(
+      3, true, SPARSE_SCHUR, EIGEN, EIGEN_SPARSE, OrderingType::NESDIS);
+}
+#endif
 
 TEST_F(SchurComplementSolverTest,
        SparseSchurWithEigenSparseLargeProblemNATURAL) {

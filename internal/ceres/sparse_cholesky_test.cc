@@ -195,9 +195,9 @@ INSTANTIATE_TEST_SUITE_P(
     SuiteSparseCholesky,
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(SUITE_SPARSE),
-                       ::testing::Values(OrderingType::NATURAL,
-                                         OrderingType::AMD,
-                                         OrderingType::NESDIS),
+                       ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NESDIS,
+                                         OrderingType::NATURAL),
                        ::testing::Values(true, false)),
     ParamInfoToString);
 #endif
@@ -219,6 +219,7 @@ INSTANTIATE_TEST_SUITE_P(
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(ACCELERATE_SPARSE),
                        ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NESDIS,
                                          OrderingType::NATURAL),
                        ::testing::Values(true, false)),
     ParamInfoToString);
@@ -228,6 +229,7 @@ INSTANTIATE_TEST_SUITE_P(
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(ACCELERATE_SPARSE),
                        ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NESDIS,
                                          OrderingType::NATURAL),
                        ::testing::Values(true, false)),
     ParamInfoToString);
@@ -239,6 +241,7 @@ INSTANTIATE_TEST_SUITE_P(
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(EIGEN_SPARSE),
                        ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NESDIS,
                                          OrderingType::NATURAL),
                        ::testing::Values(true, false)),
     ParamInfoToString);
@@ -248,6 +251,7 @@ INSTANTIATE_TEST_SUITE_P(
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(EIGEN_SPARSE),
                        ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NESDIS,
                                          OrderingType::NATURAL),
                        ::testing::Values(true, false)),
     ParamInfoToString);

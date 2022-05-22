@@ -31,6 +31,7 @@
 #include "ceres/reorder_program.h"
 
 #include <algorithm>
+#include <iostream>  // Need this because MetisSupport refers to std::cerr.
 #include <memory>
 #include <numeric>
 #include <vector>
@@ -51,6 +52,7 @@
 #include "ceres/types.h"
 
 #ifdef CERES_USE_EIGEN_SPARSE
+#include "Eigen/MetisSupport"
 #include "Eigen/OrderingMethods"
 #endif
 
@@ -196,16 +198,13 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
                 "Eigen's SimplicialLDLT decomposition. "
                 "This requires enabling building with -DEIGENSPARSE=ON.";
 #else
-  CHECK_NE(linear_solver_ordering_type, NESDIS)
-      << "Congratulations, you found a Ceres bug! "
-      << "Please report this error to the developers.";
 
-  // This conversion from a TripletSparseMatrix to a Eigen::Triplet
-  // matrix is unfortunate, but unavoidable for now. It is not a
-  // significant performance penalty in the grand scheme of
-  // things. The right thing to do here would be to get a compressed
-  // row sparse matrix representation of the jacobian and go from
-  // there. But that is a project for another day.
+  // TODO(sameeragarwal): This conversion from a TripletSparseMatrix
+  // to a Eigen::Triplet matrix is unfortunate, but unavoidable for
+  // now. It is not a significant performance penalty in the grand
+  // scheme of things. The right thing to do here would be to get a
+  // compressed row sparse matrix representation of the jacobian and
+  // go from there. But that is a project for another day.
   using SparseMatrix = Eigen::SparseMatrix<int>;
 
   const SparseMatrix block_jacobian =
@@ -213,9 +212,19 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
   const SparseMatrix block_hessian =
       block_jacobian.transpose() * block_jacobian;
 
-  Eigen::AMDOrdering<int> amd_ordering;
   Eigen::PermutationMatrix<Eigen::Dynamic, Eigen::Dynamic, int> perm;
-  amd_ordering(block_hessian, perm);
+  if (linear_solver_ordering_type == ceres::AMD) {
+    Eigen::AMDOrdering<int> amd_ordering;
+    amd_ordering(block_hessian, perm);
+  } else {
+#ifndef CERES_NO_METIS
+    perm.setIdentity(block_hessian.rows());
+#else
+    Eigen::MetisOrdering<int> metis_ordering;
+    metis_ordering(block_hessian, perm);
+#endif
+  }
+
   for (int i = 0; i < block_hessian.rows(); ++i) {
     ordering[i] = perm.indices()[i];
   }
@@ -385,13 +394,13 @@ static void ReorderSchurComplementColumnsUsingSuiteSparse(
 }
 
 static void ReorderSchurComplementColumnsUsingEigen(
+    LinearSolverOrderingType ordering_type,
     const int size_of_first_elimination_group,
     const ProblemImpl::ParameterMap& parameter_map,
     Program* program) {
 #if defined(CERES_USE_EIGEN_SPARSE)
   std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
       program->CreateJacobianBlockSparsityTranspose());
-
   using SparseMatrix = Eigen::SparseMatrix<int>;
   const SparseMatrix block_jacobian =
       CreateBlockJacobian(*tsm_block_jacobian_transpose);
@@ -412,9 +421,18 @@ static void ReorderSchurComplementColumnsUsingEigen(
   const SparseMatrix block_schur_complement =
       F.transpose() * F - F.transpose() * E * E.transpose() * F;
 
-  Eigen::AMDOrdering<int> amd_ordering;
   Eigen::PermutationMatrix<Eigen::Dynamic, Eigen::Dynamic, int> perm;
-  amd_ordering(block_schur_complement, perm);
+  if (ordering_type == ceres::AMD) {
+    Eigen::AMDOrdering<int> amd_ordering;
+    amd_ordering(block_schur_complement, perm);
+  } else {
+#ifndef CERES_NO_METIS
+    perm.setIdentity(block_schur_complement.rows());
+#else
+    Eigen::MetisOrdering<int> metis_ordering;
+    metis_ordering(block_schur_complement, perm);
+#endif
+  }
 
   const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
   vector<ParameterBlock*> ordering(num_cols);
@@ -505,17 +523,21 @@ bool ReorderProgramForSchurTypeLinearSolver(
   const int size_of_first_elimination_group =
       parameter_block_ordering->group_to_elements().begin()->second.size();
 
-  // Pre-ordering of the columns of the Schur complement only works if
-  // we are using approximate mininmum degree based ordering and
-  // SUITE_SPARSE or EIGEN_SPARSE.
-  if (linear_solver_type == SPARSE_SCHUR &&
-      linear_solver_ordering_type == ceres::AMD) {
-    if (sparse_linear_algebra_library_type == SUITE_SPARSE) {
+  if (linear_solver_type == SPARSE_SCHUR) {
+    if (sparse_linear_algebra_library_type == SUITE_SPARSE &&
+        linear_solver_ordering_type == ceres::AMD) {
+      // Preordering support for schur complement only works with AMD
+      // for now, since we are using CAMD.
+      //
+      // TODO(sameeragarwal): It maybe worth adding pre-ordering support for
+      // nested dissection too.
       ReorderSchurComplementColumnsUsingSuiteSparse(*parameter_block_ordering,
                                                     program);
     } else if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
-      ReorderSchurComplementColumnsUsingEigen(
-          size_of_first_elimination_group, parameter_map, program);
+      ReorderSchurComplementColumnsUsingEigen(linear_solver_ordering_type,
+                                              size_of_first_elimination_group,
+                                              parameter_map,
+                                              program);
     }
   }
 
@@ -612,11 +634,6 @@ bool AreJacobianColumnsOrdered(
         linear_solver_ordering_type == ceres::AMD) {
       return true;
     }
-  }
-
-  // For all sparse linear algebra libraries other than SuiteSparse,
-  // nested dissection is not used for pre-ordering.
-  if (linear_solver_ordering_type == ceres::NESDIS) {
     return false;
   }
 
@@ -626,16 +643,24 @@ bool AreJacobianColumnsOrdered(
         (linear_solver_type == CGNR && preconditioner_type == SUBSET)) {
       return true;
     }
+    return false;
+  }
+
+  if (sparse_linear_algebra_library_type == ceres::ACCELERATE_SPARSE) {
+    // Apple's accelerate framework does not allow direct access to
+    // ordering algorithms, so jacobian columns are never pre-ordered.
+    return false;
   }
 
   if (sparse_linear_algebra_library_type == ceres::CX_SPARSE) {
+    if (linear_solver_ordering_type == ceres::NESDIS) {
+      return false;
+    }
+
     if (linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
         (linear_solver_type == CGNR && preconditioner_type == SUBSET)) {
       return true;
     }
-  }
-
-  if (sparse_linear_algebra_library_type == ceres::ACCELERATE_SPARSE) {
     return false;
   }
 
