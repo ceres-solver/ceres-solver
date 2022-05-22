@@ -139,8 +139,23 @@ AccelerateSparse<Scalar>::CreateSparseMatrixTransposeView(
 
 template <typename Scalar>
 typename AccelerateSparse<Scalar>::SymbolicFactorization
-AccelerateSparse<Scalar>::AnalyzeCholesky(ASSparseMatrix* A) {
-  return SparseFactor(SparseFactorizationCholesky, A->structure);
+AccelerateSparse<Scalar>::AnalyzeCholesky(OrderingType ordering_type,
+                                          ASSparseMatrix* A) {
+  SparseSymbolicFactorOptions sfoption;
+  sfoption.control = SparseDefaultControl;
+  sfoption.orderMethod = SparseOrderDefault;
+  sfoption.order = nullptr;
+  sfoption.ignoreRowsAndColumns = nullptr;
+  sfoption.malloc = malloc;
+  sfoption.free = free;
+  sfoption.reportError = nullptr;
+
+  if (ordering_type == OrderingType::AMD) {
+    sfoption.orderMethod = SparseOrderAMD;
+  } else if (ordering_type == OrderingType::NESDIS) {
+    sfoption.orderMethod = SparseOrderMetis;
+  }
+  return SparseFactor(SparseFactorizationCholesky, A->structure, sfoption);
 }
 
 template <typename Scalar>
@@ -207,7 +222,8 @@ LinearSolverTerminationType AppleAccelerateCholesky<Scalar>::Factorize(
   if (!symbolic_factor_) {
     symbolic_factor_ = std::make_unique<
         typename SparseTypesTrait<Scalar>::SymbolicFactorization>(
-        as_.AnalyzeCholesky(&as_lhs));
+        as_.AnalyzeCholesky(ordering_type_, &as_lhs));
+
     if (symbolic_factor_->status != SparseStatusOK) {
       *message = StringPrintf(
           "Apple Accelerate Failure : Symbolic factorisation failed: %s",
