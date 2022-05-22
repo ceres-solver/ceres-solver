@@ -91,7 +91,8 @@ class AccelerateSparse {
   //       objects internally).
   ASSparseMatrix CreateSparseMatrixTransposeView(CompressedRowSparseMatrix* A);
   // Computes a symbolic factorisation of A that can be used in Solve().
-  SymbolicFactorization AnalyzeCholesky(ASSparseMatrix* A);
+  SymbolicFactorization AnalyzeCholesky(OrderingType ordering_type,
+                                        ASSparseMatrix* A);
   // Compute the numeric Cholesky factorization of A, given its
   // symbolic factorization.
   NumericFactorization Cholesky(ASSparseMatrix* A,
