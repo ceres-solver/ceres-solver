@@ -40,6 +40,7 @@
 #include "ceres/context.h"
 #include "ceres/context_impl.h"
 #include "ceres/detect_structure.h"
+#include "ceres/eigensparse.h"
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/internal/export.h"
 #include "ceres/parameter_block_ordering.h"
@@ -109,8 +110,11 @@ bool CommonOptionsAreValid(const Solver::Options& options, string* error) {
 }
 
 bool IsNestedDissectionAvailable(SparseLinearAlgebraLibraryType type) {
-  return (type == SUITE_SPARSE) &&
-         internal::SuiteSparse::IsNestedDissectionAvailable();
+  return (((type == SUITE_SPARSE) &&
+           internal::SuiteSparse::IsNestedDissectionAvailable()) ||
+          (type == ACCELERATE_SPARSE) ||
+          ((type == EIGEN_SPARSE) &&
+           internal::EigenSparse::IsNestedDissectionAvailable()));
 }
 
 bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
