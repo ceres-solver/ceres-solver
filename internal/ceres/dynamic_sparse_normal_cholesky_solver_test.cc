@@ -116,6 +116,7 @@ class DynamicSparseNormalCholeskySolverTest : public ::testing::Test {
 TEST_F(DynamicSparseNormalCholeskySolverTest, SuiteSparseAMD) {
   TestSolver(SUITE_SPARSE, OrderingType::AMD);
 }
+
 #ifndef CERES_NO_METIS
 TEST_F(DynamicSparseNormalCholeskySolverTest, SuiteSparseNESDIS) {
   TestSolver(SUITE_SPARSE, OrderingType::NESDIS);
@@ -130,9 +131,15 @@ TEST_F(DynamicSparseNormalCholeskySolverTest, CXSparse) {
 #endif
 
 #ifdef CERES_USE_EIGEN_SPARSE
-TEST_F(DynamicSparseNormalCholeskySolverTest, Eigen) {
+TEST_F(DynamicSparseNormalCholeskySolverTest, EigenAMD) {
   TestSolver(EIGEN_SPARSE, OrderingType::AMD);
 }
+
+#ifndef CERES_NO_METIS
+TEST_F(DynamicSparseNormalCholeskySolverTest, EigenNESDIS) {
+  TestSolver(EIGEN_SPARSE, OrderingType::NESDIS);
+}
+#endif
 #endif  // CERES_USE_EIGEN_SPARSE
 
 }  // namespace internal

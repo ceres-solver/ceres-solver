@@ -92,10 +92,11 @@ DEFINE_string(visibility_clustering, "canonical_views",
               "single_linkage, canonical_views");
 
 DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
-              "Options are: suite_sparse and cx_sparse.");
+              "Options are: suite_sparse, cx_sparse, accelerate_sparse and eigen_sparse.");
 DEFINE_string(dense_linear_algebra_library, "eigen",
               "Options are: eigen, lapack, and cuda");
-DEFINE_string(ordering, "amd", "Options are: amd, nesdis and user");
+DEFINE_string(ordering_type, "amd", "Options are: amd, nesdis");
+DEFINE_string(linear_solver_ordering, "automatic", "Options are: automatic and user");
 
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
             "rotations. If false, angle axis is used.");
@@ -147,6 +148,9 @@ void SetLinearSolver(Solver::Options* options) {
   CHECK(StringToDenseLinearAlgebraLibraryType(
       CERES_GET_FLAG(FLAGS_dense_linear_algebra_library),
       &options->dense_linear_algebra_library_type));
+  CHECK(
+      StringToLinearSolverOrderingType(CERES_GET_FLAG(FLAGS_ordering_type),
+                                       &options->linear_solver_ordering_type));
   options->use_explicit_schur_complement =
       CERES_GET_FLAG(FLAGS_explicit_schur_complement);
   options->use_mixed_precision_solves =
@@ -222,12 +226,10 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   // ITERATIVE_SCHUR solvers make use of this specialized
   // structure.
   //
-  // This can either be done by specifying Options::ordering_type =
-  // ceres::SCHUR, in which case Ceres will automatically determine
-  // the right ParameterBlock ordering, or by manually specifying a
-  // suitable ordering vector and defining
-  // Options::num_eliminate_blocks.
-  if (CERES_GET_FLAG(FLAGS_ordering) == "user") {
+  // This can either be done by specifying a
+  // Options::linear_solver_ordering or having Ceres figure it out
+  // automatically using a greedy maximum independent set algorithm.
+  if (CERES_GET_FLAG(FLAGS_linear_solver_ordering) == "user") {
     auto* ordering = new ceres::ParameterBlockOrdering;
 
     // The points come before the cameras.
@@ -242,14 +244,6 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
     }
 
     options->linear_solver_ordering.reset(ordering);
-  } else {
-    if (CERES_GET_FLAG(FLAGS_ordering) == "amd") {
-      options->linear_solver_ordering_type = AMD;
-    } else if (CERES_GET_FLAG(FLAGS_ordering) == "nesdis") {
-      options->linear_solver_ordering_type = NESDIS;
-    } else {
-      LOG(FATAL) << "Unknown ordering type: " << CERES_GET_FLAG(FLAGS_ordering);
-    }
   }
 }
 
