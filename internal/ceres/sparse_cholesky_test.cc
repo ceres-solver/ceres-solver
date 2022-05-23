@@ -202,17 +202,6 @@ INSTANTIATE_TEST_SUITE_P(
     ParamInfoToString);
 #endif
 
-#ifndef CERES_NO_CXSPARSE
-INSTANTIATE_TEST_SUITE_P(
-    CXSparseCholesky,
-    SparseCholeskyTest,
-    ::testing::Combine(::testing::Values(CX_SPARSE),
-                       ::testing::Values(OrderingType::AMD,
-                                         OrderingType::NATURAL),
-                       ::testing::Values(true, false)),
-    ParamInfoToString);
-#endif
-
 #ifndef CERES_NO_ACCELERATE_SPARSE
 INSTANTIATE_TEST_SUITE_P(
     AccelerateSparseCholesky,

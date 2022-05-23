@@ -67,8 +67,7 @@ enum LinearSolverType {
   // Eigen.
   DENSE_QR,
 
-  // Solve the normal equations using a sparse cholesky solver; requires
-  // SuiteSparse or CXSparse.
+  // Solve the normal equations using a sparse cholesky solver;
   SPARSE_NORMAL_CHOLESKY,
 
   // Specialized solvers, specific to problems with a generalized
@@ -164,11 +163,6 @@ enum SparseLinearAlgebraLibraryType {
   // High performance sparse Cholesky factorization and approximate
   // minimum degree ordering.
   SUITE_SPARSE,
-
-  // A lightweight replacement for SuiteSparse, which does not require
-  // a LAPACK/BLAS implementation. Consequently, its performance is
-  // also a bit lower than SuiteSparse.
-  CX_SPARSE,
 
   // Eigen's sparse linear algebra routines. In particular Ceres uses
   // the Simplicial LDLT routines.
