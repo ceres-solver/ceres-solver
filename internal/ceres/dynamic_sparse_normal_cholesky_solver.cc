@@ -39,7 +39,6 @@
 
 #include "Eigen/SparseCore"
 #include "ceres/compressed_row_sparse_matrix.h"
-#include "ceres/cxsparse.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
@@ -85,9 +84,6 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
   switch (options_.sparse_linear_algebra_library_type) {
     case SUITE_SPARSE:
       summary = SolveImplUsingSuiteSparse(A, x);
-      break;
-    case CX_SPARSE:
-      summary = SolveImplUsingCXSparse(A, x);
       break;
     case EIGEN_SPARSE:
       summary = SolveImplUsingEigen(A, x);
@@ -173,58 +169,6 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(
 
   return summary;
 #endif  // CERES_USE_EIGEN_SPARSE
-}
-
-LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingCXSparse(
-    CompressedRowSparseMatrix* A, double* rhs_and_solution) {
-#ifdef CERES_NO_CXSPARSE
-
-  LinearSolver::Summary summary;
-  summary.num_iterations = 0;
-  summary.termination_type = LinearSolverTerminationType::FATAL_ERROR;
-  summary.message =
-      "SPARSE_NORMAL_CHOLESKY cannot be used with CX_SPARSE "
-      "because Ceres was not built with support for CXSparse. "
-      "This requires enabling building with -DCXSPARSE=ON.";
-
-  return summary;
-
-#else
-  EventLogger event_logger(
-      "DynamicSparseNormalCholeskySolver::CXSparse::Solve");
-
-  LinearSolver::Summary summary;
-  summary.num_iterations = 1;
-  summary.termination_type = LinearSolverTerminationType::SUCCESS;
-  summary.message = "Success.";
-
-  CXSparse cxsparse;
-
-  // Wrap the augmented Jacobian in a compressed sparse column matrix.
-  cs_di a_transpose = cxsparse.CreateSparseMatrixTransposeView(A);
-
-  // Compute the normal equations. J'J delta = J'f and solve them
-  // using a sparse Cholesky factorization. Notice that when compared
-  // to SuiteSparse we have to explicitly compute the transpose of Jt,
-  // and then the normal equations before they can be
-  // factorized. CHOLMOD/SuiteSparse on the other hand can just work
-  // off of Jt to compute the Cholesky factorization of the normal
-  // equations.
-  cs_di* a = cxsparse.TransposeMatrix(&a_transpose);
-  cs_di* lhs = cxsparse.MatrixMatrixMultiply(&a_transpose, a);
-  cxsparse.Free(a);
-  event_logger.AddEvent("NormalEquations");
-
-  if (!cxsparse.SolveCholesky(lhs, rhs_and_solution)) {
-    summary.termination_type = LinearSolverTerminationType::FAILURE;
-    summary.message = "CXSparse::SolveCholesky failed";
-  }
-  event_logger.AddEvent("Solve");
-
-  cxsparse.Free(lhs);
-  event_logger.AddEvent("TearDown");
-  return summary;
-#endif
 }
 
 LinearSolver::Summary

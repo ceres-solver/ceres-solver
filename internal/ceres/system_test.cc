@@ -186,17 +186,6 @@ TEST_F(PowellTest, SparseNormalCholeskyUsingSuiteSparse) {
 }
 #endif  // CERES_NO_SUITESPARSE
 
-#ifndef CERES_NO_CXSPARSE
-TEST_F(PowellTest, SparseNormalCholeskyUsingCXSparse) {
-  PowellsFunction powells_function;
-  Solver::Options* options = powells_function.mutable_solver_options();
-  options->linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-  options->sparse_linear_algebra_library_type = CX_SPARSE;
-  RunSolverForConfigAndExpectResidualsMatch(*options,
-                                            powells_function.mutable_problem());
-}
-#endif  // CERES_NO_CXSPARSE
-
 #ifndef CERES_NO_ACCELERATE_SPARSE
 TEST_F(PowellTest, SparseNormalCholeskyUsingAccelerateSparse) {
   PowellsFunction powells_function;
