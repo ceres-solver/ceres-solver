@@ -33,11 +33,9 @@
 #include <memory>
 
 #include "ceres/accelerate_sparse.h"
-#include "ceres/cxsparse.h"
 #include "ceres/eigensparse.h"
-#include "ceres/float_cxsparse.h"
-#include "ceres/float_suitesparse.h"
 #include "ceres/iterative_refiner.h"
+#include "ceres/float_suitesparse.h"
 #include "ceres/suitesparse.h"
 
 namespace ceres::internal {
@@ -72,18 +70,6 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
 #else
       LOG(FATAL) << "Ceres was compiled without support for "
                  << "Eigen's sparse Cholesky factorization routines.";
-#endif
-
-    case CX_SPARSE:
-#ifndef CERES_NO_CXSPARSE
-      if (options.use_mixed_precision_solves) {
-        sparse_cholesky = FloatCXSparseCholesky::Create(options.ordering_type);
-      } else {
-        sparse_cholesky = CXSparseCholesky::Create(options.ordering_type);
-      }
-      break;
-#else
-      LOG(FATAL) << "Ceres was compiled without support for CXSparse.";
 #endif
 
     case ACCELERATE_SPARSE:

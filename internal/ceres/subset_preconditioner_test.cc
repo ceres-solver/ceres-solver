@@ -181,14 +181,6 @@ INSTANTIATE_TEST_SUITE_P(SubsetPreconditionerWithSuiteSparse,
                          ParamInfoToString);
 #endif
 
-#ifndef CERES_NO_CXSPARSE
-INSTANTIATE_TEST_SUITE_P(SubsetPreconditionerWithCXSparse,
-                         SubsetPreconditionerTest,
-                         ::testing::Combine(::testing::Values(CX_SPARSE),
-                                            ::testing::Values(true, false)),
-                         ParamInfoToString);
-#endif
-
 #ifndef CERES_NO_ACCELERATE_SPARSE
 INSTANTIATE_TEST_SUITE_P(
     SubsetPreconditionerWithAccelerateSparse,
