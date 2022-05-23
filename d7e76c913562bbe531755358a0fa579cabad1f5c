@@ -127,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "01474fbe_c586125a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6190
+      },
+      "writtenOn": "2022-05-23T10:13:24Z",
+      "side": 1,
+      "message": "Yeah, I agree this is tricky in terms of API and I don\u0027t really have a good suggestion :-|\n\nHaving some Manifold classes implement a second API is kind of the same as just extending the Manifold API with optional elements.\n\nOptional API functions could also be made more explicit, for example by having some sort of \"capability\" flags, where each Manifold class can (has to) explicitly state which functionality is supported. Then Ceres can make some decisions based on which capabilities the manifolds of the current Problem have. And it\u0027s more explicit and maybe less surprising (compared to just default-implementing virtual methods with a throwing implementation). But still doesn\u0027t feel very nice.\n\nThe Jacobian to be ignored will be close to identity only if the current state and the linearization points are close. Maybe in practice for well-behaved problems this is anyway the case. But I have no experience on how much of a difference it makes for the optimization result of practical problems.\n\nWhat is the current MinusJacobian (at (x,x)) envisioned to be used for? So far it\u0027s unused, I believe. Possibly, one could also argue that it is not needed in the common case (unless you plan to make use of it in some core part of Ceres). At the same time, I think it\u0027s quite feasible that in the future some new feature might want to extend the Manifold API again (e.g.---just a random example---with a PlusJacobian at a general x, not just 0). So if the API is extended now, it would probably be good to do it in a way that is extensible in the future without breaking API.",
+      "parentUuid": "2ee966bf_fea978ef",
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b357d74_3934ae65",
         "filename": "include/ceres/marginalization.h",
         "patchSetId": 11
