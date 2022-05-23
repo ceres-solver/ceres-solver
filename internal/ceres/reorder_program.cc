@@ -31,13 +31,11 @@
 #include "ceres/reorder_program.h"
 
 #include <algorithm>
-#include <iostream>  // Need this because MetisSupport refers to std::cerr.
 #include <memory>
 #include <numeric>
 #include <vector>
 
 #include "Eigen/SparseCore"
-#include "ceres/cxsparse.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/export.h"
 #include "ceres/ordered_groups.h"
@@ -52,7 +50,13 @@
 #include "ceres/types.h"
 
 #ifdef CERES_USE_EIGEN_SPARSE
+
+#ifndef CERES_NO_METIS
+#include <iostream>  // Need this because MetisSupport refers to std::cerr.
+
 #include "Eigen/MetisSupport"
+#endif
+
 #include "Eigen/OrderingMethods"
 #endif
 
@@ -158,36 +162,6 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
 #endif  // CERES_NO_SUITESPARSE
 }
 
-void OrderingForSparseNormalCholeskyUsingCXSparse(
-    const LinearSolverOrderingType linear_solver_ordering_type,
-    const TripletSparseMatrix& tsm_block_jacobian_transpose,
-    int* ordering) {
-#ifdef CERES_NO_CXSPARSE
-  LOG(FATAL) << "Congratulations, you found a Ceres bug! "
-             << "Please report this error to the developers.";
-#else
-  CHECK_NE(linear_solver_ordering_type, NESDIS)
-      << "Congratulations, you found a Ceres bug! "
-      << "Please report this error to the developers.";
-
-  // CXSparse works with J'J instead of J'. So compute the block
-  // sparsity for J'J and compute an approximate minimum degree
-  // ordering.
-  CXSparse cxsparse;
-  cs_di* block_jacobian_transpose;
-  block_jacobian_transpose = cxsparse.CreateSparseMatrix(
-      const_cast<TripletSparseMatrix*>(&tsm_block_jacobian_transpose));
-  cs_di* block_jacobian = cxsparse.TransposeMatrix(block_jacobian_transpose);
-  cs_di* block_hessian =
-      cxsparse.MatrixMatrixMultiply(block_jacobian_transpose, block_jacobian);
-  cxsparse.Free(block_jacobian);
-  cxsparse.Free(block_jacobian_transpose);
-
-  cxsparse.ApproximateMinimumDegreeOrdering(block_hessian, ordering);
-  cxsparse.Free(block_hessian);
-#endif  // CERES_NO_CXSPARSE
-}
-
 void OrderingForSparseNormalCholeskyUsingEigenSparse(
     const LinearSolverOrderingType linear_solver_ordering_type,
     const TripletSparseMatrix& tsm_block_jacobian_transpose,
@@ -218,10 +192,10 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
     amd_ordering(block_hessian, perm);
   } else {
 #ifndef CERES_NO_METIS
-    perm.setIdentity(block_hessian.rows());
-#else
     Eigen::MetisOrdering<int> metis_ordering;
     metis_ordering(block_hessian, perm);
+#else
+    perm.setIdentity(block_hessian.rows());
 #endif
   }
 
@@ -427,10 +401,10 @@ static void ReorderSchurComplementColumnsUsingEigen(
     amd_ordering(block_schur_complement, perm);
   } else {
 #ifndef CERES_NO_METIS
-    perm.setIdentity(block_schur_complement.rows());
-#else
     Eigen::MetisOrdering<int> metis_ordering;
     metis_ordering(block_schur_complement, perm);
+#else
+    perm.setIdentity(block_schur_complement.rows());
 #endif
   }
 
@@ -578,10 +552,6 @@ bool ReorderProgramForSparseCholesky(
         parameter_blocks,
         parameter_block_ordering,
         &ordering[0]);
-  } else if (sparse_linear_algebra_library_type == CX_SPARSE) {
-    OrderingForSparseNormalCholeskyUsingCXSparse(linear_solver_ordering_type,
-                                                 *tsm_block_jacobian_transpose,
-                                                 &ordering[0]);
   } else if (sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
     // Accelerate does not provide a function to perform reordering without
     // performing a full symbolic factorisation.  As such, we have nothing
@@ -649,18 +619,6 @@ bool AreJacobianColumnsOrdered(
   if (sparse_linear_algebra_library_type == ceres::ACCELERATE_SPARSE) {
     // Apple's accelerate framework does not allow direct access to
     // ordering algorithms, so jacobian columns are never pre-ordered.
-    return false;
-  }
-
-  if (sparse_linear_algebra_library_type == ceres::CX_SPARSE) {
-    if (linear_solver_ordering_type == ceres::NESDIS) {
-      return false;
-    }
-
-    if (linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
-        (linear_solver_type == CGNR && preconditioner_type == SUBSET)) {
-      return true;
-    }
     return false;
   }
 

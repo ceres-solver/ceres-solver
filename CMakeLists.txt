@@ -137,7 +137,6 @@ set_property(CACHE CERES_THREADING_MODEL PROPERTY STRINGS
 option(MINIGLOG "Use a stripped down version of glog." OFF)
 option(GFLAGS "Enable Google Flags." ON)
 option(SUITESPARSE "Enable SuiteSparse." ON)
-option(CXSPARSE "Enable CXSparse." ON)
 if (APPLE)
   option(ACCELERATESPARSE
     "Enable use of sparse solvers in Apple's Accelerate framework." ON)
@@ -193,7 +192,7 @@ if (IOS)
   # Apple claims that the BLAS call dsyrk_ is a private API, and will not allow
   # you to submit to the Apple Store if the symbol is present.
   update_cache_variable(LAPACK OFF)
-  message(STATUS "Building for iOS: SuiteSparse, CXSparse, LAPACK, gflags, "
+  message(STATUS "Building for iOS: SuiteSparse, LAPACK, gflags, "
     "and OpenMP are not available.")
 
   update_cache_variable(BUILD_EXAMPLES OFF)
@@ -291,32 +290,6 @@ else (SUITESPARSE)
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE)
 endif (SUITESPARSE)
 
-# CXSparse.
-if (CXSPARSE)
-  # Don't search with REQUIRED as we can continue without CXSparse.
-  find_package(CXSparse)
-  if (CXSparse_FOUND)
-    set(CXSparse_DEPENDENCY "find_dependency(CXSparse ${CXSparse_VERSION})")
-    # By default, if CXSparse and all dependencies are found, Ceres is
-    # built with CXSparse support.
-    message("-- Found CXSparse version: ${CXSparse_VERSION}, "
-      "building with CXSparse.")
-
-    if (CXSparse_NO_CMAKE OR NOT CXSparse_DIR)
-      install(FILES ${Ceres_SOURCE_DIR}/cmake/FindCXSparse.cmake
-              DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
-    endif (CXSparse_NO_CMAKE OR NOT CXSparse_DIR)
-  else (CXSparse_FOUND)
-    # Disable use of CXSparse if it cannot be found and continue.
-    message("-- Did not find CXSparse, Building without CXSparse.")
-    update_cache_variable(CXSPARSE OFF)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CXSPARSE)
-  endif (CXSparse_FOUND)
-else (CXSPARSE)
-  message("-- Building without CXSparse.")
-  list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CXSPARSE)
-endif (CXSPARSE)
-
 if (ACCELERATESPARSE)
   find_package(AccelerateSparse)
   if (AccelerateSparse_FOUND)
@@ -336,9 +309,9 @@ else()
 endif()
 
 # Ensure that the user understands they have disabled all sparse libraries.
-if (NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE AND NOT ACCELERATESPARSE)
+if (NOT SUITESPARSE AND NOT EIGENSPARSE AND NOT ACCELERATESPARSE)
   message("   ===============================================================")
-  message("   Compiling without any sparse library: SuiteSparse, CXSparse ")
+  message("   Compiling without any sparse library: SuiteSparse, ")
   message("   EigenSparse & Apple's Accelerate are all disabled or unavailable.  ")
   message("   No sparse linear solvers (SPARSE_NORMAL_CHOLESKY & SPARSE_SCHUR)")
   message("   will be available when Ceres is used.")

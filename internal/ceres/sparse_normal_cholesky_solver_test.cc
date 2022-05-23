@@ -129,30 +129,6 @@ TEST_F(SparseNormalCholeskySolverTest,
 }
 #endif
 
-#ifndef CERES_NO_CXSPARSE
-TEST_F(SparseNormalCholeskySolverTest,
-       SparseNormalCholeskyUsingCXSparsePreOrdering) {
-  LinearSolver::Options options;
-  options.sparse_linear_algebra_library_type = CX_SPARSE;
-  options.type = SPARSE_NORMAL_CHOLESKY;
-  options.ordering_type = OrderingType::NATURAL;
-  ContextImpl context;
-  options.context = &context;
-  TestSolver(options);
-}
-
-TEST_F(SparseNormalCholeskySolverTest,
-       SparseNormalCholeskyUsingCXSparsePostOrdering) {
-  LinearSolver::Options options;
-  options.sparse_linear_algebra_library_type = CX_SPARSE;
-  options.type = SPARSE_NORMAL_CHOLESKY;
-  options.ordering_type = OrderingType::AMD;
-  ContextImpl context;
-  options.context = &context;
-  TestSolver(options);
-}
-#endif
-
 #ifndef CERES_NO_ACCELERATE_SPARSE
 TEST_F(SparseNormalCholeskySolverTest,
        SparseNormalCholeskyUsingAccelerateSparsePreOrdering) {
