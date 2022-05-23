@@ -233,24 +233,6 @@ TEST_F(SchurComplementSolverTest,
 #endif  // CERES_NO_METIS
 #endif  // CERES_NO_SUITESPARSE
 
-#ifndef CERES_NO_CXSPARSE
-// TODO(sameeragarwal): Extend these tests for NATURAL & NESDIS, once the linear
-// solver supports it.
-TEST_F(SchurComplementSolverTest, SparseSchurWithCXSparseSmallProblem) {
-  ComputeAndCompareSolutions(
-      2, false, SPARSE_SCHUR, EIGEN, CX_SPARSE, OrderingType::AMD);
-  ComputeAndCompareSolutions(
-      2, true, SPARSE_SCHUR, EIGEN, CX_SPARSE, OrderingType::AMD);
-}
-
-TEST_F(SchurComplementSolverTest, SparseSchurWithCXSparseLargeProblem) {
-  ComputeAndCompareSolutions(
-      3, false, SPARSE_SCHUR, EIGEN, CX_SPARSE, OrderingType::AMD);
-  ComputeAndCompareSolutions(
-      3, true, SPARSE_SCHUR, EIGEN, CX_SPARSE, OrderingType::AMD);
-}
-#endif  // CERES_NO_CXSPARSE
-
 #ifndef CERES_NO_ACCELERATE_SPARSE
 TEST_F(SchurComplementSolverTest,
        SparseSchurWithAccelerateSparseSmallProblemAMD) {

@@ -37,7 +37,6 @@
 #include <vector>
 
 #include "Eigen/SparseCore"
-#include "ceres/cxsparse.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/export.h"
 #include "ceres/ordered_groups.h"
@@ -156,36 +155,6 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
 
   ss.Free(block_jacobian_transpose);
 #endif  // CERES_NO_SUITESPARSE
-}
-
-void OrderingForSparseNormalCholeskyUsingCXSparse(
-    const LinearSolverOrderingType linear_solver_ordering_type,
-    const TripletSparseMatrix& tsm_block_jacobian_transpose,
-    int* ordering) {
-#ifdef CERES_NO_CXSPARSE
-  LOG(FATAL) << "Congratulations, you found a Ceres bug! "
-             << "Please report this error to the developers.";
-#else
-  CHECK_NE(linear_solver_ordering_type, NESDIS)
-      << "Congratulations, you found a Ceres bug! "
-      << "Please report this error to the developers.";
-
-  // CXSparse works with J'J instead of J'. So compute the block
-  // sparsity for J'J and compute an approximate minimum degree
-  // ordering.
-  CXSparse cxsparse;
-  cs_di* block_jacobian_transpose;
-  block_jacobian_transpose = cxsparse.CreateSparseMatrix(
-      const_cast<TripletSparseMatrix*>(&tsm_block_jacobian_transpose));
-  cs_di* block_jacobian = cxsparse.TransposeMatrix(block_jacobian_transpose);
-  cs_di* block_hessian =
-      cxsparse.MatrixMatrixMultiply(block_jacobian_transpose, block_jacobian);
-  cxsparse.Free(block_jacobian);
-  cxsparse.Free(block_jacobian_transpose);
-
-  cxsparse.ApproximateMinimumDegreeOrdering(block_hessian, ordering);
-  cxsparse.Free(block_hessian);
-#endif  // CERES_NO_CXSPARSE
 }
 
 void OrderingForSparseNormalCholeskyUsingEigenSparse(
@@ -578,10 +547,6 @@ bool ReorderProgramForSparseCholesky(
         parameter_blocks,
         parameter_block_ordering,
         &ordering[0]);
-  } else if (sparse_linear_algebra_library_type == CX_SPARSE) {
-    OrderingForSparseNormalCholeskyUsingCXSparse(linear_solver_ordering_type,
-                                                 *tsm_block_jacobian_transpose,
-                                                 &ordering[0]);
   } else if (sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
     // Accelerate does not provide a function to perform reordering without
     // performing a full symbolic factorisation.  As such, we have nothing
@@ -649,18 +614,6 @@ bool AreJacobianColumnsOrdered(
   if (sparse_linear_algebra_library_type == ceres::ACCELERATE_SPARSE) {
     // Apple's accelerate framework does not allow direct access to
     // ordering algorithms, so jacobian columns are never pre-ordered.
-    return false;
-  }
-
-  if (sparse_linear_algebra_library_type == ceres::CX_SPARSE) {
-    if (linear_solver_ordering_type == ceres::NESDIS) {
-      return false;
-    }
-
-    if (linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
-        (linear_solver_type == CGNR && preconditioner_type == SUBSET)) {
-      return true;
-    }
     return false;
   }
 

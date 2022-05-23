@@ -104,7 +104,6 @@ const char* SparseLinearAlgebraLibraryTypeToString(
     SparseLinearAlgebraLibraryType type) {
   switch (type) {
     CASESTR(SUITE_SPARSE);
-    CASESTR(CX_SPARSE);
     CASESTR(EIGEN_SPARSE);
     CASESTR(ACCELERATE_SPARSE);
     CASESTR(NO_SPARSE);
@@ -117,7 +116,6 @@ bool StringToSparseLinearAlgebraLibraryType(
     string value, SparseLinearAlgebraLibraryType* type) {
   UpperCase(&value);
   STRENUM(SUITE_SPARSE);
-  STRENUM(CX_SPARSE);
   STRENUM(EIGEN_SPARSE);
   STRENUM(ACCELERATE_SPARSE);
   STRENUM(NO_SPARSE);
@@ -398,14 +396,6 @@ bool IsSparseLinearAlgebraLibraryTypeAvailable(
     SparseLinearAlgebraLibraryType type) {
   if (type == SUITE_SPARSE) {
 #ifdef CERES_NO_SUITESPARSE
-    return false;
-#else
-    return true;
-#endif
-  }
-
-  if (type == CX_SPARSE) {
-#ifdef CERES_NO_CXSPARSE
     return false;
 #else
     return true;
