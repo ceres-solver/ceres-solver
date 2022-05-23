@@ -368,7 +368,6 @@ class EuclideanDistanceFunctor {
 TEST(DynamicSparsity, StaticAndDynamicSparsityProduceSameSolution) {
   // Skip test if there is no sparse linear algebra library.
   if (!IsSparseLinearAlgebraLibraryTypeAvailable(SUITE_SPARSE) &&
-      !IsSparseLinearAlgebraLibraryTypeAvailable(CX_SPARSE) &&
       !IsSparseLinearAlgebraLibraryTypeAvailable(EIGEN_SPARSE)) {
     return;
   }
