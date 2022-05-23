@@ -378,16 +378,12 @@ class CERES_EXPORT Solver {
     DenseLinearAlgebraLibraryType dense_linear_algebra_library_type = EIGEN;
 
     // Ceres supports using multiple sparse linear algebra libraries for sparse
-    // matrix ordering and factorizations. Currently, SUITE_SPARSE and CX_SPARSE
-    // are the valid choices, depending on whether they are linked into Ceres at
-    // build time.
+    // matrix ordering and factorizations. 
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type =
 #if !defined(CERES_NO_SUITESPARSE)
         SUITE_SPARSE;
 #elif defined(CERES_USE_EIGEN_SPARSE)
         EIGEN_SPARSE;
-#elif !defined(CERES_NO_CXSPARSE)
-        CX_SPARSE;
 #elif !defined(CERES_NO_ACCELERATE_SPARSE)
         ACCELERATE_SPARSE;
 #else
@@ -413,7 +409,7 @@ class CERES_EXPORT Solver {
     //
     // Implementation status:
     //
-    // AMD works for SUITE_SPARSE, CX_SPARSE, EIGEN_SPARSE &
+    // AMD works for SUITE_SPARSE, EIGEN_SPARSE &
     // ACCELERATE_SPARSE.
     //
     // NESDIS currently works for SUITE_SPARSE when using

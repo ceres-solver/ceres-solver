@@ -120,12 +120,6 @@ if (SUITESPARSE AND SuiteSparse_FOUND)
     SuiteSparse::SPQR)
 endif (SUITESPARSE AND SuiteSparse_FOUND)
 
-if (CXSPARSE AND CXSparse_FOUND)
-  # Define version information for use in Solver::FullReport.
-  add_definitions(-DCERES_CXSPARSE_VERSION="${CXSparse_VERSION}")
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES CXSparse::CXSparse)
-endif (CXSPARSE AND CXSparse_FOUND)
-
 if (ACCELERATESPARSE AND AccelerateSparse_FOUND)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${AccelerateSparse_LIBRARIES})
 endif()
@@ -186,7 +180,6 @@ add_library(ceres_internal OBJECT
     cost_function.cc
     covariance.cc
     covariance_impl.cc
-    cxsparse.cc
     dense_cholesky.cc
     dense_normal_cholesky_solver.cc
     dense_qr.cc
@@ -202,7 +195,6 @@ add_library(ceres_internal OBJECT
     evaluator.cc
     file.cc
     first_order_function.cc
-    float_cxsparse.cc
     float_suitesparse.cc
     function_sample.cc
     gradient_checking_cost_function.cc
