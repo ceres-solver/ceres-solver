@@ -52,11 +52,9 @@ SPARSE_SOLVER_CONFIGS = [
     # Linear solver            Sparse backend
     ('SPARSE_NORMAL_CHOLESKY', 'SUITE_SPARSE'),
     ('SPARSE_NORMAL_CHOLESKY', 'EIGEN_SPARSE'),
-    ('SPARSE_NORMAL_CHOLESKY', 'CX_SPARSE'),
     ('SPARSE_NORMAL_CHOLESKY', 'ACCELERATE_SPARSE'),
     ('SPARSE_SCHUR',           'SUITE_SPARSE'),
     ('SPARSE_SCHUR',           'EIGEN_SPARSE'),
-    ('SPARSE_SCHUR',           'CX_SPARSE'),
     ('SPARSE_SCHUR',           'ACCELERATE_SPARSE'),
 ]
 
@@ -66,11 +64,9 @@ ITERATIVE_SOLVER_CONFIGS = [
     ('ITERATIVE_SCHUR',        'NO_SPARSE',        'SCHUR_JACOBI'),
     ('ITERATIVE_SCHUR',        'SUITE_SPARSE',     'CLUSTER_JACOBI'),
     ('ITERATIVE_SCHUR',        'EIGEN_SPARSE',     'CLUSTER_JACOBI'),
-    ('ITERATIVE_SCHUR',        'CX_SPARSE',        'CLUSTER_JACOBI'),
     ('ITERATIVE_SCHUR',        'ACCELERATE_SPARSE','CLUSTER_JACOBI'),
     ('ITERATIVE_SCHUR',        'SUITE_SPARSE',     'CLUSTER_TRIDIAGONAL'),
     ('ITERATIVE_SCHUR',        'EIGEN_SPARSE',     'CLUSTER_TRIDIAGONAL'),
-    ('ITERATIVE_SCHUR',        'CX_SPARSE',        'CLUSTER_TRIDIAGONAL'),
     ('ITERATIVE_SCHUR',        'ACCELERATE_SPARSE','CLUSTER_TRIDIAGONAL'),
 ]
 
@@ -85,7 +81,6 @@ FILENAME_SHORTENING_MAP = dict(
   NO_SPARSE='',  # Omit sparse reference entirely for dense tests.
   SUITE_SPARSE='suitesparse',
   EIGEN_SPARSE='eigensparse',
-  CX_SPARSE='cxsparse',
   ACCELERATE_SPARSE='acceleratesparse',
   IDENTITY='identity',
   JACOBI='jacobi',
@@ -212,9 +207,6 @@ def generate_bundle_test(linear_solver,
   if sparse_backend == 'SUITE_SPARSE':
     preprocessor_conditions_begin.append('#ifndef CERES_NO_SUITESPARSE')
     preprocessor_conditions_end.insert(0, '#endif  // CERES_NO_SUITESPARSE')
-  elif sparse_backend == 'CX_SPARSE':
-    preprocessor_conditions_begin.append('#ifndef CERES_NO_CXSPARSE')
-    preprocessor_conditions_end.insert(0, '#endif  // CERES_NO_CXSPARSE')
   elif sparse_backend == 'ACCELERATE_SPARSE':
     preprocessor_conditions_begin.append('#ifndef CERES_NO_ACCELERATE_SPARSE')
     preprocessor_conditions_end.insert(0, '#endif  // CERES_NO_ACCELERATE_SPARSE')

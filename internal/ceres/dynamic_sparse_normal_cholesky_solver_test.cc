@@ -124,12 +124,6 @@ TEST_F(DynamicSparseNormalCholeskySolverTest, SuiteSparseNESDIS) {
 #endif
 #endif
 
-#ifndef CERES_NO_CXSPARSE
-TEST_F(DynamicSparseNormalCholeskySolverTest, CXSparse) {
-  TestSolver(CX_SPARSE, OrderingType::AMD);
-}
-#endif
-
 #ifdef CERES_USE_EIGEN_SPARSE
 TEST_F(DynamicSparseNormalCholeskySolverTest, EigenAMD) {
   TestSolver(EIGEN_SPARSE, OrderingType::AMD);

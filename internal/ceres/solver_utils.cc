@@ -63,10 +63,6 @@ std::string VersionString() {
   value += "-suitesparse-(" + std::string(CERES_SUITESPARSE_VERSION) + ")";
 #endif
 
-#ifndef CERES_NO_CXSPARSE
-  value += "-cxsparse-(" + std::string(CERES_CXSPARSE_VERSION) + ")";
-#endif
-
 #ifndef CERES_NO_ACCELERATE_SPARSE
   value += "-acceleratesparse";
 #endif
