@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ed935ca_4d8c2bf4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-23T18:23:28Z",
+      "side": 1,
+      "message": "If I do not hear anything substantial by next monday, this can go in.",
+      "revId": "06bd2fc1a24e115d7a8e7b37433562269c2297d7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
