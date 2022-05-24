@@ -50,7 +50,7 @@ if (SPHINX_EXECUTABLE)
   if(PYTHONINTERP_FOUND)
     # Check for sphinx theme dependency for documentation
     execute_process(
-      COMMAND ${PYTHON_EXECUTABLE} -m pip show sphinx-rtd-theme
+      COMMAND ${PYTHON_EXECUTABLE} -c "import sphinx_rtd_theme"
       RESULT_VARIABLE SPHINX_RTD_THEME
       OUTPUT_QUIET
       ERROR_QUIET
