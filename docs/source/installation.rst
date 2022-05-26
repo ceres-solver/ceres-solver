@@ -85,17 +85,6 @@ optional. For details on customizing the build process, see
   `CMake support for SuiteSparse <https://github.com/sergiud/SuiteSparse>`_
   project.
 
-- `CXSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_.
-  Similar to ``SuiteSparse`` but simpler and slower. CXSparse has
-  no dependencies on ``LAPACK`` and ``BLAS``. This makes for a simpler
-  build process and a smaller binary. **Optional**
-
-  A CMake native version of CXSparse that can be compiled on a variety of
-  platforms (e.g., using Visual Studio, Xcode, MinGW, etc.) is also maintained
-  by the `CMake support for SuiteSparse
-  <https://github.com/sergiud/SuiteSparse>`_ project and is part of the
-  SuiteSparse package.
-
 - `Apple's Accelerate sparse solvers <https://developer.apple.com/documentation/accelerate/sparse_solvers>`_.
   As of Xcode 9.0, Apple's Accelerate framework includes support for
   solving sparse linear systems across macOS, iOS et al. **Optional**
@@ -162,7 +151,7 @@ Start by installing all the dependencies.
      sudo apt-get install libatlas-base-dev
      # Eigen3
      sudo apt-get install libeigen3-dev
-     # SuiteSparse and CXSparse (optional)
+     # SuiteSparse (optional)
      sudo apt-get install libsuitesparse-dev
 
 We are now ready to build, test, and install Ceres.
@@ -291,7 +280,7 @@ framework.
       brew install glog gflags
       # Eigen3
       brew install eigen
-      # SuiteSparse and CXSparse
+      # SuiteSparse
       brew install suite-sparse
 
 We are now ready to build, test, and install Ceres.
@@ -347,13 +336,6 @@ Studio 2019 and newer.
       <https://github.com/jlblancoc/suitesparse-metis-for-windows>`_
       project.  If you wish to use ``SuiteSparse``, follow their
       instructions for obtaining and building it.
-
-   #. (Experimental) ``CXSparse`` Previously CXSparse was not
-      available on Windows, there are now several ports that enable it
-      to be, including: `[1] <https://github.com/PetterS/CXSparse>`_
-      and `[2] <https://github.com/TheFrenchLeaf/CXSparse>`_.  If you
-      wish to use ``CXSparse``, follow their instructions for
-      obtaining and building it.
 
    #. Alternatively, Ceres Solver supports ``SuiteSparse`` binary
       packages available for Visual Studio 2019 and 2022 provided by the `CMake
@@ -619,14 +601,6 @@ Options controlling Ceres configuration
       terms.  Ceres requires some components that are only licensed under
       GPL/Commercial terms.
 
-#. ``CXSPARSE [Default: ON]``: By default, Ceres will link to
-   ``CXSparse`` if all its dependencies are present. Turn this ``OFF``
-   to build Ceres without ``CXSparse``.
-
-   .. NOTE::
-
-      CXSparse is licensed under the LGPL.
-
 #. ``ACCELERATESPARSE [Default: ON]``: By default, Ceres will link to
    Apple's Accelerate framework directly if a version of it is detected
    which supports solving sparse linear systems.  Note that on Apple OSs
@@ -836,16 +810,14 @@ The Ceres components which can be specified are:
 
 #. ``SuiteSparse``: Ceres built with SuiteSparse (``SUITESPARSE=ON``).
 
-#. ``CXSparse``: Ceres built with CXSparse (``CXSPARSE=ON``).
-
 #. ``AccelerateSparse``: Ceres built with Apple's Accelerate sparse solvers (``ACCELERATESPARSE=ON``).
 
 #. ``EigenSparse``: Ceres built with Eigen's sparse Cholesky factorization
    (``EIGENSPARSE=ON``).
 
-#. ``SparseLinearAlgebraLibrary``: Ceres built with *at least one* sparse linear
-   algebra library.  This is equivalent to ``SuiteSparse`` **OR** ``CXSparse``
-   **OR** ``AccelerateSparse``  **OR** ``EigenSparse``.
+#. ``SparseLinearAlgebraLibrary``: Ceres built with *at least one*
+   sparse linear algebra library.  This is equivalent to
+   ``SuiteSparse`` **OR** ``AccelerateSparse`` **OR** ``EigenSparse``.
 
 #. ``SchurSpecializations``: Ceres built with Schur specializations
    (``SCHUR_SPECIALIZATIONS=ON``).
