@@ -489,11 +489,13 @@ Cholesky factorization of the normal equations. Ceres uses
 
 ``SPARSE_NORMAL_CHOLESKY``, as the name implies performs a sparse
 Cholesky factorization of the normal equations. This leads to
-substantial savings in time and memory for large sparse
-problems. Ceres uses the sparse Cholesky factorization routines in
-Professor Tim Davis' ``SuiteSparse`` or ``CXSparse`` packages [Chen]_
-or the sparse Cholesky factorization algorithm in ``Eigen`` (which
-incidentally is a port of the algorithm implemented inside ``CXSparse``)
+substantial savings in time and memory for large sparse problems. The
+use of this linear solver requires that Ceres is compiled with support
+for at least one of:
+
+ 1. SuiteSparse
+ 2. Apple's Accelerate framework.
+ 3. Eigen's sparse linear solvers.
 
 .. _section-cgnr:
 
@@ -822,33 +824,31 @@ The order in which variables are eliminated in a linear solver can
 have a significant of impact on the efficiency and accuracy of the
 method. For example when doing sparse Cholesky factorization, there
 are matrices for which a good ordering will give a Cholesky factor
-with :math:`O(n)` storage, where as a bad ordering will result in an
+with :math:`O(n)` storage, whereas a bad ordering will result in an
 completely dense factor.
 
 Ceres allows the user to provide varying amounts of hints to the
 solver about the variable elimination ordering to use. This can range
-from no hints, where the solver is free to decide the best ordering
-based on the user's choices like the linear solver being used, to an
-exact order in which the variables should be eliminated, and a variety
-of possibilities in between.
+from no hints, where the solver is free to decide the best possible
+ordering based on the user's choices like the linear solver being
+used, to an exact order in which the variables should be eliminated,
+and a variety of possibilities in between.
 
 Instances of the :class:`ParameterBlockOrdering` class are used to
 communicate this information to Ceres.
 
-Formally an ordering is an ordered partitioning of the parameter
-blocks. Each parameter block belongs to exactly one group, and each
-group has a unique integer associated with it, that determines its
-order in the set of groups. We call these groups *Elimination Groups*
+Formally an ordering is an ordered partitioning of the
+parameter blocks, i.e, each parameter block belongs to exactly
+one group, and each group has a unique non-negative integer
+associated with it, that determines its order in the set of
+groups.
 
-Given such an ordering, Ceres ensures that the parameter blocks in the
-lowest numbered elimination group are eliminated first, and then the
-parameter blocks in the next lowest numbered elimination group and so
-on. Within each elimination group, Ceres is free to order the
-parameter blocks as it chooses. For example, consider the linear system
+
+e.g. Consider the linear system
 
 .. math::
-  x + y &= 3\\
-  2x + 3y &= 7
+   x + y &= 3 \\
+   2x + 3y &= 7
 
 There are two ways in which it can be solved. First eliminating
 :math:`x` from the two equations, solving for :math:`y` and then back
@@ -856,32 +856,86 @@ substituting for :math:`x`, or first eliminating :math:`y`, solving
 for :math:`x` and back substituting for :math:`y`. The user can
 construct three orderings here.
 
-1. :math:`\{0: x\}, \{1: y\}` : Eliminate :math:`x` first.
-2. :math:`\{0: y\}, \{1: x\}` : Eliminate :math:`y` first.
-3. :math:`\{0: x, y\}`        : Solver gets to decide the elimination order.
+1. :math:`\{0: x\}, \{1: y\}` - eliminate :math:`x` first.
+2. :math:`\{0: y\}, \{1: x\}` - eliminate :math:`y` first.
+3. :math:`\{0: x, y\}` - Solver gets to decide the elimination order.
 
-Thus, to have Ceres determine the ordering automatically using
-heuristics, put all the variables in the same elimination group. The
-identity of the group does not matter. This is the same as not
-specifying an ordering at all. To control the ordering for every
-variable, create an elimination group per variable, ordering them in
-the desired order.
+Thus, to have Ceres determine the ordering automatically, put all the
+variables in group 0 and to control the ordering for every variable,
+create groups :math:`0 \dots N-1`, one per variable, in the desired
+order.
 
-If the user is using one of the Schur solvers (``DENSE_SCHUR``,
-``SPARSE_SCHUR``, ``ITERATIVE_SCHUR``) and chooses to specify an
-ordering, it must have one important property. The lowest numbered
-elimination group must form an independent set in the graph
-corresponding to the Hessian, or in other words, no two parameter
-blocks in in the first elimination group should co-occur in the same
-residual block. For the best performance, this elimination group
-should be as large as possible. For standard bundle adjustment
-problems, this corresponds to the first elimination group containing
-all the 3d points, and the second containing the all the cameras
-parameter blocks.
+``linear_solver_ordering == nullptr`` and an ordering where all the
+parameter blocks are in one elimination group mean the same thing -
+the solver is free to choose what it thinks is the best elimination
+ordering. Therefore in the following we will only consider the case
+where ``linear_solver_ordering != nullptr``.
+
+The exact interpretation of the ``linear_solver_ordering depeneds`` on
+the values of ``Solver::Options::linear_solver_ordering_type``,
+``Solver::Options::linear_solver_type``,
+``Solver::Options::preconditioner_type`` and
+``Solver::Options::sparse_linear_algebra_type`` as we will explain
+below.
+
+Bundle Adjustment
+-----------------
+
+If the user is using one of the Schur solvers (DENSE_SCHUR,
+SPARSE_SCHUR, ITERATIVE_SCHUR) and chooses to specify an ordering, it
+must have one important property. The lowest numbered elimination
+group must form an independent set in the graph corresponding to the
+Hessian, or in other words, no two parameter blocks in the first
+elimination group should co-occur in the same residual block. For the
+best performance, this elimination group should be as large as
+possible. For standard bundle adjustment problems, this corresponds to
+the first elimination group containing all the 3d points, and the
+second containing the parameter blocks for all the cameras.
 
 If the user leaves the choice to Ceres, then the solver uses an
 approximate maximum independent set algorithm to identify the first
 elimination group [LiSaad]_.
+
+sparse_linear_algebra_library_type = SUITE_SPARSE
+-------------------------------------------------
+
+**linear_solver_ordering_type = AMD**
+
+A constrained Approximate Minimum Degree (CAMD) ordering used where
+the parameter blocks in the lowest numbered group are eliminated
+first, and then the parameter blocks in the next lowest numbered group
+and so on. Within each group, CAMD is free to order the parameter blocks
+as it chooses.
+
+**linear_solver_ordering_type = NESDIS**
+
+a. ``linear_solver_type = SPARSE_NORMAL_CHOLESKY`` or
+   ``linear_solver_type = CGNR`` and ``preconditioner_type = SUBSET``
+
+   The value of linear_solver_ordering is ignored and a Nested
+   Dissection algorithm is used to compute a fill reducing ordering.
+
+b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
+
+   ONLY the lowest group are used to compute the Schur complement, and
+   Nested Dissection is used to compute a fill reducing ordering for
+   the Schur Complement (or its preconditioner).
+
+sparse_linear_algebra_library_type = EIGEN_SPARSE or ACCELERATE_SPARSE
+----------------------------------------------------------------------
+
+a. ``linear_solver_type = SPARSE_NORMAL_CHOLESKY`` or
+   ``linear_solver_type = CGNR`` and ``preconditioner_type = SUBSET``
+
+   The value of linear_solver_ordering is ignored and ``AMD`` or
+   ``NESDIS`` is used to compute a fill reducing ordering as requested
+   by the user.
+
+b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
+
+   ONLY the lowest group are used to compute the Schur complement, and
+   ``AMD`` or ``NESID`` is used to compute a fill reducing ordering
+   for the Schur Complement (or its preconditioner).
 
 .. _section-solver-options:
 
@@ -1261,7 +1315,7 @@ elimination group [LiSaad]_.
    Type of linear solver used to compute the solution to the linear
    least squares problem in each iteration of the Levenberg-Marquardt
    algorithm. If Ceres is built with support for ``SuiteSparse`` or
-   ``CXSparse`` or ``Eigen``'s sparse Cholesky factorization, the
+   ``Accelerate`` or ``Eigen``'s sparse Cholesky factorization, the
    default is ``SPARSE_NORMAL_CHOLESKY``, it is ``DENSE_QR``
    otherwise.
 
@@ -1340,48 +1394,58 @@ elimination group [LiSaad]_.
 .. member:: SparseLinearAlgebraLibrary Solver::Options::sparse_linear_algebra_library_type
 
    Default: The highest available according to: ``SUITE_SPARSE`` >
-   ``CX_SPARSE`` > ``EIGEN_SPARSE`` > ``NO_SPARSE``
+   ``ACCELERATE_SPARSE`` > ``EIGEN_SPARSE`` > ``NO_SPARSE``
 
    Ceres supports the use of three sparse linear algebra libraries,
    ``SuiteSparse``, which is enabled by setting this parameter to
-   ``SUITE_SPARSE``, ``CXSparse``, which can be selected by setting
-   this parameter to ``CX_SPARSE`` and ``Eigen`` which is enabled by
-   setting this parameter to ``EIGEN_SPARSE``.  Lastly, ``NO_SPARSE``
-   means that no sparse linear solver should be used; note that this is
-   irrespective of whether Ceres was compiled with support for one.
+   ``SUITE_SPARSE``, ``Acclerate``, which can be selected by setting
+   this parameter to ``ACCELERATE_SPARSE`` and ``Eigen`` which is
+   enabled by setting this parameter to ``EIGEN_SPARSE``.  Lastly,
+   ``NO_SPARSE`` means that no sparse linear solver should be used;
+   note that this is irrespective of whether Ceres was compiled with
+   support for one.
 
-   ``SuiteSparse`` is a sophisticated and complex sparse linear
-   algebra library and should be used in general.
+   ``SuiteSparse`` is a sophisticated sparse linear algebra library
+   and should be used in general. On MacOS you may want to use the
+   ``Accelerate`` framework.
 
    If your needs/platforms prevent you from using ``SuiteSparse``,
-   consider using ``CXSparse``, which is a much smaller, easier to
-   build library. As can be expected, its performance on large
-   problems is not comparable to that of ``SuiteSparse``.
+   consider using the sparse linear algebra routines in ``Eigen``. The
+   sparse Cholesky algorithms currently included with ``Eigen`` are
+   not as sophisticated as the ones in ``SuiteSparse`` and
+   ``Accelerate`` and as a result its performance is considerably
+   worse.
 
-   Last but not the least you can use the sparse linear algebra
-   routines in ``Eigen``. Currently the performance of this library is
-   the poorest of the three. But this should change in the near
-   future.
+.. member:: LinearSolverOrderingType Solver::Options::linear_solver_ordering_type
 
-   Another thing to consider here is that the sparse Cholesky
-   factorization libraries in Eigen are licensed under ``LGPL`` and
-   building Ceres with support for ``EIGEN_SPARSE`` will result in an
-   LGPL licensed library (since the corresponding code from Eigen is
-   compiled into the library).
+   Default: ``AMD``
 
-   The upside is that you do not need to build and link to an external
-   library to use ``EIGEN_SPARSE``.
+    The order in which variables are eliminated in a linear solver can
+    have a significant impact on the efficiency and accuracy of the
+    method. e.g., when doing sparse Cholesky factorization, there are
+    matrices for which a good ordering will give a Cholesky factor
+    with :math:`O(n)` storage, where as a bad ordering will result in
+    an completely dense factor.
 
+    Sparse direct solvers like ``SPARSE_NORMAL_CHOLESKY`` and
+    ``SPARSE_SCHUR`` use a fill reducing ordering of the columns and
+    rows of the matrix being factorized before computing the numeric
+    factorization.
+
+    This enum controls the type of algorithm used to compute this fill
+    reducing ordering. There is no single algorithm that works on all
+    matrices, so determining which algorithm works better is a matter
+    of empirical experimentation.
 
 .. member:: shared_ptr<ParameterBlockOrdering> Solver::Options::linear_solver_ordering
 
-   Default: ``NULL``
+   Default: ``nullptr``
 
    An instance of the ordering object informs the solver about the
    desired order in which parameter blocks should be eliminated by the
    linear solvers.
 
-   If ``NULL``, the solver is free to choose an ordering that it
+   If ``nullptr``, the solver is free to choose an ordering that it
    thinks is best.
 
    See :ref:`section-ordering` for more details.
@@ -1526,14 +1590,14 @@ elimination group [LiSaad]_.
 
 .. member:: shared_ptr<ParameterBlockOrdering> Solver::Options::inner_iteration_ordering
 
-   Default: ``NULL``
+   Default: ``nullptr``
 
    If :member:`Solver::Options::use_inner_iterations` true, then the
    user has two choices.
 
    1. Let the solver heuristically decide which parameter blocks to
       optimize in each inner iteration. To do this, set
-      :member:`Solver::Options::inner_iteration_ordering` to ``NULL``.
+      :member:`Solver::Options::inner_iteration_ordering` to ``nullptr``.
 
    2. Specify a collection of of ordered independent sets. The lower
       numbered groups are optimized before the higher number groups

@@ -85,17 +85,6 @@ optional. For details on customizing the build process, see
   `CMake support for SuiteSparse <https://github.com/sergiud/SuiteSparse>`_
   project.
 
-- `CXSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_.
-  Similar to ``SuiteSparse`` but simpler and slower. CXSparse has
-  no dependencies on ``LAPACK`` and ``BLAS``. This makes for a simpler
-  build process and a smaller binary. **Optional**
-
-  A CMake native version of CXSparse that can be compiled on a variety of
-  platforms (e.g., using Visual Studio, Xcode, MinGW, etc.) is also maintained
-  by the `CMake support for SuiteSparse
-  <https://github.com/sergiud/SuiteSparse>`_ project and is part of the
-  SuiteSparse package.
-
 - `Apple's Accelerate sparse solvers <https://developer.apple.com/documentation/accelerate/sparse_solvers>`_.
   As of Xcode 9.0, Apple's Accelerate framework includes support for
   solving sparse linear systems across macOS, iOS et al. **Optional**
@@ -162,7 +151,7 @@ Start by installing all the dependencies.
      sudo apt-get install libatlas-base-dev
      # Eigen3
      sudo apt-get install libeigen3-dev
-     # SuiteSparse and CXSparse (optional)
+     # SuiteSparse (optional)
      sudo apt-get install libsuitesparse-dev
 
 We are now ready to build, test, and install Ceres.
@@ -203,7 +192,7 @@ this.
        5  1.803399e+04    5.33e+01    1.48e+04   1.23e+01   9.99e-01  8.33e+05       1    1.45e-01    1.08e+00
        6  1.803390e+04    9.02e-02    6.35e+01   8.00e-01   1.00e+00  2.50e+06       1    1.50e-01    1.23e+00
 
-  Solver Summary (v 2.1.0-eigen-(3.4.0)-lapack-suitesparse-(5.10.1)-cxsparse-(3.2.0)-acceleratesparse-eigensparse-no_openmp)
+  Solver Summary (v 2.1.0-eigen-(3.4.0)-lapack-suitesparse-(5.10.1)-acceleratesparse-eigensparse-no_openmp)
 
 				       Original                  Reduced
   Parameter blocks                        22122                    22122
@@ -291,7 +280,7 @@ framework.
       brew install glog gflags
       # Eigen3
       brew install eigen
-      # SuiteSparse and CXSparse
+      # SuiteSparse
       brew install suite-sparse
 
 We are now ready to build, test, and install Ceres.
@@ -348,23 +337,13 @@ Studio 2019 and newer.
       project.  If you wish to use ``SuiteSparse``, follow their
       instructions for obtaining and building it.
 
-   #. (Experimental) ``CXSparse`` Previously CXSparse was not
-      available on Windows, there are now several ports that enable it
-      to be, including: `[1] <https://github.com/PetterS/CXSparse>`_
-      and `[2] <https://github.com/TheFrenchLeaf/CXSparse>`_.  If you
-      wish to use ``CXSparse``, follow their instructions for
-      obtaining and building it.
-
-   #. Alternatively, Ceres Solver supports ``SuiteSparse`` binary
-      packages available for Visual Studio 2019 and 2022 provided by the `CMake
-      support for SuiteSparse <https://github.com/sergiud/SuiteSparse>`_ project
-      that also include `reference LAPACK <http://www.netlib.org/blas>`_ (and
-      BLAS). The binary packages are used by Ceres Solver for continuous testing
-      on Github.
-
-      .. note::
-
-          The GPL licensed version of the SuiteSparse package is required.
+      Alternatively, Ceres Solver supports ``SuiteSparse`` binary
+      packages available for Visual Studio 2019 and 2022 provided by
+      the `CMake support for SuiteSparse
+      <https://github.com/sergiud/SuiteSparse>`_ project that also
+      include `reference LAPACK <http://www.netlib.org/blas>`_ (and
+      BLAS). The binary packages are used by Ceres Solver for
+      continuous testing on Github.
 
 #. Unpack the Ceres tarball into ``ceres``. For the tarball, you
    should get a directory inside ``ceres`` similar to
@@ -427,8 +406,9 @@ Like the Linux build, you should now be able to run
        optimal performance.
     #. CMake puts the resulting test binaries in ``ceres-bin/examples/Debug`` by
        default.
-    #. Without ``SuiteSparse``, only a subset of solvers is usable,
-       namely: ``DENSE_QR``, ``DENSE_SCHUR``, ``CGNR``, and ``ITERATIVE_SCHUR``.
+    #. Without a sparse linear algebra library, only a subset of
+       solvers is usable, namely: ``DENSE_QR``, ``DENSE_SCHUR``,
+       ``CGNR``, and ``ITERATIVE_SCHUR``.
 
 
 .. _section-android:
@@ -527,9 +507,7 @@ need to add to your Xcode project.
 The default CMake configuration builds a bare bones version of Ceres
 Solver that only depends on Eigen (``MINIGLOG`` is compiled into Ceres
 if it is used), this should be sufficient for solving small to
-moderate sized problems (No ``SPARSE_SCHUR``,
-``SPARSE_NORMAL_CHOLESKY`` linear solvers and no ``CLUSTER_JACOBI``
-and ``CLUSTER_TRIDIAGONAL`` preconditioners).
+moderate sized problems.
 
 If you decide to use ``LAPACK`` and ``BLAS``, then you also need to
 add ``Accelerate.framework`` to your Xcode project's linking
@@ -619,22 +597,14 @@ Options controlling Ceres configuration
       terms.  Ceres requires some components that are only licensed under
       GPL/Commercial terms.
 
-#. ``CXSPARSE [Default: ON]``: By default, Ceres will link to
-   ``CXSparse`` if all its dependencies are present. Turn this ``OFF``
-   to build Ceres without ``CXSparse``.
-
-   .. NOTE::
-
-      CXSparse is licensed under the LGPL.
-
 #. ``ACCELERATESPARSE [Default: ON]``: By default, Ceres will link to
    Apple's Accelerate framework directly if a version of it is detected
    which supports solving sparse linear systems.  Note that on Apple OSs
    Accelerate usually also provides the BLAS/LAPACK implementations and
    so would be linked against irrespective of the value of ``ACCELERATESPARSE``.
 
-#. ``EIGENSPARSE [Default: ON]``: By default, Ceres will not use
-   Eigen's sparse Cholesky factorization.
+#. ``EIGENSPARSE [Default: ON]``: By default, Ceres will use Eigen's
+   sparse Cholesky factorization.
 
 #. ``GFLAGS [Default: ON]``: Turn this ``OFF`` to build Ceres without
    ``gflags``. This will also prevent some of the example code from
@@ -836,16 +806,14 @@ The Ceres components which can be specified are:
 
 #. ``SuiteSparse``: Ceres built with SuiteSparse (``SUITESPARSE=ON``).
 
-#. ``CXSparse``: Ceres built with CXSparse (``CXSPARSE=ON``).
-
 #. ``AccelerateSparse``: Ceres built with Apple's Accelerate sparse solvers (``ACCELERATESPARSE=ON``).
 
 #. ``EigenSparse``: Ceres built with Eigen's sparse Cholesky factorization
    (``EIGENSPARSE=ON``).
 
-#. ``SparseLinearAlgebraLibrary``: Ceres built with *at least one* sparse linear
-   algebra library.  This is equivalent to ``SuiteSparse`` **OR** ``CXSparse``
-   **OR** ``AccelerateSparse``  **OR** ``EigenSparse``.
+#. ``SparseLinearAlgebraLibrary``: Ceres built with *at least one*
+   sparse linear algebra library.  This is equivalent to
+   ``SuiteSparse`` **OR** ``AccelerateSparse`` **OR** ``EigenSparse``.
 
 #. ``SchurSpecializations``: Ceres built with Schur specializations
    (``SCHUR_SPECIALIZATIONS=ON``).
