@@ -76,10 +76,6 @@
 // If defined Ceres was compiled without support for METIS via Eigen.
 @CERES_NO_EIGEN_METIS@
 
-// If defined, Ceres was compiled with a version MSVC >= 2005 which
-// deprecated the standard POSIX names for bessel functions, replacing them
-// with underscore prefixed versions (e.g. j0() -> _j0()).
-@CERES_MSVC_USE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS@
 
 // CERES_NO_SPARSE should be automatically defined by config.h if Ceres was
 // compiled without any sparse back-end.  Verify that it has not subsequently

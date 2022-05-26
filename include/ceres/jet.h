@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -430,6 +430,9 @@ using std::ceil;
 using std::copysign;
 using std::cos;
 using std::cosh;
+#ifdef CERES_HAS_CPP17_BESSEL_FUNCTIONS
+using std::cyl_bessel_j;
+#endif  // CERES_HAS_CPP17_BESSEL_FUNCTIONS
 using std::erf;
 using std::erfc;
 using std::exp;
@@ -867,6 +870,9 @@ inline Jet<T, N> erfc(const Jet<T, N>& x) {
                    -x.v * exp(-x.a * x.a) * (T(1) / sqrt(atan(T(1)))));
 }
 
+#if defined(CERES_HAS_CPP17_BESSEL_FUNCTIONS) || \
+    defined(CERES_HAS_POSIX_BESSEL_FUNCTIONS)
+
 // Bessel functions of the first kind with integer order equal to 0, 1, n.
 //
 // Microsoft has deprecated the j[0,1,n]() POSIX Bessel functions in favour of
@@ -874,19 +880,33 @@ inline Jet<T, N> erfc(const Jet<T, N>& x) {
 // function errors in client code (the specific warning is suppressed when
 // Ceres itself is built).
 inline double BesselJ0(double x) {
+#ifdef CERES_HAS_CPP17_BESSEL_FUNCTIONS
+  return cyl_bessel_j(0, x);
+#else
   CERES_DISABLE_DEPRECATED_WARNING
   return j0(x);
   CERES_RESTORE_DEPRECATED_WARNING
+#endif  // defined(CERES_HAS_CPP17_BESSEL_FUNCTIONS)
 }
+
 inline double BesselJ1(double x) {
+#ifdef CERES_HAS_CPP17_BESSEL_FUNCTIONS
+  return cyl_bessel_j(1, x);
+#else
   CERES_DISABLE_DEPRECATED_WARNING
   return j1(x);
   CERES_RESTORE_DEPRECATED_WARNING
+#endif  // defined(CERES_HAS_CPP17_BESSEL_FUNCTIONS)
 }
+
 inline double BesselJn(int n, double x) {
+#ifdef CERES_HAS_CPP17_BESSEL_FUNCTIONS
+  return cyl_bessel_j(static_cast<double>(n), x);
+#else
   CERES_DISABLE_DEPRECATED_WARNING
   return jn(n, x);
   CERES_RESTORE_DEPRECATED_WARNING
+#endif  // defined(CERES_HAS_CPP17_BESSEL_FUNCTIONS)
 }
 
 // For the formulae of the derivatives of the Bessel functions see the book:
@@ -899,25 +919,59 @@ inline double BesselJn(int n, double x) {
 // j0(a + h) ~= j0(a) - j1(a) h
 template <typename T, int N>
 inline Jet<T, N> BesselJ0(const Jet<T, N>& f) {
+#ifdef CERES_HAS_CPP17_BESSEL_FUNCTIONS
+  return cyl_bessel_j(0, f);
+#else
   return Jet<T, N>(BesselJ0(f.a), -BesselJ1(f.a) * f.v);
+#endif  // defined(CERES_HAS_CPP17_BESSEL_FUNCTIONS)
 }
 
 // See formula http://dlmf.nist.gov/10.6#E1
 // j1(a + h) ~= j1(a) + 0.5 ( j0(a) - j2(a) ) h
 template <typename T, int N>
 inline Jet<T, N> BesselJ1(const Jet<T, N>& f) {
+#ifdef CERES_HAS_CPP17_BESSEL_FUNCTIONS
+  return cyl_bessel_j(1, f);
+#else
   return Jet<T, N>(BesselJ1(f.a),
                    T(0.5) * (BesselJ0(f.a) - BesselJn(2, f.a)) * f.v);
+#endif  // defined(CERES_HAS_CPP17_BESSEL_FUNCTIONS)
 }
 
 // See formula http://dlmf.nist.gov/10.6#E1
 // j_n(a + h) ~= j_n(a) + 0.5 ( j_{n-1}(a) - j_{n+1}(a) ) h
 template <typename T, int N>
 inline Jet<T, N> BesselJn(int n, const Jet<T, N>& f) {
+#ifdef CERES_HAS_CPP17_BESSEL_FUNCTIONS
+  return cyl_bessel_j(n, f);
+#else
   return Jet<T, N>(
       BesselJn(n, f.a),
       T(0.5) * (BesselJn(n - 1, f.a) - BesselJn(n + 1, f.a)) * f.v);
+#endif  // defined(CERES_HAS_CPP17_BESSEL_FUNCTIONS)
 }
+
+#endif  // defined(CERES_HAS_CPP17_BESSEL_FUNCTIONS) ||
+        // defined(CERES_HAS_POSIX_BESSEL_FUNCTIONS)
+
+#ifdef CERES_HAS_CPP17_BESSEL_FUNCTIONS
+
+// See formula http://dlmf.nist.gov/10.6#E1
+// j_n(a + h) ~= j_n(a) + 0.5 ( j_{n-1}(a) - j_{n+1}(a) ) h
+template <typename T, int N>
+inline Jet<T, N> cyl_bessel_j(double v, const Jet<T, N>& f) {
+  // See formula http://dlmf.nist.gov/10.6#E3
+  // j0(a + h) ~= j0(a) - j1(a) h
+  if (fpclassify(v) == FP_ZERO) {
+    return Jet<T, N>(cyl_bessel_j(0, f.a), -cyl_bessel_j(1, f.a) * f.v);
+  }
+
+  return Jet<T, N>(
+      cyl_bessel_j(v, f.a),
+      T(0.5) * (cyl_bessel_j(v - 1, f.a) - cyl_bessel_j(v + 1, f.a)) * f.v);
+}
+
+#endif  // CERES_HAS_CPP17_BESSEL_FUNCTIONS
 
 // Classification and comparison functionality referencing only the scalar part
 // of a Jet. To classify the derivatives (e.g., for sanity checks), the dual
