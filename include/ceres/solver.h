@@ -382,10 +382,10 @@ class CERES_EXPORT Solver {
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type =
 #if !defined(CERES_NO_SUITESPARSE)
         SUITE_SPARSE;
-#elif defined(CERES_USE_EIGEN_SPARSE)
-        EIGEN_SPARSE;
 #elif !defined(CERES_NO_ACCELERATE_SPARSE)
         ACCELERATE_SPARSE;
+#elif defined(CERES_USE_EIGEN_SPARSE)
+        EIGEN_SPARSE;
 #else
         NO_SPARSE;
 #endif
@@ -407,143 +407,115 @@ class CERES_EXPORT Solver {
     // that works on all matrices, so determining which algorithm
     // works better is a matter of empirical experimentation.
     //
-    // Implementation status:
-    //
-    // AMD works for SUITE_SPARSE, EIGEN_SPARSE &
-    // ACCELERATE_SPARSE.
-    //
-    // NESDIS currently works for SUITE_SPARSE when using
-    // SPARSE_NORMAL_CHOLESKY, SPARSE_SCHUR, CGNR + SUBSET,
-    // ITERATIVE_SCHUR + CLUSTER_JACOBI, ITERATIVE_SCHUR +
-    // CLUSTER_TRIDIAGONAL linear solvers.
+    // The exact behaviour of this setting is affected by the value of
+    // linear_solver_ordering as described below.
     LinearSolverOrderingType linear_solver_ordering_type = AMD;
 
-    // Ceres allows the user to provide varying amounts of hints to
-    // the solver about the variable elimination ordering to use. This
-    // can range from no hints, where the solver is free to decide the
-    // best possible ordering based on the user's choices like the
-    // linear solver being used, to an exact order in which the
-    // variables should be eliminated, and a variety of possibilities
-    // in between.
+    // Besides specifying the fill reducing ordering via
+    // linear_solver_ordering_type, Ceres allows the user to provide varying
+    // amounts of hints to the linear solver about the variable elimination
+    // ordering to use. This can range from no hints, where the solver is free
+    // to decide the best possible ordering based on the user's choices like the
+    // linear solver being used, to an exact order in which the variables should
+    // be eliminated, and a variety of possibilities in between.
     //
-    // Instances of the ParameterBlockOrdering class are used to
-    // communicate this information to Ceres.
+    // Instances of the ParameterBlockOrdering class are used to communicate
+    // this information to Ceres.
     //
-    // Formally an ordering is an ordered partitioning of the
-    // parameter blocks, i.e, each parameter block belongs to exactly
-    // one group, and each group has a unique non-negative integer
-    // associated with it, that determines its order in the set of
-    // groups.
-    //
-    // The exact interpretation of this information depends on the
-    // values of linear_solver_ordering_type and
-    // linear_solver_type/preconditioner_type and
-    // sparse_linear_algebra_type.
-    //
-    // sparse_linear_algebra_library_type != SUITE_SPARSE
-    // ==================================================
-    //
-    // The value of linear_solver_ordering_type does not matter and:
-    //
-    // a. linear_solver_type = SPARSE_NORMAL_CHOLESKY or
-    //    linear_solver_type = CGNR and preconditioner_type = SUBSET
-    //
-    // then the value of linear_solver_ordering is ignored.
-    //
-    // b. linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR
-    //
-    // then if linear_solver_ordering is non-null, then the lowest
-    // number group is used as the first elimination group to compute
-    // the Schur complement. All other groups are ignored.
-    //
-    // sparse_linear_algebra_library_type == SUITE_SPARSE
-    // ==================================================
-    //
-    // linear_solver_ordering_type = AMD
-    // ---------------------------------
-    //
-    // linear_solver_type = SPARSE_NORMAL_CHOLESKY or
-    // linear_solver_type = CGNR and preconditioner_type = SUBSET
-    //
-    // if linear_solver_ordering = nullptr, then Ceres assumes that
-    // all parameter blocks are in the same elimination group and uses
-    // the Approximate Minimum Degree algorithm to compute a fill
-    // reducing ordering.
-    //
-    // If linear_solver_order is not null, then a Constrained
-    // Approximate Minimum Degree (CAMD) ordering used where the
-    // parameter blocks in the lowest numbered group are eliminated
-    // first, and then the parameter blocks in the next lowest
-    // numbered group and so on. Within each group, CAMD free to order
-    // the parameter blocks as it chooses.
+    // Formally an ordering is an ordered partitioning of the parameter blocks,
+    // i.e, each parameter block belongs to exactly one group, and each group
+    // has a unique non-negative integer associated with it, that determines its
+    // order in the set of groups.
     //
     // e.g. Consider the linear system
     //
     //   x + y = 3
     //   2x + 3y = 7
     //
-    // There are two ways in which it can be solved. First eliminating x
-    // from the two equations, solving for y and then back substituting
-    // for x, or first eliminating y, solving for x and back substituting
-    // for y. The user can construct three orderings here.
+    // There are two ways in which it can be solved. First eliminating x from
+    // the two equations, solving for y and then back substituting for x, or
+    // first eliminating y, solving for x and back substituting for y. The user
+    // can construct three orderings here.
     //
     //   {0: x}, {1: y} - eliminate x first.
     //   {0: y}, {1: x} - eliminate y first.
     //   {0: x, y}      - Solver gets to decide the elimination order.
     //
-    // Thus, to have Ceres determine the ordering automatically, put
-    // all the variables in group 0 and to control the ordering for
-    // every variable, create groups 0..N-1, one per variable, in the
-    // desired order.
+    // Thus, to have Ceres determine the ordering automatically, put all the
+    // variables in group 0 and to control the ordering for every variable
+    // create groups 0 ... N-1, one per variable, in the desired
+    // order.
     //
-    // b. linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR
+    // linear_solver_ordering == nullptr and an ordering where all the parameter
+    // blocks are in one elimination group mean the same thing - the solver is
+    // free to choose what it thinks is the best elimination ordering. Therefore
+    // in the following we will only consider the case where
+    // linear_solver_ordering is nullptr.
     //
-    // If linear_solver_ordering is null then an greedy maximum
-    // independent set algorithm is used to compute the first
-    // elimination group, and AMD is applied to the corresponding
-    // Schur complement matrix or a subset thereof used that is used
-    // as a preconditioner.
+    // The exact interpretation of this information depends on the values of
+    // linear_solver_ordering_type and linear_solver_type/preconditioner_type
+    // and sparse_linear_algebra_type.
     //
-    // If linear_solver_ordering is not null, then CAMD is used to
-    // compute a fill reducing ordering.
+    // Bundle Adjustment
+    // =================
     //
-    // linear_solver_ordering = NESDIS
-    // -------------------------------
+    // If the user is using one of the Schur solvers (DENSE_SCHUR,
+    // SPARSE_SCHUR, ITERATIVE_SCHUR) and chooses to specify an
+    // ordering, it must have one important property. The lowest
+    // numbered elimination group must form an independent set in the
+    // graph corresponding to the Hessian, or in other words, no two
+    // parameter blocks in in the first elimination group should
+    // co-occur in the same residual block. For the best performance,
+    // this elimination group should be as large as possible. For
+    // standard bundle adjustment problems, this corresponds to the
+    // first elimination group containing all the 3d points, and the
+    // second containing the all the cameras parameter blocks.
+    //
+    // If the user leaves the choice to Ceres, then the solver uses an
+    // approximate maximum independent set algorithm to identify the first
+    // elimination group.
+    //
+    // sparse_linear_algebra_library_type = SUITE_SPARSE
+    // =================================================
+    //
+    // linear_solver_ordering_type = AMD
+    // ---------------------------------
+    //
+    // A Constrained Approximate Minimum Degree (CAMD) ordering used where the
+    // parameter blocks in the lowest numbered group are eliminated first, and
+    // then the parameter blocks in the next lowest numbered group and so
+    // on. Within each group, CAMD free to order the parameter blocks as it
+    // chooses.
+    //
+    // linear_solver_ordering_type = NESDIS
+    // -------------------------------------
     //
     // a. linear_solver_type = SPARSE_NORMAL_CHOLESKY or
     //    linear_solver_type = CGNR and preconditioner_type = SUBSET
     //
-    // then the value of linear_solver_ordering is ignored and a
-    // Nested Dissection algorithm is used to compute a fill reducing
-    // ordering.
+    // The value of linear_solver_ordering is ignored and a Nested Dissection
+    // algorithm is used to compute a fill reducing ordering.
     //
     // b. linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR
     //
-    // If linear_solver_ordering is null then an greedy maximum
-    // independent set algorithm is used to compute the first
-    // elimination group, and Nested Dissection is applied to the
-    // corresponding Schur complement matrix or a subset thereof used
-    // that is used as a preconditioner.
+    // ONLY the lowest group are used to compute the Schur complement, and
+    // Nested Dissection is used to compute a fill reducing ordering for the
+    // Schur Complement (or its preconditioner).
     //
-    // If linear_solver_ordering is not null, the parameter blocks in
-    // the lowest numbered group are eliminated to compute the Schur
-    // complement. All other groups are ignored and Nested Dissection
-    // is applied to the corresponding Schur complement matrix or a
-    // subset thereof used that is used as a preconditioner.
+    // sparse_linear_algebra_library_type = EIGEN_SPARSE or ACCELERATE_SPARSE
+    // ======================================================================
     //
-    // Bundle Adjustment
-    // -----------------
+    // a. linear_solver_type = SPARSE_NORMAL_CHOLESKY or
+    //    linear_solver_type = CGNR and preconditioner_type = SUBSET
     //
-    // A particular case of interest is bundle adjustment, where the
-    // user has two options. The default is not specifying ordering at
-    // all; in this case the solver will see that the user wants to
-    // use a Schur type solver and figure out an elimination ordering.
+    // then the value of linear_solver_ordering is ignored and AMD or NESDIS is
+    // used to compute a fill reducing ordering as requested by the user.
     //
-    // But if the user already knows what parameter blocks are points and
-    // what are cameras, they can save preprocessing time by partitioning
-    // the parameter blocks into two groups, one for the points and one
-    // for the cameras, where the group containing the points has an id
-    // smaller than the group containing cameras.
+    // b. linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR
+    //
+    // ONLY the lowest group are used to compute the Schur complement, and AMD
+    // or NESDIS is used to compute a fill reducing ordering for the Schur
+    // Complement (or its preconditioner).
     std::shared_ptr<ParameterBlockOrdering> linear_solver_ordering;
 
     // Use an explicitly computed Schur complement matrix with
