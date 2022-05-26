@@ -563,14 +563,6 @@ if (MSVC)
 
   # Tuple sizes of 10 are used by Gtest.
   add_definitions("-D_VARIADIC_MAX=10")
-
-  include(CheckIfUnderscorePrefixedBesselFunctionsExist)
-  check_if_underscore_prefixed_bessel_functions_exist(
-    HAVE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
-  if (HAVE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
-    list(APPEND CERES_COMPILE_OPTIONS
-      CERES_MSVC_USE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
-  endif()
 endif (MSVC)
 
 if (UNIX)

@@ -82,11 +82,6 @@
 // If defined Ceres was compiled without support for METIS via Eigen.
 @CERES_NO_EIGEN_METIS@
 
-// If defined, Ceres was compiled with a version MSVC >= 2005 which
-// deprecated the standard POSIX names for bessel functions, replacing them
-// with underscore prefixed versions (e.g. j0() -> _j0()).
-@CERES_MSVC_USE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS@
-
 #if defined(CERES_USE_OPENMP)
 #if defined(CERES_USE_CXX_THREADS) || defined(CERES_NO_THREADS)
 #error CERES_USE_OPENMP is mutually exclusive to CERES_USE_CXX_THREADS and CERES_NO_THREADS
