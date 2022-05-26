@@ -34,6 +34,7 @@
 #include <algorithm>
 #include <cfenv>
 #include <cmath>
+#include <stdexcept>
 
 #include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
@@ -75,7 +76,7 @@ J MakeJet(double a, double v0, double v1) {
   return z;
 }
 
-double const kTolerance = 1e-13;
+constexpr double kTolerance = 1e-13;
 
 // Stores the floating-point environment containing active floating-point
 // exceptions, rounding mode, etc., and restores it upon destruction.
@@ -119,6 +120,19 @@ MATCHER_P(IsAlmostEqualTo, y, "") {
   const bool result = (AreAlmostEqual(arg.a, y.a, kTolerance) &&
                        AreAlmostEqual(arg.v[0], y.v[0], kTolerance) &&
                        AreAlmostEqual(arg.v[1], y.v[1], kTolerance));
+  if (!result) {
+    *result_listener << "\nexpected - actual : " << y - arg;
+  }
+  return result;
+}
+
+// MSVC Bessel functions and their derivatives produce errors slightly above
+// kTolerance. Provide an alternative variant with a relaxed threshold.
+MATCHER_P(IsAlmostEqualToRelaxed, y, "") {
+  constexpr double kRelaxedTolerance = 10 * kTolerance;
+  const bool result = (AreAlmostEqual(arg.a, y.a, 10 * kRelaxedTolerance) &&
+                       AreAlmostEqual(arg.v[0], y.v[0], kRelaxedTolerance) &&
+                       AreAlmostEqual(arg.v[1], y.v[1], kRelaxedTolerance));
   if (!result) {
     *result_listener << "\nexpected - actual : " << y - arg;
   }
@@ -269,23 +283,47 @@ TEST(Jet, Abs) {
   }
 }
 
+#if defined(CERES_HAS_POSIX_BESSEL_FUNCTIONS) || \
+    defined(CERES_HAS_CPP17_BESSEL_FUNCTIONS)
 TEST(Jet, Bessel) {
   J zero = J(0.0);
+  J z = MakeJet(0.1, -2.7, 1e-3);
 
+#ifdef CERES_HAS_POSIX_BESSEL_FUNCTIONS
   EXPECT_THAT(BesselJ0(zero), IsAlmostEqualTo(J(1.0)));
   EXPECT_THAT(BesselJ1(zero), IsAlmostEqualTo(zero));
   EXPECT_THAT(BesselJn(2, zero), IsAlmostEqualTo(zero));
   EXPECT_THAT(BesselJn(3, zero), IsAlmostEqualTo(zero));
 
-  J z = MakeJet(0.1, -2.7, 1e-3);
-
   EXPECT_THAT(BesselJ0(z), IsAlmostEqualTo(BesselJn(0, z)));
   EXPECT_THAT(BesselJ1(z), IsAlmostEqualTo(BesselJn(1, z)));
 
-  //  See formula http://dlmf.nist.gov/10.6.E1
+  // See formula http://dlmf.nist.gov/10.6.E1
   EXPECT_THAT(BesselJ0(z) + BesselJn(2, z),
               IsAlmostEqualTo((2.0 / z) * BesselJ1(z)));
+#endif  // CERES_HAS_POSIX_BESSEL_FUNCTIONS
+
+#ifdef CERES_HAS_CPP17_BESSEL_FUNCTIONS
+  EXPECT_THAT(cyl_bessel_j(0, zero), IsAlmostEqualTo(J(1.0)));
+  EXPECT_THAT(cyl_bessel_j(1, zero), IsAlmostEqualTo(zero));
+  EXPECT_THAT(cyl_bessel_j(2, zero), IsAlmostEqualTo(zero));
+  EXPECT_THAT(cyl_bessel_j(3, zero), IsAlmostEqualTo(zero));
+
+  EXPECT_THAT(cyl_bessel_j(0, z), IsAlmostEqualTo(BesselJn(0, z)));
+  EXPECT_THAT(cyl_bessel_j(1, z), IsAlmostEqualTo(BesselJn(1, z)));
+
+  // See formula http://dlmf.nist.gov/10.6.E1
+  EXPECT_THAT(cyl_bessel_j(0, z) + cyl_bessel_j(2, z),
+              IsAlmostEqualToRelaxed((2.0 / z) * cyl_bessel_j(1, z)));
+
+  // MSVC does not throw an exception on invalid first argument
+#ifndef _MSC_VER
+  EXPECT_THROW(cyl_bessel_j(-1, zero), std::domain_error);
+#endif  // defined(_MSC_VER)
+#endif  // defined(CERES_HAS_CPP17_BESSEL_FUNCTIONS)
 }
+#endif  // defined(CERES_HAS_POSIX_BESSEL_FUNCTIONS) ||
+        // defined(CERES_HAS_CPP17_BESSEL_FUNCTIONS)
 
 TEST(Jet, Floor) {
   {  // floor of a positive number works.
