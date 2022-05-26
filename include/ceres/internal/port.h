@@ -31,6 +31,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_PORT_H_
 #define CERES_PUBLIC_INTERNAL_PORT_H_
 
+#include <cmath>  // Necessary for __cpp_lib_math_special_functions feature test
+
 // A macro to mark a function/variable/class as deprecated.
 // We use compiler specific attributes rather than the c++
 // attribute because they do not mix well with each other.
@@ -76,5 +78,24 @@
 // general case, because it will prevent argument-dependent lookup (ADL).
 //
 #define CERES_PREVENT_MACRO_SUBSTITUTION  // Yes, it's empty
+
+#if defined(__cpp_lib_math_special_functions) &&      \
+    ((__cpp_lib_math_special_functions >= 201603L) || \
+     defined(__STDCPP_MATH_SPEC_FUNCS__) &&           \
+         (__STDCPP_MATH_SPEC_FUNCS__ >= 201003L))
+// If defined, indicates whether C++17 Bessel functions (of the first kind) are
+// available. Some standard library implementations, such as libc++ (Android
+// NDK, Apple, Clang) do not yet provide these functions. Implementations that
+// do not support C++17, but support ISO 29124:2010, provide the functions if
+// __STDCPP_MATH_SPEC_FUNCS__ is defined by the implementation to a value at
+// least 201003L and if the user defines __STDCPP_WANT_MATH_SPEC_FUNCS__ before
+// including any standard library headers.
+#define CERES_HAS_CPP17_BESSEL_FUNCTIONS
+#endif
+
+#if defined(_SVID_SOURCE) || defined(_BSD_SOURCE) || defined(_XOPEN_SOURCE)
+// If defined, indicates that j0, j1, and jn from <math.h> are available.
+#define CERES_HAS_POSIX_BESSEL_FUNCTIONS
+#endif
 
 #endif  // CERES_PUBLIC_INTERNAL_PORT_H_
