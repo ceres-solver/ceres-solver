@@ -47,10 +47,10 @@ Why?
     linear system. To this end Ceres ships with a variety of linear
     solvers - dense QR and dense Cholesky factorization (using
     `Eigen`_, `LAPACK`_ or `CUDA`_) for dense problems, sparse
-    Cholesky factorization (`SuiteSparse`_, `Apple's Accelerate`_,
-    `CXSparse`_ `Eigen`_) for large sparse problems, custom Schur
-    complement based dense, sparse, and iterative linear solvers for
-    `bundle adjustment`_ problems.
+    Cholesky factorization (`SuiteSparse`_, `Accelerate`_, `Eigen`_)
+    for large sparse problems, custom Schur complement based dense,
+    sparse, and iterative linear solvers for `bundle adjustment`_
+    problems.
 
   - **Line Search Solvers** - When the problem size is so large that
     storing and factoring the Jacobian is not feasible or a low
@@ -90,7 +90,6 @@ Why?
 .. _SuiteSparse: http://www.cise.ufl.edu/research/sparse/SuiteSparse/
 .. _Eigen: http://eigen.tuxfamily.org/
 .. _LAPACK: http://www.netlib.org/lapack/
-.. _CXSparse: https://www.cise.ufl.edu/research/sparse/CXSparse/
 .. _automatic: http://en.wikipedia.org/wiki/Automatic_differentiation
 .. _numeric: http://en.wikipedia.org/wiki/Numerical_differentiation
 .. _CUDA : https://developer.nvidia.com/cuda-toolkit
