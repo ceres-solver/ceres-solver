@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ed8b1a8d_41f4a12a",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T13:44:40Z",
+      "side": 1,
+      "message": "Almost. I thought of this:\n```\n#ifndef CERES_NO_METIS\n  } else if (ordering_type \u003d\u003d OrderingType::NESDIS) {\n    return std::make_unique\u003cEigenSparseCholeskyTemplate\u003cWithMetisOrdering\u003e\u003e();\n  }\n#else\n  } else {\n    LOG(FATAL)\n        \u003c\u003c \"Congratulations you have found a bug in Ceres Solver. Please \"\n           \"report it to the Ceres Solver developers.\";\n    return nullptr;\n  }\n#endif\n```",
+      "parentUuid": "c6ca3521_f14f67b3",
+      "revId": "34a23e5bb254ba6df4b12104457c562a57bc6e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4af84215_dadcdf4a",
         "filename": "internal/ceres/eigensparse.cc",
         "patchSetId": 4
