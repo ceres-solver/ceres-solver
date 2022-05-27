@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14c380c2_9cb6bd11",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T21:29:42Z",
+      "side": 1,
+      "message": "The builds pass now: https://github.com/sergiud/ceres-solver/actions?query\u003dbranch%3Aoptional-metis-support-upstream",
+      "revId": "314b244b6d5b60b5a447006f60f88e453361b9a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
