@@ -132,6 +132,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "690c8ccd_b682b160",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T16:47:39Z",
+      "side": 1,
+      "message": "right, so the case would be people do not want to use suitesparse because of licensing, but want to use nested dissection with eigen which is MPL + Apache\n\nshould we think about splitting this into two defines then?\n\nCERES_NO_PARTITION -- this is used inside suitesparse/cholmod only\nand \nCERES_NO_METIS which is used for eigen.\n\nor am I overthinking this?",
+      "parentUuid": "2392f949_1145087d",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5dad0dfa_7f5c57ed",
         "filename": "internal/ceres/reorder_program.cc",
         "patchSetId": 2
