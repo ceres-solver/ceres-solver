@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef5351bb_45fcd3fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T23:49:24Z",
+      "side": 1,
+      "message": "Sergiu, thanks for doing this. It looks fine to my cmake-unskilled eyes, so I will let Alex be the final judge. \n\nOne thing that would be useful is to make the commit log much more detailed to explain why this CL is the way it is, and that we are not just adding metis support here but also splitting a macro into two and what is the corner cases that we are trying to capture with this splitting.",
+      "revId": "42270ace916d27d7d568cf26834c547a45f60944",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3068e5e9_520e1490",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T23:49:24Z",
+      "side": 1,
+      "message": "why make the default off?",
+      "range": {
+        "startLine": 160,
+        "startChar": 74,
+        "endLine": 160,
+        "endChar": 77
+      },
+      "revId": "42270ace916d27d7d568cf26834c547a45f60944",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7f508b1_a7b1bb1f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T23:49:24Z",
+      "side": 1,
+      "message": "why make the default off?",
+      "range": {
+        "startLine": 162,
+        "startChar": 14,
+        "endLine": 162,
+        "endChar": 17
+      },
+      "revId": "42270ace916d27d7d568cf26834c547a45f60944",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
