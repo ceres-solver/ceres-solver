@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a6719e3_8e2cf581",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T16:13:23Z",
+      "side": 1,
+      "message": "I see that `bazel/ceres.blz` also contains a reference to `CERES_NO_CXSPARSE`.",
+      "revId": "903c5831390a5662f8624114e5409f1d0f9b8991",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
