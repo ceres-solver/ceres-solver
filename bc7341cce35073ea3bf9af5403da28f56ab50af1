@@ -16,6 +16,92 @@
       "message": "Once the builds succeed, the CL is good to go: https://github.com/sergiud/ceres-solver/actions",
       "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90f2620f_7da7a560",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T16:14:12Z",
+      "side": 1,
+      "message": "Alex should take a look.",
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd73a79c_2ee41c5c",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T16:14:12Z",
+      "side": 1,
+      "message": "so I think there is a subtlety here which I was callous about.\nit is possible that SuiteSparse is compiled without metis support but metis is available on the system.. \n\nTBH I do not expect this to actually occur in practice, but it can happen. What do you think?",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5dad0dfa_7f5c57ed",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T16:14:12Z",
+      "side": 1,
+      "message": "this could be moved to the metis guard too.",
+      "range": {
+        "startLine": 34,
+        "startChar": 34,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ed1500e_19ecdffa",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T16:14:12Z",
+      "side": 1,
+      "message": "wow thats a total fail on my part :/",
+      "range": {
+        "startLine": 222,
+        "startChar": 1,
+        "endLine": 222,
+        "endChar": 7
+      },
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
