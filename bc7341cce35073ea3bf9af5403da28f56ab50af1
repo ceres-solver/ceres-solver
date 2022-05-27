@@ -108,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2392f949_1145087d",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T16:44:25Z",
+      "side": 1,
+      "message": "Ah, yes. However, that would require to explicitly link against METIS. Since METIS is included only if `SuiteSparse::Partition` is available, this corner case is rather unlikely.",
+      "parentUuid": "ee22198b_4a1163fa",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5dad0dfa_7f5c57ed",
         "filename": "internal/ceres/reorder_program.cc",
         "patchSetId": 2
