@@ -95,6 +95,17 @@ class CERES_NO_EXPORT FloatEigenSparseCholesky : public SparseCholesky {
 
 }  // namespace ceres::internal
 
+#else
+
+namespace ceres::internal {
+
+class EigenSparse {
+ public:
+  static constexpr bool IsNestedDissectionAvailable() noexcept { return false; }
+};
+
+}  // namespace ceres::internal
+
 #endif  // CERES_USE_EIGEN_SPARSE
 
 #endif  // CERES_INTERNAL_EIGENSPARSE_H_
