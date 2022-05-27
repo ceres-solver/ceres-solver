@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3dc0add_fa40745f",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T16:29:56Z",
+      "side": 1,
+      "message": "This cannot happen anymore because I now explicitly check for corresponding symbols in CHOLMOD.",
+      "parentUuid": "bd73a79c_2ee41c5c",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5dad0dfa_7f5c57ed",
@@ -81,6 +105,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29076f4b_2dc99852",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T16:29:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dad0dfa_7f5c57ed",
+      "range": {
+        "startLine": 34,
+        "startChar": 34,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ed1500e_19ecdffa",
@@ -94,6 +142,30 @@
       "writtenOn": "2022-05-27T16:14:12Z",
       "side": 1,
       "message": "wow thats a total fail on my part :/",
+      "range": {
+        "startLine": 222,
+        "startChar": 1,
+        "endLine": 222,
+        "endChar": 7
+      },
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0e12961_d7a20230",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T16:29:56Z",
+      "side": 1,
+      "message": "Not a problem. CI caught the issue. :)",
+      "parentUuid": "5ed1500e_19ecdffa",
       "range": {
         "startLine": 222,
         "startChar": 1,
