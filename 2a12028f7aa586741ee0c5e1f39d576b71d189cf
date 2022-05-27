@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf48814b_b8c7040e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T16:05:04Z",
+      "side": 1,
+      "message": "`@CXSparse_DEPENDENCY@` in `cmake/CeresConfig.cmake.in` (line 182) should also be removed.",
+      "revId": "2a12028f7aa586741ee0c5e1f39d576b71d189cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
