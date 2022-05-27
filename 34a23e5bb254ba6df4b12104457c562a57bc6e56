@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c6ca3521_f14f67b3",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T13:31:07Z",
+      "side": 1,
+      "message": "do you mean like this?",
+      "parentUuid": "c9420f28_4b2c524a",
+      "revId": "34a23e5bb254ba6df4b12104457c562a57bc6e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4af84215_dadcdf4a",
         "filename": "internal/ceres/eigensparse.cc",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "writtenOn": "2022-05-27T11:33:31Z",
       "side": 1,
       "message": "This can only happen if the user passed a constant outside of the supported types range, no?",
+      "revId": "34a23e5bb254ba6df4b12104457c562a57bc6e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37bd7d45_caac215b",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T13:31:07Z",
+      "side": 1,
+      "message": "only if the preprocessor did not do its job of catching this beforehand.",
+      "parentUuid": "4af84215_dadcdf4a",
       "revId": "34a23e5bb254ba6df4b12104457c562a57bc6e56",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -69,6 +105,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1a5b615_058c6afd",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T13:31:07Z",
+      "side": 1,
+      "message": "yes I have been meaning to refactor them, i will come back and do that in a follow up CL.",
+      "parentUuid": "4f54b60c_900cdda0",
+      "revId": "34a23e5bb254ba6df4b12104457c562a57bc6e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b47eed99_a99e1fff",
@@ -86,6 +140,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47f190a2_82af318e",
+        "filename": "internal/ceres/eigensparse.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T13:31:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b47eed99_a99e1fff",
+      "revId": "34a23e5bb254ba6df4b12104457c562a57bc6e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0aff6af2_4d8c7b17",
@@ -99,6 +171,30 @@
       "writtenOn": "2022-05-27T11:33:31Z",
       "side": 1,
       "message": "refers?",
+      "range": {
+        "startLine": 34,
+        "startChar": 55,
+        "endLine": 34,
+        "endChar": 62
+      },
+      "revId": "34a23e5bb254ba6df4b12104457c562a57bc6e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ac8b80b_2449038b",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T13:31:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aff6af2_4d8c7b17",
       "range": {
         "startLine": 34,
         "startChar": 55,
