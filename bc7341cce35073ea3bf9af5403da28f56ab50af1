@@ -252,6 +252,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "de76c5c9_fa22097a",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T17:05:49Z",
+      "side": 1,
+      "message": "Great! Meanwhile I\u0027ve found a problem in CMake support for SuiteSparse which I need to address first.",
+      "parentUuid": "958aff33_489610ce",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5dad0dfa_7f5c57ed",
         "filename": "internal/ceres/reorder_program.cc",
         "patchSetId": 2
