@@ -16,6 +16,23 @@
       "message": "LGTM",
       "revId": "2335b5b4b7a4703ca9458aa275ca878945763a34",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59c25cb9_78a3215a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T16:48:17Z",
+      "side": 1,
+      "message": "I am going to go ahead and merge this. I do not see a credible reason to keep cxsparse support in ceres solver anymore.",
+      "revId": "2335b5b4b7a4703ca9458aa275ca878945763a34",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
