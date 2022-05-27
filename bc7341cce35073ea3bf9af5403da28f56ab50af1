@@ -204,6 +204,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "770bdcad_7b6afb78",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T16:57:15Z",
+      "side": 1,
+      "message": "Correct, METIS needs to be detected on its own which I just previously pushed. We can go ahead and introduce the corresponding defines as part of this CL.",
+      "parentUuid": "8bd65e40_e3a8fc21",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5dad0dfa_7f5c57ed",
         "filename": "internal/ceres/reorder_program.cc",
         "patchSetId": 2
