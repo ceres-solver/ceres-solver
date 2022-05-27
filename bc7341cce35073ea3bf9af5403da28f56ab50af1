@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1adba780_90514476",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T16:10:29Z",
+      "side": 1,
+      "message": "Once the builds succeed, the CL is good to go: https://github.com/sergiud/ceres-solver/actions",
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
