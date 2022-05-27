@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -30,8 +30,6 @@
 
 #include "ceres/solver_utils.h"
 
-#include <string>
-
 #include "Eigen/Core"
 #include "ceres/internal/config.h"
 #include "ceres/internal/export.h"
@@ -49,47 +47,54 @@ namespace ceres::internal {
   CERES_TO_STRING(EIGEN_MINOR_VERSION)
 // clang-format on
 
-std::string VersionString() {
-  std::string value = std::string(CERES_VERSION_STRING);
-  value += "-eigen-(" + std::string(CERES_EIGEN_VERSION) + ")";
+constexpr char kVersion[] =
+    // clang-format off
+  CERES_VERSION_STRING
+  "-eigen-(" CERES_EIGEN_VERSION ")"
 
 #ifdef CERES_NO_LAPACK
-  value += "-no_lapack";
+  "-no_lapack"
 #else
-  value += "-lapack";
+  "-lapack"
 #endif
 
 #ifndef CERES_NO_SUITESPARSE
-  value += "-suitesparse-(" + std::string(CERES_SUITESPARSE_VERSION) + ")";
+  "-suitesparse-(" CERES_SUITESPARSE_VERSION ")"
 #endif
 
+// TODO(sergiud) Capture METIS version
+// #ifndef CERES_NO_METIS
+//   "-metis-(" CERES_METIS_VERSION ")"
+// #endif
+
 #ifndef CERES_NO_ACCELERATE_SPARSE
-  value += "-acceleratesparse";
+  "-acceleratesparse"
 #endif
 
 #ifdef CERES_USE_EIGEN_SPARSE
-  value += "-eigensparse";
+  "-eigensparse"
 #endif
 
 #ifdef CERES_RESTRUCT_SCHUR_SPECIALIZATIONS
-  value += "-no_schur_specializations";
+  "-no_schur_specializations"
 #endif
 
 #ifdef CERES_USE_OPENMP
-  value += "-openmp";
+  "-openmp"
 #else
-  value += "-no_openmp";
+  "-no_openmp"
 #endif
 
 #ifdef CERES_NO_CUSTOM_BLAS
-  value += "-no_custom_blas";
+  "-no_custom_blas"
 #endif
 
 #ifndef CERES_NO_CUDA
-  value += "-cuda-(" + std::to_string(CUDART_VERSION) + ")";
+  "-cuda-(" CERES_TO_STRING(CUDART_VERSION) ")"
 #endif
+  ;
+// clang-format on
 
-  return value;
-}
+std::string_view VersionString() noexcept { return kVersion; }
 
 }  // namespace ceres::internal

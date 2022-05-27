@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -31,6 +31,7 @@
 #include "ceres/gradient_problem_solver.h"
 
 #include <memory>
+#include <string>
 
 #include "ceres/callbacks.h"
 #include "ceres/gradient_problem.h"
@@ -219,7 +220,9 @@ string GradientProblemSolver::Summary::BriefReport() const {
 string GradientProblemSolver::Summary::FullReport() const {
   using internal::VersionString;
 
-  string report = string("\nSolver Summary (v " + VersionString() + ")\n\n");
+  // NOTE operator+ is not usable for concatenating a string and a string_view.
+  string report =
+      string{"\nSolver Summary (v "}.append(VersionString()) + ")\n\n";
 
   StringAppendF(&report, "Parameters          % 25d\n", num_parameters);
   if (num_local_parameters != num_parameters) {

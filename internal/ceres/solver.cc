@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,7 @@
 #include <algorithm>
 #include <memory>
 #include <sstream>  // NOLINT
+#include <string>
 #include <vector>
 
 #include "ceres/casts.h"
@@ -658,7 +659,9 @@ string Solver::Summary::BriefReport() const {
 string Solver::Summary::FullReport() const {
   using internal::VersionString;
 
-  string report = string("\nSolver Summary (v " + VersionString() + ")\n\n");
+  // NOTE operator+ is not usable for concatenating a string and a string_view.
+  string report =
+      string{"\nSolver Summary (v "}.append(VersionString()) + ")\n\n";
 
   StringAppendF(&report, "%45s    %21s\n", "Original", "Reduced");
   StringAppendF(&report,
