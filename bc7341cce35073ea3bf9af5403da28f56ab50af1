@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ee22198b_4a1163fa",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T16:39:53Z",
+      "side": 1,
+      "message": "oh but there is the case where suitesparse is compiled without metis support and we say ceres_no_metis, but metis by itself is available on the system and eigen would be able to use it.. if we enabled it.. I suspect this is a stupid corner case and we are likely okay doing",
+      "parentUuid": "e3dc0add_fa40745f",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5dad0dfa_7f5c57ed",
         "filename": "internal/ceres/reorder_program.cc",
         "patchSetId": 2
