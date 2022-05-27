@@ -16,6 +16,97 @@
       "message": "I will update the documentation after the cxsparse deletion goes in.",
       "revId": "34a23e5bb254ba6df4b12104457c562a57bc6e56",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9420f28_4b2c524a",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T11:33:31Z",
+      "side": 1,
+      "message": "I would rather protect the whole `else if` block and introduce an `else` branch for unsupported ordering types.",
+      "revId": "34a23e5bb254ba6df4b12104457c562a57bc6e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4af84215_dadcdf4a",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T11:33:31Z",
+      "side": 1,
+      "message": "This can only happen if the user passed a constant outside of the supported types range, no?",
+      "revId": "34a23e5bb254ba6df4b12104457c562a57bc6e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f54b60c_900cdda0",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T11:33:31Z",
+      "side": 1,
+      "message": "Comments similar to the `double` implementation since it is basically the same code.\n\nMaybe also refactor `EigenSparseCholesky` and `FloatEigenSparseCholesky` to avoid code duplication?",
+      "revId": "34a23e5bb254ba6df4b12104457c562a57bc6e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b47eed99_a99e1fff",
+        "filename": "internal/ceres/eigensparse.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T11:33:31Z",
+      "side": 1,
+      "message": "Nit: add `constexpr` and `noexcept`.",
+      "revId": "34a23e5bb254ba6df4b12104457c562a57bc6e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0aff6af2_4d8c7b17",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-27T11:33:31Z",
+      "side": 1,
+      "message": "refers?",
+      "range": {
+        "startLine": 34,
+        "startChar": 55,
+        "endLine": 34,
+        "endChar": 62
+      },
+      "revId": "34a23e5bb254ba6df4b12104457c562a57bc6e56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
