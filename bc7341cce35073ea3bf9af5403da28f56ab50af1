@@ -180,6 +180,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8bd65e40_e3a8fc21",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-27T16:52:41Z",
+      "side": 1,
+      "message": "that would also mean metis detection on its own no?\nhow do you want to land this? maybe start by just having suitesparse support as you have right now, and then split this into a more elaborate detection in a subsequent CL?",
+      "parentUuid": "d515ee1e_55197d2c",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "bc7341cce35073ea3bf9af5403da28f56ab50af1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5dad0dfa_7f5c57ed",
         "filename": "internal/ceres/reorder_program.cc",
         "patchSetId": 2
