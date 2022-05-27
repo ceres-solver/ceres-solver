@@ -2,6 +2,9 @@ name: Linux
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: ${{matrix.os}}-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.threading_model}}

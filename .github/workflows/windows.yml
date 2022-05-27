@@ -2,6 +2,9 @@ name: Windows
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+
 jobs:
   build-msvc:
     name: ${{matrix.msvc}}-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
