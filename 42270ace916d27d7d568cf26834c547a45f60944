@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c7fc208_e65e6f2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-28T00:03:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ef5351bb_45fcd3fc",
+      "revId": "42270ace916d27d7d568cf26834c547a45f60944",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3068e5e9_520e1490",
@@ -41,6 +59,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab7c001c_edef960d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-28T00:03:12Z",
+      "side": 1,
+      "message": "The default is still `ON`. Only if `EIGENSPARSE` is turned off, `METIS` will be too.",
+      "parentUuid": "3068e5e9_520e1490",
+      "range": {
+        "startLine": 160,
+        "startChar": 74,
+        "endLine": 160,
+        "endChar": 77
+      },
+      "revId": "42270ace916d27d7d568cf26834c547a45f60944",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7f508b1_a7b1bb1f",
@@ -54,6 +96,30 @@
       "writtenOn": "2022-05-27T23:49:24Z",
       "side": 1,
       "message": "why make the default off?",
+      "range": {
+        "startLine": 162,
+        "startChar": 14,
+        "endLine": 162,
+        "endChar": 17
+      },
+      "revId": "42270ace916d27d7d568cf26834c547a45f60944",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c82a96f3_7365245c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-28T00:03:12Z",
+      "side": 1,
+      "message": "It\u0027s not. The option is simply conditional and depends on `SUITESPARSE`\u0027s value similar to `METIS`.",
+      "parentUuid": "a7f508b1_a7b1bb1f",
       "range": {
         "startLine": 162,
         "startChar": 14,
