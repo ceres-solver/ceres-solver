@@ -19,4 +19,5 @@ add_custom_target(ceres_docs ALL
                   "${Ceres_SOURCE_DIR}"
                   "${Ceres_BINARY_DIR}/docs"
                   "${SPHINX_EXECUTABLE}"
+                  USES_TERMINAL
                   COMMENT "Building HTML documentation with Sphinx")
