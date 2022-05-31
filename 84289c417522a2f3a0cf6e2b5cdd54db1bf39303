@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e23d6a3d_40003da6",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-31T16:51:22Z",
+      "side": 1,
+      "message": "I would argue that we treat this purely as a matter of something being available in a dependent library or not. We detect its presence and make it available for use or not. \n\nIf it is the case that SuiteSparse was compiled incorrectly where partition module was enabled somehow but metis was not available.. well then we have bigger problems.\n\nI am trying to keep the number of things we document and test against to a minimum, and this knob definitely feels superfluous to me.",
+      "parentUuid": "a6a398a7_357070f1",
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5fd68cda_92f3ad96",
         "filename": "CMakeLists.txt",
         "patchSetId": 9
@@ -149,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4683b34d_bed28c3e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-31T16:51:22Z",
+      "side": 1,
+      "message": "I do not understand what it means by the statement \"Metis is a private dependency\". Private dependency of what? and why do we need to access the link only target?",
+      "parentUuid": "0ac3c039_aa7fea07",
+      "range": {
+        "startLine": 306,
+        "startChar": 12,
+        "endLine": 306,
+        "endChar": 17
+      },
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "08b01ba8_87f6e64d",
         "filename": "cmake/config.h.in",
         "patchSetId": 9
@@ -207,6 +249,30 @@
       "side": 1,
       "message": "`CERES_NO_CHOLMOD_PARTITION` is certainly more precise.",
       "parentUuid": "5f245ddb_914a0c82",
+      "range": {
+        "startLine": 80,
+        "startChar": 1,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbc20f91_6a8b3df2",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-31T16:51:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7fabca21_20ed2a63",
       "range": {
         "startLine": 80,
         "startChar": 1,
