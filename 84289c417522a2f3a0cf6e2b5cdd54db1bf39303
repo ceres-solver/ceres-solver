@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a6a398a7_357070f1",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-31T16:30:29Z",
+      "side": 1,
+      "message": "Reasons for the option:\n1. Consistency (this is an additional component/dependency and needs adequate treatment)\n2. In case METIS support in CHOLMOD is broken (whatever the reason may be) possibly making SuiteSparse support unusable as well.\nYou can decide whether this makes sense and should eventually be considered.",
+      "parentUuid": "cd147a00_a5662144",
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5fd68cda_92f3ad96",
         "filename": "CMakeLists.txt",
         "patchSetId": 9
@@ -48,6 +66,30 @@
       "writtenOn": "2022-05-31T12:00:50Z",
       "side": 1,
       "message": "I am curious as to why we are having to specify this here? shouldn\u0027t the fact that partition is an optional property be a property of the suitesparse cmake file?",
+      "range": {
+        "startLine": 274,
+        "startChar": 4,
+        "endLine": 274,
+        "endChar": 23
+      },
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f2d2b43_d98b9aa7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-31T16:30:29Z",
+      "side": 1,
+      "message": "It is a property of the find module/package config. `OPTIONAL_COMPONENTS` does not work without this.\n\nLeaving out `OPTIONAL_COMPONENTS` means SuiteSparse will be found iff all specified components are found which goes against CL\u0027s intention.",
+      "parentUuid": "5fd68cda_92f3ad96",
       "range": {
         "startLine": 274,
         "startChar": 4,
@@ -71,6 +113,30 @@
       "writtenOn": "2022-05-31T12:00:50Z",
       "side": 1,
       "message": "I do not understand this comment.",
+      "range": {
+        "startLine": 306,
+        "startChar": 12,
+        "endLine": 306,
+        "endChar": 17
+      },
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ac3c039_aa7fea07",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-31T16:30:29Z",
+      "side": 1,
+      "message": "I\u0027d be happy to improve. Please let me know what exactly is bothering you.",
+      "parentUuid": "0b1605ce_815b42f9",
       "range": {
         "startLine": 306,
         "startChar": 12,
@@ -117,6 +183,30 @@
       "writtenOn": "2022-05-31T12:00:50Z",
       "side": 1,
       "message": "should we consider naming this CERES_NO_CHOLMOD_PARTITION?",
+      "range": {
+        "startLine": 80,
+        "startChar": 1,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fabca21_20ed2a63",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-31T16:30:29Z",
+      "side": 1,
+      "message": "`CERES_NO_CHOLMOD_PARTITION` is certainly more precise.",
+      "parentUuid": "5f245ddb_914a0c82",
       "range": {
         "startLine": 80,
         "startChar": 1,
