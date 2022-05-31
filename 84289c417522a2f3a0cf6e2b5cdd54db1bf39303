@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "17bdb33d_d9c4e154",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-31T17:37:05Z",
+      "side": 1,
+      "message": "We are effectively arguing about a single line. The machinery for defining `CERES_NO_CHOLMOD_PARTITION` will still be there. So why not be consistent?",
+      "parentUuid": "e23d6a3d_40003da6",
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5fd68cda_92f3ad96",
         "filename": "CMakeLists.txt",
         "patchSetId": 9
