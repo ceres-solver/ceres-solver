@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e34853f8_35306c5e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-05-31T12:00:50Z",
+      "side": 1,
+      "message": "Sergiu,\nI had some more time to think about this change. So some more comments/questions.",
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd147a00_a5662144",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-05-31T12:00:50Z",
+      "side": 1,
+      "message": "I think the explicit control over metis as a direct dependency makes sense, but its not clear to me why we want explicit control over the partition module. If SuiteSparse is compiled with partition we should use it, otherwise no?\n\nso IMO we can drop this option.",
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fd68cda_92f3ad96",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-05-31T12:00:50Z",
+      "side": 1,
+      "message": "I am curious as to why we are having to specify this here? shouldn\u0027t the fact that partition is an optional property be a property of the suitesparse cmake file?",
+      "range": {
+        "startLine": 274,
+        "startChar": 4,
+        "endLine": 274,
+        "endChar": 23
+      },
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b1605ce_815b42f9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-05-31T12:00:50Z",
+      "side": 1,
+      "message": "I do not understand this comment.",
+      "range": {
+        "startLine": 306,
+        "startChar": 12,
+        "endLine": 306,
+        "endChar": 17
+      },
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08b01ba8_87f6e64d",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-05-31T12:00:50Z",
+      "side": 1,
+      "message": "If defined, Ceres was compiled with a version of SuiteSparse/CHOLMOD without the Partition module.",
+      "range": {
+        "startLine": 79,
+        "startChar": 41,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f245ddb_914a0c82",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-05-31T12:00:50Z",
+      "side": 1,
+      "message": "should we consider naming this CERES_NO_CHOLMOD_PARTITION?",
+      "range": {
+        "startLine": 80,
+        "startChar": 1,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
