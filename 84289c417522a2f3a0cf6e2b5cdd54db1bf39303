@@ -143,6 +143,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db0b63b8_3f33e5cd",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-31T19:54:21Z",
+      "side": 1,
+      "message": "Agreed. :)",
+      "parentUuid": "942940ec_c86e0f6d",
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5fd68cda_92f3ad96",
@@ -261,6 +279,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "143cd8b3_79abe417",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-31T19:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4683b34d_bed28c3e",
+      "range": {
+        "startLine": 306,
+        "startChar": 12,
+        "endLine": 306,
+        "endChar": 17
+      },
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08b01ba8_87f6e64d",
@@ -274,6 +316,30 @@
       "writtenOn": "2022-05-31T12:00:50Z",
       "side": 1,
       "message": "If defined, Ceres was compiled with a version of SuiteSparse/CHOLMOD without the Partition module.",
+      "range": {
+        "startLine": 79,
+        "startChar": 41,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90a08610_882be77d",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-31T19:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08b01ba8_87f6e64d",
       "range": {
         "startLine": 79,
         "startChar": 41,
@@ -345,6 +411,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "7fabca21_20ed2a63",
+      "range": {
+        "startLine": 80,
+        "startChar": 1,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0f37495_e4034122",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-31T19:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbc20f91_6a8b3df2",
       "range": {
         "startLine": 80,
         "startChar": 1,
