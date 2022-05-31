@@ -127,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "942940ec_c86e0f6d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-05-31T18:10:32Z",
+      "side": 1,
+      "message": "I already have a CL in the works about updating the docs (there is abunch of gunk that needs cleaned up anyways). Lets drop this knob for now. If it ends up being required down the line, I will happily eat crow and buy you a beer :)",
+      "parentUuid": "6176c078_20f544a9",
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5fd68cda_92f3ad96",
         "filename": "CMakeLists.txt",
         "patchSetId": 9
