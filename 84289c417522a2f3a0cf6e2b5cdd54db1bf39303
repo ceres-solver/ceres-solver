@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6176c078_20f544a9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-05-31T17:52:03Z",
+      "side": 1,
+      "message": "I\u0027m happy both updating the docs (which I omitted here for the `METIS` option btw) or dropping the option. You have the final word. :)",
+      "parentUuid": "f4fb88a2_3bf2c030",
+      "revId": "84289c417522a2f3a0cf6e2b5cdd54db1bf39303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5fd68cda_92f3ad96",
         "filename": "CMakeLists.txt",
         "patchSetId": 9
