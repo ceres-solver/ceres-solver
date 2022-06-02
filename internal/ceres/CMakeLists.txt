@@ -134,10 +134,10 @@ if (CUDA_FOUND)
   if (BUILD_TESTING)
     add_test(
         NAME cuda_memcheck_dense_qr_test
-        COMMAND cuda-memcheck --leak-check full
+        COMMAND ${CUDA_TOOLKIT_ROOT_DIR}/bin/cuda-memcheck --leak-check full
             $<TARGET_FILE:cuda_dense_qr_test>)
     add_test(
-        NAME cuda_memcheck_dense_cholesky_test
+        NAME ${CUDA_TOOLKIT_ROOT_DIR}/bin/cuda_memcheck_dense_cholesky_test
         COMMAND cuda-memcheck --leak-check full
             $<TARGET_FILE:cuda_dense_cholesky_test>)
   endif (BUILD_TESTING)
