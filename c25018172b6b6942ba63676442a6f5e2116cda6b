@@ -16,6 +16,193 @@
       "message": "Alex should take a look.",
       "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cd7418e_1bc2799f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-03T11:09:07Z",
+      "side": 1,
+      "message": "Looks good, I have some comments but nothing major.  I do think we need to tweak the names though now that there are two paths for METIS inclusion and the current \u0027CERES_NO_METIS\u0027 would only block off one of them",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26472077_143925b0",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-03T11:09:07Z",
+      "side": 1,
+      "message": "I think we should call this `EIGEN_METIS` (or perhaps `EIGENMETIS` for consistency, but I think that is harder to read) for clarity.\n\nI think it\u0027s otherwise confusing if when SuiteSparse is enabled (and thus METIS might be being used) that this option might still be FALSE (if EigenSparse was not used)",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abbb2d01_62065d5c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-03T11:09:07Z",
+      "side": 1,
+      "message": "I would put this and the end of the \u0027if (SUITESPARSE)\u0027 block above rather than outside it, as it is explicitly only necessary if SuiteSparse is found",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cbcac08_87e7dc25",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-03T11:09:07Z",
+      "side": 1,
+      "message": "We should add a call to update_cache_variable(METIS OFF) with an appropriate message here, something like:\n\nmessage(\"-- Did not find METIS, disabling Eigen METIS support.\")\n\nas above for consistency and clarity s/t the options show what is actually going to happen.  This also means that we can also simplify the check below to remove METIS_FOUND.",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98c8d3c2_76dc9e4d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-03T11:09:07Z",
+      "side": 1,
+      "message": "With the above change, this could just become \u0027if (NOT METIS)\u0027",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be472aec_1c6d2b40",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-03T11:09:07Z",
+      "side": 1,
+      "message": "I think we should make this: CERES_NO_EIGEN_METIS for clarity about exactly what we mean here, as it is confusing otherwise that you could be using SuiteSparse, which in turn required METIS and yet CERES_NO_METIS implies that you are not using it when in fact you are",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3cebb11_90d8d188",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 10
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-03T11:09:07Z",
+      "side": 1,
+      "message": "IMO, I think it would be clearer to handle this within the block above, but with an unset(SuiteSparse_Partition_FOUND) above \u0027if (TARGET SuiteSparse::CHOLMOD)\u0027 to avoid an else(), that way \u0027set (SuiteSparse_Partition_FOUND TRUE)\u0027 is inline with the point where it is added as a SuiteSparse target.",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad632906_4f7995fd",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-03T11:09:07Z",
+      "side": 1,
+      "message": "\u0027the Partition module (requires METIS)\u0027",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70ec26bf_839fa674",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-03T11:09:07Z",
+      "side": 1,
+      "message": "\u0027without support for METIS via Eigen\u0027",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18aeae1d_832283ab",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-03T11:09:07Z",
+      "side": 1,
+      "message": "I think we should change this to CERES_NO_EIGEN_METIS as it\u0027s now explicitly for that purpose and I think it\u0027s confusing to have NO_METIS when we might still need METIS via SuiteSparse even if this was defined",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc104d1d_d6ff21cf",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-03T11:09:07Z",
+      "side": 1,
+      "message": "I would put this inside the \u0027if (SUITESPARSE AND SuiteSparse_FOUND)\u0027 block above to group all of the SuiteSparse related dependency handling.\n\nThis also (I think?) would have the potentially negative side-effect of including SuiteSparse as a private dependency even if SUITESPARSE was disabled, but the target remained cached and/or visible",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
