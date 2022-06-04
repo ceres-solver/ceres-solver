@@ -682,7 +682,7 @@ TEST(Jet, Fma) {
   EXPECT_THAT(v, IsAlmostEqualTo(w));
 }
 
-TEST(Jet, Fmax) {
+TEST(Jet, FmaxJetWithJet) {
   Fenv env;
   // Clear all exceptions to ensure none are set by the following function
   // calls.
@@ -690,21 +690,54 @@ TEST(Jet, Fmax) {
 
   EXPECT_THAT(fmax(x, y), IsAlmostEqualTo(x));
   EXPECT_THAT(fmax(y, x), IsAlmostEqualTo(x));
-  EXPECT_THAT(fmax(x, y.a), IsAlmostEqualTo(x));
-  EXPECT_THAT(fmax(y.a, x), IsAlmostEqualTo(x));
-  EXPECT_THAT(fmax(y, x.a), IsAlmostEqualTo(J{x.a}));
-  EXPECT_THAT(fmax(x.a, y), IsAlmostEqualTo(J{x.a}));
-  EXPECT_THAT(fmax(x, std::numeric_limits<double>::quiet_NaN()),
-              IsAlmostEqualTo(x));
-  EXPECT_THAT(fmax(std::numeric_limits<double>::quiet_NaN(), x),
-              IsAlmostEqualTo(x));
+
+  // Average the Jets on equality (of scalar parts).
+  const J scalar_part_only_equal_to_x = J(x.a, 2 * x.v);
+  const J average = (x + scalar_part_only_equal_to_x) * 0.5;
+  EXPECT_THAT(fmax(x, scalar_part_only_equal_to_x), IsAlmostEqualTo(average));
+  EXPECT_THAT(fmax(scalar_part_only_equal_to_x, x), IsAlmostEqualTo(average));
+
+  // Follow convention of fmax(): treat NANs as missing values.
+  const J nan_scalar_part(std::numeric_limits<double>::quiet_NaN(), 2 * x.v);
+  EXPECT_THAT(fmax(x, nan_scalar_part), IsAlmostEqualTo(x));
+  EXPECT_THAT(fmax(nan_scalar_part, x), IsAlmostEqualTo(x));
 
 #ifndef CERES_NO_FENV_ACCESS
   EXPECT_EQ(std::fetestexcept(FE_ALL_EXCEPT & ~FE_INEXACT), 0);
 #endif
 }
 
-TEST(Jet, Fmin) {
+TEST(Jet, FmaxJetWithScalar) {
+  Fenv env;
+  // Clear all exceptions to ensure none are set by the following function
+  // calls.
+  std::feclearexcept(FE_ALL_EXCEPT);
+
+  EXPECT_THAT(fmax(x, y.a), IsAlmostEqualTo(x));
+  EXPECT_THAT(fmax(y.a, x), IsAlmostEqualTo(x));
+  EXPECT_THAT(fmax(y, x.a), IsAlmostEqualTo(J{x.a}));
+  EXPECT_THAT(fmax(x.a, y), IsAlmostEqualTo(J{x.a}));
+
+  // Average the Jet and scalar cast to a Jet on equality (of scalar parts).
+  const J average = (x + J{x.a}) * 0.5;
+  EXPECT_THAT(fmax(x, x.a), IsAlmostEqualTo(average));
+  EXPECT_THAT(fmax(x.a, x), IsAlmostEqualTo(average));
+
+  // Follow convention of fmax(): treat NANs as missing values.
+  EXPECT_THAT(fmax(x, std::numeric_limits<double>::quiet_NaN()),
+              IsAlmostEqualTo(x));
+  EXPECT_THAT(fmax(std::numeric_limits<double>::quiet_NaN(), x),
+              IsAlmostEqualTo(x));
+  const J nan_scalar_part(std::numeric_limits<double>::quiet_NaN(), 2 * x.v);
+  EXPECT_THAT(fmax(nan_scalar_part, x.a), IsAlmostEqualTo(J{x.a}));
+  EXPECT_THAT(fmax(x.a, nan_scalar_part), IsAlmostEqualTo(J{x.a}));
+
+#ifndef CERES_NO_FENV_ACCESS
+  EXPECT_EQ(std::fetestexcept(FE_ALL_EXCEPT & ~FE_INEXACT), 0);
+#endif
+}
+
+TEST(Jet, FminJetWithJet) {
   Fenv env;
   // Clear all exceptions to ensure none are set by the following function
   // calls.
@@ -712,14 +745,47 @@ TEST(Jet, Fmin) {
 
   EXPECT_THAT(fmin(x, y), IsAlmostEqualTo(y));
   EXPECT_THAT(fmin(y, x), IsAlmostEqualTo(y));
+
+  // Average the Jets on equality (of scalar parts).
+  const J scalar_part_only_equal_to_x = J(x.a, 2 * x.v);
+  const J average = (x + scalar_part_only_equal_to_x) * 0.5;
+  EXPECT_THAT(fmin(x, scalar_part_only_equal_to_x), IsAlmostEqualTo(average));
+  EXPECT_THAT(fmin(scalar_part_only_equal_to_x, x), IsAlmostEqualTo(average));
+
+  // Follow convention of fmin(): treat NANs as missing values.
+  const J nan_scalar_part(std::numeric_limits<double>::quiet_NaN(), 2 * x.v);
+  EXPECT_THAT(fmin(x, nan_scalar_part), IsAlmostEqualTo(x));
+  EXPECT_THAT(fmin(nan_scalar_part, x), IsAlmostEqualTo(x));
+
+#ifndef CERES_NO_FENV_ACCESS
+  EXPECT_EQ(std::fetestexcept(FE_ALL_EXCEPT & ~FE_INEXACT), 0);
+#endif
+}
+
+TEST(Jet, FminJetWithScalar) {
+  Fenv env;
+  // Clear all exceptions to ensure none are set by the following function
+  // calls.
+  std::feclearexcept(FE_ALL_EXCEPT);
+
   EXPECT_THAT(fmin(x, y.a), IsAlmostEqualTo(J{y.a}));
   EXPECT_THAT(fmin(y.a, x), IsAlmostEqualTo(J{y.a}));
   EXPECT_THAT(fmin(y, x.a), IsAlmostEqualTo(y));
   EXPECT_THAT(fmin(x.a, y), IsAlmostEqualTo(y));
+
+  // Average the Jet and scalar cast to a Jet on equality (of scalar parts).
+  const J average = (x + J{x.a}) * 0.5;
+  EXPECT_THAT(fmin(x, x.a), IsAlmostEqualTo(average));
+  EXPECT_THAT(fmin(x.a, x), IsAlmostEqualTo(average));
+
+  // Follow convention of fmin(): treat NANs as missing values.
   EXPECT_THAT(fmin(x, std::numeric_limits<double>::quiet_NaN()),
               IsAlmostEqualTo(x));
   EXPECT_THAT(fmin(std::numeric_limits<double>::quiet_NaN(), x),
               IsAlmostEqualTo(x));
+  const J nan_scalar_part(std::numeric_limits<double>::quiet_NaN(), 2 * x.v);
+  EXPECT_THAT(fmin(nan_scalar_part, x.a), IsAlmostEqualTo(J{x.a}));
+  EXPECT_THAT(fmin(x.a, nan_scalar_part), IsAlmostEqualTo(J{x.a}));
 
 #ifndef CERES_NO_FENV_ACCESS
   EXPECT_EQ(std::fetestexcept(FE_ALL_EXCEPT & ~FE_INEXACT), 0);
