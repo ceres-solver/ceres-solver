@@ -757,26 +757,42 @@ inline Jet<T, N> fma(const Jet<T, N>& x,
 
 // Returns the larger of the two arguments. NaNs are treated as missing data.
 //
+// On equality, the argument with the greater information is returned, where:
+// Jet > Scalar. If both arguments have equal information, the first argument
+// is returned (like std::max). This behaviour ensures that derivatives are
+// preserved up to and including the boundary.
+//
 // NOTE: This function is NOT subject to any of the error conditions specified
-// in `math_errhandling`.
-template <typename Lhs,
-          typename Rhs,
-          std::enable_if_t<CompatibleJetOperands_v<Lhs, Rhs>>* = nullptr>
-inline decltype(auto) fmax(const Lhs& f, const Rhs& g) {
-  using J = std::common_type_t<Lhs, Rhs>;
-  return (isnan(g) || isgreater(f, g)) ? J{f} : J{g};
+//       in `math_errhandling`.
+template<typename T, int N, typename Rhs,
+         std::enable_if_t<CompatibleJetOperands_v<Jet<T, N>, Rhs>>* = nullptr>
+inline Jet<T, N> fmax(const Jet<T, N>& x, const Rhs& y) {
+  return isnan(x) || isless(x, y) ? Jet<T, N>{y} : x;
+}
+
+template<typename T, int N>
+inline Jet<T, N> fmax(const T& x, const Jet<T, N>& y) {
+  return isnan(y) || isgreater(x, y) ? Jet<T, N>{x} : y;
 }
 
 // Returns the smaller of the two arguments. NaNs are treated as missing data.
 //
+// On equality, the argument with the greater information is returned, where:
+// Jet > Scalar. If both arguments have equal information, the first argument
+// is returned (like std::min). This behaviour ensures that derivatives are
+// preserved up to and including the boundary.
+//
 // NOTE: This function is NOT subject to any of the error conditions specified
-// in `math_errhandling`.
-template <typename Lhs,
-          typename Rhs,
-          std::enable_if_t<CompatibleJetOperands_v<Lhs, Rhs>>* = nullptr>
-inline decltype(auto) fmin(const Lhs& f, const Rhs& g) {
-  using J = std::common_type_t<Lhs, Rhs>;
-  return (isnan(f) || isless(g, f)) ? J{g} : J{f};
+//       in `math_errhandling`.
+template<typename T, int N, typename Rhs,
+         std::enable_if_t<CompatibleJetOperands_v<Jet<T, N>, Rhs>>* = nullptr>
+inline Jet<T, N> fmin(const Jet<T, N>& x, const Rhs& y) {
+  return isnan(x) || isgreater(x, y) ? Jet<T, N>{y} : x;
+}
+
+template<typename T, int N>
+inline Jet<T, N> fmin(const T& x, const Jet<T, N>& y) {
+  return isnan(y) || isless(x, y) ? Jet<T, N>{x} : y;
 }
 
 // Returns the positive difference (f - g) of two arguments and zero if f <= g.
