@@ -33,11 +33,14 @@
 if (CERES_THREADING_MODEL STREQUAL "CXX_THREADS")
   set(CERES_PARALLEL_FOR_SRC parallel_for_cxx.cc thread_pool.cc)
 elseif (CERES_THREADING_MODEL STREQUAL "OPENMP")
+  # OpenMP requires linking to the corresponding library.
+  find_package(OpenMP REQUIRED COMPONENTS CXX)
+
   set(CERES_PARALLEL_FOR_SRC parallel_for_openmp.cc)
-  if (CMAKE_COMPILER_IS_GNUCXX)
-    # OpenMP in GCC requires the GNU OpenMP library.
-    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES gomp)
-  endif()
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES OpenMP::OpenMP_CXX)
+
+  # Make dependency visible to the parent CMakeLists.txt
+  set(OpenMP_DEPENDENCY "find_dependency (OpenMP ${OpenMP_CXX_VERSION} COMPONENTS CXX)" PARENT_SCOPE)
 elseif (CERES_THREADING_MODEL STREQUAL "NO_THREADS")
   set(CERES_PARALLEL_FOR_SRC parallel_for_nothreads.cc)
 endif()
