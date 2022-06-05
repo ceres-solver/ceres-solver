@@ -144,7 +144,9 @@ if (APPLE)
   option(ENABLE_BITCODE
     "Enable bitcode for iOS builds (disables inline optimizations for Eigen)." OFF)
 endif()
-option(CUDA "Enable use of CUDA linear algebra solvers." ON)
+# We can't have an option called 'CUDA' since that is a reserved word -- a
+# language definition.
+option(USE_CUDA "Enable use of CUDA linear algebra solvers." ON)
 option(LAPACK "Enable use of LAPACK directly within Ceres." ON)
 # Template specializations for the Schur complement based solvers. If
 # compile time, binary size or compiler performance is an issue, you
@@ -226,23 +228,23 @@ if (Eigen3_FOUND)
   endif (EIGENSPARSE)
 endif (Eigen3_FOUND)
 
-if (CUDA)
+if (USE_CUDA)
   find_package(CUDA QUIET)
   if (CUDA_FOUND)
     message("-- Found CUDA version ${CUDA_VERSION}: "
         "${CUDA_LIBRARIES};"
         "${CUDA_cusolver_LIBRARY};"
         "${CUDA_cusparse_LIBRARY}")
+    enable_language(CUDA)
   else (CUDA_FOUND)
     message("-- Did not find CUDA library, disabling CUDA support.")
     update_cache_variable(CUDA OFF)
     list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CUDA)
   endif (CUDA_FOUND)
-else (CUDA)
+else (USE_CUDA)
   message("-- Building without CUDA.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CUDA)
-endif (CUDA)
-
+endif (USE_CUDA)
 if (LAPACK)
   find_package(LAPACK QUIET)
   if (LAPACK_FOUND)

@@ -170,6 +170,68 @@ TEST(CUDADenseCholesky, Randomized1600x1600Tests) {
   }
 }
 
+// Tests the CUDA Cholesky solver with a simple 4x4 matrix.
+TEST(CUDADenseCholeskyMixedPrecision, Cholesky4x4Matrix1Step) {
+  Eigen::Matrix4d A;
+  // clang-format off
+  A <<  4,  12, -16, 0,
+       12,  37, -43, 0,
+      -16, -43,  98, 0,
+        0,   0,   0, 1;
+  // clang-format on
+
+  const Eigen::Vector4d b = Eigen::Vector4d::Ones();
+  LinearSolver::Options options;
+  options.max_num_refinement_iterations = 0;
+  ContextImpl context;
+  options.context = &context;
+  options.dense_linear_algebra_library_type = CUDA;
+  auto solver = CUDADenseCholeskyMixedPrecision::Create(options);
+  ASSERT_NE(solver, nullptr);
+  std::string error_string;
+  ASSERT_EQ(solver->Factorize(A.cols(), A.data(), &error_string),
+            LinearSolverTerminationType::SUCCESS);
+  Eigen::Vector4d x = Eigen::Vector4d::Zero();
+  ASSERT_EQ(solver->Solve(b.data(), x.data(), &error_string),
+            LinearSolverTerminationType::SUCCESS);
+  static const double kEpsilon = std::numeric_limits<double>::epsilon() * 1e10;
+  EXPECT_NEAR(x(0), 113.75 / 3.0, kEpsilon);
+  EXPECT_NEAR(x(1), -31.0 / 3.0, kEpsilon);
+  EXPECT_NEAR(x(2), 5.0 / 3.0, kEpsilon);
+  EXPECT_NEAR(x(3), 1.0000, kEpsilon);
+}
+
+// Tests the CUDA Cholesky solver with a simple 4x4 matrix.
+TEST(CUDADenseCholeskyMixedPrecision, Cholesky4x4Matrix4Steps) {
+  Eigen::Matrix4d A;
+  // clang-format off
+  A <<  4,  12, -16, 0,
+       12,  37, -43, 0,
+      -16, -43,  98, 0,
+        0,   0,   0, 1;
+  // clang-format on
+
+  const Eigen::Vector4d b = Eigen::Vector4d::Ones();
+  LinearSolver::Options options;
+  options.max_num_refinement_iterations = 3;
+  ContextImpl context;
+  options.context = &context;
+  options.dense_linear_algebra_library_type = CUDA;
+  auto solver = CUDADenseCholeskyMixedPrecision::Create(options);
+  ASSERT_NE(solver, nullptr);
+  std::string error_string;
+  ASSERT_EQ(solver->Factorize(A.cols(), A.data(), &error_string),
+            LinearSolverTerminationType::SUCCESS);
+  Eigen::Vector4d x = Eigen::Vector4d::Zero();
+  ASSERT_EQ(solver->Solve(b.data(), x.data(), &error_string),
+            LinearSolverTerminationType::SUCCESS);
+  static const double kEpsilon = std::numeric_limits<double>::epsilon() * 1e2;
+  EXPECT_NEAR(x(0), 113.75 / 3.0, kEpsilon);
+  EXPECT_NEAR(x(1), -31.0 / 3.0, kEpsilon);
+  EXPECT_NEAR(x(2), 5.0 / 3.0, kEpsilon);
+  EXPECT_NEAR(x(3), 1.0000, kEpsilon);
+}
+
 #endif  // CERES_NO_CUDA
 
 }  // namespace internal

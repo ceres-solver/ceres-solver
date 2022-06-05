@@ -176,6 +176,71 @@ class CERES_NO_EXPORT CUDADenseCholesky final : public DenseCholesky {
       LinearSolverTerminationType::FATAL_ERROR;
 };
 
+// A mixed-precision iterative refinement dense Cholesky solver using FP32 CUDA
+// Dense Cholesky for inner iterations, and FP64 outer refinements.
+class CERES_NO_EXPORT CUDADenseCholeskyMixedPrecision final :
+    public DenseCholesky {
+ public:
+  static std::unique_ptr<CUDADenseCholeskyMixedPrecision> Create(
+      const LinearSolver::Options& options);
+  CUDADenseCholeskyMixedPrecision(
+      const CUDADenseCholeskyMixedPrecision&) = delete;
+  CUDADenseCholeskyMixedPrecision& operator=(
+      const CUDADenseCholeskyMixedPrecision&) = delete;
+  LinearSolverTerminationType Factorize(int num_cols,
+                                        double* lhs,
+                                        std::string* message) override;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override;
+
+ private:
+  CUDADenseCholeskyMixedPrecision() = default;
+  // Helper function to wrap Cuda boilerplate needed to call Spotrf.
+  LinearSolverTerminationType CudaSpotrf(std::string* message);
+  // Helper function to wrap Cuda boilerplate needed to call Spotrs.
+  LinearSolverTerminationType CudaSpotrs(std::string* message);
+  // Picks up the cuSolverDN and cuStream handles from the context. If
+  // the context is unable to initialize CUDA, returns false with a
+  // human-readable message indicating the reason.
+  bool Init(ContextImpl* context, std::string* message);
+
+  // Handle to the cuSOLVER context.
+  cusolverDnHandle_t cusolver_handle_ = nullptr;
+  // Handle to the cuBLAS context.
+  cublasHandle_t cublas_handle_ = nullptr;
+  // CUDA device stream.
+  cudaStream_t stream_ = nullptr;
+  // Number of columns in the A matrix, to be cached between calls to *Factorize
+  // and *Solve.
+  size_t num_cols_ = 0;
+  // GPU memory allocated for the A matrix (lhs matrix) in fp64.
+  CudaBuffer<double> lhs_fp64_;
+  // GPU memory allocated for the B matrix (rhs vector) in fp64.
+  CudaBuffer<double> rhs_fp64_;
+  // GPU memory allocated for the A matrix (lhs matrix) in fp32.
+  CudaBuffer<float> lhs_fp32_;
+  // Scratch space for cuSOLVER on the GPU.
+  CudaBuffer<float> device_workspace_;
+  // Required for error handling with cuSOLVER.
+  CudaBuffer<int> error_;
+
+  // Solution to lhs * x = rhs.
+  CudaBuffer<double> x_fp64_;
+  // Incremental correction to x.
+  CudaBuffer<float> c_fp32_;
+  // Residual to iterative refinement.
+  CudaBuffer<float> residual_fp32_;
+  CudaBuffer<double> residual_fp64_;
+
+  // Number of inner refinement iterations to perform.
+  int max_num_refinement_iterations_ = 0;
+  // Cache the result of Factorize to ensure that when Solve is called, the
+  // factorization of lhs is valid.
+  LinearSolverTerminationType factorize_result_ =
+      LinearSolverTerminationType::FATAL_ERROR;
+};
+
 #endif  // CERES_NO_CUDA
 
 }  // namespace ceres::internal
