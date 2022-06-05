@@ -118,11 +118,12 @@ optional. For details on customizing the build process, see
 
 - `CUDA <https://developer.nvidia.com/cuda-toolkit>`_ If you have an
   NVIDIA GPU then Ceres Solver can use it accelerate the solution of
-  the Gauss-Newton linear systems using ``CUDA``. Currently this
-  support is limited to using the dense linear solvers that ship with
-  ``CUDA``. As a result GPU acceleration can be used to speed up
+  the Gauss-Newton linear systems using the CMake flag ``USE_CUDA``.
+  Currently this support is limited to using the dense linear solvers that ship
+  with ``CUDA``. As a result GPU acceleration can be used to speed up
   ``DENSE_QR``, ``DENSE_NORMAL_CHOLESKY`` and
-  ``DENSE_SCHUR``. **Optional**.
+  ``DENSE_SCHUR``. This also enables ``CUDA`` mixed precision solves
+  for ``DENSE_NORMAL_CHOLESKY`` and ``DENSE_SCHUR``.  **Optional**.
 
 .. _section-linux:
 
