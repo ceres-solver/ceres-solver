@@ -362,14 +362,15 @@ class TypedLinearSolver : public LinearSolver {
     return execution_summary_.statistics();
   }
 
+ protected:
+  ExecutionSummary execution_summary_;
+
  private:
   virtual LinearSolver::Summary SolveImpl(
       MatrixType* A,
       const double* b,
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* x) = 0;
-
-  ExecutionSummary execution_summary_;
 };
 
 // Linear solvers that depend on access to the low level structure of

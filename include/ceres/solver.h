@@ -890,6 +890,28 @@ class CERES_EXPORT Solver {
     // inner iterations.
     int num_linear_solves = -1;
 
+    // Time (in seconds) spent in the linear solver performing Schur
+    // elimination. Only valid for linear solvers of the Schur complement type.
+    double schur_eliminate_time_in_seconds = -1.0;
+    // Number of times Schur elimination was performed. Only valid for linear
+    // solvers of the Schur complement type.
+    int num_schur_eliminates = -1;
+
+    // Time (in seconds) spent in the linear solver solving the reduced system.
+    // Only valid for linear solvers of the Schur complement type.
+    double reduced_solve_time_in_seconds = -1.0;
+    // Number of times the reduced system was solved. Only valid for linear
+    // solvers of the Schur complement type.
+    int num_reduced_solves = -1;
+
+    // Time (in seconds) spent in the linear solver back-subsituting the
+    // solution of the reduced system to the full system. Only valid for
+    // linear solvers of the Schur complement type.
+    double back_substitute_time_in_seconds = -1.0;
+    // Number of times the back-substitution was performed. Only valid for
+    // linear solvers of the Schur complement type.
+    int num_back_substitutions = -1;
+
     // Time (in seconds) spent evaluating the residual vector.
     double residual_evaluation_time_in_seconds = -1.0;
 
