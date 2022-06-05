@@ -996,6 +996,8 @@ class CERES_EXPORT Solver {
         SPARSE_NORMAL_CHOLESKY;
 #endif
 
+    bool mixed_precision_solves_used = false;
+
     LinearSolverOrderingType linear_solver_ordering_type;
 
     // Size of the elimination groups given by the user as hints to

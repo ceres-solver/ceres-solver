@@ -38,6 +38,7 @@
 #include "ceres/internal/config.h"
 
 #ifndef CERES_NO_CUDA
+#include "ceres/ceres_cuda_kernels.h"
 #include "ceres/context_impl.h"
 #include "cuda_runtime.h"
 #include "cusolverDn.h"
@@ -82,7 +83,11 @@ std::unique_ptr<DenseCholesky> DenseCholesky::Create(
 
     case CUDA:
 #ifndef CERES_NO_CUDA
-      dense_cholesky = CUDADenseCholesky::Create(options);
+      if (options.use_mixed_precision_solves) {
+        dense_cholesky = CUDADenseCholeskyMixedPrecision::Create(options);
+      } else {
+        dense_cholesky = CUDADenseCholesky::Create(options);
+      }
       break;
 #else
       LOG(FATAL) << "Ceres was compiled without support for CUDA.";
@@ -318,6 +323,215 @@ std::unique_ptr<CUDADenseCholesky> CUDADenseCholesky::Create(
   // nullptr.
   LOG(ERROR) << "CUDADenseCholesky::Init failed: " << cuda_error;
   return nullptr;
+}
+
+std::unique_ptr<CUDADenseCholeskyMixedPrecision>
+    CUDADenseCholeskyMixedPrecision::Create(
+    const LinearSolver::Options& options) {
+  if (options.dense_linear_algebra_library_type != CUDA ||
+      !options.use_mixed_precision_solves) {
+    // The user called the wrong factory method.
+    return nullptr;
+  }
+  auto cuda_dense_cholesky_mixed_precision =
+      std::unique_ptr<CUDADenseCholeskyMixedPrecision>(
+          new CUDADenseCholeskyMixedPrecision());
+  std::string cuda_error;
+  if (cuda_dense_cholesky_mixed_precision->Init(options.context, &cuda_error)) {
+    cuda_dense_cholesky_mixed_precision->max_num_refinement_iterations_ =
+        options.max_num_refinement_iterations;
+    return cuda_dense_cholesky_mixed_precision;
+  }
+  // Initialization failed, destroy the object (done automatically) and return a
+  // nullptr.
+  LOG(ERROR) << "CUDADenseCholeskyMixedPrecision::Init failed: " << cuda_error;
+  return nullptr;
+}
+
+bool CUDADenseCholeskyMixedPrecision::Init(
+    ContextImpl* context, std::string* message) {
+  if (!context->InitCUDA(message)) {
+    return false;
+  }
+  cusolver_handle_ = context->cusolver_handle_;
+  cublas_handle_ = context->cublas_handle_;
+  stream_ = context->stream_;
+  error_.Reserve(1);
+  *message = "CUDADenseCholeskyMixedPrecision::Init Success.";
+  return true;
+}
+
+LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::CudaSpotrf(
+    std::string* message) {
+  int device_workspace_size = 0;
+  if (cusolverDnSpotrf_bufferSize(cusolver_handle_,
+                                  CUBLAS_FILL_MODE_LOWER,
+                                  num_cols_,
+                                  lhs_fp32_.data(),
+                                  num_cols_,
+                                  &device_workspace_size) !=
+      CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnSpotrf_bufferSize failed.";
+    return LinearSolverTerminationType::FATAL_ERROR;
+  }
+  device_workspace_.Reserve(device_workspace_size);
+  if (cusolverDnSpotrf(cusolver_handle_,
+                       CUBLAS_FILL_MODE_LOWER,
+                       num_cols_,
+                       lhs_fp32_.data(),
+                       num_cols_,
+                       device_workspace_.data(),
+                       device_workspace_.size(),
+                       error_.data()) != CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnSpotrf failed.";
+    return LinearSolverTerminationType::FATAL_ERROR;
+  }
+  if (cudaDeviceSynchronize() != cudaSuccess ||
+      cudaStreamSynchronize(stream_) != cudaSuccess) {
+    *message = "Cuda device synchronization failed.";
+    return LinearSolverTerminationType::FATAL_ERROR;
+  }
+  int error = 0;
+  error_.CopyToHost(&error, 1);
+  if (error < 0) {
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres - "
+               << "please report it. "
+               << "cuSolverDN::cusolverDnSpotrf fatal error. "
+               << "Argument: " << -error << " is invalid.";
+    // The following line is unreachable, but return failure just to be
+    // pedantic, since the compiler does not know that.
+    return LinearSolverTerminationType::FATAL_ERROR;
+  } else if (error > 0) {
+    *message = StringPrintf(
+        "cuSolverDN::cusolverDnSpotrf numerical failure. "
+        "The leading minor of order %d is not positive definite.",
+        error);
+    factorize_result_ = LinearSolverTerminationType::FAILURE;
+    return LinearSolverTerminationType::FAILURE;
+  }
+  return LinearSolverTerminationType::SUCCESS;
+}
+
+LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::CudaSpotrs(
+    std::string* message) {
+  CHECK_EQ(cudaMemcpyAsync(c_fp32_.data(),
+                           residual_fp32_.data(),
+                           num_cols_ * sizeof(float),
+                           cudaMemcpyDeviceToDevice,
+                           stream_),
+           cudaSuccess);
+  if (cusolverDnSpotrs(cusolver_handle_,
+                       CUBLAS_FILL_MODE_LOWER,
+                       num_cols_,
+                       1,
+                       lhs_fp32_.data(),
+                       num_cols_,
+                       c_fp32_.data(),
+                       num_cols_,
+                       error_.data()) != CUSOLVER_STATUS_SUCCESS) {
+    *message = "cuSolverDN::cusolverDnDpotrs failed.";
+    return LinearSolverTerminationType::FATAL_ERROR;
+  }
+  if (cudaDeviceSynchronize() != cudaSuccess ||
+      cudaStreamSynchronize(stream_) != cudaSuccess) {
+    *message = "Cuda device synchronization failed.";
+    return LinearSolverTerminationType::FATAL_ERROR;
+  }
+  int error = 0;
+  error_.CopyToHost(&error, 1);
+  if (error != 0) {
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
+               << "Please report it."
+               << "cuSolverDN::cusolverDnDpotrs fatal error. "
+               << "Argument: " << -error << " is invalid.";
+  }
+  *message = "Success";
+  return LinearSolverTerminationType::SUCCESS;
+}
+
+LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Factorize(
+    int num_cols,
+    double* lhs,
+    std::string* message) {
+  num_cols_ = num_cols;
+
+  // Copy fp64 version of lhs to GPU.
+  lhs_fp64_.Reserve(num_cols * num_cols);
+  lhs_fp64_.CopyToGpuAsync(lhs, num_cols * num_cols, stream_);
+
+  // Create an fp32 copy of lhs, lhs_fp32.
+  lhs_fp32_.Reserve(num_cols * num_cols);
+  ceres_cuda_kernels::CudaFP64ToFP32(
+      lhs_fp64_.data(), lhs_fp32_.data(), num_cols * num_cols, stream_);
+
+  // Factorize lhs_fp32.
+  factorize_result_ = CudaSpotrf(message);
+  if (factorize_result_ == LinearSolverTerminationType::SUCCESS) {
+    *message = "Success";
+  }
+  return factorize_result_;
+}
+
+LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Solve(
+    const double* rhs,
+    double* solution,
+    std::string* message) {
+  // If factorization failed, return failure.
+  if (factorize_result_ != LinearSolverTerminationType::SUCCESS) {
+    *message = "Factorize did not complete successfully previously.";
+    return factorize_result_;
+  }
+
+  // Reserve memory for all arrays.
+  rhs_fp64_.Reserve(num_cols_);
+  x_fp64_.Reserve(num_cols_);
+  c_fp32_.Reserve(num_cols_);
+  residual_fp32_.Reserve(num_cols_);
+  residual_fp64_.Reserve(num_cols_);
+
+  // Initialize x = 0.
+  ceres_cuda_kernels::CudaSetZeroFP64(x_fp64_.data(), num_cols_, stream_);
+
+  // Initialize residual = rhs.
+  rhs_fp64_.CopyToGpuAsync(rhs, num_cols_, stream_);
+  residual_fp64_.CopyFromGpuAsync(rhs_fp64_.data(), num_cols_, stream_);
+
+  for (int i = 0; i <= max_num_refinement_iterations_; ++i) {
+    // Cast residual from fp64 to fp32.
+    ceres_cuda_kernels::CudaFP64ToFP32(
+        residual_fp64_.data(), residual_fp32_.data(), num_cols_, stream_);
+    // [fp32] c = lhs^-1 * residual.
+    auto result = CudaSpotrs(message);
+    if (result != LinearSolverTerminationType::SUCCESS) {
+      return result;
+    }
+    // [fp64] x += c.
+    ceres_cuda_kernels::CudaDsaxpy(
+        x_fp64_.data(), c_fp32_.data(), num_cols_, stream_);
+    if (i + 1 < max_num_refinement_iterations_) {
+      // [fp64] residual = rhs - lhs * x
+      // This is done in two steps:
+      // 1. [fp64] residual = rhs
+      residual_fp64_.CopyFromGpuAsync(rhs_fp64_.data(), num_cols_, stream_);
+      // 2. [fp64] residual = residual - lhs * x
+      double alpha = -1.0;
+      double beta = 1.0;
+      cublasDsymv(cublas_handle_,
+                  CUBLAS_FILL_MODE_LOWER,
+                  num_cols_,
+                  &alpha,
+                  lhs_fp64_.data(),
+                  num_cols_,
+                  x_fp64_.data(),
+                  1,
+                  &beta,
+                  residual_fp64_.data(),
+                  1);
+    }
+  }
+  x_fp64_.CopyToHost(solution, num_cols_);
+  *message = "Success.";
+  return LinearSolverTerminationType::SUCCESS;
 }
 
 #endif  // CERES_NO_CUDA
