@@ -147,6 +147,10 @@ if (CUDA_FOUND)
         COMMAND cuda-memcheck --leak-check full
             $<TARGET_FILE:cuda_dense_cholesky_test>)
   endif (BUILD_TESTING)
+  add_library(ceres_cuda_kernels
+              ceres_cuda_kernels.cu)
+  target_compile_features(ceres_cuda_kernels PUBLIC cxx_std_14)
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ceres_cuda_kernels)
 endif (CUDA_FOUND)
 
 if (LAPACK_FOUND)
@@ -160,6 +164,7 @@ endif ()
 add_library(ceres_internal OBJECT
     ${CERES_INTERNAL_SCHUR_FILES}
     ${CERES_PARALLEL_FOR_SRC}
+    ${CERES_CUDA_SRCS}
     accelerate_sparse.cc
     array_utils.cc
     block_evaluate_preparer.cc
@@ -257,6 +262,9 @@ add_library(ceres_internal OBJECT
     visibility_based_preconditioner.cc
     wall_time.cc
 )
+if (CUDA_FOUND)
+  target_link_libraries(ceres_internal ceres_cuda_kernels)
+endif (CUDA_FOUND)
 
 set(CERES_LIBRARY_SOURCE
     ${CERES_EXPORTED_SRCS}
@@ -379,7 +387,7 @@ if (ACCELERATESPARSE)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
     ${AccelerateSparse_INCLUDE_DIRS})
 endif()
-if (CUDA)
+if (USE_CUDA)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
     ${CUDA_INCLUDE_DIRS})
 endif()
@@ -394,6 +402,12 @@ target_include_directories(ceres PUBLIC ${CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCL
 include(GenerateExportHeader)
 generate_export_header(ceres EXPORT_FILE_NAME
   ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal/export.h)
+
+install(TARGETS ceres_cuda_kernels
+  EXPORT  CeresExport
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 install(TARGETS ceres
         EXPORT  CeresExport
