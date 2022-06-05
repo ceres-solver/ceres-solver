@@ -573,6 +573,8 @@ class CERES_EXPORT Solver {
 
     // TODO(sameeragarwal): Further expand the documentation for the
     // following two options.
+    // TODO(joydeepbiswas): Update the documentation for the mixed precision
+    // option with CUDA.
 
     // NOTE1: EXPERIMENTAL FEATURE, UNDER DEVELOPMENT, USE AT YOUR OWN RISK.
     //
@@ -995,6 +997,8 @@ class CERES_EXPORT Solver {
 #else
         SPARSE_NORMAL_CHOLESKY;
 #endif
+
+    bool mixed_precision_solves_used = false;
 
     LinearSolverOrderingType linear_solver_ordering_type;
 
