@@ -118,6 +118,48 @@ bool IsNestedDissectionAvailable(SparseLinearAlgebraLibraryType type) {
            internal::EigenSparse::IsNestedDissectionAvailable()));
 }
 
+bool MixedPrecisionOptionIsValid(const Solver::Options& options,
+                                 string* error) {
+  if (options.use_mixed_precision_solves) {
+    if ((options.linear_solver_type == DENSE_NORMAL_CHOLESKY ||
+        options.linear_solver_type == DENSE_SCHUR) &&
+        options.dense_linear_algebra_library_type == CUDA) {
+      // Mixed precision with CUDA and dense Cholesky variant: okay.
+      return true;
+    }
+    if ((options.linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
+        options.linear_solver_type == SPARSE_SCHUR) &&
+        (options.sparse_linear_algebra_library_type == EIGEN_SPARSE ||
+        options.sparse_linear_algebra_library_type == ACCELERATE_SPARSE)) {
+      // Mixed precision with any Eigen or Accelerate Cholesky variant: okay.
+      return true;
+    }
+    // No other mixed precision variants are supported.
+    if (options.linear_solver_type == DENSE_NORMAL_CHOLESKY ||
+        options.linear_solver_type == DENSE_SCHUR) {
+      *error = StringPrintf(
+          "use_mixed_precision_solves with %s is only supported with "
+          "CUDA as the dense_linear_algebra_library_type.",
+          LinearSolverTypeToString(options.linear_solver_type));
+      return false;
+    }
+    if ((options.linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
+        options.linear_solver_type == SPARSE_SCHUR) &&
+        options.sparse_linear_algebra_library_type == SUITE_SPARSE) {
+      *error =  StringPrintf(
+          "use_mixed_precision_solves with %s is not supported with "
+          "SUITE_SPARSE as the sparse_linear_algebra_library_type.",
+          LinearSolverTypeToString(options.linear_solver_type));
+      return false;
+    }
+    *error = StringPrintf(
+          "use_mixed_precision_solves with %s is not supported.",
+          LinearSolverTypeToString(options.linear_solver_type));
+    return false;
+  }
+  return true;
+}
+
 bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
   OPTION_GT(initial_trust_region_radius, 0.0);
   OPTION_GT(min_trust_region_radius, 0.0);
@@ -226,6 +268,10 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
         return false;
       }
     }
+  }
+
+  if (!MixedPrecisionOptionIsValid(options, error)) {
+    return false;
   }
 
   if (options.trust_region_strategy_type == DOGLEG) {
@@ -372,7 +418,7 @@ void PreSolveSummarize(const Solver::Options& options,
                                  &(summary->inner_iteration_ordering_given));
 
   // clang-format off
-  summary->dense_linear_algebra_library_type  = options.dense_linear_algebra_library_type;  
+  summary->dense_linear_algebra_library_type  = options.dense_linear_algebra_library_type;
   summary->dogleg_type                        = options.dogleg_type;
   summary->inner_iteration_time_in_seconds    = 0.0;
   summary->num_line_search_steps              = 0;
@@ -381,18 +427,18 @@ void PreSolveSummarize(const Solver::Options& options,
   summary->line_search_polynomial_minimization_time_in_seconds = 0.0;
   summary->line_search_total_time_in_seconds  = 0.0;
   summary->inner_iterations_given             = options.use_inner_iterations;
-  summary->line_search_direction_type         = options.line_search_direction_type;       
-  summary->line_search_interpolation_type     = options.line_search_interpolation_type;   
+  summary->line_search_direction_type         = options.line_search_direction_type;
+  summary->line_search_interpolation_type     = options.line_search_interpolation_type;
   summary->line_search_type                   = options.line_search_type;
   summary->linear_solver_type_given           = options.linear_solver_type;
   summary->max_lbfgs_rank                     = options.max_lbfgs_rank;
   summary->minimizer_type                     = options.minimizer_type;
-  summary->nonlinear_conjugate_gradient_type  = options.nonlinear_conjugate_gradient_type; 
+  summary->nonlinear_conjugate_gradient_type  = options.nonlinear_conjugate_gradient_type;
   summary->num_threads_given                  = options.num_threads;
   summary->preconditioner_type_given          = options.preconditioner_type;
   summary->sparse_linear_algebra_library_type = options.sparse_linear_algebra_library_type;
-  summary->linear_solver_ordering_type        = options.linear_solver_ordering_type;       
-  summary->trust_region_strategy_type         = options.trust_region_strategy_type;        
+  summary->linear_solver_ordering_type        = options.linear_solver_ordering_type;
+  summary->trust_region_strategy_type         = options.trust_region_strategy_type;
   summary->visibility_clustering_type         = options.visibility_clustering_type;
   // clang-format on
 }
@@ -408,8 +454,9 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
                                  &(summary->inner_iteration_ordering_used));
 
   // clang-format off
-  summary->inner_iterations_used          = pp.inner_iteration_minimizer != nullptr;   
+  summary->inner_iterations_used          = pp.inner_iteration_minimizer != nullptr;
   summary->linear_solver_type_used        = pp.linear_solver_options.type;
+  summary->mixed_precision_solves_used    = pp.options.use_mixed_precision_solves;
   summary->num_threads_used               = pp.options.num_threads;
   summary->preconditioner_type_used       = pp.options.preconditioner_type;
   // clang-format on
@@ -699,10 +746,13 @@ string Solver::Summary::FullReport() const {
     if (linear_solver_type_used == DENSE_NORMAL_CHOLESKY ||
         linear_solver_type_used == DENSE_SCHUR ||
         linear_solver_type_used == DENSE_QR) {
+      const char* mixed_precision_suffix =
+          (mixed_precision_solves_used ? "(Mixed Precision)" : "");
       StringAppendF(&report,
-                    "\nDense linear algebra library  %15s\n",
+                    "\nDense linear algebra library  %15s %s\n",
                     DenseLinearAlgebraLibraryTypeToString(
-                        dense_linear_algebra_library_type));
+                        dense_linear_algebra_library_type),
+                    mixed_precision_suffix);
     }
 
     StringAppendF(&report,
@@ -723,12 +773,15 @@ string Solver::Summary::FullReport() const {
         (linear_solver_type_used == ITERATIVE_SCHUR &&
          (preconditioner_type_used == CLUSTER_JACOBI ||
           preconditioner_type_used == CLUSTER_TRIDIAGONAL))) {
+      const char* mixed_precision_suffix =
+          (mixed_precision_solves_used ? "(Mixed Precision)" : "");
       StringAppendF(
           &report,
-          "\nSparse linear algebra library %15s + %s\n",
+          "\nSparse linear algebra library %15s + %s %s\n",
           SparseLinearAlgebraLibraryTypeToString(
               sparse_linear_algebra_library_type),
-          LinearSolverOrderingTypeToString(linear_solver_ordering_type));
+          LinearSolverOrderingTypeToString(linear_solver_ordering_type),
+          mixed_precision_suffix);
     }
 
     StringAppendF(&report, "\n");

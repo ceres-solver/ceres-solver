@@ -176,6 +176,78 @@ class CERES_NO_EXPORT CUDADenseCholesky final : public DenseCholesky {
       LinearSolverTerminationType::FATAL_ERROR;
 };
 
+// A mixed-precision iterative refinement dense Cholesky solver using FP32 CUDA
+// Dense Cholesky for inner iterations, and FP64 outer refinements.
+// This class implements a modified version of the  "Classical iterative
+// refinement" (Algorithm 4.1) from the following paper:
+// Haidar, Azzam, Harun Bayraktar, Stanimire Tomov, Jack Dongarra, and Nicholas
+// J. Higham. "Mixed-precision iterative refinement using tensor cores on GPUs
+// to accelerate solution of linear systems." Proceedings of the Royal Society A
+// 476, no. 2243 (2020): 20200110.
+//
+// The three key modifications from Algorithm 4.1 in the paper are:
+// 1. We use Cholesky factorization instead of LU factorization since our A is
+//    symmetric positive definite.
+// 2. During the solution update, the up-cast and accumulation is performed in
+//    one step with a custom kernel.
+class CERES_NO_EXPORT CUDADenseCholeskyMixedPrecision final :
+    public DenseCholesky {
+ public:
+  static std::unique_ptr<CUDADenseCholeskyMixedPrecision> Create(
+      const LinearSolver::Options& options);
+  CUDADenseCholeskyMixedPrecision(
+      const CUDADenseCholeskyMixedPrecision&) = delete;
+  CUDADenseCholeskyMixedPrecision& operator=(
+      const CUDADenseCholeskyMixedPrecision&) = delete;
+  LinearSolverTerminationType Factorize(int num_cols,
+                                        double* lhs,
+                                        std::string* message) override;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override;
+
+ private:
+  CUDADenseCholeskyMixedPrecision() = default;
+  // Helper function to wrap Cuda boilerplate needed to call Spotrf.
+  LinearSolverTerminationType CudaCholeskyFactorize(std::string* message);
+  // Helper function to wrap Cuda boilerplate needed to call Spotrs.
+  LinearSolverTerminationType CudaCholeskySolve(std::string* message);
+  // Picks up the cuSolverDN and cuStream handles from the context in the
+  // options, and the number of refinement iterations from the options. If
+  // the context is unable to initialize CUDA, returns false with a
+  // human-readable message indicating the reason.
+  bool Init(const LinearSolver::Options& options, std::string* message);
+
+  cusolverDnHandle_t cusolver_handle_ = nullptr;
+  cublasHandle_t cublas_handle_ = nullptr;
+  cudaStream_t stream_ = nullptr;
+  // Number of columns in the A matrix, to be cached between calls to *Factorize
+  // and *Solve.
+  size_t num_cols_ = 0;
+  CudaBuffer<double> lhs_fp64_;
+  CudaBuffer<double> rhs_fp64_;
+  CudaBuffer<float> lhs_fp32_;
+  // Scratch space for cuSOLVER on the GPU.
+  CudaBuffer<float> device_workspace_;
+  // Required for error handling with cuSOLVER.
+  CudaBuffer<int> error_;
+
+  // Solution to lhs * x = rhs.
+  CudaBuffer<double> x_fp64_;
+  // Incremental correction to x.
+  CudaBuffer<float> correction_fp32_;
+  // Residual to iterative refinement.
+  CudaBuffer<float> residual_fp32_;
+  CudaBuffer<double> residual_fp64_;
+
+  // Number of inner refinement iterations to perform.
+  int max_num_refinement_iterations_ = 0;
+  // Cache the result of Factorize to ensure that when Solve is called, the
+  // factorization of lhs is valid.
+  LinearSolverTerminationType factorize_result_ =
+      LinearSolverTerminationType::FATAL_ERROR;
+};
+
 #endif  // CERES_NO_CUDA
 
 }  // namespace ceres::internal
