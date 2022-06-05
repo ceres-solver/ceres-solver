@@ -81,6 +81,14 @@ class CudaBuffer {
              cudaSuccess);
   }
 
+  // Perform an asynchronous copy from GPU memory using the stream provided.
+  void CopyFromGpuAsync(const T* data, const size_t size, cudaStream_t stream) {
+    Reserve(size);
+    CHECK_EQ(cudaMemcpyAsync(
+        data_, data, size * sizeof(T), cudaMemcpyDeviceToDevice, stream),
+            cudaSuccess);
+  }
+
   // Copy data from the GPU to CPU memory. This is necessarily synchronous since
   // any potential GPU kernels that may be writing to the buffer must finish
   // before the transfer happens.
@@ -95,6 +103,7 @@ class CudaBuffer {
   }
 
   T* data() { return data_; }
+  const T* data() const { return data_; }
   size_t size() const { return size_; }
 
  private:
