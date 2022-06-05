@@ -455,6 +455,27 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
         linear_solver_statistics, "LinearSolver::Solve", CallStatistics());
     summary->num_linear_solves = call_stats.calls;
     summary->linear_solver_time_in_seconds = call_stats.time;
+    const auto GetStat = [&](const char* stat_name) {
+      return FindWithDefault(
+            linear_solver_statistics, stat_name, CallStatistics());
+    };
+
+    if (IsSchurType(pp.linear_solver_options.type)) {
+      summary->schur_eliminate_time_in_seconds = GetStat(
+          "SchurComplementSolver::Eliminate").time;
+      summary->num_schur_eliminates = GetStat(
+          "SchurComplementSolver::Eliminate").calls;
+      
+      summary->reduced_solve_time_in_seconds = GetStat(
+          "SchurComplementSolver::ReducedSolve").time;
+      summary->num_reduced_solves = GetStat(
+          "SchurComplementSolver::ReducedSolve").calls;
+
+      summary->back_substitute_time_in_seconds = GetStat(
+          "SchurComplementSolver::BackSubstitute").time;
+      summary->num_back_substitutions = GetStat(
+          "SchurComplementSolver::BackSubstitute").calls;
+    }
   }
 }
 
@@ -892,6 +913,20 @@ string Solver::Summary::FullReport() const {
                   "  Linear solver       %23.6f (%d)\n",
                   linear_solver_time_in_seconds,
                   num_linear_solves);
+    if (IsSchurType(linear_solver_type_used)) {
+      StringAppendF(&report,
+                    "  ├ Schur eliminate %25.6f (%d)\n",
+                    schur_eliminate_time_in_seconds,
+                    num_schur_eliminates);
+      StringAppendF(&report,
+                    "  ├ Reduced solve %27.6f (%d)\n",
+                    reduced_solve_time_in_seconds,
+                    num_reduced_solves);
+      StringAppendF(&report,
+                    "  └ Backsubstitute %26.6f (%d)\n",
+                    back_substitute_time_in_seconds,
+                    num_back_substitutions);
+    }
   }
 
   if (inner_iterations_used) {

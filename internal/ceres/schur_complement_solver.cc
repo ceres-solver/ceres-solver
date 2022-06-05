@@ -156,19 +156,27 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
   std::fill(x, x + A->num_cols(), 0.0);
   event_logger.AddEvent("Setup");
 
-  eliminator_->Eliminate(BlockSparseMatrixData(*A),
-                         b,
-                         per_solve_options.D,
-                         lhs_.get(),
-                         rhs_.get());
-  event_logger.AddEvent("Eliminate");
+  {
+    ScopedExecutionTimer total_time("SchurComplementSolver::Eliminate", &execution_summary_);
+    eliminator_->Eliminate(BlockSparseMatrixData(*A),
+                          b,
+                          per_solve_options.D,
+                          lhs_.get(),
+                          rhs_.get());
+    event_logger.AddEvent("Eliminate");
+  }
 
-  double* reduced_solution = x + A->num_cols() - lhs_->num_cols();
-  const LinearSolver::Summary summary =
-      SolveReducedLinearSystem(per_solve_options, reduced_solution);
-  event_logger.AddEvent("ReducedSolve");
+  double* reduced_solution = nullptr;
+  LinearSolver::Summary summary;
+  {
+    ScopedExecutionTimer total_time("SchurComplementSolver::ReducedSolve", &execution_summary_);
+    reduced_solution = x + A->num_cols() - lhs_->num_cols();
+    summary = SolveReducedLinearSystem(per_solve_options, reduced_solution);
+    event_logger.AddEvent("ReducedSolve");
+  }
 
   if (summary.termination_type == LinearSolverTerminationType::SUCCESS) {
+    ScopedExecutionTimer total_time("SchurComplementSolver::BackSubstitute", &execution_summary_);
     eliminator_->BackSubstitute(
         BlockSparseMatrixData(*A), b, per_solve_options.D, reduced_solution, x);
     event_logger.AddEvent("BackSubstitute");
