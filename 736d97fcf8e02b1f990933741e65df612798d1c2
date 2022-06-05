@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "346723ea_d5073d94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-05T01:21:19Z",
+      "side": 1,
+      "message": "Mixed-precision iterative refinement Cholesky with CUDA.\n\nThis CL introduces changes to the build to accommodate custom Cuda kernels. Notably, the Cuda compiler is unhappy with C++17, so it needs to be compiled separately and linked in. Suggestions for better alternatives are welcome.",
+      "revId": "736d97fcf8e02b1f990933741e65df612798d1c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
