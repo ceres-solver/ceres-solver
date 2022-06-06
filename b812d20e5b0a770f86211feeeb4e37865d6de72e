@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "43c453a1_bc76a7d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-06T14:53:12Z",
+      "side": 1,
+      "message": "Thanks for going through this. I have some follow-up questions.",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
@@ -14,6 +31,30 @@
       "writtenOn": "2022-06-06T00:31:21Z",
       "side": 1,
       "message": "I have no idea what havoc this will wreck.",
+      "range": {
+        "startLine": 152,
+        "startChar": 45,
+        "endLine": 152,
+        "endChar": 51
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20c1a969_c8abdc67",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-06T14:53:12Z",
+      "side": 1,
+      "message": "Agreed, me neither. We need a \"good\" way to compile cuda kernels alongside ceres for the kinds of extensions we\u0027re planning in the future. Now is probably a good time to figure out what the correct way to do it is.",
+      "parentUuid": "edaa91f0_51013f0f",
       "range": {
         "startLine": 152,
         "startChar": 45,
@@ -49,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b742bf37_3ac690fe",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-06T14:53:12Z",
+      "side": 1,
+      "message": "There is `cudaMemset`, but out of a (potential over-) abundance of caution this calls a kernel that does a safe type cast. I could be swayed to revert to cudaMemset if you think that is preferable.",
+      "parentUuid": "30ea4a01_666b84a0",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72e105c5_a70d6499",
         "filename": "internal/ceres/ceres_cuda_kernels.h",
         "patchSetId": 2
@@ -60,6 +125,30 @@
       "writtenOn": "2022-06-06T00:31:21Z",
       "side": 1,
       "message": "This needs a better name, not sure what though.\n\nalso are you sure you x \u003d x + y and not x \u003d x + a * y or something like that in which case you just have axpy no?",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6f63b0c_f13d2d4c",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-06T14:53:12Z",
+      "side": 1,
+      "message": "It does need a better more descriptive name. \nIt actually does more than just x \u003d x + y. It operates on different types for x and y, and casts to the destination type before performing the addition.\ncublas *axpy operations operate on the same type for all values.",
+      "parentUuid": "72e105c5_a70d6499",
       "range": {
         "startLine": 56,
         "startChar": 5,
@@ -95,6 +184,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6c5d387c_2d986ece",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-06T14:53:12Z",
+      "side": 1,
+      "message": "I\u0027ll move it to a private method. Factorizing it out improves readability of the iterative solver.",
+      "parentUuid": "e689bfd7_2e89f16d",
+      "range": {
+        "startLine": 431,
+        "startChar": 28,
+        "endLine": 431,
+        "endChar": 38
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0d24dc6c_8f1185d4",
         "filename": "internal/ceres/dense_cholesky.h",
         "patchSetId": 2
@@ -106,6 +219,30 @@
       "writtenOn": "2022-06-06T00:31:21Z",
       "side": 1,
       "message": "unless you plan to test this method on its own -- I recommend having this just as a private method of cudadensecholeskymixedprecision.",
+      "range": {
+        "startLine": 180,
+        "startChar": 28,
+        "endLine": 180,
+        "endChar": 38
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f0cb72f_a25fb824",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-06T14:53:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0d24dc6c_8f1185d4",
       "range": {
         "startLine": 180,
         "startChar": 28,
