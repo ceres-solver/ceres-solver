@@ -72,6 +72,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01654d2e_9a5a2a16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-06T23:05:22Z",
+      "side": 1,
+      "message": "I believe you need to set `CUDA_STANDARD_REQUIRED` to `ON`. Looks like `CXX_STADNARD*` properties do not apply to CUDA source files.",
+      "parentUuid": "9543c0d8_f2d7a923",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
