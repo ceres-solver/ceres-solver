@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edaa91f0_51013f0f",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-06T00:31:21Z",
+      "side": 1,
+      "message": "I have no idea what havoc this will wreck.",
+      "range": {
+        "startLine": 152,
+        "startChar": 45,
+        "endLine": 152,
+        "endChar": 51
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30ea4a01_666b84a0",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-06T00:31:21Z",
+      "side": 1,
+      "message": "shouldn\u0027t there be cuda functions for this already?",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72e105c5_a70d6499",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-06T00:31:21Z",
+      "side": 1,
+      "message": "This needs a better name, not sure what though.\n\nalso are you sure you x \u003d x + y and not x \u003d x + a * y or something like that in which case you just have axpy no?",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e689bfd7_2e89f16d",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-06T00:31:21Z",
+      "side": 1,
+      "message": "is there a point to splitting this out into its own function, its called exactly once.",
+      "range": {
+        "startLine": 431,
+        "startChar": 28,
+        "endLine": 431,
+        "endChar": 38
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d24dc6c_8f1185d4",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-06T00:31:21Z",
+      "side": 1,
+      "message": "unless you plan to test this method on its own -- I recommend having this just as a private method of cudadensecholeskymixedprecision.",
+      "range": {
+        "startLine": 180,
+        "startChar": 28,
+        "endLine": 180,
+        "endChar": 38
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
