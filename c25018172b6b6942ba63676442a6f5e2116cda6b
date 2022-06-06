@@ -88,6 +88,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fc457aa1_1b93f33e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-06T21:25:39Z",
+      "side": 1,
+      "message": "I\u0027m aware that currently dependencies are disabled upon failure to locate them. However, this behavior is rather annoying and does not provide any actual benefit for the user.\n\nConsider the case were I forgot to install a dependency, then use my package manager to install it, run CMake again only to find out that nothing changed. I explicitly need enable the dependency which is not intuitive at all.\n\nAlso, I would rather communicate the status of enabled features and components through the `FeatureSummary` module native provided by CMake. This, of course, requires a larger overhaul of Ceres\u0027s CMake files.",
+      "parentUuid": "7cbcac08_87e7dc25",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "98c8d3c2_76dc9e4d",
         "filename": "CMakeLists.txt",
         "patchSetId": 10
@@ -133,6 +151,24 @@
       "writtenOn": "2022-06-03T11:09:07Z",
       "side": 1,
       "message": "IMO, I think it would be clearer to handle this within the block above, but with an unset(SuiteSparse_Partition_FOUND) above \u0027if (TARGET SuiteSparse::CHOLMOD)\u0027 to avoid an else(), that way \u0027set (SuiteSparse_Partition_FOUND TRUE)\u0027 is inline with the point where it is added as a SuiteSparse target.",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e76c33c3_28003e9f",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 10
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-06T21:25:39Z",
+      "side": 1,
+      "message": "`unset(SuiteSparse_Partition_FOUND)` would not do anything because `SuiteSparse_Partition_FOUND` is only defined here. The variable is also not cached. Segmenting the condition across the source would make it less readable. Since the availability of `SuiteSparse::Partition` implies the `SuiteSparse_Partition_FOUND` result we can safely leave it as is.",
+      "parentUuid": "d3cebb11_90d8d188",
       "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
