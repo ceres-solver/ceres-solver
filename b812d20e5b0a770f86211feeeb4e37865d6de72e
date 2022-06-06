@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "172a3c6c_7514e6f0",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-06T15:23:55Z",
+      "side": 1,
+      "message": "Alex, do you know what is the right thing here?",
+      "parentUuid": "20c1a969_c8abdc67",
+      "range": {
+        "startLine": 152,
+        "startChar": 45,
+        "endLine": 152,
+        "endChar": 51
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "30ea4a01_666b84a0",
         "filename": "internal/ceres/ceres_cuda_kernels.h",
         "patchSetId": 2
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "There is `cudaMemset`, but out of a (potential over-) abundance of caution this calls a kernel that does a safe type cast. I could be swayed to revert to cudaMemset if you think that is preferable.",
       "parentUuid": "30ea4a01_666b84a0",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "226fccd3_7d698ce9",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-06T15:23:55Z",
+      "side": 1,
+      "message": "you should be able to make a type specific cudaMemset call no?",
+      "parentUuid": "b742bf37_3ac690fe",
       "range": {
         "startLine": 50,
         "startChar": 5,
@@ -154,6 +202,53 @@
         "startChar": 5,
         "endLine": 56,
         "endChar": 21
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbdd307b_30b4d03f",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-06T15:23:55Z",
+      "side": 1,
+      "message": "dsaxpy is a good name, there is a precendent for this typed of mixed naming in blas.",
+      "parentUuid": "e6f63b0c_f13d2d4c",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cea1c21d_2603ad94",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-06T15:23:55Z",
+      "side": 1,
+      "message": "I think it will make the code much simpler to read if you introduced private high level methods which took care of doing the operation while using the various member variables. For example\n\ncusolver_handle,\n                       CUBLAS_FILL_MODE_LOWER,\n                       num_cols,\n                       1,\n                       lhs.data(),\n                       num_cols,\n                       solution.data(),\n                       num_cols,\n                       error.data()\n                       \n                       \nshould be replaced by a private member which takes care of the cuda boiler plate etc.",
+      "range": {
+        "startLine": 363,
+        "startChar": 28,
+        "endLine": 363,
+        "endChar": 59
       },
       "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
