@@ -54,6 +54,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9543c0d8_f2d7a923",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-06T22:55:35Z",
+      "side": 1,
+      "message": "I\u0027m way out of my depth in cmake land here, but here\u0027s what I tried:\n\n```\nset(CUDA_STANDARD 14)\n  set_property(TARGET ceres_internal PROPERTY CUDA_STANDARD 14)\n  set_property(TARGET ceres PROPERTY CUDA_STANDARD 14)\n  target_sources(ceres_internal PRIVATE ceres_cuda_kernels.cu)\n  set_source_files_properties(ceres_cuda_kernels.cu PROPERTIES CXX_STANDARD 14)\n  set_source_files_properties(ceres_cuda_kernels.cu PROPERTIES CUDA_STANDARD 14)\n  set_source_files_properties(ceres_cuda_kernels.cu\n      PROPERTIES CXX_STANDARD_REQUIRED ON)\n```\n\nHowever, this still fails with the following cmake error:\n```\nCMake Error at internal/ceres/CMakeLists.txt:287 (add_library):\n  CUDA_STANDARD is set to invalid value \u002717\u0027\n\n\nCMake Error at internal/ceres/CMakeLists.txt:164 (add_library):\n  CUDA_STANDARD is set to invalid value \u002717\u0027\n```",
+      "parentUuid": "b4ffe13f_5bb1ee13",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
