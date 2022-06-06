@@ -36,6 +36,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4ffe13f_5bb1ee13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-06T22:09:38Z",
+      "side": 1,
+      "message": "Mixing C++14 and C++17 is safe in my experience.\n\nWhat I\u0027m wondering about: will Ceres ship the kernels in a separate library? The `add_library` call will generate either a static or a shared library depending on `BUILD_SHARED_LIBS`.\n\nIf a separate library is not necessary, the CUDA kernels can be added to the `ceres_internal` target directly using `target_sources(... PRIVATE)` as I\u0027m assuming these are not intended to be exported. Here, the C++ standard can also be set per translation unit using `set_source_files_properties (... PROPERTIES CXX_STANDARD 14)`.\n\nYou also need to decide whether the language standard is a strict requirement and use `set_source_files_properties (... PROPERTIES CXX_STANDARD_REQUIRED ON)` accordingly as otherwise the compiler will decay to latest supported standard.",
+      "parentUuid": "c12d6200_3bc9f3c2",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
