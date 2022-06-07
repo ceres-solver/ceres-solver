@@ -162,6 +162,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "85074d55_efbeed3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T09:36:43Z",
+      "side": 1,
+      "message": "Yes, you can compile the kernels into a static library but you must pass the `STATIC` modifier to the `add_library` call. An object library (similar to `ceres_internal`) would also suffice if the kernels are not intended to be shipped/installed separately.\n\nI would also document your findings in a comment in the affected `CMakeLists.txt` so we can drop the workaround once a newer version of CMake can be used by Ceres.",
+      "parentUuid": "5b793a18_d749c41c",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
