@@ -16,6 +16,156 @@
       "message": "Sergiu do you mind taking a look, Alex is almost OOO.",
       "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79fc9e64_4bbaaaeb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T20:10:34Z",
+      "side": 1,
+      "message": "Sure. I have a couple of remarks.",
+      "parentUuid": "5859aa13_8b3c71f8",
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91b624f5_237ce425",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T20:10:34Z",
+      "side": 1,
+      "message": "Possibly: \"that Ceres was/is compiled\"?",
+      "range": {
+        "startLine": 493,
+        "startChar": 35,
+        "endLine": 493,
+        "endChar": 54
+      },
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6647f0aa_0afc55cd",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T20:10:34Z",
+      "side": 1,
+      "message": "in in -\u003e in",
+      "range": {
+        "startLine": 888,
+        "startChar": 52,
+        "endLine": 888,
+        "endChar": 57
+      },
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecb8a111_c22846e1",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T20:10:34Z",
+      "side": 1,
+      "message": "cameras -\u003e camera or possibly \"parameter blocks of all cameras\"?",
+      "range": {
+        "startLine": 893,
+        "startChar": 30,
+        "endLine": 893,
+        "endChar": 37
+      },
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1e9778c_896ea7db",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T20:10:34Z",
+      "side": 1,
+      "message": "CAMD is free",
+      "range": {
+        "startLine": 907,
+        "startChar": 30,
+        "endLine": 907,
+        "endChar": 39
+      },
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3782f87c_4d17aa78",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T20:10:34Z",
+      "side": 1,
+      "message": "Cholesky",
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5070bf2c_b34fd2ad",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T20:10:34Z",
+      "side": 1,
+      "message": "Possibly use TeX? :math:`\\mathcal{O}(n)`",
+      "range": {
+        "startLine": 1427,
+        "startChar": 9,
+        "endLine": 1427,
+        "endChar": 13
+      },
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
