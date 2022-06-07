@@ -216,6 +216,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0a64884_f41f6241",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-07T14:09:27Z",
+      "side": 1,
+      "message": "The original implementation produced a separate `libceres_cuda_kernels.a`, irrespective of `BUILD_SHARED_LIBS`. `libceres.a` or `libceres.so` just links to `libceres_cuda_kernels.a`.\n\nActually, there may be a nuclear option: Just scrap the cmake wrappers to compile the kernels, and manually invoke nvcc to compile them. Then we should be able to link the produced objects into ceres. I\u0027m not sure this would work, but if you think this is preferable to exporting a separate library just for the cuda kernels, it\u0027s worth trying out. Thoughts?",
+      "parentUuid": "e136eba9_febf97eb",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
