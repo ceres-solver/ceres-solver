@@ -270,6 +270,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f132222b_d7a4f19d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-07T14:45:11Z",
+      "side": 1,
+      "message": "Ah, you are right.\n\nRunning this:\n```\nrm -rf * \u0026\u0026 cmake .. -DCMAKE_BUILD_TYPE\u003dRelease -DBUILD_SHARED_LIBS\u003dON \u0026\u0026 make -j32 bundle_adjuster \u0026\u0026 ll lib\n```\nProduces:\n```\ndrwxrwxr-x 2 joydeepb joydeepb 4.0K Jun  7 09:38 .\ndrwxrwxr-x 9 joydeepb joydeepb 4.0K Jun  7 09:37 ..\n-rwxrwxr-x 1 joydeepb joydeepb 807K Jun  7 09:37 libceres_cuda_kernels.so\nlrwxrwxrwx 1 joydeepb joydeepb   13 Jun  7 09:38 libceres.so -\u003e libceres.so.3\n-rwxrwxr-x 1 joydeepb joydeepb 4.4M Jun  7 09:38 libceres.so.2.2.0\nlrwxrwxrwx 1 joydeepb joydeepb   17 Jun  7 09:38 libceres.so.3 -\u003e libceres.so.2.2.0\n```\n\nWhile running this:\n```\nrm -rf * \u0026\u0026 cmake .. -DCMAKE_BUILD_TYPE\u003dRelease \u0026\u0026 make -j32 bundle_adjuster \u0026\u0026 ll lib\n```\nProduces:\n```\ndrwxrwxr-x 2 joydeepb joydeepb 4.0K Jun  7 09:37 .\ndrwxrwxr-x 9 joydeepb joydeepb 4.0K Jun  7 09:36 ..\n-rw-rw-r-- 1 joydeepb joydeepb  11M Jun  7 09:37 libceres.a\n-rw-rw-r-- 1 joydeepb joydeepb  22K Jun  7 09:36 libceres_cuda_kernels.a\n```\n\nComing back to how to compile and link the cuda kernels: Until we can move to cmake 3.17, due to the cmake bug that mixes up C++ and Cuda standards, we will be unable to compile cuda kernels into the same unit as ceres. I\u0027ve tried compiling the kernels to `OBJECT`, `STATIC`, and linking them in with explicit cuda 14 flags, to no avail - it still throws the cuda17 error. The only thing that has worked is the above: compile the kernels into a separate unit, and link them to ceres.",
+      "parentUuid": "2f3a6c73_2a819751",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
