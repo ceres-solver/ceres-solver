@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5859aa13_8b3c71f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-07T19:16:28Z",
+      "side": 1,
+      "message": "Sergiu do you mind taking a look, Alex is almost OOO.",
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
