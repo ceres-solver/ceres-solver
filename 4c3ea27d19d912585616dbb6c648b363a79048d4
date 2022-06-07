@@ -36,6 +36,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b3b1e21_87e4cee8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-07T21:07:45Z",
+      "side": 1,
+      "message": "Thanks for the careful read.",
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91b624f5_237ce425",
@@ -59,6 +76,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19504bf4_f1b4aaa3",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-07T21:07:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91b624f5_237ce425",
+      "range": {
+        "startLine": 493,
+        "startChar": 35,
+        "endLine": 493,
+        "endChar": 54
+      },
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6647f0aa_0afc55cd",
@@ -72,6 +113,30 @@
       "writtenOn": "2022-06-07T20:10:34Z",
       "side": 1,
       "message": "in in -\u003e in",
+      "range": {
+        "startLine": 888,
+        "startChar": 52,
+        "endLine": 888,
+        "endChar": 57
+      },
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbedd25a_19e51ef1",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-07T21:07:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6647f0aa_0afc55cd",
       "range": {
         "startLine": 888,
         "startChar": 52,
@@ -128,6 +193,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91b6f2ef_e5e7c6fa",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-07T21:07:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1e9778c_896ea7db",
+      "range": {
+        "startLine": 907,
+        "startChar": 30,
+        "endLine": 907,
+        "endChar": 39
+      },
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3782f87c_4d17aa78",
@@ -145,6 +234,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8d010e0_be1f85ae",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-07T21:07:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3782f87c_4d17aa78",
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5070bf2c_b34fd2ad",
@@ -158,6 +265,30 @@
       "writtenOn": "2022-06-07T20:10:34Z",
       "side": 1,
       "message": "Possibly use TeX? :math:`\\mathcal{O}(n)`",
+      "range": {
+        "startLine": 1427,
+        "startChar": 9,
+        "endLine": 1427,
+        "endChar": 13
+      },
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cf7b22d_4b753ffb",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-07T21:07:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5070bf2c_b34fd2ad",
       "range": {
         "startLine": 1427,
         "startChar": 9,
