@@ -234,6 +234,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f5e1623_7522bdad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-07T14:22:36Z",
+      "side": 1,
+      "message": "This article describes how to separately compile and link cuda units with nvcc and g++: \n\nhttps://developer.nvidia.com/blog/separate-compilation-linking-cuda-device-code/\n\nI\u0027m pretty sure this would work on linux, but it might break the build with cuda on other platforms.",
+      "parentUuid": "d0a64884_f41f6241",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
