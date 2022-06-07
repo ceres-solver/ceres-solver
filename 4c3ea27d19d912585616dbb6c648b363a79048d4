@@ -170,6 +170,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f28becac_770773d4",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-07T21:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecb8a111_c22846e1",
+      "range": {
+        "startLine": 893,
+        "startChar": 30,
+        "endLine": 893,
+        "endChar": 37
+      },
+      "revId": "4c3ea27d19d912585616dbb6c648b363a79048d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c1e9778c_896ea7db",
