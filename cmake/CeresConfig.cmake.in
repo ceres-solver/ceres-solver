@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2015 Google Inc. All rights reserved.
+# Copyright 2022 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -176,11 +176,10 @@ endif(CERES_WAS_INSTALLED)
 set(CERES_VERSION @CERES_VERSION@)
 
 include(CMakeFindDependencyMacro)
-find_dependency(Threads)
-
 # Optional dependencies
-@SuiteSparse_DEPENDENCY@
 @OpenMP_DEPENDENCY@
+@SuiteSparse_DEPENDENCY@
+@Threads_DEPENDENCY@
 
 # As imported CMake targets are not re-exported when a dependent target is
 # exported, we must invoke find_package(XXX) here to reload the definition

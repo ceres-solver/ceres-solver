@@ -28,10 +28,17 @@
 #
 # Author: keir@google.com (Keir Mierle)
 
+# Build the list of dependencies for Ceres based on the current configuration.
+
 # Avoid 'xxx.cc has no symbols' warnings from source files which are 'empty'
 # when their enclosing #ifdefs are disabled.
 if (CERES_THREADING_MODEL STREQUAL "CXX_THREADS")
   set(CERES_PARALLEL_FOR_SRC parallel_for_cxx.cc thread_pool.cc)
+  find_package(Threads REQUIRED)
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES Threads::Threads)
+
+  # Make dependency visible to the parent CMakeLists.txt
+  set(Threads_DEPENDENCY "find_dependency (Threads)" PARENT_SCOPE)
 elseif (CERES_THREADING_MODEL STREQUAL "OPENMP")
   # OpenMP requires linking to the corresponding library.
   find_package(OpenMP REQUIRED COMPONENTS CXX)
@@ -99,10 +106,6 @@ if (NOT CMAKE_VERSION VERSION_LESS 3.16)
 elseif(CMAKE_UNITY_BUILD)
   message(FATAL_ERROR "Unity build requires cmake 3.16 or newer.  Please unset CMAKE_UNITY_BUILD.")
 endif()
-
-# Build the list of dependencies for Ceres based on the current configuration.
-find_package(Threads QUIET)
-list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES Threads::Threads)
 
 if (NOT MINIGLOG AND GLOG_FOUND)
   list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES ${GLOG_LIBRARIES})
