@@ -126,6 +126,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6ba4fb1_7c905063",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T00:12:10Z",
+      "side": 1,
+      "message": "Thanks. I already suspected a CMake issue because I tried reproducing the problem locally using CUDA 11.7, `nvcc --version`\n```\nnvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2022 NVIDIA Corporation\nBuilt on Tue_May__3_18:49:52_PDT_2022\nCuda compilation tools, release 11.7, V11.7.64\nBuild cuda_11.7.r11.7/compiler.31294372_0\n```\nand CMake 3.23.2 but couldn\u0027t.\n\nAfter checking the `nvcc` flags it looks like setting these for individual CUDA sources files is not possible after all.\n\nCould you try setting\n```\nset (CMAKE_CUDA_STANDARD 14)\nset (CMAKE_CUDA_STANDARD_REQUIRED ON)\n```\nsomewhere in the main `CMakeLists.txt` instead? This seems to work for me.\n\nSince the kernels are compiled into the library, propagating the CUDA compiler dialect is unnecessary and using the above variables to initialize the compiler flags should be sufficient.",
+      "parentUuid": "ece38331_913ac00f",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
