@@ -108,6 +108,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "817fb90c_062796e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-07T00:07:45Z",
+      "side": 1,
+      "message": "Hmm, looks like this was fixed in cmake 3.17: \nhttps://gitlab.kitware.com/cmake/cmake/-/issues/19123\n\nUnfortunately 20.04 is still using cmake 3.16.3",
+      "parentUuid": "ece38331_913ac00f",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
