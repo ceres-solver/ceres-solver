@@ -252,6 +252,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f3a6c73_2a819751",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T14:27:27Z",
+      "side": 1,
+      "message": "If you don\u0027t pass any library type to `add_library`, its type will depend on `BUILD_SHARED_LIBS`. See https://cmake.org/cmake/help/latest/command/add_library.html:\n\n\u003e  If no type is given explicitly the type is STATIC or SHARED based on whether the current value of the variable BUILD_SHARED_LIBS is ON",
+      "parentUuid": "0f5e1623_7522bdad",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
