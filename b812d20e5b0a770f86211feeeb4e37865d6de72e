@@ -144,6 +144,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b793a18_d749c41c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-07T00:41:24Z",
+      "side": 1,
+      "message": "This still does not work. I put this at the top of the main CMakeLists.txt:\n```\nset(CMAKE_CUDA_STANDARD 14)\nset(CMAKE_CUDA_STANDARD_REQUIRED TRUE)\n```\n\nHowever, it throws the following error:\n\n```\nCMake Error in internal/ceres/CMakeLists.txt:\n  Target \"ceres\" requires the language dialect \"CUDA17\" (with compiler\n  extensions), but CMake does not know the compile flags to use to enable it.\n\n\nCMake Error in internal/ceres/CMakeLists.txt:\n  Target \"ceres_internal\" requires the language dialect \"CUDA17\" (with\n  compiler extensions), but CMake does not know the compile flags to use to\n  enable it.\n```\n\nIt seems my cmake (3.16.3) is incorrectly intertwining the CXX and CUDA standards. Just to verify, I modified the following line:\n```\ntarget_compile_features(ceres PUBLIC cxx_std_17)\n```\nI tried commenting it out, and changing it to 14. Both succeeded with cmake, but of course Ceres won\u0027t compile without 17 support.\n\nI think our only solution is to compile the kernels into a separate library and link it into ceres. We don\u0027t need to publicly export the symbols from the cuda kernels library, and we can even do that using static libs. Is it possible to:\n1. Compile ceres_cuda_kernels into a static lib\n2. Link ceres_cuda_kernels to ceres.a as well as ceres.so?",
+      "parentUuid": "d6ba4fb1_7c905063",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
