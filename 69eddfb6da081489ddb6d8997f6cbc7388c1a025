@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d7681b8_4e10bdb4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-07T21:43:43Z",
+      "side": 1,
+      "message": "This is nice, I am so glad we are not special casing GCC. ",
+      "revId": "69eddfb6da081489ddb6d8997f6cbc7388c1a025",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
