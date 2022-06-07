@@ -180,6 +180,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc9e6160_c8d16135",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-07T13:46:48Z",
+      "side": 1,
+      "message": "It turns out that adding `STATIC` and `OBJECT` modifiers to the kernel object invokes the same Cmake bug: it inherits CUDA 17, no matter what else is done.\nUnfortunately it looks like the only way to do this is to have `ceres_cuda_kernels` link as a separate library and link it to ceres, as I did in this original commit.",
+      "parentUuid": "85074d55_efbeed3c",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
