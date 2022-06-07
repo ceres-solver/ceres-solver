@@ -198,6 +198,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e136eba9_febf97eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T13:57:38Z",
+      "side": 1,
+      "message": "Your original implementation generates either a `STATIC` or a `SHARED` library depending on `BUILD_SHARED_LIBS` value. If I understand you correctly, you must always build a `SHARED` library to avoid the bug, correct? This is of course a huge downside because you need to export the symbols correctly, among other things.",
+      "parentUuid": "bc9e6160_c8d16135",
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edaa91f0_51013f0f",
