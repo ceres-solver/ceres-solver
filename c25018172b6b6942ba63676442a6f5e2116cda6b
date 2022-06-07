@@ -52,6 +52,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13a2cb13_244be54d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T21:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26472077_143925b0",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abbb2d01_62065d5c",
@@ -65,6 +83,24 @@
       "writtenOn": "2022-06-03T11:09:07Z",
       "side": 1,
       "message": "I would put this and the end of the \u0027if (SUITESPARSE)\u0027 block above rather than outside it, as it is explicitly only necessary if SuiteSparse is found",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cb8f633_58743d9b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T21:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abbb2d01_62065d5c",
       "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -138,6 +174,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b575f9d7_c7c686d7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T21:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be472aec_1c6d2b40",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3cebb11_90d8d188",
@@ -190,6 +244,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13359c75_7fcedc92",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T21:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad632906_4f7995fd",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "70ec26bf_839fa674",
@@ -203,6 +275,24 @@
       "writtenOn": "2022-06-03T11:09:07Z",
       "side": 1,
       "message": "\u0027without support for METIS via Eigen\u0027",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89164cba_aaab365d",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T21:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70ec26bf_839fa674",
       "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -224,6 +314,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "262cc186_8908bff1",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T21:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18aeae1d_832283ab",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc104d1d_d6ff21cf",
@@ -237,6 +345,24 @@
       "writtenOn": "2022-06-03T11:09:07Z",
       "side": 1,
       "message": "I would put this inside the \u0027if (SUITESPARSE AND SuiteSparse_FOUND)\u0027 block above to group all of the SuiteSparse related dependency handling.\n\nThis also (I think?) would have the potentially negative side-effect of including SuiteSparse as a private dependency even if SUITESPARSE was disabled, but the target remained cached and/or visible",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e26ecfa9_4b4aa07c",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T21:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc104d1d_d6ff21cf",
       "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
