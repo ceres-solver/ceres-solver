@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c520f33a_282bdfae",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T19:52:56Z",
+      "side": 1,
+      "message": "Similar to `fmin`:\n* use `islessgreater` instead of op\u003d\u003d\n* `midpoint` for averaging to avoid overflows.",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a50ede8d_34a50225",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T19:52:56Z",
+      "side": 1,
+      "message": "op\u003d\u003d is not a quiet comparison and will set floating point exceptions. You want to use `islessgreater` or otherwise you defeat the purpose of `fmin/fmax`.",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d44e5a4b_8a8c0620",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-07T19:52:56Z",
+      "side": 1,
+      "message": "If C++20 is active, we should use `std::midpoint` which handles overflows.",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
