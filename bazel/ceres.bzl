@@ -91,7 +91,6 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "linear_least_squares_problems.cc",
     "linear_operator.cc",
     "linear_solver.cc",
-    "local_parameterization.cc",
     "loss_function.cc",
     "low_rank_inverse_hessian.cc",
     "manifold.cc",

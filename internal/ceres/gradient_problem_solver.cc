@@ -113,7 +113,7 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
   *summary = Summary();
   // clang-format off
   summary->num_parameters                    = problem.NumParameters();
-  summary->num_local_parameters              = problem.NumLocalParameters();
+  summary->num_tangent_parameters            = problem.NumTangentParameters();
   summary->line_search_direction_type        = options.line_search_direction_type;         //  NOLINT
   summary->line_search_interpolation_type    = options.line_search_interpolation_type;     //  NOLINT
   summary->line_search_type                  = options.line_search_type;
@@ -225,8 +225,9 @@ string GradientProblemSolver::Summary::FullReport() const {
       string{"\nSolver Summary (v "}.append(VersionString()) + ")\n\n";
 
   StringAppendF(&report, "Parameters          % 25d\n", num_parameters);
-  if (num_local_parameters != num_parameters) {
-    StringAppendF(&report, "Local parameters    % 25d\n", num_local_parameters);
+  if (num_tangent_parameters != num_parameters) {
+    StringAppendF(
+        &report, "Tangent parameters   % 25d\n", num_tangent_parameters);
   }
 
   string line_search_direction_string;

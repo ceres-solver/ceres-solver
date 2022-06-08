@@ -59,7 +59,6 @@ set(CERES_EXPORTED_SRCS
     c_api.cc
     gradient_checker.cc
     gradient_problem.cc
-    local_parameterization.cc
     loss_function.cc
     manifold.cc
     normal_prior.cc
@@ -336,7 +335,7 @@ target_compile_features(ceres PUBLIC cxx_std_17)
 
 set_target_properties(ceres PROPERTIES
   VERSION ${CERES_VERSION}
-  SOVERSION 3)
+  SOVERSION 4)
 
 target_link_libraries(ceres
   PUBLIC ${CERES_LIBRARY_PUBLIC_DEPENDENCIES}
@@ -464,7 +463,6 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(autodiff)
   ceres_test(autodiff_first_order_function)
   ceres_test(autodiff_cost_function)
-  ceres_test(autodiff_local_parameterization)
   ceres_test(autodiff_manifold)
   ceres_test(block_jacobi_preconditioner)
   ceres_test(block_random_access_dense_matrix)
@@ -517,7 +515,6 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(levenberg_marquardt_strategy)
   ceres_test(line_search_minimizer)
   ceres_test(line_search_preprocessor)
-  ceres_test(local_parameterization)
   ceres_test(loss_function)
   ceres_test(manifold)
   ceres_test(minimizer)

@@ -36,7 +36,6 @@
 
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/autodiff_first_order_function.h"
-#include "ceres/autodiff_local_parameterization.h"
 #include "ceres/autodiff_manifold.h"
 #include "ceres/conditioned_cost_function.h"
 #include "ceres/context.h"
@@ -56,7 +55,6 @@
 #include "ceres/iteration_callback.h"
 #include "ceres/jet.h"
 #include "ceres/line_manifold.h"
-#include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
 #include "ceres/manifold.h"
 #include "ceres/numeric_diff_cost_function.h"

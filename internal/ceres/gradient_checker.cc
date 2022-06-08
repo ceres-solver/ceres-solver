@@ -40,7 +40,6 @@
 #include <vector>
 
 #include "ceres/is_close.h"
-#include "ceres/manifold_adapter.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
 
@@ -116,37 +115,6 @@ bool EvaluateCostFunction(const CostFunction* function,
 }
 }  // namespace
 
-GradientChecker::GradientChecker(
-    const CostFunction* function,
-    const vector<const LocalParameterization*>* local_parameterizations,
-    const NumericDiffOptions& options)
-    : delete_manifolds_(true), function_(function) {
-  CHECK(function != nullptr);
-  manifolds_.resize(function->parameter_block_sizes().size(), nullptr);
-
-  // Wrap the local parameterization into manifold objects using
-  // ManifoldAdapter.
-  for (int i = 0; i < manifolds_.size(); ++i) {
-    const LocalParameterization* local_param = local_parameterizations->at(i);
-    if (local_param == nullptr) {
-      continue;
-    }
-    manifolds_[i] = new internal::ManifoldAdapter(local_param);
-  }
-
-  auto finite_diff_cost_function =
-      std::make_unique<DynamicNumericDiffCostFunction<CostFunction, RIDDERS>>(
-          function, DO_NOT_TAKE_OWNERSHIP, options);
-  const vector<int32_t>& parameter_block_sizes =
-      function->parameter_block_sizes();
-  for (int32_t parameter_block_size : parameter_block_sizes) {
-    finite_diff_cost_function->AddParameterBlock(parameter_block_size);
-  }
-  finite_diff_cost_function->SetNumResiduals(function->num_residuals());
-
-  finite_diff_cost_function_ = std::move(finite_diff_cost_function);
-}
-
 GradientChecker::GradientChecker(const CostFunction* function,
                                  const vector<const Manifold*>* manifolds,
                                  const NumericDiffOptions& options)
@@ -170,14 +138,6 @@ GradientChecker::GradientChecker(const CostFunction* function,
   finite_diff_cost_function->SetNumResiduals(function->num_residuals());
 
   finite_diff_cost_function_ = std::move(finite_diff_cost_function);
-}
-
-GradientChecker::~GradientChecker() {
-  if (delete_manifolds_) {
-    for (const auto m : manifolds_) {
-      delete m;
-    }
-  }
 }
 
 bool GradientChecker::Probe(double const* const* parameters,
