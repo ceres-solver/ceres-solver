@@ -82,7 +82,7 @@ class CERES_NO_EXPORT GradientProblemEvaluator final : public Evaluator {
   int NumParameters() const final { return problem_.NumParameters(); }
 
   int NumEffectiveParameters() const final {
-    return problem_.NumLocalParameters();
+    return problem_.NumTangentParameters();
   }
 
   int NumResiduals() const final { return 1; }
