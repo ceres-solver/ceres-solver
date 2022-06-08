@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7dd44fb_e0ae4dce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-08T22:47:14Z",
+      "side": 1,
+      "message": "Mostly LGTM. `bazel/ceres.bzl` also contains a reference to `local_parametrization.cc`.",
+      "revId": "a2913aa3c46748a85ec49b82b16a07b7e95dc1e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbb97100_0b7d2fb5",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-08T22:47:14Z",
+      "side": 1,
+      "message": "Nit: Jacobian",
+      "revId": "a2913aa3c46748a85ec49b82b16a07b7e95dc1e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "313a3f2d_da2eefe9",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-08T22:47:14Z",
+      "side": 1,
+      "message": "```\nGradientChecker::~GradientChecker() \u003d default;\n```",
+      "range": {
+        "startLine": 143,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 38
+      },
+      "revId": "a2913aa3c46748a85ec49b82b16a07b7e95dc1e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
