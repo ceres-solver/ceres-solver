@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2b1f5ada_e13c1c47",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-08T08:15:43Z",
+      "side": 1,
+      "message": "I don\u0027t think this is right, operator\u003d\u003d (and operator!\u003d) should *not* set any FP exceptions, see here: https://www.gnu.org/software/libc/manual/html_node/FP-Comparison-Functions.html for example.\n\nCeres requires C++17 only, and we won\u0027t change to C++20 soon and I want a single code-path rather than conditionals for C++20",
+      "parentUuid": "c520f33a_282bdfae",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a50ede8d_34a50225",
         "filename": "include/ceres/jet.h",
         "patchSetId": 3
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d70c07cc_4b46bcbc",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-08T08:15:43Z",
+      "side": 1,
+      "message": "As above, operator\u003d\u003d and operator!\u003d should not set floating point exceptions, and the tests also verify this.",
+      "parentUuid": "a50ede8d_34a50225",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d44e5a4b_8a8c0620",
         "filename": "include/ceres/jet.h",
         "patchSetId": 3
@@ -48,6 +84,24 @@
       "writtenOn": "2022-06-07T19:52:56Z",
       "side": 1,
       "message": "If C++20 is active, we should use `std::midpoint` which handles overflows.",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f05cad99_7b93bb9f",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-08T08:15:43Z",
+      "side": 1,
+      "message": "Ceres uses C++17, so changing this can be something for the future but not now",
+      "parentUuid": "d44e5a4b_8a8c0620",
       "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
