@@ -71,12 +71,6 @@ void Problem::AddParameterBlock(double* values, int size) {
   impl_->AddParameterBlock(values, size);
 }
 
-void Problem::AddParameterBlock(double* values,
-                                int size,
-                                LocalParameterization* local_parameterization) {
-  impl_->AddParameterBlock(values, size, local_parameterization);
-}
-
 void Problem::AddParameterBlock(double* values, int size, Manifold* manifold) {
   impl_->AddParameterBlock(values, size, manifold);
 }
@@ -99,20 +93,6 @@ void Problem::SetParameterBlockVariable(double* values) {
 
 bool Problem::IsParameterBlockConstant(const double* values) const {
   return impl_->IsParameterBlockConstant(values);
-}
-
-void Problem::SetParameterization(
-    double* values, LocalParameterization* local_parameterization) {
-  impl_->SetParameterization(values, local_parameterization);
-}
-
-const LocalParameterization* Problem::GetParameterization(
-    const double* values) const {
-  return impl_->GetParameterization(values);
-}
-
-bool Problem::HasParameterization(const double* values) const {
-  return impl_->HasParameterization(values);
 }
 
 void Problem::SetManifold(double* values, Manifold* manifold) {
@@ -192,10 +172,6 @@ int Problem::NumResiduals() const { return impl_->NumResiduals(); }
 
 int Problem::ParameterBlockSize(const double* values) const {
   return impl_->ParameterBlockSize(values);
-}
-
-int Problem::ParameterBlockLocalSize(const double* values) const {
-  return impl_->ParameterBlockTangentSize(values);
 }
 
 int Problem::ParameterBlockTangentSize(const double* values) const {

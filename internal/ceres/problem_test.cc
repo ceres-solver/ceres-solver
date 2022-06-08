@@ -39,7 +39,6 @@
 #include "ceres/crs_matrix.h"
 #include "ceres/evaluator_test_utils.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
 #include "ceres/map_util.h"
 #include "ceres/parameter_block.h"
@@ -287,43 +286,6 @@ TEST(Problem, AddParameterIgnoresDuplicateCalls) {
 
   EXPECT_EQ(2, problem.NumParameterBlocks());
   EXPECT_EQ(7, problem.NumParameters());
-}
-
-TEST(Problem, AddingParametersAndResidualsResultsInExpectedProblem) {
-  double x[3], y[4], z[5], w[4];
-
-  Problem problem;
-  problem.AddParameterBlock(x, 3);
-  EXPECT_EQ(1, problem.NumParameterBlocks());
-  EXPECT_EQ(3, problem.NumParameters());
-
-  problem.AddParameterBlock(y, 4);
-  EXPECT_EQ(2, problem.NumParameterBlocks());
-  EXPECT_EQ(7, problem.NumParameters());
-
-  problem.AddParameterBlock(z, 5);
-  EXPECT_EQ(3, problem.NumParameterBlocks());
-  EXPECT_EQ(12, problem.NumParameters());
-
-  // Add a parameter that has a local parameterization.
-  w[0] = 1.0;
-  w[1] = 0.0;
-  w[2] = 0.0;
-  w[3] = 0.0;
-  problem.AddParameterBlock(w, 4, new QuaternionParameterization);
-  EXPECT_EQ(4, problem.NumParameterBlocks());
-  EXPECT_EQ(16, problem.NumParameters());
-
-  problem.AddResidualBlock(new UnaryCostFunction(2, 3), nullptr, x);
-  problem.AddResidualBlock(new BinaryCostFunction(6, 5, 4), nullptr, z, y);
-  problem.AddResidualBlock(new BinaryCostFunction(3, 3, 5), nullptr, x, z);
-  problem.AddResidualBlock(new BinaryCostFunction(7, 5, 3), nullptr, z, x);
-  problem.AddResidualBlock(
-      new TernaryCostFunction(1, 5, 3, 4), nullptr, z, x, y);
-
-  const int total_residuals = 2 + 6 + 3 + 7 + 1;
-  EXPECT_EQ(problem.NumResidualBlocks(), 5);
-  EXPECT_EQ(problem.NumResiduals(), total_residuals);
 }
 
 class DestructorCountingCostFunction : public SizedCostFunction<3, 4, 5> {
@@ -574,18 +536,6 @@ TEST(Problem, IsParameterBlockConstantWithUnknownPtrDies) {
                             "Parameter block not found:");
 }
 
-TEST(Problem, SetLocalParameterizationWithUnknownPtrDies) {
-  double x[3];
-  double y[2];
-
-  Problem problem;
-  problem.AddParameterBlock(x, 3);
-
-  EXPECT_DEATH_IF_SUPPORTED(
-      problem.SetParameterization(y, new IdentityParameterization(3)),
-      "Parameter block not found:");
-}
-
 TEST(Problem, SetManifoldWithUnknownPtrDies) {
   double x[3];
   double y[2];
@@ -608,20 +558,6 @@ TEST(Problem, RemoveParameterBlockWithUnknownPtrDies) {
                             "Parameter block not found:");
 }
 
-TEST(Problem, GetParameterization) {
-  double x[3];
-  double y[2];
-
-  Problem problem;
-  problem.AddParameterBlock(x, 3);
-  problem.AddParameterBlock(y, 2);
-
-  LocalParameterization* parameterization = new IdentityParameterization(3);
-  problem.SetParameterization(x, parameterization);
-  EXPECT_EQ(problem.GetParameterization(x), parameterization);
-  EXPECT_TRUE(problem.GetParameterization(y) == nullptr);
-}
-
 TEST(Problem, GetManifold) {
   double x[3];
   double y[2];
@@ -634,20 +570,6 @@ TEST(Problem, GetManifold) {
   problem.SetManifold(x, manifold);
   EXPECT_EQ(problem.GetManifold(x), manifold);
   EXPECT_TRUE(problem.GetManifold(y) == nullptr);
-}
-
-TEST(Problem, HasParameterization) {
-  double x[3];
-  double y[2];
-
-  Problem problem;
-  problem.AddParameterBlock(x, 3);
-  problem.AddParameterBlock(y, 2);
-
-  LocalParameterization* parameterization = new IdentityParameterization(3);
-  problem.SetParameterization(x, parameterization);
-  EXPECT_TRUE(problem.HasParameterization(x));
-  EXPECT_FALSE(problem.HasParameterization(y));
 }
 
 TEST(Problem, HasManifold) {
@@ -664,53 +586,6 @@ TEST(Problem, HasManifold) {
   EXPECT_FALSE(problem.HasManifold(y));
 }
 
-TEST(Problem, RepeatedAddParameterBlockResetsParameterization) {
-  double x[4];
-  double y[2];
-
-  Problem problem;
-  problem.AddParameterBlock(x, 4, new SubsetParameterization(4, {0, 1}));
-  problem.AddParameterBlock(y, 2);
-
-  EXPECT_FALSE(problem.HasParameterization(y));
-
-  EXPECT_TRUE(problem.HasParameterization(x));
-  EXPECT_TRUE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 2);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 2);
-  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 4);
-  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 2);
-  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 4);
-  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 2);
-
-  problem.AddParameterBlock(x, 4, static_cast<LocalParameterization*>(nullptr));
-  EXPECT_FALSE(problem.HasParameterization(y));
-
-  EXPECT_FALSE(problem.HasParameterization(x));
-  EXPECT_FALSE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 4);
-  EXPECT_EQ(problem.GetManifold(x), nullptr);
-  EXPECT_EQ(problem.GetParameterization(x), nullptr);
-
-  problem.AddParameterBlock(x, 4, new SubsetParameterization(4, {0, 1, 2}));
-  problem.AddParameterBlock(y, 2);
-
-  EXPECT_FALSE(problem.HasParameterization(y));
-
-  EXPECT_TRUE(problem.HasParameterization(x));
-  EXPECT_TRUE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 1);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 1);
-  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 4);
-  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 1);
-  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 4);
-  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 1);
-}
-
 TEST(Problem, RepeatedAddParameterBlockResetsManifold) {
   double x[4];
   double y[2];
@@ -721,233 +596,25 @@ TEST(Problem, RepeatedAddParameterBlockResetsManifold) {
 
   EXPECT_FALSE(problem.HasManifold(y));
 
-  EXPECT_FALSE(problem.HasParameterization(x));
   EXPECT_TRUE(problem.HasManifold(x));
   EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 2);
   EXPECT_EQ(problem.ParameterBlockTangentSize(x), 2);
   EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 4);
   EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 2);
 
   problem.AddParameterBlock(x, 4, static_cast<Manifold*>(nullptr));
-  EXPECT_FALSE(problem.HasParameterization(y));
-
-  EXPECT_FALSE(problem.HasParameterization(x));
   EXPECT_FALSE(problem.HasManifold(x));
   EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 4);
   EXPECT_EQ(problem.ParameterBlockTangentSize(x), 4);
   EXPECT_EQ(problem.GetManifold(x), nullptr);
-  EXPECT_EQ(problem.GetParameterization(x), nullptr);
 
   problem.AddParameterBlock(x, 4, new SubsetManifold(4, {0, 1, 2}));
   problem.AddParameterBlock(y, 2);
-
-  EXPECT_FALSE(problem.HasParameterization(y));
-
-  EXPECT_FALSE(problem.HasParameterization(x));
   EXPECT_TRUE(problem.HasManifold(x));
   EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 1);
   EXPECT_EQ(problem.ParameterBlockTangentSize(x), 1);
   EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 4);
   EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 1);
-}
-
-TEST(Problem, AddParameterBlockWithManifoldNullLocalParameterization) {
-  double x[4];
-  double y[2];
-
-  Problem problem;
-  problem.AddParameterBlock(x, 4, new SubsetManifold(4, {0, 1}));
-  problem.AddParameterBlock(y, 2);
-
-  EXPECT_FALSE(problem.HasManifold(y));
-  EXPECT_FALSE(problem.HasParameterization(x));
-  EXPECT_TRUE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 2);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 2);
-  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 4);
-  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 2);
-
-  problem.AddParameterBlock(x, 4, static_cast<LocalParameterization*>(nullptr));
-  EXPECT_FALSE(problem.HasParameterization(y));
-  EXPECT_FALSE(problem.HasParameterization(x));
-  EXPECT_FALSE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 4);
-  EXPECT_EQ(problem.GetManifold(x), nullptr);
-  EXPECT_EQ(problem.GetParameterization(x), nullptr);
-}
-
-TEST(Problem, AddParameterBlockWithLocalParameterizationNullManifold) {
-  double x[4];
-  double y[2];
-
-  Problem problem;
-  problem.AddParameterBlock(x, 4, new SubsetParameterization(4, {0, 1}));
-  problem.AddParameterBlock(y, 2);
-
-  EXPECT_FALSE(problem.HasManifold(y));
-  EXPECT_TRUE(problem.HasParameterization(x));
-  EXPECT_TRUE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 2);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 2);
-  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 4);
-  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 2);
-
-  problem.AddParameterBlock(x, 4, static_cast<Manifold*>(nullptr));
-  EXPECT_FALSE(problem.HasParameterization(y));
-  EXPECT_FALSE(problem.HasParameterization(x));
-  EXPECT_FALSE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 4);
-  EXPECT_EQ(problem.GetManifold(x), nullptr);
-  EXPECT_EQ(problem.GetParameterization(x), nullptr);
-}
-
-TEST(Problem, RepeatedAddParameterBlockManifoldThenLocalParameterization) {
-  double x[4];
-  double y[2];
-
-  Problem problem;
-  problem.AddParameterBlock(x, 4, new SubsetManifold(4, {0, 1}));
-  problem.AddParameterBlock(y, 2);
-
-  EXPECT_FALSE(problem.HasManifold(y));
-  EXPECT_FALSE(problem.HasParameterization(x));
-  EXPECT_TRUE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 2);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 2);
-  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 4);
-  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 2);
-
-  problem.AddParameterBlock(x, 4, new SubsetParameterization(4, {0, 1, 2}));
-  problem.AddParameterBlock(y, 2);
-
-  EXPECT_FALSE(problem.HasParameterization(y));
-
-  EXPECT_TRUE(problem.HasParameterization(x));
-  EXPECT_TRUE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 1);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 1);
-  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 4);
-  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 1);
-  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 4);
-  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 1);
-}
-
-TEST(Problem, RepeatedAddParameterBlockLocalParameterizationThenManifold) {
-  double x[4];
-  double y[2];
-
-  Problem problem;
-  problem.AddParameterBlock(x, 4, new SubsetParameterization(4, {0, 1, 2}));
-  problem.AddParameterBlock(y, 2);
-
-  EXPECT_FALSE(problem.HasParameterization(y));
-
-  EXPECT_TRUE(problem.HasParameterization(x));
-  EXPECT_TRUE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 1);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 1);
-  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 4);
-  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 1);
-  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 4);
-  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 1);
-
-  problem.AddParameterBlock(x, 4, new SubsetManifold(4, {0, 1}));
-  problem.AddParameterBlock(y, 2);
-
-  EXPECT_FALSE(problem.HasManifold(y));
-  EXPECT_FALSE(problem.HasParameterization(x));
-  EXPECT_TRUE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 2);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 2);
-  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 4);
-  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 2);
-}
-
-TEST(Problem, ParameterizationAndManifoldSittingInATree) {
-  double x[4];
-  double y[2];
-
-  Problem problem;
-  problem.AddParameterBlock(x, 4);
-  problem.AddParameterBlock(y, 2);
-
-  problem.SetParameterization(x, new SubsetParameterization(4, {0, 1}));
-
-  EXPECT_FALSE(problem.HasParameterization(y));
-
-  EXPECT_TRUE(problem.HasParameterization(x));
-  EXPECT_TRUE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 2);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 2);
-  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 4);
-  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 2);
-  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 4);
-  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 2);
-
-  problem.SetManifold(x, new SubsetManifold(4, {1, 2, 3}));
-  EXPECT_FALSE(problem.HasParameterization(x));
-  EXPECT_TRUE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 1);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 1);
-  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 4);
-  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 1);
-  EXPECT_EQ(problem.GetParameterization(x), nullptr);
-
-  problem.SetParameterization(x, new SubsetParameterization(4, {0, 1}));
-  EXPECT_TRUE(problem.HasParameterization(x));
-  EXPECT_TRUE(problem.HasManifold(x));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 4);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 2);
-  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 2);
-  EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 4);
-  EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 2);
-  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 4);
-  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 2);
-};
-
-TEST(Problem, ParameterBlockQueryTestUsingLocalParameterization) {
-  double x[3];
-  double y[4];
-  Problem problem;
-  problem.AddParameterBlock(x, 3);
-  problem.AddParameterBlock(y, 4);
-
-  vector<int> constant_parameters;
-  constant_parameters.push_back(0);
-  problem.SetParameterization(
-      x, new SubsetParameterization(3, constant_parameters));
-  EXPECT_EQ(problem.ParameterBlockSize(x), 3);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 2);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(y), 4);
-
-  vector<double*> parameter_blocks;
-  problem.GetParameterBlocks(&parameter_blocks);
-  EXPECT_EQ(parameter_blocks.size(), 2);
-  EXPECT_NE(parameter_blocks[0], parameter_blocks[1]);
-  EXPECT_TRUE(parameter_blocks[0] == x || parameter_blocks[0] == y);
-  EXPECT_TRUE(parameter_blocks[1] == x || parameter_blocks[1] == y);
-
-  EXPECT_TRUE(problem.HasParameterBlock(x));
-  problem.RemoveParameterBlock(x);
-  EXPECT_FALSE(problem.HasParameterBlock(x));
-  problem.GetParameterBlocks(&parameter_blocks);
-  EXPECT_EQ(parameter_blocks.size(), 1);
-  EXPECT_TRUE(parameter_blocks[0] == y);
 }
 
 TEST(Problem, ParameterBlockQueryTestUsingManifold) {
@@ -961,8 +628,8 @@ TEST(Problem, ParameterBlockQueryTestUsingManifold) {
   constant_parameters.push_back(0);
   problem.SetManifold(x, new SubsetManifold(3, constant_parameters));
   EXPECT_EQ(problem.ParameterBlockSize(x), 3);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 2);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(y), 4);
+  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 2);
+  EXPECT_EQ(problem.ParameterBlockTangentSize(y), 4);
 
   vector<double*> parameter_blocks;
   problem.GetParameterBlocks(&parameter_blocks);
@@ -990,8 +657,8 @@ TEST(Problem, ParameterBlockQueryTest) {
   constant_parameters.push_back(0);
   problem.SetManifold(x, new SubsetManifold(3, constant_parameters));
   EXPECT_EQ(problem.ParameterBlockSize(x), 3);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 2);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(y), 4);
+  EXPECT_EQ(problem.ParameterBlockTangentSize(x), 2);
+  EXPECT_EQ(problem.ParameterBlockTangentSize(y), 4);
 
   vector<double*> parameter_blocks;
   problem.GetParameterBlocks(&parameter_blocks);
@@ -1895,43 +1562,6 @@ TEST_F(ProblemEvaluateTest, ExcludedParameterBlockAndExcludedResidualBlock) {
   CheckAllEvaluationCombinations(evaluate_options, expected);
 }
 
-TEST_F(ProblemEvaluateTest, LocalParameterization) {
-  // clang-format off
-  ExpectedEvaluation expected = {
-    // Rows/columns
-    6, 5,
-    // Cost
-    7607.0,
-    // Residuals
-    { -19.0, -35.0,  // f
-      -59.0, -87.0,  // g
-      -27.0, -43.0   // h
-    },
-    // Gradient
-    {  146.0,  484.0,  // x
-      1256.0,          // y with SubsetParameterization
-      1450.0, 2604.0,  // z
-    },
-    // Jacobian
-    //                       x      y             z
-    { /* f(x, y) */ -2.0,  0.0,   0.0,   0.0,   0.0,
-                     0.0, -4.0, -16.0,   0.0,   0.0,
-      /* g(y, z) */  0.0,  0.0,   0.0, -20.0,   0.0,
-                     0.0,  0.0,  -8.0,   0.0, -24.0,
-      /* h(z, x) */ -4.0,  0.0,   0.0, -10.0,   0.0,
-                     0.0, -8.0,   0.0,   0.0, -12.0
-    }
-  };
-  // clang-format on
-
-  vector<int> constant_parameters;
-  constant_parameters.push_back(0);
-  problem_.SetParameterization(
-      parameters_ + 2, new SubsetParameterization(2, constant_parameters));
-
-  CheckAllEvaluationCombinations(Problem::EvaluateOptions(), expected);
-}
-
 TEST_F(ProblemEvaluateTest, Manifold) {
   // clang-format off
   ExpectedEvaluation expected = {
@@ -1946,7 +1576,7 @@ TEST_F(ProblemEvaluateTest, Manifold) {
     },
     // Gradient
     {  146.0,  484.0,  // x
-      1256.0,          // y with SubsetParameterization
+      1256.0,          // y with SubsetManifold
       1450.0, 2604.0,  // z
     },
     // Jacobian
@@ -2251,50 +1881,6 @@ TEST_F(ProblemEvaluateResidualBlockTest,
       << actual_dfdy;
 }
 
-TEST_F(ProblemEvaluateResidualBlockTest,
-       OneResidualBlockWithOneLocalParameterization) {
-  ResidualBlockId residual_block_id =
-      problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
-  problem_.SetParameterization(x_, new SubsetParameterization(2, {1}));
-
-  Vector expected_f(5);
-  expected_f << 1, 2, 1, 2, 3;
-  Matrix expected_dfdx = Matrix::Zero(5, 1);
-  expected_dfdx.block(0, 0, 1, 1) = Matrix::Identity(1, 1);
-  Matrix expected_dfdy = Matrix::Zero(5, 3);
-  expected_dfdy.block(2, 0, 3, 3) = Matrix::Identity(3, 3);
-  double expected_cost = expected_f.squaredNorm() / 2.0;
-
-  double actual_cost;
-  Vector actual_f(5);
-  Matrix actual_dfdx(5, 1);
-  Matrix actual_dfdy(5, 3);
-  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
-  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
-                                             kApplyLossFunction,
-                                             kNewPoint,
-                                             &actual_cost,
-                                             actual_f.data(),
-                                             jacobians));
-
-  EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
-              0,
-              std::numeric_limits<double>::epsilon())
-      << actual_cost;
-  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
-      << actual_f;
-  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
-      << actual_dfdx;
-  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
-      << actual_dfdy;
-}
-
 TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockWithOneManifold) {
   ResidualBlockId residual_block_id =
       problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
@@ -2312,51 +1898,6 @@ TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockWithOneManifold) {
   Vector actual_f(5);
   Matrix actual_dfdx(5, 1);
   Matrix actual_dfdy(5, 3);
-  double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
-  EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
-                                             kApplyLossFunction,
-                                             kNewPoint,
-                                             &actual_cost,
-                                             actual_f.data(),
-                                             jacobians));
-
-  EXPECT_NEAR(std::abs(expected_cost - actual_cost) / actual_cost,
-              0,
-              std::numeric_limits<double>::epsilon())
-      << actual_cost;
-  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
-      << actual_f;
-  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
-      << actual_dfdx;
-  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
-      << actual_dfdy;
-}
-
-TEST_F(ProblemEvaluateResidualBlockTest,
-       OneResidualBlockWithTwoLocalParameterizations) {
-  ResidualBlockId residual_block_id =
-      problem_.AddResidualBlock(IdentityFunctor::Create(), nullptr, x_, y_);
-  problem_.SetParameterization(x_, new SubsetParameterization(2, {1}));
-  problem_.SetParameterization(y_, new SubsetParameterization(3, {2}));
-
-  Vector expected_f(5);
-  expected_f << 1, 2, 1, 2, 3;
-  Matrix expected_dfdx = Matrix::Zero(5, 1);
-  expected_dfdx.block(0, 0, 1, 1) = Matrix::Identity(1, 1);
-  Matrix expected_dfdy = Matrix::Zero(5, 2);
-  expected_dfdy.block(2, 0, 2, 2) = Matrix::Identity(2, 2);
-  double expected_cost = expected_f.squaredNorm() / 2.0;
-
-  double actual_cost;
-  Vector actual_f(5);
-  Matrix actual_dfdx(5, 1);
-  Matrix actual_dfdy(5, 2);
   double* jacobians[2] = {actual_dfdx.data(), actual_dfdy.data()};
   EXPECT_TRUE(problem_.EvaluateResidualBlock(residual_block_id,
                                              kApplyLossFunction,
@@ -2628,19 +2169,6 @@ TEST(Problem, SetAndGetParameterUpperBound) {
             std::numeric_limits<double>::max());
 }
 
-TEST(Problem, SetParameterizationTwice) {
-  Problem problem;
-  double x[] = {1.0, 2.0, 3.0};
-  problem.AddParameterBlock(x, 3);
-  problem.SetParameterization(x, new SubsetParameterization(3, {1}));
-  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 3);
-  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 2);
-
-  problem.SetParameterization(x, new SubsetParameterization(3, {0, 1}));
-  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 3);
-  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 1);
-}
-
 TEST(Problem, SetManifoldTwice) {
   Problem problem;
   double x[] = {1.0, 2.0, 3.0};
@@ -2652,20 +2180,6 @@ TEST(Problem, SetManifoldTwice) {
   problem.SetManifold(x, new SubsetManifold(3, {0, 1}));
   EXPECT_EQ(problem.GetManifold(x)->AmbientSize(), 3);
   EXPECT_EQ(problem.GetManifold(x)->TangentSize(), 1);
-}
-
-TEST(Problem, SetParameterizationAndThenClearItWithNull) {
-  Problem problem;
-  double x[] = {1.0, 2.0, 3.0};
-  problem.AddParameterBlock(x, 3);
-  problem.SetParameterization(x, new SubsetParameterization(3, {1}));
-  EXPECT_EQ(problem.GetParameterization(x)->GlobalSize(), 3);
-  EXPECT_EQ(problem.GetParameterization(x)->LocalSize(), 2);
-
-  problem.SetParameterization(x, nullptr);
-  EXPECT_EQ(problem.GetParameterization(x), nullptr);
-  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 3);
-  EXPECT_EQ(problem.ParameterBlockSize(x), 3);
 }
 
 TEST(Problem, SetManifoldAndThenClearItWithNull) {
@@ -2680,15 +2194,6 @@ TEST(Problem, SetManifoldAndThenClearItWithNull) {
   EXPECT_EQ(problem.GetManifold(x), nullptr);
   EXPECT_EQ(problem.ParameterBlockTangentSize(x), 3);
   EXPECT_EQ(problem.ParameterBlockSize(x), 3);
-}
-
-TEST(Solver, ZeroSizedLocalParameterizationMeansParameterBlockIsConstant) {
-  double x = 0.0;
-  double y = 1.0;
-  Problem problem;
-  problem.AddResidualBlock(new BinaryCostFunction(1, 1, 1), nullptr, &x, &y);
-  problem.SetParameterization(&y, new SubsetParameterization(1, {0}));
-  EXPECT_TRUE(problem.IsParameterBlockConstant(&y));
 }
 
 TEST(Solver, ZeroTangentSizedManifoldMeansParameterBlockIsConstant) {
