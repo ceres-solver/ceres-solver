@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eba4d42e_fcf956c3",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-08T11:19:21Z",
+      "side": 1,
+      "message": "Yes, you are right. I oversaw the exception for the equality comparison. However, my point still stands:\n1. Consistency\n2. Compilers may raise warnings when comparing FP values using op\u003d\u003d (see `-Wfloat-equal`: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html). This is something we should avoid.",
+      "parentUuid": "6a73a97e_4c806c66",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a50ede8d_34a50225",
         "filename": "include/ceres/jet.h",
         "patchSetId": 3
@@ -210,6 +228,24 @@
       "side": 1,
       "message": "Consistency of execution paths and maintainability is valuable, whilst C++17 is our (recent) default",
       "parentUuid": "f2fe83d8_5e45685d",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b8b7c75_608f2b87",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-08T11:19:21Z",
+      "side": 1,
+      "message": "According to this logic we should not allow C++20 compilation then, because same execution paths are not guaranteed anymore (for instance, in the standard library.)",
+      "parentUuid": "41aaa5c6_cefea1e9",
       "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
