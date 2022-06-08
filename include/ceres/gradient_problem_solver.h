@@ -306,10 +306,6 @@ class CERES_EXPORT GradientProblemSolver {
     int num_parameters = -1;
 
     // Dimension of the tangent space of the problem.
-    CERES_DEPRECATED_WITH_MSG("Use num_tangent_parameters.")
-    int num_local_parameters = -1;
-
-    // Dimension of the tangent space of the problem.
     int num_tangent_parameters = -1;
 
     // Type of line search direction used.
