@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6a73a97e_4c806c66",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-08T10:59:58Z",
+      "side": 1,
+      "message": "From that link: \"The standard C comparison operators provoke exceptions when one or other of the operands is NaN. For example ... will raise an exception if a is NaN. (This does not happen with \u003d\u003d and !\u003d; those merely return false and true, respectively, when NaN is examined.)\"\n\nSee the last sentence, so it is not that we are catching nan\u0027s explicitly, as we are not doing so until after this is evaluated.  I don\u0027t see any benefit over using operator\u003d\u003d here.\n\nThe tests should catch that the FE exception flags are in fact not set.  You think that they are incomplete?",
+      "parentUuid": "21b0374a_e431b69d",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a50ede8d_34a50225",
         "filename": "include/ceres/jet.h",
         "patchSetId": 3
@@ -174,6 +192,24 @@
       "side": 1,
       "message": "Sure, Ceres defaults to C++17 but conditionally still supports C++20. In my opinion, we should invoke features depending on the active C++ dialect particularly if these affect numerical stability.",
       "parentUuid": "f05cad99_7b93bb9f",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41aaa5c6_cefea1e9",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-08T10:59:58Z",
+      "side": 1,
+      "message": "Consistency of execution paths and maintainability is valuable, whilst C++17 is our (recent) default",
+      "parentUuid": "f2fe83d8_5e45685d",
       "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
