@@ -46,8 +46,8 @@
 #ifdef _MSC_VER
 #pragma float_control(precise, on, push)
 #pragma fenv_access(on)
-#elif !(defined(__ARM_ARCH) && __ARM_ARCH >= 8)
-// NOTE: FENV_ACCESS cannot be set to ON when targeting arm(v8)
+#elif !(defined(__ARM_ARCH) && __ARM_ARCH >= 8) && !defined(__MINGW32__)
+// NOTE: FENV_ACCESS cannot be set to ON when targeting arm(v8) and MinGW
 #pragma STDC FENV_ACCESS ON
 #else
 #define CERES_NO_FENV_ACCESS
