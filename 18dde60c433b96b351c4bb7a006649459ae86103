@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "21b0374a_e431b69d",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-08T10:49:15Z",
+      "side": 1,
+      "message": "From the link above:\n\u003e The standard C comparison operators provoke exceptions when one or other of the operands is NaN.\n\nSince we explicitly catch NaNs this of course will not happen but for consistency we should use quiet comparisons regardless.",
+      "parentUuid": "2b1f5ada_e13c1c47",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a50ede8d_34a50225",
         "filename": "include/ceres/jet.h",
         "patchSetId": 3
@@ -73,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b4f26339_2bc2bbd6",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-08T10:49:15Z",
+      "side": 1,
+      "message": "See my previous comment.",
+      "parentUuid": "d70c07cc_4b46bcbc",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d44e5a4b_8a8c0620",
         "filename": "include/ceres/jet.h",
         "patchSetId": 3
@@ -102,6 +138,24 @@
       "side": 1,
       "message": "Ceres uses C++17, so changing this can be something for the future but not now",
       "parentUuid": "d44e5a4b_8a8c0620",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2fe83d8_5e45685d",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-08T10:49:15Z",
+      "side": 1,
+      "message": "Sure, Ceres defaults to C++17 but conditionally still supports C++20. In my opinion, we should invoke features depending on the active C++ dialect particularly if these affect numerical stability.",
+      "parentUuid": "f05cad99_7b93bb9f",
       "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
