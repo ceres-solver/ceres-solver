@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0d54f4ac_e3e3638c",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-08T10:58:07Z",
+      "side": 1,
+      "message": "Oh, you actually do not catch NaNs. My bad. So the exceptions will in fact occur.",
+      "parentUuid": "21b0374a_e431b69d",
+      "revId": "18dde60c433b96b351c4bb7a006649459ae86103",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a50ede8d_34a50225",
         "filename": "include/ceres/jet.h",
         "patchSetId": 3
