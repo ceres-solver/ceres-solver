@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b61aa211_5186d356",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-08T23:44:53Z",
+      "side": 1,
+      "message": "There is still a little bit of cruft remaining -- the deprecated messages in jet.h and the compiler directives to deal with them, i will come back and get rid of those in a follow up CL.",
+      "revId": "36292a882235f18f6ebf941f56001335abbdb530",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

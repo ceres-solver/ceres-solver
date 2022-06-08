@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7599268_95838e81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-08T23:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7dd44fb_e0ae4dce",
+      "revId": "a2913aa3c46748a85ec49b82b16a07b7e95dc1e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bbb97100_0b7d2fb5",
@@ -35,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b065985b_e5357e7e",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-08T23:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbb97100_0b7d2fb5",
+      "revId": "a2913aa3c46748a85ec49b82b16a07b7e95dc1e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "313a3f2d_da2eefe9",
@@ -48,6 +84,30 @@
       "writtenOn": "2022-06-08T22:47:14Z",
       "side": 1,
       "message": "```\nGradientChecker::~GradientChecker() \u003d default;\n```",
+      "range": {
+        "startLine": 143,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 38
+      },
+      "revId": "a2913aa3c46748a85ec49b82b16a07b7e95dc1e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1eb3c58_2c1b6b7a",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-08T23:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "313a3f2d_da2eefe9",
       "range": {
         "startLine": 143,
         "startChar": 0,
