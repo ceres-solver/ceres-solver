@@ -104,9 +104,12 @@ typedef unsigned __int32 uint32_t;
 
 #include <cstdint>
 
+// NOTE MinGW does define the macro.
+#ifndef O_BINARY
 // O_BINARY is not defined on unix like platforms, as there is no
 // difference between binary and text files.
 #define O_BINARY 0
+#endif
 
 #endif
 
