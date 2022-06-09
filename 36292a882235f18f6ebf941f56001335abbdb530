@@ -16,6 +16,23 @@
       "message": "There is still a little bit of cruft remaining -- the deprecated messages in jet.h and the compiler directives to deal with them, i will come back and get rid of those in a follow up CL.",
       "revId": "36292a882235f18f6ebf941f56001335abbdb530",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a587108_77da5c9d",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-09T00:06:17Z",
+      "side": 1,
+      "message": "This will define the destructor inline and consequently shift the invocation of member variables\u0027 destructors into user code. Given `GradientChecker` is entirely exported, I believe it is more consequent not to define the destructor inline.",
+      "revId": "36292a882235f18f6ebf941f56001335abbdb530",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
