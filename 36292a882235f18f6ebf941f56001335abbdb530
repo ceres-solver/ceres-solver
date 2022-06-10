@@ -51,6 +51,24 @@
       "parentUuid": "2a587108_77da5c9d",
       "revId": "36292a882235f18f6ebf941f56001335abbdb530",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de26f68c_870b10d8",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-10T12:00:33Z",
+      "side": 1,
+      "message": "Ah, yes. That would be equivalent. I initially assumed the destructor was implemented in the translation unit for a reason (improve compilation speed or pimpl.)",
+      "parentUuid": "78bfd112_ce66dba1",
+      "revId": "36292a882235f18f6ebf941f56001335abbdb530",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
