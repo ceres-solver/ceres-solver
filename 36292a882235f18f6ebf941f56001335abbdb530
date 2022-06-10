@@ -69,6 +69,24 @@
       "parentUuid": "78bfd112_ce66dba1",
       "revId": "36292a882235f18f6ebf941f56001335abbdb530",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef82cddc_6b47c5be",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-10T14:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de26f68c_870b10d8",
+      "revId": "36292a882235f18f6ebf941f56001335abbdb530",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
