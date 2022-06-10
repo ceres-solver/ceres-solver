@@ -33,6 +33,24 @@
       "message": "This will define the destructor inline and consequently shift the invocation of member variables\u0027 destructors into user code. Given `GradientChecker` is entirely exported, I believe it is more consequent not to define the destructor inline.",
       "revId": "36292a882235f18f6ebf941f56001335abbdb530",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78bfd112_ce66dba1",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-10T02:19:51Z",
+      "side": 1,
+      "message": "actually I can just drop defining a destructor no? it does nothing.",
+      "parentUuid": "2a587108_77da5c9d",
+      "revId": "36292a882235f18f6ebf941f56001335abbdb530",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
