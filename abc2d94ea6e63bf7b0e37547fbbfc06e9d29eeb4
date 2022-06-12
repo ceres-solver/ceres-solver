@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62382de5_498ee59a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-06-12T02:50:30Z",
+      "side": 1,
+      "message": "I think sergiu has a patch in the works that subsumes this. it is waiting on approval from Alex who is traveling right now.",
+      "revId": "abc2d94ea6e63bf7b0e37547fbbfc06e9d29eeb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
