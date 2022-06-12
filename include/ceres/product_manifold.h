@@ -257,7 +257,13 @@ class ProductManifold final : public Manifold {
   template <typename T, std::size_t N>
   static std::array<T, N> ExclusiveScan(const std::array<T, N>& values) {
     std::array<T, N> result;
-    std::exclusive_scan(values.begin(), values.end(), result.begin(), 0);
+    // TODO Replace with std::exclusive_scan once all platforms have full C++17
+    // STL support.
+    T init = 0;
+    for (std::size_t i = 0; i != N; ++i) {
+      result[i] = init;
+      init += values[i];
+    }
     return result;
   }
 
