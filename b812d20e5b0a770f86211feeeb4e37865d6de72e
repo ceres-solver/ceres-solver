@@ -450,6 +450,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "51e0c12c_e04d9f4d",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-12T01:15:41Z",
+      "side": 1,
+      "message": "Unfortunately there is no type-generic cudaMemset - it operates on void pointers and byte-initialization.",
+      "parentUuid": "226fccd3_7d698ce9",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72e105c5_a70d6499",
         "filename": "internal/ceres/ceres_cuda_kernels.h",
         "patchSetId": 2
@@ -519,6 +543,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "956c9510_2675233f",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-12T01:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbdd307b_30b4d03f",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cea1c21d_2603ad94",
@@ -532,6 +580,30 @@
       "writtenOn": "2022-06-06T15:23:55Z",
       "side": 1,
       "message": "I think it will make the code much simpler to read if you introduced private high level methods which took care of doing the operation while using the various member variables. For example\n\ncusolver_handle,\n                       CUBLAS_FILL_MODE_LOWER,\n                       num_cols,\n                       1,\n                       lhs.data(),\n                       num_cols,\n                       solution.data(),\n                       num_cols,\n                       error.data()\n                       \n                       \nshould be replaced by a private member which takes care of the cuda boiler plate etc.",
+      "range": {
+        "startLine": 363,
+        "startChar": 28,
+        "endLine": 363,
+        "endChar": 59
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "666c1c44_54b7f644",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-12T01:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cea1c21d_2603ad94",
       "range": {
         "startLine": 363,
         "startChar": 28,
@@ -579,6 +651,30 @@
       "side": 1,
       "message": "I\u0027ll move it to a private method. Factorizing it out improves readability of the iterative solver.",
       "parentUuid": "e689bfd7_2e89f16d",
+      "range": {
+        "startLine": 431,
+        "startChar": 28,
+        "endLine": 431,
+        "endChar": 38
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0ebb211_13975ae5",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-06-12T01:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c5d387c_2d986ece",
       "range": {
         "startLine": 431,
         "startChar": 28,
