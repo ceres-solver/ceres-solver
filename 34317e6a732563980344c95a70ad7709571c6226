@@ -33,6 +33,24 @@
       "message": "Given a recent discussion, the SOVERSION in CMakeLists.txt needs to be again incremented (from 3 to 4) due ABI incompatible changes.",
       "revId": "34317e6a732563980344c95a70ad7709571c6226",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bda9da84_181ff782",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-15T20:07:29Z",
+      "side": 1,
+      "message": "oh fun times. this CL will take a bit to submit, shall we do that independently? or do you want to send me the right CL?",
+      "parentUuid": "9a10cb72_a11eb837",
+      "revId": "34317e6a732563980344c95a70ad7709571c6226",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
