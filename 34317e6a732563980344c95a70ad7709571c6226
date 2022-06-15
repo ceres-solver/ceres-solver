@@ -51,6 +51,24 @@
       "parentUuid": "9a10cb72_a11eb837",
       "revId": "34317e6a732563980344c95a70ad7709571c6226",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dd01dea_2db71dc8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-15T21:26:15Z",
+      "side": 1,
+      "message": "I believe the SOVERSION increment should be part of this CL (it\u0027s a one-liner in `internal/ceres/CMakeLists.txt` around line 335 anyway) as the removal is the reason the ABI becomes incompatible with previous Ceres release (which is totally fine btw.)",
+      "parentUuid": "bda9da84_181ff782",
+      "revId": "34317e6a732563980344c95a70ad7709571c6226",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
