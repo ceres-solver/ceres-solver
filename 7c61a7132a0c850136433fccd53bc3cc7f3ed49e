@@ -16,6 +16,69 @@
       "message": "Hi, I\u0027ve made some small changes to the install doc help the next person who does the same thing I did.",
       "revId": "7c61a7132a0c850136433fccd53bc3cc7f3ed49e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d498840b_02f48b2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-17T19:20:57Z",
+      "side": 1,
+      "message": "Thanks for doing this, two minor comments.",
+      "revId": "7c61a7132a0c850136433fccd53bc3cc7f3ed49e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "816a906c_6ffe2104",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-17T19:20:57Z",
+      "side": 1,
+      "message": "please remove the trailing spaces.",
+      "range": {
+        "startLine": 310,
+        "startChar": 41,
+        "endLine": 310,
+        "endChar": 42
+      },
+      "revId": "7c61a7132a0c850136433fccd53bc3cc7f3ed49e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8497b2e6_e184c699",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-17T19:20:57Z",
+      "side": 1,
+      "message": "cxsparse is not supported anymore.",
+      "range": {
+        "startLine": 324,
+        "startChar": 48,
+        "endLine": 324,
+        "endChar": 56
+      },
+      "revId": "7c61a7132a0c850136433fccd53bc3cc7f3ed49e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
