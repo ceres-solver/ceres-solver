@@ -307,6 +307,32 @@ Windows
 equivalent on Microsoft Windows and can be used to install Ceres
 Solver.
 
+#. Install the package manager vcpkg into a top-level directory ``vcpkg/`` on Windows 
+   following the `guide <https://github.com/microsoft/vcpkg#quick-start-windows>`_ 
+   (confirmed working with Visual Studio 2022 community edition MSVC compiler).
+
+#. Use vcpkg to install/build ceres and all its dependencies in x64 Windows
+
+   .. code:: bat
+
+      vcpkg\vcpkg.exe install ceres:x64-windows
+   
+   Or with optional components suitesparse and cxsparse using
+
+   .. code:: bat
+
+      vcpkg\vcpkg.exe install ceres[suitesparse,cxsparse]:x64-windows
+
+#. Integrate vcpkg packages with Visual Studio to allow it to automatically 
+   find all the libraries installed by vcpkg.
+
+   .. code:: bat
+
+      vcpkg\vcpkg.exe integrate install
+
+#. When using Ceres in a project with CMake, use ``find_package(Ceres)``.
+
+
 Ceres Solver can also be built from source. For this purpose, we support Visual
 Studio 2019 and newer.
 
