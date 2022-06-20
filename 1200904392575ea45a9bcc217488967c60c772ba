@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4600c827_0cc5376a",
+        "filename": "internal/ceres/solver_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-20T15:46:55Z",
+      "side": 1,
+      "message": "I think this should also be:\n\n!defined(CERES_NO_EIGEN_METIS) || !defined(CERES_NO_CHOLMOD_PARTITION)\n\nas we might want the METIS version used in either case, although we should be able to back it out from the SuiteSparse version, we might as well include it directly here as well for clarity / debugging unusual setups",
+      "revId": "1200904392575ea45a9bcc217488967c60c772ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

@@ -142,6 +142,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7f0d77f2_dd2a5865",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-20T15:46:55Z",
+      "side": 1,
+      "message": "It is important that the option values should *always* reflect what is actually happening, not just what a user requested if that cannot be performed, as if we cannot do what they are asking that is an error state, not nominal behaviour and should be clearly communicated to the user.\n\nThis is also consistent with how all other dependencies are handled in Ceres, and consistency is important so please change it",
+      "parentUuid": "fc457aa1_1b93f33e",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "98c8d3c2_76dc9e4d",
         "filename": "CMakeLists.txt",
         "patchSetId": 10
@@ -223,6 +241,24 @@
       "side": 1,
       "message": "`unset(SuiteSparse_Partition_FOUND)` would not do anything because `SuiteSparse_Partition_FOUND` is only defined here. The variable is also not cached. Segmenting the condition across the source would make it less readable. Since the availability of `SuiteSparse::Partition` implies the `SuiteSparse_Partition_FOUND` result we can safely leave it as is.",
       "parentUuid": "d3cebb11_90d8d188",
+      "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfdf6d6a_ea70cb01",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 10
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-20T15:46:55Z",
+      "side": 1,
+      "message": "Except as written this does segment the condition, it would be more compact to move the true-condition into the block above where we know that SuiteSparse::Partition exists than to have a later check.",
+      "parentUuid": "e76c33c3_28003e9f",
       "revId": "c25018172b6b6942ba63676442a6f5e2116cda6b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
