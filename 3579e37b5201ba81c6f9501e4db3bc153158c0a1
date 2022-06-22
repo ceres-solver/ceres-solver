@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7db1832f_39c10ad7",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-22T13:07:37Z",
+      "side": 1,
+      "message": "I am not fond of this double ternary, my head hurts reading it. please convert this into a nested conditional.",
+      "range": {
+        "startLine": 796,
+        "startChar": 21,
+        "endLine": 796,
+        "endChar": 26
+      },
+      "revId": "3579e37b5201ba81c6f9501e4db3bc153158c0a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fca742c_deecec90",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-06-22T13:07:37Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 820,
+        "startChar": 8,
+        "endLine": 820,
+        "endChar": 16
+      },
+      "revId": "3579e37b5201ba81c6f9501e4db3bc153158c0a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
