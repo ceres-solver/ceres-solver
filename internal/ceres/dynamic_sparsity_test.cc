@@ -366,7 +366,8 @@ class EuclideanDistanceFunctor {
 };
 
 TEST(DynamicSparsity, StaticAndDynamicSparsityProduceSameSolution) {
-  // Skip test if there is no sparse linear algebra library.
+  // Skip test if there is no sparse linear algebra library that
+  // supports dynamic sparsity.
   if (!IsSparseLinearAlgebraLibraryTypeAvailable(SUITE_SPARSE) &&
       !IsSparseLinearAlgebraLibraryTypeAvailable(EIGEN_SPARSE)) {
     return;
@@ -426,6 +427,13 @@ TEST(DynamicSparsity, StaticAndDynamicSparsityProduceSameSolution) {
   Solver::Options options;
   options.max_num_iterations = 100;
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  // Only SuiteSparse & EigenSparse currently support dynamic sparsity.
+  options.sparse_linear_algebra_library_type =
+#if !defined(CERES_NO_SUITESPARSE)
+      ceres::SUITE_SPARSE;
+#elif defined(CERES_USE_EIGEN_SPARSE)
+      ceres::EIGEN_SPARSE;
+#endif
 
   // First, solve `X` and `t` jointly with dynamic_sparsity = true.
   Matrix X0 = X;

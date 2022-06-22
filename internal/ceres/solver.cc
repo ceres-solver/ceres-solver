@@ -213,6 +213,10 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
           *error = StringPrintf(
               "Can't use NESDIS with SUITE_SPARSE because SuiteSparse was "
               "compiled without support for Metis.");
+        } else if (options.sparse_linear_algebra_library_type == EIGEN_SPARSE) {
+          *error = StringPrintf(
+              "Can't use NESDIS with EIGEN_SPARSE because Ceres was "
+              "compiled without support for Metis.");
         } else {
           *error = StringPrintf(
               "Can't use NESDIS with "

@@ -230,7 +230,9 @@ INSTANTIATE_TEST_SUITE_P(
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(EIGEN_SPARSE),
                        ::testing::Values(OrderingType::AMD,
+#ifndef CERES_NO_EIGEN_METIS
                                          OrderingType::NESDIS,
+#endif  // CERES_NO_EIGEN_METIS
                                          OrderingType::NATURAL),
                        ::testing::Values(true, false)),
     ParamInfoToString);
@@ -240,7 +242,9 @@ INSTANTIATE_TEST_SUITE_P(
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(EIGEN_SPARSE),
                        ::testing::Values(OrderingType::AMD,
+#ifndef CERES_NO_EIGEN_METIS
                                          OrderingType::NESDIS,
+#endif  // CERES_NO_EIGEN_METIS
                                          OrderingType::NATURAL),
                        ::testing::Values(true, false)),
     ParamInfoToString);

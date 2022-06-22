@@ -157,23 +157,19 @@ std::unique_ptr<SparseCholesky> EigenSparseCholesky::Create(
 
   if (ordering_type == OrderingType::AMD) {
     return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
-#ifndef CERES_NO_EIGEN_METIS
   } else if (ordering_type == OrderingType::NESDIS) {
+#ifndef CERES_NO_EIGEN_METIS
     using WithMetisOrdering = Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
                                                     Eigen::Upper,
                                                     Eigen::MetisOrdering<int>>;
-
     return std::make_unique<EigenSparseCholeskyTemplate<WithMetisOrdering>>();
-  }
 #else
-  } else {
     LOG(FATAL)
         << "Congratulations you have found a bug in Ceres Solver. Please "
            "report it to the Ceres Solver developers.";
     return nullptr;
+#endif  // CERES_NO_EIGEN_METIS
   }
-#endif
-
   return std::make_unique<EigenSparseCholeskyTemplate<WithNaturalOrdering>>();
 }
 
@@ -190,23 +186,19 @@ std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
                             Eigen::NaturalOrdering<int>>;
   if (ordering_type == OrderingType::AMD) {
     return std::make_unique<EigenSparseCholeskyTemplate<WithAMDOrdering>>();
-#ifndef CERES_NO_EIGEN_METIS
   } else if (ordering_type == OrderingType::NESDIS) {
+#ifndef CERES_NO_EIGEN_METIS
     using WithMetisOrdering = Eigen::SimplicialLDLT<Eigen::SparseMatrix<float>,
                                                     Eigen::Upper,
                                                     Eigen::MetisOrdering<int>>;
-
     return std::make_unique<EigenSparseCholeskyTemplate<WithMetisOrdering>>();
-  }
 #else
-  } else {
     LOG(FATAL)
         << "Congratulations you have found a bug in Ceres Solver. Please "
-           "report it to the Ceres Solver developers.";
+        "report it to the Ceres Solver developers.";
     return nullptr;
+#endif  // CERES_NO_EIGEN_METIS
   }
-#endif
-
   return std::make_unique<EigenSparseCholeskyTemplate<WithNaturalOrdering>>();
 }
 
