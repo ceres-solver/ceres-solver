@@ -33,6 +33,24 @@
       "message": "The preprocessor checks within a macro invocation are nonstandard C++ which is why the Windows builds fail.",
       "revId": "11e6376675fbe8ff7b0dfeb3f36fa416a64f10e3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb42a8df_5bbff539",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-06-23T15:32:08Z",
+      "side": 1,
+      "message": "I\u0027ve raised a CL to update this here: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/21903",
+      "parentUuid": "25567df7_eddd9941",
+      "revId": "11e6376675fbe8ff7b0dfeb3f36fa416a64f10e3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
