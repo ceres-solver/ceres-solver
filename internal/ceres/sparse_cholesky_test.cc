@@ -230,9 +230,6 @@ INSTANTIATE_TEST_SUITE_P(
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(EIGEN_SPARSE),
                        ::testing::Values(OrderingType::AMD,
-#ifndef CERES_NO_EIGEN_METIS
-                                         OrderingType::NESDIS,
-#endif  // CERES_NO_EIGEN_METIS
                                          OrderingType::NATURAL),
                        ::testing::Values(true, false)),
     ParamInfoToString);
@@ -242,13 +239,28 @@ INSTANTIATE_TEST_SUITE_P(
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(EIGEN_SPARSE),
                        ::testing::Values(OrderingType::AMD,
-#ifndef CERES_NO_EIGEN_METIS
-                                         OrderingType::NESDIS,
-#endif  // CERES_NO_EIGEN_METIS
                                          OrderingType::NATURAL),
                        ::testing::Values(true, false)),
     ParamInfoToString);
-#endif
+#endif  // CERES_USE_EIGEN_SPARSE
+
+#if defined(CERES_USE_EIGEN_SPARSE) && !defined(CERES_NO_EIGEN_METIS)
+INSTANTIATE_TEST_SUITE_P(
+    EigenSparseCholeskyMETIS,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(EIGEN_SPARSE),
+                       ::testing::Values(OrderingType::NESDIS),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
+
+INSTANTIATE_TEST_SUITE_P(
+    EigenSparseCholeskySingleMETIS,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(EIGEN_SPARSE),
+                       ::testing::Values(OrderingType::NESDIS),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
+#endif  // defined(CERES_USE_EIGEN_SPARSE) && !defined(CERES_NO_EIGEN_METIS)
 
 class MockSparseCholesky : public SparseCholesky {
  public:
