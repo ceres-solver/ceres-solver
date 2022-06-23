@@ -49,7 +49,7 @@ inline bool VariadicEvaluateImpl(const Functor& functor,
                                  T* output,
                                  std::false_type /*is_dynamic*/,
                                  std::integer_sequence<int, Indices...>) {
-  static_assert(sizeof...(Indices),
+  static_assert(sizeof...(Indices) > 0,
                 "Invalid number of parameter blocks. At least one parameter "
                 "block must be specified.");
   return functor(input[Indices]..., output);
