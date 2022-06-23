@@ -800,7 +800,7 @@ inline decltype(auto) fmax(const Lhs& x, const Rhs& y) {
 #if defined(CERES_HAS_CPP20)
   return midpoint(J{x}, J{y});
 #else
-  return (J{x} + J{y}) * 0.5;
+  return (J{x} + J{y}) * typename J::Scalar(0.5);
 #endif  // defined(CERES_HAS_CPP20)
 }
 
@@ -823,7 +823,7 @@ inline decltype(auto) fmin(const Lhs& x, const Rhs& y) {
 #if defined(CERES_HAS_CPP20)
   return midpoint(J{x}, J{y});
 #else
-  return (J{x} + J{y}) * 0.5;
+  return (J{x} + J{y}) * typename J::Scalar(0.5);
 #endif  // defined(CERES_HAS_CPP20)
 }
 
