@@ -16,6 +16,23 @@
       "message": "Thank you.",
       "revId": "11e6376675fbe8ff7b0dfeb3f36fa416a64f10e3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25567df7_eddd9941",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-23T08:28:15Z",
+      "side": 1,
+      "message": "The preprocessor checks within a macro invocation are nonstandard C++ which is why the Windows builds fail.",
+      "revId": "11e6376675fbe8ff7b0dfeb3f36fa416a64f10e3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
