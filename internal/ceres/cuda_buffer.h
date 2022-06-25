@@ -74,10 +74,23 @@ class CudaBuffer {
 
   // Perform an asynchronous copy from CPU memory to GPU memory using the stream
   // provided.
-  void CopyToGpuAsync(const T* data, const size_t size, cudaStream_t stream) {
+  void CopyFromCpuAsync(const T* data,
+                        const size_t size,
+                        cudaStream_t stream) {
     Reserve(size);
     CHECK_EQ(cudaMemcpyAsync(
                  data_, data, size * sizeof(T), cudaMemcpyHostToDevice, stream),
+             cudaSuccess);
+  }
+
+  void CopyFromCpuAsync(const std::vector<T>& data,
+                        cudaStream_t stream) {
+    Reserve(data.size());
+    CHECK_EQ(cudaMemcpyAsync(data_,
+                             data.data(),
+                             data.size() * sizeof(T),
+                             cudaMemcpyHostToDevice,
+                             stream),
              cudaSuccess);
   }
 
@@ -92,14 +105,22 @@ class CudaBuffer {
   // Copy data from the GPU to CPU memory. This is necessarily synchronous since
   // any potential GPU kernels that may be writing to the buffer must finish
   // before the transfer happens.
-  void CopyToHost(T* data, const size_t size) {
+  void CopyToCpu(T* data, const size_t size) const {
     CHECK(data_ != nullptr);
     CHECK_EQ(cudaMemcpy(data, data_, size * sizeof(T), cudaMemcpyDeviceToHost),
              cudaSuccess);
   }
 
-  void CopyToGpu(const std::vector<T>& data) {
-    CopyToGpu(data.data(), data.size());
+  void CopyNItemsFrom(int n, const CudaBuffer<T>& other, cudaStream_t stream) {
+    Reserve(n);
+    CHECK(other.data_ != nullptr);
+    CHECK(data_ != nullptr);
+    CHECK_EQ(cudaMemcpyAsync(data_,
+                             other.data_,
+                             size_ * sizeof(T),
+                             cudaMemcpyDeviceToDevice,
+                             stream),
+             cudaSuccess);
   }
 
   T* data() { return data_; }
