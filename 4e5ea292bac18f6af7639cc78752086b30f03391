@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c60513a_183a8c73",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-06-25T11:23:11Z",
+      "side": 1,
+      "message": "The warnings can be observed in current master: https://github.com/ceres-solver/ceres-solver/runs/7026927340?check_suite_focus\u003dtrue#step:17:240",
+      "revId": "4e5ea292bac18f6af7639cc78752086b30f03391",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
