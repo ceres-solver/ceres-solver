@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2015 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,74 +26,60 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: vitus@google.com (Michael Vitus)
+// Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
+//
+// CUDA-Accelerated Conjugate Gradients based solver for positive
+// semidefinite linear systems.
 
-#ifndef CERES_INTERNAL_CONTEXT_IMPL_H_
-#define CERES_INTERNAL_CONTEXT_IMPL_H_
+#ifndef CERES_INTERNAL_CUDA_CONJUGATE_GRADIENTS_SOLVER_H_
+#define CERES_INTERNAL_CUDA_CONJUGATE_GRADIENTS_SOLVER_H_
 
 // This include must come before any #ifndef check on Ceres compile options.
 // clang-format off
 #include "ceres/internal/config.h"
 // clang-format on
 
-#include <string>
+#include <memory>
 
-#include "ceres/context.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
+#include "ceres/linear_solver.h"
 
 #ifndef CERES_NO_CUDA
-#include "cublas_v2.h"
-#include "cuda_runtime.h"
-#include "cusparse.h"
-#include "cusolverDn.h"
-#endif  // CERES_NO_CUDA
-
-#ifdef CERES_USE_CXX_THREADS
-#include "ceres/thread_pool.h"
-#endif  // CERES_USE_CXX_THREADS
+#include "ceres/cuda_linear_operator.h"
+#include "ceres/cuda_vector.h"
 
 namespace ceres::internal {
 
-class CERES_NO_EXPORT ContextImpl final : public Context {
+class CERES_NO_EXPORT CudaConjugateGradientsSolver {
  public:
-  ContextImpl();
-  ~ContextImpl() override;
-  void Cleanup();
-  ContextImpl(const ContextImpl&) = delete;
-  void operator=(const ContextImpl&) = delete;
+  static std::unique_ptr<CudaConjugateGradientsSolver> Create(
+      const LinearSolver::Options& options);
 
-  // When compiled with C++ threading support, resize the thread pool to have
-  // at min(num_thread, num_hardware_threads) where num_hardware_threads is
-  // defined by the hardware.  Otherwise this call is a no-op.
-  void EnsureMinimumThreads(int num_threads);
+  bool Init(ContextImpl* context, std::string* message);
 
-#ifdef CERES_USE_CXX_THREADS
-  ThreadPool thread_pool;
-#endif  // CERES_USE_CXX_THREADS
+  LinearSolver::Summary Solve(
+      CudaLinearOperator* A,
+      CudaLinearOperator* preconditioner,
+      const CudaVector& b,
+      const LinearSolver::PerSolveOptions& per_solve_options,
+      CudaVector* x);
 
-#ifndef CERES_NO_CUDA
-  // Initializes the cuSolverDN context, creates an asynchronous stream, and
-  // associates the stream with cuSolverDN. Returns true iff initialization was
-  // successful, else it returns false and a human-readable error message is
-  // returned.
-  bool InitCUDA(std::string* message);
+ private:
+  explicit CudaConjugateGradientsSolver(LinearSolver::Options options) :
+      options_(options) { }
+  const LinearSolver::Options options_;
+  ContextImpl* context_ = nullptr;
 
-  // Handle to the cuSOLVER context.
-  cusolverDnHandle_t cusolver_handle_ = nullptr;
-  // Handle to cuBLAS context.
-  cublasHandle_t cublas_handle_ = nullptr;
-  // CUDA device stream.
-  cudaStream_t stream_ = nullptr;
-  // Handle to cuSPARSE context.
-  cusparseHandle_t cusparse_handle_ = nullptr;
-  // Indicates whether all the CUDA resources have been initialized.
-  bool cuda_initialized_ = false;
-#endif  // CERES_NO_CUDA
+  CudaVector r_;
+  CudaVector p_;
+  CudaVector z_;
+  CudaVector tmp_;
 };
 
 }  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"
 
-#endif  // CERES_INTERNAL_CONTEXT_IMPL_H_
+#endif  // CERES_NO_CUDA
+#endif  // CERES_INTERNAL_CUDA_CONJUGATE_GRADIENTS_SOLVER_H_
