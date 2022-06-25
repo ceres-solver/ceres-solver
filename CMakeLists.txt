@@ -37,6 +37,8 @@ if (POLICY CMP0074) # Added in CMake 3.12
   cmake_policy(SET CMP0074 NEW)
 endif()
 
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+
 # On macOS, add the Homebrew prefix (with appropriate suffixes) to the
 # respective HINTS directories (after any user-specified locations).  This
 # handles Homebrew installations into non-standard locations (not /usr/local).

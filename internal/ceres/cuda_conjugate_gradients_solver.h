@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2022 Google Inc. All rights reserved.
+// Copyright 2015 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,40 +27,59 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
+//
+// CUDA-Accelerated Conjugate Gradients based solver for positive
+// semidefinite linear systems.
 
+#ifndef CERES_INTERNAL_CUDA_CONJUGATE_GRADIENTS_SOLVER_H_
+#define CERES_INTERNAL_CUDA_CONJUGATE_GRADIENTS_SOLVER_H_
+
+// This include must come before any #ifndef check on Ceres compile options.
+// clang-format off
 #include "ceres/internal/config.h"
+// clang-format on
+
+#include <memory>
+
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
+#include "ceres/linear_solver.h"
 
 #ifndef CERES_NO_CUDA
+#include "ceres/cuda_linear_operator.h"
+#include "ceres/cuda_vector.h"
 
-#include "cuda_runtime.h"
+namespace ceres::internal {
 
-namespace ceres_cuda_kernels {
+class CERES_NO_EXPORT CudaConjugateGradientsSolver {
+ public:
+  static std::unique_ptr<CudaConjugateGradientsSolver> Create(
+      const LinearSolver::Options& options);
 
-void CudaFP64ToFP32(const double* input,
-                    float* output,
-                    const int size,
-                    cudaStream_t stream);
+  bool Init(ContextImpl* context, std::string* message);
 
-void CudaFP32ToFP64(const float* input,
-                    double* output,
-                    const int size,
-                    cudaStream_t stream);
+  LinearSolver::Summary Solve(
+      CudaLinearOperator* A,
+      CudaLinearOperator* preconditioner,
+      const CudaVector& b,
+      const LinearSolver::PerSolveOptions& per_solve_options,
+      CudaVector* x);
 
-// Set all elements of the array to the FP32 value 0.
-void CudaSetZeroFP32(float* output, const int size, cudaStream_t stream);
+ private:
+  explicit CudaConjugateGradientsSolver(LinearSolver::Options options) :
+      options_(options) { }
+  const LinearSolver::Options options_;
+  ContextImpl* context_ = nullptr;
 
-// Set all elements of the array to the FP64 value 0.
-void CudaSetZeroFP64(double* output, const int size, cudaStream_t stream);
+  CudaVector r_;
+  CudaVector p_;
+  CudaVector z_;
+  CudaVector tmp_;
+};
 
-// Compute x = x + double(y).
-void CudaDsaxpy(double* x, float* y, const int size, cudaStream_t stream);
+}  // namespace ceres::internal
 
-// Compute y = y + DtDx
-void CudaDtDxpy(double* y,
-                const double* D,
-                const double* x,
-                const int size,
-                cudaStream_t stream);
-}  // namespace ceres_cuda_kernels
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_NO_CUDA
+#endif  // CERES_INTERNAL_CUDA_CONJUGATE_GRADIENTS_SOLVER_H_

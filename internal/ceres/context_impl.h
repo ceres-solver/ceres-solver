@@ -45,6 +45,7 @@
 #ifndef CERES_NO_CUDA
 #include "cublas_v2.h"
 #include "cuda_runtime.h"
+#include "cusparse.h"
 #include "cusolverDn.h"
 #endif  // CERES_NO_CUDA
 
@@ -58,6 +59,7 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
  public:
   ContextImpl();
   ~ContextImpl() override;
+  void Cleanup();
   ContextImpl(const ContextImpl&) = delete;
   void operator=(const ContextImpl&) = delete;
 
@@ -83,6 +85,8 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   cublasHandle_t cublas_handle_ = nullptr;
   // CUDA device stream.
   cudaStream_t stream_ = nullptr;
+  // Handle to cuSPARSE context.
+  cusparseHandle_t cusparse_handle_ = nullptr;
   // Indicates whether all the CUDA resources have been initialized.
   bool cuda_initialized_ = false;
 #endif  // CERES_NO_CUDA

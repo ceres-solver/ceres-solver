@@ -42,6 +42,14 @@
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
 
+#ifndef CERES_NO_CUDA
+#include "ceres/cuda_cgnr_linear_operator.h"
+#include "ceres/cuda_conjugate_gradients_solver.h"
+#include "ceres/cuda_linear_operator.h"
+#include "ceres/cuda_sparse_matrix.h"
+#include "ceres/cuda_vector.h"
+#endif  // CERES_NO_CUDA
+
 namespace ceres::internal {
 
 CgnrSolver::CgnrSolver(LinearSolver::Options options)
@@ -106,5 +114,92 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
   event_logger.AddEvent("Solve");
   return summary;
 }
+
+#ifndef CERES_NO_CUDA
+
+CudaCgnrSolver::CudaCgnrSolver() = default;
+
+CudaCgnrSolver::~CudaCgnrSolver() = default;
+
+bool CudaCgnrSolver::Init(
+    const LinearSolver::Options& options, std::string* error) {
+  options_ = options;
+  solver_ = CudaConjugateGradientsSolver::Create(options);
+  if (solver_ == nullptr) {
+    *error = "CudaConjugateGradientsSolver::Create failed.";
+    return false;
+  }
+  if (!solver_->Init(options.context, error)) {
+    return false;
+  }
+  return true;
+}
+
+std::unique_ptr<CudaCgnrSolver> CudaCgnrSolver::Create(
+      LinearSolver::Options options, std::string* error) {
+  CHECK(error != nullptr);
+  if (options.preconditioner_type != IDENTITY) {
+    *error = "CudaCgnrSolver does not support preconditioner type " +
+        std::string(PreconditionerTypeToString(options.preconditioner_type)) + ". ";
+    return nullptr;
+  }
+  std::unique_ptr<CudaCgnrSolver> solver(new CudaCgnrSolver());
+  if (!solver->Init(options, error)) {
+    return nullptr;
+  }
+  solver->options_ = options;
+  return solver;
+}
+
+LinearSolver::Summary CudaCgnrSolver::SolveImpl(
+    BlockSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double* x) {
+  EventLogger event_logger("CudaCgnrSolver::Solve");
+  LinearSolver::Summary summary;
+  summary.num_iterations = 0;
+  summary.termination_type = LinearSolverTerminationType::FATAL_ERROR;
+
+  CudaSparseMatrix cuda_A;
+  CudaVector cuda_b;
+  CudaVector cuda_z;
+  CudaVector cuda_x;
+  CudaVector cuda_D;
+  if (!cuda_A.Init(options_.context, &summary.message) ||
+      !cuda_b.Init(options_.context, &summary.message) ||
+      !cuda_z.Init(options_.context, &summary.message) ||
+      !cuda_x.Init(options_.context, &summary.message) ||
+      !cuda_D.Init(options_.context, &summary.message)) {
+    return summary;
+  }
+  event_logger.AddEvent("Initialize");
+
+  cuda_A.CopyFrom(*A);
+  cuda_b.CopyFrom(b, A->num_rows());
+  cuda_z.resize(A->num_cols());
+  cuda_x.resize(A->num_cols());
+  cuda_D.CopyFrom(per_solve_options.D, A->num_cols());
+  event_logger.AddEvent("CPU to GPU Transfer");
+
+  // Form z = Atb.
+  cuda_z.setZero();
+  cuda_A.LeftMultiply(cuda_b, &cuda_z);
+
+  LinearSolver::PerSolveOptions cg_per_solve_options = per_solve_options;
+  cg_per_solve_options.preconditioner = nullptr;
+
+  // Solve (AtA + DtD)x = z (= Atb).
+  cuda_x.setZero();
+  CudaCgnrLinearOperator lhs(&cuda_A, &cuda_D);
+  event_logger.AddEvent("Setup");
+
+  summary = solver_->Solve(
+      &lhs, nullptr, cuda_z, cg_per_solve_options, &cuda_x);
+  event_logger.AddEvent("Solve");
+  return summary;
+}
+
+#endif  // CERES_NO_CUDA
 
 }  // namespace ceres::internal

@@ -27,40 +27,41 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
+//
+// A generic CUDA linear operator that operates on vectors already on the GPU.
 
+#ifndef CERES_INTERNAL_CUDA_LINEAR_OPERATOR_H_
+#define CERES_INTERNAL_CUDA_LINEAR_OPERATOR_H_
+
+// This include must come before any #ifndef check on Ceres compile options.
+// clang-format off
 #include "ceres/internal/config.h"
+// clang-format on
+
+#include <string>
+
+#include "ceres/internal/export.h"
+#include "ceres/types.h"
+#include "ceres/context_impl.h"
 
 #ifndef CERES_NO_CUDA
+#include "ceres/cuda_vector.h"
 
-#include "cuda_runtime.h"
+namespace ceres::internal {
 
-namespace ceres_cuda_kernels {
+class CERES_NO_EXPORT CudaLinearOperator {
+ public:
+  // y = y + Ax;
+  virtual void RightMultiply(const CudaVector& x, CudaVector* y) = 0;
 
-void CudaFP64ToFP32(const double* input,
-                    float* output,
-                    const int size,
-                    cudaStream_t stream);
+  // y = y + A'x;
+  virtual void LeftMultiply(const CudaVector& x, CudaVector* y) = 0;
 
-void CudaFP32ToFP64(const float* input,
-                    double* output,
-                    const int size,
-                    cudaStream_t stream);
+  virtual int num_rows() const = 0;
+  virtual int num_cols() const = 0;
+};
 
-// Set all elements of the array to the FP32 value 0.
-void CudaSetZeroFP32(float* output, const int size, cudaStream_t stream);
-
-// Set all elements of the array to the FP64 value 0.
-void CudaSetZeroFP64(double* output, const int size, cudaStream_t stream);
-
-// Compute x = x + double(y).
-void CudaDsaxpy(double* x, float* y, const int size, cudaStream_t stream);
-
-// Compute y = y + DtDx
-void CudaDtDxpy(double* y,
-                const double* D,
-                const double* x,
-                const int size,
-                cudaStream_t stream);
-}  // namespace ceres_cuda_kernels
+}  // namespace ceres::internal
 
 #endif  // CERES_NO_CUDA
+#endif  // CERES_INTERNAL_CUDA_LINEAR_OPERATOR_H_

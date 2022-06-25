@@ -26,80 +26,74 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: strandmark@google.com (Petter Strandmark)
+// Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
 
-#include "ceres/wall_time.h"
+#ifndef CERES_INTERNAL_CUDA_CGNR_LINEAR_OPERATOR_H_
+#define CERES_INTERNAL_CUDA_CGNR_LINEAR_OPERATOR_H_
 
-#include "ceres/internal/config.h"
+#include <algorithm>
+#include <memory>
 
-#ifdef CERES_USE_OPENMP
-#include <omp.h>
-#else
-#include <ctime>
-#endif
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <sys/time.h>
-#endif
+#ifndef CERES_NO_CUDA
+
+#include "ceres/cuda_sparse_matrix.h"
+#include "ceres/cuda_vector.h"
 
 namespace ceres::internal {
 
-double WallTimeInSeconds() {
-#ifdef CERES_USE_OPENMP
-  return omp_get_wtime();
-#else
-#ifdef _WIN32
-  LARGE_INTEGER count;
-  LARGE_INTEGER frequency;
-  QueryPerformanceCounter(&count);
-  QueryPerformanceFrequency(&frequency);
-  return static_cast<double>(count.QuadPart) /
-         static_cast<double>(frequency.QuadPart);
-#else
-  timeval time_val;
-  gettimeofday(&time_val, nullptr);
-  return (time_val.tv_sec + time_val.tv_usec * 1e-6);
-#endif
-#endif
-}
+// A linear operator which takes a matrix A and a diagonal vector D and
+// performs products of the form
+//
+//   (A^T A + D^T D)x
+//
+// This is used to implement iterative general sparse linear solving with
+// conjugate gradients, where A is the Jacobian and D is a regularizing
+// parameter. A brief proof is included in cgnr_linear_operator.h.
+class CERES_NO_EXPORT CudaCgnrLinearOperator final : public CudaLinearOperator {
+ public:
+  CudaCgnrLinearOperator(CudaLinearOperator* A,
+                         CudaVector* D)
+      : A_(A), D_(D) {}
 
-EventLogger::EventLogger(const std::string& logger_name) {
-  if (!VLOG_IS_ON(3)) {
-    return;
+  bool Init(ContextImpl* context, std::string* message) {
+    CHECK(message != nullptr);
+    return z_.Init(context, message);
   }
 
-  start_time_ = WallTimeInSeconds();
-  last_event_time_ = start_time_;
-  events_ = StringPrintf(
-      "\n%s\n                                        Delta   Cumulative\n",
-      logger_name.c_str());
-}
+  void RightMultiply(const CudaVector& x, CudaVector* y) final {
+    // z = Ax
+    z_.setZero();
+    A_->RightMultiply(x, &z_);
 
-EventLogger::~EventLogger() {
-  if (!VLOG_IS_ON(3)) {
-    return;
-  }
-  AddEvent("Total");
-  VLOG(3) << "\n" << events_ << "\n";
-}
+    // y = y + Atz
+    A_->LeftMultiply(z_, y);
 
-void EventLogger::AddEvent(const std::string& event_name) {
-  if (!VLOG_IS_ON(3)) {
-    return;
+    // y = y + DtDx
+    if (D_ != nullptr) {
+      y->DtDxpy(*D_, x);
+    }
   }
 
-  const double current_time = WallTimeInSeconds();
-  const double relative_time_delta = current_time - last_event_time_;
-  const double absolute_time_delta = current_time - start_time_;
-  last_event_time_ = current_time;
+  void LeftMultiply(const CudaVector& x, CudaVector* y) {
+    RightMultiply(x, y);
+  }
 
-  StringAppendF(&events_,
-                "  %30s : %10.5f   %10.5f\n",
-                event_name.c_str(),
-                relative_time_delta,
-                absolute_time_delta);
-}
+  int num_rows() const final { return A_->num_cols(); }
+  int num_cols() const final { return A_->num_cols(); }
+
+ private:
+  CudaLinearOperator* A_ = nullptr;
+  CudaVector* D_ = nullptr;
+  CudaVector z_;
+};
 
 }  // namespace ceres::internal
+
+#endif  // CERES_NO_CUDA
+
+#include "ceres/internal/reenable_warnings.h"
+
+#endif  // CERES_INTERNAL_CUDA_CGNR_LINEAR_OPERATOR_H_
