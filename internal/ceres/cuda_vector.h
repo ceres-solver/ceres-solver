@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,74 +26,91 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: vitus@google.com (Michael Vitus)
+// Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
+//
+// A simple CUDA vector class.
 
-#ifndef CERES_INTERNAL_CONTEXT_IMPL_H_
-#define CERES_INTERNAL_CONTEXT_IMPL_H_
+#ifndef CERES_INTERNAL_CUDA_VECTOR_H_
+#define CERES_INTERNAL_CUDA_VECTOR_H_
 
 // This include must come before any #ifndef check on Ceres compile options.
 // clang-format off
 #include "ceres/internal/config.h"
 // clang-format on
 
-#include <string>
+#include <math.h>
 
-#include "ceres/context.h"
-#include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
+#include "ceres/types.h"
+#include "ceres/context_impl.h"
 
 #ifndef CERES_NO_CUDA
-#include "cublas_v2.h"
-#include "cuda_runtime.h"
-#include "cusparse.h"
-#include "cusolverDn.h"
-#endif  // CERES_NO_CUDA
 
-#ifdef CERES_USE_CXX_THREADS
-#include "ceres/thread_pool.h"
-#endif  // CERES_USE_CXX_THREADS
+#include "ceres/cuda_buffer.h"
+#include "ceres/ceres_cuda_kernels.h"
+#include "ceres/internal/eigen.h"
+#include "cublas_v2.h"
+#include "cusparse.h"
 
 namespace ceres::internal {
 
-class CERES_NO_EXPORT ContextImpl final : public Context {
+// An Nx1 vector, denoted y hosted on the GPU, with CUDA-accelerated operations.
+class CERES_NO_EXPORT CudaVector {
  public:
-  ContextImpl();
-  ~ContextImpl() override;
-  void Cleanup();
-  ContextImpl(const ContextImpl&) = delete;
-  void operator=(const ContextImpl&) = delete;
+  CudaVector() = default;
+  ~CudaVector() = default;
 
-  // When compiled with C++ threading support, resize the thread pool to have
-  // at min(num_thread, num_hardware_threads) where num_hardware_threads is
-  // defined by the hardware.  Otherwise this call is a no-op.
-  void EnsureMinimumThreads(int num_threads);
+  bool Init(ContextImpl* context, std::string* message);
 
-#ifdef CERES_USE_CXX_THREADS
-  ThreadPool thread_pool;
-#endif  // CERES_USE_CXX_THREADS
+  void resize(int size);
 
-#ifndef CERES_NO_CUDA
-  // Initializes the cuSolverDN context, creates an asynchronous stream, and
-  // associates the stream with cuSolverDN. Returns true iff initialization was
-  // successful, else it returns false and a human-readable error message is
-  // returned.
-  bool InitCUDA(std::string* message);
+  // Return the inner product x' * y.
+  double dot(const CudaVector& x) const;
 
-  // Handle to the cuSOLVER context.
-  cusolverDnHandle_t cusolver_handle_ = nullptr;
-  // Handle to cuBLAS context.
-  cublasHandle_t cublas_handle_ = nullptr;
-  // CUDA device stream.
-  cudaStream_t stream_ = nullptr;
-  // Handle to cuSPARSE context.
-  cusparseHandle_t cusparse_handle_ = nullptr;
-  // Indicates whether all the CUDA resources have been initialized.
-  bool cuda_initialized_ = false;
-#endif  // CERES_NO_CUDA
+  // Return the L2 norm of the vector (||y||_2).
+  double norm() const;
+
+  // Set all elements to zero.
+  void setZero();
+
+  // Set y = x.
+  void CopyFrom(const CudaVector& x);
+
+  // Copy from Eigen vector.
+  void CopyFrom(const Vector& x);
+
+  // Copy to Eigen vector.
+  void CopyTo(Vector* x) const;
+
+  // y = a * x + y.
+  void Axpy(double a, const CudaVector& x);
+
+  // y = a * x + b * y.
+  void Axpby(double a, const CudaVector& x, double b);
+
+  // y = diag(d)' * diag(d) * x + y.
+  void DtDxpy(const CudaVector& D, const CudaVector& x);
+
+  int num_rows() const { return num_rows_; }
+  int num_cols() const { return 1; }
+
+  // Return the pointer to the GPU buffer.
+  const CudaBuffer<double>& data() const { return data_; }
+
+  const cusparseDnVecDescr_t& descr() const { return cusparse_descr_; }
+
+ private:
+  CudaVector(const CudaVector&) = delete;
+  CudaVector& operator=(const CudaVector&) = delete;
+
+  int num_rows_ = 0;
+  ContextImpl* context_ = nullptr;
+  CudaBuffer<double> data_;
+  // CuSparse object that describes this dense vector.
+  cusparseDnVecDescr_t cusparse_descr_ = nullptr;
 };
 
 }  // namespace ceres::internal
 
-#include "ceres/internal/reenable_warnings.h"
-
-#endif  // CERES_INTERNAL_CONTEXT_IMPL_H_
+#endif  // CERES_NO_CUDA
+#endif  // CERES_INTERNAL_CUDA_SPARSE_LINEAR_OPERATOR_H_

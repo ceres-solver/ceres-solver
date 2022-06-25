@@ -45,6 +45,21 @@ namespace ceres::internal {
 ContextImpl::ContextImpl() = default;
 
 #ifndef CERES_NO_CUDA
+void ContextImpl::Cleanup() {
+  if (cusolver_handle_ != nullptr) {
+    cusolverDnDestroy(cusolver_handle_);
+    cusolver_handle_ = nullptr;
+  }
+  if (cublas_handle_ != nullptr) {
+    cublasDestroy(cublas_handle_);
+    cublas_handle_ = nullptr;
+  }
+  if (stream_ != nullptr) {
+    cudaStreamDestroy(stream_);
+    stream_ = nullptr;
+  }
+}
+
 bool ContextImpl::InitCUDA(std::string* message) {
   if (cuda_initialized_) {
     return true;
@@ -57,31 +72,28 @@ bool ContextImpl::InitCUDA(std::string* message) {
   if (cusolverDnCreate(&cusolver_handle_) != CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnCreate failed.";
     cusolver_handle_ = nullptr;
-    cublasDestroy(cublas_handle_);
-    cublas_handle_ = nullptr;
+    Cleanup();
     return false;
   }
   if (cudaStreamCreateWithFlags(&stream_, cudaStreamNonBlocking) !=
       cudaSuccess) {
     *message = "CUDA::cudaStreamCreateWithFlags failed.";
-    cusolverDnDestroy(cusolver_handle_);
-    cublasDestroy(cublas_handle_);
-    cusolver_handle_ = nullptr;
-    cublas_handle_ = nullptr;
     stream_ = nullptr;
+    Cleanup();
+    return false;
+  }
+  if (cusparseCreate(&cusparse_handle_) != CUSPARSE_STATUS_SUCCESS) {
+    *message = "cuSPARSE::cusparseCreate failed.";
+    cusparse_handle_ = nullptr;
+    Cleanup();
     return false;
   }
   if (cusolverDnSetStream(cusolver_handle_, stream_) !=
           CUSOLVER_STATUS_SUCCESS ||
-      cublasSetStream(cublas_handle_, stream_) != CUBLAS_STATUS_SUCCESS) {
-    *message =
-        "cuSolverDN::cusolverDnSetStream or cuBLAS::cublasSetStream failed.";
-    cusolverDnDestroy(cusolver_handle_);
-    cublasDestroy(cublas_handle_);
-    cudaStreamDestroy(stream_);
-    cusolver_handle_ = nullptr;
-    cublas_handle_ = nullptr;
-    stream_ = nullptr;
+      cublasSetStream(cublas_handle_, stream_) != CUBLAS_STATUS_SUCCESS ||
+      cusparseSetStream(cusparse_handle_, stream_) != CUSPARSE_STATUS_SUCCESS) {
+    *message = "CUDA [Solver|BLAS|Sparse] SetStream failed.";
+    Cleanup();
     return false;
   }
   cuda_initialized_ = true;
