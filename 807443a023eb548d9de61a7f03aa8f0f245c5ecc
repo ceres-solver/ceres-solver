@@ -16,6 +16,24 @@
       "message": "Updated the commit message with performance numbers.\n\nSome high-level questions + comments:\n- I just realized that the full report does not currently report when a mixed precision solver is used. How about adding a suffix after the \"Dense linear algebra library\" result? e.g.:\n  Dense linear algebra library             CUDA (FP64-FP32 Mixed Precision)\nI could add that in a revision to this patch.\n- The current ScopedTimers used in the solvers don\u0027t report cumulative times, they just log times per execution. Getting a cumulative time across all minimizer iterations as this patch does, is actually quite difficult without the patch.\n- I think there is value in reporting the cumulative breakdown times of the linear solver, since it reveals a clearer picture of how much of a potential benefit changing underlying linear algebra libraries makes, and that will affect production decisions like to run with / without GPUs, with what CPUs, with what libraries, etc. For example, it shows that for a large problem like problem-744-543562-pre.txt, providing more CPU cores for the Schur elimination has a greater performance impact than adding a GPU based solver.\n",
       "revId": "807443a023eb548d9de61a7f03aa8f0f245c5ecc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "407f1e58_f3598efa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-07T15:35:19Z",
+      "side": 1,
+      "message": "I think you can add a mixed precision annotation to the linear solver name, that would be useful.\n\n\nA mixed precision solver is an iterative solver, so we should treat it as such, so we should report the number of backsolves/iterations as part of the the number of iterations reported by the linearsolver::summary and then it will get automatically printed as part of the log.\n\nThe current Report is already quite long and I am loathe to make it longer. \n\nI think of the report as a coarse profile. So a cumulative linear solver time is good enough for most uses. When one sees thats where most of the time is going, then running the solver with -v\u003d3. This is why all the linear solvers are instrumented. \n\nThe breakdown you are talking about is useful to the developer but not necessarily the user of mixed precision solves.",
+      "parentUuid": "e277c370_81add2e9",
+      "revId": "807443a023eb548d9de61a7f03aa8f0f245c5ecc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

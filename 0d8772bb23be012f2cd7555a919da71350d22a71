@@ -150,6 +150,30 @@
       },
       "revId": "0d8772bb23be012f2cd7555a919da71350d22a71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef248429_7d602e62",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-07T15:35:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "025d6e14_67e26f4f",
+      "range": {
+        "startLine": 160,
+        "startChar": 14,
+        "endLine": 160,
+        "endChar": 32
+      },
+      "revId": "0d8772bb23be012f2cd7555a919da71350d22a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
