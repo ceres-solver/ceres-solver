@@ -16,6 +16,92 @@
       "message": "Some performance numbers from\n`./bin/bundle_adjuster --input ../data/problem-257-65132-pre.txt --linear_solver dense_schur --dense_linear_algebra_library [lapack|cuda] --num_threads 30 --num_iterations 20 [--mixed_precision_solves]`:\n\nThis is on a desktop with a Core i9-9940X and an Nvidia RTX 6000.\n\n```\nLAPACK (OpenBLAS):\n  Linear solver                      2.382664 (20)\n  ├ Schur eliminate                  1.004291 (20)\n  ├ Reduced solve                    1.077322 (20)\n  └ Backsubstitute                   0.268680 (20)\n```\n\nCUDA FP64:\n```\n  Linear solver                      1.826328 (20)\n  ├ Schur eliminate                  1.020224 (20)\n  ├ Reduced solve                    0.679327 (20)\n  └ Backsubstitute                   0.092785 (20)\n```\n\nCUDA Mixed Precision:\n```\n  Linear solver                      1.344467 (20)\n  ├ Schur eliminate                  1.027418 (20)\n  ├ Reduced solve                    0.195330 (20)\n  └ Backsubstitute                   0.087665 (20)\n```",
       "revId": "0d8772bb23be012f2cd7555a919da71350d22a71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8357b3dd_ae3137ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-07T05:08:28Z",
+      "side": 1,
+      "message": "quick API comments, I do not think you need to pipe everything out.\nsee example of ScopedTimer usage in other linear solvers and expose the number of mixed precision solvers as part of number of iterations for the linear solver.\n\nalso add the performance numbers to the commit log please.\n\nit would be good to do this for a number of problems.",
+      "revId": "0d8772bb23be012f2cd7555a919da71350d22a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dd612e7_8f9a8f8b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-07T05:08:28Z",
+      "side": 1,
+      "message": "ugh. But how was this working before?",
+      "range": {
+        "startLine": 149,
+        "startChar": 11,
+        "endLine": 149,
+        "endChar": 21
+      },
+      "revId": "0d8772bb23be012f2cd7555a919da71350d22a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "544c3e83_ed60f5c0",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-07T05:08:28Z",
+      "side": 1,
+      "message": "I do not think this needs to exposed here (timer or number of solves information, because generally speaking its not useful. If you want to expose it, we have number of linear solver iterations we can use that, and it will get logged as part of the iteration display.). This information is available if you run the solver and use vlog(3), we use the scopedtimer object to do this.",
+      "range": {
+        "startLine": 893,
+        "startChar": 7,
+        "endLine": 893,
+        "endChar": 11
+      },
+      "revId": "0d8772bb23be012f2cd7555a919da71350d22a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8afbc2d4_530f01dc",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-07T05:08:28Z",
+      "side": 1,
+      "message": "how does cmake know to use the cuda compiler to compile these?",
+      "range": {
+        "startLine": 160,
+        "startChar": 14,
+        "endLine": 160,
+        "endChar": 32
+      },
+      "revId": "0d8772bb23be012f2cd7555a919da71350d22a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
