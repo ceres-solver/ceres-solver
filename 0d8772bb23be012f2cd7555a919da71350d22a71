@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "919a843d_f198dd81",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-07T14:50:21Z",
+      "side": 1,
+      "message": "It worked because we weren\u0027t using the other connotation -- as a language definition to compile custom kernels. I realized this when I enabled the `CUDA` language definition to compile the custom kernels, and all hell broke loose!",
+      "parentUuid": "0dd612e7_8f9a8f8b",
+      "range": {
+        "startLine": 149,
+        "startChar": 11,
+        "endLine": 149,
+        "endChar": 21
+      },
+      "revId": "0d8772bb23be012f2cd7555a919da71350d22a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "544c3e83_ed60f5c0",
@@ -94,6 +118,30 @@
       "writtenOn": "2022-07-07T05:08:28Z",
       "side": 1,
       "message": "how does cmake know to use the cuda compiler to compile these?",
+      "range": {
+        "startLine": 160,
+        "startChar": 14,
+        "endLine": 160,
+        "endChar": 32
+      },
+      "revId": "0d8772bb23be012f2cd7555a919da71350d22a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "025d6e14_67e26f4f",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-07T14:50:21Z",
+      "side": 1,
+      "message": "It checks the file extension (`.cu` for cuda). To make this clearer, I added an explicit property marking it as a Cuda file.",
+      "parentUuid": "8afbc2d4_530f01dc",
       "range": {
         "startLine": 160,
         "startChar": 14,
