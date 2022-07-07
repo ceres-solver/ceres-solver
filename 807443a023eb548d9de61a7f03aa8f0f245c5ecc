@@ -69,6 +69,70 @@
       "parentUuid": "407f1e58_f3598efa",
       "revId": "807443a023eb548d9de61a7f03aa8f0f245c5ecc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b0345ef_3807b49c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-07T18:11:38Z",
+      "side": 1,
+      "message": "so currently we only log per call to the linear solver. I think that would be sufficient. Trying to aggregate across varying number of linear solver iterations is not terribly useful, at that point you can just log the total cost of the linear solver which we already do.",
+      "parentUuid": "a13dd8dd_bf2661c0",
+      "revId": "807443a023eb548d9de61a7f03aa8f0f245c5ecc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "731686de_18c3b0a0",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-07T18:11:38Z",
+      "side": 1,
+      "message": "be sure to update the building/installation docs too please.",
+      "range": {
+        "startLine": 150,
+        "startChar": 7,
+        "endLine": 150,
+        "endChar": 15
+      },
+      "revId": "807443a023eb548d9de61a7f03aa8f0f245c5ecc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac00180e_5f0efd22",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-07T18:11:38Z",
+      "side": 1,
+      "message": "Update this section, we can also do this in a follow up CL in which case leave a TODO and file a github bug to track it.",
+      "range": {
+        "startLine": 574,
+        "startChar": 7,
+        "endLine": 574,
+        "endChar": 11
+      },
+      "revId": "807443a023eb548d9de61a7f03aa8f0f245c5ecc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
