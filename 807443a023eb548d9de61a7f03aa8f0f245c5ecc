@@ -34,6 +34,41 @@
       "parentUuid": "e277c370_81add2e9",
       "revId": "807443a023eb548d9de61a7f03aa8f0f245c5ecc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92629094_1de32927",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-07T17:52:03Z",
+      "side": 1,
+      "message": "Responses inline, if the proposed changes sound good, I\u0027ll go ahead and implement them, thanks!",
+      "revId": "807443a023eb548d9de61a7f03aa8f0f245c5ecc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a13dd8dd_bf2661c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-07T17:52:03Z",
+      "side": 1,
+      "message": "Mixed precision annotation - will do.\n\nNumber of refinement iterations - yes, good point. I\u0027ll add that.\n\nReport: Okay I see - then how about this:\n- I remove the detailed reporting from the Report\n- I keep the cumulative execution counter in the solver itself, and log it with VLOG(3) if it isn\u0027t already (I\u0027ll check).\nThis will ensure that we don\u0027t increase the Report, while still having the cumulative detailed timings for devs to access with --v 3.",
+      "parentUuid": "407f1e58_f3598efa",
+      "revId": "807443a023eb548d9de61a7f03aa8f0f245c5ecc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

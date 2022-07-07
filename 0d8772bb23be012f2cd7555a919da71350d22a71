@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "08242221_1bcf4288",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-07T17:52:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8357b3dd_ae3137ba",
+      "revId": "0d8772bb23be012f2cd7555a919da71350d22a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0dd612e7_8f9a8f8b",
@@ -95,6 +113,30 @@
       "writtenOn": "2022-07-07T05:08:28Z",
       "side": 1,
       "message": "I do not think this needs to exposed here (timer or number of solves information, because generally speaking its not useful. If you want to expose it, we have number of linear solver iterations we can use that, and it will get logged as part of the iteration display.). This information is available if you run the solver and use vlog(3), we use the scopedtimer object to do this.",
+      "range": {
+        "startLine": 893,
+        "startChar": 7,
+        "endLine": 893,
+        "endChar": 11
+      },
+      "revId": "0d8772bb23be012f2cd7555a919da71350d22a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30f9033a_e2183aa8",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-07T17:52:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "544c3e83_ed60f5c0",
       "range": {
         "startLine": 893,
         "startChar": 7,
