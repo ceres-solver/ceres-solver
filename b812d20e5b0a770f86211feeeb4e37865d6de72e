@@ -472,6 +472,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e126cc2_c94a1784",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-07T01:44:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51e0c12c_e04d9f4d",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72e105c5_a70d6499",

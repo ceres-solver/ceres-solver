@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0d078d6_d2f70cd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-07T01:44:22Z",
+      "side": 1,
+      "message": "Some performance numbers from\n`./bin/bundle_adjuster --input ../data/problem-257-65132-pre.txt --linear_solver dense_schur --dense_linear_algebra_library [lapack|cuda] --num_threads 30 --num_iterations 20 [--mixed_precision_solves]`:\n\nThis is on a desktop with a Core i9-9940X and an Nvidia RTX 6000.\n\n```\nLAPACK (OpenBLAS):\n  Linear solver                      2.382664 (20)\n  ├ Schur eliminate                  1.004291 (20)\n  ├ Reduced solve                    1.077322 (20)\n  └ Backsubstitute                   0.268680 (20)\n```\n\nCUDA FP64:\n```\n  Linear solver                      1.826328 (20)\n  ├ Schur eliminate                  1.020224 (20)\n  ├ Reduced solve                    0.679327 (20)\n  └ Backsubstitute                   0.092785 (20)\n```\n\nCUDA Mixed Precision:\n```\n  Linear solver                      1.344467 (20)\n  ├ Schur eliminate                  1.027418 (20)\n  ├ Reduced solve                    0.195330 (20)\n  └ Backsubstitute                   0.087665 (20)\n```",
+      "revId": "0d8772bb23be012f2cd7555a919da71350d22a71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
