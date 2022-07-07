@@ -379,6 +379,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "571d81cd_d30ea59b",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-07T01:46:10Z",
+      "side": 1,
+      "message": "If it is okay to have an additional library object (.a / .so) for ceres_cuda_kernels from the main ceres library, this should suffice for us, and side-steps the CMake bug and CUDA compiler limitations.",
+      "parentUuid": "172a3c6c_7514e6f0",
+      "range": {
+        "startLine": 152,
+        "startChar": 45,
+        "endLine": 152,
+        "endChar": 51
+      },
+      "revId": "b812d20e5b0a770f86211feeeb4e37865d6de72e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "30ea4a01_666b84a0",
         "filename": "internal/ceres/ceres_cuda_kernels.h",
         "patchSetId": 2
