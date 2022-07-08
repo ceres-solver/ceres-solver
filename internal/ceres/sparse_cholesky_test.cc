@@ -203,7 +203,7 @@ INSTANTIATE_TEST_SUITE_P(
 
 #if !defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_CHOLMOD_PARTITION)
 INSTANTIATE_TEST_SUITE_P(
-    SuiteSparseCholesky,
+    SuiteSparseCholeskyMETIS,
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(SUITE_SPARSE),
                        ::testing::Values(OrderingType::NESDIS),
