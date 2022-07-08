@@ -196,11 +196,20 @@ INSTANTIATE_TEST_SUITE_P(
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(SUITE_SPARSE),
                        ::testing::Values(OrderingType::AMD,
-                                         OrderingType::NESDIS,
                                          OrderingType::NATURAL),
                        ::testing::Values(true, false)),
     ParamInfoToString);
 #endif
+
+#if !defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_CHOLMOD_PARTITION)
+INSTANTIATE_TEST_SUITE_P(
+    SuiteSparseCholesky,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(SUITE_SPARSE),
+                       ::testing::Values(OrderingType::NESDIS),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
+#endif  // !defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_CHOLMOD_PARTITION)
 
 #ifndef CERES_NO_ACCELERATE_SPARSE
 INSTANTIATE_TEST_SUITE_P(
