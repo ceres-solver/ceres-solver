@@ -33,6 +33,23 @@
       "message": "Ah, I missed the iteration reporting, sorry, please wait until that is complete.\n",
       "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d986413a_4f0ed4cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-09T21:37:19Z",
+      "side": 1,
+      "message": "Sorry I might be missing it entirely, but there doesn\u0027t seem to an existing report entry or variable under Solver::Summary that reports things like iterative solver num iterations or number of refinement steps. Could you point me to which part of the report you had in mind to reuse?\n\nThe existing iterative refiner does not seem to report back the number of refinement steps used: https://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/iterative_refiner.cc#L60\n\n",
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
