@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b45bdc6_43ee3492",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-09T03:13:02Z",
+      "side": 1,
+      "message": "I think I\u0027ve addressed all the comments so far, please take a look.",
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
