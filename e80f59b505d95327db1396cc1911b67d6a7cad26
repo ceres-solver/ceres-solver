@@ -68,6 +68,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUD0CeZwmgGzUVTDtT\u003deh1CoQpuQ93K8\u003dtAcq2KjRZva0w@mail.gmail.com\u003e",
       "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f91b121f_c0621d57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-10T00:31:49Z",
+      "side": 1,
+      "message": "Ah, I see. However, if I am reading it correctly, that feature is only exposed by ITERATIVE_SCHUR and CGNR currently. \nAll other linear solvers hard-code it to 1:\nhttps://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/schur_complement_solver.cc#L344\nhttps://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/dense_normal_cholesky_solver.cc#L81\n\nChanging this will require changing the API for how \"non-iterative\" solvers are called, so that they can return a number of iterations, for example, when called like this:\nhttps://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/dense_normal_cholesky_solver.cc#L82\n\nHere\u0027s a potential solution to this: how about if we change the API so that the SolveImpl of all low-level solvers (e.g. DenseCholesky) return a full LinearSolver::Summary object instead of just the LinearSolverTerminationType?",
+      "parentUuid": "4674d823_bec1639e",
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
