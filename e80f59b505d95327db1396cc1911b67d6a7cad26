@@ -86,6 +86,524 @@
       "parentUuid": "4674d823_bec1639e",
       "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17bd3543_7e2e2f90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "sure we can do that but lets do that in a follow up cl.",
+      "parentUuid": "f91b121f_c0621d57",
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93a1ee1d_bb924bd0",
+        "filename": "internal/ceres/ceres_cuda_kernels.cu",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "where does this magic value come from? also why not constexpr?",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5971dc01_f0fca052",
+        "filename": "internal/ceres/ceres_cuda_kernels.cu",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "cuda does not provide a kernel for this?",
+      "range": {
+        "startLine": 38,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c2f9118_ce856fc7",
+        "filename": "internal/ceres/ceres_cuda_kernels.cu",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "Google styleguide requires lower case variable names.",
+      "range": {
+        "startLine": 41,
+        "startChar": 42,
+        "endLine": 41,
+        "endChar": 51
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dce528c_570ca1ab",
+        "filename": "internal/ceres/ceres_cuda_kernels.cu",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "doesn\u0027t cuda have a setzero call?",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42b6712c_3052406a",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "ceres::internal is a fine name space why are you introducing a new namespace here?",
+      "range": {
+        "startLine": 37,
+        "startChar": 10,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5a4c8a6_da78f57c",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "add documentation, its not clear reading the function signature what array is on the cpu and which is on the gpu.",
+      "range": {
+        "startLine": 39,
+        "startChar": 5,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8224ce09_2559c88f",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "this is not really saxpy, this is just sum no?",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 13
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03f6224f_cdf9861c",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "add documentation for how you arrived at this solution/problem here and below.",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 4
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e810de6a_8f7281b2",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "why not provide the whole options object to the constructor? instead of only providing the context and then modifying its internal state like this?",
+      "range": {
+        "startLine": 341,
+        "startChar": 41,
+        "endLine": 341,
+        "endChar": 71
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9597180b_c5b1ce93",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "give this a more readable name.",
+      "range": {
+        "startLine": 364,
+        "startChar": 61,
+        "endLine": 364,
+        "endChar": 71
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8333c6fc_7d8549c2",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "no need for else here since you are returning above.",
+      "range": {
+        "startLine": 404,
+        "startChar": 4,
+        "endLine": 404,
+        "endChar": 8
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe2ae08a_b9c3da8a",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "why not give this a more readable name?",
+      "range": {
+        "startLine": 415,
+        "startChar": 61,
+        "endLine": 415,
+        "endChar": 71
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55643606_bc8f4695",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "why not have CudaSpotrf also populate message on success?",
+      "range": {
+        "startLine": 470,
+        "startChar": 13,
+        "endLine": 470,
+        "endChar": 14
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c16ee33d_034ef9b8",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "a bunch of these comments are redundant, as long as your variable name makes it obvious you can skip the comment.",
+      "range": {
+        "startLine": 220,
+        "startChar": 12,
+        "endLine": 220,
+        "endChar": 14
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4ec7a21_95c7eb27",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "for variables which do not have two variants, why bother with the 32/64 variant?",
+      "range": {
+        "startLine": 241,
+        "startChar": 21,
+        "endLine": 241,
+        "endChar": 28
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f10028e2_cae4b17c",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "this is not a great variable name.",
+      "range": {
+        "startLine": 243,
+        "startChar": 20,
+        "endLine": 243,
+        "endChar": 27
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9547a761_1dd5ef9e",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "NoMixedPrecision -\u003e FullPrecision",
+      "range": {
+        "startLine": 58,
+        "startChar": 56,
+        "endLine": 58,
+        "endChar": 72
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e653ccaa_13dca05d",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "make 4 a named constant.",
+      "range": {
+        "startLine": 79,
+        "startChar": 44,
+        "endLine": 79,
+        "endChar": 45
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63fc49e6_735922f7",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "make true and false named constants.",
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbecb166_f622e3a6",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "this is not always possible, it depends on the sparse linear algebra backend, I think only eigen supports this right now. please check.",
+      "range": {
+        "startLine": 132,
+        "startChar": 16,
+        "endLine": 132,
+        "endChar": 34
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24dc1559_f64fcddc",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "I think as a baseline it would be worth adding these for CPU also. If suspect that you will get similar improvements on the CPU also.",
+      "range": {
+        "startLine": 138,
+        "startChar": 16,
+        "endLine": 138,
+        "endChar": 34
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88b45777_c9748df1",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-10T04:49:05Z",
+      "side": 1,
+      "message": "consdier just adding (Mixed Precision) as a suffix to the name of the linear solver below rather than adding another line here.",
+      "range": {
+        "startLine": 744,
+        "startChar": 24,
+        "endLine": 744,
+        "endChar": 25
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
