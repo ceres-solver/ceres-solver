@@ -57,6 +57,17 @@ extern "C" void dpotrs_(const char* uplo,
                         double* b,
                         const int* ldb,
                         int* info);
+extern "C" void spotrf_(
+    const char* uplo, const int* n, float* a, const int* lda, int* info);
+
+extern "C" void spotrs_(const char* uplo,
+                        const int* n,
+                        const int* nrhs,
+                        const float* a,
+                        const int* lda,
+                        float* b,
+                        const int* ldb,
+                        int* info);
 #endif
 
 namespace ceres::internal {
@@ -137,6 +148,33 @@ LinearSolverTerminationType EigenDenseCholesky::Solve(const double* rhs,
   return LinearSolverTerminationType::SUCCESS;
 }
 
+LinearSolverTerminationType FloatEigenDenseCholesky::Factorize(
+    int num_cols, double* lhs, std::string* message) {
+  lhs_ = Eigen::Map<Eigen::MatrixXd>(lhs, num_cols, num_cols).cast<float>();
+  llt_ = std::make_unique<LLTType>(lhs_);
+  if (llt_->info() != Eigen::Success) {
+    *message = "Eigen failure. Unable to perform dense Cholesky factorization.";
+    return LinearSolverTerminationType::FAILURE;
+  }
+
+  *message = "Success.";
+  return LinearSolverTerminationType::SUCCESS;
+}
+
+LinearSolverTerminationType FloatEigenDenseCholesky::Solve(
+    const double* rhs, double* solution, std::string* message) {
+  if (llt_->info() != Eigen::Success) {
+    *message = "Eigen failure. Unable to perform dense Cholesky factorization.";
+    return LinearSolverTerminationType::FAILURE;
+  }
+
+  VectorRef(solution, llt_->cols()) =
+      llt_->solve(ConstVectorRef(rhs, llt_->cols()).cast<float>())
+          .cast<double>();
+  *message = "Success.";
+  return LinearSolverTerminationType::SUCCESS;
+}
+
 #ifndef CERES_NO_LAPACK
 LinearSolverTerminationType LAPACKDenseCholesky::Factorize(
     int num_cols, double* lhs, std::string* message) {
@@ -173,7 +211,7 @@ LinearSolverTerminationType LAPACKDenseCholesky::Solve(const double* rhs,
   const int nrhs = 1;
   int info = 0;
 
-  std::copy_n(rhs, num_cols_, solution);
+  VectorRef(solution, num_cols_) = ConstVectorRef(rhs, num_cols_);
   dpotrs_(
       &uplo, &num_cols_, &nrhs, lhs_, &num_cols_, solution, &num_cols_, &info);
 
@@ -188,6 +226,64 @@ LinearSolverTerminationType LAPACKDenseCholesky::Solve(const double* rhs,
   *message = "Success";
   termination_type_ = LinearSolverTerminationType::SUCCESS;
 
+  return termination_type_;
+}
+
+LinearSolverTerminationType FloatLAPACKDenseCholesky::Factorize(
+    int num_cols, double* lhs, std::string* message) {
+  lhs_ = Eigen::Map<Eigen::MatrixXd>(lhs, num_cols, num_cols).cast<float>();
+  num_cols_ = num_cols;
+
+  const char uplo = 'L';
+  int info = 0;
+  spotrf_(&uplo, &num_cols_, lhs_.data(), &num_cols_, &info);
+
+  if (info < 0) {
+    termination_type_ = LinearSolverTerminationType::FATAL_ERROR;
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
+               << "Please report it. "
+               << "LAPACK::spotrf fatal error. "
+               << "Argument: " << -info << " is invalid.";
+  } else if (info > 0) {
+    termination_type_ = LinearSolverTerminationType::FAILURE;
+    *message = StringPrintf(
+        "LAPACK::spotrf numerical failure. "
+        "The leading minor of order %d is not positive definite.",
+        info);
+  } else {
+    termination_type_ = LinearSolverTerminationType::SUCCESS;
+    *message = "Success.";
+  }
+  return termination_type_;
+}
+
+LinearSolverTerminationType FloatLAPACKDenseCholesky::Solve(
+    const double* rhs, double* solution, std::string* message) {
+  const char uplo = 'L';
+  const int nrhs = 1;
+  int info = 0;
+  solution_ = ConstVectorRef(rhs, num_cols_).cast<float>();
+  std::copy_n(rhs, num_cols_, solution);
+  spotrs_(&uplo,
+          &num_cols_,
+          &nrhs,
+          lhs_.data(),
+          &num_cols_,
+          solution_.data(),
+          &num_cols_,
+          &info);
+
+  if (info < 0) {
+    termination_type_ = LinearSolverTerminationType::FATAL_ERROR;
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
+               << "Please report it. "
+               << "LAPACK::dpotrs fatal error. "
+               << "Argument: " << -info << " is invalid.";
+  }
+
+  *message = "Success";
+  termination_type_ = LinearSolverTerminationType::SUCCESS;
+  VectorRef(solution, num_cols_) = solution_.cast<double>();
   return termination_type_;
 }
 

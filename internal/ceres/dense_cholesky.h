@@ -114,6 +114,22 @@ class CERES_NO_EXPORT EigenDenseCholesky final : public DenseCholesky {
   std::unique_ptr<LLTType> llt_;
 };
 
+class CERES_NO_EXPORT FloatEigenDenseCholesky final : public DenseCholesky {
+ public:
+  LinearSolverTerminationType Factorize(int num_cols,
+                                        double* lhs,
+                                        std::string* message) override;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override;
+
+ private:
+  Eigen::MatrixXf lhs_;
+  Eigen::VectorXf solution_;
+  using LLTType = Eigen::LLT<Eigen::MatrixXf, Eigen::Lower>;
+  std::unique_ptr<LLTType> llt_;
+};
+
 #ifndef CERES_NO_LAPACK
 class CERES_NO_EXPORT LAPACKDenseCholesky final : public DenseCholesky {
  public:
@@ -126,6 +142,23 @@ class CERES_NO_EXPORT LAPACKDenseCholesky final : public DenseCholesky {
 
  private:
   double* lhs_ = nullptr;
+  int num_cols_ = -1;
+  LinearSolverTerminationType termination_type_ =
+      LinearSolverTerminationType::FATAL_ERROR;
+};
+
+class CERES_NO_EXPORT FloatLAPACKDenseCholesky final : public DenseCholesky {
+ public:
+  LinearSolverTerminationType Factorize(int num_cols,
+                                        double* lhs,
+                                        std::string* message) override;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override;
+
+ private:
+  Eigen::MatrixXf lhs_;
+  Eigen::VectorXf solution_;
   int num_cols_ = -1;
   LinearSolverTerminationType termination_type_ =
       LinearSolverTerminationType::FATAL_ERROR;
