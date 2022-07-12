@@ -106,6 +106,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16761c2d_286ee114",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "17bd3543_7e2e2f90",
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93a1ee1d_bb924bd0",
@@ -119,6 +137,30 @@
       "writtenOn": "2022-07-10T04:49:05Z",
       "side": 1,
       "message": "where does this magic value come from? also why not constexpr?",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a5d07a7_a626305a",
+        "filename": "internal/ceres/ceres_cuda_kernels.cu",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "I\u0027ve added some explanation in the comments to explain this.",
+      "parentUuid": "93a1ee1d_bb924bd0",
       "range": {
         "startLine": 35,
         "startChar": 17,
@@ -152,6 +194,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f76f0ce_b10ff5ae",
+        "filename": "internal/ceres/ceres_cuda_kernels.cu",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Sorry, no",
+      "parentUuid": "5971dc01_f0fca052",
+      "range": {
+        "startLine": 38,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c2f9118_ce856fc7",
@@ -165,6 +231,30 @@
       "writtenOn": "2022-07-10T04:49:05Z",
       "side": 1,
       "message": "Google styleguide requires lower case variable names.",
+      "range": {
+        "startLine": 41,
+        "startChar": 42,
+        "endLine": 41,
+        "endChar": 51
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d9c487a_2d14a922",
+        "filename": "internal/ceres/ceres_cuda_kernels.cu",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "These are not variables created by the user - they are built-in variables provided by the CUDA language extensions.",
+      "parentUuid": "9c2f9118_ce856fc7",
       "range": {
         "startLine": 41,
         "startChar": 42,
@@ -198,6 +288,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d628230_2e4f7f37",
+        "filename": "internal/ceres/ceres_cuda_kernels.cu",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "There is only a low-level memzero equivalent. This is type-safe, and we can also use it for things like Jets in the future where zero representations do not correspond to all 0 memory values.",
+      "parentUuid": "2dce528c_570ca1ab",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "42b6712c_3052406a",
@@ -211,6 +325,30 @@
       "writtenOn": "2022-07-10T04:49:05Z",
       "side": 1,
       "message": "ceres::internal is a fine name space why are you introducing a new namespace here?",
+      "range": {
+        "startLine": 37,
+        "startChar": 10,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "225ef6dd_5fad6da7",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "I thought it would be good to somehow indicate that these functions are compiled separately by the cuda compiler. I\u0027ll change it to ceres::internal.",
+      "parentUuid": "42b6712c_3052406a",
       "range": {
         "startLine": 37,
         "startChar": 10,
@@ -244,6 +382,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6ee0313_2623c6d3",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5a4c8a6_da78f57c",
+      "range": {
+        "startLine": 39,
+        "startChar": 5,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8224ce09_2559c88f",
@@ -257,6 +419,30 @@
       "writtenOn": "2022-07-10T04:49:05Z",
       "side": 1,
       "message": "this is not really saxpy, this is just sum no?",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 13
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbb2980a_36aa75d9",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "That\u0027s right - how about sxpy?",
+      "parentUuid": "8224ce09_2559c88f",
       "range": {
         "startLine": 55,
         "startChar": 12,
@@ -290,6 +476,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28b8587d_361ba620",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03f6224f_cdf9861c",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 4
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e810de6a_8f7281b2",
@@ -303,6 +513,30 @@
       "writtenOn": "2022-07-10T04:49:05Z",
       "side": 1,
       "message": "why not provide the whole options object to the constructor? instead of only providing the context and then modifying its internal state like this?",
+      "range": {
+        "startLine": 341,
+        "startChar": 41,
+        "endLine": 341,
+        "endChar": 71
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30fcec09_7bd2920d",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e810de6a_8f7281b2",
       "range": {
         "startLine": 341,
         "startChar": 41,
@@ -336,6 +570,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f1eca86_b7b1254b",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9597180b_c5b1ce93",
+      "range": {
+        "startLine": 364,
+        "startChar": 61,
+        "endLine": 364,
+        "endChar": 71
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8333c6fc_7d8549c2",
@@ -349,6 +607,30 @@
       "writtenOn": "2022-07-10T04:49:05Z",
       "side": 1,
       "message": "no need for else here since you are returning above.",
+      "range": {
+        "startLine": 404,
+        "startChar": 4,
+        "endLine": 404,
+        "endChar": 8
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02c249b6_4dce832d",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "There are three cases: error \u003e 0, error \u003c 0, error \u003d\u003d 0. All three are different cases, I don\u0027t think any of the previous returns cover all three, unless I\u0027m misunderstanding it.",
+      "parentUuid": "8333c6fc_7d8549c2",
       "range": {
         "startLine": 404,
         "startChar": 4,
@@ -382,6 +664,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3205c1c5_229630ed",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe2ae08a_b9c3da8a",
+      "range": {
+        "startLine": 415,
+        "startChar": 61,
+        "endLine": 415,
+        "endChar": 71
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55643606_bc8f4695",
@@ -395,6 +701,30 @@
       "writtenOn": "2022-07-10T04:49:05Z",
       "side": 1,
       "message": "why not have CudaSpotrf also populate message on success?",
+      "range": {
+        "startLine": 470,
+        "startChar": 13,
+        "endLine": 470,
+        "endChar": 14
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2376e991_f239cd62",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55643606_bc8f4695",
       "range": {
         "startLine": 470,
         "startChar": 13,
@@ -428,6 +758,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79e19186_0f278e37",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c16ee33d_034ef9b8",
+      "range": {
+        "startLine": 220,
+        "startChar": 12,
+        "endLine": 220,
+        "endChar": 14
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4ec7a21_95c7eb27",
@@ -441,6 +795,30 @@
       "writtenOn": "2022-07-10T04:49:05Z",
       "side": 1,
       "message": "for variables which do not have two variants, why bother with the 32/64 variant?",
+      "range": {
+        "startLine": 241,
+        "startChar": 21,
+        "endLine": 241,
+        "endChar": 28
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf4ca2f9_42bf315f",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Just to be clear what precision each is operating in, I think it is preferable to explicitly annotate them when using them in a mixed precision solver. This follows the convention of algorithm listings of mixed precision solvers in papers, e.g. the cited paper.",
+      "parentUuid": "b4ec7a21_95c7eb27",
       "range": {
         "startLine": 241,
         "startChar": 21,
@@ -474,6 +852,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "21108182_416e0386",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f10028e2_cae4b17c",
+      "range": {
+        "startLine": 243,
+        "startChar": 20,
+        "endLine": 243,
+        "endChar": 27
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9547a761_1dd5ef9e",
@@ -487,6 +889,30 @@
       "writtenOn": "2022-07-10T04:49:05Z",
       "side": 1,
       "message": "NoMixedPrecision -\u003e FullPrecision",
+      "range": {
+        "startLine": 58,
+        "startChar": 56,
+        "endLine": 58,
+        "endChar": 72
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1778e98_9f715705",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9547a761_1dd5ef9e",
       "range": {
         "startLine": 58,
         "startChar": 56,
@@ -520,6 +946,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0698b20d_4d4a1388",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e653ccaa_13dca05d",
+      "range": {
+        "startLine": 79,
+        "startChar": 44,
+        "endLine": 79,
+        "endChar": 45
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63fc49e6_735922f7",
@@ -537,6 +987,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef070ca7_33ba80f1",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63fc49e6_735922f7",
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbecb166_f622e3a6",
@@ -550,6 +1018,30 @@
       "writtenOn": "2022-07-10T04:49:05Z",
       "side": 1,
       "message": "this is not always possible, it depends on the sparse linear algebra backend, I think only eigen supports this right now. please check.",
+      "range": {
+        "startLine": 132,
+        "startChar": 16,
+        "endLine": 132,
+        "endChar": 34
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26da9129_4f3f4749",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Got it, looks like only Suitesparse does not implement mixed precision at the moment. Corrected accordingly.",
+      "parentUuid": "cbecb166_f622e3a6",
       "range": {
         "startLine": 132,
         "startChar": 16,
@@ -583,6 +1075,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "867ba1e7_ded755a3",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "24dc1559_f64fcddc",
+      "range": {
+        "startLine": 138,
+        "startChar": 16,
+        "endLine": 138,
+        "endChar": 34
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88b45777_c9748df1",
@@ -596,6 +1112,30 @@
       "writtenOn": "2022-07-10T04:49:05Z",
       "side": 1,
       "message": "consdier just adding (Mixed Precision) as a suffix to the name of the linear solver below rather than adding another line here.",
+      "range": {
+        "startLine": 744,
+        "startChar": 24,
+        "endLine": 744,
+        "endChar": 25
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af8eed8a_ccae39ca",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-12T06:58:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88b45777_c9748df1",
       "range": {
         "startLine": 744,
         "startChar": 24,
