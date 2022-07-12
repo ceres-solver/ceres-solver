@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de6970c9_80db70ff",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-12T15:18:17Z",
+      "side": 1,
+      "message": "trailing space.",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 11
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d88276d2_9ecf014b",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-12T15:18:17Z",
+      "side": 1,
+      "message": "trailing space.",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6dc400e_1192e6ba",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-12T15:18:17Z",
+      "side": 1,
+      "message": "actually I do not understand this test, why are you testing 1 step with this massive tolerance. it does not test for much at all.",
+      "range": {
+        "startLine": 216,
+        "startChar": 74,
+        "endLine": 216,
+        "endChar": 78
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7132f274_1ffdc852",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-12T15:18:17Z",
+      "side": 1,
+      "message": "how did you arrive at this tolerance.",
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8f6a1d2_28e0cba5",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-12T15:18:17Z",
+      "side": 1,
+      "message": "nit: initialize all the variables and then populate string.",
+      "range": {
+        "startLine": 363,
+        "startChar": 35,
+        "endLine": 363,
+        "endChar": 42
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55c6a7c9_ff62f865",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-12T15:18:17Z",
+      "side": 1,
+      "message": "trailing space.",
+      "range": {
+        "startLine": 367,
+        "startChar": 27,
+        "endLine": 367,
+        "endChar": 28
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "873b2906_3506dab4",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-12T15:18:17Z",
+      "side": 1,
+      "message": "kFullPrecision",
+      "range": {
+        "startLine": 52,
+        "startChar": 15,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d10542b6_229d273f",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-12T15:18:17Z",
+      "side": 1,
+      "message": "trailing space.",
+      "range": {
+        "startLine": 748,
+        "startChar": 42,
+        "endLine": 748,
+        "endChar": 43
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

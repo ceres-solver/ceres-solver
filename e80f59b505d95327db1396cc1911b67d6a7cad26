@@ -641,6 +641,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c42e630d_307747e4",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-12T15:18:17Z",
+      "side": 1,
+      "message": "no I mean have an if statement rather than an else if.",
+      "parentUuid": "02c249b6_4dce832d",
+      "range": {
+        "startLine": 404,
+        "startChar": 4,
+        "endLine": 404,
+        "endChar": 8
+      },
+      "revId": "e80f59b505d95327db1396cc1911b67d6a7cad26",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe2ae08a_b9c3da8a",
