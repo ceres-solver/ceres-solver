@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55e1169c_0dd53fc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-13T05:07:50Z",
+      "side": 1,
+      "message": "almost there.",
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7481ad16_d2fd2b5a",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-13T05:07:50Z",
+      "side": 1,
+      "message": "I would argue that the unit test should see how far this solver can go, so the unit test should absolutely test the ultimate accuracy it can achieve as predicted by the bounds.",
+      "range": {
+        "startLine": 257,
+        "startChar": 46,
+        "endLine": 257,
+        "endChar": 50
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "538c7494_967d9113",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-13T05:07:50Z",
+      "side": 1,
+      "message": "crank this up and test this as accurately as possible",
+      "range": {
+        "startLine": 279,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 44
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d60f3a1_8b01d5cc",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-13T05:07:50Z",
+      "side": 1,
+      "message": "auto solver \u003d",
+      "range": {
+        "startLine": 340,
+        "startChar": 7,
+        "endLine": 340,
+        "endChar": 42
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f75969d4_37ff541b",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-13T05:07:50Z",
+      "side": 1,
+      "message": "drop comment it is redundant.",
+      "range": {
+        "startLine": 347,
+        "startChar": 36,
+        "endLine": 347,
+        "endChar": 39
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79e9152d_e8ee2cc7",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-13T05:07:50Z",
+      "side": 1,
+      "message": "drop else and let the if statement stand on its own.",
+      "range": {
+        "startLine": 407,
+        "startChar": 4,
+        "endLine": 407,
+        "endChar": 8
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78e09135_e22937f9",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-13T05:07:50Z",
+      "side": 1,
+      "message": "drop else and let the if stands on its own here and below.",
+      "range": {
+        "startLine": 146,
+        "startChar": 6,
+        "endLine": 146,
+        "endChar": 10
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3e59569_5a2a4a50",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-13T05:07:50Z",
+      "side": 1,
+      "message": "this should be called inside trustregionoptionsarevalid since it is the only thing that uses linear solver rather than it being a top level call.",
+      "range": {
+        "startLine": 563,
+        "startChar": 7,
+        "endLine": 563,
+        "endChar": 34
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
