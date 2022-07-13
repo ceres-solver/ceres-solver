@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77057450_60894dff",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T12:00:54Z",
+      "side": 1,
+      "message": "Okay, I printed out the norm of the error (||x - x_expected||) for a varying number of max iterations, here is the result (I caught a bug in the process, which led to a reduction in the number of iterations needed):\n\nWith full precision (CUDADenseCholesky.Cholesky4x4Matrix):\n||e|| \u003d.           1.790180836524724e-15\n\nWith mixed precision (CUDADenseCholeskyMixedPrecision.Cholesky4x4MatrixNSteps)\n0 ||e|| \u003d          1.423873336347308e-06\n1 ||e|| \u003d          1.505077560382871e-13\n2 ||e|| \u003d          6.691210183059884e-14\n3 ||e|| \u003d          6.691210183059884e-14\n4 ||e|| \u003d          6.691210183059884e-14\n5 ||e|| \u003d          6.691210183059884e-14\n6 ||e|| \u003d          6.691210183059884e-14\n7 ||e|| \u003d          6.691210183059884e-14\n8 ||e|| \u003d          6.691210183059884e-14\n9 ||e|| \u003d          6.691210183059884e-14",
+      "parentUuid": "7481ad16_d2fd2b5a",
+      "range": {
+        "startLine": 257,
+        "startChar": 46,
+        "endLine": 257,
+        "endChar": 50
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "538c7494_967d9113",
@@ -71,6 +95,30 @@
       "writtenOn": "2022-07-13T05:07:50Z",
       "side": 1,
       "message": "crank this up and test this as accurately as possible",
+      "range": {
+        "startLine": 279,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 44
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b81e162d_aa73d977",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T12:00:54Z",
+      "side": 1,
+      "message": "Done:\n- I tuned the kEpsilon to the tightest margin (in order of magnitude) for the full precision solver.\n- Ditto for the mixed precision solver - the results vary based on whether running the debug Cuda libraries or not. Outside of debug mode the same tolerance works, when using cuda-memcheck, the numerical precision drops. I had to increase the tolerance by one order of magnitude to compensate.\n- The mixed precision solver results do not improve beyond 10-15 refinement steps.\n- I suspect this tight a tolerance will fail on some GPUs, based on how flakey it is whether it is run in debug mode or not. We can relax the margins as needed in follow-up CLs.",
+      "parentUuid": "538c7494_967d9113",
       "range": {
         "startLine": 279,
         "startChar": 0,
@@ -104,6 +152,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b074157e_a32c56a5",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T12:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d60f3a1_8b01d5cc",
+      "range": {
+        "startLine": 340,
+        "startChar": 7,
+        "endLine": 340,
+        "endChar": 42
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f75969d4_37ff541b",
@@ -117,6 +189,30 @@
       "writtenOn": "2022-07-13T05:07:50Z",
       "side": 1,
       "message": "drop comment it is redundant.",
+      "range": {
+        "startLine": 347,
+        "startChar": 36,
+        "endLine": 347,
+        "endChar": 39
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "450b61b2_16b7c3cc",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T12:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f75969d4_37ff541b",
       "range": {
         "startLine": 347,
         "startChar": 36,
@@ -150,6 +246,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15ef7f0f_854aed15",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T12:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79e9152d_e8ee2cc7",
+      "range": {
+        "startLine": 407,
+        "startChar": 4,
+        "endLine": 407,
+        "endChar": 8
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "78e09135_e22937f9",
@@ -173,6 +293,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10826564_c71a6017",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T12:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78e09135_e22937f9",
+      "range": {
+        "startLine": 146,
+        "startChar": 6,
+        "endLine": 146,
+        "endChar": 10
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3e59569_5a2a4a50",
@@ -186,6 +330,30 @@
       "writtenOn": "2022-07-13T05:07:50Z",
       "side": 1,
       "message": "this should be called inside trustregionoptionsarevalid since it is the only thing that uses linear solver rather than it being a top level call.",
+      "range": {
+        "startLine": 563,
+        "startChar": 7,
+        "endLine": 563,
+        "endChar": 34
+      },
+      "revId": "40542c2ee6096a91cf76aa9aa11d47ac8ff1531f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5a623d6_efe86df7",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T12:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3e59569_5a2a4a50",
       "range": {
         "startLine": 563,
         "startChar": 7,

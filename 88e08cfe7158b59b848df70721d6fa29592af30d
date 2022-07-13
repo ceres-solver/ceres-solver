@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "466d1459_bde1e97b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T12:00:54Z",
+      "side": 1,
+      "message": "Done. \n\nI am concerned about cranking the tolerances leading to flakiness of the randomized tests, though. I think we should separate out ways to check for \"the absolute best possible numerical accuracy\" from unit tests. It is reasonable to expect all tests to pass on all platforms, but I don\u0027t think we can reasonably expect the same numerical performance on all platforms - unfortunately a lot of factors affect the absolute numerical precision. This article touches on the problem:\nhttps://docs.nvidia.com/cuda/floating-point/index.html",
+      "revId": "88e08cfe7158b59b848df70721d6fa29592af30d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
