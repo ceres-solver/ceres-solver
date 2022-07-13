@@ -16,6 +16,24 @@
       "message": "This should be USE_CUDA, as CUDA might be found but the user may still have disabled building with it",
       "revId": "d17b93c80038deab6f1917f76484cf188ba28434",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "faf4bbfe_2467187b",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-13T17:01:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adf9228d_fee989a1",
+      "revId": "d17b93c80038deab6f1917f76484cf188ba28434",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
