@@ -7,7 +7,7 @@
 #
 # * Redistributions of source code must retain the above copyright notice,
 #   this list of conditions and the following disclaimer.
-# * Redistributions in binary form must reproduce the above copyright notice,
+# * Redistributions in binary form %Cmust reproduce the above copyright notice,
 #   this list of conditions and the following disclaimer in the documentation
 #   and/or other materials provided with the distribution.
 # * Neither the name of Google Inc. nor the names of its contributors may be
@@ -140,7 +140,7 @@ if (ACCELERATESPARSE AND AccelerateSparse_FOUND)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${AccelerateSparse_LIBRARIES})
 endif()
 
-if (CUDA_FOUND)
+if (USE_CUDA)
   list(APPEND
        CERES_LIBRARY_PRIVATE_DEPENDENCIES
        ${CUDA_LIBRARIES}
@@ -161,7 +161,7 @@ if (CUDA_FOUND)
   add_library(ceres_cuda_kernels ceres_cuda_kernels.cu)
   target_compile_features(ceres_cuda_kernels PRIVATE cxx_std_14)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ceres_cuda_kernels)
-endif (CUDA_FOUND)
+endif (USE_CUDA)
 
 if (LAPACK_FOUND)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${LAPACK_LIBRARIES})
@@ -407,11 +407,13 @@ include(GenerateExportHeader)
 generate_export_header(ceres EXPORT_FILE_NAME
   ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal/export.h)
 
-install(TARGETS ceres_cuda_kernels
-        EXPORT  CeresExport
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+if (USE_CUDA)
+  install(TARGETS ceres_cuda_kernels
+          EXPORT  CeresExport
+          RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+          LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+          ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+endif(USE_CUDA)
 
 install(TARGETS ceres
         EXPORT  CeresExport
