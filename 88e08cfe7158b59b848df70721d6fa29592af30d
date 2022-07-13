@@ -43,6 +43,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "331186c8_56d9da79",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 18
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T14:52:37Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be hard, let\u0027s track that via a GH issue. With this CL, we will have cuda kernel support, so I can also go back and add the QR rank deficiency checking.",
+      "parentUuid": "f07aeb57_69e7e47b",
+      "range": {
+        "startLine": 125,
+        "startChar": 37,
+        "endLine": 125,
+        "endChar": 38
+      },
+      "revId": "88e08cfe7158b59b848df70721d6fa29592af30d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "ed70bb98_c84a5bf7",
         "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
         "patchSetId": 18
@@ -77,6 +101,30 @@
       "writtenOn": "2022-07-13T13:43:07Z",
       "side": 1,
       "message": "aren\u0027t you doing +1 iterations here?",
+      "range": {
+        "startLine": 498,
+        "startChar": 23,
+        "endLine": 498,
+        "endChar": 53
+      },
+      "revId": "88e08cfe7158b59b848df70721d6fa29592af30d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e795f01_8b6cc539",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T14:52:37Z",
+      "side": 1,
+      "message": "Yes, maybe we should decide on a clear definition and document it. In my mind the first solve is not a \"refinement\" - it is the initial solve. Subsequent iterations are refinements, hence the +1. If you agree, let\u0027s document it accordingly. If not, I can change it to iterations \u003d refinements, but then I\u0027d want to add error checking to ensure that it is at least 1, else the problem won\u0027t get solved.",
+      "parentUuid": "d430f106_c5c84bdb",
       "range": {
         "startLine": 498,
         "startChar": 23,
