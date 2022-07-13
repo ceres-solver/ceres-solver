@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ff6a97d_ff466e6f",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T00:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de6970c9_80db70ff",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 11
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d88276d2_9ecf014b",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-07-12T15:18:17Z",
       "side": 1,
       "message": "trailing space.",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "260de39b_0b1ab39e",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T00:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d88276d2_9ecf014b",
       "range": {
         "startLine": 58,
         "startChar": 10,
@@ -70,6 +118,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be902b84_ccc34edf",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T00:55:15Z",
+      "side": 1,
+      "message": "Fixed, and added comment to explain selection of tolerance.",
+      "parentUuid": "f6dc400e_1192e6ba",
+      "range": {
+        "startLine": 216,
+        "startChar": 74,
+        "endLine": 216,
+        "endChar": 78
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7132f274_1ffdc852",
@@ -87,6 +159,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0051ccb_d6c93745",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T00:55:15Z",
+      "side": 1,
+      "message": "Added some comments to explain the rationale here.",
+      "parentUuid": "7132f274_1ffdc852",
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f8f6a1d2_28e0cba5",
@@ -100,6 +190,30 @@
       "writtenOn": "2022-07-12T15:18:17Z",
       "side": 1,
       "message": "nit: initialize all the variables and then populate string.",
+      "range": {
+        "startLine": 363,
+        "startChar": 35,
+        "endLine": 363,
+        "endChar": 42
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1bffce4_160b793a",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T00:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8f6a1d2_28e0cba5",
       "range": {
         "startLine": 363,
         "startChar": 35,
@@ -133,6 +247,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca08b82e_5d3a1f6c",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T00:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55c6a7c9_ff62f865",
+      "range": {
+        "startLine": 367,
+        "startChar": 27,
+        "endLine": 367,
+        "endChar": 28
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "873b2906_3506dab4",
@@ -156,6 +294,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39053ee6_458b25df",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T00:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "873b2906_3506dab4",
+      "range": {
+        "startLine": 52,
+        "startChar": 15,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d10542b6_229d273f",
@@ -169,6 +331,30 @@
       "writtenOn": "2022-07-12T15:18:17Z",
       "side": 1,
       "message": "trailing space.",
+      "range": {
+        "startLine": 748,
+        "startChar": 42,
+        "endLine": 748,
+        "endChar": 43
+      },
+      "revId": "0e2cc5eb0920e4754166cfc7fd945cae2d8f12ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01a8b43a_00f05c70",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-13T00:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d10542b6_229d273f",
       "range": {
         "startLine": 748,
         "startChar": 42,
