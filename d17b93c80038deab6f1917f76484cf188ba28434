@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adf9228d_fee989a1",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-07-13T16:58:42Z",
+      "side": 1,
+      "message": "This should be USE_CUDA, as CUDA might be found but the user may still have disabled building with it",
+      "revId": "d17b93c80038deab6f1917f76484cf188ba28434",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
