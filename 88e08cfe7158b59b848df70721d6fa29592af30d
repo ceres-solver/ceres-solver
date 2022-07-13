@@ -133,6 +133,30 @@
       },
       "revId": "88e08cfe7158b59b848df70721d6fa29592af30d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c317d2bb_c72e7ec5",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-13T15:53:07Z",
+      "side": 1,
+      "message": "I went back and looked at https://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/iterative_refiner.cc\n\nso the first iteration through this loop is actually just a solve, it is only from the second iteration onwards you are refining, so you are doing okay.",
+      "parentUuid": "1e795f01_8b6cc539",
+      "range": {
+        "startLine": 498,
+        "startChar": 23,
+        "endLine": 498,
+        "endChar": 53
+      },
+      "revId": "88e08cfe7158b59b848df70721d6fa29592af30d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
