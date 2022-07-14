@@ -130,11 +130,11 @@ if (SUITESPARSE AND SuiteSparse_FOUND)
   endif (SuiteSparse_Partition_FOUND)
 endif (SUITESPARSE AND SuiteSparse_FOUND)
 
-if (EIGENMETIS AND METIS_FOUND)
+if (SuiteSparse_Partition_FOUND OR EIGENMETIS)
   # Define version information for use in Solver::FullReport.
   add_definitions(-DCERES_METIS_VERSION="${METIS_VERSION}")
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES METIS::METIS)
-endif (EIGENMETIS AND METIS_FOUND)
+endif (SuiteSparse_Partition_FOUND OR EIGENMETIS)
 
 if (ACCELERATESPARSE AND AccelerateSparse_FOUND)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${AccelerateSparse_LIBRARIES})
