@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "079e6a8c_397e7ac5",
+        "filename": "internal/ceres/dense_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-07-14T13:41:42Z",
+      "side": 1,
+      "message": "Maybe add a \u0027because we use a non-default ordering (RowMajor)\u0027",
+      "revId": "05724750ad1112cd45a384d1ccac7d50cf5fd4ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "565fb185_5564d7d5",
+        "filename": "internal/ceres/dense_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-07-14T13:41:42Z",
+      "side": 1,
+      "message": "Is std::fill_n(x, num_cols, 0) slower than this?",
+      "revId": "05724750ad1112cd45a384d1ccac7d50cf5fd4ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
