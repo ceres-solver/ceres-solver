@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57fe7d09_099790ad",
+        "filename": "internal/ceres/dense_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-14T13:47:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "079e6a8c_397e7ac5",
+      "revId": "05724750ad1112cd45a384d1ccac7d50cf5fd4ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "565fb185_5564d7d5",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-07-14T13:41:42Z",
       "side": 1,
       "message": "Is std::fill_n(x, num_cols, 0) slower than this?",
+      "revId": "05724750ad1112cd45a384d1ccac7d50cf5fd4ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b487d6a9_47ddb984",
+        "filename": "internal/ceres/dense_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-14T13:47:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "565fb185_5564d7d5",
       "revId": "05724750ad1112cd45a384d1ccac7d50cf5fd4ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
