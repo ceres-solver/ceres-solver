@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b09c0b7e_2603119a",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-07-14T13:52:10Z",
+      "side": 1,
+      "message": "You don\u0027t actually need the METIS_FOUND check here, as by definition if EIGENMETIS is on we must have found METIS, as we disable it if we have not like we do for every other option s/t they always reflect what will actually happen",
+      "revId": "1403acfc1012ac1a14a1b05ec8623be36a3b66e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
