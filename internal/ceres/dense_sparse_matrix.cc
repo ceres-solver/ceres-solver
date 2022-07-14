@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -60,16 +60,30 @@ DenseSparseMatrix::DenseSparseMatrix(Matrix m) : m_(std::move(m)) {}
 void DenseSparseMatrix::SetZero() { m_.setZero(); }
 
 void DenseSparseMatrix::RightMultiply(const double* x, double* y) const {
-  VectorRef(y, num_rows()) += matrix() * ConstVectorRef(x, num_cols());
+  VectorRef(y, num_rows()).noalias() += m_ * ConstVectorRef(x, num_cols());
 }
 
 void DenseSparseMatrix::LeftMultiply(const double* x, double* y) const {
-  VectorRef(y, num_cols()) +=
-      matrix().transpose() * ConstVectorRef(x, num_rows());
+  VectorRef(y, num_cols()).noalias() +=
+      m_.transpose() * ConstVectorRef(x, num_rows());
 }
 
 void DenseSparseMatrix::SquaredColumnNorm(double* x) const {
-  VectorRef(x, num_cols()) = m_.colwise().squaredNorm();
+  // This implementation is 3x faster than the naive version
+  // x = m_.colwise().square().sum();
+
+  const int num_rows = m_.rows();
+  const int num_cols = m_.cols();
+  for (int i = 0; i < num_cols; ++i) {
+    x[i] = 0.0;
+  }
+
+  const double* m = m_.data();
+  for (int i = 0; i < num_rows; ++i) {
+    for (int j = 0; j < num_cols; ++j, ++m) {
+      x[j] += (*m) * (*m);
+    }
+  }
 }
 
 void DenseSparseMatrix::ScaleColumns(const double* scale) {
