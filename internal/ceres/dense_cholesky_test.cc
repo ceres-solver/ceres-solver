@@ -45,9 +45,7 @@
 
 namespace ceres::internal {
 
-
-using Param =
-    ::testing::tuple<DenseLinearAlgebraLibraryType, bool>;
+using Param = ::testing::tuple<DenseLinearAlgebraLibraryType, bool>;
 constexpr bool kMixedPrecision = true;
 constexpr bool kFullPrecision = false;
 
@@ -109,70 +107,65 @@ TEST_P(DenseCholeskyTest, FactorAndSolve) {
   }
 }
 
-INSTANTIATE_TEST_SUITE_P(
-    EigenCholesky,
-    DenseCholeskyTest,
-    ::testing::Combine(::testing::Values(EIGEN),
-                       ::testing::Values(kFullPrecision)),
-    ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(EigenCholesky,
+                         DenseCholeskyTest,
+                         ::testing::Combine(::testing::Values(EIGEN),
+                                            ::testing::Values(kFullPrecision)),
+                         ParamInfoToString);
 #ifndef CERES_NO_LAPACK
-INSTANTIATE_TEST_SUITE_P(
-    LapackCholesky,
-    DenseCholeskyTest,
-    ::testing::Combine(::testing::Values(LAPACK),
-                       ::testing::Values(kFullPrecision)),
-    ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(LapackCholesky,
+                         DenseCholeskyTest,
+                         ::testing::Combine(::testing::Values(LAPACK),
+                                            ::testing::Values(kFullPrecision)),
+                         ParamInfoToString);
 #endif
 #ifndef CERES_NO_CUDA
-INSTANTIATE_TEST_SUITE_P(
-    CudaCholesky,
-    DenseCholeskyTest,
-    ::testing::Combine(::testing::Values(CUDA),
-                       ::testing::Values(kMixedPrecision,
-                                         kFullPrecision)),
-    ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(CudaCholesky,
+                         DenseCholeskyTest,
+                         ::testing::Combine(::testing::Values(CUDA),
+                                            ::testing::Values(kMixedPrecision,
+                                                              kFullPrecision)),
+                         ParamInfoToString);
 #endif
 
+#ifndef CERES_NO_CUDA
 TEST(DenseCholesky, ValidMixedPrecisionOptions) {
-#ifndef CERES_NO_CUDA
-  {
-    // Dense Cholesky with CUDA: okay, supported.
-    ContextImpl context;
-    LinearSolver::Options options;
-    options.dense_linear_algebra_library_type = CUDA;
-    options.use_mixed_precision_solves = true;
-    options.context = &context;
-    std::unique_ptr<DenseCholesky> dense_cholesky =
-        DenseCholesky::Create(options);
-    EXPECT_NE(dense_cholesky, nullptr);
-  }
+  // Dense Cholesky with CUDA: okay, supported.
+  ContextImpl context;
+  LinearSolver::Options options;
+  options.dense_linear_algebra_library_type = CUDA;
+  options.use_mixed_precision_solves = true;
+  options.context = &context;
+  std::unique_ptr<DenseCholesky> dense_cholesky =
+      DenseCholesky::Create(options);
+  EXPECT_NE(dense_cholesky, nullptr);
+}
 #endif
+
+TEST(DenseCholesky, InvalidMixedPrecisionOptionsEigen) {
+  // Dense Cholesky with Eigen: not supported
+  ContextImpl context;
+  LinearSolver::Options options;
+  options.dense_linear_algebra_library_type = EIGEN;
+  options.use_mixed_precision_solves = true;
+  options.context = &context;
+  std::unique_ptr<DenseCholesky> dense_cholesky =
+      DenseCholesky::Create(options);
+  EXPECT_EQ(dense_cholesky, nullptr);
 }
 
-TEST(DenseCholesky, InvalidMixedPrecisionOptions) {
-  {
-    // Dense Cholesky with Eigen: not supported
-    ContextImpl context;
-    LinearSolver::Options options;
-    options.dense_linear_algebra_library_type = EIGEN;
-    options.use_mixed_precision_solves = true;
-    options.context = &context;
-    std::unique_ptr<DenseCholesky> dense_cholesky =
-        DenseCholesky::Create(options);
-    EXPECT_EQ(dense_cholesky, nullptr);
-  }
-
-  {
-    // Dense Cholesky with Lapack: not supported
-    ContextImpl context;
-    LinearSolver::Options options;
-    options.dense_linear_algebra_library_type = LAPACK;
-    options.use_mixed_precision_solves = true;
-    options.context = &context;
-    std::unique_ptr<DenseCholesky> dense_cholesky =
-        DenseCholesky::Create(options);
-    EXPECT_EQ(dense_cholesky, nullptr);
-  }
+#ifndef CERES_NO_LAPACK
+TEST(DenseCholesky, InvalidMixedPrecisionOptionsLAPACK) {
+  // Dense Cholesky with Lapack: not supported
+  ContextImpl context;
+  LinearSolver::Options options;
+  options.dense_linear_algebra_library_type = LAPACK;
+  options.use_mixed_precision_solves = true;
+  options.context = &context;
+  std::unique_ptr<DenseCholesky> dense_cholesky =
+      DenseCholesky::Create(options);
+  EXPECT_EQ(dense_cholesky, nullptr);
 }
+#endif
 
 }  // namespace ceres::internal
