@@ -82,6 +82,43 @@ struct CERES_NO_EXPORT CompressedList {
 using CompressedRow = CompressedList;
 using CompressedColumn = CompressedList;
 
+// CompressedRowBlockStructure specifies the storage structure of a row block
+// sparse matrix.
+//
+// Consider the following matrix A:
+// A = [A_11 A_12 ...
+//      A_21 A_22 ...
+//      ...
+//      A_m1 A_m2 ... ]
+//
+// A row block sparse matrix is a matrix where the following properties hold:
+// 1. The number of rows in every block A_ij and A_ik are the same.
+// 2. The number of columns in every block A_ij and A_kj are the same.
+// 3. The number of rows in A_ij and A_kj may be different (i != k).
+// 4. The number of columns in A_ij and A_ik may be different (j != k).
+// 5. Any block A_ij may be all 0s, in which case the block is not stored.
+//
+// The structure of the matrix is stored as follows:
+//
+// The `rows' array contains the following information for each row block:
+// - rows[i].block.size: The number of rows in each block A_ij in the row block.
+// - rows[i].block.position: The starting row in the full matrix A of the
+//       row block i.
+// - rows[i].cells[j].block_id: The index into the `cols' array corresponding to
+//       the non-zero blocks A_ij.
+// - rows[i].cells[j].position: The index in the `values' array for the contents
+//       of block A_ij.
+//
+// The `cols' array contains the following information for block:
+// - cols[.].size: The number of columns spanned by the block.
+// - cols[.].position: The starting column in the full matrix A of the block.
+//
+//
+// Example of a row block sparse matrix:
+// block_id: | 0  |1|2  |3 |
+// rows[0]:  [ 1 2 0 3 4 0 ]
+//           [ 5 6 0 7 8 0 ]
+// rows[1]:  [ 0 0 9 0 0 0 ]
 struct CERES_NO_EXPORT CompressedRowBlockStructure {
   std::vector<Block> cols;
   std::vector<CompressedRow> rows;

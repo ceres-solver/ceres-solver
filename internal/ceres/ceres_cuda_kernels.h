@@ -61,6 +61,13 @@ void CudaSetZeroFP64(double* output, const int size, cudaStream_t stream);
 // Compute x = x + double(y). Input array is float (FP32), output array is
 // double (FP64). Both arrays must already be on GPU memory.
 void CudaDsxpy(double* x, float* y, const int size, cudaStream_t stream);
+
+// Compute y = y + DtDx
+void CudaDtDxpy(double* y,
+                const double* D,
+                const double* x,
+                const int size,
+                cudaStream_t stream);
 }  // namespace ceres_cuda_kernels
 
 #endif  // CERES_NO_CUDA

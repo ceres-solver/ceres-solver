@@ -38,6 +38,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "ceres/sparse_matrix.h"
+#include "ceres/triplet_sparse_matrix.h"
 
 namespace ceres::internal {
 
@@ -84,6 +85,13 @@ bool DumpLinearLeastSquaresProblem(const std::string& filename_base,
                                    const double* b,
                                    const double* x,
                                    int num_eliminate_blocks);
+
+// Read a linear least squares problem from disk.
+bool ReadLinearLeastSquaresProblemFromTextFile(const std::string& filename_base,
+                                               TripletSparseMatrix* A,
+                                               std::vector<double>* D,
+                                               std::vector<double>* b,
+                                               std::vector<double>* x);
 }  // namespace ceres::internal
 
 #include "ceres/internal/reenable_warnings.h"

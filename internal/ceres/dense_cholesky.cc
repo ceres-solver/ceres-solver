@@ -221,7 +221,7 @@ LinearSolverTerminationType CUDADenseCholesky::Factorize(int num_cols,
   factorize_result_ = LinearSolverTerminationType::FATAL_ERROR;
   lhs_.Reserve(num_cols * num_cols);
   num_cols_ = num_cols;
-  lhs_.CopyToGpuAsync(lhs, num_cols * num_cols, stream_);
+  lhs_.CopyFromCpuAsync(lhs, num_cols * num_cols, stream_);
   int device_workspace_size = 0;
   if (cusolverDnDpotrf_bufferSize(cusolver_handle_,
                                   CUBLAS_FILL_MODE_LOWER,
@@ -251,7 +251,7 @@ LinearSolverTerminationType CUDADenseCholesky::Factorize(int num_cols,
     return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
-  error_.CopyToHost(&error, 1);
+  error_.CopyToCpu(&error, 1);
   if (error < 0) {
     LOG(FATAL) << "Congratulations, you found a bug in Ceres - "
                << "please report it. "
@@ -280,7 +280,7 @@ LinearSolverTerminationType CUDADenseCholesky::Solve(const double* rhs,
     *message = "Factorize did not complete successfully previously.";
     return factorize_result_;
   }
-  rhs_.CopyToGpuAsync(rhs, num_cols_, stream_);
+  rhs_.CopyFromCpuAsync(rhs, num_cols_, stream_);
   if (cusolverDnDpotrs(cusolver_handle_,
                        CUBLAS_FILL_MODE_LOWER,
                        num_cols_,
@@ -299,14 +299,14 @@ LinearSolverTerminationType CUDADenseCholesky::Solve(const double* rhs,
     return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
-  error_.CopyToHost(&error, 1);
+  error_.CopyToCpu(&error, 1);
   if (error != 0) {
     LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
                << "Please report it."
                << "cuSolverDN::cusolverDnDpotrs fatal error. "
                << "Argument: " << -error << " is invalid.";
   }
-  rhs_.CopyToHost(solution, num_cols_);
+  rhs_.CopyToCpu(solution, num_cols_);
   *message = "Success";
   return LinearSolverTerminationType::SUCCESS;
 }
@@ -392,7 +392,7 @@ CUDADenseCholeskyMixedPrecision::CudaCholeskyFactorize(std::string* message) {
     return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
-  error_.CopyToHost(&error, 1);
+  error_.CopyToCpu(&error, 1);
   if (error < 0) {
     LOG(FATAL) << "Congratulations, you found a bug in Ceres - "
                << "please report it. "
@@ -440,7 +440,7 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::CudaCholeskySolve(
     return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
-  error_.CopyToHost(&error, 1);
+  error_.CopyToCpu(&error, 1);
   if (error != 0) {
     LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
                << "Please report it."
@@ -459,7 +459,7 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Factorize(
 
   // Copy fp64 version of lhs to GPU.
   lhs_fp64_.Reserve(num_cols * num_cols);
-  lhs_fp64_.CopyToGpuAsync(lhs, num_cols * num_cols, stream_);
+  lhs_fp64_.CopyFromCpuAsync(lhs, num_cols * num_cols, stream_);
 
   // Create an fp32 copy of lhs, lhs_fp32.
   lhs_fp32_.Reserve(num_cols * num_cols);
@@ -492,7 +492,7 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Solve(
   CudaSetZeroFP64(x_fp64_.data(), num_cols_, stream_);
 
   // Initialize residual = rhs.
-  rhs_fp64_.CopyToGpuAsync(rhs, num_cols_, stream_);
+  rhs_fp64_.CopyFromCpuAsync(rhs, num_cols_, stream_);
   residual_fp64_.CopyFromGpuAsync(rhs_fp64_.data(), num_cols_, stream_);
 
   for (int i = 0; i <= max_num_refinement_iterations_; ++i) {
@@ -528,7 +528,7 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Solve(
                   1);
     }
   }
-  x_fp64_.CopyToHost(solution, num_cols_);
+  x_fp64_.CopyToCpu(solution, num_cols_);
   *message = "Success.";
   return LinearSolverTerminationType::SUCCESS;
 }

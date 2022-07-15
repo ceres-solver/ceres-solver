@@ -76,8 +76,15 @@ std::unique_ptr<LinearSolver> LinearSolver::Create(
   CHECK(options.context != nullptr);
 
   switch (options.type) {
-    case CGNR:
+    case CGNR: {
+#ifndef CERES_NO_CUDA
+      if (options.sparse_linear_algebra_library_type == CUDA_SPARSE) {
+        std::string error;
+        return CudaCgnrSolver::Create(options, &error);
+      }
+#endif
       return std::make_unique<CgnrSolver>(options);
+    } break;
 
     case SPARSE_NORMAL_CHOLESKY:
 #if defined(CERES_NO_SPARSE)
