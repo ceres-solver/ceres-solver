@@ -16,6 +16,23 @@
       "message": "Adding Sameer to updated CL. Still not ready for review yet, but will holler when ready.",
       "revId": "6aa9050282ab67eba013a5867a1022edf8d44dc5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7222693c_a54f9b7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-15T15:38:28Z",
+      "side": 1,
+      "message": "Joydeep, this is a massive CL, it would be a good idea to send me a sequence of smaller CLs which do the various bits of cleanup like in block_sparse_matrix etc, lets land them and then move to doing the cuda stuff.",
+      "revId": "6aa9050282ab67eba013a5867a1022edf8d44dc5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
