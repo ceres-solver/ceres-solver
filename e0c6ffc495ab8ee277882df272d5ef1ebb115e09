@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64f1bcb4_d9888cff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-15T15:21:44Z",
+      "side": 1,
+      "message": "I think I messed up rebasing this commit, when I pushed the rebased commit it created a new CL, 22080. Closing this and will track it on 22080.",
+      "revId": "e0c6ffc495ab8ee277882df272d5ef1ebb115e09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
