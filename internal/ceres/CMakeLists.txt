@@ -199,6 +199,9 @@ add_library(ceres_internal OBJECT
     cost_function.cc
     covariance.cc
     covariance_impl.cc
+    cuda_conjugate_gradients_solver.cc
+    cuda_sparse_matrix.cc
+    cuda_vector.cc
     dense_cholesky.cc
     dense_normal_cholesky_solver.cc
     dense_qr.cc
@@ -480,9 +483,12 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(cost_function_to_functor)
   ceres_test(covariance)
   ceres_test(cubic_interpolation)
+  ceres_test(cuda_conjugate_gradients_solver)
   ceres_test(cuda_dense_cholesky)
   ceres_test(cuda_dense_qr)
   ceres_test(cuda_kernels)
+  ceres_test(cuda_sparse_matrix)
+  ceres_test(cuda_vector)
   ceres_test(dense_linear_solver)
   ceres_test(dense_cholesky)
   ceres_test(dense_qr)
@@ -585,6 +591,10 @@ if (BUILD_BENCHMARKS)
 
   add_executable(dense_linear_solver_benchmark dense_linear_solver_benchmark.cc)
   add_dependencies_to_benchmark(dense_linear_solver_benchmark)
+
+  add_executable(sparse_linear_operator_benchmark
+      sparse_linear_operator_benchmark.cc)
+  add_dependencies_to_benchmark(sparse_linear_operator_benchmark)
 
   add_subdirectory(autodiff_benchmarks)
 endif (BUILD_BENCHMARKS)

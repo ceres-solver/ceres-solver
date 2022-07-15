@@ -336,6 +336,10 @@ void SolveProblem(const char* filename) {
   SetSolverOptionsFromFlags(&bal_problem, &options);
   options.gradient_tolerance = 1e-16;
   options.function_tolerance = 1e-16;
+  options.trust_region_minimizer_iterations_to_dump = {
+    0, 1, 2, 3, 4, 5, 6, 7, 8
+  };
+  options.trust_region_problem_dump_directory = "../jacobians/";
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";

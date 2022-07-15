@@ -131,6 +131,8 @@ class CudaBuffer {
 
   // Return a pointer to the GPU memory managed by this CudaBuffer instance.
   T* data() { return data_; }
+  // Return a const pointer to the GPU memory managed by this CudaBuffer
+  // instance.
   const T* data() const { return data_; }
   // Return the number of items of type T that can fit in the GPU memory
   // allocated so far by this CudaBuffer instance.
