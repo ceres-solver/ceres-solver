@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d55aed98_b7c3783a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-15T15:23:19Z",
+      "side": 1,
+      "message": "Adding Sameer to updated CL. Still not ready for review yet, but will holler when ready.",
+      "revId": "6aa9050282ab67eba013a5867a1022edf8d44dc5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
