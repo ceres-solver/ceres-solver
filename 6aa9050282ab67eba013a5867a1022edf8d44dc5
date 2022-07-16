@@ -33,6 +33,24 @@
       "message": "Joydeep, this is a massive CL, it would be a good idea to send me a sequence of smaller CLs which do the various bits of cleanup like in block_sparse_matrix etc, lets land them and then move to doing the cuda stuff.",
       "revId": "6aa9050282ab67eba013a5867a1022edf8d44dc5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcb0ae72_8bcb0386",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-07-16T04:28:59Z",
+      "side": 1,
+      "message": "Yes, good point, will do.",
+      "parentUuid": "7222693c_a54f9b7c",
+      "revId": "6aa9050282ab67eba013a5867a1022edf8d44dc5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
