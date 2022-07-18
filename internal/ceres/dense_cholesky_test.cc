@@ -32,6 +32,7 @@
 
 #include <memory>
 #include <numeric>
+#include <sstream>
 #include <string>
 #include <vector>
 

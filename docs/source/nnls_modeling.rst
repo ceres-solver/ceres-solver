@@ -82,7 +82,7 @@ Then, given :math:`\left[x_{1}, ... , x_{k}\right]`,
      public:
       virtual bool Evaluate(double const* const* parameters,
                             double* residuals,
-                            double** jacobians) = 0;
+                            double** jacobians) const = 0;
       const vector<int32>& parameter_block_sizes();
       int num_residuals() const;
 
@@ -100,7 +100,7 @@ inheriting from this class is expected to set these two members with
 the corresponding accessors. This information will be verified by the
 :class:`Problem` when added with :func:`Problem::AddResidualBlock`.
 
-.. function:: bool CostFunction::Evaluate(double const* const* parameters, double* residuals, double** jacobians)
+.. function:: bool CostFunction::Evaluate(double const* const* parameters, double* residuals, double** jacobians) const
 
    Compute the residual vector and the Jacobian matrices.
 
