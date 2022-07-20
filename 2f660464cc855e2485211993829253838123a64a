@@ -16,6 +16,23 @@
       "message": "This should fix #840.",
       "revId": "2f660464cc855e2485211993829253838123a64a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f739fc8_53ca670a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-20T17:01:25Z",
+      "side": 1,
+      "message": "Merging to fix the immediate problem, but the bigger issue seems to be as you mentioned earlier, build_testing should be updated in the top level cmake file when gflags is not available, or even at the top of this file so errors like this never crop up.",
+      "revId": "2f660464cc855e2485211993829253838123a64a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
