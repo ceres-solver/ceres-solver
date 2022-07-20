@@ -147,7 +147,7 @@ if (USE_CUDA)
        ${CUDA_cublas_LIBRARY}
        ${CUDA_cusolver_LIBRARY}
        ${CUDA_cusparse_LIBRARY})
-  if (BUILD_TESTING)
+  if (BUILD_TESTING AND GFLAGS)
     add_test(
         NAME cuda_memcheck_dense_qr_test
         COMMAND ${CUDA_TOOLKIT_ROOT_DIR}/bin/cuda-memcheck --leak-check full
@@ -156,7 +156,7 @@ if (USE_CUDA)
         NAME cuda_memcheck_dense_cholesky_test
         COMMAND ${CUDA_TOOLKIT_ROOT_DIR}/bin/cuda-memcheck --leak-check full
             $<TARGET_FILE:cuda_dense_cholesky_test>)
-  endif (BUILD_TESTING)
+  endif (BUILD_TESTING AND GFLAGS)
   set_source_files_properties(ceres_cuda_kernels.cu PROPERTIES LANGUAGE CUDA)
   add_library(ceres_cuda_kernels ceres_cuda_kernels.cu)
   target_compile_features(ceres_cuda_kernels PRIVATE cxx_std_14)
