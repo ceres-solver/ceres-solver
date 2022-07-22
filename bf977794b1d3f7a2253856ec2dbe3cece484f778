@@ -16,6 +16,23 @@
       "message": "Thank you Mark, do you have any performance numbers to share? ",
       "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67979cff_a3f1e341",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-22T17:15:27Z",
+      "side": 1,
+      "message": "as a high level API comment, I do not think about power series expansion as a linear solver on its own (it can be used so of course). I think it would better to have it as a preconditioner for iterative schur.\n",
+      "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
