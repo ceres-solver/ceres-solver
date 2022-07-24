@@ -158,6 +158,42 @@
       "parentUuid": "991fc0b6_fa3cfe08",
       "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b1bea7d_3fc11678",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-24T22:15:58Z",
+      "side": 1,
+      "message": "Thanks for the pointer, let me take a look at the thesis.",
+      "parentUuid": "9afd2b82_a095bb47",
+      "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e781fc5_513cad5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-07-24T22:15:58Z",
+      "side": 1,
+      "message": "I think it will require some futzing to get the right balance, which is fine, having this as a preconditioner is a more general api anyways. we can assume/introduce a trivial linear solver if need be to make the pure power ba work.",
+      "parentUuid": "99b94bbd_6fbe9aa1",
+      "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
