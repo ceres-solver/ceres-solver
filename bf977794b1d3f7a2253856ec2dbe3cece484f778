@@ -122,6 +122,42 @@
       "parentUuid": "89247946_4e4df263",
       "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99b94bbd_6fbe9aa1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-07-24T20:46:13Z",
+      "side": 1,
+      "message": "Did tinkered a bit with that idea, currently don\u0027t see any immediate speedups on Ladybug-1031 in terms of net wall time. Do i understand correctly, that the idea is to use a few terms of power series expansion of S^-1 as a preconditioner on every step of cg?",
+      "parentUuid": "28b3456c_9c5fe5ed",
+      "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9afd2b82_a095bb47",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-07-24T20:46:13Z",
+      "side": 1,
+      "message": "While there are no direct comparisons with ceres in the paper (Simon Weber suggested to look here https://vision.in.tum.de/_media/members/demmeln/chan2022ma.pdf for such comparison, but i do not found direct comparison of \"ceres-implicit\" with \"power-64\"), the performance on Ladybug-1031 seems to be on par with \"PoBA\" line at Fig. 5(b). My comment \"no speedups found\" was about the inferior performance on Ladybug-1031 relative to ceres\u0027s \"ITERATIVE_SCHUR\" (in contrast to the difference of \"PoBA\" with \"LM-iterative\" plotted at Fig. 5(b)).",
+      "parentUuid": "991fc0b6_fa3cfe08",
+      "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
