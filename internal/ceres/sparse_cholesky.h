@@ -112,14 +112,15 @@ class CERES_NO_EXPORT SparseCholesky {
                                              std::string* message);
 };
 
-class IterativeRefiner;
+class SparseIterativeRefiner;
 
 // Computes an initial solution using the given instance of
-// SparseCholesky, and then refines it using the IterativeRefiner.
+// SparseCholesky, and then refines it using the SparseIterativeRefiner.
 class CERES_NO_EXPORT RefinedSparseCholesky final : public SparseCholesky {
  public:
-  RefinedSparseCholesky(std::unique_ptr<SparseCholesky> sparse_cholesky,
-                        std::unique_ptr<IterativeRefiner> iterative_refiner);
+  RefinedSparseCholesky(
+      std::unique_ptr<SparseCholesky> sparse_cholesky,
+      std::unique_ptr<SparseIterativeRefiner> iterative_refiner);
   ~RefinedSparseCholesky() override;
 
   CompressedRowSparseMatrix::StorageType StorageType() const override;
@@ -131,7 +132,7 @@ class CERES_NO_EXPORT RefinedSparseCholesky final : public SparseCholesky {
 
  private:
   std::unique_ptr<SparseCholesky> sparse_cholesky_;
-  std::unique_ptr<IterativeRefiner> iterative_refiner_;
+  std::unique_ptr<SparseIterativeRefiner> iterative_refiner_;
   CompressedRowSparseMatrix* lhs_ = nullptr;
 };
 

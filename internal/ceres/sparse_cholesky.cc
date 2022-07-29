@@ -94,10 +94,10 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
   }
 
   if (options.max_num_refinement_iterations > 0) {
-    std::unique_ptr<IterativeRefiner> refiner(
-        new IterativeRefiner(options.max_num_refinement_iterations));
-    sparse_cholesky = std::unique_ptr<SparseCholesky>(new RefinedSparseCholesky(
-        std::move(sparse_cholesky), std::move(refiner)));
+    auto refiner = std::make_unique<SparseIterativeRefiner>(
+        options.max_num_refinement_iterations);
+    sparse_cholesky = std::make_unique<RefinedSparseCholesky>(
+        std::move(sparse_cholesky), std::move(refiner));
   }
   return sparse_cholesky;
 }
@@ -118,7 +118,7 @@ LinearSolverTerminationType SparseCholesky::FactorAndSolve(
 
 RefinedSparseCholesky::RefinedSparseCholesky(
     std::unique_ptr<SparseCholesky> sparse_cholesky,
-    std::unique_ptr<IterativeRefiner> iterative_refiner)
+    std::unique_ptr<SparseIterativeRefiner> iterative_refiner)
     : sparse_cholesky_(std::move(sparse_cholesky)),
       iterative_refiner_(std::move(iterative_refiner)) {}
 
