@@ -41,6 +41,7 @@
 
 namespace ceres::internal {
 
+class DenseCholesky;
 class SparseCholesky;
 class SparseMatrix;
 
@@ -57,20 +58,20 @@ class SparseMatrix;
 // Definite linear systems.
 //
 // The above iterative loop is run until max_num_iterations is reached.
-class CERES_NO_EXPORT IterativeRefiner {
+class CERES_NO_EXPORT SparseIterativeRefiner {
  public:
   // max_num_iterations is the number of refinement iterations to
   // perform.
-  explicit IterativeRefiner(int max_num_iterations);
+  explicit SparseIterativeRefiner(int max_num_iterations);
 
   // Needed for mocking.
-  virtual ~IterativeRefiner();
+  virtual ~SparseIterativeRefiner();
 
   // Given an initial estimate of the solution of lhs * x = rhs, use
   // max_num_iterations rounds of iterative refinement to improve it.
   //
-  // sparse_cholesky is assumed to contain an already computed
-  // factorization (or approximation thereof) of lhs.
+  // cholesky is assumed to contain an already computed factorization (or
+  // an approximation thereof) of lhs.
   //
   // solution is expected to contain a approximation to the solution
   // to lhs * x = rhs. It can be zero.
@@ -78,7 +79,7 @@ class CERES_NO_EXPORT IterativeRefiner {
   // This method is virtual to facilitate mocking.
   virtual void Refine(const SparseMatrix& lhs,
                       const double* rhs,
-                      SparseCholesky* sparse_cholesky,
+                      SparseCholesky* cholesky,
                       double* solution);
 
  private:
@@ -88,6 +89,39 @@ class CERES_NO_EXPORT IterativeRefiner {
   Vector residual_;
   Vector correction_;
   Vector lhs_x_solution_;
+};
+
+class CERES_NO_EXPORT DenseIterativeRefiner {
+ public:
+  // max_num_iterations is the number of refinement iterations to
+  // perform.
+  explicit DenseIterativeRefiner(int max_num_iterations);
+
+  // Needed for mocking.
+  virtual ~DenseIterativeRefiner();
+
+  // Given an initial estimate of the solution of lhs * x = rhs, use
+  // max_num_iterations rounds of iterative refinement to improve it.
+  //
+  // cholesky is assumed to contain an already computed factorization (or
+  // an approximation thereof) of lhs.
+  //
+  // solution is expected to contain a approximation to the solution
+  // to lhs * x = rhs. It can be zero.
+  //
+  // This method is virtual to facilitate mocking.
+  virtual void Refine(int num_cols,
+                      const double* lhs,
+                      const double* rhs,
+                      DenseCholesky* cholesky,
+                      double* solution);
+
+ private:
+  void Allocate(int num_cols);
+
+  int max_num_iterations_;
+  Vector residual_;
+  Vector correction_;
 };
 
 }  // namespace ceres::internal

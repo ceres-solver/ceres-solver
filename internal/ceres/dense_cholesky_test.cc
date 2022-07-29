@@ -39,6 +39,7 @@
 #include "Eigen/Dense"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/iterative_refiner.h"
 #include "ceres/linear_solver.h"
 #include "glog/logging.h"
 #include "gmock/gmock.h"
@@ -111,13 +112,15 @@ TEST_P(DenseCholeskyTest, FactorAndSolve) {
 INSTANTIATE_TEST_SUITE_P(EigenCholesky,
                          DenseCholeskyTest,
                          ::testing::Combine(::testing::Values(EIGEN),
-                                            ::testing::Values(kFullPrecision)),
+                                            ::testing::Values(kMixedPrecision,
+                                                              kFullPrecision)),
                          ParamInfoToString);
 #ifndef CERES_NO_LAPACK
 INSTANTIATE_TEST_SUITE_P(LapackCholesky,
                          DenseCholeskyTest,
                          ::testing::Combine(::testing::Values(LAPACK),
-                                            ::testing::Values(kFullPrecision)),
+                                            ::testing::Values(kMixedPrecision,
+                                                              kFullPrecision)),
                          ParamInfoToString);
 #endif
 #ifndef CERES_NO_CUDA
@@ -129,44 +132,96 @@ INSTANTIATE_TEST_SUITE_P(CudaCholesky,
                          ParamInfoToString);
 #endif
 
-#ifndef CERES_NO_CUDA
-TEST(DenseCholesky, ValidMixedPrecisionOptions) {
-  // Dense Cholesky with CUDA: okay, supported.
-  ContextImpl context;
-  LinearSolver::Options options;
-  options.dense_linear_algebra_library_type = CUDA;
-  options.use_mixed_precision_solves = true;
-  options.context = &context;
-  std::unique_ptr<DenseCholesky> dense_cholesky =
-      DenseCholesky::Create(options);
-  EXPECT_NE(dense_cholesky, nullptr);
-}
-#endif
+class MockDenseCholesky : public DenseCholesky {
+ public:
+  MOCK_METHOD3(Factorize,
+               LinearSolverTerminationType(int num_cols,
+                                           double* lhs,
+                                           std::string* message));
+  MOCK_METHOD3(Solve,
+               LinearSolverTerminationType(const double* rhs,
+                                           double* solution,
+                                           std::string* message));
+};
 
-TEST(DenseCholesky, InvalidMixedPrecisionOptionsEigen) {
-  // Dense Cholesky with Eigen: not supported
-  ContextImpl context;
-  LinearSolver::Options options;
-  options.dense_linear_algebra_library_type = EIGEN;
-  options.use_mixed_precision_solves = true;
-  options.context = &context;
-  std::unique_ptr<DenseCholesky> dense_cholesky =
-      DenseCholesky::Create(options);
-  EXPECT_EQ(dense_cholesky, nullptr);
-}
+class MockDenseIterativeRefiner : public DenseIterativeRefiner {
+ public:
+  MockDenseIterativeRefiner() : DenseIterativeRefiner(1) {}
+  MOCK_METHOD5(Refine,
+               void(int num_cols,
+                    const double* lhs,
+                    const double* rhs,
+                    DenseCholesky* dense_cholesky,
+                    double* solution));
+};
 
-#ifndef CERES_NO_LAPACK
-TEST(DenseCholesky, InvalidMixedPrecisionOptionsLAPACK) {
-  // Dense Cholesky with Lapack: not supported
-  ContextImpl context;
-  LinearSolver::Options options;
-  options.dense_linear_algebra_library_type = LAPACK;
-  options.use_mixed_precision_solves = true;
-  options.context = &context;
-  std::unique_ptr<DenseCholesky> dense_cholesky =
-      DenseCholesky::Create(options);
-  EXPECT_EQ(dense_cholesky, nullptr);
-}
-#endif
+using testing::_;
+using testing::Return;
+
+TEST(RefinedDenseCholesky, Factorize) {
+  auto* mock_dense_cholesky = new MockDenseCholesky;
+  auto* mock_iterative_refiner = new MockDenseIterativeRefiner;
+  EXPECT_CALL(*mock_dense_cholesky, Factorize(_, _, _))
+      .Times(1)
+      .WillRepeatedly(Return(LinearSolverTerminationType::SUCCESS));
+  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _, _)).Times(0);
+  std::unique_ptr<DenseCholesky> dense_cholesky(mock_dense_cholesky);
+  std::unique_ptr<DenseIterativeRefiner> iterative_refiner(
+      mock_iterative_refiner);
+  RefinedDenseCholesky refined_dense_cholesky(std::move(dense_cholesky),
+                                              std::move(iterative_refiner));
+  double lhs;
+  std::string message;
+  EXPECT_EQ(refined_dense_cholesky.Factorize(1, &lhs, &message),
+            LinearSolverTerminationType::SUCCESS);
+};
+
+TEST(RefinedDenseCholesky, FactorAndSolveWithUnsuccessfulFactorization) {
+  auto* mock_dense_cholesky = new MockDenseCholesky;
+  auto* mock_iterative_refiner = new MockDenseIterativeRefiner;
+  EXPECT_CALL(*mock_dense_cholesky, Factorize(_, _, _))
+      .Times(1)
+      .WillRepeatedly(Return(LinearSolverTerminationType::FAILURE));
+  EXPECT_CALL(*mock_dense_cholesky, Solve(_, _, _)).Times(0);
+  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _, _)).Times(0);
+  std::unique_ptr<DenseCholesky> dense_cholesky(mock_dense_cholesky);
+  std::unique_ptr<DenseIterativeRefiner> iterative_refiner(
+      mock_iterative_refiner);
+  RefinedDenseCholesky refined_dense_cholesky(std::move(dense_cholesky),
+                                              std::move(iterative_refiner));
+  double lhs;
+  std::string message;
+  double rhs;
+  double solution;
+  EXPECT_EQ(
+      refined_dense_cholesky.FactorAndSolve(1, &lhs, &rhs, &solution, &message),
+      LinearSolverTerminationType::FAILURE);
+};
+
+TEST(RefinedDenseCholesky, FactorAndSolveWithSuccess) {
+  auto* mock_dense_cholesky = new MockDenseCholesky;
+  std::unique_ptr<MockDenseIterativeRefiner> mock_iterative_refiner(
+      new MockDenseIterativeRefiner);
+  EXPECT_CALL(*mock_dense_cholesky, Factorize(_, _, _))
+      .Times(1)
+      .WillRepeatedly(Return(LinearSolverTerminationType::SUCCESS));
+  EXPECT_CALL(*mock_dense_cholesky, Solve(_, _, _))
+      .Times(1)
+      .WillRepeatedly(Return(LinearSolverTerminationType::SUCCESS));
+  EXPECT_CALL(*mock_iterative_refiner, Refine(_, _, _, _, _)).Times(1);
+
+  std::unique_ptr<DenseCholesky> dense_cholesky(mock_dense_cholesky);
+  std::unique_ptr<DenseIterativeRefiner> iterative_refiner(
+      std::move(mock_iterative_refiner));
+  RefinedDenseCholesky refined_dense_cholesky(std::move(dense_cholesky),
+                                              std::move(iterative_refiner));
+  double lhs;
+  std::string message;
+  double rhs;
+  double solution;
+  EXPECT_EQ(
+      refined_dense_cholesky.FactorAndSolve(1, &lhs, &rhs, &solution, &message),
+      LinearSolverTerminationType::SUCCESS);
+};
 
 }  // namespace ceres::internal

@@ -36,6 +36,7 @@
 #include <vector>
 
 #include "ceres/internal/config.h"
+#include "ceres/iterative_refiner.h"
 
 #ifndef CERES_NO_CUDA
 #include "ceres/ceres_cuda_kernels.h"
@@ -58,6 +59,18 @@ extern "C" void dpotrs_(const char* uplo,
                         double* b,
                         const int* ldb,
                         int* info);
+
+extern "C" void spotrf_(
+    const char* uplo, const int* n, float* a, const int* lda, int* info);
+
+extern "C" void spotrs_(const char* uplo,
+                        const int* n,
+                        const int* nrhs,
+                        const float* a,
+                        const int* lda,
+                        float* b,
+                        const int* ldb,
+                        int* info);
 #endif
 
 namespace ceres::internal {
@@ -69,17 +82,23 @@ std::unique_ptr<DenseCholesky> DenseCholesky::Create(
   std::unique_ptr<DenseCholesky> dense_cholesky;
 
   switch (options.dense_linear_algebra_library_type) {
-    case EIGEN: {
+    case EIGEN:
       // Eigen mixed precision solver not yet implemented.
-      if (options.use_mixed_precision_solves) return nullptr;
-      dense_cholesky = std::make_unique<EigenDenseCholesky>();
-    } break;
+      if (options.use_mixed_precision_solves) {
+        dense_cholesky = std::make_unique<FloatEigenDenseCholesky>();
+      } else {
+        dense_cholesky = std::make_unique<EigenDenseCholesky>();
+      }
+      break;
 
     case LAPACK:
 #ifndef CERES_NO_LAPACK
       // LAPACK mixed precision solver not yet implemented.
-      if (options.use_mixed_precision_solves) return nullptr;
-      dense_cholesky = std::make_unique<LAPACKDenseCholesky>();
+      if (options.use_mixed_precision_solves) {
+        dense_cholesky = std::make_unique<FloatLAPACKDenseCholesky>();
+      } else {
+        dense_cholesky = std::make_unique<LAPACKDenseCholesky>();
+      }
       break;
 #else
       LOG(FATAL) << "Ceres was compiled without support for LAPACK.";
@@ -102,6 +121,14 @@ std::unique_ptr<DenseCholesky> DenseCholesky::Create(
                  << DenseLinearAlgebraLibraryTypeToString(
                         options.dense_linear_algebra_library_type);
   }
+
+  if (options.max_num_refinement_iterations > 0) {
+    auto refiner = std::make_unique<DenseIterativeRefiner>(
+        options.max_num_refinement_iterations);
+    dense_cholesky = std::make_unique<RefinedDenseCholesky>(
+        std::move(dense_cholesky), std::move(refiner));
+  }
+
   return dense_cholesky;
 }
 
@@ -146,6 +173,34 @@ LinearSolverTerminationType EigenDenseCholesky::Solve(const double* rhs,
   return LinearSolverTerminationType::SUCCESS;
 }
 
+LinearSolverTerminationType FloatEigenDenseCholesky::Factorize(
+    int num_cols, double* lhs, std::string* message) {
+  // TODO(sameeragarwal): Check if this causes a double allocation.
+  lhs_ = Eigen::Map<Eigen::MatrixXd>(lhs, num_cols, num_cols).cast<float>();
+  llt_ = std::make_unique<LLTType>(lhs_);
+  if (llt_->info() != Eigen::Success) {
+    *message = "Eigen failure. Unable to perform dense Cholesky factorization.";
+    return LinearSolverTerminationType::FAILURE;
+  }
+
+  *message = "Success.";
+  return LinearSolverTerminationType::SUCCESS;
+}
+
+LinearSolverTerminationType FloatEigenDenseCholesky::Solve(
+    const double* rhs, double* solution, std::string* message) {
+  if (llt_->info() != Eigen::Success) {
+    *message = "Eigen failure. Unable to perform dense Cholesky factorization.";
+    return LinearSolverTerminationType::FAILURE;
+  }
+
+  rhs_ = ConstVectorRef(rhs, llt_->cols()).cast<float>();
+  solution_ = llt_->solve(rhs_);
+  VectorRef(solution, llt_->cols()) = solution_.cast<double>();
+  *message = "Success.";
+  return LinearSolverTerminationType::SUCCESS;
+}
+
 #ifndef CERES_NO_LAPACK
 LinearSolverTerminationType LAPACKDenseCholesky::Factorize(
     int num_cols, double* lhs, std::string* message) {
@@ -182,7 +237,7 @@ LinearSolverTerminationType LAPACKDenseCholesky::Solve(const double* rhs,
   const int nrhs = 1;
   int info = 0;
 
-  std::copy_n(rhs, num_cols_, solution);
+  VectorRef(solution, num_cols_) = ConstVectorRef(rhs, num_cols_);
   dpotrs_(
       &uplo, &num_cols_, &nrhs, lhs_, &num_cols_, solution, &num_cols_, &info);
 
@@ -200,7 +255,94 @@ LinearSolverTerminationType LAPACKDenseCholesky::Solve(const double* rhs,
   return termination_type_;
 }
 
+LinearSolverTerminationType FloatLAPACKDenseCholesky::Factorize(
+    int num_cols, double* lhs, std::string* message) {
+  num_cols_ = num_cols;
+  lhs_ = Eigen::Map<Eigen::MatrixXd>(lhs, num_cols, num_cols).cast<float>();
+
+  const char uplo = 'L';
+  int info = 0;
+  spotrf_(&uplo, &num_cols_, lhs_.data(), &num_cols_, &info);
+
+  if (info < 0) {
+    termination_type_ = LinearSolverTerminationType::FATAL_ERROR;
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
+               << "Please report it. "
+               << "LAPACK::spotrf fatal error. "
+               << "Argument: " << -info << " is invalid.";
+  } else if (info > 0) {
+    termination_type_ = LinearSolverTerminationType::FAILURE;
+    *message = StringPrintf(
+        "LAPACK::spotrf numerical failure. "
+        "The leading minor of order %d is not positive definite.",
+        info);
+  } else {
+    termination_type_ = LinearSolverTerminationType::SUCCESS;
+    *message = "Success.";
+  }
+  return termination_type_;
+}
+
+LinearSolverTerminationType FloatLAPACKDenseCholesky::Solve(
+    const double* rhs, double* solution, std::string* message) {
+  const char uplo = 'L';
+  const int nrhs = 1;
+  int info = 0;
+  rhs_and_solution_ = ConstVectorRef(rhs, num_cols_).cast<float>();
+  spotrs_(&uplo,
+          &num_cols_,
+          &nrhs,
+          lhs_.data(),
+          &num_cols_,
+          rhs_and_solution_.data(),
+          &num_cols_,
+          &info);
+
+  if (info < 0) {
+    termination_type_ = LinearSolverTerminationType::FATAL_ERROR;
+    LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
+               << "Please report it. "
+               << "LAPACK::dpotrs fatal error. "
+               << "Argument: " << -info << " is invalid.";
+  }
+
+  *message = "Success";
+  termination_type_ = LinearSolverTerminationType::SUCCESS;
+  VectorRef(solution, num_cols_) =
+      rhs_and_solution_.head(num_cols_).cast<double>();
+  return termination_type_;
+}
+
 #endif  // CERES_NO_LAPACK
+
+RefinedDenseCholesky::RefinedDenseCholesky(
+    std::unique_ptr<DenseCholesky> dense_cholesky,
+    std::unique_ptr<DenseIterativeRefiner> iterative_refiner)
+    : dense_cholesky_(std::move(dense_cholesky)),
+      iterative_refiner_(std::move(iterative_refiner)) {}
+
+RefinedDenseCholesky::~RefinedDenseCholesky() = default;
+
+LinearSolverTerminationType RefinedDenseCholesky::Factorize(
+    const int num_cols, double* lhs, std::string* message) {
+  lhs_ = lhs;
+  num_cols_ = num_cols;
+  return dense_cholesky_->Factorize(num_cols, lhs, message);
+}
+
+LinearSolverTerminationType RefinedDenseCholesky::Solve(const double* rhs,
+                                                        double* solution,
+                                                        std::string* message) {
+  CHECK(lhs_ != nullptr);
+  auto termination_type = dense_cholesky_->Solve(rhs, solution, message);
+  if (termination_type != LinearSolverTerminationType::SUCCESS) {
+    return termination_type;
+  }
+
+  iterative_refiner_->Refine(
+      num_cols_, lhs_, rhs, dense_cholesky_.get(), solution);
+  return LinearSolverTerminationType::SUCCESS;
+}
 
 #ifndef CERES_NO_CUDA
 
@@ -323,15 +465,14 @@ std::unique_ptr<CUDADenseCholesky> CUDADenseCholesky::Create(
   if (cuda_dense_cholesky->Init(options.context, &cuda_error)) {
     return cuda_dense_cholesky;
   }
-  // Initialization failed, destroy the object (done automatically) and return a
-  // nullptr.
+  // Initialization failed, destroy the object (done automatically) and return
+  // a nullptr.
   LOG(ERROR) << "CUDADenseCholesky::Init failed: " << cuda_error;
   return nullptr;
 }
 
 std::unique_ptr<CUDADenseCholeskyMixedPrecision>
-    CUDADenseCholeskyMixedPrecision::Create(
-    const LinearSolver::Options& options) {
+CUDADenseCholeskyMixedPrecision::Create(const LinearSolver::Options& options) {
   if (options.dense_linear_algebra_library_type != CUDA ||
       !options.use_mixed_precision_solves) {
     // The user called the wrong factory method.
@@ -347,8 +488,8 @@ std::unique_ptr<CUDADenseCholeskyMixedPrecision>
   return nullptr;
 }
 
-bool CUDADenseCholeskyMixedPrecision::Init(
-    const LinearSolver::Options& options, std::string* message) {
+bool CUDADenseCholeskyMixedPrecision::Init(const LinearSolver::Options& options,
+                                           std::string* message) {
   if (!options.context->InitCUDA(message)) {
     return false;
   }
@@ -452,9 +593,7 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::CudaCholeskySolve(
 }
 
 LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Factorize(
-    int num_cols,
-    double* lhs,
-    std::string* message) {
+    int num_cols, double* lhs, std::string* message) {
   num_cols_ = num_cols;
 
   // Copy fp64 version of lhs to GPU.
@@ -472,9 +611,7 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Factorize(
 }
 
 LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Solve(
-    const double* rhs,
-    double* solution,
-    std::string* message) {
+    const double* rhs, double* solution, std::string* message) {
   // If factorization failed, return failure.
   if (factorize_result_ != LinearSolverTerminationType::SUCCESS) {
     *message = "Factorize did not complete successfully previously.";
@@ -505,8 +642,7 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Solve(
       return result;
     }
     // [fp64] x += c.
-    CudaDsxpy(
-        x_fp64_.data(), correction_fp32_.data(), num_cols_, stream_);
+    CudaDsxpy(x_fp64_.data(), correction_fp32_.data(), num_cols_, stream_);
     if (i < max_num_refinement_iterations_) {
       // [fp64] residual = rhs - lhs * x
       // This is done in two steps:

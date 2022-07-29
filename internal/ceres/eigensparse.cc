@@ -195,7 +195,7 @@ std::unique_ptr<SparseCholesky> FloatEigenSparseCholesky::Create(
 #else
     LOG(FATAL)
         << "Congratulations you have found a bug in Ceres Solver. Please "
-        "report it to the Ceres Solver developers.";
+           "report it to the Ceres Solver developers.";
     return nullptr;
 #endif  // CERES_NO_EIGEN_METIS
   }
