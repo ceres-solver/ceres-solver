@@ -120,44 +120,36 @@ bool IsNestedDissectionAvailable(SparseLinearAlgebraLibraryType type) {
 
 bool MixedPrecisionOptionIsValid(const Solver::Options& options,
                                  string* error) {
-  if (options.use_mixed_precision_solves) {
-    if ((options.linear_solver_type == DENSE_NORMAL_CHOLESKY ||
-        options.linear_solver_type == DENSE_SCHUR) &&
-        options.dense_linear_algebra_library_type == CUDA) {
-      // Mixed precision with CUDA and dense Cholesky variant: okay.
-      return true;
-    }
-    if ((options.linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
-        options.linear_solver_type == SPARSE_SCHUR) &&
-        (options.sparse_linear_algebra_library_type == EIGEN_SPARSE ||
-        options.sparse_linear_algebra_library_type == ACCELERATE_SPARSE)) {
+  if (!options.use_mixed_precision_solves) {
+    return true;
+  }
+
+  // All dense linear algebra backends support mixed precision solves now with
+  // Cholesky factorization.
+  if ((options.linear_solver_type == DENSE_NORMAL_CHOLESKY ||
+       options.linear_solver_type == DENSE_SCHUR)) {
+    return true;
+  }
+
+  if ((options.linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
+       options.linear_solver_type == SPARSE_SCHUR)) {
+    if (options.sparse_linear_algebra_library_type == EIGEN_SPARSE ||
+        options.sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
       // Mixed precision with any Eigen or Accelerate Cholesky variant: okay.
       return true;
     }
-    // No other mixed precision variants are supported.
-    if (options.linear_solver_type == DENSE_NORMAL_CHOLESKY ||
-        options.linear_solver_type == DENSE_SCHUR) {
+    if (options.sparse_linear_algebra_library_type == SUITE_SPARSE) {
       *error = StringPrintf(
-          "use_mixed_precision_solves with %s is only supported with "
-          "CUDA as the dense_linear_algebra_library_type.",
-          LinearSolverTypeToString(options.linear_solver_type));
-      return false;
-    }
-    if ((options.linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
-        options.linear_solver_type == SPARSE_SCHUR) &&
-        options.sparse_linear_algebra_library_type == SUITE_SPARSE) {
-      *error =  StringPrintf(
           "use_mixed_precision_solves with %s is not supported with "
           "SUITE_SPARSE as the sparse_linear_algebra_library_type.",
           LinearSolverTypeToString(options.linear_solver_type));
       return false;
     }
-    *error = StringPrintf(
-          "use_mixed_precision_solves with %s is not supported.",
-          LinearSolverTypeToString(options.linear_solver_type));
-    return false;
   }
-  return true;
+
+  *error = StringPrintf("use_mixed_precision_solves with %s is not supported.",
+                        LinearSolverTypeToString(options.linear_solver_type));
+  return false;
 }
 
 bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
@@ -300,7 +292,8 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
     }
     if (options.sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
       *error =
-          "ACCELERATE_SPARSE is not currently supported with dynamic sparsity.";
+          "ACCELERATE_SPARSE is not currently supported with dynamic "
+          "sparsity.";
       return false;
     }
   }
@@ -310,7 +303,8 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
       options.residual_blocks_for_subset_preconditioner.empty()) {
     *error =
         "When using SUBSET preconditioner, "
-        "Solver::Options::residual_blocks_for_subset_preconditioner cannot be "
+        "Solver::Options::residual_blocks_for_subset_preconditioner cannot "
+        "be "
         "empty";
     return false;
   }
@@ -348,8 +342,8 @@ bool LineSearchOptionsAreValid(const Solver::Options& options, string* error) {
 
   // Warn user if they have requested BISECTION interpolation, but constraints
   // on max/min step size change during line search prevent bisection scaling
-  // from occurring. Warn only, as this is likely a user mistake, but one which
-  // does not prevent us from continuing.
+  // from occurring. Warn only, as this is likely a user mistake, but one
+  // which does not prevent us from continuing.
   if (options.line_search_interpolation_type == ceres::BISECTION &&
       (options.max_line_search_step_contraction > 0.5 ||
        options.min_line_search_step_contraction < 0.5)) {

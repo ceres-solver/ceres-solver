@@ -33,6 +33,7 @@
 #include <utility>
 
 #include "Eigen/Dense"
+#include "ceres/dense_cholesky.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/sparse_matrix.h"
@@ -97,7 +98,9 @@ class FakeSparseCholesky : public SparseCholesky {
     const int num_cols = lhs_.cols();
     VectorRef solution(solution_ptr, num_cols);
     ConstVectorRef rhs(rhs_ptr, num_cols);
-    solution = lhs_.llt().solve(rhs.cast<Scalar>()).template cast<double>();
+    auto llt = lhs_.llt();
+    CHECK_NE(llt.info(), Eigen::Success);
+    solution = llt.solve(rhs.cast<Scalar>()).template cast<double>();
     return LinearSolverTerminationType::SUCCESS;
   }
 
@@ -113,10 +116,37 @@ class FakeSparseCholesky : public SparseCholesky {
   Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic> lhs_;
 };
 
+// A fake DenseCholesky which uses Eigen's Cholesky factorization to
+// do the real work. The template parameter allows us to work in
+// doubles or floats, even though the source matrix is double.
+template <typename Scalar>
+class FakeDenseCholesky : public DenseCholesky {
+ public:
+  explicit FakeDenseCholesky(const Matrix& lhs) { lhs_ = lhs.cast<Scalar>(); }
+
+  LinearSolverTerminationType Solve(const double* rhs_ptr,
+                                    double* solution_ptr,
+                                    std::string* message) final {
+    const int num_cols = lhs_.cols();
+    VectorRef solution(solution_ptr, num_cols);
+    ConstVectorRef rhs(rhs_ptr, num_cols);
+    solution = lhs_.llt().solve(rhs.cast<Scalar>()).template cast<double>();
+    return LinearSolverTerminationType::SUCCESS;
+  }
+
+  LinearSolverTerminationType Factorize(int num_cols,
+                                        double* lhs,
+                                        std::string* message) final
+      DO_NOT_CALL_WITH_RETURN(LinearSolverTerminationType::FAILURE);
+
+ private:
+  Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic> lhs_;
+};
+
 #undef DO_NOT_CALL
 #undef DO_NOT_CALL_WITH_RETURN
 
-class IterativeRefinerTest : public ::testing::Test {
+class SparseIterativeRefinerTest : public ::testing::Test {
  public:
   void SetUp() override {
     num_cols_ = 5;
@@ -136,10 +166,11 @@ class IterativeRefinerTest : public ::testing::Test {
   Vector rhs_, solution_;
 };
 
-TEST_F(IterativeRefinerTest, RandomSolutionWithExactFactorizationConverges) {
+TEST_F(SparseIterativeRefinerTest,
+       RandomSolutionWithExactFactorizationConverges) {
   FakeSparseMatrix lhs(lhs_);
   FakeSparseCholesky<double> sparse_cholesky(lhs_);
-  IterativeRefiner refiner(max_num_iterations_);
+  SparseIterativeRefiner refiner(max_num_iterations_);
   Vector refined_solution(num_cols_);
   refined_solution.setRandom();
   refiner.Refine(lhs, rhs_.data(), &sparse_cholesky, refined_solution.data());
@@ -148,16 +179,72 @@ TEST_F(IterativeRefinerTest, RandomSolutionWithExactFactorizationConverges) {
               std::numeric_limits<double>::epsilon() * 10);
 }
 
-TEST_F(IterativeRefinerTest,
+TEST_F(SparseIterativeRefinerTest,
        RandomSolutionWithApproximationFactorizationConverges) {
   FakeSparseMatrix lhs(lhs_);
   // Use a single precision Cholesky factorization of the double
   // precision matrix. This will give us an approximate factorization.
   FakeSparseCholesky<float> sparse_cholesky(lhs_);
-  IterativeRefiner refiner(max_num_iterations_);
+  SparseIterativeRefiner refiner(max_num_iterations_);
   Vector refined_solution(num_cols_);
   refined_solution.setRandom();
   refiner.Refine(lhs, rhs_.data(), &sparse_cholesky, refined_solution.data());
+  EXPECT_NEAR((lhs_ * refined_solution - rhs_).norm(),
+              0.0,
+              std::numeric_limits<double>::epsilon() * 10);
+}
+
+class DenseIterativeRefinerTest : public ::testing::Test {
+ public:
+  void SetUp() override {
+    num_cols_ = 5;
+    max_num_iterations_ = 30;
+    Matrix m(num_cols_, num_cols_);
+    m.setRandom();
+    lhs_ = m * m.transpose();
+    solution_.resize(num_cols_);
+    solution_.setRandom();
+    rhs_ = lhs_ * solution_;
+  };
+
+ protected:
+  int num_cols_;
+  int max_num_iterations_;
+  Matrix lhs_;
+  Vector rhs_, solution_;
+};
+
+TEST_F(DenseIterativeRefinerTest,
+       RandomSolutionWithExactFactorizationConverges) {
+  Matrix lhs = lhs_;
+  FakeDenseCholesky<double> dense_cholesky(lhs);
+  DenseIterativeRefiner refiner(max_num_iterations_);
+  Vector refined_solution(num_cols_);
+  refined_solution.setRandom();
+  refiner.Refine(lhs.cols(),
+                 lhs.data(),
+                 rhs_.data(),
+                 &dense_cholesky,
+                 refined_solution.data());
+  EXPECT_NEAR((lhs_ * refined_solution - rhs_).norm(),
+              0.0,
+              std::numeric_limits<double>::epsilon() * 10);
+}
+
+TEST_F(DenseIterativeRefinerTest,
+       RandomSolutionWithApproximationFactorizationConverges) {
+  Matrix lhs = lhs_;
+  // Use a single precision Cholesky factorization of the double
+  // precision matrix. This will give us an approximate factorization.
+  FakeDenseCholesky<float> dense_cholesky(lhs_);
+  DenseIterativeRefiner refiner(max_num_iterations_);
+  Vector refined_solution(num_cols_);
+  refined_solution.setRandom();
+  refiner.Refine(lhs.cols(),
+                 lhs.data(),
+                 rhs_.data(),
+                 &dense_cholesky,
+                 refined_solution.data());
   EXPECT_NEAR((lhs_ * refined_solution - rhs_).norm(),
               0.0,
               std::numeric_limits<double>::epsilon() * 10);

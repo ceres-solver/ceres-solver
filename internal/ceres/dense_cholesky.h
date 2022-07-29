@@ -114,6 +114,23 @@ class CERES_NO_EXPORT EigenDenseCholesky final : public DenseCholesky {
   std::unique_ptr<LLTType> llt_;
 };
 
+class CERES_NO_EXPORT FloatEigenDenseCholesky final : public DenseCholesky {
+ public:
+  LinearSolverTerminationType Factorize(int num_cols,
+                                        double* lhs,
+                                        std::string* message) override;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override;
+
+ private:
+  Eigen::MatrixXf lhs_;
+  Eigen::VectorXf rhs_;
+  Eigen::VectorXf solution_;
+  using LLTType = Eigen::LLT<Eigen::MatrixXf, Eigen::Lower>;
+  std::unique_ptr<LLTType> llt_;
+};
+
 #ifndef CERES_NO_LAPACK
 class CERES_NO_EXPORT LAPACKDenseCholesky final : public DenseCholesky {
  public:
@@ -130,7 +147,49 @@ class CERES_NO_EXPORT LAPACKDenseCholesky final : public DenseCholesky {
   LinearSolverTerminationType termination_type_ =
       LinearSolverTerminationType::FATAL_ERROR;
 };
+
+class CERES_NO_EXPORT FloatLAPACKDenseCholesky final : public DenseCholesky {
+ public:
+  LinearSolverTerminationType Factorize(int num_cols,
+                                        double* lhs,
+                                        std::string* message) override;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override;
+
+ private:
+  Eigen::MatrixXf lhs_;
+  Eigen::VectorXf rhs_and_solution_;
+  int num_cols_ = -1;
+  LinearSolverTerminationType termination_type_ =
+      LinearSolverTerminationType::FATAL_ERROR;
+};
 #endif  // CERES_NO_LAPACK
+
+class DenseIterativeRefiner;
+
+// Computes an initial solution using the given instance of
+// DenseCholesky, and then refines it using the DenseIterativeRefiner.
+class CERES_NO_EXPORT RefinedDenseCholesky final : public DenseCholesky {
+ public:
+  RefinedDenseCholesky(
+      std::unique_ptr<DenseCholesky> dense_cholesky,
+      std::unique_ptr<DenseIterativeRefiner> iterative_refiner);
+  ~RefinedDenseCholesky() override;
+
+  LinearSolverTerminationType Factorize(int num_cols,
+                                        double* lhs,
+                                        std::string* message) override;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) override;
+
+ private:
+  std::unique_ptr<DenseCholesky> dense_cholesky_;
+  std::unique_ptr<DenseIterativeRefiner> iterative_refiner_;
+  double* lhs_ = nullptr;
+  int num_cols_;
+};
 
 #ifndef CERES_NO_CUDA
 // CUDA implementation of DenseCholesky using the cuSolverDN library using the
@@ -190,13 +249,13 @@ class CERES_NO_EXPORT CUDADenseCholesky final : public DenseCholesky {
 //    symmetric positive definite.
 // 2. During the solution update, the up-cast and accumulation is performed in
 //    one step with a custom kernel.
-class CERES_NO_EXPORT CUDADenseCholeskyMixedPrecision final :
-    public DenseCholesky {
+class CERES_NO_EXPORT CUDADenseCholeskyMixedPrecision final
+    : public DenseCholesky {
  public:
   static std::unique_ptr<CUDADenseCholeskyMixedPrecision> Create(
       const LinearSolver::Options& options);
-  CUDADenseCholeskyMixedPrecision(
-      const CUDADenseCholeskyMixedPrecision&) = delete;
+  CUDADenseCholeskyMixedPrecision(const CUDADenseCholeskyMixedPrecision&) =
+      delete;
   CUDADenseCholeskyMixedPrecision& operator=(
       const CUDADenseCholeskyMixedPrecision&) = delete;
   LinearSolverTerminationType Factorize(int num_cols,

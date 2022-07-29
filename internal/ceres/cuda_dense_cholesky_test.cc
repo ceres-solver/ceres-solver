@@ -258,8 +258,6 @@ TEST(CUDADenseCholeskyMixedPrecision, Cholesky4x4Matrix4Steps) {
   EXPECT_NEAR(x(3), 1.0000, kEpsilon);
 }
 
-
-
 TEST(CUDADenseCholeskyMixedPrecision, Randomized1600x1600Tests) {
   const int kNumCols = 1600;
   using LhsType = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>;
