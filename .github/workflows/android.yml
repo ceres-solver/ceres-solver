@@ -46,6 +46,16 @@ jobs:
             ccache \
             ninja-build
 
+      # Ensure the declared NDK version is always installed even if it's removed
+      # from the virtual environment.
+      - name: Setup NDK
+        env:
+          ANDROID_NDK_VERSION: 23.2.8568313
+          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+        run: |
+          echo 'y' | ${{env.ANDROID_SDK_ROOT}}/cmdline-tools/latest/bin/sdkmanager --install 'ndk;${{env.ANDROID_NDK_VERSION}}'
+          echo "ANDROID_NDK_ROOT=${{env.ANDROID_SDK_ROOT}}/ndk/${{env.ANDROID_NDK_VERSION}}" >> $GITHUB_ENV
+
       - name: Cache Eigen
         id: cache-eigen
         uses: actions/cache@v2
