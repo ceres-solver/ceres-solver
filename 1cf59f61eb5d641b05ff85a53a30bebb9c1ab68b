@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b023567f_977fac24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-03T17:32:40Z",
+      "side": 1,
+      "message": "Thanks Sergiu. I was going to ping you about these failures but it slipped my mind. ",
+      "revId": "1cf59f61eb5d641b05ff85a53a30bebb9c1ab68b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
