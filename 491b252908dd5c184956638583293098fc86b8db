@@ -52,6 +52,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5e29849_fb3007d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-04T21:38:39Z",
+      "side": 1,
+      "message": "And on the same computer, recompiled with IntelMKL:\nLAPACK        43.443452\nLAPACK+mixed  41.708270\n\nSchur Elimination contributions:\nLAPACK        37.103953\nLAPACK+mixed  37.256882",
+      "parentUuid": "a79e082c_120d7625",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb624841_7969423f",
