@@ -16,6 +16,75 @@
       "message": "one quick comment, it would be good to add as much context as possible based on your references to the commit log.",
       "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ddc26bb_842f2baf",
+        "filename": "include/ceres/line_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-04T17:27:57Z",
+      "side": 1,
+      "message": "I think we have a similar ambiguity in our quaternion implementation, is it worth fixing that too?",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 26
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "862d5272_9c2dd01c",
+        "filename": "include/ceres/sphere_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-04T17:27:57Z",
+      "side": 1,
+      "message": "perhaps send this change out on its own since it does not affect numerics, and can just be checked in.\nits okay if thats too much trouble and you want to just keep it in this CL.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 2
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15c96b4a_ea12172c",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-04T17:27:57Z",
+      "side": 1,
+      "message": "why do we need to normalize here?",
+      "range": {
+        "startLine": 707,
+        "startChar": 4,
+        "endLine": 707,
+        "endChar": 13
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
