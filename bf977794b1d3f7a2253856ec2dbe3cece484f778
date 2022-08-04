@@ -229,6 +229,24 @@
       "parentUuid": "2f108551_99e4f9b1",
       "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94d2936a_b9d91aeb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-04T18:35:10Z",
+      "side": 1,
+      "message": "Sameer, as you suggested, i made a preconditioner based on power series expansion and, also, added an option to use a few terms of expansion to initialize the pcg. Preliminary tests showed that preconditioning during the iterations of pcg does job no better then schur_jacobi, but using power series expansion to initialize the pcg does indeed improve the quality/time curve on problem-1031-110968. I am currently running tests on subset of bal problems (\u003e1k cameras) to quantify the effects on more exhaustive dataset and to find the best defaults. An estimate of time for tests to finish is about 50h. Meanwhile, i can push the current version.",
+      "parentUuid": "2f108551_99e4f9b1",
+      "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
