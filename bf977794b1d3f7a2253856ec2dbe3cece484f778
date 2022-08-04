@@ -247,6 +247,24 @@
       "parentUuid": "2f108551_99e4f9b1",
       "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1668aa43_51e7ed19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-04T18:37:17Z",
+      "side": 1,
+      "message": "oh you are already on it! awesome. please push the version I can take a closer look at your implementation. since it is now just a preconditioner (we can always run iterative_schur with just one iteration) and a higher tolerance/number of iterations for the preconditioner we should be able to recover the original functionality too no?\n\nit will reduce the amount of changes in the CL where we are introducing a whole new linear solver.",
+      "parentUuid": "94d2936a_b9d91aeb",
+      "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
