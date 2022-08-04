@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b5c8fd09_419b948b",
+        "filename": "include/ceres/line_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6677
+      },
+      "writtenOn": "2022-08-04T17:43:25Z",
+      "side": 1,
+      "message": "I would need to check the rest of the sota against that. For line and sphere manifolds it is very intuitive, but maybe for quaternions there is some controversy.",
+      "parentUuid": "3ddc26bb_842f2baf",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 26
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "862d5272_9c2dd01c",
         "filename": "include/ceres/sphere_manifold.h",
         "patchSetId": 1
@@ -66,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d84be0dd_7db45a9d",
+        "filename": "include/ceres/sphere_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 6677
+      },
+      "writtenOn": "2022-08-04T17:43:25Z",
+      "side": 1,
+      "message": "Sure, I can send it in a different PR. It should be merge before this CL then, because if not the tests will fail (I added some that cover this case)",
+      "parentUuid": "862d5272_9c2dd01c",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 2
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15c96b4a_ea12172c",
         "filename": "internal/ceres/manifold_test.cc",
         "patchSetId": 1
@@ -77,6 +125,30 @@
       "writtenOn": "2022-08-04T17:27:57Z",
       "side": 1,
       "message": "why do we need to normalize here?",
+      "range": {
+        "startLine": 707,
+        "startChar": 4,
+        "endLine": 707,
+        "endChar": 13
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "276a0f08_d6cecc97",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 6677
+      },
+      "writtenOn": "2022-08-04T17:43:25Z",
+      "side": 1,
+      "message": "Because all the math is meant for unit vectors (points in the unit n-dimensional sphere). Thus the ambient space points should always be normalized. There is some additional math to work with non-unit, constant-norm vectors, but I think its not worth it to add it and over-complicate things (you can always multiply the unit vector by some magnitude outside the manifold). \n\nBecause of that, if we input a non-unit vector that is outside of the manifold then the test would make no sense, and the results would not be conclusive.",
+      "parentUuid": "15c96b4a_ea12172c",
       "range": {
         "startLine": 707,
         "startChar": 4,
