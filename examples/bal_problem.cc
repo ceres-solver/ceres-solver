@@ -38,9 +38,11 @@
 #include <vector>
 
 #include "Eigen/Core"
+#include "brown_ffcckkk_reprojection_error.h"
 #include "ceres/rotation.h"
 #include "glog/logging.h"
 #include "random.h"
+#include "snavely_reprojection_error.h"
 
 namespace ceres::examples {
 namespace {
@@ -70,7 +72,10 @@ double Median(std::vector<double>* data) {
 
 }  // namespace
 
-BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
+BALProblem::BALProblem(const std::string& filename,
+                       bool use_quaternions,
+                       bool general_format)
+    : use_quaternions_(use_quaternions) {
   FILE* fptr = fopen(filename.c_str(), "r");
 
   if (fptr == nullptr) {
@@ -79,19 +84,32 @@ BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
   };
 
   // This will die horribly on invalid files. Them's the breaks.
+  if (general_format) {
+    int _intrinsics_type;
+    FscanfOrDie(fptr, "%d", &_intrinsics_type);
+    FscanfOrDie(fptr, "%d", &num_intrinsics_);
+    intrinsics_type_ = static_cast<IntrinsicsType>(_intrinsics_type);
+  }
   FscanfOrDie(fptr, "%d", &num_cameras_);
   FscanfOrDie(fptr, "%d", &num_points_);
   FscanfOrDie(fptr, "%d", &num_observations_);
+  if (!general_format) {
+    intrinsics_type_ = IntrinsicsType::SNAVELY;
+    num_intrinsics_ = num_cameras_;
+  }
+  assert(num_cameras_ == num_intrinsics_ || num_intrinsics_ == 1);
 
-  VLOG(1) << "Header: " << num_cameras_ << " " << num_points_ << " "
-          << num_observations_;
+  VLOG(1) << "Header: " << num_intrinsics_ << " intrinsics, " << num_cameras_
+          << " cameras, " << num_points_ << " points, " << num_observations_
+          << " observations";
 
   point_index_ = new int[num_observations_];
   camera_index_ = new int[num_observations_];
   observations_ = new double[2 * num_observations_];
 
-  num_parameters_ = 9 * num_cameras_ + 3 * num_points_;
-  parameters_ = new double[num_parameters_];
+  intrinsics_ = new double[intrinsic_block_size() * num_intrinsics_];
+  cameras_ = new double[camera_block_size() * num_cameras_];
+  points_ = new double[point_block_size() * num_points_];
 
   for (int i = 0; i < num_observations_; ++i) {
     FscanfOrDie(fptr, "%d", camera_index_ + i);
@@ -101,34 +119,51 @@ BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
     }
   }
 
-  for (int i = 0; i < num_parameters_; ++i) {
-    FscanfOrDie(fptr, "%lf", parameters_ + i);
+  if (intrinsics_type_ == IntrinsicsType::SNAVELY) {
+    // intrinsics and cameras are interleaved
+    assert(num_cameras_ == num_intrinsics_);
+    for (int i = 0; i < num_cameras_; ++i) {
+      for (int j = 0; j < 6; ++j) {
+        FscanfOrDie(fptr, "%lf", cameras_ + i * 6 + j);
+      }
+      for (int j = 0; j < 3; ++j) {
+        FscanfOrDie(fptr, "%lf", intrinsics_ + i * 3 + j);
+      }
+    }
+  } else {
+    // intrinsics and cameras are separate
+    const int ibs = intrinsic_block_size();
+    for (int i = 0; i < num_intrinsics_; ++i) {
+      for (int j = 0; j < ibs; ++j) {
+        FscanfOrDie(fptr, "%lf", intrinsics_ + i * ibs + j);
+      }
+    }
+    for (int i = 0; i < num_cameras_; ++i) {
+      for (int j = 0; j < 6; ++j) {
+        FscanfOrDie(fptr, "%lf", cameras_ + i * 6 + j);
+      }
+    }
+  }
+  for (int i = 0; i < num_points_; ++i) {
+    for (int j = 0; j < 3; ++j) {
+      FscanfOrDie(fptr, "%lf", points_ + i * 3 + j);
+    }
   }
 
   fclose(fptr);
 
-  use_quaternions_ = use_quaternions;
   if (use_quaternions) {
     // Switch the angle-axis rotations to quaternions.
-    num_parameters_ = 10 * num_cameras_ + 3 * num_points_;
-    auto* quaternion_parameters = new double[num_parameters_];
-    double* original_cursor = parameters_;
-    double* quaternion_cursor = quaternion_parameters;
-    for (int i = 0; i < num_cameras_; ++i) {
-      AngleAxisToQuaternion(original_cursor, quaternion_cursor);
-      quaternion_cursor += 4;
-      original_cursor += 3;
-      for (int j = 4; j < 10; ++j) {
-        *quaternion_cursor++ = *original_cursor++;
-      }
+    double* original_cursor = cameras_ + 6 * num_cameras_;
+    double* quaternion_cursor = cameras_ + 7 * num_cameras_;
+    while (original_cursor > cameras_) {
+      original_cursor -= 6;
+      quaternion_cursor -= 7;
+      const Eigen::Vector3d angleaxis = ConstVectorRef(original_cursor + 0, 3);
+      const Eigen::Vector3d position = ConstVectorRef(original_cursor + 3, 3);
+      AngleAxisToQuaternion(angleaxis.data(), quaternion_cursor);
+      VectorRef(quaternion_cursor + 4, 3) = position;
     }
-    // Copy the rest of the points.
-    for (int i = 0; i < 3 * num_points_; ++i) {
-      *quaternion_cursor++ = *original_cursor++;
-    }
-    // Swap in the quaternion parameters.
-    delete[] parameters_;
-    parameters_ = quaternion_parameters;
   }
 }
 
@@ -142,7 +177,17 @@ void BALProblem::WriteToFile(const std::string& filename) const {
     return;
   };
 
-  fprintf(fptr, "%d %d %d\n", num_cameras_, num_points_, num_observations_);
+  if (intrinsics_type_ == IntrinsicsType::SNAVELY) {
+    fprintf(fptr, "%d %d %d\n", num_cameras_, num_points_, num_observations_);
+  } else {
+    fprintf(fptr,
+            "%d %d %d %d %d\n",
+            static_cast<int>(intrinsics_type_),
+            num_intrinsics_,
+            num_cameras_,
+            num_points_,
+            num_observations_);
+  }
 
   for (int i = 0; i < num_observations_; ++i) {
     fprintf(fptr, "%d %d", camera_index_[i], point_index_[i]);
@@ -152,23 +197,53 @@ void BALProblem::WriteToFile(const std::string& filename) const {
     fprintf(fptr, "\n");
   }
 
-  for (int i = 0; i < num_cameras(); ++i) {
-    double angleaxis[9];
-    if (use_quaternions_) {
-      // Output in angle-axis format.
-      QuaternionToAngleAxis(parameters_ + 10 * i, angleaxis);
-      memcpy(angleaxis + 3, parameters_ + 10 * i + 4, 6 * sizeof(double));
-    } else {
-      memcpy(angleaxis, parameters_ + 9 * i, 9 * sizeof(double));
+  if (intrinsics_type_ == IntrinsicsType::SNAVELY) {
+    for (int i = 0; i < num_cameras(); ++i) {
+      const double* intrinsic = this->intrinsic(i);
+      for (int j = 0; j < intrinsic_block_size(); ++j) {
+        fprintf(fptr, "%.16g\n", intrinsic[j]);
+      }
+      double* angleaxis;
+      double _angleaxis[6];
+      const double* camera = this->camera(i);
+      if (use_quaternions_) {
+        // Output in angle-axis format.
+        QuaternionToAngleAxis(camera, _angleaxis);
+        memcpy(_angleaxis + 3, camera + 4, 3 * sizeof(double));
+        angleaxis = _angleaxis;
+      } else {
+        angleaxis = cameras_;
+      }
+      for (int j = 0; j < 6; ++j) {
+        fprintf(fptr, "%.16g\n", angleaxis[j]);
+      }
     }
-    for (double coeff : angleaxis) {
-      fprintf(fptr, "%.16g\n", coeff);
+  } else {
+    for (int i = 0; i < num_intrinsics(); ++i) {
+      const double* intrinsic = this->intrinsic(i);
+      for (int j = 0; j < intrinsic_block_size(); ++j) {
+        fprintf(fptr, "%.16g\n", intrinsic[j]);
+      }
+    }
+    for (int i = 0; i < num_cameras(); ++i) {
+      double* angleaxis;
+      double _angleaxis[6];
+      const double* camera = this->camera(i);
+      if (use_quaternions_) {
+        // Output in angle-axis format.
+        QuaternionToAngleAxis(camera, _angleaxis);
+        memcpy(_angleaxis + 3, camera + 4, 3 * sizeof(double));
+        angleaxis = _angleaxis;
+      } else {
+        angleaxis = cameras_;
+      }
+      for (int j = 0; j < 6; ++j) {
+        fprintf(fptr, "%.16g\n", angleaxis[j]);
+      }
     }
   }
-
-  const double* points = parameters_ + camera_block_size() * num_cameras_;
   for (int i = 0; i < num_points(); ++i) {
-    const double* point = points + i * point_block_size();
+    const double* point = this->point(i);
     for (int j = 0; j < point_block_size(); ++j) {
       fprintf(fptr, "%.16g\n", point[j]);
     }
@@ -196,16 +271,14 @@ void BALProblem::WriteToPLYFile(const std::string& filename) const {
   double angle_axis[3];
   double center[3];
   for (int i = 0; i < num_cameras(); ++i) {
-    const double* camera = cameras() + camera_block_size() * i;
+    const double* camera = this->camera(i);
     CameraToAngleAxisAndCenter(camera, angle_axis, center);
-    of << center[0] << ' ' << center[1] << ' ' << center[2] << " 0 255 0"
-       << '\n';
+    of << center[0] << ' ' << center[1] << ' ' << center[2] << " 0 255 0\n";
   }
 
   // Export the structure (i.e. 3D Points) as white points.
-  const double* points = parameters_ + camera_block_size() * num_cameras_;
   for (int i = 0; i < num_points(); ++i) {
-    const double* point = points + i * point_block_size();
+    const double* point = this->point(i);
     for (int j = 0; j < point_block_size(); ++j) {
       of << point[j] << ' ';
     }
@@ -224,11 +297,23 @@ void BALProblem::CameraToAngleAxisAndCenter(const double* camera,
     angle_axis_ref = ConstVectorRef(camera, 3);
   }
 
-  // c = -R't
-  Eigen::VectorXd inverse_rotation = -angle_axis_ref;
-  AngleAxisRotatePoint(
-      inverse_rotation.data(), camera + camera_block_size() - 6, center);
-  VectorRef(center, 3) *= -1.0;
+  switch (intrinsics_type_) {
+    case IntrinsicsType::SNAVELY: {
+      // C = -R't
+      const Eigen::VectorXd inverse_rotation = -angle_axis_ref;
+      AngleAxisRotatePoint(
+          inverse_rotation.data(), camera + (camera_block_size() - 3), center);
+      VectorRef(center, 3) *= -1.0;
+      break;
+    }
+    case IntrinsicsType::BROWN_FFCCKKK: {
+      VectorRef(center, 3) =
+          ConstVectorRef(camera + (camera_block_size() - 3), 3);
+      break;
+    }
+    default:
+      LOG(FATAL) << "Unknown intrinsics type";
+  }
 }
 
 void BALProblem::AngleAxisAndCenterToCamera(const double* angle_axis,
@@ -241,25 +326,41 @@ void BALProblem::AngleAxisAndCenterToCamera(const double* angle_axis,
     VectorRef(camera, 3) = angle_axis_ref;
   }
 
-  // t = -R * c
-  AngleAxisRotatePoint(angle_axis, center, camera + camera_block_size() - 6);
-  VectorRef(camera + camera_block_size() - 6, 3) *= -1.0;
+  switch (intrinsics_type_) {
+    case IntrinsicsType::SNAVELY: {
+      // t = -R * C
+      AngleAxisRotatePoint(
+          angle_axis, center, camera + (camera_block_size() - 3));
+      VectorRef(camera + (camera_block_size() - 3), 3) *= -1.0;
+      break;
+    }
+    case IntrinsicsType::BROWN_FFCCKKK: {
+      VectorRef(camera + (camera_block_size() - 3), 3) =
+          ConstVectorRef(center, 3);
+      break;
+    }
+    default:
+      LOG(FATAL) << "Unknown intrinsics type";
+  }
 }
 
-void BALProblem::Normalize() {
+void BALProblem::Normalize(const double median_scale) {
+  if (median_scale <= 0) {
+    return;
+  }
+
   // Compute the marginal median of the geometry.
   std::vector<double> tmp(num_points_);
   Eigen::Vector3d median;
-  double* points = mutable_points();
   for (int i = 0; i < 3; ++i) {
     for (int j = 0; j < num_points_; ++j) {
-      tmp[j] = points[3 * j + i];
+      tmp[j] = points_[3 * j + i];
     }
     median(i) = Median(&tmp);
   }
 
   for (int i = 0; i < num_points_; ++i) {
-    VectorRef point(points + 3 * i, 3);
+    VectorRef point(points_ + 3 * i, 3);
     tmp[i] = (point - median).lpNorm<1>();
   }
 
@@ -267,7 +368,7 @@ void BALProblem::Normalize() {
 
   // Scale so that the median absolute deviation of the resulting
   // reconstruction is 100.
-  const double scale = 100.0 / median_absolute_deviation;
+  const double scale = median_scale / median_absolute_deviation;
 
   VLOG(2) << "median: " << median.transpose();
   VLOG(2) << "median absolute deviation: " << median_absolute_deviation;
@@ -275,19 +376,17 @@ void BALProblem::Normalize() {
 
   // X = scale * (X - median)
   for (int i = 0; i < num_points_; ++i) {
-    VectorRef point(points + 3 * i, 3);
+    VectorRef point(points_ + 3 * i, 3);
     point = scale * (point - median);
   }
 
-  double* cameras = mutable_cameras();
-  double angle_axis[3];
-  double center[3];
+  Eigen::Vector3d angle_axis;
+  Eigen::Vector3d center;
   for (int i = 0; i < num_cameras_; ++i) {
-    double* camera = cameras + camera_block_size() * i;
-    CameraToAngleAxisAndCenter(camera, angle_axis, center);
-    // center = scale * (center - median)
-    VectorRef(center, 3) = scale * (VectorRef(center, 3) - median);
-    AngleAxisAndCenterToCamera(angle_axis, center, camera);
+    double* const camera = this->mutable_camera(i);
+    CameraToAngleAxisAndCenter(camera, angle_axis.data(), center.data());
+    center = scale * (center - median);
+    AngleAxisAndCenterToCamera(angle_axis.data(), center.data(), camera);
   }
 }
 
@@ -305,30 +404,66 @@ void BALProblem::Perturb(const double rotation_sigma,
     }
   }
 
-  for (int i = 0; i < num_cameras_; ++i) {
-    double* camera = mutable_cameras() + camera_block_size() * i;
+  if (rotation_sigma > 0.0 || translation_sigma > 0.0) {
+    for (int i = 0; i < num_cameras_; ++i) {
+      double* const camera = this->mutable_camera(i);
 
-    double angle_axis[3];
-    double center[3];
-    // Perturb in the rotation of the camera in the angle-axis
-    // representation.
-    CameraToAngleAxisAndCenter(camera, angle_axis, center);
-    if (rotation_sigma > 0.0) {
-      PerturbPoint3(rotation_sigma, angle_axis);
-    }
-    AngleAxisAndCenterToCamera(angle_axis, center, camera);
+      double angle_axis[3];
+      double center[3];
+      // Perturb in the rotation of the camera in the angle-axis
+      // representation.
+      CameraToAngleAxisAndCenter(camera, angle_axis, center);
+      if (rotation_sigma > 0.0) {
+        PerturbPoint3(rotation_sigma, angle_axis);
+      }
+      AngleAxisAndCenterToCamera(angle_axis, center, camera);
 
-    if (translation_sigma > 0.0) {
-      PerturbPoint3(translation_sigma, camera + camera_block_size() - 6);
+      if (translation_sigma > 0.0) {
+        PerturbPoint3(translation_sigma, camera + camera_block_size() - 3);
+      }
     }
   }
+}
+
+CostFunction* BALProblem::CreateReprojectionErrorCostFunction(int idx) const {
+  // Each Residual block takes a point, a camera and an intrinsics as input and
+  // outputs a 2 dimensional residual.
+  const Eigen::Map<const Eigen::Vector2d> observation(observations_ + 2 * idx);
+  switch (intrinsics_type_) {
+    case IntrinsicsType::SNAVELY:
+      return use_quaternions_
+                 ? SnavelyReprojectionErrorWithQuaternions::Create(observation)
+                 : SnavelyReprojectionError::Create(observation);
+    case IntrinsicsType::BROWN_FFCCKKK:
+      return use_quaternions_
+                 ? BrownffcckkkReprojectionErrorWithQuaternions::Create(
+                       observation)
+                 : BrownffcckkkReprojectionError::Create(observation);
+    default:
+      LOG(FATAL) << "Unknown intrinsics type";
+      return nullptr;
+  }
+}
+
+std::string BALProblem::PrintIntrinsics(int idx) const {
+  assert(idx < num_cameras_);
+  const double* intrinsic = this->intrinsic(idx);
+  std::stringstream ss;
+  const int ibs = intrinsic_block_size();
+  for (int i = 0; i < ibs; ++i) {
+    ss << intrinsic[i];
+    if (i != ibs - 1) ss << ' ';
+  }
+  return ss.str();
 }
 
 BALProblem::~BALProblem() {
   delete[] point_index_;
   delete[] camera_index_;
   delete[] observations_;
-  delete[] parameters_;
+  delete[] intrinsics_;
+  delete[] cameras_;
+  delete[] points_;
 }
 
 }  // namespace ceres::examples

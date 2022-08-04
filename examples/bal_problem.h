@@ -39,11 +39,20 @@
 
 #include <string>
 
+#include "ceres/cost_function.h"
+
 namespace ceres::examples {
 
 class BALProblem {
  public:
-  explicit BALProblem(const std::string& filename, bool use_quaternions);
+  enum class IntrinsicsType {
+    SNAVELY = 0,
+    BROWN_FFCCKKK,
+  };
+
+  explicit BALProblem(const std::string& filename,
+                      bool use_quaternions,
+                      bool general_format = false);
   ~BALProblem();
 
   void WriteToFile(const std::string& filename) const;
@@ -56,7 +65,7 @@ class BALProblem {
   // 100.0.
   //
   // The reprojection error of the problem remains the same.
-  void Normalize();
+  void Normalize(const double median_scale = 100.0);
 
   // Perturb the camera pose and the geometry with random normal
   // numbers with corresponding standard deviations.
@@ -64,23 +73,37 @@ class BALProblem {
                const double translation_sigma,
                const double point_sigma);
 
+  // Create the appropriate reprojection error cost function for the given
+  // observation index.
+  CostFunction* CreateReprojectionErrorCostFunction(int idx) const;
+
+  // Print the intrinsics for the camera at the given index.
+  std::string PrintIntrinsics(int idx) const;
+	
   // clang-format off
-  int camera_block_size()      const { return use_quaternions_ ? 10 : 9; }
-  int point_block_size()       const { return 3;                         }
-  int num_cameras()            const { return num_cameras_;              }
-  int num_points()             const { return num_points_;               }
-  int num_observations()       const { return num_observations_;         }
-  int num_parameters()         const { return num_parameters_;           }
-  const int* point_index()     const { return point_index_;              }
-  const int* camera_index()    const { return camera_index_;             }
-  const double* observations() const { return observations_;             }
-  const double* parameters()   const { return parameters_;               }
-  const double* cameras()      const { return parameters_;               }
-  double* mutable_cameras()          { return parameters_;               }
+  int intrinsic_block_size()       const { return intrinsics_type_ == IntrinsicsType::SNAVELY ? 3 : 7;  }
+  int camera_block_size()          const { return use_quaternions_ ? 7 : 6;  }
+  int point_block_size()           const { return 3;                         }
+  int num_intrinsics()             const { return num_intrinsics_;           }
+  int num_cameras()                const { return num_cameras_;              }
+  int num_points()                 const { return num_points_;               }
+  int num_observations()           const { return num_observations_;         }
+  const int* point_index()         const { return point_index_;              }
+  const int* camera_index()        const { return camera_index_;             }
+  const double* observations()     const { return observations_;             }
+  const double* intrinsics()       const { return intrinsics_;               }
+  double* mutable_intrinsics()           { return intrinsics_;               }
+  const double* intrinsic(int idx) const { return intrinsics_ + (num_intrinsics_ == 1 ? 0 : intrinsic_block_size()*idx); }
+  double* mutable_intrinsic(int idx)     { return intrinsics_ + (num_intrinsics_ == 1 ? 0 : intrinsic_block_size()*idx); }
+  const double* cameras()          const { return cameras_;                  }
+  double* mutable_cameras()              { return cameras_;                  }
+  const double* camera(int idx)    const { return cameras_ + camera_block_size()*idx; }
+  double* mutable_camera(int idx)        { return cameras_ + camera_block_size()*idx; }
+  const double* points()           const { return points_;                   }
+  double* mutable_points()               { return points_;                   }
+  const double* point(int idx)     const { return points_ + point_block_size()*idx; }
+  double* mutable_point(int idx)         { return points_ + point_block_size()*idx; }
   // clang-format on
-  double* mutable_points() {
-    return parameters_ + camera_block_size() * num_cameras_;
-  }
 
  private:
   void CameraToAngleAxisAndCenter(const double* camera,
@@ -90,18 +113,19 @@ class BALProblem {
   void AngleAxisAndCenterToCamera(const double* angle_axis,
                                   const double* center,
                                   double* camera) const;
+  int num_intrinsics_;
   int num_cameras_;
   int num_points_;
   int num_observations_;
-  int num_parameters_;
+  IntrinsicsType intrinsics_type_;
   bool use_quaternions_;
 
   int* point_index_;
   int* camera_index_;
   double* observations_;
-  // The parameter vector is laid out as follows
-  // [camera_1, ..., camera_n, point_1, ..., point_m]
-  double* parameters_;
+  double* intrinsics_;
+  double* cameras_;
+  double* points_;
 };
 
 }  // namespace ceres::examples

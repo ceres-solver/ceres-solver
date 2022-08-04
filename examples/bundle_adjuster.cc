@@ -63,12 +63,13 @@
 #include "ceres/ceres.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
-#include "snavely_reprojection_error.h"
 
 // clang-format makes the gflags definitions too verbose
 // clang-format off
 
 DEFINE_string(input, "", "Input File name");
+DEFINE_bool(general_input, false, "Problem encoded type in the input file"
+             ": false - snavely format, true - general format.");
 DEFINE_string(trust_region_strategy, "levenberg_marquardt",
               "Options are: levenberg_marquardt, dogleg.");
 DEFINE_string(dogleg, "traditional_dogleg", "Options are: traditional_dogleg,"
@@ -103,6 +104,8 @@ DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
 DEFINE_bool(use_manifolds, false, "For quaternions, use a manifold.");
 DEFINE_bool(robustify, false, "Use a robust loss function.");
 
+DEFINE_double(median_scale, 100.0, "The reconstruction is then scaled so that the median"
+              "absolute deviation of the points measured from the origin is 100.");
 DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
               "accuracy of each linear solve of the truncated newton step. "
               "Changing this parameter can affect solve performance.");
@@ -160,56 +163,52 @@ void SetLinearSolver(Solver::Options* options) {
 }
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
-  const int num_points = bal_problem->num_points();
-  const int point_block_size = bal_problem->point_block_size();
-  double* points = bal_problem->mutable_points();
-
-  const int num_cameras = bal_problem->num_cameras();
-  const int camera_block_size = bal_problem->camera_block_size();
-  double* cameras = bal_problem->mutable_cameras();
-
   if (options->use_inner_iterations) {
     if (CERES_GET_FLAG(FLAGS_blocks_for_inner_iterations) == "cameras") {
       LOG(INFO) << "Camera blocks for inner iterations";
       options->inner_iteration_ordering =
           std::make_shared<ParameterBlockOrdering>();
-      for (int i = 0; i < num_cameras; ++i) {
+      for (int i = 0; i < bal_problem->num_intrinsics(); ++i) {
         options->inner_iteration_ordering->AddElementToGroup(
-            cameras + camera_block_size * i, 0);
+            bal_problem->mutable_intrinsic(i), 0);
+      }
+      for (int i = 0; i < bal_problem->num_cameras(); ++i) {
+        options->inner_iteration_ordering->AddElementToGroup(
+            bal_problem->mutable_camera(i), 0);
       }
     } else if (CERES_GET_FLAG(FLAGS_blocks_for_inner_iterations) == "points") {
       LOG(INFO) << "Point blocks for inner iterations";
       options->inner_iteration_ordering =
           std::make_shared<ParameterBlockOrdering>();
-      for (int i = 0; i < num_points; ++i) {
+      for (int i = 0; i < bal_problem->num_points(); ++i) {
         options->inner_iteration_ordering->AddElementToGroup(
-            points + point_block_size * i, 0);
+            bal_problem->mutable_point(i), 0);
       }
     } else if (CERES_GET_FLAG(FLAGS_blocks_for_inner_iterations) ==
                "cameras,points") {
       LOG(INFO) << "Camera followed by point blocks for inner iterations";
       options->inner_iteration_ordering =
           std::make_shared<ParameterBlockOrdering>();
-      for (int i = 0; i < num_cameras; ++i) {
+      for (int i = 0; i < bal_problem->num_cameras(); ++i) {
         options->inner_iteration_ordering->AddElementToGroup(
-            cameras + camera_block_size * i, 0);
+            bal_problem->mutable_camera(i), 0);
       }
-      for (int i = 0; i < num_points; ++i) {
+      for (int i = 0; i < bal_problem->num_points(); ++i) {
         options->inner_iteration_ordering->AddElementToGroup(
-            points + point_block_size * i, 1);
+            bal_problem->mutable_point(i), 1);
       }
     } else if (CERES_GET_FLAG(FLAGS_blocks_for_inner_iterations) ==
                "points,cameras") {
       LOG(INFO) << "Point followed by camera blocks for inner iterations";
       options->inner_iteration_ordering =
           std::make_shared<ParameterBlockOrdering>();
-      for (int i = 0; i < num_cameras; ++i) {
+      for (int i = 0; i < bal_problem->num_cameras(); ++i) {
         options->inner_iteration_ordering->AddElementToGroup(
-            cameras + camera_block_size * i, 1);
+            bal_problem->mutable_camera(i), 1);
       }
-      for (int i = 0; i < num_points; ++i) {
+      for (int i = 0; i < bal_problem->num_points(); ++i) {
         options->inner_iteration_ordering->AddElementToGroup(
-            points + point_block_size * i, 0);
+            bal_problem->mutable_point(i), 0);
       }
     } else if (CERES_GET_FLAG(FLAGS_blocks_for_inner_iterations) ==
                "automatic") {
@@ -233,14 +232,14 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
     auto* ordering = new ceres::ParameterBlockOrdering;
 
     // The points come before the cameras.
-    for (int i = 0; i < num_points; ++i) {
-      ordering->AddElementToGroup(points + point_block_size * i, 0);
+    for (int i = 0; i < bal_problem->num_points(); ++i) {
+      ordering->AddElementToGroup(bal_problem->mutable_point(i), 0);
     }
 
-    for (int i = 0; i < num_cameras; ++i) {
+    for (int i = 0; i < bal_problem->num_cameras(); ++i) {
       // When using axis-angle, there is a single parameter block for
       // the entire camera.
-      ordering->AddElementToGroup(cameras + camera_block_size * i, 1);
+      ordering->AddElementToGroup(bal_problem->mutable_camera(i), 1);
     }
 
     options->linear_solver_ordering.reset(ordering);
@@ -274,50 +273,42 @@ void SetSolverOptionsFromFlags(BALProblem* bal_problem,
 }
 
 void BuildProblem(BALProblem* bal_problem, Problem* problem) {
-  const int point_block_size = bal_problem->point_block_size();
-  const int camera_block_size = bal_problem->camera_block_size();
-  double* points = bal_problem->mutable_points();
-  double* cameras = bal_problem->mutable_cameras();
+  // If enabled use Huber's loss function.
+  LossFunction* loss_function =
+      CERES_GET_FLAG(FLAGS_robustify) ? new HuberLoss(1.0) : nullptr;
 
   // Observations is 2*num_observations long array observations =
   // [u_1, u_2, ... , u_n], where each u_i is two dimensional, the x
   // and y positions of the observation.
-  const double* observations = bal_problem->observations();
   for (int i = 0; i < bal_problem->num_observations(); ++i) {
-    CostFunction* cost_function;
-    // Each Residual block takes a point and a camera as input and
-    // outputs a 2 dimensional residual.
-    cost_function = (CERES_GET_FLAG(FLAGS_use_quaternions))
-                        ? SnavelyReprojectionErrorWithQuaternions::Create(
-                              observations[2 * i + 0], observations[2 * i + 1])
-                        : SnavelyReprojectionError::Create(
-                              observations[2 * i + 0], observations[2 * i + 1]);
+    // Create the reprojection error function for this observation.
+    CostFunction* cost_function =
+        bal_problem->CreateReprojectionErrorCostFunction(i);
 
-    // If enabled use Huber's loss function.
-    LossFunction* loss_function =
-        CERES_GET_FLAG(FLAGS_robustify) ? new HuberLoss(1.0) : nullptr;
-
-    // Each observation corresponds to a pair of a camera and a point
-    // which are identified by camera_index()[i] and point_index()[i]
-    // respectively.
-    double* camera =
-        cameras + camera_block_size * bal_problem->camera_index()[i];
-    double* point = points + point_block_size * bal_problem->point_index()[i];
-    problem->AddResidualBlock(cost_function, loss_function, camera, point);
+    // Each observation corresponds to a pair of a camera and a point.
+    const int idx_point = bal_problem->point_index()[i];
+    const int idx_camera = bal_problem->camera_index()[i];
+    problem->AddResidualBlock(cost_function,
+                              loss_function,
+                              bal_problem->mutable_intrinsic(idx_camera),
+                              bal_problem->mutable_camera(idx_camera),
+                              bal_problem->mutable_point(idx_point));
   }
 
   if (CERES_GET_FLAG(FLAGS_use_quaternions) &&
       CERES_GET_FLAG(FLAGS_use_manifolds)) {
     Manifold* camera_manifold =
-        new ProductManifold<QuaternionManifold, EuclideanManifold<6>>{};
+        new ProductManifold<QuaternionManifold, EuclideanManifold<3>>{};
     for (int i = 0; i < bal_problem->num_cameras(); ++i) {
-      problem->SetManifold(cameras + camera_block_size * i, camera_manifold);
+      problem->SetManifold(bal_problem->mutable_camera(i), camera_manifold);
     }
   }
 }
 
 void SolveProblem(const char* filename) {
-  BALProblem bal_problem(filename, CERES_GET_FLAG(FLAGS_use_quaternions));
+  BALProblem bal_problem(filename,
+                         CERES_GET_FLAG(FLAGS_use_quaternions),
+                         CERES_GET_FLAG(FLAGS_general_input));
 
   if (!CERES_GET_FLAG(FLAGS_initial_ply).empty()) {
     bal_problem.WriteToPLYFile(CERES_GET_FLAG(FLAGS_initial_ply));
@@ -326,12 +317,15 @@ void SolveProblem(const char* filename) {
   Problem problem;
 
   srand(CERES_GET_FLAG(FLAGS_random_seed));
-  bal_problem.Normalize();
+  bal_problem.Normalize(CERES_GET_FLAG(FLAGS_median_scale));
   bal_problem.Perturb(CERES_GET_FLAG(FLAGS_rotation_sigma),
                       CERES_GET_FLAG(FLAGS_translation_sigma),
                       CERES_GET_FLAG(FLAGS_point_sigma));
 
   BuildProblem(&bal_problem, &problem);
+  VLOG(1) << "Initial camera intrinsics: " << bal_problem.PrintIntrinsics(0)
+          << "\n";
+
   Solver::Options options;
   SetSolverOptionsFromFlags(&bal_problem, &options);
   options.gradient_tolerance = 1e-16;
@@ -340,6 +334,8 @@ void SolveProblem(const char* filename) {
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";
 
+  VLOG(1) << "Refined camera intrinsics: " << bal_problem.PrintIntrinsics(0)
+          << "\n";
   if (!CERES_GET_FLAG(FLAGS_final_ply).empty()) {
     bal_problem.WriteToPLYFile(CERES_GET_FLAG(FLAGS_final_ply));
   }

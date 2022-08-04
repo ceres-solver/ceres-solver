@@ -46,6 +46,7 @@ cc_binary(
     srcs = [
         "bal_problem.cc",
         "bal_problem.h",
+        "brown_ffcckkk_reprojection_error.h",
         "bundle_adjuster.cc",
         "random.h",
         "snavely_reprojection_error.h",
