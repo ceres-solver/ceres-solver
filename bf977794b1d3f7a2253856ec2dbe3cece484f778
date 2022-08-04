@@ -194,6 +194,23 @@
       "parentUuid": "99b94bbd_6fbe9aa1",
       "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f108551_99e4f9b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-04T18:19:44Z",
+      "side": 1,
+      "message": "Mark I have some time to hack these days, so I am wondering if you would you be okay if I take your patch and start restructuring it to be a preconditioner and integrate it into the iterative_schur solver? ",
+      "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
