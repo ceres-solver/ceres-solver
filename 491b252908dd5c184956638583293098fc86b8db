@@ -123,6 +123,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bf811f5_6bc812c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-04T23:39:07Z",
+      "side": 1,
+      "message": "Detailed breakdown of all numbers:\n\nIntel MKL LAPACK:\nEliminate: 37.163144 (20)\nReducedSolve: 4.581118 (20)\nBackSubstitute: 1.258721 (20)\n\nIntel MKL LAPACK+mixed:\nEliminate: 37.135626 (20)\nReducedSolve: 2.785081 (20)\nBackSubstitute: 1.303132 (20)\n\nCUDA:\nEliminate: 37.073238 (20)\nReducedSolve: 6.992411 (20)\nBackSubstitute: 0.931878 (20)\n\nCUDA+mixed:\nEliminate: 37.264682 (20)\nReducedSolve: 1.447737 (20)\nBackSubstitute: 0.907869 (20)\n\nOpenBLAS LAPACK:\nEliminate: 37.370801 (20)\nReducedSolve: 8.440761 (20)\nBackSubstitute: 0.866261 (20)\n\nOpenBLAS LAPACK+mixed:\nEliminate: 37.235857 (20)\nReducedSolve: 7.177484 (20)\nBackSubstitute: 0.867057 (20)\n\nYes, weirdly there isn\u0027t much speedup I\u0027m noticing with OpenBLAS mixed precision...",
+      "parentUuid": "1febdc83_f353cbc7",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb624841_7969423f",
