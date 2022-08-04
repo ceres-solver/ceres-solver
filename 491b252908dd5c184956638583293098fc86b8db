@@ -65,6 +65,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62c14571_2628e403",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-04T04:41:03Z",
+      "side": 1,
+      "message": "Interesting I had not realized this, and in all our code we just check for success. Instead of changing in this CL, I will come back and take a pass at at.\n\nhttps://github.com/ceres-solver/ceres-solver/issues/849",
+      "parentUuid": "16ce6454_fecddb58",
+      "range": {
+        "startLine": 183,
+        "startChar": 40,
+        "endLine": 183,
+        "endChar": 47
+      },
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8367fc6d_8d727d04",
@@ -78,6 +102,30 @@
       "writtenOn": "2022-08-04T01:05:57Z",
       "side": 1,
       "message": "Since there is now a FloatEigenDenseCholesky, shouldn\u0027t this be DoubleEigenDenseCholesky for consistency?",
+      "range": {
+        "startLine": 103,
+        "startChar": 22,
+        "endLine": 103,
+        "endChar": 40
+      },
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "613a434e_ed5baf6f",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-04T04:41:03Z",
+      "side": 1,
+      "message": "I am following the convention in the SparseCholesky code where by default everything is double precision and Float is the exception.",
+      "parentUuid": "8367fc6d_8d727d04",
       "range": {
         "startLine": 103,
         "startChar": 22,
@@ -111,6 +159,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ca8abdd_6ebde19b",
+        "filename": "internal/ceres/iterative_refiner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-04T04:41:03Z",
+      "side": 1,
+      "message": "the only real failure case is when the factorization has failed but the precondition for calling the refiner is that it be correct. Refine itself does not return an error code for this reason. Checking error here is not going to do us any good.",
+      "parentUuid": "08c9c256_f5664c05",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 76
+      },
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "813ca991_ea955997",
@@ -124,6 +196,24 @@
       "writtenOn": "2022-08-04T01:05:57Z",
       "side": 1,
       "message": "It\u0027s good to add a note here that all dense Cholesky solvers currently support mixed precision, so that if and when someone adds another dense solver, they\u0027d think to check this logic.",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b399a6d_c9901788",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-04T04:41:03Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "813ca991_ea955997",
       "revId": "491b252908dd5c184956638583293098fc86b8db",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
