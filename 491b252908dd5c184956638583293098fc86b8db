@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16ce6454_fecddb58",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-04T01:08:06Z",
+      "side": 1,
+      "message": "Looks like it does?\n\nhttps://eigen.tuxfamily.org/dox/group__enums.html#ga85fad7b87587764e5cf6b513a9e0ee5e",
+      "parentUuid": "eb624841_7969423f",
+      "range": {
+        "startLine": 183,
+        "startChar": 40,
+        "endLine": 183,
+        "endChar": 47
+      },
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8367fc6d_8d727d04",
         "filename": "internal/ceres/dense_cholesky.h",
         "patchSetId": 4
