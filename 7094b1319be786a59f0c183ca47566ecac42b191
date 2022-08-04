@@ -56,6 +56,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79c533e8_a1874774",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-08-04T18:39:14Z",
+      "side": 1,
+      "message": "Thanks for looking into this. The factor of 2 comes from the original implementation of HomogenousVectorParameterization. As you have already discovered, this was based on Hartley \u0026 Zisserman, in which the formulas are written with a factor of 2. As sphere manifold and line manifold are closely related I kept the factor of 2. When implementing the new manifold class we were discussing whether it makes sense to do that but decided against it back then (see https://ceres-solver-review.googlesource.com/c/ceres-solver/+/19860 patchset3). Btw it is the same for quaternions (factor of 2).\n\nI am in favour of removing that factor 2.",
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eca600eb_cf11083e",
+        "filename": "include/ceres/internal/sphere_manifold_functions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-08-04T18:39:14Z",
+      "side": 1,
+      "message": "There are different styles but I think in ceres usually there is no const value used in function parameters, but I am not 100% sure.",
+      "range": {
+        "startLine": 68,
+        "startChar": 38,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3ddc26bb_842f2baf",
         "filename": "include/ceres/line_manifold.h",
         "patchSetId": 1
@@ -91,6 +131,30 @@
       "side": 1,
       "message": "I would need to check the rest of the sota against that. For line and sphere manifolds it is very intuitive, but maybe for quaternions there is some controversy.",
       "parentUuid": "3ddc26bb_842f2baf",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 26
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b07788d_e7e9926f",
+        "filename": "include/ceres/line_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-08-04T18:39:14Z",
+      "side": 1,
+      "message": "The formulars for quaternions are (almost) the same as for sphere parameterization. I am not sure but maybe quaternion parameterization could be just and alias for sphere parameterization.",
+      "parentUuid": "b5c8fd09_419b948b",
       "range": {
         "startLine": 159,
         "startChar": 22,
@@ -150,6 +214,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d14745e9_cf109f75",
+        "filename": "include/ceres/sphere_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-08-04T18:39:14Z",
+      "side": 1,
+      "message": "Thanks for fixing this. I was not aware of this limitation in Eigen.",
+      "parentUuid": "d84be0dd_7db45a9d",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 2
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15c96b4a_ea12172c",
         "filename": "internal/ceres/manifold_test.cc",
         "patchSetId": 1
@@ -185,6 +273,30 @@
       "side": 1,
       "message": "Because all the math is meant for unit vectors (points in the unit n-dimensional sphere). Thus the ambient space points should always be normalized. There is some additional math to work with non-unit, constant-norm vectors, but I think its not worth it to add it and over-complicate things (you can always multiply the unit vector by some magnitude outside the manifold). \n\nBecause of that, if we input a non-unit vector that is outside of the manifold then the test would make no sense, and the results would not be conclusive.",
       "parentUuid": "15c96b4a_ea12172c",
+      "range": {
+        "startLine": 707,
+        "startChar": 4,
+        "endLine": 707,
+        "endChar": 13
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1108314a_a36ab64d",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 6186
+      },
+      "writtenOn": "2022-08-04T18:39:14Z",
+      "side": 1,
+      "message": "Are you sure the formulars are only for |x|\u003d1? The original implementation (HomogenousLineParameterization which was based on Hartley \u0026 Zisserman) did not have that limitation. And if the current implementation does not work with |x|!\u003d1 (for sphere and for line parameterization) it is probably a bug I introduced. Is that test failing if no normalization would be done?",
+      "parentUuid": "276a0f08_d6cecc97",
       "range": {
         "startLine": 707,
         "startChar": 4,
