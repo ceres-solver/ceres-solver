@@ -194,6 +194,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa104754_f7c9a65b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-04T23:52:45Z",
+      "side": 1,
+      "message": "My bundler command:\n./bin/bundle_adjuster --input ../data/problem-744-543562-pre.txt -num_iterations 20 --linear_solver dense_schur --dense_linear_algebra_library lapack --num_threads 24 --mixed_precision_solves\n\nWhat is your cmake command?\nI used (on both the linux and Mac):\n```\ncmake .. -DCMAKE_BUILD_TYPE\u003dRelease\n```",
+      "parentUuid": "12c8dcb2_8637195d",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb624841_7969423f",
