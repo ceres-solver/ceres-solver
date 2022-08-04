@@ -141,6 +141,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6f1504d_1e5e7d6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-04T23:43:45Z",
+      "side": 1,
+      "message": "interesting, so what is happening here is that the intel mkl lapack is SO fast, that going to mixed precision does not give you much due to amdahl\u0027s law. \n\nwhere as on my machine full precision looks like this\n\nSchurComplementSolver::Solve\n                                   Delta   Cumulative\n                           Setup :    0.24217      0.24217\n                       Eliminate :    1.17963      1.42180\n                    ReducedSolve :    1.01181      2.43362\n                  BackSubstitute :    0.03542      2.46903\n                           Total :    0.00001      2.46904\n\nMixed precision looks like\n\nSchurComplementSolver::Solve\n                                   Delta   Cumulative\n                           Setup :    0.18481      0.18481\n                       Eliminate :    1.18836      1.37317\n                    ReducedSolve :    0.25705      1.63022\n                  BackSubstitute :    0.03643      1.66665\n                           Total :    0.00000      1.66665\n\nso previously eliminator and linear solver were comparable time.. so speeding up the linear solve makes a big difference.\n\nI am using\n\n./bin/bundle_adjuster --input ../../Downloads/problem-744-543562-pre.txt  -num_iterations 20 -num_threads 8 -linear_solver dense_schur --dense_linear_algebra_library lapack  -mixed_precision_solves\n\nas my command line. I am surprised how slow your eliminator is.\nyou are clocking 1.85 seconds per elimination whereas just 0.25 seconds per reduced solve.. the balance on my machine is more like 1:1.",
+      "parentUuid": "3bf811f5_6bc812c1",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb624841_7969423f",
