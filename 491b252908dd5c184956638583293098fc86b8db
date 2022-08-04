@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e003fbb5_d7690594",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-04T01:05:57Z",
+      "side": 1,
+      "message": "Neat! The numbers look good. What LAPACK implementation are you using on the M1? ",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb624841_7969423f",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-04T01:05:57Z",
+      "side": 1,
+      "message": "Does Eigen distinguish numerical errors from API / other failures?",
+      "range": {
+        "startLine": 183,
+        "startChar": 40,
+        "endLine": 183,
+        "endChar": 47
+      },
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8367fc6d_8d727d04",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-04T01:05:57Z",
+      "side": 1,
+      "message": "Since there is now a FloatEigenDenseCholesky, shouldn\u0027t this be DoubleEigenDenseCholesky for consistency?",
+      "range": {
+        "startLine": 103,
+        "startChar": 22,
+        "endLine": 103,
+        "endChar": 40
+      },
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08c9c256_f5664c05",
+        "filename": "internal/ceres/iterative_refiner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-04T01:05:57Z",
+      "side": 1,
+      "message": "It is possible for the DenseCholesky Solve to fail. Shouldn\u0027t this check for success before updating the solution and trying to continue refinement?",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 76
+      },
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "813ca991_ea955997",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-04T01:05:57Z",
+      "side": 1,
+      "message": "It\u0027s good to add a note here that all dense Cholesky solvers currently support mixed precision, so that if and when someone adds another dense solver, they\u0027d think to check this logic.",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
