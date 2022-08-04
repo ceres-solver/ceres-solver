@@ -35,6 +35,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a79e082c_120d7625",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-04T20:42:26Z",
+      "side": 1,
+      "message": "On problem-744-543562-pre.txt with 20 iterations, on my Core i9-9920X running Ubuntu 20.04, with OpenBLAS:\n\neigen        164.533143\neigen+mixed  116.878866\nLAPACK        47.079672\nLAPACK+mixed  45.599979\nCUDA          45.470067\nCUDA+mixed    39.996551\n\nHowever, the Schur Elimination is actually taking up the bulk of the time in the LinearSolver::Solve times. Some quick instrumentation shows that in all of the above, about 37.538 is consistently the Schur eliminate times, which puts a lower bound on what you\u0027d expect to see for the total LinearSolver::Solve timings.",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb624841_7969423f",
