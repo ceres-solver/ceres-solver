@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b620fe4f_dba9a9b3",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T21:44:29Z",
+      "side": 1,
+      "message": "you could reserve num_nonzeros() and save on allocations in the loop below.",
+      "range": {
+        "startLine": 176,
+        "startChar": 7,
+        "endLine": 176,
+        "endChar": 12
+      },
+      "revId": "5879106ad580a96eee7845492ce53e01d68e2f6a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90228bba_31d679a3",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T21:44:29Z",
+      "side": 1,
+      "message": "so there is a subtlety here, which may not be evident.\nthe column blocks may or may not be sorted. so you maybe creating an invalid crs matrix (I think the entries are required to be in increasing order).",
+      "range": {
+        "startLine": 180,
+        "startChar": 27,
+        "endLine": 180,
+        "endChar": 43
+      },
+      "revId": "5879106ad580a96eee7845492ce53e01d68e2f6a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d58d28b_ba714703",
+        "filename": "internal/ceres/triplet_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T21:44:29Z",
+      "side": 1,
+      "message": "why replicate the construction of a CRS matrix here.\njust create a CompressedRowSparseMatrix from the TripletSparseMatrix and use it ToCRSMatrix() method. this is what we do in the ProblemImpl::Evaluate also.",
+      "revId": "5879106ad580a96eee7845492ce53e01d68e2f6a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
