@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "260e4486_eae327bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6677
+      },
+      "writtenOn": "2022-08-05T10:20:43Z",
+      "side": 1,
+      "message": "Perfect then. Since I also updated all the numerical tests, now it should be a good time to update this before the full transition to manifolds.",
+      "parentUuid": "79c533e8_a1874774",
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eca600eb_cf11083e",
         "filename": "include/ceres/internal/sphere_manifold_functions.h",
         "patchSetId": 1
@@ -215,6 +233,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "987462c3_5d5d11e7",
+        "filename": "include/ceres/line_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6677
+      },
+      "writtenOn": "2022-08-05T10:20:43Z",
+      "side": 1,
+      "message": "Yes, it is a good idea to have a different implementation for quaternions since they are a Lie group (not only a manifold) with a special, faster implementation than simply using the 4-dimensional sphere (even though results should hold). Also I was checking the current quaternion implementation and did not see any *2 or *0.5 at a first glance. Is it really following Hartley \u0026 Zisserman? Maybe it was changed at some point.",
+      "parentUuid": "f3520032_c3dce072",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 26
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "862d5272_9c2dd01c",
         "filename": "include/ceres/sphere_manifold.h",
         "patchSetId": 1
@@ -310,6 +352,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b6f98bb8_6d4b991a",
+        "filename": "include/ceres/sphere_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 6677
+      },
+      "writtenOn": "2022-08-05T10:20:43Z",
+      "side": 1,
+      "message": "Already sent the PR. Will erase this in the next patchset",
+      "parentUuid": "c9a1d4f6_c59d0c6b",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 2
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15c96b4a_ea12172c",
         "filename": "internal/ceres/manifold_test.cc",
         "patchSetId": 1
@@ -393,6 +459,30 @@
       "side": 1,
       "message": "Yes we are supposed to preserve the norm of the vector not make it unit norm. Thats why is the SphereManifold not the UnitSphereManifold.",
       "parentUuid": "1108314a_a36ab64d",
+      "range": {
+        "startLine": 707,
+        "startChar": 4,
+        "endLine": 707,
+        "endChar": 13
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f17eb8b_244e436f",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 6677
+      },
+      "writtenOn": "2022-08-05T10:20:43Z",
+      "side": 1,
+      "message": "Ok I took a deeper look into this and saw the real problem. \n - It is true that the norm is preserved in the current implementation (I was supposing not since all the references were for unit spheres). The only thing to take into account is that if |x|!\u003d1, magnitudes in the tangent space will not represent the traveled geodesic distance but only the traveled angle (and one will need to multiply by the radius to get the geodesic distance). However I don\u0027t see a problem with this (it is more intuitive that the magnitudes are simply angles), so we can leave it as is.\n - The real cause that makes the test fail in the new implementation is more subtle. Now in \"ComputeSphereManifoldMinus\" we better cover the special case when \"hy_norm \u003d\u003d 0\". This case is basically a step function that is 0 when \"y_last \u003e\u003d0\" and pi otherwise (I will update from the current atan2 fix to using a ternary operator in the next patchset). The problem comes when numerically computing the MinusJacobian at x\u003d{0.001, 0.0, 0.0, 0.0}. Since the magnitude of x is small, it is easy to fall in a case where \"y_last\" switches from 0 to pi, thus giving a wrong numeric jacobian because of that discontinuity. Simply reducing the \"options.ridders_relative_initial_step_size\" to 1e-6 for the numeric differentiation or using a value of 0.01 for x will make the test run OK again.",
+      "parentUuid": "0d41d85f_dc951049",
       "range": {
         "startLine": 707,
         "startChar": 4,
