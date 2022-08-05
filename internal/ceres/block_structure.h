@@ -82,6 +82,82 @@ struct CERES_NO_EXPORT CompressedList {
 using CompressedRow = CompressedList;
 using CompressedColumn = CompressedList;
 
+// CompressedRowBlockStructure specifies the storage structure of a row block
+// sparse matrix.
+//
+// Consider the following matrix A:
+// A = [A_11 A_12 ...
+//      A_21 A_22 ...
+//      ...
+//      A_m1 A_m2 ... ]
+//
+// A row block sparse matrix is a matrix where the following properties hold:
+// 1. The number of rows in every block A_ij and A_ik are the same.
+// 2. The number of columns in every block A_ij and A_kj are the same.
+// 3. The number of rows in A_ij and A_kj may be different (i != k).
+// 4. The number of columns in A_ij and A_ik may be different (j != k).
+// 5. Any block A_ij may be all 0s, in which case the block is not stored.
+//
+// The structure of the matrix is stored as follows:
+//
+// The `rows' array contains the following information for each row block:
+// - rows[i].block.size: The number of rows in each block A_ij in the row block.
+// - rows[i].block.position: The starting row in the full matrix A of the
+//       row block i.
+// - rows[i].cells[j].block_id: The index into the `cols' array corresponding to
+//       the non-zero blocks A_ij.
+// - rows[i].cells[j].position: The index in the `values' array for the contents
+//       of block A_ij.
+//
+// The `cols' array contains the following information for block:
+// - cols[.].size: The number of columns spanned by the block.
+// - cols[.].position: The starting column in the full matrix A of the block.
+//
+//
+// Example of a row block sparse matrix:
+// block_id: | 0  |1|2  |3 |
+// rows[0]:  [ 1 2 0 3 4 0 ]
+//           [ 5 6 0 7 8 0 ]
+// rows[1]:  [ 0 0 9 0 0 0 ]
+//
+// This matrix is stored as follows:
+//
+// There are four column blocks:
+// cols[0].size = 2
+// cols[0].position = 0
+// cols[1].size = 1
+// cols[1].position = 2
+// cols[2].size = 2
+// cols[2].position = 3
+// cols[3].size = 1
+// cols[3].position = 5
+
+// The first row block spans two rows, starting at row 0:
+// rows[0].block.size = 2          // This row block spans two rows.
+// rows[0].block.position = 0      // It starts at row 0.
+// rows[0] has two cells, at column blocks 0 and 2:
+// rows[0].cells[0].block_id = 0   // This cell is in column block 0.
+// rows[0].cells[0].position = 0   // See below for an explanation of this.
+// rows[0].cells[1].block_id = 2   // This cell is in column block 2.
+// rows[0].cells[1].position = 4   // See below for an explanation of this.
+//
+// The second row block spans two rows, starting at row 2:
+// rows[1].block.size = 1          // This row block spans one row.
+// rows[1].block.position = 2      // It starts at row 2.
+// rows[1] has one cell at column block 1:
+// rows[1].cells[0].block_id = 1   // This cell is in column block 1.
+// rows[1].cells[0].position = 8   // See below for an explanation of this.
+//
+// The values in each blocks are stored contiguously in row major order.
+// However, there is no unique way to order the blocks -- it is usually
+// optimized to promote cache coherent access, e.g. ordering it so that
+// Jacobian blocks of parameters of the same type are stored nearby.
+// This is one possible way to store the values of the blocks in a values array:
+// values = { 1, 2, 5, 6, 3, 4, 7, 8, 9 }
+//           |           |          |   |    // The three blocks.
+//            ^ rows[0].cells[0].position = 0
+//                        ^ rows[0].cells[1].position = 4
+//                                    ^ rows[1].cells[0].position = 8
 struct CERES_NO_EXPORT CompressedRowBlockStructure {
   std::vector<Block> cols;
   std::vector<CompressedRow> rows;

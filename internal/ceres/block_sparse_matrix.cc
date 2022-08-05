@@ -36,6 +36,7 @@
 #include <vector>
 
 #include "ceres/block_structure.h"
+#include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/random.h"
 #include "ceres/small_blas.h"
@@ -163,6 +164,42 @@ void BlockSparseMatrix::ScaleColumns(const double* scale) {
       m *= ConstVectorRef(scale + col_block_pos, col_block_size).asDiagonal();
     }
   }
+}
+
+void BlockSparseMatrix::ToCRSMatrix(CRSMatrix* crs_matrix) const {
+  CHECK(crs_matrix != nullptr);
+  crs_matrix->num_rows = num_rows_;
+  crs_matrix->num_cols = num_cols_;
+  vector<int>& rows = crs_matrix->rows;
+  vector<int>& cols = crs_matrix->cols;
+  vector<double>& values = crs_matrix->values;
+  rows.clear();
+  cols.clear();
+  values.clear();
+  rows.reserve(num_nonzeros_ + 1);
+  cols.reserve(num_nonzeros_);
+  values.reserve(num_nonzeros_);
+
+  for (const auto& row_block : block_structure_->rows) {
+    int row_block_size = row_block.block.size;
+    const vector<Cell>& cells = row_block.cells;
+    const int row_start = row_block.block.position;
+    for (int r = 0; r < row_block_size; ++r) {
+      rows.push_back(values.size());
+      for (const auto& cell : cells) {
+        int col_block_id = cell.block_id;
+        int col_block_size = block_structure_->cols[col_block_id].size;
+        int col_start = block_structure_->cols[col_block_id].position;
+        const MatrixRef m(
+            values_.get() + cell.position, row_block_size, col_block_size);
+        for (int c = 0; c < col_block_size; ++c) {
+          cols.push_back(c + col_start);
+          values.push_back(m(r, c));
+        }
+      }
+    }
+  }
+  rows.push_back(values.size());
 }
 
 void BlockSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
