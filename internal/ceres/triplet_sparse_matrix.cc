@@ -33,6 +33,8 @@
 #include <algorithm>
 #include <memory>
 
+#include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/random.h"
@@ -194,6 +196,12 @@ void TripletSparseMatrix::ScaleColumns(const double* scale) {
   }
 }
 
+void TripletSparseMatrix::ToCRSMatrix(CRSMatrix* crs_matrix) const {
+  const auto crs_form_matrix =
+      CompressedRowSparseMatrix::FromTripletSparseMatrix(*this);
+  crs_form_matrix->ToCRSMatrix(crs_matrix);
+}
+
 void TripletSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
   dense_matrix->resize(num_rows_, num_cols_);
   dense_matrix->setZero();
@@ -273,6 +281,31 @@ void TripletSparseMatrix::ToTextFile(FILE* file) const {
   for (int i = 0; i < num_nonzeros_; ++i) {
     fprintf(file, "% 10d % 10d %17f\n", rows_[i], cols_[i], values_[i]);
   }
+}
+
+std::unique_ptr<TripletSparseMatrix>
+TripletSparseMatrix::CreateFromTextFile(FILE* file) {
+  CHECK(file != nullptr);
+  int num_rows = 0;
+  int num_cols = 0;
+  std::vector<int> rows;
+  std::vector<int> cols;
+  std::vector<double> values;
+  while (true) {
+    int row, col;
+    double value;
+    if (fscanf(file, "%d %d %lf", &row, &col, &value) != 3) {
+      break;
+    }
+    rows.push_back(row);
+    cols.push_back(col);
+    values.push_back(value);
+    num_rows = std::max(num_rows, row + 1);
+    num_cols = std::max(num_cols, col + 1);
+  }
+  printf("Read %ld nonzeros from file.\n", rows.size());
+  return std::unique_ptr<TripletSparseMatrix>(new TripletSparseMatrix(
+      num_rows, num_cols, rows, cols, values));
 }
 
 std::unique_ptr<TripletSparseMatrix> TripletSparseMatrix::CreateRandomMatrix(

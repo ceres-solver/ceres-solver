@@ -34,6 +34,7 @@
 #include <string>
 
 #include "ceres/casts.h"
+#include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -42,6 +43,92 @@
 
 namespace ceres {
 namespace internal {
+
+namespace {
+template<typename T>
+void CheckVectorEq(const std::vector<T>& a, const std::vector<T>& b) {
+  EXPECT_EQ(a.size(), b.size());
+  for (int i = 0; i < a.size(); ++i) {
+    EXPECT_EQ(a[i], b[i]);
+  }
+}
+
+std::unique_ptr<BlockSparseMatrix> CreateTestMatrixFromId(int id) {
+  if (id == 0) {
+    // Create the following block sparse matrix:
+    // [ 1 2 0 0  0 0 ]
+    // [ 3 4 0 0  0 0 ]
+    // [ 0 0 5 6  7 0 ]
+    // [ 0 0 8 9 10 0 ]
+    CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
+    bs->cols = {
+      // Block size 2, position 0.
+      Block(2, 0),
+      // Block size 3, position 2.
+      Block(3, 2),
+      // Block size 1, position 5.
+      Block(1, 5),
+    };
+    bs->rows = {
+      CompressedRow(1),
+      CompressedRow(1)
+    };
+    bs->rows[0].block = Block(2, 0);
+    bs->rows[0].cells = { Cell(0, 0) };
+
+    bs->rows[1].block = Block(2, 2);
+    bs->rows[1].cells = { Cell(1, 4) };
+    std::unique_ptr<BlockSparseMatrix> m =
+        std::make_unique<BlockSparseMatrix>(bs);
+    EXPECT_NE(m, nullptr);
+    EXPECT_EQ(m->num_rows(), 4);
+    EXPECT_EQ(m->num_cols(), 6);
+    EXPECT_EQ(m->num_nonzeros(), 10);
+    double* values = m->mutable_values();
+    for (int i = 0; i < 10; ++i) {
+      values[i] = i + 1;
+    }
+    return m;
+  } else if (id == 1) {
+    // Create the following block sparse matrix:
+    // [ 1 2 0 5 6 0 ]
+    // [ 3 4 0 7 8 0 ]
+    // [ 0 0 9 0 0 0 ]
+    CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
+    bs->cols = {
+      // Block size 2, position 0.
+      Block(2, 0),
+      // Block size 1, position 2.
+      Block(1, 2),
+      // Block size 2, position 3.
+      Block(2, 3),
+      // Block size 1, position 5.
+      Block(1, 5),
+    };
+    bs->rows = {
+      CompressedRow(2),
+      CompressedRow(1)
+    };
+    bs->rows[0].block = Block(2, 0);
+    bs->rows[0].cells = { Cell(0, 0), Cell(2, 4) };
+
+    bs->rows[1].block = Block(1, 2);
+    bs->rows[1].cells = { Cell(1, 8) };
+    std::unique_ptr<BlockSparseMatrix> m =
+        std::make_unique<BlockSparseMatrix>(bs);
+    EXPECT_NE(m, nullptr);
+    EXPECT_EQ(m->num_rows(), 3);
+    EXPECT_EQ(m->num_cols(), 6);
+    EXPECT_EQ(m->num_nonzeros(), 9);
+    double* values = m->mutable_values();
+    for (int i = 0; i < 9; ++i) {
+      values[i] = i + 1;
+    }
+    return m;
+  }
+  return nullptr;
+}
+}  // namespace
 
 class BlockSparseMatrixTest : public ::testing::Test {
  protected:
@@ -211,6 +298,60 @@ TEST(BlockSparseMatrix, CreateDiagonalMatrix) {
   m->RightMultiply(x.data(), y.data());
   for (int i = 0; i < num_cols; ++i) {
     EXPECT_NEAR(y[i], diagonal[i], std::numeric_limits<double>::epsilon());
+  }
+}
+
+TEST(BlockSparseMatrix, ToDenseMatrix) {
+  {
+    std::unique_ptr<BlockSparseMatrix> m = CreateTestMatrixFromId(0);
+    Matrix m_dense;
+    m->ToDenseMatrix(&m_dense);
+    EXPECT_EQ(m_dense.rows(), 4);
+    EXPECT_EQ(m_dense.cols(), 6);
+    Matrix m_expected(4, 6);
+    m_expected << 1, 2, 0, 0, 0, 0,
+                  3, 4, 0, 0, 0, 0,
+                  0, 0, 5, 6, 7, 0,
+                  0, 0, 8, 9, 10, 0;
+    EXPECT_EQ(m_dense, m_expected);
+  }
+
+  {
+    std::unique_ptr<BlockSparseMatrix> m = CreateTestMatrixFromId(1);
+    Matrix m_dense;
+    m->ToDenseMatrix(&m_dense);
+    EXPECT_EQ(m_dense.rows(), 3);
+    EXPECT_EQ(m_dense.cols(), 6);
+    Matrix m_expected(3, 6);
+    m_expected << 1, 2, 0, 5, 6, 0,
+                  3, 4, 0, 7, 8, 0,
+                  0, 0, 9, 0, 0, 0;
+    EXPECT_EQ(m_dense, m_expected);
+  }
+}
+
+TEST(BlockSparseMatrix, ToCRSMatrix) {
+  {
+    std::unique_ptr<BlockSparseMatrix> m = CreateTestMatrixFromId(0);
+    CRSMatrix m_crs;
+    m->ToCRSMatrix(&m_crs);
+    std::vector<int> rows_expected = {0, 2, 4, 7, 10};
+    std::vector<int> cols_expected = {0, 1, 0, 1, 2, 3, 4, 2, 3, 4};
+    std::vector<double> values_expected = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    CheckVectorEq(rows_expected, m_crs.rows);
+    CheckVectorEq(cols_expected, m_crs.cols);
+    CheckVectorEq(values_expected, m_crs.values);
+  }
+  {
+    std::unique_ptr<BlockSparseMatrix> m = CreateTestMatrixFromId(1);
+    CRSMatrix m_crs;
+    m->ToCRSMatrix(&m_crs);
+    std::vector<int> rows_expected = {0, 4, 8, 9};
+    std::vector<int> cols_expected = {0, 1, 3, 4, 0, 1, 3, 4, 2};
+    std::vector<double> values_expected = {1, 2, 5, 6, 3, 4, 7, 8, 9};
+    CheckVectorEq(rows_expected, m_crs.rows);
+    CheckVectorEq(cols_expected, m_crs.cols);
+    CheckVectorEq(values_expected, m_crs.values);
   }
 }
 
