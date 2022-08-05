@@ -94,6 +94,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f381e7b9_78834907",
+        "filename": "include/ceres/internal/sphere_manifold_functions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T00:17:57Z",
+      "side": 1,
+      "message": "since we have the implementation right here, its good to have const here.",
+      "parentUuid": "eca600eb_cf11083e",
+      "range": {
+        "startLine": 68,
+        "startChar": 38,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ddc26bb_842f2baf",
@@ -155,6 +179,30 @@
       "side": 1,
       "message": "The formulars for quaternions are (almost) the same as for sphere parameterization. I am not sure but maybe quaternion parameterization could be just and alias for sphere parameterization.",
       "parentUuid": "b5c8fd09_419b948b",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 26
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3520032_c3dce072",
+        "filename": "include/ceres/line_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T00:17:57Z",
+      "side": 1,
+      "message": "I suppose so, we try and make the quaternion impl as fast as possible though since it is very extensively used and the size is known and fixed forever.",
+      "parentUuid": "1b07788d_e7e9926f",
       "range": {
         "startLine": 159,
         "startChar": 22,
@@ -238,6 +286,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c9a1d4f6_c59d0c6b",
+        "filename": "include/ceres/sphere_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T00:17:57Z",
+      "side": 1,
+      "message": "yes sending it and merging it before this CL is a good idea.",
+      "parentUuid": "d14745e9_cf109f75",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 2
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15c96b4a_ea12172c",
         "filename": "internal/ceres/manifold_test.cc",
         "patchSetId": 1
@@ -297,6 +369,30 @@
       "side": 1,
       "message": "Are you sure the formulars are only for |x|\u003d1? The original implementation (HomogenousLineParameterization which was based on Hartley \u0026 Zisserman) did not have that limitation. And if the current implementation does not work with |x|!\u003d1 (for sphere and for line parameterization) it is probably a bug I introduced. Is that test failing if no normalization would be done?",
       "parentUuid": "276a0f08_d6cecc97",
+      "range": {
+        "startLine": 707,
+        "startChar": 4,
+        "endLine": 707,
+        "endChar": 13
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d41d85f_dc951049",
+        "filename": "internal/ceres/manifold_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T00:17:57Z",
+      "side": 1,
+      "message": "Yes we are supposed to preserve the norm of the vector not make it unit norm. Thats why is the SphereManifold not the UnitSphereManifold.",
+      "parentUuid": "1108314a_a36ab64d",
       "range": {
         "startLine": 707,
         "startChar": 4,
