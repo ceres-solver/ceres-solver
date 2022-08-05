@@ -386,6 +386,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ccb2eec8_7470b83c",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-05T20:47:56Z",
+      "side": 1,
+      "message": "Better use `std::make_unique` directly. Everywhere in the source file as well.",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8be967e3_a0f7f5b9",
+        "filename": "internal/ceres/iterative_refiner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-05T20:47:56Z",
+      "side": 1,
+      "message": "Better move the variable out of the loop.",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b527af4c_7b044423",
+        "filename": "internal/ceres/iterative_refiner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-05T20:47:56Z",
+      "side": 1,
+      "message": "If variable\u0027s value is ignored, maybe move it out of the loop to avoid possible reallocations.",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "08c9c256_f5664c05",
         "filename": "internal/ceres/iterative_refiner.cc",
         "patchSetId": 4
@@ -427,6 +478,57 @@
         "endLine": 96,
         "endChar": 76
       },
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65359155_ad9f8df1",
+        "filename": "internal/ceres/iterative_refiner_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-05T20:47:56Z",
+      "side": 1,
+      "message": "Possibly check whether LL^T factorization was successful using `llt().info()`.",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c87ad6a_bffd172b",
+        "filename": "internal/ceres/iterative_refiner_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-05T20:47:56Z",
+      "side": 1,
+      "message": "Is there are reason why factorization is performed in the `Solve` method instead of running it here?",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf7e5281_5e9e846f",
+        "filename": "internal/ceres/iterative_refiner_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-05T20:47:56Z",
+      "side": 1,
+      "message": "Since `lhs_` is symmetric, maybe only reference the upper/lower part using `.triangularView\u003cUpper\u003e()`/`.triangularView\u003cLower\u003e()`?\n\nI would personally preferred using `.adjoint` instead of `.transpose` to be more general. However, I guess the use of complex matrices is unlikely.",
       "revId": "491b252908dd5c184956638583293098fc86b8db",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
