@@ -114,12 +114,17 @@ class SphereManifold final : public Manifold {
   static constexpr int TangentSpaceDimension =
       AmbientSpaceDimension > 0 ? AmbientSpaceDimension - 1 : Eigen::Dynamic;
 
+  // NOTE: Eigen does not allow to have a RowMajor column vector.
+  // In that case, change the storage order
+  static constexpr int SafeRowMajor =
+      TangentSpaceDimension == 1 ? Eigen::ColMajor : Eigen::RowMajor;
+
   using AmbientVector = Eigen::Matrix<double, AmbientSpaceDimension, 1>;
   using TangentVector = Eigen::Matrix<double, TangentSpaceDimension, 1>;
   using MatrixPlusJacobian = Eigen::Matrix<double,
                                            AmbientSpaceDimension,
                                            TangentSpaceDimension,
-                                           Eigen::RowMajor>;
+                                           SafeRowMajor>;
   using MatrixMinusJacobian = Eigen::Matrix<double,
                                             TangentSpaceDimension,
                                             AmbientSpaceDimension,
