@@ -401,6 +401,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68213ca6_18de4102",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T22:30:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccb2eec8_7470b83c",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8be967e3_a0f7f5b9",
@@ -418,6 +436,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca1fae73_66b012f7",
+        "filename": "internal/ceres/iterative_refiner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T22:30:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8be967e3_a0f7f5b9",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b527af4c_7b044423",
@@ -431,6 +467,24 @@
       "writtenOn": "2022-08-05T20:47:56Z",
       "side": 1,
       "message": "If variable\u0027s value is ignored, maybe move it out of the loop to avoid possible reallocations.",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "589d269f_23779bc4",
+        "filename": "internal/ceres/iterative_refiner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T22:30:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b527af4c_7b044423",
       "revId": "491b252908dd5c184956638583293098fc86b8db",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -499,6 +553,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "562a73d4_4aeba311",
+        "filename": "internal/ceres/iterative_refiner_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T22:30:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65359155_ad9f8df1",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c87ad6a_bffd172b",
@@ -516,6 +588,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b338c66d_d09bd6ba",
+        "filename": "internal/ceres/iterative_refiner_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T22:30:35Z",
+      "side": 1,
+      "message": "the iterative refiner never calls factorize. the api assumes that the factorization has already been computed somehow, this is why we do all the computation in Solve.",
+      "parentUuid": "2c87ad6a_bffd172b",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf7e5281_5e9e846f",
@@ -529,6 +619,24 @@
       "writtenOn": "2022-08-05T20:47:56Z",
       "side": 1,
       "message": "Since `lhs_` is symmetric, maybe only reference the upper/lower part using `.triangularView\u003cUpper\u003e()`/`.triangularView\u003cLower\u003e()`?\n\nI would personally preferred using `.adjoint` instead of `.transpose` to be more general. However, I guess the use of complex matrices is unlikely.",
+      "revId": "491b252908dd5c184956638583293098fc86b8db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "299ecb4d_a5a31618",
+        "filename": "internal/ceres/iterative_refiner_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T22:30:35Z",
+      "side": 1,
+      "message": "these are tiny matrices, so kept things very very simple. only updating one part of lhs will then translate into a slightly bigger expression when computing the rhs.",
+      "parentUuid": "cf7e5281_5e9e846f",
       "revId": "491b252908dd5c184956638583293098fc86b8db",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
