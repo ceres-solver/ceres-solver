@@ -275,6 +275,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b3dcccd7_6b2467a2",
+        "filename": "include/ceres/line_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-05T12:43:36Z",
+      "side": 1,
+      "message": "https://github.com/ceres-solver/ceres-solver/issues/311",
+      "parentUuid": "987462c3_5d5d11e7",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 26
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "862d5272_9c2dd01c",
         "filename": "include/ceres/sphere_manifold.h",
         "patchSetId": 1
