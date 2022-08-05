@@ -34,6 +34,7 @@
 #include <memory>
 #include <vector>
 
+#include "ceres/crs_matrix.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
@@ -68,6 +69,7 @@ class CERES_NO_EXPORT TripletSparseMatrix final : public SparseMatrix {
   void LeftMultiply(const double* x, double* y) const final;
   void SquaredColumnNorm(double* x) const final;
   void ScaleColumns(const double* scale) final;
+  void ToCRSMatrix(CRSMatrix* matrix) const;
   void ToDenseMatrix(Matrix* dense_matrix) const final;
   void ToTextFile(FILE* file) const final;
   // clang-format off
@@ -135,6 +137,8 @@ class CERES_NO_EXPORT TripletSparseMatrix final : public SparseMatrix {
   static std::unique_ptr<TripletSparseMatrix> CreateRandomMatrix(
       const TripletSparseMatrix::RandomMatrixOptions& options);
 
+  // Load a triplet sparse matrix from a text file.
+  static std::unique_ptr<TripletSparseMatrix> CreateFromTextFile(FILE* file);
  private:
   void AllocateMemory();
   void CopyData(const TripletSparseMatrix& orig);
