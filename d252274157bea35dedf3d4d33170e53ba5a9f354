@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62aa95de_c41dab04",
+        "filename": "internal/ceres/triplet_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-06T04:16:15Z",
+      "side": 1,
+      "message": "you could just say\n\nCompressedRowSparseMatrix::FromTripletSparseMatrix(*this)-\u003eToCRSMatrix(crs_matrix);",
+      "range": {
+        "startLine": 201,
+        "startChar": 6,
+        "endLine": 201,
+        "endChar": 31
+      },
+      "revId": "d252274157bea35dedf3d4d33170e53ba5a9f354",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
