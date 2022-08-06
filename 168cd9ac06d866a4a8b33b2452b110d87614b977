@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6125219_9f4e3df8",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-06T03:56:16Z",
+      "side": 1,
+      "message": "DtDx is very hard to read why not just\n\ny[i] \u003d y[i] + d[i]^2 x[i]\n\nalso this seems like a very specific kernel no?",
+      "range": {
+        "startLine": 65,
+        "startChar": 19,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f3e2fe0_339f4473",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-06T03:56:16Z",
+      "side": 1,
+      "message": "I think these names are very confusing.\n\n1. you are overloading functions, which I do not think is a great idea.\n2. CopyFromCpuAsync and CopyFromGpuAsync have one character difference in the middle..\n\nHow about CopyFromCpuAsync -\u003e CopyFromCpu()",
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26c936ba_ac2cf6cf",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-06T03:56:16Z",
+      "side": 1,
+      "message": "CopyVectorFromCpu",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 23
+      },
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04f609b7_392e6d0a",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-06T03:56:16Z",
+      "side": 1,
+      "message": "GpuToGpuCopy",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 23
+      },
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "403f630d_45e65f04",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-06T03:56:16Z",
+      "side": 1,
+      "message": "if all copies on this object are async now, why not just drop the async entirely and shorten all names?",
+      "range": {
+        "startLine": 121,
+        "startChar": 5,
+        "endLine": 121,
+        "endChar": 9
+      },
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "285107f0_e5c8923a",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-06T03:56:16Z",
+      "side": 1,
+      "message": "How about just CopyN ? along the lines of  std::copy_n",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 21
+      },
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c090886_ae0a0f46",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-06T03:56:16Z",
+      "side": 1,
+      "message": "drop comment.",
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
