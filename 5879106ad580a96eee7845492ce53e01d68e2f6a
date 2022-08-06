@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d15dc00b_acf07edc",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-06T00:39:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b620fe4f_dba9a9b3",
+      "range": {
+        "startLine": 176,
+        "startChar": 7,
+        "endLine": 176,
+        "endChar": 12
+      },
+      "revId": "5879106ad580a96eee7845492ce53e01d68e2f6a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90228bba_31d679a3",
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f1d7f80a_55befb7e",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-06T00:39:43Z",
+      "side": 1,
+      "message": "Could you point me to an example of such usage of the column blocks? I can update the documentation and the implementation accordingly.",
+      "parentUuid": "90228bba_31d679a3",
+      "range": {
+        "startLine": 180,
+        "startChar": 27,
+        "endLine": 180,
+        "endChar": 43
+      },
+      "revId": "5879106ad580a96eee7845492ce53e01d68e2f6a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6d58d28b_ba714703",
         "filename": "internal/ceres/triplet_sparse_matrix.cc",
         "patchSetId": 1
@@ -60,6 +108,24 @@
       "writtenOn": "2022-08-05T21:44:29Z",
       "side": 1,
       "message": "why replicate the construction of a CRS matrix here.\njust create a CompressedRowSparseMatrix from the TripletSparseMatrix and use it ToCRSMatrix() method. this is what we do in the ProblemImpl::Evaluate also.",
+      "revId": "5879106ad580a96eee7845492ce53e01d68e2f6a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7abc9301_9fe1dd8e",
+        "filename": "internal/ceres/triplet_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-06T00:39:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d58d28b_ba714703",
       "revId": "5879106ad580a96eee7845492ce53e01d68e2f6a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
