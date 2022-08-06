@@ -237,6 +237,11 @@ if (USE_CUDA)
         "${CUDA_LIBRARIES};"
         "${CUDA_cusolver_LIBRARY};"
         "${CUDA_cusparse_LIBRARY}")
+    if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.18")
+      # Support Maxwell, Pascal, Volta, Turing, and Ampere GPUs.
+      set(CMAKE_CUDA_ARCHITECTURES "50;60;70;80")
+      message("-- Setting CUDA Architecture to ${CMAKE_CUDA_ARCHITECTURES}")
+    endif()
     enable_language(CUDA)
   else (CUDA_FOUND)
     message("-- Did not find CUDA library, disabling CUDA support.")
