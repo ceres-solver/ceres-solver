@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "701c10ae_5079d75d",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-06T18:21:42Z",
+      "side": 1,
+      "message": "Okay, got it. Since this loop makes no assumption about ordering in the values array (it explicitly picks it up from the cell info), this should be correct, I think. Let me know if there are any other edge cases.",
+      "parentUuid": "8ff81d88_c0c86004",
+      "range": {
+        "startLine": 180,
+        "startChar": 27,
+        "endLine": 180,
+        "endChar": 43
+      },
+      "revId": "5879106ad580a96eee7845492ce53e01d68e2f6a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6d58d28b_ba714703",
         "filename": "internal/ceres/triplet_sparse_matrix.cc",
         "patchSetId": 1

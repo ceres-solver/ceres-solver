@@ -22,6 +22,30 @@
       },
       "revId": "d252274157bea35dedf3d4d33170e53ba5a9f354",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d98a785e_389c8b47",
+        "filename": "internal/ceres/triplet_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-06T18:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62aa95de_c41dab04",
+      "range": {
+        "startLine": 201,
+        "startChar": 6,
+        "endLine": 201,
+        "endChar": 31
+      },
+      "revId": "d252274157bea35dedf3d4d33170e53ba5a9f354",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
