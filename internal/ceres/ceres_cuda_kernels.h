@@ -62,6 +62,13 @@ void CudaSetZeroFP64(double* output, const int size, cudaStream_t stream);
 // double (FP64). Both arrays must already be on GPU memory.
 void CudaDsxpy(double* x, float* y, const int size, cudaStream_t stream);
 
+// Compute y[i] = y[i] + d[i]^2 x[i]. All arrays must already be on GPU memory.
+void CudaDtDxpy(double* y,
+                const double* D,
+                const double* x,
+                const int size,
+                cudaStream_t stream);
+
 }  // namespace ceres::internal
 
 #endif  // CERES_NO_CUDA
