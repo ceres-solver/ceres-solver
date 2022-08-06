@@ -99,7 +99,7 @@ class FakeSparseCholesky : public SparseCholesky {
     VectorRef solution(solution_ptr, num_cols);
     ConstVectorRef rhs(rhs_ptr, num_cols);
     auto llt = lhs_.llt();
-    CHECK_NE(llt.info(), Eigen::Success);
+    CHECK_EQ(llt.info(), Eigen::Success);
     solution = llt.solve(rhs.cast<Scalar>()).template cast<double>();
     return LinearSolverTerminationType::SUCCESS;
   }
