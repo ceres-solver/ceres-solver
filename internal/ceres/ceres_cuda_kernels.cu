@@ -106,4 +106,24 @@ void CudaDsxpy(double* x,
       <<<num_blocks, kCudaBlockSize, 0, stream>>>(x, y, size);
 }
 
+__global__ void CudaDtDxpyKernel(double* __restrict__ y,
+                                 const double* D,
+                                 const double* __restrict__ x,
+                                 const int size) {
+  const int i = blockIdx.x * blockDim.x + threadIdx.x;
+  if (i < size) {
+    y[i] = y[i] + D[i] * D[i] * x[i];
+  }
+}
+
+void CudaDtDxpy(double* y,
+                const double* D,
+                const double* x,
+                const int size,
+                cudaStream_t stream) {
+  const int num_blocks = (size + kCudaBlockSize - 1) / kCudaBlockSize;
+  CudaDtDxpyKernel<<<num_blocks, kCudaBlockSize, 0, stream>>>(
+      y, D, x, size);
+}
+
 } // namespace ceres_cuda_kernels

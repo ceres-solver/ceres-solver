@@ -72,16 +72,33 @@ class CudaBuffer {
     }
   }
 
-  // Perform an asynchronous copy from CPU memory to GPU memory using the stream
-  // provided.
-  void CopyToGpuAsync(const T* data, const size_t size, cudaStream_t stream) {
+  // Perform an asynchronous copy from CPU memory to GPU memory managed by this
+  // CudaBuffer instance using the stream provided.
+  void CopyFromCpuAsync(const T* data,
+                        const size_t size,
+                        cudaStream_t stream) {
     Reserve(size);
     CHECK_EQ(cudaMemcpyAsync(
                  data_, data, size * sizeof(T), cudaMemcpyHostToDevice, stream),
              cudaSuccess);
   }
 
-  // Perform an asynchronous copy from GPU memory using the stream provided.
+  // Perform an asynchronous copy from CPU memory to GPU memory managed by this
+  // CudaBuffer instance using the stream provided -- convenience overload for
+  // copying from std::vector.
+  void CopyFromCpuAsync(const std::vector<T>& data,
+                        cudaStream_t stream) {
+    Reserve(data.size());
+    CHECK_EQ(cudaMemcpyAsync(data_,
+                             data.data(),
+                             data.size() * sizeof(T),
+                             cudaMemcpyHostToDevice,
+                             stream),
+             cudaSuccess);
+  }
+
+  // Perform an asynchronous copy from another GPU memory array to the GPU
+  // memory managed by this CudaBuffer instance using the stream provided.
   void CopyFromGpuAsync(const T* data, const size_t size, cudaStream_t stream) {
     Reserve(size);
     CHECK_EQ(cudaMemcpyAsync(
@@ -89,21 +106,40 @@ class CudaBuffer {
             cudaSuccess);
   }
 
-  // Copy data from the GPU to CPU memory. This is necessarily synchronous since
-  // any potential GPU kernels that may be writing to the buffer must finish
-  // before the transfer happens.
-  void CopyToHost(T* data, const size_t size) {
+  // Copy data from the GPU memory managed by this CudaBuffer instance to CPU
+  // memory. It is the caller's responsibility to ensure that the CPU memory
+  // pointer is valid, i.e. it is not null, and that it points to memory of
+  // at least this->size() size. This copy is necessarily synchronous since any
+  // potential GPU kernels that may be writing to the buffer must finish before
+  // the transfer happens.
+  void CopyToCpu(T* data, const size_t size) const {
     CHECK(data_ != nullptr);
     CHECK_EQ(cudaMemcpy(data, data_, size * sizeof(T), cudaMemcpyDeviceToHost),
              cudaSuccess);
   }
 
-  void CopyToGpu(const std::vector<T>& data) {
-    CopyToGpu(data.data(), data.size());
+  // Copy N items from another GPU memory array to the GPU memory managed by
+  // this CudaBuffer instance, growing this buffer's size if needed. This copy
+  // is asynchronous, and operates on the stream provided.
+  void CopyNItemsFrom(int n, const CudaBuffer<T>& other, cudaStream_t stream) {
+    Reserve(n);
+    CHECK(other.data_ != nullptr);
+    CHECK(data_ != nullptr);
+    CHECK_EQ(cudaMemcpyAsync(data_,
+                             other.data_,
+                             size_ * sizeof(T),
+                             cudaMemcpyDeviceToDevice,
+                             stream),
+             cudaSuccess);
   }
 
+  // Return a pointer to the GPU memory managed by this CudaBuffer instance.
   T* data() { return data_; }
+  // Return a const pointer to the GPU memory managed by this CudaBuffer
+  // instance.
   const T* data() const { return data_; }
+  // Return the number of items of type T that can fit in the GPU memory
+  // allocated so far by this CudaBuffer instance.
   size_t size() const { return size_; }
 
  private:
