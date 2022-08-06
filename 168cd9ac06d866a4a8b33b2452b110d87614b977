@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a43e3669_459e6fb5",
+        "filename": "internal/ceres/ceres_cuda_kernels.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-06T17:41:05Z",
+      "side": 1,
+      "message": "It\u0027s used by some downstream CLs that will hit soon, for implementing damping.",
+      "parentUuid": "c6125219_9f4e3df8",
+      "range": {
+        "startLine": 65,
+        "startChar": 19,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f3e2fe0_339f4473",
@@ -41,6 +65,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f27aecc9_df54edce",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-06T17:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f3e2fe0_339f4473",
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26c936ba_ac2cf6cf",
@@ -54,6 +96,30 @@
       "writtenOn": "2022-08-06T03:56:16Z",
       "side": 1,
       "message": "CopyVectorFromCpu",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 23
+      },
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0666430_d47bd322",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-06T17:41:05Z",
+      "side": 1,
+      "message": "I like CopyFromCpuVector more.",
+      "parentUuid": "26c936ba_ac2cf6cf",
       "range": {
         "startLine": 89,
         "startChar": 7,
@@ -87,6 +153,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27f1dd70_939917b5",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-06T17:41:05Z",
+      "side": 1,
+      "message": "That seems ambiguous about whether this instance is the source or destination. How about `CopyFromGpuArray`?",
+      "parentUuid": "04f609b7_392e6d0a",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 23
+      },
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "403f630d_45e65f04",
@@ -100,6 +190,30 @@
       "writtenOn": "2022-08-06T03:56:16Z",
       "side": 1,
       "message": "if all copies on this object are async now, why not just drop the async entirely and shorten all names?",
+      "range": {
+        "startLine": 121,
+        "startChar": 5,
+        "endLine": 121,
+        "endChar": 9
+      },
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c77a27c_1e0d0991",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-06T17:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "403f630d_45e65f04",
       "range": {
         "startLine": 121,
         "startChar": 5,
@@ -133,6 +247,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7cbbbae_843cab9c",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-06T17:41:05Z",
+      "side": 1,
+      "message": "std::copy_n is a \"third party\" copy not belonging to the source or the destination, so its name makes sense. I\u0027d like the name here to indicate that it is copying to this instance, rather than from this instance to the other.",
+      "parentUuid": "285107f0_e5c8923a",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 21
+      },
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c090886_ae0a0f46",
@@ -146,6 +284,24 @@
       "writtenOn": "2022-08-06T03:56:16Z",
       "side": 1,
       "message": "drop comment.",
+      "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99db2740_3960660f",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-06T17:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c090886_ae0a0f46",
       "revId": "168cd9ac06d866a4a8b33b2452b110d87614b977",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
