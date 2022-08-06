@@ -37,6 +37,7 @@
 #include "ceres/linear_solver.h"
 
 #ifndef CERES_NO_CUDA
+#include "ceres/cuda_cgnr_linear_operator.h"
 #include "ceres/cuda_conjugate_gradients_solver.h"
 #include "ceres/cuda_linear_operator.h"
 #include "ceres/cuda_sparse_matrix.h"
@@ -93,6 +94,7 @@ class CERES_NO_EXPORT CudaCgnrSolver final : public BlockSparseMatrixSolver {
 
   LinearSolver::Options options_;
   std::unique_ptr<CudaConjugateGradientsSolver> solver_ = nullptr;
+  CudaCgnrLinearOperator lhs_;
 };
 #endif  // CERES_NO_CUDA
 

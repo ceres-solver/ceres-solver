@@ -28,6 +28,8 @@
 //
 // Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
 
+#include <stdio.h>
+
 #include "cuda_runtime.h"
 
 namespace ceres::internal {
@@ -83,8 +85,10 @@ void CudaSetZeroFP32(float* output, const int size, cudaStream_t stream) {
 
 void CudaSetZeroFP64(double* output, const int size, cudaStream_t stream) {
   const int num_blocks = (size + kCudaBlockSize - 1) / kCudaBlockSize;
+  printf("Invoking kernel with %d blocks and %d threads\n", num_blocks, kCudaBlockSize);
   SetZeroKernel<double><<<num_blocks, kCudaBlockSize, 0, stream>>>(
       output, size);
+  printf("Kernel invocation complete\n");
 }
 
 template <typename SrcType, typename DstType>

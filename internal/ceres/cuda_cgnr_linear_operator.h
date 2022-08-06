@@ -54,12 +54,15 @@ namespace ceres::internal {
 // parameter. A brief proof is included in cgnr_linear_operator.h.
 class CERES_NO_EXPORT CudaCgnrLinearOperator final : public CudaLinearOperator {
  public:
-  CudaCgnrLinearOperator(CudaLinearOperator* A,
-                         CudaVector* D)
-      : A_(A), D_(D) {}
+  CudaCgnrLinearOperator() = default;
 
-  bool Init(ContextImpl* context, std::string* message) {
+  bool Init(CudaLinearOperator* A,
+            CudaVector* D,
+            ContextImpl* context,
+            std::string* message) {
     CHECK(message != nullptr);
+    A_ = A;
+    D_ = D;
     return z_.Init(context, message);
   }
 
@@ -68,15 +71,21 @@ class CERES_NO_EXPORT CudaCgnrLinearOperator final : public CudaLinearOperator {
     CHECK(y != nullptr);
     CHECK_EQ(y->num_rows(), A_->num_cols());
     // z = Ax
+    printf("Resizing z to %d\n", A_->num_rows());
     z_.resize(A_->num_rows());
+    printf("Setting z to zero\n");
     z_.setZero();
+    printf("Right multiplying A\n");
     A_->RightMultiply(x, &z_);
 
     // y = y + Atz
+    //   = y + AtAx
+    printf("Right multiplying A^T\n");
     A_->LeftMultiply(z_, y);
 
     // y = y + DtDx
     if (D_ != nullptr) {
+      printf("Right multiplying D^T\n");
       y->DtDxpy(*D_, x);
     }
   }

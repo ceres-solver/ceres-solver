@@ -95,6 +95,7 @@ LinearSolver::Summary CudaConjugateGradientsSolver::Solve(
   summary.message = "Maximum number of iterations reached.";
   summary.num_iterations = 0;
 
+  printf("Starting CG solver\n");
   const double norm_b = b.norm();
   if (norm_b == 0.0) {
     x.setZero();
@@ -105,13 +106,16 @@ LinearSolver::Summary CudaConjugateGradientsSolver::Solve(
 
   const double tol_r = per_solve_options.r_tolerance * norm_b;
 
+  printf("r = 0\n");
   // r = 0.
   r_.setZero();
   // r = A * x.
   A.RightMultiply(x, &r_);
+  printf("r = A * x\n");
   // r = b - r
   //   = b - A * x.
   r_.Axpby(1.0, b, -1.0);
+  printf("r = b - A * x\n");
 
   double norm_r = r_.norm();
   if (options_.min_num_iterations == 0 && norm_r <= tol_r) {
@@ -127,11 +131,14 @@ LinearSolver::Summary CudaConjugateGradientsSolver::Solve(
   // tmp = r
   //     = b - A * x.
   tmp_.CopyFrom(r_);
+  printf("tmp = r\n");
   // tmp = b + tmp.
   //     = 2 * b + A * x.
   tmp_.Axpy(1.0, b);
+  printf("tmp = 2 * b + A * x\n");
   // Q0 = x'Ax - 2 * b'x.
   double Q0 = -1.0 * x.dot(tmp_);
+  printf("Q0 = x'Ax - 2 * b'x\n");
 
   for (summary.num_iterations = 1;; ++summary.num_iterations) {
     printf("Iteration %d\n", summary.num_iterations);

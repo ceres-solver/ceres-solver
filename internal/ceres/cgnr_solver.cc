@@ -185,17 +185,23 @@ LinearSolver::Summary CudaCgnrSolver::SolveImpl(
   // Form z = Atb.
   cuda_z.setZero();
   cuda_A.LeftMultiply(cuda_b, &cuda_z);
+  printf("z = Atb\n");
 
   LinearSolver::PerSolveOptions cg_per_solve_options = per_solve_options;
   cg_per_solve_options.preconditioner = nullptr;
 
   // Solve (AtA + DtD)x = z (= Atb).
   cuda_x.setZero();
-  CudaCgnrLinearOperator lhs(&cuda_A, &cuda_D);
+  if (!lhs_.Init(&cuda_A, &cuda_D, options_.context, &summary.message)) {
+    summary.termination_type = LinearSolverTerminationType::FATAL_ERROR;
+    return summary;
+  }
+
   event_logger.AddEvent("Setup");
+  printf("Solve (AtA + DtD)x = z (= Atb)\n");
 
   summary = solver_->Solve(
-      &lhs, nullptr, cuda_z, cg_per_solve_options, &cuda_x);
+      &lhs_, nullptr, cuda_z, cg_per_solve_options, &cuda_x);
   event_logger.AddEvent("Solve");
   return summary;
 }

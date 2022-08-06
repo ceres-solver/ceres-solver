@@ -85,18 +85,20 @@ DEFINE_string(linear_solver, "sparse_schur", "Options are: "
               "dense_qr, dense_normal_cholesky and cgnr.");
 DEFINE_bool(explicit_schur_complement, false, "If using ITERATIVE_SCHUR "
             "then explicitly compute the Schur complement.");
-DEFINE_string(preconditioner, "jacobi", "Options are: "
+DEFINE_string(preconditioner, "identity", "Options are: "
               "identity, jacobi, schur_jacobi, cluster_jacobi, "
               "cluster_tridiagonal.");
 DEFINE_string(visibility_clustering, "canonical_views",
               "single_linkage, canonical_views");
 
-DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
-              "Options are: suite_sparse, cx_sparse, accelerate_sparse and eigen_sparse.");
+DEFINE_string(sparse_linear_algebra_library, "cuda_sparse",
+              "Options are: suite_sparse, cx_sparse, accelerate_sparse,"
+              " eigen_sparse, and cuda_sparse.");
 DEFINE_string(dense_linear_algebra_library, "eigen",
               "Options are: eigen, lapack, and cuda");
 DEFINE_string(ordering_type, "amd", "Options are: amd, nesdis");
-DEFINE_string(linear_solver_ordering, "automatic", "Options are: automatic and user");
+DEFINE_string(linear_solver_ordering, "automatic",
+              "Options are: automatic and user");
 
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
             "rotations. If false, angle axis is used.");
@@ -336,10 +338,6 @@ void SolveProblem(const char* filename) {
   SetSolverOptionsFromFlags(&bal_problem, &options);
   options.gradient_tolerance = 1e-16;
   options.function_tolerance = 1e-16;
-  options.trust_region_minimizer_iterations_to_dump = {
-    0, 1, 2, 3, 4, 5, 6, 7, 8
-  };
-  options.trust_region_problem_dump_directory = "../jacobians/";
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";
