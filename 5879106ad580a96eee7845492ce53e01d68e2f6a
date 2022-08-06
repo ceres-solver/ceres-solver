@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8ff81d88_c0c86004",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-06T04:15:01Z",
+      "side": 1,
+      "message": "actually I am wrong. I mixed up two different things.\n\nThe columns blocks are sorted by their block_ids, this happens inside block_jacobian_writer in CreateJacobian. there is an explicit call to sort there after we populate the cells for each residual block.\n\nhowever there is no guarantee that the position in the values array where the actual values are stored is in that order. this is computed in BuildJacobianLayout and there we try and maximize cache coherency. so landmark jacobians are placed together in memory and then all the non-landmark jacobians.",
+      "parentUuid": "f1d7f80a_55befb7e",
+      "range": {
+        "startLine": 180,
+        "startChar": 27,
+        "endLine": 180,
+        "endChar": 43
+      },
+      "revId": "5879106ad580a96eee7845492ce53e01d68e2f6a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6d58d28b_ba714703",
         "filename": "internal/ceres/triplet_sparse_matrix.cc",
         "patchSetId": 1
