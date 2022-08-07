@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b3064cd_64d6ded7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-07T00:37:08Z",
+      "side": 1,
+      "message": "minor nit, then its ready to go.",
+      "revId": "87641ce2fb4825bd761df9a7b2460f7bfbf4ca33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf50c23b_324976a1",
+        "filename": "internal/ceres/triplet_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-07T00:37:08Z",
+      "side": 1,
+      "message": "std::make_unique\u003cTripletSparseMatrix\u003e(num_rows, num_cols, rows, cols, values); is better.",
+      "revId": "87641ce2fb4825bd761df9a7b2460f7bfbf4ca33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
