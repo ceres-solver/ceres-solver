@@ -77,6 +77,10 @@ int InnerProductComputer::ComputeNonzeros(
   row_nnz->resize(blocks.size());
   std::fill(row_nnz->begin(), row_nnz->end(), 0);
 
+  if (product_terms.empty()) {
+    return 0;
+  }
+
   // First product term.
   (*row_nnz)[product_terms[0].row] = blocks[product_terms[0].col].size;
   int num_nonzeros =
@@ -197,6 +201,10 @@ void InnerProductComputer::ComputeOffsetsAndCreateResultMatrix(
       *(crsm_rows + 1) = *crsm_rows + row_block_nnz[i];
     }
   }
+  result_offsets_.resize(product_terms.size());
+  if (num_nonzeros == 0) {
+    return;
+  }
 
   // The following macro FILL_CRSM_COL_BLOCK is key to understanding
   // how this class works.
@@ -243,7 +251,6 @@ void InnerProductComputer::ComputeOffsetsAndCreateResultMatrix(
     }                                                      \
   }
 
-  result_offsets_.resize(product_terms.size());
   int col_nnz = 0;
   int nnz = 0;
 

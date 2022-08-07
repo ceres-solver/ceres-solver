@@ -44,36 +44,36 @@
 namespace ceres {
 namespace internal {
 
-#define COMPUTE_AND_COMPARE                                                  \
-  {                                                                          \
-    inner_product_computer->Compute();                                       \
-    CompressedRowSparseMatrix* actual_product_crsm =                         \
-        inner_product_computer->mutable_result();                            \
-    Matrix actual_inner_product =                                            \
-        Eigen::Map<Eigen::SparseMatrix<double, Eigen::ColMajor>>(            \
-            actual_product_crsm->num_rows(),                                 \
-            actual_product_crsm->num_rows(),                                 \
-            actual_product_crsm->num_nonzeros(),                             \
-            actual_product_crsm->mutable_rows(),                             \
-            actual_product_crsm->mutable_cols(),                             \
-            actual_product_crsm->mutable_values());                          \
-    EXPECT_EQ(actual_inner_product.rows(), actual_inner_product.cols());     \
-    EXPECT_EQ(expected_inner_product.rows(), expected_inner_product.cols()); \
-    EXPECT_EQ(actual_inner_product.rows(), expected_inner_product.rows());   \
-    Matrix expected_t, actual_t;                                             \
-    if (actual_product_crsm->storage_type() ==                               \
-        CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {          \
-      expected_t = expected_inner_product.triangularView<Eigen::Upper>();    \
-      actual_t = actual_inner_product.triangularView<Eigen::Upper>();        \
-    } else {                                                                 \
-      expected_t = expected_inner_product.triangularView<Eigen::Lower>();    \
-      actual_t = actual_inner_product.triangularView<Eigen::Lower>();        \
-    }                                                                        \
-    EXPECT_LE((expected_t - actual_t).norm() / actual_t.norm(),              \
-              100 * std::numeric_limits<double>::epsilon())                  \
-        << "expected: \n"                                                    \
-        << expected_t << "\nactual: \n"                                      \
-        << actual_t;                                                         \
+#define COMPUTE_AND_COMPARE                                                   \
+  {                                                                           \
+    inner_product_computer->Compute();                                        \
+    CompressedRowSparseMatrix* actual_product_crsm =                          \
+        inner_product_computer->mutable_result();                             \
+    Matrix actual_inner_product =                                             \
+        Eigen::Map<Eigen::SparseMatrix<double, Eigen::ColMajor>>(             \
+            actual_product_crsm->num_rows(),                                  \
+            actual_product_crsm->num_rows(),                                  \
+            actual_product_crsm->num_nonzeros(),                              \
+            actual_product_crsm->mutable_rows(),                              \
+            actual_product_crsm->mutable_cols(),                              \
+            actual_product_crsm->mutable_values());                           \
+    EXPECT_EQ(actual_inner_product.rows(), actual_inner_product.cols());      \
+    EXPECT_EQ(expected_inner_product.rows(), expected_inner_product.cols());  \
+    EXPECT_EQ(actual_inner_product.rows(), expected_inner_product.rows());    \
+    Matrix expected_t, actual_t;                                              \
+    if (actual_product_crsm->storage_type() ==                                \
+        CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {           \
+      expected_t = expected_inner_product.triangularView<Eigen::Upper>();     \
+      actual_t = actual_inner_product.triangularView<Eigen::Upper>();         \
+    } else {                                                                  \
+      expected_t = expected_inner_product.triangularView<Eigen::Lower>();     \
+      actual_t = actual_inner_product.triangularView<Eigen::Lower>();         \
+    }                                                                         \
+    EXPECT_LE((expected_t - actual_t).norm(),                                 \
+              100 * std::numeric_limits<double>::epsilon() * actual_t.norm()) \
+        << "expected: \n"                                                     \
+        << expected_t << "\nactual: \n"                                       \
+        << actual_t;                                                          \
   }
 
 TEST(InnerProductComputer, NormalOperation) {
@@ -99,7 +99,6 @@ TEST(InnerProductComputer, NormalOperation) {
         options.min_col_block_size = 1;
         options.max_col_block_size = 10;
         options.block_density = std::max(0.1, RandDouble());
-
         VLOG(2) << "num row blocks: " << options.num_row_blocks;
         VLOG(2) << "num col blocks: " << options.num_col_blocks;
         VLOG(2) << "min row block size: " << options.min_row_block_size;
@@ -141,10 +140,6 @@ TEST(InnerProductComputer, NormalOperation) {
 }
 
 TEST(InnerProductComputer, SubMatrix) {
-  // "Randomly generated seed."
-  // FIXME Use a seed different from the previous one to allow the test to pass
-  // without a segmentation fault when compiled using 32 bit MinGW.
-  SetRandomState(29824);
   const int kNumRowBlocks = 10;
   const int kNumColBlocks = 20;
   const int kNumTrials = 5;
@@ -160,7 +155,7 @@ TEST(InnerProductComputer, SubMatrix) {
     options.max_row_block_size = 5;
     options.min_col_block_size = 1;
     options.max_col_block_size = 10;
-    options.block_density = std::max(0.1, RandDouble());
+    options.block_density = std::min(0.01, RandDouble());
 
     VLOG(2) << "num row blocks: " << options.num_row_blocks;
     VLOG(2) << "num col blocks: " << options.num_col_blocks;
