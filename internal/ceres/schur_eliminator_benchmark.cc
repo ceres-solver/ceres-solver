@@ -35,7 +35,6 @@
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
-#include "ceres/random.h"
 #include "ceres/schur_eliminator.h"
 
 namespace ceres::internal {
@@ -91,6 +90,8 @@ class BenchmarkData {
 
     matrix_ = std::make_unique<BlockSparseMatrix>(bs);
     double* values = matrix_->mutable_values();
+    std::default_random_engine generator;
+    std::normal_distribution<double> distribution(0.0, 1.0);
     for (int i = 0; i < matrix_->num_nonzeros(); ++i) {
       values[i] = RandNormal();
     }
