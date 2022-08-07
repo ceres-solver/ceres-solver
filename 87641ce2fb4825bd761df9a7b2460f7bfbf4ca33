@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5e79a7d3_d2c6efaa",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-07T00:38:16Z",
+      "side": 1,
+      "message": "this is not right, this should be num_rows + 1.",
+      "revId": "87641ce2fb4825bd761df9a7b2460f7bfbf4ca33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cf50c23b_324976a1",
         "filename": "internal/ceres/triplet_sparse_matrix.cc",
         "patchSetId": 3
