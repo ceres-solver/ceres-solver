@@ -194,6 +194,13 @@ std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem1() {
   problem->D = std::make_unique<double[]>(num_cols);
   problem->num_eliminate_blocks = 2;
 
+  problem->x = std::make_unique<double[]>(num_cols);
+  problem->x[0] = -2.3061;
+  problem->x[1] = 0.3172;
+  problem->x[2] = 0.2102;
+  problem->x[3] = 2.1367;
+  problem->x[4] = 0.1388;
+
   int* rows = A->mutable_rows();
   int* cols = A->mutable_cols();
   double* values = A->mutable_values();
@@ -297,6 +304,13 @@ std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem2() {
   problem->b = std::make_unique<double[]>(num_rows);
   problem->D = std::make_unique<double[]>(num_cols);
   problem->num_eliminate_blocks = 2;
+
+  problem->x = std::make_unique<double[]>(num_cols);
+  problem->x[0] = -2.3061;
+  problem->x[1] = 0.3172;
+  problem->x[2] = 0.2102;
+  problem->x[3] = 2.1367;
+  problem->x[4] = 0.1388;
 
   auto* bs = new CompressedRowBlockStructure;
   std::unique_ptr<double[]> values =

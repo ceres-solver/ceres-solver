@@ -68,7 +68,6 @@ void CudaDtDxpy(double* y,
                 const double* x,
                 const int size,
                 cudaStream_t stream);
-
 }  // namespace ceres::internal
 
 #endif  // CERES_NO_CUDA
