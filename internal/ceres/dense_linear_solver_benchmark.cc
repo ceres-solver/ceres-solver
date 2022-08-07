@@ -34,7 +34,6 @@
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/internal/config.h"
 #include "ceres/linear_solver.h"
-#include "ceres/random.h"
 
 namespace ceres::internal {
 
