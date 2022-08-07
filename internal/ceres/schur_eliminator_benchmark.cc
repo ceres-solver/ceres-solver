@@ -29,6 +29,7 @@
 // Authors: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <memory>
+#include <random>
 
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"
@@ -93,7 +94,7 @@ class BenchmarkData {
     std::default_random_engine generator;
     std::normal_distribution<double> distribution(0.0, 1.0);
     for (int i = 0; i < matrix_->num_nonzeros(); ++i) {
-      values[i] = RandNormal();
+      values[i] = distribution(generator);
     }
 
     b_.resize(matrix_->num_rows());

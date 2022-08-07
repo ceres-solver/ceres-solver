@@ -31,6 +31,7 @@
 #include "ceres/schur_eliminator.h"
 
 #include <memory>
+#include <random>
 
 #include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"
@@ -41,7 +42,6 @@
 #include "ceres/detect_structure.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
-#include "ceres/random.h"
 #include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
@@ -283,8 +283,10 @@ TEST(SchurEliminatorForOneFBlock, MatchesSchurEliminator) {
 
   BlockSparseMatrix matrix(bs);
   double* values = matrix.mutable_values();
+  std::default_random_engine generator;
+  std::normal_distribution<double> distribution(0.0, 1.0);
   for (int i = 0; i < matrix.num_nonzeros(); ++i) {
-    values[i] = RandNormal();
+    values[i] = distribution(generator);
   }
 
   Vector b(matrix.num_rows());

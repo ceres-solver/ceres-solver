@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <memory>
 #include <numeric>
+#include <random>
 #include <string>
 
 #include "Eigen/SparseCore"
@@ -40,7 +41,6 @@
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
-#include "ceres/random.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
@@ -404,7 +404,8 @@ TEST_P(RightMultiplyTest, _) {
   const int kMinBlockSize = 1;
   const int kMaxBlockSize = 5;
   const int kNumTrials = 10;
-
+  std::default_random_engine generator;
+  std::uniform_real_distribution<double> distribution(0.5, 1.0);
   for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
        ++num_blocks) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
@@ -416,7 +417,7 @@ TEST_P(RightMultiplyTest, _) {
       options.num_row_blocks = 2 * num_blocks;
       options.min_row_block_size = kMinBlockSize;
       options.max_row_block_size = kMaxBlockSize;
-      options.block_density = std::max(0.5, RandDouble());
+      options.block_density = distribution(generator);
       options.storage_type = ::testing::get<0>(param);
       std::unique_ptr<CompressedRowSparseMatrix> matrix =
           CompressedRowSparseMatrix::CreateRandomMatrix(options);
@@ -473,7 +474,8 @@ TEST_P(LeftMultiplyTest, _) {
   const int kMinBlockSize = 1;
   const int kMaxBlockSize = 5;
   const int kNumTrials = 10;
-
+  std::default_random_engine generator;
+  std::uniform_real_distribution<double> distribution(0.5, 1.0);
   for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
        ++num_blocks) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
@@ -485,7 +487,7 @@ TEST_P(LeftMultiplyTest, _) {
       options.num_row_blocks = 2 * num_blocks;
       options.min_row_block_size = kMinBlockSize;
       options.max_row_block_size = kMaxBlockSize;
-      options.block_density = std::max(0.5, RandDouble());
+      options.block_density = distribution(generator);
       options.storage_type = ::testing::get<0>(param);
       std::unique_ptr<CompressedRowSparseMatrix> matrix =
           CompressedRowSparseMatrix::CreateRandomMatrix(options);
@@ -542,7 +544,8 @@ TEST_P(SquaredColumnNormTest, _) {
   const int kMinBlockSize = 1;
   const int kMaxBlockSize = 5;
   const int kNumTrials = 10;
-
+  std::default_random_engine generator;
+  std::uniform_real_distribution<double> distribution(0.5, 1.0);
   for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
        ++num_blocks) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
@@ -554,7 +557,7 @@ TEST_P(SquaredColumnNormTest, _) {
       options.num_row_blocks = 2 * num_blocks;
       options.min_row_block_size = kMinBlockSize;
       options.max_row_block_size = kMaxBlockSize;
-      options.block_density = std::max(0.5, RandDouble());
+      options.block_density = distribution(generator);
       options.storage_type = ::testing::get<0>(param);
       std::unique_ptr<CompressedRowSparseMatrix> matrix =
           CompressedRowSparseMatrix::CreateRandomMatrix(options);
