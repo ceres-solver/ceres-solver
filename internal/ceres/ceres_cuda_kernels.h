@@ -69,6 +69,36 @@ void CudaDtDxpy(double* y,
                 const int size,
                 cudaStream_t stream);
 
+// Convert a triplet sparse (COO in Cuda parlance) matrix to a CSR matrix.
+// The input triplet sparse matrix is represented with three arrays:
+//   - row_indices: row indices of the triplet sparse matrix.
+//   - col_indices: column indices of the triplet sparse matrix.
+//   - values: values of the triplet sparse matrix.
+// The output CSR matrix is represented with three arrays:
+//   - csr_row_indices: row offsets of the CSR matrix.
+//   - csr_col_indices: column indices of the CSR matrix.
+//   - values: values of the CSR matrix.
+// All arrays must already be on GPU memory.
+void TripletSparseMatrixToCSR(const int num_rows,
+                              const int num_cols,
+                              const int num_nonzeros,
+                              const int32_t* row_indices,
+                              const int32_t* col_indices,
+                              const double* values,
+                              int32_t* csr_row_indices,
+                              int32_t* csr_col_indices,
+                              double* csr_values,
+                              cudaStream_t stream);
+
+// Permute the input vector by the permutation vector. The temp array must be of
+// the same size as the input array. All arrays must be on GPU.
+void PermuteVector(int size,
+                   const int32_t* permutation,
+                   const double* input,
+                   double* output,
+                   double* temp,
+                   cudaStream_t stream);
+
 }  // namespace ceres::internal
 
 #endif  // CERES_NO_CUDA

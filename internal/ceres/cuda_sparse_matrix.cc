@@ -41,9 +41,11 @@
 
 #include "ceres/internal/export.h"
 #include "ceres/block_sparse_matrix.h"
+#include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/types.h"
 #include "ceres/context_impl.h"
+#include "ceres/wall_time.h"
 
 #ifndef CERES_NO_CUDA
 
@@ -75,6 +77,31 @@ void CudaSparseMatrix::CopyFrom(const CRSMatrix& crs_matrix) {
   num_rows_ = crs_matrix.num_rows;
   num_cols_ = crs_matrix.num_cols;
   num_nonzeros_ = crs_matrix.values.size();
+  DestroyDescriptor();
+  cusparseCreateCsr(&csr_descr_,
+                    num_rows_,
+                    num_cols_,
+                    num_nonzeros_,
+                    csr_row_indices_.data(),
+                    csr_col_indices_.data(),
+                    csr_values_.data(),
+                    CUSPARSE_INDEX_32I,
+                    CUSPARSE_INDEX_32I,
+                    CUSPARSE_INDEX_BASE_ZERO,
+                    CUDA_R_64F);
+}
+
+void CudaSparseMatrix::CopyFrom(const CompressedRowSparseMatrix& crs_matrix) {
+  num_rows_ = crs_matrix.num_rows();
+  num_cols_ = crs_matrix.num_cols();
+  num_nonzeros_ = crs_matrix.num_nonzeros();
+  csr_row_indices_.CopyFromCpuAsync(
+      crs_matrix.rows(), num_rows_ + 1, context_->stream_);
+  csr_col_indices_.CopyFromCpuAsync(
+      crs_matrix.cols(), num_nonzeros_, context_->stream_);
+  csr_values_.CopyFromCpuAsync(
+      crs_matrix.values(), num_nonzeros_, context_->stream_);
+  DestroyDescriptor();
   cusparseCreateCsr(&csr_descr_,
                     num_rows_,
                     num_cols_,
@@ -95,6 +122,7 @@ void CudaSparseMatrix::Resize(int num_rows, int num_cols, int num_nnz) {
   csr_col_indices_.Reserve(num_nnz);
   csr_values_.Reserve(num_nnz);
   num_nonzeros_ = num_nnz;
+  DestroyDescriptor();
   cusparseCreateCsr(&csr_descr_,
                     num_rows_,
                     num_cols_,
@@ -114,13 +142,21 @@ void CudaSparseMatrix::CopyFrom(const BlockSparseMatrix& bs_matrix) {
   CopyFrom(crs_matrix);
 }
 
-void CudaSparseMatrix::CopyFromAndTranspose(const CudaSparseMatrix& other) {
+void CudaSparseMatrix::DestroyDescriptor() {
+  if (csr_descr_) {
+    CHECK_EQ(cusparseDestroySpMat(csr_descr_), CUSPARSE_STATUS_SUCCESS);
+    csr_descr_ = nullptr;
+  }
+}
+
+void CudaSparseMatrix::CopyFromTranspose(const CudaSparseMatrix& other) {
   num_rows_ = other.num_cols_;
   num_cols_ = other.num_rows_;
   csr_values_.Reserve(other.csr_values_.size());
   csr_row_indices_.Reserve(num_rows_ + 1);
   csr_col_indices_.Reserve(csr_values_.size());
   num_nonzeros_ = other.num_nonzeros_;
+  DestroyDescriptor();
   cusparseCreateCsr(&csr_descr_,
                     num_rows_,
                     num_cols_,
@@ -168,6 +204,128 @@ void CudaSparseMatrix::CopyFromAndTranspose(const CudaSparseMatrix& other) {
       CUSPARSE_CSR2CSC_ALG1,
       buffer.data()), CUSPARSE_STATUS_SUCCESS);
   cudaDeviceSynchronize();
+}
+
+void CudaSparseMatrix::Multiply(const CudaSparseMatrix& A,
+                                const CudaSparseMatrix& B) {
+  printf("A has %d nonzeros\n", A.num_nonzeros());
+  printf("B has %d nonzeros\n", B.num_nonzeros());
+  // Create a temporary descriptor for the matrix M -- we don't yet know the
+  // number of nonzeros, so we just set it to 1 to allocate some non-zero
+  // memory.
+  num_rows_ = A.num_rows_;
+  num_cols_ = B.num_cols_;
+  printf("Resizing M to %d x %d\n", num_rows_, num_cols_);
+  DestroyDescriptor();
+  CHECK_EQ(cusparseCreateCsr(
+      &csr_descr_,
+      num_rows_,
+      num_cols_,
+      0,
+      nullptr,
+      nullptr,
+      nullptr,
+      CUSPARSE_INDEX_32I,
+      CUSPARSE_INDEX_32I,
+      CUSPARSE_INDEX_BASE_ZERO,
+      CUDA_R_64F), CUSPARSE_STATUS_SUCCESS);
+  const double alpha = 1.0;
+  const double beta = 0.0;
+  size_t buffer1_size = 0;
+  cusparseSpGEMMDescr_t spgemm_desc;
+  CHECK_EQ(cusparseSpGEMM_createDescr(&spgemm_desc), CUSPARSE_STATUS_SUCCESS);
+  CHECK_EQ(cusparseSpGEMM_workEstimation(
+      context_->cusparse_handle_,
+      CUSPARSE_OPERATION_NON_TRANSPOSE,
+      CUSPARSE_OPERATION_NON_TRANSPOSE,
+      &alpha,
+      A.descr(),
+      B.descr(),
+      &beta,
+      csr_descr_,
+      CUDA_R_64F,
+      CUSPARSE_SPGEMM_DEFAULT,
+      spgemm_desc,
+      &buffer1_size,
+      nullptr), CUSPARSE_STATUS_SUCCESS);
+  printf("buffer1_size = %lu\n", buffer1_size);
+
+  CudaBuffer<uint8_t> buffer1;
+  buffer1.Reserve(buffer1_size);
+  CHECK_EQ(cusparseSpGEMM_workEstimation(
+      context_->cusparse_handle_,
+      CUSPARSE_OPERATION_NON_TRANSPOSE,
+      CUSPARSE_OPERATION_NON_TRANSPOSE,
+      &alpha,
+      A.descr(),
+      B.descr(),
+      &beta,
+      csr_descr_,
+      CUDA_R_64F,
+      CUSPARSE_SPGEMM_DEFAULT,
+      spgemm_desc,
+      &buffer1_size,
+      buffer1.data()), CUSPARSE_STATUS_SUCCESS);
+
+  size_t buffer2_size = 0;
+  CHECK_EQ(cusparseSpGEMM_compute(
+      context_->cusparse_handle_,
+      CUSPARSE_OPERATION_NON_TRANSPOSE,
+      CUSPARSE_OPERATION_NON_TRANSPOSE,
+      &alpha,
+      A.descr(),
+      B.descr(),
+      &beta,
+      csr_descr_,
+      CUDA_R_64F,
+      CUSPARSE_SPGEMM_DEFAULT,
+      spgemm_desc,
+      &buffer2_size,
+      nullptr), CUSPARSE_STATUS_SUCCESS);
+  printf("buffer2_size = %lu\n", buffer2_size);
+
+  // Allocate at most 1 GB of memory for the operation.
+  buffer2_size = std::min<size_t>(buffer2_size, 1lu << 34);
+  static CudaBuffer<uint8_t> buffer2;
+  buffer2.Reserve(buffer2_size);
+  CHECK_EQ(cusparseSpGEMM_compute(
+      context_->cusparse_handle_,
+      CUSPARSE_OPERATION_NON_TRANSPOSE,
+      CUSPARSE_OPERATION_NON_TRANSPOSE,
+      &alpha,
+      A.descr(),
+      B.descr(),
+      &beta,
+      csr_descr_,
+      CUDA_R_64F,
+      CUSPARSE_SPGEMM_DEFAULT,
+      spgemm_desc,
+      &buffer2_size,
+      buffer2.data()), CUSPARSE_STATUS_SUCCESS);
+
+  int64_t new_num_rows, new_num_cols, new_nnz;
+  CHECK_EQ(cusparseSpMatGetSize(
+      csr_descr_,
+      &new_num_rows,
+      &new_num_cols,
+      &new_nnz), CUSPARSE_STATUS_SUCCESS);
+  printf("new_num_rows = %d\n", int(new_num_rows));
+  printf("new_num_cols = %d\n", int(new_num_cols));
+  printf("new_nnz = %d\n", int(new_nnz));
+  // CHECK_NE(new_nnz, 0);
+  Resize(new_num_rows, new_num_cols, new_nnz);
+  CHECK_EQ(cusparseSpGEMM_copy(
+      context_->cusparse_handle_,
+      CUSPARSE_OPERATION_NON_TRANSPOSE,
+      CUSPARSE_OPERATION_NON_TRANSPOSE,
+      &alpha,
+      A.descr(),
+      B.descr(),
+      &beta,
+      csr_descr_,
+      CUDA_R_64F,
+      CUSPARSE_SPGEMM_DEFAULT,
+      spgemm_desc), CUSPARSE_STATUS_SUCCESS);
 }
 
 void CudaSparseMatrix::CopyFrom(const TripletSparseMatrix& ts_matrix) {

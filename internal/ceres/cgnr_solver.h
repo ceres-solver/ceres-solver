@@ -75,7 +75,7 @@ class CERES_NO_EXPORT CgnrSolver final : public BlockSparseMatrixSolver {
 };
 
 #ifndef CERES_NO_CUDA
-class CERES_NO_EXPORT CudaCgnrSolver final : public BlockSparseMatrixSolver {
+class CERES_NO_EXPORT CudaCgnrSolver final : public CompressedRowSparseMatrixSolver {
  public:
   static std::unique_ptr<CudaCgnrSolver> Create(
       LinearSolver::Options options, std::string* error);
@@ -83,7 +83,7 @@ class CERES_NO_EXPORT CudaCgnrSolver final : public BlockSparseMatrixSolver {
   void operator=(const CudaCgnrSolver&) = delete;
   ~CudaCgnrSolver() override;
 
-  Summary SolveImpl(BlockSparseMatrix* A,
+  Summary SolveImpl(CompressedRowSparseMatrix* A,
                     const double* b,
                     const LinearSolver::PerSolveOptions& per_solve_options,
                     double* x) final;

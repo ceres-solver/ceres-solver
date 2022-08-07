@@ -28,9 +28,11 @@
 //
 // Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
 
+#include <stdint.h>
 #include <stdio.h>
 
 #include "cuda_runtime.h"
+#include "glog/logging.h"
 
 namespace ceres::internal {
 
@@ -127,5 +129,30 @@ void CudaDtDxpy(double* y,
   CudaDtDxpyKernel<<<num_blocks, kCudaBlockSize, 0, stream>>>(
       y, D, x, size);
 }
+
+__global__ void PermuteVectorKernel(const int size,
+                                    const int* __restrict__ permutation,
+                                    const double* __restrict__ input,
+                                    double* __restrict__ temp) {
+  const int i = blockIdx.x * blockDim.x + threadIdx.x;
+  if (i < size) {
+    temp[i] = input[permutation[i]];
+  }
+}
+
+void PermuteVector(int size,
+                   const int32_t* permutation,
+                   const double* input,
+                   double* output,
+                   double* temp,
+                   cudaStream_t stream) {
+  const int num_blocks = (size + kCudaBlockSize - 1) / kCudaBlockSize;
+  PermuteVectorKernel<<<num_blocks, kCudaBlockSize, 0, stream>>>(
+      size, permutation, input, temp);
+  CHECK_EQ(cudaMemcpyAsync(
+      output, temp, size * sizeof(double), cudaMemcpyDeviceToDevice, stream),
+          cudaSuccess);
+}
+
 
 } // namespace ceres_cuda_kernels

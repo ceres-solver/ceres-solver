@@ -68,7 +68,7 @@
 // clang-format makes the gflags definitions too verbose
 // clang-format off
 
-DEFINE_string(input, "", "Input File name");
+DEFINE_string(input, "./data/problem-16-22106-pre.txt", "Input File name");
 DEFINE_string(trust_region_strategy, "levenberg_marquardt",
               "Options are: levenberg_marquardt, dogleg.");
 DEFINE_string(dogleg, "traditional_dogleg", "Options are: traditional_dogleg,"

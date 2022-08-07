@@ -42,6 +42,7 @@
 #include <string>
 
 #include "ceres/block_sparse_matrix.h"
+#include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/export.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -74,20 +75,27 @@ class CERES_NO_EXPORT CudaSparseMatrix : public CudaLinearOperator {
   void CopyFrom(const CRSMatrix& crs_matrix);
   void CopyFrom(const BlockSparseMatrix& bs_matrix);
   void CopyFrom(const TripletSparseMatrix& ts_matrix);
+  void CopyFrom(const CompressedRowSparseMatrix& crs_matrix);
 
   // Set this matrix as the transpose of the other given matrix.
-  void CopyFromAndTranspose(const CudaSparseMatrix& other);
+  void CopyFromTranspose(const CudaSparseMatrix& other);
 
   const cusparseSpMatDescr_t& descr() const { return csr_descr_; }
 
   void Resize(int num_rows, int num_cols, int num_nnz);
+
+  // M = A * B.
+  void Multiply(const CudaSparseMatrix& A, const CudaSparseMatrix& B);
 
  private:
   // Disable copy and assignment.
   CudaSparseMatrix(const CudaSparseMatrix&) = delete;
   CudaSparseMatrix& operator=(const CudaSparseMatrix&) = delete;
 
-  // Convenience wrapper around cusparseSpMV to compute y = y + op(A)x.
+  // Destroy the cuSparse matrix descriptor if it exists.
+  void DestroyDescriptor();
+
+  // y = y + op(M)x.
   void SpMv(cusparseOperation_t op, const CudaVector& x, CudaVector* y);
 
   int num_rows_ = 0;

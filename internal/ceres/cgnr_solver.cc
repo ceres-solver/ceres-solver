@@ -35,6 +35,7 @@
 
 #include "ceres/block_jacobi_preconditioner.h"
 #include "ceres/cgnr_linear_operator.h"
+#include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/conjugate_gradients_solver.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
@@ -153,7 +154,7 @@ std::unique_ptr<CudaCgnrSolver> CudaCgnrSolver::Create(
 }
 
 LinearSolver::Summary CudaCgnrSolver::SolveImpl(
-    BlockSparseMatrix* A,
+    CompressedRowSparseMatrix* A,
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {
@@ -185,12 +186,13 @@ LinearSolver::Summary CudaCgnrSolver::SolveImpl(
   cuda_D.CopyFrom(per_solve_options.D, A->num_cols());
   event_logger.AddEvent("b CPU to GPU Transfer");
 
-  std::unique_ptr<CudaPreconditioner> preconditioner(
-      new CudaIncompleteCholeskyPreconditioner);
-  std::string message;
-
-  CHECK(preconditioner->Init(options_.context, &message));
-  CHECK(preconditioner->Update(cuda_A, cuda_D));
+  std::unique_ptr<CudaPreconditioner> preconditioner(nullptr);
+  if (options_.preconditioner_type == INCOMPLETE_CHOLESKY) {
+    preconditioner = std::make_unique<CudaIncompleteCholeskyPreconditioner>();
+    std::string message;
+    CHECK(preconditioner->Init(options_.context, &message));
+    CHECK(preconditioner->Update(cuda_A, cuda_D));
+  }
 
   event_logger.AddEvent("Preconditioner Update");
   // Form z = Atb.
@@ -212,7 +214,7 @@ LinearSolver::Summary CudaCgnrSolver::SolveImpl(
   if (kDebug) printf("Solve (AtA + DtD)x = z (= Atb)\n");
 
   summary = solver_->Solve(
-      &lhs_, nullptr, cuda_z, cg_per_solve_options, &cuda_x);
+      &lhs_, preconditioner.get(), cuda_z, cg_per_solve_options, &cuda_x);
   cuda_x.CopyTo(x);
   event_logger.AddEvent("Solve");
   return summary;

@@ -134,6 +134,8 @@ enum PreconditionerType {
   // residual blocks approximate the non-linear least squares
   // problem.
   SUBSET,
+
+  INCOMPLETE_CHOLESKY,
 };
 
 enum VisibilityClusteringType {
