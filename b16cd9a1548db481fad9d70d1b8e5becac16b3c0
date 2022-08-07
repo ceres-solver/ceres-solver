@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f5816c4_b3215a74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-07T00:41:51Z",
+      "side": 1,
+      "message": "minor nit in the test otherwise good to go.",
+      "revId": "b16cd9a1548db481fad9d70d1b8e5becac16b3c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87eafcd3_5a69d41f",
+        "filename": "internal/ceres/cuda_kernels_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-07T00:41:51Z",
+      "side": 1,
+      "message": "these values are representable in double as well as floats exactly no, so you not really know if the conversion is successful.",
+      "range": {
+        "startLine": 47,
+        "startChar": 14,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "b16cd9a1548db481fad9d70d1b8e5becac16b3c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
