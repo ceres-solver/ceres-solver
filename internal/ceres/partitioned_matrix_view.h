@@ -54,7 +54,7 @@ namespace ceres::internal {
 
 // Given generalized bi-partite matrix A = [E F], with the same block
 // structure as required by the Schur complement based solver, found
-// in explicit_schur_complement_solver.h, provide access to the
+// in schur_complement_solver.h, provide access to the
 // matrices E and F and their outer products E'E and F'F with
 // themselves.
 //
