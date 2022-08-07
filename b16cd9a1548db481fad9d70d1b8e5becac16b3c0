@@ -39,6 +39,30 @@
       },
       "revId": "b16cd9a1548db481fad9d70d1b8e5becac16b3c0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ceb2924_fd308c0d",
+        "filename": "internal/ceres/cuda_kernels_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T03:37:41Z",
+      "side": 1,
+      "message": "Added a new test to check for this:\n```\nTEST(CudaFP64ToFP32, NumericallyExtremeValues)\n```",
+      "parentUuid": "87eafcd3_5a69d41f",
+      "range": {
+        "startLine": 47,
+        "startChar": 14,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "b16cd9a1548db481fad9d70d1b8e5becac16b3c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
