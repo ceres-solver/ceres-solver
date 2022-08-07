@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "628a4f89_477a48a9",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T03:03:00Z",
+      "side": 1,
+      "message": "Ah, good catch!",
+      "parentUuid": "5e79a7d3_d2c6efaa",
+      "revId": "87641ce2fb4825bd761df9a7b2460f7bfbf4ca33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf50c23b_324976a1",
@@ -48,6 +66,24 @@
       "writtenOn": "2022-08-07T00:37:08Z",
       "side": 1,
       "message": "std::make_unique\u003cTripletSparseMatrix\u003e(num_rows, num_cols, rows, cols, values); is better.",
+      "revId": "87641ce2fb4825bd761df9a7b2460f7bfbf4ca33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "253fbb91_cf0f2a2b",
+        "filename": "internal/ceres/triplet_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T03:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf50c23b_324976a1",
       "revId": "87641ce2fb4825bd761df9a7b2460f7bfbf4ca33",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
