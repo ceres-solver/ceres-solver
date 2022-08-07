@@ -34,9 +34,9 @@
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
+#include <random>
 
 #include "ceres/internal/eigen.h"
-#include "ceres/random.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -160,18 +160,19 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximation) {
   // and hessians.
   Matrix c_hess(2, 2);
   Vector c_grad(2);
-
-  srand(5);
+  std::default_random_engine generator;
+  std::uniform_real_distribution<double> distribution(0.0, 1.0);
   for (int iter = 0; iter < 10000; ++iter) {
     // Initialize the jacobian and residual.
-    for (double& jacobian_entry : jacobian) jacobian_entry = RandDouble();
-    for (double& residual : residuals) residual = RandDouble();
+    for (double& jacobian_entry : jacobian)
+      jacobian_entry = distribution(generator);
+    for (double& residual : residuals) residual = distribution(generator);
 
     const double sq_norm = res.dot(res);
 
     rho[0] = sq_norm;
-    rho[1] = RandDouble();
-    rho[2] = 2.0 * RandDouble() - 1.0;
+    rho[1] = distribution(generator);
+    rho[2] = 2.0 * distribution(generator) - 1.0;
 
     // If rho[2] > 0, then the curvature correction to the correction
     // and the gauss newton approximation will match. Otherwise, we
@@ -227,10 +228,12 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximationZeroResidual) {
   Matrix c_hess(2, 2);
   Vector c_grad(2);
 
-  srand(5);
+  std::default_random_engine generator;
+  std::uniform_real_distribution<double> distribution(0.0, 1.0);
   for (int iter = 0; iter < 10000; ++iter) {
     // Initialize the jacobian.
-    for (double& jacobian_entry : jacobian) jacobian_entry = RandDouble();
+    for (double& jacobian_entry : jacobian)
+      jacobian_entry = distribution(generator);
 
     // Zero residuals
     res.setZero();
@@ -238,8 +241,8 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximationZeroResidual) {
     const double sq_norm = res.dot(res);
 
     rho[0] = sq_norm;
-    rho[1] = RandDouble();
-    rho[2] = 2 * RandDouble() - 1.0;
+    rho[1] = distribution(generator);
+    rho[2] = 2 * distribution(generator) - 1.0;
 
     // Ground truth values.
     g_res = sqrt(rho[1]) * res;

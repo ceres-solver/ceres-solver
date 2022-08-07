@@ -33,6 +33,7 @@
 #include <cmath>
 #include <cstdint>
 #include <memory>
+#include <random>
 #include <vector>
 
 #include "ceres/cost_function.h"
@@ -41,7 +42,6 @@
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
-#include "ceres/random.h"
 #include "ceres/residual_block.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
@@ -70,12 +70,14 @@ class TestTerm : public CostFunction {
   // The constructor of this function needs to know the number
   // of blocks desired, and the size of each block.
   TestTerm(int arity, int const* dim) : arity_(arity) {
+    std::default_random_engine generator;
+    std::uniform_real_distribution<double> distribution(-1.0, 1.0);
     // Make 'arity' random vectors.
     a_.resize(arity_);
     for (int j = 0; j < arity_; ++j) {
       a_[j].resize(dim[j]);
       for (int u = 0; u < dim[j]; ++u) {
-        a_[j][u] = 2.0 * RandDouble() - 1.0;
+        a_[j][u] = distribution(generator);
       }
     }
 
@@ -130,18 +132,18 @@ class TestTerm : public CostFunction {
 };
 
 TEST(GradientCheckingCostFunction, ResidualsAndJacobiansArePreservedTest) {
-  srand(5);
-
   // Test with 3 blocks of size 2, 3 and 4.
   int const arity = 3;
   int const dim[arity] = {2, 3, 4};
 
   // Make a random set of blocks.
   vector<double*> parameters(arity);
+  std::default_random_engine generator;
+  std::uniform_real_distribution<double> distribution(-1.0, 1.0);
   for (int j = 0; j < arity; ++j) {
     parameters[j] = new double[dim[j]];
     for (int u = 0; u < dim[j]; ++u) {
-      parameters[j][u] = 2.0 * RandDouble() - 1.0;
+      parameters[j][u] = distribution(generator);
     }
   }
 
@@ -187,18 +189,18 @@ TEST(GradientCheckingCostFunction, ResidualsAndJacobiansArePreservedTest) {
 }
 
 TEST(GradientCheckingCostFunction, SmokeTest) {
-  srand(5);
-
   // Test with 3 blocks of size 2, 3 and 4.
   int const arity = 3;
   int const dim[arity] = {2, 3, 4};
 
   // Make a random set of blocks.
   vector<double*> parameters(arity);
+  std::default_random_engine generator;
+  std::uniform_real_distribution<double> distribution(-1.0, 1.0);
   for (int j = 0; j < arity; ++j) {
     parameters[j] = new double[dim[j]];
     for (int u = 0; u < dim[j]; ++u) {
-      parameters[j][u] = 2.0 * RandDouble() - 1.0;
+      parameters[j][u] = distribution(generator);
     }
   }
 
