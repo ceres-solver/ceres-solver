@@ -59,7 +59,6 @@ namespace ceres::internal {
 class CERES_NO_EXPORT CudaSparseMatrix : public CudaLinearOperator {
  public:
   CudaSparseMatrix() {};
-  // ~CudaSparseMatrix() = default;
 
   bool Init(ContextImpl* context, std::string* message);
 
@@ -70,12 +69,18 @@ class CERES_NO_EXPORT CudaSparseMatrix : public CudaLinearOperator {
 
   int num_rows() const override { return num_rows_; }
   int num_cols() const override { return num_cols_; }
+  int num_nonzeros() const { return num_nonzeros_; }
 
   void CopyFrom(const CRSMatrix& crs_matrix);
   void CopyFrom(const BlockSparseMatrix& bs_matrix);
   void CopyFrom(const TripletSparseMatrix& ts_matrix);
 
+  // Set this matrix as the transpose of the other given matrix.
+  void CopyFromAndTranspose(const CudaSparseMatrix& other);
+
   const cusparseSpMatDescr_t& descr() const { return csr_descr_; }
+
+  void Resize(int num_rows, int num_cols, int num_nnz);
 
  private:
   // Disable copy and assignment.
@@ -87,6 +92,7 @@ class CERES_NO_EXPORT CudaSparseMatrix : public CudaLinearOperator {
 
   int num_rows_ = 0;
   int num_cols_ = 0;
+  int num_nonzeros_ = 0;
 
   // CSR row indices.
   CudaBuffer<int32_t> csr_row_indices_;

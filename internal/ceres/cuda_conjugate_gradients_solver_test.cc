@@ -43,30 +43,6 @@ namespace internal {
 
 #ifndef CERES_NO_CUDA
 
-namespace {
-
-class IdentityPreconditioner : public CudaLinearOperator {
- public:
-  explicit IdentityPreconditioner(int num_rows)
-      : num_rows_(num_rows) {}
-  ~IdentityPreconditioner() {}
-  int num_rows() const override { return num_rows_; }
-  int num_cols() const override { return num_rows_; }
-
-  void RightMultiply(const CudaVector& x, CudaVector* y) override {
-    y->CopyFrom(x);
-  }
-
-  void LeftMultiply(const CudaVector& x, CudaVector* y) override {
-    y->CopyFrom(x);
-  }
-
- private:
-  int num_rows_;
-};
-
-}  // namespace
-
 TEST(CudaConjugateGradientsSolver, InvalidOptionOnInit) {
   LinearSolver::Options options;
   auto solver = CudaConjugateGradientsSolver::Create(options);
@@ -103,9 +79,8 @@ TEST(CudaConjugateGradientsSolver, Solves3x3IdentitySystem) {
 
   LinearSolver::PerSolveOptions per_solve_options;
 
-  IdentityPreconditioner preconditioner(3);
   LinearSolver::Summary summary = solver->Solve(
-      &A, &preconditioner, b, per_solve_options, &x);
+      &A, nullptr, b, per_solve_options, &x);
   EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 
   Vector x_cpu;
@@ -149,9 +124,8 @@ TEST(CudaConjugateGradientsSolver, Solves3x3SymmetricSystem) {
 
   LinearSolver::PerSolveOptions per_solve_options;
   per_solve_options.r_tolerance = 1e-9;
-  IdentityPreconditioner preconditioner(3);
   LinearSolver::Summary summary = solver->Solve(
-      &A, &preconditioner, b, per_solve_options, &x);
+      &A, nullptr, b, per_solve_options, &x);
 
   EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 

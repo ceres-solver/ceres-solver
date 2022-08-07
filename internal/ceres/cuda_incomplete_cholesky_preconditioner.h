@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,59 +28,35 @@
 //
 // Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
 //
-// CUDA-Accelerated Conjugate Gradients based solver for positive
-// semidefinite linear systems.
+// A CUDA-accelerated incomplete Cholesky preconditioner.
 
-#ifndef CERES_INTERNAL_CUDA_CONJUGATE_GRADIENTS_SOLVER_H_
-#define CERES_INTERNAL_CUDA_CONJUGATE_GRADIENTS_SOLVER_H_
-
-// This include must come before any #ifndef check on Ceres compile options.
-// clang-format off
-#include "ceres/internal/config.h"
-// clang-format on
-
-#include <memory>
-
-#include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/export.h"
-#include "ceres/linear_solver.h"
+#ifndef CERES_INTERNAL_CUDA_INCOMPLETE_CHOLESKY_PRECONDITIONER_H_
+#define CERES_INTERNAL_CUDA_INCOMPLETE_CHOLESKY_PRECONDITIONER_H_
 
 #ifndef CERES_NO_CUDA
-#include "ceres/cuda_linear_operator.h"
 #include "ceres/cuda_preconditioner.h"
-#include "ceres/cuda_vector.h"
+#include "ceres/cuda_sparse_matrix.h"
 
 namespace ceres::internal {
 
-class CERES_NO_EXPORT CudaConjugateGradientsSolver {
+class CERES_NO_EXPORT CudaIncompleteCholeskyPreconditioner final :
+    public CudaPreconditioner {
  public:
-  static std::unique_ptr<CudaConjugateGradientsSolver> Create(
-      const LinearSolver::Options& options);
+  CudaIncompleteCholeskyPreconditioner() {}
+  // ~CudaIncompleteCholeskyPreconditioner() {}
 
-  bool Init(ContextImpl* context, std::string* message);
+  virtual bool Update(const CudaSparseMatrix& A, const CudaVector& D)
+      override;
 
-  LinearSolver::Summary Solve(
-      CudaLinearOperator* A,
-      CudaPreconditioner* preconditioner,
-      const CudaVector& b,
-      const LinearSolver::PerSolveOptions& per_solve_options,
-      CudaVector* x);
+  virtual void Apply(const CudaVector& x, CudaVector* y) override;
 
  private:
-  explicit CudaConjugateGradientsSolver(LinearSolver::Options options) :
-      options_(options) { }
-  const LinearSolver::Options options_;
-  ContextImpl* context_ = nullptr;
-
-  CudaVector r_;
-  CudaVector p_;
-  CudaVector z_;
-  CudaVector tmp_;
+  CudaSparseMatrix A_transpose_;
+  CudaSparseMatrix H_;
 };
 
 }  // namespace ceres::internal
 
-#include "ceres/internal/reenable_warnings.h"
+#endif // CERES_NO_CUDA
 
-#endif  // CERES_NO_CUDA
-#endif  // CERES_INTERNAL_CUDA_CONJUGATE_GRADIENTS_SOLVER_H_
+#endif  // CERES_INTERNAL_CUDA_INCOMPLETE_CHOLESKY_PRECONDITIONER_H_

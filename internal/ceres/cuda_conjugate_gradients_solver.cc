@@ -77,10 +77,11 @@ bool CudaConjugateGradientsSolver::Init(
 
 LinearSolver::Summary CudaConjugateGradientsSolver::Solve(
     CudaLinearOperator* A_ptr,
-    CudaLinearOperator* preconditioner,
+    CudaPreconditioner* preconditioner,
     const CudaVector& b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     CudaVector* x_ptr) {
+  static const bool kDebug = false;
   CHECK(A_ptr != nullptr);
   CHECK(x_ptr != nullptr);
   CudaVector& x = *x_ptr;
@@ -95,7 +96,7 @@ LinearSolver::Summary CudaConjugateGradientsSolver::Solve(
   summary.message = "Maximum number of iterations reached.";
   summary.num_iterations = 0;
 
-  printf("Starting CG solver\n");
+  if (kDebug) printf("Starting CG solver\n");
   const double norm_b = b.norm();
   if (norm_b == 0.0) {
     x.setZero();
@@ -106,22 +107,23 @@ LinearSolver::Summary CudaConjugateGradientsSolver::Solve(
 
   const double tol_r = per_solve_options.r_tolerance * norm_b;
 
-  printf("r = 0\n");
+  if (kDebug) printf("r = 0\n");
   // r = 0.
   r_.setZero();
   // r = A * x.
   A.RightMultiply(x, &r_);
-  printf("r = A * x\n");
+  if (kDebug) printf("r = A * x\n");
   // r = b - r
   //   = b - A * x.
   r_.Axpby(1.0, b, -1.0);
-  printf("r = b - A * x\n");
+  if (kDebug) printf("r = b - A * x\n");
 
   double norm_r = r_.norm();
   if (options_.min_num_iterations == 0 && norm_r <= tol_r) {
     summary.termination_type = LinearSolverTerminationType::SUCCESS;
     summary.message =
         StringPrintf("Convergence. |r_| = %e <= %e.", norm_r, tol_r);
+    if (kDebug) printf("%s\n", summary.message.c_str());
     return summary;
   }
 
@@ -131,21 +133,24 @@ LinearSolver::Summary CudaConjugateGradientsSolver::Solve(
   // tmp = r
   //     = b - A * x.
   tmp_.CopyFrom(r_);
-  printf("tmp = r\n");
+  if (kDebug) printf("tmp = r\n");
   // tmp = b + tmp.
   //     = 2 * b + A * x.
   tmp_.Axpy(1.0, b);
-  printf("tmp = 2 * b + A * x\n");
+  if (kDebug) printf("tmp = 2 * b + A * x\n");
   // Q0 = x'Ax - 2 * b'x.
   double Q0 = -1.0 * x.dot(tmp_);
-  printf("Q0 = x'Ax - 2 * b'x\n");
+  if (kDebug) printf("Q0 = x'Ax - 2 * b'x\n");
 
   for (summary.num_iterations = 1;; ++summary.num_iterations) {
-    printf("Iteration %d\n", summary.num_iterations);
+    if (kDebug) {
+      printf("Iteration %3d ||r|| = %20f\n",
+             summary.num_iterations,
+             norm_r);
+    }
     // Apply preconditioner
     if (preconditioner != nullptr) {
-      z_.setZero();
-      preconditioner->RightMultiply(r_, &z_);
+      preconditioner->Apply(r_, &z_);
     } else {
       z_.CopyFrom(r_);
     }
@@ -156,6 +161,7 @@ LinearSolver::Summary CudaConjugateGradientsSolver::Solve(
       summary.termination_type = LinearSolverTerminationType::FAILURE;
       summary.message =
           StringPrintf("Numerical failure. rho = r_'z_ = %e.", rho);
+      if (kDebug) printf("%s\n", summary.message.c_str());
       break;
     }
 
@@ -171,6 +177,7 @@ LinearSolver::Summary CudaConjugateGradientsSolver::Solve(
             beta,
             rho,
             last_rho);
+        if (kDebug) printf("%s\n", summary.message.c_str());
         break;
       }
       // p = z + beta * p.
@@ -190,6 +197,7 @@ LinearSolver::Summary CudaConjugateGradientsSolver::Solve(
           pq,
           p_.norm(),
           q.norm());
+      if (kDebug) printf("%s\n", summary.message.c_str());
       break;
     }
 
@@ -201,6 +209,7 @@ LinearSolver::Summary CudaConjugateGradientsSolver::Solve(
           alpha,
           rho,
           pq);
+      if (kDebug) printf("%s\n", summary.message.c_str());
       break;
     }
 
@@ -268,6 +277,7 @@ LinearSolver::Summary CudaConjugateGradientsSolver::Solve(
                        zeta,
                        per_solve_options.q_tolerance,
                        r_.norm());
+      if (kDebug) printf("%s\n", summary.message.c_str());
       break;
     }
     Q0 = Q1;
@@ -282,10 +292,12 @@ LinearSolver::Summary CudaConjugateGradientsSolver::Solve(
                        summary.num_iterations,
                        norm_r,
                        tol_r);
+      if (kDebug) printf("%s\n", summary.message.c_str());
       break;
     }
 
     if (summary.num_iterations >= options_.max_num_iterations) {
+      if (kDebug) printf("%s\n", summary.message.c_str());
       break;
     }
   }

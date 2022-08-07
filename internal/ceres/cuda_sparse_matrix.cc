@@ -56,13 +56,12 @@
 namespace ceres::internal {
 
 bool CudaSparseMatrix::Init(ContextImpl* context, std::string* message) {
-  CHECK(message != nullptr);
   if (context == nullptr) {
-    *message = "CudaVector::Init: context is nullptr";
+    if (message) *message = "CudaVector::Init: context is nullptr";
     return false;
   }
   if (!context->InitCUDA(message)) {
-    *message = "CudaVector::Init: context->InitCUDA() failed";
+    if (message) *message = "CudaVector::Init: context->InitCUDA() failed";
     return false;
   }
   context_ = context;
@@ -75,10 +74,31 @@ void CudaSparseMatrix::CopyFrom(const CRSMatrix& crs_matrix) {
   csr_values_.CopyFromCpuAsync(crs_matrix.values, context_->stream_);
   num_rows_ = crs_matrix.num_rows;
   num_cols_ = crs_matrix.num_cols;
+  num_nonzeros_ = crs_matrix.values.size();
   cusparseCreateCsr(&csr_descr_,
                     num_rows_,
                     num_cols_,
-                    crs_matrix.values.size(),
+                    num_nonzeros_,
+                    csr_row_indices_.data(),
+                    csr_col_indices_.data(),
+                    csr_values_.data(),
+                    CUSPARSE_INDEX_32I,
+                    CUSPARSE_INDEX_32I,
+                    CUSPARSE_INDEX_BASE_ZERO,
+                    CUDA_R_64F);
+}
+
+void CudaSparseMatrix::Resize(int num_rows, int num_cols, int num_nnz) {
+  num_rows_ = num_rows;
+  num_cols_ = num_cols;
+  csr_row_indices_.Reserve(num_rows + 1);
+  csr_col_indices_.Reserve(num_nnz);
+  csr_values_.Reserve(num_nnz);
+  num_nonzeros_ = num_nnz;
+  cusparseCreateCsr(&csr_descr_,
+                    num_rows_,
+                    num_cols_,
+                    num_nonzeros_,
                     csr_row_indices_.data(),
                     csr_col_indices_.data(),
                     csr_values_.data(),
@@ -92,6 +112,62 @@ void CudaSparseMatrix::CopyFrom(const BlockSparseMatrix& bs_matrix) {
   CRSMatrix crs_matrix;
   bs_matrix.ToCRSMatrix(&crs_matrix);
   CopyFrom(crs_matrix);
+}
+
+void CudaSparseMatrix::CopyFromAndTranspose(const CudaSparseMatrix& other) {
+  num_rows_ = other.num_cols_;
+  num_cols_ = other.num_rows_;
+  csr_values_.Reserve(other.csr_values_.size());
+  csr_row_indices_.Reserve(num_rows_ + 1);
+  csr_col_indices_.Reserve(csr_values_.size());
+  num_nonzeros_ = other.num_nonzeros_;
+  cusparseCreateCsr(&csr_descr_,
+                    num_rows_,
+                    num_cols_,
+                    num_nonzeros_,
+                    csr_row_indices_.data(),
+                    csr_col_indices_.data(),
+                    csr_values_.data(),
+                    CUSPARSE_INDEX_32I,
+                    CUSPARSE_INDEX_32I,
+                    CUSPARSE_INDEX_BASE_ZERO,
+                    CUDA_R_64F);
+  size_t buffer_size = 0;
+  CHECK_EQ(cusparseCsr2cscEx2_bufferSize(
+      context_->cusparse_handle_,
+      other.num_rows_,
+      other.num_cols_,
+      other.num_nonzeros_,
+      other.csr_values_.data(),
+      other.csr_row_indices_.data(),
+      other.csr_col_indices_.data(),
+      csr_values_.data(),
+      csr_row_indices_.data(),
+      csr_col_indices_.data(),
+      CUDA_R_64F,
+      CUSPARSE_ACTION_NUMERIC,
+      CUSPARSE_INDEX_BASE_ZERO,
+      CUSPARSE_CSR2CSC_ALG1,
+      &buffer_size), CUSPARSE_STATUS_SUCCESS);
+  CudaBuffer<uint8_t> buffer;
+  buffer.Reserve(buffer_size);
+  CHECK_EQ(cusparseCsr2cscEx2(
+      context_->cusparse_handle_,
+      other.num_rows_,
+      other.num_cols_,
+      other.num_nonzeros_,
+      other.csr_values_.data(),
+      other.csr_row_indices_.data(),
+      other.csr_col_indices_.data(),
+      csr_values_.data(),
+      csr_row_indices_.data(),
+      csr_col_indices_.data(),
+      CUDA_R_64F,
+      CUSPARSE_ACTION_NUMERIC,
+      CUSPARSE_INDEX_BASE_ZERO,
+      CUSPARSE_CSR2CSC_ALG1,
+      buffer.data()), CUSPARSE_STATUS_SUCCESS);
+  cudaDeviceSynchronize();
 }
 
 void CudaSparseMatrix::CopyFrom(const TripletSparseMatrix& ts_matrix) {

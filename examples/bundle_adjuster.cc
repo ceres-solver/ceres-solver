@@ -80,7 +80,7 @@ DEFINE_bool(inner_iterations, false, "Use inner iterations to non-linearly "
 DEFINE_string(blocks_for_inner_iterations, "automatic", "Options are: "
               "automatic, cameras, points, cameras,points, points,cameras");
 
-DEFINE_string(linear_solver, "sparse_schur", "Options are: "
+DEFINE_string(linear_solver, "cgnr", "Options are: "
               "sparse_schur, dense_schur, iterative_schur, sparse_normal_cholesky, "
               "dense_qr, dense_normal_cholesky and cgnr.");
 DEFINE_bool(explicit_schur_complement, false, "If using ITERATIVE_SCHUR "
@@ -109,8 +109,8 @@ DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
               "accuracy of each linear solve of the truncated newton step. "
               "Changing this parameter can affect solve performance.");
 
-DEFINE_int32(num_threads, 1, "Number of threads.");
-DEFINE_int32(num_iterations, 5, "Number of iterations.");
+DEFINE_int32(num_threads, 24, "Number of threads.");
+DEFINE_int32(num_iterations, 10, "Number of iterations.");
 DEFINE_double(max_solver_time, 1e32, "Maximum solve time in seconds.");
 DEFINE_bool(nonmonotonic_steps, false, "Trust region algorithm can use"
             " nonmonotic steps.");
@@ -338,6 +338,7 @@ void SolveProblem(const char* filename) {
   SetSolverOptionsFromFlags(&bal_problem, &options);
   options.gradient_tolerance = 1e-16;
   options.function_tolerance = 1e-16;
+  options.parameter_tolerance = 1e-16;
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";
@@ -356,6 +357,11 @@ int main(int argc, char** argv) {
   if (CERES_GET_FLAG(FLAGS_input).empty()) {
     LOG(ERROR) << "Usage: bundle_adjuster --input=bal_problem";
     return 1;
+  }
+  for (int i = 1; i < argc; ++i) {
+    if (strcmp(argv[i], "cpu") == 0) {
+      FLAGS_sparse_linear_algebra_library = "suite_sparse";
+    }
   }
 
   CHECK(CERES_GET_FLAG(FLAGS_use_quaternions) ||

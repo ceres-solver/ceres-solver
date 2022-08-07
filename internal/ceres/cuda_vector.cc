@@ -144,7 +144,6 @@ void CudaVector::CopyFrom(const CudaVector& x) {
 
 void CudaVector::setZero() {
   CHECK(data_.data() != nullptr);
-  printf("Calling setZero on CudaVector with size %d\n", num_rows_);
   CudaSetZeroFP64(data_.data(), num_rows_, context_->stream_);
 }
 

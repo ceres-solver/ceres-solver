@@ -762,8 +762,7 @@ string Solver::Summary::FullReport() const {
 
     if (linear_solver_type_used == SPARSE_NORMAL_CHOLESKY ||
         linear_solver_type_used == SPARSE_SCHUR ||
-        (linear_solver_type_used == CGNR &&
-         preconditioner_type_used == SUBSET) ||
+        linear_solver_type_used == CGNR ||
         (linear_solver_type_used == ITERATIVE_SCHUR &&
          (preconditioner_type_used == CLUSTER_JACOBI ||
           preconditioner_type_used == CLUSTER_TRIDIAGONAL))) {

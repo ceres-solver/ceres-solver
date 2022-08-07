@@ -67,25 +67,26 @@ class CERES_NO_EXPORT CudaCgnrLinearOperator final : public CudaLinearOperator {
   }
 
   void RightMultiply(const CudaVector& x, CudaVector* y) final {
+    static const bool kDebug = false;
     CHECK(A_ != nullptr);
     CHECK(y != nullptr);
     CHECK_EQ(y->num_rows(), A_->num_cols());
     // z = Ax
-    printf("Resizing z to %d\n", A_->num_rows());
+    if (kDebug) printf("Resizing z to %d\n", A_->num_rows());
     z_.resize(A_->num_rows());
-    printf("Setting z to zero\n");
+    if (kDebug) printf("Setting z to zero\n");
     z_.setZero();
-    printf("Right multiplying A\n");
+    if (kDebug) printf("Right multiplying A\n");
     A_->RightMultiply(x, &z_);
 
     // y = y + Atz
     //   = y + AtAx
-    printf("Right multiplying A^T\n");
+    if (kDebug) printf("Right multiplying A^T\n");
     A_->LeftMultiply(z_, y);
 
     // y = y + DtDx
     if (D_ != nullptr) {
-      printf("Right multiplying D^T\n");
+      if (kDebug) printf("Right multiplying D^T\n");
       y->DtDxpy(*D_, x);
     }
   }

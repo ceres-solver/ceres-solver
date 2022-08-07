@@ -41,6 +41,7 @@
 #include "ceres/random.h"
 #include "ceres/small_blas.h"
 #include "ceres/triplet_sparse_matrix.h"
+#include "ceres/wall_time.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
@@ -167,6 +168,7 @@ void BlockSparseMatrix::ScaleColumns(const double* scale) {
 }
 
 void BlockSparseMatrix::ToCRSMatrix(CRSMatrix* crs_matrix) const {
+  EventLogger event_logger("BlockSparseMatrix::ToCRSMatrix");
   CHECK(crs_matrix != nullptr);
   crs_matrix->num_rows = num_rows_;
   crs_matrix->num_cols = num_cols_;

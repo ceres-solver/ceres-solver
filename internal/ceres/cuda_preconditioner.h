@@ -28,11 +28,10 @@
 //
 // Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
 //
-// CUDA-Accelerated Conjugate Gradients based solver for positive
-// semidefinite linear systems.
+// Interface to CUDA preconditioners.
 
-#ifndef CERES_INTERNAL_CUDA_CONJUGATE_GRADIENTS_SOLVER_H_
-#define CERES_INTERNAL_CUDA_CONJUGATE_GRADIENTS_SOLVER_H_
+#ifndef CERES_INTERNAL_CUDA_PRECONDITIONER_H_
+#define CERES_INTERNAL_CUDA_PRECONDITIONER_H_
 
 // This include must come before any #ifndef check on Ceres compile options.
 // clang-format off
@@ -46,36 +45,48 @@
 #include "ceres/linear_solver.h"
 
 #ifndef CERES_NO_CUDA
-#include "ceres/cuda_linear_operator.h"
-#include "ceres/cuda_preconditioner.h"
+#include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
 
 namespace ceres::internal {
 
-class CERES_NO_EXPORT CudaConjugateGradientsSolver {
+class CERES_NO_EXPORT CudaPreconditioner {
  public:
-  static std::unique_ptr<CudaConjugateGradientsSolver> Create(
-      const LinearSolver::Options& options);
 
-  bool Init(ContextImpl* context, std::string* message);
+  bool Init(ContextImpl* context, std::string* message) {
+    if (context == nullptr) {
+      *message = "Context is nullptr.";
+      return false;
+    }
+    if (!context->InitCUDA(message)) {
+      return false;
+    }
+    context_ = context;
+    return true;
+  }
 
-  LinearSolver::Summary Solve(
-      CudaLinearOperator* A,
-      CudaPreconditioner* preconditioner,
-      const CudaVector& b,
-      const LinearSolver::PerSolveOptions& per_solve_options,
-      CudaVector* x);
+  // Update the numerical value of the preconditioner for the linear
+  // system:
+  //
+  //  |   A   | x = |b|
+  //  |diag(D)|     |0|
+  //
+  // for some vector b. It is important that the matrix A have the
+  // same block structure as the one used to construct this object.
+  //
+  // D can be nullptr, in which case its interpreted as a diagonal matrix
+  // of size zero.
+  // Returns true iff the preconditioner was successfully updated. A failure
+  // might be due to numerical problems (e.g. A is singular).
+  virtual bool Update(const CudaSparseMatrix& A, const CudaVector& D) = 0;
 
- private:
-  explicit CudaConjugateGradientsSolver(LinearSolver::Options options) :
-      options_(options) { }
-  const LinearSolver::Options options_;
+  // Given a preconditioner matrix M, this returns y = M^-1 * x.
+  // In general, this could perform in-place solving using factorized
+  // preconditioners, for example, given an incomplete LU preconditioner
+  // M = LU, this computes y = (LU)\x.
+  virtual void Apply(const CudaVector& x, CudaVector* y) = 0;
+
   ContextImpl* context_ = nullptr;
-
-  CudaVector r_;
-  CudaVector p_;
-  CudaVector z_;
-  CudaVector tmp_;
 };
 
 }  // namespace ceres::internal
@@ -83,4 +94,4 @@ class CERES_NO_EXPORT CudaConjugateGradientsSolver {
 #include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_NO_CUDA
-#endif  // CERES_INTERNAL_CUDA_CONJUGATE_GRADIENTS_SOLVER_H_
+#endif  // CERES_INTERNAL_CUDA_PRECONDITIONER_H_

@@ -45,6 +45,7 @@
 #ifndef CERES_NO_CUDA
 #include "ceres/cuda_cgnr_linear_operator.h"
 #include "ceres/cuda_conjugate_gradients_solver.h"
+#include "ceres/cuda_incomplete_cholesky_preconditioner.h"
 #include "ceres/cuda_linear_operator.h"
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
@@ -77,7 +78,6 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
   Vector z(A->num_cols());
   z.setZero();
   A->LeftMultiply(b, z.data());
-
   if (!preconditioner_) {
     if (options_.preconditioner_type == JACOBI) {
       preconditioner_ = std::make_unique<BlockJacobiPreconditioner>(*A);
@@ -128,6 +128,7 @@ bool CudaCgnrSolver::Init(
   if (solver_ == nullptr) {
     *error = "CudaConjugateGradientsSolver::Create failed.";
     return false;
+
   }
   if (!solver_->Init(options.context, error)) {
     return false;
@@ -156,6 +157,7 @@ LinearSolver::Summary CudaCgnrSolver::SolveImpl(
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {
+  static const bool kDebug = false;
   EventLogger event_logger("CudaCgnrSolver::Solve");
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
@@ -176,16 +178,25 @@ LinearSolver::Summary CudaCgnrSolver::SolveImpl(
   event_logger.AddEvent("Initialize");
 
   cuda_A.CopyFrom(*A);
+  event_logger.AddEvent("A CPU to GPU Transfer");
   cuda_b.CopyFrom(b, A->num_rows());
   cuda_z.resize(A->num_cols());
   cuda_x.resize(A->num_cols());
   cuda_D.CopyFrom(per_solve_options.D, A->num_cols());
-  event_logger.AddEvent("CPU to GPU Transfer");
+  event_logger.AddEvent("b CPU to GPU Transfer");
 
+  std::unique_ptr<CudaPreconditioner> preconditioner(
+      new CudaIncompleteCholeskyPreconditioner);
+  std::string message;
+
+  CHECK(preconditioner->Init(options_.context, &message));
+  CHECK(preconditioner->Update(cuda_A, cuda_D));
+
+  event_logger.AddEvent("Preconditioner Update");
   // Form z = Atb.
   cuda_z.setZero();
   cuda_A.LeftMultiply(cuda_b, &cuda_z);
-  printf("z = Atb\n");
+  if (kDebug) printf("z = Atb\n");
 
   LinearSolver::PerSolveOptions cg_per_solve_options = per_solve_options;
   cg_per_solve_options.preconditioner = nullptr;
@@ -198,10 +209,11 @@ LinearSolver::Summary CudaCgnrSolver::SolveImpl(
   }
 
   event_logger.AddEvent("Setup");
-  printf("Solve (AtA + DtD)x = z (= Atb)\n");
+  if (kDebug) printf("Solve (AtA + DtD)x = z (= Atb)\n");
 
   summary = solver_->Solve(
       &lhs_, nullptr, cuda_z, cg_per_solve_options, &cuda_x);
+  cuda_x.CopyTo(x);
   event_logger.AddEvent("Solve");
   return summary;
 }

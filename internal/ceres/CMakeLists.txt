@@ -200,6 +200,7 @@ add_library(ceres_internal OBJECT
     covariance.cc
     covariance_impl.cc
     cuda_conjugate_gradients_solver.cc
+    cuda_incomplete_cholesky_preconditioner.cc
     cuda_sparse_matrix.cc
     cuda_vector.cc
     dense_cholesky.cc
