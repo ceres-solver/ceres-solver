@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e300996_0d62e5cf",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T03:28:09Z",
+      "side": 1,
+      "message": "This will fix issue #851.",
+      "revId": "1b525773400ba716cf2da9091c3e00fd1bfb56d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
