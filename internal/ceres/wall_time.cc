@@ -73,7 +73,7 @@ EventLogger::EventLogger(const std::string& logger_name) {
   start_time_ = WallTimeInSeconds();
   last_event_time_ = start_time_;
   events_ = StringPrintf(
-      "\n%s\n                                   Delta   Cumulative\n",
+      "\n%s\n                                        Delta   Cumulative\n",
       logger_name.c_str());
 }
 
