@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11d93a52_3074c9ed",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T23:34:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dfdfbfd_c2c9867e",
+      "range": {
+        "startLine": 49,
+        "startChar": 18,
+        "endLine": 49,
+        "endChar": 25
+      },
+      "revId": "ce919c712e7c335c13ce37a29c8a844e23e506d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f5c8c291_35914ade",
@@ -64,6 +88,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1eb69e0_5a0d3f28",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T23:34:36Z",
+      "side": 1,
+      "message": "Yes, it is useful for catching pain points with the Cuda init stuff. It turns out that the first invokation is the worst, taking ~1s on my desktop, and it gets worse on multi-GPU machines. An easy workaround is for the user to pre-call the Cuda init stuff in their own code, and then this init is pretty fast.",
+      "parentUuid": "f5c8c291_35914ade",
+      "range": {
+        "startLine": 68,
+        "startChar": 28,
+        "endLine": 68,
+        "endChar": 36
+      },
+      "revId": "ce919c712e7c335c13ce37a29c8a844e23e506d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8f4d6fb_74f60c75",
@@ -77,6 +125,30 @@
       "writtenOn": "2022-08-07T22:57:18Z",
       "side": 1,
       "message": "document class.",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 21
+      },
+      "revId": "ce919c712e7c335c13ce37a29c8a844e23e506d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f89eaba_64492b2c",
+        "filename": "internal/ceres/cuda_linear_operator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T23:34:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8f4d6fb_74f60c75",
       "range": {
         "startLine": 52,
         "startChar": 6,
@@ -112,6 +184,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d5fff2e3_5c0b8d98",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T23:34:36Z",
+      "side": 1,
+      "message": "It would either need to be public, or protected. If protected, a bunch of friends will have to be declared.\n\nThis interface is kind of cumbersome. The ContextImpl is required by nearly every Cuda object, and not calling it causes subtle memory bugs. Is there a simpler way of keeping around a singleton? How opposed are you to a global instance in some kind of protected namespace?",
+      "parentUuid": "a1a901a3_1ef593a6",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 64,
+        "endChar": 23
+      },
+      "revId": "ce919c712e7c335c13ce37a29c8a844e23e506d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f486ef06_2b2c8d94",
         "filename": "internal/ceres/cuda_sparse_matrix.h",
         "patchSetId": 3
@@ -123,6 +219,30 @@
       "writtenOn": "2022-08-07T22:57:18Z",
       "side": 1,
       "message": "override or final here and elsewhere?",
+      "range": {
+        "startLine": 67,
+        "startChar": 57,
+        "endLine": 67,
+        "endChar": 65
+      },
+      "revId": "ce919c712e7c335c13ce37a29c8a844e23e506d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c36252e_ba6f8a59",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T23:34:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f486ef06_2b2c8d94",
       "range": {
         "startLine": 67,
         "startChar": 57,
@@ -156,6 +276,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "55f79d19_8d1711e7",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T23:34:36Z",
+      "side": 1,
+      "message": "They are used for testing, and I\u0027d also like to keep them around while I try out a few other solver variants.",
+      "parentUuid": "85c23b8a_bc04200f",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 15
+      },
+      "revId": "ce919c712e7c335c13ce37a29c8a844e23e506d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21548dab_6b61a402",
@@ -169,6 +313,30 @@
       "writtenOn": "2022-08-07T22:57:18Z",
       "side": 1,
       "message": "why do you need this?",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 28
+      },
+      "revId": "ce919c712e7c335c13ce37a29c8a844e23e506d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fd59b92_f0232ba3",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T23:34:36Z",
+      "side": 1,
+      "message": "Experimental preconditioner stuff, I could delete for now.",
+      "parentUuid": "21548dab_6b61a402",
       "range": {
         "startLine": 80,
         "startChar": 8,
@@ -202,6 +370,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c64ed03b_2ce82591",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T23:34:36Z",
+      "side": 1,
+      "message": "Experimental preconditioner stuff, I could delete for now.",
+      "parentUuid": "fc8814f4_875bbb20",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 13
+      },
+      "revId": "ce919c712e7c335c13ce37a29c8a844e23e506d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df9240dd_96ab3e73",
@@ -215,6 +407,30 @@
       "writtenOn": "2022-08-07T22:57:18Z",
       "side": 1,
       "message": "possible values of op?",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 17
+      },
+      "revId": "ce919c712e7c335c13ce37a29c8a844e23e506d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b983998_2a08b5eb",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T23:34:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df9240dd_96ab3e73",
       "range": {
         "startLine": 92,
         "startChar": 16,
@@ -248,6 +464,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4c0293f_79c246bf",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T23:34:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79ead359_f5ded368",
+      "range": {
+        "startLine": 100,
+        "startChar": 22,
+        "endLine": 100,
+        "endChar": 38
+      },
+      "revId": "ce919c712e7c335c13ce37a29c8a844e23e506d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d39815c_43e64625",
@@ -261,6 +501,30 @@
       "writtenOn": "2022-08-07T22:57:18Z",
       "side": 1,
       "message": "consistent google style naming for methods.",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 12
+      },
+      "revId": "ce919c712e7c335c13ce37a29c8a844e23e506d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c296a69b_4ffb699c",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-07T23:34:36Z",
+      "side": 1,
+      "message": "Ah, I was following the Eigen convention, but I can switch over.",
+      "parentUuid": "6d39815c_43e64625",
       "range": {
         "startLine": 69,
         "startChar": 9,
