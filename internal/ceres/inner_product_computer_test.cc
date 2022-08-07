@@ -32,11 +32,11 @@
 
 #include <memory>
 #include <numeric>
+#include <random>
 
 #include "Eigen/SparseCore"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/random.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
@@ -77,11 +77,11 @@ namespace internal {
   }
 
 TEST(InnerProductComputer, NormalOperation) {
-  // "Randomly generated seed."
-  SetRandomState(29823);
   const int kMaxNumRowBlocks = 10;
   const int kMaxNumColBlocks = 10;
   const int kNumTrials = 10;
+  std::mt19937 prng;
+  std::uniform_real_distribution distribution(0.01, 1.0);
 
   // Create a random matrix, compute its outer product using Eigen and
   // ComputeOuterProduct. Convert both matrices to dense matrices and
@@ -98,7 +98,8 @@ TEST(InnerProductComputer, NormalOperation) {
         options.max_row_block_size = 5;
         options.min_col_block_size = 1;
         options.max_col_block_size = 10;
-        options.block_density = std::max(0.1, RandDouble());
+        options.block_density = distribution(prng);
+
         VLOG(2) << "num row blocks: " << options.num_row_blocks;
         VLOG(2) << "num col blocks: " << options.num_col_blocks;
         VLOG(2) << "min row block size: " << options.min_row_block_size;
@@ -143,6 +144,8 @@ TEST(InnerProductComputer, SubMatrix) {
   const int kNumRowBlocks = 10;
   const int kNumColBlocks = 20;
   const int kNumTrials = 5;
+  std::mt19937 prng;
+  std::uniform_real_distribution distribution(0.01, 1.0);
 
   // Create a random matrix, compute its outer product using Eigen and
   // ComputeInnerProductComputer. Convert both matrices to dense matrices and
@@ -155,7 +158,7 @@ TEST(InnerProductComputer, SubMatrix) {
     options.max_row_block_size = 5;
     options.min_col_block_size = 1;
     options.max_col_block_size = 10;
-    options.block_density = std::min(0.01, RandDouble());
+    options.block_density = distribution(prng);
 
     VLOG(2) << "num row blocks: " << options.num_row_blocks;
     VLOG(2) << "num col blocks: " << options.num_col_blocks;

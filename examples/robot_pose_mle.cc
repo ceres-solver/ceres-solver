@@ -127,13 +127,13 @@
 
 #include <cmath>
 #include <cstdio>
+#include <random>
 #include <vector>
 
 #include "ceres/ceres.h"
 #include "ceres/dynamic_autodiff_cost_function.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
-#include "random.h"
 
 using ceres::AutoDiffCostFunction;
 using ceres::CauchyLoss;
@@ -143,7 +143,6 @@ using ceres::LossFunction;
 using ceres::Problem;
 using ceres::Solve;
 using ceres::Solver;
-using ceres::examples::RandNormal;
 using std::min;
 using std::vector;
 
@@ -247,6 +246,10 @@ void SimulateRobot(vector<double>* odometry_values,
   const int num_steps =
       static_cast<int>(ceil(CERES_GET_FLAG(FLAGS_corridor_length) /
                             CERES_GET_FLAG(FLAGS_pose_separation)));
+  std::mt19937 prng;
+  std::normal_distribution odometry_noise(
+      0.0, CERES_GET_FLAG(FLAGS_odometry_stddev));
+  std::normal_distribution range_noise(0.0, CERES_GET_FLAG(FLAGS_range_stddev));
 
   // The robot starts out at the origin.
   double robot_location = 0.0;
@@ -258,10 +261,8 @@ void SimulateRobot(vector<double>* odometry_values,
     const double actual_range =
         CERES_GET_FLAG(FLAGS_corridor_length) - robot_location;
     const double observed_odometry =
-        RandNormal() * CERES_GET_FLAG(FLAGS_odometry_stddev) +
-        actual_odometry_value;
-    const double observed_range =
-        RandNormal() * CERES_GET_FLAG(FLAGS_range_stddev) + actual_range;
+        actual_odometry_value + odometry_noise(prng);
+    const double observed_range = actual_range + range_noise(prng);
     odometry_values->push_back(observed_odometry);
     range_readings->push_back(observed_range);
   }

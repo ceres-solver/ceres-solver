@@ -31,13 +31,13 @@
 #include "ceres/partitioned_matrix_view.h"
 
 #include <memory>
+#include <random>
 #include <vector>
 
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
-#include "ceres/random.h"
 #include "ceres/sparse_matrix.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
@@ -50,7 +50,6 @@ const double kEpsilon = 1e-14;
 class PartitionedMatrixViewTest : public ::testing::Test {
  protected:
   void SetUp() final {
-    srand(5);
     std::unique_ptr<LinearLeastSquaresProblem> problem =
         CreateLinearLeastSquaresProblemFromId(2);
     CHECK(problem != nullptr);
@@ -65,11 +64,16 @@ class PartitionedMatrixViewTest : public ::testing::Test {
         options, *down_cast<BlockSparseMatrix*>(A_.get()));
   }
 
+  double RandDouble() { return distribution_(prng_); }
+
   int num_rows_;
   int num_cols_;
   int num_eliminate_blocks_;
   std::unique_ptr<SparseMatrix> A_;
   std::unique_ptr<PartitionedMatrixViewBase> pmv_;
+  std::mt19937 prng_;
+  std::uniform_real_distribution<double> distribution_ =
+      std::uniform_real_distribution(0.0, 1.0);
 };
 
 TEST_F(PartitionedMatrixViewTest, DimensionsTest) {

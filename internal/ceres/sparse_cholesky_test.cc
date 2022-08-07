@@ -32,6 +32,7 @@
 
 #include <memory>
 #include <numeric>
+#include <random>
 #include <vector>
 
 #include "Eigen/Dense"
@@ -42,7 +43,6 @@
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/iterative_refiner.h"
-#include "ceres/random.h"
 #include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -165,17 +165,18 @@ std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
 class SparseCholeskyTest : public ::testing::TestWithParam<Param> {};
 
 TEST_P(SparseCholeskyTest, FactorAndSolve) {
-  SetRandomState(2982);
   const int kMinNumBlocks = 1;
   const int kMaxNumBlocks = 10;
   const int kNumTrials = 10;
   const int kMinBlockSize = 1;
   const int kMaxBlockSize = 5;
+  std::mt19937 prng;
+  std::uniform_real_distribution distribution(0.1, 1.0);
 
   for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
        ++num_blocks) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
-      const double block_density = std::max(0.1, RandDouble());
+      const double block_density = distribution(prng);
       Param param = GetParam();
       SparseCholeskySolverUnitTest(::testing::get<0>(param),
                                    ::testing::get<1>(param),

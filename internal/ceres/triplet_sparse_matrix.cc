@@ -32,12 +32,12 @@
 
 #include <algorithm>
 #include <memory>
+#include <random>
 
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
-#include "ceres/random.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
 
@@ -282,8 +282,8 @@ void TripletSparseMatrix::ToTextFile(FILE* file) const {
   }
 }
 
-std::unique_ptr<TripletSparseMatrix>
-TripletSparseMatrix::CreateFromTextFile(FILE* file) {
+std::unique_ptr<TripletSparseMatrix> TripletSparseMatrix::CreateFromTextFile(
+    FILE* file) {
   CHECK(file != nullptr);
   int num_rows = 0;
   int num_cols = 0;
@@ -317,16 +317,19 @@ std::unique_ptr<TripletSparseMatrix> TripletSparseMatrix::CreateRandomMatrix(
   std::vector<int> rows;
   std::vector<int> cols;
   std::vector<double> values;
+  std::mt19937 prng;
+  std::uniform_real_distribution uniform01(0.0, 1.0);
+  std::uniform_real_distribution standard_normal;
   while (rows.empty()) {
     rows.clear();
     cols.clear();
     values.clear();
     for (int r = 0; r < options.num_rows; ++r) {
       for (int c = 0; c < options.num_cols; ++c) {
-        if (RandDouble() <= options.density) {
+        if (uniform01(prng) <= options.density) {
           rows.push_back(r);
           cols.push_back(c);
-          values.push_back(RandNormal());
+          values.push_back(standard_normal(prng));
         }
       }
     }

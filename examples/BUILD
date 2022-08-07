@@ -47,7 +47,6 @@ cc_binary(
         "bal_problem.cc",
         "bal_problem.h",
         "bundle_adjuster.cc",
-        "random.h",
         "snavely_reprojection_error.h",
     ],
     copts = EXAMPLE_COPTS,
@@ -69,7 +68,6 @@ cc_binary(
 cc_binary(
     name = "robot_pose_mle",
     srcs = [
-        "random.h",
         "robot_pose_mle.cc",
     ],
     copts = EXAMPLE_COPTS,

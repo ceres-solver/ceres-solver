@@ -32,15 +32,15 @@
 
 #include <algorithm>
 #include <cstdio>
-#include <cstdlib>
 #include <fstream>
+#include <functional>
+#include <random>
 #include <string>
 #include <vector>
 
 #include "Eigen/Core"
 #include "ceres/rotation.h"
 #include "glog/logging.h"
-#include "random.h"
 
 namespace ceres::examples {
 namespace {
@@ -55,9 +55,9 @@ void FscanfOrDie(FILE* fptr, const char* format, T* value) {
   }
 }
 
-void PerturbPoint3(const double sigma, double* point) {
+void PerturbPoint3(std::function<double()> dist, double* point) {
   for (int i = 0; i < 3; ++i) {
-    point[i] += RandNormal() * sigma;
+    point[i] += dist();
   }
 }
 
@@ -297,14 +297,19 @@ void BALProblem::Perturb(const double rotation_sigma,
   CHECK_GE(point_sigma, 0.0);
   CHECK_GE(rotation_sigma, 0.0);
   CHECK_GE(translation_sigma, 0.0);
-
+  std::mt19937 prng;
+  std::normal_distribution point_noise_distribution(0.0, point_sigma);
   double* points = mutable_points();
   if (point_sigma > 0) {
     for (int i = 0; i < num_points_; ++i) {
-      PerturbPoint3(point_sigma, points + 3 * i);
+      PerturbPoint3(std::bind(point_noise_distribution, std::ref(prng)),
+                    points + 3 * i);
     }
   }
 
+  std::normal_distribution rotation_noise_distribution(0.0, point_sigma);
+  std::normal_distribution translation_noise_distribution(0.0,
+                                                          translation_sigma);
   for (int i = 0; i < num_cameras_; ++i) {
     double* camera = mutable_cameras() + camera_block_size() * i;
 
@@ -314,12 +319,14 @@ void BALProblem::Perturb(const double rotation_sigma,
     // representation.
     CameraToAngleAxisAndCenter(camera, angle_axis, center);
     if (rotation_sigma > 0.0) {
-      PerturbPoint3(rotation_sigma, angle_axis);
+      PerturbPoint3(std::bind(rotation_noise_distribution, std::ref(prng)),
+                    angle_axis);
     }
     AngleAxisAndCenterToCamera(angle_axis, center, camera);
 
     if (translation_sigma > 0.0) {
-      PerturbPoint3(translation_sigma, camera + camera_block_size() - 6);
+      PerturbPoint3(std::bind(translation_noise_distribution, std::ref(prng)),
+                    camera + camera_block_size() - 6);
     }
   }
 }

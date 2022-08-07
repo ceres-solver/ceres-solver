@@ -34,12 +34,12 @@
 
 #include <cmath>
 #include <cstdlib>
+#include <random>
 #include <utility>
 #include <vector>
 
 #include "ceres/cost_function.h"
 #include "ceres/problem.h"
-#include "ceres/random.h"
 #include "ceres/solver.h"
 #include "ceres/test_util.h"
 #include "glog/logging.h"
@@ -60,12 +60,15 @@ const double kTolerance = 1e-12;
 class GoodTestTerm : public CostFunction {
  public:
   GoodTestTerm(int arity, int const* dim) : arity_(arity), return_value_(true) {
+    std::mt19937 prng;
+    std::uniform_real_distribution distribution(-1.0, 1.0);
+
     // Make 'arity' random vectors.
     a_.resize(arity_);
     for (int j = 0; j < arity_; ++j) {
       a_[j].resize(dim[j]);
       for (int u = 0; u < dim[j]; ++u) {
-        a_[j][u] = 2.0 * RandDouble() - 1.0;
+        a_[j][u] = distribution(prng);
       }
     }
 
@@ -119,12 +122,14 @@ class GoodTestTerm : public CostFunction {
 class BadTestTerm : public CostFunction {
  public:
   BadTestTerm(int arity, int const* dim) : arity_(arity) {
+    std::mt19937 prng;
+    std::uniform_real_distribution distribution(-1.0, 1.0);
     // Make 'arity' random vectors.
     a_.resize(arity_);
     for (int j = 0; j < arity_; ++j) {
       a_[j].resize(dim[j]);
       for (int u = 0; u < dim[j]; ++u) {
-        a_[j][u] = 2.0 * RandDouble() - 1.0;
+        a_[j][u] = distribution(prng);
       }
     }
 
@@ -194,8 +199,6 @@ static void CheckDimensions(const GradientChecker::ProbeResults& results,
 }
 
 TEST(GradientChecker, SmokeTest) {
-  srand(5);
-
   // Test with 3 blocks of size 2, 3 and 4.
   int const num_parameters = 3;
   std::vector<int> parameter_sizes(3);
@@ -205,10 +208,12 @@ TEST(GradientChecker, SmokeTest) {
 
   // Make a random set of blocks.
   FixedArray<double*> parameters(num_parameters);
+  std::mt19937 prng;
+  std::uniform_real_distribution distribution(-1.0, 1.0);
   for (int j = 0; j < num_parameters; ++j) {
     parameters[j] = new double[parameter_sizes[j]];
     for (int u = 0; u < parameter_sizes[j]; ++u) {
-      parameters[j][u] = 2.0 * RandDouble() - 1.0;
+      parameters[j][u] = distribution(prng);
     }
   }
 
