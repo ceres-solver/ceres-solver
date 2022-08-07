@@ -33,6 +33,7 @@
 #include <string>
 
 #include "ceres/internal/config.h"
+#include "ceres/wall_time.h"
 
 #ifndef CERES_NO_CUDA
 #include "cublas_v2.h"
@@ -45,45 +46,65 @@ namespace ceres::internal {
 ContextImpl::ContextImpl() = default;
 
 #ifndef CERES_NO_CUDA
+void ContextImpl::TearDown() {
+  if (cusolver_handle_ != nullptr) {
+    cusolverDnDestroy(cusolver_handle_);
+    cusolver_handle_ = nullptr;
+  }
+  if (cublas_handle_ != nullptr) {
+    cublasDestroy(cublas_handle_);
+    cublas_handle_ = nullptr;
+  }
+  if (cusolver_handle_ != nullptr) {
+    cusparseDestroy(cusparse_handle_);
+    cusparse_handle_ = nullptr;
+  }
+  if (stream_ != nullptr) {
+    cudaStreamDestroy(stream_);
+    stream_ = nullptr;
+  }
+  cuda_initialized_ = false;
+}
+
 bool ContextImpl::InitCUDA(std::string* message) {
   if (cuda_initialized_) {
     return true;
   }
+  EventLogger event_logger("InitCuda");
   if (cublasCreate(&cublas_handle_) != CUBLAS_STATUS_SUCCESS) {
     *message = "cuBLAS::cublasCreate failed.";
     cublas_handle_ = nullptr;
     return false;
   }
+  event_logger.AddEvent("cublasCreate");
   if (cusolverDnCreate(&cusolver_handle_) != CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnCreate failed.";
-    cusolver_handle_ = nullptr;
-    cublasDestroy(cublas_handle_);
-    cublas_handle_ = nullptr;
+    TearDown();
     return false;
   }
+  event_logger.AddEvent("cusolverDnCreate");
+  if (cusparseCreate(&cusparse_handle_) != CUSPARSE_STATUS_SUCCESS) {
+    *message = "cuSPARSE::cusparseCreate failed.";
+    TearDown();
+    return false;
+  }
+  event_logger.AddEvent("cusparseCreate");
   if (cudaStreamCreateWithFlags(&stream_, cudaStreamNonBlocking) !=
       cudaSuccess) {
     *message = "CUDA::cudaStreamCreateWithFlags failed.";
-    cusolverDnDestroy(cusolver_handle_);
-    cublasDestroy(cublas_handle_);
-    cusolver_handle_ = nullptr;
-    cublas_handle_ = nullptr;
-    stream_ = nullptr;
+    TearDown();
     return false;
   }
+  event_logger.AddEvent("cudaStreamCreateWithFlags");
   if (cusolverDnSetStream(cusolver_handle_, stream_) !=
           CUSOLVER_STATUS_SUCCESS ||
-      cublasSetStream(cublas_handle_, stream_) != CUBLAS_STATUS_SUCCESS) {
-    *message =
-        "cuSolverDN::cusolverDnSetStream or cuBLAS::cublasSetStream failed.";
-    cusolverDnDestroy(cusolver_handle_);
-    cublasDestroy(cublas_handle_);
-    cudaStreamDestroy(stream_);
-    cusolver_handle_ = nullptr;
-    cublas_handle_ = nullptr;
-    stream_ = nullptr;
+      cublasSetStream(cublas_handle_, stream_) != CUBLAS_STATUS_SUCCESS ||
+      cusparseSetStream(cusparse_handle_, stream_) != CUSPARSE_STATUS_SUCCESS) {
+    *message = "CUDA [Solver|BLAS|Sparse] SetStream failed.";
+    TearDown();
     return false;
   }
+  event_logger.AddEvent("SetStream");
   cuda_initialized_ = true;
   return true;
 }
@@ -91,11 +112,7 @@ bool ContextImpl::InitCUDA(std::string* message) {
 
 ContextImpl::~ContextImpl() {
 #ifndef CERES_NO_CUDA
-  if (cuda_initialized_) {
-    cusolverDnDestroy(cusolver_handle_);
-    cublasDestroy(cublas_handle_);
-    cudaStreamDestroy(stream_);
-  }
+  TearDown();
 #endif  // CERES_NO_CUDA
 }
 void ContextImpl::EnsureMinimumThreads(int num_threads) {
