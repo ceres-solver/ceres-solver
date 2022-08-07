@@ -45,6 +45,7 @@
 #ifndef CERES_NO_CUDA
 #include "cublas_v2.h"
 #include "cuda_runtime.h"
+#include "cusparse.h"
 #include "cusolverDn.h"
 #endif  // CERES_NO_CUDA
 
@@ -76,13 +77,12 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   // successful, else it returns false and a human-readable error message is
   // returned.
   bool InitCUDA(std::string* message);
+  void TearDown();
 
-  // Handle to the cuSOLVER context.
   cusolverDnHandle_t cusolver_handle_ = nullptr;
-  // Handle to cuBLAS context.
   cublasHandle_t cublas_handle_ = nullptr;
-  // CUDA device stream.
   cudaStream_t stream_ = nullptr;
+  cusparseHandle_t cusparse_handle_ = nullptr;
   // Indicates whether all the CUDA resources have been initialized.
   bool cuda_initialized_ = false;
 #endif  // CERES_NO_CUDA
