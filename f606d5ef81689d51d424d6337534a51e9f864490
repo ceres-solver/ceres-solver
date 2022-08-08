@@ -33,6 +33,40 @@
       "message": "Joydeep if this looks sane to you, then I can clean it up later today or early tomorrow morning and send it out for full review.",
       "revId": "f606d5ef81689d51d424d6337534a51e9f864490",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98296203_47f89e99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T23:41:49Z",
+      "side": 1,
+      "message": "The CG version I think looks good now, any thoughts on how to feed in the ContextImpl* to the vector ops?",
+      "revId": "f606d5ef81689d51d424d6337534a51e9f864490",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9a6f7e0_11c1a9fe",
+        "filename": "internal/ceres/eigen_vector_ops.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T23:41:49Z",
+      "side": 1,
+      "message": "The cuda versions of all of these will require access to ContextImpl*. Thoughts on how to do that?",
+      "revId": "f606d5ef81689d51d424d6337534a51e9f864490",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
