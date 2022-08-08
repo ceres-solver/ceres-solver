@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2922ec6_8f795e05",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:27:43Z",
+      "side": 1,
+      "message": "I think it maybe helpful for me to at least look at your CG loop to see how you are using the matrix and vector classes to better appreciate their interface requirements.\n\nfor example, can we add an appropriate level of abstraction to a vector object so that we can have the cuda_linear_operator just be a linearoperator and cuda vector just be a vector object so that we can use the existing conjugate_gradients_solver.cc loop? why write a whole new loop ?\n\nI am okay putting a small wrapper around an eigenvector to make it hospitable to cg.",
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "981d2afa_3c2abfac",
