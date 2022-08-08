@@ -136,17 +136,38 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     ImplicitSchurComplement isc(options);
     isc.Init(*A_, D, b_.get());
 
-    int num_sc_cols = lhs.cols();
+    const int num_f_cols = lhs.cols();
+    const int num_e_cols = num_cols_ - num_f_cols;
 
-    for (int i = 0; i < num_sc_cols; ++i) {
-      Vector x(num_sc_cols);
+    Matrix A_dense, E, F, DE, DF;
+    A_->ToDenseMatrix(&A_dense);
+    E = A_dense.leftCols(A_->num_cols() - num_f_cols);
+    F = A_dense.rightCols(num_f_cols);
+    if (D) {
+      DE = VectorRef(D, num_e_cols).asDiagonal();
+      DF = VectorRef(D + num_e_cols, num_f_cols).asDiagonal();
+    } else {
+      DE = Matrix::Zero(num_e_cols, num_e_cols);
+      DF = Matrix::Zero(num_f_cols, num_f_cols);
+    }
+
+    // Z = (block_diagonal(F'F))^-1 F'E (E'E)^-1 E'F
+    // Here, assuming that block_diagonal(F'F) == diagonal(F'F)
+    Matrix Z_reference =
+        (F.transpose() * F + DF).diagonal().asDiagonal().inverse() *
+        F.transpose() * E * (E.transpose() * E + DE).inverse() *
+        E.transpose() * F;
+
+    for (int i = 0; i < num_f_cols; ++i) {
+      Vector x(num_f_cols);
       x.setZero();
       x(i) = 1.0;
 
-      Vector y(num_sc_cols);
+      Vector y(num_f_cols);
       y = lhs * x;
 
-      Vector z(num_sc_cols);
+
+      Vector z(num_f_cols);
       isc.RightMultiplyAndAccumulate(x.data(), z.data());
 
       // The i^th column of the implicit schur complement is the same as
@@ -155,6 +176,22 @@ class ImplicitSchurComplementTest : public ::testing::Test {
         return testing::AssertionFailure()
                << "Explicit and Implicit SchurComplements differ in "
                << "column " << i << ". explicit: " << y.transpose()
+               << " implicit: " << z.transpose();
+      }
+
+      y.setZero();
+      y = Z_reference * x;
+      z.setZero();
+      isc.InversePowerSeriesOperatorRightMultiply(x.data(), z.data());
+
+      // The i^th column of operator Z stored implicitly is the same as its
+      // explicit version.
+      if ((y - z).norm() > kEpsilon) {
+        return testing::AssertionFailure()
+               << "Explicit and Implicit operators used to approximate the "
+                  "inversion of schur complement via power series expansion "
+                  "differ in column "
+               << i << ". explicit: " << y.transpose()
                << " implicit: " << z.transpose();
       }
     }
