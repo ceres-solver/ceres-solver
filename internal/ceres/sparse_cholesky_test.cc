@@ -55,7 +55,8 @@ std::unique_ptr<BlockSparseMatrix> CreateRandomFullRankMatrix(
     const int num_col_blocks,
     const int min_col_block_size,
     const int max_col_block_size,
-    const double block_density) {
+    const double block_density,
+    std::mt19937& prng) {
   // Create a random matrix
   BlockSparseMatrix::RandomMatrixOptions options;
   options.num_col_blocks = num_col_blocks;
@@ -66,7 +67,7 @@ std::unique_ptr<BlockSparseMatrix> CreateRandomFullRankMatrix(
   options.min_row_block_size = 1;
   options.max_row_block_size = max_col_block_size;
   options.block_density = block_density;
-  auto random_matrix = BlockSparseMatrix::CreateRandomMatrix(options);
+  auto random_matrix = BlockSparseMatrix::CreateRandomMatrix(options, prng);
 
   // Add a diagonal block sparse matrix to make it full rank.
   Vector diagonal = Vector::Ones(random_matrix->num_cols());
@@ -110,7 +111,8 @@ void SparseCholeskySolverUnitTest(
     const int num_blocks,
     const int min_block_size,
     const int max_block_size,
-    const double block_density) {
+    const double block_density,
+    std::mt19937& prng) {
   LinearSolver::Options sparse_cholesky_options;
   sparse_cholesky_options.sparse_linear_algebra_library_type =
       sparse_linear_algebra_library_type;
@@ -120,7 +122,7 @@ void SparseCholeskySolverUnitTest(
       sparse_cholesky->StorageType();
 
   auto m = CreateRandomFullRankMatrix(
-      num_blocks, min_block_size, max_block_size, block_density);
+      num_blocks, min_block_size, max_block_size, block_density, prng);
   auto inner_product_computer = InnerProductComputer::Create(*m, storage_type);
   inner_product_computer->Compute();
   CompressedRowSparseMatrix* lhs = inner_product_computer->mutable_result();
@@ -184,7 +186,8 @@ TEST_P(SparseCholeskyTest, FactorAndSolve) {
                                    num_blocks,
                                    kMinBlockSize,
                                    kMaxBlockSize,
-                                   block_density);
+                                   block_density,
+                                   prng);
     }
   }
 }

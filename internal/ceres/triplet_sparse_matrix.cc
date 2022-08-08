@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -310,7 +310,8 @@ std::unique_ptr<TripletSparseMatrix> TripletSparseMatrix::CreateFromTextFile(
 }
 
 std::unique_ptr<TripletSparseMatrix> TripletSparseMatrix::CreateRandomMatrix(
-    const TripletSparseMatrix::RandomMatrixOptions& options) {
+    const TripletSparseMatrix::RandomMatrixOptions& options,
+    std::mt19937& prng) {
   CHECK_GT(options.num_rows, 0);
   CHECK_GT(options.num_cols, 0);
   CHECK_GT(options.density, 0.0);
@@ -319,7 +320,6 @@ std::unique_ptr<TripletSparseMatrix> TripletSparseMatrix::CreateRandomMatrix(
   std::vector<int> rows;
   std::vector<int> cols;
   std::vector<double> values;
-  std::mt19937 prng;
   std::uniform_real_distribution<double> uniform01(0.0, 1.0);
   std::normal_distribution<double> standard_normal;
   while (rows.empty()) {

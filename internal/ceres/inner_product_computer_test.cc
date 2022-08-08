@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2017 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -109,7 +109,7 @@ TEST(InnerProductComputer, NormalOperation) {
         VLOG(2) << "block density: " << options.block_density;
 
         std::unique_ptr<BlockSparseMatrix> random_matrix(
-            BlockSparseMatrix::CreateRandomMatrix(options));
+            BlockSparseMatrix::CreateRandomMatrix(options, prng));
 
         TripletSparseMatrix tsm(random_matrix->num_rows(),
                                 random_matrix->num_cols(),
@@ -169,7 +169,7 @@ TEST(InnerProductComputer, SubMatrix) {
     VLOG(2) << "block density: " << options.block_density;
 
     std::unique_ptr<BlockSparseMatrix> random_matrix(
-        BlockSparseMatrix::CreateRandomMatrix(options));
+        BlockSparseMatrix::CreateRandomMatrix(options, prng));
 
     const std::vector<CompressedRow>& row_blocks =
         random_matrix->block_structure()->rows;

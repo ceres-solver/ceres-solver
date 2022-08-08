@@ -375,7 +375,7 @@ void BlockSparseMatrix::DeleteRowBlocks(const int delta_row_blocks) {
 }
 
 std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
-    const BlockSparseMatrix::RandomMatrixOptions& options) {
+    const BlockSparseMatrix::RandomMatrixOptions& options, std::mt19937& prng) {
   CHECK_GT(options.num_row_blocks, 0);
   CHECK_GT(options.min_row_block_size, 0);
   CHECK_GT(options.max_row_block_size, 0);
@@ -383,7 +383,6 @@ std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
   CHECK_GT(options.block_density, 0.0);
   CHECK_LE(options.block_density, 1.0);
 
-  std::mt19937 prng;
   std::uniform_int_distribution<int> col_distribution(
       options.min_col_block_size, options.max_col_block_size);
   std::uniform_int_distribution<int> row_distribution(
@@ -436,9 +435,10 @@ std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
   auto matrix = std::make_unique<BlockSparseMatrix>(bs);
   double* values = matrix->mutable_values();
   std::normal_distribution<double> standard_normal_distribution;
-  for (int i = 0; i < matrix->num_nonzeros(); ++i) {
-    values[i] = standard_normal_distribution(prng);
-  }
+  std::generate_n(
+      values, matrix->num_nonzeros(), [&standard_normal_distribution, &prng] {
+        return standard_normal_distribution(prng);
+      });
 
   return matrix;
 }
