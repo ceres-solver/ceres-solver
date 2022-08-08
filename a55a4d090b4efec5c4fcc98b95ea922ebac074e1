@@ -16,6 +16,24 @@
       "message": "Mark, I like the general shape and size of this change. Thank you for making the change from linear solver to preconditioner.\n\nI would like to review it and land it in a couple of pieces (this is how I have tried to do various other changes like this).\n\n0. There are a bunch of small corrections to comments and documentation get those out of the way and in quickly. so that we can focus on the technical part of this change (e.g. changes in linear_least_squares_problem.cc. implicit_schur_complement.cc etc).\n1. Add the basic PowerSeriesExpansionPreconditioner on its own with tests but it does not have to integrated into the API.\n2. Add the initialization (I am wondering if the initialization may be helpful to iterative schur solvers in general when when not using this preconditioner). \n3. Integrate the preconditioner into the public API and into examples.\n\nI think this will allow me to review carefully, and iterate quickly without creating too much churn.\n",
       "revId": "a55a4d090b4efec5c4fcc98b95ea922ebac074e1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c9c24bd_9363bf24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-08T13:23:27Z",
+      "side": 1,
+      "message": "Sameer, to make it clear: you expect me to open 4 separate \"pull requests\" matching the list you provided?",
+      "parentUuid": "f5c2ab6e_cfc6eda1",
+      "revId": "a55a4d090b4efec5c4fcc98b95ea922ebac074e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
