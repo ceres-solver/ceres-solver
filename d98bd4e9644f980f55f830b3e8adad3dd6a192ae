@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07359144_0da152ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:29:49Z",
+      "side": 1,
+      "message": "we could also consider templatizing the CG solver on the vector type?",
+      "revId": "d98bd4e9644f980f55f830b3e8adad3dd6a192ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e188c260_92242845",
