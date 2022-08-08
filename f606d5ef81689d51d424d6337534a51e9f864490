@@ -85,6 +85,24 @@
       "parentUuid": "a9a6f7e0_11c1a9fe",
       "revId": "f606d5ef81689d51d424d6337534a51e9f864490",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a07d4015_769e5bbe",
+        "filename": "internal/ceres/eigen_vector_ops.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T23:48:22Z",
+      "side": 1,
+      "message": "Ah never mind, I get the idea now - this is just a wrapper, and would call the DenseVector operations to get the job done. Yes, that works!",
+      "parentUuid": "4cbe89d0_c0e6714b",
+      "revId": "f606d5ef81689d51d424d6337534a51e9f864490",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
