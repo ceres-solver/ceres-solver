@@ -1,0 +1,231 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb7f0178_dc4f8f93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:43:15Z",
+      "side": 1,
+      "message": "This is great! I also started removing `random.h` (https://github.com/sergiud/ceres-solver/tree/remove-random) but my changes are incomplete.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2c63045_79cee8b9",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:43:15Z",
+      "side": 1,
+      "message": "Is this include still necessary?",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "000ecd43_8d60accc",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:43:15Z",
+      "side": 1,
+      "message": "For reproducible results, I believe it is better use a specific PRNG such as `std::mt19937` because `std::default_random_engine` aliases to an implementation-defined generator.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae14becb_2ee7cacb",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:43:15Z",
+      "side": 1,
+      "message": "Maybe call it `standard_normal`. The constructor arguments can be also left out.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0148397_079887f2",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:43:15Z",
+      "side": 1,
+      "message": "I personally don\u0027t like manually scaling random numbers because this functionality is already provided by the distribution classes directly. There are two variants:\n1. Either declare multiple distribution, one for the odometry and the other for the range, or\n2. Use the `operator()(Generator\u0026, const param_type\u0026)` overload on the distribution to specify the different standard deviations.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "588579f2_df312389",
+        "filename": "internal/ceres/autodiff_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:43:15Z",
+      "side": 1,
+      "message": "Maybe call it `uniform01`?",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efeeae83_a247d1e9",
+        "filename": "internal/ceres/autodiff_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:43:15Z",
+      "side": 1,
+      "message": "Also `uniform01`?",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "363b7ecd_bce673fd",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:43:15Z",
+      "side": 1,
+      "message": "Just above you used C++17 class template argument deduction but here the template type (`double`) is explicitly specified. Better to use one variant for consistency.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f33f569a_8433e9a6",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:43:15Z",
+      "side": 1,
+      "message": "The naming is somewhat inconsistent to previous occurrences. I suggest using the same name, e.g., `uniform01` or `uniform01_distribution`.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ac8ed82_ecc9fa16",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:43:15Z",
+      "side": 1,
+      "message": "For the future, I believe for consistency it would be better to avoid Eigen\u0027s `.setRandom()`/`::Random()` since AFAIK it uses the `\u003ccstdlib\u003e` PRNG.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98f8c60c_23c136e0",
+        "filename": "internal/ceres/corrector_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:43:15Z",
+      "side": 1,
+      "message": "Similar to before: either declare an additional instance for the [-1, +1] interval (as you do later) or use the `operator()` overload with the additional `param_type` parameter.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6f9d232_11ea08c0",
+        "filename": "internal/ceres/corrector_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:43:15Z",
+      "side": 1,
+      "message": "Avoid manual scaling and shifting.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2925d1eb_72b2f6eb",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:43:15Z",
+      "side": 1,
+      "message": "Set the lower bound to 0.1 to avoid clamping manually below?",
+      "range": {
+        "startLine": 174,
+        "startChar": 54,
+        "endLine": 174,
+        "endChar": 57
+      },
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
