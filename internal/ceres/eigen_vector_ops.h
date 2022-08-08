@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,41 +27,19 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//
-// Base classes for access to an linear operator.
 
-#ifndef CERES_INTERNAL_LINEAR_OPERATOR_H_
-#define CERES_INTERNAL_LINEAR_OPERATOR_H_
+#ifndef CERES_INTERNAL_EIGEN_VECTOR_OPS_H_
+#define CERES_INTERNAL_EIGEN_VECTOR_OPS_H_
 
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/export.h"
-#include "ceres/types.h"
 
 namespace ceres::internal {
+inline double Norm(const Vector& x) { return x.norm(); }
+inline void SetZero(Vector& x) { x.setZero();}
+inline void Axby(double a, const Vector& x, double b, const Vector& y, Vector& z) {
+  z = a * x + b * y;
+}
+inline double Dot(const Vector&x, const Vector& y) { return x.dot(y); }
 
-// This is an abstract base class for linear operators. It supports
-// access to size information and left and right multiply operators.
-class CERES_NO_EXPORT LinearOperator {
- public:
-  virtual ~LinearOperator();
-
-  // y = y + Ax;
-  virtual void RightMultiply(const double* x, double* y) const = 0;
-  // y = y + A'x;
-  virtual void LeftMultiply(const double* x, double* y) const = 0;
-
-  virtual void RightMultiply(const Vector& x, Vector& y) const {
-    RightMultiply(x.data(), y.data());
-  }
-
-  virtual void LeftMultiply(const Vector& x, Vector& y) const {
-    LeftMultiply(x.data(), y.data());
-  }
-
-  virtual int num_rows() const = 0;
-  virtual int num_cols() const = 0;
-};
-
-}  // namespace ceres::internal
-
-#endif  // CERES_INTERNAL_LINEAR_OPERATOR_H_
+}
+#endif  // CERES_INTERNAL_EIGEN_VECTOR_OPS_H_
