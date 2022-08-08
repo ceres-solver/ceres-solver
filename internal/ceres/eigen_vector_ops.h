@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,48 +26,27 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
+// Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_INTERNAL_CGNR_SOLVER_H_
-#define CERES_INTERNAL_CGNR_SOLVER_H_
+#ifndef CERES_INTERNAL_EIGEN_VECTOR_OPS_H_
+#define CERES_INTERNAL_EIGEN_VECTOR_OPS_H_
 
-#include <memory>
-
-#include "ceres/internal/export.h"
-#include "ceres/linear_solver.h"
+#include "ceres/internal/eigen.h"
 
 namespace ceres::internal {
 
-class Preconditioner;
-
-class BlockJacobiPreconditioner;
-
-// A conjugate gradients on the normal equations solver. This directly solves
-// for the solution to
-//
-//   (A^T A + D^T D)x = A^T b
-//
-// as required for solving for x in the least squares sense. Currently only
-// block diagonal preconditioning is supported.
-class CERES_NO_EXPORT CgnrSolver final : public BlockSparseMatrixSolver {
- public:
-  explicit CgnrSolver(LinearSolver::Options options);
-  CgnrSolver(const CgnrSolver&) = delete;
-  void operator=(const CgnrSolver&) = delete;
-  ~CgnrSolver() override;
-
-  Summary SolveImpl(BlockSparseMatrix* A,
-                    const double* b,
-                    const LinearSolver::PerSolveOptions& per_solve_options,
-                    double* x) final;
-
- private:
-  const LinearSolver::Options options_;
-  std::unique_ptr<Preconditioner> preconditioner_;
-  Vector cg_solution_;
-  Vector scratch_[4];
-};
+// Blas1 operations on Eigen vectors. These functions are needed as an
+// abstraction layer so that we can use different versions of a vector style
+// object in the conjugate gradients linear solver.
+inline double Norm(const Vector& x) { return x.norm(); }
+inline void SetZero(Vector& x) { x.setZero(); }
+inline void Axpby(
+    double a, const Vector& x, double b, const Vector& y, Vector& z) {
+  z = a * x + b * y;
+}
+inline double Dot(const Vector& x, const Vector& y) { return x.dot(y); }
+inline void Copy(const Vector& from, Vector& to) { to = from; }
 
 }  // namespace ceres::internal
 
-#endif  // CERES_INTERNAL_CGNR_SOLVER_H_
+#endif  // CERES_INTERNAL_EIGEN_VECTOR_OPS_H_

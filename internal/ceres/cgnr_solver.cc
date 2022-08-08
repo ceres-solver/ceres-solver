@@ -34,7 +34,6 @@
 #include <utility>
 
 #include "ceres/block_jacobi_preconditioner.h"
-#include "ceres/cgnr_linear_operator.h"
 #include "ceres/conjugate_gradients_solver.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
@@ -43,6 +42,68 @@
 #include "glog/logging.h"
 
 namespace ceres::internal {
+
+// A linear operator which takes a matrix A and a diagonal vector D and
+// performs products of the form
+//
+//   (A^T A + D^T D)x
+//
+// This is used to implement iterative general sparse linear solving with
+// conjugate gradients, where A is the Jacobian and D is a regularizing
+// parameter. A brief proof that D^T D is the correct regularizer:
+//
+// Given a regularized least squares problem:
+//
+//   min  ||Ax - b||^2 + ||Dx||^2
+//    x
+//
+// First expand into matrix notation:
+//
+//   (Ax - b)^T (Ax - b) + xD^TDx
+//
+// Then multiply out to get:
+//
+//   = xA^TAx - 2b^T Ax + b^Tb + xD^TDx
+//
+// Take the derivative:
+//
+//   0 = 2A^TAx - 2A^T b + 2 D^TDx
+//   0 = A^TAx - A^T b + D^TDx
+//   0 = (A^TA + D^TD)x - A^T b
+//
+// Thus, the symmetric system we need to solve for CGNR is
+//
+//   Sx = z
+//
+// with S = A^TA + D^TD
+//  and z = A^T b
+//
+// Note: This class is not thread safe, since it uses some temporary storage.
+class CERES_NO_EXPORT CgnrLinearOperator final
+    : public ConjugateGradientsLinearOperator<Vector> {
+ public:
+  CgnrLinearOperator(const LinearOperator& A, const double* D)
+      : A_(A), D_(D), z_(Vector::Zero(A.num_rows())) {}
+
+  void RightMultiply(const Vector& x, Vector& y) final {
+    // z = Ax
+    // y = y + Atz
+    z_.setZero();
+    A_.RightMultiply(x, z_);
+    A_.LeftMultiply(z_, y);
+
+    // y = y + DtDx
+    if (D_ != nullptr) {
+      int n = A_.num_cols();
+      y.array() += ConstVectorRef(D_, n).array().square() * x.array();
+    }
+  }
+
+ private:
+  const LinearOperator& A_;
+  const double* D_;
+  Vector z_;
+};
 
 CgnrSolver::CgnrSolver(LinearSolver::Options options)
     : options_(std::move(options)) {
@@ -64,12 +125,6 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {
   EventLogger event_logger("CgnrSolver::Solve");
-
-  // Form z = Atb.
-  Vector z(A->num_cols());
-  z.setZero();
-  A->LeftMultiply(b, z.data());
-
   if (!preconditioner_) {
     if (options_.preconditioner_type == JACOBI) {
       preconditioner_ = std::make_unique<BlockJacobiPreconditioner>(*A);
@@ -85,24 +140,37 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
       preconditioner_options.context = options_.context;
       preconditioner_ =
           std::make_unique<SubsetPreconditioner>(preconditioner_options, *A);
+    } else {
+      preconditioner_ = std::make_unique<IdentityPreconditioner>(A->num_cols());
     }
   }
 
-  if (preconditioner_) {
-    preconditioner_->Update(*A, per_solve_options.D);
-  }
+  preconditioner_->Update(*A, per_solve_options.D);
 
-  LinearSolver::PerSolveOptions cg_per_solve_options = per_solve_options;
-  cg_per_solve_options.preconditioner = preconditioner_.get();
+  ConjugateGradientsSolverOptions cg_options;
+  cg_options.min_num_iterations = options_.min_num_iterations;
+  cg_options.max_num_iterations = options_.max_num_iterations;
+  cg_options.residual_reset_period = options_.residual_reset_period;
+  cg_options.q_tolerance = per_solve_options.q_tolerance;
+  cg_options.r_tolerance = per_solve_options.r_tolerance;
 
-  // Solve (AtA + DtD)x = z (= Atb).
-  VectorRef(x, A->num_cols()).setZero();
+  // lhs = AtA + DtD
   CgnrLinearOperator lhs(*A, per_solve_options.D);
+  // rhs = Atb.
+  Vector rhs(A->num_cols());
+  rhs.setZero();
+  A->LeftMultiply(b, rhs.data());
+
+  cg_solution_ = Vector::Zero(A->num_cols());
+  for (int i = 0; i < 4; ++i) {
+    scratch_[i] = Vector::Zero(A->num_cols());
+  }
   event_logger.AddEvent("Setup");
 
-  ConjugateGradientsSolver conjugate_gradient_solver(options_);
-  LinearSolver::Summary summary =
-      conjugate_gradient_solver.Solve(&lhs, z.data(), cg_per_solve_options, x);
+  LinearOperatorAdapter preconditioner(*preconditioner_);
+  auto summary = ConjugateGradientsSolver(
+      cg_options, lhs, rhs, preconditioner, scratch_, cg_solution_);
+  VectorRef(x, A->num_cols()) = cg_solution_;
   event_logger.AddEvent("Solve");
   return summary;
 }

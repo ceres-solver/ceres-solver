@@ -191,7 +191,6 @@ add_library(ceres_internal OBJECT
     compressed_row_jacobian_writer.cc
     compressed_row_sparse_matrix.cc
     conditioned_cost_function.cc
-    conjugate_gradients_solver.cc
     context.cc
     context_impl.cc
     coordinate_descent_minimizer.cc
