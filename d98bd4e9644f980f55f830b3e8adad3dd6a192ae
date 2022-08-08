@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e188c260_92242845",
+        "filename": "internal/ceres/cuda_conjugate_gradients_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:28:56Z",
+      "side": 1,
+      "message": "if we had a think wrapper around Eigen Vector objects, can we just use conjugate_gradients_solver.cc and not introduce a new class here?",
+      "revId": "d98bd4e9644f980f55f830b3e8adad3dd6a192ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
