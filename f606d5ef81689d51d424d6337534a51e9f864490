@@ -52,6 +52,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dfb9026_1bfe3c6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T23:49:22Z",
+      "side": 1,
+      "message": "Any appetite for fixing the \"RightMultiply\" name to \"RightMultiplyAndAccumulate\"? :-)",
+      "revId": "f606d5ef81689d51d424d6337534a51e9f864490",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9a6f7e0_11c1a9fe",
