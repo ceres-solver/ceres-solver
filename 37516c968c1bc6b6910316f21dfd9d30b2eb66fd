@@ -16,6 +16,24 @@
       "message": "I would have performed an early return prior to this line but I guess this assignment necessary even if `product_terms` is empty?",
       "revId": "37516c968c1bc6b6910316f21dfd9d30b2eb66fd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0a09083_98af3d7b",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T11:31:48Z",
+      "side": 1,
+      "message": "yes the rows array needs to be all zero.",
+      "parentUuid": "b20deed3_6facb034",
+      "revId": "37516c968c1bc6b6910316f21dfd9d30b2eb66fd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
