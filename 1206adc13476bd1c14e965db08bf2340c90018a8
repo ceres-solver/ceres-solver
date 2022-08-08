@@ -16,6 +16,24 @@
       "message": "Some initial thoughts - mostly I am concerned about intermediate copies if we rely on operator overloading and expression templates. Instead of relying on operator overloading and expression templates, let\u0027s include basic functions like axpy and axbpy in DenseVector.",
       "revId": "1206adc13476bd1c14e965db08bf2340c90018a8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aad23f04_003a5906",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:54:00Z",
+      "side": 1,
+      "message": "I have not gotten to refactoring/abstracting the vector operations. thats next.",
+      "parentUuid": "8d3609e8_01757d00",
+      "revId": "1206adc13476bd1c14e965db08bf2340c90018a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "99fe40dc_edd5eeaa",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:54:00Z",
+      "side": 1,
+      "message": "yes, I need to update the docs. There are no allocations performed in the function.",
+      "parentUuid": "958c3f93_3afbee58",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9863f746_9a918f44",
         "filename": "internal/ceres/conjugate_gradients_solver.h",
         "patchSetId": 1
@@ -73,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ce25c3c_b79d0ddf",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:54:00Z",
+      "side": 1,
+      "message": "I will update the docs for this.",
+      "parentUuid": "0f6f7fb1_29865dd1",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5da7ca36_6ff6f390",
         "filename": "internal/ceres/conjugate_gradients_solver.h",
         "patchSetId": 1
@@ -84,6 +120,24 @@
       "writtenOn": "2022-08-08T22:33:58Z",
       "side": 1,
       "message": "This requires operator overloading and careful implementation to ensure that the assignment does not create additional copies. Instead, let\u0027s do:\n```\nr.Copy(rhs);\nr.axpy(-1, tmp);\n```",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb0369b5_995623b1",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:54:00Z",
+      "side": 1,
+      "message": "I think we can just have a file of functions that operator on pairs of DenseVector types, with specializations for the two vector types we will encounter.",
+      "parentUuid": "5da7ca36_6ff6f390",
       "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -123,6 +177,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0aaef4e_e06467f4",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:54:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d714ffa9_051536aa",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aad4c810_df131ba9",
@@ -136,6 +208,24 @@
       "writtenOn": "2022-08-08T22:33:58Z",
       "side": 1,
       "message": "```\np.Copy(z)\n```",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af31bf91_54166f3f",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:54:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aad4c810_df131ba9",
       "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -157,6 +247,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2901d5b4_733c6be2",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:54:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "58a9e112_88fbb652",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a206f92d_cc731e4a",
@@ -170,6 +278,24 @@
       "writtenOn": "2022-08-08T22:33:58Z",
       "side": 1,
       "message": "```\nsolution.axpy(alpha, p);\n```",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a04b8b03_7766027b",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:54:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a206f92d_cc731e4a",
       "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -191,6 +317,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f16bc70_28073711",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:54:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "40ce2f5d_0e86f97e",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c0bb1d9_fecc14ee",
@@ -204,6 +348,24 @@
       "writtenOn": "2022-08-08T22:33:58Z",
       "side": 1,
       "message": "`rhs+r` will create a copy without expression templating the `dot()` function.\n```\nconst double Q1 \u003d -1.0 * (solution.dot(rhs) + solution.dot(r));\n```",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19250c9d_7246d104",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:54:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4c0bb1d9_fecc14ee",
       "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
