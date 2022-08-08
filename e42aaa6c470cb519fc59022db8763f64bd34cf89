@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a72c568_36d29c67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:32:02Z",
+      "side": 1,
+      "message": "Minor comment, otherwise it looks good to me.",
+      "revId": "e42aaa6c470cb519fc59022db8763f64bd34cf89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "140481bb_7d5cbccc",
@@ -14,6 +31,24 @@
       "writtenOn": "2022-08-08T18:54:12Z",
       "side": 1,
       "message": "Added this transpose for correctness (the product is expected to be a row vector), although there seems to be no difference between transposing or not for Eigen (maybe a compile-time auto fix).",
+      "revId": "e42aaa6c470cb519fc59022db8763f64bd34cf89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a42f75a_bb844a9d",
+        "filename": "include/ceres/internal/sphere_manifold_functions.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:32:02Z",
+      "side": 1,
+      "message": "Please add this comment to the code itself.",
+      "parentUuid": "140481bb_7d5cbccc",
       "revId": "e42aaa6c470cb519fc59022db8763f64bd34cf89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
