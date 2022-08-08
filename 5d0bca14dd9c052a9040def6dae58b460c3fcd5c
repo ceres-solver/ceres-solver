@@ -16,6 +16,24 @@
       "message": "It seems some sort of heap corruption occurs now in this test when compiled using MSVC. I\u0027ll look into it tomorrow including follow up changes w.r.t. `random.h` removal.",
       "revId": "5d0bca14dd9c052a9040def6dae58b460c3fcd5c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e71d80ad_b41d2546",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:16:50Z",
+      "side": 1,
+      "message": "Wow okay. Thanks for looking at this.",
+      "parentUuid": "17f0f0e2_fb00f4e2",
+      "revId": "5d0bca14dd9c052a9040def6dae58b460c3fcd5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
