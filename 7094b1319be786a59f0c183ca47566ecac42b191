@@ -323,6 +323,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "43922c5d_0f490ea6",
+        "filename": "include/ceres/line_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T17:20:08Z",
+      "side": 1,
+      "message": "I am good with incremental PRs. so I am okay going ahead of this with PR and dealing with quaternions in a followup CL.",
+      "parentUuid": "c35a0489_99309e9f",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 26
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "862d5272_9c2dd01c",
         "filename": "include/ceres/sphere_manifold.h",
         "patchSetId": 1
