@@ -283,6 +283,24 @@
       "parentUuid": "1668aa43_51e7ed19",
       "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25675cbd_956fb11f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T22:29:31Z",
+      "side": 1,
+      "message": "interesting numbers, and its not clear from these numbers if the power series expansion always wins either. how many cg iterations are you running?\n\nI am going to take a look at weber\u0027s thesis and then review your code so it will take me a little bit, but I should be able to review it by tomorrow sometime.",
+      "parentUuid": "f256f5d7_d7e59b00",
+      "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
