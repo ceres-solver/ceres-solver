@@ -67,6 +67,24 @@
       "message": "The cuda versions of all of these will require access to ContextImpl*. Thoughts on how to do that?",
       "revId": "f606d5ef81689d51d424d6337534a51e9f864490",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cbe89d0_c0e6714b",
+        "filename": "internal/ceres/eigen_vector_ops.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T23:46:01Z",
+      "side": 1,
+      "message": "won\u0027t the cudavector be carrying all the handles that it needs?",
+      "parentUuid": "a9a6f7e0_11c1a9fe",
+      "revId": "f606d5ef81689d51d424d6337534a51e9f864490",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
