@@ -420,6 +420,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fe1e58c_61c652b1",
+        "filename": "internal/ceres/corrector_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98f8c60c_23c136e0",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6f9d232_11ea08c0",
@@ -433,6 +451,24 @@
       "writtenOn": "2022-08-08T07:43:15Z",
       "side": 1,
       "message": "Avoid manual scaling and shifting.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "411466fc_59baf297",
+        "filename": "internal/ceres/corrector_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6f9d232_11ea08c0",
       "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
