@@ -94,15 +94,6 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   reduced_linear_system_solution_.resize(schur_complement_->num_rows());
   reduced_linear_system_solution_.setZero();
 
-  LinearSolver::Options cg_options;
-  cg_options.min_num_iterations = options_.min_num_iterations;
-  cg_options.max_num_iterations = options_.max_num_iterations;
-  ConjugateGradientsSolver cg_solver(cg_options);
-
-  LinearSolver::PerSolveOptions cg_per_solve_options;
-  cg_per_solve_options.r_tolerance = per_solve_options.r_tolerance;
-  cg_per_solve_options.q_tolerance = per_solve_options.q_tolerance;
-
   CreatePreconditioner(A);
   if (preconditioner_.get() != nullptr) {
     if (!preconditioner_->Update(*A, per_solve_options.D)) {
@@ -112,16 +103,33 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
       summary.message = "Preconditioner update failed.";
       return summary;
     }
+  }
 
-    cg_per_solve_options.preconditioner = preconditioner_.get();
+  ConjugateGradientsSolverOptions cg_options;
+  cg_options.min_num_iterations = options_.min_num_iterations;
+  cg_options.max_num_iterations = options_.max_num_iterations;
+  cg_options.residual_reset_period = options_.residual_reset_period;
+  cg_options.q_tolerance = per_solve_options.q_tolerance;
+  cg_options.r_tolerance = per_solve_options.r_tolerance;
+
+  LinearOperatorToEigenVectorAdapter lhs(*schur_complement_);
+  LinearOperatorToEigenVectorAdapter preconditioner(*preconditioner_);
+
+  Vector scratch[4];
+  for (int i = 0; i < 4; ++i) {
+    scratch[i] = Vector::Zero(schur_complement_->num_cols());
   }
 
   event_logger.AddEvent("Setup");
+
   LinearSolver::Summary summary =
-      cg_solver.Solve(schur_complement_.get(),
-                      schur_complement_->rhs().data(),
-                      cg_per_solve_options,
-                      reduced_linear_system_solution_.data());
+      ConjugateGradientsSolver(cg_options,
+                               lhs,
+                               schur_complement_->rhs(),
+                               preconditioner,
+                               scratch,
+                               reduced_linear_system_solution_);
+
   if (summary.termination_type != LinearSolverTerminationType::FAILURE &&
       summary.termination_type != LinearSolverTerminationType::FATAL_ERROR) {
     schur_complement_->BackSubstitute(reduced_linear_system_solution_.data(),
@@ -133,8 +141,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
 
 void IterativeSchurComplementSolver::CreatePreconditioner(
     BlockSparseMatrix* A) {
-  if (options_.preconditioner_type == IDENTITY ||
-      preconditioner_.get() != nullptr) {
+  if (preconditioner_.get() != nullptr) {
     return;
   }
 
@@ -153,6 +160,10 @@ void IterativeSchurComplementSolver::CreatePreconditioner(
   preconditioner_options.context = options_.context;
 
   switch (options_.preconditioner_type) {
+    case IDENTITY:
+      preconditioner_ = std::make_unique<IdentityPreconditioner>(
+          schur_complement_->num_cols());
+      break;
     case JACOBI:
       preconditioner_ = std::make_unique<SparseMatrixPreconditionerWrapper>(
           schur_complement_->block_diagonal_FtF_inverse());
