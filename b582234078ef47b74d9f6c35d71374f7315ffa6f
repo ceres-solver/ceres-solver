@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f68ef33_b11f56d1",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T22:33:58Z",
+      "side": 1,
+      "message": "Is it the caller\u0027s responsibility to make sure all the DenseVector (including scratch) are dimensioned correctly? Else there will be errors below.",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9863f746_9a918f44",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T22:33:58Z",
+      "side": 1,
+      "message": "At this point, `tmp` could be the wrong dimension, since it is picked up from opaque scratch space.",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5da7ca36_6ff6f390",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T22:33:58Z",
+      "side": 1,
+      "message": "This requires operator overloading and careful implementation to ensure that the assignment does not create additional copies. Instead, let\u0027s do:\n```\nr.Copy(rhs);\nr.axpy(-1, tmp);\n```",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af2b417a_77afa807",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T22:33:58Z",
+      "side": 1,
+      "message": "At this point, `z` could be the wrong dimension, since you are picking it up from opaque scratch space.",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aad4c810_df131ba9",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T22:33:58Z",
+      "side": 1,
+      "message": "```\np.Copy(z)\n```",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58a9e112_88fbb652",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T22:33:58Z",
+      "side": 1,
+      "message": "This requires operator overloading, and expression templates for zero-copy implementations. Let\u0027s instead define an axpby method on DenseVector and use that instead.\n```\np.axpby(1.0, beta, z);\n```",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a206f92d_cc731e4a",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T22:33:58Z",
+      "side": 1,
+      "message": "```\nsolution.axpy(alpha, p);\n```",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40ce2f5d_0e86f97e",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T22:33:58Z",
+      "side": 1,
+      "message": "```\nr.axpy(-alpha, q);\n```",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c0bb1d9_fecc14ee",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T22:33:58Z",
+      "side": 1,
+      "message": "`rhs+r` will create a copy without expression templating the `dot()` function.\n```\nconst double Q1 \u003d -1.0 * (solution.dot(rhs) + solution.dot(r));\n```",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
