@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "958c3f93_3afbee58",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T22:38:50Z",
+      "side": 1,
+      "message": "Okay I see the usage now. Perhaps add a dimension check here to be safe?",
+      "parentUuid": "8f68ef33_b11f56d1",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9863f746_9a918f44",
         "filename": "internal/ceres/conjugate_gradients_solver.h",
         "patchSetId": 1
@@ -31,6 +49,24 @@
       "writtenOn": "2022-08-08T22:33:58Z",
       "side": 1,
       "message": "At this point, `tmp` could be the wrong dimension, since it is picked up from opaque scratch space.",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f6f7fb1_29865dd1",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T22:38:50Z",
+      "side": 1,
+      "message": "Will be resolved by check above.",
+      "parentUuid": "9863f746_9a918f44",
       "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -65,6 +101,24 @@
       "writtenOn": "2022-08-08T22:33:58Z",
       "side": 1,
       "message": "At this point, `z` could be the wrong dimension, since you are picking it up from opaque scratch space.",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d714ffa9_051536aa",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-08T22:38:50Z",
+      "side": 1,
+      "message": "Will be resolved by check above.",
+      "parentUuid": "af2b417a_77afa807",
       "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
