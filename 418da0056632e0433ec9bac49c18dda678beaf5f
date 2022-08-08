@@ -139,6 +139,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c099607a_17c14474",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T09:32:54Z",
+      "side": 1,
+      "message": "I would pass the generator as argument such that a single instance can be shared among different steps used to generate random numbers also outside the method. Using different engine instances breaks the random number sequence and possibly diminishes its quality.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "363b7ecd_bce673fd",
         "filename": "internal/ceres/block_sparse_matrix.cc",
         "patchSetId": 1
