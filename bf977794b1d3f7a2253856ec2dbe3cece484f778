@@ -265,6 +265,24 @@
       "parentUuid": "94d2936a_b9d91aeb",
       "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f256f5d7_d7e59b00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-08T21:30:52Z",
+      "side": 1,
+      "message": "I made quite an underestimate of time to finish all experiment configurations on all problems i picked, so i stopped heating my room. Here are the results for the finished experiments https://drive.google.com/drive/folders/1r2fULHx-Yo8VQwAbyf5fKtqmD4EjXS-8?usp\u003dsharing\n\nUsing iterative_schur solver, schur_jacobi preconditioner as a baseline and varying power series expansion preconditioner (initialization) parameters.\n\nSeems like using initialization is valuable given tight constrains on wall run time. Also, might be interesting to play with \u0027dynamic\u0027 usage of initialization, but clearly this is quite far from math formulation.",
+      "parentUuid": "1668aa43_51e7ed19",
+      "revId": "bf977794b1d3f7a2253856ec2dbe3cece484f778",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
