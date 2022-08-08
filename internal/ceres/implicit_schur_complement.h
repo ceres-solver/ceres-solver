@@ -122,6 +122,12 @@ class CERES_NO_EXPORT ImplicitSchurComplement final : public LinearOperator {
     RightMultiply(x, y);
   }
 
+  // Following is useful for approximation of S^-1 via power series expansion.
+  // Z = (F'F)^-1 F'E (E'E)^-1 E'F
+  // y += Zx
+  void InversePowerSeriesOperatorRightMultiply(const double* x,
+                                               double* y) const;
+
   // y = (E'E)^-1 (E'b - E'F x). Given an estimate of the solution to
   // the Schur complement system, this method computes the value of
   // the e_block variables that were eliminated to form the Schur
