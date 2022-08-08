@@ -334,6 +334,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db4efba0_0c663225",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T18:38:33Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "dd781f35_0cd64fb2",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "363b7ecd_bce673fd",
