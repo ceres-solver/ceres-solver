@@ -237,6 +237,7 @@ add_library(ceres_internal OBJECT
     parameter_block_ordering.cc
     partitioned_matrix_view.cc
     polynomial.cc
+    power_series_expansion_preconditioner.cc
     preconditioner.cc
     preprocessor.cc
     problem_impl.cc
@@ -529,6 +530,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(parameter_dims)
   ceres_test(partitioned_matrix_view)
   ceres_test(polynomial)
+  ceres_test(power_series_expansion_preconditioner)
   ceres_test(problem)
   ceres_test(program)
   ceres_test(reorder_program)
