@@ -1,0 +1,319 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "981d2afa_3c2abfac",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "here is a slightly better structure of this function.\n\nyou can have an InitCUDA and and then another function that (InitCUDA say InitCudaFoo) calls. If that function returns false, InitCUDA calls TearDown otherwise just returns true. \n\nwhat this ensures is that TearDown always gets called it Initialization fails.",
+      "range": {
+        "startLine": 64,
+        "startChar": 18,
+        "endLine": 64,
+        "endChar": 26
+      },
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5b83356_74033e72",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "why not just called TearDown()?",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 113,
+        "endChar": 23
+      },
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aeb9088a_5417fda4",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "I think since these variables are called foo_handle already, you can drop the comments here.",
+      "range": {
+        "startLine": 82,
+        "startChar": 15,
+        "endLine": 82,
+        "endChar": 18
+      },
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90b46a25_ee21ab08",
+        "filename": "internal/ceres/cuda_linear_operator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "Why do you need a base class? are you really going to have multiple versions of this class?",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 12
+      },
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c22c9b3b_bfcf367a",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "why won\u0027t you assume that at this point the context has been initialized? why would the context be a non-null but uninitialzed object?",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4669b933_41c1407b",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "just matrix is fine here and below.",
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0c7c524_025225e4",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "why bother? the user can do this conversion.",
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b73c987_80a01eba",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "why bother? the user can do this conversion.",
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fccc394_fbb7b04c",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "we already know this will be done as frequently as RightMultiply since we are doing CGNR. so its not really a question of whether it is being done frequently or not.",
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7614cb68_fc53c01e",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "is this object expensive to create? and destroy? I imagine the matrix copy is the expensive part. if this object is not expensive then the constructor should just take the matrix as input no?",
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc25a346_ccd605ed",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "why do you need to expose num_nonzeroes?",
+      "range": {
+        "startLine": 73,
+        "startChar": 21,
+        "endLine": 73,
+        "endChar": 26
+      },
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90d925a5_705bb1be",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "why do you need four of these methods?",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 15
+      },
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b7ea6a0_8ce47020",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "what happens to the data when you resize? also do we actually ever do this?\n\nwhy would we ever create this object without a initial vector or the zero vector?",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 13
+      },
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "100eebd2_ded70c1f",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "why have multiple versions with eigen and raw memory? pick one and use it.",
+      "range": {
+        "startLine": 90,
+        "startChar": 20,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6b12037_b89a0bd0",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "is the multiplication with b that expensive that its worth having two methods? also why not just have Axpby and depect when b is 1?",
+      "range": {
+        "startLine": 100,
+        "startChar": 13,
+        "endLine": 100,
+        "endChar": 19
+      },
+      "revId": "11f567951800747fd87085271462f9641a1fb20d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

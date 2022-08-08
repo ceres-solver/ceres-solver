@@ -208,6 +208,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dd206f2d_bdef2edd",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T02:16:37Z",
+      "side": 1,
+      "message": "Then why not have a factory function which takes the context and returns an initialized CudaSparseMatrix object?\n\nas for the context object, why not put a call to InitCuda in solver.cc? that way you are guaranteed that downstream cuda is always initialized.",
+      "parentUuid": "d5fff2e3_5c0b8d98",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 64,
+        "endChar": 23
+      },
+      "revId": "ce919c712e7c335c13ce37a29c8a844e23e506d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f486ef06_2b2c8d94",
         "filename": "internal/ceres/cuda_sparse_matrix.h",
         "patchSetId": 3
