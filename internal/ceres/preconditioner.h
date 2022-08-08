@@ -142,6 +142,22 @@ class CERES_NO_EXPORT Preconditioner : public LinearOperator {
   int num_cols() const override { return num_rows(); }
 };
 
+class CERES_NO_EXPORT IdentityPreconditioner : public Preconditioner {
+ public:
+  IdentityPreconditioner(int num_rows) : num_rows_(num_rows) {}
+
+  bool Update(const LinearOperator& A, const double* D) final { return true; }
+
+  void RightMultiply(const double* x, double* y) const final {
+    VectorRef(y, num_rows_) += ConstVectorRef(x, num_rows_);
+  }
+
+  int num_rows() const final { return num_rows_; }
+
+ private:
+  int num_rows_ = -1;
+};
+
 // This templated subclass of Preconditioner serves as a base class for
 // other preconditioners that depend on the particular matrix layout of
 // the underlying linear operator.

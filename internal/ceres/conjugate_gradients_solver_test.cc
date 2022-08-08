@@ -37,6 +37,7 @@
 
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
+#include "ceres/preconditioner.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "gtest/gtest.h"
@@ -58,15 +59,24 @@ TEST(ConjugateGradientTest, Solves3x3IdentitySystem) {
   x(1) = 1;
   x(2) = 1;
 
-  LinearSolver::Options options;
-  options.max_num_iterations = 10;
+  ConjugateGradientsSolverOptions cg_options;
+  cg_options.min_num_iterations = 1;
+  cg_options.max_num_iterations = 10;
+  cg_options.residual_reset_period = 20;
+  cg_options.q_tolerance = 0.0;
+  cg_options.r_tolerance = 1e-9;
 
-  LinearSolver::PerSolveOptions per_solve_options;
-  per_solve_options.r_tolerance = 1e-9;
+  Vector scratch[4];
+  for (int i = 0; i < 4; ++i) {
+    scratch[i] = Vector::Zero(A->num_cols());
+  }
 
-  ConjugateGradientsSolver solver(options);
-  LinearSolver::Summary summary =
-      solver.Solve(A.get(), b.data(), per_solve_options, x.data());
+  IdentityPreconditioner identity(A->num_cols());
+  LinearOperatorAdapter lhs(*A);
+  LinearOperatorAdapter preconditioner(identity);
+
+  auto summary =
+      ConjugateGradientsSolver(cg_options, lhs, b, preconditioner, scratch, x);
 
   EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
   ASSERT_EQ(summary.num_iterations, 1);
@@ -114,15 +124,24 @@ TEST(ConjuateGradientTest, Solves3x3SymmetricSystem) {
   x(1) = 1;
   x(2) = 1;
 
-  LinearSolver::Options options;
-  options.max_num_iterations = 10;
+  ConjugateGradientsSolverOptions cg_options;
+  cg_options.min_num_iterations = 1;
+  cg_options.max_num_iterations = 10;
+  cg_options.residual_reset_period = 20;
+  cg_options.q_tolerance = 0.0;
+  cg_options.r_tolerance = 1e-9;
 
-  LinearSolver::PerSolveOptions per_solve_options;
-  per_solve_options.r_tolerance = 1e-9;
+  Vector scratch[4];
+  for (int i = 0; i < 4; ++i) {
+    scratch[i] = Vector::Zero(A->num_cols());
+  }
 
-  ConjugateGradientsSolver solver(options);
-  LinearSolver::Summary summary =
-      solver.Solve(A.get(), b.data(), per_solve_options, x.data());
+  IdentityPreconditioner identity(A->num_cols());
+  LinearOperatorAdapter lhs(*A);
+  LinearOperatorAdapter preconditioner(identity);
+
+  auto summary =
+      ConjugateGradientsSolver(cg_options, lhs, b, preconditioner, scratch, x);
 
   EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 
