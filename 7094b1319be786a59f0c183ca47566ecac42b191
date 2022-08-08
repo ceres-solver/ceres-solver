@@ -299,6 +299,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c35a0489_99309e9f",
+        "filename": "include/ceres/line_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6677
+      },
+      "writtenOn": "2022-08-08T15:51:51Z",
+      "side": 1,
+      "message": "I see. In the quaternion case it even seems more beneficial to use that notation since you get rid of some divisions (however I personally would prefer the covariance to represent angles and not half-angles). Should we go on with this PR and have a different convention for quaternions and spheres/lines then? I guess that is the question now. I could also update the quaternions and all their tests in another PR if eventually that is decided.",
+      "parentUuid": "b3dcccd7_6b2467a2",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 26
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "862d5272_9c2dd01c",
         "filename": "include/ceres/sphere_manifold.h",
         "patchSetId": 1
