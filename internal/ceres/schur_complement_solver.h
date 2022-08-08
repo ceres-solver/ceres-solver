@@ -130,9 +130,8 @@ class CERES_NO_EXPORT SchurComplementSolver : public BlockSparseMatrixSolver {
   }
   const BlockRandomAccessMatrix* lhs() const { return lhs_.get(); }
   BlockRandomAccessMatrix* mutable_lhs() { return lhs_.get(); }
-
-  void set_rhs(std::unique_ptr<double[]> rhs) { rhs_ = std::move(rhs); }
-  const double* rhs() const { return rhs_.get(); }
+  void ResizeRhs(int n) { rhs_.resize(n); }
+  const Vector& rhs() const { return rhs_; }
 
  private:
   virtual void InitStorage(const CompressedRowBlockStructure* bs) = 0;
@@ -144,7 +143,7 @@ class CERES_NO_EXPORT SchurComplementSolver : public BlockSparseMatrixSolver {
 
   std::unique_ptr<SchurEliminatorBase> eliminator_;
   std::unique_ptr<BlockRandomAccessMatrix> lhs_;
-  std::unique_ptr<double[]> rhs_;
+  Vector rhs_;
 };
 
 // Dense Cholesky factorization based solver.
@@ -188,6 +187,8 @@ class CERES_NO_EXPORT SparseSchurComplementSolver final
   std::vector<int> blocks_;
   std::unique_ptr<SparseCholesky> sparse_cholesky_;
   std::unique_ptr<BlockRandomAccessDiagonalMatrix> preconditioner_;
+  Vector cg_solution_;
+  Vector scratch_[4];
 };
 
 }  // namespace ceres::internal
