@@ -318,6 +318,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dd781f35_0cd64fb2",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T17:57:23Z",
+      "side": 1,
+      "message": "alright let me do that in a follow up (or if you have CL you can beat me to it). I am going to go ahead and merge this once if you are good with it and then revise the CreateRandomMatrix interface.",
+      "parentUuid": "b83597da_d94bab1d",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "363b7ecd_bce673fd",
         "filename": "internal/ceres/block_sparse_matrix.cc",
         "patchSetId": 1
