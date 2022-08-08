@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82f5a472_9a0baf91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T23:12:07Z",
+      "side": 1,
+      "message": "have a look now.\nThe only thing I have left undone is the assignment operator which I think is perhaps worth implementing for CudaVector.. if not, then we can add a small copy op also.",
+      "revId": "f606d5ef81689d51d424d6337534a51e9f864490",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
