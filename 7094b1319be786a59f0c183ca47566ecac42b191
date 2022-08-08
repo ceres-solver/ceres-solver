@@ -142,6 +142,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f92b7c17_880baf90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6677
+      },
+      "writtenOn": "2022-08-08T18:47:14Z",
+      "side": 1,
+      "message": "Closing this comment.",
+      "parentUuid": "260e4486_eae327bb",
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eca600eb_cf11083e",
@@ -370,6 +388,30 @@
       "side": 1,
       "message": "I am good with incremental PRs. so I am okay going ahead of this with PR and dealing with quaternions in a followup CL.",
       "parentUuid": "c35a0489_99309e9f",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 26
+      },
+      "revId": "7094b1319be786a59f0c183ca47566ecac42b191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3cf8fe9_05e5db5d",
+        "filename": "include/ceres/line_manifold.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6677
+      },
+      "writtenOn": "2022-08-08T18:47:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "43922c5d_0f490ea6",
       "range": {
         "startLine": 159,
         "startChar": 22,
