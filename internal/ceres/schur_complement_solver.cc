@@ -160,7 +160,7 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
                          b,
                          per_solve_options.D,
                          lhs_.get(),
-                         rhs_.get());
+                         rhs_.data());
   event_logger.AddEvent("Eliminate");
 
   double* reduced_solution = x + A->num_cols() - lhs_->num_cols();
@@ -196,7 +196,7 @@ void DenseSchurComplementSolver::InitStorage(
   }
 
   set_lhs(std::make_unique<BlockRandomAccessDenseMatrix>(blocks));
-  set_rhs(std::make_unique<double[]>(lhs()->num_rows()));
+  ResizeRhs(lhs()->num_rows());
 }
 
 // Solve the system Sx = r, assuming that the matrix S is stored in a
@@ -220,7 +220,7 @@ LinearSolver::Summary DenseSchurComplementSolver::SolveReducedLinearSystem(
 
   summary.num_iterations = 1;
   summary.termination_type = cholesky_->FactorAndSolve(
-      num_rows, m->mutable_values(), rhs(), solution, &summary.message);
+      num_rows, m->mutable_values(), rhs().data(), solution, &summary.message);
   return summary;
 }
 
@@ -303,7 +303,7 @@ void SparseSchurComplementSolver::InitStorage(
 
   set_lhs(
       std::make_unique<BlockRandomAccessSparseMatrix>(blocks_, block_pairs));
-  set_rhs(std::make_unique<double[]>(lhs()->num_rows()));
+  ResizeRhs(lhs()->num_rows());
 }
 
 LinearSolver::Summary SparseSchurComplementSolver::SolveReducedLinearSystem(
@@ -343,7 +343,7 @@ LinearSolver::Summary SparseSchurComplementSolver::SolveReducedLinearSystem(
 
   summary.num_iterations = 1;
   summary.termination_type = sparse_cholesky_->FactorAndSolve(
-      lhs.get(), rhs(), solution, &summary.message);
+      lhs.get(), rhs().data(), solution, &summary.message);
   return summary;
 }
 
@@ -402,18 +402,32 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingConjugateGradients(
       std::make_unique<BlockRandomAccessDiagonalMatrixAdapter>(
           *preconditioner_);
 
-  LinearSolver::Options cg_options;
+  ConjugateGradientsSolverOptions cg_options;
   cg_options.min_num_iterations = options().min_num_iterations;
   cg_options.max_num_iterations = options().max_num_iterations;
-  ConjugateGradientsSolver cg_solver(cg_options);
+  cg_options.residual_reset_period = options().residual_reset_period;
+  cg_options.q_tolerance = per_solve_options.q_tolerance;
+  cg_options.r_tolerance = per_solve_options.r_tolerance;
 
-  LinearSolver::PerSolveOptions cg_per_solve_options;
-  cg_per_solve_options.r_tolerance = per_solve_options.r_tolerance;
-  cg_per_solve_options.q_tolerance = per_solve_options.q_tolerance;
-  cg_per_solve_options.preconditioner = preconditioner_adapter.get();
+  LinearOperatorToEigenVectorAdapter lhs_adapter2(*lhs_adapter);
+  LinearOperatorToEigenVectorAdapter preconditioner_adapter2(
+      *preconditioner_adapter);
+  Vector cg_solution = Vector::Zero(lhs()->num_rows());
+  Vector scratch[4];
+  for (int i = 0; i < 4; ++i) {
+    scratch[i] = cg_solution;
+  }
 
-  return cg_solver.Solve(
-      lhs_adapter.get(), rhs(), cg_per_solve_options, solution);
+  auto summary =
+      ConjugateGradientsSolver<LinearOperatorToEigenVectorAdapter, Vector>(
+          cg_options,
+          lhs_adapter2,
+          rhs(),
+          preconditioner_adapter2,
+          scratch,
+          cg_solution);
+  VectorRef(solution, lhs()->num_rows()) = cg_solution;
+  return summary;
 }
 
 }  // namespace ceres::internal
