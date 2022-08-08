@@ -97,13 +97,20 @@ enum PreconditionerType {
   // Block diagonal of the Gauss-Newton Hessian.
   JACOBI,
 
-  // Note: The following three preconditioners can only be used with
+  // Note: The following four preconditioners can only be used with
   // the ITERATIVE_SCHUR solver. They are well suited for Structure
   // from Motion problems.
 
   // Block diagonal of the Schur complement. This preconditioner may
   // only be used with the ITERATIVE_SCHUR solver.
   SCHUR_JACOBI,
+
+  // Use power series expansion to approximate the inversion of Schur complement
+  // as a preconditioner.
+  // WARNING! Application of this preconditioner currently is not integrated
+  // into linear solvers, so failure to use it via public API is expected
+  // behaviour.
+  SCHUR_POWER_SERIES_EXPANSION,
 
   // Visibility clustering based preconditioners.
   //

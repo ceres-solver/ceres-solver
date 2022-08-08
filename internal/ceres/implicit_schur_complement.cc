@@ -60,7 +60,8 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
   // E'E and F'E.
   if (block_diagonal_EtE_inverse_ == nullptr) {
     block_diagonal_EtE_inverse_ = A_->CreateBlockDiagonalEtE();
-    if (options_.preconditioner_type == JACOBI) {
+    if (options_.preconditioner_type == JACOBI ||
+        options_.preconditioner_type == SCHUR_POWER_SERIES_EXPANSION) {
       block_diagonal_FtF_inverse_ = A_->CreateBlockDiagonalFtF();
     }
     rhs_.resize(A_->num_cols_f());
@@ -71,7 +72,8 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
     tmp_f_cols_.resize(A_->num_cols_f());
   } else {
     A_->UpdateBlockDiagonalEtE(block_diagonal_EtE_inverse_.get());
-    if (options_.preconditioner_type == JACOBI) {
+    if (options_.preconditioner_type == JACOBI ||
+        options_.preconditioner_type == SCHUR_POWER_SERIES_EXPANSION) {
       A_->UpdateBlockDiagonalFtF(block_diagonal_FtF_inverse_.get());
     }
   }
@@ -80,7 +82,8 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
   // contributions from the diagonal D if it is non-null. Add that to
   // the block diagonals and invert them.
   AddDiagonalAndInvert(D_, block_diagonal_EtE_inverse_.get());
-  if (options_.preconditioner_type == JACOBI) {
+  if (options_.preconditioner_type == JACOBI ||
+      options_.preconditioner_type == SCHUR_POWER_SERIES_EXPANSION) {
     AddDiagonalAndInvert((D_ == nullptr) ? nullptr : D_ + A_->num_cols_e(),
                          block_diagonal_FtF_inverse_.get());
   }
@@ -127,6 +130,33 @@ void ImplicitSchurComplement::RightMultiplyAndAccumulate(const double* x,
 
   // y = y5 + F' y1
   A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(), y);
+}
+
+void ImplicitSchurComplement::InversePowerSeriesOperatorRightMultiplyAccumulate(
+    const double* x, double* y) const {
+  // y1 = F x
+  tmp_rows_.setZero();
+  A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
+
+  // y2 = E' y1
+  tmp_e_cols_.setZero();
+  A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(), tmp_e_cols_.data());
+
+  // y3 = (E'E)^-1 y2
+  tmp_e_cols_2_.setZero();
+  block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
+                                                          tmp_e_cols_2_.data());
+  // y1 = E y3
+  tmp_rows_.setZero();
+  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(), tmp_rows_.data());
+
+  // y4 = F' y1
+  tmp_f_cols_.setZero();
+  A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(), tmp_f_cols_.data());
+
+  // y += (F'F)^-1 y4
+  block_diagonal_FtF_inverse_->RightMultiplyAndAccumulate(tmp_f_cols_.data(),
+                                                          y);
 }
 
 // Given a block diagonal matrix and an optional array of diagonal
