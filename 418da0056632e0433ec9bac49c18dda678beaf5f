@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "45de7a6f_cb2a0701",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85ee7912_5e7c87c4",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "cb7f0178_dc4f8f93",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -52,6 +70,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "698bdbe4_cb1b277b",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c63045_79cee8b9",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "000ecd43_8d60accc",
@@ -65,6 +101,24 @@
       "writtenOn": "2022-08-08T07:43:15Z",
       "side": 1,
       "message": "For reproducible results, I believe it is better use a specific PRNG such as `std::mt19937` because `std::default_random_engine` aliases to an implementation-defined generator.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85b37c3f_486cc597",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "000ecd43_8d60accc",
       "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -86,6 +140,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcf4fe90_50f1d1d6",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae14becb_2ee7cacb",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0148397_079887f2",
@@ -99,6 +171,24 @@
       "writtenOn": "2022-08-08T07:43:15Z",
       "side": 1,
       "message": "I personally don\u0027t like manually scaling random numbers because this functionality is already provided by the distribution classes directly. There are two variants:\n1. Either declare multiple distribution, one for the odometry and the other for the range, or\n2. Use the `operator()(Generator\u0026, const param_type\u0026)` overload on the distribution to specify the different standard deviations.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef54e941_1146933c",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0148397_079887f2",
       "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -120,6 +210,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16b7bac4_9935f3c3",
+        "filename": "internal/ceres/autodiff_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "588579f2_df312389",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "efeeae83_a247d1e9",
@@ -133,6 +241,24 @@
       "writtenOn": "2022-08-08T07:43:15Z",
       "side": 1,
       "message": "Also `uniform01`?",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2db8a141_dd5bcfe8",
+        "filename": "internal/ceres/autodiff_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efeeae83_a247d1e9",
       "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -156,6 +282,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ee5e3a19_350b3afd",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:07:05Z",
+      "side": 1,
+      "message": "do you mean passing the generator as an argument to CreateRandomMatrix?\nthat makes the call site worse and the options struct now carrying a generator, which seems odd. \n\nGiven that there is no base class for the random number generators, won\u0027t we end up committing to one specific random number generator in the API or end up playing some std::function tricks?",
+      "parentUuid": "c099607a_17c14474",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "363b7ecd_bce673fd",
         "filename": "internal/ceres/block_sparse_matrix.cc",
         "patchSetId": 1
@@ -167,6 +311,24 @@
       "writtenOn": "2022-08-08T07:43:15Z",
       "side": 1,
       "message": "Just above you used C++17 class template argument deduction but here the template type (`double`) is explicitly specified. Better to use one variant for consistency.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76736cc2_e630970b",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "363b7ecd_bce673fd",
       "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -188,6 +350,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4f60559_cf0f2f8e",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f33f569a_8433e9a6",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ac8ed82_ecc9fa16",
@@ -201,6 +381,24 @@
       "writtenOn": "2022-08-08T07:43:15Z",
       "side": 1,
       "message": "For the future, I believe for consistency it would be better to avoid Eigen\u0027s `.setRandom()`/`::Random()` since AFAIK it uses the `\u003ccstdlib\u003e` PRNG.",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96cfd95f_fd6f4fdf",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:07:05Z",
+      "side": 1,
+      "message": "for our purposes it likely does not matter though right and when eigen cleans up its internals we will just get their improvements as they come?",
+      "parentUuid": "3ac8ed82_ecc9fa16",
       "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -252,6 +450,30 @@
       "writtenOn": "2022-08-08T07:43:15Z",
       "side": 1,
       "message": "Set the lower bound to 0.1 to avoid clamping manually below?",
+      "range": {
+        "startLine": 174,
+        "startChar": 54,
+        "endLine": 174,
+        "endChar": 57
+      },
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0490b5f_03078675",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T14:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2925d1eb_72b2f6eb",
       "range": {
         "startLine": 174,
         "startChar": 54,
