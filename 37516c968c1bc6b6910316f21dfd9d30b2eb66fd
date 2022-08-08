@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b20deed3_6facb034",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T07:48:38Z",
+      "side": 1,
+      "message": "I would have performed an early return prior to this line but I guess this assignment necessary even if `product_terms` is empty?",
+      "revId": "37516c968c1bc6b6910316f21dfd9d30b2eb66fd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
