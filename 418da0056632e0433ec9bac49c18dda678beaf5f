@@ -300,6 +300,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b83597da_d94bab1d",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-08T17:50:43Z",
+      "side": 1,
+      "message": "What I mean is passing the generator as additional argument: https://github.com/sergiud/ceres-solver/commit/636d66d0848b2d9301c0c224330dbf5c1fba902e#diff-9e89b4615c8709d313d40d6010547f1ea0c5d66c5a93cdea5f85cb792d501420R375-R377\n\nSince the corresponding methods (and classes) are private to the library, sticking to a specific generator engine is fine IMO. The generator type also does not change at runtime thus absolute flexibility in terms of type erasure is unnecessary here.",
+      "parentUuid": "ee5e3a19_350b3afd",
+      "revId": "418da0056632e0433ec9bac49c18dda678beaf5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "363b7ecd_bce673fd",
         "filename": "internal/ceres/block_sparse_matrix.cc",
         "patchSetId": 1
