@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -30,6 +30,8 @@
 
 #ifndef CERES_INTERNAL_NUMERIC_DIFF_TEST_UTILS_H_
 #define CERES_INTERNAL_NUMERIC_DIFF_TEST_UTILS_H_
+
+#include <random>
 
 #include "ceres/cost_function.h"
 #include "ceres/internal/export.h"
@@ -116,8 +118,10 @@ class ExponentialCostFunction : public SizedCostFunction<1, 1> {
 // y = x^2 + [random noise], dy/dx ~ 2x
 class CERES_NO_EXPORT RandomizedFunctor {
  public:
-  RandomizedFunctor(double noise_factor, unsigned int random_seed)
-      : noise_factor_(noise_factor), random_seed_(random_seed) {}
+  RandomizedFunctor(double noise_factor, std::mt19937& prng)
+      : noise_factor_(noise_factor),
+        prng_(&prng),
+        uniform_distribution_{-noise_factor, noise_factor} {}
 
   bool operator()(const double* x1, double* residuals) const;
   void ExpectCostFunctionEvaluationIsNearlyCorrect(
@@ -125,13 +129,16 @@ class CERES_NO_EXPORT RandomizedFunctor {
 
  private:
   double noise_factor_;
-  unsigned int random_seed_;
+  // Store the generator as a pointer to be able to modify the instance the
+  // pointer is pointing to.
+  std::mt19937* prng_;
+  mutable std::uniform_real_distribution<> uniform_distribution_;
 };
 
 class CERES_NO_EXPORT RandomizedCostFunction : public SizedCostFunction<1, 1> {
  public:
-  RandomizedCostFunction(double noise_factor, unsigned int random_seed)
-      : functor_(noise_factor, random_seed) {}
+  RandomizedCostFunction(double noise_factor, std::mt19937& prng)
+      : functor_(noise_factor, prng) {}
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,

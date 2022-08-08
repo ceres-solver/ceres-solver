@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2017 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -31,6 +31,7 @@
 #include "ceres/subset_preconditioner.h"
 
 #include <memory>
+#include <random>
 
 #include "Eigen/Dense"
 #include "Eigen/SparseCore"
@@ -100,13 +101,13 @@ class SubsetPreconditionerTest : public ::testing::TestWithParam<Param> {
     options.max_row_block_size = 4;
     options.block_density = 0.9;
 
-    m_ = BlockSparseMatrix::CreateRandomMatrix(options);
+    m_ = BlockSparseMatrix::CreateRandomMatrix(options, prng);
     start_row_block_ = m_->block_structure()->rows.size();
 
     // Ensure that the bottom part of the matrix has the same column
     // block structure.
     options.col_blocks = m_->block_structure()->cols;
-    b_ = BlockSparseMatrix::CreateRandomMatrix(options);
+    b_ = BlockSparseMatrix::CreateRandomMatrix(options, prng);
     m_->AppendRows(*b_);
 
     // Create a Identity block diagonal matrix with the same column
@@ -132,6 +133,7 @@ class SubsetPreconditionerTest : public ::testing::TestWithParam<Param> {
   std::unique_ptr<Preconditioner> preconditioner_;
   Vector diagonal_;
   int start_row_block_;
+  std::mt19937 prng;
 };
 
 TEST_P(SubsetPreconditionerTest, foo) {

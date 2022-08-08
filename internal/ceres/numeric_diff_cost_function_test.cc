@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,7 @@
 #include <array>
 #include <cmath>
 #include <memory>
+#include <random>
 #include <string>
 #include <vector>
 
@@ -310,6 +311,7 @@ TEST(NumericDiffCostFunction, ExponentialCostFunctionRidders) {
 }
 
 TEST(NumericDiffCostFunction, RandomizedFunctorRidders) {
+  std::mt19937 prng;
   NumericDiffOptions options;
   // Larger initial step size is chosen to produce robust results in the
   // presence of random noise.
@@ -321,15 +323,16 @@ TEST(NumericDiffCostFunction, RandomizedFunctorRidders) {
                                                1,  // number of residuals
                                                1   // size of x1
                                                >>(
-          new RandomizedFunctor(kNoiseFactor, kRandomSeed),
+          new RandomizedFunctor(kNoiseFactor, prng),
           TAKE_OWNERSHIP,
           1,
           options);
-  RandomizedFunctor functor(kNoiseFactor, kRandomSeed);
+  RandomizedFunctor functor(kNoiseFactor, prng);
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function);
 }
 
 TEST(NumericDiffCostFunction, RandomizedCostFunctionRidders) {
+  std::mt19937 prng;
   NumericDiffOptions options;
   // Larger initial step size is chosen to produce robust results in the
   // presence of random noise.
@@ -341,12 +344,12 @@ TEST(NumericDiffCostFunction, RandomizedCostFunctionRidders) {
                                                1,  // number of residuals
                                                1   // size of x1
                                                >>(
-          new RandomizedCostFunction(kNoiseFactor, kRandomSeed),
+          new RandomizedCostFunction(kNoiseFactor, prng),
           TAKE_OWNERSHIP,
           1,
           options);
 
-  RandomizedFunctor functor(kNoiseFactor, kRandomSeed);
+  RandomizedFunctor functor(kNoiseFactor, prng);
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function);
 }
 

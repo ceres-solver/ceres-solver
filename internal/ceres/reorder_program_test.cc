@@ -265,7 +265,7 @@ TEST(_, ReorderResidualBlocksbyPartition) {
   problem.GetResidualBlocks(&residual_block_ids);
   std::vector<ResidualBlock*> residual_blocks =
       problem.program().residual_blocks();
-  auto rng = std::default_random_engine{};
+  auto rng = std::mt19937{};
   for (int i = 1; i < 6; ++i) {
     std::shuffle(
         std::begin(residual_block_ids), std::end(residual_block_ids), rng);

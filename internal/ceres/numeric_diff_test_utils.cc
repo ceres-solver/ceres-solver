@@ -226,14 +226,7 @@ void ExponentialFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
 }
 
 bool RandomizedFunctor::operator()(const double* x1, double* residuals) const {
-  double random_value =
-      static_cast<double>(rand()) / static_cast<double>(RAND_MAX);
-
-  // Normalize noise to [-factor, factor].
-  random_value *= 2.0;
-  random_value -= 1.0;
-  random_value *= noise_factor_;
-
+  double random_value = uniform_distribution_(*prng_);
   residuals[0] = x1[0] * x1[0] + random_value;
   return true;
 }
@@ -243,9 +236,6 @@ void RandomizedFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
   std::vector<double> kTests = {0.0, 1.0, 3.0, 4.0, 50.0};
 
   const double kTolerance = 2e-4;
-
-  // Initialize random number generator with given seed.
-  srand(random_seed_);
 
   for (double& test : kTests) {
     double* parameters[] = {&test};
