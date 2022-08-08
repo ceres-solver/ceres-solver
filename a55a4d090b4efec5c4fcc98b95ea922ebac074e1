@@ -70,6 +70,24 @@
       "parentUuid": "e96b054e_c833f1a1",
       "revId": "a55a4d090b4efec5c4fcc98b95ea922ebac074e1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6db5a9a2_e96426fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-08T13:43:16Z",
+      "side": 1,
+      "message": "for implicit_schur_complement::rightmultiply_z (I am not fond of the name but we can come back to it) you can just test exact results computed using a different matrix representation. For example you could construct a dense jacobian, partition it into E and F blocks and do the computation that rightmultiply_z is doing and compare the results upto some tolerance.\n\nThis is sort of but not exactly how the implicit schur complement tests are done right now, but they are not great (my fault). I could use some help refactoring them if you are up to it. If not, then just add tests for rightmultiply_z and I will look at refactoring the rest of the tests.\n\nas for the power series expansion preconditioner, there things are a bit more complicated. \n\nI think there are two routes there. \n\nThe first one is where you have matrices where you know that a fixed (small) number of iterations of the preconditioner will give you the exact result. \nyou could also play with diagonal matrices here.\nand then have some tests where you have relatively well conditioned matrices so you are able to run the preconditioner to convergence and compare to the actual inverse computed using Cholesky decomposition.",
+      "parentUuid": "ca501590_d66960d7",
+      "revId": "a55a4d090b4efec5c4fcc98b95ea922ebac074e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
