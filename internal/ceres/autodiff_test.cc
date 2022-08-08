@@ -30,6 +30,8 @@
 
 #include "ceres/internal/autodiff.h"
 
+#include <algorithm>
+#include <iterator>
 #include <random>
 
 #include "gtest/gtest.h"
@@ -173,9 +175,9 @@ TEST(AutoDiff, ProjectiveCameraModel) {
 
   // Make random P and X, in a single vector.
   double PX[12 + 4];
-  for (double& PX_i : PX) {
-    PX_i = uniform01(prng);
-  }
+  std::generate(std::begin(PX), std::end(PX), [&prng, &uniform01] {
+    return uniform01(prng);
+  });
 
   // Handy names for the P and X parts.
   double* P = PX + 0;
@@ -294,7 +296,10 @@ TEST(AutoDiff, Metric) {
   double qcX[4 + 3 + 3];
   std::mt19937 prng;
   std::uniform_real_distribution<double> uniform01(0.0, 1.0);
-  for (double& qcX_i : qcX) qcX_i = uniform01(prng);
+
+  std::generate(std::begin(qcX), std::end(qcX), [&prng, &uniform01] {
+    return uniform01(prng);
+  });
 
   // Handy names.
   double* q = qcX;

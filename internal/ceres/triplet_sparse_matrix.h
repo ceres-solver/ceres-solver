@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_TRIPLET_SPARSE_MATRIX_H_
 
 #include <memory>
+#include <random>
 #include <vector>
 
 #include "ceres/crs_matrix.h"
@@ -135,7 +136,8 @@ class CERES_NO_EXPORT TripletSparseMatrix final : public SparseMatrix {
   // normally distributed and whose structure is determined by
   // RandomMatrixOptions.
   static std::unique_ptr<TripletSparseMatrix> CreateRandomMatrix(
-      const TripletSparseMatrix::RandomMatrixOptions& options);
+      const TripletSparseMatrix::RandomMatrixOptions& options,
+      std::mt19937& prng);
 
   // Load a triplet sparse matrix from a text file.
   static std::unique_ptr<TripletSparseMatrix> CreateFromTextFile(FILE* file);

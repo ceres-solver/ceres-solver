@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -328,6 +328,7 @@ TEST(CompressedRowSparseMatrix, Transpose) {
 }
 
 TEST(CompressedRowSparseMatrix, FromTripletSparseMatrix) {
+  std::mt19937 prng;
   TripletSparseMatrix::RandomMatrixOptions options;
   options.num_rows = 5;
   options.num_cols = 7;
@@ -336,7 +337,7 @@ TEST(CompressedRowSparseMatrix, FromTripletSparseMatrix) {
   const int kNumTrials = 10;
   for (int i = 0; i < kNumTrials; ++i) {
     std::unique_ptr<TripletSparseMatrix> tsm =
-        TripletSparseMatrix::CreateRandomMatrix(options);
+        TripletSparseMatrix::CreateRandomMatrix(options, prng);
     std::unique_ptr<CompressedRowSparseMatrix> crsm =
         CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm);
 
@@ -354,6 +355,7 @@ TEST(CompressedRowSparseMatrix, FromTripletSparseMatrix) {
 }
 
 TEST(CompressedRowSparseMatrix, FromTripletSparseMatrixTransposed) {
+  std::mt19937 prng;
   TripletSparseMatrix::RandomMatrixOptions options;
   options.num_rows = 5;
   options.num_cols = 7;
@@ -362,7 +364,7 @@ TEST(CompressedRowSparseMatrix, FromTripletSparseMatrixTransposed) {
   const int kNumTrials = 10;
   for (int i = 0; i < kNumTrials; ++i) {
     std::unique_ptr<TripletSparseMatrix> tsm =
-        TripletSparseMatrix::CreateRandomMatrix(options);
+        TripletSparseMatrix::CreateRandomMatrix(options, prng);
     std::unique_ptr<CompressedRowSparseMatrix> crsm =
         CompressedRowSparseMatrix::FromTripletSparseMatrixTransposed(*tsm);
 
@@ -421,7 +423,7 @@ TEST_P(RightMultiplyAndAccumulateTest, _) {
       options.block_density = uniform(prng);
       options.storage_type = ::testing::get<0>(param);
       std::unique_ptr<CompressedRowSparseMatrix> matrix =
-          CompressedRowSparseMatrix::CreateRandomMatrix(options);
+          CompressedRowSparseMatrix::CreateRandomMatrix(options, prng);
       const int num_rows = matrix->num_rows();
       const int num_cols = matrix->num_cols();
 
@@ -491,7 +493,7 @@ TEST_P(LeftMultiplyAndAccumulateTest, _) {
       options.block_density = uniform(prng);
       options.storage_type = ::testing::get<0>(param);
       std::unique_ptr<CompressedRowSparseMatrix> matrix =
-          CompressedRowSparseMatrix::CreateRandomMatrix(options);
+          CompressedRowSparseMatrix::CreateRandomMatrix(options, prng);
       const int num_rows = matrix->num_rows();
       const int num_cols = matrix->num_cols();
 
@@ -561,7 +563,7 @@ TEST_P(SquaredColumnNormTest, _) {
       options.block_density = uniform(prng);
       options.storage_type = ::testing::get<0>(param);
       std::unique_ptr<CompressedRowSparseMatrix> matrix =
-          CompressedRowSparseMatrix::CreateRandomMatrix(options);
+          CompressedRowSparseMatrix::CreateRandomMatrix(options, prng);
       const int num_cols = matrix->num_cols();
 
       Vector actual(num_cols);

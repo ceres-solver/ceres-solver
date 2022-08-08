@@ -32,6 +32,7 @@
 
 #include <cmath>
 #include <limits>
+#include <random>
 #include <string>
 
 #include "ceres/internal/eigen.h"
@@ -55,11 +56,6 @@ using std::swap;
 
 const double kPi = 3.14159265358979323846;
 const double kHalfSqrt2 = 0.707106781186547524401;
-
-static double RandDouble() {
-  double r = rand();
-  return r / RAND_MAX;
-}
 
 // A tolerance value for floating-point comparisons.
 static double const kTolerance = numeric_limits<double>::epsilon() * 10;
@@ -322,20 +318,22 @@ static constexpr int kNumTrials = 10000;
 // Takes a bunch of random axis/angle values, converts them to quaternions,
 // and back again.
 TEST(Rotation, AngleAxisToQuaterionAndBack) {
-  srand(5);
+  std::mt19937 prng;
+  std::uniform_real_distribution<double> uniform_distribution{-1.0, 1.0};
   for (int i = 0; i < kNumTrials; i++) {
     double axis_angle[3];
     // Make an axis by choosing three random numbers in [-1, 1) and
     // normalizing.
     double norm = 0;
     for (double& coeff : axis_angle) {
-      coeff = RandDouble() * 2 - 1;
+      coeff = uniform_distribution(prng);
       norm += coeff * coeff;
     }
     norm = sqrt(norm);
 
     // Angle in [-pi, pi).
-    double theta = kPi * 2 * RandDouble() - kPi;
+    double theta = uniform_distribution(
+        prng, std::uniform_real_distribution<double>::param_type{-kPi, kPi});
     for (double& coeff : axis_angle) {
       coeff = coeff * theta / norm;
     }
@@ -355,13 +353,14 @@ TEST(Rotation, AngleAxisToQuaterionAndBack) {
 // Takes a bunch of random quaternions, converts them to axis/angle,
 // and back again.
 TEST(Rotation, QuaterionToAngleAxisAndBack) {
-  srand(5);
+  std::mt19937 prng;
+  std::uniform_real_distribution<double> uniform_distribution{-1.0, 1.0};
   for (int i = 0; i < kNumTrials; i++) {
     double quaternion[4];
     // Choose four random numbers in [-1, 1) and normalize.
     double norm = 0;
     for (double& coeff : quaternion) {
-      coeff = RandDouble() * 2 - 1;
+      coeff = uniform_distribution(prng);
       norm += coeff * coeff;
     }
     norm = sqrt(norm);
@@ -432,20 +431,24 @@ TEST(Rotation, NearPiAngleAxisRoundTrip) {
   double matrix[9];
   double out_axis_angle[3];
 
-  srand(5);
+  std::mt19937 prng;
+  std::uniform_real_distribution<double> uniform_distribution{-1.0, 1.0};
   for (int i = 0; i < kNumTrials; i++) {
     // Make an axis by choosing three random numbers in [-1, 1) and
     // normalizing.
     double norm = 0;
     for (double& coeff : in_axis_angle) {
-      coeff = RandDouble() * 2 - 1;
+      coeff = uniform_distribution(prng);
       norm += coeff * coeff;
     }
     norm = sqrt(norm);
 
     // Angle in [pi - kMaxSmallAngle, pi).
-    const double kMaxSmallAngle = 1e-8;
-    double theta = kPi - kMaxSmallAngle * RandDouble();
+    constexpr double kMaxSmallAngle = 1e-8;
+    double theta =
+        uniform_distribution(prng,
+                             std::uniform_real_distribution<double>::param_type{
+                                 kPi - kMaxSmallAngle, kPi});
 
     for (double& coeff : in_axis_angle) {
       coeff *= (theta / norm);
@@ -531,20 +534,22 @@ TEST(Rotation, ZRotationToRotationMatrix) {
 // Takes a bunch of random axis/angle values, converts them to rotation
 // matrices, and back again.
 TEST(Rotation, AngleAxisToRotationMatrixAndBack) {
-  srand(5);
+  std::mt19937 prng;
+  std::uniform_real_distribution<double> uniform_distribution{-1.0, 1.0};
   for (int i = 0; i < kNumTrials; i++) {
     double axis_angle[3];
     // Make an axis by choosing three random numbers in [-1, 1) and
     // normalizing.
     double norm = 0;
     for (double& i : axis_angle) {
-      i = RandDouble() * 2 - 1;
+      i = uniform_distribution(prng);
       norm += i * i;
     }
     norm = sqrt(norm);
 
     // Angle in [-pi, pi).
-    double theta = kPi * 2 * RandDouble() - kPi;
+    double theta = uniform_distribution(
+        prng, std::uniform_real_distribution<double>::param_type{-kPi, kPi});
     for (double& i : axis_angle) {
       i = i * theta / norm;
     }
@@ -564,20 +569,25 @@ TEST(Rotation, AngleAxisToRotationMatrixAndBack) {
 // Takes a bunch of random axis/angle values near zero, converts them
 // to rotation matrices, and back again.
 TEST(Rotation, AngleAxisToRotationMatrixAndBackNearZero) {
-  srand(5);
+  std::mt19937 prng;
+  std::uniform_real_distribution<double> uniform_distribution{-1.0, 1.0};
   for (int i = 0; i < kNumTrials; i++) {
     double axis_angle[3];
     // Make an axis by choosing three random numbers in [-1, 1) and
     // normalizing.
     double norm = 0;
     for (double& i : axis_angle) {
-      i = RandDouble() * 2 - 1;
+      i = uniform_distribution(prng);
       norm += i * i;
     }
     norm = sqrt(norm);
 
     // Tiny theta.
-    double theta = 1e-16 * (kPi * 2 * RandDouble() - kPi);
+    constexpr double kScale = 1e-16;
+    double theta =
+        uniform_distribution(prng,
+                             std::uniform_real_distribution<double>::param_type{
+                                 -kScale * kPi, kScale * kPi});
     for (double& i : axis_angle) {
       i = i * theta / norm;
     }
@@ -647,11 +657,12 @@ TEST(EulerAnglesToRotationMatrix, OnAxis) {
 // Test that a random rotation produces an orthonormal rotation
 // matrix.
 TEST(EulerAnglesToRotationMatrix, IsOrthonormal) {
-  srand(5);
+  std::mt19937 prng;
+  std::uniform_real_distribution<double> uniform_distribution{-180.0, 180.0};
   for (int trial = 0; trial < kNumTrials; ++trial) {
     double euler_angles_degrees[3];
     for (double& euler_angles_degree : euler_angles_degrees) {
-      euler_angles_degree = RandDouble() * 360.0 - 180.0;
+      euler_angles_degree = uniform_distribution(prng);
     }
     double rotation_matrix[9];
     EulerAnglesToRotationMatrix(euler_angles_degrees, 3, rotation_matrix);
@@ -906,13 +917,15 @@ TEST(Quaternion, RotatePointGivesSameAnswerAsRotationByMatrix) {
 
 // Verify that (a * b) * c == a * (b * c).
 TEST(Quaternion, MultiplicationIsAssociative) {
+  std::mt19937 prng;
+  std::uniform_real_distribution<double> uniform_distribution{-1.0, 1.0};
   double a[4];
   double b[4];
   double c[4];
   for (int i = 0; i < 4; ++i) {
-    a[i] = 2 * RandDouble() - 1;
-    b[i] = 2 * RandDouble() - 1;
-    c[i] = 2 * RandDouble() - 1;
+    a[i] = uniform_distribution(prng);
+    b[i] = uniform_distribution(prng);
+    c[i] = uniform_distribution(prng);
   }
 
   double ab[4];
@@ -932,6 +945,8 @@ TEST(Quaternion, MultiplicationIsAssociative) {
 }
 
 TEST(AngleAxis, RotatePointGivesSameAnswerAsRotationMatrix) {
+  std::mt19937 prng;
+  std::uniform_real_distribution<double> uniform_distribution{-1.0, 1.0};
   double angle_axis[3];
   double R[9];
   double p[3];
@@ -943,8 +958,8 @@ TEST(AngleAxis, RotatePointGivesSameAnswerAsRotationMatrix) {
     for (int j = 0; j < 50; ++j) {
       double norm2 = 0.0;
       for (int k = 0; k < 3; ++k) {
-        angle_axis[k] = 2.0 * RandDouble() - 1.0;
-        p[k] = 2.0 * RandDouble() - 1.0;
+        angle_axis[k] = uniform_distribution(prng);
+        p[k] = uniform_distribution(prng);
         norm2 = angle_axis[k] * angle_axis[k];
       }
 
@@ -976,6 +991,8 @@ TEST(AngleAxis, RotatePointGivesSameAnswerAsRotationMatrix) {
 }
 
 TEST(AngleAxis, NearZeroRotatePointGivesSameAnswerAsRotationMatrix) {
+  std::mt19937 prng;
+  std::uniform_real_distribution<double> uniform_distribution{-1.0, 1.0};
   double angle_axis[3];
   double R[9];
   double p[3];
@@ -985,8 +1002,8 @@ TEST(AngleAxis, NearZeroRotatePointGivesSameAnswerAsRotationMatrix) {
   for (int i = 0; i < 10000; ++i) {
     double norm2 = 0.0;
     for (int k = 0; k < 3; ++k) {
-      angle_axis[k] = 2.0 * RandDouble() - 1.0;
-      p[k] = 2.0 * RandDouble() - 1.0;
+      angle_axis[k] = uniform_distribution(prng);
+      p[k] = uniform_distribution(prng);
       norm2 = angle_axis[k] * angle_axis[k];
     }
 
@@ -1111,7 +1128,12 @@ static void CheckRotationMatrixToAngleAxisRoundTrip(const double theta,
 }
 
 TEST(RotationMatrixToAngleAxis, ExhaustiveRoundTrip) {
-  const double kMaxSmallAngle = 1e-8;
+  constexpr double kMaxSmallAngle = 1e-8;
+  std::mt19937 prng;
+  std::uniform_real_distribution<double> uniform_distribution1{
+      kPi - kMaxSmallAngle, kPi};
+  std::uniform_real_distribution<double> uniform_distribution2{
+      -1.0, 2.0 * kMaxSmallAngle - 1.0};
   const int kNumSteps = 1000;
   for (int i = 0; i < kNumSteps; ++i) {
     const double theta = static_cast<double>(i) / kNumSteps * 2.0 * kPi;
@@ -1121,10 +1143,10 @@ TEST(RotationMatrixToAngleAxis, ExhaustiveRoundTrip) {
       CheckRotationMatrixToAngleAxisRoundTrip(theta, phi, kPi);
       // Rotation of angle approximately Pi.
       CheckRotationMatrixToAngleAxisRoundTrip(
-          theta, phi, kPi - kMaxSmallAngle * RandDouble());
+          theta, phi, uniform_distribution1(prng));
       // Rotations of angle approximately zero.
       CheckRotationMatrixToAngleAxisRoundTrip(
-          theta, phi, kMaxSmallAngle * 2.0 * RandDouble() - 1.0);
+          theta, phi, uniform_distribution2(prng));
     }
   }
 }

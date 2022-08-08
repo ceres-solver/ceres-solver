@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,7 @@
 #define CERES_INTERNAL_BLOCK_SPARSE_MATRIX_H_
 
 #include <memory>
+#include <random>
 
 #include "ceres/block_structure.h"
 #include "ceres/crs_matrix.h"
@@ -123,7 +124,7 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
   // distributed and whose structure is determined by
   // RandomMatrixOptions.
   static std::unique_ptr<BlockSparseMatrix> CreateRandomMatrix(
-      const RandomMatrixOptions& options);
+      const RandomMatrixOptions& options, std::mt19937& prng);
 
  private:
   int num_rows_;

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2019 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -91,11 +91,9 @@ class BenchmarkData {
 
     matrix_ = std::make_unique<BlockSparseMatrix>(bs);
     double* values = matrix_->mutable_values();
-    std::mt19937 prng;
-    std::normal_distribution<double> standard_normal;
-    for (int i = 0; i < matrix_->num_nonzeros(); ++i) {
-      values[i] = standard_normal(prng);
-    }
+    std::generate_n(values, matrix_->num_nonzeros(), [this] {
+      return standard_normal(prng);
+    });
 
     b_.resize(matrix_->num_rows());
     b_.setRandom();
@@ -128,6 +126,8 @@ class BenchmarkData {
   Vector diagonal_;
   Vector z_;
   Vector y_;
+  std::mt19937 prng;
+  std::normal_distribution<> standard_normal;
 };
 
 static void BM_SchurEliminatorEliminate(benchmark::State& state) {

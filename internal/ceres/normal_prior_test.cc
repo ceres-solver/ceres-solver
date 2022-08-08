@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -42,6 +42,7 @@ namespace internal {
 TEST(NormalPriorTest, ResidualAtRandomPosition) {
   std::mt19937 prng;
   std::uniform_real_distribution<double> distribution(-1.0, 1.0);
+  auto randu = [&distribution, &prng] { return distribution(prng); };
   for (int num_rows = 1; num_rows < 5; ++num_rows) {
     for (int num_cols = 1; num_cols < 5; ++num_cols) {
       Vector b(num_cols);
@@ -50,7 +51,7 @@ TEST(NormalPriorTest, ResidualAtRandomPosition) {
       A.setRandom();
 
       auto* x = new double[num_cols];
-      for (int i = 0; i < num_cols; ++i) x[i] = distribution(prng);
+      std::generate_n(x, num_cols, randu);
 
       auto* jacobian = new double[num_rows * num_cols];
       Vector residuals(num_rows);
@@ -77,6 +78,7 @@ TEST(NormalPriorTest, ResidualAtRandomPosition) {
 TEST(NormalPriorTest, ResidualAtRandomPositionNullJacobians) {
   std::mt19937 prng;
   std::uniform_real_distribution<double> distribution(-1.0, 1.0);
+  auto randu = [&distribution, &prng] { return distribution(prng); };
   for (int num_rows = 1; num_rows < 5; ++num_rows) {
     for (int num_cols = 1; num_cols < 5; ++num_cols) {
       Vector b(num_cols);
@@ -85,7 +87,7 @@ TEST(NormalPriorTest, ResidualAtRandomPositionNullJacobians) {
       A.setRandom();
 
       auto* x = new double[num_cols];
-      for (int i = 0; i < num_cols; ++i) x[i] = distribution(prng);
+      std::generate_n(x, num_cols, randu);
 
       double* jacobians[1];
       jacobians[0] = nullptr;
