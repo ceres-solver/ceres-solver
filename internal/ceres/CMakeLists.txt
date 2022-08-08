@@ -238,6 +238,7 @@ add_library(ceres_internal OBJECT
     parameter_block_ordering.cc
     partitioned_matrix_view.cc
     polynomial.cc
+    power_series_expansion_preconditioner.cc
     preconditioner.cc
     preprocessor.cc
     problem_impl.cc
