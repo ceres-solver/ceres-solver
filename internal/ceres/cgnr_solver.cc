@@ -66,9 +66,9 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
   EventLogger event_logger("CgnrSolver::Solve");
 
   // Form z = Atb.
-  Vector z(A->num_cols());
-  z.setZero();
-  A->LeftMultiply(b, z.data());
+  Vector rhs(A->num_cols());
+  rhs.setZero();
+  A->LeftMultiply(b, rhs.data());
 
   if (!preconditioner_) {
     if (options_.preconditioner_type == JACOBI) {
@@ -85,24 +85,35 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
       preconditioner_options.context = options_.context;
       preconditioner_ =
           std::make_unique<SubsetPreconditioner>(preconditioner_options, *A);
+    } else {
+      preconditioner_ = std::make_unique<IdentityPreconditioner>(A->num_cols());
     }
   }
 
-  if (preconditioner_) {
-    preconditioner_->Update(*A, per_solve_options.D);
+  preconditioner_->Update(*A, per_solve_options.D);
+
+  ConjugateGradientsSolverOptions cg_options;
+  cg_options.min_num_iterations = options_.min_num_iterations;
+  cg_options.max_num_iterations = options_.max_num_iterations;
+  cg_options.residual_reset_period = options_.residual_reset_period;
+  cg_options.q_tolerance = per_solve_options.q_tolerance;
+  cg_options.r_tolerance = per_solve_options.r_tolerance;
+
+  // Solve (AtA + DtD)x = Atb.
+  CgnrLinearOperator cgnr_lhs(*A, per_solve_options.D);
+  LinearOperatorToEigenVectorAdapter lhs(cgnr_lhs);
+  LinearOperatorToEigenVectorAdapter preconditioner(*preconditioner_);
+
+  Vector cg_solution = Vector::Zero(A->num_cols());
+  Vector scratch[4];
+  for (int i = 0; i < 4; ++i) {
+    scratch[i] = cg_solution;
   }
-
-  LinearSolver::PerSolveOptions cg_per_solve_options = per_solve_options;
-  cg_per_solve_options.preconditioner = preconditioner_.get();
-
-  // Solve (AtA + DtD)x = z (= Atb).
-  VectorRef(x, A->num_cols()).setZero();
-  CgnrLinearOperator lhs(*A, per_solve_options.D);
   event_logger.AddEvent("Setup");
 
-  ConjugateGradientsSolver conjugate_gradient_solver(options_);
-  LinearSolver::Summary summary =
-      conjugate_gradient_solver.Solve(&lhs, z.data(), cg_per_solve_options, x);
+  auto summary = ConjugateGradientsSolver(
+      cg_options, lhs, rhs, preconditioner, scratch, cg_solution);
+  VectorRef(x, A->num_cols()) = cg_solution;
   event_logger.AddEvent("Solve");
   return summary;
 }
