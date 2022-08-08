@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "140481bb_7d5cbccc",
+        "filename": "include/ceres/internal/sphere_manifold_functions.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 6677
+      },
+      "writtenOn": "2022-08-08T18:54:12Z",
+      "side": 1,
+      "message": "Added this transpose for correctness (the product is expected to be a row vector), although there seems to be no difference between transposing or not for Eigen (maybe a compile-time auto fix).",
+      "revId": "e42aaa6c470cb519fc59022db8763f64bd34cf89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
