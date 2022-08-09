@@ -418,6 +418,10 @@ bool IsSparseLinearAlgebraLibraryTypeAvailable(
 #endif
   }
 
+  if (type == NO_SPARSE) {
+    return true;
+  }
+
   LOG(WARNING) << "Unknown sparse linear algebra library " << type;
   return false;
 }
