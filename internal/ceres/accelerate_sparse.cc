@@ -127,7 +127,7 @@ AccelerateSparse<Scalar>::CreateSparseMatrixTransposeView(
   At.structure.attributes._reserved = 0;
   At.structure.attributes._allocatedBySparse = 0;
   At.structure.blockSize = 1;
-  if (std::is_same<Scalar, double>::value) {
+  if constexpr (std::is_same_v<Scalar, double>) {
     At.data = reinterpret_cast<Scalar*>(A->mutable_values());
   } else {
     values_ =
@@ -262,7 +262,7 @@ LinearSolverTerminationType AppleAccelerateCholesky<Scalar>::Solve(
 
   typename SparseTypesTrait<Scalar>::DenseVector as_rhs_and_solution;
   as_rhs_and_solution.count = num_cols;
-  if (std::is_same<Scalar, double>::value) {
+  if constexpr (std::is_same_v<Scalar, double>) {
     as_rhs_and_solution.data = reinterpret_cast<Scalar*>(solution);
     std::copy_n(rhs, num_cols, solution);
   } else {
