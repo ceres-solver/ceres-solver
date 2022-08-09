@@ -88,6 +88,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "653640a7_303fdd37",
+        "filename": "internal/ceres/implicit_schur_complement.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-09T18:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae1f9567_b8a44b98",
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e92d633_3ba1f1cc",
@@ -159,6 +177,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "90be361f_debe09c3",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-09T18:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81c05d76_32cbd9c3",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e701ab67_e0e36633",
@@ -172,6 +214,30 @@
       "writtenOn": "2022-08-09T13:51:12Z",
       "side": 1,
       "message": "you do not need the b_init vector. how about\n\nyref.setZero();\ns_-\u003eblock_diagonal_FtF_inverse()-\u003eRightMultiply(x,y);\nb_temp_previous \u003d yref;",
+      "range": {
+        "startLine": 54,
+        "startChar": 9,
+        "endLine": 54,
+        "endChar": 16
+      },
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "096a33b1_742c9631",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-09T18:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e701ab67_e0e36633",
       "range": {
         "startLine": 54,
         "startChar": 9,
@@ -205,6 +271,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "529979fe_aa276a67",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-09T18:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc42ca25_692f5c4b",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13d575ef_08a17a2a",
@@ -228,6 +318,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "46067ce8_080c1da0",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-09T18:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13d575ef_08a17a2a",
+      "range": {
+        "startLine": 48,
+        "startChar": 69,
+        "endLine": 48,
+        "endChar": 70
+      },
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e921d8df_bb0e64f4",
@@ -241,6 +355,24 @@
       "writtenOn": "2022-08-09T13:51:12Z",
       "side": 1,
       "message": "these three vectors are confusingly named.",
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dab480fd_48c49ee5",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-09T18:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e921d8df_bb0e64f4",
       "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
