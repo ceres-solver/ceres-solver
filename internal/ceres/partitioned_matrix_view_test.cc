@@ -73,7 +73,7 @@ class PartitionedMatrixViewTest : public ::testing::Test {
   std::unique_ptr<PartitionedMatrixViewBase> pmv_;
   std::mt19937 prng_;
   std::uniform_real_distribution<double> distribution_ =
-      std::uniform_real_distribution(0.0, 1.0);
+      std::uniform_real_distribution<double>(0.0, 1.0);
 };
 
 TEST_F(PartitionedMatrixViewTest, DimensionsTest) {
