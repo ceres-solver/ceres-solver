@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ae1f9567_b8a44b98",
+        "filename": "internal/ceres/implicit_schur_complement.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T18:07:05Z",
+      "side": 1,
+      "message": "that works for me.",
+      "parentUuid": "a2facfd0_9fa9f41c",
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3e92d633_3ba1f1cc",
         "filename": "internal/ceres/power_series_expansion_preconditioner.cc",
         "patchSetId": 3
@@ -107,6 +125,30 @@
       "side": 1,
       "message": "To clear my understanding: are you suggesting to implement the preconditioner as a \"function\" with no state?\n\nAs far as i can see, currently, IterativeSchurComplementSolver stores preconditioner as a unique_ptr\u003cPreconditioner\u003e (which, after changes at current master, become additionally wrapped by LinearOperatorAdapter), so there should be an instance of Preconditioner child which holds a state needed for computations during the call to RightMultiply of LinearOperatorAdapter inside the cg loop.\n\nI agree, that storage of mutable temporaries are not necessary, but don\u0027t see a way to avoid usage of a class inherited from Preconditioner to store the pointer to implicit schur complement instance.",
       "parentUuid": "3e92d633_3ba1f1cc",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81c05d76_32cbd9c3",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T18:07:05Z",
+      "side": 1,
+      "message": "Sorry I should have been clearer. yes we are going to need a class, there is no getting around that, but we can minimize the state we are keeping around inside the class and make it as close to a function as possible.",
+      "parentUuid": "c58f46ba_612abb85",
       "range": {
         "startLine": 36,
         "startChar": 9,
