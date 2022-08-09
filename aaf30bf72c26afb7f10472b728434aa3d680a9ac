@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c8c2647_29f91e4b",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-09T03:24:26Z",
+      "side": 1,
+      "message": "This scratch can now become a class member to reduce reallocations between subsequent calls to the linear solver.",
+      "revId": "aaf30bf72c26afb7f10472b728434aa3d680a9ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40497501_a1ccd746",
+        "filename": "internal/ceres/eigen_vector_ops.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-09T03:24:26Z",
+      "side": 1,
+      "message": "This should be Axpby to reuse notation, e.g. : https://www.intel.com/content/www/us/en/develop/documentation/onemkl-developer-reference-fortran/top/blas-and-sparse-blas-routines/blas-like-extensions/axpby.html",
+      "revId": "aaf30bf72c26afb7f10472b728434aa3d680a9ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11085637_08f02c27",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-09T03:24:26Z",
+      "side": 1,
+      "message": "This scratch can now become a class member to reduce reallocations.",
+      "revId": "aaf30bf72c26afb7f10472b728434aa3d680a9ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
