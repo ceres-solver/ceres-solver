@@ -51,6 +51,24 @@
       "parentUuid": "140481bb_7d5cbccc",
       "revId": "e42aaa6c470cb519fc59022db8763f64bd34cf89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9eacf7f_519649a5",
+        "filename": "include/ceres/internal/sphere_manifold_functions.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 6677
+      },
+      "writtenOn": "2022-08-09T07:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42f75a_bb844a9d",
+      "revId": "e42aaa6c470cb519fc59022db8763f64bd34cf89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
