@@ -57,6 +57,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "303ed82a_69565af9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-09T22:22:36Z",
+      "side": 1,
+      "message": "Yes, there are basic runtime checks: https://docs.microsoft.com/en-us/cpp/build/reference/rtc-run-time-error-checks?view\u003dmsvc-170 which are turned on by default in debug builds.\n\nIn the meantime the version of METIS I built locally worked without problems. I need to determine the differences between this version and the one built on Github along SuiteSparse.",
+      "parentUuid": "2c3845e9_bcd5db5c",
+      "revId": "5d0bca14dd9c052a9040def6dae58b460c3fcd5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "17f0f0e2_fb00f4e2",
         "filename": "internal/ceres/sparse_cholesky_test.cc",
         "patchSetId": 3
