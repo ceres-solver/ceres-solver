@@ -645,7 +645,9 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
   CHECK_LE(options.block_density, 1.0);
 
   vector<int> row_blocks;
+  row_blocks.reserve(options.num_row_blocks);
   vector<int> col_blocks;
+  col_blocks.reserve(options.num_col_blocks);
 
   std::mt19937 prng;
   std::uniform_int_distribution<int> col_distribution(

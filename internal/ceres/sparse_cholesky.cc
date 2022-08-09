@@ -31,6 +31,7 @@
 #include "ceres/sparse_cholesky.h"
 
 #include <memory>
+#include <utility>
 
 #include "ceres/accelerate_sparse.h"
 #include "ceres/eigensparse.h"

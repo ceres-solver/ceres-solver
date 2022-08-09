@@ -45,7 +45,7 @@ namespace ceres {
 namespace internal {
 
 namespace {
-template<typename T>
+template <typename T>
 void CheckVectorEq(const std::vector<T>& a, const std::vector<T>& b) {
   EXPECT_EQ(a.size(), b.size());
   for (int i = 0; i < a.size(); ++i) {
@@ -62,24 +62,20 @@ std::unique_ptr<BlockSparseMatrix> CreateTestMatrixFromId(int id) {
     // [ 0 0 8 9 10 0 ]
     CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
     bs->cols = {
-      // Block size 2, position 0.
-      Block(2, 0),
-      // Block size 3, position 2.
-      Block(3, 2),
-      // Block size 1, position 5.
-      Block(1, 5),
+        // Block size 2, position 0.
+        Block(2, 0),
+        // Block size 3, position 2.
+        Block(3, 2),
+        // Block size 1, position 5.
+        Block(1, 5),
     };
-    bs->rows = {
-      CompressedRow(1),
-      CompressedRow(1)
-    };
+    bs->rows = {CompressedRow(1), CompressedRow(1)};
     bs->rows[0].block = Block(2, 0);
-    bs->rows[0].cells = { Cell(0, 0) };
+    bs->rows[0].cells = {Cell(0, 0)};
 
     bs->rows[1].block = Block(2, 2);
-    bs->rows[1].cells = { Cell(1, 4) };
-    std::unique_ptr<BlockSparseMatrix> m =
-        std::make_unique<BlockSparseMatrix>(bs);
+    bs->rows[1].cells = {Cell(1, 4)};
+    auto m = std::make_unique<BlockSparseMatrix>(bs);
     EXPECT_NE(m, nullptr);
     EXPECT_EQ(m->num_rows(), 4);
     EXPECT_EQ(m->num_cols(), 6);
@@ -96,26 +92,22 @@ std::unique_ptr<BlockSparseMatrix> CreateTestMatrixFromId(int id) {
     // [ 0 0 9 0 0 0 ]
     CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
     bs->cols = {
-      // Block size 2, position 0.
-      Block(2, 0),
-      // Block size 1, position 2.
-      Block(1, 2),
-      // Block size 2, position 3.
-      Block(2, 3),
-      // Block size 1, position 5.
-      Block(1, 5),
+        // Block size 2, position 0.
+        Block(2, 0),
+        // Block size 1, position 2.
+        Block(1, 2),
+        // Block size 2, position 3.
+        Block(2, 3),
+        // Block size 1, position 5.
+        Block(1, 5),
     };
-    bs->rows = {
-      CompressedRow(2),
-      CompressedRow(1)
-    };
+    bs->rows = {CompressedRow(2), CompressedRow(1)};
     bs->rows[0].block = Block(2, 0);
-    bs->rows[0].cells = { Cell(0, 0), Cell(2, 4) };
+    bs->rows[0].cells = {Cell(0, 0), Cell(2, 4)};
 
     bs->rows[1].block = Block(1, 2);
-    bs->rows[1].cells = { Cell(1, 8) };
-    std::unique_ptr<BlockSparseMatrix> m =
-        std::make_unique<BlockSparseMatrix>(bs);
+    bs->rows[1].cells = {Cell(1, 8)};
+    auto m = std::make_unique<BlockSparseMatrix>(bs);
     EXPECT_NE(m, nullptr);
     EXPECT_EQ(m->num_rows(), 3);
     EXPECT_EQ(m->num_cols(), 6);
@@ -309,10 +301,8 @@ TEST(BlockSparseMatrix, ToDenseMatrix) {
     EXPECT_EQ(m_dense.rows(), 4);
     EXPECT_EQ(m_dense.cols(), 6);
     Matrix m_expected(4, 6);
-    m_expected << 1, 2, 0, 0, 0, 0,
-                  3, 4, 0, 0, 0, 0,
-                  0, 0, 5, 6, 7, 0,
-                  0, 0, 8, 9, 10, 0;
+    m_expected << 1, 2, 0, 0, 0, 0, 3, 4, 0, 0, 0, 0, 0, 0, 5, 6, 7, 0, 0, 0, 8,
+        9, 10, 0;
     EXPECT_EQ(m_dense, m_expected);
   }
 
@@ -323,9 +313,7 @@ TEST(BlockSparseMatrix, ToDenseMatrix) {
     EXPECT_EQ(m_dense.rows(), 3);
     EXPECT_EQ(m_dense.cols(), 6);
     Matrix m_expected(3, 6);
-    m_expected << 1, 2, 0, 5, 6, 0,
-                  3, 4, 0, 7, 8, 0,
-                  0, 0, 9, 0, 0, 0;
+    m_expected << 1, 2, 0, 5, 6, 0, 3, 4, 0, 7, 8, 0, 0, 0, 9, 0, 0, 0;
     EXPECT_EQ(m_dense, m_expected);
   }
 }
