@@ -16,6 +16,24 @@
       "message": "I\u0027ll read through this in more detail, but I think it would be very helpful to do the following:\n1. Add documentation to solver.cc to explain the strategy used for checking valid options: how are the options grouped, what order they are checked in, where each dimension of strategy is checked, etc. Then someone adding a new solver could follow the structure of the checking.\n2. We should add tests to check this code.",
       "revId": "369f63f2b78cda84e590f7720dae97b53a0959ee",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61761848_14172b4e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T22:01:45Z",
+      "side": 1,
+      "message": "I thought about documentation and its not clear to me it would be more or less complicated than the code itself. I tried making the function names self contained. could you give me an example of the sort of documentation you are looking for?\n\nright now the idea is that each solver has a function and it is responsible for all the checks that are needed for that solver.\n\nas for tests, the tests would amount to testing policy, but sure I can implement some using Solver::Options::IsValid",
+      "parentUuid": "8ad17040_ca2df62d",
+      "revId": "369f63f2b78cda84e590f7720dae97b53a0959ee",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
