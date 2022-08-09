@@ -34,6 +34,24 @@
       "parentUuid": "17f0f0e2_fb00f4e2",
       "revId": "5d0bca14dd9c052a9040def6dae58b460c3fcd5c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1273fc5_c8926211",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-09T16:12:00Z",
+      "side": 1,
+      "message": "After an initial analysis, I can confirm a heap corruption with memory written to past the heap buffer end in the very first trial. The failure occurs in METIS directly, specifically when running the `EigenSparseCholeskyMETIS/SparseCholeskyTest.FactorAndSolve/EIGEN_SPARSE_NESDIS_UseBlockStructure` test at `eigensparse.cc:66` within ` solver_.analyzePattern(lhs)`. The passed sparse matrix `lhs` seems to be fully dense:\n```\n1.02287 -0.121527 -0.0138689\n-0.121527 1.64576 0.0736949\n-0.0138689 0.0736949 1.00841\n```\n`block_density` for the run is `0.22192930386710247`.\n\nAny idea what might be happening here?",
+      "parentUuid": "e71d80ad_b41d2546",
+      "revId": "5d0bca14dd9c052a9040def6dae58b460c3fcd5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
