@@ -54,6 +54,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68583b47_00abacda",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T02:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99fe40dc_edd5eeaa",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9863f746_9a918f44",
@@ -107,6 +125,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53b47f0c_8c2cf449",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T02:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ce25c3c_b79d0ddf",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5da7ca36_6ff6f390",
@@ -138,6 +174,24 @@
       "side": 1,
       "message": "I think we can just have a file of functions that operator on pairs of DenseVector types, with specializations for the two vector types we will encounter.",
       "parentUuid": "5da7ca36_6ff6f390",
+      "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ccf5f05_694d5574",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T02:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb0369b5_995623b1",
       "revId": "b582234078ef47b74d9f6c35d71374f7315ffa6f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
