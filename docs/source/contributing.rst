@@ -118,8 +118,8 @@ Submitting a change
 
    When the push succeeds, the console will display a URL showing the
    address of the review. Go to the URL and add at least one of the
-   maintainers (Sameer Agarwal, Keir Mierle, Alex Stewart or William
-   Rucklidge) as reviewers.
+   maintainers (Sameer Agarwal, Keir Mierle, Alex Stewart, William
+   Rucklidge or Sergiu Deitsch) as reviewers.
 
 3. Wait for a review.
 
