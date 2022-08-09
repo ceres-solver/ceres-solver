@@ -230,6 +230,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06c88d0c_30b8186c",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-09T02:48:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd206f2d_bdef2edd",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 64,
+        "endChar": 23
+      },
+      "revId": "ce919c712e7c335c13ce37a29c8a844e23e506d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f486ef06_2b2c8d94",

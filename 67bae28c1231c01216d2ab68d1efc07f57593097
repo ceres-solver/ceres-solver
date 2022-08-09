@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "661435ef_3e08df6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-09T02:48:37Z",
+      "side": 1,
+      "message": "Trimmed the fat from this CL, please take a look now.",
+      "revId": "67bae28c1231c01216d2ab68d1efc07f57593097",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
