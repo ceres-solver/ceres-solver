@@ -116,7 +116,7 @@ class EigenSparseCholeskyTemplate final : public SparseCholesky {
     CHECK_EQ(lhs->storage_type(), StorageType());
 
     typename Solver::Scalar* values_ptr = nullptr;
-    if (std::is_same<typename Solver::Scalar, double>::value) {
+    if constexpr (std::is_same_v<typename Solver::Scalar, double>) {
       values_ptr =
           reinterpret_cast<typename Solver::Scalar*>(lhs->mutable_values());
     } else {
@@ -128,12 +128,12 @@ class EigenSparseCholeskyTemplate final : public SparseCholesky {
       values_ptr = values_.data();
     }
 
-    Eigen::Map<Eigen::SparseMatrix<typename Solver::Scalar, Eigen::ColMajor>>
+    Eigen::Map<const Eigen::SparseMatrix<typename Solver::Scalar, Eigen::ColMajor>>
         eigen_lhs(lhs->num_rows(),
                   lhs->num_rows(),
                   lhs->num_nonzeros(),
-                  lhs->mutable_rows(),
-                  lhs->mutable_cols(),
+                  lhs->rows(),
+                  lhs->cols(),
                   values_ptr);
     return Factorize(eigen_lhs, message);
   }
