@@ -16,6 +16,172 @@
       "message": "I would wait on the tests, I\u0027d like to read and understand your implementation first before I create churn for you in the tests.",
       "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d656d59_8daa2168",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T13:51:12Z",
+      "side": 1,
+      "message": "just some minor code comments, I have not had a chance to read the thesis yet will do so today.",
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b43564bf_2efe0ef6",
+        "filename": "internal/ceres/implicit_schur_complement.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T13:51:12Z",
+      "side": 1,
+      "message": "this needs a slightly better name. RightMultiply_Z is not great.",
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e92d633_3ba1f1cc",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T13:51:12Z",
+      "side": 1,
+      "message": "so there is something interesting happening here. which I had not realized before. \nnormally the preconditioner does not get the matrix upon construction, it persists  and the Update method gets the jacobian matrix and it constructs the preconditioner from there.\n\nin this case the implicit schur compliment is effectively doing that. so there is nothing that needs to happen in the update method.\n\nThere really isn\u0027t much of a setup cost to this preconditioner beyond the couple of temporary vectors that are being created, so why bother with these temp vectors being part of the state of the preconditioner at all and then making them mutable. \n\njust use and throw this preconditioner on demand (this is class effectively is a function).\n\nthe allocation of the three vectors does not matter IMO and not worth the extra class/state complexity.",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e701ab67_e0e36633",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T13:51:12Z",
+      "side": 1,
+      "message": "you do not need the b_init vector. how about\n\nyref.setZero();\ns_-\u003eblock_diagonal_FtF_inverse()-\u003eRightMultiply(x,y);\nb_temp_previous \u003d yref;",
+      "range": {
+        "startLine": 54,
+        "startChar": 9,
+        "endLine": 54,
+        "endChar": 16
+      },
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc42ca25_692f5c4b",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T13:51:12Z",
+      "side": 1,
+      "message": "move this at the top of the class. Also this class is not the preconditioner interface, rather an implementation/instance of the preconditioner interface.",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13d575ef_08a17a2a",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T13:51:12Z",
+      "side": 1,
+      "message": "s -\u003e isc",
+      "range": {
+        "startLine": 48,
+        "startChar": 69,
+        "endLine": 48,
+        "endChar": 70
+      },
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e921d8df_bb0e64f4",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T13:51:12Z",
+      "side": 1,
+      "message": "these three vectors are confusingly named.",
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99675a5c_da13964d",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T13:51:12Z",
+      "side": 1,
+      "message": "e_tolerance is not a great name, because it easy to confuse it with e_block_size, also not particularly descriptive.\n\nhow about spse_tolerance ?",
+      "range": {
+        "startLine": 107,
+        "startChar": 23,
+        "endLine": 107,
+        "endChar": 24
+      },
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
