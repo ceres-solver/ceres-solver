@@ -106,6 +106,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23efe6eb_75a2ced7",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T15:24:18Z",
+      "side": 1,
+      "message": "good point, okay I will fix this. I will also have to change the interface to the CG solver, but thats fine.\n\nhttps://github.com/ceres-solver/ceres-solver/issues/856",
+      "parentUuid": "49a7ccac_e17d878d",
+      "range": {
+        "startLine": 68,
+        "startChar": 17,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "4ebba1210c86c2ad8967eefe6e2f0f97d176dc83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "843b1c3b_cf94420f",
