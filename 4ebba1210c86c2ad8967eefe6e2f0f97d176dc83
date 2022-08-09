@@ -82,6 +82,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49a7ccac_e17d878d",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-09T15:13:02Z",
+      "side": 1,
+      "message": "One reason is that clang-tidy warns when C-arrays are used, e.g., under the `modernize-avoid-c-arrays` check.",
+      "parentUuid": "3f0ce72c_a879d2ba",
+      "range": {
+        "startLine": 68,
+        "startChar": 17,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "4ebba1210c86c2ad8967eefe6e2f0f97d176dc83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "843b1c3b_cf94420f",
