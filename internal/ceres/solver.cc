@@ -118,37 +118,242 @@ bool IsNestedDissectionAvailable(SparseLinearAlgebraLibraryType type) {
            internal::EigenSparse::IsNestedDissectionAvailable()));
 }
 
-bool MixedPrecisionOptionIsValid(const Solver::Options& options,
-                                 string* error) {
-  if (!options.use_mixed_precision_solves) {
-    return true;
+bool IsIterativeSolver(LinearSolverType type) {
+  return (type == CGNR || type == ITERATIVE_SCHUR);
+}
+
+bool OptionsAreValidForDenseSolver(const Solver::Options& options,
+                                   string* error) {
+  const char* library_name = DenseLinearAlgebraLibraryTypeToString(
+      options.dense_linear_algebra_library_type);
+  const char* solver_name =
+      LinearSolverTypeToString(options.linear_solver_type);
+  constexpr char kFormat[] =
+      "Can't use %s with dense_linear_algebra_library_type = %s "
+      "because support not enabled when Ceres was built.";
+
+  if (!IsDenseLinearAlgebraLibraryTypeAvailable(
+          options.dense_linear_algebra_library_type)) {
+    *error = StringPrintf(kFormat, solver_name, library_name);
+    return false;
+  }
+  return true;
+}
+
+bool OptionsAreValidForSparseCholeskyBasedSolver(const Solver::Options& options,
+                                                 string* error) {
+  const char* library_name = SparseLinearAlgebraLibraryTypeToString(
+      options.sparse_linear_algebra_library_type);
+  // Sparse factorization based solvers and some preconditioners require a
+  // sparse Cholesky factorization.
+  const char* solver_name =
+      IsIterativeSolver(options.linear_solver_type)
+          ? PreconditionerTypeToString(options.preconditioner_type)
+          : LinearSolverTypeToString(options.linear_solver_type);
+
+  constexpr char kNoSparseFormat[] =
+      "Can't use %s with sparse_linear_algebra_library_type = %s.";
+  constexpr char kNoLibraryFormat[] =
+      "Can't use %s sparse_linear_algebra_library_type = %s, because support "
+      "was not enabled when Ceres Solver was built.";
+  constexpr char kNoNesdisFormat[] =
+      "NESDIS is not available with sparse_linear_algebra_library_type = %s.";
+  constexpr char kMixedFormat[] =
+      "use_mixed_precision_solves with %s is not supported with "
+      "sparse_linear_algebra_library_type = %s";
+  constexpr char kDynamicSparsityFormat[] =
+      "dynamic sparsity is not supported with "
+      "sparse_linear_algebra_library_type = %s";
+
+  if (options.sparse_linear_algebra_library_type == NO_SPARSE) {
+    *error = StringPrintf(kNoSparseFormat, solver_name, library_name);
+    return false;
   }
 
-  // All dense linear algebra backends support mixed precision solves now with
-  // Cholesky factorization.
-  if ((options.linear_solver_type == DENSE_NORMAL_CHOLESKY ||
-       options.linear_solver_type == DENSE_SCHUR)) {
-    return true;
+  if (!IsSparseLinearAlgebraLibraryTypeAvailable(
+          options.sparse_linear_algebra_library_type)) {
+    *error = StringPrintf(kNoLibraryFormat, solver_name, library_name);
+    return false;
   }
 
-  if ((options.linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
-       options.linear_solver_type == SPARSE_SCHUR)) {
-    if (options.sparse_linear_algebra_library_type == EIGEN_SPARSE ||
-        options.sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
-      // Mixed precision with any Eigen or Accelerate Cholesky variant: okay.
-      return true;
+  if (options.linear_solver_ordering_type == ceres::NESDIS &&
+      !IsNestedDissectionAvailable(
+          options.sparse_linear_algebra_library_type)) {
+    *error = StringPrintf(kNoNesdisFormat, library_name);
+    return false;
+  }
+
+  if (options.use_mixed_precision_solves &&
+      options.sparse_linear_algebra_library_type == SUITE_SPARSE) {
+    *error = StringPrintf(kMixedFormat, solver_name, library_name);
+    return false;
+  }
+
+  if (options.dynamic_sparsity &&
+      options.sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
+    *error = StringPrintf(kDynamicSparsityFormat, library_name);
+    return false;
+  }
+
+  return true;
+}
+
+bool OptionsAreValidForDenseNormalCholesky(const Solver::Options& options,
+                                           string* error) {
+  CHECK_EQ(options.linear_solver_type, DENSE_NORMAL_CHOLESKY);
+  return OptionsAreValidForDenseSolver(options, error);
+}
+
+bool OptionsAreValidForDenseQr(const Solver::Options& options, string* error) {
+  CHECK_EQ(options.linear_solver_type, DENSE_QR);
+
+  if (!OptionsAreValidForDenseSolver(options, error)) {
+    return false;
+  }
+
+  if (options.use_mixed_precision_solves) {
+    *error = "Can't use use_mixed_precision_solves with DENSE_QR.";
+    return false;
+  }
+
+  return true;
+}
+
+bool OptionsAreValidForSparseNormalCholesky(const Solver::Options& options,
+                                            string* error) {
+  CHECK_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
+  return OptionsAreValidForSparseCholeskyBasedSolver(options, error);
+}
+
+bool OptionsAreValidForDenseSchur(const Solver::Options& options,
+                                  string* error) {
+  CHECK_EQ(options.linear_solver_type, DENSE_SCHUR);
+
+  if (options.dynamic_sparsity) {
+    *error = "dynamic sparsity is only supported with SPARSE_NORMAL_CHOLESKY";
+    return false;
+  }
+
+  if (!OptionsAreValidForDenseSolver(options, error)) {
+    return false;
+  }
+
+  return true;
+}
+
+bool OptionsAreValidForSparseSchur(const Solver::Options& options,
+                                   string* error) {
+  CHECK_EQ(options.linear_solver_type, SPARSE_SCHUR);
+  if (options.dynamic_sparsity) {
+    *error = "Dynamic sparsity is only supported with SPARSE_NORMAL_CHOLESKY.";
+    return false;
+  }
+  return OptionsAreValidForSparseCholeskyBasedSolver(options, error);
+}
+
+bool OptionsAreValidForIterativeSchur(const Solver::Options& options,
+                                      string* error) {
+  CHECK_EQ(options.linear_solver_type, ITERATIVE_SCHUR);
+  if (options.dynamic_sparsity) {
+    *error = "Dynamic sparsity is only supported with SPARSE_NORMAL_CHOLESKY.";
+    return false;
+  }
+
+  if (options.use_explicit_schur_complement &&
+      options.preconditioner_type != SCHUR_JACOBI) {
+    *error =
+        "use_explicit_schur_complement only supports "
+        "SCHUR_JACOBI as the preconditioner.";
+    return false;
+  }
+
+  if (options.use_mixed_precision_solves) {
+    *error = "Can't use use_mixed_precision_solves with ITERATIVE_SCHUR";
+    return false;
+  }
+
+  if (options.dynamic_sparsity) {
+    *error = "Dynamic sparsity is only supported with SPARSE_NORMAL_CHOLESKY.";
+    return false;
+  }
+
+  if (options.preconditioner_type == SUBSET) {
+    *error = "Can't use SUBSET preconditioner with ITERATIVE_SCHUR";
+    return false;
+  }
+
+  // CLUSTER_JACOBI and CLUSTER_TRIDIAGONAL require sparse Cholesky
+  // factorization.
+  if (options.preconditioner_type == CLUSTER_JACOBI ||
+      options.preconditioner_type == CLUSTER_TRIDIAGONAL) {
+    return OptionsAreValidForSparseCholeskyBasedSolver(options, error);
+  }
+
+  return true;
+}
+
+bool OptionsAreValidForCgnr(const Solver::Options& options, string* error) {
+  CHECK_EQ(options.linear_solver_type, CGNR);
+
+  if (options.preconditioner_type != IDENTITY &&
+      options.preconditioner_type != JACOBI &&
+      options.preconditioner_type != SUBSET) {
+    *error =
+        StringPrintf("Can't use CGNR with preconditioner_type = %s.",
+                     PreconditionerTypeToString(options.preconditioner_type));
+    return false;
+  }
+
+  if (options.use_mixed_precision_solves) {
+    *error = "use_mixed_precision_solves cannot be used with CGNR";
+    return false;
+  }
+
+  if (options.dynamic_sparsity) {
+    *error = "Dynamic sparsity is only supported with SPARSE_NORMAL_CHOLESKY.";
+    return false;
+  }
+
+  if (options.preconditioner_type == SUBSET) {
+    if (options.residual_blocks_for_subset_preconditioner.empty()) {
+      *error =
+          "When using SUBSET preconditioner, "
+          "residual_blocks_for_subset_preconditioner cannot be empty";
+      return false;
     }
-    if (options.sparse_linear_algebra_library_type == SUITE_SPARSE) {
-      *error = StringPrintf(
-          "use_mixed_precision_solves with %s is not supported with "
-          "SUITE_SPARSE as the sparse_linear_algebra_library_type.",
-          LinearSolverTypeToString(options.linear_solver_type));
+
+    // SUBSET preconditioner requires sparse Cholesky factorization.
+    if (!OptionsAreValidForSparseCholeskyBasedSolver(options, error)) {
       return false;
     }
   }
 
-  *error = StringPrintf("use_mixed_precision_solves with %s is not supported.",
-                        LinearSolverTypeToString(options.linear_solver_type));
+  return true;
+}
+
+bool OptionsAreValidForLinearSolver(const Solver::Options& options,
+                                    string* error) {
+  switch (options.linear_solver_type) {
+    case DENSE_NORMAL_CHOLESKY:
+      return OptionsAreValidForDenseNormalCholesky(options, error);
+    case DENSE_QR:
+      return OptionsAreValidForDenseQr(options, error);
+    case SPARSE_NORMAL_CHOLESKY:
+      return OptionsAreValidForSparseNormalCholesky(options, error);
+    case DENSE_SCHUR:
+      return OptionsAreValidForDenseSchur(options, error);
+    case SPARSE_SCHUR:
+      return OptionsAreValidForSparseSchur(options, error);
+    case ITERATIVE_SCHUR:
+      return OptionsAreValidForIterativeSchur(options, error);
+    case CGNR:
+      return OptionsAreValidForCgnr(options, error);
+    default:
+      LOG(FATAL) << "Congratulations you have found a bug. Please report "
+                    "this to the "
+                    "Ceres Solver developers. Unknown linear solver type: "
+                 << LinearSolverTypeToString(options.linear_solver_type);
+  }
   return false;
 }
 
@@ -177,135 +382,23 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
     OPTION_GT(max_consecutive_nonmonotonic_steps, 0);
   }
 
-  if (options.linear_solver_type == ITERATIVE_SCHUR &&
-      options.use_explicit_schur_complement &&
-      options.preconditioner_type != SCHUR_JACOBI) {
+  if ((options.trust_region_strategy_type == DOGLEG) &&
+      IsIterativeSolver(options.linear_solver_type)) {
     *error =
-        "use_explicit_schur_complement only supports "
-        "SCHUR_JACOBI as the preconditioner.";
+        "DOGLEG only supports exact factorization based linear "
+        "solvers. If you want to use an iterative solver please "
+        "use LEVENBERG_MARQUARDT as the trust_region_strategy_type";
     return false;
   }
 
-  if (!IsDenseLinearAlgebraLibraryTypeAvailable(
-          options.dense_linear_algebra_library_type) &&
-      (options.linear_solver_type == DENSE_NORMAL_CHOLESKY ||
-       options.linear_solver_type == DENSE_QR ||
-       options.linear_solver_type == DENSE_SCHUR)) {
-    *error = StringPrintf(
-        "Can't use %s with "
-        "Solver::Options::dense_linear_algebra_library_type = %s "
-        "because %s was not enabled when Ceres was built.",
-        LinearSolverTypeToString(options.linear_solver_type),
-        DenseLinearAlgebraLibraryTypeToString(
-            options.dense_linear_algebra_library_type),
-        DenseLinearAlgebraLibraryTypeToString(
-            options.dense_linear_algebra_library_type));
+  if (!OptionsAreValidForLinearSolver(options, error)) {
     return false;
-  }
-
-  {
-    const char* sparse_linear_algebra_library_name =
-        SparseLinearAlgebraLibraryTypeToString(
-            options.sparse_linear_algebra_library_type);
-    const char* name = nullptr;
-    if (options.linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
-        options.linear_solver_type == SPARSE_SCHUR) {
-      name = LinearSolverTypeToString(options.linear_solver_type);
-    } else if ((options.linear_solver_type == ITERATIVE_SCHUR &&
-                (options.preconditioner_type == CLUSTER_JACOBI ||
-                 options.preconditioner_type == CLUSTER_TRIDIAGONAL)) ||
-               (options.linear_solver_type == CGNR &&
-                options.preconditioner_type == SUBSET)) {
-      name = PreconditionerTypeToString(options.preconditioner_type);
-    }
-
-    if (name) {
-      if (options.sparse_linear_algebra_library_type == NO_SPARSE) {
-        *error = StringPrintf(
-            "Can't use %s with "
-            "Solver::Options::sparse_linear_algebra_library_type = %s.",
-            name,
-            sparse_linear_algebra_library_name);
-        return false;
-      }
-
-      if (!IsSparseLinearAlgebraLibraryTypeAvailable(
-              options.sparse_linear_algebra_library_type)) {
-        *error = StringPrintf(
-            "Can't use %s with "
-            "Solver::Options::sparse_linear_algebra_library_type = %s, "
-            "because support was not enabled when Ceres Solver was built.",
-            name,
-            sparse_linear_algebra_library_name);
-        return false;
-      }
-
-      if (options.linear_solver_ordering_type == ceres::NESDIS &&
-          !IsNestedDissectionAvailable(
-              options.sparse_linear_algebra_library_type)) {
-        if (options.sparse_linear_algebra_library_type == SUITE_SPARSE) {
-          *error = StringPrintf(
-              "Can't use NESDIS with SUITE_SPARSE because SuiteSparse was "
-              "compiled without support for Metis.");
-        } else if (options.sparse_linear_algebra_library_type == EIGEN_SPARSE) {
-          *error = StringPrintf(
-              "Can't use NESDIS with EIGEN_SPARSE because Ceres was "
-              "compiled without support for Metis.");
-        } else {
-          *error = StringPrintf(
-              "Can't use NESDIS with "
-              "Solver::Options::sparse_linear_algebra_library_type = %s.",
-              sparse_linear_algebra_library_name);
-        }
-        return false;
-      }
-    }
-  }
-
-  if (!MixedPrecisionOptionIsValid(options, error)) {
-    return false;
-  }
-
-  if (options.trust_region_strategy_type == DOGLEG) {
-    if (options.linear_solver_type == ITERATIVE_SCHUR ||
-        options.linear_solver_type == CGNR) {
-      *error =
-          "DOGLEG only supports exact factorization based linear "
-          "solvers. If you want to use an iterative solver please "
-          "use LEVENBERG_MARQUARDT as the trust_region_strategy_type";
-      return false;
-    }
   }
 
   if (!options.trust_region_minimizer_iterations_to_dump.empty() &&
       options.trust_region_problem_dump_format_type != CONSOLE &&
       options.trust_region_problem_dump_directory.empty()) {
     *error = "Solver::Options::trust_region_problem_dump_directory is empty.";
-    return false;
-  }
-
-  if (options.dynamic_sparsity) {
-    if (options.linear_solver_type != SPARSE_NORMAL_CHOLESKY) {
-      *error =
-          "Dynamic sparsity is only supported with SPARSE_NORMAL_CHOLESKY.";
-      return false;
-    }
-    if (options.sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
-      *error =
-          "ACCELERATE_SPARSE is not currently supported with dynamic "
-          "sparsity.";
-      return false;
-    }
-  }
-
-  if (options.linear_solver_type == CGNR &&
-      options.preconditioner_type == SUBSET &&
-      options.residual_blocks_for_subset_preconditioner.empty()) {
-    *error =
-        "When using SUBSET preconditioner, "
-        "Solver::Options::residual_blocks_for_subset_preconditioner cannot "
-        "be "
-        "empty";
     return false;
   }
 
@@ -785,8 +878,7 @@ string Solver::Summary::FullReport() const {
                   LinearSolverTypeToString(linear_solver_type_given),
                   LinearSolverTypeToString(linear_solver_type_used));
 
-    if (linear_solver_type_given == CGNR ||
-        linear_solver_type_given == ITERATIVE_SCHUR) {
+    if (IsIterativeSolver(linear_solver_type_given)) {
       StringAppendF(&report,
                     "Preconditioner      %25s%25s\n",
                     PreconditionerTypeToString(preconditioner_type_given),
