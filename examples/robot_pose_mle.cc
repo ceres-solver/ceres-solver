@@ -247,9 +247,10 @@ void SimulateRobot(vector<double>* odometry_values,
       static_cast<int>(ceil(CERES_GET_FLAG(FLAGS_corridor_length) /
                             CERES_GET_FLAG(FLAGS_pose_separation)));
   std::mt19937 prng;
-  std::normal_distribution odometry_noise(
+  std::normal_distribution<double> odometry_noise(
       0.0, CERES_GET_FLAG(FLAGS_odometry_stddev));
-  std::normal_distribution range_noise(0.0, CERES_GET_FLAG(FLAGS_range_stddev));
+  std::normal_distribution<double> range_noise(
+      0.0, CERES_GET_FLAG(FLAGS_range_stddev));
 
   // The robot starts out at the origin.
   double robot_location = 0.0;

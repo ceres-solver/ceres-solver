@@ -648,12 +648,12 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
   vector<int> col_blocks;
 
   std::mt19937 prng;
-  std::uniform_int_distribution col_distribution(options.min_col_block_size,
-                                                 options.max_col_block_size);
-  std::uniform_int_distribution row_distribution(options.min_row_block_size,
-                                                 options.max_row_block_size);
-  std::uniform_real_distribution uniform01(0.0, 1.0);
-  std::normal_distribution standard_normal_distribution;
+  std::uniform_int_distribution<int> col_distribution(
+      options.min_col_block_size, options.max_col_block_size);
+  std::uniform_int_distribution<int> row_distribution(
+      options.min_row_block_size, options.max_row_block_size);
+  std::uniform_real_distribution<double> uniform01(0.0, 1.0);
+  std::normal_distribution<double> standard_normal_distribution;
   auto values_dist = std::bind(standard_normal_distribution, std::ref(prng));
 
   // Generate the row block structure.

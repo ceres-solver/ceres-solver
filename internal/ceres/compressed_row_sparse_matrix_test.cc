@@ -405,7 +405,7 @@ TEST_P(RightMultiplyTest, _) {
   const int kMaxBlockSize = 5;
   const int kNumTrials = 10;
   std::mt19937 prng;
-  std::uniform_real_distribution uniform(0.5, 1.0);
+  std::uniform_real_distribution<double> uniform(0.5, 1.0);
   for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
        ++num_blocks) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
@@ -475,7 +475,7 @@ TEST_P(LeftMultiplyTest, _) {
   const int kMaxBlockSize = 5;
   const int kNumTrials = 10;
   std::mt19937 prng;
-  std::uniform_real_distribution uniform(0.5, 1.0);
+  std::uniform_real_distribution<double> uniform(0.5, 1.0);
   for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
        ++num_blocks) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
@@ -545,7 +545,7 @@ TEST_P(SquaredColumnNormTest, _) {
   const int kMaxBlockSize = 5;
   const int kNumTrials = 10;
   std::mt19937 prng;
-  std::uniform_real_distribution uniform(0.5, 1.0);
+  std::uniform_real_distribution<double> uniform(0.5, 1.0);
   for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
        ++num_blocks) {
     for (int trial = 0; trial < kNumTrials; ++trial) {

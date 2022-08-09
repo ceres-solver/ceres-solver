@@ -41,7 +41,7 @@ namespace internal {
 
 TEST(NormalPriorTest, ResidualAtRandomPosition) {
   std::mt19937 prng;
-  std::uniform_real_distribution distribution(-1.0, 1.0);
+  std::uniform_real_distribution<double> distribution(-1.0, 1.0);
   for (int num_rows = 1; num_rows < 5; ++num_rows) {
     for (int num_cols = 1; num_cols < 5; ++num_cols) {
       Vector b(num_cols);
@@ -76,7 +76,7 @@ TEST(NormalPriorTest, ResidualAtRandomPosition) {
 
 TEST(NormalPriorTest, ResidualAtRandomPositionNullJacobians) {
   std::mt19937 prng;
-  std::uniform_real_distribution distribution(-1.0, 1.0);
+  std::uniform_real_distribution<double> distribution(-1.0, 1.0);
   for (int num_rows = 1; num_rows < 5; ++num_rows) {
     for (int num_cols = 1; num_cols < 5; ++num_cols) {
       Vector b(num_cols);

@@ -183,7 +183,6 @@ void BlockSparseMatrix::ToCRSMatrix(CRSMatrix* crs_matrix) const {
   for (const auto& row_block : block_structure_->rows) {
     int row_block_size = row_block.block.size;
     const vector<Cell>& cells = row_block.cells;
-    const int row_start = row_block.block.position;
     for (int r = 0; r < row_block_size; ++r) {
       rows.push_back(values.size());
       for (const auto& cell : cells) {
@@ -383,10 +382,10 @@ std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
   CHECK_LE(options.block_density, 1.0);
 
   std::mt19937 prng;
-  std::uniform_int_distribution col_distribution(options.min_col_block_size,
-                                                 options.max_col_block_size);
-  std::uniform_int_distribution row_distribution(options.min_row_block_size,
-                                                 options.max_row_block_size);
+  std::uniform_int_distribution<int> col_distribution(
+      options.min_col_block_size, options.max_col_block_size);
+  std::uniform_int_distribution<int> row_distribution(
+      options.min_row_block_size, options.max_row_block_size);
   auto* bs = new CompressedRowBlockStructure();
   if (options.col_blocks.empty()) {
     CHECK_GT(options.num_col_blocks, 0);
@@ -406,7 +405,7 @@ std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
   }
 
   bool matrix_has_blocks = false;
-  std::uniform_real_distribution uniform01(0.0, 1.0);
+  std::uniform_real_distribution<double> uniform01(0.0, 1.0);
   while (!matrix_has_blocks) {
     VLOG(1) << "Clearing";
     bs->rows.clear();
@@ -434,7 +433,7 @@ std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
 
   auto matrix = std::make_unique<BlockSparseMatrix>(bs);
   double* values = matrix->mutable_values();
-  std::normal_distribution standard_normal_distribution;
+  std::normal_distribution<double> standard_normal_distribution;
   for (int i = 0; i < matrix->num_nonzeros(); ++i) {
     values[i] = standard_normal_distribution(prng);
   }

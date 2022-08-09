@@ -61,7 +61,7 @@ class GoodTestTerm : public CostFunction {
  public:
   GoodTestTerm(int arity, int const* dim) : arity_(arity), return_value_(true) {
     std::mt19937 prng;
-    std::uniform_real_distribution distribution(-1.0, 1.0);
+    std::uniform_real_distribution<double> distribution(-1.0, 1.0);
 
     // Make 'arity' random vectors.
     a_.resize(arity_);
@@ -123,7 +123,7 @@ class BadTestTerm : public CostFunction {
  public:
   BadTestTerm(int arity, int const* dim) : arity_(arity) {
     std::mt19937 prng;
-    std::uniform_real_distribution distribution(-1.0, 1.0);
+    std::uniform_real_distribution<double> distribution(-1.0, 1.0);
     // Make 'arity' random vectors.
     a_.resize(arity_);
     for (int j = 0; j < arity_; ++j) {
@@ -209,7 +209,7 @@ TEST(GradientChecker, SmokeTest) {
   // Make a random set of blocks.
   FixedArray<double*> parameters(num_parameters);
   std::mt19937 prng;
-  std::uniform_real_distribution distribution(-1.0, 1.0);
+  std::uniform_real_distribution<double> distribution(-1.0, 1.0);
   for (int j = 0; j < num_parameters; ++j) {
     parameters[j] = new double[parameter_sizes[j]];
     for (int u = 0; u < parameter_sizes[j]; ++u) {

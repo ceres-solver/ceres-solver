@@ -161,7 +161,7 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximation) {
   Matrix c_hess(2, 2);
   Vector c_grad(2);
   std::mt19937 prng;
-  std::uniform_real_distribution uniform01(0.0, 1.0);
+  std::uniform_real_distribution<double> uniform01(0.0, 1.0);
   for (int iter = 0; iter < 10000; ++iter) {
     // Initialize the jacobian and residual.
     for (double& jacobian_entry : jacobian) jacobian_entry = uniform01(prng);
@@ -229,7 +229,7 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximationZeroResidual) {
   Vector c_grad(2);
 
   std::mt19937 prng;
-  std::uniform_real_distribution uniform01(0.0, 1.0);
+  std::uniform_real_distribution<double> uniform01(0.0, 1.0);
   for (int iter = 0; iter < 10000; ++iter) {
     // Initialize the jacobian.
     for (double& jacobian_entry : jacobian) jacobian_entry = uniform01(prng);

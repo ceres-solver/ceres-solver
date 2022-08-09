@@ -171,7 +171,7 @@ TEST_P(SparseCholeskyTest, FactorAndSolve) {
   const int kMinBlockSize = 1;
   const int kMaxBlockSize = 5;
   std::mt19937 prng;
-  std::uniform_real_distribution distribution(0.1, 1.0);
+  std::uniform_real_distribution<double> distribution(0.1, 1.0);
 
   for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
        ++num_blocks) {

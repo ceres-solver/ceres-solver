@@ -318,8 +318,8 @@ std::unique_ptr<TripletSparseMatrix> TripletSparseMatrix::CreateRandomMatrix(
   std::vector<int> cols;
   std::vector<double> values;
   std::mt19937 prng;
-  std::uniform_real_distribution uniform01(0.0, 1.0);
-  std::uniform_real_distribution standard_normal;
+  std::uniform_real_distribution<double> uniform01(0.0, 1.0);
+  std::normal_distribution<double> standard_normal;
   while (rows.empty()) {
     rows.clear();
     cols.clear();

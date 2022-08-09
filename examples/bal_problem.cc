@@ -298,7 +298,7 @@ void BALProblem::Perturb(const double rotation_sigma,
   CHECK_GE(rotation_sigma, 0.0);
   CHECK_GE(translation_sigma, 0.0);
   std::mt19937 prng;
-  std::normal_distribution point_noise_distribution(0.0, point_sigma);
+  std::normal_distribution<double> point_noise_distribution(0.0, point_sigma);
   double* points = mutable_points();
   if (point_sigma > 0) {
     for (int i = 0; i < num_points_; ++i) {
@@ -307,9 +307,10 @@ void BALProblem::Perturb(const double rotation_sigma,
     }
   }
 
-  std::normal_distribution rotation_noise_distribution(0.0, point_sigma);
-  std::normal_distribution translation_noise_distribution(0.0,
-                                                          translation_sigma);
+  std::normal_distribution<double> rotation_noise_distribution(0.0,
+                                                               point_sigma);
+  std::normal_distribution<double> translation_noise_distribution(
+      0.0, translation_sigma);
   for (int i = 0; i < num_cameras_; ++i) {
     double* camera = mutable_cameras() + camera_block_size() * i;
 

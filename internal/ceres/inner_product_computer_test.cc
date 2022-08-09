@@ -81,7 +81,7 @@ TEST(InnerProductComputer, NormalOperation) {
   const int kMaxNumColBlocks = 10;
   const int kNumTrials = 10;
   std::mt19937 prng;
-  std::uniform_real_distribution distribution(0.01, 1.0);
+  std::uniform_real_distribution<double> distribution(0.01, 1.0);
 
   // Create a random matrix, compute its outer product using Eigen and
   // ComputeOuterProduct. Convert both matrices to dense matrices and
@@ -145,7 +145,7 @@ TEST(InnerProductComputer, SubMatrix) {
   const int kNumColBlocks = 20;
   const int kNumTrials = 5;
   std::mt19937 prng;
-  std::uniform_real_distribution distribution(0.01, 1.0);
+  std::uniform_real_distribution<double> distribution(0.01, 1.0);
 
   // Create a random matrix, compute its outer product using Eigen and
   // ComputeInnerProductComputer. Convert both matrices to dense matrices and
