@@ -93,6 +93,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "58328e4d_d7385955",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-09T23:11:17Z",
+      "side": 1,
+      "message": "Yes, correct.\n\nI could narrow down the differences to unspecified build type in the Github workflow that publishes the binaries at https://github.com/sergiud/SuiteSparse/releases. MSVC is known to cause problems when mixing debug and release builds. This essentially means the published METIS library could have always been broken. However, then I\u0027m wondering why the Ceres METIS tests succeeded just until recently.",
+      "parentUuid": "8b77ff59_caebda33",
+      "revId": "5d0bca14dd9c052a9040def6dae58b460c3fcd5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "17f0f0e2_fb00f4e2",
         "filename": "internal/ceres/sparse_cholesky_test.cc",
         "patchSetId": 3
