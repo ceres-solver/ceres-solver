@@ -52,6 +52,24 @@
       "parentUuid": "e71d80ad_b41d2546",
       "revId": "5d0bca14dd9c052a9040def6dae58b460c3fcd5c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48204210_8a7dc163",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T18:09:23Z",
+      "side": 1,
+      "message": "how many blocks are there in this\n\ncan you print out all the properties of the sparse matrix, on my machine I get a 5x5 dense matrix.\n\nI am wondering if there is something weird in the csr matrix that innerproductcomputer is computing.. \n\nI would be very surprised if that were the case.\n\nany chance you can get a full stack trace?",
+      "parentUuid": "c1273fc5_c8926211",
+      "revId": "5d0bca14dd9c052a9040def6dae58b460c3fcd5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
