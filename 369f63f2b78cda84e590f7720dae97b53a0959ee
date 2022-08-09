@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ad17040_ca2df62d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-09T21:45:18Z",
+      "side": 1,
+      "message": "I\u0027ll read through this in more detail, but I think it would be very helpful to do the following:\n1. Add documentation to solver.cc to explain the strategy used for checking valid options: how are the options grouped, what order they are checked in, where each dimension of strategy is checked, etc. Then someone adding a new solver could follow the structure of the checking.\n2. We should add tests to check this code.",
+      "revId": "369f63f2b78cda84e590f7720dae97b53a0959ee",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
