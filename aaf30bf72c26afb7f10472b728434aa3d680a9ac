@@ -18,6 +18,42 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "237080ad_b73bacf8",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T03:44:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c8c2647_29f91e4b",
+      "revId": "aaf30bf72c26afb7f10472b728434aa3d680a9ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dbcfec1_36ac7b64",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T03:44:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c8c2647_29f91e4b",
+      "revId": "aaf30bf72c26afb7f10472b728434aa3d680a9ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "40497501_a1ccd746",
@@ -35,6 +71,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5c4af93_128bf660",
+        "filename": "internal/ceres/eigen_vector_ops.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T03:44:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40497501_a1ccd746",
+      "revId": "aaf30bf72c26afb7f10472b728434aa3d680a9ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11085637_08f02c27",
@@ -48,6 +102,42 @@
       "writtenOn": "2022-08-09T03:24:26Z",
       "side": 1,
       "message": "This scratch can now become a class member to reduce reallocations.",
+      "revId": "aaf30bf72c26afb7f10472b728434aa3d680a9ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8940b98_daba1fb5",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T03:44:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11085637_08f02c27",
+      "revId": "aaf30bf72c26afb7f10472b728434aa3d680a9ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2760081_b727648d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T03:44:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11085637_08f02c27",
       "revId": "aaf30bf72c26afb7f10472b728434aa3d680a9ac",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
