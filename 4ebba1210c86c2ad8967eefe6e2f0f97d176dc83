@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f0ce72c_a879d2ba",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T13:33:01Z",
+      "side": 1,
+      "message": "we are not doing anything with this array, except filling it with zero vectors and passing it to the CG solver. why bother?",
+      "parentUuid": "11410c37_065c86f5",
+      "range": {
+        "startLine": 68,
+        "startChar": 17,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "4ebba1210c86c2ad8967eefe6e2f0f97d176dc83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "843b1c3b_cf94420f",
@@ -71,6 +95,30 @@
       "writtenOn": "2022-08-09T11:36:26Z",
       "side": 1,
       "message": "To avoid repeating the size, maybe use\n```\nstd::generate(std::begin(scratch), std::end(scratch), [zero \u003d Vector::Zero(A-\u003enum_cols())] { return zero; });\n```",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 3
+      },
+      "revId": "4ebba1210c86c2ad8967eefe6e2f0f97d176dc83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c4d3486_7f73484b",
+        "filename": "internal/ceres/conjugate_gradients_solver_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T13:33:01Z",
+      "side": 1,
+      "message": "IMO this longer more complicated code that replaces a simpler fixed size loop.",
+      "parentUuid": "843b1c3b_cf94420f",
       "range": {
         "startLine": 70,
         "startChar": 2,
@@ -104,6 +152,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18204f44_70e877d4",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T13:33:01Z",
+      "side": 1,
+      "message": "IMO this is fancier code which replaces a simpler fixed size loop.",
+      "parentUuid": "8b12e181_763c5f7d",
+      "range": {
+        "startLine": 398,
+        "startChar": 2,
+        "endLine": 400,
+        "endChar": 3
+      },
+      "revId": "4ebba1210c86c2ad8967eefe6e2f0f97d176dc83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0bb3f51a_a9203ff0",
@@ -117,6 +189,30 @@
       "writtenOn": "2022-08-09T11:36:26Z",
       "side": 1,
       "message": "Possibly use `std::array\u003cVector, 4\u003e` instead.",
+      "range": {
+        "startLine": 191,
+        "startChar": 17,
+        "endLine": 191,
+        "endChar": 20
+      },
+      "revId": "4ebba1210c86c2ad8967eefe6e2f0f97d176dc83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4badbce1_de09b9da",
+        "filename": "internal/ceres/schur_complement_solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-09T13:33:01Z",
+      "side": 1,
+      "message": "we are not doing anything with this array, except filling it with zero vectors and passing it to the CG solver. why bother?",
+      "parentUuid": "0bb3f51a_a9203ff0",
       "range": {
         "startLine": 191,
         "startChar": 17,
