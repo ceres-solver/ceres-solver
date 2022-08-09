@@ -34,6 +34,24 @@
       "parentUuid": "8ad17040_ca2df62d",
       "revId": "369f63f2b78cda84e590f7720dae97b53a0959ee",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbeebdd8_6dd60c18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-09T22:51:17Z",
+      "side": 1,
+      "message": "Hmm, I feel like it should still be possible for the logic flow to be succinctly described, unhindered by syntax cruft and long method names, for example:\n```\nLinearSolver options are checked using the following flow:\n- DENSE_NORMAL_CHOLESKY:\n  - Check if the chosen dense linear algebra library is available\n  - Check if mixed precision is available\n- DENSE_QR:\n  - Check if the chosen dense linear algebra library is available\n  - Mixed precision is not possible\n...\n```\n\nActually, reading through the code, the reason why it is so hard to follow right now is that it mixes in the logic checking, which is actually not so bad, with attempting to put together helpful error strings, which is kind of sophisticated. Is there a better way to refactor these two purposes?",
+      "parentUuid": "61761848_14172b4e",
+      "revId": "369f63f2b78cda84e590f7720dae97b53a0959ee",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
