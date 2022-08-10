@@ -52,6 +52,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6351087_68149cb5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-10T16:18:00Z",
+      "side": 1,
+      "message": "Sergiu,\nI recommend taking both the vcpkg/windows CLs, and creating a new CL with whatever is the appropriate structure that captures what the current state of affairs is for windows. once thats done we can abandon these two CLs.",
+      "revId": "0dafeffcc4ec83e53f5de1254ec775b5e051a333",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62b17b12_d43853bb",
