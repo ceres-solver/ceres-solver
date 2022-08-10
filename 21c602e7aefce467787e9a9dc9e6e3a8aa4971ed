@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c9b0a32_9c720ed7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-10T00:42:22Z",
+      "side": 1,
+      "message": "I think this is a big improvement!\n\nThe one big remaining piece I think is to separate out sparse linear algebra library checks from Sparse Cholesky.",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49ce67d5_02e0a4b9",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-10T00:42:22Z",
+      "side": 1,
+      "message": "This part could do with a comment along the lines of:\n```\n// SuiteSparse is the only iterative solver sparse linear algebra library without mixed precision support.\n```\nAlso, mixed precision is currently technically implemented using an iterative refiner, which is an iterative solver...",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c181e1a3_ebca1f10",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-10T00:42:22Z",
+      "side": 1,
+      "message": "Ditto, but for dynamic sparsity:\n```\n// Accelerate is the only iterative solver sparse linear algebra library without dynamic sparsity support.\n```",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38365153_a570aabc",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-10T00:42:22Z",
+      "side": 1,
+      "message": "This part is misleading. Iterative Schur does not actually use Cholesky, but the options validity is passed through to `OptionsAreValidForSparseCholeskyBasedSolver`.\nDoes `OptionsAreValidForSparseCholeskyBasedSolver` need to be refactored into \n`OptionsAreValidForSparseLinearAlgebraLibrary` ?",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cddf884_717ce486",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-10T00:42:22Z",
+      "side": 1,
+      "message": "Are all values of `sparse_linear_algebra_library_type` valid?",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dd7ad48_417b1a98",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-10T00:42:22Z",
+      "side": 1,
+      "message": "Is this actually just checking for sparse linear algebra library options? There\u0027s no real Cholesky involved in CGNR...",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
