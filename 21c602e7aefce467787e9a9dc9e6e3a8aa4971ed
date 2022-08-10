@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13dba7b2_1f024036",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-10T01:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49ce67d5_02e0a4b9",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c181e1a3_ebca1f10",
@@ -48,6 +66,24 @@
       "writtenOn": "2022-08-10T00:42:22Z",
       "side": 1,
       "message": "Ditto, but for dynamic sparsity:\n```\n// Accelerate is the only iterative solver sparse linear algebra library without dynamic sparsity support.\n```",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51570665_58149bd0",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-10T01:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c181e1a3_ebca1f10",
       "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -83,6 +119,24 @@
       "side": 1,
       "message": "yeah thats a good idea. Let me see how I can break it up further.",
       "parentUuid": "38365153_a570aabc",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e8d37e4_a1197e68",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-10T01:04:34Z",
+      "side": 1,
+      "message": "actually iterative_schur when using visibility based preconditioning uses sparse cholesky.",
+      "parentUuid": "b3ccbf3b_660f7123",
       "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
