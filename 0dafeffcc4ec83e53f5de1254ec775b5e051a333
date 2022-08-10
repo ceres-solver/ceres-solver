@@ -35,6 +35,46 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69fcfb63_d035c703",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-10T07:09:40Z",
+      "side": 1,
+      "message": "Sameer, do we need a new CL for the open changes or can these be applied here?",
+      "revId": "0dafeffcc4ec83e53f5de1254ec775b5e051a333",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62b17b12_d43853bb",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-10T07:09:40Z",
+      "side": 1,
+      "message": "As the Windows section already mentions vcpkg, merging the additions makes more sense. Maybe also split the Windows section into vcpkg and \u0027Compiling from source\u0027 subsections for easier navigation.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "0dafeffcc4ec83e53f5de1254ec775b5e051a333",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e74dac2e_1932a44b",
@@ -53,6 +93,52 @@
         "startChar": 17,
         "endLine": 8,
         "endChar": 18
+      },
+      "revId": "0dafeffcc4ec83e53f5de1254ec775b5e051a333",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d320f116_e7ade270",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-10T07:09:40Z",
+      "side": 1,
+      "message": "Which version is installed? I would guess the latest that was packaged for vcpkg which is not necessary the latest release.",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 34
+      },
+      "revId": "0dafeffcc4ec83e53f5de1254ec775b5e051a333",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72840dd8_94a0b55b",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-10T07:09:40Z",
+      "side": 1,
+      "message": "Maybe the term is specific to vcpkg, but port sounds like Ceres is not portable by itself and required significant changes in the code base for the integration to work. I would drop the term here to avoid any confusion.",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 14
       },
       "revId": "0dafeffcc4ec83e53f5de1254ec775b5e051a333",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
