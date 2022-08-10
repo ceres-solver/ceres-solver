@@ -245,6 +245,24 @@
       "parentUuid": "d2386d5e_5e672c95",
       "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ca1a9e6_cf0e18d2",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-10T16:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a5b2e51_2513f289",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

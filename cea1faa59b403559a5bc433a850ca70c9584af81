@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f59ea9fe_e117d13e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-10T16:14:24Z",
+      "side": 1,
+      "message": "the places where we need sparse linear algebra libraries when using CGNR we need sparse cholesky, jacobi, schur jacobi and identity preconditioners do not need sparse linear algebra libraries since we compute the preconditioner ourselves.",
+      "parentUuid": "6a5a0b24_c96460e1",
+      "revId": "cea1faa59b403559a5bc433a850ca70c9584af81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e1ddac6_8be7643e",
@@ -48,6 +66,24 @@
       "writtenOn": "2022-08-10T15:14:14Z",
       "side": 1,
       "message": "I did not understand this - is it possible to run CGNR without a sparse linear algebra library?",
+      "revId": "cea1faa59b403559a5bc433a850ca70c9584af81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a99b2ea9_bb591385",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-10T16:14:24Z",
+      "side": 1,
+      "message": "yes. identity and jacobi preconditioners do not require a sparse cholesky factorizaztion, so they can run without having a sparse linear algebra library available.",
+      "parentUuid": "2e1ddac6_8be7643e",
       "revId": "cea1faa59b403559a5bc433a850ca70c9584af81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
