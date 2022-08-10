@@ -71,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b3ccbf3b_660f7123",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-10T00:46:08Z",
+      "side": 1,
+      "message": "yeah thats a good idea. Let me see how I can break it up further.",
+      "parentUuid": "38365153_a570aabc",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4cddf884_717ce486",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 5
@@ -88,6 +106,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5e741e44_bd9830f7",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-10T00:46:08Z",
+      "side": 1,
+      "message": "The only one that matters is when preconditioner type is subset, which we check below.",
+      "parentUuid": "4cddf884_717ce486",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6dd7ad48_417b1a98",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 5
@@ -99,6 +135,24 @@
       "writtenOn": "2022-08-10T00:42:22Z",
       "side": 1,
       "message": "Is this actually just checking for sparse linear algebra library options? There\u0027s no real Cholesky involved in CGNR...",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2386d5e_5e672c95",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-10T00:46:08Z",
+      "side": 1,
+      "message": "subset preconditioner requires a sparse cholesky factorization.",
+      "parentUuid": "6dd7ad48_417b1a98",
       "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
