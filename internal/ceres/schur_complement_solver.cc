@@ -68,6 +68,8 @@ class BlockRandomAccessSparseMatrixAdapter
       const BlockRandomAccessSparseMatrix& m)
       : m_(m) {}
 
+  virtual ~BlockRandomAccessSparseMatrixAdapter() final {}
+
   void RightMultiply(const Vector& x, Vector& y) final {
     m_.SymmetricRightMultiply(x.data(), y.data());
   }
@@ -82,6 +84,8 @@ class BlockRandomAccessDiagonalMatrixAdapter final
   explicit BlockRandomAccessDiagonalMatrixAdapter(
       const BlockRandomAccessDiagonalMatrix& m)
       : m_(m) {}
+
+  virtual ~BlockRandomAccessDiagonalMatrixAdapter() final {}
 
   // y = y + Ax;
   void RightMultiply(const Vector& x, Vector& y) final {
