@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86a406ea_f1de3b29",
+        "filename": "internal/ceres/implicit_schur_complement_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-10T16:16:29Z",
+      "side": 1,
+      "message": "this is fine for now, I will come back and refactor these tests myself.",
+      "range": {
+        "startLine": 142,
+        "startChar": 11,
+        "endLine": 142,
+        "endChar": 18
+      },
+      "revId": "0c6dcc5ecc9a863031b8946abe2c54a1def53662",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
