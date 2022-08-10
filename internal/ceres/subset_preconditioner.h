@@ -75,7 +75,7 @@ class CERES_NO_EXPORT SubsetPreconditioner
   ~SubsetPreconditioner() override;
 
   // Preconditioner interface
-  void RightMultiply(const double* x, double* y) const final;
+  void RightMultiplyAndAccumulate(const double* x, double* y) const final;
   int num_rows() const final { return num_cols_; }
   int num_cols() const final { return num_cols_; }
 

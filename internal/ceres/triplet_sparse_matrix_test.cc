@@ -28,11 +28,11 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/crs_matrix.h"
 #include "ceres/triplet_sparse_matrix.h"
 
 #include <memory>
 
+#include "ceres/crs_matrix.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

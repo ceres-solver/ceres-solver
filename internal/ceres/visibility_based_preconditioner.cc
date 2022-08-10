@@ -422,8 +422,8 @@ LinearSolverTerminationType VisibilityBasedPreconditioner::Factorize() {
   return sparse_cholesky_->Factorize(lhs.get(), &message);
 }
 
-void VisibilityBasedPreconditioner::RightMultiply(const double* x,
-                                                  double* y) const {
+void VisibilityBasedPreconditioner::RightMultiplyAndAccumulate(
+    const double* x, double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
   CHECK(sparse_cholesky_ != nullptr);

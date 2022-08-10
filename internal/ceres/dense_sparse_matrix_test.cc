@@ -59,8 +59,8 @@ static void CompareMatrices(const SparseMatrix* a, const SparseMatrix* b) {
     Vector y_a = Vector::Zero(num_rows);
     Vector y_b = Vector::Zero(num_rows);
 
-    a->RightMultiply(x.data(), y_a.data());
-    b->RightMultiply(x.data(), y_b.data());
+    a->RightMultiplyAndAccumulate(x.data(), y_a.data());
+    b->RightMultiplyAndAccumulate(x.data(), y_b.data());
 
     EXPECT_EQ((y_a - y_b).norm(), 0);
   }
@@ -88,7 +88,7 @@ class DenseSparseMatrixTest : public ::testing::Test {
   std::unique_ptr<DenseSparseMatrix> dsm;
 };
 
-TEST_F(DenseSparseMatrixTest, RightMultiply) {
+TEST_F(DenseSparseMatrixTest, RightMultiplyAndAccumulate) {
   CompareMatrices(tsm.get(), dsm.get());
 
   // Try with a not entirely zero vector to verify column interactions, which
@@ -100,13 +100,13 @@ TEST_F(DenseSparseMatrixTest, RightMultiply) {
   Vector b1 = Vector::Zero(num_rows);
   Vector b2 = Vector::Zero(num_rows);
 
-  tsm->RightMultiply(a.data(), b1.data());
-  dsm->RightMultiply(a.data(), b2.data());
+  tsm->RightMultiplyAndAccumulate(a.data(), b1.data());
+  dsm->RightMultiplyAndAccumulate(a.data(), b2.data());
 
   EXPECT_EQ((b1 - b2).norm(), 0);
 }
 
-TEST_F(DenseSparseMatrixTest, LeftMultiply) {
+TEST_F(DenseSparseMatrixTest, LeftMultiplyAndAccumulate) {
   for (int i = 0; i < num_rows; ++i) {
     Vector a = Vector::Zero(num_rows);
     a(i) = 1.0;
@@ -114,8 +114,8 @@ TEST_F(DenseSparseMatrixTest, LeftMultiply) {
     Vector b1 = Vector::Zero(num_cols);
     Vector b2 = Vector::Zero(num_cols);
 
-    tsm->LeftMultiply(a.data(), b1.data());
-    dsm->LeftMultiply(a.data(), b2.data());
+    tsm->LeftMultiplyAndAccumulate(a.data(), b1.data());
+    dsm->LeftMultiplyAndAccumulate(a.data(), b2.data());
 
     EXPECT_EQ((b1 - b2).norm(), 0);
   }
@@ -129,8 +129,8 @@ TEST_F(DenseSparseMatrixTest, LeftMultiply) {
   Vector b1 = Vector::Zero(num_cols);
   Vector b2 = Vector::Zero(num_cols);
 
-  tsm->LeftMultiply(a.data(), b1.data());
-  dsm->LeftMultiply(a.data(), b2.data());
+  tsm->LeftMultiplyAndAccumulate(a.data(), b1.data());
+  dsm->LeftMultiplyAndAccumulate(a.data(), b2.data());
 
   EXPECT_EQ((b1 - b2).norm(), 0);
 }

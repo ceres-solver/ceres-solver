@@ -85,12 +85,12 @@ class CERES_NO_EXPORT CgnrLinearOperator final
   CgnrLinearOperator(const LinearOperator& A, const double* D)
       : A_(A), D_(D), z_(Vector::Zero(A.num_rows())) {}
 
-  void RightMultiply(const Vector& x, Vector& y) final {
+  void RightMultiplyAndAccumulate(const Vector& x, Vector& y) final {
     // z = Ax
     // y = y + Atz
     z_.setZero();
-    A_.RightMultiply(x, z_);
-    A_.LeftMultiply(z_, y);
+    A_.RightMultiplyAndAccumulate(x, z_);
+    A_.LeftMultiplyAndAccumulate(z_, y);
 
     // y = y + DtDx
     if (D_ != nullptr) {
@@ -159,7 +159,7 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
   // rhs = Atb.
   Vector rhs(A->num_cols());
   rhs.setZero();
-  A->LeftMultiply(b, rhs.data());
+  A->LeftMultiplyAndAccumulate(b, rhs.data());
 
   cg_solution_ = Vector::Zero(A->num_cols());
   for (int i = 0; i < 4; ++i) {

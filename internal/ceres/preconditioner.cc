@@ -60,9 +60,9 @@ bool SparseMatrixPreconditionerWrapper::UpdateImpl(const SparseMatrix& A,
   return true;
 }
 
-void SparseMatrixPreconditionerWrapper::RightMultiply(const double* x,
-                                                      double* y) const {
-  matrix_->RightMultiply(x, y);
+void SparseMatrixPreconditionerWrapper::RightMultiplyAndAccumulate(
+    const double* x, double* y) const {
+  matrix_->RightMultiplyAndAccumulate(x, y);
 }
 
 int SparseMatrixPreconditionerWrapper::num_rows() const {

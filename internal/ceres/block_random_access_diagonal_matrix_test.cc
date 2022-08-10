@@ -134,7 +134,7 @@ TEST_F(BlockRandomAccessDiagonalMatrixTest, MatrixContents) {
       kTolerance);
 }
 
-TEST_F(BlockRandomAccessDiagonalMatrixTest, RightMultiply) {
+TEST_F(BlockRandomAccessDiagonalMatrixTest, RightMultiplyAndAccumulate) {
   double kTolerance = 1e-14;
   const TripletSparseMatrix* tsm = m_->matrix();
   Matrix dense;
@@ -142,7 +142,7 @@ TEST_F(BlockRandomAccessDiagonalMatrixTest, RightMultiply) {
   Vector x = Vector::Random(dense.rows());
   Vector expected_y = dense * x;
   Vector actual_y = Vector::Zero(dense.rows());
-  m_->RightMultiply(x.data(), actual_y.data());
+  m_->RightMultiplyAndAccumulate(x.data(), actual_y.data());
   EXPECT_NEAR((expected_y - actual_y).norm(), 0, kTolerance);
 }
 

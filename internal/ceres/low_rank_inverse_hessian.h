@@ -64,7 +64,7 @@ class CERES_NO_EXPORT LowRankInverseHessian final : public LinearOperator {
   // num_parameters is the row/column size of the Hessian.
   // max_num_corrections is the rank of the Hessian approximation.
   // use_approximate_eigenvalue_scaling controls whether the initial
-  // inverse Hessian used during Right/LeftMultiply() is scaled by
+  // inverse Hessian used during Right/LeftMultiplyAndAccumulate() is scaled by
   // the approximate eigenvalue of the true inverse Hessian at the
   // current operating point.
   // The approximation uses:
@@ -83,9 +83,9 @@ class CERES_NO_EXPORT LowRankInverseHessian final : public LinearOperator {
   bool Update(const Vector& delta_x, const Vector& delta_gradient);
 
   // LinearOperator interface
-  void RightMultiply(const double* x, double* y) const final;
-  void LeftMultiply(const double* x, double* y) const final {
-    RightMultiply(x, y);
+  void RightMultiplyAndAccumulate(const double* x, double* y) const final;
+  void LeftMultiplyAndAccumulate(const double* x, double* y) const final {
+    RightMultiplyAndAccumulate(x, y);
   }
   int num_rows() const final { return num_parameters_; }
   int num_cols() const final { return num_parameters_; }

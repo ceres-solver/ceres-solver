@@ -75,7 +75,7 @@ class CERES_NO_EXPORT BlockRandomAccessDiagonalMatrix
   void Invert();
 
   // y += S * x
-  void RightMultiply(const double* x, double* y) const;
+  void RightMultiplyAndAccumulate(const double* x, double* y) const;
 
   // Since the matrix is square, num_rows() == num_cols().
   int num_rows() const final { return tsm_->num_rows(); }

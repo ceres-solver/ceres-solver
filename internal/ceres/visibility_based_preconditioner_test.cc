@@ -276,7 +276,7 @@ namespace ceres::internal {
 //     y.setZero();
 //     z.setZero();
 //     x[i] = 1.0;
-//     preconditioner_->RightMultiply(x.data(), y.data());
+//     preconditioner_->RightMultiplyAndAccumulate(x.data(), y.data());
 //     z = full_schur_complement
 //         .selfadjointView<Eigen::Upper>()
 //         .llt().solve(x);

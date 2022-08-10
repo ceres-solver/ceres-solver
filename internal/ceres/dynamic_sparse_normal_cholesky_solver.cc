@@ -64,7 +64,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
     double* x) {
   const int num_cols = A->num_cols();
   VectorRef(x, num_cols).setZero();
-  A->LeftMultiply(b, x);
+  A->LeftMultiplyAndAccumulate(b, x);
 
   if (per_solve_options.D != nullptr) {
     // Temporarily append a diagonal block to the A matrix, but undo

@@ -421,7 +421,8 @@ bool TrustRegionMinimizer::ComputeTrustRegionStep() {
   //  = -f'J * step - step' * J' * J * step / 2
   //  = -(J * step)'(f + J * step / 2)
   model_residuals_.setZero();
-  jacobian_->RightMultiply(trust_region_step_.data(), model_residuals_.data());
+  jacobian_->RightMultiplyAndAccumulate(trust_region_step_.data(),
+                                        model_residuals_.data());
   model_cost_change_ =
       -model_residuals_.dot(residuals_ + model_residuals_ / 2.0);
 

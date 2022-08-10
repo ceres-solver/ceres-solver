@@ -67,16 +67,18 @@ class CERES_NO_EXPORT PartitionedMatrixViewBase {
   virtual ~PartitionedMatrixViewBase();
 
   // y += E'x
-  virtual void LeftMultiplyE(const double* x, double* y) const = 0;
+  virtual void LeftMultiplyAndAccumulateE(const double* x, double* y) const = 0;
 
   // y += F'x
-  virtual void LeftMultiplyF(const double* x, double* y) const = 0;
+  virtual void LeftMultiplyAndAccumulateF(const double* x, double* y) const = 0;
 
   // y += Ex
-  virtual void RightMultiplyE(const double* x, double* y) const = 0;
+  virtual void RightMultiplyAndAccumulateE(const double* x,
+                                           double* y) const = 0;
 
   // y += Fx
-  virtual void RightMultiplyF(const double* x, double* y) const = 0;
+  virtual void RightMultiplyAndAccumulateF(const double* x,
+                                           double* y) const = 0;
 
   // Create and return the block diagonal of the matrix E'E.
   virtual std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const = 0;
@@ -124,10 +126,10 @@ class CERES_NO_EXPORT PartitionedMatrixView final
   // num_col_blocks_a column blocks.
   PartitionedMatrixView(const BlockSparseMatrix& matrix, int num_col_blocks_e);
 
-  void LeftMultiplyE(const double* x, double* y) const final;
-  void LeftMultiplyF(const double* x, double* y) const final;
-  void RightMultiplyE(const double* x, double* y) const final;
-  void RightMultiplyF(const double* x, double* y) const final;
+  void LeftMultiplyAndAccumulateE(const double* x, double* y) const final;
+  void LeftMultiplyAndAccumulateF(const double* x, double* y) const final;
+  void RightMultiplyAndAccumulateE(const double* x, double* y) const final;
+  void RightMultiplyAndAccumulateF(const double* x, double* y) const final;
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const final;
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalFtF() const final;
   void UpdateBlockDiagonalEtE(BlockSparseMatrix* block_diagonal) const final;

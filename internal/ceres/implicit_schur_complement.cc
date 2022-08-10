@@ -96,23 +96,24 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
 // By breaking it down into individual matrix vector products
 // involving the matrices E and F. This is implemented using a
 // PartitionedMatrixView of the input matrix A.
-void ImplicitSchurComplement::RightMultiply(const double* x, double* y) const {
+void ImplicitSchurComplement::RightMultiplyAndAccumulate(const double* x,
+                                                         double* y) const {
   // y1 = F x
   tmp_rows_.setZero();
-  A_->RightMultiplyF(x, tmp_rows_.data());
+  A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
 
   // y2 = E' y1
   tmp_e_cols_.setZero();
-  A_->LeftMultiplyE(tmp_rows_.data(), tmp_e_cols_.data());
+  A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(), tmp_e_cols_.data());
 
   // y3 = -(E'E)^-1 y2
   tmp_e_cols_2_.setZero();
-  block_diagonal_EtE_inverse_->RightMultiply(tmp_e_cols_.data(),
-                                             tmp_e_cols_2_.data());
+  block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
+                                                          tmp_e_cols_2_.data());
   tmp_e_cols_2_ *= -1.0;
 
   // y1 = y1 + E y3
-  A_->RightMultiplyE(tmp_e_cols_2_.data(), tmp_rows_.data());
+  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(), tmp_rows_.data());
 
   // y5 = D * x
   if (D_ != nullptr) {
@@ -125,7 +126,7 @@ void ImplicitSchurComplement::RightMultiply(const double* x, double* y) const {
   }
 
   // y = y5 + F' y1
-  A_->LeftMultiplyF(tmp_rows_.data(), y);
+  A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(), y);
 }
 
 // Given a block diagonal matrix and an optional array of diagonal
@@ -153,8 +154,8 @@ void ImplicitSchurComplement::AddDiagonalAndInvert(
   }
 }
 
-// Similar to RightMultiply, use the block structure of the matrix A
-// to compute y = (E'E)^-1 (E'b - E'F x).
+// Similar to RightMultiplyAndAccumulate, use the block structure of the matrix
+// A to compute y = (E'E)^-1 (E'b - E'F x).
 void ImplicitSchurComplement::BackSubstitute(const double* x, double* y) {
   const int num_cols_e = A_->num_cols_e();
   const int num_cols_f = A_->num_cols_f();
@@ -163,18 +164,19 @@ void ImplicitSchurComplement::BackSubstitute(const double* x, double* y) {
 
   // y1 = F x
   tmp_rows_.setZero();
-  A_->RightMultiplyF(x, tmp_rows_.data());
+  A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
 
   // y2 = b - y1
   tmp_rows_ = ConstVectorRef(b_, num_rows) - tmp_rows_;
 
   // y3 = E' y2
   tmp_e_cols_.setZero();
-  A_->LeftMultiplyE(tmp_rows_.data(), tmp_e_cols_.data());
+  A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(), tmp_e_cols_.data());
 
   // y = (E'E)^-1 y3
   VectorRef(y, num_cols).setZero();
-  block_diagonal_EtE_inverse_->RightMultiply(tmp_e_cols_.data(), y);
+  block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
+                                                          y);
 
   // The full solution vector y has two blocks. The first block of
   // variables corresponds to the eliminated variables, which we just
@@ -193,22 +195,23 @@ void ImplicitSchurComplement::BackSubstitute(const double* x, double* y) {
 void ImplicitSchurComplement::UpdateRhs() {
   // y1 = E'b
   tmp_e_cols_.setZero();
-  A_->LeftMultiplyE(b_, tmp_e_cols_.data());
+  A_->LeftMultiplyAndAccumulateE(b_, tmp_e_cols_.data());
 
   // y2 = (E'E)^-1 y1
   Vector y2 = Vector::Zero(A_->num_cols_e());
-  block_diagonal_EtE_inverse_->RightMultiply(tmp_e_cols_.data(), y2.data());
+  block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
+                                                          y2.data());
 
   // y3 = E y2
   tmp_rows_.setZero();
-  A_->RightMultiplyE(y2.data(), tmp_rows_.data());
+  A_->RightMultiplyAndAccumulateE(y2.data(), tmp_rows_.data());
 
   // y3 = b - y3
   tmp_rows_ = ConstVectorRef(b_, A_->num_rows()) - tmp_rows_;
 
   // rhs = F' y3
   rhs_.setZero();
-  A_->LeftMultiplyF(tmp_rows_.data(), rhs_.data());
+  A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(), rhs_.data());
 }
 
 }  // namespace ceres::internal

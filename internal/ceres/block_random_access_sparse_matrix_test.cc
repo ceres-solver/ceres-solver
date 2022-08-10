@@ -127,7 +127,7 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
   Vector expected_y = Vector::Zero(dense.rows());
 
   expected_y += dense.selfadjointView<Eigen::Upper>() * x;
-  m.SymmetricRightMultiply(x.data(), actual_y.data());
+  m.SymmetricRightMultiplyAndAccumulate(x.data(), actual_y.data());
   EXPECT_NEAR((expected_y - actual_y).norm(), 0.0, kTolerance)
       << "actual: " << actual_y.transpose() << "\n"
       << "expected: " << expected_y.transpose() << "matrix: \n " << dense;

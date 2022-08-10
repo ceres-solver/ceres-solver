@@ -88,7 +88,8 @@ void BlockSparseMatrix::SetZero() {
   std::fill(values_.get(), values_.get() + num_nonzeros_, 0.0);
 }
 
-void BlockSparseMatrix::RightMultiply(const double* x, double* y) const {
+void BlockSparseMatrix::RightMultiplyAndAccumulate(const double* x,
+                                                   double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
 
@@ -110,7 +111,8 @@ void BlockSparseMatrix::RightMultiply(const double* x, double* y) const {
   }
 }
 
-void BlockSparseMatrix::LeftMultiply(const double* x, double* y) const {
+void BlockSparseMatrix::LeftMultiplyAndAccumulate(const double* x,
+                                                  double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
 

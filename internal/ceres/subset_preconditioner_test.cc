@@ -159,7 +159,7 @@ TEST_P(SubsetPreconditionerTest, foo) {
     EXPECT_TRUE(ComputeExpectedSolution(*lhs, rhs, &expected));
 
     Vector actual(lhs->num_rows());
-    preconditioner_->RightMultiply(rhs.data(), actual.data());
+    preconditioner_->RightMultiplyAndAccumulate(rhs.data(), actual.data());
 
     Matrix eigen_lhs;
     lhs->ToDenseMatrix(&eigen_lhs);

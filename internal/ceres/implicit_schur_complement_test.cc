@@ -147,7 +147,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
       y = lhs * x;
 
       Vector z(num_sc_cols);
-      isc.RightMultiply(x.data(), z.data());
+      isc.RightMultiplyAndAccumulate(x.data(), z.data());
 
       // The i^th column of the implicit schur complement is the same as
       // the explicit schur complement.

@@ -62,7 +62,7 @@ void SparseIterativeRefiner::Refine(const SparseMatrix& lhs,
   for (int i = 0; i < max_num_iterations_; ++i) {
     // residual = rhs - lhs * solution
     lhs_x_solution_.setZero();
-    lhs.RightMultiply(solution_ptr, lhs_x_solution_.data());
+    lhs.RightMultiplyAndAccumulate(solution_ptr, lhs_x_solution_.data());
     residual_ = rhs - lhs_x_solution_;
     // solution += lhs^-1 residual
     cholesky->Solve(residual_.data(), correction_.data(), &ignored_message);

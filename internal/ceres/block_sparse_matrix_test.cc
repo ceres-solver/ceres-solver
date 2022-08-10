@@ -148,26 +148,26 @@ TEST_F(BlockSparseMatrixTest, SetZeroTest) {
   EXPECT_EQ(13, A_->num_nonzeros());
 }
 
-TEST_F(BlockSparseMatrixTest, RightMultiplyTest) {
+TEST_F(BlockSparseMatrixTest, RightMultiplyAndAccumulateTest) {
   Vector y_a = Vector::Zero(A_->num_rows());
   Vector y_b = Vector::Zero(A_->num_rows());
   for (int i = 0; i < A_->num_cols(); ++i) {
     Vector x = Vector::Zero(A_->num_cols());
     x[i] = 1.0;
-    A_->RightMultiply(x.data(), y_a.data());
-    B_->RightMultiply(x.data(), y_b.data());
+    A_->RightMultiplyAndAccumulate(x.data(), y_a.data());
+    B_->RightMultiplyAndAccumulate(x.data(), y_b.data());
     EXPECT_LT((y_a - y_b).norm(), 1e-12);
   }
 }
 
-TEST_F(BlockSparseMatrixTest, LeftMultiplyTest) {
+TEST_F(BlockSparseMatrixTest, LeftMultiplyAndAccumulateTest) {
   Vector y_a = Vector::Zero(A_->num_cols());
   Vector y_b = Vector::Zero(A_->num_cols());
   for (int i = 0; i < A_->num_rows(); ++i) {
     Vector x = Vector::Zero(A_->num_rows());
     x[i] = 1.0;
-    A_->LeftMultiply(x.data(), y_a.data());
-    B_->LeftMultiply(x.data(), y_b.data());
+    A_->LeftMultiplyAndAccumulate(x.data(), y_a.data());
+    B_->LeftMultiplyAndAccumulate(x.data(), y_b.data());
     EXPECT_LT((y_a - y_b).norm(), 1e-12);
   }
 }
@@ -210,8 +210,8 @@ TEST_F(BlockSparseMatrixTest, AppendRows) {
     y_a.setZero();
     y_b.setZero();
 
-    A_->RightMultiply(x.data(), y_a.data());
-    B_->RightMultiply(x.data(), y_b.data());
+    A_->RightMultiplyAndAccumulate(x.data(), y_a.data());
+    B_->RightMultiplyAndAccumulate(x.data(), y_b.data());
     EXPECT_LT((y_a - y_b).norm(), 1e-12);
   }
 }
@@ -237,8 +237,8 @@ TEST_F(BlockSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
     y_a.setZero();
     y_b.setZero();
 
-    A_->RightMultiply(x.data(), y_a.data());
-    B_->RightMultiply(x.data(), y_b.data());
+    A_->RightMultiplyAndAccumulate(x.data(), y_a.data());
+    B_->RightMultiplyAndAccumulate(x.data(), y_b.data());
     EXPECT_LT((y_a.head(B_->num_rows()) - y_b.head(B_->num_rows())).norm(),
               1e-12);
     Vector expected_tail = Vector::Zero(A_->num_cols());
@@ -258,8 +258,8 @@ TEST_F(BlockSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
     y_a.setZero();
     y_b.setZero();
 
-    A_->RightMultiply(x.data(), y_a.data());
-    B_->RightMultiply(x.data(), y_b.data());
+    A_->RightMultiplyAndAccumulate(x.data(), y_a.data());
+    B_->RightMultiplyAndAccumulate(x.data(), y_b.data());
     EXPECT_LT((y_a - y_b).norm(), 1e-12);
   }
 }
@@ -287,7 +287,7 @@ TEST(BlockSparseMatrix, CreateDiagonalMatrix) {
   EXPECT_EQ(m->num_rows(), m->num_cols());
   Vector x = Vector::Ones(num_cols);
   Vector y = Vector::Zero(num_cols);
-  m->RightMultiply(x.data(), y.data());
+  m->RightMultiplyAndAccumulate(x.data(), y.data());
   for (int i = 0; i < num_cols; ++i) {
     EXPECT_NEAR(y[i], diagonal[i], std::numeric_limits<double>::epsilon());
   }

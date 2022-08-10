@@ -64,7 +64,7 @@ class CERES_NO_EXPORT BlockJacobiPreconditioner
   ~BlockJacobiPreconditioner() override;
 
   // Preconditioner interface
-  void RightMultiply(const double* x, double* y) const final;
+  void RightMultiplyAndAccumulate(const double* x, double* y) const final;
   int num_rows() const final { return m_->num_rows(); }
   int num_cols() const final { return m_->num_rows(); }
   const BlockRandomAccessDiagonalMatrix& matrix() const { return *m_; }

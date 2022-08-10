@@ -66,8 +66,9 @@ class CudaBuffer {
       if (data_ != nullptr) {
         CHECK_EQ(cudaFree(data_), cudaSuccess);
       }
-      CHECK_EQ(cudaMalloc(&data_, size * sizeof(T)), cudaSuccess) <<
-          "Failed to allocate " << size * sizeof(T) << " bytes of GPU memory";
+      CHECK_EQ(cudaMalloc(&data_, size * sizeof(T)), cudaSuccess)
+          << "Failed to allocate " << size * sizeof(T)
+          << " bytes of GPU memory";
       size_ = size;
     }
   }

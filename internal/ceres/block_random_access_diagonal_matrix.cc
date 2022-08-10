@@ -130,8 +130,8 @@ void BlockRandomAccessDiagonalMatrix::Invert() {
   }
 }
 
-void BlockRandomAccessDiagonalMatrix::RightMultiply(const double* x,
-                                                    double* y) const {
+void BlockRandomAccessDiagonalMatrix::RightMultiplyAndAccumulate(
+    const double* x, double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
   const double* values = tsm_->values();

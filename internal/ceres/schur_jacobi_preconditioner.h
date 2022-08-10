@@ -71,7 +71,7 @@ class SchurEliminatorBase;
 //   SchurJacobiPreconditioner preconditioner(
 //      *A.block_structure(), options);
 //   preconditioner.Update(A, nullptr);
-//   preconditioner.RightMultiply(x, y);
+//   preconditioner.RightMultiplyAndAccumulate(x, y);
 //
 class CERES_NO_EXPORT SchurJacobiPreconditioner
     : public BlockSparseMatrixPreconditioner {
@@ -90,7 +90,7 @@ class CERES_NO_EXPORT SchurJacobiPreconditioner
   ~SchurJacobiPreconditioner() override;
 
   // Preconditioner interface.
-  void RightMultiply(const double* x, double* y) const final;
+  void RightMultiplyAndAccumulate(const double* x, double* y) const final;
   int num_rows() const final;
 
  private:

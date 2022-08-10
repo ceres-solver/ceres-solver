@@ -57,7 +57,8 @@ SubsetPreconditioner::SubsetPreconditioner(Preconditioner::Options options,
 
 SubsetPreconditioner::~SubsetPreconditioner() = default;
 
-void SubsetPreconditioner::RightMultiply(const double* x, double* y) const {
+void SubsetPreconditioner::RightMultiplyAndAccumulate(const double* x,
+                                                      double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
   std::string message;

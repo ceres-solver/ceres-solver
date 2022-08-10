@@ -169,13 +169,15 @@ void TripletSparseMatrix::CopyData(const TripletSparseMatrix& orig) {
   }
 }
 
-void TripletSparseMatrix::RightMultiply(const double* x, double* y) const {
+void TripletSparseMatrix::RightMultiplyAndAccumulate(const double* x,
+                                                     double* y) const {
   for (int i = 0; i < num_nonzeros_; ++i) {
     y[rows_[i]] += values_[i] * x[cols_[i]];
   }
 }
 
-void TripletSparseMatrix::LeftMultiply(const double* x, double* y) const {
+void TripletSparseMatrix::LeftMultiplyAndAccumulate(const double* x,
+                                                    double* y) const {
   for (int i = 0; i < num_nonzeros_; ++i) {
     y[cols_[i]] += values_[i] * x[rows_[i]];
   }
