@@ -16,6 +16,40 @@
       "message": "I added a bunch of tests, I can add more tests.. but I think this covers the major bits.",
       "revId": "cea1faa59b403559a5bc433a850ca70c9584af81",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a5a0b24_c96460e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-10T15:14:14Z",
+      "side": 1,
+      "message": "The tests look good to me, except one clarification question. \nWill you be pulling out the sparse linear algebra checking into its own thing? (relevant to the two unresolved comments).",
+      "revId": "cea1faa59b403559a5bc433a850ca70c9584af81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e1ddac6_8be7643e",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-10T15:14:14Z",
+      "side": 1,
+      "message": "I did not understand this - is it possible to run CGNR without a sparse linear algebra library?",
+      "revId": "cea1faa59b403559a5bc433a850ca70c9584af81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
