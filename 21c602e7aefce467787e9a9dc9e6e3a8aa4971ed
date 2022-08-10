@@ -122,6 +122,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbfc4a05_2a7dd291",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-10T00:49:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5e741e44_bd9830f7",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6dd7ad48_417b1a98",
@@ -153,6 +171,24 @@
       "side": 1,
       "message": "subset preconditioner requires a sparse cholesky factorization.",
       "parentUuid": "6dd7ad48_417b1a98",
+      "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a5b2e51_2513f289",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-10T00:49:40Z",
+      "side": 1,
+      "message": "In that case this would help clarity:\n```\n// Subset preconditioner requires a sparse Cholesky factorization.\nif (options.preconditioner_type \u003d\u003d SUBSET \u0026\u0026\n    !OptionsAreValidForSparseCholeskyBasedSolver(options, error)) {\n  return false;\n} \n```",
+      "parentUuid": "d2386d5e_5e672c95",
       "revId": "21c602e7aefce467787e9a9dc9e6e3a8aa4971ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
