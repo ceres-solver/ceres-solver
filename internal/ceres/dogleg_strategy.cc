@@ -175,7 +175,7 @@ TrustRegionStrategy::Summary DoglegStrategy::ComputeStep(
 void DoglegStrategy::ComputeGradient(SparseMatrix* jacobian,
                                      const double* residuals) {
   gradient_.setZero();
-  jacobian->LeftMultiply(residuals, gradient_.data());
+  jacobian->LeftMultiplyAndAccumulate(residuals, gradient_.data());
   gradient_.array() /= diagonal_.array();
 }
 
@@ -188,7 +188,7 @@ void DoglegStrategy::ComputeCauchyPoint(SparseMatrix* jacobian) {
   // The Jacobian is scaled implicitly by computing J * (D^-1 * (D^-1 * g))
   // instead of (J * D^-1) * (D^-1 * g).
   Vector scaled_gradient = (gradient_.array() / diagonal_.array()).matrix();
-  jacobian->RightMultiply(scaled_gradient.data(), Jg.data());
+  jacobian->RightMultiplyAndAccumulate(scaled_gradient.data(), Jg.data());
   alpha_ = gradient_.squaredNorm() / Jg.squaredNorm();
 }
 
@@ -706,9 +706,9 @@ bool DoglegStrategy::ComputeSubspaceModel(SparseMatrix* jacobian) {
 
   Vector tmp;
   tmp = (subspace_basis_.col(0).array() / diagonal_.array()).matrix();
-  jacobian->RightMultiply(tmp.data(), Jb.row(0).data());
+  jacobian->RightMultiplyAndAccumulate(tmp.data(), Jb.row(0).data());
   tmp = (subspace_basis_.col(1).array() / diagonal_.array()).matrix();
-  jacobian->RightMultiply(tmp.data(), Jb.row(1).data());
+  jacobian->RightMultiplyAndAccumulate(tmp.data(), Jb.row(1).data());
 
   subspace_B_ = Jb * Jb.transpose();
 

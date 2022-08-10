@@ -85,7 +85,7 @@ TEST_F(PartitionedMatrixViewTest, DimensionsTest) {
   EXPECT_EQ(pmv_->num_rows(), A_->num_rows());
 }
 
-TEST_F(PartitionedMatrixViewTest, RightMultiplyE) {
+TEST_F(PartitionedMatrixViewTest, RightMultiplyAndAccumulateE) {
   Vector x1(pmv_->num_cols_e());
   Vector x2(pmv_->num_cols());
   x2.setZero();
@@ -95,17 +95,17 @@ TEST_F(PartitionedMatrixViewTest, RightMultiplyE) {
   }
 
   Vector y1 = Vector::Zero(pmv_->num_rows());
-  pmv_->RightMultiplyE(x1.data(), y1.data());
+  pmv_->RightMultiplyAndAccumulateE(x1.data(), y1.data());
 
   Vector y2 = Vector::Zero(pmv_->num_rows());
-  A_->RightMultiply(x2.data(), y2.data());
+  A_->RightMultiplyAndAccumulate(x2.data(), y2.data());
 
   for (int i = 0; i < pmv_->num_rows(); ++i) {
     EXPECT_NEAR(y1(i), y2(i), kEpsilon);
   }
 }
 
-TEST_F(PartitionedMatrixViewTest, RightMultiplyF) {
+TEST_F(PartitionedMatrixViewTest, RightMultiplyAndAccumulateF) {
   Vector x1(pmv_->num_cols_f());
   Vector x2 = Vector::Zero(pmv_->num_cols());
 
@@ -115,17 +115,17 @@ TEST_F(PartitionedMatrixViewTest, RightMultiplyF) {
   }
 
   Vector y1 = Vector::Zero(pmv_->num_rows());
-  pmv_->RightMultiplyF(x1.data(), y1.data());
+  pmv_->RightMultiplyAndAccumulateF(x1.data(), y1.data());
 
   Vector y2 = Vector::Zero(pmv_->num_rows());
-  A_->RightMultiply(x2.data(), y2.data());
+  A_->RightMultiplyAndAccumulate(x2.data(), y2.data());
 
   for (int i = 0; i < pmv_->num_rows(); ++i) {
     EXPECT_NEAR(y1(i), y2(i), kEpsilon);
   }
 }
 
-TEST_F(PartitionedMatrixViewTest, LeftMultiply) {
+TEST_F(PartitionedMatrixViewTest, LeftMultiplyAndAccumulate) {
   Vector x = Vector::Zero(pmv_->num_rows());
   for (int i = 0; i < pmv_->num_rows(); ++i) {
     x(i) = RandDouble();
@@ -135,9 +135,9 @@ TEST_F(PartitionedMatrixViewTest, LeftMultiply) {
   Vector y1 = Vector::Zero(pmv_->num_cols_e());
   Vector y2 = Vector::Zero(pmv_->num_cols_f());
 
-  A_->LeftMultiply(x.data(), y.data());
-  pmv_->LeftMultiplyE(x.data(), y1.data());
-  pmv_->LeftMultiplyF(x.data(), y2.data());
+  A_->LeftMultiplyAndAccumulate(x.data(), y.data());
+  pmv_->LeftMultiplyAndAccumulateE(x.data(), y1.data());
+  pmv_->LeftMultiplyAndAccumulateF(x.data(), y2.data());
 
   for (int i = 0; i < pmv_->num_cols(); ++i) {
     EXPECT_NEAR(y(i),

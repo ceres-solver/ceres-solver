@@ -58,13 +58,13 @@ class FakeSparseMatrix : public SparseMatrix {
   explicit FakeSparseMatrix(Matrix m) : m_(std::move(m)) {}
 
   // y += Ax
-  void RightMultiply(const double* x, double* y) const final {
+  void RightMultiplyAndAccumulate(const double* x, double* y) const final {
     VectorRef(y, m_.cols()) += m_ * ConstVectorRef(x, m_.cols());
   }
   // y += A'x
-  void LeftMultiply(const double* x, double* y) const final {
+  void LeftMultiplyAndAccumulate(const double* x, double* y) const final {
     // We will assume that this is a symmetric matrix.
-    RightMultiply(x, y);
+    RightMultiplyAndAccumulate(x, y);
   }
 
   double* mutable_values() final { return m_.data(); }

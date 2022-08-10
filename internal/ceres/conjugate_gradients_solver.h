@@ -55,7 +55,8 @@ template <typename DenseVectorType>
 class ConjugateGradientsLinearOperator {
  public:
   ~ConjugateGradientsLinearOperator() = default;
-  virtual void RightMultiply(const DenseVectorType& x, DenseVectorType& y) = 0;
+  virtual void RightMultiplyAndAccumulate(const DenseVectorType& x,
+                                          DenseVectorType& y) = 0;
 };
 
 // Adapter class that makes LinearOperator appear like an instance of
@@ -65,8 +66,8 @@ class LinearOperatorAdapter : public ConjugateGradientsLinearOperator<Vector> {
   LinearOperatorAdapter(LinearOperator& linear_operator)
       : linear_operator_(linear_operator) {}
 
-  void RightMultiply(const Vector& x, Vector& y) final {
-    linear_operator_.RightMultiply(x, y);
+  void RightMultiplyAndAccumulate(const Vector& x, Vector& y) final {
+    linear_operator_.RightMultiplyAndAccumulate(x, y);
   }
 
  private:
@@ -135,7 +136,7 @@ LinearSolver::Summary ConjugateGradientsSolver(
   const double tol_r = options.r_tolerance * norm_b;
 
   SetZero(tmp);
-  lhs.RightMultiply(solution, tmp);
+  lhs.RightMultiplyAndAccumulate(solution, tmp);
 
   // r = rhs - tmp
   Axpby(1.0, rhs, -1.0, tmp, r);
@@ -157,7 +158,7 @@ LinearSolver::Summary ConjugateGradientsSolver(
 
   for (summary.num_iterations = 1;; ++summary.num_iterations) {
     SetZero(z);
-    preconditioner.RightMultiply(r, z);
+    preconditioner.RightMultiplyAndAccumulate(r, z);
 
     double last_rho = rho;
     // rho = r.dot(z);
@@ -188,7 +189,7 @@ LinearSolver::Summary ConjugateGradientsSolver(
 
     DenseVectorType& q = z;
     SetZero(q);
-    lhs.RightMultiply(p, q);
+    lhs.RightMultiplyAndAccumulate(p, q);
     const double pq = Dot(p, q);
     if ((pq <= 0) || std::isinf(pq)) {
       summary.termination_type = LinearSolverTerminationType::NO_CONVERGENCE;
@@ -224,7 +225,7 @@ LinearSolver::Summary ConjugateGradientsSolver(
     // double the complexity of the CG algorithm.
     if (summary.num_iterations % options.residual_reset_period == 0) {
       SetZero(tmp);
-      lhs.RightMultiply(solution, tmp);
+      lhs.RightMultiplyAndAccumulate(solution, tmp);
       Axpby(1.0, rhs, -1.0, tmp, r);
       // r = rhs - tmp;
     } else {

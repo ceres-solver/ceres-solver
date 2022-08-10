@@ -85,9 +85,9 @@ class BlockSparseMatrix;
 // complement using the PartitionedMatrixView object.
 //
 // THREAD SAFETY: This class is not thread safe. In particular, the
-// RightMultiply (and the LeftMultiply) methods are not thread safe as
-// they depend on mutable arrays used for the temporaries needed to
-// compute the product y += Sx;
+// RightMultiplyAndAccumulate (and the LeftMultiplyAndAccumulate) methods are
+// not thread safe as they depend on mutable arrays used for the temporaries
+// needed to compute the product y += Sx;
 class CERES_NO_EXPORT ImplicitSchurComplement final : public LinearOperator {
  public:
   // num_eliminate_blocks is the number of E blocks in the matrix
@@ -114,12 +114,12 @@ class CERES_NO_EXPORT ImplicitSchurComplement final : public LinearOperator {
   void Init(const BlockSparseMatrix& A, const double* D, const double* b);
 
   // y += Sx, where S is the Schur complement.
-  void RightMultiply(const double* x, double* y) const final;
+  void RightMultiplyAndAccumulate(const double* x, double* y) const final;
 
   // The Schur complement is a symmetric positive definite matrix,
   // thus the left and right multiply operators are the same.
-  void LeftMultiply(const double* x, double* y) const final {
-    RightMultiply(x, y);
+  void LeftMultiplyAndAccumulate(const double* x, double* y) const final {
+    RightMultiplyAndAccumulate(x, y);
   }
 
   // y = (E'E)^-1 (E'b - E'F x). Given an estimate of the solution to
@@ -155,7 +155,7 @@ class CERES_NO_EXPORT ImplicitSchurComplement final : public LinearOperator {
 
   Vector rhs_;
 
-  // Temporary storage vectors used to implement RightMultiply.
+  // Temporary storage vectors used to implement RightMultiplyAndAccumulate.
   mutable Vector tmp_rows_;
   mutable Vector tmp_e_cols_;
   mutable Vector tmp_e_cols_2_;

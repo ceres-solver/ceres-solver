@@ -147,8 +147,8 @@ void BlockRandomAccessSparseMatrix::SetZero() {
   }
 }
 
-void BlockRandomAccessSparseMatrix::SymmetricRightMultiply(const double* x,
-                                                           double* y) const {
+void BlockRandomAccessSparseMatrix::SymmetricRightMultiplyAndAccumulate(
+    const double* x, double* y) const {
   for (const auto& cell_position_and_data : cell_values_) {
     const int row = cell_position_and_data.first.first;
     const int row_block_size = blocks_[row];

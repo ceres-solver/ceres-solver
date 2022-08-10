@@ -45,8 +45,8 @@
 #ifndef CERES_NO_CUDA
 #include "cublas_v2.h"
 #include "cuda_runtime.h"
-#include "cusparse.h"
 #include "cusolverDn.h"
+#include "cusparse.h"
 #endif  // CERES_NO_CUDA
 
 #ifdef CERES_USE_CXX_THREADS

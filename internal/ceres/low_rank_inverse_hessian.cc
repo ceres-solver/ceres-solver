@@ -116,8 +116,8 @@ bool LowRankInverseHessian::Update(const Vector& delta_x,
   return true;
 }
 
-void LowRankInverseHessian::RightMultiply(const double* x_ptr,
-                                          double* y_ptr) const {
+void LowRankInverseHessian::RightMultiplyAndAccumulate(const double* x_ptr,
+                                                       double* y_ptr) const {
   ConstVectorRef gradient(x_ptr, num_parameters_);
   VectorRef search_direction(y_ptr, num_parameters_);
 

@@ -65,8 +65,8 @@ class CERES_NO_EXPORT TripletSparseMatrix final : public SparseMatrix {
 
   // Implementation of the SparseMatrix interface.
   void SetZero() final;
-  void RightMultiply(const double* x, double* y) const final;
-  void LeftMultiply(const double* x, double* y) const final;
+  void RightMultiplyAndAccumulate(const double* x, double* y) const final;
+  void LeftMultiplyAndAccumulate(const double* x, double* y) const final;
   void SquaredColumnNorm(double* x) const final;
   void ScaleColumns(const double* scale) final;
   void ToCRSMatrix(CRSMatrix* matrix) const;
@@ -139,6 +139,7 @@ class CERES_NO_EXPORT TripletSparseMatrix final : public SparseMatrix {
 
   // Load a triplet sparse matrix from a text file.
   static std::unique_ptr<TripletSparseMatrix> CreateFromTextFile(FILE* file);
+
  private:
   void AllocateMemory();
   void CopyData(const TripletSparseMatrix& orig);

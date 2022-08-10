@@ -72,7 +72,7 @@ class DynamicSparseNormalCholeskySolverTest : public ::testing::Test {
 
     Vector rhs(A_->num_cols());
     rhs.setZero();
-    A_->LeftMultiply(b_.get(), rhs.data());
+    A_->LeftMultiplyAndAccumulate(b_.get(), rhs.data());
     Vector expected_solution = lhs.llt().solve(rhs);
 
     std::unique_ptr<LinearSolver> solver(LinearSolver::Create(options));

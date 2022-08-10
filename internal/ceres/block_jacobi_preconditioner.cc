@@ -90,9 +90,9 @@ bool BlockJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   return true;
 }
 
-void BlockJacobiPreconditioner::RightMultiply(const double* x,
-                                              double* y) const {
-  m_->RightMultiply(x, y);
+void BlockJacobiPreconditioner::RightMultiplyAndAccumulate(const double* x,
+                                                           double* y) const {
+  m_->RightMultiplyAndAccumulate(x, y);
 }
 
 }  // namespace ceres::internal

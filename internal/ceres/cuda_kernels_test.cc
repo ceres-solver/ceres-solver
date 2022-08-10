@@ -52,10 +52,8 @@ TEST(CudaFP64ToFP32, SimpleConversions) {
   fp64_gpu.CopyFromCpuVector(fp64_cpu, cudaStreamDefault);
   CudaBuffer<float> fp32_gpu;
   fp32_gpu.Reserve(fp64_cpu.size());
-  CudaFP64ToFP32(fp64_gpu.data(),
-                 fp32_gpu.data(),
-                 fp64_cpu.size(),
-                 cudaStreamDefault);
+  CudaFP64ToFP32(
+      fp64_gpu.data(), fp32_gpu.data(), fp64_cpu.size(), cudaStreamDefault);
   std::vector<float> fp32_cpu(fp64_cpu.size());
   fp32_gpu.CopyToCpu(fp32_cpu.data(), fp32_cpu.size());
   for (int i = 0; i < fp32_cpu.size(); ++i) {
@@ -65,11 +63,7 @@ TEST(CudaFP64ToFP32, SimpleConversions) {
 
 TEST(CudaFP64ToFP32, NumericallyExtremeValues) {
   std::vector<double> fp64_cpu = {
-      DBL_MIN,
-      10.0 * DBL_MIN,
-      DBL_MAX,
-      0.1 * DBL_MAX
-  };
+      DBL_MIN, 10.0 * DBL_MIN, DBL_MAX, 0.1 * DBL_MAX};
   // First just make sure that the compiler has represented these values
   // accurately as fp64.
   EXPECT_GT(fp64_cpu[0], 0.0);
@@ -80,10 +74,8 @@ TEST(CudaFP64ToFP32, NumericallyExtremeValues) {
   fp64_gpu.CopyFromCpuVector(fp64_cpu, cudaStreamDefault);
   CudaBuffer<float> fp32_gpu;
   fp32_gpu.Reserve(fp64_cpu.size());
-  CudaFP64ToFP32(fp64_gpu.data(),
-                 fp32_gpu.data(),
-                 fp64_cpu.size(),
-                 cudaStreamDefault);
+  CudaFP64ToFP32(
+      fp64_gpu.data(), fp32_gpu.data(), fp64_cpu.size(), cudaStreamDefault);
   std::vector<float> fp32_cpu(fp64_cpu.size());
   fp32_gpu.CopyToCpu(fp32_cpu.data(), fp32_cpu.size());
   EXPECT_EQ(fp32_cpu[0], 0.0f);
@@ -98,10 +90,8 @@ TEST(CudaFP32ToFP64, SimpleConversions) {
   fp32_gpu.CopyFromCpuVector(fp32_cpu, cudaStreamDefault);
   CudaBuffer<double> fp64_gpu;
   fp64_gpu.Reserve(fp32_cpu.size());
-  CudaFP32ToFP64(fp32_gpu.data(),
-                 fp64_gpu.data(),
-                 fp32_cpu.size(),
-                 cudaStreamDefault);
+  CudaFP32ToFP64(
+      fp32_gpu.data(), fp64_gpu.data(), fp32_cpu.size(), cudaStreamDefault);
   std::vector<double> fp64_cpu(fp32_cpu.size());
   fp64_gpu.CopyToCpu(fp64_cpu.data(), fp64_cpu.size());
   for (int i = 0; i < fp64_cpu.size(); ++i) {
@@ -135,8 +125,8 @@ TEST(CudaSetZeroFP64, NonZeroInput) {
 
 TEST(CudaDsxpy, DoubleValues) {
   std::vector<float> fp32_cpu_a = {1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
-  std::vector<double> fp64_cpu_b =
-      {1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
+  std::vector<double> fp64_cpu_b = {
+      1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
   CudaBuffer<float> fp32_gpu_a;
   fp32_gpu_a.CopyFromCpuVector(fp32_cpu_a, cudaStreamDefault);
   CudaBuffer<double> fp64_gpu_b;

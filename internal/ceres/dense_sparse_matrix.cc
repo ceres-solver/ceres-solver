@@ -59,11 +59,13 @@ DenseSparseMatrix::DenseSparseMatrix(Matrix m) : m_(std::move(m)) {}
 
 void DenseSparseMatrix::SetZero() { m_.setZero(); }
 
-void DenseSparseMatrix::RightMultiply(const double* x, double* y) const {
+void DenseSparseMatrix::RightMultiplyAndAccumulate(const double* x,
+                                                   double* y) const {
   VectorRef(y, num_rows()).noalias() += m_ * ConstVectorRef(x, num_cols());
 }
 
-void DenseSparseMatrix::LeftMultiply(const double* x, double* y) const {
+void DenseSparseMatrix::LeftMultiplyAndAccumulate(const double* x,
+                                                  double* y) const {
   VectorRef(y, num_cols()).noalias() +=
       m_.transpose() * ConstVectorRef(x, num_rows());
 }

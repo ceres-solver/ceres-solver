@@ -91,9 +91,9 @@ bool SchurJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   return true;
 }
 
-void SchurJacobiPreconditioner::RightMultiply(const double* x,
-                                              double* y) const {
-  m_->RightMultiply(x, y);
+void SchurJacobiPreconditioner::RightMultiplyAndAccumulate(const double* x,
+                                                           double* y) const {
+  m_->RightMultiplyAndAccumulate(x, y);
 }
 
 int SchurJacobiPreconditioner::num_rows() const { return m_->num_rows(); }

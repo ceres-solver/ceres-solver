@@ -64,8 +64,8 @@ static void CompareMatrices(const SparseMatrix* a, const SparseMatrix* b) {
     Vector y_a = Vector::Zero(num_rows);
     Vector y_b = Vector::Zero(num_rows);
 
-    a->RightMultiply(x.data(), y_a.data());
-    b->RightMultiply(x.data(), y_b.data());
+    a->RightMultiplyAndAccumulate(x.data(), y_a.data());
+    b->RightMultiplyAndAccumulate(x.data(), y_b.data());
     EXPECT_EQ((y_a - y_b).norm(), 0);
   }
 }
@@ -237,13 +237,13 @@ TEST(CompressedRowSparseMatrix, CreateBlockDiagonalMatrix) {
 
   x.setOnes();
   y.setZero();
-  matrix->RightMultiply(x.data(), y.data());
+  matrix->RightMultiplyAndAccumulate(x.data(), y.data());
   for (int i = 0; i < diagonal.size(); ++i) {
     EXPECT_EQ(y[i], diagonal[i]);
   }
 
   y.setZero();
-  matrix->LeftMultiply(x.data(), y.data());
+  matrix->LeftMultiplyAndAccumulate(x.data(), y.data());
   for (int i = 0; i < diagonal.size(); ++i) {
     EXPECT_EQ(y[i], diagonal[i]);
   }
@@ -396,9 +396,10 @@ static std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   return "UNSYMMETRIC";
 }
 
-class RightMultiplyTest : public ::testing::TestWithParam<Param> {};
+class RightMultiplyAndAccumulateTest : public ::testing::TestWithParam<Param> {
+};
 
-TEST_P(RightMultiplyTest, _) {
+TEST_P(RightMultiplyAndAccumulateTest, _) {
   const int kMinNumBlocks = 1;
   const int kMaxNumBlocks = 10;
   const int kMinBlockSize = 1;
@@ -429,7 +430,7 @@ TEST_P(RightMultiplyTest, _) {
 
       Vector actual_y(num_rows);
       actual_y.setZero();
-      matrix->RightMultiply(x.data(), actual_y.data());
+      matrix->RightMultiplyAndAccumulate(x.data(), actual_y.data());
 
       Matrix dense;
       matrix->ToDenseMatrix(&dense);
@@ -460,15 +461,15 @@ TEST_P(RightMultiplyTest, _) {
 
 INSTANTIATE_TEST_SUITE_P(
     CompressedRowSparseMatrix,
-    RightMultiplyTest,
+    RightMultiplyAndAccumulateTest,
     ::testing::Values(CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR,
                       CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR,
                       CompressedRowSparseMatrix::StorageType::UNSYMMETRIC),
     ParamInfoToString);
 
-class LeftMultiplyTest : public ::testing::TestWithParam<Param> {};
+class LeftMultiplyAndAccumulateTest : public ::testing::TestWithParam<Param> {};
 
-TEST_P(LeftMultiplyTest, _) {
+TEST_P(LeftMultiplyAndAccumulateTest, _) {
   const int kMinNumBlocks = 1;
   const int kMaxNumBlocks = 10;
   const int kMinBlockSize = 1;
@@ -499,7 +500,7 @@ TEST_P(LeftMultiplyTest, _) {
 
       Vector actual_y(num_cols);
       actual_y.setZero();
-      matrix->LeftMultiply(x.data(), actual_y.data());
+      matrix->LeftMultiplyAndAccumulate(x.data(), actual_y.data());
 
       Matrix dense;
       matrix->ToDenseMatrix(&dense);
@@ -530,7 +531,7 @@ TEST_P(LeftMultiplyTest, _) {
 
 INSTANTIATE_TEST_SUITE_P(
     CompressedRowSparseMatrix,
-    LeftMultiplyTest,
+    LeftMultiplyAndAccumulateTest,
     ::testing::Values(CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR,
                       CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR,
                       CompressedRowSparseMatrix::StorageType::UNSYMMETRIC),

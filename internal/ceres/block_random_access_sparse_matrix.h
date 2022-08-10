@@ -83,7 +83,7 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
   // matrix is stored.
   //
   // y += S * x
-  void SymmetricRightMultiply(const double* x, double* y) const;
+  void SymmetricRightMultiplyAndAccumulate(const double* x, double* y) const;
 
   // Since the matrix is square, num_rows() == num_cols().
   int num_rows() const final { return tsm_->num_rows(); }

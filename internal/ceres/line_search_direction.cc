@@ -120,8 +120,8 @@ class CERES_NO_EXPORT LBFGS final : public LineSearchDirection {
         current.gradient - previous.gradient);
 
     search_direction->setZero();
-    low_rank_inverse_hessian_.RightMultiply(current.gradient.data(),
-                                            search_direction->data());
+    low_rank_inverse_hessian_.RightMultiplyAndAccumulate(
+        current.gradient.data(), search_direction->data());
     *search_direction *= -1.0;
 
     if (search_direction->dot(current.gradient) >= 0.0) {

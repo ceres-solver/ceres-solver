@@ -278,10 +278,10 @@ void CompressedRowSparseMatrix::SetZero() {
   std::fill(values_.begin(), values_.end(), 0);
 }
 
-// TODO(sameeragarwal): Make RightMultiply and LeftMultiply
-// block-aware for higher performance.
-void CompressedRowSparseMatrix::RightMultiply(const double* x,
-                                              double* y) const {
+// TODO(sameeragarwal): Make RightMultiplyAndAccumulate and
+// LeftMultiplyAndAccumulate block-aware for higher performance.
+void CompressedRowSparseMatrix::RightMultiplyAndAccumulate(const double* x,
+                                                           double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
 
@@ -342,7 +342,8 @@ void CompressedRowSparseMatrix::RightMultiply(const double* x,
   }
 }
 
-void CompressedRowSparseMatrix::LeftMultiply(const double* x, double* y) const {
+void CompressedRowSparseMatrix::LeftMultiplyAndAccumulate(const double* x,
+                                                          double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
 
@@ -353,8 +354,9 @@ void CompressedRowSparseMatrix::LeftMultiply(const double* x, double* y) const {
       }
     }
   } else {
-    // Since the matrix is symmetric, LeftMultiply = RightMultiply.
-    RightMultiply(x, y);
+    // Since the matrix is symmetric, LeftMultiplyAndAccumulate =
+    // RightMultiplyAndAccumulate.
+    RightMultiplyAndAccumulate(x, y);
   }
 }
 

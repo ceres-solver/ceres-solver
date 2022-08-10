@@ -70,8 +70,8 @@ class BlockRandomAccessSparseMatrixAdapter
 
   virtual ~BlockRandomAccessSparseMatrixAdapter() final {}
 
-  void RightMultiply(const Vector& x, Vector& y) final {
-    m_.SymmetricRightMultiply(x.data(), y.data());
+  void RightMultiplyAndAccumulate(const Vector& x, Vector& y) final {
+    m_.SymmetricRightMultiplyAndAccumulate(x.data(), y.data());
   }
 
  private:
@@ -88,8 +88,8 @@ class BlockRandomAccessDiagonalMatrixAdapter final
   virtual ~BlockRandomAccessDiagonalMatrixAdapter() final {}
 
   // y = y + Ax;
-  void RightMultiply(const Vector& x, Vector& y) final {
-    m_.RightMultiply(x.data(), y.data());
+  void RightMultiplyAndAccumulate(const Vector& x, Vector& y) final {
+    m_.RightMultiplyAndAccumulate(x.data(), y.data());
   }
 
  private:

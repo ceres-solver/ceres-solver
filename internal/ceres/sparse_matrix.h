@@ -68,9 +68,10 @@ class CERES_NO_EXPORT SparseMatrix : public LinearOperator {
   ~SparseMatrix() override;
 
   // y += Ax;
-  void RightMultiply(const double* x, double* y) const override = 0;
+  void RightMultiplyAndAccumulate(const double* x,
+                                  double* y) const override = 0;
   // y += A'x;
-  void LeftMultiply(const double* x, double* y) const override = 0;
+  void LeftMultiplyAndAccumulate(const double* x, double* y) const override = 0;
 
   // In MATLAB notation sum(A.*A, 1)
   virtual void SquaredColumnNorm(double* x) const = 0;
