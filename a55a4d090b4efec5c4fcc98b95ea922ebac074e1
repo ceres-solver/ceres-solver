@@ -106,6 +106,24 @@
       "parentUuid": "6db5a9a2_e96426fa",
       "revId": "a55a4d090b4efec5c4fcc98b95ea922ebac074e1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd3b458d_950cbdce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-10T16:15:30Z",
+      "side": 1,
+      "message": "mark sorry for not being clear, your refactoring is good. nothing more needs to be done there.",
+      "parentUuid": "4f9dc073_302acf18",
+      "revId": "a55a4d090b4efec5c4fcc98b95ea922ebac074e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
