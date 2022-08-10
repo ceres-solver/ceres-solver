@@ -129,6 +129,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "fcfb34cc_74d5dfc2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-10T21:17:21Z",
+      "side": 1,
+      "message": "A small update: downgrading to METIS 5.1.0 solves the heap corruption. Essentially this means there\u0027s something wrong with the latest METIS 5.1.1 release, at least when using MSVC 2022.",
+      "parentUuid": "0f2e8b49_fe0dd6a8",
+      "revId": "5d0bca14dd9c052a9040def6dae58b460c3fcd5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "17f0f0e2_fb00f4e2",
         "filename": "internal/ceres/sparse_cholesky_test.cc",
         "patchSetId": 3
