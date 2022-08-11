@@ -165,6 +165,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d45c3047_86be46f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-11T21:38:39Z",
+      "side": 1,
+      "message": "Sameer, after the downgrade I see the following output:\n```\n   Current memory used:         416 bytes\n   Maximum memory used:         416 bytes\n***Memory allocation failed for OMETIS: cptr. Requested size: 7378697601996030192 bytes\nERROR WHILE CALLING THE METIS PACKAGE\n[       OK ] EigenSparseCholeskyMETIS/SparseCholeskyTest.FactorAndSolve/EIGEN_SPARSE_NESDIS_UseBlockStructure (3796 ms)\n[----------] 1 test from EigenSparseCholeskyMETIS/SparseCholeskyTest (3796 ms total)\n\n[----------] Global test environment tear-down\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] 1 test from 1 test suite ran. (3796 ms total)\n[  PASSED  ] 1 test.\n```\neven though the tests pass. Is this something we should worry about?",
+      "parentUuid": "cadf1677_a403d1da",
+      "revId": "5d0bca14dd9c052a9040def6dae58b460c3fcd5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "17f0f0e2_fb00f4e2",
         "filename": "internal/ceres/sparse_cholesky_test.cc",
         "patchSetId": 3
