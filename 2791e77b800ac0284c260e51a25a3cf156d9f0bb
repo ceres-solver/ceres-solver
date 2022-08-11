@@ -108,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fd5922cd_ed84b1af",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-11T23:24:59Z",
+      "side": 1,
+      "message": "I believe that doing a \"help in general\", as i mentioned earlier, would be to use initialization only for a few LM steps and disabling it later on. Though, this statement need some benchmarking or, better, math based estimates 😊\n\nMaybe you will suggest a subset (2-3 problems) of bal dataset that i will use to exhaustively benchmark a set of parameter combinations to have more objective data for discussion?",
+      "parentUuid": "b853c383_390ab680",
+      "range": {
+        "startLine": 696,
+        "startChar": 9,
+        "endLine": 696,
+        "endChar": 50
+      },
+      "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "461fc0f0_c85818ec",
         "filename": "include/ceres/solver.h",
         "patchSetId": 1
