@@ -41,30 +41,22 @@
 namespace ceres::internal {
 
 class BlockSparseMatrix;
-struct CompressedRowBlockStructure;
+class CompressedRowSparseMatrix;
 
 // A block Jacobi preconditioner. This is intended for use with
-// conjugate gradients, or other iterative symmetric solvers. To use
-// the preconditioner, create one by passing a BlockSparseMatrix "A"
-// to the constructor. This fixes the sparsity pattern to the pattern
-// of the matrix A^TA.
-//
-// Before each use of the preconditioner in a solve with conjugate gradients,
-// update the matrix by running Update(A, D). The values of the matrix A are
-// inspected to construct the preconditioner. The vector D is applied as the
-// D^TD diagonal term.
-class CERES_NO_EXPORT BlockJacobiPreconditioner
+// conjugate gradients, or other iterative symmetric solvers.
+
+// This version of the preconditioner is for use with BlockSparseMatrix
+// Jacobians.
+class CERES_NO_EXPORT BlockSparseJacobiPreconditioner
     : public BlockSparseMatrixPreconditioner {
  public:
   // A must remain valid while the BlockJacobiPreconditioner is.
-  explicit BlockJacobiPreconditioner(const BlockSparseMatrix& A);
-  BlockJacobiPreconditioner(const BlockJacobiPreconditioner&) = delete;
-  void operator=(const BlockJacobiPreconditioner&) = delete;
-
-  ~BlockJacobiPreconditioner() override;
-
-  // Preconditioner interface
-  void RightMultiplyAndAccumulate(const double* x, double* y) const final;
+  explicit BlockSparseJacobiPreconditioner(const BlockSparseMatrix& A);
+  ~BlockSparseJacobiPreconditioner() override;
+  void RightMultiplyAndAccumulate(const double* x, double* y) const final {
+    return m_->RightMultiplyAndAccumulate(x, y);
+  }
   int num_rows() const final { return m_->num_rows(); }
   int num_cols() const final { return m_->num_rows(); }
   const BlockRandomAccessDiagonalMatrix& matrix() const { return *m_; }
@@ -73,6 +65,27 @@ class CERES_NO_EXPORT BlockJacobiPreconditioner
   bool UpdateImpl(const BlockSparseMatrix& A, const double* D) final;
 
   std::unique_ptr<BlockRandomAccessDiagonalMatrix> m_;
+};
+
+// This version of the preconditioner is for use with CompressedRowSparseMatrix
+// Jacobians.
+class CERES_NO_EXPORT BlockCRSJacobiPreconditioner
+    : public CompressedRowSparseMatrixPreconditioner {
+ public:
+  // A must remain valid while the BlockJacobiPreconditioner is.
+  explicit BlockCRSJacobiPreconditioner(const CompressedRowSparseMatrix& A);
+  ~BlockCRSJacobiPreconditioner() override;
+  void RightMultiplyAndAccumulate(const double* x, double* y) const final {
+    m_->RightMultiplyAndAccumulate(x, y);
+  }
+  int num_rows() const final { return m_->num_rows(); }
+  int num_cols() const final { return m_->num_rows(); }
+  const CompressedRowSparseMatrix& matrix() const { return *m_; }
+
+ private:
+  bool UpdateImpl(const CompressedRowSparseMatrix& A, const double* D) final;
+
+  std::unique_ptr<CompressedRowSparseMatrix> m_;
 };
 
 }  // namespace ceres::internal

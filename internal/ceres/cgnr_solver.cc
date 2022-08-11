@@ -127,7 +127,7 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
   EventLogger event_logger("CgnrSolver::Solve");
   if (!preconditioner_) {
     if (options_.preconditioner_type == JACOBI) {
-      preconditioner_ = std::make_unique<BlockJacobiPreconditioner>(*A);
+      preconditioner_ = std::make_unique<BlockSparseJacobiPreconditioner>(*A);
     } else if (options_.preconditioner_type == SUBSET) {
       Preconditioner::Options preconditioner_options;
       preconditioner_options.type = SUBSET;
