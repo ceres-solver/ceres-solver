@@ -30,6 +30,7 @@
 
 #include "ceres/block_jacobi_preconditioner.h"
 
+#include "Eigen/Dense"
 #include "ceres/block_random_access_diagonal_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
@@ -38,7 +39,7 @@
 
 namespace ceres::internal {
 
-BlockJacobiPreconditioner::BlockJacobiPreconditioner(
+BlockSparseJacobiPreconditioner::BlockSparseJacobiPreconditioner(
     const BlockSparseMatrix& A) {
   const CompressedRowBlockStructure* bs = A.block_structure();
   std::vector<int> blocks(bs->cols.size());
@@ -49,10 +50,10 @@ BlockJacobiPreconditioner::BlockJacobiPreconditioner(
   m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(blocks);
 }
 
-BlockJacobiPreconditioner::~BlockJacobiPreconditioner() = default;
+BlockSparseJacobiPreconditioner::~BlockSparseJacobiPreconditioner() = default;
 
-bool BlockJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
-                                           const double* D) {
+bool BlockSparseJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
+                                                 const double* D) {
   const CompressedRowBlockStructure* bs = A.block_structure();
   const double* values = A.values();
   m_->SetZero();
@@ -90,9 +91,91 @@ bool BlockJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   return true;
 }
 
-void BlockJacobiPreconditioner::RightMultiplyAndAccumulate(const double* x,
-                                                           double* y) const {
-  m_->RightMultiplyAndAccumulate(x, y);
+BlockCRSJacobiPreconditioner::BlockCRSJacobiPreconditioner(
+    const CompressedRowSparseMatrix& A) {
+  auto& col_blocks = A.col_blocks();
+
+  // Compute the number of non-zeros in the preconditioner. This is needed so
+  // that we can construct the CompressedRowSparseMatrix.
+  int m_nnz = 0;
+  for (int col_block_size : col_blocks) {
+    m_nnz += col_block_size * col_block_size;
+  }
+
+  m_ = std::make_unique<CompressedRowSparseMatrix>(
+      A.num_cols(), A.num_cols(), m_nnz);
+
+  const int num_col_blocks = col_blocks.size();
+
+  // Populate the sparsity structure of the preconditioner matrix.
+  int* m_cols = m_->mutable_cols();
+  int* m_rows = m_->mutable_rows();
+  m_rows[0] = 0;
+  for (int i = 0, col = 0, idx = 0; i < num_col_blocks; ++i) {
+    // For each column block populate a diagonal block in the preconditioner.
+    // Not that the because of the way the CompressedRowSparseMatrix format
+    // works, the entire diagonal block is laid out contiguously in memory as a
+    // row-major matrix. We will use this when updating the block.
+    const int col_block_size = col_blocks[i];
+    for (int j = 0; j < col_block_size; ++j) {
+      for (int k = 0; k < col_block_size; ++k, ++idx) {
+        m_cols[idx] = col + k;
+      }
+      m_rows[col + j + 1] = idx;
+    }
+    col += col_block_size;
+  }
+
+  CHECK_EQ(m_rows[A.num_cols()], m_nnz);
+}
+
+BlockCRSJacobiPreconditioner::~BlockCRSJacobiPreconditioner() = default;
+
+bool BlockCRSJacobiPreconditioner::UpdateImpl(
+    const CompressedRowSparseMatrix& A, const double* D) {
+  const auto& col_blocks = A.col_blocks();
+  const int num_col_blocks = col_blocks.size();
+
+  const int* a_rows = A.rows();
+  const int* a_cols = A.cols();
+  const double* a_values = A.values();
+
+  m_->SetZero();
+  double* m_values = m_->mutable_values();
+  const int* m_rows = m_->rows();
+
+  const int num_rows = A.num_rows();
+  // The following loop can likely be optimized by exploiting the fact that each
+  // row block has exactly the same sparsity structure.
+  for (int r = 0; r < num_rows; ++r) {
+    int idx = a_rows[r];
+    while (idx < a_rows[r + 1]) {
+      const int col = a_cols[idx];
+      const int col_block_size = m_rows[col + 1] - m_rows[col];
+      // We make use of the fact that the entire diagonal block is stored
+      // contiguously in memory as a row-major matrix.
+      MatrixRef m(m_values + m_rows[col], col_block_size, col_block_size);
+      ConstVectorRef b(a_values + idx, col_block_size);
+      m.selfadjointView<Eigen::Upper>().rankUpdate(b);
+      idx += col_block_size;
+    }
+  }
+
+  for (int i = 0, col = 0; i < num_col_blocks; ++i) {
+    const int col_block_size = m_rows[col + 1] - m_rows[col];
+    MatrixRef m(m_values + m_rows[col], col_block_size, col_block_size);
+
+    if (D != nullptr) {
+      m.diagonal() +=
+          ConstVectorRef(D + col, col_block_size).array().square().matrix();
+    }
+
+    m = m.selfadjointView<Eigen::Upper>().llt().solve(
+        Matrix::Identity(col_block_size, col_block_size));
+    col += col_block_size;
+  }
+
+  return true;
 }
 
 }  // namespace ceres::internal
