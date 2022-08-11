@@ -81,10 +81,9 @@ class PowerSeriesExpansionPreconditionerTest : public ::testing::Test {
 TEST_F(PowerSeriesExpansionPreconditionerTest,
        InverseValidPreconditionerToleranceReached) {
   const double spse_tolerance = kEpsilon;
-  const int min_iterations = 1;
-  const int max_iterations = 50;
+  const int max_num_iterations = 50;
   PowerSeriesExpansionPreconditioner preconditioner(
-      isc_.get(), spse_tolerance, min_iterations, max_iterations);
+      isc_.get(), max_num_iterations, spse_tolerance);
 
   Vector x(num_f_cols_), y(num_f_cols_);
   for (int i = 0; i < num_f_cols_; i++) {
@@ -104,10 +103,10 @@ TEST_F(PowerSeriesExpansionPreconditionerTest,
 
 TEST_F(PowerSeriesExpansionPreconditionerTest,
        InverseValidPreconditionerMaxIterations) {
-  const double spse_tolerance = 1 / kEpsilon;
-  const int num_iterations = 50;
+  const double spse_tolerance = 0;
+  const int max_num_iterations = 50;
   PowerSeriesExpansionPreconditioner preconditioner_fixed_n_iterations(
-      isc_.get(), spse_tolerance, num_iterations, num_iterations);
+      isc_.get(), max_num_iterations, spse_tolerance);
 
   Vector x(num_f_cols_), y(num_f_cols_);
   for (int i = 0; i < num_f_cols_; i++) {
@@ -129,10 +128,9 @@ TEST_F(PowerSeriesExpansionPreconditionerTest,
 TEST_F(PowerSeriesExpansionPreconditionerTest,
        InverseInvalidBadPreconditionerTolerance) {
   const double spse_tolerance = 1 / kEpsilon;
-  const int min_iterations = 1;
-  const int max_iterations = 50;
+  const int max_num_iterations = 50;
   PowerSeriesExpansionPreconditioner preconditioner_bad_tolerance(
-      isc_.get(), spse_tolerance, min_iterations, max_iterations);
+      isc_.get(), max_num_iterations, spse_tolerance);
 
   Vector x(num_f_cols_), y(num_f_cols_);
   for (int i = 0; i < num_f_cols_; i++) {
@@ -151,9 +149,9 @@ TEST_F(PowerSeriesExpansionPreconditionerTest,
 TEST_F(PowerSeriesExpansionPreconditionerTest,
        InverseInvalidBadPreconditionerMaxIterations) {
   const double spse_tolerance = kEpsilon;
-  const int num_iterations = 1;
+  const int max_num_iterations = 1;
   PowerSeriesExpansionPreconditioner preconditioner_bad_iterations_limit(
-      isc_.get(), spse_tolerance, num_iterations, num_iterations);
+      isc_.get(), max_num_iterations, spse_tolerance);
 
   Vector x(num_f_cols_), y(num_f_cols_);
   for (int i = 0; i < num_f_cols_; i++) {

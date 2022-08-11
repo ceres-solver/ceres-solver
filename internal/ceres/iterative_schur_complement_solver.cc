@@ -43,6 +43,7 @@
 #include "ceres/implicit_schur_complement.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
+#include "ceres/power_series_expansion_preconditioner.h"
 #include "ceres/preconditioner.h"
 #include "ceres/schur_jacobi_preconditioner.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -90,9 +91,18 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
     return summary;
   }
 
-  // Initialize the solution to the Schur complement system to zero.
+  // Initialize the solution to the Schur complement system.
   reduced_linear_system_solution_.resize(schur_complement_->num_rows());
   reduced_linear_system_solution_.setZero();
+  if (options_.use_power_series_expansion_initialization) {
+    PowerSeriesExpansionPreconditioner pse_solver(
+        schur_complement_.get(),
+        options_.max_num_spse_iterations,
+        options_.spse_tolerance);
+    pse_solver.RightMultiplyAndAccumulate(
+        schur_complement_->rhs().data(),
+        reduced_linear_system_solution_.data());
+  }
 
   CreatePreconditioner(A);
   if (preconditioner_ != nullptr) {
@@ -167,6 +177,12 @@ void IterativeSchurComplementSolver::CreatePreconditioner(
     case JACOBI:
       preconditioner_ = std::make_unique<SparseMatrixPreconditionerWrapper>(
           schur_complement_->block_diagonal_FtF_inverse());
+      break;
+    case SCHUR_POWER_SERIES_EXPANSION:
+      // Ignoring the value of spse_tolerance to ensure preconditioner stays
+      // fixed during the iterations of cg.
+      preconditioner_ = std::make_unique<PowerSeriesExpansionPreconditioner>(
+          schur_complement_.get(), options_.max_num_spse_iterations, 0);
       break;
     case SCHUR_JACOBI:
       preconditioner_ = std::make_unique<SchurJacobiPreconditioner>(

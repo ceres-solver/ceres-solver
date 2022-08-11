@@ -691,6 +691,23 @@ class CERES_EXPORT Solver {
     // as its termination type.
     int max_linear_solver_iterations = 500;
 
+    // Maximum number of iterations performed by SCHUR_POWER_SERIES_EXPANSION.
+    // This value controls the maximum number of iterations whether it is used
+    // as a preconditioner or just to initialize the solution for
+    // ITERATIVE_SCHUR.
+    int max_num_spse_iterations = 5;
+
+    // Use SCHUR_POWER_SERIES_EXPANSION to initialize the solution for
+    // ITERATIVE_SCHUR. This option can be set true regardless of what
+    // preconditioner is being used.
+    bool use_power_series_expansion_initialization = false;
+
+    // When use_power_series_expansion_initialization is true, this parameter
+    // along with max_num_spse_iterations controls the number of
+    // SCHUR_POWER_SERIES_EXPANSION iterations performed for initialization. It
+    // is not used to control the preconditioner.
+    double spse_tolerance = 0.1;
+
     // Forcing sequence parameter. The truncated Newton solver uses
     // this number to control the relative accuracy with which the
     // Newton step is computed.
