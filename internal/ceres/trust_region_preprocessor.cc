@@ -199,6 +199,11 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
       options.max_linear_solver_iterations;
   pp->linear_solver_options.type = options.linear_solver_type;
   pp->linear_solver_options.preconditioner_type = options.preconditioner_type;
+  pp->linear_solver_options.use_power_series_expansion_initialization =
+      options.use_power_series_expansion_initialization;
+  pp->linear_solver_options.spse_tolerance = options.spse_tolerance;
+  pp->linear_solver_options.max_num_spse_iterations =
+      options.max_num_spse_iterations;
   pp->linear_solver_options.visibility_clustering_type =
       options.visibility_clustering_type;
   pp->linear_solver_options.sparse_linear_algebra_library_type =

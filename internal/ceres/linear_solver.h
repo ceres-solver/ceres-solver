@@ -165,6 +165,16 @@ class CERES_NO_EXPORT LinearSolver {
     int min_num_iterations = 1;
     int max_num_iterations = 1;
 
+    // Use power series expansion to initialize iterations of pcg in
+    // ITERATIVE_SCHUR linear solver.
+    bool use_power_series_expansion_initialization = false;
+
+    // Tolerance to reach while accumulating power series expansion.
+    double spse_tolerance = 0.1;
+
+    // Bound on number of power series expansion iterations.
+    int max_num_spse_iterations = 5;
+
     // If possible, how many threads can the solver use.
     int num_threads = 1;
 

@@ -178,12 +178,20 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
   }
 
   if (options.linear_solver_type == ITERATIVE_SCHUR &&
-      options.use_explicit_schur_complement &&
-      options.preconditioner_type != SCHUR_JACOBI) {
-    *error =
-        "use_explicit_schur_complement only supports "
-        "SCHUR_JACOBI as the preconditioner.";
-    return false;
+      options.use_explicit_schur_complement) {
+    if (options.preconditioner_type != SCHUR_JACOBI) {
+      *error =
+          "use_explicit_schur_complement only supports "
+          "SCHUR_JACOBI as the preconditioner.";
+      return false;
+    }
+    if (options.use_power_series_expansion_initialization) {
+      *error =
+          "implementation of initialization for reduced linear system solution "
+          "via power series expansion of schur inverse does not supports "
+          "use_explicit_schur_complement";
+      return false;
+    }
   }
 
   if (!IsDenseLinearAlgebraLibraryTypeAvailable(

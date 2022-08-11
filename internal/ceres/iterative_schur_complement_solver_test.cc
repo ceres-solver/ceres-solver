@@ -74,7 +74,8 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     num_eliminate_blocks_ = problem->num_eliminate_blocks;
   }
 
-  AssertionResult TestSolver(double* D) {
+  AssertionResult TestSolver(
+      double* D, PreconditionerType preconditioner_type = SCHUR_JACOBI) {
     TripletSparseMatrix triplet_A(
         A_->num_rows(), A_->num_cols(), A_->num_nonzeros());
     A_->ToTripletSparseMatrix(&triplet_A);
@@ -95,7 +96,8 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     options.elimination_groups.push_back(num_eliminate_blocks_);
     options.elimination_groups.push_back(0);
     options.max_num_iterations = num_cols_;
-    options.preconditioner_type = SCHUR_JACOBI;
+    options.max_num_spse_iterations = 1;
+    options.preconditioner_type = preconditioner_type;
     IterativeSchurComplementSolver isc(options);
 
     Vector isc_sol(num_cols_);
@@ -119,10 +121,16 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
   std::unique_ptr<double[]> D_;
 };
 
-TEST_F(IterativeSchurComplementSolverTest, NormalProblem) {
+TEST_F(IterativeSchurComplementSolverTest, NormalProblemSchurJacobi) {
   SetUpProblem(2);
   EXPECT_TRUE(TestSolver(nullptr));
   EXPECT_TRUE(TestSolver(D_.get()));
+}
+
+TEST_F(IterativeSchurComplementSolverTest, NormalProblemPowerSeriesExpansion) {
+  SetUpProblem(5);
+  EXPECT_TRUE(TestSolver(nullptr, SCHUR_POWER_SERIES_EXPANSION));
+  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_POWER_SERIES_EXPANSION));
 }
 
 TEST_F(IterativeSchurComplementSolverTest, ProblemWithNoFBlocks) {
