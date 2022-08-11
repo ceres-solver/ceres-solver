@@ -132,6 +132,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0fcf39f5_45a6bcab",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-11T23:32:22Z",
+      "side": 1,
+      "message": "later LM iterations require more accuracy not less, so I think it is the reverse of what you are saying. I do not remember the poorly conditioned ones, but let me see what I can find. I will play with this tomorrow sometime and get back to you.",
+      "parentUuid": "fd5922cd_ed84b1af",
+      "range": {
+        "startLine": 696,
+        "startChar": 9,
+        "endLine": 696,
+        "endChar": 50
+      },
+      "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "461fc0f0_c85818ec",
         "filename": "include/ceres/solver.h",
         "patchSetId": 1
