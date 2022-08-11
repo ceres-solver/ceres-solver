@@ -107,9 +107,6 @@ enum PreconditionerType {
 
   // Use power series expansion to approximate the inversion of Schur complement
   // as a preconditioner.
-  // WARNING! Application of this preconditioner currently is not integrated
-  // into linear solvers, so failure to use it via public API is expected
-  // behaviour.
   SCHUR_POWER_SERIES_EXPANSION,
 
   // Visibility clustering based preconditioners.

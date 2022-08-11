@@ -186,6 +186,16 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
     return false;
   }
 
+  if (options.preconditioner_type == SCHUR_POWER_SERIES_EXPANSION &&
+      options.min_num_preconditioner_iterations !=
+          options.max_num_preconditioner_iterations) {
+    *error =
+        "SCHUR_POWER_SERIES_EXPANSION preconditioner should be set with fixed "
+        "number of preconditioner iterations to satisfy assumptions needed for "
+        "convergence of pcg implementation.";
+    return false;
+  }
+
   if (!IsDenseLinearAlgebraLibraryTypeAvailable(
           options.dense_linear_algebra_library_type) &&
       (options.linear_solver_type == DENSE_NORMAL_CHOLESKY ||
