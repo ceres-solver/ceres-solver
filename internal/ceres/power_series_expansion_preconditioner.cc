@@ -34,13 +34,11 @@ namespace ceres::internal {
 
 PowerSeriesExpansionPreconditioner::PowerSeriesExpansionPreconditioner(
     const ImplicitSchurComplement* isc,
-    const double spse_tolerance,
-    const int min_num_iterations,
-    const int max_num_iterations)
+    const int max_num_spse_iterations,
+    const double spse_tolerance)
     : isc_(isc),
-      spse_tolerance_(spse_tolerance),
-      min_num_iterations_(min_num_iterations),
-      max_num_iterations_(max_num_iterations) {}
+      max_num_spse_iterations_(max_num_spse_iterations),
+      spse_tolerance_(spse_tolerance) {}
 
 PowerSeriesExpansionPreconditioner::~PowerSeriesExpansionPreconditioner() =
     default;
@@ -66,8 +64,7 @@ void PowerSeriesExpansionPreconditioner::RightMultiplyAndAccumulate(
     isc_->InversePowerSeriesOperatorRightMultiplyAccumulate(
         previous_series_term.data(), series_term.data());
     yref += series_term;
-    if (i >= min_num_iterations_ &&
-        (i >= max_num_iterations_ || series_term.norm() < norm_threshold)) {
+    if (i >= max_num_spse_iterations_ || series_term.norm() < norm_threshold) {
       break;
     }
     std::swap(previous_series_term, series_term);
