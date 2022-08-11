@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38ce7e7d_5ec455ce",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-11T16:07:40Z",
+      "side": 1,
+      "message": "since this enum is not integrated yet, please add a warning that this is work in progress and in the next CL when it becomes available we will remove it.",
+      "range": {
+        "startLine": 108,
+        "startChar": 15,
+        "endLine": 108,
+        "endChar": 21
+      },
+      "revId": "ac3f426ce61636d9e907e72c1c4dc9613539ae17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77c89252_20eace24",
+        "filename": "internal/ceres/implicit_schur_complement.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-11T16:07:40Z",
+      "side": 1,
+      "message": "RightMultiplyAndAccumulate to match the new naming convention.",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 46
+      },
+      "revId": "ac3f426ce61636d9e907e72c1c4dc9613539ae17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3cf65ec_237ea83b",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-11T16:07:40Z",
+      "side": 1,
+      "message": "drop blank.",
+      "revId": "ac3f426ce61636d9e907e72c1c4dc9613539ae17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f6a1f45_4d568a8d",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-11T16:07:40Z",
+      "side": 1,
+      "message": "{break;}",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 11
+      },
+      "revId": "ac3f426ce61636d9e907e72c1c4dc9613539ae17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea537eef_040f55e8",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-11T16:07:40Z",
+      "side": 1,
+      "message": "drop blank",
+      "revId": "ac3f426ce61636d9e907e72c1c4dc9613539ae17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61b39dcd_0e71b1ae",
+        "filename": "internal/ceres/power_series_expansion_preconditioner_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-11T16:07:40Z",
+      "side": 1,
+      "message": "add a comment about what you are doing here.",
+      "range": {
+        "startLine": 57,
+        "startChar": 10,
+        "endLine": 57,
+        "endChar": 11
+      },
+      "revId": "ac3f426ce61636d9e907e72c1c4dc9613539ae17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89faa55f_c6bda04b",
+        "filename": "internal/ceres/power_series_expansion_preconditioner_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-11T16:07:40Z",
+      "side": 1,
+      "message": "sc_inverse_expected_",
+      "range": {
+        "startLine": 75,
+        "startChar": 9,
+        "endLine": 75,
+        "endChar": 29
+      },
+      "revId": "ac3f426ce61636d9e907e72c1c4dc9613539ae17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ab43048_f438e404",
+        "filename": "internal/ceres/power_series_expansion_preconditioner_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-11T16:07:40Z",
+      "side": 1,
+      "message": "split this into four tests one for each kind of preconditioner setup.",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 45
+      },
+      "revId": "ac3f426ce61636d9e907e72c1c4dc9613539ae17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
