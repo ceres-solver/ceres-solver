@@ -398,6 +398,30 @@
       },
       "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83ee566d_8c50960a",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-11T15:35:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99675a5c_da13964d",
+      "range": {
+        "startLine": 107,
+        "startChar": 23,
+        "endLine": 107,
+        "endChar": 24
+      },
+      "revId": "f8c317842427d13b2900523b4de9d5d39bcb7fc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
