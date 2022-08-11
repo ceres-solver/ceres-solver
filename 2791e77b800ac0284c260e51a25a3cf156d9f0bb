@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b853c383_390ab680",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-11T23:09:07Z",
+      "side": 1,
+      "message": "bundle adjustment problems are usually pretty poorly conditioned. in fact now I want to use this initialization for iterative schur in general if it helps 😊\n\nI suggest we do this in general and if push comes to shove come back and add options for disabling this.",
+      "parentUuid": "9600da4b_bc2d24c3",
+      "range": {
+        "startLine": 696,
+        "startChar": 9,
+        "endLine": 696,
+        "endChar": 50
+      },
+      "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "461fc0f0_c85818ec",
         "filename": "include/ceres/solver.h",
         "patchSetId": 1
@@ -150,6 +174,30 @@
       "side": 1,
       "message": "I assume that there might be problems, where number of initialization iterations that substantially reduce the residual might vary, but maybe we need to come up with particular instance to reason about this.",
       "parentUuid": "0d246ef5_f0a4ad30",
+      "range": {
+        "startLine": 699,
+        "startChar": 11,
+        "endLine": 699,
+        "endChar": 25
+      },
+      "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f63ec3b1_5c0ba139",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-11T23:09:07Z",
+      "side": 1,
+      "message": "I think we can keep this, since it maybe difficult to control the accuracy of the preconditioner using iterations alone, but if you feel this is not that useful and we never really reach this tolerance then we should just drop it and use num-iterations as the control to begin with. \n\nyour call. my bias is for APIs which can be used in general because most people are going to just set these tolerances and forget them rather than tuning them for one problem at a time.",
+      "parentUuid": "0b62b3c7_e6597024",
       "range": {
         "startLine": 699,
         "startChar": 11,
