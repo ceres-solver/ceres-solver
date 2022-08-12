@@ -394,6 +394,30 @@
       },
       "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3aee9f6_4a1ba80b",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-12T14:21:54Z",
+      "side": 1,
+      "message": "Couple of thoughts.\n\n1. min_num_preconditioner_iterations and max_num_preconditioner_iterations should be renamed to min_num_spse_iterations and max_num_spse_iterations. The reason is that these options are used whether spse is the preconditioner or not, because you could easily combine spse initialization with any other preconditioner no? so calling them preconditioner iterations seems wrong.\n\n2. With regards to this check, why does PCG require that these values be the same?",
+      "parentUuid": "710ed2cb_c512df62",
+      "range": {
+        "startLine": 189,
+        "startChar": 14,
+        "endLine": 189,
+        "endChar": 33
+      },
+      "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
