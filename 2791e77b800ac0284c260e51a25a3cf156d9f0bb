@@ -352,6 +352,30 @@
       },
       "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "710ed2cb_c512df62",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-12T14:10:45Z",
+      "side": 1,
+      "message": "Sameer, sorry to introduce such an ambiguity. The assumption here is that even if SCHUR_POWER_SERIES_EXPANSION preconditioner is not used, its implementation via PowerSeriesExpansionPreconditioner still might be involved for initalization purposes, so then difference of bounds on number of iterations is a valid state. But, this holds only if there are examples where speedups appear and executed number of iterations for initialization vary. I think, that coming up with such an example needs a bit of experimenting.",
+      "parentUuid": "18f289ff_a6a254ba",
+      "range": {
+        "startLine": 189,
+        "startChar": 14,
+        "endLine": 189,
+        "endChar": 33
+      },
+      "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
