@@ -125,15 +125,15 @@ LinearSolver::Summary ConjugateGradientsSolver(
   summary.message = "Maximum number of iterations reached.";
   summary.num_iterations = 0;
 
-  const double norm_b = Norm(rhs);
-  if (norm_b == 0.0) {
+  const double norm_rhs = Norm(rhs);
+  if (norm_rhs == 0.0) {
     SetZero(solution);
     summary.termination_type = LinearSolverTerminationType::SUCCESS;
     summary.message = "Convergence. |b| = 0.";
     return summary;
   }
 
-  const double tol_r = options.r_tolerance * norm_b;
+  const double tol_r = options.r_tolerance * norm_rhs;
 
   SetZero(tmp);
   lhs.RightMultiplyAndAccumulate(solution, tmp);

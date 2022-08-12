@@ -143,6 +143,7 @@ class CERES_NO_EXPORT ImplicitSchurComplement final : public LinearOperator {
   }
 
   const BlockSparseMatrix* block_diagonal_FtF_inverse() const {
+    CHECK(compute_ftf_inverse_);
     return block_diagonal_FtF_inverse_.get();
   }
 
@@ -151,10 +152,10 @@ class CERES_NO_EXPORT ImplicitSchurComplement final : public LinearOperator {
   void UpdateRhs();
 
   const LinearSolver::Options& options_;
-
+  bool compute_ftf_inverse_ = false;
   std::unique_ptr<PartitionedMatrixViewBase> A_;
-  const double* D_;
-  const double* b_;
+  const double* D_ = nullptr;
+  const double* b_ = nullptr;
 
   std::unique_ptr<BlockSparseMatrix> block_diagonal_EtE_inverse_;
   std::unique_ptr<BlockSparseMatrix> block_diagonal_FtF_inverse_;
