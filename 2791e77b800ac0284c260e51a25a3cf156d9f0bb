@@ -418,6 +418,30 @@
       },
       "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "098b9e98_04a69eb2",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-12T15:13:05Z",
+      "side": 1,
+      "message": "1. Agree.\n\n2. This is mostly because of my ignorance of pcg convergence proof for variable preconditioner case. I agree that this does not sound as a valuable reason for this change and i will be grateful for a pointer/hint for such proof (or an explanation why existing proof holds even if preconditioner is variable).",
+      "parentUuid": "e3aee9f6_4a1ba80b",
+      "range": {
+        "startLine": 189,
+        "startChar": 14,
+        "endLine": 189,
+        "endChar": 33
+      },
+      "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
