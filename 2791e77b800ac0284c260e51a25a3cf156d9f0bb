@@ -466,6 +466,30 @@
       },
       "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ece49dba_36b8dd93",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-12T19:54:39Z",
+      "side": 1,
+      "message": "https://arxiv.org/pdf/math/0605767.pdf\n\nMark as this paper points out variable preconditioning is a bit of a minefield which requires care. So having the preconditioner quit based on spse_tolerance is not a good idea. It should be a fixed number of iterations.  This will ensure the same linear operator is being used for preconditioning\n\nInitialization is different matter, there we can use whatever tolerance we want to use.\n\nso one scheme we can follow is have two tolerances.\n\nspse_tolerance\nmax_num_spse_iterations.\n\nwhere initialization uses both of these options, but when constructing the preconditioner we assume spse_tolerance \u003d 0.\n\nWDYT?",
+      "parentUuid": "4d8125e9_75879ee2",
+      "range": {
+        "startLine": 189,
+        "startChar": 14,
+        "endLine": 189,
+        "endChar": 33
+      },
+      "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
