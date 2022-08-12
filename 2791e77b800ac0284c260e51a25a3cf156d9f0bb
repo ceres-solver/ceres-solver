@@ -333,6 +333,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5610d580_07c64381",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-12T14:12:46Z",
+      "side": 1,
+      "message": "Blocking on https://ceres-solver-review.googlesource.com/c/ceres-solver/+/22460 to fix this.",
+      "parentUuid": "2d863d7c_ac1ebd91",
+      "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "18f289ff_a6a254ba",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 1
