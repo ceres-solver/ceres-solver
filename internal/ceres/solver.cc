@@ -166,7 +166,7 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
   OPTION_GE(max_num_consecutive_invalid_steps, 0);
   OPTION_GT(eta, 0.0);
   OPTION_GE(min_linear_solver_iterations, 0);
-  OPTION_GE(max_linear_solver_iterations, 1);
+  OPTION_GE(max_linear_solver_iterations, 0);
   OPTION_LE_OPTION(min_linear_solver_iterations, max_linear_solver_iterations);
 
   if (options.use_inner_iterations) {
