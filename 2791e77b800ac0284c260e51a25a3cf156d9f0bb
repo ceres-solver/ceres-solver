@@ -442,6 +442,30 @@
       },
       "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d8125e9_75879ee2",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-12T16:38:33Z",
+      "side": 1,
+      "message": "Mark let me see what I can find on variable preconditioning. Thats a good point and I had not though that through.\n\nIt is also possible that that the incremental improvement we are seeing when using spse is because the cg loop does not deal with variable preconditioning correctly and it needs to be more sophisticated.",
+      "parentUuid": "098b9e98_04a69eb2",
+      "range": {
+        "startLine": 189,
+        "startChar": 14,
+        "endLine": 189,
+        "endChar": 33
+      },
+      "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
