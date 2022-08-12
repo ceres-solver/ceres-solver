@@ -156,6 +156,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e0b21260_9b739ba2",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-12T13:19:12Z",
+      "side": 1,
+      "message": "I think for now it is useful to have this as a bool.",
+      "parentUuid": "0fcf39f5_45a6bcab",
+      "range": {
+        "startLine": 696,
+        "startChar": 9,
+        "endLine": 696,
+        "endChar": 50
+      },
+      "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "461fc0f0_c85818ec",
         "filename": "include/ceres/solver.h",
         "patchSetId": 1
@@ -268,6 +292,46 @@
         "startChar": 11,
         "endLine": 699,
         "endChar": 25
+      },
+      "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d863d7c_ac1ebd91",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-12T13:19:12Z",
+      "side": 1,
+      "message": "this option when used with schur_jacobi preconditioner causes a crash. The reason is that inside implicit_schur_complement ftf is computed only if the preconditioner is jacobi or schur_power_series_expansion, but if the preconditioner is schur_jacobi this is never triggered, but power series expansion based initialization requires it.\n\nso implicit_schur_complement needs to check for that bool too.",
+      "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18f289ff_a6a254ba",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-12T13:19:12Z",
+      "side": 1,
+      "message": "this is odd. if the only use of this is for preconditioner why are we allowing max and min values which are different?",
+      "range": {
+        "startLine": 189,
+        "startChar": 14,
+        "endLine": 189,
+        "endChar": 33
       },
       "revId": "2791e77b800ac0284c260e51a25a3cf156d9f0bb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
