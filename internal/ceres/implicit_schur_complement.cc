@@ -42,7 +42,7 @@ namespace ceres::internal {
 
 ImplicitSchurComplement::ImplicitSchurComplement(
     const LinearSolver::Options& options)
-    : options_(options), D_(nullptr), b_(nullptr) {}
+    : options_(options) {}
 
 void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
                                    const double* D,
@@ -56,12 +56,15 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
   D_ = D;
   b_ = b;
 
+  compute_ftf_inverse_ =
+      options_.preconditioner_type == JACOBI ||
+      options_.preconditioner_type == SCHUR_POWER_SERIES_EXPANSION;
+
   // Initialize temporary storage and compute the block diagonals of
   // E'E and F'E.
   if (block_diagonal_EtE_inverse_ == nullptr) {
     block_diagonal_EtE_inverse_ = A_->CreateBlockDiagonalEtE();
-    if (options_.preconditioner_type == JACOBI ||
-        options_.preconditioner_type == SCHUR_POWER_SERIES_EXPANSION) {
+    if (compute_ftf_inverse_) {
       block_diagonal_FtF_inverse_ = A_->CreateBlockDiagonalFtF();
     }
     rhs_.resize(A_->num_cols_f());
@@ -72,8 +75,7 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
     tmp_f_cols_.resize(A_->num_cols_f());
   } else {
     A_->UpdateBlockDiagonalEtE(block_diagonal_EtE_inverse_.get());
-    if (options_.preconditioner_type == JACOBI ||
-        options_.preconditioner_type == SCHUR_POWER_SERIES_EXPANSION) {
+    if (compute_ftf_inverse_) {
       A_->UpdateBlockDiagonalFtF(block_diagonal_FtF_inverse_.get());
     }
   }
@@ -82,8 +84,7 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
   // contributions from the diagonal D if it is non-null. Add that to
   // the block diagonals and invert them.
   AddDiagonalAndInvert(D_, block_diagonal_EtE_inverse_.get());
-  if (options_.preconditioner_type == JACOBI ||
-      options_.preconditioner_type == SCHUR_POWER_SERIES_EXPANSION) {
+  if (compute_ftf_inverse_) {
     AddDiagonalAndInvert((D_ == nullptr) ? nullptr : D_ + A_->num_cols_e(),
                          block_diagonal_FtF_inverse_.get());
   }
@@ -134,6 +135,7 @@ void ImplicitSchurComplement::RightMultiplyAndAccumulate(const double* x,
 
 void ImplicitSchurComplement::InversePowerSeriesOperatorRightMultiplyAccumulate(
     const double* x, double* y) const {
+  CHECK(compute_ftf_inverse_);
   // y1 = F x
   tmp_rows_.setZero();
   A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
