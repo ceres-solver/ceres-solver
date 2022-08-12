@@ -125,15 +125,15 @@ LinearSolver::Summary ConjugateGradientsSolver(
   summary.message = "Maximum number of iterations reached.";
   summary.num_iterations = 0;
 
-  const double norm_b = Norm(rhs);
-  if (norm_b == 0.0) {
+  const double norm_rhs = Norm(rhs);
+  if (norm_rhs == 0.0) {
     SetZero(solution);
     summary.termination_type = LinearSolverTerminationType::SUCCESS;
     summary.message = "Convergence. |b| = 0.";
     return summary;
   }
 
-  const double tol_r = options.r_tolerance * norm_b;
+  const double tol_r = options.r_tolerance * norm_rhs;
 
   SetZero(tmp);
   lhs.RightMultiplyAndAccumulate(solution, tmp);
@@ -156,7 +156,8 @@ LinearSolver::Summary ConjugateGradientsSolver(
   Axpby(1.0, rhs, 1.0, r, tmp);
   double Q0 = -Dot(solution, tmp);
 
-  for (summary.num_iterations = 1;; ++summary.num_iterations) {
+  for (; summary.num_iterations < options.max_num_iterations;) {
+    ++summary.num_iterations;
     SetZero(z);
     preconditioner.RightMultiplyAndAccumulate(r, z);
 
@@ -285,10 +286,6 @@ LinearSolver::Summary ConjugateGradientsSolver(
                        summary.num_iterations,
                        norm_r,
                        tol_r);
-      break;
-    }
-
-    if (summary.num_iterations >= options.max_num_iterations) {
       break;
     }
   }
