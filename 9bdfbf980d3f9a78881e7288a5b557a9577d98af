@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00b750ad_1d171d81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-12T21:38:42Z",
+      "side": 1,
+      "message": "Mostly LGTM. Only a minor suggestion.",
+      "revId": "9bdfbf980d3f9a78881e7288a5b557a9577d98af",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "beee07ef_13042ff3",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-12T21:38:42Z",
+      "side": 1,
+      "message": "clang-tidy generally complains about the use of C-style arrays. I\u0027d rather use `std::string_view` which supports `constexpr`. Something along the lines should work:\n```\nconstexpr std::string_view \u003d \"...\";\n```",
+      "revId": "9bdfbf980d3f9a78881e7288a5b557a9577d98af",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
