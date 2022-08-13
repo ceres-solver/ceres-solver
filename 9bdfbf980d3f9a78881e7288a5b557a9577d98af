@@ -51,6 +51,24 @@
       "parentUuid": "beee07ef_13042ff3",
       "revId": "9bdfbf980d3f9a78881e7288a5b557a9577d98af",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "826f81fd_b5f7dedf",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T04:20:08Z",
+      "side": 1,
+      "message": "Our current version of stringprintf is not string_view friendly. Once we move to absl we can do this.",
+      "parentUuid": "b563e0c7_2e9ce9e2",
+      "revId": "9bdfbf980d3f9a78881e7288a5b557a9577d98af",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
