@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f42cacf5_a476c6de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T22:19:31Z",
+      "side": 1,
+      "message": "Currently, the changes should not break the API unless you mean the deprecation.",
+      "parentUuid": "49b0f857_b3fbfa2a",
+      "revId": "9a3777374d7d6fa776f0579d32d017dd0776841b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "24c2be2c_2c160dfc",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-08-13T22:13:26Z",
       "side": 1,
       "message": "drop this comment because this is a short but complicated ifdef block anyways.",
+      "range": {
+        "startLine": 94,
+        "startChar": 9,
+        "endLine": 94,
+        "endChar": 10
+      },
+      "revId": "9a3777374d7d6fa776f0579d32d017dd0776841b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e1509b6_0f3d95b1",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T22:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24c2be2c_2c160dfc",
       "range": {
         "startLine": 94,
         "startChar": 9,
@@ -64,6 +106,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "336f6a27_7c096415",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T22:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fa5f389_fadd1610",
+      "range": {
+        "startLine": 100,
+        "startChar": 19,
+        "endLine": 100,
+        "endChar": 31
+      },
+      "revId": "9a3777374d7d6fa776f0579d32d017dd0776841b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a9fcb19_ee7e98f7",
@@ -77,6 +143,24 @@
       "writtenOn": "2022-08-13T22:13:26Z",
       "side": 1,
       "message": "should we consider defining CERES_HAS_BESSEL_FUNCTIONS as the or of these two macros? or is that not worth it?",
+      "revId": "9a3777374d7d6fa776f0579d32d017dd0776841b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51a237be_06816cd9",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T22:19:31Z",
+      "side": 1,
+      "message": "I\u0027m not sure that helps, unless it\u0027s for the user. Additionally, what should be the semantics of the conjunction? OR or AND?",
+      "parentUuid": "5a9fcb19_ee7e98f7",
       "revId": "9a3777374d7d6fa776f0579d32d017dd0776841b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
